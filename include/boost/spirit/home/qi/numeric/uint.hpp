@@ -171,7 +171,7 @@ namespace boost { namespace spirit { namespace qi
 #ifdef BOOST_HAS_LONG_LONG
     template <typename Modifiers>
     struct make_primitive<tag::ulong_long, Modifiers>
-      : make_uint<unsigned long long> {};
+      : make_uint<boost::ulong_long_type> {};
 #endif
 }}}
 

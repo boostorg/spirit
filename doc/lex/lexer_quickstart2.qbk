@@ -72,7 +72,8 @@ using the `self.add()` style of the API, while we here directly assign the token
 definitions to `self`, combining the different token definitions using the `|` 
 operator. Here is the code snippet again:
 
-    self =  word  [++ref(w), ref(c) += distance(_1)]
+    this->self 
+        =   word  [++ref(w), ref(c) += distance(_1)]
         |   eol   [++ref(c), ++ref(l)] 
         |   any   [++ref(c)]
         ;

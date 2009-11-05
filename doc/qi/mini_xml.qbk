@@ -108,8 +108,8 @@ not have a synthesized attribute. Let's see its definition:
         >>  '>'
     ;
 
-`_r1` is yet another __phoenix__ placeholder for the first inherited attribute (we
-have only one, use `_r2`, `_r3`, etc. if you have more).
+`_r1` is yet another __phoenix__ placeholder for the first inherited attribute
+(we have only one, use `_r2`, `_r3`, etc. if you have more).
 
 [heading A Lazy Lit]
 

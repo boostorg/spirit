@@ -41,7 +41,7 @@
         <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.include_files"></a><h5>
-<a name="id933840"></a>
+<a name="id931438"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.include_files">Include
         Files</a>
       </h5>
@@ -223,7 +223,7 @@
 </tbody>
 </table></div>
 <a name="spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions"></a><h5>
-<a name="id935690"></a>
+<a name="id932076"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions">The
         Free Parse Functions</a>
       </h5>
@@ -237,8 +237,8 @@
         should be done using a skipper (<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>)
         or not (<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>). All free functions now return a
         simple <code class="computeroutput"><span class="keyword">bool</span></code>. A returned <code class="computeroutput"><span class="keyword">true</span></code> means success (i.e. the parser has matched)
-        or <code class="computeroutput"><span class="keyword">false</span></code> (i.e. the parser either
-        didn't match). This is equivalent to the former old <code class="computeroutput"><span class="identifier">parse_info</span></code>
+        or <code class="computeroutput"><span class="keyword">false</span></code> (i.e. the parser didn't
+        match). This is equivalent to the former old <code class="computeroutput"><span class="identifier">parse_info</span></code>
         member <code class="computeroutput"><span class="identifier">hit</span></code>. <span class="emphasis"><em>Spirit.Qi</em></span>
         doesn't support tracking of the matched input length anymore. The old <code class="computeroutput"><span class="identifier">parse_info</span></code> member <code class="computeroutput"><span class="identifier">full</span></code>
         can be emulated by comparing the iterators after <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>
@@ -410,7 +410,7 @@
         Encoding Namespace</a> for more information.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.naming_conventions"></a><h5>
-<a name="id937913"></a>
+<a name="id937481"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.naming_conventions">Naming
         Conventions</a>
       </h5>
@@ -430,7 +430,7 @@
         parser primitives, directives and operators.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.parser_attributes"></a><h5>
-<a name="id937985"></a>
+<a name="id937553"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.parser_attributes">Parser
         Attributes</a>
       </h5>
@@ -448,7 +448,7 @@
         underlying matched input sequence.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules"></a><h5>
-<a name="id938054"></a>
+<a name="id937622"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules">Grammars
         and Rules</a>
       </h5>
@@ -647,17 +647,18 @@
           The function type notation allows to specify parameters as well. These
           are interpreted as the types of inherited attributes the rule or grammar
           expect to be passed during parsing. For more information please see the
-          section about inherited and synthesized attributes for rules and grammars.
+          section about inherited and synthesized attributes for rules and grammars
+          (<a class="link" href="../abstracts/attributes.html" title="Attributes">Attributes</a>).
         </p></td></tr>
 </table></div>
 <p>
-        If no attribute is desired none needs to be specified. The default attrribute
+        If no attribute is desired none needs to be specified. The default attribute
         type for both, grammars and rules, is <code class="computeroutput"><span class="identifier">unused_type</span></code>,
         which is a special placeholder type. Generally, using <code class="computeroutput"><span class="identifier">unused_type</span></code>
         as the attribute of a parser is interpreted as 'this parser has no attribute'.
         This is mostly used for parsers applied to parts of the input not carrying
         any significant information, rather being delimiters or structural elements
-        needed for coreect interpretation of the input.
+        needed for correct interpretation of the input.
       </p>
 <p>
         The last difference might seem to be rather cosmetic and insignificant. But

@@ -26,7 +26,7 @@ function, `generate`, that accepts an `OutputIterator` and
 returns bool as its result. The iterator receives the data being generated.
 The Generator's `generate` member function returns `true` if the generator
 succeeds. Each Generator can represent a specific pattern or algorithm, or it 
-can be a more complex generator formed as a composition of other Generator's.
+can be a more complex generator formed as a composition of other Generators.
 
 [variablelist Notation
     [[`g`]              [A `Generator`.]]
@@ -51,7 +51,7 @@ For any Generator the following expressions must be valid:
 [table
     [[Expression]           [Semantics]                         [Return type]]
     [[
-``g.generate(sink, context, delimit, attr)``]
+``g.generate(sink, context, delimit, attrib)``]
                             [Generate the output sequence by inserting the
                              generated characters/tokens into `sink`. Use the
                              `delimit` generator for delimiting. Return
@@ -68,7 +68,7 @@ For any Generator the following expressions must be valid:
     [[`traits::is_generator<G>::type`]              [Metafunction that evaluates to `mpl::true_` if 
                                                      a certain type, `G` is a Generator, `mpl::false_`  
                                                      otherwise (See __mpl_boolean_constant__).]]
-    [[`G::properties`]                              [A `mpl::int_` (See __mpl_int_constant__) holding 
+    [[`G::properties`]                              [An `mpl::int_` (See __mpl_int_constant__) holding 
                                                      a value from the `karma::generator_properties` 
                                                      enumeration. The default value is 
                                                      `generator_properties::no_properties`]]
@@ -124,7 +124,7 @@ This is typically carried out through a call to `karma::delimit_out`:
 
 The following generators conform to this model: 
 
-* __karma_eol__ ,
+* __karma_eol__,
 * __karma_eps__,
 * [link spirit.karma.reference.numeric Numeric generators],
 * [karma_char Character generators].
@@ -204,7 +204,7 @@ __fixme__ Add more links to models of UnaryGenerator concept
 
 [heading Description]
 
-/BinaryGenerator/ is a composite parser that has a two subjects, `left` and
+/BinaryGenerator/ is a composite generator that has a two subjects, `left` and
 `right`. The BinaryGenerator allows its subjects to be treated in the same
 way as a single instance of a __generator_concept__ following the
 __composite_pattern__. 
@@ -233,8 +233,8 @@ BinaryGenerator the following must be met:
 
 [table
     [[Expression]           [Description]]
-    [[`G::left_type`]       [The left parser type.]]
-    [[`G::right_type`]      [The right parser type.]]
+    [[`G::left_type`]       [The left generator type.]]
+    [[`G::right_type`]      [The right generator type.]]
     [[`traits::is_binary_generator<G>::type`]   [Metafunction that evaluates to `mpl::true_` if 
                                                 a certain type, `G` is a BinaryGenerator, `mpl::false_`  
                                                 otherwise (See __mpl_boolean_constant__).]]
@@ -350,9 +350,9 @@ e.g.:
 
 [heading `_val`]
 
-The `boost::spirit::qi_val` placeholder can be used in __phoenix__
+The `boost::spirit::karma::_val` placeholder can be used in __phoenix__
 semantic actions anywhere in the Nonterminal's definition. This
-__phoenix__ placeholder refers to the Nonterminal's (synthesized)
+__phoenix__ placeholder refers to the Nonterminal's (consumed)
 attribute. The `_val` placeholder acts like a immutable reference to the
 Nonterminal's attribute.
 
@@ -366,10 +366,10 @@ inherited attributes.
 [heading Locals]
 
 Nonterminals can have local variables that will be created on the stack
-at parse time. A locals descriptor added to the Nonterminal declaration
+at runtime. A locals descriptor added to the Nonterminal declaration
 will give the Nonterminal local variables: 
 
-    template <typename T0, typename T1, typename T2, ... typename TN>
+    template <typename T0, typename T1, typename T2, ..., typename TN>
     struct locals;
 
 where `T0` ... `TN` are the types of local variables accessible in your
@@ -397,17 +397,17 @@ which correspond to the Nonterminal's local variables `T0` ... `T9`.
 
 [heading Valid Expressions]
 
-In addition to the requirements defined in __parser_concept__, for any
-NaryParser the following must be met:
+In addition to the requirements defined in __generator_concept__, for any
+Nonterminal the following must be met:
 
 [table
     [[Expression]               [Semantics]                                         [Return type]]
-    [[`x`]                      [In a generator expression, invoke Nonterminal `x`]  [`X`]]
-    [[`x(arg1, arg2, ... argN)`][In a generator expression, invoke Nonterminal `x` 
+    [[`x`]                      [In a generator expression, invoke Nonterminal `x`] [`X`]]
+    [[`x(arg1, arg2, ..., argN)`][In a generator expression, invoke Nonterminal `x` 
                                 passing in inherited attributes
                                 `arg1`...`argN`]                                    [`X`]]
-    [[`x.name(name)`]           [Naming a Nonterminal.]                             [`void`]]
-    [[`x.name()`]               [Getting the name of a Nonterminal.]                [`std::string`]]
+    [[`x.name(name)`]           [Set the name of a Nonterminal]                     [`void`]]
+    [[`x.name()`]               [Get the name of a Nonterminal]                     [`std::string`]]
 ]
 
 [heading Type Expressions]

@@ -83,7 +83,7 @@ types).]
 [table
     [[Parameter]    [Description]                       [Default]]
     [[`T`]          [The numeric base type of the 
-                    numeric parser.]                    []]
+                    numeric parser.]                    [none]]
     [[`Radix`]      [The radix base. This can be 
                     either 2: binary, 8: octal, 
                     10: decimal and 16: hexadecimal.]   [10]]
@@ -130,7 +130,7 @@ not defined in __primitive_parser_concept__.
 
 [heading Minimum Expression Requirements for `T`]
 
-The numeric base type, `T`, the expression requirements below must be
+For the numeric base type, `T`, the expression requirements below must be
 valid:
 
 [table
@@ -217,7 +217,7 @@ native support for `signed long long` (64 bit) unsigned integer types).]
 [table
     [[Parameter]    [Description]                       [Default]]
     [[`T`]          [The numeric base type of the 
-                    numeric parser.]                    []]
+                    numeric parser.]                    [none]]
     [[`Radix`]      [The radix base. This can be 
                     either 2: binary, 8: octal, 
                     10: decimal and 16: hexadecimal.]   [10]]
@@ -261,7 +261,7 @@ not defined in __primitive_parser_concept__.
 
 [heading Minimum Expression Requirements for `T`]
 
-The numeric base type, `T`, the expression requirements below must be
+For the numeric base type, `T`, the expression requirements below must be
 valid:
 
 [table
@@ -334,7 +334,7 @@ Also, see __include_structure__.
 [table
     [[Parameter]            [Description]                   [Default]]
     [[`T`]                  [The numeric base type of the 
-                            numeric parser.]                []]
+                            numeric parser.]                [none]]
     [[`RealPolicies`]       [Policies control the 
                             parser's behavior.]             [`real_policies<T>`]]
 ]
@@ -597,7 +597,7 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename T, typename RealPolicies>
+    template <typename T, typename BooleanPolicies>
     struct bool_parser;
 
 [heading Template parameters]
@@ -606,7 +606,7 @@ Also, see __include_structure__.
     [[Parameter]            [Description]                   [Default]]
     [[`B`]                  [The boolean type of the 
                             boolean parser.]                [`bool`]]
-    [[`RealPolicies`]       [Policies control the 
+    [[`BooleanPolicies`]    [Policies control the 
                             parser's behavior.]             [`bool_policies<B>`]]
 ]
 
@@ -619,6 +619,10 @@ Also, see __include_structure__.
     [[`BP`]         [A boolean `Policies` (type).]]
     [[`b`]          [An object of `B`, the numeric base type.]]
     [[`f`, `l`]     [__fwditer__. first/last iterator pair.]]
+    [[`attr`]       [An attribute value.]]
+    [[`Context`]    [The type of the parse context of the current invocation of
+                     the `bool_` parser.]]
+    [[`ctx`]        [An instance of the parse context, `Context`.]]
 ]
 
 [heading Expression Semantics]
@@ -628,12 +632,12 @@ not defined in __primitive_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`BP()`]           [Instantiate and (default) construct an `bool_parser`]]
+    [[`BP()`]           [Instantiate and (default) construct a `bool_parser`]]
     [[`bool_`]          [Create a `bool_parser<bool, bool_policies<bool> >`]]
     [[`true_`]          [Create a `bool_parser<bool, bool_policies<bool> >` 
-                         which is succeeding onlz after matching `"true"`.]]
+                         which is succeeding only after matching `"true"`.]]
     [[`false_`]         [Create a `bool_parser<bool, bool_policies<bool> >` 
-                         which is succeeding onlz after matching `"false"`.]]
+                         which is succeeding only after matching `"false"`.]]
 ]
 
 [note   All boolean parsers properly respect the __qi_no_case__`[]` directive.]
@@ -675,8 +679,8 @@ For models of boolean `Policies` the following expressions must be valid:
 
 [table
     [[Expression]                           [Semantics]]
-    [[`BP::parse_true(f, l, n)`]            [Parse a `true` value.]]
-    [[`BP::parse_false(f, l, n)`]           [Parse a `false` value.]]
+    [[`BP::parse_true(f, l, attr, ctx)`]    [Parse a `true` value.]]
+    [[`BP::parse_false(f, l, attr, ctx)`]   [Parse a `false` value.]]
 ]
 
 The functions should return true if the required representations of `true` or 

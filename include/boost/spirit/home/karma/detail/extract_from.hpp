@@ -84,13 +84,13 @@ namespace boost { namespace spirit { namespace traits
     extract_from(Attribute const& attr, Context& context)
     {
         return extract_from_attribute<Attribute>::call(attr, context);
-    };
+    }
 
     template <typename Context>
     unused_type extract_from(unused_type, Context&)
     {
         return unused;
-    };
+    }
 
 }}}
 

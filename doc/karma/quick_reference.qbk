@@ -7,10 +7,10 @@
 ===============================================================================/]
 
 This quick reference section is provided for convenience. You can use
-this section as a sort of a "cheat-sheet" on the most commonly used Karma
+this section as sort of a "cheat-sheet" on the most commonly used Karma
 components. It is not intended to be complete, but should give you an
 easy way to recall a particular component without having to dig up on
-pages and pages of reference doumentation.
+pages upon pages of reference documentation.
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section Common Notation]
@@ -22,10 +22,10 @@ pages and pages of reference doumentation.
     [[`I`]              [The iterator type used for generation]]
     [[`Unused`]         [An `unused_type`]]
     [[`Context`]        [The enclosing rule's `Context` type]]
-    [[`attrib`]         [A attribute value]]
+    [[`attrib`]         [An attribute value]]
     [[`Attrib`]         [An attribute type]]
     [[`b`]              [A boolean expression]]
-    [[`B`]              [A type to be interpreted as in boolean expressions]]
+    [[`B`]              [A type to be interpreted in boolean expressions]]
     [[`fg`]             [A (lazy generator) function with signature `G(Unused, Context)`]]
     [[`fa`]             [A (semantic action) function with signature `void(Attrib&, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
@@ -34,7 +34,7 @@ pages and pages of reference doumentation.
     [[`outiter`]        [An output iterator to receive the generated output]]
     [[`Ch`]             [Character-class specific character type (See __char_class_types__)]]
     [[`ch, ch2`]        [Character-class specific character (See __char_class_types__)]]
-    [[`charset`]        [Character-set specifier string (example: "a-z0-9")]]
+    [[`charset`]        [Character-set specifier string (example: `"a-z0-9"`)]]
     [[`str`]            [Character-class specific string (See __char_class_types__)]]
     [[`Str`]            [Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
     [[`num`]            [Numeric literal, any integer or real number type]]
@@ -56,55 +56,55 @@ See here for more information about __karma_char__.
 
 [table 
     [[Expression]                   [Attribute]         [Description]]
-    [[[karma_char `ch`]]            [`Unused`]          [Generates `ch`]]
-    [[[karma_char `lit(ch)`]]       [`Unused`]          [Generates `ch`]]
+    [[[karma_char `ch`]]            [`Unused`]          [Generate `ch`]]
+    [[[karma_char `lit(ch)`]]       [`Unused`]          [Generate `ch`]]
 
-    [[[karma_char `char_`]]         [`Ch`]      [Generates character supplied as the attribute]]
-    [[[karma_char `char_(ch)`]]     [`Ch`]      [Generates `ch`, 
+    [[[karma_char `char_`]]         [`Ch`]      [Generate character supplied as the attribute]]
+    [[[karma_char `char_(ch)`]]     [`Ch`]      [Generate `ch`, 
                                                  if an attribute is supplied it must match]]
-    [[[karma_char `char_("c")`]]    [`Ch`]      [Generates a single char string literal, `c`, 
+    [[[karma_char `char_("c")`]]    [`Ch`]      [Generate a single char string literal, `c`, 
                                                  if an attribute is supplied it must match]]
-    [[[karma_char `char_(ch, ch2)`]][`Ch`]      [Generates a single char string literal, `c`, 
+    [[[karma_char `char_(ch, ch2)`]][`Ch`]      [Generate a single char string literal, `c`, 
                                                  if `c` belongs to the chracter range from
                                                  `ch` to `ch2`]]
-    [[[karma_char `char_(charset)`]][`Ch`]      [Generates a single char string literal, `c`, 
+    [[[karma_char `char_(charset)`]][`Ch`]      [Generate a single char string literal, `c`, 
                                                  if `c` belongs to the chracter set `charset`]]
 
-    [[[karma_char_class `alnum`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `alnum`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isalnum` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `alpha`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `alpha`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isalpha` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `blank`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `blank`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isblank` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `cntrl`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `cntrl`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::iscntrl` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `digit`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `digit`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isdigit` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `graph`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `graph`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isgraph` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `print`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `print`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isprint` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `punct`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `punct`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::ispunct` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `space`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `space`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isspace`, or
                                                  a single space character in the character set 
                                                  defined by `NS`]]
-    [[[karma_char_class `xdigit`]]  [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `xdigit`]]  [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isxdigit` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `lower`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `lower`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::islower` in 
                                                  the character set defined by `NS`]]
-    [[[karma_char_class `upper`]]   [`Ch`]      [Generates the character supplied as the attribute
+    [[[karma_char_class `upper`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isupper` in 
                                                  the character set defined by `NS`]]
 ]
@@ -117,10 +117,10 @@ See here for more information about [karma_string String Generators].
 
 [table 
     [[Expression]                   [Attribute] [Description]]
-    [[[karma_string `str`]]         [`Unused`]  [Generates `str`]]
-    [[[karma_string `lit(str)`]]    [`Unused`]  [Generates `str`]]
-    [[[karma_string `string`]]      [`Str`]     [Generates string supplied as the attribute]]
-    [[[karma_string `string(str)`]] [`Str`]     [Generates `str`, 
+    [[[karma_string `str`]]         [`Unused`]  [Generate `str`]]
+    [[[karma_string `lit(str)`]]    [`Unused`]  [Generate `str`]]
+    [[[karma_string `string`]]      [`Str`]     [Generate string supplied as the attribute]]
+    [[[karma_string `string(str)`]] [`Str`]     [Generate `str`, 
                                                  if an attribute is supplied it must match]]
 ]
 
@@ -132,8 +132,7 @@ See here for more information about __karma_numeric__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[[link spirit.karma.reference.numeric `lit(num)`]]
-                            [`Unused`]                  [Generates `num`]]
+    [[[real_number `lit(num)`]]         [`Unused`]      [Generate `num`]]
     [[[real_number `float_`]]           [`float`]       [Generate a real number from a `float`]]
     [[[real_number `float_(num)`]]      [`float`]       [Generate `num` as a real number from a `float`, 
                                                             if an attribute is supplied it must match]]
@@ -164,6 +163,7 @@ See here for more information about __karma_numeric__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
+    [[[signed_int `lit(num)`]]          [`Unused`]             [Generate `num`]]
     [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
     [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
                                                                 if an attribute is supplied it must match]]
@@ -174,7 +174,7 @@ See here for more information about __karma_numeric__.
     [[[signed_int `long_(num)`]]        [`long`]               [Generate `num` as long integer, 
                                                                 if an attribute is supplied it must match]]
     [[[signed_int `long_long`]]         [`long long`]          [Generate a long long]]
-    [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as an long long, 
+    [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as a long long, 
                                                                 if an attribute is supplied it must match]]
 
     [[[signed_int ``int_generator<
@@ -194,6 +194,7 @@ See here for more information about __karma_numeric__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
+    [[[signed_int `lit(num)`]]          [`Unused`]             [Generate `num`]]
     [[[unsigned_int `ushort_`]]         [`unsigned short`]     [Generate an unsigned short integer]]
     [[[unsigned_int `ushort_(num)`]]    [`unsigned short`]     [Generate `num` as an unsigned short integer, 
                                                                 if an attribute is supplied it must match]]
@@ -227,6 +228,7 @@ See here for more information about __karma_numeric__.
 
 [table 
     [[Expression]               [Attribute]     [Description]]
+    [[[boolean `lit(num)`]]     [`Unused`]      [Generate `num`]]
     [[[boolean `bool_`]]        [`bool`]        [Generate a boolean]]
     [[[boolean `bool_(b)`]]     [`bool`]        [Generate `b` as a boolean, 
                                                  if an attribute is supplied it must match]]
@@ -249,25 +251,25 @@ See here for more information about [karma_stream Stream Generators].
 
 [table 
     [[Expression]           [Attribute]     [Description]]
-    [[[karma_stream `stream`]]     [`hold_any`] [Generates narrow character (`char`) based output 
+    [[[karma_stream `stream`]]     [`hold_any`] [Generate narrow character (`char`) based output 
                                                  using the matching streaming `operator<<()`]]
-    [[[karma_stream `stream(s)`]]  [`Unused`]   [Generates narrow character (`char`) based output 
+    [[[karma_stream `stream(s)`]]  [`Unused`]   [Generate narrow character (`char`) based output 
                                                  from the immediate argument `s` using the matching 
                                                  streaming `operator<<()`]]
-    [[[karma_stream `wstream`]]    [`hold_any`] [Generates narrow character (`wchar_t`) based output 
+    [[[karma_stream `wstream`]]    [`hold_any`] [Generate narrow character (`wchar_t`) based output 
                                                  using the matching streaming `operator<<()`]]
-    [[[karma_stream `wstream(s)`]] [`Unused`]   [Generates wide character (`wchar_t`) based output 
+    [[[karma_stream `wstream(s)`]] [`Unused`]   [Generate wide character (`wchar_t`) based output 
                                                  from the immediate argument `s` using the matching 
                                                  streaming `operator<<()`]]
     [
 [[karma_stream ``stream_generator<
     Char
->()``]]                     [`hold_any`]    [Generates output based on the given character type 
+>()``]]                     [`hold_any`]    [Generate output based on the given character type 
                                              (`Char`) using the matching streaming `operator<<()`]]
     [
 [[karma_stream ``stream_generator<
     Char
->()(s)``]]                  [`Unused`]      [Generates output based on the given character type
+>()(s)``]]                  [`Unused`]      [Generate output based on the given character type
                                              `Char` from the immediate argument `s` using the 
                                              matching streaming `operator<<()`]]
 ]
@@ -280,16 +282,16 @@ See here for more information about __karma_binary__.
 
 [table 
     [[Expression]                          [Attribute]                 [Description]]
-    [[[karma_native_binary `byte_`]]       [8 bits native endian]      [Generates an 8 bit binary]]
-    [[[karma_native_binary `word`]]        [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
-    [[[karma_big_binary `big_word`]]       [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
-    [[[karma_little_binary `little_word`]] [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
-    [[[karma_native_binary `dword`]]       [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
-    [[[karma_big_binary `big_dword`]]      [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
-    [[[karma_little_binary `little_dword`]][32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
-    [[[karma_native_binary `qword`]]       [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
-    [[[karma_big_binary `big_qword`]]      [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
-    [[[karma_little_binary `little_qword`]][64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
+    [[[karma_native_binary `byte_`]]       [8 bits native endian]      [Generate an 8 bit binary]]
+    [[[karma_native_binary `word`]]        [16 bits native endian]     [Generate a 16 bit binary in native endian representation]]
+    [[[karma_big_binary `big_word`]]       [16 bits big endian]        [Generate a 16 bit binary in big endian representation]]
+    [[[karma_little_binary `little_word`]] [16 bits little endian]     [Generate a 16 bit binary in little endian representation]]
+    [[[karma_native_binary `dword`]]       [32 bits native endian]     [Generate a 32 bit binary in native endian representation]]
+    [[[karma_big_binary `big_dword`]]      [32 bits big endian]        [Generate a 32 bit binary in big endian representation]]
+    [[[karma_little_binary `little_dword`]][32 bits little endian]     [Generate a 32 bit binary in little endian representation]]
+    [[[karma_native_binary `qword`]]       [64 bits native endian]     [Generate a 64 bit binary in native endian representation]]
+    [[[karma_big_binary `big_qword`]]      [64 bits big endian]        [Generate a 64 bit binary in big endian representation]]
+    [[[karma_little_binary `little_qword`]][64 bits little endian]     [Generate a 64 bit binary in little endian representation]]
     [[`pad(num)`]                          [`Unused`]                  [Generate additional null bytes allowing to align generated 
                                                                         output with memory addresses divisible by `num`.]]
 ]
@@ -302,8 +304,8 @@ See here for more information about __karma_auxiliary__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[[karma_attr_cast `attr_cast<Exposed>(a)`]] [`Exposed`] [Invokes `a` while supplying an attribute of type `Exposed`.]]
-    [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
+    [[[karma_attr_cast `attr_cast<Exposed>(a)`]] [`Exposed`] [Invoke `a` while supplying an attribute of type `Exposed`.]]
+    [[__karma_eol__]        [`Unused`]                  [Generate the end of line (`\n`)]]
     [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
     [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
     [[[karma_lazy `lazy(fg)`]]
@@ -391,10 +393,10 @@ See here for more information about __karma_directive__.
     [[[karma_delimit `delimit`]`[a]`]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
     [[[karma_delimit `delimit`]`(d)[a]`]  [`A`]   [Use `d` as a delimiter for generating `a`]]
 
-    [[__karma_omit__`[a]`]  [`A`]               [Consumes the attribute type of `a` without generating anything]]
+    [[__karma_omit__`[a]`]  [`A`]               [Consume the attribute type of `a` without generating anything]]
 
-    [[__karma_buffer__`[a]`][`A`]               [Temporarily intercepts the output generated by `a`, 
-                                                 flushing it only after `a` succeeded.]]
+    [[__karma_buffer__`[a]`][`A`]               [Temporarily intercept the output generated by `a`, 
+                                                 flushing it only after `a` succeeded]]
 ]
 
 [endsect]
@@ -403,7 +405,7 @@ See here for more information about __karma_directive__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action, `fa` before invoking `g`.]]
+    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` before invoking `g`]]
 ]
 
 [endsect]
@@ -415,7 +417,7 @@ See here for more information about __karma_directive__.
 
 [heading Notation]
 
-The notation we will use will be of the form:
+The notation we use is of the form:
 
     a: A, b: B, ... --> composite-expression: composite-attribute
 
@@ -463,7 +465,7 @@ a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[[karma_kleene kleene (unary `*`)]]
+    [[[karma_kleene Kleene (unary `*`)]]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
     [[__karma_plus__]
@@ -474,7 +476,7 @@ a: Unused --> +a: Unused``]]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[[karma_repeat repetition]]
+    [[[karma_repeat Repetition]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
@@ -562,7 +564,7 @@ See here for more information about __karma_nonterminal__.
 [/////////////////////////////////////////////////////////////////////////////]
 [section Semantic Actions]
 
-Has the form:
+Semantic Actions may be attached to any generator as follows:
 
     g[f]
 
@@ -604,6 +606,10 @@ information from the `Attrib` and `Context` that are otherwise fiddly to extract
     [[`_a, _b... , _j`]         [The enclosing rule's local variables (`_a` refers to the first).]]
     [[`_pass`]                  [Assign `false` to `_pass` to force a generator failure.]]
 ]
+
+[important  All placeholders mentioned above are defined in the namespace 
+           `boost::spirit` and, for your convenience, are available in the 
+           namespace `boost::spirit::karma` as well.]
 
 For more information see __karma_actions__.
 

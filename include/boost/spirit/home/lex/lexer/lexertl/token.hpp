@@ -249,7 +249,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //        types supported by the generated variant type (this is being 
         //        used to identify whether the stored data item in a particular 
         //        token instance needs to be converted from the pair of 
-        //        iterators (see the first of the construct() functions below).
+        //        iterators (see the first of the assign_to_attribute_from_value 
+        //        specializations below).
         ///////////////////////////////////////////////////////////////////////
         template <typename IteratorPair, typename AttributeTypes>
         struct token_value_typesequence
@@ -402,8 +403,7 @@ namespace boost { namespace spirit { namespace traits
             // Interestingly enough we use the assign_to() framework defined in 
             // Spirit.Qi allowing to convert the pair of iterators to almost any 
             // required type (assign_to(), if available, uses the standard Spirit 
-            // parsers to do the conversion, and falls back to boost::lexical_cast
-            // otherwise).
+            // parsers to do the conversion).
                 spirit::traits::assign_to(ip.begin(), ip.end(), attr);
 
             //  If you get an error during the compilation of the following 

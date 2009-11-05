@@ -128,7 +128,7 @@ The library provides a couple of Standard IO __iomanip__ allowing to integrate
 __qi__ input parsing facilities with Standard input streams.
 These parser manipulators have two forms. The first form, `match`, works on
 the character level. The second `phrase_match` works on the phrase level
-and requires skip parser. Both versions can take in attributes by reference 
+and requires a skip parser. Both versions can take in attributes by reference 
 that will hold the parsed values on a successful parse.
 
 [heading Header]
@@ -143,7 +143,7 @@ For variadic attributes:
 
 The variadic attributes version of the API allows one or more
 attributes to be passed into the parse manipulators. The manipulators taking 
-two or more attributes are usable when the generator expression is a 
+two or more attributes are usable when the parser expression is a 
 __qi_sequence__ only. In this case each of the attributes passed have to 
 match the corresponding part of the sequence.
 

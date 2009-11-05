@@ -28,7 +28,7 @@
 // LONG_LONG_MIN and LONG_LONG_MAX macros in limits.h.  This
 // assumes that long long is 64 bits.
 
-BOOST_STATIC_ASSERT(sizeof(long long) == 8);
+BOOST_STATIC_ASSERT(sizeof(boost::long_long_type) == 8);
 
 #if !defined(LONG_LONG_MIN) && !defined(LONG_LONG_MAX)
 # define LONG_LONG_MAX 0x7fffffffffffffffLL

@@ -54,7 +54,8 @@ namespace boost { namespace spirit { namespace lex
 
         vector_type attr (BOOST_PP_ENUM_PARAMS(N, attr));
         typename Lexer::iterator_type iter = lex.begin(first, last);
-        return compile<qi::domain>(expr).parse(iter, lex.end(), unused, unused, attr);
+        return compile<qi::domain>(expr).parse(
+            iter, lex.end(), unused, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////

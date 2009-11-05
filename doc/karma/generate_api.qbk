@@ -114,7 +114,7 @@ corresponding argument.
 
 [table
     [[Parameter]                    [Description]]
-    [[`OutputIterator`]             [__outputiter__ pointing to the source to parse.]]
+    [[`OutputIterator`]             [__outputiter__ receiving the generated output.]]
     [[`Expr`]                       [An expression that can be converted to a Karma generator.]]
     [[`Delimiter`]                  [Generator used to delimit the output of the expression components.]]
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]

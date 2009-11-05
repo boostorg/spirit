@@ -28,18 +28,18 @@
         Numbers From a std::vector</a>
 </h4></div></div></div>
 <a name="spirit.karma.tutorials.num_list.using_the_list_operator"></a><h6>
-<a name="id715532"></a>
+<a name="id706642"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.using_the_list_operator">Using
           the List Operator</a>
         </h6>
 <p>
-          The C++ Standards library lacks an important feature, namely the support
+          The C++ Standard library lacks an important feature, namely the support
           for any formatted output of containers. Sure, it's fairly easy to write
           a custom routine to output a specific container, but doing so over and
           over again is tedious at best. In this section we will demonstrate some
           more of the capabilities of <span class="emphasis"><em>Spirit.Karma</em></span> for generating
           output from arbitrary STL containers. We will build on the example presented
-          in an earlier section (see: <a class="link" href="warming_up.html" title="Warming up">Warming
+          in an earlier section (see <a class="link" href="warming_up.html" title="Warming up">Warming
           Up</a>).
         </p>
 <p>
@@ -60,7 +60,7 @@
 <pre class="programlisting"><span class="identifier">double_</span> <span class="special">%</span> <span class="char">','</span>
 </pre>
 <p>
-          simplifying the overall code. The list operators attribute is compatible
+          simplifying the overall code. The list operator's attribute is compatible
           with any STL container as well. For a change we use a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code> instead of the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code> we used before. Additionally, the routine
           <code class="computeroutput"><span class="identifier">generate_numbers</span></code> takes
           the container as a template paramter, so it will now work with any STL
@@ -102,11 +102,11 @@
             <span class="special">%</span> <span class="char">','</span></code>)
             does not depend on the actual type of the passed container. The only
             precondition to be met here is that the elements stored in the container
-            have to be converible to <code class="computeroutput"><span class="keyword">double</span></code>.
+            have to be convertible to <code class="computeroutput"><span class="keyword">double</span></code>.
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data"></a><h6>
-<a name="id716051"></a>
+<a name="id707161"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data">Generate
           Output from Arbitrary Data</a>
         </h6>
@@ -115,12 +115,11 @@
           all types of STL containers and for arbitrary elements stored in them.
           In order to be usable the items stored in the container still need to be
           convertible to a <code class="computeroutput"><span class="keyword">double</span></code>. Fortunately
-          <span class="emphasis"><em>Spirit.Karma</em></span> exposes the capabilities to output arbitrary
-          data types while using the same format description expression. It implements
-          the <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
-          generators. These are applicable to any attribute type as long as a matching
-          standard streaming operator is defined. For instance for any attribute
-          type <code class="computeroutput"><span class="identifier">Attrib</span></code> a function:
+          <span class="emphasis"><em>Spirit.Karma</em></span> is capable to output arbitrary data types
+          while using the same format description expression. It implements the
+          <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
+          generators which are able to consume any attribute type as long as a matching
+          standard streaming operator is defined. I.e. for any attribute type <code class="computeroutput"><span class="identifier">Attrib</span></code> a function:
         </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;,</span> <span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 </pre>

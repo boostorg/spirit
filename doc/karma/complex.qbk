@@ -31,8 +31,8 @@ expressions (as delimited by `'|'`) succeeds. If no generator expression
 succeeds the whole alternative fails.
 
 If we left this formatting grammar as is our generator would always choose 
-the first alternative. We need to add some additional rules allowing to make 
-the first alternative failing. So, if the first fails the second alternative will 
+the first alternative. We need to add some additional rules allowing to make the
+first alternative fail. So, if the first alternative fails the second one will 
 be chosen instead. The decision about whether to choose the first alternative 
 has to be made at runtime as only then we actually know the value of the 
 imaginary part of the complex number. __karma__ provides us with with a 
@@ -51,8 +51,8 @@ for complex numbers with imaginary parts equal to zero.
 
 [import ../../example/karma/complex_number.cpp]
 
-Here goes the full example, this time with the proper semantic actions (The 
-full cpp file for this example can be found here: 
+Now on to the full example, this time with the proper semantic actions (the 
+complete cpp file for this example can be found here: 
 [@../../example/karma/complex_number.cpp complex_number.cpp]).
 
 We will use the `std::complex` type for this and all subsequent related 
@@ -73,13 +73,13 @@ generator with the data to be used. The semantic action above assigns the value
 to be generated (`n`) to the generator (actually, the attribute of `double_`). 
 `_1` is a Phoenix placeholder referring to the attribute of the generator the 
 semantic action is attached to. If you need more information about semantic 
-actions, you may want to read about those in this section: __karma_actions__.
+actions, you may want to read about them in this section: __karma_actions__.
 
 These semantic actions are easy to understand but have the unexpected side 
 effect of being slightly less efficient than it could be. In addition they tend
 to make the formatting grammar less readable. We will see in one of the next 
-sections how it is possible to use other, builtin features of __karma__ to get 
-rid of the semantic actions alltogether. When writing your grammars in Spirit
+sections how it is possible to use other, built-in features of __karma__ to get 
+rid of the semantic actions altogether. When writing your grammars in Spirit
 you should always try to avoid semantic actions which is often possible. 
 Semantic actions are really powerful tools but grammars tend to be more 
 efficient and readable without them.
@@ -100,7 +100,7 @@ file for this example can be found here:
 
 [tutorial_karma_complex_number_easier]
 
-Let's try to cover some basic library features first.
+Let's cover some basic library features first.
 
 [heading Making Numeric Generators Fail]
 
@@ -127,9 +127,9 @@ This feature, namely to succeed generating only if the attribute matches the
 immediate value, enables numeric generators to be used to dynamically control 
 the way output is generated.
 
-[note  There are more generators exposing the feature to fail if their 
-       immediate value is not equal to the supplied attribute. Here are some:
-       all __karma_char__, all [karma_string String Generators]. Generally,
+[note  Quite a few generators will fail if their immediate value is not equal
+       to the supplied attribute. Among those are all __karma_char__ and
+       all [karma_string String Generators]. Generally,
        all generators having a sibling created by a variant of `lit()` belong
        into this category.]
 
@@ -149,9 +149,9 @@ associated generator fails.
       available. This makes them behave differently from predicates in __qi__,
       where they do not expose any attribute. This is because predicates
       allow to make decisions based on data available only at runtime. While
-      in __qi__ during parsing the decision is made based on the look ahead 
-      input, in __karma__ the criteria has to be supplied by the user. The 
-      simplest way to do this is by providing an attribute.]
+      in __qi__ during parsing the decision is made based on looking ahead 
+      a few more input tokens, in __karma__ the criteria has to be supplied
+      by the user. The simplest way to do this is by providing an attribute.]
 
 As an example, the following generator succeeds generating
 

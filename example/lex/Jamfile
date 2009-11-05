@@ -21,4 +21,5 @@ exe word_count_lexer        : word_count_lexer.cpp ;
 exe word_count_functor_flex : word_count_functor_flex.cpp ;
 exe strip_comments          : strip_comments.cpp ;
 exe strip_comments_lexer    : strip_comments_lexer.cpp ;
+exe custom_token_attribute  : custom_token_attribute.cpp ;
 

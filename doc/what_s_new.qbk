@@ -89,8 +89,8 @@ backwards compatibility for existing applications.
   `double_()` et.al.: all of these generators now always expose an attribute. 
   If they do not have an associate attribute, they generate their immediate 
   literal. If they have an associated attribute, the generators first test if 
-  the attribute value is equal to the immediate literal. They fail while not 
-  generating anything if those are not equal. Otherwise they generate their 
+  the attribute value is equal to the immediate literal. They fail and do not 
+  generate anything if those are not equal. Otherwise they generate their 
   immediate literal. For more information see for instance [signed_int `int_`].
 * `karma::lit()` can now be used to generate integer and floating point numbers
 * `qi::rule` and `karma::rule` now can be directly initialized using their copy

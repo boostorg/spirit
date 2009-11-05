@@ -10,7 +10,7 @@
 
 In the previous section we mentioned a very important difference between parsers
 and generators. While parsers may be used without 'producing' any data, 
-generators alsways need data to generate the output from. We mentioned one way 
+generators always need data to generate the output from. We mentioned one way 
 of passing data to the generator by supplying it as a parameter to one of the
 main API functions (for instance `generate()` or `generate_delimited()`). 
 But sometimes this is not possible or not desireable. 
@@ -29,8 +29,8 @@ The expression above links `F` to the generator, `G`.
 Semantic actions in __qi__ are invoked after a parser successfully 
 matches its input and the matched value is passed into the
 semantic action. In __karma__ the opposite happens. Semantic actions are called
-before its associated generator is invoked. They may provide the data to be 
-generated to the generator.
+before its associated generator is invoked. They may provide the data required
+by the generator.
 
 The function/function object signature depends on the type of the generator to
 which it is attached. The generator `double_` expects the number to generate. 
@@ -43,7 +43,7 @@ where the function is expected to initialize the parameter `n` with the value
 to generate.
 
 [important  Generally, and more formally, the semantic action `F` attached to 
-            a generator `G` needs to take a reference to the generators 
+            a generator `G` needs to take a reference to the generator's 
             attribute type as its first parameter. For more information about 
             generator attributes please see the section __karma_attribute__.
 
@@ -57,7 +57,7 @@ reference to a boolean 'pass' parameter). We don't need these, for now, but
 we'll see more on these other arguments later. __karma__ allows us to bind a 
 single argument function, like above. The other arguments are simply ignored.
 
-Overall, the possible signatures for semantic actions are:
+To sum up, the possible signatures for semantic actions are:
 
     void f(Attrib&);
     void f(Attrib&, Context&);
@@ -67,8 +67,8 @@ Overall, the possible signatures for semantic actions are:
 
 In the following example we present various ways to attach semantic actions:
 
-* Using plain function pointer
-* Using simple function object
+* Using a plain function pointer
+* Using a simple function object
 * Using __boost_bind__ with a plain function
 * Using __boost_bind__ with a member function
 * Using __boost_lambda__
@@ -131,5 +131,25 @@ Spirit. If your requirements go beyond simple to moderate generation, I suggest
 you use this library. Examples presented henceforth shall be using the Phoenix 
 library exclusively.
 
+[important There are different ways to write semantic actions for __karma__: 
+           using plain functions, __boost_bind__, __boost_lambda__, or 
+           __phoenix__. The latter three allow you to use special placeholders
+           to control parameter placement (`_1`, `_2`, etc.). Each of those
+           libraries has it's own implementation of the placeholders, all
+           in different namespaces. You have to make sure not to mix 
+           placeholders with a library they don't belong to and not to 
+           use different libraries while writing a semantic action.
+
+           Generally, for __boost_bind__, use `::_1`, `::_2`, etc. (yes, these
+           placeholders are defined in the globl namespace). 
+
+           For __boost_lambda__ use the placeholders defined in the namespace 
+           `boost::lambda`. 
+
+          For semantic actions written using __phoenix__ use the placeholders 
+          defined in the namespace `boost::spirit`. Please note that all 
+          existing placeholders for your convenience are also available from 
+          the namespace `boost::spirit::karma`.]
 
 [endsect] [/ Semantic Actions]
+

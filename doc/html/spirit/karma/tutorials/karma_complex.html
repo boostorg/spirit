@@ -56,10 +56,10 @@
 <p>
           If we left this formatting grammar as is our generator would always choose
           the first alternative. We need to add some additional rules allowing to
-          make the first alternative failing. So, if the first fails the second alternative
-          will be chosen instead. The decision about whether to choose the first
-          alternative has to be made at runtime as only then we actually know the
-          value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
+          make the first alternative fail. So, if the first alternative fails the
+          second one will be chosen instead. The decision about whether to choose
+          the first alternative has to be made at runtime as only then we actually
+          know the value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
           provides us with with a primitive generator <code class="computeroutput"><span class="identifier">eps</span><span class="special">()</span></code>, which is usable as a semantic predicate.
           It has the property to 'succeed' generating only if its argument is true
           (while it never generates any output on its own).
@@ -75,8 +75,8 @@
           to be chosen for complex numbers with imaginary parts equal to zero.
         </p>
 <p>
-          Here goes the full example, this time with the proper semantic actions
-          (The full cpp file for this example can be found here: <a href="../../../../../example/karma/complex_number.cpp" target="_top">complex_number.cpp</a>).
+          Now on to the full example, this time with the proper semantic actions
+          (the complete cpp file for this example can be found here: <a href="../../../../../example/karma/complex_number.cpp" target="_top">complex_number.cpp</a>).
         </p>
 <p>
           We will use the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code> type for this and all subsequent
@@ -129,15 +129,15 @@
           <code class="computeroutput"><span class="identifier">_1</span></code> is a Phoenix placeholder
           referring to the attribute of the generator the semantic action is attached
           to. If you need more information about semantic actions, you may want to
-          read about those in this section: <a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic
+          read about them in this section: <a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic
           Actions</a>.
         </p>
 <p>
           These semantic actions are easy to understand but have the unexpected side
           effect of being slightly less efficient than it could be. In addition they
           tend to make the formatting grammar less readable. We will see in one of
-          the next sections how it is possible to use other, builtin features of
-          <span class="emphasis"><em>Spirit.Karma</em></span> to get rid of the semantic actions alltogether.
+          the next sections how it is possible to use other, built-in features of
+          <span class="emphasis"><em>Spirit.Karma</em></span> to get rid of the semantic actions altogether.
           When writing your grammars in Spirit you should always try to avoid semantic
           actions which is often possible. Semantic actions are really powerful tools
           but grammars tend to be more efficient and readable without them.

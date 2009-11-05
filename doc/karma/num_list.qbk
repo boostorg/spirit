@@ -11,12 +11,12 @@
 
 [heading Using the List Operator]
 
-The C++ Standards library lacks an important feature, namely the support for
+The C++ Standard library lacks an important feature, namely the support for
 any formatted output of containers. Sure, it's fairly easy to write a custom 
 routine to output a specific container, but doing so over and over again is 
 tedious at best. In this section we will demonstrate some more of the 
 capabilities of __karma__ for generating output from arbitrary STL containers. 
-We will build on the example presented in an earlier section (see: 
+We will build on the example presented in an earlier section (see 
 [link spirit.karma.tutorials.warming_up Warming Up]).
 
 The full source code of the example shown in this section can be found here: 
@@ -34,7 +34,7 @@ is semantically equivalent to the generator expression
 
     double_ % ','
 
-simplifying the overall code. The list operators attribute is compatible with 
+simplifying the overall code. The list operator's attribute is compatible with 
 any STL container as well. For a change we use a `std::vector<double>`
 instead of the `std::list<double>` we used before. Additionally, the routine
 `generate_numbers` takes the container as a template paramter, so it will now 
@@ -45,7 +45,7 @@ work with any STL container holding `double` numbers.
 [note Despite the container being a template parameter, the __karma__ 
       formatting expression (`double_ % ','`) does not depend on the actual 
       type of the passed container. The only precondition to be met here is 
-      that the elements stored in the container have to be converible to 
+      that the elements stored in the container have to be convertible to 
       `double`.]
 
 [heading Generate Output from Arbitrary Data]
@@ -53,10 +53,10 @@ work with any STL container holding `double` numbers.
 The output routine developed above is still not generically usable for all types 
 of STL containers and for arbitrary elements stored in them. In order to be 
 usable the items stored in the container still need to be convertible to a 
-`double`. Fortunately __karma__ exposes the capabilities to output arbitrary 
+`double`. Fortunately __karma__ is capable to output arbitrary 
 data types while using the same format description expression. It implements 
-the [karma_stream `stream`] generators. These are applicable to any attribute
-type as long as a matching standard streaming operator is defined. For instance 
+the [karma_stream `stream`] generators which are able to consume any attribute
+type as long as a matching standard streaming operator is defined. I.e. 
 for any attribute type `Attrib` a function:
 
     std::ostream& operator<< (std::ostream&, Attrib const&);

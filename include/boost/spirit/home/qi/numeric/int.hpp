@@ -152,7 +152,8 @@ namespace boost { namespace spirit { namespace qi
 #ifdef BOOST_HAS_LONG_LONG
     //[primitive_parsers_long_long_
     template <typename Modifiers>
-    struct make_primitive<tag::long_long, Modifiers> : make_int<long long> {};
+    struct make_primitive<tag::long_long, Modifiers> 
+      : make_int<boost::long_long_type> {};
     //]
 #endif
 

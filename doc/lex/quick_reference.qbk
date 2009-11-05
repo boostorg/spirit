@@ -108,7 +108,7 @@ information from the `Context` that are otherwise difficult to extract.
 
 [tip  All of the placeholders in the list above (except `_eoi`) can be changed 
       from the inside of the semantic action allowing to modify the lexer 
-      behavior.]
+      behavior. They are defined in the namespace `boost::spirit::lex`.]
 
 For more information see __lex_actions__.
 

@@ -33,12 +33,14 @@
 
 [section:quick_reference Quick Reference]
 [include        lex/quick_reference.qbk]
+[include        lex/lexer.qbk]
 [endsect]
 
 [section:reference Reference]
 [import ../example/lex/reference.cpp]
 [include            lex/concepts.qbk]
 [include            lex/basics.qbk]
+[include            lex/lexer_api.qbk]
 [include            lex/token_primitives.qbk]
 [/ include            lex/token.qbk]
 [/ include            lex/tokendef.qbk]

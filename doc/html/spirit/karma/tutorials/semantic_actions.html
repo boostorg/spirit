@@ -29,7 +29,7 @@
 <p>
           In the previous section we mentioned a very important difference between
           parsers and generators. While parsers may be used without 'producing' any
-          data, generators alsways need data to generate the output from. We mentioned
+          data, generators always need data to generate the output from. We mentioned
           one way of passing data to the generator by supplying it as a parameter
           to one of the main API functions (for instance <code class="computeroutput"><span class="identifier">generate</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">generate_delimited</span><span class="special">()</span></code>). But sometimes this is not possible
           or not desireable.
@@ -55,7 +55,7 @@
           parser successfully matches its input and the matched value is passed into
           the semantic action. In <span class="emphasis"><em>Spirit.Karma</em></span> the opposite
           happens. Semantic actions are called before its associated generator is
-          invoked. They may provide the data to be generated to the generator.
+          invoked. They may provide the data required by the generator.
         </p>
 <p>
           The function/function object signature depends on the type of the generator
@@ -79,7 +79,7 @@
 <p>
             Generally, and more formally, the semantic action <code class="computeroutput"><span class="identifier">F</span></code>
             attached to a generator <code class="computeroutput"><span class="identifier">G</span></code>
-            needs to take a reference to the generators attribute type as its first
+            needs to take a reference to the generator's attribute type as its first
             parameter. For more information about generator attributes please see
             the section Generator Attributes.
           </p>
@@ -98,14 +98,14 @@
           are simply ignored.
         </p>
 <p>
-          Overall, the possible signatures for semantic actions are:
+          To sum up, the possible signatures for semantic actions are:
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;);</span>
 <span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;);</span>
 <span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;);</span>
 </pre>
 <a name="spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions"></a><h6>
-<a name="id709869"></a>
+<a name="id702544"></a>
           <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions">Examples
           of Semantic Actions</a>
         </h6>
@@ -114,10 +114,10 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Using plain function pointer
+            Using a plain function pointer
           </li>
 <li class="listitem">
-            Using simple function object
+            Using a simple function object
           </li>
 <li class="listitem">
             Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
@@ -281,7 +281,7 @@
           The examples above can be found here: <a href="../../../../../example/karma/actions.cpp" target="_top">actions.cpp</a>
         </p>
 <a name="spirit.karma.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id711378"></a>
+<a name="id703486"></a>
           <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>
@@ -293,6 +293,42 @@
           moderate generation, I suggest you use this library. Examples presented
           henceforth shall be using the Phoenix library exclusively.
         </p>
+<div class="important" title="Important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            There are different ways to write semantic actions for <span class="emphasis"><em>Spirit.Karma</em></span>:
+            using plain functions, <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
+            <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>, or
+            <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>. The latter
+            three allow you to use special placeholders to control parameter placement
+            (<code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>,
+            etc.). Each of those libraries has it's own implementation of the placeholders,
+            all in different namespaces. You have to make sure not to mix placeholders
+            with a library they don't belong to and not to use different libraries
+            while writing a semantic action.
+          </p>
+<p>
+            Generally, for <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
+            use <code class="computeroutput"><span class="special">::</span><span class="identifier">_1</span></code>,
+            <code class="computeroutput"><span class="special">::</span><span class="identifier">_2</span></code>,
+            etc. (yes, these placeholders are defined in the globl namespace).
+          </p>
+<p>
+            For <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a> use
+            the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lambda</span></code>.
+          </p>
+<p>
+            For semantic actions written using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            use the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>.
+            Please note that all existing placeholders for your convenience are also
+            available from the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span></code>.
+          </p>
+</td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
