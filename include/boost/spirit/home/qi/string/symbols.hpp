@@ -186,14 +186,35 @@ namespace boost { namespace spirit { namespace qi
             return *lookup->add(traits::get_begin<Char>(str)
                 , traits::get_end<Char>(str), T());
         }
-        
+
         template <typename Str>
         value_type* find(Str const& str)
         {
-            return lookup->find(traits::get_begin<Char>(str)
-                , traits::get_end<Char>(str), T());
+            return find_impl(traits::get_begin<Char>(str)
+                , traits::get_end<Char>(str));
         }
 
+        template <typename Str>
+        value_type const* find(Str const& str) const
+        {
+            return find_impl(traits::get_begin<Char>(str)
+                , traits::get_end<Char>(str));
+        }
+
+private:
+        template <typename Iterator>
+        value_type* find_impl(Iterator begin, Iterator end)
+        {
+            return lookup->find(begin, end, Filter());
+        }
+
+        template <typename Iterator>
+        value_type const* find_impl(Iterator begin, Iterator end) const
+        {
+            return lookup->find(begin, end, Filter());
+        }
+
+public:
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
