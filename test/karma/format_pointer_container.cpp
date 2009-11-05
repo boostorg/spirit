@@ -30,7 +30,7 @@ Stream& operator<<(Stream& out, const foo& f)
 {
     out << f.str;
     return out;
-};
+}
 
 int main()
 {
