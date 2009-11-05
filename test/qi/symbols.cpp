@@ -276,6 +276,34 @@ main()
         BOOST_TEST(i == 2);
         BOOST_TEST(!test("c", r(phx::ref(sym))));
     }
+    
+    { // find
+    
+        symbols<char, int> sym;
+        sym.add("a", 1)("b", 2);
+        
+        BOOST_TEST(!sym.find("c"));
+
+        BOOST_TEST(sym.find("a") && *sym.find("a") == 1);
+        BOOST_TEST(sym.find("b") && *sym.find("b") == 2);
+
+        BOOST_TEST(sym.at("a") == 1);
+        BOOST_TEST(sym.at("b") == 2);
+        BOOST_TEST(sym.at("c") == 0);
+
+        BOOST_TEST(sym.find("a") && *sym.find("a") == 1);
+        BOOST_TEST(sym.find("b") && *sym.find("b") == 2);
+        BOOST_TEST(sym.find("c") && *sym.find("c") == 0);
+        
+        symbols<char, int> const_sym(sym);
+
+        BOOST_TEST(const_sym.find("a") && *const_sym.find("a") == 1);
+        BOOST_TEST(const_sym.find("b") && *const_sym.find("b") == 2);
+        BOOST_TEST(const_sym.find("c") && *const_sym.find("c") == 0);
+        BOOST_TEST(!const_sym.find("d"));
+        
+        
+    }
 
     return boost::report_errors();
 }
