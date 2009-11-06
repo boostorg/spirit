@@ -101,63 +101,19 @@ namespace boost { namespace spirit { namespace karma
         alternative(Elements const& elements)
           : elements(elements) {}
 
-        // this is the implementation for non-optional and non-empty optional
-        // attributes 
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        bool generate_dispatch(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Attribute const& attr, mpl::true_) const
-        {
-            typedef typename 
-                traits::extract_from_attribute<Attribute>::type attr_type;
-            typedef detail::alternative_generate_functor<
-                OutputIterator, Context, Delimiter
-              , typename remove_const<
-                    typename remove_reference<attr_type>::type>::type
-            > functor;
-
-            // f return true if *any* of the parser succeeds
-            functor f (sink, ctx, d, traits::extract_from(attr, ctx));
-            return fusion::any(elements, f);
-        }
-
-        // this is the implementation for empty optional attributes, the empty 
-        // optional is passed through to the embedded generators
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Optional>
-        bool generate_optional(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Optional const& attr) const
-        {
-            typedef detail::alternative_generate_functor<
-                OutputIterator, Context, Delimiter, Optional
-            > functor;
-
-            // f return true if *any* of the parser succeeds
-            functor f (sink, ctx, d, attr);
-            return fusion::any(elements, f);
-        }
-
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        bool generate_dispatch(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Attribute const& attr, mpl::false_) const
-        {
-            if (!traits::has_optional_value(attr))
-                return generate_optional(sink, ctx, d, attr);
-            return generate_dispatch(sink, ctx, d, attr, mpl::true_());
-        }
-
         template <
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            return generate_dispatch(sink, ctx, d, attr
-              , traits::not_is_optional<Attribute>());
+            typedef detail::alternative_generate_functor<
+                OutputIterator, Context, Delimiter, Attribute
+            > functor;
+
+            // f return true if *any* of the parser succeeds
+            functor f (sink, ctx, d, attr);
+            return fusion::any(elements, f);
         }
 
         template <typename Context>

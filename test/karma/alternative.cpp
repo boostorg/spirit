@@ -223,6 +223,18 @@ main()
         BOOST_TEST(test(">1,2,3,4", '>' << r % ',' | karma::eps, v));
     }
 
+    {
+        typedef spirit_test::output_iterator<char>::type outiter_type;
+        namespace karma = boost::spirit::karma;
+
+        karma::rule<outiter_type, boost::optional<int>()> r = int_;
+        boost::optional<int> o;
+        BOOST_TEST(test("error", r | "error", o));
+
+        o = 10;
+        BOOST_TEST(test("10", r | "error", o));
+    }
+
     return boost::report_errors();
 }
 
