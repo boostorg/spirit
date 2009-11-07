@@ -181,7 +181,7 @@ For any UnaryGenerator, `G`, the following invariant always holds:
 
 The following generators conform to this model: 
 
-* [karma_kleene Kleene Star (unary `*`)], 
+* [karma_kleene Kleene Star (unary `*`)] operator, 
 * __karma_plus__ operator,
 * __karma_optional__ operator,
 * __karma_and_predicate__ and __karma_not_predicate__ operators,
@@ -353,7 +353,7 @@ e.g.:
 The `boost::spirit::karma::_val` placeholder can be used in __phoenix__
 semantic actions anywhere in the Nonterminal's definition. This
 __phoenix__ placeholder refers to the Nonterminal's (consumed)
-attribute. The `_val` placeholder acts like a immutable reference to the
+attribute. The `_val` placeholder acts like an immutable reference to the
 Nonterminal's attribute.
 
 [heading `_r1`...`r10`]
@@ -391,7 +391,7 @@ which correspond to the Nonterminal's local variables `T0` ... `T9`.
 [variablelist Notation
     [[`x`]                          [A Nonterminal]]
     [[`X`]                          [A Nonterminal type]]
-    [[`arg1`, `arg2`, ... `argN`]   [__karma_lazy_arguments__ that evaluate to each of 
+    [[`arg1`, `arg2`, ..., `argN`]  [__karma_lazy_arguments__ that evaluate to each of 
                                     the Nonterminal's inherited attributes.]]
 ]
 

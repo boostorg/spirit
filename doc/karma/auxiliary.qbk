@@ -9,7 +9,7 @@
 [section Auxiliary]
 
 This module includes different auxiliary generators not fitting into any of the 
-other categories. It includes the `attr_cast`, `eol` and `eps`, `lazy` 
+other categories. It includes the `attr_cast`, `eol`, `eps`, and `lazy` 
 generators.
 
 [heading Module Header]

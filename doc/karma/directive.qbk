@@ -8,7 +8,7 @@
 
 [section:directive Directive]
 
-This module includes different generator directives. It includes alignement 
+This module includes different generator directives. It includes alignment 
 directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
 (`repeat[]`), directives controlling automatic delimiting (`verbatim[]` and 
 `delimit[]`), controlling case sensitivity (`upper[]` and `lower[]`), field
@@ -609,7 +609,7 @@ __boost_proto__ expression into the corresponding parser expressions).
 ]
 
 [note  If both directives are 'active' with regard to a generator, the  
-       innermost of those directives takes precendence. For instance:
+       innermost of those directives takes precedence. For instance:
        ``
             generate(sink, ascii::lower['A' << ascii::upper['b']])
        ``
@@ -661,7 +661,7 @@ Basic usage of the `upper` and `lower` generator directives:
 [endsect] [/ upper/lower]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:maxwidth Controlling the Maximum Field Wield (`maxwidth[]`)]
+[section:maxwidth Controlling the Maximum Field Width (`maxwidth[]`)]
 
 [heading Description]
 
@@ -715,7 +715,7 @@ defined in __unary_generator_concept__.
                              underlying output stream reports an error).]]
 ]
 
-[note   The `maxwidth[]` generator directive does not pads the generated output
+[note   The `maxwidth[]` generator directive does not pad the generated output
         to fill the specified column width. If the emitted output is shorter 
         than the specified (or implied) column width, the generated output will
         be more narrow than the column width.
@@ -837,7 +837,8 @@ a: Unused --> buffer[a]: Unused``]]
 
 [:The overall complexity of the buffering generator directive is defined by the 
   complexity of its embedded generator. The complexity of the buffering 
-  directive generator itself is O(1).]
+  directive generator itself is O(N), where N is the number of characters 
+  buffered.]
 
 [heading Example]
 

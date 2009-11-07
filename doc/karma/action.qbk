@@ -30,7 +30,7 @@ Also, see __include_structure__.
 [variablelist Notation
     [[`a`, `g`][Instances of a generator, `G`]]
     [[`A`]     [Attribute type exposed by a generator, `a`]]
-    [[`fa`]    [A (semantic action) function with signature `void(Attrib&, Context, bool&)`.
+    [[`fa`]    [A (semantic action) function with signature `void(Attrib&, Context&, bool&)`.
                The third parameter is a boolean flag that can be set to false to
                force the generator to fail. Both `Context` and the boolean flag are
                optional. For more information see below.]]
@@ -67,8 +67,8 @@ output from by assigning it to the first parameter, `attr`. Here `Attrib` is
 the attribute type of the generator the semantic action is attached to. 
 
 The type `Context` is the type of the generator execution context. This type is 
-unspecified and depends on the context the generator is invoked in. The value, 
-`context` used by semantic actions written using __phoenix__ to access various 
+unspecified and depends on the context the generator is invoked in. The value 
+`context` is used by semantic actions written using __phoenix__ to access various 
 context dependent attributes and values. For more information about __phoenix__ 
 placeholder expressions usable in semantic actions see __karma_nonterminal_concept__.
 

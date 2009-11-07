@@ -44,20 +44,20 @@
             information about the interface a user defined token type has to expose
             please look at the Token Class reference. The library provides a default
             token type based on the <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
-            library which should be sufficient in most cases: the <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> type. This section focusses on
+            library which should be sufficient in most cases: the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> type. This section focusses on
             the description of general features a token class may implement and how
             this integrates with the other parts of the <span class="emphasis"><em>Spirit.Lex</em></span>
             library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id853565"></a>
+<a name="id920179"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
 <p>
             It is very important to understand the difference between a token definition
-            (represented by the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> template) and a token itself
-            (for instance represented by the <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> template).
+            (represented by the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> template) and a token itself
+            (for instance represented by the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> template).
           </p>
 <p>
             The token definition is used to describe the main features of a particular
@@ -107,7 +107,7 @@
             The token value and the lexer state the token has been recognized in
             may be omitted for optimization reasons, thus avoiding the need for the
             token to carry more data than actually required. This configuration can
-            be achieved by supplying appropriate template parameters for the <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code>
+            be achieved by supplying appropriate template parameters for the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code>
             template while defining the token type.
           </p>
 <p>
@@ -139,7 +139,7 @@
             </p></td></tr>
 </table></div>
 <p>
-            Here is the template prototype of the <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> template:
+            Here is the template prototype of the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> template:
           </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Iterator</span> <span class="special">=</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> 
@@ -184,12 +184,12 @@
             time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id854070"></a>
+<a name="id920713"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
 <p>
-            The token definitions (represented by the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> template) are normally used as
+            The token definitions (represented by the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> template) are normally used as
             part of the definition of the lexical analyzer. At the same time a token
             definition instance may be used as a parser component in <span class="emphasis"><em>Spirit.Qi</em></span>.
           </p>
@@ -249,16 +249,16 @@
             </p>
 <p>
               But as soon as you specify at least one token value type while defining
-              the token type you'll have to list all value types used for <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
+              the token type you'll have to list all value types used for <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
               declarations in the token definition class, otherwise compilation errors
               will occur.
             </p>
 </td></tr>
 </table></div>
-<a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_"></a><h6>
-<a name="id854316"></a>
-            <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_">Examples
-            of using <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code></a>
+<a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lex__phrase__phrase_role__special______phrase__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_"></a><h6>
+<a name="id920973"></a>
+            <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lex__phrase__phrase_role__special______phrase__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_">Examples
+            of using <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code></a>
           </h6>
 <p>
             Let's start with some examples. We refer to one of the <span class="emphasis"><em>Spirit.Lex</em></span>
@@ -306,7 +306,7 @@
 <p>
             As the parsers generated by <span class="emphasis"><em>Spirit.Qi</em></span> are fully
             attributed, any <span class="emphasis"><em>Spirit.Qi</em></span> parser component needs
-            to expose a certain type as its parser attribute. Naturally, the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
+            to expose a certain type as its parser attribute. Naturally, the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
             exposes the token value type as its parser attribute, enabling a smooth
             integration with <span class="emphasis"><em>Spirit.Qi</em></span>.
           </p>

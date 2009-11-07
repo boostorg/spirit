@@ -64,11 +64,11 @@ See here for more information about __karma_char__.
                                                  if an attribute is supplied it must match]]
     [[[karma_char `char_("c")`]]    [`Ch`]      [Generate a single char string literal, `c`, 
                                                  if an attribute is supplied it must match]]
-    [[[karma_char `char_(ch, ch2)`]][`Ch`]      [Generate a single char string literal, `c`, 
-                                                 if `c` belongs to the chracter range from
+    [[[karma_char `char_(ch, ch2)`]][`Ch`]      [Generate the character supplied as the attribute, 
+                                                 if it belongs to the character range from
                                                  `ch` to `ch2`]]
-    [[[karma_char `char_(charset)`]][`Ch`]      [Generate a single char string literal, `c`, 
-                                                 if `c` belongs to the chracter set `charset`]]
+    [[[karma_char `char_(charset)`]][`Ch`]      [Generate the character supplied as the attribute, 
+                                                 if it belongs to the character set `charset`]]
 
     [[[karma_char_class `alnum`]]   [`Ch`]      [Generate the character supplied as the attribute
                                                  if it satisfies the concept of `std::isalnum` in 
@@ -194,7 +194,7 @@ See here for more information about __karma_numeric__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[[signed_int `lit(num)`]]          [`Unused`]             [Generate `num`]]
+    [[[unsigned_int `lit(num)`]]        [`Unused`]             [Generate `num`]]
     [[[unsigned_int `ushort_`]]         [`unsigned short`]     [Generate an unsigned short integer]]
     [[[unsigned_int `ushort_(num)`]]    [`unsigned short`]     [Generate `num` as an unsigned short integer, 
                                                                 if an attribute is supplied it must match]]
@@ -256,7 +256,7 @@ See here for more information about [karma_stream Stream Generators].
     [[[karma_stream `stream(s)`]]  [`Unused`]   [Generate narrow character (`char`) based output 
                                                  from the immediate argument `s` using the matching 
                                                  streaming `operator<<()`]]
-    [[[karma_stream `wstream`]]    [`hold_any`] [Generate narrow character (`wchar_t`) based output 
+    [[[karma_stream `wstream`]]    [`hold_any`] [Generate wide character (`wchar_t`) based output 
                                                  using the matching streaming `operator<<()`]]
     [[[karma_stream `wstream(s)`]] [`Unused`]   [Generate wide character (`wchar_t`) based output 
                                                  from the immediate argument `s` using the matching 
@@ -506,10 +506,10 @@ See here for more information about __karma_nonterminal__.
 ]
 
 [variablelist Terminology
-    [[Signature]                [`RT(Arg1, Arg2 ... ,ArgN)`. The signature specifies
+    [[Signature]                [`RT(Arg1, Arg2, ... ,ArgN)`. The signature specifies
                                 the synthesized (return value) and inherited (arguments)
                                 attributes.]]
-    [[Locals]                   [`locals<L1, L2 ..., LN>`. The local variables.]]
+    [[Locals]                   [`locals<L1, L2, ..., LN>`. The local variables.]]
     [[Delimiter]                [The delimit-generator type]]
 ]
 
@@ -526,11 +526,11 @@ See here for more information about __karma_nonterminal__.
                                                 its name, useful for debugging and error handling.]]
     [[`rule<OutputIterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
-    [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
-                                                holds a reference to `r`. Reference semantics.]]
+    [[`r.alias()`]                              [Return an alias of `r`. The alias is a generator that
+                                                 holds a reference to `r`. Reference semantics.]]
     [[`r.copy()`]                               [Get a copy of `r`.]]
-    [[`r.name(name)`]                           [Naming a rule]]
-    [[`r.name()`]                               [Getting the name of a rule]]
+    [[`r.name(name)`]                           [Set the name of a rule]]
+    [[`r.name()`]                               [Get the name of a rule]]
     [[`r = g;`]                                 [Rule definition]]
     [[`r %= g;`]                                [Auto-rule definition. The attribute of `g` should be
                                                 compatible with the synthesized attribute of `r`. When `g`
@@ -554,9 +554,9 @@ See here for more information about __karma_nonterminal__.
 ``
     ]                                           [Grammar definition. `name` is an optional string that gives the
                                                 grammar its name, useful for debugging.]]
-    [[my_grammar<OutputIterator> g]             [Instantiating a grammar]]
-    [[`g.name(name)`]                           [Naming a grammar]]
-    [[`g.name()`]                               [Getting the name of a grammar]]
+    [[my_grammar<OutputIterator> g]             [Instantiate a grammar]]
+    [[`g.name(name)`]                           [Set the name of a grammar]]
+    [[`g.name()`]                               [Get the name of a grammar]]
 ]
 
 [endsect]
@@ -600,10 +600,10 @@ __karma__ provides some __boost_phoenix__ placeholders to access important
 information from the `Attrib` and `Context` that are otherwise fiddly to extract.
 
 [variablelist Spirit.Karma specific Phoenix placeholders
-    [[`_1, _2... , _N`]         [Nth attribute of `g`]]
+    [[`_1, _2, ... , _N`]       [Nth attribute of `g`]]
     [[`_val`]                   [The enclosing rule's synthesized attribute.]]
-    [[`_r1, _r2... , _rN`]      [The enclosing rule's Nth inherited attribute.]]
-    [[`_a, _b... , _j`]         [The enclosing rule's local variables (`_a` refers to the first).]]
+    [[`_r1, _r2, ... , _rN`]    [The enclosing rule's Nth inherited attribute.]]
+    [[`_a, _b, ... , _j`]       [The enclosing rule's local variables (`_a` refers to the first).]]
     [[`_pass`]                  [Assign `false` to `_pass` to force a generator failure.]]
 ]
 

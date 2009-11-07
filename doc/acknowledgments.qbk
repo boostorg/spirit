@@ -54,8 +54,12 @@ Qi.
 for this documentation. Also, for bits and pieces here and there such
 documentation suggestions and editorial patches.
 
-[*Ray Burkholder], [*Dainis Polis], and [*Stephan Menzel] for last
-minute feedback on the documentation.
+[*Stephan Menzel] for his early adoption of Qi and Karma and his willingness 
+to invest time to spot bugs which were hard to isolate. Also, for his feedback
+on the documentation.
+
+[*Ray Burkholder] and [*Dainis Polis] for last minute feedback on the 
+documentation.
 
 Special thanks to spirit-devel and spirit-general mailing lists for
 participating in the discussions, being early adopters of pre-release

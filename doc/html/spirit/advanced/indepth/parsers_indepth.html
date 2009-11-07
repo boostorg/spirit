@@ -197,7 +197,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id879326"></a>
+<a name="id946071"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
@@ -437,7 +437,8 @@
             
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">long</span> <span class="keyword">long</span><span class="special">&gt;</span> <span class="special">{};</span>
+<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> 
+  <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">long_long_type</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
           </p>
@@ -449,7 +450,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id881363"></a>
+<a name="id948110"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
