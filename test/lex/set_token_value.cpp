@@ -107,7 +107,7 @@ struct set_token_value : boost::spirit::lex::lexer<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 struct token_data
 {
-    int id;
+    std::size_t id;
     unsigned int value;
 };
 
