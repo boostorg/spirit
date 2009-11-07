@@ -83,16 +83,16 @@ not defined in __primitive_parser_concept__.
 [table
     [[Expression]           [Description]]
     [[`stream`]             [Call the streaming `operator>>()` for the type
-                             of the mandory attribute. The input recognized 
+                             of the mandatory attribute. The input recognized 
                              by this operator will be the result of the 
                              `stream` parser. This parser never fails 
                              (unless the underlying input stream reports an 
                              error). The character type of the I/O istream
                              is assumed to be `char`.]]
     [[`wstream`]            [Call the streaming `operator>>()` for the type
-                             of the mandory attribute. The input recognized 
+                             of the mandatory attribute. The input recognized 
                              by this operator will be the result of the 
-                             `stream` parser. This parser never fails 
+                             `wstream` parser. This parser never fails 
                              (unless the underlying input stream reports an 
                              error). The character type of the I/O istream
                              is assumed to be `wchar_t`.]]
@@ -155,7 +155,7 @@ the attribute of type `attribute_type`.
 [important The attribute type `spirit::hold_any` exposed by some of the stream 
            parsers is semantically and syntactically equivalent to 
            the type implemented by __boost_any__. It has been added to /Spirit/ 
-           as it has better a performance and a smaller footprint if compared to 
+           as it has better performance and a smaller footprint than 
            __boost_any__.
 ]
 

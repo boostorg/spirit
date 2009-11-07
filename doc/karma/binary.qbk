@@ -62,10 +62,10 @@ Also, see __include_structure__.
                evaluates to a 16 bit binary value. This value is always 
                interpreted using native endianness.]]
     [[`dw`]   [A 32 bit binary value or a __karma_lazy_argument__ that 
-               evaluates to a 16 bit binary value. This value is always 
+               evaluates to a 32 bit binary value. This value is always 
                interpreted using native endianness.]]
     [[`qw`]   [A 64 bit binary value or a __karma_lazy_argument__ that 
-               evaluates to a 16 bit binary value. This value is always 
+               evaluates to a 64 bit binary value. This value is always 
                interpreted using native endianness.]]
 ]
 
@@ -208,10 +208,10 @@ Also, see __include_structure__.
                evaluates to a 16 bit binary value. This value is always 
                interpreted using native endianness.]]
     [[`dw`]   [A 32 bit binary value or a __karma_lazy_argument__ that 
-               evaluates to a 16 bit binary value. This value is always 
+               evaluates to a 32 bit binary value. This value is always 
                interpreted using native endianness.]]
     [[`qw`]   [A 64 bit binary value or a __karma_lazy_argument__ that 
-               evaluates to a 16 bit binary value. This value is always 
+               evaluates to a 64 bit binary value. This value is always 
                interpreted using native endianness.]]
 ]
 
@@ -331,10 +331,10 @@ Also, see __include_structure__.
                evaluates to a 16 bit binary value. This value is always 
                interpreted using native endianness.]]
     [[`dw`]   [A 32 bit binary value or a __karma_lazy_argument__ that 
-               evaluates to a 16 bit binary value. This value is always 
+               evaluates to a 32 bit binary value. This value is always 
                interpreted using native endianness.]]
     [[`qw`]   [A 64 bit binary value or a __karma_lazy_argument__ that 
-               evaluates to a 16 bit binary value. This value is always 
+               evaluates to a 64 bit binary value. This value is always 
                interpreted using native endianness.]]
 ]
 

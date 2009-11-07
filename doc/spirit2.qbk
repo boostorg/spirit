@@ -116,11 +116,11 @@
 
 [/ References to classes ]
 
-[def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `token_def<>`]
+[def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `lex::token_def<>`]
 
-[def __class_lexertl_token__    [/ link spirit.lex.reference.token `lexertl_token<>`] `lexertl::token<>`]
-[def __class_lexertl_lexer__    [/ link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`] `lexertl_lexer<>`]
-[def __class_lexertl_static_lexer__ [/ link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`] `lexertl_static_lexer<>`]
+[def __class_lexertl_token__    [/ link spirit.lex.reference.token `lexertl_token<>`] `lex::lexertl::token<>`]
+[def __class_lexertl_lexer__    [/ link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`] `lex::lexertl::lexer<>`]
+[def __class_lexertl_static_lexer__ [/ link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`] `lex::lexertl::static_lexer<>`]
 
 [/ References to support ]
 
@@ -170,7 +170,8 @@
 [def __karma_sequence__             [link spirit.karma.reference.operator.sequence Sequence (`<<`)]]
 [def __karma_alternative__          [link spirit.karma.reference.operator.alternative Alternative (`|`)]]
 [template karma_kleene[str]         [link spirit.karma.reference.operator.kleene [str]]]
-[def __karma_plus__                 [link spirit.karma.reference.operator.plus Plus (unary `+`)]]
+[template karma_plus[str]           [link spirit.karma.reference.operator.plus [str]]]
+[def __karma_plus__                 [karma_plus Plus (unary `+`)]]
 [def __karma_list__                 [link spirit.karma.reference.operator.list List (`%`)]]
 [def __karma_optional__             [link spirit.karma.reference.operator.optional Optional (unary `-`)]]
 [def __karma_and_predicate__        [link spirit.karma.reference.operator.and_predicate And predicate (unary `&`)]]

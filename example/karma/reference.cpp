@@ -515,7 +515,7 @@ int main()
         test_generator_attr("a", alpha, 'a');
         test_generator_attr("A", alpha, 'A');
         test_generator_attr("", alpha, '1');          // fails (as isalpha('1') is false)
-        test_generator_attr("A", upper[alpha], 'a');
+        test_generator_attr("A", upper[alpha], 'A');
         test_generator_attr("", upper[alpha], 'a');   // fails (as isupper('a') is false)
         //]
     }

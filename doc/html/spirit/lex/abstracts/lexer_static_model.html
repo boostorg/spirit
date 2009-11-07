@@ -35,13 +35,13 @@
           and its integration with the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
           library and the C++ host language. Its big disadvantage is the need to
           spend additional runtime to generate the tables, which especially might
-          be a limitation for larger lexical analyers. The <span class="emphasis"><em>static</em></span>
+          be a limitation for larger lexical analyzers. The <span class="emphasis"><em>static</em></span>
           model strives to build upon the smooth integration with <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
           and C++, and reuses large parts of the <span class="emphasis"><em>Spirit.Lex</em></span>
           library as described so far, while overcoming the additional runtime requirements
           by using pre-generated tables and tokenizer routines. To make the code
-          generation as simple as possible, it is possible reuse the token definition
-          types developed using the <span class="emphasis"><em>dynamic</em></span> model without any
+          generation as simple as possible, the static model reuses the token definition
+          types developed for the <span class="emphasis"><em>dynamic</em></span> model without any
           changes. As will be shown in this section, building a code generator based
           on an existing token definition type is a matter of writing 3 lines of
           code.
@@ -125,8 +125,8 @@
 <p>
           The only thing changing between the three different use cases is the template
           parameter used to instantiate a concrete token definition. Fot the dynamic
-          model and the code generator you probably will use the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code> template, where for the static
-          model you will use the <code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code> type as the template parameter.
+          model and the code generator you probably will use the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span></code> template, where for the static
+          model you will use the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;&gt;</span></code> type as the template parameter.
         </p>
 <p>
           This example not only shows how to build a static lexer, but it additionally
@@ -175,7 +175,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id863796"></a>
+<a name="id925035"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -238,7 +238,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id864154"></a>
+<a name="id925394"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -247,8 +247,8 @@
           one is to change your main program at two places. First, you need to change
           the type of the used lexer (that is the template parameter used while instantiating
           your token definition class). While in the dynamic model we have been using
-          the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code>
-          template, we now need to change that to the <code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code> type. The second change is tightly
+          the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span></code>
+          template, we now need to change that to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;&gt;</span></code> type. The second change is tightly
           related to the first one and involves correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code> statement to:
         </p>
 <p>
@@ -340,10 +340,11 @@
             have been assigned, either explicitly by the programmer or implicitely
             during lexer construction. It is your responsibility to make sure that
             all instances of a particular static lexer type use exactly the same
-            token ids. This is ensured by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
-            is specified during construction of the static lexer instances. The constructor
-            of the lexer object has a second default parameter allowing it to designate
-            a starting token id to be used while assigning the ids to the token definitions.
+            token ids. The constructor of the lexer object has a second (default)
+            parameter allowing it to designate a starting token id to be used while
+            assigning the ids to the token definitions. The requirement above is
+            fullfilled by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
+            is specified during construction of the static lexer instances.
           </p></td></tr>
 </table></div>
 </div>

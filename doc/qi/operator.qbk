@@ -20,9 +20,9 @@ yields a new parser type which is a composite of its operands, `a` and
 This module includes different parsers which get instantiated if one of
 the overloaded operators is used with more primitive parser constructs.
 It includes Alternative (`|`), And predicate (unary `&`), Difference
-(`-`), Expect (`>`), Kleene star (unary `*`), Lists (unary `%`), Not
-predicate (unary `!`), Optional (`-`), Permutation (`^`), Plus (unary
-`+`), Sequence (`>>`) and Sequential-Or (`||`).
+(`-`), Expect (`>`), Kleene star (unary `*`), Lists (`%`), Not
+predicate (`!`), Optional (unary `-`), Permutation (`^`), Plus (unary
+`+`), Sequence (`>>`), and Sequential-Or (`||`).
 
 [heading Module Header]
 
@@ -266,7 +266,7 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`a`, `b`]     [A __parser_concept__]]
-    [[`Iter`]       [a __fwditer__ type.]]
+    [[`Iter`]       [A __fwditer__ type]]
 ]
 
 [heading Expectation Failure]
@@ -433,7 +433,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`a - b`]
+    [[`a % b`]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 ]
@@ -612,7 +612,8 @@ defined in __nary_parser_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`a ^ b`]          [Match `a` or `b` in any order. Each operand 
-                        may match zero or one time.]]
+                        may match zero or one time as long as at least
+                        one operand matches.]]
 ]
 
 [heading Attributes]
@@ -712,7 +713,7 @@ __qi_basics_examples__ section.]
 
 [heading Description]
 
-The sequence operator, `a >> b`, which parses two or more operands (`a`,
+The sequence operator, `a >> b`, parses two or more operands (`a`,
 `b`, ... etc.), in sequence:
 
     a >> b >> ...
@@ -784,9 +785,9 @@ __qi_basics_examples__ section.]
 
 [heading Description]
 
-The sequential-or operator, `a || b`, where the expression `a || b`
-reads as match `a` or `b` and in sequence. That is, if both `a` and `b`
-match, it must be in sequence; this is equivalent to `a >> -b | b`:
+The sequential-or operator, `a || b`, matches `a` or `b` or `a` followed
+by `b`.  That is, if both `a` and `b` match, it must be in sequence; this
+is equivalent to `a >> -b | b`:
 
     a || b || ...
 
