@@ -49,7 +49,7 @@ of the Boost Spirit library. The library consists of 4 major parts:
   descent parsers. The exposed domain-specific language can be used to describe
   the grammars to implement, and the rules for storing the parsed information.
 * __lex__: This is the library usable to create tokenizers (lexers). The
-  domain-specific language exposed by __lex__ allows to define regular 
+  domain-specific language exposed by __lex__ allows you to define regular 
   expressions used to match tokens (create token definitions), associate these 
   regular expressions with code to be executed whenever they are matched, and 
   to add the token definitions to the lexical analyzer.

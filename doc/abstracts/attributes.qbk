@@ -57,7 +57,7 @@ the sections __sec_qi_primitive__ and __sec_karma_primitive__.
 
 __qi__ and __karma__ implement well defined attribute type propagation rules 
 for all compound parsers and generators, such as sequences, alternatives, 
-Kleene star, etc. The main attribute propagation rule for a sequences are for 
+Kleene star, etc. The main attribute propagation rule for a sequences is for 
 instance:
 
 [table
@@ -200,7 +200,7 @@ and here is the equivalent __karma__ code snippet:
     std::back_insert_iterator<std::string> out(str);
     generate(out, 
         '(' << karma::double_ << ", " << karma::double_ << ')', // generator grammar (format description)
-        p);                                       // data to use as the attribute 
+        p);                                                     // data to use as the attribute 
 
 where the first element of the pair passed in as the data to generate is still
 associated with the first `double_`, and the second element is associated with 

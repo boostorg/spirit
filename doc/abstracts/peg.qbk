@@ -27,7 +27,7 @@ Sequences are represented by juxtaposition like in EBNF:
     a b
 
 The PEG expression above states that, in order for this to succeed,
-`a` must follow `b`. Here's the syntax diagram:
+`b` must follow `a`. Here's the syntax diagram:
 
 [:__sd_sequence__]
 
@@ -97,7 +97,7 @@ mechanisms shortly.
 
 [heading Difference]
 
-In certain cases, you may want to restrict a certain expression. You can
+In some cases, you may want to restrict a certain expression. You can
 think of a PEG expression as a match for a potentially infinite set of
 strings. The difference operator allows you to restrict this set:
 

@@ -87,7 +87,7 @@ backwards compatibility for existing applications.
   Both now always consume an attribute.
 * Karma: changed semantics of `char_()`, `string()`, `int_()` et.al., and 
   `double_()` et.al.: all of these generators now always expose an attribute. 
-  If they do not have an associate attribute, they generate their immediate 
+  If they do not have an associated attribute, they generate their immediate 
   literal. If they have an associated attribute, the generators first test if 
   the attribute value is equal to the immediate literal. They fail and do not 
   generate anything if those are not equal. Otherwise they generate their 
@@ -102,7 +102,7 @@ backwards compatibility for existing applications.
 * Almost all Karma generators now accept `optional<>` attributes and will fail
   generating if this is not initialized.
 * Qi and Karma rules now automatically detect whether to apply auto-rule 
-  semantics or now (no need for using `operator%=()` anymore, even if it's still
+  semantics or not (no need for using `operator%=()` anymore, even if it's still
   existing). Auto-rule semantics are applied if the right hand side has no
   semantic actions attached to any of the elements. This works for rule 
   initialization and assignment.

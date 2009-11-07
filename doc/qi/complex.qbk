@@ -45,7 +45,7 @@ The full cpp file for this example can be found here: [@../../example/qi/complex
 placeholders that we are using (i.e. `_1`, `_2`, etc.). Please be aware
 that we are not using the same placeholders supplied by Phoenix. Take
 note that we are pulling in the placeholders from namespace
-`boost::spirit::`qi`. These placeholders are specifically tailored for
+`boost::spirit::qi`. These placeholders are specifically tailored for
 Spirit.]
 
 The `double_` parser attaches this action:

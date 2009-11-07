@@ -10,7 +10,7 @@
 
 [heading Module Headers]
 
-    // forwards to <boost/spirit/qi/nonterminal.hpp>
+    // forwards to <boost/spirit/home/qi/nonterminal.hpp>
     #include <boost/spirit/include/qi_nonterminal.hpp>
 
 Also, see __include_structure__.
@@ -29,7 +29,7 @@ descent parsing.
 
 [heading Header]
 
-    // forwards to <boost/spirit/qi/nonterminal/rule.hpp>
+    // forwards to <boost/spirit/home/qi/nonterminal/rule.hpp>
     #include <boost/spirit/include/qi_rule.hpp>
 
 Also, see __include_structure__.
@@ -151,7 +151,7 @@ composed to form more complex grammars.
 
 [heading Header]
 
-    // forwards to <boost/spirit/qi/nonterminal/grammar.hpp>
+    // forwards to <boost/spirit/home/qi/nonterminal/grammar.hpp>
     #include <boost/spirit/include/qi_grammar.hpp>
 
 Also, see __include_structure__.

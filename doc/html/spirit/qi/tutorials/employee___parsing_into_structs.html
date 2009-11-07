@@ -71,7 +71,7 @@
         </p>
 <p>
           Then, we need to tell <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-          about our employee struct to make it a first- class fusion citizen that
+          about our employee struct to make it a first-class fusion citizen that
           the grammar can utilize. If you don't know fusion yet, it is a <a href="http://www.boost.org/" target="_top">Boost</a>
           library for working with heterogenous collections of data, commonly referred
           to as tuples. Spirit uses fusion extensively as part of its infrastructure.
@@ -179,7 +179,7 @@
           has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> attribute.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h6>
-<a name="id628980"></a>
+<a name="id634581"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
         </h6>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
@@ -196,7 +196,7 @@
           a double quote.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h6>
-<a name="id629093"></a>
+<a name="id634694"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
         </h6>
 <p>
@@ -215,7 +215,7 @@
           is just <code class="computeroutput"><span class="keyword">char</span></code>.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h6>
-<a name="id629201"></a>
+<a name="id634802"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
         </h6>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
@@ -236,7 +236,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h6>
-<a name="id629338"></a>
+<a name="id634939"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
         </h6>
@@ -277,7 +277,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h6>
-<a name="id629560"></a>
+<a name="id635161"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
         </h6>
@@ -287,7 +287,7 @@
         </p>
 <p>
           Nodes without attributes are disregarded. In a sequence, like above, all
-          nodes with no attributes are filtered out of the <code class="computeroutput"><span class="identifier">fusion</span><span class="special">:</span><span class="identifier">vector</span></code>.
+          nodes with no attributes are filtered out of the <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></code>.
           So, since <code class="computeroutput"><span class="char">'"'</span></code> has no attribute,
           and <code class="computeroutput"><span class="special">+(</span><span class="identifier">char_</span>
           <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span></code> has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code> attribute, the whole expression's attribute
@@ -309,7 +309,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h6>
-<a name="id629798"></a>
+<a name="id635400"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
         </h6>
@@ -346,8 +346,20 @@
           with the attribute of the RHS: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>. The RHS extracts the parsed attribute
           directly into the rule's attribute, in-situ.
         </p>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            <code class="computeroutput"><span class="identifier">r</span> <span class="special">%=</span>
+            <span class="identifier">p</span></code> and <code class="computeroutput"><span class="identifier">r</span>
+            <span class="special">=</span> <span class="identifier">p</span></code>
+            are equivalent if there are no semantic actions associated with <code class="computeroutput"><span class="identifier">p</span></code>.
+          </p></td></tr>
+</table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h6>
-<a name="id630118"></a>
+<a name="id635767"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
         </h6>
 <p>
@@ -374,6 +386,7 @@
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></code></li>
 <li class="listitem"><code class="computeroutput"><span class="char">'{'</span></code></li>
+<li class="listitem"><code class="computeroutput"><span class="char">','</span></code></li>
 <li class="listitem"><code class="computeroutput"><span class="char">'}'</span></code></li>
 </ul></div>
 <div class="note" title="Note"><table border="0" summary="Note">

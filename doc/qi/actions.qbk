@@ -96,7 +96,7 @@ The examples above can be found here: [@../../example/qi/actions.cpp]
 [heading Phoenix]
 
 __phoenix__, a companion library bundled with Spirit, is specifically suited
-for binding semantic actions. It is like __boost_lambda__ in steroids, with
+for binding semantic actions. It is like __boost_lambda__ on steroids, with
 special custom features that make it easy to integrate semantic actions with
 Spirit. If your requirements go beyond simple to moderate parsing, it is 
 suggested that you use this library. All the following examples in this tutorial
@@ -112,7 +112,7 @@ will use __phoenix__ for sematic actions.
            use different libraries while writing a semantic action.
 
            Generally, for __boost_bind__, use `::_1`, `::_2`, etc. (yes, these
-           placeholders are defined in the globl namespace). 
+           placeholders are defined in the global namespace). 
 
            For __boost_lambda__ use the placeholders defined in the namespace 
            `boost::lambda`. 

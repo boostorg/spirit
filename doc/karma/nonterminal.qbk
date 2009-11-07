@@ -10,7 +10,7 @@
 
 [heading Module Headers]
 
-    // forwards to <boost/spirit/karma/nonterminal.hpp>
+    // forwards to <boost/spirit/home/karma/nonterminal.hpp>
     #include <boost/spirit/include/karma_nonterminal.hpp>
 
 Also, see __include_structure__.
@@ -21,7 +21,7 @@ Also, see __include_structure__.
 [heading Description]
 
 The rule is a polymorphic generator that acts as a named place-holder
-capturing the behavior of an PEG expression assigned to it. Naming a
+capturing the behavior of a PEG expression assigned to it. Naming a
 __peg__ expression allows it to be referenced later and makes it
 possible for the rule to call itself. This is one of the most important
 mechanisms and the reason behind the word "recursive" in recursive
@@ -29,7 +29,7 @@ descent output generation.
 
 [heading Header]
 
-    // forwards to <boost/spirit/karma/nonterminal/rule.hpp>
+    // forwards to <boost/spirit/home/karma/nonterminal/rule.hpp>
     #include <boost/spirit/include/karma_rule.hpp>
 
 Also, see __include_structure__.
@@ -71,7 +71,7 @@ Here is more information about the template parameters:
                                                             to __unused_type__, the effect 
                                                             is the same as specifying a signature
                                                             of `void()` which is also equivalent 
-                                                            to `unused()`]]
+                                                            to `unused_type()`]]
     [[`Delimiter`]          [Specifies the rule's delimiter 
                             generator. Specify this if you
                             want the rule to delimit the 
@@ -84,8 +84,6 @@ Here is more information about the template parameters:
 [heading Model of]
 
 [:__karma_nonterminal_concept__]
-
-[heading Signature]
 
 [variablelist Notation
     [[`r, r2`]                  [Rules]]
@@ -114,12 +112,12 @@ not defined in __karma_nonterminal_concept__.
 ``rule<OutputIterator, A1, A2, A3> 
     r(r2);``]                                   [Copy construct rule `r` from rule `r2`.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`.]]
-    [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
-                                                holds a reference to `r`. Reference semantics.]]
+    [[`r.alias()`]                              [Return an alias of `r`. The alias is a generator that
+                                                 holds a reference to `r`. Reference semantics.]]
     [[`r.copy()`]                               [Get a copy of `r`.]]
     [[`r = g;`]                                 [Rule definition]]
-    [[`r %= g;`]                                [Auto-rule definition. The attribute of `expr` should be
-                                                compatible with the consumed attribute of `r`.]]
+    [[`r %= g;`]                                [Auto-rule definition. The attribute of `g` should be
+                                                 compatible with the consumed attribute of `r`.]]
 ]
 
 [heading Attributes]
@@ -152,7 +150,7 @@ composed to form more complex grammars.
 
 [heading Header]
 
-    // forwards to <boost/spirit/karma/nonterminal/grammar.hpp>
+    // forwards to <boost/spirit/home/karma/nonterminal/grammar.hpp>
     #include <boost/spirit/include/karma_grammar.hpp>
 
 Also, see __include_structure__.
@@ -244,7 +242,7 @@ defined in __karma_nonterminal_concept__.
 
 [heading Attributes]
 
-[:The generator attribute of the grammar is `T`, its consumed attribute. See
+[:The generator attribute of the grammar is `RT`, its consumed attribute. See
 __karma_nonterminal_attribute__]
 
 [heading Complexity]
