@@ -38,7 +38,7 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace qi
 {
     template <typename Elements>
-    struct permutation : nary_parser<alternative<Elements> >
+    struct permutation : nary_parser<permutation<Elements> >
     {
         template <typename Context, typename Iterator>
         struct attribute

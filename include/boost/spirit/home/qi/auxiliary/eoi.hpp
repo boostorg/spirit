@@ -16,6 +16,7 @@
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
+#include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 
 namespace boost { namespace spirit
