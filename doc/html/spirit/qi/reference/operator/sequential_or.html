@@ -29,16 +29,15 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.sequential_or.description"></a><h6>
-<a name="id750562"></a>
+<a name="id745101"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.description">Description</a>
           </h6>
 <p>
             The sequential-or operator, <code class="computeroutput"><span class="identifier">a</span>
             <span class="special">||</span> <span class="identifier">b</span></code>,
-            where the expression <code class="computeroutput"><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span></code>
-            reads as match <code class="computeroutput"><span class="identifier">a</span></code> or
-            <code class="computeroutput"><span class="identifier">b</span></code> and in sequence. That
-            is, if both <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code> match, it must be in sequence; this
+            matches <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code> or <code class="computeroutput"><span class="identifier">a</span></code>
+            followed by <code class="computeroutput"><span class="identifier">b</span></code>. That is,
+            if both <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code> match, it must be in sequence; this
             is equivalent to <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
             <span class="special">-</span><span class="identifier">b</span>
             <span class="special">|</span> <span class="identifier">b</span></code>:
@@ -46,7 +45,7 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span> <span class="special">||</span> <span class="special">...</span>
 </pre>
 <a name="spirit.qi.reference.operator.sequential_or.header"></a><h6>
-<a name="id750699"></a>
+<a name="id745235"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/sequential_or.hpp&gt;
@@ -56,7 +55,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.sequential_or.model_of"></a><h6>
-<a name="id750773"></a>
+<a name="id745310"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.model_of">Model
             of</a>
           </h6>
@@ -80,7 +79,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.sequential_or.expression_semantics"></a><h6>
-<a name="id750851"></a>
+<a name="id745388"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -123,7 +122,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequential_or.attributes"></a><h6>
-<a name="id750992"></a>
+<a name="id745528"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.attributes">Attributes</a>
           </h6>
 <p>
@@ -173,7 +172,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequential_or.complexity"></a><h6>
-<a name="id751679"></a>
+<a name="id746215"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -189,7 +188,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.sequential_or.example"></a><h6>
-<a name="id751703"></a>
+<a name="id746239"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
