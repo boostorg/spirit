@@ -132,7 +132,8 @@ namespace boost { namespace spirit { namespace karma
             ch = CharParam(attr);
 
             using spirit::char_class::classify;
-            return classify<char_encoding>::is(tag::space(), attr);
+            spirit::tag::space const space_;
+            return classify<char_encoding>::is(space_, attr);
         }
 
         // any_space has no attribute attached, use single space character
