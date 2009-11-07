@@ -107,7 +107,7 @@ struct set_token_value : boost::spirit::lex::lexer<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 struct token_data
 {
-    std::size_t id;
+    int id;
     unsigned int value;
 };
 
@@ -121,7 +121,7 @@ bool test_tokens(token_data const* d, std::vector<Token> const& tokens)
             return false;           // reached end of expected data
 
         typename Token::token_value_type const& value (t.value());
-        if (t.id() != d->id)        // token id must match
+        if (t.id() != static_cast<std::size_t>(d->id))        // token id must match
             return false;
         if (value.which() != 1)     // must have an integer value 
             return false;
