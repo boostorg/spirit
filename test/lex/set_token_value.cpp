@@ -140,7 +140,7 @@ bool test_indents(int *i, std::stack<unsigned int>& indents)
     {
         if (*i == -1)
             return false;           // reached end of expected data
-        if (indents.top() != *i)
+        if (indents.top() != static_cast<unsigned int>(*i))
             return false;           // value must match
 
         ++i;
