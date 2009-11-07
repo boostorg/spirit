@@ -506,7 +506,7 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Transformed, typename Exposed>
     typename spirit::result_of::pre_transform<Exposed, Transformed>::type
-    pre_transform(Exposed& attr)
+    pre_transform(Exposed& attr BOOST_PROTO_DISABLE_IF_IS_CONST(Exposed))
     {
         return transform_attribute<Exposed, Transformed>::pre(attr);
     }

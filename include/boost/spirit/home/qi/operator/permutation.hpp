@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/detail/permute_function.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/algorithm/any_if_ns.hpp>
@@ -38,7 +39,7 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace qi
 {
     template <typename Elements>
-    struct permutation : nary_parser<alternative<Elements> >
+    struct permutation : nary_parser<permutation<Elements> >
     {
         template <typename Context, typename Iterator>
         struct attribute

@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace traits
         static void 
         call(T const& val, Attribute& attr)
         {
-            attr = val;
+            attr = static_cast<Attribute>(val);
         }
     };
 
@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace traits
         static void 
         call(T const& val, reference_wrapper<Attribute> attr)
         {
-            attr = val;
+            attr = static_cast<Attribute>(val.get());
         }
     };
 

@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/detail/pass_function.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>

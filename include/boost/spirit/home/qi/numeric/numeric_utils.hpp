@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/assert_msg.hpp>
+#include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/qi/numeric/detail/numeric_utils.hpp>
 #include <boost/assert.hpp>
 #include <boost/mpl/assert.hpp>

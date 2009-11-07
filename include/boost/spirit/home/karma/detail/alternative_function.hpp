@@ -16,6 +16,7 @@
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/karma/detail/output_iterator.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/deref.hpp>
