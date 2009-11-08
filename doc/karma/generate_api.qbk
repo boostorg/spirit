@@ -21,12 +21,12 @@ attribute values to output.
 
 [heading Header]
 
-    // forwards to <boost/spirit/karma/generate.hpp>
+    // forwards to <boost/spirit/home/karma/generate.hpp>
     #include <boost/spirit/include/karma_generate.hpp>
 
 For variadic attributes:
 
-    // forwards to <boost/spirit/karma/generate_attr.hpp>
+    // forwards to <boost/spirit/home/karma/generate_attr.hpp>
     #include <boost/spirit/include/karma_generate_attr.hpp>
 
 The variadic attributes version of the API allows one or more
@@ -138,12 +138,12 @@ attribute values to output.
 
 [heading Header]
 
-    // forwards to <boost/spirit/karma/stream/format_manip.hpp>
+    // forwards to <boost/spirit/home/karma/stream/format_manip.hpp>
     #include <boost/spirit/include/karma_format.hpp>
 
 For variadic attributes:
 
-    // forwards to <boost/spirit/karma/stream/format_manip_attr.hpp>
+    // forwards to <boost/spirit/home/karma/stream/format_manip_attr.hpp>
     #include <boost/spirit/include/karma_format_attr.hpp>
 
 The variadic attributes version of the API allows one or more

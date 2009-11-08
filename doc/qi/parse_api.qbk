@@ -19,12 +19,12 @@ reference that will hold the parsed values on a successful parse.
 
 [heading Header]
 
-    // forwards to <boost/spirit/qi/parse.hpp>
+    // forwards to <boost/spirit/home/qi/parse.hpp>
     #include <boost/spirit/include/qi_parse.hpp>
 
 For variadic attributes:
 
-    // forwards to <boost/spirit/qi/parse_attr.hpp>
+    // forwards to <boost/spirit/home/qi/parse_attr.hpp>
     #include <boost/spirit/include/qi_parse_attr.hpp>
 
 The variadic attributes version of the API allows one or more
@@ -133,12 +133,12 @@ that will hold the parsed values on a successful parse.
 
 [heading Header]
 
-    // forwards to <boost/spirit/qi/stream/match_manip.hpp>
+    // forwards to <boost/spirit/home/qi/stream/match_manip.hpp>
     #include <boost/spirit/include/qi_match.hpp>
 
 For variadic attributes:
 
-    // forwards to <boost/spirit/qi/stream/match_manip_attr.hpp>
+    // forwards to <boost/spirit/home/qi/stream/match_manip_attr.hpp>
     #include <boost/spirit/include/qi_match_attr.hpp>
 
 The variadic attributes version of the API allows one or more

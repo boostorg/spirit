@@ -18,7 +18,7 @@ arbitrary generator expression.
 
 [heading Header]
 
-    // forwards to <boost/spirit/karma/action.hpp>
+    // forwards to <boost/spirit/home/karma/action.hpp>
     #include <boost/spirit/include/karma_action.hpp>
 
 Also, see __include_structure__.

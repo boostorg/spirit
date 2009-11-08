@@ -26,8 +26,8 @@ First, let's create a struct representing an employee:
 
 [tutorial_employee_struct]
 
-Then, we need to tell __fusion__ about our employee struct to make it a first-
-class fusion citizen that the grammar can utilize. If you don't know fusion yet, 
+Then, we need to tell __fusion__ about our employee struct to make it a first-class 
+fusion citizen that the grammar can utilize. If you don't know fusion yet, 
 it is a __boost__ library for working with heterogenous collections of data, 
 commonly referred to as tuples. Spirit uses fusion extensively as part of its 
 infrastructure.
@@ -139,7 +139,7 @@ Some parsers, especially those very little literal parsers you see, like `'"'`,
 do not have attributes.
 
 Nodes without attributes are disregarded. In a sequence, like above, all nodes
-with no attributes are filtered out of the `fusion:vector`. So, since `'"'` has
+with no attributes are filtered out of the `fusion::vector`. So, since `'"'` has
 no attribute, and `+(char_ - '"')` has a `std::vector<char>` attribute, the
 whole expression's attribute should have been:
 
@@ -181,6 +181,10 @@ The attribute of the `quoted_string` rule: `std::string` *is compatible* with
 the attribute of the RHS: `std::vector<char>`. The RHS extracts the parsed
 attribute directly into the rule's attribute, in-situ.
 
+[note `r %= p` and `r = p` are equivalent if there are no semantic actions
+      associated with `p`. ]
+
+
 [heading Finally]
 
 We're down to one rule, the start rule:
@@ -203,6 +207,7 @@ These nodes do not have an attribute:
 
 * `lit("employee")`
 * `'{'`
+* `','`
 * `'}'`
 
 [note In case you are wondering, `lit("employee")` is the same as "employee". We

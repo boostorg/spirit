@@ -8,14 +8,15 @@
 
 [section Mini XML - ASTs!]
 
-Stop and think about it... We've come very close to generating an AST in our
-last example. We parsed a single structure and generated an in-memory
-representation of it in the form of a struct: the `struct employee`. If we
-changed the implementation to parse one or more employees, the result would be a
-`std::vector<employee>`. We can go on and add more hierarchy: teams,
-departments, corporations. Then we'll have an AST representation of it all.
+Stop and think about it... We've come very close to generating an AST 
+(abstract syntax tree) in our last example. We parsed a single structure and 
+generated an in-memory representation of it in the form of a struct: the 
+`struct employee`. If we changed the implementation to parse one or more 
+employees, the result would be a `std::vector<employee>`. We can go on and add 
+more hierarchy: teams, departments, corporations. Then we'll have an AST 
+representation of it all.
 
-In this example (actually two examples), we'll now explore parsers how to create
+In this example (actually two examples), we'll now explore how to create
 ASTs. We will parse a minimalistic XML like language and compile the results
 into our data structures in the form of a tree.
 
@@ -173,7 +174,7 @@ hierarchical. It will also be recursive: xml is recursive.
 
 [heading Of Alternates and Variants]
 
-So that's how a `mini_xml_node` looks like. We had a hint that it is either
+So that's what a `mini_xml_node` looks like. We had a hint that it is either
 a `string` or a `mini_xml`. For this, we use __boost_variant__. `boost::recursive_wrapper`
 wraps `mini_xml`, making it a recursive data structure.
 
@@ -205,7 +206,7 @@ semantic-action-less. Here it is:
 This one shouldn't be any more difficult to understand after going through the
 first xml parser example. The rules are almost the same, except that, we got rid
 of semantic actions and used auto-rules (see the employee example if you missed
-that). There are a couple of new stuff, though. It's all in the `xml` rule:
+that). There is some new stuff though. It's all in the `xml` rule:
 
 [heading Local Variables]
 

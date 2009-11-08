@@ -29,7 +29,7 @@
           etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.description"></a><h6>
-<a name="id854051"></a>
+<a name="id891227"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.description">Description</a>
           </h6>
 <p>
@@ -38,13 +38,13 @@
             integers of arbitrary length and size. The <code class="computeroutput"><span class="identifier">uint_generator</span></code>
             generator can be used to generate ordinary primitive C/C++ integers or
             even user defined scalars such as bigints (unlimited precision integers)
-            as long as the type follows certain expression requirements (for more
-            information about the requirements, see <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.additional_requirements">below</a>)).
+            if the type follows certain expression requirements (for more information
+            about the requirements, see <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.additional_requirements">below</a>)).
             The <code class="computeroutput"><span class="identifier">uint_generator</span></code> is
             a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.karma.reference.numeric.unsigned_int.header"></a><h6>
-<a name="id854101"></a>
+<a name="id891277"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/uint.hpp&gt;
@@ -54,7 +54,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.unsigned_int.namespace"></a><h6>
-<a name="id854176"></a>
+<a name="id891352"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -145,7 +145,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.synopsis"></a><h6>
-<a name="id854601"></a>
+<a name="id891777"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -154,7 +154,7 @@
 <span class="keyword">struct</span> <span class="identifier">uint_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.unsigned_int.template_parameters"></a><h6>
-<a name="id854670"></a>
+<a name="id891846"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.template_parameters">Template
             parameters</a>
           </h6>
@@ -220,7 +220,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.model_of"></a><h6>
-<a name="id854797"></a>
+<a name="id891973"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.model_of">Model
             of</a>
           </h6>
@@ -250,7 +250,7 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Radix</span></code></span></dt>
 <dd><p>
-                A integer literal specifying the required radix for the output conversion.
+                An integer literal specifying the required radix for the output conversion.
                 Valid values are <code class="computeroutput"><span class="number">2</span></code>,
                 <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>,
                 and <code class="computeroutput"><span class="number">16</span></code>.
@@ -258,7 +258,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.unsigned_int.expression_semantics"></a><h6>
-<a name="id854949"></a>
+<a name="id892125"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -292,10 +292,9 @@
                   </td>
 <td>
                   <p>
-                    Generate the integer literal <code class="computeroutput"><span class="identifier">num</span></code>
-                    using the default formatting (radix is 10, sign is only printed
-                    for negative literals). This generator never fails (except if
-                    the underlying output stream reports an error).
+                    Generate the unsigned integer literal <code class="computeroutput"><span class="identifier">num</span></code>
+                    using the default formatting (radix is 10). This generator never
+                    fails (unless the underlying output stream reports an error).
                   </p>
                   </td>
 </tr>
@@ -336,9 +335,9 @@
                     Generate the unsigned integer provided by the immediate literal
                     value the generator is initialized from using the default formatting
                     (radix is 10). If this generator has an associated attribute
-                    it succeeds only as long as the attribute is equal to the immediate
-                    literal (unless the underlying output stream reports an error).
-                    Otherwise this generator fails and does not generate any output.
+                    it succeeds only if the attribute is equal to the immediate literal
+                    (unless the underlying output stream reports an error). Otherwise
+                    this generator fails and does not generate any output.
                   </p>
                   </td>
 </tr>
@@ -357,8 +356,7 @@
                   <p>
                     Generate the unsigned integer provided by a mandatory attribute
                     using the default formatting and the corresponding radix (<code class="computeroutput"><span class="identifier">bin</span></code>: radix is 2, <code class="computeroutput"><span class="identifier">oct</span></code>: radix is 8, <code class="computeroutput"><span class="identifier">hex</span></code>: radix is 16). This generator
-                    never fails (except if the underlying output stream reports an
-                    error).
+                    never fails (unless the underlying output stream reports an error).
                   </p>
                   </td>
 </tr>
@@ -381,9 +379,9 @@
                     radix is 2, <code class="computeroutput"><span class="identifier">oct</span></code>:
                     radix is 8, <code class="computeroutput"><span class="identifier">hex</span></code>:
                     radix is 16). If this generator has an associated attribute it
-                    succeeds only as long as the attribute is equal to the immediate
-                    literal (unless the underlying output stream reports an error).
-                    Otherwise this generator fails and does not generate any output.
+                    succeeds only if the attribute is equal to the immediate literal
+                    (unless the underlying output stream reports an error). Otherwise
+                    this generator fails and does not generate any output.
                   </p>
                   </td>
 </tr>
@@ -457,16 +455,16 @@
                     <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>, and <code class="computeroutput"><span class="number">16</span></code>,
                     the default value is <code class="computeroutput"><span class="number">10</span></code>).
                     If this generator has an associated attribute it succeeds only
-                    as long as the attribute is equal to the immediate literal (unless
-                    the underlying output stream reports an error). Otherwise this
-                    generator fails and does not generate any output.
+                    if the attribute is equal to the immediate literal (unless the
+                    underlying output stream reports an error). Otherwise this generator
+                    fails and does not generate any output.
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.additional_requirements"></a><h6>
-<a name="id855600"></a>
+<a name="id892777"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -520,7 +518,7 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.attributes"></a><h6>
-<a name="id856014"></a>
+<a name="id893191"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -759,7 +757,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.complexity"></a><h6>
-<a name="id858210"></a>
+<a name="id895392"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -773,7 +771,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.example"></a><h6>
-<a name="id858242"></a>
+<a name="id895424"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

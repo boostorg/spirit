@@ -23,7 +23,7 @@ support classes are placed:
 * Phoenix
 * Support
 
-The top spirit directory is:
+The top Spirit directory is:
 
     BOOST_ROOT/boost/spirit
 
@@ -63,7 +63,7 @@ The include directory at:
 
     BOOST_ROOT/boost/spirit/include
 
-is a special flat directory that contains all the spirit headers. To
+is a special flat directory that contains all the Spirit headers. To
 accomodate the flat structure, the headers are prefixed with the
 sub-library name:
 
@@ -94,7 +94,7 @@ The home directory:
 
     BOOST_ROOT/boost/spirit/home
 
-is the /real/ home of spirit. It is the place where the various sub-libraries
+is the /real/ home of Spirit. It is the place where the various sub-libraries
 actually exist. The home directory contains:
 
     [classic]   [karma]     [lex]

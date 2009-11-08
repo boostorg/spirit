@@ -51,7 +51,7 @@ The most basic composition is the Sequence. B follows A:
 
 [:__sd_sequence__]
 
-The ordered choice, henceforth we will call /alternatives/. In PEG,
+The ordered choice henceforth we will call /alternatives/. In PEG,
 ordered choice and alternatives are not quite the same. PEG allows
 ambiguity of choice where one or more branches can succeed. In PEG, in
 case of ambiguity, the first one always wins.

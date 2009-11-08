@@ -18,7 +18,7 @@ arbitrary parser expression.
 
 [heading Header]
 
-    // forwards to <boost/spirit/qi/action.hpp>
+    // forwards to <boost/spirit/home/qi/action.hpp>
     #include <boost/spirit/include/qi_action.hpp>
 
 Also, see __include_structure__.
