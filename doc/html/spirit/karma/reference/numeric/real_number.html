@@ -29,7 +29,7 @@
           <code class="computeroutput"><span class="identifier">double_</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.real_number.description"></a><h6>
-<a name="id901756"></a>
+<a name="id865760"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.description">Description</a>
           </h6>
 <p>
@@ -38,12 +38,11 @@
             parameter, <code class="computeroutput"><span class="identifier">Num</span></code>. The numeric
             base type <code class="computeroutput"><span class="identifier">Num</span></code> can be
             a user defined numeric type such as fixed_point (fixed point reals) and
-            bignum (unlimited precision numbers) as long as the type follows certain
-            expression requirements (for more information about the requirements,
-            see <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">below</a>).
+            bignum (unlimited precision numbers) if the type follows certain expression
+            requirements (for more information about the requirements, see <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">below</a>).
           </p>
 <a name="spirit.karma.reference.numeric.real_number.header"></a><h6>
-<a name="id901799"></a>
+<a name="id865803"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/real.hpp&gt;
@@ -53,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.real_number.namespace"></a><h6>
-<a name="id901874"></a>
+<a name="id865878"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -106,14 +105,14 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.synopsis"></a><h6>
-<a name="id902091"></a>
+<a name="id866095"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Num</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">RealPolicies</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">real_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.real_number.template_parameters"></a><h6>
-<a name="id902158"></a>
+<a name="id866162"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.template_parameters">Template
             parameters</a>
           </h6>
@@ -182,7 +181,7 @@
             see <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policies">below</a>.
           </p>
 <a name="spirit.karma.reference.numeric.real_number.model_of"></a><h6>
-<a name="id902314"></a>
+<a name="id866318"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.model_of">Model
             of</a>
           </h6>
@@ -211,7 +210,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.real_number.expression_semantics"></a><h6>
-<a name="id902416"></a>
+<a name="id866420"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -337,7 +336,8 @@
                   </p>
                   </th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>
                   <p>
                     
@@ -355,10 +355,34 @@
                     never fails (unless the underlying output stream reports an error).
                   </p>
                   </td>
-</tr></tbody>
+</tr>
+<tr>
+<td>
+                  <p>
+                    
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">real_generator</span><span class="special">&lt;</span>
+    <span class="identifier">Num</span><span class="special">,</span> <span class="identifier">RealPolicies</span>
+<span class="special">&gt;()(</span><span class="identifier">num</span><span class="special">)</span></pre>
+<p>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the real number of type <code class="computeroutput"><span class="identifier">Num</span></code>
+                    provided by the immediate literal value the generator is initialized
+                    from using the specified <code class="computeroutput"><span class="identifier">RealPolicies</span></code>.
+                    If this generator has an associated attribute it succeeds only
+                    if the attribute is equal to the immediate literal (unless the
+                    underlying output stream reports an error). Otherwise this generator
+                    fails and does not generate any output.
+                  </p>
+                  </td>
+</tr>
+</tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.additional_requirements"></a><h6>
-<a name="id902960"></a>
+<a name="id867031"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -397,7 +421,7 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.real_number.attributes"></a><h6>
-<a name="id903269"></a>
+<a name="id867340"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -568,7 +592,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.real_number_formatting_policies"></a><h6>
-<a name="id903833"></a>
+<a name="id867905"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policies">Real
             Number Formatting Policies</a>
           </h6>
@@ -600,7 +624,7 @@
             will be used as the attribute type of the created real number generator.
           </p>
 <a name="spirit.karma.reference.numeric.real_number.real_number_formatting_policy_expression_semantics"></a><h6>
-<a name="id904187"></a>
+<a name="id868259"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policy_expression_semantics">Real
             Number Formatting Policy Expression Semantics</a>
           </h6>
@@ -666,7 +690,7 @@
                     number to convert
                   </p>
                   <p>
-                    <code class="computeroutput"><span class="identifier">p</span></code> the instance
+                    <code class="computeroutput"><span class="identifier">p</span></code> is the instance
                     of the policy type used to instantiate this real number generator.
                   </p>
                   </td>
@@ -775,11 +799,10 @@
                     fractional part of the output.
                   </p>
                   <p>
-                    <code class="computeroutput"><span class="identifier">n</span></code>: is the real
-                    number to output. This can be used to adjust the required precision
-                    depending on the value of this number. If the trailing zeros
-                    flag is specified the fractional part of the output will be 'filled'
-                    with zeros, if appropriate.
+                    `n: is the real number to output. This can be used to adjust
+                    the required precision depending on the value of this number.
+                    If the trailing zeros flag is specified the fractional part of
+                    the output will be 'filled' with zeros, if appropriate.
                   </p>
                   <p>
                     <span class="bold"><strong>Note:</strong></span> If the trailing_zeros
@@ -1117,7 +1140,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.complexity"></a><h6>
-<a name="id909382"></a>
+<a name="id873447"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -1131,7 +1154,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.real_number.example"></a><h6>
-<a name="id909413"></a>
+<a name="id873478"></a>
             <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

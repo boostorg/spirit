@@ -26,7 +26,7 @@ The string generators described in this section are:
 
 The `string` generator emits a string of characters. The `string` generator
 is implicitly verbatim: the `delimit` parser is not applied in between
-characters of the string. The `string` generator has an assocaiated
+characters of the string. The `string` generator has an associated
 __karma_char_encoding_namespace__. This is needed when doing basic operations
 such as forcing lower or upper case. Examples:
 
@@ -93,7 +93,7 @@ not defined in __primitive_generator_concept__.
     [[`ns::string(s)`]      [Generate the string `s` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
-                             it succeeds only as long as the attribute is equal 
+                             it succeeds only if the attribute is equal 
                              to the immediate literal (unless the underlying 
                              output stream reports an error). Otherwise this 
                              generator fails and does not generate any output.]]

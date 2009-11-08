@@ -28,17 +28,16 @@
           Comparing the performance of a single double_ generator</a>
 </h5></div></div></div>
 <p>
-            This performance measurements are centered around default formatting
+            These performance measurements are centered around default formatting
             of a single <code class="computeroutput"><span class="keyword">double</span></code> floating
             point number using different libraries and methods. The overall execution
             times for those examples are compared below. We compare using <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams, <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>,
             and <span class="emphasis"><em>Spirit.Karma</em></span>.
           </p>
 <p>
-            For the full source code of the performance test please see here: <a href="../../../../../../benchmarks/karma/double_performance.cpp" target="_top">double_performance.cpp</a>).
-            All the measurements have been done by executing 1000000 iterations for
-            each formatting type (NUMITERATIONS is set to 1000000 in the code shown
-            below).
+            For the full source code of the performance test please see here: <a href="../../../../../../benchmarks/karma/double_performance.cpp" target="_top">double_performance.cpp</a>.
+            All the measurements have been done by executing <code class="computeroutput"><span class="number">1e6</span></code>
+            iterations for each formatting type (NUMITERATIONS is set to <code class="computeroutput"><span class="number">1e6</span></code> in the code shown below).
           </p>
 <p>
             Code used to measure the performance for <code class="computeroutput"><span class="identifier">sprintf</span></code>:
@@ -129,16 +128,15 @@
           </p>
 <p>
             The following table shows the overall performance results collected while
-            using different compilers. All times are in seconds measured for 1000000
-            iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
-            4GByte RAM). For a more readable comparison of the results see this
-            <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 4. Performance comparison for a single double">figure</a>.
+            using different compilers. All times are in seconds measured for <code class="computeroutput"><span class="number">1e6</span></code> iterations (platform: Windows7, Intel
+            Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). For a more readable comparison
+            of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 4. Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id936842"></a><p class="title"><b>Table 6. Performance comparison for a single double (all
-          times in [s], 1000000 iterations)</b></p>
+<a name="id900954"></a><p class="title"><b>Table 6. Performance comparison for a single double (all
+          times in [s], `1e6` iterations)</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a single double (all
-          times in [s], 1000000 iterations)">
+          times in [s], `1e6` iterations)">
 <colgroup>
 <col>
 <col>

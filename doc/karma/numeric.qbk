@@ -566,7 +566,7 @@ Basic usage of an `int_` generator:
 The `real_generator` can generate  real numbers of arbitrary length and size
 limited by its template parameter, `Num`. The numeric base type `Num` can be
 a user defined numeric type such as fixed_point (fixed point reals) and
-bignum (unlimited precision numbers) as long as the type follows certain
+bignum (unlimited precision numbers) if the type follows certain
 expression requirements (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.real_number.additional_requirements below]).
 
@@ -680,6 +680,18 @@ options.
                          `RealPolicies`. This generator never fails 
                          (unless the underlying output stream reports an 
                          error).]]
+    [
+[``real_generator<
+    Num, RealPolicies
+>()(num)``]
+                        [Generate the real number of type `Num` provided by the
+                         immediate literal value the generator is initialized
+                         from  using the specified `RealPolicies`.
+                         If this generator has an associated attribute it
+                         succeeds only if the attribute is equal to the
+                         immediate literal (unless the underlying output stream
+                         reports an error).  Otherwise this generator fails and
+                         does not generate any output.]]
 ]
 
 [heading Additional Requirements]
@@ -802,7 +814,7 @@ functions:
 
       `n` is the real number to convert 
 
-      `p` the instance of the policy type used to instantiate this real 
+      `p` is the instance of the policy type used to instantiate this real 
            number generator.
     ]]
 [   [``
@@ -852,7 +864,7 @@ functions:
     [Return the maximum number of decimal digits to generate in the 
      fractional part of the output.
 
-    `n`: is the real number to output. This can be used to 
+    `n: is the real number to output. This can be used to 
     adjust the required precision depending on the value of this number. If 
     the trailing zeros flag is specified the fractional part of the output will 
     be 'filled' with zeros, if appropriate.
@@ -1066,7 +1078,7 @@ Basic usage of an `double_` generator:
 
 As you might expect, the `bool_generator` can generate output from boolean 
 values. The `bool_generator` generator can be used to generate output from 
-ordinary primitive C/C++ `bool` values or user defined boolean types as long as 
+ordinary primitive C/C++ `bool` values or user defined boolean types if 
 the type follows certain expression requirements (for more information about 
 the requirements, see 
 [link spirit.karma.reference.numeric.boolean.additional_requirements below])). 
@@ -1154,7 +1166,7 @@ not defined in __primitive_generator_concept__.
                          is `true` as well (unless the underlying output stream 
                          reports an error).]]
     [[`false_`]         [Generate `"false"`. If this generator has an associated 
-                         attribute it succeeds only as long as the attribute 
+                         attribute it succeeds only if the attribute 
                          is `false` as well (unless the underlying output stream 
                          reports an error).]]
 ]

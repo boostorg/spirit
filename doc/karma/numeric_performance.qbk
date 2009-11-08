@@ -10,15 +10,15 @@
 
 [section:int_performance Comparing the performance of a single int_ generator]
 
-This performance measurements are centered around default formatting of a 
+These performance measurements are centered around default formatting of a 
 single `int` integer number using different libraries and methods. 
 The overall execution times for those examples are compared below. We compare
 using `sprintf`, C++ iostreams, __boost_format__, and __karma__.
 
 For the full source code of the performance test please see here:
-[@../../benchmarks/karma/int_generator.cpp int_generator.cpp]). All the 
-measurements have been done by executing 10000000 iterations for each 
-formatting type (NUMITERATIONS is set to 10000000 in the code shown below).
+[@../../benchmarks/karma/int_generator.cpp int_generator.cpp]. All the 
+measurements have been done by executing `1e7` iterations for each 
+formatting type (NUMITERATIONS is set to `1e7` in the code shown below).
 
 [import ../benchmarks/karma/int_generator.cpp]
 
@@ -39,12 +39,12 @@ Code used to measure the performance for __karma__ using a plain character buffe
 [karma_int_performance_plain]
 
 The following table shows the overall performance results collected 
-while using different compilers. All times are in seconds measured for 10000000
+while using different compilers. All times are in seconds measured for `1e7`
 iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). 
 For a more readable comparison of the results see this 
 [link spirit.karma.int_performance figure].
 
-[table Performance comparison for a single int (all times in [s], 10000000 iterations)
+[table Performance comparison for a single int (all times in [s], `1e7` iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
     [[ltoa]                 [1.542]              [0.895]            [0.884]               [1.163]              [1.099]            [0.906]]
     [[iostreams]            [6.548]              [13.727]           [11.898]              [3.464]              [8.316]            [8.115]]
@@ -59,15 +59,15 @@ For a more readable comparison of the results see this
 [/////////////////////////////////////////////////////////////////////////////]
 [section:double_performance Comparing the performance of a single double_ generator]
 
-This performance measurements are centered around default formatting of a 
+These performance measurements are centered around default formatting of a 
 single `double` floating point number using different libraries and methods. 
 The overall execution times for those examples are compared below. We compare
 using `sprintf`, C++ iostreams, __boost_format__, and __karma__.
 
 For the full source code of the performance test please see here:
-[@../../benchmarks/karma/double_performance.cpp double_performance.cpp]). All the 
-measurements have been done by executing 1000000 iterations for each 
-formatting type (NUMITERATIONS is set to 1000000 in the code shown below).
+[@../../benchmarks/karma/double_performance.cpp double_performance.cpp]. All the 
+measurements have been done by executing `1e6` iterations for each 
+formatting type (NUMITERATIONS is set to `1e6` in the code shown below).
 
 [import ../benchmarks/karma/double_performance.cpp]
 
@@ -93,12 +93,12 @@ Code used to measure the performance for __karma__ using a plain character buffe
 [karma_double_performance_plain]
 
 The following table shows the overall performance results collected 
-while using different compilers. All times are in seconds measured for 1000000
+while using different compilers. All times are in seconds measured for `1e6`
 iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). 
 For a more readable comparison of the results see this 
 [link spirit.karma.double_performance figure].
 
-[table Performance comparison for a single double (all times in [s], 1000000 iterations)
+[table Performance comparison for a single double (all times in [s], `1e6` iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
     [[sprintf]              [0.755]              [0.965]            [0.880]               [0.713]              [0.807]            [0.694]]
     [[iostreams]            [2.316]              [2.624]            [1.964]               [1.634]              [1.468]            [1.354]]
@@ -113,16 +113,16 @@ For a more readable comparison of the results see this
 [////////////////////////////////////////////////////////////////////////////]
 [section:format_performance Comparing the performance of a sequence of several generators]
 
-This performance measurements are centered around formatting of a sequence of
+These performance measurements are centered around formatting of a sequence of
 different items, including 2 `double` floating point numbers using different 
 libraries and methods. The overall execution times for those examples are 
 compared below. We compare using `sprintf`, C++ iostreams, __boost_format__, 
 and __karma__.
 
 For the full source code of the performance test please see here:
-[@../../benchmarks/karma/format_performance.cpp format_performance.cpp]). All the 
-measurements have been done by doing 1000000 iterations for each formatting 
-type (NUMITERATIONS is set to 1000000).
+[@../../benchmarks/karma/format_performance.cpp format_performance.cpp]. All the 
+measurements have been done by doing `1e6` iterations for each formatting 
+type (NUMITERATIONS is set to `1e6`).
 
 [import ../benchmarks/karma/format_performance.cpp]
 
@@ -149,12 +149,12 @@ buffer:
 [karma_format_performance_plain]
 
 The following table shows the overall performance results collected 
-while using different compilers. All times are in seconds measured for 1000000
+while using different compilers. All times are in seconds measured for `1e6`
 iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). 
 For a more readable comparison of the results see this 
 [link spirit.karma.format_performance figure].
 
-[table Performance comparison for a sequence of several items (all times in [s], 1000000 iterations)
+[table Performance comparison for a sequence of several items (all times in [s], `1e6` iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
     [[sprintf]              [1.725]              [1.892]            [1.903]               [1.469]              [1.608]            [1.493]]
     [[iostreams]            [4.827]              [5.287]            [4.444]               [3.112]              [3.319]            [2.877]]
