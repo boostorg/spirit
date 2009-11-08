@@ -20,12 +20,12 @@ parsed values on a successful parse.
 
 [heading Header]
 
-    // forwards to <boost/spirit/lex/tokenize_and_parse.hpp>
+    // forwards to <boost/spirit/home/lex/tokenize_and_parse.hpp>
     #include <boost/spirit/include/lex_tokenize_and_parse.hpp>
 
 For variadic attributes:
 
-    // forwards to <boost/spirit/lex/tokenize_and_parse_attr.hpp>
+    // forwards to <boost/spirit/home/lex/tokenize_and_parse_attr.hpp>
     #include <boost/spirit/include/lex_tokenize_and_parse_attr.hpp>
 
 The variadic attributes version of the API allows one or more

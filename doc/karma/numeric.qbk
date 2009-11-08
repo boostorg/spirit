@@ -39,7 +39,7 @@ The `uint_generator` class is the simplest among the members of the
 numerics package. The `uint_generator` can generate unsigned integers of
 arbitrary length and size. The `uint_generator` generator can be used to 
 generate ordinary primitive C/C++ integers or even user defined scalars such as
-bigints (unlimited precision integers) as long as the type follows
+bigints (unlimited precision integers) if the type follows
 certain expression requirements (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.unsigned_int.additional_requirements below])). 
 The `uint_generator` is a template class. Template parameters fine tune its behavior. 
@@ -104,7 +104,7 @@ Also, see __include_structure__.
                          unsigned integer value of type `Num`]]
     [[`Num`]            [Type of `num`: any unsigned integer type, or in case
                          of a __karma_lazy_argument__, its return value]]
-    [[`Radix`]          [A integer literal specifying the required radix for 
+    [[`Radix`]          [An integer literal specifying the required radix for 
                          the output conversion. Valid values are `2`, `8`, `10`,
                          and `16`.]]
 ]
@@ -116,10 +116,10 @@ not defined in __primitive_generator_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`lit(num)`]       [Generate the integer literal `num` using the default
-                         formatting (radix is 10, sign is only printed for 
-                         negative literals). This generator never fails (except 
-                         if the underlying output stream reports an error).]]
+    [[`lit(num)`]       [Generate the unsigned integer literal `num` using the
+                         default formatting (radix is 10). This generator never
+                         fails (unless the underlying output stream reports
+                         an error).]]
     [
 [``ushort
 uint
@@ -136,7 +136,7 @@ ulong_long(num)``]      [Generate the unsigned integer provided by the
                          immediate literal value the generator is initialized 
                          from using the default formatting (radix is 10). If 
                          this generator has an associated attribute it succeeds 
-                         only as long as the attribute is equal to the 
+                         only if the attribute is equal to the 
                          immediate literal (unless the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
@@ -146,8 +146,8 @@ oct
 hex``]                  [Generate the unsigned integer provided by a mandatory 
                          attribute using the default formatting and the 
                          corresponding radix (`bin`: radix is 2, `oct`: radix is 8,
-                         `hex`: radix is 16). This generator never fails (except 
-                         if the underlying output stream reports an error).]]
+                         `hex`: radix is 16). This generator never fails (unless 
+                         the underlying output stream reports an error).]]
     [
 [``bin(num)
 oct(num)
@@ -157,7 +157,7 @@ hex(num)``]             [Generate the unsigned integer provided by the
                          corresponding radix (`bin`: radix is 2, `oct`: 
                          radix is 8, `hex`: radix is 16). If 
                          this generator has an associated attribute it succeeds 
-                         only as long as the attribute is equal to the 
+                         only if the attribute is equal to the 
                          immediate literal (unless the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
@@ -190,7 +190,7 @@ options.
                          initialized from, using the specified `Radix` 
                          (possible values are `2`, `8`, `10`, and `16`, the 
                          default value is `10`). If this generator has an 
-                         associated attribute it succeeds only as long as the 
+                         associated attribute it succeeds only if the 
                          attribute is equal to the immediate literal (unless 
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
@@ -312,13 +312,13 @@ Basic usage of an `uint` generator:
 [heading Description]
 
 The `int_generator` can generate signed integers of arbitrary length and size.
-This is almost the same as the `int_generator`. The only difference is the
+This is almost the same as the `uint_generator`. The only difference is the
 additional task of generating the `'+'` or `'-'` sign preceding the number.
-The class interface is the same as that of the `int_generator`.
+The class interface is the same as that of the `uint_generator`.
 
 The `int_generator` generator can be used to emit ordinary primitive C/C++
 integers or even user defined scalars such as bigints (unlimited
-precision integers) as long as the type follows certain expression
+precision integers) if the type follows certain expression
 requirements (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.signed_int.additional_requirements below]). 
 
@@ -399,8 +399,8 @@ not defined in __primitive_generator_concept__.
     [[Expression]       [Semantics]]
     [[`lit(num)`]       [Generate the integer literal `num` using the default
                          formatting (radix is 10, sign is only printed for 
-                         negative literals). This generator never fails (except 
-                         if the underlying output stream reports an error).]]
+                         negative literals). This generator never fails (unless 
+                         the underlying output stream reports an error).]]
     [
 [``short_
 int_
@@ -418,7 +418,7 @@ long_long(num)``]       [Generate the integer provided by the immediate literal
                          value the generator is initialized from using the 
                          default formatting (radix is 10, sign is only printed 
                          for negative literals). If this generator has an 
-                         associated attribute it succeeds only as long as the 
+                         associated attribute it succeeds only if the 
                          attribute is equal to the immediate literal (unless 
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
@@ -459,7 +459,7 @@ type to create integer generators using a wide range of formatting options.
                          `true`, all numbers will be printed using a sign, i.e.
                          `'-'` for negative numbers, `'+'` for positive numbers,
                          and `' '` for zeros. If this generator has an 
-                         associated attribute it succeeds only as long as the 
+                         associated attribute it succeeds only if the 
                          attribute is equal to the immediate literal (unless 
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
@@ -608,7 +608,7 @@ Also, see __include_structure__.
 ]
 
 For more information about the type `RealPolicies` see 
-[link spirit.karma.reference.numeric.real_number.real_number_formatting_policies below]).
+[link spirit.karma.reference.numeric.real_number.real_number_formatting_policies below].
 
 [heading Model of]
 
@@ -656,9 +656,9 @@ long_double(num)``]     [Generate the real point number provided by the
                          `fabs(n) <= 1e5 && fabs(n) > 1e-3`, scientific 
                          representation otherwise, 3 fractional digits, sign is 
                          only printed for negative literals). If this generator 
-                         has an associated attribute it succeeds only as long as 
-                         the attribute is equal to the immediate literal (except 
-                         if the underlying output stream reports an error). 
+                         has an associated attribute it succeeds only if 
+                         the attribute is equal to the immediate literal (unless
+                         the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
 ]
@@ -684,7 +684,7 @@ options.
 
 [heading Additional Requirements]
 
-The following list enumerate the requirements which must be met in order to 
+The following list enumerates the requirements which must be met in order to 
 use a certain type `Num` to instantiate a `real_generator<Num, Policies>`.
 
 In order to be usable as the first template parameter for `real_generator<>` 
@@ -785,8 +785,8 @@ functions:
     ``]
     [This is the main function used to generate the output for a real
      number. It is called by the real generator in order to perform the 
-     conversion. In theory all of the work can be implemented here, but it is 
-     the easiest to use existing functionality provided by the type specified
+     conversion. In theory all of the work can be implemented here, but the 
+     easiest way is to use existing functionality provided by the type specified
      by the template parameter `Inserter`. The default implementation of this
      functions is:
      ``
@@ -798,11 +798,11 @@ functions:
               return Inserter::call_n(sink, n, p);
           }
      ``
-      `sink`: is the output iterator to use for generation 
+      `sink` is the output iterator to use for generation 
 
-      `n`: is the real number to convert 
+      `n` is the real number to convert 
 
-      `p`: the instance of the policy type used to instantiate this real 
+      `p` the instance of the policy type used to instantiate this real 
            number generator.
     ]]
 [   [``
@@ -838,7 +838,7 @@ functions:
     `precision()` member function. The default is not to generate the trailing 
     zeros.
 
-    `n`: is the real number to output. This can be used to 
+    `n` is the real number to output. This can be used to 
           adjust the formatting flags depending on the value of 
           this number.
 
@@ -870,16 +870,16 @@ functions:
     [This function is called to generate the integer part of the real
       number. 
 
-      `sink`: is the output iterator to use for generation 
+      `sink` is the output iterator to use for generation 
 
-      `n`: is the absolute value of the integer part of the real
+      `n` is the absolute value of the integer part of the real
            number to convert (always non-negative)
 
-      `sign`: is the sign of the overall real number to convert.
+      `sign` is the sign of the overall real number to convert.
 
-      `force_sign`: is a flag whether a sign has to be generated even for non-
-                    negative numbers (this is the same as has been returned from
-                    the function `force_sign()` described above)
+      `force_sign` is a flag indicating whether a sign has to be generated even for
+                   non-negative numbers (this is the same as has been returned
+                   from the function `force_sign()` described above)
 
       The return value defines the outcome of the whole generator. If it is 
       `false`, no further output is generated, immediately returning `false` from 
@@ -892,15 +892,15 @@ functions:
     ``]
     [This function is called to generate the decimal point.
 
-     `sink`: is the output iterator to use for generation 
+     `sink` is the output iterator to use for generation 
 
-     `n`: The fractional part of the real number to convert. Note 
+     `n` is the fractional part of the real number to convert. Note 
       that this number is scaled such, that it represents the number of units 
       which correspond to the value returned from the `precision()` function 
       earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
       when the function `precision()` returned `5`.
 
-      `precision`: The number of digits to emit as returned by the function 
+      `precision` is the number of digits to emit as returned by the function 
                    `precision()` described above
 
       This is given to allow to decide, whether a decimal point has to be 
@@ -920,17 +920,17 @@ functions:
     ``]
     [This function is called to generate the fractional part of the number.
 
-      `sink`: is the output iterator to use for generation 
+      `sink` is the output iterator to use for generation 
 
-      `n`: The fractional part of the real number to convert. Note 
+      `n` is the fractional part of the real number to convert. Note 
       that this number is scaled such, that it represents the number of units 
       which correspond to the value returned from the `precision()` function 
       earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
       when the function `precision()` returned `5`.
 
-      `adjprec`: The corrected number of digits to emit (see note below)
+      `adjprec` is the corrected number of digits to emit (see note below)
 
-      `precision`: The number of digits to emit as returned by the function 
+      `precision` is the number of digits to emit as returned by the function 
                    `precision()` described above
 
       *Note:* If `trailing_zeros()` returns `false` the `adjprec` 
@@ -963,9 +963,9 @@ functions:
      (this is called only if the `floatfield()` function returned the 
      `fmtflags::scientific` flag).
 
-     `sink`: is the output iterator to use for generation 
+     `sink` is the output iterator to use for generation 
 
-     `n`: The (signed) exponential part of the real number to convert. 
+     `n` is the (signed) exponential part of the real number to convert. 
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
@@ -985,13 +985,13 @@ functions:
     [This function is called whenever the number to print is a non-normal 
      real number of type `NaN`.
 
-     `sink`: is the output iterator to use for generation 
+     `sink` is the output iterator to use for generation 
 
-     `n`: is the (signed) real number to convert
+     `n` is the (signed) real number to convert
 
-    `force_sign`: is a flag whether a sign has to be generated even for non-
-                  negative numbers (this is the same as has been returned from
-                  the function `force_sign()` described above)
+    `force_sign` is a flag indicating whether a sign has to be generated even for
+                 non-negative numbers (this is the same as has been returned from
+                 the function `force_sign()` described above)
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
@@ -1011,13 +1011,13 @@ functions:
     [This function is called whenever the number to print is a non-normal 
      real number of type `Inf`.
 
-     `sink`: is the output iterator to use for generation 
+     `sink` is the output iterator to use for generation 
 
-     `n`: is the (signed) real number to convert
+     `n` is the (signed) real number to convert
 
-    `force_sign`: is a flag whether a sign has to be generated even for non-
-                  negative numbers (this is the same as has been returned from
-                  the function `force_sign()` described above)
+    `force_sign` is a flag indicating whether a sign has to be generated even for
+                 non-negative numbers (this is the same as has been returned from
+                 the function `force_sign()` described above)
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
@@ -1140,17 +1140,17 @@ not defined in __primitive_generator_concept__.
                          generated as `"false"`, and `true` is generated as 
                          `"true"`). This generator never fails (unless the 
                          underlying output stream reports an error).]]
-    [[`bool_(num)`]     [Generate the booelan value provided by the 
+    [[`bool_(b)`]       [Generate the booelan value provided by the 
                          immediate literal value the generator is initialized 
                          from using the default formatting (`false` is 
                          generated as `"false"`, and `true` is generated as 
                          `"true"`). If this generator has an associated 
-                         attribute it succeeds only as long as the attribute 
+                         attribute it succeeds only if the attribute 
                          is equal to the immediate literal (unless the 
                          underlying output stream reports an error). Otherwise 
                          this generator fails and does not generate any output.]]
     [[`true_`]          [Generate `"true"`. If this generator has an associated 
-                         attribute it succeeds only as long as the attribute 
+                         attribute it succeeds only if the attribute 
                          is `true` as well (unless the underlying output stream 
                          reports an error).]]
     [[`false_`]         [Generate `"false"`. If this generator has an associated 
@@ -1176,11 +1176,11 @@ boolean generators using a wide range of formatting options.
     [
 [``bool_generator<
     B, Policies
->()``]                  [Generate the boolean of type `B` provided 
+>()(b)``]               [Generate the boolean of type `B` provided 
                          by the immediate literal value the generator is 
                          initialized from, using the specified `Policies`. If 
                          this generator has an associated attribute it succeeds 
-                         only as long as the attribute is equal to the 
+                         only if the attribute is equal to the 
                          immediate literal (unless the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
@@ -1272,8 +1272,8 @@ A boolean formatting policy should expose the following:
     ``]
     [This is the main function used to generate the output for a boolean.
      It is called by the boolean generator in order to perform the 
-     conversion. In theory all of the work can be implemented here, but it is 
-     the easiest to use existing functionality provided by the type specified
+     conversion. In theory all of the work can be implemented here, but the 
+     easiest way is to use existing functionality provided by the type specified
      by the template parameter `Inserter`. The default implementation of this
      functions is:
      ``
@@ -1285,11 +1285,11 @@ A boolean formatting policy should expose the following:
               return Inserter::call_n(sink, b, p);
           }
      ``
-      `sink`: is the output iterator to use for generation 
+      `sink` is the output iterator to use for generation 
 
-      `b`: is the boolean to convert 
+      `b` is the boolean to convert 
 
-      `p`: the instance of the policy type used to instantiate this real 
+      `p` is the instance of the policy type used to instantiate this real 
            number generator.
     ]]
 [   [``
@@ -1300,9 +1300,9 @@ A boolean formatting policy should expose the following:
     ``]
     [This function is called to generate the boolean if it is `false`.
 
-     `sink`: is the output iterator to use for generation 
+     `sink` is the output iterator to use for generation 
 
-     `b`: The boolean to convert (the value is `false`). 
+     `b` is the boolean to convert (the value is `false`). 
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
@@ -1318,9 +1318,9 @@ A boolean formatting policy should expose the following:
     ``]
     [This function is called to generate the boolean if it is `true`.
 
-     `sink`: is the output iterator to use for generation 
+     `sink` is the output iterator to use for generation 
 
-     `b`: The boolean to convert (the value is `true`). 
+     `b` is the boolean to convert (the value is `true`). 
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
