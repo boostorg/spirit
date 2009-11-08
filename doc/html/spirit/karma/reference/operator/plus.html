@@ -27,16 +27,16 @@
 <a name="spirit.karma.reference.operator.plus"></a><a class="link" href="plus.html" title="Plus (+a)"> Plus (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.plus.description"></a><h6>
-<a name="id920824"></a>
+<a name="id884750"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.description">Description</a>
           </h6>
 <p>
-            The plus generator is used to repeat the execution of an embedded generator
+            The Plus generator is used to repeat the execution of an embedded generator
             one or more times. It succeeds if the embedded generator has been successfully
             executed at least once.
           </p>
 <a name="spirit.karma.reference.operator.plus.header"></a><h6>
-<a name="id920840"></a>
+<a name="id884767"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/plus.hpp&gt;
@@ -46,7 +46,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.plus.model_of"></a><h6>
-<a name="id920915"></a>
+<a name="id884841"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -59,7 +59,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.plus.expression_semantics"></a><h6>
-<a name="id920953"></a>
+<a name="id884880"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -116,7 +116,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.plus.attributes"></a><h6>
-<a name="id921078"></a>
+<a name="id885004"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.attributes">Attributes</a>
           </h6>
 <p>
@@ -171,13 +171,13 @@
             </p></td></tr>
 </table></div>
 <p>
-            The plus generator will execute its embedded generator once for each
-            element in the provided container attribute and as long as the embedded
-            generator succeeds. On each iteration it will pass the next consecutive
-            element from the container attribute to the embedded generator. Therefor
-            the number of iterations will not be larger than the number of elements
-            in the container passed as its attribute. An empty container will make
-            the plus generator fail.
+            The Plus generator will execute its embedded generator once for each
+            element in the provided container attribute as long as the embedded generator
+            succeeds. On each iteration it will pass the next consecutive element
+            from the container attribute to the embedded generator. Therefore the
+            number of iterations will not be larger than the number of elements in
+            the container passed as its attribute. An empty container will make the
+            plus generator fail.
           </p>
 <p>
             It is important to note, that the plus generator does not perform any
@@ -214,12 +214,12 @@
 <p>
               will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
               of its output. The overall expression will still generate the output
-              as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
+              as produced by all successful invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.plus.complexity"></a><h6>
-<a name="id921418"></a>
+<a name="id885344"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -235,7 +235,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.plus.example"></a><h6>
-<a name="id921442"></a>
+<a name="id885368"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

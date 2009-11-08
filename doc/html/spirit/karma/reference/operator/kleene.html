@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.kleene.description"></a><h6>
-<a name="id918702"></a>
+<a name="id882767"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             generator, the Kleene star generator always succeeds.
           </p>
 <a name="spirit.karma.reference.operator.kleene.header"></a><h6>
-<a name="id918719"></a>
+<a name="id882784"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/kleene.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.kleene.model_of"></a><h6>
-<a name="id918793"></a>
+<a name="id882858"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.expression_semantics"></a><h6>
-<a name="id918832"></a>
+<a name="id882896"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -115,7 +115,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.attributes"></a><h6>
-<a name="id918946"></a>
+<a name="id883010"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
           </h6>
 <p>
@@ -171,12 +171,12 @@
 </table></div>
 <p>
             The Kleene star generator will execute its embedded generator once for
-            each element in the provided container attribute and as long as the embedded
+            each element in the provided container attribute as long as the embedded
             generator succeeds. On each iteration it will pass the next consecutive
-            element from the container attribute to the embedded generator. Therefor
+            element from the container attribute to the embedded generator. Therefore
             the number of iterations will not be larger than the number of elements
             in the container passed as its attribute. An empty container will make
-            the Kleene star to not generate any output at all.
+            the Kleene star generate no output at all.
           </p>
 <p>
             It is important to note, that the Kleene star does not perform any buffering
@@ -213,12 +213,12 @@
 <p>
               will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
               of its output. The overall expression will still generate the output
-              as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
+              as produced by all successful invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.complexity"></a><h6>
-<a name="id919285"></a>
+<a name="id884205"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -235,7 +235,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.example"></a><h6>
-<a name="id920303"></a>
+<a name="id884229"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
