@@ -20,6 +20,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         unused_skipper(Skipper const& skipper)
           : skipper(skipper) {}
         Skipper const& skipper;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        unused_skipper& operator= (unused_skipper const&);
     };
 
     // If a surrounding lexeme[] directive was specified, the current

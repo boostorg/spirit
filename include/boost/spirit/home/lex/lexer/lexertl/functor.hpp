@@ -91,6 +91,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             T& dst_;
             T const& src_;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            assign_on_exit& operator= (assign_on_exit const&);
         };
 
     public:
@@ -131,7 +135,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         static result_type& get_next(MultiPass& mp, result_type& result)
         {
             shared& data = mp.shared()->ftor;
-            do {
+            for(;;) 
+            {
                 if (data.get_first() == data.get_last()) 
 #if defined(BOOST_SPIRIT_STATIC_EOF)
                     return result = eof;
@@ -213,8 +218,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             // if this token needs to be ignored, just repeat the matching,
             // while starting right after the current match
                 data.get_first() = end;
-
-            } while (true);
+            }
         }
 
         // set_state are propagated up to the iterator interface, allowing to 

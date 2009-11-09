@@ -439,7 +439,7 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef Attribute& type;
         static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute& val, Attribute const& attr) {}
+        static void post(Attribute&, Attribute const&) {}
     };
 
     template <typename Attribute>

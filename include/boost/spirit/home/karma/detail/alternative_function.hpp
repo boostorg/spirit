@@ -25,6 +25,7 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/variant.hpp>
+#include <boost/detail/workaround.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma { namespace detail
@@ -110,6 +111,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         call(Component const& component, OutputIterator& sink, Context& ctx
           , Delimiter const& d, unused_type)
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             // return true if any of the generators succeed
             return component.generate(sink, ctx, d, unused);
         }
@@ -139,6 +143,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         call(Component const& component, OutputIterator& sink
           , Context& ctx, Delimiter const& d, Attribute const& attr)
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             return call(component, sink, ctx, d, attr
               , spirit::traits::not_is_variant<Attribute>());
         }
@@ -148,6 +155,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         call(Component const& component, OutputIterator& sink
           , Context& ctx, Delimiter const& d, Attribute const& attr, mpl::true_)
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             return component.generate(sink, ctx, d, attr);
         }
 
@@ -156,6 +166,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         call(Component const& component, OutputIterator& sink
           , Context& ctx, Delimiter const& d, Attribute const& attr, mpl::false_)
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             typedef
                 compute_compatible_component<Expected, Attribute>
             component_type;
@@ -183,15 +196,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  alternative_generate_functor: a functor supplied to fusion::any which
+    //  alternative_generate_function: a functor supplied to fusion::any which
     //  will be executed for every generator in a given alternative generator
     //  expression
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator, typename Context, typename Delimiter,
         typename Attribute>
-    struct alternative_generate_functor
+    struct alternative_generate_function
     {
-        alternative_generate_functor(OutputIterator& sink_, Context& ctx_
+        alternative_generate_function(OutputIterator& sink_, Context& ctx_
             , Delimiter const& d, Attribute const& attr_)
           : sink(sink_), ctx(ctx_), delim(d), attr(attr_) {}
 
@@ -222,6 +235,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         Context& ctx;
         Delimiter const& delim;
         Attribute const& attr;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        alternative_generate_function& operator= (alternative_generate_function const&);
     };
 
 }}}}

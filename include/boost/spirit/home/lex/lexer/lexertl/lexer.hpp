@@ -166,9 +166,22 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // this type is purely used for the iterator_type construction below
         struct iterator_data_type 
         {
+            typedef typename Functor::semantic_actions_type semantic_actions_type;
+
+            iterator_data_type(
+                boost::lexer::basic_state_machine<char_type> const& state_machine
+              , boost::lexer::basic_rules<char_type> const& rules
+              , semantic_actions_type const& actions)
+              : state_machine_(state_machine), rules_(rules), actions_(actions)
+            {}
+
             boost::lexer::basic_state_machine<char_type> const& state_machine_;
             boost::lexer::basic_rules<char_type> const& rules_;
-            typename Functor::semantic_actions_type const& actions_;
+            semantic_actions_type const& actions_;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            iterator_data_type& operator= (iterator_data_type const&);
         };
 
     public:
@@ -180,7 +193,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             if (!init_dfa())
                 return iterator_type();
 
-            iterator_data_type iterator_data = { state_machine_, rules_, actions_ };
+            iterator_data_type iterator_data(state_machine_, rules_, actions_);
             return iterator_type(iterator_data, first, last, initial_state);
         }
 

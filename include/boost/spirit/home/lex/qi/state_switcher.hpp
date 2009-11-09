@@ -108,7 +108,7 @@ namespace boost { namespace spirit { namespace qi
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& /*context*/, Skipper const& skipper
-          , Attribute& attr) const
+          , Attribute& /*attr*/) const
         {
             qi::skip_over(first, last, skipper);   // always do a pre-skip
 
@@ -146,6 +146,10 @@ namespace boost { namespace spirit { namespace qi
 
             Iterator& it;
             std::size_t state;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            reset_state_on_exit& operator= (reset_state_on_exit const&);
         };
     }
 
@@ -202,6 +206,10 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
         State state;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        state_switcher_context& operator= (state_switcher_context const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

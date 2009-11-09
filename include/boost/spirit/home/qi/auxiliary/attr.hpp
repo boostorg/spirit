@@ -55,8 +55,8 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
+        bool parse(Iterator& /*first*/, Iterator const& /*last*/
+          , Context& /*context*/, Skipper const& /*skipper*/
           , Attribute& attr) const
         {
             spirit::traits::assign_to(value_, attr);
@@ -64,12 +64,16 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Context>
-        info what(Context& context) const
+        info what(Context& /*context*/) const
         {
             return info("attr");
         }
 
         Value value_;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        attr_parser& operator= (attr_parser const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

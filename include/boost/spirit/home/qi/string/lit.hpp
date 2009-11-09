@@ -29,6 +29,7 @@
 #include <boost/type_traits/add_const.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/detail/workaround.hpp>
 #include <string>
 
 namespace boost { namespace spirit
@@ -88,19 +89,23 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper, Attribute& attr) const
+          , Context& /*context*/, Skipper const& skipper, Attribute& attr) const
         {
             qi::skip_over(first, last, skipper);
             return detail::string_parse(str, first, last, attr);
         }
 
         template <typename Context>
-        info what(Context& /*ctx*/) const
+        info what(Context& /*context*/) const
         {
             return info("literal-string", str);
         }
 
         String str;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        literal_string& operator= (literal_string const&);
     };
 
     template <typename String, bool no_attribute>
@@ -117,6 +122,9 @@ namespace boost { namespace spirit { namespace qi
           : str_lo(in)
           , str_hi(in)
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            encoding; // suppresses warning: C4100: 'encoding' : unreferenced formal parameter
+#endif
             typename string_type::iterator loi = str_lo.begin();
             typename string_type::iterator hii = str_hi.begin();
 
@@ -124,8 +132,8 @@ namespace boost { namespace spirit { namespace qi
             {
                 typedef typename CharEncoding::char_type encoded_char_type;
 
-                *loi = encoding.tolower(encoded_char_type(*loi));
-                *hii = encoding.toupper(encoded_char_type(*hii));
+                *loi = static_cast<char_type>(encoding.tolower(encoded_char_type(*loi)));
+                *hii = static_cast<char_type>(encoding.toupper(encoded_char_type(*hii)));
             }
         }
 
@@ -140,7 +148,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper, Attribute& attr) const
+          , Context& /*context*/, Skipper const& skipper, Attribute& attr) const
         {
             qi::skip_over(first, last, skipper);
             return detail::string_parse(str_lo, str_hi, first, last, attr);

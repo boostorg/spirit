@@ -25,6 +25,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_enum.hpp>
+#include <boost/config.hpp>
 
 #define BOOST_SPIRIT_ENABLE_BINARY(name)                                        \
     template <>                                                                 \
@@ -176,7 +177,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
+          , Context& /*context*/, Skipper const& skipper
           , Attribute& attr) const
         {
             qi::skip_over(first, last, skipper);
@@ -198,7 +199,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Context>
-        info what(Context& context) const
+        info what(Context& /*context*/) const
         {
             return info(qi::detail::what<endian>::is());
         }
@@ -222,7 +223,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
+          , Context& /*context*/, Skipper const& skipper
           , Attribute& attr) const
         {
             qi::skip_over(first, last, skipper);
@@ -233,7 +234,17 @@ namespace boost { namespace spirit { namespace qi
             // This allows us to treat them as a sequence of consecutive bytes.
             boost::integer::endian<
                 endian, typename qi::detail::integer<bits>::type, bits> attr_;
+
+#if defined(BOOST_MSVC)
+// warning C4244: 'argument' : conversion from 'const int' to 'foo', possible loss of data
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#endif
             attr_ = n;
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
+
             unsigned char* bytes = reinterpret_cast<unsigned char*>(&attr_);
 
             Iterator it = first;
@@ -249,7 +260,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Context>
-        info what(Context& context) const
+        info what(Context& /*context*/) const
         {
             return info(qi::detail::what<endian>::is());
         }

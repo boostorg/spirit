@@ -48,14 +48,14 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+          , Attribute const& /*attr*/)
         {
             return detail::generate_to(sink, '\n') &&
                    karma::delimit_out(sink, d);   // always do post-delimiting
         }
 
         template <typename Context>
-        info what(Context const& ctx) const
+        info what(Context const& /*context*/) const
         {
             return info("eol");
         }

@@ -269,7 +269,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        static info what(Context const& ctx)
+        static info what(Context const& /*context*/)
         {
             return info("unsigned-integer");
         }
@@ -330,7 +330,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        static info what(Context const& ctx)
+        static info what(Context const& /*context*/)
         {
             return info("unsigned-integer");
         }

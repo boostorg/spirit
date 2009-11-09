@@ -69,6 +69,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Context& context;
         Skipper const& skipper;
         Attribute& attr;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        alternative_function& operator= (alternative_function const&);
     };
 
     template <typename Iterator, typename Context, typename Skipper>
@@ -93,6 +97,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Iterator const& last;
         Context& context;
         Skipper const& skipper;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        alternative_function& operator= (alternative_function const&);
     };
 
 }}}}

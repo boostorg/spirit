@@ -44,15 +44,15 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr) const
+          , Context& /*context*/, Skipper const& skipper
+          , Attribute& /*attr*/) const
         {
             qi::skip_over(first, last, skipper);
             return first == last;
         }
 
         template <typename Context>
-        info what(Context& context) const
+        info what(Context& /*context*/) const
         {
             return info("eoi");
         }

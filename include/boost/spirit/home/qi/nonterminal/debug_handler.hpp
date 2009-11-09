@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace qi
             catch (expectation_failure<Iterator> const& e)
             {
                 f(first, last, context, failed_parse, rule_name);
-                throw e;
+                boost::throw_exception(e);
             }
             return false;
         }

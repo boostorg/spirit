@@ -15,6 +15,7 @@
 #include <boost/spirit/home/qi/detail/expect_function.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <stdexcept>
 
 namespace boost { namespace spirit
 {
@@ -33,11 +34,17 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace qi
 {
     template <typename Iterator>
-    struct expectation_failure
+    struct expectation_failure : std::runtime_error
     {
+        expectation_failure(Iterator first, Iterator last, info const& what)
+          : std::runtime_error("boost::spirit::qi::expectation_failure")
+          , first(first), last(last), what_(what)
+        {}
+        ~expectation_failure() throw() {}
+
         Iterator first;
         Iterator last;
-        info what;
+        info what_;
     };
 
     template <typename Elements>

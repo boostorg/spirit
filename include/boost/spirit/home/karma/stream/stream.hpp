@@ -194,7 +194,6 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
-    
     template <typename T, typename Char, typename CharEncoding, typename Tag>
     struct lit_stream_generator
       : primitive_generator<lit_stream_generator<T, Char, CharEncoding, Tag> >
@@ -264,6 +263,10 @@ namespace boost { namespace spirit { namespace karma
         }
 
         T t_;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        lit_stream_generator& operator= (lit_stream_generator const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

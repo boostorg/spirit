@@ -15,6 +15,7 @@
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
 #include <boost/spirit/home/karma/detail/string_generate.hpp>
 #include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
+#include <boost/detail/workaround.hpp>
 
 namespace boost { namespace spirit { namespace karma 
 { 
@@ -38,6 +39,9 @@ namespace boost { namespace spirit { namespace karma
         static bool
         call (OutputIterator& sink, U b, Policies const& p = Policies())
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            p; // suppresses warning: C4100: 'p' : unreferenced formal parameter
+#endif
             return p.template call<bool_inserter>(sink, T(b), p);
         }
 
@@ -48,6 +52,9 @@ namespace boost { namespace spirit { namespace karma
         static bool
         call_n (OutputIterator& sink, U b, Policies const& p)
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            p; // suppresses warning: C4100: 'p' : unreferenced formal parameter
+#endif
             if (b) 
                 return p.template generate_true<CharEncoding, Tag>(sink, b);
             return p.template generate_false<CharEncoding, Tag>(sink, b);

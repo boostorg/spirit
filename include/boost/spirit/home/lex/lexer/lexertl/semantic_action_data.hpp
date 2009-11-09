@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
 
             // try to invoke a semantic action for the given token (unique_id)
-            BOOST_SCOPED_ENUM(pass_flags) invoke_actions(std::size_t state
+            BOOST_SCOPED_ENUM(pass_flags) invoke_actions(std::size_t /*state*/
               , std::size_t& id, std::size_t unique_id, Iterator& end
               , Data& data) const
             {

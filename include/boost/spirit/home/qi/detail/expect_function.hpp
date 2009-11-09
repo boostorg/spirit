@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/multi_pass_wrapper.hpp>
+#include <boost/throw_exception.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
@@ -53,8 +54,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     is_first = false;
                     return true;
                 }
-                Exception x = { first, last, component.what(context) };
-                throw x;
+                boost::throw_exception(Exception(first, last, component.what(context)));
+#if defined(BOOST_NO_EXCEPTIONS)
+                return false;   // for systems not supporting exceptions
+#endif
             }
             is_first = false;
             return false;
@@ -78,8 +81,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     is_first = false;
                     return true;
                 }
-                Exception x = { first, last, component.what(context) };
-                throw x;
+                boost::throw_exception(Exception(first, last, component.what(context)));
+#if defined(BOOST_NO_EXCEPTIONS)
+                return false;   // for systems not supporting exceptions
+#endif
             }
             is_first = false;
             return false;
@@ -90,6 +95,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Context& context;
         Skipper const& skipper;
         mutable bool is_first;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        expect_function& operator= (expect_function const&);
     };
 }}}}
 

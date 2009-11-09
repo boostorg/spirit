@@ -142,7 +142,7 @@ namespace boost { namespace spirit { namespace lex
         }
 
         template <typename LexerDef>
-        void add_actions(LexerDef& lexdef) const {}
+        void add_actions(LexerDef&) const {}
 
     public:
         typedef Char char_type;
@@ -153,12 +153,13 @@ namespace boost { namespace spirit { namespace lex
         token_def() 
           : proto_base_type(terminal_type::make(alias()))
           , def_('\0'), token_id_()
-          , unique_id_(std::size_t(~0)), token_state_(~0)  {}
+          , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0))  {}
 
         explicit token_def(char_type def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(alias()))
-          , def_(def_), token_id_(Idtype() == id_ ? def_ : id_)
-          , unique_id_(~0), token_state_(std::size_t(~0)) {}
+          , def_(def_)
+          , token_id_(std::size_t(Idtype() == id_ ? def_ : id_))
+          , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
 
         explicit token_def(string_type const& def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(alias()))

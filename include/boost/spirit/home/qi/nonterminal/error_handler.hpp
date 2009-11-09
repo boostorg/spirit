@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, bool active>
         struct reset_on_exit
         {
-            reset_on_exit(Iterator& it) {}
+            reset_on_exit(Iterator&) {}
         };
 
         // For 'retry' or 'fail' error handlers we need to inhibit the flushing 
@@ -91,7 +91,7 @@ namespace boost { namespace spirit { namespace qi
                   (action == retry || action == fail)> on_exit_type;
 
             on_exit_type on_exit(first);
-            while (true)
+            for(;;)
             {
                 try
                 {
@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace qi
                           , info const&>
                     params;
                     error_handler_result r = action;
-                    params args(first, last, x.first, x.what);
+                    params args(first, last, x.first, x.what_);
                     f(args, context, r);
 
                     // The assertions below will fire if you are using a
@@ -133,7 +133,7 @@ namespace boost { namespace spirit { namespace qi
                                 (action != retry && action != fail));
                             continue;
                         case accept: return true;
-                        case rethrow: throw x;
+                        case rethrow: boost::throw_exception(x);
                     }
                 }
             }

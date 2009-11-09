@@ -73,6 +73,10 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
         Action f;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        action& operator= (action const&);
     };
 }}}
 

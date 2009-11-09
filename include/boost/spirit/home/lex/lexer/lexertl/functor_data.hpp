@@ -58,9 +58,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // The following functions are used by the implementation of the 
             // placeholder '_state'.
-            void set_state_name (char_type const* state) {}
+            void set_state_name (char_type const*) {}
             char_type const* get_state_name() const { return rules_.initial(); }
-            std::size_t get_state_id (char_type const* state) const
+            std::size_t get_state_id (char_type const*) const
             {
                 return 0;
             }
@@ -142,7 +142,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
 
             std::size_t get_state() const { return 0; }
-            void set_state(std::size_t state) {}
+            void set_state(std::size_t) {}
 
             Iterator& get_first() { return first_; }
             Iterator const& get_first() const { return first_; }
@@ -161,6 +161,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             boost::lexer::basic_state_machine<char_type> const& state_machine_;
             boost::lexer::basic_rules<char_type> const& rules_;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            data& operator= (data const&);
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -227,6 +231,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         protected:
             std::size_t state_;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            data& operator= (data const&);
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -342,6 +350,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             mutable TokenValue value_;  // token value to use
             bool has_hold_;     // 'true' if hold_ is valid
             bool has_value_;    // 'true' if value_ is valid
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            data& operator= (data const&);
         };
     }
 

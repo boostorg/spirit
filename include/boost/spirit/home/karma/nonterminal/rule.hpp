@@ -273,7 +273,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        info what(Context& context) const
+        info what(Context& /*context*/) const
         {
             return info(name_);
         }

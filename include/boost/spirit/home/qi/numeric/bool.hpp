@@ -18,6 +18,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/mpl/assert.hpp>
+#include <boost/detail/workaround.hpp>
 
 namespace boost { namespace spirit
 {
@@ -59,6 +60,9 @@ namespace boost { namespace spirit { namespace qi
                 if (first == last)
                     return false;
 
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+                p; // suppresses warning: C4100: 'p' : unreferenced formal parameter
+#endif
                 return (allow_true && p.parse_true(first, last, attr)) ||
                        (!disallow_false && p.parse_false(first, last, attr));
             }

@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Iterator>
     void clear_queue(Iterator&
-      , BOOST_SCOPED_ENUM(clear_mode) mode = clear_mode::clear_if_enabled) 
+      , BOOST_SCOPED_ENUM(clear_mode) /*mode*/ = clear_mode::clear_if_enabled) 
     {}
 
     template <typename Iterator>

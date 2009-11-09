@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_value<optional<Attribute>, unused_type>
     {
         static void 
-        call(unused_type, optional<Attribute> const& attr)
+        call(unused_type, optional<Attribute> const&)
         {
         }
     };

@@ -82,6 +82,10 @@ namespace boost { namespace spirit { namespace qi
         bool got_min(T i) const { return i >= exact; }
 
         T const exact;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        exact_iterator& operator= (exact_iterator const&);
     };
 
     template <typename T>
@@ -98,6 +102,10 @@ namespace boost { namespace spirit { namespace qi
 
         T const min;
         T const max;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        finite_iterator& operator= (finite_iterator const&);
     };
 
     template <typename T>
@@ -108,10 +116,14 @@ namespace boost { namespace spirit { namespace qi
 
         typedef T type;
         T start() const { return 0; }
-        bool got_max(T i) const { return false; }
+        bool got_max(T /*i*/) const { return false; }
         bool got_min(T i) const { return i >= min; }
 
         T const min;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        infinite_iterator& operator= (infinite_iterator const&);
     };
 
     template <typename Subject, typename LoopIter>
@@ -187,6 +199,10 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
         LoopIter iter;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        repeat_parser& operator= (repeat_parser const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

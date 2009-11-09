@@ -27,6 +27,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_enum.hpp>
+#include <boost/config.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 #define BOOST_SPIRIT_ENABLE_BINARY(name)                                      \
@@ -192,7 +193,17 @@ namespace boost { namespace spirit { namespace karma
             boost::integer::endian<
                 endian, typename karma::detail::integer<bits>::type, bits
             > p;
+
+#if defined(BOOST_MSVC)
+// warning C4244: 'argument' : conversion from 'const int' to 'foo', possible loss of data
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#endif
             p = traits::extract_from(attr, context);
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
+
             unsigned char const* bytes =
                 reinterpret_cast<unsigned char const*>(&p);
 
@@ -221,7 +232,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        static info what(Context const& ctx)
+        static info what(Context const& /*context*/)
         {
             return karma::detail::what<endian>::is();
         }
@@ -241,7 +252,15 @@ namespace boost { namespace spirit { namespace karma
         template <typename T>
         literal_binary_generator(T const& t)
         {
+#if defined(BOOST_MSVC)
+// warning C4244: 'argument' : conversion from 'const int' to 'foo', possible loss of data
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#endif
             data_ = t;
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
         }
 
         template <
@@ -266,7 +285,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        static info what(Context const& ctx)
+        static info what(Context const& /*context*/)
         {
             return karma::detail::what<endian>::is();
         }

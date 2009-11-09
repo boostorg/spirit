@@ -73,6 +73,10 @@ namespace boost { namespace spirit { namespace detail
         }
 
         Context& context;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        expand_arg& operator= (expand_arg const&);
     };
 
 }}}

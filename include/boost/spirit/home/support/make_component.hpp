@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace detail
 
             result_type operator()(
                 typename impl::expr_param expr
-              , typename impl::state_param state
+              , typename impl::state_param /*state*/
               , typename impl::data_param data
             ) const
             {

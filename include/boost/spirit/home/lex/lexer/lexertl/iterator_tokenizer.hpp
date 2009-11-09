@@ -34,7 +34,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
           , Iterator &start_token_, Iterator const& end_
           , std::size_t& unique_id_)
         {
-            if (start_token_ == end_) return 0;
+            if (start_token_ == end_) 
+            {
+                unique_id_ = boost::lexer::npos;
+                return 0;
+            }
 
         again:
             std::size_t const* lookup_ = &state_machine_.data()._lookup[dfa_state_]->

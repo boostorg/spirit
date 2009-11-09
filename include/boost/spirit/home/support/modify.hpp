@@ -99,7 +99,7 @@ namespace boost { namespace spirit
 
         template <typename Tag, typename Modifiers>
         Modifiers
-        op(Tag tag, Modifiers modifiers, mpl::false_) const
+        op(Tag /*tag*/, Modifiers modifiers, mpl::false_) const
         {
             return modifiers;
         }

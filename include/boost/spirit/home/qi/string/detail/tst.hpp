@@ -117,7 +117,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 return 0;
 
             tst_node** pp = &start;
-            while (true)
+            for(;;)
             {
                 typename
                     boost::detail::iterator_traits<Iterator>::value_type

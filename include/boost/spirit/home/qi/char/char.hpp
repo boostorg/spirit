@@ -107,8 +107,9 @@ namespace boost { namespace spirit { namespace qi
         typedef typename CharEncoding::char_type char_type;
         typedef CharEncoding char_encoding;
 
-        literal_char(char_type ch)
-          : ch(ch) {}
+        template <typename Char>
+        literal_char(Char ch)
+          : ch(static_cast<char_type>(ch)) {}
 
         template <typename Context, typename Iterator>
         struct attribute
@@ -145,8 +146,8 @@ namespace boost { namespace spirit { namespace qi
         typedef CharEncoding char_encoding;
 
         literal_char(char_type ch)
-          : lo(char_encoding::tolower(ch))
-          , hi(char_encoding::toupper(ch)) {}
+          : lo(static_cast<char_type>(char_encoding::tolower(ch)))
+          , hi(static_cast<char_type>(char_encoding::toupper(ch))) {}
 
         template <typename Context, typename Iterator>
         struct attribute
@@ -218,10 +219,10 @@ namespace boost { namespace spirit { namespace qi
         typedef CharEncoding char_encoding;
 
         char_range(char_type from, char_type to)
-          : from_lo(char_encoding::tolower(from))
-          , to_lo(char_encoding::tolower(to))
-          , from_hi(char_encoding::toupper(from))
-          , to_hi(char_encoding::toupper(to))
+          : from_lo(static_cast<char_type>(char_encoding::tolower(from)))
+          , to_lo(static_cast<char_type>(char_encoding::tolower(to)))
+          , from_hi(static_cast<char_type>(char_encoding::toupper(from)))
+          , to_hi(static_cast<char_type>(char_encoding::toupper(to)))
         {}
 
         template <typename CharParam, typename Context>
@@ -335,18 +336,20 @@ namespace boost { namespace spirit { namespace qi
                     next = *definition++;
                     if (next == 0)
                     {
-                        chset.set(CharEncoding::tolower(ch));
-                        chset.set(CharEncoding::toupper(ch));
+                        chset.set(static_cast<char_type>(CharEncoding::tolower(ch)));
+                        chset.set(static_cast<char_type>(CharEncoding::toupper(ch)));
                         chset.set('-');
                         break;
                     }
-                    chset.set(CharEncoding::tolower(ch), CharEncoding::tolower(next));
-                    chset.set(CharEncoding::toupper(ch), CharEncoding::toupper(next));
+                    chset.set(static_cast<char_type>(CharEncoding::tolower(ch))
+                      , static_cast<char_type>(CharEncoding::tolower(next)));
+                    chset.set(static_cast<char_type>(CharEncoding::toupper(ch))
+                      , static_cast<char_type>(CharEncoding::toupper(next)));
                 }
                 else
                 {
-                    chset.set(CharEncoding::tolower(ch));
-                    chset.set(CharEncoding::toupper(ch));
+                    chset.set(static_cast<char_type>(CharEncoding::tolower(ch)));
+                    chset.set(static_cast<char_type>(CharEncoding::toupper(ch)));
                 }
                 ch = next;
             }

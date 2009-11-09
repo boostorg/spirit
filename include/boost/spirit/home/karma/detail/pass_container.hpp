@@ -170,6 +170,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         F f;
         Attr const& attr;
         mutable typename traits::container_iterator<Attr>::type iter;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        pass_container& operator= (pass_container const&);
     };
 
     // Utility function to make a pass_container

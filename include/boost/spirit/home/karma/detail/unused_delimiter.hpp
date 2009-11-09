@@ -20,6 +20,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         unused_delimiter(Delimiter const& delim)
           : delimiter(delim) {}
         Delimiter const& delimiter;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        unused_delimiter& operator= (unused_delimiter const&);
     };
 
     // If a surrounding verbatim[] directive was specified, the current
