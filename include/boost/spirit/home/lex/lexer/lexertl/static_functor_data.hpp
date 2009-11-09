@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
  
             typedef std::size_t (*next_token_functor)(std::size_t&, 
                 Iterator const&, Iterator&, Iterator const&, std::size_t&);
-            typedef char_type const* const (*get_state_name_type)(std::size_t);
+            typedef char_type const* (*get_state_name_type)(std::size_t);
 
             // initialize the shared data 
             template <typename IterData>

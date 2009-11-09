@@ -386,7 +386,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           : sink(sink_)
         {}
         output_iterator(output_iterator const& rhs)
-          : base_iterator(rhs), sink(rhs.sink)
+          : base_iterator(rhs), boost::noncopyable(), sink(rhs.sink)
         {}
 
         output_iterator& operator*() { return *this; }
