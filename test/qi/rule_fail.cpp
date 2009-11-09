@@ -25,7 +25,7 @@ int main()
     def = int_ >> *(',' >> int_);
 
     bool r = phrase_parse(input, end, def,
-        space | ('%' >> *~char_('\n') >> '\n'));
+        qi::space | ('%' >> *~char_('\n') >> '\n'));
 
     return 0;
 }

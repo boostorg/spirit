@@ -68,6 +68,10 @@ namespace testns
         }
 
         const T1 t1;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        ops_1_parser& operator= (ops_1_parser const&);
     };
 
     template <typename T1, typename T2>
@@ -117,6 +121,10 @@ namespace testns
 
         const T1 t1;
         const T2 t2;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        ops_2_parser& operator= (ops_2_parser const&);
     };
 
     template <typename T1, typename T2, typename T3>
@@ -171,6 +179,10 @@ namespace testns
         const T1 t1;
         const T2 t2;
         const T3 t3;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        ops_3_parser& operator= (ops_3_parser const&);
     };
 
 }
@@ -273,7 +285,7 @@ namespace boost { namespace spirit { namespace qi
 namespace testns
 {
     template <typename T1, typename T>
-    void check_type_1(const T& t)
+    void check_type_1(const T& /*t*/)
     {
         namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
@@ -281,7 +293,7 @@ namespace testns
     }
 
     template <typename T1, typename T2, typename T>
-    void check_type_2(const T& t)
+    void check_type_2(const T& /*t*/)
     {
         namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
@@ -289,7 +301,7 @@ namespace testns
     }
 
     template <typename T1, typename T2, typename T3, typename T>
-    void check_type_3(const T& t)
+    void check_type_3(const T& /*t*/)
     {
         namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T

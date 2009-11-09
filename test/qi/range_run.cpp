@@ -33,8 +33,8 @@ void acid_test()
     int const test_size = 1000;
 
     boost::mt19937 rng;
-    int min = const_min;
-    int max = const_max;
+    Char min = const_min;
+    Char max = const_max;
     boost::uniform_int<Char> char_(min, max);
     boost::variate_generator<boost::mt19937&, boost::uniform_int<Char> >
        gen(rng, char_);
@@ -62,7 +62,7 @@ void acid_test()
 
     for (int i = const_min; i <= int(const_max); ++i)
     {
-        BOOST_TEST(rr.test(i) == bset[i-const_min]);
+        BOOST_TEST(rr.test(static_cast<Char>(i)) == bset[i-const_min]);
     }
 }
 

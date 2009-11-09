@@ -68,7 +68,7 @@ struct word_count_grammar : qi::grammar<Iterator>
 };
 
 
-int main(int argc, char* argv[])
+int main()
 {
     typedef lex::lexertl::token<
         const char*, boost::mpl::vector<std::string>

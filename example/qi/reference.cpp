@@ -812,7 +812,7 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: "; print_info(x.what);
+            std::cout << "expected: "; print_info(x.what_);
             std::cout << "got: \"" << std::string(x.first, x.last) << '"' << std::endl;
         }
         /*`The code above will print:[teletype]

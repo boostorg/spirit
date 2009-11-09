@@ -71,6 +71,10 @@ struct dumper
     }
 
     std::stringstream& strm;
+
+private:
+    // silence MSVC warning C4512: assignment operator could not be generated
+    dumper& operator= (dumper const&);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

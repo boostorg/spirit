@@ -69,7 +69,7 @@ namespace
         template <typename Char>
         Char operator()(Char ch) const
         {
-            return std::tolower(ch);
+            return static_cast<Char>(std::tolower(ch));
         }
     };
 

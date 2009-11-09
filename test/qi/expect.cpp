@@ -45,10 +45,10 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: "; print_info(x.what);
+            std::cout << "expected: "; print_info(x.what_);
             std::cout << "got: \"" << x.first << '"' << std::endl;
 
-            BOOST_TEST(boost::get<std::string>(x.what.value) == "o");
+            BOOST_TEST(boost::get<std::string>(x.what_.value) == "o");
             BOOST_TEST(std::string(x.first, x.last) == "i");
         }
     }
@@ -62,10 +62,10 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: "; print_info(x.what);
+            std::cout << "expected: "; print_info(x.what_);
             std::cout << "got: \"" << x.first << '"' << std::endl;
 
-            BOOST_TEST(boost::get<std::string>(x.what.value) == "o");
+            BOOST_TEST(boost::get<std::string>(x.what_.value) == "o");
             BOOST_TEST(std::string(x.first, x.last) == "i");
         }
     }
@@ -79,11 +79,11 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: "; print_info(x.what);
+            std::cout << "expected: "; print_info(x.what_);
             std::cout << "got: \"" << x.first << '"' << std::endl;
 
-            BOOST_TEST(x.what.tag == "no-case-literal-string");
-            BOOST_TEST(boost::get<std::string>(x.what.value) == "nend");
+            BOOST_TEST(x.what_.tag == "no-case-literal-string");
+            BOOST_TEST(boost::get<std::string>(x.what_.value) == "nend");
             BOOST_TEST(std::string(x.first, x.last) == "END");
         }
     }

@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct push_back_container<x_attr, char>
     {
-        static void call(x_attr& c, char val)
+        static void call(x_attr& /*c*/, char /*val*/)
         {
             // push back value type into container
         }

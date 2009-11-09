@@ -80,6 +80,10 @@ struct handle_whitespace
     }
 
     std::stack<unsigned int>& indents_;
+
+private:
+    // silence MSVC warning C4512: assignment operator could not be generated
+    handle_whitespace& operator= (handle_whitespace const&);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

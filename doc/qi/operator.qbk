@@ -275,11 +275,11 @@ When any operand, except the first, fail to match an
 `expectation_failure<Iter>` is thrown:
 
     template <typename Iter>
-    struct expectation_failure
+    struct expectation_failure : std::runtime_error
     {
-        Iter first;     // [first, last) iterator pointing
-        Iter last;      // to the error position in the input.
-        __info__ what;      // Information about the nature of the error.
+        Iter first;           // [first, last) iterator pointing
+        Iter last;            // to the error position in the input.
+        __info__ what_;       // Information about the nature of the error.
     };
 
 [heading Expression Semantics]
