@@ -463,7 +463,7 @@ failing for empty containers passed as its attribute:
 [heading Description]
 
 The list generator is used to repeat the execution of an embedded generator 
-and interspace it with the output of anyother generator one or more times. 
+and interspace it with the output of another generator one or more times. 
 It succeeds if the embedded generator has been successfully executed at least 
 once.
 
