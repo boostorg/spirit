@@ -26,13 +26,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           : sink(sink_), ctx(context_), delim(delim_) 
         {}
 
-#if defined(BOOST_MSVC)
-#pragma warning(push)
-#pragma warning(disable: 4100)  // warning C4100: 'component' : unreferenced formal parameter
-#endif
         template <typename Component, typename Attribute>
         bool operator()(Component const& component, Attribute const& attr) const
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))  
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             // return true if any of the generators fail
             return !component.generate(sink, ctx, delim, attr);
         }
@@ -40,12 +39,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool operator()(Component const& component) const
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))  
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             // return true if any of the generators fail
             return !component.generate(sink, ctx, delim, unused);
         }
-#if defined(BOOST_MSVC)
-#pragma warning(pop)
-#endif
 
         OutputIterator& sink;
         Context& ctx;
