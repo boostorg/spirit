@@ -82,10 +82,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct no_position_policy
     {
         no_position_policy() {}
-        no_position_policy(no_position_policy const& rhs) {}
+        no_position_policy(no_position_policy const&) {}
 
         template <typename T>
-        void output(T const& value) {}
+        void output(T const& /*value*/) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -160,10 +160,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct no_counting_policy
     {
         no_counting_policy() {}
-        no_counting_policy(no_counting_policy const& rhs) {}
+        no_counting_policy(no_counting_policy const&) {}
 
         template <typename T>
-        void output(T const& value) {}
+        void output(T const& /*value*/) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -281,10 +281,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct no_buffering_policy
     {
         no_buffering_policy() {}
-        no_buffering_policy(no_counting_policy const& rhs) {}
+        no_buffering_policy(no_counting_policy const&) {}
 
         template <typename T>
-        bool output(T const& value) 
+        bool output(T const& /*value*/) 
         {
             return true;
         }
@@ -386,7 +386,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           : sink(sink_)
         {}
         output_iterator(output_iterator const& rhs)
-          : base_iterator(rhs), sink(rhs.sink)
+          : base_iterator(rhs), boost::noncopyable(), sink(rhs.sink)
         {}
 
         output_iterator& operator*() { return *this; }

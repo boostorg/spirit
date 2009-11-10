@@ -67,7 +67,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+          , Attribute const& /*attr*/) const
         {
             std::size_t count = sink.get_out_count() % numpadbytes_;
             if (count)

@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace karma
         //            adjust the required behavior depending on the value of 
         //            this number.
         ///////////////////////////////////////////////////////////////////////
-        static bool const force_sign(T)
+        static bool force_sign(T)
         {
             return false;
         }

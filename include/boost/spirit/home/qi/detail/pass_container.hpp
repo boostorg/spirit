@@ -139,7 +139,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return f(component, attr);
         }
 
-        // Dispaches to dispatch_main depending on the attribute type
+        // Dispatches to dispatch_main depending on the attribute type
         // of the Component
         template <typename Component>
         bool operator()(Component const& component) const
@@ -155,6 +155,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         F f;
         Attr& attr;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        pass_container& operator= (pass_container const&);
     };
 
     // Utility function to make a pass_container

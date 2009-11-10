@@ -37,7 +37,7 @@ struct position_helper_tokens : lexer<Lexer>
     token_def<> any, eol;
 };
 
-int main(int argc, char* argv[])
+int main()
 {
     // read input from the given file
     std::string str ("test");

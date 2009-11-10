@@ -116,6 +116,10 @@ namespace boost { namespace spirit
         Callback& callback;
         utf8_string const& tag;
         int depth;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        basic_info_walker& operator= (basic_info_walker const&);
     };
 
     // bare-bones print support
@@ -127,7 +131,7 @@ namespace boost { namespace spirit
         simple_printer(Out& out)
           : out(out) {}
 
-        void element(string const& tag, string const& value, int depth) const
+        void element(string const& tag, string const& value, int /*depth*/) const
         {
             if (value == "")
                 out << '<' << tag << '>';
@@ -136,6 +140,10 @@ namespace boost { namespace spirit
         }
 
         Out& out;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        simple_printer& operator= (simple_printer const&);
     };
 
     template <typename Out>

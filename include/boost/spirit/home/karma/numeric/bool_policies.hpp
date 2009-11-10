@@ -88,7 +88,7 @@ namespace boost { namespace spirit { namespace karma
         //
         ///////////////////////////////////////////////////////////////////////
         template <typename CharEncoding, typename Tag, typename OutputIterator>
-        static bool generate_true(OutputIterator& sink, T b)
+        static bool generate_true(OutputIterator& sink, T)
         {
             return string_inserter<CharEncoding, Tag>::call(sink, "true");
         }
@@ -106,7 +106,7 @@ namespace boost { namespace spirit { namespace karma
         //
         ///////////////////////////////////////////////////////////////////////
         template <typename CharEncoding, typename Tag, typename OutputIterator>
-        static bool generate_false(OutputIterator& sink, T b)
+        static bool generate_false(OutputIterator& sink, T)
         {
             return string_inserter<CharEncoding, Tag>::call(sink, "false");
         }

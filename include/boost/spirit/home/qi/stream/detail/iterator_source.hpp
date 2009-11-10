@@ -50,6 +50,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         Iterator& first;
         Iterator const& last;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        iterator_source& operator= (iterator_source const&);
     };
 
 }}}}

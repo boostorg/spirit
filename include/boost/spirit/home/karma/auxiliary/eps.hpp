@@ -60,13 +60,13 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+          , Attribute const& /*attr*/)
         {
             return karma::delimit_out(sink, d); // always do post-delimiting
         }
 
         template <typename Context>
-        info what(Context const& ctx) const
+        info what(Context const& /*context*/) const
         {
             return info("eps");
         }
@@ -88,14 +88,14 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+          , Attribute const& /*attr*/) const
         {
             // only do post-delimiting when predicate is true
             return predicate_ && karma::delimit_out(sink, d);
         }
 
         template <typename Context>
-        info what(Context const& ctx) const
+        info what(Context const& /*context*/) const
         {
             return info("semantic-predicate");
         }

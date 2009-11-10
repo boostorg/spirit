@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/config.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -28,6 +29,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component, typename Attribute>
         bool operator()(Component const& component, Attribute const& attr) const
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))  
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             // return true if any of the generators fail
             return !component.generate(sink, ctx, delim, attr);
         }
@@ -35,6 +39,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool operator()(Component const& component) const
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))  
+            component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
+#endif
             // return true if any of the generators fail
             return !component.generate(sink, ctx, delim, unused);
         }
@@ -42,6 +49,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         OutputIterator& sink;
         Context& ctx;
         Delimiter const& delim;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        fail_function& operator= (fail_function const&);
     };
 
 }}}}

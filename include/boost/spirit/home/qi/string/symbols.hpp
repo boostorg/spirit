@@ -218,7 +218,7 @@ public:
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper, Attribute& attr) const
+          , Context& /*context*/, Skipper const& skipper, Attribute& attr) const
         {
             qi::skip_over(first, last, skipper);
 
@@ -232,7 +232,7 @@ public:
         }
 
         template <typename Context>
-        info what(Context& context) const
+        info what(Context& /*context*/) const
         {
             return info("symbols"); // $$$ for now! give symbols a name $$$
         }
@@ -274,6 +274,10 @@ public:
             }
 
             symbols& sym;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            adder& operator= (adder const&);
         };
 
         struct remover
@@ -313,6 +317,10 @@ public:
             }
 
             symbols& sym;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            remover& operator= (remover const&);
         };
 
         adder add;
@@ -332,7 +340,7 @@ public:
         {
             Char operator()(Char ch) const
             {
-                return CharEncoding::tolower(ch);
+                return static_cast<Char>(CharEncoding::tolower(ch));
             }
         };
 

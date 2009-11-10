@@ -179,7 +179,7 @@ argument.
 
 [table
     [[Parameter]                    [Description]]
-    [[`Iterator`]                   [__randomiter__ pointing to the underlying input sequence to parse.]]
+    [[`Iterator`]                   [__fwditer__ pointing to the underlying input sequence to parse.]]
     [[`Lexer`]                      [A lexer (token definition) object.]]
     [[`F`]                          [A function object called for each generated token.]]
     [[`ParserExpr`]                 [An expression that can be converted to a Qi parser.]]

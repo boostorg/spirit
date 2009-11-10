@@ -132,13 +132,17 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token(id_type id, std::size_t, token_value_type)
           : id_(id) {}
 
+#if defined(BOOST_SPIRIT_DEBUG)
         token(id_type id, std::size_t, Iterator const& first
               , Iterator const& last)
           : id_(id) 
-#if defined(BOOST_SPIRIT_DEBUG)
           , matched_(first, last)
-#endif
         {}
+#else
+        token(id_type id, std::size_t, Iterator const&, Iterator const&)
+          : id_(id) 
+        {}
+#endif
 
         //  this default conversion operator is needed to allow the direct 
         //  usage of tokens in conjunction with the primitive parsers defined 

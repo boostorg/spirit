@@ -164,7 +164,7 @@ will expose exactly the same attribute type as well.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:more_sompound_attributes More About Attributes of Compound Components]
+[section:more_compound_attributes More About Attributes of Compound Components]
 
 While parsing input or generating output it is often desirable to combine some 
 constant elements with variable parts. For instance, let us look at the example

@@ -41,7 +41,6 @@ namespace boost { namespace spirit { namespace lex
               , lexer_def_<LexerDef> >
           , qi::parser<lexer_def_<LexerDef> >
           , lex::lexer_type<lexer_def_<LexerDef> >
-//           , noncopyable
         {
         private:
             // avoid warnings about using 'this' in constructor
@@ -168,6 +167,10 @@ namespace boost { namespace spirit { namespace lex
                 }
 
                 lexer_def_& def;
+
+            private:
+                // silence MSVC warning C4512: assignment operator could not be generated
+                adder& operator= (adder const&);
             };
             friend struct adder;
 
@@ -186,6 +189,10 @@ namespace boost { namespace spirit { namespace lex
                 }
 
                 lexer_def_& def;
+
+            private:
+                // silence MSVC warning C4512: assignment operator could not be generated
+                pattern_adder& operator= (pattern_adder const&);
             };
             friend struct pattern_adder;
 
@@ -243,6 +250,10 @@ namespace boost { namespace spirit { namespace lex
         private:
             LexerDef& def;
             string_type state;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            lexer_def_& operator= (lexer_def_ const&);
         };
 
         // allow to assign a token definition expression

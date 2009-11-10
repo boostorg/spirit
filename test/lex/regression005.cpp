@@ -70,7 +70,7 @@ typedef lex::lexertl::token<char const*
 typedef lex::lexertl::actor_lexer<token_type> lexer_type;
 typedef my_lexer<lexer_type>::iterator_type iterator_type;
 
-int main(int argc, char* argv[])
+int main()
 {
     std::string test_string ("BEGIN section\n");
     // we introduce a syntax error: ";;" instead of ";" as a terminator.

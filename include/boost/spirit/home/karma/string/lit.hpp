@@ -115,7 +115,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        static info what(Context const& ctx)
+        static info what(Context const& /*context*/)
         {
             return info("any-string");
         }
@@ -178,7 +178,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        info what(Context const& ctx) const
+        info what(Context const& /*context*/) const
         {
             return info("literal-string", str_);
         }

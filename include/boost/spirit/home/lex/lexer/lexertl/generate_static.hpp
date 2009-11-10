@@ -173,14 +173,22 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "std::size_t next_token" << (name_suffix[0] ? "_" : "") 
             << name_suffix  << " (";
 
-        if (dfas_ > 1 || !optimize_parameters)
+        if (dfas_ > 1)
         {
-            os_ << "std::size_t &start_state_, ";
+            os_ << "std::size_t& start_state_, ";
+        }
+        else if (!optimize_parameters)
+        {
+            os_ << "std::size_t& /*start_state_*/, ";
         }
 
-        if (sm_.data()._seen_BOL_assertion || !optimize_parameters)
+        if (sm_.data()._seen_BOL_assertion)
         {
             os_ << "Iterator const& start_, ";
+        }
+        else if (!optimize_parameters)
+        {
+            os_ << "Iterator const& /*start_*/, ";
         }
 
         if (dfas_ > 1 || sm_.data()._seen_BOL_assertion || !optimize_parameters)

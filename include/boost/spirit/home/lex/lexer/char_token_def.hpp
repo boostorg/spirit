@@ -78,7 +78,7 @@ namespace boost { namespace spirit { namespace lex
         }
 
         template <typename LexerDef>
-        void add_actions(LexerDef& lexdef) const {}
+        void add_actions(LexerDef&) const {}
 
         std::size_t id() const { return static_cast<std::size_t>(ch); }
         std::size_t unique_id() const { return unique_id_; }

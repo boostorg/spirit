@@ -30,11 +30,15 @@ struct store_double
     template <class Iterator,class LexerContext>
     void operator () (Iterator const& start, Iterator const& end
       , BOOST_SCOPED_ENUM(boost::spirit::lex::pass_flags)&, std::size_t
-      , LexerContext &ctx) const
+      , LexerContext &) const
     {
         std::string work(start, end);
         out.push_back(std::atof(work.c_str()));
     }
+
+private:
+    // silence MSVC warning C4512: assignment operator could not be generated
+    store_double& operator= (store_double const&);
 };
 
 struct add_row
@@ -53,6 +57,10 @@ struct add_row
         matrix.back().swap(row);
         ctx.set_state_name("A");
     }
+
+private:
+    // silence MSVC warning C4512: assignment operator could not be generated
+    add_row& operator= (add_row const&);
 };
 
 template <class Lexer>

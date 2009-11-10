@@ -169,9 +169,9 @@ bool identifier_token(token_type const& t)
 struct found_identifier_sa5
 {
     template <typename Context>
-    void operator()(std::string::iterator& start
-      , std::string::iterator& end, BOOST_SCOPED_ENUM(lex::pass_flags)& pass
-      , std::size_t& id, Context& ctx)
+    void operator()(std::string::iterator& /*start*/
+      , std::string::iterator& /*end*/, BOOST_SCOPED_ENUM(lex::pass_flags)& pass
+      , std::size_t& /*id*/, Context& ctx)
     {
         BOOST_TEST(pass == lex::pass_flags::pass_normal);
 

@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename OutputIterator, typename Char, typename CharEncoding
       , typename Tag>
     inline bool string_generate(OutputIterator& sink, Char const* str
-      , CharEncoding ce, Tag tag)
+      , CharEncoding, Tag)
     {
         for (Char ch = *str; ch != 0; ch = *++str)
         {
@@ -91,7 +91,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename OutputIterator, typename Iterator, typename CharEncoding
       , typename Tag>
     inline bool string_generate(OutputIterator& sink
-      , boost::iterator_range<Iterator> const& r, CharEncoding ce, Tag tag)
+      , boost::iterator_range<Iterator> const& r, CharEncoding, Tag)
     {
         Iterator end = r.end();
         for (Iterator it = r.begin(); it != end; ++it)

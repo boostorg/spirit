@@ -55,6 +55,10 @@ main()
 
         boost::mpl::true_ f = boost::mpl::bool_<boost::spirit::traits::is_parser<symbols<char, int> >::value>();
 
+        // silence stupid compiler warnings 
+        // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
+        BOOST_TEST((f.value));
+
         BOOST_TEST((test("Joel", sym)));
         BOOST_TEST((test("Ruby", sym)));
         BOOST_TEST((test("Tenji", sym)));

@@ -439,7 +439,7 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef Attribute& type;
         static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute& val, Attribute const& attr) {}
+        static void post(Attribute&, Attribute const&) {}
     };
 
     template <typename Attribute>
@@ -726,7 +726,7 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(optional<T>& val)
         {
-            if (val)
+            if (val) 
                 val = none_t();    // leave optional uninitialized
         }
     };

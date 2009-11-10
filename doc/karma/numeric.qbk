@@ -864,7 +864,7 @@ functions:
     [Return the maximum number of decimal digits to generate in the 
      fractional part of the output.
 
-    `n: is the real number to output. This can be used to 
+    `n` is the real number to output. This can be used to 
     adjust the required precision depending on the value of this number. If 
     the trailing zeros flag is specified the fractional part of the output will 
     be 'filled' with zeros, if appropriate.

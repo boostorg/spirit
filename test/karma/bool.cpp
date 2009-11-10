@@ -27,7 +27,7 @@ struct special_bool_policy : boost::spirit::karma::bool_policies<>
 {
     template <typename CharEncoding, typename Tag
       , typename OutputIterator>
-    static bool generate_false(OutputIterator& sink, bool b)
+    static bool generate_false(OutputIterator& sink, bool)
     {
         //  we want to spell the names of true and false backwards
         return boost::spirit::karma::string_inserter<CharEncoding, Tag>::

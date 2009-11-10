@@ -133,10 +133,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // this type is purely used for the iterator_type construction below
         struct iterator_data_type 
         {
-            typename Functor::next_token_functor next_;
-            typename Functor::semantic_actions_type const& actions_;
-            typename Functor::get_state_name_type get_state_name_;
+            typedef typename Functor::next_token_functor next_token_functor;
+            typedef typename Functor::semantic_actions_type semantic_actions_type;
+            typedef typename Functor::get_state_name_type get_state_name_type;
+
+            iterator_data_type(next_token_functor next
+              , semantic_actions_type const& actions
+              , get_state_name_type get_state_name, std::size_t num_states)
+              : next_(next), actions_(actions), get_state_name_(get_state_name)
+              , num_states_(num_states)
+            {}
+
+            next_token_functor next_;
+            semantic_actions_type const& actions_;
+            get_state_name_type get_state_name_;
             std::size_t num_states_;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            iterator_data_type& operator= (iterator_data_type const&);
         };
 
         typedef LexerTables tables_type;
@@ -157,10 +172,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         iterator_type begin(Iterator_& first, Iterator_ const& last
           , char_type const* initial_state = 0) const
         { 
-            iterator_data_type iterator_data = { 
+            iterator_data_type iterator_data( 
                     &tables_type::template next<Iterator_>, actions_, 
                     &tables_type::state_name, tables_type::state_count()
-                };
+                );
             return iterator_type(iterator_data, first, last, initial_state);
         }
 
@@ -173,26 +188,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
     protected:
         //  Lexer instances can be created by means of a derived class only.
-        static_lexer(unsigned int flags) : unique_id_(0) {}
+        static_lexer(unsigned int) : unique_id_(0) {}
 
     public:
         // interface for token definition management
-        std::size_t add_token (char_type const* state, char_type tokendef
-          , std::size_t token_id) 
+        std::size_t add_token (char_type const*, char_type, std::size_t) 
         {
             return unique_id_++;
         }
-        std::size_t add_token (char_type const* state, string_type const& tokendef
-          , std::size_t token_id) 
+        std::size_t add_token (char_type const*, string_type const&
+          , std::size_t) 
         {
             return unique_id_++;
         }
 
         // interface for pattern definition management
-        void add_pattern (char_type const* state, string_type const& name
-          , string_type const& patterndef) {}
+        void add_pattern (char_type const*, string_type const&
+          , string_type const&) {}
 
-        void clear(char_type const* state) {}
+        void clear(char_type const*) {}
 
         std::size_t add_state(char_type const* state)
         {

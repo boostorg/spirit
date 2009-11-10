@@ -25,6 +25,7 @@
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/detail/workaround.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -83,8 +84,8 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename OutputIterator>
-        bool buffer_copy_rest(detail::enable_buffering<OutputIterator>& buff
-          , std::size_t start_at, unused_type)
+        bool buffer_copy_rest(detail::enable_buffering<OutputIterator>&
+          , std::size_t, unused_type)
         {
             return true;
         }
@@ -100,6 +101,9 @@ namespace boost { namespace spirit { namespace karma
             Delimiter const& d, Attribute const& attr, Embedded const& e, 
             unsigned int const maxwidth, Rest& restdest) 
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            e; // suppresses warning: C4100: 'e' : unreferenced formal parameter
+#endif
             // wrap the given output iterator to allow buffering, but disable 
             // counting
             detail::enable_buffering<OutputIterator> buffering(sink);

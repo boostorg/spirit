@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            typedef detail::alternative_generate_functor<
+            typedef detail::alternative_generate_function<
                 OutputIterator, Context, Delimiter, Attribute
             > functor;
 

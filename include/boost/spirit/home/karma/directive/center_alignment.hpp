@@ -28,6 +28,7 @@
 #include <boost/integer_traits.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/detail/workaround.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -87,6 +88,9 @@ namespace boost { namespace spirit { namespace karma
             Delimiter const& d, Attribute const& attr, Embedded const& e, 
             unsigned int const width, Padding const& p) 
         {
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1600))
+            e; // suppresses warning: C4100: 'e' : unreferenced formal parameter
+#endif
             // wrap the given output iterator to allow left padding
             detail::enable_buffering<OutputIterator> buffering(sink, width);
             bool r = false;

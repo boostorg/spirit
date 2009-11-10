@@ -183,7 +183,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (n > max - digit)
                 return false;
 
-            n += digit;
+            n += static_cast<T>(digit);
             return true;
         }
     };
@@ -214,7 +214,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (n < min + digit)
                 return false;
 
-            n -= digit;
+            n -= static_cast<T>(digit);
             return true;
         }
     };

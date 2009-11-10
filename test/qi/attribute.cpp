@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef int& type;
         static int& pre(test_int_data2& d) { return d.i; }
-        static void post(test_int_data2& d, int const& i) {}
+        static void post(test_int_data2&, int const&) {}
     };
 }}}
 

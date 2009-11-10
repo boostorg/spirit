@@ -162,6 +162,10 @@ namespace boost { namespace spirit { namespace iterator_policies
             explicit shared(Functor const& x) : ftor(x.second) {}
 
             mutable typename Functor::second_type ftor;
+
+        private:
+            // silence MSVC warning C4512: assignment operator could not be generated
+            shared& operator= (shared const&);
         };
     };
 

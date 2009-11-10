@@ -53,8 +53,8 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
-          , Attribute const& attr) const
+        bool generate(OutputIterator&, Context&, Delimiter const&
+          , Attribute const&) const
         {
             return true;
         }
