@@ -101,10 +101,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "    enum { static_version = " 
             << boost::lexical_cast<std::string>(SPIRIT_STATIC_LEXER_VERSION) << " };\n\n";
         os_ << "    // return the number of lexer states\n";
-        os_ << "    static std::size_t const state_count()\n";
+        os_ << "    static std::size_t state_count()\n";
         os_ << "    {\n        return lexer_state_count" << suffix << "; \n    }\n\n";
         os_ << "    // return the name of the lexer state as given by 'idx'\n";
-        os_ << "    static char const* const state_name(std::size_t idx)\n";
+        os_ << "    static char const* state_name(std::size_t idx)\n";
         os_ << "    {\n        return lexer_state_names" << suffix << "[idx]; \n    }\n\n";
         os_ << "    // return the next matched token\n";
         os_ << "    template<typename Iterator>\n";
