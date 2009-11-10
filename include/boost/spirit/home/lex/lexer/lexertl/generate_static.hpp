@@ -89,7 +89,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     }
 
     inline bool 
-    generate_cpp_state_table (std::ostream &os_, char const* name_suffix = "")
+    generate_cpp_state_table (std::ostream &os_, char const* name_suffix
+      , bool bol, bool eol)
     {
         std::string suffix(name_suffix[0] ? "_" : "");
         suffix += name_suffix;
@@ -97,9 +98,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         generate_delimiter(os_);
         os_ << "// this defines a generic accessors for the information above\n";
         os_ << "struct lexer" << suffix << "\n{\n";
-        os_ << "    // version number of compatible static lexer engine\n";
-        os_ << "    enum { static_version = " 
-            << boost::lexical_cast<std::string>(SPIRIT_STATIC_LEXER_VERSION) << " };\n\n";
+        os_ << "    // version number and feature-set of compatible static lexer engine\n";
+        os_ << "    enum\n";
+        os_ << "    {\n        static_version = "
+            << boost::lexical_cast<std::string>(SPIRIT_STATIC_LEXER_VERSION) << ",\n";
+        os_ << "        supports_bol = " << std::boolalpha << bol << ",\n";
+        os_ << "        supports_eol = " << std::boolalpha << eol << "\n";
+        os_ << "    };\n\n";
         os_ << "    // return the number of lexer states\n";
         os_ << "    static std::size_t const state_count()\n";
         os_ << "    {\n        return lexer_state_count" << suffix << "; \n    }\n\n";
@@ -108,10 +113,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "    {\n        return lexer_state_names" << suffix << "[idx]; \n    }\n\n";
         os_ << "    // return the next matched token\n";
         os_ << "    template<typename Iterator>\n";
-        os_ << "    static std::size_t next(std::size_t &start_state_, Iterator const& start_\n";
+        os_ << "    static std::size_t next(std::size_t &start_state_, bool& bol_\n";
         os_ << "      , Iterator &start_token_, Iterator const& end_, std::size_t& unique_id_)\n";
         os_ << "    {\n        return next_token" << suffix 
-            << "(start_state_, start_, start_token_, end_, unique_id_);\n    }\n";
+            << "(start_state_, bol_, start_token_, end_, unique_id_);\n    }\n";
         os_ << "};\n\n";
         return os_.good();
     }
@@ -184,11 +189,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         if (sm_.data()._seen_BOL_assertion)
         {
-            os_ << "Iterator const& start_, ";
+            os_ << "bool& bol_, ";
         }
         else if (!optimize_parameters)
         {
-            os_ << "Iterator const& /*start_*/, ";
+            os_ << "bool& /*bol_*/, ";
         }
 
         if (dfas_ > 1 || sm_.data()._seen_BOL_assertion || !optimize_parameters)
@@ -391,7 +396,15 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << " };\n";
         }
 
-        os_ << "\n    if (start_token_ == end_) return 0;\n\n";
+        os_ << "\n    if (start_token_ == end_)\n";
+        os_ << "    {\n";
+        os_ << "        unique_id_ = boost::lexer::npos;\n";
+        os_ << "        return 0;\n";
+        os_ << "    }\n\n";
+        if (sm_.data()._seen_BOL_assertion)
+        {
+            os_ << "    bool bol = bol_;\n\n";
+        }
 
         if (dfas_ > 1)
         {
@@ -401,11 +414,19 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "    const std::size_t *dfa_ = dfa_arr_[start_state_];\n";
         }
 
-        os_ << "    const std::size_t *ptr_ = dfa_ + dfa_alphabet_;\n";
+        os_ << "    std::size_t const* ptr_ = dfa_ + dfa_alphabet_;\n";
         os_ << "    Iterator curr_ = start_token_;\n";
         os_ << "    bool end_state_ = *ptr_ != 0;\n";
         os_ << "    std::size_t id_ = *(ptr_ + id_index);\n";
         os_ << "    std::size_t uid_ = *(ptr_ + unique_id_index);\n";
+        if (dfas_ > 1)
+        {
+            os_ << "    std::size_t end_start_state_ = start_state_;\n";
+        }
+        if (sm_.data()._seen_BOL_assertion)
+        {
+            os_ << "    bool end_bol_ = bol_;\n";
+        }
         os_ << "    Iterator end_token_ = start_token_;\n\n";
 
         os_ << "    while (curr_ != end_)\n";
@@ -423,8 +444,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         if (sm_.data()._seen_BOL_assertion && sm_.data()._seen_EOL_assertion)
         {
-            os_ << "        if (BOL_state_ && (start_token_ == start_ ||\n";
-            os_ << "            *(start_token_ - 1) == '\\n'))\n";
+            os_ << "        if (BOL_state_ && bol)\n";
             os_ << "        {\n";
             os_ << "            ptr_ = &dfa_[BOL_state_ * dfa_alphabet_];\n";
             os_ << "        }\n";
@@ -434,17 +454,18 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "        }\n";
             os_ << "        else\n";
             os_ << "        {\n";
-            os_ << "            std::size_t const state_ =\n";
-
             if (lookups_ == 256)
             {
-                os_ << "                ptr_[lookup_[<typename Traits::index_type>"
-                    "(*curr_++)]];\n";
+                os_ << "            unsigned char index = \n";
+                os_ << "                static_cast<unsigned char>(*curr_++);\n";
             }
             else
             {
-                os_ << "                ptr_[lookup_[*curr_++]];\n";
+                os_ << "            std::size_t index = *curr_++\n";
             }
+            os_ << "            bol = (index == '\n') ? true : false;\n";
+            os_ << "            std::size_t const state_ = ptr_[\n";
+            os_ << "                lookup_[static_cast<std::size_t>(index)]];\n";
 
             os_ << '\n';
             os_ << "            if (state_ == 0) break;\n";
@@ -454,24 +475,24 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
         else if (sm_.data()._seen_BOL_assertion)
         {
-            os_ << "        if (BOL_state_ && (start_token_ == start_ ||\n";
-            os_ << "            *(start_token_ - 1) == '\\n'))\n";
+            os_ << "        if (BOL_state_ && bol)\n";
             os_ << "        {\n";
             os_ << "            ptr_ = &dfa_[BOL_state_ * dfa_alphabet_];\n";
             os_ << "        }\n";
             os_ << "        else\n";
             os_ << "        {\n";
-            os_ << "            std::size_t const state_ =\n";
-
             if (lookups_ == 256)
             {
-                os_ << "                ptr_[lookup_[static_cast<unsigned char>"
-                       "(*curr_++)]];\n";
+                os_ << "            unsigned char index = \n";
+                os_ << "                static_cast<unsigned char>(*curr_++);\n";
             }
             else
             {
-                os_ << "                ptr_[lookup_[*curr_++]];\n";
+                os_ << "            std::size_t index = *curr_++\n";
             }
+            os_ << "            bol = (index == '\n') ? true : false;\n";
+            os_ << "            std::size_t const state_ = ptr_[\n";
+            os_ << "                lookup_[static_cast<std::size_t>(index)]];\n";
 
             os_ << '\n';
             os_ << "            if (state_ == 0) break;\n";
@@ -487,17 +508,18 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "        }\n";
             os_ << "        else\n";
             os_ << "        {\n";
-            os_ << "            std::size_t const state_ =\n";
-
             if (lookups_ == 256)
             {
-                os_ << "                ptr_[lookup_[static_cast<unsigned char>"
-                       "(*curr_++)]];\n";
+                os_ << "            unsigned char index = \n";
+                os_ << "                static_cast<unsigned char>(*curr_++);\n";
             }
             else
             {
-                os_ << "                ptr_[lookup_[*curr_++]];\n";
+                os_ << "            std::size_t index = *curr_++\n";
             }
+            os_ << "            bol = (index == '\n') ? true : false;\n";
+            os_ << "            std::size_t const state_ = ptr_[\n";
+            os_ << "                lookup_[static_cast<std::size_t>(index)]];\n";
 
             os_ << '\n';
             os_ << "            if (state_ == 0) break;\n";
@@ -530,12 +552,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "            end_state_ = true;\n";
         os_ << "            id_ = *(ptr_ + id_index);\n";
         os_ << "            uid_ = *(ptr_ + unique_id_index);\n";
-
         if (dfas_ > 1)
         {
-            os_ << "            start_state_ = *(ptr_ + state_index);\n";
+            os_ << "            end_start_state_ = *(ptr_ + state_index);\n";
         }
-
+        if (sm_.data()._seen_BOL_assertion)
+        {
+            os_ << "            end_bol_ = bol;\n";
+        }
         os_ << "            end_token_ = curr_;\n";
         os_ << "        }\n";
         os_ << "    }\n\n";
@@ -553,12 +577,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "            end_state_ = true;\n";
             os_ << "            id_ = *(ptr_ + id_index);\n";
             os_ << "            uid_ = *(ptr_ + unique_id_index);\n";
-
             if (dfas_ > 1)
             {
-                os_ << "            start_state_ = *(ptr_ + state_index);\n";
+                os_ << "            end_start_state_ = *(ptr_ + state_index);\n";
             }
-
+            if (sm_.data()._seen_BOL_assertion)
+            {
+                os_ << "            end_bol_ = bol;\n";
+            }
             os_ << "            end_token_ = curr_;\n";
             os_ << "        }\n";
             os_ << "    }\n\n";
@@ -567,17 +593,36 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "    if (end_state_)\n";
         os_ << "    {\n";
         os_ << "        // return longest match\n";
+        os_ << "        start_state_ = end_start_state_;\n";
         os_ << "        start_token_ = end_token_;\n";
 
         if (dfas_ > 1)
         {
-            os_ << "        if (id_ == 0) goto again;\n";
+            os_ << "        if (id_ == 0)\n";
+            os_ << "        {\n";
+            if (sm_.data()._seen_BOL_assertion)
+            {
+                os_ << "            bol_ = end_bol_;\n";
+            }
+            os_ << "            goto again;\n";
+            os_ << "        }\n";
+            if (sm_.data()._seen_BOL_assertion)
+            {
+                os_ << "        else\n";
+                os_ << "        {\n";
+                os_ << "            bol_ = end_bol_;\n";
+                os_ << "        }\n";
+            }
         }
 
         os_ << "    }\n";
         os_ << "    else\n";
         os_ << "    {\n";
 
+        if (sm_.data()._seen_BOL_assertion)
+        {
+            os_ << "        bol_ = (*start_token_ == '\n') ? true : false;\n";
+        }
         if (skip_on_nomatch)
         {
             os_ << "        // No match causes char to be skipped\n";
@@ -592,8 +637,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "    return id_;\n";
         os_ << "}\n\n";
 
-        if (!generate_cpp_state_table(os_, name_suffix))
+        if (!generate_cpp_state_table(os_, name_suffix
+            , sm_.data()._seen_BOL_assertion, sm_.data()._seen_EOL_assertion))
+        {
             return false;
+        }
 
         os_ << "}}}}}  // namespace boost::spirit::lex::lexertl::static_\n\n";
 
