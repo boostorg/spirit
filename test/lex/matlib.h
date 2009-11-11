@@ -83,7 +83,7 @@ struct matlib_tokens : boost::spirit::lex::lexer<Lexer>
         this->self("A") 
             =   token_def_('[') [set_lexer_state("B")]
             |   ','
-            |   token_def_(']') [ set_lexer_state("INITIAL")]
+            |   token_def_(']') [set_lexer_state("INITIAL")]
             ;
 
         this->self("B") 
