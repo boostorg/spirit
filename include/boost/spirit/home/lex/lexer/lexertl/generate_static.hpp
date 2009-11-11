@@ -17,6 +17,10 @@
 #include <boost/spirit/home/support/detail/lexer/size_t.hpp>
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/static_version.hpp>
+#include <boost/spirit/home/karma/numeric/uint.hpp>
+#include <boost/spirit/home/karma/string/lit.hpp>
+#include <boost/spirit/home/karma/operator/sequence.hpp>
+#include <boost/spirit/home/karma/generate.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -567,21 +571,24 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
             else 
             {
-                result = "\\x";
-                char buffer[3];
-                result += ltoa(ch, buffer, 16);
+                typedef karma::uint_generator<unsigned char, 16> uintgen_type;
+                std::back_insert_iterator<std::string> sink(result);
+                karma::generate(sink, "\\x" << uintgen_type()(ch));
             }
             break;
         }
         return result;
     }
 
-    inline std::basic_string<wchar_t> get_charcode(wchar_t ch)
+    inline std::string get_charcode(wchar_t ch)
     {
-        // not implemented yet
-        std::basic_string<wchar_t> result;
-        result = ch;
-        return result;
+        if (ch & ~0xff) {
+            BOOST_ASSERT(false);    // not implemented yet
+
+            std::string result;
+            return result;
+        }
+        return  get_charcode(static_cast<char>(ch & 0xff));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -683,20 +690,24 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     }
                 }
 
-                os_ << "    if (curr_ == end_) goto end;\n";
-                os_ << "    ch_ = *curr_;\n";
-                if (iter_->bol_index != boost::lexer::npos)
+                if (t_ < transitions_ || 
+                    iter_->bol_index != boost::lexer::npos ||
+                    iter_->eol_index != boost::lexer::npos)
                 {
-                    os_ << "\n    if (bol) goto state" << dfa_ << '_' 
-                        << iter_->bol_index << ";\n";
+                    os_ << "    if (curr_ == end_) goto end;\n";
+                    os_ << "    ch_ = *curr_;\n";
+                    if (iter_->bol_index != boost::lexer::npos)
+                    {
+                        os_ << "\n    if (bol) goto state" << dfa_ << '_' 
+                            << iter_->bol_index << ";\n";
+                    }
+                    if (iter_->eol_index != boost::lexer::npos)
+                    {
+                        os_ << "\n    if (ch_ == '\n') goto state" << dfa_ 
+                            << '_' << iter_->eol_index << ";\n";
+                    }
+                    os_ << "    ++curr_;\n";
                 }
-                if (iter_->eol_index != boost::lexer::npos)
-                {
-                    os_ << "\n    if (ch_ == '\n') goto state" << dfa_ 
-                        << '_' << iter_->eol_index << ";\n";
-                }
-                os_ << "    ++curr_;\n";
-
 
                 for (/**/; t_ < transitions_; ++t_)
                 {
@@ -725,7 +736,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                         {
                             if (!first_char_)
                             {
-                                os_ << " || ";
+                                if (iter_->token._negated)
+                                {
+                                    os_ << " && ";
+                                }
+                                else
+                                {
+                                    os_ << " || ";
+                                }
                             }
 
                             first_char_ = false;

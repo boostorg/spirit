@@ -63,12 +63,14 @@ inline std::string get_charcode(char ch)
     return result;
 }
 
-inline std::basic_string<wchar_t> get_charcode(wchar_t ch)
+inline std::string get_charcode(wchar_t ch)
 {
-    // not implemented yet
-    std::basic_string<wchar_t> result;
-    result = ch;
-    return result;
+    if (ch & ~0xff) 
+    {
+        std::string result;
+        return result;    // not implemented yet
+    }
+    return get_charcode(static_cast<char>(ch & 0xff));
 }
 
 template<typename CharT>
@@ -274,22 +276,27 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
                 }
             }
 
-            os_ << "    if (curr_ == end_) goto end;\n";
-            os_ << "    ch_ = *curr_;\n";
-
-            if (iter_->bol_index != boost::lexer::npos)
+            if (t_ < transitions_ || 
+                iter_->bol_index != boost::lexer::npos ||
+                iter_->eol_index != boost::lexer::npos)
             {
-                os_ << "\n    if (bol_) goto state" << dfa_ << '_' <<
-                    iter_->bol_index << ";\n\n";
-            }
+                os_ << "    if (curr_ == end_) goto end;\n";
+                os_ << "    ch_ = *curr_;\n";
 
-            if (iter_->eol_index != boost::lexer::npos)
-            {
-                os_ << "\n    if (ch_ == '\n') goto state" << dfa_ << '_' <<
-                    iter_->eol_index << ";\n\n";
-            }
+                if (iter_->bol_index != boost::lexer::npos)
+                {
+                    os_ << "\n    if (bol_) goto state" << dfa_ << '_' <<
+                        iter_->bol_index << ";\n\n";
+                }
 
-            os_ << "    ++curr_;\n";
+                if (iter_->eol_index != boost::lexer::npos)
+                {
+                    os_ << "\n    if (ch_ == '\n') goto state" << dfa_ << '_' <<
+                        iter_->eol_index << ";\n\n";
+                }
+
+                os_ << "    ++curr_;\n";
+            }
 
             for (; t_ < transitions_; ++t_)
             {
@@ -319,7 +326,14 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
                     {
                         if (!first_char_)
                         {
-                            os_ << " || ";
+                            if (iter_->token._negated)
+                            {
+                                os_ << " && ";
+                            }
+                            else
+                            {
+                                os_ << " || ";
+                            }
                         }
 
                         first_char_ = false;
