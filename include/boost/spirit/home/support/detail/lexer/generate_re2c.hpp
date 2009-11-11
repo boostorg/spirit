@@ -19,66 +19,13 @@ namespace boost
 {
 namespace lexer
 {
-inline std::string get_charcode(char ch)
-{
-    std::string result;
-    switch(ch) {
-    case '\t':
-        result = "\\t";
-        break;
-    case '\b':
-        result = "\\b";
-        break;
-    case '\r':
-        result = "\\r";
-        break;
-    case '\n':
-        result = "\\n";
-        break;
-    case '\f':
-        result = "\\f";
-        break;
-    case '\v':
-        result = "\\v";
-        break;
-    case '\\':
-        result = "\\\\";
-        break;
-    case '\'':
-        result = "\\'";
-        break;
-    default:
-        if (std::isprint(ch))
-        {
-            result = ch;
-        }
-        else 
-        {
-            result = "\\x";
-            char buffer[3];
-            result += ltoa(ch, buffer, 16);
-        }
-        break;
-    }
-    return result;
-}
-
-inline std::string get_charcode(wchar_t ch)
-{
-    if (ch & ~0xff) 
-    {
-        std::string result;
-        return result;    // not implemented yet
-    }
-    return get_charcode(static_cast<char>(ch & 0xff));
-}
-
 template<typename CharT>
 void generate_re2c (const basic_state_machine<CharT> &state_machine_,
     std::ostream &os_, const bool use_pointers_ = false,
     const bool skip_unknown_ = true, const bool optimise_parameters_ = true,
     const char *name_ = "next_token")
 {
+    typedef typename lexertl::basic_string_token<CharT> string_token;
     const detail::internals &sm_ = state_machine_.data ();
 
     if (sm_._lookup->size () == 0)
@@ -227,6 +174,7 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
         }
 
         os_ << "    default:\n";
+        os_ << "        throw std::runtime_error (\"Invalid start state!\")\n";
         os_ << "        break;\n";
         os_ << "    }\n\n";
     }
@@ -253,10 +201,8 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
             const std::size_t transitions_ = iter_->transitions;
             std::size_t t_ = 0;
 
-            if (dfas_ > 1 || dfa_ != 0 || state_ != 0)
-            {
-                os_ << "state" << dfa_ << '_' << state_ << ":\n";
-            }
+            os_ << "state" << dfa_ << '_' << state_ << ":\n";
+
             if (iter_->end_state)
             {
                 os_ << "    end_state_ = true;\n";
@@ -274,22 +220,23 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
                 {
                     os_ << "    end_bol_ = bol_;\n";
                 }
+
+                if (transitions_) os_ << '\n';
             }
 
-            if (t_ < transitions_ || 
-                iter_->bol_index != boost::lexer::npos ||
-                iter_->eol_index != boost::lexer::npos)
+            if (t_ < transitions_ || iter_->bol_index != lexertl::npos ||
+                iter_->eol_index != lexertl::npos)
             {
-                os_ << "    if (curr_ == end_) goto end;\n";
+                os_ << "    if (curr_ == end_) goto end;\n\n";
                 os_ << "    ch_ = *curr_;\n";
 
-                if (iter_->bol_index != boost::lexer::npos)
+                if (iter_->bol_index != lexertl::npos)
                 {
                     os_ << "\n    if (bol_) goto state" << dfa_ << '_' <<
                         iter_->bol_index << ";\n\n";
                 }
 
-                if (iter_->eol_index != boost::lexer::npos)
+                if (iter_->eol_index != lexertl::npos)
                 {
                     os_ << "\n    if (ch_ == '\n') goto state" << dfa_ << '_' <<
                         iter_->eol_index << ";\n\n";
@@ -340,17 +287,28 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
 
                         if (range_)
                         {
+                            typename string_token::string temp_;
+
                             if (iter_->token._negated)
                             {
                                 os_ << "!";
                             }
 
-                            os_ << "(ch_ >= '" << get_charcode(start_char_);
-                            os_ << "' && ch_ <= '" << get_charcode(curr_char_) << "\')";
+                            string_token::escape_char (start_char_, temp_);
+                            os_ << "(ch_ >= '" << temp_;
+#if defined _MSC_VER && _MSC_VER <= 1200
+                            temp_.erase ();
+#else
+                            temp_.clear ();
+#endif
+                            string_token::escape_char (curr_char_, temp_);
+                            os_ << "' && ch_ <= '" << temp_ << "')";
                             range_ = false;
                         }
                         else
                         {
+                            typename string_token::string temp_;
+
                             os_ << "ch_ ";
 
                             if (iter_->token._negated)
@@ -362,20 +320,21 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
                                 os_ << "==";
                             }
 
-                            os_ << " '" << get_charcode(curr_char_) << "'";
+                            string_token::escape_char (curr_char_, temp_);
+                            os_ << " '" << temp_ << "'";
                         }
                     }
                 }
 
                 os_ << ") goto state" << dfa_ << '_' << iter_->goto_state <<
-                    ";\n";
+                    ";\n\n";
                 ++iter_;
             }
 
-            if (transitions_) os_ << '\n';
-
-            os_ << "    goto end;\n";
-            os_ << '\n';
+            if (!(dfa_ == dfas_ - 1 && state_ == states_ - 1))
+            {
+                os_ << "    goto end;\n";
+            }
 
             if (transitions_ == 0) ++iter_;
         }

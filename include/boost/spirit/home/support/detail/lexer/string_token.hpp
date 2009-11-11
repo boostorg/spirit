@@ -146,6 +146,78 @@ struct basic_string_token
         }
     }
 
+    static void escape_char (const CharT ch_, string &out_)
+    {
+        switch (ch_)
+        {
+            case '\0':
+                out_ += '\\';
+                out_ += '0';
+                break;
+            case '\a':
+                out_ += '\\';
+                out_ += 'a';
+                break;
+            case '\b':
+                out_ += '\\';
+                out_ += 'b';
+                break;
+            case 27:
+                out_ += '\\';
+                out_ += 'x';
+                out_ += '1';
+                out_ += 'b';
+                break;
+            case '\f':
+                out_ += '\\';
+                out_ += 'f';
+                break;
+            case '\n':
+                out_ += '\\';
+                out_ += 'n';
+                break;
+            case '\r':
+                out_ += '\\';
+                out_ += 'r';
+                break;
+            case '\t':
+                out_ += '\\';
+                out_ += 't';
+                break;
+            case '\v':
+                out_ += '\\';
+                out_ += 'v';
+                break;
+            case '\\':
+                out_ += '\\';
+                out_ += '\\';
+                break;
+            case '"':
+                out_ += '\\';
+                out_ += '"';
+                break;
+            default:
+            {
+                if (ch_ < 32 && ch_ >= 0)
+                {
+					std::basic_stringstream<CharT> ss_;
+
+                    out_ += '\\';
+                    out_ += 'x';
+                    ss_ << std::hex <<
+                        static_cast<std::size_t> (ch_);
+                    out_ += ss_.str ();
+                }
+                else
+                {
+                    out_ += ch_;
+                }
+
+                break;
+            }
+        }
+    }
+
 private:
     void intersect_same_types (basic_string_token &rhs_,
         basic_string_token &overlap_)

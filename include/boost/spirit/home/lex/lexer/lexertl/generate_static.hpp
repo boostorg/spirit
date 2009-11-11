@@ -16,11 +16,8 @@
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/size_t.hpp>
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
+#include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/static_version.hpp>
-#include <boost/spirit/home/karma/numeric/uint.hpp>
-#include <boost/spirit/home/karma/string/lit.hpp>
-#include <boost/spirit/home/karma/operator/sequence.hpp>
-#include <boost/spirit/home/karma/generate.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -536,59 +533,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    inline std::string get_charcode(char ch)
+    template <typename Char>
+    inline std::string get_charlit(Char ch)
     {
-        std::string result;
-        switch(ch) {
-        case '\t':
-            result = "\\t";
-            break;
-        case '\b':
-            result = "\\b";
-            break;
-        case '\r':
-            result = "\\r";
-            break;
-        case '\n':
-            result = "\\n";
-            break;
-        case '\f':
-            result = "\\f";
-            break;
-        case '\v':
-            result = "\\v";
-            break;
-        case '\\':
-            result = "\\\\";
-            break;
-        case '\'':
-            result = "\\'";
-            break;
-        default:
-            if (std::isprint(ch))
-            {
-                result = ch;
-            }
-            else 
-            {
-                typedef karma::uint_generator<unsigned char, 16> uintgen_type;
-                std::back_insert_iterator<std::string> sink(result);
-                karma::generate(sink, "\\x" << uintgen_type()(ch));
-            }
-            break;
-        }
+        std::basic_string<Char> result;
+        boost::lexer::basic_string_token<Char>::escape_char (ch, result);
         return result;
-    }
-
-    inline std::string get_charcode(wchar_t ch)
-    {
-        if (ch & ~0xff) {
-            BOOST_ASSERT(false);    // not implemented yet
-
-            std::string result;
-            return result;
-        }
-        return  get_charcode(static_cast<char>(ch & 0xff));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -657,7 +607,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
 
         os_ << "    " << ((lookups_ == 256) ? "char" : "wchar_t") 
-            << " ch_ = 0;\n\n";
+            << " ch_ = 0;\n";
         for (std::size_t dfa_ = 0; dfa_ < dfas_; ++dfa_)
         {
             std::size_t const states_ = iter_->states;
@@ -667,10 +617,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 std::size_t const transitions_ = iter_->transitions;
                 std::size_t t_ = 0;
 
-                if (dfas_ > 1 || dfa_ != 0 || state_ != 0)
-                {
-                    os_ << "state" << dfa_ << '_' << state_ << ":\n";
-                }
+                os_ << "\nstate" << dfa_ << '_' << state_ << ":\n";
+
                 if (iter_->end_state)
                 {
                     os_ << "    end_state_ = true;\n";
@@ -688,6 +636,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     {
                         os_ << "    end_bol_ = bol;\n";
                     }
+
+                    if (transitions_) os_ << '\n';
                 }
 
                 if (t_ < transitions_ || 
@@ -736,43 +686,28 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                         {
                             if (!first_char_)
                             {
-                                if (iter_->token._negated)
-                                {
-                                    os_ << " && ";
-                                }
-                                else
-                                {
-                                    os_ << " || ";
-                                }
+                                os_ << ((iter_->token._negated) ? " && " : " || ");
                             }
-
-                            first_char_ = false;
-
+                            else 
+                            {
+                                first_char_ = false;
+                            }
                             if (range_)
                             {
                                 if (iter_->token._negated)
                                 {
                                     os_ << "!";
                                 }
-
-                                os_ << "(ch_ >= '" << get_charcode(start_char_);
-                                os_ << "' && ch_ <= '" << get_charcode(curr_char_) << "')";
+                                os_ << "(ch_ >= '" << get_charlit(start_char_)
+                                    << "' && ch_ <= '" 
+                                    << get_charlit(curr_char_) << "')";
                                 range_ = false;
                             }
                             else
                             {
-                                os_ << "ch_ ";
-
-                                if (iter_->token._negated)
-                                {
-                                    os_ << "!=";
-                                }
-                                else
-                                {
-                                    os_ << "==";
-                                }
-
-                                os_ << " '" << get_charcode(curr_char_) << "'";
+                                os_ << "ch_ " 
+                                    << ((iter_->token._negated) ? "!=" : "==")
+                                    << " '" << get_charlit(curr_char_) << "'";
                             }
                         }
                     }
@@ -782,16 +717,16 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     ++iter_;
                 }
 
-                if (transitions_) os_ << '\n';
-
-                os_ << "    goto end;\n";
-                os_ << '\n';
+                if (!(dfa_ == dfas_ - 1 && state_ == states_ - 1))
+                {
+                    os_ << "    goto end;\n";
+                }
 
                 if (transitions_ == 0) ++iter_;
             }
         }
 
-        os_ << "end:\n";
+        os_ << "\nend:\n";
         os_ << "    if (end_state_)\n";
         os_ << "    {\n";
         os_ << "        // return longest match\n";
