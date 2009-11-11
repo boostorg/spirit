@@ -89,6 +89,6 @@ Here is the prototype of this `tokenize()` function overload:
                              the initial lexer state for tokenization.]]
 ]
 
-[heading The generate_static function]
+[/heading The generate_static_dfa function]
 
 [endsect]

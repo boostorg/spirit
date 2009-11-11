@@ -175,7 +175,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id920941"></a>
+<a name="id927487"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -184,7 +184,7 @@
           analyzer is to create a small standalone program for creating the lexer
           tables and the corresponding tokenization function. For this purpose the
           <span class="emphasis"><em>Spirit.Lex</em></span> library exposes a special API - the function
-          <code class="computeroutput"><span class="identifier">generate_static</span><span class="special">()</span></code>
+          <code class="computeroutput"><span class="identifier">generate_static_dfa</span><span class="special">()</span></code>
           . It implements the whole code generator, no further code is needed. All
           what it takes to invoke this function is to supply a token definition instance,
           an output stream to use to generate the code to, and an optional string
@@ -211,7 +211,7 @@
 </span>    <span class="comment">// The suffix "wc" used below results in a type lexertl::static_::lexer_wc
 </span>    <span class="comment">// to be generated, which needs to be passed as a template parameter to the 
 </span>    <span class="comment">// lexertl::static_lexer template (see word_count_static.cpp).
-</span>    <span class="keyword">return</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="string">"wc"</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
+</span>    <span class="keyword">return</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static_dfa</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="string">"wc"</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -238,7 +238,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id921300"></a>
+<a name="id927846"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>

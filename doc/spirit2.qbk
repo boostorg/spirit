@@ -110,7 +110,7 @@
 
 [def __api_tokenize_and_parse__ `tokenize_and_parse()` [/link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
 [def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
-[def __api_generate_static__    `generate_static()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
+[def __api_generate_static__    `generate_static_dfa()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
 [template karma_format[str]     [str] [/link spirit.karma.reference.format [str]]]
 
