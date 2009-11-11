@@ -138,9 +138,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             typedef typename Functor::get_state_name_type get_state_name_type;
 
             iterator_data_type(next_token_functor next
-              , semantic_actions_type const& actions
-              , get_state_name_type get_state_name, std::size_t num_states
-              , bool bol)
+                  , semantic_actions_type const& actions
+                  , get_state_name_type get_state_name, std::size_t num_states
+                  , bool bol)
               : next_(next), actions_(actions), get_state_name_(get_state_name)
               , num_states_(num_states), bol_(bol)
             {}

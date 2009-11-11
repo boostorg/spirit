@@ -90,8 +90,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Lexer>
-    bool generate_static(Lexer const& lex, std::ostream& os, char const* name);
+    template <typename Lexer, typename F>
+    bool generate_static(Lexer const&, std::ostream&, char const*, F);
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -169,10 +169,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             typedef typename Functor::semantic_actions_type semantic_actions_type;
 
             iterator_data_type(
-                boost::lexer::basic_state_machine<char_type> const& state_machine
-              , boost::lexer::basic_rules<char_type> const& rules
-              , semantic_actions_type const& actions)
-              : state_machine_(state_machine), rules_(rules), actions_(actions)
+                    boost::lexer::basic_state_machine<char_type> const& sm
+                  , boost::lexer::basic_rules<char_type> const& rules
+                  , semantic_actions_type const& actions)
+              : state_machine_(sm), rules_(rules), actions_(actions)
             {}
 
             boost::lexer::basic_state_machine<char_type> const& state_machine_;
@@ -294,8 +294,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typename Functor::semantic_actions_type actions_;
         mutable bool initialized_dfa_;
 
-        template <typename Lexer> 
-        friend bool generate_static(Lexer const&, std::ostream&, char const*);
+        // generator functions must be able to access members directly
+        template <typename Lexer, typename F> 
+        friend bool generate_static(Lexer const&, std::ostream&, char const*, F);
     };
 
     ///////////////////////////////////////////////////////////////////////////

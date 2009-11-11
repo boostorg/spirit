@@ -61,7 +61,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
               , std::size_t> wrap_action_type;
  
             typedef std::size_t (*next_token_functor)(std::size_t&, 
-as                 Iterator const&, Iterator&, Iterator const&, std::size_t&);
                 bool&, Iterator&, Iterator const&, std::size_t&);
             typedef char_type const* (*get_state_name_type)(std::size_t);
 

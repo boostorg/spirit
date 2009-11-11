@@ -1,10 +1,10 @@
-// generate_cpp_code.hpp
+// generate_cpp.hpp
 // Copyright (c) 2008-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-#ifndef BOOST_LEXER_GENERATE_CPP_CODE_HPP
-#define BOOST_LEXER_GENERATE_CPP_CODE_HPP
+#ifndef BOOST_LEXER_GENERATE_CPP_HPP
+#define BOOST_LEXER_GENERATE_CPP_HPP
 
 #include "char_traits.hpp"
 #include "consts.hpp"
@@ -551,15 +551,14 @@ void generate_cpp (const basic_state_machine<CharT> &state_machine_,
     os_ << "    else\n";
     os_ << "    {\n";
 
+    if (sm_._seen_BOL_assertion)
+    {
+        os_ << "        beg_of_line_ = *start_token_ == '\\n';\n";
+    }
+
     if (skip_unknown_)
     {
         os_ << "        // No match causes char to be skipped\n";
-
-        if (sm_._seen_BOL_assertion)
-        {
-            os_ << "        beg_of_line_ = *start_token_ == '\\n';\n";
-        }
-        
         os_ << "        ++start_token_;\n";
     }
 
