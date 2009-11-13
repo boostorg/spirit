@@ -19,13 +19,43 @@ namespace boost
 {
 namespace lexer
 {
+// check whether state0_0 is referenced from any of the other states
+template <typename Char>
+bool need_label0_0(boost::lexer::basic_state_machine<Char> const &sm_)
+{
+    typedef typename boost::lexer::basic_state_machine<Char>::iterator
+        iterator_type;
+    iterator_type iter_ = sm_.begin();
+    std::size_t states_ = iter_->states;
+
+    for (std::size_t state_ = 0; state_ < states_; ++state_)
+    {
+        if (0 == iter_->bol_index || 0 == iter_->eol_index)
+        {
+            return true;
+        }
+
+        std::size_t const transitions_ = iter_->transitions;
+        for (std::size_t t_ = 0; t_ < transitions_; ++t_)
+        {
+            if (0 == iter_->goto_state)
+            {
+                return true;
+            }
+            ++iter_;
+        }
+        if (transitions_ == 0) ++iter_;
+    }
+    return false;
+}
+
 template<typename CharT>
 void generate_re2c (const basic_state_machine<CharT> &state_machine_,
     std::ostream &os_, const bool use_pointers_ = false,
     const bool skip_unknown_ = true, const bool optimise_parameters_ = true,
     const char *name_ = "next_token")
 {
-    typedef typename lexertl::basic_string_token<CharT> string_token;
+    typedef typename boost::lexer::basic_string_token<CharT> string_token;
     const detail::internals &sm_ = state_machine_.data ();
 
     if (sm_._lookup->size () == 0)
@@ -192,6 +222,8 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
 
     os_ << " ch_ = 0;\n\n";
 
+    bool need_state0_0_label = need_label0_0(state_machine_);
+
     for (std::size_t dfa_ = 0; dfa_ < dfas_; ++dfa_)
     {
         const std::size_t states_ = iter_->states;
@@ -201,7 +233,10 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
             const std::size_t transitions_ = iter_->transitions;
             std::size_t t_ = 0;
 
-            os_ << "state" << dfa_ << '_' << state_ << ":\n";
+            if (dfas_ > 1 || dfa_ != 0 || state_ != 0 || need_state0_0_label)
+            {
+                os_ << "state" << dfa_ << '_' << state_ << ":\n";
+            }
 
             if (iter_->end_state)
             {
@@ -224,19 +259,19 @@ void generate_re2c (const basic_state_machine<CharT> &state_machine_,
                 if (transitions_) os_ << '\n';
             }
 
-            if (t_ < transitions_ || iter_->bol_index != lexertl::npos ||
-                iter_->eol_index != lexertl::npos)
+            if (t_ < transitions_ || iter_->bol_index != boost::lexer::npos ||
+                iter_->eol_index != boost::lexer::npos)
             {
                 os_ << "    if (curr_ == end_) goto end;\n\n";
                 os_ << "    ch_ = *curr_;\n";
 
-                if (iter_->bol_index != lexertl::npos)
+                if (iter_->bol_index != boost::lexer::npos)
                 {
                     os_ << "\n    if (bol_) goto state" << dfa_ << '_' <<
                         iter_->bol_index << ";\n\n";
                 }
 
-                if (iter_->eol_index != lexertl::npos)
+                if (iter_->eol_index != boost::lexer::npos)
                 {
                     os_ << "\n    if (ch_ == '\n') goto state" << dfa_ << '_' <<
                         iter_->eol_index << ";\n\n";

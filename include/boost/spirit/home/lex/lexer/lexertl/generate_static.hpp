@@ -541,14 +541,48 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         return result;
     }
 
+    // check whether state0_0 is referenced from any of the other states
+    template <typename Char>
+    bool need_label0_0(boost::lexer::basic_state_machine<Char> const &sm_)
+    {
+        typedef typename boost::lexer::basic_state_machine<Char>::iterator
+            iterator_type;
+        iterator_type iter_ = sm_.begin();
+        std::size_t states_ = iter_->states;
+
+        for (std::size_t state_ = 0; state_ < states_; ++state_)
+        {
+            if (0 == iter_->bol_index || 0 == iter_->eol_index)
+            {
+                return true;
+            }
+
+            std::size_t const transitions_ = iter_->transitions;
+            for (std::size_t t_ = 0; t_ < transitions_; ++t_)
+            {
+                if (0 == iter_->goto_state)
+                {
+                    return true;
+                }
+                ++iter_;
+            }
+            if (transitions_ == 0) ++iter_;
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char>
     bool generate_function_body_switch(std::ostream & os_
       , boost::lexer::basic_state_machine<Char> const &sm_) 
     {
+        typedef typename boost::lexer::basic_state_machine<Char>::iterator
+            iterator_type;
+
         std::size_t const lookups_ = sm_.data()._lookup->front ()->size ();
-        typename boost::lexer::basic_state_machine<Char>::iterator iter_ = sm_.begin();
-        typename boost::lexer::basic_state_machine<Char>::iterator end_ = sm_.end();
+        iterator_type iter_ = sm_.begin();
+        iterator_type labeliter_ = iter_;
+        iterator_type end_ = sm_.end();
         std::size_t const dfas_ = sm_.data()._dfa->size ();
 
         os_ << "    static std::size_t const npos = "
@@ -608,16 +642,21 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         os_ << "    " << ((lookups_ == 256) ? "char" : "wchar_t") 
             << " ch_ = 0;\n";
+
+        bool need_state0_0_label = need_label0_0(sm_);
+
         for (std::size_t dfa_ = 0; dfa_ < dfas_; ++dfa_)
         {
             std::size_t const states_ = iter_->states;
-
             for (std::size_t state_ = 0; state_ < states_; ++state_)
             {
                 std::size_t const transitions_ = iter_->transitions;
                 std::size_t t_ = 0;
 
-                os_ << "\nstate" << dfa_ << '_' << state_ << ":\n";
+                if (dfas_ > 1 || dfa_ != 0 || state_ != 0 || need_state0_0_label)
+                {
+                    os_ << "\nstate" << dfa_ << '_' << state_ << ":\n";
+                }
 
                 if (iter_->end_state)
                 {

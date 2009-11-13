@@ -196,11 +196,15 @@ struct basic_string_token
                 out_ += '\\';
                 out_ += '"';
                 break;
+            case '\'':
+                out_ += '\\';
+                out_ += '\'';
+                break;
             default:
             {
                 if (ch_ < 32 && ch_ >= 0)
                 {
-					std::basic_stringstream<CharT> ss_;
+                    std::basic_stringstream<CharT> ss_;
 
                     out_ += '\\';
                     out_ += 'x';
