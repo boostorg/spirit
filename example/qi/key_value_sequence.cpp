@@ -11,7 +11,6 @@
 
 namespace client
 {
-    namespace spirit = boost::spirit;
     namespace qi = boost::spirit::qi;
 
     template <typename Iterator>
@@ -42,10 +41,10 @@ int main()
     std::string::iterator begin = input.begin();
     std::string::iterator end = input.end();
 
-    client::key_value_sequence<std::string::iterator> g;
+    client::key_value_sequence<std::string::iterator> p;
     std::map<std::string, std::string> m;
 
-    if (!qi::parse(begin, end, g, m))
+    if (!qi::parse(begin, end, p, m))
     {
         std::cout << "-------------------------------- \n";
         std::cout << "Parsing failed\n";
