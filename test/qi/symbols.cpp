@@ -304,9 +304,20 @@ main()
         BOOST_TEST(const_sym.find("a") && *const_sym.find("a") == 1);
         BOOST_TEST(const_sym.find("b") && *const_sym.find("b") == 2);
         BOOST_TEST(const_sym.find("c") && *const_sym.find("c") == 0);
-        BOOST_TEST(!const_sym.find("d"));
-        
-        
+        BOOST_TEST(!const_sym.find("d"));        
+    }
+    
+    { // Don't find substring
+    
+        symbols<char, int> sym;
+        BOOST_TEST(sym.at("foo") == 0);
+        sym.at("foo") = 1;
+        BOOST_TEST(sym.at("foo") == 1);
+        BOOST_TEST(sym.at("fool") == 0);
+        sym.at("fool") = 2;
+        BOOST_TEST(sym.find("foo") && *sym.find("foo") == 1);
+        BOOST_TEST(sym.find("fool") && *sym.find("foo") == 2);
+        BOOST_TEST(!sym.find("foolish"));
     }
 
     return boost::report_errors();
