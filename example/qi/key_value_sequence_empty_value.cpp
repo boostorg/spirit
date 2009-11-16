@@ -3,6 +3,17 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+// The purpose of this example is to show how to parse arbitrary key/value 
+// pairs delimited by some separator into a std::vector. The difference to 
+// the example 'key_value_sequence.cpp' is that we preserve the order of the
+// elements in the parsed sequence as well as possibly existing duplicates.
+// In addition to the example 'key_value_sequence_ordered.cpp' we allow for 
+// empty values, i.e. the grammar allows to distinguish between 'key=;' and
+// 'key;", where the first stores an empty string as the value, while the 
+// second does not initialize the optional holding the value.
+//
+// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=270
+
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
