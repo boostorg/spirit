@@ -13,14 +13,14 @@ namespace client
 {
     namespace qi = boost::spirit::qi;
 
-    typedef std::map<std::string, std::string> pairs_type;
+    typedef std::vector<std::pair<std::string, std::string> > pairs_type;
 
     template <typename Iterator>
-    struct key_value_sequence 
+    struct key_value_sequence_ordered 
       : qi::grammar<Iterator, pairs_type()>
     {
-        key_value_sequence()
-          : key_value_sequence::base_type(query)
+        key_value_sequence_ordered()
+          : key_value_sequence_ordered::base_type(query)
         {
             query =  pair >> *((qi::lit(';') | '&') >> pair);
             pair  =  key >> -('=' >> value);
@@ -39,14 +39,14 @@ int main()
 {
     namespace qi = boost::spirit::qi;
 
-    std::string input("key1=value1;key2;key3=value3");
+    std::string input("key2=value2;key1;key3=value3");
     std::string::iterator begin = input.begin();
     std::string::iterator end = input.end();
 
-    client::key_value_sequence<std::string::iterator> p;
-    client::pairs_type m;
+    client::key_value_sequence_ordered<std::string::iterator> p;
+    client::pairs_type v;
 
-    if (!qi::parse(begin, end, p, m))
+    if (!qi::parse(begin, end, p, v))
     {
         std::cout << "-------------------------------- \n";
         std::cout << "Parsing failed\n";
@@ -56,8 +56,8 @@ int main()
     {
         std::cout << "-------------------------------- \n";
         std::cout << "Parsing succeeded, found entries:\n";
-        client::pairs_type::iterator end = m.end();
-        for (client::pairs_type::iterator it = m.begin(); it != end; ++it)
+        client::pairs_type::iterator end = v.end();
+        for (client::pairs_type::iterator it = v.begin(); it != end; ++it)
         {
             std::cout << (*it).first;
             if (!(*it).second.empty())

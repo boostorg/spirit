@@ -19,30 +19,26 @@
 
 namespace client
 {
-    namespace spirit = boost::spirit;
-    namespace ascii = boost::spirit::ascii;
+    namespace karma = boost::spirit::karma;
     namespace phoenix = boost::phoenix;
 
     template <typename OutputIterator>
     bool key_value_sequence(OutputIterator sink
       , std::map<std::string, std::string> const& m)
     {
-        using spirit::karma::generate;
-        using spirit::karma::eps;
-        using spirit::karma::omit;
-        using spirit::karma::rule;
-        using spirit::karma::_1;
-        using spirit::karma::_val;
-        using ascii::string;
+        using karma::eps;
+        using karma::omit;
+        using karma::_val;
+        using karma::string;
 
-        rule<OutputIterator, std::pair<std::string const, std::string>()> param;
+        karma::rule<OutputIterator, std::pair<std::string const, std::string>()> param;
 
-        param %=  eps(!phoenix::empty(phoenix::at_c<1>(_val))) 
+        param =  eps(!phoenix::empty(phoenix::at_c<1>(_val))) 
                     << string << "=" << string
               |   string << omit[string]
               ;
 
-        return generate(sink, param % '&', m);
+        return karma::generate(sink, param % '&', m);
     }
 }
 
