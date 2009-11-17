@@ -3,8 +3,10 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  The main purpose of this example is to show how a single container type can
-//  be formatted using different output grammars. 
+//  The main purpose of this example is to show how we can generate output from 
+//  a container holding key/value pairs.
+//
+//  For more information see here: http://spirit.sourceforge.net/home/?p=282
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
@@ -20,42 +22,42 @@
 namespace client
 {
     namespace karma = boost::spirit::karma;
-    namespace phoenix = boost::phoenix;
+
+    typedef std::pair<std::string, boost::optional<std::string> > pair_type;
 
     template <typename OutputIterator>
-    bool key_value_sequence(OutputIterator sink
-      , std::map<std::string, std::string> const& m)
+    struct keys_and_values
+      : karma::grammar<OutputIterator, std::vector<pair_type>()>
     {
-        using karma::eps;
-        using karma::omit;
-        using karma::_val;
-        using karma::string;
+        keys_and_values()
+          : keys_and_values::base_type(query)
+        {
+            query =  pair << *('&' << pair);
+            pair  =  karma::string << -('=' << karma::string);
+        }
 
-        karma::rule<OutputIterator, std::pair<std::string const, std::string>()> param;
-
-        param =  eps(!phoenix::empty(phoenix::at_c<1>(_val))) 
-                    << string << "=" << string
-              |   string << omit[string]
-              ;
-
-        return karma::generate(sink, param % '&', m);
-    }
+        karma::rule<OutputIterator, std::vector<pair_type>()> query;
+        karma::rule<OutputIterator, pair_type()> pair;
+    };
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    typedef std::map<std::string, std::string>::value_type value_type;
+    namespace karma = boost::spirit::karma;
 
-    std::map<std::string, std::string> m;
-    m.insert(value_type("key1", "value1"));
-    m.insert(value_type("key2", ""));
-    m.insert(value_type("key3", "value3"));
-    m.insert(value_type("key4", ""));
+    typedef std::vector<client::pair_type>::value_type value_type;
+    typedef std::back_insert_iterator<std::string> sink_type;
+
+    std::vector<client::pair_type> v;
+    v.push_back(value_type("key1", boost::optional<std::string>("value1")));
+    v.push_back(value_type("key2", boost::optional<std::string>()));
+    v.push_back(value_type("key3", boost::optional<std::string>("")));
 
     std::string generated;
-    std::back_insert_iterator<std::string> sink(generated);
-    if (!client::key_value_sequence(sink, m))
+    sink_type sink(generated);
+    client::keys_and_values<sink_type> g;
+    if (!karma::generate(sink, g, v))
     {
         std::cout << "-------------------------\n";
         std::cout << "Generating failed\n";
