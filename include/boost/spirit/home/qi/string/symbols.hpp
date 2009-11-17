@@ -187,6 +187,18 @@ namespace boost { namespace spirit { namespace qi
                 , traits::get_end<Char>(str), T());
         }
 
+        template <typename Iterator>
+        value_type* prefix_find(Iterator& first, Iterator const& last)
+        {
+            return lookup->find(first, last, Filter());
+        }
+
+        template <typename Iterator>
+        value_type const* prefix_find(Iterator& first, Iterator const& last) const
+        {
+            return lookup->find(first, last, Filter());
+        }
+
         template <typename Str>
         value_type* find(Str const& str)
         {

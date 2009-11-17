@@ -304,10 +304,18 @@ main()
         BOOST_TEST(const_sym.find("a") && *const_sym.find("a") == 1);
         BOOST_TEST(const_sym.find("b") && *const_sym.find("b") == 2);
         BOOST_TEST(const_sym.find("c") && *const_sym.find("c") == 0);
-        BOOST_TEST(!const_sym.find("d"));        
+        BOOST_TEST(!const_sym.find("d"));
+        
+        char const *str1 = "all";
+        char const *first = str1, *last = str1 + 3;
+        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str1 + 1);
+
+        char const *str2 = "dart";
+        first = str2; last = str2 + 4;
+        BOOST_TEST(!sym.prefix_find(first, last) && first == str2);
     }
     
-    { // Don't find substring
+    { // Substrings
     
         symbols<char, int> sym;
         BOOST_TEST(sym.at("foo") == 0);
@@ -316,8 +324,26 @@ main()
         BOOST_TEST(sym.at("fool") == 0);
         sym.at("fool") = 2;
         BOOST_TEST(sym.find("foo") && *sym.find("foo") == 1);
-        BOOST_TEST(sym.find("fool") && *sym.find("foo") == 2);
+        BOOST_TEST(sym.find("fool") && *sym.find("fool") == 2);
         BOOST_TEST(!sym.find("foolish"));
+        BOOST_TEST(!sym.find("foot"));
+        BOOST_TEST(!sym.find("afoot"));
+
+        char const *str, *first, *last;        
+        str = "foolish"; first = str; last = str + 7;
+        BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
+        
+        first = str; last = str + 4;
+        BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
+
+        str = "food"; first = str; last = str + 4;
+        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str + 3);
+
+        first = str; last = str + 3;
+        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str + 3);
+
+        first = str; last = str + 2;
+        BOOST_TEST(!sym.prefix_find(first, last) && first == str);
     }
 
     return boost::report_errors();
