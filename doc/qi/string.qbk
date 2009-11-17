@@ -187,6 +187,7 @@ Also, see __include_structure__.
     [[`s1`...`sN`]  [A __string__.]]
     [[`d1`...`dN`]  [Objects of type `T`.]]
     [[`f`]          [A callable function or function object.]]
+    [[`f`, `l`]     [`ForwardIterator` first/last pair.]]
 ]
 
 [heading Expression Semantics]
@@ -220,6 +221,11 @@ defined in __primitive_parser_concept__.
                                     with symbol, `s`. If `sym` does not already
                                     contain such an object, `find` returns a null
                                     pointer.]]
+    [[`sym.prefix_find(f, l)`]      [Return a pointer to the object associated
+                                    with longest symbol that matches the beginning
+                                    of the range `[f, l)`, and updates `f` to point
+                                    to one past the end of that match. If no symbol matches,
+                                    then return a null pointer, and `f` is unchanged.]]
     [[`sym.for_each(f)`]            [For each symbol in `sym`, `s`, a
                                     `std::basic_string<Char>` with associated data,
                                     `d`, an object of type `T`, invoke `f(s, d)`.]]
