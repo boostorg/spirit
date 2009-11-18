@@ -13,6 +13,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
+
+#define BOOST_SPIRIT_AUTO(domain_, name, expr)                                  \
+    typedef BOOST_TYPEOF(expr) name##expr_type;                                 \
+    BOOST_SPIRIT_ASSERT_MATCH(boost::spirit::domain_::domain, name##expr_type); \
+    boost::spirit::result_of::compile<                                          \
+        boost::spirit::domain_::domain, name##expr_type>::type                  \
+        name = boost::spirit::compile<boost::spirit::domain_::domain>(expr);    \
+    //
+
 int
 main()
 {
@@ -21,7 +30,7 @@ main()
     using boost::spirit::qi::parse;
     typedef std::string::const_iterator iterator_type;
     
-    BOOST_AUTO(comment, "/*" >> *(char_ - "*/") >> "*/");
+    BOOST_SPIRIT_AUTO(qi, comment, "/*" >> *(char_ - "*/") >> "*/");
 
     std::string str = "/*This is a comment*/";
     std::string::const_iterator iter = str.begin();
