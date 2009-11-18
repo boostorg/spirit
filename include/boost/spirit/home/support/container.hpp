@@ -251,6 +251,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename T>
     void push_back(Container& c, T const& val);
 
+    //[customization_push_back_default
     template <typename Container, typename T, typename Enable/* = void*/>
     struct push_back_container
     {
@@ -259,6 +260,7 @@ namespace boost { namespace spirit { namespace traits
             c.insert(c.end(), val);
         }
     };
+    //]
 
     template <typename Container, typename T>
     struct push_back_container<optional<Container>, T>
@@ -316,10 +318,12 @@ namespace boost { namespace spirit { namespace traits
         push_back_container<Container, T>::call(c, val);
     }
 
+    //[customization_push_back_unused
     template <typename Container>
     void push_back(Container&, unused_type)
     {
     }
+    //]
 
     template <typename T>
     void push_back(unused_type, T const&)
