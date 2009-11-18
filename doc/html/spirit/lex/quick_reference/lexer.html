@@ -28,7 +28,7 @@
         Expressions</a>
 </h4></div></div></div>
 <div class="table">
-<a name="id930493"></a><p class="title"><b>Table 11. Regular expressions
+<a name="id944156"></a><p class="title"><b>Table 11. Regular expressions
         support</b></p>
 <div class="table-contents"><table class="table" summary="Regular expressions
         support">
@@ -613,8 +613,32 @@
             issues when creating them in wide character mode.
           </p></td></tr>
 </table></div>
+<div class="tip" title="Tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            If you want to build tokens for syntaxes that recognize items like quotes
+            (<code class="computeroutput"><span class="string">"'"</span></code>, <code class="computeroutput"><span class="char">'"'</span></code>) and backslash (<code class="computeroutput"><span class="special">\</span></code>),
+            here is example syntax to get you started. The lesson here really is
+            to remember that both c++, as well as regular expressions require escaping
+            with <code class="computeroutput"><span class="special">\</span></code> for some constructs,
+            which can cascade. 
+</p>
+<pre class="programlisting"><span class="identifier">quote1</span>         <span class="special">=</span> <span class="string">"'"</span><span class="special">;</span>            <span class="comment">// match single "'"
+</span><span class="identifier">quote2</span>         <span class="special">=</span> <span class="string">"\\\""</span><span class="special">;</span>         <span class="comment">// match single '"'
+</span><span class="identifier">literal_quote1</span> <span class="special">=</span> <span class="string">"\\'"</span><span class="special">;</span>          <span class="comment">// match backslash followed by single "'"
+</span><span class="identifier">literal_quote2</span> <span class="special">=</span> <span class="string">"\\\\\\\""</span><span class="special">;</span>     <span class="comment">// match backslash followed by single '"'
+</span><span class="identifier">literal_backslash</span> <span class="special">=</span> <span class="string">"\\\\\\\\"</span><span class="special">;</span>  <span class="comment">// match two backslashs
+</span></pre>
+<p>
+          </p>
+</td></tr>
+</table></div>
 <a name="spirit.lex.quick_reference.lexer.regular_expression_precedence"></a><h6>
-<a name="id932930"></a>
+<a name="id946166"></a>
           <a class="link" href="lexer.html#spirit.lex.quick_reference.lexer.regular_expression_precedence">Regular
           Expression Precedence</a>
         </h6>
@@ -632,7 +656,7 @@
           </li>
 </ul></div>
 <a name="spirit.lex.quick_reference.lexer.macros"></a><h6>
-<a name="id933035"></a>
+<a name="id947644"></a>
           <a class="link" href="lexer.html#spirit.lex.quick_reference.lexer.macros">Macros</a>
         </h6>
 <p>
