@@ -61,3 +61,6 @@ exe mini_c_interp :
     mini_c/mini_cd.cpp
     ;
 
+exe nabialek : nabialek.cpp ;
+exe typeof : typeof.cpp ;
+
