@@ -8,7 +8,7 @@
 // the example 'key_value_sequence.cpp' is that we preserve the order of the
 // elements in the parsed seqeunce as well as possibly existing duplicates.
 //
-// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=270
+// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=371
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/std_pair.hpp>

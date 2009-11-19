@@ -8,7 +8,7 @@
 // format is the example we use to demonstrate how this can be done 
 // (i.e. things like: key1=value1;key2=value2;…;keyN=valueN).
 //
-// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=270
+// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=371
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/std_pair.hpp>

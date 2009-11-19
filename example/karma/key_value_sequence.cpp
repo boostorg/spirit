@@ -6,7 +6,7 @@
 //  The main purpose of this example is to show how we can generate output from 
 //  a container holding key/value pairs.
 //
-//  For more information see here: http://spirit.sourceforge.net/home/?p=282
+//  For more information see here: http://spirit.sourceforge.net/home/?p=400
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>

@@ -12,7 +12,7 @@
 // 'key;", where the first stores an empty string as the value, while the 
 // second does not initialize the optional holding the value.
 //
-// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=270
+// For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=371
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/std_pair.hpp>
