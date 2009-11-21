@@ -7,7 +7,7 @@
 //  component can be written. We develop a custom parser exposing the current 
 //  iterator position as its attribute.
 //
-//  For more information see: http://spirit.sourceforge.net/home/
+//  For more information see: http://spirit.sourceforge.net/home/?page_id=567
 
 #include <boost/spirit/include/qi_parse_attr.hpp>
 #include <boost/spirit/include/qi_char.hpp>
