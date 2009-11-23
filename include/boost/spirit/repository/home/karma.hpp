@@ -13,6 +13,7 @@
 
 #include <boost/spirit/repository/home/karma/directive.hpp>
 #include <boost/spirit/repository/home/karma/nonterminal.hpp>
+#include <boost/spirit/repository/home/karma/string.hpp>
 
 #endif
 

@@ -3,8 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(ITER_POS_NOV_20_2009_1245PM)
-#define ITER_POS_NOV_20_2009_1245PM
+#if !defined(BOOST_SPIRIT_REPOSITORY_QI_ITER_POS_NOV_20_2009_1245PM)
+#define BOOST_SPIRIT_REPOSITORY_QI_ITER_POS_NOV_20_2009_1245PM
 
 #include <boost/spirit/include/qi_parse.hpp>
 
