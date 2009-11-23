@@ -76,7 +76,8 @@ main()
 
     {   // test action
         boost::optional<int> n = 0;
-        BOOST_TEST((test("1234", (-int_)[test_attribute_type()])));
+        BOOST_TEST((test_attr("1234", (-int_)[test_attribute_type()], n)));
+        BOOST_TEST((n.get() == 1234));
     }
 
     {
