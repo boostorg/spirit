@@ -273,6 +273,30 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename Container, typename T>
+    struct push_back_container<Container, optional<T> >
+    {
+        static void call(Container& c, optional<T> const& val)
+        {
+            if (val)
+                push_back(c, boost::get<T>(val));
+        }
+    };
+
+    template <typename Container, typename T>
+    struct push_back_container<optional<Container>, optional<T> >
+    {
+        static void call(optional<Container>& c, optional<T> const& val)
+        {
+            if (val)
+            {
+                if (!c)
+                    c = Container();
+                push_back(boost::get<Container>(c), boost::get<T>(val));
+            }
+        }
+    };
+
     namespace detail
     {
         template <typename T>
