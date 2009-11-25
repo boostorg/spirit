@@ -49,11 +49,13 @@ struct test_action_2
       , boost::spirit::unused_type
       , boost::spirit::unused_type) const
     {
-        BOOST_TEST(v.size() == 4 && 
-            v[0] == 'a' && 
-            v[1] == 'b' && 
-            v[2] == '1' && 
-            v[3] == '2');
+        using boost::get;
+
+        BOOST_TEST(v.size() == 5 && 
+            v[1] == 'a' && 
+            v[2] == 'b' && 
+            v[3] == '1' && 
+            v[4] == '2');
     }
 };
 
@@ -172,6 +174,7 @@ main()
         using boost::spirit::ascii::string;
         namespace phx = boost::phoenix;
 
+
         BOOST_TEST( (test("ab1_", (*(alnum | char_('_')))[test_action('_')])) );
         BOOST_TEST( (test("ab12", (*(alpha | digit))[test_action('2')])) );
 
@@ -179,7 +182,11 @@ main()
 
         std::vector<boost::optional<char> > v;
         BOOST_TEST( (test("x,y,z", (*(',' | char_))[phx::ref(v) = _1])) );
-        BOOST_TEST(v.size() == 3 && v[0] == 'x' && v[1] == 'y' && v[2] == 'z');
+        assert(v[0] == 'x');
+        assert(!v[1]);       
+        assert(v[2] == 'y');
+        assert(!v[3]);        
+        assert(v[4] == 'z');        
     }
 
     {
