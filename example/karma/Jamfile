@@ -27,4 +27,5 @@ exe printf_style_double_format : printf_style_double_format.cpp ;
 exe quick_start1 : quick_start1.cpp ;
 exe karma_reference : reference.cpp ;
 exe karma_reorder_struct : reorder_struct.cpp ;
+exe karma_escaped_string : escaped_string.cpp ;
 
