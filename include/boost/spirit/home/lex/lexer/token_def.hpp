@@ -30,6 +30,11 @@
 #include <string>
 #include <cstdlib>
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4355) // 'this' : used in base member initializer list warning
+#endif
+
 namespace boost { namespace spirit { namespace lex
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -52,11 +57,6 @@ namespace boost { namespace spirit { namespace lex
         typedef lex::reference<token_def const, Idtype> reference_;
         typedef typename proto::terminal<reference_>::type terminal_type;
         typedef proto::extends<terminal_type, token_def> proto_base_type;
-
-        reference_ alias() const
-        {
-            return reference_(*this);
-        }
 
     public:
         // Qi interface: metafunction calculating parser return type
@@ -154,18 +154,23 @@ namespace boost { namespace spirit { namespace lex
 
         // Lex interface: constructing token definitions
         token_def() 
-          : proto_base_type(terminal_type::make(alias()))
+          : proto_base_type(terminal_type::make(reference_(*this)))
           , def_('\0'), token_id_()
-          , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0))  {}
+          , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
+
+        token_def(token_def const& rhs) 
+          : proto_base_type(terminal_type::make(reference_(*this)))
+          , def_(rhs.def_), token_id_(rhs.token_id_)
+          , unique_id_(rhs.unique_id_), token_state_(rhs.token_state_) {}
 
         explicit token_def(char_type def_, Idtype id_ = Idtype())
-          : proto_base_type(terminal_type::make(alias()))
+          : proto_base_type(terminal_type::make(reference_(*this)))
           , def_(def_)
           , token_id_(std::size_t(Idtype() == id_ ? def_ : id_))
           , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
 
         explicit token_def(string_type const& def_, Idtype id_ = Idtype())
-          : proto_base_type(terminal_type::make(alias()))
+          : proto_base_type(terminal_type::make(reference_(*this)))
           , def_(def_), token_id_(id_)
           , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
 
@@ -207,5 +212,9 @@ namespace boost { namespace spirit { namespace lex
     };
 
 }}}
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif
