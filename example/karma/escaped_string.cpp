@@ -15,30 +15,24 @@ namespace client
 
     template <typename OutputIterator>
     struct escaped_string
-      : karma::grammar<OutputIterator, std::string(char)>
+      : karma::grammar<OutputIterator, std::string(char const*)>
     {
         escaped_string()
           : escaped_string::base_type(esc_str)
         {
-            esc.add('\a', "\\a")
-                   ('\b', "\\b")
-                   ('\f', "\\f")
-                   ('\n', "\\n")
-                   ('\r', "\\r")
-                   ('\t', "\\t")
-                   ('\v', "\\v")
-                   ('\'', "\\\'")
-                   ('\"', "\\\"")
+            esc_char.add('\a', "\\a")('\b', "\\b")('\f', "\\f")('\n', "\\n")
+                        ('\r', "\\r")('\t', "\\t")('\v', "\\v")
+                        ('\'', "\\\'")('\"', "\\\"")
                 ;
 
-            esc_str =   lit(karma::_r1) 
-                    << *(esc | karma::print | "\\x" << karma::hex) 
-                    <<  lit(karma::_r1)
+            esc_str =   karma::lit(karma::_r1) 
+                    << *(esc_char | karma::print | "\\x" << karma::hex) 
+                    <<  karma::lit(karma::_r1)
                 ;
         }
 
-        karma::rule<OutputIterator, std::string(char)> esc_str;
-        karma::symbols<char, char const*> esc;
+        karma::rule<OutputIterator, std::string(char const*)> esc_str;
+        karma::symbols<char, char const*> esc_char;
     };
 }
 
@@ -52,9 +46,11 @@ int main()
     std::string generated;
     sink_type sink(generated);
 
-    std::string str("string to esacpe: \n\r\t\"\'\x19");
+    std::string str("string to esacpe: \n\r\t\"'\x19");
+    char const* quote = "'''";
+
     client::escaped_string<sink_type> g;
-    if (!karma::generate(sink, g('"'), str))
+    if (!karma::generate(sink, g(quote), str))
     {
         std::cout << "-------------------------\n";
         std::cout << "Generating failed\n";

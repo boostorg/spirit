@@ -753,5 +753,24 @@ int main()
         //]
     }
 
+    // symbols
+    {
+        //[reference_karma_using_declarations_symbols
+        using boost::spirit::karma::symbols;
+        //]
+
+        //[reference_karma_symbols
+        symbols<char, char const*> sym;
+
+        sym.add
+            ('a', "Apple")
+            ('b', "Banana")
+            ('o', "Orange")
+        ;
+
+        test_generator_attr("Banana", sym, 'b');
+        //]
+    }
+
     return 0;
 }

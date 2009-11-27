@@ -106,6 +106,7 @@ import testing ;
     [ run karma/right_alignment.cpp         : : : : ]
     [ run karma/sequence.cpp                : : : : karma_sequence ]
     [ run karma/stream.cpp                  : : : : karma_stream ]
+    [ run karma/symbols.cpp                 : : : : karma_symbols ]
     [ run karma/tricky_alignment.cpp        : : : : ]
 
     [ compile-fail karma/grammar_fail.cpp   : : karma_grammar_fail ]
