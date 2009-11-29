@@ -270,7 +270,7 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // Parser generators: make_xxx function (objects)
+    // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename Modifiers>
     struct make_stream

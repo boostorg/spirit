@@ -109,9 +109,9 @@ namespace boost { namespace spirit { namespace lex
         template <typename Context>
         info what(Context& /*context*/) const
         {
-            if (0 == def_.which()) {
+            if (0 == def_.which()) 
                 return info("token_def", get<string_type>(def_));
-            }
+
             return info("token_def", get<char_type>(def_));
         }
 
@@ -199,8 +199,8 @@ namespace boost { namespace spirit { namespace lex
 
         string_type definition() const 
         { 
-            return (0 == def_.which()) 
-              ? get<string_type>(def_) : string_type(1, get<char_type>(def_));
+            return (0 == def_.which()) ? 
+                get<string_type>(def_) : string_type(1, get<char_type>(def_));
         }
         std::size_t state() const { return token_state_; }
 
