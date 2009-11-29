@@ -33,6 +33,7 @@ namespace boost { namespace spirit
         ( buffer )
         ( true_ )
         ( false_ )
+        ( auto_ )
     )
 
     // Here we are reusing proto::lit
