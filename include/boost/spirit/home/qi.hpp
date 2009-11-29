@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/qi/action.hpp>
+#include <boost/spirit/home/qi/auto.hpp>
 #include <boost/spirit/home/qi/auxiliary.hpp>
 #include <boost/spirit/home/qi/char.hpp>
 #include <boost/spirit/home/qi/binary.hpp>

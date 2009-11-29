@@ -12,10 +12,13 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 
+#include <boost/proto/proto.hpp>
+#include <boost/utility/result_of.hpp>
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/fusion/include/fold.hpp>
 
 namespace boost { namespace spirit 
 {

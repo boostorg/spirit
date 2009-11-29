@@ -3,14 +3,14 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(BOOST_SPIRIT_KARMA_META_CREATE_NOV_21_2009_0425PM)
-#define BOOST_SPIRIT_KARMA_META_CREATE_NOV_21_2009_0425PM
+#if !defined(BOOST_SPIRIT_QI_META_CREATE_NOV_21_2009_0432PM)
+#define BOOST_SPIRIT_QI_META_CREATE_NOV_21_2009_0432PM
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
-#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/auto/meta_create.hpp>
 
@@ -24,7 +24,7 @@
 #include <boost/fusion/include/as_vector.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace karma
+namespace boost { namespace spirit { namespace qi
 {
     ///////////////////////////////////////////////////////////////////////////
     // compatible STL containers
@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace karma
 
         typedef spirit::detail::make_unary_proto_expr<
             typename Container::value_type, proto::tag::dereference
-          , make_dereference, karma::domain
+          , make_dereference, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -55,74 +55,16 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // String types
-    template <typename String> 
-    struct meta_create_string 
-    {
-        typedef spirit::standard::string_type const& type; 
-        static type call() { return spirit::standard::string; }
-    };
-
-    template <> 
-    struct meta_create_string<wchar_t*>
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    template <> 
-    struct meta_create_string<wchar_t const*>
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    template <int N> 
-    struct meta_create_string<wchar_t[N]>
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    template <int N> 
-    struct meta_create_string<wchar_t const[N]>
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    template <int N> 
-    struct meta_create_string<wchar_t(&)[N]>
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    template <int N> 
-    struct meta_create_string<wchar_t const(&)[N]>
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    template <typename Traits, typename Allocator> 
-    struct meta_create_string<std::basic_string<wchar_t, Traits, Allocator> >
-    {
-        typedef spirit::standard_wide::string_type const& type; 
-        static type call() { return spirit::standard_wide::string; }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     // Fusion sequences
     template <typename Sequence> 
     struct meta_create_sequence 
     {
-        struct make_shift_left
+        struct make_shift_right
         {
             template <typename RT, typename T1, typename T2>
             static RT call(T1 const& t1, T2 const& t2) 
             {
-                return t1 << t2;
+                return t1 >> t2;
             }
         };
 
@@ -133,7 +75,7 @@ namespace boost { namespace spirit { namespace karma
         >::type sequence_type;
 
         typedef spirit::detail::make_nary_proto_expr<
-            sequence_type, proto::tag::shift_left, make_shift_left, karma::domain
+            sequence_type, proto::tag::shift_right, make_shift_right, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -152,23 +94,12 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename T>
     struct meta_create_impl<T
-          , typename enable_if_c<
-                traits::is_container<T>::value && !traits::is_string<T>::value
-            >::type>
+          , typename enable_if<traits::is_container<T> >::type>
       : meta_create_container<T> {};
 
     template <typename T>
     struct meta_create_impl<T
-          , typename enable_if<
-                traits::is_string<T> 
-            >::type>
-      : meta_create_string<T> {};
-
-    template <typename T>
-    struct meta_create_impl<T
-          , typename enable_if<
-                fusion::traits::is_sequence<T> 
-            >::type>
+          , typename enable_if<fusion::traits::is_sequence<T> >::type>
       : meta_create_sequence<T> {};
 
     template <typename T, typename Enable = void>
@@ -189,7 +120,7 @@ namespace boost { namespace spirit { namespace karma
         };
 
         typedef spirit::detail::make_unary_proto_expr<
-            T, proto::tag::negate, make_negate, karma::domain
+            T, proto::tag::negate, make_negate, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -216,7 +147,7 @@ namespace boost { namespace spirit { namespace karma
 
         typedef spirit::detail::make_nary_proto_expr<
             typename boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types
-          , proto::tag::bitwise_or, make_bitwise_or, karma::domain
+          , proto::tag::bitwise_or, make_bitwise_or, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -331,16 +262,16 @@ namespace boost { namespace spirit { namespace karma
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit 
 {
-    // dispatch this to the karma related specializations
+    // dispatch this to the qi related specializations
     template <typename T>
-    struct meta_create<karma::domain, T>
+    struct meta_create<qi::domain, T>
     {
         typedef typename spirit::detail::remove_const_ref<T>::type data_type;
-        typedef typename karma::meta_create<data_type>::type type;
+        typedef typename qi::meta_create<data_type>::type type;
 
         static type call()
         {
-            return karma::meta_create<data_type>::call();
+            return qi::meta_create<data_type>::call();
         }
     };
 }}
