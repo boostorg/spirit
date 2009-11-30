@@ -54,16 +54,6 @@ namespace boost { namespace spirit { namespace karma
         auto_generator(Modifiers const& modifiers)
           : modifiers_(modifiers) {}
 
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute, typename Expr>
-        bool generate_auto(OutputIterator& sink, Context& context
-          , Delimiter const& d, Attribute const& attr, Expr const& expr) const
-        {
-            return compile<karma::domain>(expr, modifiers_)
-              .generate(sink, context, d, attr);
-        }
-
         // auto_generator has an attached attribute 
         template <
             typename OutputIterator, typename Context, typename Delimiter
@@ -71,8 +61,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& context
           , Delimiter const& d, Attribute const& attr) const
         {
-            return generate_auto(sink, context, d, attr
-              , create_generator<Attribute>());
+            return compile<karma::domain>(create_generator<Attribute>(), modifiers_)
+                      .generate(sink, context, d, attr);
         }
 
         // this auto_generator has no attribute attached, it needs to have been

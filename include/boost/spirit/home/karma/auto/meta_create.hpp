@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace karma
             }
         };
 
-        typedef spirit::detail::make_unary_proto_expr<
+        typedef make_unary_proto_expr<
             typename Container::value_type, proto::tag::dereference
           , make_dereference, karma::domain
         > make_proto_expr;
@@ -132,7 +132,7 @@ namespace boost { namespace spirit { namespace karma
           , mpl::vector<>, mpl::push_back<mpl::_, mpl::_> 
         >::type sequence_type;
 
-        typedef spirit::detail::make_nary_proto_expr<
+        typedef make_nary_proto_expr<
             sequence_type, proto::tag::shift_left, make_shift_left, karma::domain
         > make_proto_expr;
 
@@ -188,7 +188,7 @@ namespace boost { namespace spirit { namespace karma
             }
         };
 
-        typedef spirit::detail::make_unary_proto_expr<
+        typedef make_unary_proto_expr<
             T, proto::tag::negate, make_negate, karma::domain
         > make_proto_expr;
 
@@ -214,7 +214,7 @@ namespace boost { namespace spirit { namespace karma
             }
         };
 
-        typedef spirit::detail::make_nary_proto_expr<
+        typedef make_nary_proto_expr<
             typename boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types
           , proto::tag::bitwise_or, make_bitwise_or, karma::domain
         > make_proto_expr;
@@ -329,20 +329,18 @@ namespace boost { namespace spirit { namespace karma
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit 
+namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // main customization point for create_generator
+    template <typename T, typename Enable = void>
+    struct create_generator : karma::meta_create<T> {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // dispatch this to the karma related specializations
     template <typename T>
     struct meta_create<karma::domain, T>
-    {
-        typedef typename spirit::detail::remove_const_ref<T>::type data_type;
-        typedef typename karma::meta_create<data_type>::type type;
-
-        static type call()
-        {
-            return karma::meta_create<data_type>::call();
-        }
-    };
-}}
+      : create_generator<typename spirit::detail::remove_const_ref<T>::type> {};
+}}}
 
 #endif

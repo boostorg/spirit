@@ -20,13 +20,16 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/fusion/include/fold.hpp>
 
-namespace boost { namespace spirit 
+namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Domain, typename Type, typename Char = char
-      , typename Enable = void>
+    // This is the main dispatching point for meta_create to the correct domain
+    template <typename Domain, typename T, typename Enable = void>
     struct meta_create;
+}}}
 
+namespace boost { namespace spirit 
+{
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
@@ -39,24 +42,6 @@ namespace boost { namespace spirit
           : remove_const<typename remove_reference<T>::type> {};
 
         ///////////////////////////////////////////////////////////////////////
-        template <typename T, typename OpTag, typename F, typename Domain>
-        struct make_unary_proto_expr
-        {
-            typedef spirit::meta_create<Domain, T> subject_type;
-
-            typedef proto::expr<
-                OpTag, proto::list1<
-                    typename add_const_ref<typename subject_type::type>::type
-                >, 1
-            > type;
-
-            static type call()
-            {
-                return F::template call<type>(subject_type::call());
-            }
-        };
-
-        ///////////////////////////////////////////////////////////////////////
         template <typename OpTag, typename F, typename Domain>
         struct nary_proto_expr_function
         {
@@ -67,7 +52,7 @@ namespace boost { namespace spirit
             struct result<nary_proto_expr_function(T1, T2)>
             {
                 typedef typename 
-                    spirit::meta_create<Domain, T2>::type
+                    spirit::traits::meta_create<Domain, T2>::type
                 right_type;
 
                 typedef typename mpl::if_<
@@ -86,7 +71,7 @@ namespace boost { namespace spirit
             typename result<nary_proto_expr_function(unused_type const&, T)>::type
             operator()(unused_type const&, T) const
             {
-                typedef spirit::meta_create<Domain, T> type;
+                typedef spirit::traits::meta_create<Domain, T> type;
                 return type::call();
             }
 
@@ -95,7 +80,7 @@ namespace boost { namespace spirit
             operator()(T1 const& t1, T2) const
             {
                 // we variants to the alternative operator
-                typedef spirit::meta_create<Domain, T2> 
+                typedef spirit::traits::meta_create<Domain, T2> 
                     right_type;
                 typedef typename result<nary_proto_expr_function(T1, T2)>::type 
                     return_type;
@@ -103,22 +88,42 @@ namespace boost { namespace spirit
                 return F::template call<return_type>(t1, right_type::call());
             }
         };
-
-        template <typename Sequence, typename OpTag, typename F, typename Domain>
-        struct make_nary_proto_expr
-        {
-            typedef nary_proto_expr_function<OpTag, F, Domain> make_proto_expr;
-
-            typedef typename fusion::result_of::fold<
-                Sequence, unused_type, make_proto_expr
-            >::type type;
-
-            static type call()
-            {
-                return fusion::fold(Sequence(), unused, make_proto_expr());
-            }
-        };
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename OpTag, typename F, typename Domain>
+    struct make_unary_proto_expr
+    {
+        typedef spirit::traits::meta_create<Domain, T> subject_type;
+
+        typedef proto::expr<
+            OpTag, proto::list1<
+                typename detail::add_const_ref<typename subject_type::type>::type
+            >, 1
+        > type;
+
+        static type call()
+        {
+            return F::template call<type>(subject_type::call());
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Sequence, typename OpTag, typename F, typename Domain>
+    struct make_nary_proto_expr
+    {
+        typedef detail::nary_proto_expr_function<OpTag, F, Domain> 
+            make_proto_expr;
+
+        typedef typename fusion::result_of::fold<
+            Sequence, unused_type, make_proto_expr
+        >::type type;
+
+        static type call()
+        {
+            return fusion::fold(Sequence(), unused, make_proto_expr());
+        }
+    };
 }}
 
 #endif

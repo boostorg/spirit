@@ -52,22 +52,12 @@ namespace boost { namespace spirit { namespace qi
           : modifiers_(modifiers) {}
 
         template <typename Iterator, typename Context, typename Skipper
-          , typename Attribute, typename Expr>
-        bool parse_auto(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper, Attribute& attr
-          , Expr const& expr) const
-        {
-            return compile<qi::domain>(expr, modifiers_)
-              .parse(first, last, context, skipper, attr);
-        }
-
-        template <typename Iterator, typename Context, typename Skipper
           , typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper, Attribute& attr) const
         {
-            return parse_auto(first, last, context, skipper, attr
-              , create_parser<Attribute>());
+            return compile<qi::domain>(create_parser<Attribute>(), modifiers_)
+                      .parse(first, last, context, skipper, attr);
         }
 
         template <typename Context>

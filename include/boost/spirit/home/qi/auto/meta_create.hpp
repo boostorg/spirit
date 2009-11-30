@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace qi
             }
         };
 
-        typedef spirit::detail::make_unary_proto_expr<
+        typedef make_unary_proto_expr<
             typename Container::value_type, proto::tag::dereference
           , make_dereference, qi::domain
         > make_proto_expr;
@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace qi
           , mpl::vector<>, mpl::push_back<mpl::_, mpl::_> 
         >::type sequence_type;
 
-        typedef spirit::detail::make_nary_proto_expr<
+        typedef make_nary_proto_expr<
             sequence_type, proto::tag::shift_right, make_shift_right, qi::domain
         > make_proto_expr;
 
@@ -119,7 +119,7 @@ namespace boost { namespace spirit { namespace qi
             }
         };
 
-        typedef spirit::detail::make_unary_proto_expr<
+        typedef make_unary_proto_expr<
             T, proto::tag::negate, make_negate, qi::domain
         > make_proto_expr;
 
@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace qi
             }
         };
 
-        typedef spirit::detail::make_nary_proto_expr<
+        typedef make_nary_proto_expr<
             typename boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types
           , proto::tag::bitwise_or, make_bitwise_or, qi::domain
         > make_proto_expr;
@@ -260,20 +260,18 @@ namespace boost { namespace spirit { namespace qi
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit 
+namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // main customization point for create_parser
+    template <typename T, typename Enable = void>
+    struct create_parser : qi::meta_create<T> {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // dispatch this to the qi related specializations
     template <typename T>
-    struct meta_create<qi::domain, T>
-    {
-        typedef typename spirit::detail::remove_const_ref<T>::type data_type;
-        typedef typename qi::meta_create<data_type>::type type;
-
-        static type call()
-        {
-            return qi::meta_create<data_type>::call();
-        }
-    };
-}}
+    struct meta_create<qi::domain, T> 
+      : create_parser<typename spirit::detail::remove_const_ref<T>::type> {};
+}}}
 
 #endif

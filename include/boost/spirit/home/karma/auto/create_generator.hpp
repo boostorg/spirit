@@ -18,24 +18,21 @@ namespace boost { namespace spirit { namespace result_of
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct create_generator
-    {
-        typedef spirit::meta_create<karma::domain, T> creator_type;
-
-        typedef typename proto::result_of::deep_copy<
-            typename creator_type::type
-        >::type type;
-    };
+      : proto::result_of::deep_copy<
+            typename spirit::traits::meta_create<karma::domain, T>::type
+        > {};
 }}}
 
 namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
+    // Main API function for generator creation from data type
     template <typename T>
     typename result_of::create_generator<T>::type
     create_generator()
     {
-        typedef typename result_of::create_generator<T>::creator_type creator_type;
-        return proto::deep_copy(creator_type::call());
+        return proto::deep_copy(
+            spirit::traits::meta_create<karma::domain, T>::call());
     }
 }}}
 
