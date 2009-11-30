@@ -13,29 +13,29 @@
 #include <boost/spirit/home/qi/auto/meta_create.hpp>
 #include <boost/proto/deep_copy.hpp>
 
+namespace boost { namespace spirit { namespace result_of
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct create_parser
+    {
+        typedef spirit::meta_create<qi::domain, T> creator_type;
+
+        typedef typename proto::result_of::deep_copy<
+            typename creator_type::type
+        >::type type;
+    };
+}}}
+
 namespace boost { namespace spirit { namespace qi
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct parser_creator
-    {
-        typedef spirit::meta_create<qi::domain, T> creator_type;
-        typedef typename proto::result_of::deep_copy<
-            typename creator_type::type
-        >::type type;
-
-        static type call()
-        {
-            return proto::deep_copy(creator_type::call());
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    typename parser_creator<T>::type
+    typename result_of::create_parser<T>::type
     create_parser()
     {
-        return parser_creator<T>::call();
+        typedef typename result_of::create_parser<T>::creator_type creator_type;
+        return proto::deep_copy(creator_type::call());
     }
 }}}
 

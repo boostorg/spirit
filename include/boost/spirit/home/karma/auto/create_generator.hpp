@@ -13,29 +13,29 @@
 #include <boost/spirit/home/karma/auto/meta_create.hpp>
 #include <boost/proto/deep_copy.hpp>
 
+namespace boost { namespace spirit { namespace result_of
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct create_generator
+    {
+        typedef spirit::meta_create<karma::domain, T> creator_type;
+
+        typedef typename proto::result_of::deep_copy<
+            typename creator_type::type
+        >::type type;
+    };
+}}}
+
 namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct generator_creator
-    {
-        typedef spirit::meta_create<karma::domain, T> creator_type;
-        typedef typename proto::result_of::deep_copy<
-            typename creator_type::type
-        >::type type;
-
-        static type call()
-        {
-            return proto::deep_copy(creator_type::call());
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    typename generator_creator<T>::type
+    typename result_of::create_generator<T>::type
     create_generator()
     {
-        return generator_creator<T>::call();
+        typedef typename result_of::create_generator<T>::creator_type creator_type;
+        return proto::deep_copy(creator_type::call());
     }
 }}}
 
