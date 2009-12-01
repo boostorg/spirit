@@ -20,6 +20,7 @@
 #include "test.hpp"
 
 namespace karma = boost::spirit::karma;
+namespace traits = boost::spirit::traits;
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Char, typename T>
@@ -28,6 +29,7 @@ bool test_create_generator(Char const *expected, T const& t)
     std::basic_string<Char> generated;
     std::back_insert_iterator<std::basic_string<Char> > sink(generated);
 
+    BOOST_TEST((traits::meta_create_exists<karma::domain, T>::value));
     bool result = karma::generate(sink, karma::create_generator<T>(), t);
 
     spirit_test::print_if_failed("test_create_generator", result, generated, expected);
@@ -37,6 +39,8 @@ bool test_create_generator(Char const *expected, T const& t)
 template <typename Char, typename Attribute>
 bool test_rule(Char const *expected, Attribute const& attr)
 {
+    BOOST_TEST((traits::meta_create_exists<karma::domain, Attribute>::value));
+
     typedef spirit_test::output_iterator<Char>::type sink_type;
     karma::rule<sink_type, Attribute()> r = 
         karma::create_generator<Attribute>();
@@ -47,6 +51,8 @@ template <typename Char, typename Attribute, typename Delimiter>
 bool test_rule_delimited(Char const *expected, Attribute const& attr
   , Delimiter const& d)
 {
+    BOOST_TEST((traits::meta_create_exists<karma::domain, Attribute>::value));
+
     typedef spirit_test::output_iterator<Char>::type sink_type;
     karma::rule<sink_type, Attribute(), Delimiter> r = 
         karma::create_generator<Attribute>();
@@ -56,6 +62,11 @@ bool test_rule_delimited(Char const *expected, Attribute const& attr
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
+    {
+        struct my_type {};
+        BOOST_TEST((!traits::meta_create_exists<karma::domain, my_type>::value));
+    }
+
     {
         // test primitive types
         BOOST_TEST(test_create_generator("true", true));

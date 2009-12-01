@@ -21,6 +21,7 @@
 #include "test.hpp"
 
 namespace qi = boost::spirit::qi;
+namespace traits = boost::spirit::traits;
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Char, typename T>
@@ -30,12 +31,15 @@ bool test_create_parser(Char const *in, T& t)
     while (*last)
         last++;
 
+    BOOST_TEST((traits::meta_create_exists<qi::domain, T>::value));
     return qi::phrase_parse(in, last, qi::create_parser<T>(), qi::space, t);
 }
 
 template <typename Char, typename Attribute>
 bool test_rule(Char const* in, Attribute const& expected)
 {
+    BOOST_TEST((traits::meta_create_exists<qi::domain, Attribute>::value));
+
     Attribute attr = Attribute();
     qi::rule<Char const*, Attribute()> r = qi::create_parser<Attribute>();
     return spirit_test::test_attr(in, r, attr) && attr == expected;
@@ -44,6 +48,8 @@ bool test_rule(Char const* in, Attribute const& expected)
 template <typename Char, typename Attribute, typename Skipper>
 bool test_rule(Char const* in, Attribute const& expected, Skipper const& skipper)
 {
+    BOOST_TEST((traits::meta_create_exists<qi::domain, Attribute>::value));
+
     Attribute attr = Attribute();
     qi::rule<Char const*, Attribute(), Skipper> r = qi::create_parser<Attribute>();
     return spirit_test::test_attr(in, r, attr, skipper) && attr == expected;
@@ -52,6 +58,11 @@ bool test_rule(Char const* in, Attribute const& expected, Skipper const& skipper
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
+    {
+        struct my_type {};
+        BOOST_TEST((!traits::meta_create_exists<qi::domain, my_type>::value));
+    }
+
     {
         // test primitive types
         bool b = false;

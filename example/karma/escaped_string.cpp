@@ -46,7 +46,7 @@ int main()
     std::string generated;
     sink_type sink(generated);
 
-    std::string str("string to esacpe: \n\r\t\"'\x19");
+    std::string str("string to escape: \n\r\t\"'\x19");
     char const* quote = "'''";
 
     client::escaped_string<sink_type> g;
