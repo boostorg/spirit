@@ -44,7 +44,7 @@ namespace std {
 }
 
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/karma_stream.hpp>
+#include <boost/spirit/include/karma_format.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
@@ -99,11 +99,11 @@ void output_container(std::ostream& os, Container const& c)
             c                                     // data
         ) << std::endl << std::endl;
 
-//     os << 
-//         karma::format(
-//             '[' << (+stream | "empty") << ']',    // format description
-//             c                                     // data
-//         ) << std::endl << std::endl;
+    os << 
+        karma::format(
+            '[' << (+stream | "empty") << ']',    // format description
+            c                                     // data
+        ) << std::endl << std::endl;
 
     // output the container as a comma separated list of items enclosed in '()'
     os << 
@@ -123,9 +123,9 @@ void output_container(std::ostream& os, Container const& c)
     // output the container as a HTML list
     os << 
         karma::format_delimited(
-            /*"<ol>" << */
+            "<ol>" << 
                 *verbatim["<li>" << stream << "</li>"]
-            /*<< "</ol>"*/,                           // format description
+            << "</ol>",                           // format description
             '\n',                                 // delimiter
             c                                     // data
         ) << std::endl;
@@ -214,15 +214,15 @@ int main()
 
     ///////////////////////////////////////////////////////////////////////////
     //  map of int --> string mappings
-//     std::map<int, std::string> mappings;
-//     mappings.insert(std::make_pair(0, "zero"));
-//     mappings.insert(std::make_pair(1, "one"));
-//     mappings.insert(std::make_pair(2, "two"));
-// 
-//     std::cout << "-------------------------------------------------------------" 
-//               << std::endl;
-//     std::cout << "std::map<int, std::string>" << std::endl;
-//     output_container(std::cout, mappings);
+    std::map<int, std::string> mappings;
+    mappings.insert(std::make_pair(0, "zero"));
+    mappings.insert(std::make_pair(1, "one"));
+    mappings.insert(std::make_pair(2, "two"));
+
+    std::cout << "-------------------------------------------------------------" 
+              << std::endl;
+    std::cout << "std::map<int, std::string>" << std::endl;
+    output_container(std::cout, mappings);
 
     return 0;
 }
