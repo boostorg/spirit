@@ -26,6 +26,12 @@ namespace boost { namespace spirit { namespace traits
     // This is the main dispatching point for meta_create to the correct domain
     template <typename Domain, typename T, typename Enable = void>
     struct meta_create;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // This allows to query whether a valid mapping exits for the given data 
+    // type to a component in the given domain
+    template <typename Domain, typename T, typename Enable = void>
+    struct meta_create_exists : mpl::false_ {};
 }}}
 
 namespace boost { namespace spirit 

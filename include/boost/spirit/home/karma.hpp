@@ -26,5 +26,6 @@
 #include <boost/spirit/home/karma/what.hpp>
 #include <boost/spirit/home/karma/stream.hpp>
 #include <boost/spirit/home/karma/auto.hpp>
+#include <boost/spirit/home/karma/format.hpp>
 
 #endif

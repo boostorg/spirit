@@ -18,10 +18,12 @@
 #include <boost/variant.hpp>
 #include <boost/optional.hpp>
 #include <boost/config.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_back.hpp>
 #include <boost/fusion/include/as_vector.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
@@ -147,28 +149,31 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     // the default is to use the standard streaming operator unless it's a 
     // STL container or a fusion sequence
+
+    // The default implementation will be chosen if no predefined mapping of 
+    // the data type T to a Karma component is defined.
+    struct no_auto_mapping_exists {};
+
     template <typename T, typename Enable = void>
-    struct meta_create_impl;
+    struct meta_create_impl : mpl::identity<no_auto_mapping_exists> {};
 
     template <typename T>
     struct meta_create_impl<T
           , typename enable_if_c<
-                traits::is_container<T>::value && !traits::is_string<T>::value
+                traits::is_container<T>::value && 
+               !traits::is_string<T>::value && 
+               !fusion::traits::is_sequence<T>::value
             >::type>
       : meta_create_container<T> {};
 
     template <typename T>
     struct meta_create_impl<T
-          , typename enable_if<
-                traits::is_string<T> 
-            >::type>
+          , typename enable_if<traits::is_string<T> >::type>
       : meta_create_string<T> {};
 
     template <typename T>
     struct meta_create_impl<T
-          , typename enable_if<
-                fusion::traits::is_sequence<T> 
-            >::type>
+          , typename enable_if<fusion::traits::is_sequence<T> >::type>
       : meta_create_sequence<T> {};
 
     template <typename T, typename Enable = void>
@@ -341,6 +346,16 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     struct meta_create<karma::domain, T>
       : create_generator<typename spirit::detail::remove_const_ref<T>::type> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Check whether a valid mapping exits for the given data type to a Karma 
+    // component 
+    template <typename T>
+    struct meta_create_exists<karma::domain, T> 
+      : mpl::not_<is_same<
+            karma::no_auto_mapping_exists
+          , typename meta_create<karma::domain, T>::type
+        > > {};
 }}}
 
 #endif

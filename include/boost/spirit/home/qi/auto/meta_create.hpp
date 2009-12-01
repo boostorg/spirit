@@ -18,9 +18,11 @@
 #include <boost/variant.hpp>
 #include <boost/optional.hpp>
 #include <boost/config.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_back.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,8 +91,13 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     // the default is to use the standard streaming operator unless it's a 
     // STL container or a fusion sequence
+
+    // The default implementation will be chosen if no predefined mapping of 
+    // the data type T to a Karma component is defined.
+    struct no_auto_mapping_exists {};
+
     template <typename T, typename Enable = void>
-    struct meta_create_impl;
+    struct meta_create_impl : mpl::identity<no_auto_mapping_exists> {};
 
     template <typename T>
     struct meta_create_impl<T
@@ -272,6 +279,16 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     struct meta_create<qi::domain, T> 
       : create_parser<typename spirit::detail::remove_const_ref<T>::type> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Check whether a valid mapping exits for the given data type to a Karma 
+    // component 
+    template <typename T>
+    struct meta_create_exists<qi::domain, T> 
+      : mpl::not_<is_same<
+            qi::no_auto_mapping_exists
+          , typename meta_create<qi::domain, T>::type
+        > > {};
 }}}
 
 #endif
