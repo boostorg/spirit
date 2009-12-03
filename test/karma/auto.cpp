@@ -5,7 +5,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
-
+#include <boost/mpl/print.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/spirit/include/karma_bool.hpp>
@@ -54,7 +54,7 @@ bool test_rule(Char const *expected, Attribute const& attr)
 {
     BOOST_TEST((traits::meta_create_exists<karma::domain, Attribute>::value));
 
-    typedef spirit_test::output_iterator<Char>::type sink_type;
+    typedef typename spirit_test::output_iterator<Char>::type sink_type;
     karma::rule<sink_type, Attribute()> r = 
         karma::create_generator<Attribute>();
     return spirit_test::test(expected, r, attr);
@@ -66,17 +66,18 @@ bool test_rule_delimited(Char const *expected, Attribute const& attr
 {
     BOOST_TEST((traits::meta_create_exists<karma::domain, Attribute>::value));
 
-    typedef spirit_test::output_iterator<Char>::type sink_type;
+    typedef typename spirit_test::output_iterator<Char>::type sink_type;
     karma::rule<sink_type, Attribute(), Delimiter> r = 
         karma::create_generator<Attribute>();
     return spirit_test::test_delimited(expected, r, attr, d);
 }
 
+struct my_type {};
+
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
     {
-        struct my_type {};
         BOOST_TEST((!traits::meta_create_exists<karma::domain, my_type>::value));
     }
 

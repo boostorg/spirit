@@ -66,11 +66,12 @@ bool test_rule(Char const* in, Attribute const& expected, Skipper const& skipper
     return spirit_test::test_attr(in, r, attr, skipper) && attr == expected;
 }
 
+struct my_type {};
+
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
     {
-        struct my_type {};
         BOOST_TEST((!traits::meta_create_exists<qi::domain, my_type>::value));
     }
 
