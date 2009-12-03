@@ -12,7 +12,12 @@
 
 [heading What's changed in __qi__ and __karma__ from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)]
 
-* add here what's new...
+* Fixed karma::alternatives to work with embedded containers of hold_any (i.e.
+  constructs like `*stream | "empty"` (that fixes the Karma example 
+  basic_facilities.cpp).
+* Added `auto_` component and API functions `qi::create_parser` and 
+  `karma::create_generator`.
+* Added `auto_` based overloads for all API functions taking no attributes.
 
 [heading Spirit V2.1] 
 

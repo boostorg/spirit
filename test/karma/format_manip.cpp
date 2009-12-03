@@ -3,9 +3,11 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/mpl/print.hpp>
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/karma_format.hpp>
+#include <boost/spirit/include/karma_format_auto.hpp>
 #include <boost/spirit/include/karma_stream.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -34,10 +36,11 @@ bool test(Char const *expected, Expr const& xpr)
     return ostrm.good() && ostrm.str() == expected;
 }
 
-template <typename Char, typename Expr, typename Copy, typename Delimiter
-  , typename Attribute>
+template <typename Char, typename Expr, typename CopyExpr, typename CopyAttr
+  , typename Delimiter, typename Attribute>
 bool test(Char const *expected, 
-    boost::spirit::karma::detail::format_manip<Expr, Copy, Delimiter, Attribute> const& fm)
+    boost::spirit::karma::detail::format_manip<
+        Expr, CopyExpr, CopyAttr, Delimiter, Attribute> const& fm)
 {
     std::ostringstream ostrm;
     ostrm << fm;
@@ -94,6 +97,13 @@ main()
         BOOST_TEST(test( "a b ", 
             karma::format_delimited(char_ << char_, space, t) 
         ));
+
+        BOOST_TEST(test( "ab", 
+            karma::format(t) 
+        ));
+        BOOST_TEST(test( "a b ", 
+            karma::format_delimited(t, space) 
+        ));
     }
 
     {
@@ -131,7 +141,7 @@ main()
             karma::format_delimited(char_ << int_, space, t) 
         ));
     }
-    
+
     using namespace boost::assign;
 
     {
@@ -147,6 +157,13 @@ main()
         ));
         BOOST_TEST(test( "a b c ", 
             karma::format_delimited(*char_, space, v)
+        ));
+
+        BOOST_TEST(test( "abc", 
+            karma::format(v)
+        ));
+        BOOST_TEST(test( "a b c ", 
+            karma::format_delimited(v, space)
         ));
 
         // output a comma separated list of vector elements
@@ -184,6 +201,13 @@ main()
         ));
         BOOST_TEST(test( "a b c ", 
             karma::format_delimited(*char_, space, l)
+        ));
+
+        BOOST_TEST(test( "abc", 
+            karma::format(l)
+        ));
+        BOOST_TEST(test( "a b c ", 
+            karma::format_delimited(l, space)
         ));
     }
 

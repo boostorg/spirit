@@ -35,6 +35,17 @@ bool test_create_parser(Char const *in, T& t)
     return qi::phrase_parse(in, last, qi::create_parser<T>(), qi::space, t);
 }
 
+template <typename Char, typename T>
+bool test_create_parser_auto(Char const *in, T& t)
+{
+    Char const* last = in;
+    while (*last)
+        last++;
+
+    BOOST_TEST((traits::meta_create_exists<qi::domain, T>::value));
+    return qi::phrase_parse(in, last, t, qi::space);
+}
+
 template <typename Char, typename Attribute>
 bool test_rule(Char const* in, Attribute const& expected)
 {
@@ -104,6 +115,44 @@ int main()
         // test fusion sequence
         std::pair<int, double> p;
         BOOST_TEST(test_create_parser("1 2.0", p) && 
+            p.first == 1 && p.second == 2.0);
+    }
+
+    {
+        // test primitive types
+        bool b = false;
+        BOOST_TEST(test_create_parser_auto("true", b) && b == true);
+        int i = 0;
+        BOOST_TEST(test_create_parser_auto("1", i) && i == 1);
+        double d = 0;
+        BOOST_TEST(test_create_parser_auto("1.1", d) && d == 1.1);
+
+        // test containers
+        std::vector<int> v;
+        BOOST_TEST(test_create_parser_auto("0 1 2", v) && v.size() == 3 && 
+            v[0] == 0 && v[1] == 1 && v[2] == 2);
+
+        std::list<int> l;
+        BOOST_TEST(test_create_parser_auto("0 1 2", l) && l.size() == 3 &&
+            *l.begin() == 0 && *(++l.begin()) == 1 && *(++ ++l.begin()) == 2);
+
+        // test optional
+        boost::optional<int> o;
+        BOOST_TEST(test_create_parser_auto("", o) && !o);
+        BOOST_TEST(test_create_parser_auto("1", o) && !!o && boost::get<int>(o) == 1);
+
+        // test alternative
+        boost::variant<double, bool, std::vector<char> > vv;
+        BOOST_TEST(test_create_parser_auto("true", vv) && vv.which() == 1 &&
+            boost::get<bool>(vv) == true);
+        BOOST_TEST(test_create_parser_auto("1.0", vv) && vv.which() == 0 &&
+            boost::get<double>(vv) == 1.0);
+        BOOST_TEST(test_create_parser_auto("some_string", vv) && vv.which() == 2 &&
+            boost::equals(boost::get<std::vector<char> >(vv), "some_string"));
+
+        // test fusion sequence
+        std::pair<int, double> p;
+        BOOST_TEST(test_create_parser_auto("1 2.0", p) && 
             p.first == 1 && p.second == 2.0);
     }
 
