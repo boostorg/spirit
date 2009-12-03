@@ -14,7 +14,7 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 
 #include <boost/spirit/home/support/char_class.hpp>
-#include <boost/spirit/home/karma/generate.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
 #include <boost/spirit/home/karma/numeric/detail/real_utils.hpp>
