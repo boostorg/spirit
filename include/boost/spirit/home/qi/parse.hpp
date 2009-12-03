@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace qi
     parse(
         Iterator& first
       , Iterator last
-      , Expr& expr
+      , Expr const& expr
       , Attr& attr)
     {
         // Report invalid expression error as early as possible.
@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace qi
     phrase_parse(
         Iterator& first
       , Iterator last
-      , Expr& expr
+      , Expr const& expr
       , Skipper const& skipper
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
     {
@@ -92,7 +92,7 @@ namespace boost { namespace spirit { namespace qi
     phrase_parse(
         Iterator& first
       , Iterator last
-      , Expr& expr
+      , Expr const& expr
       , Skipper const& skipper
       , Attr& attr)
     {
