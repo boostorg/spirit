@@ -13,6 +13,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/karma/stream/format_manip.hpp>
+#include <boost/spirit/home/karma/format.hpp>
 
 #endif

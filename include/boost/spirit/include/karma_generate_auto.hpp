@@ -6,13 +6,14 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_QI_MATCH
-#define BOOST_SPIRIT_INCLUDE_QI_MATCH
+#ifndef BOOST_SPIRIT_INCLUDE_KARMA_GENERATE_AUTO
+#define BOOST_SPIRIT_INCLUDE_KARMA_GENERATE_AUTO
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/match.hpp>
+#include <boost/spirit/home/karma/generate.hpp>
+#include <boost/spirit/home/karma/detail/generate_auto.hpp>
 
 #endif

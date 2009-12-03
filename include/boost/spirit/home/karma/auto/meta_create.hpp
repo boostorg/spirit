@@ -159,11 +159,12 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename T>
     struct meta_create_impl<T
-          , typename enable_if_c<
-                traits::is_container<T>::value && 
-               !traits::is_string<T>::value && 
-               !fusion::traits::is_sequence<T>::value
-            >::type>
+          , typename enable_if<
+                mpl::and_<
+                    traits::is_container<T> 
+                  , mpl::not_<traits::is_string<T> >
+                  , mpl::not_<fusion::traits::is_sequence<T> > 
+                > >::type>
       : meta_create_container<T> {};
 
     template <typename T>

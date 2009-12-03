@@ -22,19 +22,17 @@ namespace boost { namespace spirit { namespace qi
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
-    inline detail::match_manip<Expr>
+    inline typename detail::match<Expr>::type
     match(
-        Expr const& xpr)
+        Expr const& expr)
     {
-        // Report invalid expression error as early as possible.
-        // If you got an error_invalid_expression error message here,
-        // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
-        return qi::detail::match_manip<Expr>(xpr, unused, unused);
+        return detail::match<Expr>::call(expr);
     }
 
     template <typename Expr, typename Attribute>
-    inline detail::match_manip<Expr, mpl::false_, unused_type, Attribute>
+    inline detail::match_manip<
+        Expr, mpl::false_, mpl::false_, unused_type, Attribute
+    >
     match(
         Expr const& xpr
       , Attribute& p)
@@ -45,32 +43,25 @@ namespace boost { namespace spirit { namespace qi
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
-        return match_manip<Expr, mpl::false_, unused_type, Attribute>(
+        return match_manip<Expr, mpl::false_, mpl::false_, unused_type, Attribute>(
             xpr, unused, p);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Skipper>
-    inline detail::match_manip<Expr, mpl::false_, Skipper>
+    inline typename detail::phrase_match<Expr, Skipper>::type 
     phrase_match(
-        Expr const& xpr
+        Expr const& expr
       , Skipper const& s
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
     {
-        using qi::detail::match_manip;
-
-        // Report invalid expression error as early as possible.
-        // If you got an error_invalid_expression error message here,
-        // then either the expression (expr) or skipper is not a valid
-        // spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
-        return match_manip<Expr, mpl::false_, Skipper>(
-            xpr, s, post_skip, unused);
+        return detail::phrase_match<Expr, Skipper>::call(expr, s, post_skip);
     }
 
     template <typename Expr, typename Skipper, typename Attribute>
-    inline detail::match_manip<Expr, mpl::false_, Skipper, Attribute>
+    inline detail::match_manip<
+        Expr, mpl::false_, mpl::false_, Skipper, Attribute
+    >
     phrase_match(
         Expr const& xpr
       , Skipper const& s
@@ -85,12 +76,14 @@ namespace boost { namespace spirit { namespace qi
         // spirit qi expression.
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
-        return match_manip<Expr, mpl::false_, Skipper, Attribute>(
+        return match_manip<Expr, mpl::false_, mpl::false_, Skipper, Attribute>(
             xpr, s, post_skip, p);
     }
 
     template <typename Expr, typename Skipper, typename Attribute>
-    inline detail::match_manip<Expr, mpl::false_, Skipper, Attribute>
+    inline detail::match_manip<
+        Expr, mpl::false_, mpl::false_, Skipper, Attribute
+    >
     phrase_match(
         Expr const& xpr
       , Skipper const& s
@@ -104,7 +97,8 @@ namespace boost { namespace spirit { namespace qi
         // spirit qi expression.
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
-        return match_manip<Expr, mpl::false_, Skipper, Attribute>(xpr, s, p);
+        return match_manip<Expr, mpl::false_, mpl::false_, Skipper, Attribute>(
+            xpr, s, p);
     }
 
     ///////////////////////////////////////////////////////////////////////////

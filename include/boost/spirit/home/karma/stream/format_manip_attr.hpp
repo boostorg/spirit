@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, BOOST_PP_ENUM_PARAMS(N, typename A)>
-    inline detail::format_manip<Expr, mpl::true_, unused_type
+    inline detail::format_manip<Expr, mpl::false_, mpl::true_, unused_type
       , fusion::vector<
             BOOST_PP_ENUM(N, BOOST_SPIRIT_KARMA_ATTRIBUTE_REFERENCE, A)
         > > 
@@ -57,14 +57,14 @@ namespace boost { namespace spirit { namespace karma
         > vector_type;
 
         vector_type attr (BOOST_PP_ENUM_PARAMS(N, attr));
-        return format_manip<Expr, mpl::true_, unused_type, vector_type>(
+        return format_manip<Expr, mpl::false_, mpl::true_, unused_type, vector_type>(
             xpr, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Delimiter
       , BOOST_PP_ENUM_PARAMS(N, typename A)>
-    inline detail::format_manip<Expr, mpl::true_, Delimiter
+    inline detail::format_manip<Expr, mpl::false_, mpl::true_, Delimiter
       , fusion::vector<
             BOOST_PP_ENUM(N, BOOST_SPIRIT_KARMA_ATTRIBUTE_REFERENCE, A)
         > > 
@@ -85,13 +85,13 @@ namespace boost { namespace spirit { namespace karma
         > vector_type;
 
         vector_type attr (BOOST_PP_ENUM_PARAMS(N, attr));
-        return format_manip<Expr, mpl::true_, Delimiter, vector_type>(
+        return format_manip<Expr, mpl::false_, mpl::true_, Delimiter, vector_type>(
             xpr, d, pre_delimit, attr);
     }
 
     template <typename Expr, typename Delimiter
       , BOOST_PP_ENUM_PARAMS(N, typename A)>
-    inline detail::format_manip<Expr, mpl::true_, Delimiter
+    inline detail::format_manip<Expr, mpl::false_, mpl::true_, Delimiter
       , fusion::vector<
             BOOST_PP_ENUM(N, BOOST_SPIRIT_KARMA_ATTRIBUTE_REFERENCE, A)
         > > 
@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace karma
         > vector_type;
 
         vector_type attr (BOOST_PP_ENUM_PARAMS(N, attr));
-        return format_manip<Expr, mpl::true_, Delimiter, vector_type>(
+        return format_manip<Expr, mpl::false_, mpl::true_, Delimiter, vector_type>(
             xpr, d, delimit_flag::dont_predelimit, attr);
     }
 
