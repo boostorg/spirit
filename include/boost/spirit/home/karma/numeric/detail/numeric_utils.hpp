@@ -73,21 +73,23 @@ namespace boost { namespace spirit { namespace karma
             }                                                                 \
         }                                                                     \
     /**/
-#define BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(type)                            \
+#define BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsignedtype)                    \
         template <>                                                           \
-        struct absolute_value_helper<type>                                    \
+        struct absolute_value_helper<unsignedtype>                            \
         {                                                                     \
-            typedef type result_type;                                         \
-            static result_type call(type n)                                   \
+            typedef unsignedtype result_type;                                 \
+            static result_type call(unsignedtype n)                           \
             {                                                                 \
                 return n;                                                     \
             }                                                                 \
         }                                                                     \
     /**/
 
+        BOOST_SPIRIT_ABSOLUTE_VALUE(char, unsigned char);
         BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
         BOOST_SPIRIT_ABSOLUTE_VALUE(int, unsigned int);
         BOOST_SPIRIT_ABSOLUTE_VALUE(long, unsigned long);
+        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned char);
         BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned short);
         BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned int);
         BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned long);
