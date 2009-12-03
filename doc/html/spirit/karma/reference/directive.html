@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Directive</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
@@ -41,16 +41,19 @@
           Output Buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive/omit.html"> Consume Attribute
           (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/columns.html"> Separate
+          Output Into Columns (<code class="computeroutput"><span class="identifier">columns</span><span class="special">[]</span></code>)</a></span></dt>
 </dl></div>
 <p>
           This module includes different generator directives. It includes alignment
           directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, and <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>), repetition (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>), directives controlling automatic delimiting
           (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
           and <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>),
-          controlling case sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>), field width (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>), buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>), and attribute handling (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>).
+          controlling case sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>), field width (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>), buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>), splitting into columns (<code class="computeroutput"><span class="identifier">columns</span><span class="special">[]</span></code>)
+          and attribute handling (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>).
         </p>
 <a name="spirit.karma.reference.directive.module_header"></a><h6>
-<a name="id830478"></a>
+<a name="id836555"></a>
           <a class="link" href="directive.html#spirit.karma.reference.directive.module_header">Module Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive.hpp&gt;
@@ -62,7 +65,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
       de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)

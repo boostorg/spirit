@@ -12,8 +12,8 @@ This module includes different generator directives. It includes alignment
 directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
 (`repeat[]`), directives controlling automatic delimiting (`verbatim[]` and 
 `delimit[]`), controlling case sensitivity (`upper[]` and `lower[]`), field
-width (`maxwidth[]`), buffering (`buffer[]`), and attribute handling 
-(`omit[]`).
+width (`maxwidth[]`), buffering (`buffer[]`), splitting into columns 
+(`columns[]`) and attribute handling (`omit[]`).
 
 [heading Module Header]
 
@@ -967,5 +967,115 @@ which is at the same time more readable and more efficient as we don't have to
 use semantic actions.
 
 [endsect] [/ omit]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:columns Separate Output Into Columns (`columns[]`)]
+
+[heading Description]
+
+The `columns[]` directive separates the output emitted by the embedded 
+generator by inserting special column separators.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/directive/columns.hpp>
+    #include <boost/spirit/include/karma_columns.hpp>
+
+Also, see __include_structure__.
+
+[table
+    [[Name]]
+    [[`boost::spirit::columns // alias: boost::spirit::karma::columns` ]]
+]
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`a`]     [A generator object]]
+    [[`g`]     [A generator object, or a __karma_lazy_argument__ that 
+                evaluates to a generator object, will be used to emit column 
+                separators]]
+    [[`A`]     [Attribute type of generator `a`]
+    [[`num`]   [Numeric literal, any unsigned integer value, or
+                a __karma_lazy_argument__ that evaluates to an unsigned 
+                integer value defining the number of items to emit in between
+                the column separators]]]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`columns[a]`]     [The `columns` directive invokes a generator after
+                         each N-th element of the embedded generator has been 
+                         emitted. The number of columns is defined by the 
+                         preprocessor constant `BOOST_KARMA_DEFAULT_COLUMNS`.
+                         The column separator used will be `karma::eol`.]]
+    [[`columns(num)[a]`][The `columns` directive invokes a generator after
+                         each N-th element of the embedded generator has been 
+                         emitted. The number of columns is defined by the 
+                         argument to the directive `num`.
+                         The column separator used will be `karma::eol`.]]
+    [[`columns(g)[a]`]  [The `columns` directive invokes a generator after
+                         each N-th element of the embedded generator has been 
+                         emitted. The number of columns is defined by the 
+                         preprocessor constant `BOOST_KARMA_DEFAULT_COLUMNS`.
+                         The column separator used will be `g`.]]
+    [[`columns(num, g)[a]`]  [The `columns` directive invokes a generator after
+                         each N-th element of the embedded generator has been 
+                         emitted. The number of columns is defined by the 
+                         argument to the directive `num`.
+                         The column separator used will be `g`.]]
+]
+
+[heading Attributes]
+
+See __karma_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`columns[a]`]
+[``a: A --> columns[a]: A
+a: Unused --> columns[a]: Unused``]]
+    [[`columns(num)[a]`]
+[``a: A --> columns(num)[a]: A
+a: Unused --> columns(num)[a]: Unused``]]
+    [[`columns(g)[a]`]
+[``a: A --> columns(g)[a]: A
+a: Unused --> columns(g)[a]: Unused``]]
+    [[`columns(num, g)[a]`]
+[``a: A --> columns(num, g)[a]: A
+a: Unused --> columns(num, g)[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the `columns` generator directive depends on the 
+complexity of the embeddded generator. The complexitz of the `columns` generator 
+directive itself is O(N), where `N` is the number of inserted column 
+separators.]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
+Some includes:
+
+[reference_karma_includes]
+
+Some using declarations:
+
+[reference_karma_using_declarations_columns]
+
+Basic usage of the `columns` generators:
+
+[reference_karma_columns]
+
+[endsect] [/ columns]
 
 [endsect] [/ directives]

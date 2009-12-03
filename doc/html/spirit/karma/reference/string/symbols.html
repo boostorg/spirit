@@ -7,7 +7,7 @@
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../string.html" title="String">
 <link rel="prev" href="string.html" title="String (string, lit)">
-<link rel="next" href="../../../karma.html" title="Karma - Writing Generators">
+<link rel="next" href="../../performance_measurements.html" title="Performance Measurements">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,45 +20,44 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="string.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../string.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../../../karma.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="string.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../string.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../../performance_measurements.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="Symbols (symbols)">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.string.symbols"></a><a class="link" href="symbols.html" title="Symbols (symbols)"> Symbols (<code class="computeroutput"><span class="identifier">symbols</span></code>)</a>
+<a name="spirit.karma.reference.string.symbols"></a><a class="link" href="symbols.html" title="Symbols (symbols)"> Symbols (<code class="computeroutput"><span class="identifier">symbols</span></code>)</a>
 </h5></div></div></div>
-<a name="spirit.qi.reference.string.symbols.description"></a><h6>
-<a name="id761532"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.description">Description</a>
+<a name="spirit.karma.reference.string.symbols.description"></a><h6>
+<a name="id909105"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.description">Description</a>
           </h6>
 <p>
             The class <code class="computeroutput"><span class="identifier">symbols</span></code> implements
-            a symbol table: an associative container (or map) of key-value pairs
-            where the keys are strings. The <code class="computeroutput"><span class="identifier">symbols</span></code>
-            class can work efficiently with 8, 16, 32 and even 64 bit characters.
+            an 'inverse' symbol table: an associative container (or map) of key-value
+            pairs where the values are (most of the time) strings. It maps the value
+            to be generated (the key) to any other value which will be emitted instead
+            of the original key.
           </p>
 <p>
-            Traditionally, symbol table management is maintained seperately outside
-            the grammar through semantic actions. Contrary to standard practice,
-            the Spirit symbol table class <code class="computeroutput"><span class="identifier">symbols</span></code>
-            is-a parser, an instance of which may be used anywhere in the grammar
-            specification. It is an example of a dynamic parser. A dynamic parser
+            The Karma symbol table class <code class="computeroutput"><span class="identifier">symbols</span></code>
+            is-a generator, an instance of which may be used anywhere in the grammar
+            specification. It is an example of a dynamic generator. A dynamic generator
             is characterized by its ability to modify its behavior at run time. Initially,
-            an empty symbols object matches nothing. At any time, symbols may be
+            an empty symbols object will emit nothing. At any time, symbols may be
             added, thus, dynamically altering its behavior.
           </p>
-<a name="spirit.qi.reference.string.symbols.header"></a><h6>
-<a name="id761574"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.header">Header</a>
+<a name="spirit.karma.reference.string.symbols.header"></a><h6>
+<a name="id909140"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.header">Header</a>
           </h6>
-<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/symbols.hpp&gt;
-</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_symbols</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/string/symbols.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_symbols</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
-<a name="spirit.qi.reference.string.symbols.namespace"></a><h6>
-<a name="id761648"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.namespace">Namespace</a>
+<a name="spirit.karma.reference.string.symbols.namespace"></a><h6>
+<a name="id909214"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
@@ -67,34 +66,23 @@
                     Name
                   </p>
                   </th></tr></thead>
-<tbody>
-<tr><td>
+<tbody><tr><td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span></code>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">symbols</span></code>
                   </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tst</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tst_map</span></code>
-                  </p>
-                  </td></tr>
-</tbody>
+                  </td></tr></tbody>
 </table></div>
-<a name="spirit.qi.reference.string.symbols.synopsis"></a><h6>
-<a name="id761808"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.synopsis">Synopsis</a>
+<a name="spirit.karma.reference.string.symbols.synopsis"></a><h6>
+<a name="id909295"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.synopsis">Synopsis</a>
           </h6>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lookup</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lookup</span>
+  <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Tag</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">symbols</span><span class="special">;</span>
 </pre>
-<a name="spirit.qi.reference.string.symbols.template_parameters"></a><h6>
-<a name="id761886"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.template_parameters">Template
+<a name="spirit.karma.reference.string.symbols.template_parameters"></a><h6>
+<a name="id909403"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -124,12 +112,13 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">Char</span></code>
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    The character type of the symbol strings.
+                    The type of the original attribute to be used as the key into
+                    the symbol generator (the symbol).
                   </p>
                   </td>
 <td>
@@ -146,7 +135,7 @@
                   </td>
 <td>
                   <p>
-                    The data type associated with each symbol.
+                    The data type associated with each key.
                   </p>
                   </td>
 <td>
@@ -168,22 +157,60 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">tst</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span>
+                    if T is <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+                    <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">&gt;</span></code>,
+                    and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">,</span>
                     <span class="identifier">T</span><span class="special">&gt;</span></code>
+                    otherwise
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">CharEncoding</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Used for character set selection, normally not used by end user.
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Tag</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Used for character set selection, normally not used by end user.
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.string.symbols.model_of"></a><h6>
-<a name="id762069"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.model_of">Model of</a>
+<a name="spirit.karma.reference.string.symbols.model_of"></a><h6>
+<a name="id909703"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.model_of">Model
+            of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
               </p>
 <p>
             </p>
@@ -195,9 +222,9 @@
 <dd><p>
                 A <code class="computeroutput"><span class="identifier">symbols</span></code> type.
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">Char</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Attrib</span></code></span></dt>
 <dd><p>
-                A character type.
+                An attribute type.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">T</span></code></span></dt>
 <dd><p>
@@ -221,7 +248,7 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">s1</span></code>...<code class="computeroutput"><span class="identifier">sN</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../basics.html#spirit.qi.reference.basics.string">String</a>.
+                A <a class="link" href="../../../qi/reference/basics.html#spirit.qi.reference.basics.string">String</a>.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">d1</span></code>...<code class="computeroutput"><span class="identifier">dN</span></code></span></dt>
 <dd><p>
@@ -239,14 +266,14 @@
               </p></dd>
 </dl>
 </div>
-<a name="spirit.qi.reference.string.symbols.expression_semantics"></a><h6>
-<a name="id762376"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.expression_semantics">Expression
+<a name="spirit.karma.reference.string.symbols.expression_semantics"></a><h6>
+<a name="id910015"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>.
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -274,7 +301,7 @@
                   </td>
 <td>
                   <p>
-                    Construct an empty symbols.
+                    Construct an empty symbols object instance.
                   </p>
                   </td>
 </tr>
@@ -302,7 +329,7 @@
                   <p>
                     Construct symbols from <code class="computeroutput"><span class="identifier">sseq</span></code>
                     (An <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
-                    of strings).
+                    of symbols of type <code class="computeroutput"><span class="identifier">Attrib</span></code>).
                   </p>
                   </td>
 </tr>
@@ -318,7 +345,8 @@
                     Construct symbols from <code class="computeroutput"><span class="identifier">sseq</span></code>
                     and <code class="computeroutput"><span class="identifier">dseq</span></code> (An
                     <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
-                    of strings and an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+                    of symbols of type <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                    and an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
                     container of data with <code class="computeroutput"><span class="identifier">value_type</span></code>
                     <code class="computeroutput"><span class="identifier">T</span></code>).
                   </p>
@@ -350,6 +378,8 @@
 <td>
                   <p>
                     Assign one or more symbols (<code class="computeroutput"><span class="identifier">s1</span></code>...<code class="computeroutput"><span class="identifier">sN</span></code>) to <code class="computeroutput"><span class="identifier">sym</span></code>.
+                    The associated data values of type <code class="computeroutput"><span class="identifier">T</span></code>
+                    are default constructed.
                   </p>
                   </td>
 </tr>
@@ -365,6 +395,8 @@
 <td>
                   <p>
                     Add one or more symbols (<code class="computeroutput"><span class="identifier">s1</span></code>...<code class="computeroutput"><span class="identifier">sN</span></code>) to <code class="computeroutput"><span class="identifier">sym</span></code>.
+                    The associated data values of type <code class="computeroutput"><span class="identifier">T</span></code>
+                    are default constructed.
                   </p>
                   </td>
 </tr>
@@ -377,6 +409,8 @@
 <td>
                   <p>
                     Add one or more symbols (<code class="computeroutput"><span class="identifier">s1</span></code>...<code class="computeroutput"><span class="identifier">sN</span></code>) to <code class="computeroutput"><span class="identifier">sym</span></code>.
+                    The associated data values of type <code class="computeroutput"><span class="identifier">T</span></code>
+                    are default constructed.
                   </p>
                   </td>
 </tr>
@@ -466,100 +500,56 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">prefix_find</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span>
-                    <span class="identifier">l</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Return a pointer to the object associated with longest symbol
-                    that matches the beginning of the range <code class="computeroutput"><span class="special">[</span><span class="identifier">f</span><span class="special">,</span>
-                    <span class="identifier">l</span><span class="special">)</span></code>,
-                    and updates <code class="computeroutput"><span class="identifier">f</span></code>
-                    to point to one past the end of that match. If no symbol matches,
-                    then return a null pointer, and <code class="computeroutput"><span class="identifier">f</span></code>
-                    is unchanged.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
                     <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    For each symbol in <code class="computeroutput"><span class="identifier">sym</span></code>,
-                    <code class="computeroutput"><span class="identifier">s</span></code>, a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
-                    with associated data, <code class="computeroutput"><span class="identifier">d</span></code>,
-                    an object of type <code class="computeroutput"><span class="identifier">T</span></code>,
-                    invoke <code class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span>
-                    <span class="identifier">d</span><span class="special">)</span></code>.
+                    For each symbol in <code class="computeroutput"><span class="identifier">sym</span></code>
+                    <code class="computeroutput"><span class="identifier">s</span></code> invoke <code class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">Lookup</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">)</span></code>.
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.string.symbols.attributes"></a><h6>
-<a name="id764825"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.attributes">Attributes</a>
-          </h6>
 <p>
-            The attribute of <code class="computeroutput"><span class="identifier">symbol</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> is <code class="computeroutput"><span class="identifier">T</span></code>.
+            The symbols generator uses the supplied attribute as the key to be looked
+            up in the internal associative container. If the key exists the generator
+            emits the associated value and succeeds (unless the underlying output
+            stream reports an error). If the value type stored in the symbol generator
+            is <code class="computeroutput"><span class="identifier">unused_type</span></code> it will
+            emit the key instead. If the key does not exist the generator fails while
+            not emitting anything.
           </p>
-<a name="spirit.qi.reference.string.symbols.complexity"></a><h6>
-<a name="id764875"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.complexity">Complexity</a>
+<a name="spirit.karma.reference.string.symbols.attributes"></a><h6>
+<a name="id911711"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.attributes">Attributes</a>
           </h6>
 <p>
-            The default implementation uses a Ternary Search Tree (TST) with complexity:
+            The attribute of <code class="computeroutput"><span class="identifier">symbol</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> is <code class="computeroutput"><span class="identifier">Attrib</span></code>.
+          </p>
+<a name="spirit.karma.reference.string.symbols.complexity"></a><h6>
+<a name="id911761"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.complexity">Complexity</a>
+          </h6>
+<p>
+            The default implementation uses a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;&gt;</span></code> or a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;&gt;</span></code> with a complexity of:
           </p>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                O(log n+k)
+                O(log n)
               </p>
 <p>
             </p>
 </blockquote></div>
 <p>
-            Where k is the length of the string to be searched in a TST with n strings.
+            Where n is the number of stored symbols.
           </p>
-<p>
-            TSTs are faster than hashing for many typical search problems especially
-            when the search interface is iterator based. TSTs are many times faster
-            than hash tables for unsuccessful searches since mismatches are discovered
-            earlier after examining only a few characters. Hash tables always examine
-            an entire key when searching.
-          </p>
-<p>
-            An alternative implementation uses a hybrid hash-map front end (for the
-            first character) plus a TST: <code class="computeroutput"><span class="identifier">tst_map</span></code>.
-            This gives us a complexity of
-          </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                O(1 + log n+k-1)
-              </p>
-<p>
-            </p>
-</blockquote></div>
-<p>
-            This is found to be significantly faster than plain TST, albeit with
-            a bit more memory usage requirements (each slot in the hash-map is a
-            TST node). If you require a lot of symbols to be searched, use the <code class="computeroutput"><span class="identifier">tst_map</span></code> implementation. This can be
-            done by using <code class="computeroutput"><span class="identifier">tst_map</span></code>
-            as the third template parameter to the symbols class:
-          </p>
-<pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">tst_map</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
-</pre>
-<a name="spirit.qi.reference.string.symbols.example"></a><h6>
-<a name="id765014"></a>
-            <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.example">Example</a>
+<a name="spirit.karma.reference.string.symbols.example"></a><h6>
+<a name="id911829"></a>
+            <a class="link" href="symbols.html#spirit.karma.reference.string.symbols.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
 <tr>
@@ -567,10 +557,29 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>
+<p>
+            Some includes:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">std_pair</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
 <p>
             Some using declarations:
           </p>
@@ -579,62 +588,30 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">;</span>
 </pre>
 <p>
             </p>
 <p>
           </p>
 <p>
-            Symbols with data:
+            Basic usage of <code class="computeroutput"><span class="identifier">symbol</span></code>
+            generators:
           </p>
 <p>
             </p>
 <p>
               
 </p>
-<pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 
 <span class="identifier">sym</span><span class="special">.</span><span class="identifier">add</span>
-    <span class="special">(</span><span class="string">"Apple"</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>
-    <span class="special">(</span><span class="string">"Banana"</span><span class="special">,</span> <span class="number">2</span><span class="special">)</span>
-    <span class="special">(</span><span class="string">"Orange"</span><span class="special">,</span> <span class="number">3</span><span class="special">)</span>
+    <span class="special">(</span><span class="char">'a'</span><span class="special">,</span> <span class="string">"Apple"</span><span class="special">)</span>
+    <span class="special">(</span><span class="char">'b'</span><span class="special">,</span> <span class="string">"Banana"</span><span class="special">)</span>
+    <span class="special">(</span><span class="char">'o'</span><span class="special">,</span> <span class="string">"Orange"</span><span class="special">)</span>
 <span class="special">;</span>
 
-<span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
-<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"Banana"</span><span class="special">,</span> <span class="identifier">sym</span><span class="special">,</span> <span class="identifier">i</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-</pre>
-<p>
-            </p>
-<p>
-          </p>
-<p>
-            When <code class="computeroutput"><span class="identifier">symbols</span></code> is used
-            for case-insensitive parsing (in a <a class="link" href="../directive/no_case.html" title="Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a> directive), added symbol
-            strings should be in lowercase. Symbol strings containing one or more
-            uppercase characters will not match any input when symbols is used in
-            a <code class="computeroutput"><span class="identifier">no_case</span></code> directive.
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
-
-<span class="identifier">sym</span><span class="special">.</span><span class="identifier">add</span>
-    <span class="special">(</span><span class="string">"apple"</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>    <span class="comment">// symbol strings are added in lowercase...
-</span>    <span class="special">(</span><span class="string">"banana"</span><span class="special">,</span> <span class="number">2</span><span class="special">)</span>
-    <span class="special">(</span><span class="string">"orange"</span><span class="special">,</span> <span class="number">3</span><span class="special">)</span>
-<span class="special">;</span>
-
-<span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
-<span class="comment">// ...because sym is used for case-insensitive parsing
-</span><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"Apple"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span> <span class="identifier">sym</span> <span class="special">],</span> <span class="identifier">i</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"ORANGE"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span> <span class="identifier">sym</span> <span class="special">],</span> <span class="identifier">i</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"Banana"</span><span class="special">,</span> <span class="identifier">sym</span><span class="special">,</span> <span class="char">'b'</span><span class="special">);</span>
 </pre>
 <p>
             </p>
@@ -652,7 +629,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="string.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../string.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../../../karma.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="string.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../string.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../../performance_measurements.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

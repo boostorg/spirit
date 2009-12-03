@@ -186,6 +186,7 @@
 [template karma_delimit[str]        [link spirit.karma.reference.directive.delimit [str]]]
 [template karma_upperlower[str]     [link spirit.karma.reference.directive.upperlower [str]]]
 [template karma_maxwidth[str]       [link spirit.karma.reference.directive.maxwidth [str]]]
+[template karma_columns[str]        [link spirit.karma.reference.directive.columns [str]]]
 
 [def __karma_numeric__              [link spirit.karma.reference.numeric Numeric Generators]]
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]

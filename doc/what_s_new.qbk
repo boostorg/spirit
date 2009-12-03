@@ -18,6 +18,7 @@
 * Added `auto_` component and API functions `qi::create_parser` and 
   `karma::create_generator`.
 * Added `auto_` based overloads for all API functions taking no attributes.
+* Added `karma::columns` directive.
 
 [heading Spirit V2.1] 
 

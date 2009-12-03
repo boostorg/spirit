@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Generator Directives</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
@@ -130,6 +130,26 @@
 <tr>
 <td>
                   <p>
+                    <a class="link" href="../../reference/directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">left_align</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> left
+                    aligned in column of width <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    while using <code class="computeroutput"><span class="identifier">g</span></code>
+                    to generate the necesssary padding
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
                     <a class="link" href="../../reference/directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">left_align</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
                   </p>
                   </td>
@@ -186,6 +206,26 @@
 <tr>
 <td>
                   <p>
+                    <a class="link" href="../../reference/directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">center</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
+                    in column of width <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    while using <code class="computeroutput"><span class="identifier">g</span></code>
+                    to generate the necesssary padding
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
                     <a class="link" href="../../reference/directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">center</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
                   </p>
                   </td>
@@ -236,6 +276,26 @@
                   <p>
                     Generate <code class="computeroutput"><span class="identifier">a</span></code> right
                     aligned in column of width <code class="computeroutput"><span class="identifier">num</span></code>
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../../reference/directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">right_align</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> right
+                    aligned in column of width <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    while using <code class="computeroutput"><span class="identifier">g</span></code>
+                    to generate the necesssary padding
                   </p>
                   </td>
 </tr>
@@ -454,12 +514,92 @@
                   </p>
                   </td>
 </tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../../reference/directive/columns.html" title="Separate Output Into Columns (columns[])"><code class="computeroutput"><span class="identifier">columns</span></code></a><code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> splitted
+                    into <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_COLUMNS</span></code>
+                    number of columns using <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">eol</span></code>
+                    as column delimiter
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../../reference/directive/columns.html" title="Separate Output Into Columns (columns[])"><code class="computeroutput"><span class="identifier">columns</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> splitted
+                    into <code class="computeroutput"><span class="identifier">num</span></code> number
+                    of columns using <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">eol</span></code>
+                    as column delimiter
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../../reference/directive/columns.html" title="Separate Output Into Columns (columns[])"><code class="computeroutput"><span class="identifier">columns</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> splitted
+                    into <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_COLUMNS</span></code>
+                    number of columns using <code class="computeroutput"><span class="identifier">g</span></code>
+                    as column delimiter
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../../reference/directive/columns.html" title="Separate Output Into Columns (columns[])"><code class="computeroutput"><span class="identifier">columns</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> splitted
+                    into <code class="computeroutput"><span class="identifier">num</span></code> number
+                    of columns using <code class="computeroutput"><span class="identifier">g</span></code>
+                    as column delimiter
+                  </p>
+                  </td>
+</tr>
 </tbody>
 </table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
       de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
