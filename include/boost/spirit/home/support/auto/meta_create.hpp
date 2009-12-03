@@ -48,7 +48,7 @@ namespace boost { namespace spirit
           : remove_const<typename remove_reference<T>::type> {};
 
         ///////////////////////////////////////////////////////////////////////
-        template <typename OpTag, typename F, typename Domain>
+        template <typename OpTag, typename Domain>
         struct nary_proto_expr_function
         {
             template <typename T>
@@ -57,19 +57,15 @@ namespace boost { namespace spirit
             template <typename T1, typename T2>
             struct result<nary_proto_expr_function(T1, T2)>
             {
+                typedef typename remove_const_ref<T1>::type left_type;
                 typedef typename 
                     spirit::traits::meta_create<Domain, T2>::type
                 right_type;
 
-                typedef typename mpl::if_<
-                    traits::not_is_unused<typename remove_const_ref<T1>::type>
-                  , proto::expr<
-                        OpTag, proto::list2<
-                            typename add_const_ref<T1>::type
-                          , typename add_const_ref<right_type>::type
-                        >, 2
-                    >
-                  , right_type
+                typedef typename mpl::eval_if<
+                    traits::not_is_unused<left_type>
+                  , proto::result_of::make_expr<OpTag, left_type, right_type>
+                  , mpl::identity<right_type>
                 >::type type;
             };
 
@@ -77,8 +73,8 @@ namespace boost { namespace spirit
             typename result<nary_proto_expr_function(unused_type const&, T)>::type
             operator()(unused_type const&, T) const
             {
-                typedef spirit::traits::meta_create<Domain, T> type;
-                return type::call();
+                typedef spirit::traits::meta_create<Domain, T> right_type;
+                return right_type::call();
             }
 
             template <typename T1, typename T2>
@@ -86,39 +82,33 @@ namespace boost { namespace spirit
             operator()(T1 const& t1, T2) const
             {
                 // we variants to the alternative operator
-                typedef spirit::traits::meta_create<Domain, T2> 
-                    right_type;
-                typedef typename result<nary_proto_expr_function(T1, T2)>::type 
-                    return_type;
-
-                return F::template call<return_type>(t1, right_type::call());
+                typedef spirit::traits::meta_create<Domain, T2> right_type;
+                return proto::make_expr<OpTag>(t1, right_type::call());
             }
         };
     }
 
     ///////////////////////////////////////////////////////////////////////
-    template <typename T, typename OpTag, typename F, typename Domain>
+    template <typename T, typename OpTag, typename Domain>
     struct make_unary_proto_expr
     {
         typedef spirit::traits::meta_create<Domain, T> subject_type;
 
-        typedef proto::expr<
-            OpTag, proto::list1<
-                typename detail::add_const_ref<typename subject_type::type>::type
-            >, 1
-        > type;
+        typedef typename proto::result_of::make_expr<
+            OpTag, typename subject_type::type
+        >::type type;
 
         static type call()
         {
-            return F::template call<type>(subject_type::call());
+            return proto::make_expr<OpTag>(subject_type::call());
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Sequence, typename OpTag, typename F, typename Domain>
+    template <typename Sequence, typename OpTag, typename Domain>
     struct make_nary_proto_expr
     {
-        typedef detail::nary_proto_expr_function<OpTag, F, Domain> 
+        typedef detail::nary_proto_expr_function<OpTag, Domain> 
             make_proto_expr;
 
         typedef typename fusion::result_of::fold<

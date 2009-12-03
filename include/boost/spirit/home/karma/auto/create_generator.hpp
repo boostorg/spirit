@@ -11,16 +11,13 @@
 #endif
 
 #include <boost/spirit/home/karma/auto/meta_create.hpp>
-#include <boost/proto/deep_copy.hpp>
 
 namespace boost { namespace spirit { namespace result_of
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct create_generator
-      : proto::result_of::deep_copy<
-            typename spirit::traits::meta_create<karma::domain, T>::type
-        > {};
+      : spirit::traits::meta_create<karma::domain, T> {};
 }}}
 
 namespace boost { namespace spirit { namespace karma
@@ -31,8 +28,7 @@ namespace boost { namespace spirit { namespace karma
     typename result_of::create_generator<T>::type
     create_generator()
     {
-        return proto::deep_copy(
-            spirit::traits::meta_create<karma::domain, T>::call());
+        return spirit::traits::meta_create<karma::domain, T>::call();
     }
 }}}
 

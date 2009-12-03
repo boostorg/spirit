@@ -33,19 +33,9 @@ namespace boost { namespace spirit { namespace qi
     template <typename Container> 
     struct meta_create_container 
     {
-        struct make_dereference
-        {
-            template <typename RT, typename T_>
-            static RT call(T_ const& t)
-            {
-                // we map STL containers to the Kleene star
-                return *t;
-            }
-        };
-
         typedef make_unary_proto_expr<
-            typename Container::value_type, proto::tag::dereference
-          , make_dereference, qi::domain
+            typename Container::value_type
+          , proto::tag::dereference, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -61,15 +51,6 @@ namespace boost { namespace spirit { namespace qi
     template <typename Sequence> 
     struct meta_create_sequence 
     {
-        struct make_shift_right
-        {
-            template <typename RT, typename T1, typename T2>
-            static RT call(T1 const& t1, T2 const& t2) 
-            {
-                return t1 >> t2;
-            }
-        };
-
         // create a mpl sequence from the given fusion sequence
         typedef typename mpl::fold<
             typename fusion::result_of::as_vector<Sequence>::type
@@ -77,7 +58,7 @@ namespace boost { namespace spirit { namespace qi
         >::type sequence_type;
 
         typedef make_nary_proto_expr<
-            sequence_type, proto::tag::shift_right, make_shift_right, qi::domain
+            sequence_type, proto::tag::shift_right, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -117,17 +98,8 @@ namespace boost { namespace spirit { namespace qi
     template <typename T> 
     struct meta_create<boost::optional<T> > 
     {
-        struct make_negate
-        {
-            template <typename RT, typename T_>
-            static RT call(T_ const& t)
-            {
-                return -t;
-            }
-        };
-
         typedef make_unary_proto_expr<
-            T, proto::tag::negate, make_negate, qi::domain
+            T, proto::tag::negate, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -143,18 +115,9 @@ namespace boost { namespace spirit { namespace qi
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)> 
     struct meta_create<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
     {
-        struct make_bitwise_or
-        {
-            template <typename RT, typename T1_, typename T2_>
-            static RT call(T1_ const& t1, T2_ const& t2)
-            {
-                return t1 | t2;
-            }
-        };
-
         typedef make_nary_proto_expr<
             typename boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types
-          , proto::tag::bitwise_or, make_bitwise_or, qi::domain
+          , proto::tag::bitwise_or, qi::domain
         > make_proto_expr;
 
         typedef typename make_proto_expr::type type;
@@ -172,76 +135,76 @@ namespace boost { namespace spirit { namespace qi
     template <> 
     struct meta_create<char> 
     { 
-        typedef spirit::standard::char_type const& type; 
-        static type call() { return spirit::standard::char_; }
+        typedef spirit::standard::char_type type; 
+        static type const& call() { return spirit::standard::char_; }
     };
     template <> 
     struct meta_create<wchar_t> 
     { 
-        typedef spirit::standard_wide::char_type const& type; 
-        static type call() { return spirit::standard_wide::char_; }
+        typedef spirit::standard_wide::char_type type; 
+        static type const& call() { return spirit::standard_wide::char_; }
     };
 
     // boolean generator
     template <> 
     struct meta_create<bool> 
     { 
-        typedef spirit::bool__type const& type; 
-        static type call() { return spirit::bool_; }
+        typedef spirit::bool__type type; 
+        static type const& call() { return spirit::bool_; }
     };
 
     // integral generators
     template <> 
     struct meta_create<int> 
     { 
-        typedef spirit::int__type const& type; 
-        static type call() { return spirit::int_; }
+        typedef spirit::int__type type; 
+        static type const& call() { return spirit::int_; }
     };
     template <> 
     struct meta_create<short> 
     { 
-        typedef spirit::short__type const& type; 
-        static type call() { return spirit::short_; }
+        typedef spirit::short__type type; 
+        static type const& call() { return spirit::short_; }
     };
     template <> 
     struct meta_create<long> 
     {
-        typedef spirit::long__type const& type; 
-        static type call() { return spirit::long_; }
+        typedef spirit::long__type type; 
+        static type const& call() { return spirit::long_; }
     };
     template <> 
     struct meta_create<unsigned int> 
     { 
-        typedef spirit::uint__type const& type; 
-        static type call() { return spirit::uint_; }
+        typedef spirit::uint__type type; 
+        static type const& call() { return spirit::uint_; }
     };
 #if !defined(BOOST_NO_INTRINSIC_WCHAR_T)
     template <> 
     struct meta_create<unsigned short> 
     { 
-        typedef spirit::ushort__type const& type; 
-        static type call() { return spirit::ushort_; }
+        typedef spirit::ushort__type type; 
+        static type const& call() { return spirit::ushort_; }
     };
 #endif
     template <> 
     struct meta_create<unsigned long> 
     { 
-        typedef spirit::ulong__type const& type; 
-        static type call() { return spirit::ulong_; }
+        typedef spirit::ulong__type type; 
+        static type const& call() { return spirit::ulong_; }
     };
 
 #ifdef BOOST_HAS_LONG_LONG
     template <> 
     struct meta_create<boost::long_long_type> 
     { 
-        typedef spirit::long_long_type const& type; 
-        static type call() { return spirit::long_long; }
+        typedef spirit::long_long_type type; 
+        static type const& call() { return spirit::long_long; }
     };
     template <> 
     struct meta_create<boost::ulong_long_type> 
     { 
-        typedef spirit::ulong_long_type const& type; 
-        static type call() { return spirit::ulong_long; }
+        typedef spirit::ulong_long_type type; 
+        static type const& call() { return spirit::ulong_long; }
     };
 #endif
 
@@ -249,20 +212,20 @@ namespace boost { namespace spirit { namespace qi
     template <> 
     struct meta_create<float> 
     { 
-        typedef spirit::float__type const& type; 
-        static type call() { return spirit::float_; }
+        typedef spirit::float__type type; 
+        static type const& call() { return spirit::float_; }
     };
     template <> 
     struct meta_create<double> 
     { 
-        typedef spirit::double__type const& type; 
-        static type call() { return spirit::double_; }
+        typedef spirit::double__type type; 
+        static type const& call() { return spirit::double_; }
     };
     template <> 
     struct meta_create<long double> 
     { 
-        typedef spirit::long_double_type const& type; 
-        static type call() { return spirit::long_double; }
+        typedef spirit::long_double_type type; 
+        static type const& call() { return spirit::long_double; }
     };
 }}}
 

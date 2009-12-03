@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/detail/parse.hpp>
+#include <boost/spirit/home/qi/parse.hpp>
 #include <boost/spirit/home/qi/auto/create_parser.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/not.hpp>

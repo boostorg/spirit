@@ -128,7 +128,7 @@ namespace boost { namespace spirit { namespace karma
         detail::output_iterator<OutputIterator
           , mpl::int_<properties::value | delimiter_properties::value>
         > sink(target_sink);
-        return generate_delimited(sink, expr, delimiter, pre_delimit, attr);
+        return karma::generate_delimited(sink, expr, delimiter, pre_delimit, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -141,7 +141,7 @@ namespace boost { namespace spirit { namespace karma
       , Delimiter const& delimiter
       , Attribute const& attr)
     {
-        return generate_delimited(sink, expr, delimiter
+        return karma::generate_delimited(sink, expr, delimiter
           , delimit_flag::dont_predelimit, attr);
     }
 
