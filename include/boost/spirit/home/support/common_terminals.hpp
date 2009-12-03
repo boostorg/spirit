@@ -81,6 +81,7 @@ namespace boost { namespace spirit
         ( in_state )
         ( token )
         ( attr )
+        ( columns )
     )
 
     // special tags (used mainly for stateful tag types)
