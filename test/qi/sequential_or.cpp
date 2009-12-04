@@ -63,6 +63,23 @@ main()
         BOOST_TEST((!test("a123", int_ || alpha)));
     }
 
+    {   // test whether optional<optional<>> gets properly handled 
+        vector<optional<int>, optional<int> > attr1;
+        BOOST_TEST((test_attr("123", int_ || '[' >> -int_ >> ']', attr1)));
+        BOOST_TEST((at_c<0>(attr1) && at_c<0>(attr1).get() == 123));
+        BOOST_TEST((!at_c<1>(attr1)));
+
+        vector<optional<int>, optional<int> > attr2;
+        BOOST_TEST((test_attr("[123]", int_ || '[' >> -int_ >> ']', attr2)));
+        BOOST_TEST((!at_c<0>(attr2)));
+        BOOST_TEST((at_c<1>(attr2) && at_c<1>(attr2).get() == 123));
+
+        vector<optional<int>, optional<optional<int> > > attr3;
+        BOOST_TEST((test_attr("[]", int_ || '[' >> -int_ >> ']', attr3)));
+        BOOST_TEST((!at_c<0>(attr3)));
+        BOOST_TEST((at_c<1>(attr3) && !at_c<1>(attr3).get()));
+    }
+
     {   // test unused attribute handling
 
         vector<optional<int>, optional<char> > attr;
