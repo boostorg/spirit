@@ -209,22 +209,6 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename T>
-    struct optional_attribute<optional<T const> >
-    {
-        typedef T const& type;
-
-        static type call(optional<T const> const& val)
-        {
-            return boost::get<T const>(val);
-        }
-
-        static bool is_valid(optional<T const> const& val)
-        {
-            return val;
-        }
-    };
-
-    template <typename T>
     typename optional_attribute<T>::type
     optional_value(T const& val)
     {
