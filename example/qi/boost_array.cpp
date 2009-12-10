@@ -72,6 +72,11 @@ namespace client
 namespace boost { namespace spirit { namespace traits
 {
     template <typename T, std::size_t N>
+     struct is_container<client::detail::adapt_array<boost::array<T, N> > > 
+       : boost::mpl::true_
+     {};
+
+    template <typename T, std::size_t N>
     struct container_value<client::detail::adapt_array<boost::array<T, N> > >
     {
         typedef T type;     // value type of container
