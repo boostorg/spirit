@@ -48,25 +48,25 @@ namespace boost { namespace spirit { namespace traits
             detail::has_reference<T>::value>
     {};
 
-   template <typename T>
-   struct is_container<T&> 
-     : is_container<T> 
-   {};
+    template <typename T>
+    struct is_container<T&> 
+      : is_container<T> 
+    {};
 
-   template <typename T>
-   struct is_container<optional<T> > 
-     : is_container<T> 
-   {};
+    template <typename T>
+    struct is_container<optional<T> > 
+      : is_container<T> 
+    {};
 
 #define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 \
-       is_container<BOOST_PP_CAT(T, N)>::value ||                             \
-   /***/
+        is_container<BOOST_PP_CAT(T, N)>::value ||                            \
+    /***/
 
-   template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-   struct is_container<variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
-     : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
-         , BOOST_SPIRIT_IS_CONTAINER, _) false> 
-   {};
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct is_container<variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
+       : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
+            , BOOST_SPIRIT_IS_CONTAINER, _) false> 
+    {};
 
 #undef BOOST_SPIRIT_IS_CONTAINER
 
@@ -233,15 +233,16 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename T>
-    void push_back(Container& c, T const& val);
+    bool push_back(Container& c, T const& val);
 
     //[customization_push_back_default
     template <typename Container, typename T, typename Enable/* = void*/>
     struct push_back_container
     {
-        static void call(Container& c, T const& val)
+        static bool call(Container& c, T const& val)
         {
             c.insert(c.end(), val);
+            return true;
         }
     };
     //]
@@ -249,11 +250,11 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename T>
     struct push_back_container<optional<Container>, T>
     {
-        static void call(optional<Container>& c, T const& val)
+        static bool call(optional<Container>& c, T const& val)
         {
             if (!c)
                 c = Container();
-            push_back(boost::get<Container>(c), val);
+            return push_back(boost::get<Container>(c), val);
         }
     };
 
@@ -262,25 +263,28 @@ namespace boost { namespace spirit { namespace traits
         template <typename T>
         struct push_back_visitor : public static_visitor<>
         {
+            typedef bool result_type;
+
             push_back_visitor(T const& t) : t_(t) {}
 
             template <typename Container>
-            void push_back_impl(Container& c, mpl::true_) const
+            bool push_back_impl(Container& c, mpl::true_) const
             {
-                push_back(c, t_);
+                return push_back(c, t_);
             }
 
             template <typename T_>
-            void push_back_impl(T_&, mpl::false_) const
+            bool push_back_impl(T_&, mpl::false_) const
             {
                 // this variant doesn't hold a container
                 BOOST_ASSERT(false);
+                return false;
             }
 
             template <typename T_>
-            void operator()(T_& c) const
+            bool operator()(T_& c) const
             {
-                push_back_impl(c, typename is_container<T_>::type());
+                return push_back_impl(c, typename is_container<T_>::type());
             }
 
             T const& t_;
@@ -290,32 +294,35 @@ namespace boost { namespace spirit { namespace traits
     template <BOOST_VARIANT_ENUM_PARAMS(typename T_), typename T>
     struct push_back_container<variant<BOOST_VARIANT_ENUM_PARAMS(T_)>, T>
     {
-        static void call(variant<BOOST_VARIANT_ENUM_PARAMS(T_)>& c, T const& val)
+        static bool call(variant<BOOST_VARIANT_ENUM_PARAMS(T_)>& c, T const& val)
         {
-            apply_visitor(detail::push_back_visitor<T>(val), c);
+            return apply_visitor(detail::push_back_visitor<T>(val), c);
         }
     };
 
     template <typename Container, typename T>
-    void push_back(Container& c, T const& val)
+    bool push_back(Container& c, T const& val)
     {
-        push_back_container<Container, T>::call(c, val);
+        return push_back_container<Container, T>::call(c, val);
     }
 
     //[customization_push_back_unused
     template <typename Container>
-    void push_back(Container&, unused_type)
+    bool push_back(Container&, unused_type)
     {
+        return true;
     }
     //]
 
     template <typename T>
-    void push_back(unused_type, T const&)
+    bool push_back(unused_type, T const&)
     {
+        return true;
     }
 
-    inline void push_back(unused_type, unused_type)
+    inline bool push_back(unused_type, unused_type)
     {
+        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////

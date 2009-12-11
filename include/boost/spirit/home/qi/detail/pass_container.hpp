@@ -70,11 +70,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             typename traits::container_value<Attr>::type val =
                 typename traits::container_value<Attr>::type();
 
+            iterator_type save = f.first;
             bool r = f(component, val);
             if (!r)
             {
                 // push the parsed value into our attribute
-                traits::push_back(attr, val);
+                r = !traits::push_back(attr, val);
+                if (r)
+                    f.first = save;
             }
             return r;
         }
