@@ -44,17 +44,18 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     template <typename Container>
     struct is_hold_any_container
-      : mpl::and_<
-            traits::is_container<Container>
-          , is_same<hold_any, typename traits::container_value<Container>::type>
-        > {};
+      : is_same<hold_any, typename traits::container_value<Container>::type> {};
 
     template <typename Expected, typename Attribute, typename IsNotVariant>
     struct compute_compatible_component_variant
       : mpl::or_<
             attribute_is_compatible<Expected, Attribute>
           , is_same<hold_any, Expected> 
-          , is_hold_any_container<Expected> > {};
+          , mpl::eval_if<
+                traits::is_container<Expected>
+              , is_hold_any_container<Expected>
+              , mpl::false_>
+        > {};
 
     template <typename Expected, typename Attribute>
     struct compute_compatible_component_variant<Expected, Attribute, mpl::false_>
