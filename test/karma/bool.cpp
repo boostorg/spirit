@@ -12,6 +12,7 @@
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -96,10 +97,13 @@ int main()
         boost::optional<bool> optbool;
 
         BOOST_TEST(!test("", bool_, optbool));
+        BOOST_TEST(test("", -bool_, optbool));
         optbool = false;
         BOOST_TEST(test("false", bool_, optbool));
+        BOOST_TEST(test("false", -bool_, optbool));
         optbool = true;
         BOOST_TEST(test("true", bool_, optbool));
+        BOOST_TEST(test("true", -bool_, optbool));
     }
 
 // we support Phoenix attributes only starting with V2.2

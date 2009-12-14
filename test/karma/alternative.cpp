@@ -91,6 +91,13 @@ main()
     }
 
     {
+        BOOST_TEST(test("abc", string | int_, std::string("abc")));
+        BOOST_TEST(test("1234", string | int_, 1234));
+        BOOST_TEST(test("abc", int_ | string, std::string("abc")));
+        BOOST_TEST(test("1234", int_ | string, 1234));
+    }
+
+    {
         // testing for alignment/truncation problems on little endian systems
         // (big endian systems will fail one of the other tests below)
         std::basic_string<wchar_t> generated;
