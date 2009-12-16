@@ -622,6 +622,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "    Iterator end_token_ = start_token_;\n";
         os_ << '\n';
 
+        os_ << "    " << ((lookups_ == 256) ? "char" : "wchar_t") 
+            << " ch_ = 0;\n\n";
+
         if (dfas_ > 1)
         {
             os_ << "    switch (start_state_)\n";
@@ -637,11 +640,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "    default:\n";
             os_ << "        goto end;\n";
             os_ << "        break;\n";
-            os_ << "    }\n\n";
+            os_ << "    }\n";
         }
-
-        os_ << "    " << ((lookups_ == 256) ? "char" : "wchar_t") 
-            << " ch_ = 0;\n";
 
         bool need_state0_0_label = need_label0_0(sm_);
 
