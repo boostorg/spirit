@@ -20,6 +20,8 @@
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/fusion/include/at.hpp>
+#include <boost/foreach.hpp>
+#include <vector>
 
 namespace boost { namespace spirit
 {
@@ -162,25 +164,28 @@ namespace boost { namespace spirit { namespace qi
 
             // parse the minimum required
             if (!iter.got_min(i)) { 
-                // this scope allows save and save_attr to be reclaimed 
+                // this scope allows save and required_attr to be reclaimed 
                 // immediately after we're done with the required minimum 
                 // iteration.
                 Iterator save = first;
-                Attribute save_attr; traits::swap_impl(save_attr, attr);
+                std::vector<value_type> required_attr;
                 for (; !iter.got_min(i); ++i)
                 {
                     if (!subject.parse(save, last, context, skipper, val) ||
-                        !traits::push_back(attr, val))
+                        !traits::push_back(required_attr, val))
                     {
-                        // if we fail before reaching the minimum iteration
-                        // required, restore the iterator and the attribute
-                        // then return false
-                        traits::swap_impl(save_attr, attr);
                         return false;
                     }
 
                     first = save;
                     traits::clear(val);
+                }
+
+                // if we got the required number of items, these are copied 
+                // over (appended) to the 'real' attribute
+                BOOST_FOREACH(value_type const& v, required_attr)
+                {
+                    traits::push_back(attr, v);
                 }
             }
 
