@@ -151,6 +151,60 @@ namespace boost { namespace spirit { namespace qi
           : subject(subject), iter(iter) {}
 
         template <typename Iterator, typename Context
+          , typename Skipper, typename ValueType, typename Attribute
+          , typename LoopVar>
+        bool parse_minimal(Iterator &first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr, ValueType& val, LoopVar& i) const
+        {
+            // this scope allows save and required_attr to be reclaimed 
+            // immediately after we're done with the required minimum 
+            // iteration.
+            Iterator save = first;
+            std::vector<ValueType> required_attr;
+            for (; !iter.got_min(i); ++i)
+            {
+                if (!subject.parse(save, last, context, skipper, val) ||
+                    !traits::push_back(required_attr, val))
+                {
+                    return false;
+                }
+
+                first = save;
+                traits::clear(val);
+            }
+
+            // if we got the required number of items, these are copied 
+            // over (appended) to the 'real' attribute
+            BOOST_FOREACH(ValueType const& v, required_attr)
+            {
+                traits::push_back(attr, v);
+            }
+            return true;
+        }
+
+        template <typename Iterator, typename Context
+          , typename Skipper, typename LoopVar>
+        bool parse_minimal(Iterator &first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , unused_type, unused_type, LoopVar& i) const
+        {
+            // this scope allows save and required_attr to be reclaimed 
+            // immediately after we're done with the required minimum 
+            // iteration.
+            Iterator save = first;
+            for (; !iter.got_min(i); ++i)
+            {
+                if (!subject.parse(save, last, context, skipper, unused))
+                {
+                    return false;
+                }
+                first = save;
+            }
+            return true;
+        }
+
+        template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
@@ -163,30 +217,10 @@ namespace boost { namespace spirit { namespace qi
             typename LoopIter::type i = iter.start();
 
             // parse the minimum required
-            if (!iter.got_min(i)) { 
-                // this scope allows save and required_attr to be reclaimed 
-                // immediately after we're done with the required minimum 
-                // iteration.
-                Iterator save = first;
-                std::vector<value_type> required_attr;
-                for (; !iter.got_min(i); ++i)
-                {
-                    if (!subject.parse(save, last, context, skipper, val) ||
-                        !traits::push_back(required_attr, val))
-                    {
-                        return false;
-                    }
-
-                    first = save;
-                    traits::clear(val);
-                }
-
-                // if we got the required number of items, these are copied 
-                // over (appended) to the 'real' attribute
-                BOOST_FOREACH(value_type const& v, required_attr)
-                {
-                    traits::push_back(attr, v);
-                }
+            if (!iter.got_min(i) &&
+                !parse_minimal(first, last, context, skipper, attr, val, i))
+            {
+                return false;
             }
 
             // parse some more up to the maximum specified
