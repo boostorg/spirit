@@ -156,6 +156,16 @@ main()
         BOOST_TEST(test_attr("b b b b", omit[repeat(4)[char_('b')]], s, space) && s == "bbbb");
     }
 
+    {
+        std::vector<char> v;
+        BOOST_TEST(test_attr("1 2 3", int_ >> repeat(2)[int_], v, space));
+        BOOST_TEST(v.size() == 3 && v[0] == 1 && v[1] == 2 && v[2] == 3);
+
+        v.clear();
+        BOOST_TEST(!test_attr("1 2", int_ >> repeat(2)[int_], v, space));
+        BOOST_TEST(v.size() == 1 && v[0] == 1);
+    }
+
     { // actions
         namespace phx = boost::phoenix;
 
