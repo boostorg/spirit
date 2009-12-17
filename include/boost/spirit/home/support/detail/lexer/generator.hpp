@@ -44,10 +44,10 @@ public:
 
         for (; index_ < size_; ++index_)
         {
-            internals_._lookup->push_back (0);
+            internals_._lookup->push_back (static_cast<size_t_vector *>(0));
             internals_._lookup->back () = new size_t_vector;
             internals_._dfa_alphabet.push_back (0);
-            internals_._dfa->push_back (0);
+            internals_._dfa->push_back (static_cast<size_t_vector *>(0));
             internals_._dfa->back () = new size_t_vector;
         }
 
@@ -229,7 +229,7 @@ protected:
 
             for (; iter_ != end_; ++iter_)
             {
-                node_ptr_vector_->push_back (0);
+                node_ptr_vector_->push_back (static_cast<detail::selection_node *>(0));
                 node_ptr_vector_->back () = new detail::selection_node
                     (root_, *iter_);
                 root_ = node_ptr_vector_->back ();
@@ -405,9 +405,9 @@ protected:
 
         if (!found_)
         {
-            seen_sets_->push_back (0);
+            seen_sets_->push_back (static_cast<node_set *>(0));
             seen_sets_->back () = set_ptr_.release ();
-            seen_vectors_->push_back (0);
+            seen_vectors_->push_back (static_cast<node_vector *>(0));
             seen_vectors_->back () = vector_ptr_.release ();
             hash_vector_.push_back (hash_);
             // State 0 is the jam state...
@@ -466,7 +466,7 @@ protected:
             typename charset_list::list::iterator end_;
             charset_ptr overlap_ (new charset);
 
-            lhs_->push_back (0);
+            lhs_->push_back (static_cast<charset *>(0));
             lhs_->back () = rhs_->front ();
             rhs_->pop_front ();
 
@@ -527,7 +527,7 @@ protected:
 
                 if (!r_->empty ())
                 {
-                    lhs_->push_back (0);
+                    lhs_->push_back (static_cast<charset *>(0));
                     lhs_->back () = r_.release ();
                 }
             }
@@ -544,7 +544,7 @@ protected:
 
         for (; iter_ != end_; ++iter_)
         {
-            list_->push_back (0);
+            list_->push_back (static_cast<charset *>(0));
             list_->back () = new charset (iter_->first, iter_->second);
         }
     }
@@ -609,7 +609,7 @@ protected:
             typename equivset_list::list::iterator end_;
             equivset_ptr overlap_ (new equivset);
 
-            lhs_->push_back (0);
+            lhs_->push_back (static_cast<equivset *>(0));
             lhs_->back () = rhs_->front ();
             rhs_->pop_front ();
 
@@ -670,7 +670,7 @@ protected:
 
                 if (!r_->empty ())
                 {
-                    lhs_->push_back (0);
+                    lhs_->push_back (static_cast<equivset *>(0));
                     lhs_->back () = r_.release ();
                 }
             }
@@ -695,7 +695,7 @@ protected:
 
                 if (token_ != null_token)
                 {
-                    list_->push_back (0);
+                    list_->push_back (static_cast<equivset *>(0));
 
                     if (token_ == bol_token || token_ == eol_token)
                     {
@@ -736,24 +736,26 @@ protected:
 
         if (!found_)
         {
-            node_ptr_vector_->push_back (0);
+            node_ptr_vector_->push_back (static_cast<detail::leaf_node *>(0));
             node_ptr_vector_->back () = new detail::leaf_node
                 (bol_token, true);
 
             detail::node *lhs_ = node_ptr_vector_->back ();
 
-            node_ptr_vector_->push_back (0);
+            node_ptr_vector_->push_back (static_cast<detail::leaf_node *>(0));
             node_ptr_vector_->back () = new detail::leaf_node
                 (null_token, true);
 
             detail::node *rhs_ = node_ptr_vector_->back ();
 
-            node_ptr_vector_->push_back (0);
+            node_ptr_vector_->push_back
+                (static_cast<detail::selection_node *>(0));
             node_ptr_vector_->back () =
                 new detail::selection_node (lhs_, rhs_);
             lhs_ = node_ptr_vector_->back ();
 
-            node_ptr_vector_->push_back (0);
+            node_ptr_vector_->push_back
+                (static_cast<detail::sequence_node *>(0));
             node_ptr_vector_->back () =
                 new detail::sequence_node (lhs_, root_);
             root_ = node_ptr_vector_->back ();

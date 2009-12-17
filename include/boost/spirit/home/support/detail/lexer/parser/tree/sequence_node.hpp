@@ -93,7 +93,7 @@ private:
 
             node *lhs_ = new_node_stack_.top ();
 
-            node_ptr_vector_->push_back (0);
+            node_ptr_vector_->push_back (static_cast<sequence_node *>(0));
             node_ptr_vector_->back () = new sequence_node (lhs_, rhs_);
             new_node_stack_.top () = node_ptr_vector_->back ();
         }

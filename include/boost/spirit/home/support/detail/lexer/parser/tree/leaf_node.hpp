@@ -95,7 +95,7 @@ private:
         node_stack &new_node_stack_, bool_stack &/*perform_op_stack_*/,
         bool &/*down_*/) const
     {
-        node_ptr_vector_->push_back (0);
+        node_ptr_vector_->push_back (static_cast<leaf_node *>(0));
         node_ptr_vector_->back () = new leaf_node (_token, _greedy);
         new_node_stack_.push (node_ptr_vector_->back ());
     }
