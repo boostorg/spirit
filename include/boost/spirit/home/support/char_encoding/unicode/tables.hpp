@@ -10,9 +10,8 @@
     DO NOT EDIT!!!
 ==============================================================================*/
 // category table, 27648 bytes
-#include <boost/cstdint.hpp>
 
-namespace
+namespace boost { namespace spirit { namespace unicode { namespace detail 
 {
     static const ::boost::uint8_t category_stage1[] = {
      0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, // U+0000
@@ -1931,16 +1930,16 @@ namespace
     };
 
 
-} // unnamed namespace
+}}}}
 
 namespace boost { namespace spirit { namespace unicode
 {
     category get_category(::boost::uint32_t ch)
     {
-        const ::boost::uint32_t BLOCK_SIZE = 256;
+        const ::boost::uint32_t block_size = 256;
         assert(ch < 0x110000);
-        ::boost::uint32_t block_offset = category_stage1[ch / BLOCK_SIZE] * BLOCK_SIZE;
-        ::boost::uint8_t r = category_stage2[block_offset + ch % BLOCK_SIZE];
+        ::boost::uint32_t block_offset = detail::category_stage1[ch / block_size] * block_size;
+        ::boost::uint8_t r = detail::category_stage2[block_offset + ch % block_size];
         return static_cast<category>(r);
     }
 }}}

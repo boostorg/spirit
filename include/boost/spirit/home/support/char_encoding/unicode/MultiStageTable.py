@@ -46,7 +46,7 @@ class TableBuilder:
 
         # Print header
         lic ='''/*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -60,8 +60,7 @@ class TableBuilder:
         total_size = len(self.stage1) * stage1_size + len(self.stage2) * stage2_size
         print lic
         print "// %s table, %d bytes" % (prop_name, total_size)
-        print "#include <boost/cstdint.hpp>"
-        print "\nnamespace\n{"
+        print "\nnamespace boost { namespace spirit { namespace unicode { namespace detail \n{"
 
         # Print the first stage
         print "    static const %s %s_stage1[] = {" % (stage1_type, prop_name)
@@ -87,16 +86,16 @@ class TableBuilder:
 
         # Print access function
         func = """
-} // unnamed namespace
+}}}}
 
 namespace boost { namespace spirit { namespace unicode
 {
     %(p)s get_%(p)s(::boost::uint32_t ch)
     {
-        const ::boost::uint32_t BLOCK_SIZE = %(size)d;
+        const ::boost::uint32_t block_size = %(size)d;
         assert(ch < 0x110000);
-        ::boost::uint32_t block_offset = %(p)s_stage1[ch / BLOCK_SIZE] * BLOCK_SIZE;
-        %(t)s r = %(p)s_stage2[block_offset + ch %% BLOCK_SIZE];
+        ::boost::uint32_t block_offset = detail::%(p)s_stage1[ch / block_size] * block_size;
+        %(t)s r = detail::%(p)s_stage2[block_offset + ch %% block_size];
         return static_cast<%(p)s>(r);
     }
 }}}
