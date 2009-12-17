@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
-    struct generate_delimited<Expr
+    struct generate_delimited_impl<Expr
       , typename enable_if<traits::meta_create_exists<karma::domain, Expr> >::type>
     {
         template <typename OutputIterator, typename Delimiter>

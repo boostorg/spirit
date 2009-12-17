@@ -24,7 +24,7 @@ namespace boost { namespace spirit { namespace qi
       , Iterator last
       , Expr const& expr)
     {
-        return detail::parse<Expr>::call(first, last, expr);
+        return detail::parse_impl<Expr>::call(first, last, expr);
     }
 
     template <typename Iterator, typename Expr, typename Attr>
@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace qi
       , Skipper const& skipper
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
     {
-        return detail::phrase_parse<Expr>::call(
+        return detail::phrase_parse_impl<Expr>::call(
             first, last, expr, skipper, post_skip);
     }
 
