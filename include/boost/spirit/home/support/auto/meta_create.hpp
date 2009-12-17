@@ -20,6 +20,11 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/fusion/include/fold.hpp>
 
+// needed for workaround below
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 1))
+#include <boost/type_traits/is_same.hpp>
+#endif
+
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -54,9 +59,18 @@ namespace boost { namespace spirit
             template <typename T>
             struct result;
 
+// this is a workaround for older versions of g++ (< V4.1) which apparently have
+// problems with the following template specialization
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 1))
+            template <typename F, typename T1, typename T2>
+            struct result<F(T1, T2)>
+            {
+                BOOST_STATIC_ASSERT((is_same<F, nary_proto_expr_function>::value));
+#else
             template <typename T1, typename T2>
             struct result<nary_proto_expr_function(T1, T2)>
             {
+#endif
                 typedef typename remove_const_ref<T1>::type left_type;
                 typedef typename 
                     spirit::traits::meta_create<Domain, T2>::type
