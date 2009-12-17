@@ -18,7 +18,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
-    struct generate<Expr
+    struct generate_impl<Expr
       , typename enable_if<traits::meta_create_exists<karma::domain, Expr> >::type>
     {
         template <typename OutputIterator>

@@ -21,7 +21,7 @@ namespace boost { namespace spirit { namespace karma
         OutputIterator& sink
       , Expr const& expr)
     {
-        return detail::generate<Expr>::call(sink, expr);
+        return detail::generate_impl<Expr>::call(sink, expr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace karma
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = 
             delimit_flag::dont_predelimit)
     {
-        return detail::generate_delimited<Expr>::call(
+        return detail::generate_delimited_impl<Expr>::call(
             sink, expr, delimiter, pre_delimit);
     }
 

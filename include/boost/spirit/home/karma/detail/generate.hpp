@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Enable = void>
-    struct generate
+    struct generate_impl
     {
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     };
 
     template <typename Expr>
-    struct generate<Expr
+    struct generate_impl<Expr
       , typename enable_if<traits::matches<karma::domain, Expr> >::type>
     {
         template <typename OutputIterator>
@@ -64,7 +64,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Enable = void>
-    struct generate_delimited
+    struct generate_delimited_impl
     {
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     };
 
     template <typename Expr>
-    struct generate_delimited<Expr
+    struct generate_delimited_impl<Expr
       , typename enable_if<traits::matches<karma::domain, Expr> >::type>
     {
         template <typename OutputIterator, typename Delimiter>
