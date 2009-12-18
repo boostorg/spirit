@@ -11,6 +11,8 @@
 #include "consts.hpp" // num_chars, num_wchar_ts
 #include <string>
 
+// test
+
 namespace boost
 {
 namespace lexer
