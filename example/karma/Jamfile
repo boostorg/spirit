@@ -30,4 +30,5 @@ exe karma_reference : reference.cpp ;
 exe karma_reorder_struct : reorder_struct.cpp ;
 exe karma_escaped_string : escaped_string.cpp ;
 exe simple_columns_directive : simple_columns_directive.cpp ;
+exe quoted_strings : quoted_strings.cpp ;
 

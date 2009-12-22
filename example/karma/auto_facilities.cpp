@@ -33,7 +33,6 @@
 #include <boost/fusion/include/array.hpp>
 
 #include <boost/spirit/include/karma.hpp>
-#include <boost/mpl/print.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
@@ -52,7 +51,9 @@ namespace boost { namespace spirit { namespace traits
     // (the ':') which normally gets embedded in the proto expression by 
     // reference only. The deep copy converts the proto tree to hold this by 
     // value. The deep copy operation can be left out for simpler proto 
-    // expressions (not containing references to temporaries).
+    // expressions (not containing references to temporaries). Alternatively
+    // you could use the proto::make_expr() facility to build the required
+    // proto expression.
     template <>
     struct create_generator<std::pair<int const, std::string> >
     {
