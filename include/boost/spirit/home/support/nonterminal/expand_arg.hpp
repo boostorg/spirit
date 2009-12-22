@@ -26,6 +26,8 @@ namespace boost { namespace spirit { namespace detail
         template <typename T>
         struct result_type
         {
+            // This is a temporary hack. The better way is to detect if T
+            // can be called given unused context.
             typedef typename
                 mpl::eval_if<
                     is_scalar<T>
