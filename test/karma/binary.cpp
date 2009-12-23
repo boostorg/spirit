@@ -223,7 +223,8 @@ main()
 #else // BOOST_LITTLE_ENDIAN
 
         BOOST_TEST(binary_test("\x01", 1, byte_, phoenix::val(0x01)));
-        BOOST_TEST(binary_test("\x01\x02", 2, byte_, phoenix::val(0x0102)));
+        BOOST_TEST(binary_test("\x01\x02", 2, byte_, 
+            phoenix::val(boost::uint16_t(0x0102))));
         BOOST_TEST(binary_test("\x01\x02\x03\x04", 4, dword, 
             phoenix::val(0x01020304)));
 
