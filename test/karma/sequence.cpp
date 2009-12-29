@@ -103,8 +103,8 @@ main()
                 upper[lit("begin") << "nend"], char(' ')));
 
             BOOST_TEST(test("Aa        ", left_align[char_('A') << 'a']));
-//             BOOST_TEST(test("    Aa    ", center[char_('A') << 'a']));
-//             BOOST_TEST(test("        Aa", right_align[char_('A') << 'a']));
+            BOOST_TEST(test("    Aa    ", center[char_('A') << 'a']));
+            BOOST_TEST(test("        Aa", right_align[char_('A') << 'a']));
         }
 
         {
@@ -161,6 +161,20 @@ main()
         v.push_back(3);
         v.push_back(4);
         BOOST_TEST(test(">1,2,3,4", '>' << r, v));
+    }
+
+    {
+        namespace karma = boost::spirit::karma;
+        typedef spirit_test::output_iterator<char>::type outiter_type;
+
+        karma::rule<outiter_type, std::string()> e = karma::string;
+        karma::rule<outiter_type, std::vector<std::string>()> l = e << *(',' << e);
+
+        std::vector<std::string> v;
+        v.push_back("abc1");
+        v.push_back("abc2");
+        v.push_back("abc3");
+        BOOST_TEST(test("abc1,abc2,abc3", l, v));
     }
 
     return boost::report_errors();
