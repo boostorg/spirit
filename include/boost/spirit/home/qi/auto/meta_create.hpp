@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace qi
     // STL container or a fusion sequence
 
     // The default implementation will be chosen if no predefined mapping of 
-    // the data type T to a Karma component is defined.
+    // the data type T to a Qi component is defined.
     struct no_auto_mapping_exists {};
 
     template <typename T, typename Enable = void>

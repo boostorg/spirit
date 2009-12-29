@@ -28,12 +28,12 @@
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    // This is the main dispatching point for meta_create to the correct domain
+    // This is the main dispatch point for meta_create to the correct domain
     template <typename Domain, typename T, typename Enable = void>
     struct meta_create;
 
     ///////////////////////////////////////////////////////////////////////////
-    // This allows to query whether a valid mapping exits for the given data 
+    // This allows to query whether a valid mapping exists for the given data 
     // type to a component in the given domain
     template <typename Domain, typename T, typename Enable = void>
     struct meta_create_exists : mpl::false_ {};
@@ -61,7 +61,7 @@ namespace boost { namespace spirit
 
 // this is a workaround for older versions of g++ (< V4.1) which apparently have
 // problems with the following template specialization
-#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 1))
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 2))
             template <typename F, typename T1, typename T2>
             struct result<F(T1, T2)>
             {
