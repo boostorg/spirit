@@ -56,7 +56,7 @@ namespace boost { namespace spirit
             !use_operator<Domain, proto::tag::subscript>::value
         ), error_proto_tag_subscript_cannot_be_used, ());
 
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1400)
         // this is the non-broken part for compilers properly supporting 
         // partial template specialization (VC7.1 does not)
         struct cases
