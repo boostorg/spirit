@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 
+#include <boost/version.hpp>
 #include <boost/proto/proto.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/type_traits/add_const.hpp>
@@ -52,6 +53,10 @@ namespace boost { namespace spirit
         struct remove_const_ref
           : remove_const<typename remove_reference<T>::type> {};
 
+// starting with Boost V1.42 fusion::fold has been changed to be compatible 
+// with mpl::fold (the sequence of template parameters for the meta-function 
+// object has been changed)
+#if BOOST_VERSION < 104200
         ///////////////////////////////////////////////////////////////////////
         template <typename OpTag, typename Domain>
         struct nary_proto_expr_function
@@ -59,7 +64,56 @@ namespace boost { namespace spirit
             template <typename T>
             struct result;
 
-// this is a workaround for older versions of g++ (< V4.1) which apparently have
+// this is a workaround for older versions of g++ (< V4.2) which apparently have
+// problems with the following template specialization
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 2))
+            template <typename F, typename T1, typename T2>
+            struct result<F(T1, T2)>
+            {
+                BOOST_STATIC_ASSERT((is_same<F, nary_proto_expr_function>::value));
+#else
+            template <typename T1, typename T2>
+            struct result<nary_proto_expr_function(T1, T2)>
+            {
+#endif
+                typedef typename remove_const_ref<T2>::type left_type;
+                typedef typename 
+                    spirit::traits::meta_create<Domain, T1>::type
+                right_type;
+
+                typedef typename mpl::eval_if<
+                    traits::not_is_unused<left_type>
+                  , proto::result_of::make_expr<OpTag, left_type, right_type>
+                  , mpl::identity<right_type>
+                >::type type;
+            };
+
+            template <typename T>
+            typename result<nary_proto_expr_function(T, unused_type const&)>::type
+            operator()(T, unused_type const&) const
+            {
+                typedef spirit::traits::meta_create<Domain, T> right_type;
+                return right_type::call();
+            }
+
+            template <typename T1, typename T2>
+            typename result<nary_proto_expr_function(T1, T2)>::type
+            operator()(T1, T2 const& t2) const
+            {
+                // we variants to the alternative operator
+                typedef spirit::traits::meta_create<Domain, T1> right_type;
+                return proto::make_expr<OpTag>(t2, right_type::call());
+            }
+        };
+#else
+        ///////////////////////////////////////////////////////////////////////
+        template <typename OpTag, typename Domain>
+        struct nary_proto_expr_function
+        {
+            template <typename T>
+            struct result;
+
+// this is a workaround for older versions of g++ (< V4.2) which apparently have
 // problems with the following template specialization
 #if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 2))
             template <typename F, typename T1, typename T2>
@@ -100,6 +154,7 @@ namespace boost { namespace spirit
                 return proto::make_expr<OpTag>(t1, right_type::call());
             }
         };
+#endif
     }
 
     ///////////////////////////////////////////////////////////////////////
