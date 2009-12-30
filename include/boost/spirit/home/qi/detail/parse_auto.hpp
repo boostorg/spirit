@@ -21,7 +21,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
-    struct parse<Expr
+    struct parse_impl<Expr
       , typename enable_if<traits::meta_create_exists<qi::domain, Expr> >::type>
     {
         template <typename Iterator>
@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
-    struct phrase_parse<Expr
+    struct phrase_parse_impl<Expr
       , typename enable_if<traits::meta_create_exists<qi::domain, Expr> >::type>
     {
         template <typename Iterator, typename Skipper>

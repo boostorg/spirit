@@ -138,16 +138,18 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             typedef typename Functor::get_state_name_type get_state_name_type;
 
             iterator_data_type(next_token_functor next
-              , semantic_actions_type const& actions
-              , get_state_name_type get_state_name, std::size_t num_states)
+                  , semantic_actions_type const& actions
+                  , get_state_name_type get_state_name, std::size_t num_states
+                  , bool bol)
               : next_(next), actions_(actions), get_state_name_(get_state_name)
-              , num_states_(num_states)
+              , num_states_(num_states), bol_(bol)
             {}
 
             next_token_functor next_;
             semantic_actions_type const& actions_;
             get_state_name_type get_state_name_;
             std::size_t num_states_;
+            bool bol_;
 
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
@@ -173,8 +175,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
           , char_type const* initial_state = 0) const
         { 
             iterator_data_type iterator_data( 
-                    &tables_type::template next<Iterator_>, actions_, 
-                    &tables_type::state_name, tables_type::state_count()
+                    &tables_type::template next<Iterator_>, actions_
+                  , &tables_type::state_name, tables_type::state_count()
+                  , tables_type::supports_bol
                 );
             return iterator_type(iterator_data, first, last, initial_state);
         }

@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Enable = void>
-    struct parse
+    struct parse_impl
     {
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     };
 
     template <typename Expr>
-    struct parse<Expr
+    struct parse_impl<Expr
       , typename enable_if<traits::matches<qi::domain, Expr> >::type>
     {
         template <typename Iterator>
@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Enable = void>
-    struct phrase_parse
+    struct phrase_parse_impl
     {
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     };
 
     template <typename Expr>
-    struct phrase_parse<Expr
+    struct phrase_parse_impl<Expr
       , typename enable_if<traits::matches<qi::domain, Expr> >::type>
     {
         template <typename Iterator, typename Skipper>

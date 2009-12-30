@@ -12,10 +12,12 @@
 #endif
 
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/or.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/type_traits/is_scalar.hpp>
+#include <boost/spirit/home/support/string_traits.hpp>
 
 namespace boost { namespace spirit { namespace detail
 {
@@ -26,9 +28,11 @@ namespace boost { namespace spirit { namespace detail
         template <typename T>
         struct result_type
         {
+            // This is a temporary hack. The better way is to detect if T
+            // can be called given unused context.
             typedef typename
                 mpl::eval_if<
-                    is_scalar<T>
+                    mpl::or_<is_scalar<T>, traits::is_string<T> >
                   , mpl::identity<T const &>
                   , boost::result_of<T(unused_type, Context)>
                 >::type
@@ -69,7 +73,7 @@ namespace boost { namespace spirit { namespace detail
         typename result_type<T>::type
         operator()(T const& x) const
         {
-            return call(x, is_scalar<T>());
+            return call(x, mpl::or_<is_scalar<T>, traits::is_string<T> >());
         }
 
         Context& context;

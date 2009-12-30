@@ -6,13 +6,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_LEX_LEXER_GENERATE_STATIC_LEXERTL
-#define BOOST_SPIRIT_INCLUDE_LEX_LEXER_GENERATE_STATIC_LEXERTL
+#ifndef BOOST_SPIRIT_INCLUDE_KARMA_PHOENIX_ATTRIBUTES
+#define BOOST_SPIRIT_INCLUDE_KARMA_PHOENIX_ATTRIBUTES
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
-#include <boost/spirit/home/lex/lexer/lexertl/generate_static.hpp>
+#include <boost/spirit/home/karma/phoenix_attributes.hpp>
 
 #endif

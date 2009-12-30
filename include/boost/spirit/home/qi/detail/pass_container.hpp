@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +17,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/and.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
@@ -98,11 +100,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Component>
         bool dispatch_attribute(Component const& component, mpl::true_) const
         {
-            typedef traits::is_container<
-                typename traits::attribute_of<
-                    Component, context_type, iterator_type
-                >::type
-            > predicate;
+            typedef typename traits::attribute_of<
+                Component, context_type, iterator_type>::type attribute_type;
+
+            typedef mpl::and_<
+                traits::is_container<attribute_type>
+              , is_convertible<attribute_type, Attr> > predicate;
 
             return dispatch_attribute_element(component, predicate());
         }

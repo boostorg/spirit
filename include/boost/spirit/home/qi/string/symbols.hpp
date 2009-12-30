@@ -187,6 +187,18 @@ namespace boost { namespace spirit { namespace qi
                 , traits::get_end<Char>(str), T());
         }
 
+        template <typename Iterator>
+        value_type* prefix_find(Iterator& first, Iterator const& last)
+        {
+            return lookup->find(first, last, Filter());
+        }
+
+        template <typename Iterator>
+        value_type const* prefix_find(Iterator& first, Iterator const& last) const
+        {
+            return lookup->find(first, last, Filter());
+        }
+
         template <typename Str>
         value_type* find(Str const& str)
         {
@@ -205,13 +217,15 @@ private:
         template <typename Iterator>
         value_type* find_impl(Iterator begin, Iterator end)
         {
-            return lookup->find(begin, end, Filter());
+            value_type* r = lookup->find(begin, end, Filter());
+            return begin == end ? r : 0;
         }
 
         template <typename Iterator>
         value_type const* find_impl(Iterator begin, Iterator end) const
         {
-            return lookup->find(begin, end, Filter());
+            value_type const* r = lookup->find(begin, end, Filter());
+            return begin == end ? r : 0;
         }
 
 public:

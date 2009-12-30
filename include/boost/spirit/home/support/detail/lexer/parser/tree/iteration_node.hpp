@@ -71,7 +71,7 @@ private:
         {
             node *ptr_ = new_node_stack_.top ();
 
-            node_ptr_vector_->push_back (0);
+            node_ptr_vector_->push_back (static_cast<iteration_node *>(0));
             node_ptr_vector_->back () = new iteration_node (ptr_, _greedy);
             new_node_stack_.top () = node_ptr_vector_->back ();
         }

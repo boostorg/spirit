@@ -109,9 +109,6 @@ namespace boost { namespace spirit { namespace result_of
     struct end;
 
     template <typename Iterator>
-    struct next;
-
-    template <typename Iterator>
     struct deref;
 }}}
 
