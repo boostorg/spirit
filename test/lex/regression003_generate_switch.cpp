@@ -25,8 +25,9 @@ int main(int argc, char* argv[])
     typedef matlib_tokens<lexer_type> matlib_type;
     matlib_type matrix(results);
 
-    std::ofstream out(argc < 2 ? "matlib_static.h" : argv[1]);
-    BOOST_TEST(boost::spirit::lex::lexertl::generate_static_dfa(matrix, out, "matlib"));
+    std::ofstream out(argc < 2 ? "matlib_static_switch.h" : argv[1]);
+    BOOST_TEST(boost::spirit::lex::lexertl::generate_static_switch(
+        matrix, out, "matlib_switch"));
     return boost::report_errors();
 }
 

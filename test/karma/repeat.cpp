@@ -16,6 +16,7 @@
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -159,6 +160,20 @@ int main()
         BOOST_TEST(test("bcdefg", repeat(3, inf)[r], v2));
         BOOST_TEST(!test("", repeat(4, inf)[r], v3));
     }
+
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
+    {
+        namespace ascii = boost::spirit::ascii;
+        namespace phoenix = boost::phoenix;
+
+        char c = 'a';
+        BOOST_TEST(test("bcd", repeat(3)[ascii::char_[_1 = ++phoenix::ref(c)]]));
+
+        c = 'a';
+        BOOST_TEST(test("bcd", repeat(3)[ascii::char_], ++phoenix::ref(c)));
+    }
+#endif
 
     return boost::report_errors();
 }

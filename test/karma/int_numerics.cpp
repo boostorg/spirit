@@ -21,6 +21,7 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <limits>
 #include "test.hpp"
@@ -91,6 +92,18 @@ struct test_minmax
         BOOST_TEST(test(expected_minval, gen(minval), optmin));
         BOOST_TEST(test(expected_maxval, gen(maxval), optmax));
 
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
+    // Phoenix expression tests (only supported while including
+    // karma_phoenix_attributes.hpp
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("1", gen, phoenix::val(1)));
+
+        T val = 1;
+        BOOST_TEST(test("1", gen, phoenix::ref(val)));
+        BOOST_TEST(test("2", gen, ++phoenix::ref(val)));
+#endif
     }
 };
 

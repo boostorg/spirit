@@ -57,7 +57,7 @@
 [def __boost_bind__             [@boost:/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@boost:/libs/lambda/index.html Boost.Lambda]]
 [def __boost_tuples__           [@boost:/libs/tuple/index.html Boost.Tuples]]
-[def __boost_proto__            [@boost:/libs/proto/doc/html/proto.html Boost.Proto]]
+[def __boost_proto__            [@boost:/doc/html/proto.html Boost.Proto]]
 [def __boost_format__           [@boost:/libs/format/index.html Boost.Format]]
 [def __boost_any__              [@boost:/libs/any/index.html Boost.Any]]
 
@@ -68,7 +68,7 @@
 
 [def __mpl_boolean_constant__   [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Boolean Constant]]
 [def __mpl_int_constant__       [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Integral Constant]]
-[def __mpl_fwd_sequence__       [@boost:/libs/mpl/doc/refmanual/http://www.boost.org/doc/libs/1_40_0/libs/mpl/doc/refmanual/forward-sequence.html MPL Forward Sequence]]
+[def __mpl_fwd_sequence__       [@boost:/libs/mpl/doc/refmanual/forward-sequence.html MPL Forward Sequence]]
 
 [def __fixme__                  *FIXME*]
 

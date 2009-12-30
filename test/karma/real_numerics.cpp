@@ -14,6 +14,7 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -34,8 +35,8 @@ struct scientific_policy : boost::spirit::karma::real_policies<T>
     static int floatfield(T) { return base_type::fmtflags::scientific; }
 };
 
-// ///////////////////////////////////////////////////////////////////////////////
-// //  policy for real_generator, which forces the fixed notation
+///////////////////////////////////////////////////////////////////////////////
+//  policy for real_generator, which forces the fixed notation
 template <typename T>
 struct fixed_policy : boost::spirit::karma::real_policies<T>
 {
@@ -540,6 +541,20 @@ int main()
         BOOST_TEST(test("1.0", double_, v));
         BOOST_TEST(test("1.0", double_(1.0), v));
     }
+
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
+    {   // Phoenix expression tests (requires to include 
+        // karma_phoenix_attributes.hpp)
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("1.0", double_, phoenix::val(1.0)));
+
+        double d = 1.2;
+        BOOST_TEST(test("1.2", double_, phoenix::ref(d)));
+        BOOST_TEST(test("2.2", double_, ++phoenix::ref(d)));
+    }
+#endif
 
     return boost::report_errors();
 }

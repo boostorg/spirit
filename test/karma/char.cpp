@@ -11,6 +11,7 @@
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -281,6 +282,22 @@ main()
         BOOST_TEST(!test("", ascii::char_('y'), v));
         BOOST_TEST(!test(L"", wide::char_(L'y'), w));
     }
+
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
+    // yes, we can use phoenix expressions as attributes as well
+    // but only if we include karma_phoenix_attributes.hpp
+    {
+        namespace ascii = boost::spirit::ascii;
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("x", ascii::char_, phoenix::val('x')));
+
+        char c = 'x';
+        BOOST_TEST(test("x", ascii::char_, phoenix::ref(c)));
+        BOOST_TEST(test("y", ascii::char_, ++phoenix::ref(c)));
+    }
+#endif
 
     return boost::report_errors();
 }

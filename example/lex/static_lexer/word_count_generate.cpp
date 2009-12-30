@@ -40,6 +40,6 @@ int main(int argc, char* argv[])
     // The suffix "wc" used below results in a type lexertl::static_::lexer_wc
     // to be generated, which needs to be passed as a template parameter to the 
     // lexertl::static_lexer template (see word_count_static.cpp).
-    return lex::lexertl::generate_static(word_count, out, "wc") ? 0 : -1;
+    return lex::lexertl::generate_static_dfa(word_count, out, "wc") ? 0 : -1;
 }
 //]
