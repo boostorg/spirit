@@ -109,10 +109,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_attribute(Component const& component, mpl::true_) const
         {
             typedef typename traits::attribute_of<
-			          Component, context_type>::type attribute_type;
+                Component, context_type>::type attribute_type;
 
             typedef mpl::and_<
-				        traits::is_container<attribute_type>
+                traits::is_container<attribute_type>
               , is_convertible<Attr, attribute_type> > predicate;
 
             return dispatch_attribute_element(component, predicate());
