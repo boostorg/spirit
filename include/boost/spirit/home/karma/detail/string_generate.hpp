@@ -13,44 +13,80 @@
 #include <string>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <boost/range/const_iterator.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
-    //  generate a string given by a pointer 
-    template <typename OutputIterator, typename Char>
-    inline bool string_generate(OutputIterator& sink, Char const* str)
+    // pass through character transformation
+    struct pass_through_filter
+    {
+        template <typename Char>
+        Char operator()(Char ch) const
+        {
+            return ch;
+        }
+    };
+
+    template <typename CharEncoding, typename Tag>
+    struct encoding_filter
+    {
+        template <typename Char>
+        Char operator()(Char ch) const
+        {
+            return spirit::char_class::convert<CharEncoding>::to(Tag(), ch);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  generate a string given by a std::string, applying the given filter
+    template <typename OutputIterator, typename Char, typename Filter>
+    inline bool string_generate(OutputIterator& sink, Char const* str
+      , Filter filter)
     {
         for (Char ch = *str; ch != 0; ch = *++str)
         {
-            *sink = ch;
+            *sink = filter(ch);
+            ++sink;
+        }
+        return detail::sink_is_good(sink);
+    }
+
+    template <typename OutputIterator, typename Container, typename Filter>
+    inline bool string_generate(OutputIterator& sink
+      , Container const& c, Filter filter)
+    {
+        typename range_const_iterator<Container>::type end = boost::end(c);
+        for (typename range_const_iterator<Container>::type it = boost::begin(c); 
+             it != end; ++it)
+        {
+            *sink = filter(*it);
             ++sink;
         }
         return detail::sink_is_good(sink);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  generate a string given by a std::string
+    //  generate a string without any transformation
+    template <typename OutputIterator, typename Char>
+    inline bool string_generate(OutputIterator& sink, Char const* str)
+    {
+        return string_generate(sink, str, pass_through_filter());
+    }
+
     template <typename OutputIterator, typename Char, typename Traits
       , typename Allocator>
     inline bool string_generate(OutputIterator& sink
       , std::basic_string<Char, Traits, Allocator> const& str)
     {
-        return string_generate(sink, str.c_str());
+        return string_generate(sink, str.c_str(), pass_through_filter());
     }
 
-    template <typename OutputIterator, typename Iterator>
+    template <typename OutputIterator, typename Container>
     inline bool string_generate(OutputIterator& sink
-      , boost::iterator_range<Iterator> const& r)
+      , Container const& c)
     {
-        Iterator end = r.end();
-        for (Iterator it = r.begin(); it != end; ++it)
-        {
-            *sink = *it;
-            ++sink;
-        }
-        return detail::sink_is_good(sink);
+        return string_generate(sink, c, pass_through_filter());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -58,48 +94,41 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //  given character class and case tag
     template <typename OutputIterator, typename Char, typename CharEncoding
       , typename Tag>
-    inline bool string_generate(OutputIterator& sink, Char const* str
+    inline bool string_generate(OutputIterator& sink
+      , Char const* str
       , CharEncoding, Tag)
     {
-        for (Char ch = *str; ch != 0; ch = *++str)
-        {
-            *sink = spirit::char_class::convert<CharEncoding>::to(Tag(), ch);
-            ++sink;
-        }
-        return detail::sink_is_good(sink);
+        return string_generate(sink, str, encoding_filter<CharEncoding, Tag>());
     }
 
-    template <typename OutputIterator, typename Char>
-    inline bool string_generate(OutputIterator& sink, Char const* str
-      , unused_type, unused_type)
+    template <typename OutputIterator, typename Char
+      , typename CharEncoding, typename Tag
+      , typename Traits, typename Allocator>
+    inline bool string_generate(OutputIterator& sink
+      , std::basic_string<Char, Traits, Allocator> const& str
+      , CharEncoding, Tag)
     {
-        return string_generate(sink, str);
+        return string_generate(sink, str.c_str()
+          , encoding_filter<CharEncoding, Tag>());
+    }
+
+    template <typename OutputIterator, typename Container
+      , typename CharEncoding, typename Tag>
+    inline bool 
+    string_generate(OutputIterator& sink
+      , Container const& c
+      , CharEncoding, Tag)
+    {
+        return string_generate(sink, c, encoding_filter<CharEncoding, Tag>());
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  generate a string given by a std::string, converting according using a 
-    //  given character class and case tag
-    template <typename OutputIterator, typename Char, typename CharEncoding
-      , typename Tag, typename Traits, typename Allocator>
+    template <typename OutputIterator, typename Char>
     inline bool string_generate(OutputIterator& sink
-      , std::basic_string<Char, Traits, Allocator> const& str
-      , CharEncoding ce, Tag tag)
+      , Char const* str
+      , unused_type, unused_type)
     {
-        return string_generate(sink, str.c_str(), ce, tag);
-    }
-
-    template <typename OutputIterator, typename Iterator, typename CharEncoding
-      , typename Tag>
-    inline bool string_generate(OutputIterator& sink
-      , boost::iterator_range<Iterator> const& r, CharEncoding, Tag)
-    {
-        Iterator end = r.end();
-        for (Iterator it = r.begin(); it != end; ++it)
-        {
-            *sink = spirit::char_class::convert<CharEncoding>::to(Tag(), *it);
-            ++sink;
-        }
-        return detail::sink_is_good(sink);
+        return string_generate(sink, str, pass_through_filter());
     }
 
     template <typename OutputIterator, typename Char, typename Traits
@@ -108,20 +137,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
       , std::basic_string<Char, Traits, Allocator> const& str
       , unused_type, unused_type)
     {
-        return string_generate(sink, str.c_str());
+        return string_generate(sink, str.c_str(), pass_through_filter());
     }
 
-    template <typename OutputIterator, typename Iterator>
+    template <typename OutputIterator, typename Container>
     inline bool string_generate(OutputIterator& sink
-      , boost::iterator_range<Iterator> const& r, unused_type, unused_type)
+      , Container const& c
+      , unused_type, unused_type)
     {
-        Iterator end = r.end();
-        for (Iterator it = r.begin(); it != end; ++it)
-        {
-            *sink = *it;
-            ++sink;
-        }
-        return detail::sink_is_good(sink);
+        return string_generate(sink, c, pass_through_filter());
     }
 
 }}}}

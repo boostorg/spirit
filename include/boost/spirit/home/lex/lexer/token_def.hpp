@@ -109,7 +109,10 @@ namespace boost { namespace spirit { namespace lex
         template <typename Context>
         info what(Context& /*context*/) const
         {
-            return info("token_def");
+            if (0 == def_.which()) {
+                return info("token_def", get<string_type>(def_));
+            }
+            return info("token_def", get<char_type>(def_));
         }
 
         ///////////////////////////////////////////////////////////////////////

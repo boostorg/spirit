@@ -594,9 +594,8 @@ Also, see __include_structure__.
 
 [table
     [[Parameter]            [Description]               [Default]]
-    [[`Container`]          [The type, `Container` needs to 
-                             be tested whether it has to be treated
-                             as a container]                              [none]]
+    [[`Container`]          [The type `Container` is the type for which the 
+                             type f the elements has to be deduced.]      [none]]
     [[`Enable`]             [Helper template parameter usable to selectively
                              enable or disable certain specializations
                              of `container_value` utilizing SFINAE (i.e.
@@ -666,7 +665,24 @@ points might need to be implemented as well.
 
 [heading Example]
 
-TBD
+Here is an example showing the default implementation of the 
+__customize_container_value__ customization point provided by the library:
+
+[customization_container_value_default]
+
+This template is instantiated by the library at the appropriate places while 
+using the supplied container type as the template argument. The embedded `type` 
+is used as the attribute type while parsing the elements to be store in that 
+container.
+
+The following example shows the predefined specialization for __unused_type__:
+
+[customization_container_value_unused]
+
+which defines its embedded `type` to be __unused_type__ as well, this way
+propagating the 'don't care' attribute status to the embedded parser.
+
+More examples: TBD.
 
 [endsect] [/ container_value]
 
@@ -800,7 +816,23 @@ points might need to be implemented as well.
 
 [heading Example]
 
-TBD
+Here is an example showing the default implementation of the 
+__customize_container_value__ customization point provided by the library:
+
+[customization_push_back_default]
+
+This template is instantiated by the library at the appropriate places while 
+using the supplied container and element types as the template arguments. The 
+member function `call()` will be called whenever an element has to be added to 
+the supplied container
+
+The following example shows the predefined specialization for __unused_type__:
+
+[customization_push_back_unused]
+
+which defines an empty member function `call()`.
+
+More examples: TBD
 
 [endsect] [/ push_back]
 

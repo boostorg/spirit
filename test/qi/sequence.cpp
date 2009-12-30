@@ -148,6 +148,14 @@ main()
 
     }
 
+    {
+        std::vector<char> v;
+        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+    }
+
     {   // test action
         using boost::phoenix::ref;
         char c = 0;

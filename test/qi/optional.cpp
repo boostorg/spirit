@@ -30,6 +30,15 @@ BOOST_FUSION_ADAPT_STRUCT(
     (boost::optional<int>, b)
 )
 
+struct test_attribute_type
+{
+    template <typename Attribute, typename Context>
+    void operator()(Attribute&, Context&, bool&) const
+    {
+        BOOST_TEST(typeid(Attribute).name() == typeid(boost::optional<int>).name());
+    }
+};
+
 int
 main()
 {
@@ -66,7 +75,12 @@ main()
     }
 
     {   // test action
+        boost::optional<int> n = 0;
+        BOOST_TEST((test_attr("1234", (-int_)[test_attribute_type()], n)));
+        BOOST_TEST((n.get() == 1234));
+    }
 
+    {
         namespace phx = boost::phoenix;
 
         boost::optional<int> n = 0;

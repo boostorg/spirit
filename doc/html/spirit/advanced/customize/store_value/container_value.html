@@ -28,7 +28,7 @@
           Determine the Type to be Stored in a Container (Qi)</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.store_value.container_value.container_value"></a><h6>
-<a name="id952641"></a>
+<a name="id957346"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.container_value">container_value</a>
           </h6>
 <p>
@@ -39,7 +39,7 @@
             the type to store in a container.
           </p>
 <a name="spirit.advanced.customize.store_value.container_value.module_headers"></a><h6>
-<a name="id952687"></a>
+<a name="id957392"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.module_headers">Module
             Headers</a>
           </h6>
@@ -60,7 +60,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.namespace"></a><h6>
-<a name="id952775"></a>
+<a name="id957480"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -77,7 +77,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.synopsis"></a><h6>
-<a name="id952853"></a>
+<a name="id957558"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -87,7 +87,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.store_value.container_value.template_parameters"></a><h6>
-<a name="id952951"></a>
+<a name="id957656"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.template_parameters">Template
             parameters</a>
           </h6>
@@ -123,8 +123,8 @@
                   </td>
 <td>
                   <p>
-                    The type, <code class="computeroutput"><span class="identifier">Container</span></code>
-                    needs to be tested whether it has to be treated as a container
+                    The type <code class="computeroutput"><span class="identifier">Container</span></code>
+                    is the type for which the type f the elements has to be deduced.
                   </p>
                   </td>
 <td>
@@ -156,7 +156,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.notation"></a><h6>
-<a name="id953117"></a>
+<a name="id957822"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -174,7 +174,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.store_value.container_value.expression_semantics"></a><h6>
-<a name="id953183"></a>
+<a name="id957888"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -210,7 +210,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.predefined_specializations"></a><h6>
-<a name="id953275"></a>
+<a name="id957980"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.predefined_specializations">Predefined
             Specializations</a>
           </h6>
@@ -298,7 +298,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.when_to_implement"></a><h6>
-<a name="id953607"></a>
+<a name="id958312"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.when_to_implement">When
             to implement</a>
           </h6>
@@ -320,7 +320,7 @@
             stands for any meaningful operation on the component <code class="computeroutput"><span class="identifier">a</span></code>.
           </p>
 <a name="spirit.advanced.customize.store_value.container_value.related_attribute_customization_points"></a><h6>
-<a name="id953723"></a>
+<a name="id958428"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
@@ -379,11 +379,60 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.example"></a><h6>
-<a name="id953868"></a>
+<a name="id960349"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.example">Example</a>
           </h6>
 <p>
-            TBD
+            Here is an example showing the default implementation of the <a class="link" href="container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> customization
+            point provided by the library:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="comment">/* = void*/</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">container_value</span>
+  <span class="special">:</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">remove_value_const</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span>
+<span class="special">{};</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            This template is instantiated by the library at the appropriate places
+            while using the supplied container type as the template argument. The
+            embedded <code class="computeroutput"><span class="identifier">type</span></code> is used
+            as the attribute type while parsing the elements to be store in that
+            container.
+          </p>
+<p>
+            The following example shows the predefined specialization for <code class="computeroutput"><span class="identifier">unused_type</span></code>:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">container_value</span><span class="special">&lt;</span><span class="identifier">unused_type</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">unused_type</span> <span class="identifier">type</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            which defines its embedded <code class="computeroutput"><span class="identifier">type</span></code>
+            to be <code class="computeroutput"><span class="identifier">unused_type</span></code> as
+            well, this way propagating the 'don't care' attribute status to the embedded
+            parser.
+          </p>
+<p>
+            More examples: TBD.
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

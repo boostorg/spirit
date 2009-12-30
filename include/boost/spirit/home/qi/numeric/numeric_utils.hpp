@@ -26,6 +26,7 @@ namespace boost { namespace spirit { namespace qi
     inline bool
     extract_sign(Iterator& first, Iterator const& last)
     {
+        (void)last;                  // silence unused warnings
         BOOST_ASSERT(first != last); // precondition
 
         // Extract the sign
