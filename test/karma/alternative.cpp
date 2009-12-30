@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2009 Hartmut Kaiser
+//  Copyright (c) 2001-2010 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -49,6 +49,8 @@ main()
         BOOST_TEST(test("c", int_ | char_ | lit('a'), v));
     }
 
+    // testing for alignment/truncation problems on little endian systems
+    // (big endian systems will fail one of the other tests below)
     {
         // test optional attribute
         optional<variant<int, char> > v;

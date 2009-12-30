@@ -1,12 +1,13 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
-    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 [section:parse_api Parse API]
 
+[//////////////////////////////////////////////////////////////////////////////]
 [section:iterator_api Iterator Based Parse API]
 
 [heading Description]
@@ -33,6 +34,12 @@ or more are usable when the parser expression is a __qi_sequence__ only.
 In this case each of the attributes passed have to match the corresponding 
 part of the sequence.
 
+For the API functions deducing the correct (matching) parser type from the 
+supplied attribute type:
+
+    // forwards to <boost/spirit/home/qi/detail/parse_auto.hpp>
+    #include <boost/spirit/include/qi_parse_auto.hpp>
+
 Also, see __include_structure__.
 
 [heading Namespace]
@@ -54,6 +61,13 @@ Also, see __include_structure__.
       , Iterator last
       , Expr const& expr);
 
+    template <typename Iterator, typename Attr>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , Attr& attr);
+
     template <typename Iterator, typename Expr
       , typename Attr1, typename Attr2, ..., typename AttrN>
     inline bool
@@ -69,6 +83,15 @@ Also, see __include_structure__.
         Iterator& first
       , Iterator last
       , Expr const& expr
+      , Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+
+    template <typename Iterator, typename Attr, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , Attr& attr
       , Skipper const& skipper
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
 
@@ -114,6 +137,8 @@ while passing `skip_flag::dont_postskip` to the corresponding argument.
     [[`Iterator`]                   [__fwditer__ pointing to the source to parse.]]
     [[`Expr`]                       [An expression that can be converted to a Qi parser.]]
     [[`Skipper`]                    [Parser used to skip white spaces.]]
+    [[`Attr`]                       [An attribute type utilized to create the corresponding 
+                                     parser type from.]]
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
@@ -147,6 +172,12 @@ two or more attributes are usable when the parser expression is a
 __qi_sequence__ only. In this case each of the attributes passed have to 
 match the corresponding part of the sequence.
 
+For the API functions deducing the correct (matching) parser type from the 
+supplied attribute type:
+
+    // forwards to <boost/spirit/home/qi/match_auto.hpp>
+    #include <boost/spirit/include/qi_match_auto.hpp>
+
 Also, see __include_structure__.
 
 [heading Namespace]
@@ -166,6 +197,11 @@ Also, see __include_structure__.
     match(
         Expr const& xpr);
 
+    template <typename Attr>
+    inline <unspecified> 
+    match(
+        Attr& attr);
+
     template <typename Expr
       , typename Attr1, typename Attr2, ..., typename AttrN>
     inline <unspecified> 
@@ -177,6 +213,13 @@ Also, see __include_structure__.
     inline <unspecified> 
     phrase_match(
         Expr const& expr
+      , Skipper const& s
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+
+    template <typename Attr, typename Skipper>
+    inline <unspecified> 
+    phrase_match(
+        Attr& attr
       , Skipper const& s
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
 
@@ -223,6 +266,8 @@ while passing `skip_flag::dont_postskip` to the corresponding argument.
     [[Parameter]                    [Description]]
     [[`Expr`]                       [An expression that can be converted to a Qi parser.]]
     [[`Skipper`]                    [Parser used to skip white spaces.]]
+    [[`Attr`]                       [An attribute type utilized to create the corresponding 
+                                     parser type from.]]
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 

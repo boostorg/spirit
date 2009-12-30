@@ -1,13 +1,14 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
-    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 [section:generate_api Generate API]
 
-[section:iterator_api Iterator Based Generate API]
+[//////////////////////////////////////////////////////////////////////////////]
+[section:iterator_api Iterator Based Generator API]
 
 [heading Description]
 
@@ -35,6 +36,12 @@ or more attributes are usable when the generator expression is a
 __karma_sequence__ only. In this case each of the
 attributes passed have to match the corresponding part of the sequence.
 
+For the API functions deducing the correct (matching) generator type from the 
+supplied attribute type:
+
+    // forwards to <boost/spirit/home/karma/detail/generate_auto.hpp>
+    #include <boost/spirit/include/karma_generate_auto.hpp>
+
 Also, see __include_structure__.
 
 [heading Namespace]
@@ -55,6 +62,12 @@ Also, see __include_structure__.
         OutputIterator& sink
       , Expr const& expr);
 
+    template <typename OutputIterator, typename Attr>
+    inline bool
+    generate(
+        OutputIterator& sink
+      , Attr const& attr);
+
     template <typename OutputIterator, typename Expr
       , typename Attr1, typename Attr2, ..., typename AttrN>
     inline bool
@@ -68,6 +81,14 @@ Also, see __include_structure__.
     generate_delimited(
         OutputIterator& sink
       , Expr const& expr
+      , Delimiter const& delimiter
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+
+    template <typename OutputIterator, typename Attr, typename Delimiter>
+    inline bool
+    generate_delimited(
+        OutputIterator& sink
+      , Attr const& attr
       , Delimiter const& delimiter
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
 
@@ -117,13 +138,15 @@ corresponding argument.
     [[`OutputIterator`]             [__outputiter__ receiving the generated output.]]
     [[`Expr`]                       [An expression that can be converted to a Karma generator.]]
     [[`Delimiter`]                  [Generator used to delimit the output of the expression components.]]
+    [[`Attr`]                       [An attribute type utilized to create the corresponding 
+                                     generator type from.]]
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
 [endsect] [/ Iterator Based Generate API]
 
 [//////////////////////////////////////////////////////////////////////////////]
-[section:stream_api Stream Based Generate API]
+[section:stream_api Stream Based Generator API]
 
 [heading Description]
 
@@ -152,6 +175,12 @@ two or more attributes are usable when the generator expression is a
 __karma_sequence__ only. In this case each of the attributes passed have to 
 match the corresponding part of the sequence.
 
+For the API functions deducing the correct (matching) generator type from the 
+supplied attribute type:
+
+    // forwards to <boost/spirit/home/karma/format_auto.hpp>
+    #include <boost/spirit/include/karma_format_auto.hpp>
+
 Also, see __include_structure__.
 
 [heading Namespace]
@@ -171,6 +200,11 @@ Also, see __include_structure__.
     format(
         Expr const& xpr);
 
+    template <typename Attr>
+    inline <unspecified> 
+    format(
+        Attr const& xpr);
+
     template <typename Expr
       , typename Attr1, typename Attr2, ..., typename AttrN>
     inline <unspecified> 
@@ -182,6 +216,13 @@ Also, see __include_structure__.
     inline <unspecified> 
     format_delimited(
         Expr const& expr
+      , Delimiter const& d
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+
+    template <typename Attr, typename Delimiter>
+    inline <unspecified> 
+    format_delimited(
+        Attr const& attr
       , Delimiter const& d
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
 
@@ -229,9 +270,95 @@ corresponding argument.
     [[Parameter]                    [Description]]
     [[`Expr`]                       [An expression that can be converted to a Karma generator.]]
     [[`Delimiter`]                  [Generator used to delimit the output of the expression components.]]
+    [[`Attr`]                       [An attribute type utilized to create the corresponding 
+                                     generator type from.]]
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
 [endsect] [/ Stream Based Generate API]
+
+[//////////////////////////////////////////////////////////////////////////////]
+[section:create_generator API for Automatic Generator Creation]
+
+[heading Description]
+
+The library implements a special API returning a generator instance for a 
+supplied attribute type. This function finds the best matching generator type 
+for the attribute based on a set of simple matching rules (as outlined in the 
+table below) applied recursively to the attribute type. The returned generator 
+can be utilized to emit output for the provided attribute.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/auto.hpp>
+    #include <boost/spirit/include/karma_auto.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::karma::create_generator`]]
+    [[`boost::spirit::karma::traits::create_generator_exists`]]
+]
+
+[heading Synopsis]
+
+    template <typename Attr>
+    inline <unspecified> 
+    create_generator();
+
+The returned instance can be directly passed as the generator (or the 
+delimiting generator) to any of the __karma__ API functions. Additionally it
+can be assigned to a rule as the rules right hand side expression. This 
+function will return a valid generator type only if the meta function 
+`traits::create_generator_exists` returns `mpl::true_`. Otherwise it will fail
+compiling.
+
+    template <typename Attr>
+    struct create_generator_exists;
+
+The meta function evaluates to `mpl::true_` if if create_generator does return 
+a valid generator for the given type `Attr`.
+
+The following table outlines the mapping rules from the attribute type to the
+generator type. These rules are applied recursively to create the generator 
+type which can be used to generate output from the given attribute type.
+
+[table 
+    [[Attribute type]   [Generator type]]
+    [[`char`, `wchar_t`]      [`standard::char_`, `standard_wide::char_`]]
+    [[`short`, `int`, `long`] [`short_`, `int_`, `long_`]]
+    [[`unsigned short`, `unsigned int`, `unsigned long`] 
+                              [`ushort_`, `uint_`, `ulong_`]]
+    [[`float`, `double`, `long double`] [`float_`, `double_`, `long_double`]]
+    [[`short`, `int`, `long`] [`short_`, `int_`, `long_`]]
+    [[`long long`, `unsigned long long`]
+                              [`long_long`, `ulong_long`]]
+    [[`bool`]                 [`bool_`]]
+    [[Any string (`char const*`, `std::string`, etc.)]
+                              [`string`]]
+    [[Any (STL) container]    [Kleene Star (unary `'*'`)]]
+    [[Any Fusion sequence]    [Sequence operator (`'<<'`)]]
+    [[`boost::optional<>`]    [Optional operator (unary `'-'`)]]
+    [[`boost::variant<>`]     [Alternative operator (`'|'`)]]
+]
+
+[important The mapping for the generators `long_long` and `ulong_long` are only 
+        available on platforms where the preprocessor constant 
+        `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having native 
+        support for `long long` and `unsigned long long` (64 bit) signed and 
+        unsigned integer types).]
+
+[heading Template parameters]
+
+[table
+    [[Parameter]                    [Description]]
+    [[`Attr`]                       [An attribute type utilized to create the corresponding 
+                                     generator type from.]]
+]
+
+[endsect]
 
 [endsect]

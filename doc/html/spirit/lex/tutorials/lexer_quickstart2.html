@@ -4,7 +4,7 @@
 <title>Quickstart 2 - A better word counter using Spirit.Lex</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.2">
 <link rel="up" href="../tutorials.html" title="Spirit.Lex Tutorials">
 <link rel="prev" href="lexer_quickstart1.html" title="Quickstart 1 - A word counter using Spirit.Lex">
 <link rel="next" href="lexer_quickstart3.html" title="Quickstart 3 - Counting Words Using a Parser">
@@ -40,7 +40,7 @@
           options along the lines (for the full example code see here: <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.prerequisites"></a><h6>
-<a name="id853529"></a>
+<a name="id908558"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -113,7 +113,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.semantic_actions_in__emphasis_spirit_lex__emphasis_"></a><h6>
-<a name="id856707"></a>
+<a name="id909815"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.semantic_actions_in__emphasis_spirit_lex__emphasis_">Semantic
           Actions in <span class="emphasis"><em>Spirit.Lex</em></span></a>
         </h6>
@@ -172,7 +172,7 @@
           Semantic Actions</a>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.associating_token_definitions_with_the_lexer"></a><h6>
-<a name="id857340"></a>
+<a name="id910447"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.associating_token_definitions_with_the_lexer">Associating
           Token Definitions with the Lexer</a>
         </h6>
@@ -209,7 +209,7 @@
           with the constant defined by <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">min_token_id</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.pulling_everything_together"></a><h6>
-<a name="id857635"></a>
+<a name="id910742"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.pulling_everything_together">Pulling
           everything together</a>
         </h6>
@@ -268,7 +268,8 @@
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit4"></a><a href="#spirit4co"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
-<td valign="top" align="left"><p>  Specifying <code class="computeroutput"><span class="identifier">omit</span></code> as the
+<td valign="top" align="left">
+<p>  Specifying <code class="computeroutput"><span class="identifier">omit</span></code> as the
             token attribute type generates a token class not holding any token attribute
             at all (not even the iterator range of the matched input sequence), therefore
             optimizing the token, the lexer, and possibly the parser implementation
@@ -276,32 +277,58 @@
             as the 3rd template parameter generates a token type and an iterator,
             both holding no lexer state, allowing for even more aggressive optimizations.
             As a result the token instances contain the token ids as the only data
-            member. </p></td>
+            member.
+          </p>
+<p>
+            </p>
+</td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit5"></a><a href="#spirit5co"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
-<td valign="top" align="left"><p>  This defines the lexer type to use </p></td>
+<td valign="top" align="left">
+<p>  This defines the lexer type to use
+          </p>
+<p>
+            </p>
+</td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit6"></a><a href="#spirit6co"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
-<td valign="top" align="left"><p>  Create the lexer object instance
-            needed to invoke the lexical analysis </p></td>
+<td valign="top" align="left">
+<p>  Create the lexer object instance needed to invoke the lexical analysis
+          </p>
+<p>
+            </p>
+</td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit7"></a><a href="#spirit7co"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
-<td valign="top" align="left"><p>  Read input from the given file,
-            tokenize all the input, while discarding all generated tokens </p></td>
+<td valign="top" align="left">
+<p>  Read input from the given file, tokenize all the input, while discarding
+            all generated tokens
+          </p>
+<p>
+            </p>
+</td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit8"></a><a href="#spirit8co"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a> </p></td>
-<td valign="top" align="left"><p>  Create
-            a pair of iterators returning the sequence of generated tokens </p></td>
+<td valign="top" align="left">
+<p>  Create a pair of iterators returning the sequence of generated tokens
+          </p>
+<p>
+            </p>
+</td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit9"></a><a href="#spirit9co"><img src="../../../../../../../doc/src/images/callouts/6.png" alt="6" border="0"></a> </p></td>
-<td valign="top" align="left"><p>  Here we
-            simply iterate over all tokens, making sure to break the loop if an invalid
-            token gets returned from the lexer </p></td>
+<td valign="top" align="left">
+<p>  Here we simply iterate over all tokens, making sure to break the loop
+            if an invalid token gets returned from the lexer
+          </p>
+<p>
+            </p>
+</td>
 </tr>
 </table></div>
 <p>
@@ -311,8 +338,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
-      de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
-    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,16 +14,30 @@
 
 [heading New Features]
 
-* Added `auto_` component and API functions `qi::create_parser` and 
-  `karma::create_generator`.
+* Added `auto_` component in __qi__ and __karma__, added API functions 
+  `qi::create_parser` and `karma::create_generator`.
 * Added `auto_` based overloads for all API functions taking no attributes.
 * Added `karma::columns` directive.
+* Added `karma::symbols` generator.
+* The customization point `push_back_container` now returns a `bool` to report
+  whether the item has been added to the container.
 
 [heading Bug Fixes]
 
 * Fixed karma::alternatives to work with embedded containers of hold_any (i.e.
-  constructs like `*stream | "empty"` (that fixes the Karma example 
+  constructs like `*stream | "empty"` (which fixes the Karma example 
   basic_facilities.cpp).
+* Fixed numeric __karma__ generators for character types.
+* Fixed qi::repeat[] for unused attributes.
+* Fixed rare compilation problem in karma::repeat[].
+* Fixed sequences in __qi__ and __karma__ to compile properly if the attribute 
+  is a (STL) container of (STL) containers.
+* Fixed a problem in `lex::token_def::what`.
+* Fixed __qi__ symbols not to match substrings anymore. Added 
+  `qi::symbols::prefix_find` to allow matching of (prefix-) substrings.
+* Inherited parameters for rule's usually have to be wrapped in function 
+  objects (i.e. `phoenix::val`), for integral values this was not necessary. 
+  Now all types of strings can be passed without being wrapped as well.
 
 [heading Spirit V2.1] 
 

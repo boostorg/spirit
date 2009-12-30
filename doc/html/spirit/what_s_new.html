@@ -4,8 +4,8 @@
 <title>What's New</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../index.html" title="Spirit 2.1">
-<link rel="up" href="../index.html" title="Spirit 2.1">
+<link rel="home" href="../index.html" title="Spirit 2.2">
+<link rel="up" href="../index.html" title="Spirit 2.2">
 <link rel="prev" href="preface.html" title="Preface">
 <link rel="next" href="introduction.html" title="Introduction">
 </head>
@@ -27,22 +27,23 @@
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
 <a name="spirit.what_s_new.spirit_v2_2"></a><h4>
-<a name="id538654"></a>
+<a name="id589152"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_2">Spirit V2.2</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_1__boost_v1_41_0__to_2_2__boost_v1_42_0_"></a><h4>
-<a name="id538667"></a>
+<a name="id589165"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_1__boost_v1_41_0__to_2_2__boost_v1_42_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)</a>
     </h4>
 <a name="spirit.what_s_new.new_features"></a><h4>
-<a name="id538687"></a>
+<a name="id589186"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.new_features">New Features</a>
     </h4>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-        Added <code class="computeroutput"><span class="identifier">auto_</span></code> component and
+        Added <code class="computeroutput"><span class="identifier">auto_</span></code> component in
+        <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>, added
         API functions <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">create_parser</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">create_generator</span></code>.
       </li>
 <li class="listitem">
@@ -52,23 +53,61 @@
 <li class="listitem">
         Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">columns</span></code> directive.
       </li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">symbols</span></code> generator.
+      </li>
+<li class="listitem">
+        The customization point <code class="computeroutput"><span class="identifier">push_back_container</span></code>
+        now returns a <code class="computeroutput"><span class="keyword">bool</span></code> to report
+        whether the item has been added to the container.
+      </li>
 </ul></div>
 <a name="spirit.what_s_new.bug_fixes"></a><h4>
-<a name="id538772"></a>
+<a name="id589314"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.bug_fixes">Bug Fixes</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
         Fixed karma::alternatives to work with embedded containers of hold_any (i.e.
         constructs like <code class="computeroutput"><span class="special">*</span><span class="identifier">stream</span>
         <span class="special">|</span> <span class="string">"empty"</span></code>
-        (that fixes the Karma example basic_facilities.cpp).
-      </li></ul></div>
+        (which fixes the Karma example basic_facilities.cpp).
+      </li>
+<li class="listitem">
+        Fixed numeric <span class="emphasis"><em>Spirit.Karma</em></span> generators for character
+        types.
+      </li>
+<li class="listitem">
+        Fixed qi::repeat[] for unused attributes.
+      </li>
+<li class="listitem">
+        Fixed rare compilation problem in karma::repeat[].
+      </li>
+<li class="listitem">
+        Fixed sequences in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+        to compile properly if the attribute is a (STL) container of (STL) containers.
+      </li>
+<li class="listitem">
+        Fixed a problem in <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">::</span><span class="identifier">what</span></code>.
+      </li>
+<li class="listitem">
+        Fixed <span class="emphasis"><em>Spirit.Qi</em></span> symbols not to match substrings anymore.
+        Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">::</span><span class="identifier">prefix_find</span></code> to allow matching of (prefix-)
+        substrings.
+      </li>
+<li class="listitem">
+        Inherited parameters for rule's usually have to be wrapped in function objects
+        (i.e. <code class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span></code>), for integral values this was not
+        necessary. Now all types of strings can be passed without being wrapped as
+        well.
+      </li>
+</ul></div>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id538813"></a>
+<a name="id589456"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h4>
-<a name="id538826"></a>
+<a name="id589469"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)</a>
@@ -222,7 +261,7 @@
       </li>
 </ul></div>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h4>
-<a name="id542543"></a>
+<a name="id593206"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 (Boost V1.37.0) to 2.1
       (Boost V1.41.0)</a>
@@ -328,7 +367,7 @@
       </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id543334"></a>
+<a name="id593997"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
     </h4>
 <p>
@@ -370,8 +409,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
-      de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
