@@ -4,7 +4,7 @@
 <title>Iterator Based Parse API</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.2">
 <link rel="up" href="../parse_api.html" title="Parse API">
 <link rel="prev" href="../parse_api.html" title="Parse API">
 <link rel="next" href="stream_api.html" title="Stream Based Parse API">
@@ -28,7 +28,7 @@
           Based Parse API</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parse_api.iterator_api.description"></a><h6>
-<a name="id605902"></a>
+<a name="id655174"></a>
             <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.description">Description</a>
           </h6>
 <p>
@@ -40,7 +40,7 @@
             successful parse.
           </p>
 <a name="spirit.qi.reference.parse_api.iterator_api.header"></a><h6>
-<a name="id605933"></a>
+<a name="id655205"></a>
             <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/parse.hpp&gt;
@@ -60,10 +60,17 @@
             part of the sequence.
           </p>
 <p>
+            For the API functions deducing the correct (matching) parser type from
+            the supplied attribute type:
+          </p>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/detail/parse_auto.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_parse_auto</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.parse_api.iterator_api.namespace"></a><h6>
-<a name="id606072"></a>
+<a name="id655400"></a>
             <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -97,7 +104,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parse_api.iterator_api.synopsis"></a><h6>
-<a name="id606286"></a>
+<a name="id655614"></a>
             <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">&gt;</span>
@@ -106,6 +113,13 @@
     <span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span>
   <span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span>
   <span class="special">,</span> <span class="identifier">Expr</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">expr</span><span class="special">);</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attr</span><span class="special">&gt;</span>
+<span class="keyword">inline</span> <span class="keyword">bool</span>
+<span class="identifier">parse</span><span class="special">(</span>
+    <span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span>
+  <span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span>
+  <span class="special">,</span> <span class="identifier">Attr</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Expr</span>
   <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attr1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attr2</span><span class="special">,</span> <span class="special">...,</span> <span class="keyword">typename</span> <span class="identifier">AttrN</span><span class="special">&gt;</span>
@@ -122,6 +136,15 @@
     <span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span>
   <span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span>
   <span class="special">,</span> <span class="identifier">Expr</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">expr</span>
+  <span class="special">,</span> <span class="identifier">Skipper</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">skipper</span>
+  <span class="special">,</span> <span class="identifier">BOOST_SCOPED_ENUM</span><span class="special">(</span><span class="identifier">skip_flag</span><span class="special">)</span> <span class="identifier">post_skip</span> <span class="special">=</span> <span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">postskip</span><span class="special">);</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attr</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Skipper</span><span class="special">&gt;</span>
+<span class="keyword">inline</span> <span class="keyword">bool</span>
+<span class="identifier">phrase_parse</span><span class="special">(</span>
+    <span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span>
+  <span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span>
+  <span class="special">,</span> <span class="identifier">Attr</span><span class="special">&amp;</span> <span class="identifier">attr</span>
   <span class="special">,</span> <span class="identifier">Skipper</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">skipper</span>
   <span class="special">,</span> <span class="identifier">BOOST_SCOPED_ENUM</span><span class="special">(</span><span class="identifier">skip_flag</span><span class="special">)</span> <span class="identifier">post_skip</span> <span class="special">=</span> <span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">postskip</span><span class="special">);</span>
 
@@ -236,6 +259,19 @@
 <tr>
 <td>
                   <p>
+                    <code class="computeroutput"><span class="identifier">Attr</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    An attribute type utilized to create the corresponding parser
+                    type from.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
                     <code class="computeroutput"><span class="identifier">Attr1</span></code>, <code class="computeroutput"><span class="identifier">Attr2</span></code>, ..., <code class="computeroutput"><span class="identifier">AttrN</span></code>
                   </p>
                   </td>
@@ -250,8 +286,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
-      de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

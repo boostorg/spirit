@@ -364,7 +364,7 @@ char *yytext;
 #line 1 "c:\\CVS\\boost\\libs\\spirit\\example\\lex\\word_count_functor.flex"
 #define INITIAL 0
 #line 2 "c:\\CVS\\boost\\libs\\spirit\\example\\lex\\word_count_functor.flex"
-//  Copyright (c) 2001-2009 Hartmut Kaiser
+//  Copyright (c) 2001-2010 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
