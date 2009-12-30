@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace qi
             >::type
           , symbols<Char, T, Lookup, Filter>
         >
-      , parser<symbols<Char, T, Lookup, Filter> >
+      , primitive_parser<symbols<Char, T, Lookup, Filter> >
     {
         typedef Char char_type; // the character type
         typedef T value_type; // the value associated with each entry

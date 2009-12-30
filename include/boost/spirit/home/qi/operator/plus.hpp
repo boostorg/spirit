@@ -62,18 +62,24 @@ namespace boost { namespace spirit { namespace qi
                 value_type;
             value_type val = value_type();
 
-            if (subject.parse(first, last, context, skipper, val))
+            Iterator save = first;
+            if (!subject.parse(save, last, context, skipper, val) ||
+                !traits::push_back(attr, val))
             {
-                traits::push_back(attr, val);
-                traits::clear(val);
-                while (subject.parse(first, last, context, skipper, val))
-                {
-                    traits::push_back(attr, val);
-                    traits::clear(val);
-                }
-                return true;
+                return false;
             }
-            return false;
+            first = save;
+            traits::clear(val);
+
+            while (subject.parse(save, last, context, skipper, val))
+            {
+                if (!traits::push_back(attr, val))
+                    break;
+
+                first = save;
+                traits::clear(val);
+            }
+            return true;
         }
 
         template <typename Context>

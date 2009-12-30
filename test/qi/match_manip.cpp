@@ -15,6 +15,7 @@
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_stream.hpp>
 #include <boost/spirit/include/qi_match.hpp>
+#include <boost/spirit/include/qi_match_auto.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
@@ -38,10 +39,11 @@ bool test(Char const *toparse, Expr const& expr)
     return istrm.good() || istrm.eof();
 }
 
-template <typename Char, typename Expr, typename Copy, typename Skipper
-  , typename Attribute>
+template <typename Char, typename Expr, typename CopyExpr, typename CopyAttr
+  , typename Skipper, typename Attribute>
 bool test(Char const *toparse,
-    boost::spirit::qi::detail::match_manip<Expr, Copy, Skipper, Attribute> const& mm)
+    boost::spirit::qi::detail::match_manip<
+        Expr, CopyExpr, CopyAttr, Skipper, Attribute> const& mm)
 {
     std::istringstream istrm(toparse);
     istrm >> mm;
@@ -222,6 +224,16 @@ main()
         BOOST_TEST(test( " a b c",
             phrase_match(char_ >> char_ >> char_, space, t)
         ) && fusion::at_c<0>(t) == 'a' && fusion::at_c<1>(t) == 'b' && fusion::at_c<2>(t) == 'c');
+
+        t = fusion::vector<char, char, char>();
+        BOOST_TEST(test( "abc",
+            match(t)
+        ) && fusion::at_c<0>(t) == 'a' && fusion::at_c<1>(t) == 'b' && fusion::at_c<2>(t) == 'c');
+
+        t = fusion::vector<char, char, char>();
+        BOOST_TEST(test( " a b c",
+            phrase_match(t, space)
+        ) && fusion::at_c<0>(t) == 'a' && fusion::at_c<1>(t) == 'b' && fusion::at_c<2>(t) == 'c');
     }
 
     {
@@ -250,7 +262,7 @@ main()
     }
 
     {
-        // output all elements of a vector
+        // parse elements of a vector
         std::vector<char> v;
         BOOST_TEST(test( "abc",
             (*char_)[phx::ref(v) = _1]
@@ -264,6 +276,16 @@ main()
         v.clear();
         BOOST_TEST(test( " a b c",
             phrase_match(*char_, space, v)
+        ) && 3 == v.size() && v[0] == 'a' && v[1] == 'b' && v[2] == 'c');
+
+        v.clear();
+        BOOST_TEST(test( "abc",
+            match(v)
+        ) && 3 == v.size() && v[0] == 'a' && v[1] == 'b' && v[2] == 'c');
+
+        v.clear();
+        BOOST_TEST(test( " a b c",
+            phrase_match(v, space)
         ) && 3 == v.size() && v[0] == 'a' && v[1] == 'b' && v[2] == 'c');
 
         // parse a comma separated list of vector elements
@@ -286,6 +308,16 @@ main()
         l.clear();
         BOOST_TEST(test( " a b c",
             phrase_match(*char_, space, l)
+        ) && 3 == l.size() && is_list_ok(l));
+
+        l.clear();
+        BOOST_TEST(test( "abc",
+            match(l)
+        ) && 3 == l.size() && is_list_ok(l));
+
+        l.clear();
+        BOOST_TEST(test( " a b c",
+            phrase_match(l, space)
         ) && 3 == l.size() && is_list_ok(l));
     }
 

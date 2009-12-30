@@ -8,41 +8,22 @@
 
 [section What's New]
 
-[heading Spirit Classic]
+[heading Spirit V2.2] 
 
-The Spirit V1.8.x code base has been integrated with Spirit V2. It is
-now called __classic__. Since the directory structure has changed (the
-Spirit Classic headers are now moved to the
-'''$BOOST_ROOT/boost/spirit/home/classic''' directory), we created
-forwarding headers allowing existing applications to compile without
-any change. However, these forwarding headers are deprecated, which
-will result in corresponding warnings generated for each of the
-headers starting with Boost V1.38. The forwarding headers are expected
-to be removed in the future.
+[heading What's changed in __qi__ and __karma__ from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)]
 
-The recommended way of using Spirit Classic now is to include header
-files from the directory '''$BOOST_ROOT/boost/spirit/include'''. All
-Spirit Classic headers in this directory have 'classic_' prefixed to
-their name. For example the include
+[heading New Features]
 
-    #include <boost/spirit/core/core.hpp>
+* Added `auto_` component and API functions `qi::create_parser` and 
+  `karma::create_generator`.
+* Added `auto_` based overloads for all API functions taking no attributes.
+* Added `karma::columns` directive.
 
-now should be written as:
+[heading Bug Fixes]
 
-    #include <boost/spirit/include/classic_core.hpp>
-
-To avoid namespace conflicts with the new Spirit V2 library we moved
-Spirit Classic into the namespace `boost::spirit::classic`. All
-references to the former namespace `boost::spirit` need to be adjusted
-as soon as the header names are corrected as described above. As an
-alternative you can define the preprocessor constant
-`BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic
-code to be in the namespace `boost::spirit` as before. This is not
-recommended, though, as it may result in naming clashes.
-
-The change of the namespace will be automatically deactivated whenever
-the deprecated include files are being used. This ensures full
-backwards compatibility for existing applications.
+* Fixed karma::alternatives to work with embedded containers of hold_any (i.e.
+  constructs like `*stream | "empty"` (that fixes the Karma example 
+  basic_facilities.cpp).
 
 [heading Spirit V2.1] 
 
@@ -108,6 +89,12 @@ backwards compatibility for existing applications.
   initialization and assignment.
 * Qi and Karma rules now do intrinsic attribute transformation based on the 
   attribute customization point __customize_transform_attribute__.
+* All char_ parsers now always expose an attribute. Earlier `char_(...)` didn't 
+  expose an attribute while `char_` did. If you need a literal parser not exposing 
+  any attribute use `lit(...)` instead.
+* The qi::int_spec, qi::real_spec, karma::int_spec, and karma real_spec types 
+  do not exist anymore. These have been replaced with qi::int_parser, 
+  qi::real_parser, karma::int_generator, and karma::real_generator.
 
 [heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
 
@@ -172,5 +159,41 @@ __lex__ now uses the infrastructure provided by __spirit__ version 2.1.
    `lex::lookahead()` (see  __sec_lex_semactions__ for more details).
 * Removed `lex::omitted` in favor of `lex::omit` to unify the overall 
   interface.
+
+[heading Spirit Classic]
+
+The Spirit V1.8.x code base has been integrated with Spirit V2. It is
+now called __classic__. Since the directory structure has changed (the
+Spirit Classic headers are now moved to the
+'''$BOOST_ROOT/boost/spirit/home/classic''' directory), we created
+forwarding headers allowing existing applications to compile without
+any change. However, these forwarding headers are deprecated, which
+will result in corresponding warnings generated for each of the
+headers starting with Boost V1.38. The forwarding headers are expected
+to be removed in the future.
+
+The recommended way of using Spirit Classic now is to include header
+files from the directory '''$BOOST_ROOT/boost/spirit/include'''. All
+Spirit Classic headers in this directory have 'classic_' prefixed to
+their name. For example the include
+
+    #include <boost/spirit/core/core.hpp>
+
+now should be written as:
+
+    #include <boost/spirit/include/classic_core.hpp>
+
+To avoid namespace conflicts with the new Spirit V2 library we moved
+Spirit Classic into the namespace `boost::spirit::classic`. All
+references to the former namespace `boost::spirit` need to be adjusted
+as soon as the header names are corrected as described above. As an
+alternative you can define the preprocessor constant
+`BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic
+code to be in the namespace `boost::spirit` as before. This is not
+recommended, though, as it may result in naming clashes.
+
+The change of the namespace will be automatically deactivated whenever
+the deprecated include files are being used. This ensures full
+backwards compatibility for existing applications.
 
 [endsect]

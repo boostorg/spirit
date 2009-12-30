@@ -717,7 +717,7 @@ Also, see __include_structure__.
     template <typename Container, typename Attrib, typename Enable>
     struct push_back_container
     {
-        static void call(Container& c, Attrib const& val);
+        static bool call(Container& c, Attrib const& val);
     };
 
 [heading Template parameters]
@@ -755,7 +755,10 @@ Also, see __include_structure__.
 ``push_back_container<C, Attrib>::call(c, attr)``] 
                                       [Static function that is invoked whenever an 
                                        attribute value, `attr` needs to be stored 
-                                       into the container instance `c`.]]
+                                       into the container instance `c`. This function
+                                       should return `true` on success and `false`
+                                       otherwise. Returning `false` causes the 
+                                       corresponding parser to fail.]]
 ]
 
 [heading Predefined Specializations]

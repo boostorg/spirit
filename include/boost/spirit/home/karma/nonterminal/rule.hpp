@@ -37,6 +37,11 @@
 #include <boost/spirit/home/karma/nonterminal/detail/generator_binder.hpp>
 #include <boost/spirit/home/karma/nonterminal/detail/parameterized.hpp>
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4355) // 'this' : used in base member initializer list warning
+#endif
+
 namespace boost { namespace spirit { namespace karma
 {
     BOOST_PP_REPEAT(SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_USING_ATTRIBUTE, _)
@@ -128,7 +133,7 @@ namespace boost { namespace spirit { namespace karma
         function_type;
 
         explicit rule(std::string const& name_ = "unnamed-rule")
-          : base_type(terminal::make(alias()))
+          : base_type(terminal::make(reference_(*this)))
           , name_(name_)
         {
         }
@@ -142,7 +147,7 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Expr>
         rule (Expr const& expr, std::string const& name_ = "unnamed-rule")
-          : base_type(terminal::make(alias()))
+          : base_type(terminal::make(reference_(*this)))
           , name_(name_)
         {
             // Report invalid expression error as early as possible.
@@ -299,5 +304,9 @@ namespace boost { namespace spirit { namespace karma
     };
 
 }}}
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif

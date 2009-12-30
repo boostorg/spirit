@@ -197,7 +197,7 @@ defined in __primitive_parser_concept__.
 [table
     [[Expression]                   [Semantics]]
     [[`Sym()`]                      [Construct an empty symbols.]]
-    [[`Sym(sym)`]                   [Copy construct a symbols from `sym2` (Another `symbols` object).]]
+    [[`Sym(sym2)`]                  [Copy construct a symbols from `sym2` (Another `symbols` object).]]
     [[`Sym(sseq)`]                  [Construct symbols from `sseq` (An __stl__ container of strings).]]
     [[`Sym(sseq, dseq)`]            [Construct symbols from `sseq` and `dseq`
                                     (An __stl__ container of strings and an __stl__ container of

@@ -161,31 +161,39 @@ namespace boost { namespace spirit { namespace qi
             typename LoopIter::type i = iter.start();
 
             // parse the minimum required
-            { // this scope allows save and save_attr to be reclaimed immediately
-              // after we're done with the required minimum iteration.
+            if (!iter.got_min(i)) { 
+                // this scope allows save and save_attr to be reclaimed 
+                // immediately after we're done with the required minimum 
+                // iteration.
                 Iterator save = first;
                 Attribute save_attr; traits::swap_impl(save_attr, attr);
                 for (; !iter.got_min(i); ++i)
                 {
-                    if (!subject.parse(first, last, context, skipper, val))
+                    if (!subject.parse(save, last, context, skipper, val) ||
+                        !traits::push_back(attr, val))
                     {
                         // if we fail before reaching the minimum iteration
                         // required, restore the iterator and the attribute
                         // then return false
-                        first = save;
                         traits::swap_impl(save_attr, attr);
                         return false;
                     }
-                    traits::push_back(attr, val);
+
+                    first = save;
                     traits::clear(val);
                 }
             }
+
             // parse some more up to the maximum specified
+            Iterator save = first;
             for (; !iter.got_max(i); ++i)
             {
-                if (!subject.parse(first, last, context, skipper, val))
+                if (!subject.parse(save, last, context, skipper, val) ||
+                    !traits::push_back(attr, val))
+                {
                     break;
-                traits::push_back(attr, val);
+                }
+                first = save;
                 traits::clear(val);
             }
             return true;

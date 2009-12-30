@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Compound Attribute Rules</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
@@ -28,7 +28,7 @@
         Attribute Rules</a>
 </h4></div></div></div>
 <a name="spirit.qi.quick_reference.compound_attribute_rules.notation"></a><h6>
-<a name="id648782"></a>
+<a name="id586129"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Notation</a>
         </h6>
 <p>
@@ -72,7 +72,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.quick_reference.compound_attribute_rules.compound_parser_attribute_types"></a><h6>
-<a name="id649264"></a>
+<a name="id586612"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.compound_parser_attribute_types">Compound
           Parser Attribute Types</a>
         </h6>
@@ -259,7 +259,9 @@
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
+
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">&gt;</span></pre>
 <p>
                 </p>
                 </td>
@@ -332,7 +334,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
       de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)

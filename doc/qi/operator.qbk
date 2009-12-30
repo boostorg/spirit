@@ -823,16 +823,25 @@ See __qi_comp_attr_notation__.
 [table
     [[Expression]       [Attribute]]
     [[`a || b`]  
-[``a: A, b: B --> (a || b): tuple<A, B>
-a: A, b: Unused --> (a || b): A
-a: Unused, b: B --> (a || b): B
+[``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
+a: A, b: Unused --> (a || b): optional<A>
+a: Unused, b: B --> (a || b): optional<B>
 a: Unused, b: Unused --> (a || b): Unused
 
-a: A, b: A --> (a || b): vector<A>
-a: vector<A>, b: A --> (a || b): vector<A>
-a: A, b: vector<A> --> (a || b): vector<A>
-a: vector<A>, b: vector<A> --> (a || b): vector<A>``]]
+a: A, b: A --> (a || b): vector<optional<A> >``]]
 ]
+
+[note The sequential-or parser behaves attribute-wise very similar to the 
+      plain sequence parser (`a >> b`) in the sense that it exposes the 
+      attributes of its elements separately. For instance, if you attach a 
+      semantic action to the whole sequential-or:
+      ``
+          (int_ || int_)[print_pair(_1, _2)]
+      ``
+      the function object `print_pair` would be invoked with the
+      attribute of the first `int_` (`boost::optional<int>`) as its first 
+      parameter and the attribute of the second `int_` (`boost::optional<int>`
+      as well) as its second parameter.]
 
 [heading Complexity]
 

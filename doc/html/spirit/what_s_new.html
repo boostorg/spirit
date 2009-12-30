@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>What's New</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
@@ -26,52 +26,49 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
-<a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id602878"></a>
-      <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
+<a name="spirit.what_s_new.spirit_v2_2"></a><h4>
+<a name="id538654"></a>
+      <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_2">Spirit V2.2</a>
     </h4>
-<p>
-      The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called
-      <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
-      Since the directory structure has changed (the Spirit Classic headers are now
-      moved to the $BOOST_ROOT/boost/spirit/home/classic directory), we created forwarding headers allowing existing applications
-      to compile without any change. However, these forwarding headers are deprecated,
-      which will result in corresponding warnings generated for each of the headers
-      starting with Boost V1.38. The forwarding headers are expected to be removed
-      in the future.
-    </p>
-<p>
-      The recommended way of using Spirit Classic now is to include header files
-      from the directory $BOOST_ROOT/boost/spirit/include. All Spirit Classic headers in this directory have 'classic_'
-      prefixed to their name. For example the include
-    </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-</pre>
-<p>
-      now should be written as:
-    </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">classic_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-</pre>
-<p>
-      To avoid namespace conflicts with the new Spirit V2 library we moved Spirit
-      Classic into the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">classic</span></code>.
-      All references to the former namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>
-      need to be adjusted as soon as the header names are corrected as described
-      above. As an alternative you can define the preprocessor constant <code class="computeroutput"><span class="identifier">BOOST_SPIRIT_USE_OLD_NAMESPACE</span></code>, which will
-      force the Spirit Classic code to be in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>
-      as before. This is not recommended, though, as it may result in naming clashes.
-    </p>
-<p>
-      The change of the namespace will be automatically deactivated whenever the
-      deprecated include files are being used. This ensures full backwards compatibility
-      for existing applications.
-    </p>
+<a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_1__boost_v1_41_0__to_2_2__boost_v1_42_0_"></a><h4>
+<a name="id538667"></a>
+      <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_1__boost_v1_41_0__to_2_2__boost_v1_42_0_">What's
+      changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+      from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)</a>
+    </h4>
+<a name="spirit.what_s_new.new_features"></a><h4>
+<a name="id538687"></a>
+      <a class="link" href="what_s_new.html#spirit.what_s_new.new_features">New Features</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">auto_</span></code> component and
+        API functions <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">create_parser</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">create_generator</span></code>.
+      </li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">auto_</span></code> based overloads
+        for all API functions taking no attributes.
+      </li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">columns</span></code> directive.
+      </li>
+</ul></div>
+<a name="spirit.what_s_new.bug_fixes"></a><h4>
+<a name="id538772"></a>
+      <a class="link" href="what_s_new.html#spirit.what_s_new.bug_fixes">Bug Fixes</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+        Fixed karma::alternatives to work with embedded containers of hold_any (i.e.
+        constructs like <code class="computeroutput"><span class="special">*</span><span class="identifier">stream</span>
+        <span class="special">|</span> <span class="string">"empty"</span></code>
+        (that fixes the Karma example basic_facilities.cpp).
+      </li></ul></div>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id603072"></a>
+<a name="id538813"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h4>
-<a name="id603085"></a>
+<a name="id538826"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)</a>
@@ -79,7 +76,7 @@
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> is now based on
-        the newest version of <a href="../../../../../libs/proto/doc/html/proto.html" target="_top">Boost.Proto</a>
+        the newest version of <a href="../../../../../doc/html/proto.html" target="_top">Boost.Proto</a>
 </li>
 <li class="listitem">
 <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>, <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_format</span></code>
@@ -214,9 +211,18 @@
         Qi and Karma rules now do intrinsic attribute transformation based on the
         attribute customization point <a class="link" href="advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>.
       </li>
+<li class="listitem">
+        All char_ parsers now always expose an attribute. Earlier <code class="computeroutput"><span class="identifier">char_</span><span class="special">(...)</span></code> didn't expose an attribute while <code class="computeroutput"><span class="identifier">char_</span></code> did. If you need a literal parser
+        not exposing any attribute use <code class="computeroutput"><span class="identifier">lit</span><span class="special">(...)</span></code> instead.
+      </li>
+<li class="listitem">
+        The qi::int_spec, qi::real_spec, karma::int_spec, and karma real_spec types
+        do not exist anymore. These have been replaced with qi::int_parser, qi::real_parser,
+        karma::int_generator, and karma::real_generator.
+      </li>
 </ul></div>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h4>
-<a name="id605341"></a>
+<a name="id542543"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 (Boost V1.37.0) to 2.1
       (Boost V1.41.0)</a>
@@ -321,10 +327,50 @@
         to unify the overall interface.
       </li>
 </ul></div>
+<a name="spirit.what_s_new.spirit_classic"></a><h4>
+<a name="id543334"></a>
+      <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
+    </h4>
+<p>
+      The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called
+      <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
+      Since the directory structure has changed (the Spirit Classic headers are now
+      moved to the $BOOST_ROOT/boost/spirit/home/classic directory), we created forwarding headers allowing existing applications
+      to compile without any change. However, these forwarding headers are deprecated,
+      which will result in corresponding warnings generated for each of the headers
+      starting with Boost V1.38. The forwarding headers are expected to be removed
+      in the future.
+    </p>
+<p>
+      The recommended way of using Spirit Classic now is to include header files
+      from the directory $BOOST_ROOT/boost/spirit/include. All Spirit Classic headers in this directory have 'classic_'
+      prefixed to their name. For example the include
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      now should be written as:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">classic_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      To avoid namespace conflicts with the new Spirit V2 library we moved Spirit
+      Classic into the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">classic</span></code>.
+      All references to the former namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>
+      need to be adjusted as soon as the header names are corrected as described
+      above. As an alternative you can define the preprocessor constant <code class="computeroutput"><span class="identifier">BOOST_SPIRIT_USE_OLD_NAMESPACE</span></code>, which will
+      force the Spirit Classic code to be in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>
+      as before. This is not recommended, though, as it may result in naming clashes.
+    </p>
+<p>
+      The change of the namespace will be automatically deactivated whenever the
+      deprecated include files are being used. This ensures full backwards compatibility
+      for existing applications.
+    </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
       de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)

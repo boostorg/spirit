@@ -22,7 +22,8 @@
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Expr, typename Copy = mpl::false_
+    template <typename Expr
+      , typename CopyExpr = mpl::false_, typename CopyAttr = mpl::false_
       , typename Skipper = unused_type, typename Attribute = unused_type const>
     struct match_manip
     {
@@ -44,7 +45,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     };
 
     template <typename Expr, typename Skipper, typename Attribute>
-    struct match_manip<Expr, mpl::true_, Skipper, Attribute>
+    struct match_manip<Expr, mpl::false_, mpl::true_, Skipper, Attribute>
     {
         match_manip(Expr const& xpr, Skipper const& s, Attribute& a)
           : expr(xpr), skipper(s), attr(a), post_skip(skip_flag::postskip) {}
@@ -63,11 +64,93 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         match_manip& operator= (match_manip const&);
     };
 
+    template <typename Expr, typename Skipper, typename Attribute>
+    struct match_manip<Expr, mpl::true_, mpl::false_, Skipper, Attribute>
+    {
+        match_manip(Expr const& xpr, Skipper const& s, Attribute& a)
+          : expr(xpr), skipper(s), attr(a), post_skip(skip_flag::postskip) {}
+
+        match_manip(Expr const& xpr, Skipper const& s
+            , BOOST_SCOPED_ENUM(skip_flag) ps, Attribute& a)
+          : expr(xpr), skipper(s), attr(a), post_skip(ps) {}
+
+        Expr expr;
+        Skipper const& skipper;
+        Attribute& attr;
+        BOOST_SCOPED_ENUM(skip_flag) const post_skip;
+
+    private:
+        // silence MSVC warning C4512: assignment operator could not be generated
+        match_manip& operator= (match_manip const&);
+    };
+
+    template <typename Expr, typename Skipper, typename Attribute>
+    struct match_manip<Expr, mpl::true_, mpl::true_, Skipper, Attribute>
+    {
+        BOOST_SPIRIT_ASSERT_MSG(false, error_invalid_should_not_happen, ());
+    };
+
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Char, typename Traits, typename Expr, typename Copy>
+    template <typename Expr, typename Enable = void>
+    struct match
+    {
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        // Did you intend to use the auto_ facilities while forgetting to 
+        // #include <boost/spirit/include/qi_match_auto.hpp>?
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
+    };
+
+    template <typename Expr>
+    struct match<Expr
+      , typename enable_if<traits::matches<qi::domain, Expr> >::type>
+    {
+        typedef match_manip<Expr> type;
+
+        static type call(Expr const& expr)
+        {
+            return type(expr, unused, unused);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Expr, typename Skipper, typename Enable = void>
+    struct phrase_match
+    {
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        // Did you intend to use the auto_ facilities while forgetting to 
+        // #include <boost/spirit/include/qi_match_auto.hpp>?
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
+    };
+
+    template <typename Expr, typename Skipper>
+    struct phrase_match<Expr, Skipper
+      , typename enable_if<traits::matches<qi::domain, Expr> >::type>
+    {
+        typedef match_manip<Expr, mpl::false_, mpl::false_, Skipper> type;
+
+        static type call(
+            Expr const& expr
+          , Skipper const& skipper
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        {
+            // Report invalid expression error as early as possible.
+            // If you got an error_invalid_expression error message here,
+            // then the delimiter is not a valid spirit karma expression.
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
+            return type(expr, skipper, post_skip, unused);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template<typename Char, typename Traits, typename Expr
+      , typename CopyExpr, typename CopyAttr>
     inline std::basic_istream<Char, Traits> &
     operator>>(std::basic_istream<Char, Traits> &is,
-        match_manip<Expr, Copy> const& fm)
+        match_manip<Expr, CopyExpr, CopyAttr> const& fm)
     {
         typedef std::istream_iterator<Char, Char, Traits> input_iterator;
         input_iterator f(is);
@@ -80,11 +163,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Char, typename Traits, typename Expr, typename Copy
+    template<typename Char, typename Traits, typename Expr
+      , typename CopyExpr, typename CopyAttr
       , typename Attribute>
     inline std::basic_istream<Char, Traits> &
     operator>>(std::basic_istream<Char, Traits> &is,
-        match_manip<Expr, Copy, unused_type, Attribute> const& fm)
+        match_manip<Expr, CopyExpr, CopyAttr, unused_type, Attribute> const& fm)
     {
         typedef std::istream_iterator<Char, Char, Traits> input_iterator;
         input_iterator f(is);
@@ -97,11 +181,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Char, typename Traits, typename Expr, typename Copy
+    template<typename Char, typename Traits, typename Expr
+      , typename CopyExpr, typename CopyAttr
       , typename Skipper>
     inline std::basic_istream<Char, Traits> &
     operator>>(std::basic_istream<Char, Traits> &is,
-        match_manip<Expr, Copy, Skipper> const& fm)
+        match_manip<Expr, CopyExpr, CopyAttr, Skipper> const& fm)
     {
         typedef std::istream_iterator<Char, Char, Traits> input_iterator;
         input_iterator f(is);
@@ -115,13 +200,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Char, typename Traits, typename Expr, typename Copy
+    template<typename Char, typename Traits, typename Expr
+      , typename CopyExpr, typename CopyAttr
       , typename Attribute, typename Skipper
     >
     inline std::basic_istream<Char, Traits> &
     operator>>(
         std::basic_istream<Char, Traits> &is,
-        match_manip<Expr, Copy, Attribute, Skipper> const& fm)
+        match_manip<Expr, CopyExpr, CopyAttr, Attribute, Skipper> const& fm)
     {
         typedef std::istream_iterator<Char, Char, Traits> input_iterator;
         input_iterator f(is);

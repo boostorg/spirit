@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Sequential Or (a || b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.sequential_or.description"></a><h6>
-<a name="id745465"></a>
+<a name="id684455"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.description">Description</a>
           </h6>
 <p>
@@ -45,7 +45,7 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span> <span class="special">||</span> <span class="special">...</span>
 </pre>
 <a name="spirit.qi.reference.operator.sequential_or.header"></a><h6>
-<a name="id745600"></a>
+<a name="id684590"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/sequential_or.hpp&gt;
@@ -55,7 +55,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.sequential_or.model_of"></a><h6>
-<a name="id745674"></a>
+<a name="id684664"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.model_of">Model
             of</a>
           </h6>
@@ -79,7 +79,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.sequential_or.expression_semantics"></a><h6>
-<a name="id745752"></a>
+<a name="id684742"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -122,7 +122,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequential_or.attributes"></a><h6>
-<a name="id745892"></a>
+<a name="id684882"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.attributes">Attributes</a>
           </h6>
 <p>
@@ -157,22 +157,43 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
 
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">&gt;</span></pre>
 <p>
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+              The sequential-or parser behaves attribute-wise very similar to the
+              plain sequence parser (<code class="computeroutput"><span class="identifier">a</span>
+              <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>)
+              in the sense that it exposes the attributes of its elements separately.
+              For instance, if you attach a semantic action to the whole sequential-or:
+              
+</p>
+<pre class="programlisting"><span class="special">(</span><span class="identifier">int_</span> <span class="special">||</span> <span class="identifier">int_</span><span class="special">)[</span><span class="identifier">print_pair</span><span class="special">(</span><span class="identifier">_1</span><span class="special">,</span> <span class="identifier">_2</span><span class="special">)]</span>
+</pre>
+<p>
+              the function object <code class="computeroutput"><span class="identifier">print_pair</span></code>
+              would be invoked with the attribute of the first <code class="computeroutput"><span class="identifier">int_</span></code>
+              (<code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code>)
+              as its first parameter and the attribute of the second <code class="computeroutput"><span class="identifier">int_</span></code> (<code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code> as well) as its second parameter.
+            </p>
+</td></tr>
+</table></div>
 <a name="spirit.qi.reference.operator.sequential_or.complexity"></a><h6>
-<a name="id746579"></a>
+<a name="id689781"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -188,7 +209,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.sequential_or.example"></a><h6>
-<a name="id746603"></a>
+<a name="id689805"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -248,7 +269,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Joel
       de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)

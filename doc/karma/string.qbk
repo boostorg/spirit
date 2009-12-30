@@ -9,7 +9,8 @@
 [section String]
 
 This module includes different string oriented generators allowing to output
-character sequences. It includes variants of the `string` generator.
+character sequences. It includes the `symbols` generator and variants of the 
+`string` generator.
 
 [heading Module Header]
 
@@ -145,5 +146,154 @@ Basic usage of `string` generators:
 [reference_karma_string]
 
 [endsect]
+
+[/------------------------------------------------------------------------------]
+[section:symbols Symbols (`symbols`)]
+
+[heading Description]
+
+The class `symbols` implements an 'inverse' symbol table: an associative 
+container (or map) of key-value pairs where the values are (most of the time) 
+strings. It maps the value to be generated (the key) to any other value which 
+will be emitted instead of the original key.
+
+The Karma symbol table class `symbols` is-a generator, an instance of which may
+be used anywhere in the grammar specification. It is an example of a
+dynamic generator. A dynamic generator is characterized by its ability to
+modify its behavior at run time. Initially, an empty symbols object
+will emit nothing. At any time, symbols may be added, thus, dynamically
+altering its behavior.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/string/symbols.hpp>
+    #include <boost/spirit/include/karma_symbols.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::karma::symbols`]]
+]
+
+[heading Synopsis]
+
+    template <typename Attrib, typename T, typename Lookup
+      , typename CharEncoding, typename Tag>
+    struct symbols;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Attrib`]         [The type of the original attribute to be used as 
+                        the key into the symbol generator (the symbol).]  [`char`]]
+    [[`T`]              [The data type associated
+                        with each key.]             [__unused_type__]]
+    [[`Lookup`]         [The symbol search implementation] 
+                                                    [if T is `unused_type`, `std::set<Attrib>`,
+                                                    and `std::map<Attrib, T>` otherwise]]
+    [[`CharEncoding`]   [Used for character set selection, normally not 
+                         used by end user.]         [__unused_type__]]
+    [[`Tag`]            [Used for character set selection, normally not 
+                         used by end user.]         [__unused_type__]]
+]
+
+[heading Model of]
+
+[:__primitive_generator_concept__]
+
+[variablelist Notation
+    [[`Sym`]        [A `symbols` type.]]
+    [[`Attrib`]     [An attribute type.]]
+    [[`T`]          [A data type.]]
+    [[`sym`, `sym2`][`symbols` objects.]]
+    [[`sseq`]       [An __stl__ container of strings.]]
+    [[`dseq`]       [An __stl__ container of data with `value_type` `T`.]]
+    [[`s1`...`sN`]  [A __string__.]]
+    [[`d1`...`dN`]  [Objects of type `T`.]]
+    [[`f`]          [A callable function or function object.]]
+    [[`f`, `l`]     [`ForwardIterator` first/last pair.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __primitive_generator_concept__.
+
+[table
+    [[Expression]                   [Semantics]]
+    [[`Sym()`]                      [Construct an empty symbols object instance.]]
+    [[`Sym(sym2)`]                  [Copy construct a symbols from `sym2` (Another `symbols` object).]]
+    [[`Sym(sseq)`]                  [Construct symbols from `sseq` (An __stl__ container of 
+                                    symbols of type `Attrib`).]]
+    [[`Sym(sseq, dseq)`]            [Construct symbols from `sseq` and `dseq`
+                                    (An __stl__ container of symbols of type `Attrib` and an 
+                                    __stl__ container of data with `value_type` `T`).]]
+    [[`sym = sym2`]                 [Assign `sym2` to `sym`.]]
+    [[`sym = s1, s2, ..., sN`]      [Assign one or more symbols (`s1`...`sN`) to `sym`. The 
+                                     associated data values of type `T` are default constructed.]]
+    [[`sym += s1, s2, ..., sN`]     [Add one or more symbols (`s1`...`sN`) to `sym`. The 
+                                     associated data values of type `T` are default constructed.]]
+    [[`sym.add(s1)(s2)...(sN)`]     [Add one or more symbols (`s1`...`sN`) to `sym`. The 
+                                     associated data values of type `T` are default constructed.]]
+    [[`sym.add(s1, d1)(s2, d2)...(sN, dN)`]
+                                    [Add one or more symbols (`s1`...`sN`)
+                                    with associated data (`d1`...`dN`) to `sym`.]]
+    [[`sym -= s1, s2, ..., sN`]     [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
+    [[`sym.remove(s1)(s2)...(sN)`]  [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
+    [[`sym.clear()`]                [Erase all of the symbols in `sym`.]]
+    [[`sym.at(s)`]                  [Return a reference to the object associated
+                                    with symbol, `s`. If `sym` does not already
+                                    contain such an object, `at` inserts the default
+                                    object `T()`.]]
+    [[`sym.find(s)`]                [Return a pointer to the object associated
+                                    with symbol, `s`. If `sym` does not already
+                                    contain such an object, `find` returns a null
+                                    pointer.]]
+    [[`sym.for_each(f)`]            [For each symbol in `sym` `s` invoke 
+                                    `f(typename Lookup::value_type)`.]]
+]
+
+The symbols generator uses the supplied attribute as the key to be looked up 
+in the internal associative container. If the key exists the generator emits 
+the associated value and succeeds (unless the underlying output stream reports 
+an error). If the value type stored in the symbol generator is __unused_type__
+it will emit the key instead. If the key does not exist the generator fails 
+while not emitting anything. 
+
+[heading Attributes]
+
+The attribute of `symbol<Attrib, T>` is `Attrib`.
+
+[heading Complexity]
+
+The default implementation uses a `std::map<>` or a `std::set<>` with a 
+complexity of:
+
+[:O(log n)]
+
+Where n is the number of stored symbols.
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
+Some includes:
+
+[reference_karma_includes]
+
+Some using declarations:
+
+[reference_karma_using_declarations_symbols]
+
+Basic usage of `symbol` generators:
+
+[reference_karma_symbols]
+
+[endsect] [/ symbols]
 
 [endsect]

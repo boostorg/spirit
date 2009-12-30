@@ -21,19 +21,17 @@ namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
-    inline detail::format_manip<Expr> 
-    format(Expr const& xpr)
+    inline typename detail::format<Expr>::type 
+    format(Expr const& expr)
     {
-        // Report invalid expression error as early as possible.
-        // If you got an error_invalid_expression error message here,
-        // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
-        return karma::detail::format_manip<Expr>(xpr, unused, unused);
+        return detail::format<Expr>::call(expr);
     }
 
     template <typename Expr, typename Attribute>
-    inline detail::format_manip<Expr, mpl::false_, unused_type, Attribute> 
-    format(Expr const& xpr, Attribute const& attr)
+    inline detail::format_manip<Expr, mpl::false_, mpl::false_, unused_type, Attribute> 
+    format(
+        Expr const& expr
+      , Attribute const& attr)
     {
         using karma::detail::format_manip;
 
@@ -41,31 +39,29 @@ namespace boost { namespace spirit { namespace karma
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
-        return format_manip<Expr, mpl::false_, unused_type, Attribute>(
-            xpr, unused, attr);
+        return format_manip<Expr, mpl::false_, mpl::false_, unused_type, Attribute>(
+            expr, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Delimiter>
-    inline detail::format_manip<Expr, mpl::false_, Delimiter> 
-    format_delimited(Expr const& xpr, Delimiter const& d
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit)
+    inline typename detail::format_delimited<Expr, Delimiter>::type 
+    format_delimited(
+        Expr const& expr
+      , Delimiter const& d
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = 
+            delimit_flag::dont_predelimit)
     {
-        using karma::detail::format_manip;
-
-        // Report invalid expression error as early as possible.
-        // If you got an error_invalid_expression error message here,
-        // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
-        return format_manip<Expr, mpl::false_, Delimiter>(
-            xpr, d, pre_delimit, unused);
+        return detail::format_delimited<Expr, Delimiter>::call(expr, d, pre_delimit);
     }
 
     template <typename Expr, typename Delimiter, typename Attribute>
-    inline detail::format_manip<Expr, mpl::false_, Delimiter, Attribute> 
-    format_delimited(Expr const& xpr, Delimiter const& d
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit, Attribute const& attr)
+    inline detail::format_manip<Expr, mpl::false_, mpl::false_, Delimiter, Attribute> 
+    format_delimited(
+        Expr const& xpr
+      , Delimiter const& d
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
+      , Attribute const& attr)
     {
         using karma::detail::format_manip;
 
@@ -74,13 +70,16 @@ namespace boost { namespace spirit { namespace karma
         // then the expression (expr) is not a valid spirit karma expression.
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
-        return format_manip<Expr, mpl::false_, Delimiter, Attribute>(
+        return format_manip<Expr, mpl::false_, mpl::false_, Delimiter, Attribute>(
             xpr, d, pre_delimit, attr);
     }
 
     template <typename Expr, typename Delimiter, typename Attribute>
-    inline detail::format_manip<Expr, mpl::false_, Delimiter, Attribute> 
-    format_delimited(Expr const& xpr, Delimiter const& d, Attribute const& attr)
+    inline detail::format_manip<Expr, mpl::false_, mpl::false_, Delimiter, Attribute> 
+    format_delimited(
+        Expr const& xpr
+      , Delimiter const& d
+      , Attribute const& attr)
     {
         using karma::detail::format_manip;
 
@@ -89,7 +88,7 @@ namespace boost { namespace spirit { namespace karma
         // then the expression (expr) is not a valid spirit karma expression.
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
-        return format_manip<Expr, mpl::false_, Delimiter, Attribute>(
+        return format_manip<Expr, mpl::false_, mpl::false_, Delimiter, Attribute>(
             xpr, d, delimit_flag::dont_predelimit, attr);
     }
 

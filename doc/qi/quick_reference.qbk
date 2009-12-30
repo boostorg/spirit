@@ -310,7 +310,9 @@ a: Unused --> repeat(...,...)[a]: Unused``]]
 [``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a || b): optional<A>
 a: Unused, b: B --> (a || b): optional<B>
-a: Unused, b: Unused --> (a || b): Unused``]]
+a: Unused, b: Unused --> (a || b): Unused
+
+a: A, b: A --> (a || b): vector<optional<A> >``]]
 
     [[`-a`]
 [``a: A --> -a: optional<A>

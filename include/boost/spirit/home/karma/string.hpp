@@ -11,5 +11,6 @@
 #endif
 
 #include <boost/spirit/home/karma/string/lit.hpp>
+#include <boost/spirit/home/karma/string/symbols.hpp>
 
 #endif

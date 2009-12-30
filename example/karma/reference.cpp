@@ -420,6 +420,23 @@ int main()
     }
 
     {
+        //[reference_karma_using_declarations_columns
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::columns;
+        using boost::spirit::karma::space;
+        //]
+
+        //[reference_karma_columns
+        std::vector<double> v;
+        v.push_back(1.0);
+        v.push_back(2.0);
+        v.push_back(3.0);
+        test_generator_attr("1.0\n2.0\n3.0\n", columns(1)[*double_], v);
+        test_generator_attr_delim("1.0 2.0 \n3.0 \n", columns(2)[*double_], space, v);
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_bool
         using boost::spirit::karma::bool_;
         using boost::spirit::karma::lit;
@@ -750,6 +767,25 @@ int main()
         v.push_back(456);
         v.push_back(789);
         test_generator_attr_delim("123 , 456 , 789", nlist, space, v);
+        //]
+    }
+
+    // symbols
+    {
+        //[reference_karma_using_declarations_symbols
+        using boost::spirit::karma::symbols;
+        //]
+
+        //[reference_karma_symbols
+        symbols<char, char const*> sym;
+
+        sym.add
+            ('a', "Apple")
+            ('b', "Banana")
+            ('o', "Orange")
+        ;
+
+        test_generator_attr("Banana", sym, 'b');
         //]
     }
 

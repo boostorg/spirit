@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/parser.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/not.hpp>
@@ -21,7 +20,7 @@
 namespace boost { namespace spirit { namespace traits
 {
     // finding out, whether a component contains a semantic action
-    template <typename T>
+    template <typename T, typename Enable = void>
     struct has_semantic_action
       : mpl::false_ {};
 
