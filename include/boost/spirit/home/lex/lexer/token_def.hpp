@@ -96,7 +96,7 @@ namespace boost { namespace spirit { namespace lex
                 //  associate this token definition with a lexer instance.
                 BOOST_ASSERT(std::size_t(~0) != token_state_);
 
-                token_type &t = *first;
+                token_type const& t = *first;
                 if (token_id_ == t.id() && token_state_ == t.state()) {
                     spirit::traits::assign_to(t, attr);
                     ++first;

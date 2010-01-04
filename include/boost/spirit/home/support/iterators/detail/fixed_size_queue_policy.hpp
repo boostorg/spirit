@@ -59,10 +59,7 @@ namespace boost { namespace spirit { namespace iterator_policies
                 {
                     return MultiPass::get_input(mp);
                 }
-                else
-                {
-                    return *mp.queuePosition;
-                }
+                return *mp.queuePosition;
             }
 
             //  This is called when the iterator is incremented. It's a 

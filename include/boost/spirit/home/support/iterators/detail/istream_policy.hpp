@@ -4,61 +4,39 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(BOOST_SPIRIT_ITERATOR_INPUT_ITERATOR_POLICY_MAR_16_2007_1156AM)
-#define BOOST_SPIRIT_ITERATOR_INPUT_ITERATOR_POLICY_MAR_16_2007_1156AM
+#if !defined(BOOST_SPIRIT_ISTREAM_POLICY_JAN_04_2010_0130PM)
+#define BOOST_SPIRIT_ISTREAM_POLICY_JAN_04_2010_0130PM
 
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
-#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
-#include <boost/assert.hpp>
 
 namespace boost { namespace spirit { namespace iterator_policies
 {
-    namespace input_iterator_is_valid_test_
-    {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Token>
-        inline bool token_is_valid(Token const& c)
-        {
-            return c ? true : false;
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////
-    //  class input_iterator
+    //  class istream
     //  Implementation of the InputPolicy used by multi_pass
     // 
-    //  The input_iterator encapsulates an input iterator of type T
+    //  The istream encapsulates an std::basic_istream
     ///////////////////////////////////////////////////////////////////////////
-    struct input_iterator
+    struct istream
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename T>
         class unique // : public detail::default_input_policy
         {
         private:
-            typedef
-                typename boost::detail::iterator_traits<T>::value_type
-            result_type;
+            typedef typename T::char_type result_type;
 
         public:
-            typedef
-                typename boost::detail::iterator_traits<T>::difference_type
-            difference_type;
-            typedef
-                typename boost::detail::iterator_traits<T>::difference_type
-            distance_type;
-            typedef
-                typename boost::detail::iterator_traits<T>::pointer
-            pointer;
-            typedef
-                typename boost::detail::iterator_traits<T>::reference
-            reference;
+            typedef typename T::off_type difference_type;
+            typedef typename T::off_type distance_type;
+            typedef result_type const* pointer;
+            typedef result_type const& reference;
             typedef result_type value_type;
 
         protected:
             unique() {}
-            explicit unique(T x) {}
+            explicit unique(T&) {}
 
             void swap(unique&) {}
 
@@ -69,28 +47,28 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename ValueType, typename MultiPass>
             static ValueType const& get_input(MultiPass& mp)
             {
-                return *mp.shared()->input_;
+                if (!mp.shared()->initialized_)
+                    advance_input(mp);
+                return mp.shared()->curtok_;
             }
 
             template <typename MultiPass>
             static void advance_input(MultiPass& mp)
             {
-                ++mp.shared()->input_;
+                mp.shared()->read_one();
             }
 
             // test, whether we reached the end of the underlying stream
             template <typename MultiPass>
             static bool input_at_eof(MultiPass const& mp) 
             {
-                static T const end_iter;
-                return mp.shared()->input_ == end_iter;
+                return mp.shared()->eof_reached_;
             }
 
             template <typename MultiPass>
             static bool input_is_valid(MultiPass const& mp, value_type const& t) 
             {
-                using namespace input_iterator_is_valid_test_;
-                return token_is_valid(t);
+                return mp.shared()->initialized_;
             }
 
             // no unique data elements
@@ -100,9 +78,26 @@ namespace boost { namespace spirit { namespace iterator_policies
         template <typename T>
         struct shared
         {
-            explicit shared(T const& input) : input_(input) {}
+        private:
+            typedef typename T::char_type result_type;
 
-            T input_;
+        public:
+            explicit shared(T& input) 
+              : input_(input), curtok_(-1)
+              , initialized_(false), eof_reached_(false) 
+            {}
+
+            void read_one()
+            {
+                if (!(input_ >> curtok_))
+                    eof_reached_ = true;
+                initialized_ = true;
+            }
+
+            T& input_;
+            result_type curtok_;
+            bool initialized_;
+            bool eof_reached_;
         };
     };
 

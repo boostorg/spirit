@@ -345,6 +345,21 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token_value_type& value() { return value_; }
         token_value_type const& value() const { return value_; }
 
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1600)
+        // workaround for MSVC10 which has problems copying a default 
+        // constructed iterator_range
+        token& operator= (token const& rhs)
+        {
+            if (this != &rhs) 
+            {
+                this->base_type::operator=(rhs);
+                if (this->id_ != boost::lexer::npos && this->id_ != 0) 
+                    value_ = rhs.value_;
+            }
+            return *this;
+        }
+#endif
+
     protected:
         token_value_type value_; // token value, by default a pair of iterators
     };

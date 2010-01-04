@@ -67,10 +67,13 @@ namespace boost { namespace spirit { namespace detail
         void swap(default_input_policy&) {}
 
         template <typename MultiPass, typename TokenType>
-        static TokenType& advance_input(MultiPass& mp, TokenType& curtok);
+        static void advance_input(MultiPass& mp);
 
-        template <typename MultiPass, typename TokenType>
-        static bool input_at_eof(MultiPass const& mp, TokenType& curtok);
+        template <typename TokenType, typename MultiPass>
+        static TokenType const& get_input(MultiPass& mp);
+
+        template <typename MultiPass>
+        static bool input_at_eof(MultiPass const& mp);
 
         template <typename MultiPass, typename TokenType>
         static bool input_is_valid(MultiPass& mp, TokenType& curtok);
