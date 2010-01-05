@@ -117,8 +117,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             static void clear_queue(MultiPass& mp)
             {
                 mp.shared()->queued_elements.clear();
-                mp.shared()->queued_elements.push_back(Value(0));
-                mp.queued_position = 1;
+                mp.queued_position = 0;
             }
 
             // called to determine whether the iterator is an eof iterator
