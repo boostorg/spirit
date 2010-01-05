@@ -203,14 +203,28 @@ namespace boost { namespace spirit
     {
         return multi_pass<T, Policies>(i);
     }
+    template <typename Policies, typename T>
+    inline multi_pass<T, Policies>
+    make_multi_pass(T const& i)
+    {
+        return multi_pass<T, Policies>(i);
+    }
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     inline multi_pass<T>
     make_default_multi_pass(T& i)
     {
         return multi_pass<T>(i);
     }
+    template <typename T>
+    inline multi_pass<T>
+    make_default_multi_pass(T const& i)
+    {
+        return multi_pass<T>(i);
+    }
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policies>
     inline void 
     swap(multi_pass<T, Policies> &x, multi_pass<T, Policies> &y)
@@ -218,6 +232,7 @@ namespace boost { namespace spirit
         x.swap(y);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
     // define special functions allowing to integrate any multi_pass iterator
     // with expectation points
     namespace traits

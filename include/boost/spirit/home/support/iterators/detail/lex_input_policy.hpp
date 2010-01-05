@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             // test, whether we reached the end of the underlying stream
             template <typename MultiPass>
-            static bool input_at_eof(MultiPass const&) 
+            static bool input_at_eof(MultiPass const& mp) 
             {
                 return mp.shared()->curtok == 0;
             }
