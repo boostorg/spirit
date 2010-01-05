@@ -10,13 +10,14 @@
 #pragma once
 #endif
 
-//  Include everything needed for the default configuration of multi_pass
+//  Include everything needed for the multi_pass
 //  Ownership policies
 #include <boost/spirit/home/support/iterators/detail/first_owner_policy.hpp>
 #include <boost/spirit/home/support/iterators/detail/ref_counted_policy.hpp>
 
 //  Input policies
 #include <boost/spirit/home/support/iterators/detail/input_iterator_policy.hpp>
+#include <boost/spirit/home/support/iterators/detail/istream_policy.hpp>
 #include <boost/spirit/home/support/iterators/detail/lex_input_policy.hpp>
 #include <boost/spirit/home/support/iterators/detail/split_functor_input_policy.hpp>
 

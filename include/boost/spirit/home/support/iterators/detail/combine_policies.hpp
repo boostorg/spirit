@@ -30,6 +30,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Ownership, Checking, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -66,6 +67,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Ownership, Checking, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -117,7 +119,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         template <typename TokenType, typename MultiPass>
         inline static TokenType const& get_input(MultiPass& mp)
-            { return Input::get_input<TokenType>(mp); }
+            { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -136,6 +138,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Ownership, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -192,7 +195,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         template <typename TokenType, typename MultiPass>
         inline static TokenType const& get_input(MultiPass& mp)
-            { return Input::get_input<TokenType>(mp); }
+            { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -220,6 +223,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Checking, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -280,7 +284,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         template <typename TokenType, typename MultiPass>
         inline static TokenType const& get_input(MultiPass& mp)
-            { return Input::get_input<TokenType>(mp); }
+            { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -312,8 +316,9 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
-        
+
         template <typename MultiPass>
         static void destroy(MultiPass& mp)
         {
@@ -377,7 +382,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         template <typename TokenType, typename MultiPass>
         inline static TokenType const& get_input(MultiPass& mp)
-            { return Input::get_input<TokenType>(mp); }
+            { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -420,6 +425,7 @@ namespace boost { namespace spirit { namespace iterator_policies
     struct multi_pass_shared : Ownership, Checking, Input, Storage
     {
         explicit multi_pass_shared(T& input) : Input(input) {}
+        explicit multi_pass_shared(T const& input) : Input(input) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -455,6 +461,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             unique() {}
             explicit unique(T& input) : unique_base_type(input) {}
+            explicit unique(T const& input) : unique_base_type(input) {}
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -477,6 +484,8 @@ namespace boost { namespace spirit { namespace iterator_policies
               , input_policy, storage_policy> shared_base_type;
 
             explicit shared(T& input) 
+              : shared_base_type(input), inhibit_clear_queue_(false) {}
+            explicit shared(T const& input) 
               : shared_base_type(input), inhibit_clear_queue_(false) {}
 
             // This is needed for the correct implementation of expectation 
