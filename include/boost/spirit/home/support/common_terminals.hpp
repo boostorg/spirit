@@ -33,7 +33,6 @@ namespace boost { namespace spirit
         ( buffer )
         ( true_ )
         ( false_ )
-        ( auto_ )
     )
 
     // Here we are reusing proto::lit
@@ -82,6 +81,7 @@ namespace boost { namespace spirit
         ( token )
         ( attr )
         ( columns )
+        ( auto_ )
     )
 
     // special tags (used mainly for stateful tag types)
