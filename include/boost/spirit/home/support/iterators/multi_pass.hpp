@@ -58,12 +58,9 @@ namespace boost { namespace spirit
 
         multi_pass() : member_base((shared_data_type*)0) {}
 
-        // Newer versions of gcc (and perhaps other compilers) are known to 
-        // generate warnings about the base class and the 'shared' member 
-        // being initialized in the wrong order ('shared' is initialized before
-        // the base class). This is fully intended behavior as some policies
-        // rely on the fact that their shared part is initialized before their
-        // unique part. Please ignore the warnings, these are harmless.
+        explicit multi_pass(T& input)
+          : member_base(new shared_data_type(input)), policies_base_type(input) {}
+
         explicit multi_pass(T const& input)
           : member_base(new shared_data_type(input)), policies_base_type(input) {}
 
@@ -202,11 +199,24 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <typename Policies, typename T>
     inline multi_pass<T, Policies>
+    make_multi_pass(T& i)
+    {
+        return multi_pass<T, Policies>(i);
+    }
+    template <typename Policies, typename T>
+    inline multi_pass<T, Policies>
     make_multi_pass(T const& i)
     {
         return multi_pass<T, Policies>(i);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    inline multi_pass<T>
+    make_default_multi_pass(T& i)
+    {
+        return multi_pass<T>(i);
+    }
     template <typename T>
     inline multi_pass<T>
     make_default_multi_pass(T const& i)
@@ -214,6 +224,7 @@ namespace boost { namespace spirit
         return multi_pass<T>(i);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policies>
     inline void 
     swap(multi_pass<T, Policies> &x, multi_pass<T, Policies> &y)
@@ -221,6 +232,7 @@ namespace boost { namespace spirit
         x.swap(y);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
     // define special functions allowing to integrate any multi_pass iterator
     // with expectation points
     namespace traits

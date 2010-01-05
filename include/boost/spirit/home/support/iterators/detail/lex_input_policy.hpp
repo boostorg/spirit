@@ -20,12 +20,13 @@ namespace boost { namespace spirit { namespace iterator_policies
     ///////////////////////////////////////////////////////////////////////////
     struct lex_input
     {
+        typedef int value_type;
+
         ///////////////////////////////////////////////////////////////////////
         template <typename T>
         class unique : public detail::default_input_policy
         {
         public:
-            typedef int value_type;
             typedef std::ptrdiff_t difference_type;
             typedef std::ptrdiff_t distance_type;
             typedef int* pointer;
@@ -37,17 +38,29 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         public:
             template <typename MultiPass>
-            static value_type& advance_input(MultiPass& mp, value_type& t)
+            static value_type const& get_input(MultiPass& mp)
+            {
+                value_type& curtok = mp.shared()->curtok;
+                if (-1 == curtok)
+                {
+                    extern int yylex();
+                    curtok = yylex();
+                }
+                return curtok;
+            }
+
+            template <typename MultiPass>
+            static void advance_input(MultiPass& mp)
             {
                 extern int yylex();
-                return t = yylex();
+                mp.shared()->curtok = yylex();
             }
 
             // test, whether we reached the end of the underlying stream
             template <typename MultiPass>
-            static bool input_at_eof(MultiPass const&, value_type const& t) 
+            static bool input_at_eof(MultiPass const& mp) 
             {
-                return 0 == t;
+                return mp.shared()->curtok == 0;
             }
 
             template <typename MultiPass>
@@ -61,9 +74,9 @@ namespace boost { namespace spirit { namespace iterator_policies
         template <typename T>
         struct shared
         {
-            explicit shared(T) {}
+            explicit shared(T) : curtok(-1) {}
 
-            // no shared data elements
+            value_type curtok;
         };
     };
 

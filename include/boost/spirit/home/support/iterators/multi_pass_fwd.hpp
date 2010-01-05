@@ -18,6 +18,7 @@ namespace boost { namespace spirit {
     {
         // input policies
         struct input_iterator;
+        struct istream;
         struct lex_input;
         struct functor_input;
         struct split_functor_input;

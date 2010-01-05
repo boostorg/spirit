@@ -106,7 +106,8 @@ namespace boost { namespace spirit { namespace qi
     inline std::basic_istream<Char, Traits>&
     operator>>(std::basic_istream<Char, Traits>& is, parser<Derived> const& p)
     {
-        typedef std::istream_iterator<Char, Char, Traits> input_iterator;
+        typedef spirit::basic_istream_iterator<Char, Traits> input_iterator;
+
         input_iterator f(is);
         input_iterator l;
         if (!p.derived().parse(f, l, unused, unused, unused))

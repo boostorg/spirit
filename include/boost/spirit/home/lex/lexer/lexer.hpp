@@ -86,7 +86,7 @@ namespace boost { namespace spirit { namespace lex
                         boost::detail::iterator_traits<Iterator>::value_type 
                     token_type;
 
-                    token_type &t = *first;
+                    token_type const& t = *first;
                     if (token_is_valid(t) && t.state() == first.get_state()) {
                     // any of the token definitions matched
                         spirit::traits::assign_to(t, attr);

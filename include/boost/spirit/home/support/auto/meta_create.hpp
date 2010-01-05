@@ -22,7 +22,7 @@
 #include <boost/fusion/include/fold.hpp>
 
 // needed for workaround below
-#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 1))
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 3))
 #include <boost/type_traits/is_same.hpp>
 #endif
 
@@ -64,9 +64,9 @@ namespace boost { namespace spirit
             template <typename T>
             struct result;
 
-// this is a workaround for older versions of g++ (< V4.2) which apparently have
+// this is a workaround for older versions of g++ (< V4.3) which apparently have
 // problems with the following template specialization
-#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 2))
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 3))
             template <typename F, typename T1, typename T2>
             struct result<F(T1, T2)>
             {
@@ -113,9 +113,9 @@ namespace boost { namespace spirit
             template <typename T>
             struct result;
 
-// this is a workaround for older versions of g++ (< V4.2) which apparently have
+// this is a workaround for older versions of g++ (< V4.3) which apparently have
 // problems with the following template specialization
-#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 2))
+#if defined(__GNUC__) && ((__GNUC__ < 4) || (__GNUC__ == 4) && (__GNUC_MINOR__ < 3))
             template <typename F, typename T1, typename T2>
             struct result<F(T1, T2)>
             {

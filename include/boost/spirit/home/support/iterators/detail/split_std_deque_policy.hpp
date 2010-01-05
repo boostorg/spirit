@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             typedef std::vector<Value> queue_type;
 
         protected:
-            unique() : queued_position(1) {}
+            unique() : queued_position(0) {}
 
             unique(unique const& x)
               : queued_position(x.queued_position) {}
@@ -53,13 +53,23 @@ namespace boost { namespace spirit { namespace iterator_policies
             dereference(MultiPass const& mp)
             {
                 queue_type& queue = mp.shared()->queued_elements;
+                typename queue_type::size_type size = queue.size();
 
-                BOOST_ASSERT(mp.queued_position > 0 && mp.queued_position <= queue.size());
+                BOOST_ASSERT(mp.queued_position <= size);
 
-                Value& v(queue[mp.queued_position-1]);
-                if (!MultiPass::input_is_valid(mp, v))
-                    return MultiPass::advance_input(mp, v);
-                return v;
+                if (mp.queued_position == size)
+                {
+                    // check if this is the only iterator
+                    if (size >= threshold && MultiPass::is_unique(mp))
+                    {
+                        // free up the memory used by the queue.
+                        queue.clear();
+                        mp.queued_position = 0;
+                    }
+                    return MultiPass::template get_input<Value>(mp);
+                }
+
+                return queue[mp.queued_position];
             }
 
             // This is called when the iterator is incremented. It's a template
@@ -71,12 +81,12 @@ namespace boost { namespace spirit { namespace iterator_policies
                 queue_type& queue = mp.shared()->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
-                BOOST_ASSERT(mp.queued_position > 0 && mp.queued_position <= size);
+                BOOST_ASSERT(mp.queued_position <= size);
 
-                // do not increment iterator as long as the current token is
-                // invalid
-                if (size > 0 && !MultiPass::input_is_valid(mp, queue[mp.queued_position-1]))
-                    return;
+//                 // do not increment iterator as long as the current token is
+//                 // invalid
+//                 if (size > 0 && !MultiPass::input_is_valid(mp, queue[mp.queued_position-1]))
+//                     return;
 
                 if (mp.queued_position == size)
                 {
@@ -86,21 +96,15 @@ namespace boost { namespace spirit { namespace iterator_policies
                         // free up the memory used by the queue. we avoid 
                         // clearing the queue on every increment, though, 
                         // because this would be too time consuming
-
-                        // erase all but first item in queue
-                        queue.erase(queue.begin()+1, queue.end());
+                        queue.clear();
                         mp.queued_position = 0;
-
-                        // reuse first entry in the queue and initialize 
-                        // it from the input
                     }
                     else
                     {
-                        // create a new entry in the queue and initialize 
-                        // it from the input
-                        queue.push_back(Value(0));
+                        queue.push_back(MultiPass::template get_input<Value>(mp));
+                        ++mp.queued_position;
                     }
-                    MultiPass::advance_input(mp, queue[mp.queued_position++]);
+                    MultiPass::advance_input(mp);
                 }
                 else
                 {
@@ -113,18 +117,15 @@ namespace boost { namespace spirit { namespace iterator_policies
             static void clear_queue(MultiPass& mp)
             {
                 mp.shared()->queued_elements.clear();
-                mp.shared()->queued_elements.push_back(Value(0));
-                mp.queued_position = 1;
+                mp.queued_position = 0;
             }
 
             // called to determine whether the iterator is an eof iterator
             template <typename MultiPass>
             static bool is_eof(MultiPass const& mp)
             {
-                queue_type& queue = mp.shared()->queued_elements;
-                return 0 != mp.queued_position && 
-                    mp.queued_position == queue.size() && 
-                    MultiPass::input_at_eof(mp, queue[mp.queued_position-1]);
+                return mp.queued_position == mp.shared()->queued_elements.size() 
+                    && MultiPass::input_at_eof(mp);
             }
 
             // called by operator==
@@ -155,7 +156,6 @@ namespace boost { namespace spirit { namespace iterator_policies
             shared() 
             {
                 queued_elements.reserve(threshold); 
-                queued_elements.push_back(Value(0));
             }
 
             typedef std::vector<Value> queue_type;

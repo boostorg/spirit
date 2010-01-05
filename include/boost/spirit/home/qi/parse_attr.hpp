@@ -46,6 +46,12 @@ namespace boost { namespace spirit { namespace qi
       , Expr const& expr
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, & attr))
     {
+        // Make sure the iterator is at least a forward_iterator. If you got an 
+        // compilation error here, then you are using an input_iterator while
+        // calling this function, you need to supply at least a 
+        // forward_iterator instead.
+        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
@@ -71,6 +77,12 @@ namespace boost { namespace spirit { namespace qi
       , BOOST_SCOPED_ENUM(skip_flag) post_skip
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, & attr))
     {
+        // Make sure the iterator is at least a forward_iterator. If you got an 
+        // compilation error here, then you are using an input_iterator while
+        // calling this function, you need to supply at least a 
+        // forward_iterator instead.
+        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then either the expression (expr) or skipper is not a valid

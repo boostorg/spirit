@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/qi/parse.hpp>
+#include <boost/spirit/home/support/iterators/istream_iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/mpl/bool.hpp>
 
@@ -152,7 +153,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     operator>>(std::basic_istream<Char, Traits> &is,
         match_manip<Expr, CopyExpr, CopyAttr> const& fm)
     {
-        typedef std::istream_iterator<Char, Char, Traits> input_iterator;
+        typedef spirit::basic_istream_iterator<Char, Traits> input_iterator;
+
         input_iterator f(is);
         input_iterator l;
         if (!qi::parse(f, l, fm.expr))
@@ -170,7 +172,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     operator>>(std::basic_istream<Char, Traits> &is,
         match_manip<Expr, CopyExpr, CopyAttr, unused_type, Attribute> const& fm)
     {
-        typedef std::istream_iterator<Char, Char, Traits> input_iterator;
+        typedef spirit::basic_istream_iterator<Char, Traits> input_iterator;
+
         input_iterator f(is);
         input_iterator l;
         if (!qi::parse(f, l, fm.expr, fm.attr))
@@ -188,7 +191,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     operator>>(std::basic_istream<Char, Traits> &is,
         match_manip<Expr, CopyExpr, CopyAttr, Skipper> const& fm)
     {
-        typedef std::istream_iterator<Char, Char, Traits> input_iterator;
+        typedef spirit::basic_istream_iterator<Char, Traits> input_iterator;
+
         input_iterator f(is);
         input_iterator l;
         if (!qi::phrase_parse(
@@ -209,7 +213,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         std::basic_istream<Char, Traits> &is,
         match_manip<Expr, CopyExpr, CopyAttr, Attribute, Skipper> const& fm)
     {
-        typedef std::istream_iterator<Char, Char, Traits> input_iterator;
+        typedef spirit::basic_istream_iterator<Char, Traits> input_iterator;
+
         input_iterator f(is);
         input_iterator l;
         if (!qi::phrase_parse(

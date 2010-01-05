@@ -30,6 +30,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Ownership, Checking, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -66,6 +67,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Ownership, Checking, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -111,13 +113,17 @@ namespace boost { namespace spirit { namespace iterator_policies
         }
 
         // implement input policy functions by forwarding to the Input type
-        template <typename MultiPass, typename TokenType>
-        inline static TokenType& advance_input(MultiPass& mp, TokenType& curtok)
-            { return Input::advance_input(mp, curtok); }
+        template <typename MultiPass>
+        inline static void advance_input(MultiPass& mp)
+            { Input::advance_input(mp); }
 
-        template <typename MultiPass, typename TokenType>
-        inline static bool input_at_eof(MultiPass const& mp, TokenType& curtok)
-            { return Input::input_at_eof(mp, curtok); }
+        template <typename TokenType, typename MultiPass>
+        inline static TokenType const& get_input(MultiPass& mp)
+            { return Input::template get_input<TokenType>(mp); }
+
+        template <typename MultiPass>
+        inline static bool input_at_eof(MultiPass const& mp)
+            { return Input::input_at_eof(mp); }
 
         template <typename MultiPass, typename TokenType>
         inline static bool input_is_valid(MultiPass& mp, TokenType& curtok)
@@ -132,6 +138,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Ownership, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -182,13 +189,17 @@ namespace boost { namespace spirit { namespace iterator_policies
         }
 
         // implement input policy functions by forwarding to the Input type
-        template <typename MultiPass, typename TokenType>
-        inline static TokenType& advance_input(MultiPass& mp, TokenType& curtok)
-            { return Input::advance_input(mp, curtok); }
+        template <typename MultiPass>
+        inline static void advance_input(MultiPass& mp)
+            { Input::advance_input(mp); }
 
-        template <typename MultiPass, typename TokenType>
-        inline static bool input_at_eof(MultiPass const& mp, TokenType& curtok)
-            { return Input::input_at_eof(mp, curtok); }
+        template <typename TokenType, typename MultiPass>
+        inline static TokenType const& get_input(MultiPass& mp)
+            { return Input::template get_input<TokenType>(mp); }
+
+        template <typename MultiPass>
+        inline static bool input_at_eof(MultiPass const& mp)
+            { return Input::input_at_eof(mp); }
 
         template <typename MultiPass, typename TokenType>
         inline static bool input_is_valid(MultiPass& mp, TokenType& curtok)
@@ -212,6 +223,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Checking, Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
 
         template <typename MultiPass>
@@ -266,13 +278,17 @@ namespace boost { namespace spirit { namespace iterator_policies
         }
 
         // implement input policy functions by forwarding to the Input type
-        template <typename MultiPass, typename TokenType>
-        inline static TokenType& advance_input(MultiPass& mp, TokenType& curtok)
-            { return Input::advance_input(mp, curtok); }
+        template <typename MultiPass>
+        inline static void advance_input(MultiPass& mp)
+            { Input::advance_input(mp); }
 
-        template <typename MultiPass, typename TokenType>
-        inline static bool input_at_eof(MultiPass const& mp, TokenType& curtok)
-            { return Input::input_at_eof(mp, curtok); }
+        template <typename TokenType, typename MultiPass>
+        inline static TokenType const& get_input(MultiPass& mp)
+            { return Input::template get_input<TokenType>(mp); }
+
+        template <typename MultiPass>
+        inline static bool input_at_eof(MultiPass const& mp)
+            { return Input::input_at_eof(mp); }
 
         template <typename MultiPass, typename TokenType>
         inline static bool input_is_valid(MultiPass& mp, TokenType& curtok)
@@ -300,8 +316,9 @@ namespace boost { namespace spirit { namespace iterator_policies
       : Input, Storage
     {
         multi_pass_unique() {}
+        multi_pass_unique(T& x) : Input(x) {}
         multi_pass_unique(T const& x) : Input(x) {}
-        
+
         template <typename MultiPass>
         static void destroy(MultiPass& mp)
         {
@@ -359,13 +376,17 @@ namespace boost { namespace spirit { namespace iterator_policies
         }
 
         // implement input policy functions by forwarding to the Input type
-        template <typename MultiPass, typename TokenType>
-        inline static TokenType& advance_input(MultiPass& mp, TokenType& curtok)
-            { return Input::advance_input(mp, curtok); }
+        template <typename MultiPass>
+        inline static void advance_input(MultiPass& mp)
+            { Input::advance_input(mp); }
 
-        template <typename MultiPass, typename TokenType>
-        inline static bool input_at_eof(MultiPass const& mp, TokenType& curtok)
-            { return Input::input_at_eof(mp, curtok); }
+        template <typename TokenType, typename MultiPass>
+        inline static TokenType const& get_input(MultiPass& mp)
+            { return Input::template get_input<TokenType>(mp); }
+
+        template <typename MultiPass>
+        inline static bool input_at_eof(MultiPass const& mp)
+            { return Input::input_at_eof(mp); }
 
         template <typename MultiPass, typename TokenType>
         inline static bool input_is_valid(MultiPass& mp, TokenType& curtok)
@@ -403,6 +424,7 @@ namespace boost { namespace spirit { namespace iterator_policies
       , typename Storage>
     struct multi_pass_shared : Ownership, Checking, Input, Storage
     {
+        explicit multi_pass_shared(T& input) : Input(input) {}
         explicit multi_pass_shared(T const& input) : Input(input) {}
     };
 
@@ -438,6 +460,7 @@ namespace boost { namespace spirit { namespace iterator_policies
               , input_policy, storage_policy> unique_base_type;
 
             unique() {}
+            explicit unique(T& input) : unique_base_type(input) {}
             explicit unique(T const& input) : unique_base_type(input) {}
         };
 
@@ -460,6 +483,8 @@ namespace boost { namespace spirit { namespace iterator_policies
             typedef multi_pass_shared<T, ownership_policy, checking_policy
               , input_policy, storage_policy> shared_base_type;
 
+            explicit shared(T& input) 
+              : shared_base_type(input), inhibit_clear_queue_(false) {}
             explicit shared(T const& input) 
               : shared_base_type(input), inhibit_clear_queue_(false) {}
 

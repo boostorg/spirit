@@ -224,8 +224,8 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename Subject>
-    struct has_semantic_action<karma::maxwidth_width<Subject> >
+    template <typename Subject, typename Width, typename Rest>
+    struct has_semantic_action<karma::maxwidth_width<Subject, Width, Rest> >
       : unary_has_semantic_action<Subject> {};
 
 }}}
