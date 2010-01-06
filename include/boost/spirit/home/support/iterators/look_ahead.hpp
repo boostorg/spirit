@@ -55,6 +55,12 @@ namespace boost { namespace spirit
           : base_type() {}      // shipped with gcc 3.1
 #endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
+        look_ahead operator= (base_type const& rhs)
+        {
+            this->base_type::operator=(rhs);
+            return *this;
+        }
+
     // default generated operators destructor and assignment operator are ok.
     };
 
