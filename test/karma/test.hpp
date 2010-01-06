@@ -10,8 +10,10 @@
 #include <string>
 #include <iterator>
 #include <iostream>
+#include <iomanip>
 #include <typeinfo>
 
+#include <boost/foreach.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_what.hpp>
 
@@ -54,6 +56,23 @@ namespace spirit_test
             std::cerr << "in " << func << ": generated \""
                 << std::string(generated.begin(), generated.end())
                 << "\"" << std::endl;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char, typename T>
+    void print_binary_if_failed(char const* func, bool result
+      , std::basic_string<Char> const& generated, T const& expected)
+    {
+        if (!result)
+            std::cerr << "in " << func << ": result is false" << std::endl;
+        else if (generated.size() != expected.size() ||
+                 std::memcmp(generated.c_str(), expected.c_str(), generated.size()))
+        {
+            std::cerr << "in " << func << ": generated \"";
+            BOOST_FOREACH(int c, generated)
+                std::cerr << "\\x" << std::hex << std::setfill('0') << std::setw(2) << c;
+            std::cerr << "\"" << std::endl;
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -229,6 +248,8 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g);
 
+        print_binary_if_failed("binary_test", result, generated
+          , std::string(expected, size));
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
@@ -249,6 +270,8 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g, attrib);
 
+        print_binary_if_failed("binary_test", result, generated
+          , std::string(expected, size));
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
@@ -269,6 +292,8 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate_delimited(outit, g, d);
 
+        print_binary_if_failed("binary_test_delimited", result, generated
+          , std::string(expected, size));
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
@@ -289,6 +314,8 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate_delimited(outit, g, d, attrib);
 
+        print_binary_if_failed("binary_test_delimited", result, generated
+          , std::string(expected, size));
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
