@@ -35,6 +35,7 @@ bool test(Char const *toparse, Expr const& expr)
     BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, Expr);
 
     std::istringstream istrm(toparse);
+    istrm.unsetf(std::ios::skipws);
     istrm >> spirit::qi::compile<spirit::qi::domain>(expr);
     return istrm.good() || istrm.eof();
 }
@@ -46,6 +47,7 @@ bool test(Char const *toparse,
         Expr, CopyExpr, CopyAttr, Skipper, Attribute> const& mm)
 {
     std::istringstream istrm(toparse);
+    istrm.unsetf(std::ios::skipws);
     istrm >> mm;
     return istrm.good() || istrm.eof();
 }

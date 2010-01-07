@@ -47,7 +47,7 @@ using namespace boost::spirit;
 //
 
 ///////////////////////////////////////////////////////////////////////////////
-// define a data structure and an corresponding parser to hold the formatting 
+// define a data structure and a corresponding parser to hold the formatting 
 // information extracted from the format specification string
 namespace client
 {
@@ -89,11 +89,11 @@ namespace client
             format %= '%' >> flags >> fill >> width >> prec >> type;
 
             // default flags is right aligned
-            flags  %= char_('+') | char_('-') | attr(' ');
-            fill   %= char_('0') | attr(' ');     // default fill is space
-            width  %= uint_ | attr(-1);
-            prec   %= '.' >> uint_ | attr(3);     // default is 3 digits
-            type   %= no_case[char_('e')] | char_('f') | no_case[char_('g')];
+            flags  = char_('+') | char_('-') | attr(' ');
+            fill   = char_('0') | attr(' ');     // default fill is space
+            width  = uint_ | attr(-1);
+            prec   = '.' >> uint_ | attr(3);     // default is 3 digits
+            type   = no_case[char_('e')] | char_('f') | no_case[char_('g')];
         };
 
         qi::rule<Iterator, format_data()> format;
@@ -233,7 +233,7 @@ struct format_policies : karma::real_policies<T>
 
 ///////////////////////////////////////////////////////////////////////////////
 // This is the generator usable in any Karma output format expression, it needs
-// to be used as
+// to be utilized as
 //
 //    generate(sink, real("%6.3f"), 3.1415926536);    // prints: ' 3.142'
 //
