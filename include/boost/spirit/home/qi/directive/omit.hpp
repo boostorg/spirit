@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2010 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -56,13 +56,14 @@ namespace boost { namespace spirit { namespace qi
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper, Attribute& attr) const
         {
-            return subject.parse(first, last, context, skipper, unused);
+            return subject.parse(first, last, context, skipper, attr);
         }
 
         template <typename Context>
         info what(Context& context) const
         {
             return info("omit", subject.what(context));
+
         }
 
         Subject subject;
@@ -90,7 +91,7 @@ namespace boost { namespace spirit { namespace traits
 {
     template <typename Subject>
     struct has_semantic_action<qi::omit_directive<Subject> >
-      : unary_has_semantic_action<Subject> {};
+      : mpl::false_ {};
 }}}
 
 #endif
