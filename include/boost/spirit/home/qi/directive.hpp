@@ -12,9 +12,10 @@
 #endif
 
 #include <boost/spirit/home/qi/directive/lexeme.hpp>
+#include <boost/spirit/home/qi/directive/matches.hpp>
+#include <boost/spirit/home/qi/directive/no_case.hpp>
 #include <boost/spirit/home/qi/directive/omit.hpp>
 #include <boost/spirit/home/qi/directive/raw.hpp>
-#include <boost/spirit/home/qi/directive/no_case.hpp>
 #include <boost/spirit/home/qi/directive/repeat.hpp>
 #include <boost/spirit/home/qi/directive/skip.hpp>
 
