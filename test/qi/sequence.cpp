@@ -169,17 +169,17 @@ main()
 //         BOOST_TEST(v[2] == "abc3");
 //     }
 
-    {
-        std::vector<std::string> v;
-        rule<char const*, std::string()> e = *~char_(',');
-        rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
-
-        BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
-        BOOST_TEST(v.size() == 3);
-        BOOST_TEST(v[0] == "abc1");
-        BOOST_TEST(v[1] == "abc2");
-        BOOST_TEST(v[2] == "abc3");
-    }
+//     {
+//         std::vector<std::string> v;
+//         rule<char const*, std::string()> e = *~char_(',');
+//         rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
+// 
+//         BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
+//         BOOST_TEST(v.size() == 3);
+//         BOOST_TEST(v[0] == "abc1");
+//         BOOST_TEST(v[1] == "abc2");
+//         BOOST_TEST(v[2] == "abc3");
+//     }
 
     {
         std::vector<char> v;
