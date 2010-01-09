@@ -70,6 +70,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename T, typename Enable = void>
     struct push_back_container;
 
+    template <typename Container, typename Enable = void>
+    struct is_empty_container;
+
     ///////////////////////////////////////////////////////////////////////
     // Determine the iterator type of the given container type
     ///////////////////////////////////////////////////////////////////////
