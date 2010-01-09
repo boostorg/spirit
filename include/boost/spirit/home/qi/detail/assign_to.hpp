@@ -34,7 +34,7 @@ namespace boost { namespace spirit { namespace traits
         static void 
         call(Iterator const& first, Iterator const& last, Attribute& attr)
         {
-            if (is_empty(attr))
+            if (traits::is_empty(attr))
                 attr = Attribute(first, last);
             else {
                 for (Iterator i = first; i != last; ++i)
@@ -51,7 +51,7 @@ namespace boost { namespace spirit { namespace traits
         call(Iterator const& first, Iterator const& last
           , reference_wrapper<Attribute> attr)
         {
-            if (is_empty(attr))
+            if (traits::is_empty(attr))
                 attr = Attribute(first, last);
             else {
                 for (Iterator i = first; i != last; ++i)
