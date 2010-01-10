@@ -78,12 +78,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             template <typename Char>
             void set_state_name (Char const*) 
             {
-// earlier versions of gcc (< 4.2.2) instantiate this function even if it's not 
+// some (random) versions of gcc instantiate this function even if it's not 
 // needed leading to false static asserts
-#if !(defined(__GNUC__) && ( \
-      (__GNUC__ < 4) || \
-      ((__GNUC__ == 4) && (__GNUC_MINOR__ < 2)) || \
-      ((__GNUC__ == 4) && (__GNUC_MINOR__ == 2) && (__GNUC_PATCHLEVEL__ < 2))))
+#if !defined(__GNUC__)
                 // If you see a compile time assertion below you're probably 
                 // using a token type not supporting lexer states (the 3rd 
                 // template parameter of the token is mpl::false_), but your 
