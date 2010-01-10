@@ -136,7 +136,7 @@
           Compound Attribute Rules</a>.
         </p>
 <a name="spirit.abstracts.attributes.compound_attributes.the_attribute_of_sequence_parsers_and_generators"></a><h6>
-<a name="id600691"></a>
+<a name="id626265"></a>
           <a class="link" href="compound_attributes.html#spirit.abstracts.attributes.compound_attributes.the_attribute_of_sequence_parsers_and_generators">The
           Attribute of Sequence Parsers and Generators</a>
         </h6>
@@ -203,8 +203,9 @@
         </p>
 <pre class="programlisting"><span class="comment">// the following parses "1.0 2.0" into a pair of double
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"1.0 2.0"</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">strbegin</span> <span class="special">=</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">p</span><span class="special">;</span>
-<span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> 
+<span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">strbegin</span><span class="special">,</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> 
     <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span><span class="special">,</span>       <span class="comment">// parser grammar 
 </span>    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">space</span><span class="special">,</span>                        <span class="comment">// delimiter grammar
 </span>    <span class="identifier">p</span><span class="special">);</span>                               <span class="comment">// attribute to fill while parsing
@@ -251,7 +252,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.abstracts.attributes.compound_attributes.the_attribute_of_alternative_parsers_and_generators"></a><h6>
-<a name="id602684"></a>
+<a name="id628385"></a>
           <a class="link" href="compound_attributes.html#spirit.abstracts.attributes.compound_attributes.the_attribute_of_alternative_parsers_and_generators">The
           Attribute of Alternative Parsers and Generators</a>
         </h6>

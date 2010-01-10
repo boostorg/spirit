@@ -134,11 +134,11 @@ value to recognize while parse):
 This operator will be called by the stream parsers to gather the input for
 the attribute of type `attribute_type`. 
 
-[note   If the `stream` parser is invoked inside a [qi_format `match`] 
-        (or [qi_format `phrase_match`]) stream manipulator the `Istream` 
+[note   If the `stream` parser is invoked inside a [qi_match `match`] 
+        (or [qi_match `phrase_match`]) stream manipulator the `Istream` 
         passed to the `operator>>()` will have registered (imbued) the same 
-        standard locale instance as the stream the [qi_format `match`] (or 
-        [qi_format `phrase_match`]) manipulator has been used with. 
+        standard locale instance as the stream the [qi_match `match`] (or 
+        [qi_match `phrase_match`]) manipulator has been used with. 
         This ensures all facets registered (imbued) with the original I/O 
         stream object are used during input parsing.
 ]
@@ -170,6 +170,7 @@ __qi_basics_examples__ section.]
 
 A class definition used in the examples:
 
+[reference_qi_complex]
 [reference_qi_stream_complex]
 
 [reference_qi_stream]

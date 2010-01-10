@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
-[section:generate_api Generate API]
+[section:generate_api Generator API]
 
 [//////////////////////////////////////////////////////////////////////////////]
 [section:iterator_api Iterator Based Generator API]
@@ -56,60 +56,69 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename OutputIterator, typename Expr>
-    inline bool
-    generate(
-        OutputIterator& sink
-      , Expr const& expr);
+    namespace boost { namespace spirit { namespace karma
+    {
+        template <typename OutputIterator, typename Expr>
+        inline bool
+        generate(
+            OutputIterator& sink
+          , Expr const& expr);
 
-    template <typename OutputIterator, typename Attr>
-    inline bool
-    generate(
-        OutputIterator& sink
-      , Attr const& attr);
+        template <typename OutputIterator, typename Expr
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline bool
+        generate(
+            OutputIterator& sink
+          , Expr const& expr
+          , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
 
-    template <typename OutputIterator, typename Expr
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline bool
-    generate(
-        OutputIterator& sink
-      , Expr const& expr
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+        template <typename OutputIterator, typename Expr, typename Delimiter>
+        inline bool
+        generate_delimited(
+            OutputIterator& sink
+          , Expr const& expr
+          , Delimiter const& delimiter
+          , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
 
-    template <typename OutputIterator, typename Expr, typename Delimiter>
-    inline bool
-    generate_delimited(
-        OutputIterator& sink
-      , Expr const& expr
-      , Delimiter const& delimiter
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+        template <typename OutputIterator, typename Expr, typename Delimiter
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline bool
+        generate_delimited(
+            OutputIterator& sink
+          , Expr const& expr
+          , Delimiter const& delimiter
+          , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
 
-    template <typename OutputIterator, typename Attr, typename Delimiter>
-    inline bool
-    generate_delimited(
-        OutputIterator& sink
-      , Attr const& attr
-      , Delimiter const& delimiter
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+        template <typename OutputIterator, typename Expr, typename Delimiter
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline bool
+        generate_delimited(
+            OutputIterator& sink
+          , Expr const& expr
+          , Delimiter const& delimiter
+          , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
+          , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+    }}}
 
-    template <typename OutputIterator, typename Expr, typename Delimiter
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline bool
-    generate_delimited(
-        OutputIterator& sink
-      , Expr const& expr
-      , Delimiter const& delimiter
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+__karma__ generator API functions based on the automatic creation of the 
+matching generator type:
 
-    template <typename OutputIterator, typename Expr, typename Delimiter
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline bool
-    generate_delimited(
-        OutputIterator& sink
-      , Expr const& expr
-      , Delimiter const& delimiter
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+    namespace boost { namespace spirit { namespace karma
+    {
+        template <typename OutputIterator, typename Attr, typename Delimiter>
+        inline bool
+        generate_delimited(
+            OutputIterator& sink
+          , Attr const& attr
+          , Delimiter const& delimiter
+          , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+
+        template <typename OutputIterator, typename Attr>
+        inline bool
+        generate(
+            OutputIterator& sink
+          , Attr const& attr);
+    }}}
 
 All functions above return `true` if none of the involved generator components
 failed, and `false` otherwise. If during the process of the output generation
@@ -120,7 +129,7 @@ The maximum number of supported arguments is limited by the preprocessor
 constant `SPIRIT_ARGUMENTS_LIMIT`. This constant defaults to the value defined
 by the preprocessor constant `PHOENIX_LIMIT` (which in turn defaults to `10`). 
 
-[note The variadic function with two or more attributes internally combine 
+[note The variadic functions with two or more attributes internally combine 
       (constant) references to all passed attributes into a `fusion::vector` 
       and forward this as a combined attribute to the corresponding function
       taking one attribute.]
@@ -143,7 +152,7 @@ corresponding argument.
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
-[endsect] [/ Iterator Based Generate API]
+[endsect] [/ Iterator Based Generator API]
 
 [//////////////////////////////////////////////////////////////////////////////]
 [section:stream_api Stream Based Generator API]
@@ -195,53 +204,62 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Expr>
-    inline <unspecified> 
-    format(
-        Expr const& xpr);
+    namespace boost { namespace spirit { namespace karma
+    {
+        template <typename Expr>
+        inline <unspecified> 
+        format(
+            Expr const& xpr);
 
-    template <typename Attr>
-    inline <unspecified> 
-    format(
-        Attr const& xpr);
+        template <typename Expr
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline <unspecified> 
+        format(
+            Expr const& xpr
+          , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
 
-    template <typename Expr
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline <unspecified> 
-    format(
-        Expr const& xpr
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+        template <typename Expr, typename Delimiter>
+        inline <unspecified> 
+        format_delimited(
+            Expr const& expr
+          , Delimiter const& d
+          , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
 
-    template <typename Expr, typename Delimiter>
-    inline <unspecified> 
-    format_delimited(
-        Expr const& expr
-      , Delimiter const& d
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+        template <typename Expr, typename Delimiter
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline <unspecified> 
+        format_delimited(
+            Expr const& expr
+          , Delimiter const& d
+          , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
 
-    template <typename Attr, typename Delimiter>
-    inline <unspecified> 
-    format_delimited(
-        Attr const& attr
-      , Delimiter const& d
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+        template <typename Expr, typename Delimiter
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline <unspecified> 
+        format_delimited(
+            Expr const& expr
+          , Delimiter const& d
+          , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
+          , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+    }}}
 
-    template <typename Expr, typename Delimiter
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline <unspecified> 
-    format_delimited(
-        Expr const& expr
-      , Delimiter const& d
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+__karma__ generator API functions based on the automatic creation of the 
+matching generator type:
 
-    template <typename Expr, typename Delimiter
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline <unspecified> 
-    format_delimited(
-        Expr const& expr
-      , Delimiter const& d
-      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
-      , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
+    namespace boost { namespace spirit { namespace karma
+    {
+        template <typename Attr, typename Delimiter>
+        inline <unspecified> 
+        format_delimited(
+            Attr const& attr
+          , Delimiter const& d
+          , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit);
+
+        template <typename Attr>
+        inline <unspecified> 
+        format(
+            Attr const& xpr);
+    }}}
 
 All functions above return a standard IO stream manipulator instance (see 
 __iomanip__), which when streamed to an output stream will result in generating
@@ -275,7 +293,7 @@ corresponding argument.
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
-[endsect] [/ Stream Based Generate API]
+[endsect] [/ Stream Based Generator API]
 
 [//////////////////////////////////////////////////////////////////////////////]
 [section:create_generator API for Automatic Generator Creation]
@@ -300,14 +318,17 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::karma::create_generator`]]
-    [[`boost::spirit::karma::traits::create_generator_exists`]]
+    [[`boost::spirit::traits::create_generator_exists`]]
 ]
 
 [heading Synopsis]
 
-    template <typename Attr>
-    inline <unspecified> 
-    create_generator();
+    namespace boost { namespace spirit { namespace karma
+    {
+        template <typename Attr>
+        inline <unspecified> 
+        create_generator();
+    }}}
 
 The returned instance can be directly passed as the generator (or the 
 delimiting generator) to any of the __karma__ API functions. Additionally it
@@ -316,10 +337,13 @@ function will return a valid generator type only if the meta function
 `traits::create_generator_exists` returns `mpl::true_`. Otherwise it will fail
 compiling.
 
-    template <typename Attr>
-    struct create_generator_exists;
+    namespace boost { namespace spirit { namespace traits
+    {
+        template <typename Attr>
+        struct create_generator_exists;
+    }}}
 
-The meta function evaluates to `mpl::true_` if if create_generator does return 
+The meta function evaluates to `mpl::true_` if `create_generator` would return 
 a valid generator for the given type `Attr`.
 
 The following table outlines the mapping rules from the attribute type to the
@@ -359,6 +383,6 @@ type which can be used to generate output from the given attribute type.
                                      generator type from.]]
 ]
 
-[endsect]
+[endsect] [/ API for Automatic Generator Creation]
 
 [endsect]

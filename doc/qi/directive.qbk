@@ -10,7 +10,7 @@
 
 This module includes different directives usable to augment and parametrize 
 other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`, 
-and `skip` directives.
+`matches`, and `skip` directives.
 
 
 [heading Module Header]
@@ -423,6 +423,71 @@ the length of the incoming string. Here's a sample input:
 [:__pascal_string__]
 
 [reference_repeat_pascal]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:matches Test if Parser Succeeded (`matches[]`)]
+
+[heading Description]
+
+The `matches[]` directive executes the embedded parser and returns whether it
+succeeded matching.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/matches.hpp>
+    #include <boost/spirit/include/qi_matches.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::matches // alias: boost::spirit::qi::matches` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`matches[a]`]     [Execute the subject parser `a`, and return whether it
+                         succeeded.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`matches[a]`]     [`bool`]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_using_declarations_matches]
+
+[reference_matches]
 
 [endsect]
 

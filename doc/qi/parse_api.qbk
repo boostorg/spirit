@@ -5,10 +5,10 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
-[section:parse_api Parse API]
+[section:parse_api Parser API]
 
 [//////////////////////////////////////////////////////////////////////////////]
-[section:iterator_api Iterator Based Parse API]
+[section:iterator_api Iterator Based Parser API]
 
 [heading Description]
 
@@ -54,67 +54,77 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Iterator, typename Expr>
-    inline bool
-    parse(
-        Iterator& first
-      , Iterator last
-      , Expr const& expr);
+    namespace boost { namespace spirit { namespace qi
+    {
+        template <typename Iterator, typename Expr>
+        inline bool
+        parse(
+            Iterator& first
+          , Iterator last
+          , Expr const& expr);
 
-    template <typename Iterator, typename Attr>
-    inline bool
-    parse(
-        Iterator& first
-      , Iterator last
-      , Attr& attr);
+        template <typename Iterator, typename Expr
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline bool
+        parse(
+            Iterator& first
+          , Iterator last
+          , Expr const& expr
+          , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
 
-    template <typename Iterator, typename Expr
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline bool
-    parse(
-        Iterator& first
-      , Iterator last
-      , Expr const& expr
-      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+        template <typename Iterator, typename Expr, typename Skipper>
+        inline bool
+        phrase_parse(
+            Iterator& first
+          , Iterator last
+          , Expr const& expr
+          , Skipper const& skipper
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
 
-    template <typename Iterator, typename Expr, typename Skipper>
-    inline bool
-    phrase_parse(
-        Iterator& first
-      , Iterator last
-      , Expr const& expr
-      , Skipper const& skipper
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+        template <typename Iterator, typename Expr, typename Skipper
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline bool
+        phrase_parse(
+            Iterator& first
+          , Iterator last
+          , Expr const& expr
+          , Skipper const& skipper
+          , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
 
-    template <typename Iterator, typename Attr, typename Skipper>
-    inline bool
-    phrase_parse(
-        Iterator& first
-      , Iterator last
-      , Attr& attr
-      , Skipper const& skipper
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+        template <typename Iterator, typename Expr, typename Skipper
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline bool
+        phrase_parse(
+            Iterator& first
+          , Iterator last
+          , Expr const& expr
+          , Skipper const& skipper
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip
+          , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+    }}}
 
-    template <typename Iterator, typename Expr, typename Skipper
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline bool
-    phrase_parse(
-        Iterator& first
-      , Iterator last
-      , Expr const& expr
-      , Skipper const& skipper
-      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+__qi__ parser API functions based on the automatic creation of the matching 
+parser type:
 
-    template <typename Iterator, typename Expr, typename Skipper
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline bool
-    phrase_parse(
-        Iterator& first
-      , Iterator last
-      , Expr const& expr
-      , Skipper const& skipper
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip
-      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+    namespace boost { namespace spirit { namespace qi
+    {
+        template <typename Iterator, typename Attr>
+        inline bool
+        parse(
+            Iterator& first
+          , Iterator last
+          , Attr& attr);
+
+
+        template <typename Iterator, typename Attr, typename Skipper>
+        inline bool
+        phrase_parse(
+            Iterator& first
+          , Iterator last
+          , Attr& attr
+          , Skipper const& skipper
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+    }}}
 
 All functions above return `true` if none of the involved parser components
 failed, and `false` otherwise. 
@@ -123,7 +133,7 @@ The maximum number of supported arguments is limited by the preprocessor
 constant `SPIRIT_ARGUMENTS_LIMIT`. This constant defaults to the value defined
 by the preprocessor constant `PHOENIX_LIMIT` (which in turn defaults to `10`). 
 
-[note The variadic function with two or more attributes internally combine 
+[note The variadic functions with two or more attributes internally combine 
       references to all passed attributes into a `fusion::vector` and forward 
       this as a combined attribute to the corresponding one attribute function.]
 
@@ -142,10 +152,10 @@ while passing `skip_flag::dont_postskip` to the corresponding argument.
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
-[endsect] [/ Iterator Based Parse API]
+[endsect] [/ Iterator Based Parser API]
 
 [//////////////////////////////////////////////////////////////////////////////]
-[section:stream_api Stream Based Parse API]
+[section:stream_api Stream Based Parser API]
 
 [heading Description]
 
@@ -192,53 +202,62 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Expr>
-    inline <unspecified> 
-    match(
-        Expr const& xpr);
+    namespace boost { namespace spirit { namespace qi
+    {
+        template <typename Expr>
+        inline <unspecified> 
+        match(
+            Expr const& xpr);
 
-    template <typename Attr>
-    inline <unspecified> 
-    match(
-        Attr& attr);
+        template <typename Expr
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline <unspecified> 
+        match(
+            Expr const& xpr
+          , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
 
-    template <typename Expr
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline <unspecified> 
-    match(
-        Expr const& xpr
-      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+        template <typename Expr, typename Skipper>
+        inline <unspecified> 
+        phrase_match(
+            Expr const& expr
+          , Skipper const& s
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
 
-    template <typename Expr, typename Skipper>
-    inline <unspecified> 
-    phrase_match(
-        Expr const& expr
-      , Skipper const& s
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+        template <typename Expr, typename Skipper
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline <unspecified> 
+        phrase_match(
+            Expr const& expr
+          , Skipper const& s
+          , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
 
-    template <typename Attr, typename Skipper>
-    inline <unspecified> 
-    phrase_match(
-        Attr& attr
-      , Skipper const& s
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+        template <typename Expr, typename Skipper
+          , typename Attr1, typename Attr2, ..., typename AttrN>
+        inline <unspecified> 
+        phrase_match(
+            Expr const& expr
+          , Skipper const& s
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip
+          , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+    }}}
 
-    template <typename Expr, typename Skipper
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline <unspecified> 
-    phrase_match(
-        Expr const& expr
-      , Skipper const& s
-      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+__qi__ parser API functions based on the automatic creation of the matching 
+parser type:
 
-    template <typename Expr, typename Skipper
-      , typename Attr1, typename Attr2, ..., typename AttrN>
-    inline <unspecified> 
-    phrase_match(
-        Expr const& expr
-      , Skipper const& s
-      , BOOST_SCOPED_ENUM(skip_flag) post_skip
-      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+    namespace boost { namespace spirit { namespace qi
+    {
+        template <typename Attr>
+        inline <unspecified> 
+        match(
+            Attr& attr);
+
+        template <typename Attr, typename Skipper>
+        inline <unspecified> 
+        phrase_match(
+            Attr& attr
+          , Skipper const& s
+          , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
+    }}}
 
 All functions above return a standard IO stream manipulator instance (see 
 __iomanip__), which when streamed from an input stream will result in parsing
@@ -271,6 +290,94 @@ while passing `skip_flag::dont_postskip` to the corresponding argument.
     [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
-[endsect] [/ Stream Based Parse API]
+[endsect] [/ Stream Based Parser API]
+
+[//////////////////////////////////////////////////////////////////////////////]
+[section:create_parser API for Automatic Parser Creation]
+
+[heading Description]
+
+The library implements a special API returning a parser instance for a 
+supplied attribute type. This function finds the best matching parser type 
+for the attribute based on a set of simple matching rules (as outlined in the 
+table below) applied recursively to the attribute type. The returned parser
+can be utilized to match input for the provided attribute.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auto.hpp>
+    #include <boost/spirit/include/qi_auto.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::qi::create_parser`]]
+    [[`boost::spirit::traits::create_parser_exists`]]
+]
+
+[heading Synopsis]
+
+    namespace boost { namespace spirit { namespace qi
+    {
+        template <typename Attr>
+        inline <unspecified> 
+        create_parser();
+    }}}
+
+The returned instance can be directly passed as the parser (or the skipping
+parser) to any of the __qi__ API functions. Additionally it
+can be assigned to a rule as the rules right hand side expression. This 
+function will return a valid parser type only if the meta function 
+`traits::create_parser_exists` returns `mpl::true_`. Otherwise it will fail
+compiling.
+
+    namespace boost { namespace spirit { namespace traits
+    {
+        template <typename Attr>
+        struct create_parser_exists;
+    }}}
+
+The meta function evaluates to `mpl::true_` if `create_parser` would return 
+a valid parser for the given type `Attr`.
+
+The following table outlines the mapping rules from the attribute type to the
+parser type. These rules are applied recursively to create the parser 
+type which can be used to match input for the given attribute type.
+
+[table 
+    [[Attribute type]   [Generator type]]
+    [[`char`, `wchar_t`]      [`standard::char_`, `standard_wide::char_`]]
+    [[`short`, `int`, `long`] [`short_`, `int_`, `long_`]]
+    [[`unsigned short`, `unsigned int`, `unsigned long`] 
+                              [`ushort_`, `uint_`, `ulong_`]]
+    [[`float`, `double`, `long double`] [`float_`, `double_`, `long_double`]]
+    [[`short`, `int`, `long`] [`short_`, `int_`, `long_`]]
+    [[`long long`, `unsigned long long`]
+                              [`long_long`, `ulong_long`]]
+    [[`bool`]                 [`bool_`]]
+    [[Any (STL) container]    [Kleene Star (unary `'*'`)]]
+    [[Any Fusion sequence]    [Sequence operator (`'<<'`)]]
+    [[`boost::optional<>`]    [Optional operator (unary `'-'`)]]
+    [[`boost::variant<>`]     [Alternative operator (`'|'`)]]
+]
+
+[important The mapping for the parsers `long_long` and `ulong_long` are only 
+        available on platforms where the preprocessor constant 
+        `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having native 
+        support for `long long` and `unsigned long long` (64 bit) signed and 
+        unsigned integer types).]
+
+[heading Template parameters]
+
+[table
+    [[Parameter]                    [Description]]
+    [[`Attr`]                       [An attribute type utilized to create the corresponding 
+                                     parser type from.]]
+]
+
+[endsect] [/ API for Automatic Parser Creation]
 
 [endsect]

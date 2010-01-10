@@ -1866,5 +1866,196 @@ please see here: __customize_use_as_container_example__.
 
 [endsect] [/ iterate]
 
+[/////////////////////////////////////////////////////////////////////////////]
+[section:auto Create Components from Attributes]
+
+[def __auto_parser_requirements__ [link spirit.qi.reference.auto.additional_requirements Additional Attribute Requirements for Parsers]]
+[def __auto_generator_requirements__ [link spirit.karma.reference.auto.additional_requirements Additional Attribute Requirements for Generators]]
+[def __auto_parser_example__ [link spirit.qi.reference.auto.example Example for Using the `qi::auto_` Parser]]
+[def __auto_generator_example__ [link spirit.karma.reference.auto.example Example for Using the `karma::auto_` Generator]]
+
+__spirit__ supports the creation of a default parser or a default generator from
+a given attribute type. It implements a minimal set of predefined mappings from 
+different attribute types to parsers and generators (for a description of the
+predefined mappings see __auto_parser_requirements__ and 
+__auto_generator_requirements__). 
+The customization points described in this section (__customize_create_parser__ 
+and __customize_create_generator__) can be specialized to define additional 
+mappings for custom data types.
+
+[section:create_parser Define a Custom Attribute Mapping for a Parser]
+
+[heading create_parser]
+
+The template `create_parser` is a type used as an customization point. It is 
+invoked by the /Qi/ __create_parser__ API function in order to create
+a custom mapping of the given data type to a parser expression. This 
+parser expression will be returned from __create_parser__ whenever the
+given data type is encountered.
+
+[heading Module Headers]
+
+    // forwards to <boost/spirit/home/qi/auto.hpp>
+    #include <boost/spirit/include/qi_auto.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T, typename Enable>
+    struct create_parser
+    {
+        typedef <unspecified> type; 
+        static type const& call();
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`T`]                  [The type, `T` for which a custom mapping to a 
+                             parser should be established.]            [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `create_generator` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`T`]              [An arbitrary type.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                             [Semantics]]
+    [[`create_parser<T>::type`]               [Defines the type of the parser 
+                                               expression returned from `call`.]]
+    [[`create_parser<T>::call()`]             [Returns a parser expression (usually
+                                               this is a proto::expression) to be used
+                                               as the default parser for the given 
+                                               type, `T`.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. All predefined mappings are listed here: __auto_parser_requirements__.
+
+[note It is possible to overload the predefined mappings for the listed types 
+      by providing your own specialization of the `create_parser` cutomization
+      point for the type to modify.]
+
+[heading When to implement]
+
+The customization point `create_parser` needs to be implemented for a specific 
+type whenever this type should be usable with the API function __create_parser__ 
+(which includes using the `qi::auto_` parser and the special API functions
+based on the automatic creation of the matching parser type). 
+
+[heading Example]
+
+For an example of how to use the customization point `create_parser` 
+please see here: __auto_parser_example__.
+
+[endsect]
+
+[section:create_generator Define a Custom Attribute Mapping for a Generator]
+
+[heading create_generator]
+
+The template `create_generator` is a type used as an customization point. It is 
+invoked by the /Karma/ __create_generator__ API function in order to create
+a custom mapping of the given data type to a generator expression. This 
+generator expression will be returned from __create_generator__ whenever the
+given data type is encountered.
+
+[heading Module Headers]
+
+    // forwards to <boost/spirit/home/karma/auto.hpp>
+    #include <boost/spirit/include/karma_auto.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T, typename Enable>
+    struct create_generator
+    {
+        typedef <unspecified> type; 
+        static type const& call();
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`T`]                  [The type, `T` for which a custom mapping to a 
+                             generator should be established.]            [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `create_generator` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`T`]              [An arbitrary type.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                             [Semantics]]
+    [[`create_generator<T>::type`]            [Defines the type of the generator 
+                                               expression returned from `call`.]]
+    [[`create_generator<T>::call()`]          [Returns a generator expression (usually
+                                               this is a proto::expression) to be used
+                                               as the default generator for the given 
+                                               type, `T`.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. All predefined mappings are listed here: __auto_generator_requirements__.
+
+[note It is possible to overload the predefined mappings for the listed types 
+      by providing your own specialization of the `create_generator` cutomization
+      point for the type to modify.]
+
+[heading When to implement]
+
+The customization point `create_generator` needs to be implemented for a specific 
+type whenever this type should be usable with the API function __create_generator__ 
+(which includes using the `karma::auto_` generator and the special API functions
+based on the automatic creation of the matching generator type). 
+
+[heading Example]
+
+For an example of how to use the customization point `create_generator` 
+please see here: __auto_generator_example__.
+
+[endsect]
+
+[endsect]
+
 [endsect] [/ customize]
 
