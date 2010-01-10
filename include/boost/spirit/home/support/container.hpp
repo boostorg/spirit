@@ -327,6 +327,28 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable/* = void*/>
+    struct is_empty_container
+    {
+        static bool call(Container const& c)
+        {
+            return c.empty();
+        }
+    };
+
+    template <typename Container>
+    bool is_empty(Container const& c)
+    {
+        return is_empty_container<Container>::call(c);
+    }
+
+    template <typename T>
+    bool is_empty(unused_type)
+    {
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename Enable/* = void*/>
     struct begin_container 
     {
         static typename container_iterator<Container>::type call(Container& c)

@@ -16,8 +16,10 @@
 #include <boost/spirit/home/qi/detail/construct.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes_fwd.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/ref.hpp>
+#include <boost/range/iterator_range.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -32,7 +34,12 @@ namespace boost { namespace spirit { namespace traits
         static void 
         call(Iterator const& first, Iterator const& last, Attribute& attr)
         {
-            attr = Attribute(first, last);
+            if (traits::is_empty(attr))
+                attr = Attribute(first, last);
+            else {
+                for (Iterator i = first; i != last; ++i)
+                    push_back(attr, *i);
+            }
         }
     };
 
@@ -44,7 +51,24 @@ namespace boost { namespace spirit { namespace traits
         call(Iterator const& first, Iterator const& last
           , reference_wrapper<Attribute> attr)
         {
-            attr = Attribute(first, last);
+            if (traits::is_empty(attr))
+                attr = Attribute(first, last);
+            else {
+                for (Iterator i = first; i != last; ++i)
+                    push_back(attr, *i);
+            }
+        }
+    };
+
+    template <typename Iterator>
+    struct assign_to_attribute_from_iterators<
+        iterator_range<Iterator>, Iterator>
+    {
+        static void 
+        call(Iterator const& first, Iterator const& last
+          , iterator_range<Iterator>& attr)
+        {
+            attr = iterator_range<Iterator>(first, last);
         }
     };
 

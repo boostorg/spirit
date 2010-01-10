@@ -75,7 +75,19 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // The following functions are used by the implementation of the 
             // placeholder '_state'.
-            void set_state_name (char_type const*) {}
+            template <typename Char>
+            void set_state_name (Char const*) 
+            {
+// some (random) versions of gcc instantiate this function even if it's not 
+// needed leading to false static asserts
+#if !defined(__GNUC__)
+                // If you see a compile time assertion below you're probably 
+                // using a token type not supporting lexer states (the 3rd 
+                // template parameter of the token is mpl::false_), but your 
+                // code uses state changes anyways.
+                BOOST_STATIC_ASSERT(false);
+#endif
+            }
             char_type const* get_state_name() const 
             { 
                 return get_state_name_(0); 

@@ -84,8 +84,10 @@ main()
         std::string s;
         BOOST_TEST((test_attr("kimpo", string("kimpo"), s)));
         BOOST_TEST(s == "kimpo");
+        s.clear();
         BOOST_TEST((test_attr(L"kimpo", string(L"kimpo"), s)));
         BOOST_TEST(s == "kimpo");
+        s.clear();
         BOOST_TEST((test_attr("x", string("x"), s)));
         BOOST_TEST(s == "x");
     }
