@@ -112,7 +112,7 @@
 [def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
 [def __api_generate_static__    `generate_static_dfa()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
-[template karma_format[str]     [str] [/link spirit.karma.reference.format [str]]]
+[template karma_format[str]     [link spirit.karma.reference.generate_api.stream_api [str]]]
 
 [/ References to classes ]
 
@@ -202,6 +202,9 @@
 
 [template karma_stream[str]         [link spirit.karma.reference.stream [str]]]
 
+[template karma_auto[str]           [link spirit.karma.reference.auto [str]]]
+[def __create_generator__           [link spirit.karma.reference.generate_api.create_generator `create_generator`]]
+
 [def __karma_binary__               [link spirit.karma.reference.binary Binary Generators]]
 [template karma_native_binary[str]  [link spirit.karma.reference.binary.binary_native [str]]]
 [template karma_little_binary[str]  [link spirit.karma.reference.binary.binary_little [str]]]
@@ -255,6 +258,8 @@
 [def __customize_next_iterator__    [link spirit.advanced.customize.iterate.next_iterator `next_iterator`]]
 [def __customize_deref_iterator__   [link spirit.advanced.customize.iterate.deref_iterator `deref_iterator`]]
 [def __customize_compare_iterators__ [link spirit.advanced.customize.iterate.compare_iterators `compare_iterators`]]
+[def __customize_create_parser__    [link spirit.advanced.customize.auto.create_parser `create_parser`]]
+[def __customize_create_generator__ [link spirit.advanced.customize.auto.create_generator `create_generator`]]
 
 [/ Some images ]
 
@@ -352,6 +357,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_lexeme__                  [link spirit.qi.reference.directive.lexeme `lexeme`]]
 [def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case`]]
 [def __qi_omit__                    [link spirit.qi.reference.directive.omit `omit`]]
+[def __qi_matches__                 [link spirit.qi.reference.directive.matches `matches`]]
 [def __qi_raw__                     [link spirit.qi.reference.directive.raw `raw`]]
 [template qi_repeat[str]            [link spirit.qi.reference.directive.repeat [str]]]
 [def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
@@ -378,7 +384,9 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_grammars__                [link spirit.qi.reference.nonterminal.grammar grammars]]
 
 [/ stream]
-[template qi_format[str]            [str] [/link spirit.qi.reference.match [str]]]
+[template qi_match[str]             [link spirit.qi.reference.parse_api.stream_api [str]]]
+[template qi_auto[str]              [link spirit.qi.reference.auto [str]]]
+[def __create_parser__              [link spirit.qi.reference.parse_api.create_parser `create_parser`]]
 
 
 [/ $$$ End $$$ ]

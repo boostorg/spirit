@@ -317,6 +317,19 @@ See here for more information about __karma_auxiliary__.
 
 [endsect]
 
+[section:auto Auto Generators]
+
+See here for more information about [karma_auto Auto Generators].
+
+[table 
+    [[Expression]           [Attribute]     [Description]]
+    [[[karma_auto `auto_`]] [`hold_any`]    [Generate output using a generator 
+                                             created from the supplied attribute type
+                                             using the __create_generator__ API function.]]
+]
+
+[endsect]
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:operators Generator Operators]
 

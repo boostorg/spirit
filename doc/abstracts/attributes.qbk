@@ -26,7 +26,8 @@ API function `qi::parse`:
 
     int value = 0;
     std::string str("123");
-    qi::parse(str.begin(), str.end(), int_, value);   // value == 123
+    std::string::iterator strbegin = str.begin();
+    qi::parse(strbegin, str.end(), int_, value);   // value == 123
 
 The attribute type of a generator defines what data types this generator is 
 able to consume in order to produce its output. __karma__ generators always 
@@ -110,8 +111,9 @@ attribute:
 
     // the following parses "1.0 2.0" into a pair of double
     std::string input("1.0 2.0");
+    std::string::iterator strbegin = input.begin();
     std::pair<double, double> p;
-    qi::phrase_parse(input.begin(), input.end(), 
+    qi::phrase_parse(strbegin, input.end(), 
         qi::double_ >> qi::double_,       // parser grammar 
         qi::space,                        // delimiter grammar
         p);                               // attribute to fill while parsing
@@ -188,8 +190,9 @@ sequence. As said, they just don't expose any attribute and don't produce
 
     // the following parses "(1.0, 2.0)" into a pair of double
     std::string input("(1.0, 2.0)");
+    std::string::iterator strbegin = input.begin();
     std::pair<double, double> p;
-    qi::parse(input.begin(), input.end(), 
+    qi::parse(strbegin, input.end(), 
         '(' >> qi::double_ >> ", " >> qi::double_ >> ')', // parser grammar 
         p);                                               // attribute to fill while parsing
 
@@ -290,7 +293,6 @@ a __karma__ `rule` consuming a `double` while not expecting any additional
 inherited attributes.
 
     karma::rule<OutputIterator, double()> r;
-
 
 The inherited attributes of nonterminal parsers and generators are normally
 passed to the component during its invocation. These are the /parameters/ the

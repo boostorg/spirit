@@ -211,6 +211,7 @@ Some using declarations:
 
 And a class definition used in the examples:
 
+[reference_karma_complex]
 [reference_karma_stream_complex]
 
 Basic usage of `stream` generators:

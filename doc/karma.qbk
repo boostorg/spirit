@@ -26,6 +26,7 @@
 [include        karma/basics.qbk]
 [include        karma/generate_api.qbk]
 [include        karma/action.qbk]
+[include        karma/auto.qbk]
 [include        karma/auxiliary.qbk]
 [include        karma/binary.qbk]
 [include        karma/char.qbk]

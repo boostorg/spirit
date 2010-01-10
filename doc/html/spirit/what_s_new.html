@@ -27,17 +27,17 @@
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
 <a name="spirit.what_s_new.spirit_v2_2"></a><h4>
-<a name="id589152"></a>
+<a name="id614332"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_2">Spirit V2.2</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_1__boost_v1_41_0__to_2_2__boost_v1_42_0_"></a><h4>
-<a name="id589165"></a>
+<a name="id614345"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_1__boost_v1_41_0__to_2_2__boost_v1_42_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)</a>
     </h4>
 <a name="spirit.what_s_new.new_features"></a><h4>
-<a name="id589186"></a>
+<a name="id614365"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.new_features">New Features</a>
     </h4>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -57,13 +57,30 @@
         Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">symbols</span></code> generator.
       </li>
 <li class="listitem">
-        The customization point <code class="computeroutput"><span class="identifier">push_back_container</span></code>
+        The <span class="emphasis"><em>Spirit.Qi</em></span> customization point <code class="computeroutput"><span class="identifier">push_back_container</span></code>
         now returns a <code class="computeroutput"><span class="keyword">bool</span></code> to report
         whether the item has been added to the container.
       </li>
+<li class="listitem">
+        Added an overload for <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">maxwidth</span></code>
+        directive allowing to specify an additional parameter (any compatible output
+        iterator) receiving the 'overspilled' output (output not fitting into the
+        maxwidth limit).
+      </li>
+<li class="listitem">
+        It is now possible to use Phoenix expressions as <span class="emphasis"><em>Spirit.Karma</em></span>
+        attributes.
+      </li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">basic_istream_iterator</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">Traits</span><span class="special">&gt;</span></code> usable as an equivalent for <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>
+        except its a forward iterator allowing to parse directly from any <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span></code>.
+      </li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">matches</span></code> directive.
+      </li>
 </ul></div>
 <a name="spirit.what_s_new.bug_fixes"></a><h4>
-<a name="id589314"></a>
+<a name="id614600"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.bug_fixes">Bug Fixes</a>
     </h4>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -78,10 +95,11 @@
         types.
       </li>
 <li class="listitem">
-        Fixed qi::repeat[] for unused attributes.
+        Fixed <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">repeat</span><span class="special">[]</span></code>
+        for unused attributes.
       </li>
 <li class="listitem">
-        Fixed rare compilation problem in karma::repeat[].
+        Fixed rare compilation problem in <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">repeat</span><span class="special">[]</span></code>.
       </li>
 <li class="listitem">
         Fixed sequences in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
@@ -98,16 +116,28 @@
 <li class="listitem">
         Inherited parameters for rule's usually have to be wrapped in function objects
         (i.e. <code class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span></code>), for integral values this was not
-        necessary. Now all types of strings can be passed without being wrapped as
-        well.
+        necessary. Now all string types can be passed without being wrapped as well
+        (i.e. <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>, <code class="computeroutput"><span class="keyword">char</span>
+        <span class="keyword">const</span><span class="special">*</span></code>,
+        etc.).
+      </li>
+<li class="listitem">
+        Added concept checks to all relevant <span class="emphasis"><em>Spirit.Qi</em></span> API functions
+        enforcing the iterator to be at least of the type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward_iterator_tag</span></code>.
+      </li>
+<li class="listitem">
+        Fixed the <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">match</span></code> and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_match</span></code>
+        set of API functions not to internally utilize a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stream_iterator</span></code>
+        anymore as this iterator is of the type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">input_iterator_tag</span></code>
+        only, which is not sufficient for <span class="emphasis"><em>Spirit.Qi</em></span>.
       </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id589456"></a>
+<a name="id614894"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h4>
-<a name="id589469"></a>
+<a name="id614908"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)</a>
@@ -261,7 +291,7 @@
       </li>
 </ul></div>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h4>
-<a name="id593206"></a>
+<a name="id618587"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 (Boost V1.37.0) to 2.1
       (Boost V1.41.0)</a>
@@ -367,7 +397,7 @@
       </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id593997"></a>
+<a name="id619378"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
     </h4>
 <p>
