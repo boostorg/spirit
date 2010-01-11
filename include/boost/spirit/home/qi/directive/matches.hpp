@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace qi
         {
             bool result = subject.parse(first, last, context, skipper, unused);
             spirit::traits::assign_to(result, attr);
-            return result;
+            return true;
         }
 
         template <typename Context>
