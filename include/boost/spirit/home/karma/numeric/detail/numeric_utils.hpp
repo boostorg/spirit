@@ -547,6 +547,11 @@ namespace boost { namespace spirit { namespace karma
 #undef BOOST_KARMA_NUMERICS_INNER_LOOP_SUFFIX
 
     ///////////////////////////////////////////////////////////////////////////
+    //
+    //  The uint_inserter template takes care of the conversion of any integer 
+    //  to a string, while interpreting the number as an unsigned type.
+    //
+    ///////////////////////////////////////////////////////////////////////////
     template <
         unsigned Radix, typename CharEncoding = unused_type
       , typename Tag = unused_type>
