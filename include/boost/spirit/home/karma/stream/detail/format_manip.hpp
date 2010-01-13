@@ -25,6 +25,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
       , typename Delimiter = unused_type, typename Attribute = unused_type>
     struct format_manip 
     {
+        // This assertion makes sure we don't hit the only code path which is 
+        // not implemented (because it isn't needed), where both, the 
+        // expression and the attribute need to be held as a copy.
+        BOOST_SPIRIT_ASSERT_MSG(!CopyExpr::value || !CopyAttr::value
+            , error_invalid_should_not_happen, ());
+
         format_manip(Expr const& xpr, Delimiter const& d, Attribute const& a) 
           : expr(xpr), delim(d), pre(delimit_flag::dont_predelimit), attr(a) {}
 
@@ -80,12 +86,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         format_manip& operator= (format_manip const&);
-    };
-
-    template <typename Expr, typename Delimiter, typename Attribute>
-    struct format_manip<Expr, mpl::true_, mpl::true_, Delimiter, Attribute>
-    {
-        BOOST_SPIRIT_ASSERT_MSG(false, error_invalid_should_not_happen, ());
     };
 
     ///////////////////////////////////////////////////////////////////////////
