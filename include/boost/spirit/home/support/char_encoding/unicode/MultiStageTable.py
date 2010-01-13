@@ -116,12 +116,12 @@ class UnicodeDataExtractor:
 
     def __decode(self, chardata):
         categories = {'Lu':0, 'Ll':1, 'Lt':2, 'Lm':3, 'Lo':4, \
-                      'Mn':5, 'Me':6, 'Mc':7, \
-                      'Nd':8, 'Nl':9, 'No':10, \
-                      'Zs':11, 'Zl':12, 'Zp':13, \
-                      'Cc':14, 'Cf':15, 'Co':16, 'Cs':17, 'Cn':18, \
-                      'Pd':19, 'Ps':20, 'Pe':21, 'Pc':22, 'Po':23, 'Pi':24, 'Pf':25, \
-                      'Sm':26, 'Sc':27, 'Sk':28, 'So':29}
+                      'Mn':8, 'Me':9, 'Mc':10, \
+                      'Nd':16, 'Nl':17, 'No':18, \
+                      'Zs':24, 'Zl':25, 'Zp':26, \
+                      'Cc':32, 'Cf':33, 'Co':34, 'Cs':35, 'Cn':36, \
+                      'Pd':40, 'Ps':41, 'Pe':42, 'Pc':43, 'Po':44, 'Pi':45, 'Pf':46, \
+                      'Sm':48, 'Sc':49, 'Sk':50, 'So':51}
         return categories[chardata[2]]
 
     def __add_char(self, val):
