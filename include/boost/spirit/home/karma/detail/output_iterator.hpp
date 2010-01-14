@@ -19,7 +19,7 @@
 #include <boost/mpl/if.hpp>
 
 #include <boost/spirit/home/karma/generator.hpp>
-#include <boost/spirit/home/karma/stream/ostream_iterator.hpp>
+#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail 

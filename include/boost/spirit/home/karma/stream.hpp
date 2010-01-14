@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/karma/stream/ostream_iterator.hpp>
+#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>
 #include <boost/spirit/home/karma/stream/stream.hpp>
 
 #endif
