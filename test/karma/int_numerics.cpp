@@ -287,6 +287,10 @@ main()
         BOOST_TEST(test_delimited("1234 ", oct, 01234, char_(' ')));
         BOOST_TEST(test_delimited("11110000 ", bin, 0xf0, char_(' ')));
 
+        // test unsigned generator with signed integral value
+        BOOST_TEST(test("ff", hex, (char)0xff));
+        BOOST_TEST(test_delimited("ff ", hex, (char)0xff, char_(' ')));
+
         BOOST_TEST(test("1234", lower[uint_], 1234));
         BOOST_TEST(test("ff", lower[hex], 0xff));
         BOOST_TEST(test("1234", lower[oct], 01234));

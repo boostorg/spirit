@@ -31,9 +31,9 @@ int main()
         BOOST_TEST(!test("y", matches[char_('x')]));
         BOOST_TEST(!test("y", matches['x']));
         bool result = true;
-        BOOST_TEST(!test_attr("y", matches[char_('x')], result) && !result);
+        BOOST_TEST(test_attr("y", matches[char_('x')], result, false) && !result);
         result = true;
-        BOOST_TEST(!test_attr("y", matches['x'], result) && !result);
+        BOOST_TEST(test_attr("y", matches['x'], result, false) && !result);
     }
 
     return boost::report_errors();

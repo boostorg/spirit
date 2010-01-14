@@ -548,6 +548,29 @@ namespace boost { namespace spirit { namespace karma
 
     ///////////////////////////////////////////////////////////////////////////
     //
+    //  The uint_inserter template takes care of the conversion of any integer 
+    //  to a string, while interpreting the number as an unsigned type.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        unsigned Radix, typename CharEncoding = unused_type
+      , typename Tag = unused_type>
+    struct uint_inserter : int_inserter<Radix, CharEncoding, Tag>
+    {
+        typedef int_inserter<Radix, CharEncoding, Tag> base_type;
+
+        //  Common code for integer string representations
+        template <typename OutputIterator, typename T>
+        static bool
+        call(OutputIterator& sink, T const& n)
+        {
+            typename detail::absolute_value_helper<T>::result_type un = n;
+            return base_type::call(sink, un, un, 0);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
     //  The sign_inserter template generates a sign for a given numeric value.
     //
     //    The parameter forcesign allows to generate a sign even for positive  

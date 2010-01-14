@@ -28,6 +28,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       , typename Skipper = unused_type, typename Attribute = unused_type const>
     struct match_manip
     {
+        // This assertion makes sure we don't hit the only code path which is 
+        // not implemented (because it isn't needed), where both, the 
+        // expression and the attribute need to be held as a copy.
+        BOOST_SPIRIT_ASSERT_MSG(!CopyExpr::value || !CopyAttr::value
+            , error_invalid_should_not_happen, ());
+
         match_manip(Expr const& xpr, Skipper const& s, Attribute& a)
           : expr(xpr), skipper(s), attr(a), post_skip(skip_flag::postskip) {}
 
@@ -83,12 +89,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         match_manip& operator= (match_manip const&);
-    };
-
-    template <typename Expr, typename Skipper, typename Attribute>
-    struct match_manip<Expr, mpl::true_, mpl::true_, Skipper, Attribute>
-    {
-        BOOST_SPIRIT_ASSERT_MSG(false, error_invalid_should_not_happen, ());
     };
 
     ///////////////////////////////////////////////////////////////////////////

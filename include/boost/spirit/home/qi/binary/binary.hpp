@@ -250,7 +250,7 @@ namespace boost { namespace spirit { namespace qi
             Iterator it = first;
             for (unsigned int i = 0; i < sizeof(attr_); ++i)
             {
-                if (it == last || *bytes++ != *it++)
+                if (it == last || *bytes++ != static_cast<unsigned char>(*it++))
                     return false;
             }
 
