@@ -15,11 +15,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define BOOST_SPIRIT_AUTO(domain_, name, expr)                                  \
-    typedef BOOST_TYPEOF(expr) name##_expr_type;                                \
+    typedef boost::proto::result_of::                                           \
+        deep_copy<BOOST_TYPEOF(expr)>::type name##_expr_type;                   \
     BOOST_SPIRIT_ASSERT_MATCH(                                                  \
         boost::spirit::domain_::domain, name##_expr_type);                      \
     BOOST_AUTO(name, boost::proto::deep_copy(expr));                            \
-    //
 
 int
 main()
