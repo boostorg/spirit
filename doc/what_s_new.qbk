@@ -15,20 +15,22 @@
 [heading New Features]
 
 * Added `auto_` component in __qi__ and __karma__, added API functions 
-  `qi::create_parser` and `karma::create_generator`.
-* Added `auto_` based overloads for all API functions taking no attributes.
-* Added `karma::columns` directive.
-* Added `karma::symbols` generator.
-* The __qi__ customization point `push_back_container` now returns a `bool` to 
-  report whether the item has been added to the container.
-* Added an overload for `karma::maxwidth` directive allowing to specify an 
-  additional parameter (any compatible output iterator) receiving the 
-  'overspilled' output (output not fitting into the maxwidth limit).
+  `qi::`__create_parser__ and `karma::`__create_generator__.
+* Added `auto_` based overloads for all API functions taking no attributes (see
+  [link spirit.qi.reference.parse_api /Qi/ API] and 
+  [link spirit.karma.reference.generate_api /Karma/ API]).
+* Added [karma_columns `karma::columns`] directive.
+* Added `karma::`__karma_symbols__ generator.
+* The __qi__ customization point __customize_push_back_container__ now returns 
+  a `bool` to report whether the item has been added to the container.
+* Added an overload for [karma_maxwidth `karma::maxwidth`] directive allowing 
+  to specify an additional parameter (any compatible output iterator) receiving 
+  the 'overspilled' output (output not fitting into the maxwidth limit).
 * It is now possible to use Phoenix expressions as __karma__ attributes.
-* Added `basic_istream_iterator<Char, Traits>` usable as an equivalent for 
-  `std::istream_iterator` except its a forward iterator allowing to parse
-  directly from any `std::basic_istream`.
-* Added `qi::matches` directive.
+* Added [link spirit.support.multi_pass.reading_from_standard_input_streams `basic_istream_iterator<Char, Traits>`]
+  usable as an equivalent for `std::istream_iterator` except its a __fwditer__
+  allowing to parse directly from any `std::basic_istream`.
+* Added `qi::`__qi_matches__ directive.
 
 [heading Bug Fixes]
 

@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Not Predicate (!a)</title>
+<title>Not-Predicate (!a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.2">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="and_predicate.html" title="And Predicate (&amp;a)">
+<link rel="prev" href="and_predicate.html" title="And-Predicate (&amp;a)">
 <link rel="next" href="../stream.html" title="Stream">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,22 +22,22 @@
 <div class="spirit-nav">
 <a accesskey="p" href="and_predicate.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../stream.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Not Predicate (!a)">
+<div class="section" title="Not-Predicate (!a)">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.not_predicate"></a><a class="link" href="not_predicate.html" title="Not Predicate (!a)"> Not
-          Predicate (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a>
+<a name="spirit.karma.reference.operator.not_predicate"></a><a class="link" href="not_predicate.html" title="Not-Predicate (!a)"> Not-Predicate
+          (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.not_predicate.description"></a><h6>
-<a name="id924222"></a>
+<a name="id905967"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.description">Description</a>
           </h6>
 <p>
-            The not predicate generator is used to test, whether the embedded generator
+            The not-predicate generator is used to test, whether the embedded generator
             fails, without generating any output. It succeeds if the embedded generator
             fails.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.header"></a><h6>
-<a name="id924241"></a>
+<a name="id905986"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/not_predicate.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.model_of"></a><h6>
-<a name="id924315"></a>
+<a name="id906060"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.not_predicate.expression_semantics"></a><h6>
-<a name="id924351"></a>
+<a name="id906096"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -96,9 +96,9 @@
                   <p>
                     The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed for the sole purpose of testing whether it succeeds.
-                    The not predicate generator succeeds if its embedded generator
+                    The not-predicate generator succeeds if its embedded generator
                     fails (unless the underlying output stream reports an error).
-                    The not predicate never produces any output.
+                    The not-predicate never produces any output.
                   </p>
                   </td>
 </tr></tbody>
@@ -108,7 +108,7 @@
             its embedded generator into a discarding device.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.attributes"></a><h6>
-<a name="id924455"></a>
+<a name="id906200"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.attributes">Attributes</a>
           </h6>
 <p>
@@ -136,7 +136,7 @@
 <td>
                   <p>
                     <code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>
-                    (not predicate, unary <code class="computeroutput"><span class="special">!</span></code>)
+                    (not-predicate, unary <code class="computeroutput"><span class="special">!</span></code>)
                   </p>
                   </td>
 <td>
@@ -154,29 +154,29 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The attribute of the not predicate is not always <code class="computeroutput"><span class="identifier">unused_type</span></code>,
-              which is different from Qi's not predicate. This is necessary as the
-              generator the and predicate is attached to most of the time needs an
+              The attribute of the not-predicate is not always <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+              which is different from Qi's not-predicate. This is necessary as the
+              generator the and-predicate is attached to most of the time needs an
               attribute.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.not_predicate.complexity"></a><h6>
-<a name="id924603"></a>
+<a name="id906565"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the not predicate generator is defined
+                The overall complexity of the not-predicate generator is defined
                 by the complexity of its embedded generator. The complexity of the
-                not predicate generator itself is O(1).
+                not-predicate generator itself is O(1).
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.not_predicate.example"></a><h6>
-<a name="id924630"></a>
+<a name="id906592"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
