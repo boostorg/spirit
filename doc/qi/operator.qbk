@@ -19,9 +19,9 @@ yields a new parser type which is a composite of its operands, `a` and
 
 This module includes different parsers which get instantiated if one of
 the overloaded operators is used with more primitive parser constructs.
-It includes Alternative (`|`), And predicate (unary `&`), Difference
-(`-`), Expect (`>`), Kleene star (unary `*`), Lists (`%`), Not
-predicate (`!`), Optional (unary `-`), Permutation (`^`), Plus (unary
+It includes Alternative (`|`), And-predicate (unary `&`), Difference
+(`-`), Expect (`>`), Kleene star (unary `*`), Lists (`%`), Not-predicate (`!`), 
+Optional (unary `-`), Permutation (`^`), Plus (unary
 `+`), Sequence (`>>`), and Sequential-Or (`||`).
 
 [heading Module Header]
@@ -116,14 +116,14 @@ Some using declarations:
 [endsect] [/ Alternative]
 
 [/------------------------------------------------------------------------------]
-[section:and_predicate And Predicate (`&a`)]
+[section:and_predicate And-Predicate (`&a`)]
 
 [heading Description]
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
-__qi_eps__, syntactic predicates do not consume any input. The /and
-predicate/, `&a`, is a positive syntactic predicate that returns a zero
+__qi_eps__, syntactic predicates do not consume any input. The /and-predicate/, 
+`&a`, is a positive syntactic predicate that returns a zero
 length match only if its predicate matches.
 
 [heading Header]
@@ -454,14 +454,14 @@ __qi_basics_examples__ section.]
 [endsect] [/ List]
 
 [/------------------------------------------------------------------------------]
-[section:not_predicate Not Predicate (`!a`)]
+[section:not_predicate Not-Predicate (`!a`)]
 
 [heading Description]
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
-__qi_eps__, syntactic predicates do not consume any input. The /not
-predicate/, `!a`, is a negative syntactic predicate that returns a zero
+__qi_eps__, syntactic predicates do not consume any input. The /not-predicate/, 
+`!a`, is a negative syntactic predicate that returns a zero
 length match only if its predicate fails to match.
 
 [heading Header]

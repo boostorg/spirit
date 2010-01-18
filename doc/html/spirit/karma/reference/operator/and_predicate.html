@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>And Predicate (&amp;a)</title>
+<title>And-Predicate (&amp;a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.2">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="optional.html" title="Optional (-a)">
-<link rel="next" href="not_predicate.html" title="Not Predicate (!a)">
+<link rel="next" href="not_predicate.html" title="Not-Predicate (!a)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,22 +22,22 @@
 <div class="spirit-nav">
 <a accesskey="p" href="optional.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="not_predicate.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="And Predicate (&amp;a)">
+<div class="section" title="And-Predicate (&amp;a)">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.and_predicate"></a><a class="link" href="and_predicate.html" title="And Predicate (&amp;a)"> And
-          Predicate (<code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>)</a>
+<a name="spirit.karma.reference.operator.and_predicate"></a><a class="link" href="and_predicate.html" title="And-Predicate (&amp;a)"> And-Predicate
+          (<code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.and_predicate.description"></a><h6>
-<a name="id923095"></a>
+<a name="id904840"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.description">Description</a>
           </h6>
 <p>
-            The and predicate generator is used to test, whether the embedded generator
+            The and-predicate generator is used to test, whether the embedded generator
             succeeds without generating any output. It succeeds if the embedded generator
             succeeds.
           </p>
 <a name="spirit.karma.reference.operator.and_predicate.header"></a><h6>
-<a name="id923114"></a>
+<a name="id904859"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/and_predicate.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.and_predicate.model_of"></a><h6>
-<a name="id923189"></a>
+<a name="id904934"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.and_predicate.expression_semantics"></a><h6>
-<a name="id923225"></a>
+<a name="id904970"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -96,9 +96,9 @@
                   <p>
                     The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed for the sole purpose of testing whether it succeeds.
-                    The and predicate generator succeeds if its embedded generator
+                    The and-predicate generator succeeds if its embedded generator
                     succeeds (unless the underlying output stream reports an error).
-                    The and predicate never produces any output.
+                    The and-predicate never produces any output.
                   </p>
                   </td>
 </tr></tbody>
@@ -108,7 +108,7 @@
             its embedded generator into a discarding device.
           </p>
 <a name="spirit.karma.reference.operator.and_predicate.attributes"></a><h6>
-<a name="id923328"></a>
+<a name="id905073"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.attributes">Attributes</a>
           </h6>
 <p>
@@ -136,7 +136,7 @@
 <td>
                   <p>
                     <code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>
-                    (and predicate, unary <code class="computeroutput"><span class="special">&amp;</span></code>)
+                    (and-predicate, unary <code class="computeroutput"><span class="special">&amp;</span></code>)
                   </p>
                   </td>
 <td>
@@ -154,29 +154,29 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The attribute of the and predicate is not always <code class="computeroutput"><span class="identifier">unused_type</span></code>,
-              which is different from Qi's and predicate. This is necessary as the
+              The attribute of the and-predicate is not always <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+              which is different from Qi's and-predicate. This is necessary as the
               generator the and predicate is attached to most of the time needs an
               attribute.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.and_predicate.complexity"></a><h6>
-<a name="id923477"></a>
+<a name="id905222"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the and predicate generator is defined
+                The overall complexity of the and-predicate generator is defined
                 by the complexity of its embedded generator. The complexity of the
-                and predicate generator itself is O(1).
+                and-predicate generator itself is O(1).
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.and_predicate.example"></a><h6>
-<a name="id923503"></a>
+<a name="id905248"></a>
             <a class="link" href="and_predicate.html#spirit.karma.reference.operator.and_predicate.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

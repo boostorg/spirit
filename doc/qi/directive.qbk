@@ -463,8 +463,9 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`matches[a]`]     [Execute the subject parser `a`, and return whether it
-                         succeeded.]]
+    [[`matches[a]`]     [Execute the subject parser `a`, and return as its 
+                         attribute whether it succeeded. The directive itself
+                         does always succeed.]]
 ]
 
 [heading Attributes]

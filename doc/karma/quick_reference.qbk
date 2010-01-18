@@ -122,6 +122,28 @@ See here for more information about [karma_string String Generators].
     [[[karma_string `string`]]      [`Str`]     [Generate string supplied as the attribute]]
     [[[karma_string `string(str)`]] [`Str`]     [Generate `str`, 
                                                  if an attribute is supplied it must match]]
+
+    [[__karma_symbols__`<Attr, T>`] [`Attr`]    [Declare a symbol table, `sym`. `Attr` is the
+                                                 The type of the original attribute to be used 
+                                                 as the key into the symbol generator.
+                                                 `T` is the data type associated with each key.]]
+    [[
+``
+    sym.add
+        (attr1, val1)
+        (attr2, val2)
+        /*...more...*/
+    ;
+``
+    ]
+    [N/A]                                        [Add symbols into a symbol table, `sym`.
+                                                  val1 and val2 are optional data of type `T`,
+                                                  the data type associated with each key.]]
+    [[`sym`]                [`T`]                [Emits entries in the symbol table, `sym`. If
+                                                  attribute is found in the symbol table,
+                                                  the corresponding value is emitted. If `sym`
+                                                  does not store values, the original attribute
+                                                  is emitted.]]
 ]
 
 [endsect]

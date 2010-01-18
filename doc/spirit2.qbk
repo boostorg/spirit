@@ -199,6 +199,7 @@
 [template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
 
 [template karma_string[str]         [link spirit.karma.reference.string [str]]]
+[def __karma_symbols__              [link spirit.karma.reference.string.symbols `symbols`]]
 
 [template karma_stream[str]         [link spirit.karma.reference.stream [str]]]
 

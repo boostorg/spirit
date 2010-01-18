@@ -660,11 +660,11 @@ Usage and result of an empty optional generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:and_predicate And Predicate (`&a`)]
+[section:and_predicate And-Predicate (`&a`)]
 
 [heading Description]
 
-The and predicate generator is used to test, whether the embedded generator 
+The and-predicate generator is used to test, whether the embedded generator 
 succeeds without generating any output. It succeeds if the embedded generator
 succeeds.
 
@@ -687,10 +687,10 @@ defined in __unary_generator_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`&a`]             [The generator `a` is executed for the sole purpose of
-                         testing whether it succeeds. The and predicate 
+                         testing whether it succeeds. The and-predicate 
                          generator succeeds if its embedded generator 
                          succeeds (unless the underlying output stream 
-                         reports an error). The and predicate never produces 
+                         reports an error). The and-predicate never produces 
                          any output.]]
 ]
 
@@ -703,18 +703,18 @@ See __karma_comp_attr_notation__.
 
 [table
     [[Expression]                 [Attribute]]
-    [[`&a` (and predicate, unary `&`)]  [`a: A --> &a: A`]]
+    [[`&a` (and-predicate, unary `&`)]  [`a: A --> &a: A`]]
 ]
 
-[note The attribute of the and predicate is not always `unused_type`, which is 
-      different from Qi's and predicate. This is necessary as the generator the
+[note The attribute of the and-predicate is not always `unused_type`, which is 
+      different from Qi's and-predicate. This is necessary as the generator the
       and predicate is attached to most of the time needs an attribute.
 ]
 
 [heading Complexity]
 
-[:The overall complexity of the and predicate generator is defined by the 
-  complexity of its embedded generator. The complexity of the and predicate
+[:The overall complexity of the and-predicate generator is defined by the 
+  complexity of its embedded generator. The complexity of the and-predicate
   generator itself is O(1).]
 
 [heading Example]
@@ -737,11 +737,11 @@ Basic usage of an and predicate generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:not_predicate Not Predicate (`!a`)]
+[section:not_predicate Not-Predicate (`!a`)]
 
 [heading Description]
 
-The not predicate generator is used to test, whether the embedded generator 
+The not-predicate generator is used to test, whether the embedded generator 
 fails, without generating any output. It succeeds if the embedded generator
 fails.
 
@@ -764,10 +764,10 @@ defined in __unary_generator_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`!a`]             [The generator `a` is executed for the sole purpose of
-                         testing whether it succeeds. The not predicate 
+                         testing whether it succeeds. The not-predicate 
                          generator succeeds if its embedded generator 
                          fails (unless the underlying output stream 
-                         reports an error). The not predicate never produces 
+                         reports an error). The not-predicate never produces 
                          any output.]]
 ]
 
@@ -780,18 +780,18 @@ See __karma_comp_attr_notation__.
 
 [table
     [[Expression]                 [Attribute]]
-    [[`!a` (not predicate, unary `!`)]  [`a: A --> !a: A`]]
+    [[`!a` (not-predicate, unary `!`)]  [`a: A --> !a: A`]]
 ]
 
-[note The attribute of the not predicate is not always `unused_type`, which is 
-      different from Qi's not predicate. This is necessary as the generator the
-      and predicate is attached to most of the time needs an attribute.
+[note The attribute of the not-predicate is not always `unused_type`, which is 
+      different from Qi's not-predicate. This is necessary as the generator the
+      and-predicate is attached to most of the time needs an attribute.
 ]
 
 [heading Complexity]
 
-[:The overall complexity of the not predicate generator is defined by the 
-  complexity of its embedded generator. The complexity of the not predicate
+[:The overall complexity of the not-predicate generator is defined by the 
+  complexity of its embedded generator. The complexity of the not-predicate
   generator itself is O(1).]
 
 [heading Example]
