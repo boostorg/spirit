@@ -6,7 +6,7 @@
 // The purpose of this example is to show how to parse arbitrary key/value 
 // pairs delimited by some separator into a std::map. Parsing the URL query 
 // format is the example we use to demonstrate how this can be done 
-// (i.e. things like: key1=value1;key2=value2;…;keyN=valueN).
+// (i.e. things like: key1=value1;key2=value2;...;keyN=valueN).
 //
 // For a more elaborate explanation see here: http://spirit.sourceforge.net/home/?p=371
 
