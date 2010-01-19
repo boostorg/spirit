@@ -34,7 +34,7 @@ equal(IteratorT p, IteratorT q)
 
 template <class SymbolsT, typename CharT>
 void
-check
+docheck
 (
     SymbolsT const &sym,
     CharT    const *candidate,
@@ -91,7 +91,7 @@ private:
 
 template <typename T>
 check_action<T>
-check(T const &v)
+docheck(T const &v)
 {
     return v;
 }
@@ -114,28 +114,28 @@ narrow_match_tests()
     symbols<>   sym;
     sym = "pineapple", "orange", "banana", "applepie", "apple";
 
-    check(sym, "pineapple", true, "", 9);
-    check(sym, "orange", true, "", 6);
-    check(sym, "banana", true, "", 6);
-    check(sym, "apple", true, "", 5);
-    check(sym, "pizza", false, "pizza", -1);
-    check(sym, "steak", false, "steak", -1);
-    check(sym, "applepie", true, "", 8);
-    check(sym, "bananarama", true, "rama", 6);
-    check(sym, "applet", true, "t", 5);
-    check(sym, "applepi", true, "pi", 5);
-    check(sym, "appl", false, "appl", -1);
+    docheck(sym, "pineapple", true, "", 9);
+    docheck(sym, "orange", true, "", 6);
+    docheck(sym, "banana", true, "", 6);
+    docheck(sym, "apple", true, "", 5);
+    docheck(sym, "pizza", false, "pizza", -1);
+    docheck(sym, "steak", false, "steak", -1);
+    docheck(sym, "applepie", true, "", 8);
+    docheck(sym, "bananarama", true, "rama", 6);
+    docheck(sym, "applet", true, "t", 5);
+    docheck(sym, "applepi", true, "pi", 5);
+    docheck(sym, "appl", false, "appl", -1);
 
-    check(sym, "pineapplez", true, "z", 9);
-    check(sym, "orangez", true, "z", 6);
-    check(sym, "bananaz", true, "z", 6);
-    check(sym, "applez", true, "z", 5);
-    check(sym, "pizzaz", false, "pizzaz", -1);
-    check(sym, "steakz", false, "steakz", -1);
-    check(sym, "applepiez", true, "z", 8);
-    check(sym, "bananaramaz", true, "ramaz", 6);
-    check(sym, "appletz", true, "tz", 5);
-    check(sym, "applepix", true, "pix", 5);
+    docheck(sym, "pineapplez", true, "z", 9);
+    docheck(sym, "orangez", true, "z", 6);
+    docheck(sym, "bananaz", true, "z", 6);
+    docheck(sym, "applez", true, "z", 5);
+    docheck(sym, "pizzaz", false, "pizzaz", -1);
+    docheck(sym, "steakz", false, "steakz", -1);
+    docheck(sym, "applepiez", true, "z", 8);
+    docheck(sym, "bananaramaz", true, "ramaz", 6);
+    docheck(sym, "appletz", true, "tz", 5);
+    docheck(sym, "applepix", true, "pix", 5);
 }
 
 static void
@@ -145,9 +145,9 @@ narrow_copy_ctor_tests()
     sym = "pineapple", "orange", "banana", "applepie", "apple";
 
     symbols<>   sym2(sym);
-    check(sym2, "pineapple", true, "", 9);
-    check(sym2, "pizza", false, "pizza", -1);
-    check(sym2, "bananarama", true, "rama", 6);
+    docheck(sym2, "pineapple", true, "", 9);
+    docheck(sym2, "pizza", false, "pizza", -1);
+    docheck(sym2, "bananarama", true, "rama", 6);
 }
 
 static void
@@ -159,9 +159,9 @@ narrow_assigment_operator_tests()
     symbols<>   sym2;
     sym2 = sym;
 
-    check(sym2, "pineapple", true, "", 9);
-    check(sym2, "pizza", false, "pizza", -1);
-    check(sym2, "bananarama", true, "rama", 6);
+    docheck(sym2, "pineapple", true, "", 9);
+    docheck(sym2, "pizza", false, "pizza", -1);
+    docheck(sym2, "bananarama", true, "rama", 6);
 }
 
 static void
@@ -174,10 +174,10 @@ narrow_value_tests()
     sym.add("lemon");
 
     parse("orange", sym[store(12345)]);
-    parse("orange", sym[check(12345)]);
-    parse("pineapple", sym[check(1234)]);
-    parse("banana", sym[check(int())]);
-    parse("lemon", sym[check(int())]);
+    parse("orange", sym[docheck(12345)]);
+    parse("pineapple", sym[docheck(1234)]);
+    parse("banana", sym[docheck(int())]);
+    parse("lemon", sym[docheck(int())]);
 }
 
 static void
@@ -207,28 +207,28 @@ wide_match_tests()
     symbols<int, wchar_t>   sym;
     sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
 
-    check(sym, L"pineapple", true, L"", 9);
-    check(sym, L"orange", true, L"", 6);
-    check(sym, L"banana", true, L"", 6);
-    check(sym, L"apple", true, L"", 5);
-    check(sym, L"pizza", false, L"pizza", -1);
-    check(sym, L"steak", false, L"steak", -1);
-    check(sym, L"applepie", true, L"", 8);
-    check(sym, L"bananarama", true, L"rama", 6);
-    check(sym, L"applet", true, L"t", 5);
-    check(sym, L"applepi", true, L"pi", 5);
-    check(sym, L"appl", false, L"appl", -1);
+    docheck(sym, L"pineapple", true, L"", 9);
+    docheck(sym, L"orange", true, L"", 6);
+    docheck(sym, L"banana", true, L"", 6);
+    docheck(sym, L"apple", true, L"", 5);
+    docheck(sym, L"pizza", false, L"pizza", -1);
+    docheck(sym, L"steak", false, L"steak", -1);
+    docheck(sym, L"applepie", true, L"", 8);
+    docheck(sym, L"bananarama", true, L"rama", 6);
+    docheck(sym, L"applet", true, L"t", 5);
+    docheck(sym, L"applepi", true, L"pi", 5);
+    docheck(sym, L"appl", false, L"appl", -1);
 
-    check(sym, L"pineapplez", true, L"z", 9);
-    check(sym, L"orangez", true, L"z", 6);
-    check(sym, L"bananaz", true, L"z", 6);
-    check(sym, L"applez", true, L"z", 5);
-    check(sym, L"pizzaz", false, L"pizzaz", -1);
-    check(sym, L"steakz", false, L"steakz", -1);
-    check(sym, L"applepiez", true, L"z", 8);
-    check(sym, L"bananaramaz", true, L"ramaz", 6);
-    check(sym, L"appletz", true, L"tz", 5);
-    check(sym, L"applepix", true, L"pix", 5);
+    docheck(sym, L"pineapplez", true, L"z", 9);
+    docheck(sym, L"orangez", true, L"z", 6);
+    docheck(sym, L"bananaz", true, L"z", 6);
+    docheck(sym, L"applez", true, L"z", 5);
+    docheck(sym, L"pizzaz", false, L"pizzaz", -1);
+    docheck(sym, L"steakz", false, L"steakz", -1);
+    docheck(sym, L"applepiez", true, L"z", 8);
+    docheck(sym, L"bananaramaz", true, L"ramaz", 6);
+    docheck(sym, L"appletz", true, L"tz", 5);
+    docheck(sym, L"applepix", true, L"pix", 5);
 }
 
 static void
@@ -238,9 +238,9 @@ wide_copy_ctor_tests()
     sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
 
     symbols<int, wchar_t>   sym2(sym);
-    check(sym2, L"pineapple", true, L"", 9);
-    check(sym2, L"pizza", false, L"pizza", -1);
-    check(sym2, L"bananarama", true, L"rama", 6);
+    docheck(sym2, L"pineapple", true, L"", 9);
+    docheck(sym2, L"pizza", false, L"pizza", -1);
+    docheck(sym2, L"bananarama", true, L"rama", 6);
 }
 
 static void
@@ -252,9 +252,9 @@ wide_assigment_operator_tests()
     symbols<int, wchar_t>   sym2;
     sym2 = sym;
 
-    check(sym2, L"pineapple", true, L"", 9);
-    check(sym2, L"pizza", false, L"pizza", -1);
-    check(sym2, L"bananarama", true, L"rama", 6);
+    docheck(sym2, L"pineapple", true, L"", 9);
+    docheck(sym2, L"pizza", false, L"pizza", -1);
+    docheck(sym2, L"bananarama", true, L"rama", 6);
 }
 
 static void
@@ -267,10 +267,10 @@ wide_value_tests()
     sym.add(L"lemon");
 
     parse(L"orange", sym[store(12345)]);
-    parse(L"orange", sym[check(12345)]);
-    parse(L"pineapple", sym[check(1234)]);
-    parse(L"banana", sym[check(int())]);
-    parse(L"lemon", sym[check(int())]);
+    parse(L"orange", sym[docheck(12345)]);
+    parse(L"pineapple", sym[docheck(1234)]);
+    parse(L"banana", sym[docheck(int())]);
+    parse(L"lemon", sym[docheck(int())]);
 }
 
 static void
