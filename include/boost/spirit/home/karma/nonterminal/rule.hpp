@@ -139,7 +139,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         rule(rule const& rhs)
-          : base_type(rhs)
+          : base_type(terminal::make(reference_(*this)))
           , name_(rhs.name_)
           , f(rhs.f)
         {
