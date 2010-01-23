@@ -20,19 +20,7 @@ namespace boost { namespace spirit { namespace iterator_policies
     struct no_check
     {
         ///////////////////////////////////////////////////////////////////////
-        struct unique // : public detail::default_checking_policy
-        {
-            void swap(unique&) {}
-
-            template <typename MultiPass>
-            static void check(MultiPass const&) {}
-
-            template <typename MultiPass>
-            static void clear_queue(MultiPass&) {}
-
-            template <typename MultiPass>
-            static void destroy(MultiPass&) {}
-        };
+        struct unique : public detail::default_checking_policy {};
 
         ///////////////////////////////////////////////////////////////////////
         struct shared {};

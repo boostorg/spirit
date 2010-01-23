@@ -130,7 +130,7 @@ namespace boost { namespace spirit { namespace detail
         void swap(default_checking_policy&) {}
 
         template <typename MultiPass>
-        static void check(MultiPass const&) {}
+        static void docheck(MultiPass const&) {}
 
         template <typename MultiPass>
         static void clear_queue(MultiPass&) {}

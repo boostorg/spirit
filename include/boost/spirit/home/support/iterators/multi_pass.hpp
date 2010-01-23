@@ -105,7 +105,7 @@ namespace boost { namespace spirit
 
         reference operator*() const
         {
-            policies_base_type::check(*this);
+            policies_base_type::docheck(*this);
             return policies_base_type::dereference(*this);
         }
         pointer operator->() const
@@ -115,7 +115,7 @@ namespace boost { namespace spirit
 
         multi_pass& operator++()
         {
-            policies_base_type::check(*this);
+            policies_base_type::docheck(*this);
             policies_base_type::increment(*this);
             return *this;
         }
