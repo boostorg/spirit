@@ -440,7 +440,7 @@ An `InputPolicy` must have the following interface:
             // This method is expected to return a refernce to the next 
             // character/token
             template <typename ValueType, typename MultiPass>
-            static ValueType const& get_input(MultiPass& mp)
+            static ValueType& get_input(MultiPass& mp)
 
             // advance_input is called whenever the underlying input stream 
             // should be advanced so that the next call to get_input will be 
