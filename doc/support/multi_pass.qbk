@@ -432,28 +432,34 @@ An `InputPolicy` must have the following interface:
             // swap is called by multi_pass::swap()
             void swap(unique&);
 
-            // advance_input is called whenever the next input character/token
+            // get_input is called whenever the next input character/token
             // should be fetched. 
             //
             //   mp:    is a reference to the whole multi_pass instance
-            //   t:     is a reference where the next character/token should be 
-            //          stored
             //
-            // This method is expected to return the parameter t
+            // This method is expected to return a refernce to the next 
+            // character/token
+            template <typename ValueType, typename MultiPass>
+            static ValueType const& get_input(MultiPass& mp)
+
+            // advance_input is called whenever the underlying input stream 
+            // should be advanced so that the next call to get_input will be 
+            // able to return the next input character/token
+            //
+            //   mp:    is a reference to the whole multi_pass instance
             template <typename MultiPass>
-            static value_type& advance_input(MultiPass& mp, value_type& t);
+            static void advance_input(MultiPass& mp);
 
             // input_at_eof is called to test whether this instance is a 
             // end of input iterator.
             //
             //   mp:    is a reference to the whole multi_pass instance
-            //   t:     is the current token 
             //
             // This method is expected to return true if the end of input is 
             // reached. It is often used in the implementation of the function
             // storage_policy::is_eof.
             template <typename MultiPass>
-            static bool input_at_eof(MultiPass const& mp, value_type const& t);
+            static bool input_at_eof(MultiPass const& mp);
 
             // input_is_valid is called to verify if the parameter t represents 
             // a valid input character/token
@@ -467,7 +473,7 @@ An `InputPolicy` must have the following interface:
             static bool input_is_valid(MultiPass const& mp, value_type const& t);
         };
 
-        // Input is the same type used as the first template parameter
+        // Input is the same type used as the first template parameter passed
         // while instantiating the multi_pass
         template <typename Input>
         struct shared 
@@ -565,7 +571,7 @@ The `CheckingPolicy` must have the following interface:
             template <typename MultiPass>
             static void destroy(MultiPass& mp);
 
-            // check is called before the multi_pass is dereferenced or 
+            // docheck is called before the multi_pass is dereferenced or 
             // incremented. 
             //
             //   mp:    is a reference to the whole multi_pass instance
@@ -573,7 +579,7 @@ The `CheckingPolicy` must have the following interface:
             // This method is expected to make sure the multi_pass instance is
             // still valid. If it is invalid an exception should be thrown.
             template <typename MultiPass>
-            static void check(MultiPass const& mp);
+            static void docheck(MultiPass const& mp);
 
             // clear_queue is called whenever the function 
             // multi_pass::clear_queue is called on this instance
