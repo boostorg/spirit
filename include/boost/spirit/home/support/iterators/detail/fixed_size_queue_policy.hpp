@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             void swap(unique& x)
             {
-                spirit::detail::swap(queuePosition, x.queuePosition);
+                boost::swap(queuePosition, x.queuePosition);
             }
 
             //  This is called when the iterator is dereferenced. It's a 

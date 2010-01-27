@@ -11,6 +11,7 @@
 
 #include <cstddef>
 #include <boost/spirit/home/support/multi_pass_wrapper.hpp>
+#include <boost/swap.hpp>
 
 namespace boost { namespace spirit {
 
@@ -58,11 +59,6 @@ namespace boost { namespace spirit {
 
     template <typename T, typename Policies>
     void swap(multi_pass<T, Policies> &x, multi_pass<T, Policies> &y);
-
-    namespace detail 
-    {
-        template <typename T> void swap(T& t1, T& t2);
-    }
 
 }} // namespace boost::spirit
 

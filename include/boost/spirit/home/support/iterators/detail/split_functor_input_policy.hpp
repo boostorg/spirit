@@ -126,7 +126,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             void swap(unique& x)
             {
-                spirit::detail::swap(ftor, x.ftor);
+                boost::swap(ftor, x.ftor);
             }
 
         public:
