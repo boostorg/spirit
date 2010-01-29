@@ -247,7 +247,7 @@ namespace boost { namespace spirit { namespace qi
                 }
 
                 // inform attribute transformation of failed rhs
-                transform::fail(attr);
+                traits::fail_transform(attr, attr_);
             }
             return false;
         }
@@ -290,7 +290,7 @@ namespace boost { namespace spirit { namespace qi
                 }
 
                 // inform attribute transformation of failed rhs
-                transform::fail(attr);
+                traits::fail_transform(attr, attr_);
             }
             return false;
         }

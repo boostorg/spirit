@@ -435,7 +435,7 @@ namespace boost { namespace spirit { namespace traits
         }
 
         // fail() will be called by Qi rule's if the rhs failed parsing
-        static void fail(Exposed& val) {}
+        static void fail(Exposed&) {}
     };
 
     template <typename Exposed, typename Transformed>
@@ -471,7 +471,7 @@ namespace boost { namespace spirit { namespace traits
         typedef Attribute& type;
         static Attribute& pre(Attribute& val) { return val; }
         static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute& val) {}
+        static void fail(Attribute&) {}
     };
 
     template <typename Attribute>
@@ -494,7 +494,7 @@ namespace boost { namespace spirit { namespace traits
         typedef Attribute& type;
         static Attribute& pre(Attribute& val) { return val; }
         static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute& val) {}
+        static void fail(Attribute&) {}
     };
 
     template <typename Attribute>
@@ -509,7 +509,7 @@ namespace boost { namespace spirit { namespace traits
         typedef unused_type type;
         static unused_type pre(unused_type) { return unused; }
         static void post(unused_type, unused_type) {}
-        static void fail(unused_type& val) {}
+        static void fail(unused_type) {}
     };
 
     template <>
