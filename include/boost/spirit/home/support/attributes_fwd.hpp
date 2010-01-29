@@ -15,6 +15,15 @@
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
+    // Retrieve the attribute type to use from the given type
+    //
+    // This is needed to extract the correct attribute type from proxy classes
+    // as utilized in FUSION_ADAPT_CLASS
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Enable = void>
+    struct attribute_type;
+
+    ///////////////////////////////////////////////////////////////////////////
     // Determines how we pass attributes to semantic actions. This
     // may be specialized. By default, all attributes are wrapped in
     // a fusion sequence, because the attribute has to be treated as being

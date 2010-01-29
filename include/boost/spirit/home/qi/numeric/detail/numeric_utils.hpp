@@ -451,7 +451,11 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 }
             }
 
-            Attribute val = Accumulate ? attr : Attribute(0);
+            typedef typename 
+                traits::attribute_type<Attribute>::type 
+            attribute_type;
+
+            attribute_type val = Accumulate ? attr : attribute_type(0);
             char_type ch = *it;
 
             if (!radix_check::is_valid(ch) || !extractor::call(ch, 0, val))
