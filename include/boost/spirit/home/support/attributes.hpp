@@ -458,7 +458,7 @@ namespace boost { namespace spirit { namespace traits
             return boost::get<Transformed>(val); 
         }
         static void post(optional<Exposed>&, Transformed const&) {}
-        static void fail(Exposed& val) 
+        static void fail(optional<Exposed>& val) 
         {
              val = none_t();    // leave optional uninitialized if rhs failed
         }
