@@ -688,19 +688,14 @@ namespace boost { namespace spirit { namespace traits
     // meta function to return whether the argument is a one element fusion 
     // sequence
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
+    template <typename T, bool IsSeq = fusion::traits::is_sequence<T>::value>
     struct one_element_sequence 
-      : mpl::false_ 
+      : mpl::false_
     {};
 
     template <typename T>
-    struct one_element_sequence<fusion::vector1<T> > 
-      : mpl::true_ 
-    {};
-
-    template <typename T>
-    struct one_element_sequence<fusion::vector<T> > 
-      : mpl::true_ 
+    struct one_element_sequence<T, true> 
+      : mpl::bool_<mpl::size<T>::value == 1>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
