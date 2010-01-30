@@ -256,8 +256,7 @@ main()
         BOOST_TEST(!test_attr("-1.2e", double_, d));
 
 // this appears to be broken on Apple Tiger x86 with gcc4.0.1
-#if (__GNUC__*10000 + __GNUC_MINOR__*100 + __GNUC_PATCHLEVEL__ != 40001) || \
-    !defined(__APPLE__)
+#if defined(BOOST_SPIRIT_TEST_REAL_PRECISION)
         BOOST_TEST(test_attr("-5.7222349715140557e+307", double_, d));
         BOOST_TEST(d == -5.7222349715140557e+307); // exact!
 
