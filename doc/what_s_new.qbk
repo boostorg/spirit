@@ -19,8 +19,16 @@
   will be called whenever the right hand side of the `rule` (or the embedded
   parser of `attr_cast`) fail parsing. This change affects /Qi/ only. See
   the desciption of the __customize_transform_attribute__ for more details.
+* Added support for attribute sequences created with `BOOST_FUSION_ADAPT_CLASS` 
+  and `BOOST_FUSION_ADAPT_CLASS_NAMED`. This support requires to include the 
+  new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
 
 [heading Bug Fixes]
+
+* Sequences (in /Qi/ and /Karma/) may now have a component having no attribute 
+  even as their last element.
+* Sequences (in /Qi/ and /Karma/) can now take one element attribute sequences 
+  as their attribute.
 
 [endsect] [/ spirit_2_3]
 
