@@ -12,7 +12,11 @@
 
 namespace boost { namespace spirit { namespace unicode
 {
-    enum major_category // upper 5 bits
+    // bit pattern: xxMMMCCC
+    // MMM: major_category
+    // CCC: category
+    
+    enum major_category 
     {
         letter,
         mark,
@@ -64,6 +68,11 @@ namespace boost { namespace spirit { namespace unicode
     };                               
     
     category get_category(::boost::uint32_t ch);
+    
+    inline major_category get_major_category(::boost::uint32_t ch)
+    {
+        return static_cast<major_category>(get_category(ch) >> 3);
+    }
 }}}
 
 #include "tables.hpp"
