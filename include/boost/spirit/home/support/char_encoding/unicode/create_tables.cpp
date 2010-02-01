@@ -13,10 +13,12 @@
 #include <boost/foreach.hpp>
 #include <boost/array.hpp>
 #include <boost/scoped_array.hpp>
+#include <boost/range/iterator_range.hpp>
 
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 #include <string>
 #include <map>
 
@@ -24,22 +26,6 @@
 typedef std::vector<std::string> ucd_line;
 typedef std::vector<ucd_line> ucd_vector;
 typedef std::vector<ucd_line>::iterator ucd_iterator;
-
-// a char range
-struct ucd_range
-{
-    ucd_range(boost::uint32_t start, boost::uint32_t finish)
-        : start(start), finish(finish) {}
-            
-    // we need this so we can use ucd_range as a multimap key 
-    friend bool operator<(ucd_range const& a, ucd_range const& b)
-    {
-        return a.start < b.start;
-    }
-            
-    boost::uint32_t start;
-    boost::uint32_t finish;
-};
 
 // spirit and phoenix using declarations
 using boost::spirit::qi::parse;
@@ -52,6 +38,27 @@ using boost::spirit::qi::_1;
 using boost::spirit::qi::_val;
 using boost::phoenix::push_back;
 using boost::phoenix::ref;
+
+// basic unsigned types
+using boost::uint8_t;
+using boost::uint16_t;
+using boost::uint32_t;
+
+// a char range
+struct ucd_range
+{
+    ucd_range(uint32_t start, uint32_t finish)
+        : start(start), finish(finish) {}
+            
+    // we need this so we can use ucd_range as a multimap key 
+    friend bool operator<(ucd_range const& a, ucd_range const& b)
+    {
+        return a.start < b.start;
+    }
+            
+    uint32_t start;
+    uint32_t finish;
+};
 
 class ucd_info
 {
@@ -110,8 +117,8 @@ public:
             std::string::const_iterator l = range.end();
 
             // get the code-point range
-            boost::uint32_t start;
-            boost::uint32_t finish;
+            uint32_t start;
+            uint32_t finish;
             parse(f, l, hex[ref(start) = ref(finish) = _1] >> -(".." >> hex[ref(finish) = _1]));
             
             // special case for UnicodeData.txt ranges:
@@ -134,7 +141,7 @@ public:
             if (!ignore_property(code)) // Only collect properties we are interested in
             {
                 //~ properties.insert(std::make_pair(ucd_range(start, finish), map_property(code)));
-                for (boost::uint32_t i = start; i <= finish; ++i)
+                for (uint32_t i = start; i <= finish; ++i)
                     data[i] |= map_property(code);
             }
             ++current;
@@ -315,78 +322,206 @@ private:
     ucd_vector info;
 };
 
-//~ struct block
-//~ {
-    //~ static int const block_size = 256;
+template <typename T, uint32_t block_size = 256>
+class ucd_table_builder
+{
+public:
 
-    //~ block(boost::uint32_t start) : start(start)
-    //~ {
-        //~ BOOST_FOREACH(int& i, data)
-        //~ {
-            //~ i = 0;
-        //~ }
-    //~ }
-    
-    //~ void set(ucd_property_map const& properties)
-    //~ {
-        //~ BOOST_FOREACH(ucd_property const& p, properties)
-        //~ {
-            //~ if (p.first.start > start+block_size)
-                //~ break;
-            
-        //~ }
-        
-        
+    static uint32_t const full_span = 0x110000;
 
-    //~ }
+    ucd_table_builder() : p(new T[full_span])
+    {
+        for (uint32_t i = 0; i < full_span; ++i)
+            p[i] = 0;
+    }
     
-    //~ boost::array<int, block_size> data;
-    //~ boost::uint32_t start;
-//~ };
+    void collect(char const* filename, int field)
+    {
+        ucd_info info(filename);
+        info.collect(p, field);
+    }
+    
+    void build(std::vector<uint8_t>& stage1, std::vector<T const*>& stage2)
+    {        
+        std::map<block_ptr, std::vector<T const*> > blocks;
+        for (T const* i = p.get(); i < (p.get() + full_span); i += block_size)
+            blocks[block_ptr(i)].push_back(i);
+        
+        // Not enough bits to store the block indices.
+        //~ std::cout << "no. of blocks:" <<  blocks.size() << std::endl;
+        BOOST_ASSERT(blocks.size() < (1 << (sizeof(uint8_t) * 8)));
+        
+        typedef std::pair<block_ptr, std::vector<T const*> > blocks_value_type;
+        std::map<T const*, std::vector<T const*> > sorted_blocks;
+        BOOST_FOREACH(blocks_value_type const& val, blocks)
+        {
+            sorted_blocks[val.first.p] = val.second;
+        }
+
+        stage1.clear();
+        stage1.reserve(full_span / block_size);
+        stage1.resize(full_span / block_size);
+        stage2.clear();
+        stage2.reserve(blocks.size());
+
+        typedef std::pair<T const*, std::vector<T const*> > sorted_blocks_value_type;
+        BOOST_FOREACH(sorted_blocks_value_type const& val, sorted_blocks)
+        {
+            stage2.push_back(val.first);
+            //~ std::cout << "a:" << int(val.first) << "s:" << val.second.size() << std::endl;
+            BOOST_FOREACH(T const* val2, val.second)
+            {
+                stage1[(val2 - p.get()) / block_size] = stage2.size() - 1;
+            }
+        }
+    }
+        
+private:
+    
+    struct block_ptr
+    {
+        block_ptr(T const* p) : p(p) {}
+
+        friend bool operator<(block_ptr a, block_ptr b)
+        {
+            return std::lexicographical_compare(
+                a.p, a.p + block_size, b.p, b.p + block_size);
+        }
+        
+        T const* p;
+    };
+
+    boost::scoped_array<T> p;
+};
+
+template <typename Out>
+void print_tab(Out& out, int tab)
+{
+    for (int i = 0; i < tab; ++i)
+        out << ' ';
+}
+
+template <typename Out, typename C>
+void print_table(Out& out, C const& c, int tab, int width = 4, int group = 16)
+{
+    C::size_type size = c.size();
+    BOOST_ASSERT(size > 1);
+    print_tab(out, tab);
+    out << std::setw(width) << int(c[0]);
+    for (C::size_type i = 1; i < size; ++i)
+    {
+        out << ", ";
+        if ((i % group) == 0)
+        {
+            out << std::endl;
+            print_tab(out, tab);
+        }
+        out << std::setw(width) << int(c[i]);
+    }
+}
 
 int main()
 {
-    boost::scoped_array<boost::uint16_t> p(new boost::uint16_t[0x110000]);
-    for (boost::uint32_t i = 0; i < 0x110000; ++i)
+    std::cout 
+        << "/*=============================================================================\n"
+        << "    Copyright (c) 2001-2010 Joel de Guzman\n"
+        << "\n"
+        << "    Distributed under the Boost Software License, Version 1.0. (See accompanying\n"
+        << "    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)\n"
+        << "\n"
+        << "    AUTOGENERATED. DO NOT EDIT!!!\n"
+        << "==============================================================================*/\n"
+        << "\n"
+        << "namespace boost { namespace spirit { namespace unicode { namespace detail\n"
+        << "{\n"
+        ;
+
+    const int block_size = 256;
+    
+    // The category tables
     {
-        p[i] = 0;
+        ucd_table_builder<uint16_t, block_size> builder;
+        builder.collect("UnicodeData.txt", 2);
+        builder.collect("DerivedCoreProperties.txt", 1);
+        builder.collect("PropList.txt", 1);
+        
+        std::vector<uint8_t> stage1;
+        std::vector<uint16_t const*> stage2;
+        builder.build(stage1, stage2);
+
+        std::cout
+            << "    static const ::boost::uint8_t category_stage1[] = {\n"
+            << "\n"
+            ;
+        
+        print_table(std::cout, stage1, 4, 3);
+
+        std::cout 
+            << "\n"
+            << "    };"
+            << "\n"
+            << "\n"
+            << "    static const ::boost::uint8_t category_stage2[] = {"
+            ;
+
+        int block_n = 0;
+        BOOST_FOREACH(uint16_t const* p, stage2)
+        {
+            std::cout << "\n\n    // block " << block_n++ << std::endl;
+            print_table(std::cout, 
+                boost::iterator_range<uint16_t const*>(p, p+block_size), 4, 4);
+        }
+        
+        std::cout 
+            << "\n"
+            << "    };"
+            << "\n"
+            ;
     }
-    //~ {
-        //~ ucd_info info("UnicodeData.txt");
-        //~ info.collect(p, 2);
-    //~ }
-    //~ {
-        //~ ucd_info info("DerivedCoreProperties.txt");
-        //~ info.collect(p, 1);
-    //~ }
-    //~ {
-        //~ ucd_info info("Scripts.txt");
-        //~ info.collect(p, 1);
-    //~ }
+    
+    // The script tables
     {
-        ucd_info info("PropList.txt");
-        info.collect(p, 1);
+        ucd_table_builder<uint8_t, block_size> builder;
+        builder.collect("Scripts.txt", 1);
+        
+        std::vector<uint8_t> stage1;
+        std::vector<uint8_t const*> stage2;
+        builder.build(stage1, stage2);
+
+        std::cout
+            << "    static const ::boost::uint8_t script_stage1[] = {\n"
+            << "\n"
+            ;
+        
+        print_table(std::cout, stage1, 4, 3);
+
+        std::cout 
+            << "\n"
+            << "    };"
+            << "\n"
+            << "\n"
+            << "    static const ::boost::uint8_t script_stage2[] = {"
+            ;
+
+        int block_n = 0;
+        BOOST_FOREACH(uint8_t const* p, stage2)
+        {
+            std::cout << "\n\n    // block " << block_n++ << std::endl;
+            print_table(std::cout, 
+                boost::iterator_range<uint8_t const*>(p, p+block_size), 4, 3);
+        }
+        
+        std::cout 
+            << "\n"
+            << "    };"
+            << "\n"
+            ;
     }
-    
-    for (int i = 0; i < 100; ++i)
-        std::cout << std::hex << i << ':' << std::dec << p[i] << std::endl;
-    
-    //~ ucd_property_map properties;
-    //~ info.collect(properties, 2);
-    
-    //~ BOOST_FOREACH(ucd_property const& p, properties)
-    //~ {
-        //~ std::cout << std::hex
-            //~ << p.first.start << ','
-            //~ << p.first.finish << ','
-            //~ << std::dec << p.second << std::endl;
-    //~ }
-    
-    //~ ucd_info::iterator uc = info.get_iterator(2);
-    //~ for (int i = 0; i < 100 && !uc.at_end(); ++i, uc.next())
-        //~ std::cout << std::hex
-            //~ << uc.get_range().first << ','
-            //~ << uc.get_range().second << ','
-            //~ << uc.get_info() << std::endl;
+
+    std::cout 
+        << "\n"
+        << "} // namespace boost::spirit::unicode::detail\n"
+        ;
+
     return 0;
 }
