@@ -91,13 +91,6 @@ public:
             rule<iterator_type, std::vector<ucd_line>()> file = +(endl | line[push_back(_val, _1)]);
             
             parse(f, l, file, info);
-            
-            //~ for (int i = 0; i < 20; ++i)
-            //~ {
-                //~ for (ucd_line::iterator j = info[i].begin(); j != info[i].end(); ++j)
-                    //~ std::cout << '[' << *j << ']';
-                //~ std::cout << std::endl;
-            //~ }
         }
     }
     
@@ -140,7 +133,6 @@ public:
             boost::trim(code);
             if (!ignore_property(code)) // Only collect properties we are interested in
             {
-                //~ properties.insert(std::make_pair(ucd_range(start, finish), map_property(code)));
                 for (uint32_t i = start; i <= finish; ++i)
                     data[i] |= map_property(code);
             }
@@ -348,7 +340,6 @@ public:
             blocks[block_ptr(i)].push_back(i);
         
         // Not enough bits to store the block indices.
-        //~ std::cout << "no. of blocks:" <<  blocks.size() << std::endl;
         BOOST_ASSERT(blocks.size() < (1 << (sizeof(uint8_t) * 8)));
         
         typedef std::pair<block_ptr, std::vector<T const*> > blocks_value_type;
@@ -368,7 +359,6 @@ public:
         BOOST_FOREACH(sorted_blocks_value_type const& val, sorted_blocks)
         {
             stage2.push_back(val.first);
-            //~ std::cout << "a:" << int(val.first) << "s:" << val.second.size() << std::endl;
             BOOST_FOREACH(T const* val2, val.second)
             {
                 stage1[(val2 - p.get()) / block_size] = stage2.size() - 1;
@@ -489,6 +479,7 @@ int main()
         builder.build(stage1, stage2);
 
         std::cout
+            << "\n"
             << "    static const ::boost::uint8_t script_stage1[] = {\n"
             << "\n"
             ;
@@ -520,7 +511,7 @@ int main()
 
     std::cout 
         << "\n"
-        << "} // namespace boost::spirit::unicode::detail\n"
+        << "}}}} // namespace boost::spirit::unicode::detail\n"
         ;
 
     return 0;
