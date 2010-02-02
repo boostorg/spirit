@@ -8,17 +8,23 @@
     table builder) (c) Peter Kankowski, 2008
 ==============================================================================*/
 #if !defined(BOOST_SPIRIT_UNICODE_GET_CATEGORY)
-#include <boost/cstdint.hpp>
-#include "tables.hpp"
+
+#include "category_table.hpp"
+#include "script_table.hpp"
+#include "lowercase_table.hpp"
+#include "uppercase_table.hpp"
 
 namespace boost { namespace spirit { namespace unicode
-{
-    // bit pattern: xxMMMCCC
-    // MMM: major_category
-    // CCC: category
+{    
+    // This header provides Basic (Level 1) Unicode Support
+    // See http://unicode.org/reports/tr18/ for details
     
     struct properties
     {
+        // bit pattern: xxMMMCCC
+        // MMM: major_category
+        // CCC: category
+
         enum major_category 
         {
             letter,
@@ -76,35 +82,155 @@ namespace boost { namespace spirit { namespace unicode
             uppercase = 128,
             lowercase = 256,
             white_space = 512,
-            noncharacter_code_point = 1024,
-            default_ignorable_code_point = 2048
+            hex_digit = 1024,
+            noncharacter_code_point = 2048,
+            default_ignorable_code_point = 4096
         };
-    };
-
-    namespace detail
-    {
-        inline ::boost::uint16_t category_lookup(::boost::uint32_t ch)
-        {
-            const ::boost::uint32_t block_size = 256;
-            ::boost::uint32_t block_offset = detail::category_stage1[ch / block_size] * block_size;
-            ::boost::uint8_t r = detail::category_stage2[block_offset + ch % block_size];
-            return r;
-        }
-    }    
         
-    inline category get_category(::boost::uint32_t ch)
+        enum script
+        {
+            arabic = 0,
+            imperial_aramaic = 1,
+            armenian = 2,
+            avestan = 3,
+            balinese = 4,
+            bamum = 5,
+            bengali = 6,
+            bopomofo = 7,
+            braille = 8,
+            buginese = 9,
+            buhid = 10,
+            canadian_aboriginal = 11,
+            carian = 12,
+            cham = 13,
+            cherokee = 14,
+            coptic = 15,
+            cypriot = 16,
+            cyrillic = 17,
+            devanagari = 18,
+            deseret = 19,
+            egyptian_hieroglyphs = 20,
+            ethiopic = 21,
+            georgian = 22,
+            glagolitic = 23,
+            gothic = 24,
+            greek = 25,
+            gujarati = 26,
+            gurmukhi = 27,
+            hangul = 28,
+            han = 29,
+            hanunoo = 30,
+            hebrew = 31,
+            hiragana = 32,
+            katakana_or_hiragana = 33,
+            old_italic = 34,
+            javanese = 35,
+            kayah_li = 36,
+            katakana = 37,
+            kharoshthi = 38,
+            khmer = 39,
+            kannada = 40,
+            kaithi = 41,
+            tai_tham = 42,
+            lao = 43,
+            latin = 44,
+            lepcha = 45,
+            limbu = 46,
+            linear_b = 47,
+            lisu = 48,
+            lycian = 49,
+            lydian = 50,
+            malayalam = 51,
+            mongolian = 52,
+            meetei_mayek = 53,
+            myanmar = 54,
+            nko = 55,
+            ogham = 56,
+            ol_chiki = 57,
+            old_turkic = 58,
+            oriya = 59,
+            osmanya = 60,
+            phags_pa = 61,
+            inscriptional_pahlavi = 62,
+            phoenician = 63,
+            inscriptional_parthian = 64,
+            rejang = 65,
+            runic = 66,
+            samaritan = 67,
+            old_south_arabian = 68,
+            saurashtra = 69,
+            shavian = 70,
+            sinhala = 71,
+            sundanese = 72,
+            syloti_nagri = 73,
+            syriac = 74,
+            tagbanwa = 75,
+            tai_le = 76,
+            new_tai_lue = 77,
+            tamil = 78,
+            tai_viet = 79,
+            telugu = 80,
+            tifinagh = 81,
+            tagalog = 82,
+            thaana = 83,
+            thai = 84,
+            tibetan = 85,
+            ugaritic = 86,
+            vai = 87,
+            old_persian = 88,
+            cuneiform = 89,
+            yi = 90,
+            inherited = 91,
+            common = 92,
+            unknown = 93
+        };
+    }; 
+        
+    inline properties::category get_category(::boost::uint32_t ch)
     {
         return static_cast<properties::category>(detail::category_lookup(r) & 0x3F);
     }
     
-    inline major_category get_major_category(::boost::uint32_t ch)
+    inline properties::major_category get_major_category(::boost::uint32_t ch)
     {
         return static_cast<properties::major_category>(get_category(ch) >> 3);
     }
     
+    inline bool is_punctuation(::boost::uint32_t ch)
+    {
+        return get_major_category() == properties::punctuation;
+    } 
+    
+    inline bool is_decimal_number(::boost::uint32_t ch)
+    {
+        return get_category(ch) == properties::decimal_number;
+    }
+    
+    inline bool is_hexadecimal_number(::boost::uint32_t ch)
+    {
+        return get_category(ch) == properties::hex_digit
+            || get_category(ch) == properties::decimal_number
+            ;
+    }  
+    
+    inline bool is_control(::boost::uint32_t ch)
+    {
+        return get_category(ch) == properties::control;
+    }
+    
+    inline bool is_print(::boost::uint32_t ch)
+    {
+        return (is_graph() || is_blank()) && !is_control(ch);
+    } 
+    
     inline bool is_alphabetic(::boost::uint32_t ch)
     {
         return detail::category_lookup(r) & properties::alphabetic;
+    }
+        
+    inline bool is_alphanumeric(::boost::uint32_t ch)
+    {
+        return is_decimal_number() || is_alphabetic();
     }
     
     inline bool is_uppercase(::boost::uint32_t ch)
@@ -122,7 +248,30 @@ namespace boost { namespace spirit { namespace unicode
         return detail::category_lookup(r) & properties::white_space;
     }
     
-    inline bool is_noncharacter_code_poin(::boost::uint32_t ch)
+    inline bool is_blank(::boost::uint32_t ch)
+    {
+        switch (ch)
+        {
+            case '\n': case '\v': case '\f': case '\r':
+                return false;
+            default: 
+                is_white_space(ch) 
+                && !(   get_catogory(ch) == line_separator 
+                    ||  get_catogory(ch) == paragraph_separator
+                    );
+        }
+    }
+    
+    inline bool is_graph(::boost::uint32_t ch)
+    {
+        return !(   is_white_space(ch)
+                ||  get_category(ch) == properties::control 
+                ||  get_category(ch) == properties::surrogate
+                ||  get_category(ch) == properties::unassigned
+                );
+    }
+    
+    inline bool is_noncharacter_code_point(::boost::uint32_t ch)
     {
         return detail::category_lookup(r) & properties::noncharacter_code_point;
     }
@@ -132,6 +281,10 @@ namespace boost { namespace spirit { namespace unicode
         return detail::category_lookup(r) & properties::default_ignorable_code_point;
     }
     
+    inline properties::script get_script(::boost::uint32_t ch)
+    {
+        return static_cast<properties::script>(detail::script_lookup(r) & 0x3F);
+    }
 }}}
 
 #endif
