@@ -283,7 +283,17 @@ namespace boost { namespace spirit { namespace unicode
     
     inline properties::script get_script(::boost::uint32_t ch)
     {
-        return static_cast<properties::script>(detail::script_lookup(r) & 0x3F);
+        return static_cast<properties::script>(detail::script_lookup(ch) & 0x3F);
+    }
+    
+    inline ::boost::uint32_t to_lowercase(::boost::uint32_t ch)
+    {
+        return detail::lowercase_lookup(ch);
+    }
+    
+    inline ::boost::uint32_t to_uppercase(::boost::uint32_t ch)
+    {
+        return detail::uppercase_lookup(ch);
     }
 }}}
 

@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         isascii_(int ch)
         {
-            return (0 == (ch & ~0x7f)) ? true : false;
+            return 0 == (ch & ~0x7f);
         }
 
         static bool
