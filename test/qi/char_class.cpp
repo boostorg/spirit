@@ -169,6 +169,32 @@ main()
         BOOST_TEST(test(L"f", xdigit));
         BOOST_TEST(!test(L"g", xdigit));
     }
+    
+    {
+        using namespace boost::spirit::unicode;
+        BOOST_TEST(test(L"1", alnum));
+        BOOST_TEST(!test(L" ", alnum));
+        BOOST_TEST(!test(L"1", alpha));
+        BOOST_TEST(test(L"x", alpha));
+        BOOST_TEST(test(L" ", blank));
+        BOOST_TEST(!test(L"x", blank));
+        BOOST_TEST(test(L"1", digit));
+        BOOST_TEST(!test(L"x", digit));
+        BOOST_TEST(test(L"a", lower));
+        BOOST_TEST(!test(L"A", lower));
+        BOOST_TEST(test(L"!", punct));
+        BOOST_TEST(!test(L"x", punct));
+        BOOST_TEST(test(L" ", space));
+        BOOST_TEST(test(L"\n", space));
+        BOOST_TEST(test(L"\r", space));
+        BOOST_TEST(test(L"\t", space));
+        BOOST_TEST(test(L"A", upper));
+        BOOST_TEST(!test(L"a", upper));
+        BOOST_TEST(test(L"A", xdigit));
+        BOOST_TEST(test(L"0", xdigit));
+        BOOST_TEST(test(L"f", xdigit));
+        BOOST_TEST(!test(L"g", xdigit));
+    }
 
     {   // test attribute extraction
         using boost::spirit::qi::domain;
