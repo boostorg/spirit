@@ -13,7 +13,7 @@
 #endif
 
 #include <boost/cstdint.hpp>
-#include <boost/spirit/home/support/char_encoding/unicode/properties.hpp>
+#include <boost/spirit/home/support/char_encoding/unicode/query.hpp>
 
 namespace boost { namespace spirit { namespace char_encoding
 {
