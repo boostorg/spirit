@@ -134,9 +134,9 @@ public:
                 code = (*current)[field];
             boost::trim(code);
             // Only collect properties we are interested in
-            if (collect_properties && !ignore_property(code))
+            if (collect_properties) // code for properties
             {
-                if (collect_properties) // code for properties
+                if (!ignore_property(code)) 
                 {
                     for (uint32_t i = start; i <= finish; ++i)
                         data[i] |= map_property(code);
@@ -207,11 +207,11 @@ private:
             map["Zl"] = 25;
             map["Zp"] = 26;
             
-            map["Cc"] = 27;
-            map["Cf"] = 28;
-            map["Co"] = 29;
-            map["Cs"] = 30;
-            map["Cn"] = 31;
+            map["Cc"] = 32;
+            map["Cf"] = 33;
+            map["Co"] = 34;
+            map["Cs"] = 35;
+            map["Cn"] = 36;
             
             map["Pd"] = 40;
             map["Ps"] = 41;
@@ -419,7 +419,7 @@ void print_tab(Out& out, int tab)
 }
 
 template <typename Out, typename C>
-void print_table(Out& out, C const& c, int width = 4, int group = 16)
+void print_table(Out& out, C const& c, bool trailing_comma, int width = 4, int group = 16)
 {
     int const tab = 4;
     C::size_type size = c.size();
@@ -436,6 +436,9 @@ void print_table(Out& out, C const& c, int width = 4, int group = 16)
         }
         out << std::setw(width) << int(c[i]);
     }
+    
+    if (trailing_comma)
+        out << ", " << std::endl;
 }
 
 template <typename Out>
@@ -452,7 +455,7 @@ void print_head(Out& out)
         << "==============================================================================*/\n"
         << "#include <boost/cstdint.hpp>\n"
         << "\n"
-        << "namespace boost { namespace spirit { namespace unicode { namespace detail\n"
+        << "namespace boost { namespace spirit { namespace ucd { namespace detail\n"
         << "{"
         ;
 }
@@ -501,7 +504,7 @@ void print_file(Out& out, Builder& builder, int field_width, char const* name)
         << "\n"
         ;
     
-    print_table(out, stage1, 3);
+    print_table(out, stage1, false, 3);
     char const* int_name = get_int_type_name(sizeof(value_type));
 
     out 
@@ -513,11 +516,13 @@ void print_file(Out& out, Builder& builder, int field_width, char const* name)
         ;
 
     int block_n = 0;
-    BOOST_FOREACH(value_type const* p, stage2)
+    for (int i = 0; i < int(stage2.size()); ++i)
     {
+        value_type const* p = stage2[i];
+        bool last = (i+1 == stage2.size());
         out << "\n\n    // block " << block_n++ << std::endl;
         print_table(out, 
-            boost::iterator_range<value_type const*>(p, p+block_size), field_width);
+            boost::iterator_range<value_type const*>(p, p+block_size), !last, field_width);
     }
 
     out 

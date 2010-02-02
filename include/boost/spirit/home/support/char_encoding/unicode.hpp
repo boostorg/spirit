@@ -40,89 +40,89 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         isalnum(char_type ch)
         {
-            return unicode::is_alphanumeric(ch);
+            return ucd::is_alphanumeric(ch);
         }
 
         static bool
         isalpha(char_type ch)
         {
-            return unicode::is_alphabetic(ch);
+            return ucd::is_alphabetic(ch);
         }
 
         static bool
         isdigit(char_type ch)
         {
-            return unicode::is_decimal_number(ch);
+            return ucd::is_decimal_number(ch);
         }
 
         static bool
         isxdigit(char_type ch)
         {
-            return unicode::is_hexadecimal_number(ch);
+            return ucd::is_hexadecimal_number(ch);
         }
 
         static bool
         iscntrl(char_type ch)
         {
-            return unicode::is_control(ch);
+            return ucd::is_control(ch);
         }
 
         static bool
         isgraph(char_type ch)
         {
-            return unicode::is_graph(ch);
+            return ucd::is_graph(ch);
         }
 
         static bool
         islower(char_type ch)
         {
-            return unicode::is_lowercase(ch);
+            return ucd::is_lowercase(ch);
         }
 
         static bool
         isprint(char_type ch)
         {
-            return unicode::is_print(ch);
+            return ucd::is_print(ch);
         }
 
         static bool
         ispunct(char_type ch)
         {
-            return unicode::is_punctuation(ch);
+            return ucd::is_punctuation(ch);
         }
 
         static bool
         isspace(char_type ch)
         {
-            return unicode::is_punctuation(ch);
+            return ucd::is_white_space(ch);
         }
 
         static int
         isblank BOOST_PREVENT_MACRO_SUBSTITUTION (char_type ch)
         {
-            return unicode::is_blank(ch);
+            return ucd::is_blank(ch);
         }
 
         static bool
         isupper(char_type ch)
         {
-            return unicode::is_uppercase(ch);
+            return ucd::is_uppercase(ch);
         }
 
     ///////////////////////////////////////////////////////////////////////////
     //  Simple character conversions
     ///////////////////////////////////////////////////////////////////////////
 
-        static bool
+        static char_type
         tolower(char_type ch)
         {
-            return unicode::to_lowercase(ch);
+            return ucd::to_lowercase(ch);
         }
 
-        static bool
+        static char_type
         toupper(char_type ch)
         {
-            return unicode::to_uppercase(ch);
+            return ucd::to_uppercase(ch);
         }
 
         static ::boost::uint32_t
