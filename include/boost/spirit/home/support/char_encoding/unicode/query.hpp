@@ -10,10 +10,12 @@
 #if !defined(BOOST_SPIRIT_UNICODE_QUERY_FEBRUARY_2_2010)
 #define BOOST_SPIRIT_UNICODE_QUERY_FEBRUARY_2_2010
 
-#include "category_table.hpp"
-#include "script_table.hpp"
-#include "lowercase_table.hpp"
-#include "uppercase_table.hpp"
+#include <boost/cstdint.hpp>
+
+# include "category_table.hpp"
+# include "script_table.hpp"
+# include "lowercase_table.hpp"
+# include "uppercase_table.hpp"
 
 namespace boost { namespace spirit { namespace ucd
 {    
@@ -71,7 +73,7 @@ namespace boost { namespace spirit { namespace ucd
             initial_punctuation,    // [Pi] an initial quotation mark 
             final_punctuation,      // [Pf] a final quotation mark
                                     
-            math_symboll = 48,      // [Sm] a symbol of primarily mathematical use
+            math_symbol = 48,       // [Sm] a symbol of primarily mathematical use
             currency_symbol,        // [Sc] a currency sign 
             modifier_symbol,        // [Sk] a non-letterlike modifier symbol
             other_symbol            // [So] a symbol of other type 
@@ -207,7 +209,7 @@ namespace boost { namespace spirit { namespace ucd
         return get_category(ch) == properties::decimal_number;
     }
     
-    inline bool is_hexadecimal_number(::boost::uint32_t ch)
+    inline bool is_hex_digit(::boost::uint32_t ch)
     {
         return (detail::category_lookup(ch) & properties::hex_digit) != 0;
     }  
