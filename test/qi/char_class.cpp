@@ -9,6 +9,8 @@
 // this file intentionally contains non-ascii characters
 // boostinspect:noascii
 
+#define BOOST_SPIRIT_UNICODE
+
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
