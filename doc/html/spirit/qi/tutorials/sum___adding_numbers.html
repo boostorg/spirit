@@ -4,7 +4,7 @@
 <title>Sum - adding numbers</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="complex___our_first_complex_parser.html" title="Complex - Our first complex parser">
 <link rel="next" href="number_list___stuffing_numbers_into_a_std__vector.html" title="Number List - stuffing numbers into a std::vector">
@@ -160,11 +160,10 @@
 <tr><td align="left" valign="top"><p>
             If you feel uneasy with using whole namespaces, feel free to qualify
             your code, use namespace aliases, etc. For the purpose of this tutorial,
-            we will be presenting unqualified names for both Spirit and <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
-            No worries, we will always present the full working code, so you won't
-            get lost. In fact, all examples in this tutorial have a corresponding
-            cpp file that QuickBook (the documentation tool we are using) imports
-            in here as code snippets.
+            we will be presenting unqualified names for both Spirit and <span class="underline">_phoenix</span>_. No worries, we will always present
+            the full working code, so you won't get lost. In fact, all examples in
+            this tutorial have a corresponding cpp file that QuickBook (the documentation
+            tool we are using) imports in here as code snippets.
           </p></td></tr>
 </table></div>
 <p>
@@ -216,8 +215,10 @@
 <p>
           This assigns the parsed result (actually, the attribute of <code class="computeroutput"><span class="identifier">double_</span></code>) to <code class="computeroutput"><span class="identifier">n</span></code>.
           <code class="computeroutput"><span class="identifier">ref</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span></code> tells
-          <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> that <code class="computeroutput"><span class="identifier">n</span></code> is a mutable reference. <code class="computeroutput"><span class="identifier">_1</span></code> is a <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-          placeholder for the parsed result attribute.
+          <span class="underline">_phoenix</span>_ that <code class="computeroutput"><span class="identifier">n</span></code>
+          is a mutable reference. <code class="computeroutput"><span class="identifier">_1</span></code>
+          is a <span class="underline">_phoenix</span>_ placeholder for the
+          parsed result attribute.
         </p>
 <p>
           The second <code class="computeroutput"><span class="identifier">double_</span></code> parser

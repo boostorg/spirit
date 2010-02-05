@@ -4,7 +4,7 @@
 <title>Parsers in Depth</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../indepth.html" title="In Depth">
 <link rel="prev" href="../indepth.html" title="In Depth">
 <link rel="next" href="../customize.html" title="Customization of Spirit's Attribute Handling">
@@ -29,15 +29,15 @@
 </h4></div></div></div>
 <p>
           This section is not for the faint of heart. In here, are distilled the
-          inner workings of <span class="emphasis"><em>Spirit.Qi</em></span> parsers, using real code
-          from the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> library
+          inner workings of <span class="underline">_qi</span>_ parsers, using
+          real code from the <span class="underline">_spirit</span>_ library
           as examples. On the other hand, here is no reason to fear reading on, though.
           We tried to explain things step by step while highlighting the important
           insights.
         </p>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a></code> class is the base
-          class for all parsers.
+          The <code class="computeroutput"><span class="identifier">__parser_concept__</span></code>
+          class is the base class for all parsers.
         </p>
 <p>
           </p>
@@ -81,17 +81,21 @@
 <p>
         </p>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a></code> class does not really
-          know how to parse anything but instead relies on the template parameter
-          <code class="computeroutput"><span class="identifier">Derived</span></code> to do the actual
-          parsing. This technique is known as the "Curiously Recurring Template
-          Pattern" in template meta-programming circles. This inheritance strategy
-          gives us the power of polymorphism without the virtual function overhead.
-          In essence this is a way to implement compile time polymorphism.
+          The <code class="computeroutput"><span class="identifier">__parser_concept__</span></code>
+          class does not really know how to parse anything but instead relies on
+          the template parameter <code class="computeroutput"><span class="identifier">Derived</span></code>
+          to do the actual parsing. This technique is known as the "Curiously
+          Recurring Template Pattern" in template meta-programming circles.
+          This inheritance strategy gives us the power of polymorphism without the
+          virtual function overhead. In essence this is a way to implement compile
+          time polymorphism.
         </p>
 <p>
-          The Derived parsers, <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a></code>, <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a></code>, <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/binaryparser.html" title="BinaryParser"><code class="computeroutput"><span class="identifier">BinaryParser</span></code></a></code> and <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a></code> provide the
-          necessary facilities for parser detection, introspection, transformation
+          The Derived parsers, <code class="computeroutput"><span class="identifier">__primitive_parser_concept__</span></code>,
+          <code class="computeroutput"><span class="identifier">__unary_parser_concept__</span></code>,
+          <code class="computeroutput"><span class="identifier">__binary_parser_concept__</span></code>
+          and <code class="computeroutput"><span class="identifier">__nary_parser_concept__</span></code>
+          provide the necessary facilities for parser detection, introspection, transformation
           and visitation.
         </p>
 <p>
@@ -121,7 +125,7 @@
 <p>
           The <span class="emphasis"><em>parse</em></span> is the main parser entry point. <span class="emphasis"><em>skipper</em></span>
           can be an <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-          It's a type used every where in <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          It's a type used every where in <span class="underline">_spirit</span>_
           to signify "don't-care". There is an overload for <span class="emphasis"><em>skip</em></span>
           for <code class="computeroutput"><span class="identifier">unused_type</span></code> that is
           simply a no-op. That way, we do not have to write multiple parse functions
@@ -186,23 +190,23 @@
 <div class="variablelist" title="Parsers">
 <p class="title"><b>Parsers</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">__primitive_parser_concept__</span></code></span></dt>
 <dd><p>
               A parser for primitive data (e.g. integer parsing).
             </p></dd>
-<dt><span class="term"><code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">__unary_parser_concept__</span></code></span></dt>
 <dd><p>
               A parser that has single subject (e.g. kleene star).
             </p></dd>
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id915947"></a>
+<a name="id945826"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
 <p>
-          For our disection study, we will use a <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          For our disection study, we will use a <span class="underline">_spirit</span>_
           primitive, the <code class="computeroutput"><span class="identifier">int_parser</span></code>
           in the boost::spirit::qi namespace.
         </p>
@@ -254,9 +258,8 @@
         </p>
 <p>
           The <code class="computeroutput"><span class="identifier">int_parser</span></code> is derived
-          from a <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>,
-          which in turn derives from <code class="computeroutput"><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>. Therefore, it supports the following
-          requirements:
+          from a <code class="computeroutput"><span class="identifier">__primitive_parser_concept__</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>, which in turn derives from <code class="computeroutput"><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>.
+          Therefore, it supports the following requirements:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -286,9 +289,9 @@
           The actual parsing code is placed in <code class="computeroutput"><span class="identifier">extract_int</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">MinDigits</span><span class="special">,</span> <span class="identifier">MaxDigits</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">);</span></code>
         </p>
 <p>
-          This simple no-frills protocol is one of the reasons why <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-          is fast. If you know the internals of <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
-          and perhaps even wrote some parsers with it, this simple <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          This simple no-frills protocol is one of the reasons why <span class="underline">_spirit</span>_
+          is fast. If you know the internals of <span class="underline">_classic</span>_
+          and perhaps even wrote some parsers with it, this simple <span class="underline">_spirit</span>_
           mechanism is a joy to work with. There are no scanners and all that crap.
         </p>
 <p>
@@ -353,9 +356,9 @@
           Notice that <code class="computeroutput"><span class="identifier">int_parser</span></code>
           is placed in the namespace boost::spirit::qi while these <span class="emphasis"><em>enablers</em></span>
           are in namespace boost::spirit. The reason is that these placeholders are
-          shared by other <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-          <span class="emphasis"><em>domains</em></span>. <span class="emphasis"><em>Spirit.Qi</em></span>, the parser
-          is one domain. <span class="emphasis"><em>Spirit.Karma</em></span>, the generator is another
+          shared by other <span class="underline">_spirit</span>_ <span class="emphasis"><em>domains</em></span>.
+          <span class="underline">_qi</span>_, the parser is one domain.
+          <span class="underline">_karma</span>_, the generator is another
           domain. Other parser technologies may be developed and placed in yet another
           domain. Yet, all these can potentially share the same placeholders for
           interoperability. The interpretation of these placeholders is domain-specific.
@@ -450,7 +453,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id919352"></a>
+<a name="id947868"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -536,20 +539,20 @@
 </ul></div>
 <p>
           kleene is a composite parser. It is a parser that composes another parser,
-          its <span class="quote">&#8220;<span class="quote">subject</span>&#8221;</span>. It is a <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a></code> and subclasses
-          from it. Like <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a></code>, <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>
-          derives from <code class="computeroutput"><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>.
+          its <span class="quote">&#8220;<span class="quote">subject</span>&#8221;</span>. It is a <code class="computeroutput"><span class="identifier">__unary_parser_concept__</span></code>
+          and subclasses from it. Like <code class="computeroutput"><span class="identifier">__primitive_parser_concept__</span></code>,
+          <code class="computeroutput"><span class="identifier">__unary_parser_concept__</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code> derives from <code class="computeroutput"><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>.
         </p>
 <p>
           unary_parser&lt;Derived&gt;, has these expression requirements on Derived:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            p.subject -&gt; subject parser ( <span class="emphasis"><em>p</em></span> is a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> parser.)
+            p.subject -&gt; subject parser ( <span class="emphasis"><em>p</em></span> is a __unary_parser<span class="underline">concept</span>_ parser.)
           </li>
 <li class="listitem">
             P::subject_type -&gt; subject parser type ( <span class="emphasis"><em>P</em></span> is
-            a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> type.)
+            a __unary_parser<span class="underline">concept</span>_ type.)
           </li>
 </ul></div>
 <p>
@@ -557,8 +560,7 @@
           not a primitive parser, we do not need to call <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">skipper</span><span class="special">)</span></code>. The <span class="emphasis"><em>subject</em></span>, if
           it is a primitive, will do the pre-skip. If if it is another composite
           parser, it will eventually call a primitive parser somewhere down the line
-          which will do the pre-skip. This makes it a lot more efficient than <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
-          <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+          which will do the pre-skip. This makes it a lot more efficient than <span class="underline">_classic</span>_. <span class="underline">_classic</span>_
           puts the skipping business into the so-called "scanner" which
           blindly attempts a pre-skip everytime we increment the iterator.
         </p>
@@ -629,12 +631,12 @@
           This is a recurring pattern. The reason why we do it this way is because
           attr <span class="bold"><strong>can</strong></span> be <code class="computeroutput"><span class="identifier">unused_type</span></code>.
           <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">push_back</span></code> takes care of that detail.
-          The overload for unused_type is a no-op. Now, you can imagine why <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> is fast! The parsers
-          are so simple and the generated code is as efficient as a hand rolled loop.
-          All these parser compositions and recursive parse invocations are extensively
-          inlined by a modern C++ compiler. In the end, you get a tight loop when
-          you use the kleene. No more excess baggage. If the attribute is unused,
-          then there is no code generated for that. That's how <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          The overload for unused_type is a no-op. Now, you can imagine why <span class="underline">_spirit</span>_ is fast! The parsers are so simple
+          and the generated code is as efficient as a hand rolled loop. All these
+          parser compositions and recursive parse invocations are extensively inlined
+          by a modern C++ compiler. In the end, you get a tight loop when you use
+          the kleene. No more excess baggage. If the attribute is unused, then there
+          is no code generated for that. That's how <span class="underline">_spirit</span>_
           is designed.
         </p>
 <p>
@@ -688,9 +690,9 @@
         </p>
 <p>
           This essentially says; for all expressions of the form: <code class="computeroutput"><span class="special">*</span><span class="identifier">p</span></code>, to build a kleene parser. Elements
-          is a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-          sequence. For the kleene, which is a unary operator, expect only one element
-          in the sequence. That element is the subject of the kleene.
+          is a <span class="underline">_fusion</span>_ sequence. For the kleene,
+          which is a unary operator, expect only one element in the sequence. That
+          element is the subject of the kleene.
         </p>
 <p>
           We still don't care about the Modifiers. We'll see how the modifiers is

@@ -4,7 +4,7 @@
 <title>Separate Output Into Columns (columns[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../directive.html" title="Directive">
 <link rel="prev" href="omit.html" title="Consume Attribute (omit[])">
 <link rel="next" href="../nonterminal.html" title="Nonterminal">
@@ -28,7 +28,7 @@
           Output Into Columns (<code class="computeroutput"><span class="identifier">columns</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.columns.description"></a><h6>
-<a name="id817536"></a>
+<a name="id848807"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.description">Description</a>
           </h6>
 <p>
@@ -37,14 +37,14 @@
             special column separators.
           </p>
 <a name="spirit.karma.reference.directive.columns.header"></a><h6>
-<a name="id817564"></a>
+<a name="id848834"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/columns.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_columns</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
@@ -61,7 +61,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.columns.model_of"></a><h6>
-<a name="id817711"></a>
+<a name="id848975"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.model_of">Model
             of</a>
           </h6>
@@ -69,7 +69,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+                __unary_generator<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -83,9 +83,9 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">g</span></code></span></dt>
 <dd><p>
-                A generator object, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a generator object, will be used
-                to emit column separators
+                A generator object, or a __karma_lazy<span class="underline">argument</span>_
+                that evaluates to a generator object, will be used to emit column
+                separators
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd>
@@ -96,21 +96,21 @@
                 [<code class="computeroutput"><span class="identifier">num</span></code>
               </p>
 <p>
-                Numeric literal, any unsigned integer value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to an unsigned integer value defining
-                the number of items to emit in between the column separators
+                Numeric literal, any unsigned integer value, or a __karma_lazy<span class="underline">argument</span>_ that evaluates to an unsigned
+                integer value defining the number of items to emit in between the
+                column separators
               </p>
 </dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.columns.expression_semantics"></a><h6>
-<a name="id817849"></a>
+<a name="id849106"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
+            is not defined in __unary_generator<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -198,12 +198,11 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.columns.attributes"></a><h6>
-<a name="id818189"></a>
+<a name="id849438"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __karma_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -291,7 +290,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.columns.complexity"></a><h6>
-<a name="id818792"></a>
+<a name="id850039"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -308,7 +307,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.columns.example"></a><h6>
-<a name="id818839"></a>
+<a name="id851458"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -317,8 +316,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

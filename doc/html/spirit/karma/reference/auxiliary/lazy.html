@@ -4,7 +4,7 @@
 <title>Lazy (lazy)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
 <link rel="prev" href="eps.html" title="Epsilon (eps)">
 <link rel="next" href="../binary.html" title="Binary">
@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.auxiliary.lazy"></a><a class="link" href="lazy.html" title="Lazy (lazy)"> Lazy (<code class="computeroutput"><span class="identifier">lazy</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.auxiliary.lazy.description"></a><h6>
-<a name="id779459"></a>
+<a name="id813179"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.description">Description</a>
           </h6>
 <p>
@@ -37,17 +37,17 @@
             its return value as the actual generator to produce the output.
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.header"></a><h6>
-<a name="id779483"></a>
+<a name="id813203"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/lazy.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_lazy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.namespace"></a><h6>
-<a name="id779558"></a>
+<a name="id813278"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -65,7 +65,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.lazy.model_of"></a><h6>
-<a name="id779637"></a>
+<a name="id813357"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.model_of">Model
             of</a>
           </h6>
@@ -73,7 +73,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
+                __generator<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -84,8 +84,8 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fg</span></code></span></dt>
 <dd><p>
                 A function or function object that evaluates to a generator object
-                (an object exposing the <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>). This function
-                will be invoked at generate time.
+                (an object exposing the __generator<span class="underline">concept</span>_).
+                This function will be invoked at generate time.
               </p></dd>
 </dl>
 </div>
@@ -97,20 +97,17 @@
 </pre>
 <p>
             where <code class="computeroutput"><span class="identifier">G</span></code>, the function's
-            return value, is the type of the generator to be invoked, and <code class="computeroutput"><span class="identifier">Context</span></code> is the generators's Context
-            type (The first argument is <code class="computeroutput"><span class="identifier">unused</span></code>
-            to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
-            second argument. This is done for uniformity with <a class="link" href="../../tutorials/semantic_actions.html" title="Semantic Actions">Semantic
-            Actions</a>).
+            return value, is the type of the generator to be invoked, and <code class="computeroutput"><span class="identifier">Context</span></code> is the generators's __karma<span class="underline">context</span>_ type (The first argument is <span class="underline">_unused</span>_ to make the <code class="computeroutput"><span class="identifier">Context</span></code>
+            the second argument. This is done for uniformity with __karma<span class="underline">actions</span>_).
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.expression_semantics"></a><h6>
-<a name="id779788"></a>
+<a name="id813501"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>.
+            is not defined in __generator<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -138,13 +135,13 @@
                   </td>
 <td>
                   <p>
-                    The <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
-                    function object <code class="computeroutput"><span class="identifier">fg</span></code>
-                    will be invoked at generate time. It is expected to return a
-                    generator instance. This generator is then invoked in order to
-                    generate the output. This generator will succeed as long as the
-                    invoked generated succeeds as well (unless the underlying output
-                    stream reports an error).
+                    The __boost<span class="underline">phoenix</span>_ function
+                    object <code class="computeroutput"><span class="identifier">fg</span></code> will
+                    be invoked at generate time. It is expected to return a generator
+                    instance. This generator is then invoked in order to generate
+                    the output. This generator will succeed as long as the invoked
+                    generated succeeds as well (unless the underlying output stream
+                    reports an error).
                   </p>
                   </td>
 </tr>
@@ -160,7 +157,7 @@
                     It is expected to return a generator instance (note this version
                     of <code class="computeroutput"><span class="identifier">lazy</span></code> does
                     not require <code class="computeroutput"><span class="identifier">fg</span></code>
-                    to be a <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+                    to be a __boost<span class="underline">phoenix</span>_
                     function object). This generator is then invoked in order to
                     generate the output. This generator will succeed as long as the
                     invoked generated succeeds as well (except if the underlying
@@ -171,7 +168,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.lazy.attributes"></a><h6>
-<a name="id779941"></a>
+<a name="id813649"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -223,7 +220,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.lazy.complexity"></a><h6>
-<a name="id780089"></a>
+<a name="id813797"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.complexity">Complexity</a>
           </h6>
 <p>
@@ -232,7 +229,7 @@
             <code class="computeroutput"><span class="identifier">fg</span></code>.
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.example"></a><h6>
-<a name="id780121"></a>
+<a name="id813829"></a>
             <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -241,8 +238,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

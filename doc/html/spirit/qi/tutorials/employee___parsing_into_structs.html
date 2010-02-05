@@ -4,7 +4,7 @@
 <title>Employee - Parsing into structs</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="roman_numerals.html" title="Roman Numerals">
 <link rel="next" href="mini_xml___asts_.html" title="Mini XML - ASTs!">
@@ -28,12 +28,12 @@
         - Parsing into structs</a>
 </h4></div></div></div>
 <p>
-          It's a common question in the <a href="http://www.nabble.com/The-Spirit-Parser-Library-f3430.html" target="_top">Spirit
-          General List</a>: How do I parse and place the results into a C++ struct?
-          Of course, at this point, you already know various ways to do it, using
-          semantic actions. There are many ways to skin a cat. Spirit2, being fully
-          attributed, makes it even easier. The next example demonstrates some features
-          of Spirit2 that make this easy. In the process, you'll learn about:
+          It's a common question in the __spirit<span class="underline">list</span>_:
+          How do I parse and place the results into a C++ struct? Of course, at this
+          point, you already know various ways to do it, using semantic actions.
+          There are many ways to skin a cat. Spirit2, being fully attributed, makes
+          it even easier. The next example demonstrates some features of Spirit2
+          that make this easy. In the process, you'll learn about:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -70,9 +70,9 @@
 <p>
         </p>
 <p>
-          Then, we need to tell <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-          about our employee struct to make it a first-class fusion citizen that
-          the grammar can utilize. If you don't know fusion yet, it is a <a href="http://www.boost.org/" target="_top">Boost</a>
+          Then, we need to tell <span class="underline">_fusion</span>_ about
+          our employee struct to make it a first-class fusion citizen that the grammar
+          can utilize. If you don't know fusion yet, it is a <span class="underline">_boost</span>_
           library for working with heterogenous collections of data, commonly referred
           to as tuples. Spirit uses fusion extensively as part of its infrastructure.
         </p>
@@ -179,7 +179,7 @@
           has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> attribute.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h6>
-<a name="id581154"></a>
+<a name="id617608"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
         </h6>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
@@ -196,7 +196,7 @@
           a double quote.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h6>
-<a name="id581267"></a>
+<a name="id617721"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
         </h6>
 <p>
@@ -215,7 +215,7 @@
           is just <code class="computeroutput"><span class="keyword">char</span></code>.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h6>
-<a name="id581375"></a>
+<a name="id617829"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
         </h6>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
@@ -236,7 +236,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h6>
-<a name="id582058"></a>
+<a name="id617966"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
         </h6>
@@ -272,12 +272,12 @@
 </tr>
 <tr><td align="left" valign="top"><p>
             If you don't know what I am talking about, see: <a href="http://tinyurl.com/6xun4j" target="_top">Fusion
-            Vector</a>. It might be a good idea to have a look into <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-            at this point. You'll definitely see more of it in the coming pages.
+            Vector</a>. It might be a good idea to have a look into <span class="underline">_fusion</span>_ at this point. You'll definitely
+            see more of it in the coming pages.
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h6>
-<a name="id582280"></a>
+<a name="id618188"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
         </h6>
@@ -309,7 +309,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h6>
-<a name="id582519"></a>
+<a name="id618427"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
         </h6>
@@ -359,7 +359,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h6>
-<a name="id582886"></a>
+<a name="id618794"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
         </h6>
 <p>

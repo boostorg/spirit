@@ -4,7 +4,7 @@
 <title>Directives Controlling Case Sensitivity (upper[], lower[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../directive.html" title="Directive">
 <link rel="prev" href="delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], delimit[])">
 <link rel="next" href="maxwidth.html" title="Controlling the Maximum Field Width (maxwidth[])">
@@ -28,27 +28,26 @@
           Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.upperlower.description"></a><h6>
-<a name="id809500"></a>
+<a name="id840504"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.description">Description</a>
           </h6>
 <p>
             The generator directives <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[]</span></code> force their embedded generators to
             emit lower case or upper case only characters based on the interpretation
-            of the generated characters in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code> (see <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>).
+            of the generated characters in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code> (see __karma_char_encoding<span class="underline">namespace</span>_).
           </p>
 <a name="spirit.karma.reference.directive.upperlower.header"></a><h6>
-<a name="id809565"></a>
+<a name="id840569"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/upper_lower_case.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_upper_lower_case</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.karma.reference.directive.upperlower.namespace"></a><h6>
-<a name="id809640"></a>
+<a name="id840643"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -73,11 +72,10 @@
 </table></div>
 <p>
             In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
-            represents a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            represents a __karma_char_encoding<span class="underline">namespace</span>_.
           </p>
 <a name="spirit.karma.reference.directive.upperlower.model_of"></a><h6>
-<a name="id809746"></a>
+<a name="id840750"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.model_of">Model
             of</a>
           </h6>
@@ -103,13 +101,12 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                Encoding Namespace</a>.
+                A __karma_char_encoding<span class="underline">namespace</span>_.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.upperlower.expression_semantics"></a><h6>
-<a name="id809865"></a>
+<a name="id840869"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -142,7 +139,7 @@
 </pre>
 <p>
             (for more details see the section describing the compilation process
-            of the <a href="../../../../../../../../doc/html/proto.html" target="_top">Boost.Proto</a> expression
+            of the __boost<span class="underline">proto</span>_ expression
             into the corresponding parser expressions).
           </p>
 <div class="informaltable"><table class="table">
@@ -219,12 +216,11 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.attributes"></a><h6>
-<a name="id810466"></a>
+<a name="id842699"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __karma_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -279,7 +275,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.complexity"></a><h6>
-<a name="id810795"></a>
+<a name="id843026"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -296,7 +292,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.upperlower.example"></a><h6>
-<a name="id810855"></a>
+<a name="id843086"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -305,8 +301,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

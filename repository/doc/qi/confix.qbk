@@ -52,7 +52,7 @@ Now, the comment parsers can be written as
     cpp_comment[*(char_ - eol)]   // C++ style comment
 
 [note While the `confix_p(prefix, subject, suffix)` parser in __classic__
-      was equivalent to the sequence `prefix >> (subject - suffix) >> suffix,
+      was equivalent to the sequence `prefix >> *(subject - suffix) >> suffix,
       the __qi__ `confix` directive will not perform this refactoring any more.
       This simplifies the code and makes things more explicit.]
 

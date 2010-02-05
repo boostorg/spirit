@@ -4,7 +4,7 @@
 <title>Number List - Printing Numbers From a std::vector</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="karma_easier_complex.html" title="Complex - Made easier">
 <link rel="next" href="num_matrix.html" title="Matrix of Numbers - Printing Numbers From a Matrix">
@@ -28,7 +28,7 @@
         Numbers From a std::vector</a>
 </h4></div></div></div>
 <a name="spirit.karma.tutorials.num_list.using_the_list_operator"></a><h6>
-<a name="id728567"></a>
+<a name="id760894"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.using_the_list_operator">Using
           the List Operator</a>
         </h6>
@@ -37,9 +37,9 @@
           for any formatted output of containers. Sure, it's fairly easy to write
           a custom routine to output a specific container, but doing so over and
           over again is tedious at best. In this section we will demonstrate some
-          more of the capabilities of <span class="emphasis"><em>Spirit.Karma</em></span> for generating
-          output from arbitrary STL containers. We will build on the example presented
-          in an earlier section (see <a class="link" href="warming_up.html" title="Warming up">Warming
+          more of the capabilities of <span class="underline">_karma</span>_
+          for generating output from arbitrary STL containers. We will build on the
+          example presented in an earlier section (see <a class="link" href="warming_up.html" title="Warming up">Warming
           Up</a>).
         </p>
 <p>
@@ -47,10 +47,9 @@
           here: <a href="../../../../../example/karma/num_list2.cpp" target="_top">num_list2.cpp</a>.
         </p>
 <p>
-          This time we take advantage of Karma's <a class="link" href="../reference/operator/list.html" title="Lists (a % b)">List
-          (<code class="computeroutput"><span class="special">%</span></code>)</a> operator. The semantics
-          of the list operator are fully equivalent to the semantics of the sequence
-          we used before. The generator expression
+          This time we take advantage of Karma's __karma<span class="underline">list</span>_
+          operator. The semantics of the list operator are fully equivalent to the
+          semantics of the sequence we used before. The generator expression
         </p>
 <pre class="programlisting"><span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">)</span>
 </pre>
@@ -97,7 +96,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            Despite the container being a template parameter, the <span class="emphasis"><em>Spirit.Karma</em></span>
+            Despite the container being a template parameter, the <span class="underline">_karma</span>_
             formatting expression (<code class="computeroutput"><span class="identifier">double_</span>
             <span class="special">%</span> <span class="char">','</span></code>)
             does not depend on the actual type of the passed container. The only
@@ -106,7 +105,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data"></a><h6>
-<a name="id729420"></a>
+<a name="id761409"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data">Generate
           Output from Arbitrary Data</a>
         </h6>
@@ -115,9 +114,9 @@
           all types of STL containers and for arbitrary elements stored in them.
           In order to be usable the items stored in the container still need to be
           convertible to a <code class="computeroutput"><span class="keyword">double</span></code>. Fortunately
-          <span class="emphasis"><em>Spirit.Karma</em></span> is capable to output arbitrary data types
-          while using the same format description expression. It implements the
-          <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
+          <span class="underline">_karma</span>_ is capable to output arbitrary
+          data types while using the same format description expression. It implements
+          the <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
           generators which are able to consume any attribute type as long as a matching
           standard streaming operator is defined. I.e. for any attribute type <code class="computeroutput"><span class="identifier">Attrib</span></code> a function:
         </p>
@@ -132,7 +131,7 @@
           operator, which makes it compatible with almost any data type. We implement
           a custom data type <code class="computeroutput"><span class="identifier">complex</span></code>
           to demonstrate this. The example shows how it is possible to integrate
-          this (or any other) custom data type into the <span class="emphasis"><em>Spirit.Karma</em></span>
+          this (or any other) custom data type into the <span class="underline">_karma</span>_
           generator framework.
         </p>
 <p>
@@ -167,9 +166,8 @@
         </p>
 <p>
           And this is the actual call to generate the output from a vector of those.
-          This time we interleave the generated output with newline breaks (see
-          <a class="link" href="../reference/auxiliary/eol.html" title="End of Line (eol)"><code class="computeroutput"><span class="identifier">eol</span></code></a>),
-          putting each complex number onto a separate line:
+          This time we interleave the generated output with newline breaks (see __karma<span class="underline">eol</span>_), putting each complex number onto a separate
+          line:
         </p>
 <p>
           </p>

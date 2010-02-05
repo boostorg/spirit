@@ -4,7 +4,7 @@
 <title>Action</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="generate_api/create_generator.html" title="API for Automatic Generator Creation">
 <link rel="next" href="auto.html" title="Auto">
@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.action"></a><a class="link" href="action.html" title="Action">Action</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.action.description"></a><h6>
-<a name="id769566"></a>
+<a name="id799521"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.description">Description</a>
         </h6>
 <p>
@@ -39,24 +39,24 @@
           generator expression.
         </p>
 <a name="spirit.karma.reference.action.header"></a><h6>
-<a name="id769602"></a>
+<a name="id799557"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/action.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_action</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
+          Also, see __include<span class="underline">structure</span>_.
         </p>
 <a name="spirit.karma.reference.action.model_of"></a><h6>
-<a name="id769677"></a>
+<a name="id799632"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
             </p>
 <p>
-              <a class="link" href="generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+              __unary_generator<span class="underline">concept</span>_
             </p>
 <p>
           </p>
@@ -92,13 +92,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.action.expression_semantics"></a><h6>
-<a name="id769875"></a>
+<a name="id799822"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.expression_semantics">Expression
           Semantics</a>
         </h6>
 <p>
           Semantics of an expression is defined only where it differs from, or is
-          not defined in <a class="link" href="generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
+          not defined in __unary_generator<span class="underline">concept</span>_.
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -156,10 +156,10 @@
           The type <code class="computeroutput"><span class="identifier">Context</span></code> is the
           type of the generator execution context. This type is unspecified and depends
           on the context the generator is invoked in. The value <code class="computeroutput"><span class="identifier">context</span></code>
-          is used by semantic actions written using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+          is used by semantic actions written using <span class="underline">_phoenix</span>_
           to access various context dependent attributes and values. For more information
-          about <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> placeholder
-          expressions usable in semantic actions see <a class="link" href="generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+          about <span class="underline">_phoenix</span>_ placeholder expressions
+          usable in semantic actions see __karma_nonterminal<span class="underline">concept</span>_.
         </p>
 <p>
           The third parameter, <code class="computeroutput"><span class="identifier">pass</span></code>,
@@ -170,7 +170,7 @@
           and not generating any output.
         </p>
 <a name="spirit.karma.reference.action.attributes"></a><h6>
-<a name="id770340"></a>
+<a name="id800264"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -207,7 +207,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.action.complexity"></a><h6>
-<a name="id770462"></a>
+<a name="id800386"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.complexity">Complexity</a>
         </h6>
 <p>
@@ -221,14 +221,14 @@
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            Please note that the use of semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span>
+            Please note that the use of semantic actions in <span class="underline">_karma</span>_
             generally forces the library to create a <span class="emphasis"><em>copy</em></span> of
             the attribute, which might be a costly operation. Always consider using
             other means of associating a value with a particular generator first.
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.action.example"></a><h6>
-<a name="id770494"></a>
+<a name="id800420"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.example">Example</a>
         </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -237,8 +237,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The test harness for the example(s) below is presented in the <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics
-            Examples</a> section.
+            The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
           </p></td></tr>
 </table></div>
 <p>

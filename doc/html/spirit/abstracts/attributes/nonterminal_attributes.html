@@ -4,7 +4,7 @@
 <title>Attributes of Rules and Grammars</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../attributes.html" title="Attributes">
 <link rel="prev" href="more_compound_attributes.html" title="More About Attributes of Compound Components">
 <link rel="next" href="../../qi.html" title="Qi - Writing Parsers">
@@ -34,7 +34,7 @@
           language. They can be used to encapsulate parser expressions for a particular
           input sequence. After being defined, the nonterminals can be used as 'normal'
           parsers in more complex expressions whenever the encapsulated input needs
-          to be recognized. Parser nonterminals in <span class="emphasis"><em>Spirit.Qi</em></span>
+          to be recognized. Parser nonterminals in <span class="underline">_qi</span>_
           may accept <span class="emphasis"><em>parameters</em></span> (inherited attributes) and usually
           return a value (the synthesized attribute).
         </p>
@@ -42,14 +42,12 @@
           Both, the types of the inherited and the synthesized attributes have to
           be explicitely specified while defining the particular <code class="computeroutput"><span class="identifier">grammar</span></code>
           or the <code class="computeroutput"><span class="identifier">rule</span></code> (the Spirit
-          <a href="../../../../../repository/doc/html/index.html" target="_top">Repository</a> additionally
-          has <code class="computeroutput"><span class="identifier">subrules</span></code> which conform
-          to a similar interface). As an example, the following code declares a
-          <span class="emphasis"><em>Spirit.Qi</em></span> <code class="computeroutput"><span class="identifier">rule</span></code>
-          exposing an <code class="computeroutput"><span class="keyword">int</span></code> as its synthesized
-          attribute, while expecting a single <code class="computeroutput"><span class="keyword">double</span></code>
-          as its inherited attribute (see the section about the <span class="emphasis"><em>Spirit.Qi</em></span>
-          Rule for more information):
+          <span class="underline">_repo</span>_ additionally has <code class="computeroutput"><span class="identifier">subrules</span></code> which conform to a similar interface).
+          As an example, the following code declares a <span class="underline">_qi</span>_
+          <code class="computeroutput"><span class="identifier">rule</span></code> exposing an <code class="computeroutput"><span class="keyword">int</span></code> as its synthesized attribute, while
+          expecting a single <code class="computeroutput"><span class="keyword">double</span></code>
+          as its inherited attribute (see the section about the <span class="underline">_qi</span>_
+          <span class="underline">_rule</span>_ for more information):
         </p>
 <pre class="programlisting"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">int</span><span class="special">(</span><span class="keyword">double</span><span class="special">)&gt;</span> <span class="identifier">r</span><span class="special">;</span>
 </pre>
@@ -58,17 +56,19 @@
           world. Generator nonterminals encapsulate a format description for a particular
           data type, and, whenever we need to emit output for this data type, the
           corresponding nonterminal is invoked in a similar way as the predefined
-          <span class="emphasis"><em>Spirit.Karma</em></span> generator primitives. The <span class="emphasis"><em>Spirit.Karma</em></span>
-          nonterminals are very similar to the <span class="emphasis"><em>Spirit.Qi</em></span> nonterminals.
-          Generator nonterminals may accept <span class="emphasis"><em>parameters</em></span> as well,
-          and we call those inherited attributes too. The main difference is that
-          they do not expose a synthesized attribute (as parsers do), but they require
-          a special <span class="emphasis"><em>consumed attribute</em></span>. Usually the consumed
-          attribute is the value the generator creates its output from. Even if the
-          consumed attribute is not 'returned' from the generator we chose to use
-          the same function style declaration syntax as used in <span class="emphasis"><em>Spirit.Qi</em></span>.
-          The example below declares a <span class="emphasis"><em>Spirit.Karma</em></span> <code class="computeroutput"><span class="identifier">rule</span></code> consuming a <code class="computeroutput"><span class="keyword">double</span></code>
-          while not expecting any additional inherited attributes.
+          <span class="underline">_karma</span>_ generator primitives. The
+          <span class="underline">_karma</span>_ nonterminals are very similar
+          to the <span class="underline">_qi</span>_ nonterminals. Generator
+          nonterminals may accept <span class="emphasis"><em>parameters</em></span> as well, and we
+          call those inherited attributes too. The main difference is that they do
+          not expose a synthesized attribute (as parsers do), but they require a
+          special <span class="emphasis"><em>consumed attribute</em></span>. Usually the consumed attribute
+          is the value the generator creates its output from. Even if the consumed
+          attribute is not 'returned' from the generator we chose to use the same
+          function style declaration syntax as used in <span class="underline">_qi</span>_.
+          The example below declares a <span class="underline">_karma</span>_
+          <code class="computeroutput"><span class="identifier">rule</span></code> consuming a <code class="computeroutput"><span class="keyword">double</span></code> while not expecting any additional
+          inherited attributes.
         </p>
 <pre class="programlisting"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">double</span><span class="special">()&gt;</span> <span class="identifier">r</span><span class="special">;</span>
 </pre>

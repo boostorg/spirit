@@ -4,7 +4,7 @@
 <title>Attribute Transformation Pseudo Generator (attr_cast)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
 <link rel="prev" href="attr.html" title="Attribute (attr)">
 <link rel="next" href="eol.html" title="End of Line (eol)">
@@ -28,7 +28,7 @@
           Transformation Pseudo Generator (<code class="computeroutput"><span class="identifier">attr_cast</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.description"></a><h6>
-<a name="id633736"></a>
+<a name="id668877"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.description">Description</a>
           </h6>
 <p>
@@ -38,20 +38,20 @@
             type <code class="computeroutput"><span class="identifier">Transformed</span></code>. The
             supplied attribute gets created from the original attribute (of type
             <code class="computeroutput"><span class="identifier">Exposed</span></code>) passed to this
-            component using the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>.
+            component using the customization point __customize_transform<span class="underline">attribute</span>_.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr_cast.header"></a><h6>
-<a name="id633804"></a>
+<a name="id668939"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/attr_cast.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_attr_cast</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr_cast.namespace"></a><h6>
-<a name="id633878"></a>
+<a name="id669014"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -69,14 +69,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.synopsis"></a><h6>
-<a name="id633957"></a>
+<a name="id669093"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;</span>
 <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">attr_cast</span><span class="special">(&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;);</span>
 </pre>
 <a name="spirit.qi.reference.auxiliary.attr_cast.template_parameters"></a><h6>
-<a name="id634029"></a>
+<a name="id669165"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.template_parameters">Template
             parameters</a>
           </h6>
@@ -117,7 +117,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    __unused<span class="underline">type</span>_
                   </p>
                   </td>
 </tr>
@@ -134,7 +134,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    __unused<span class="underline">type</span>_
                   </p>
                   </td>
 </tr>
@@ -153,7 +153,7 @@
             not explicitly specified.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr_cast.model_of"></a><h6>
-<a name="id634262"></a>
+<a name="id669393"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.model_of">Model
             of</a>
           </h6>
@@ -161,7 +161,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+                __unary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -176,13 +176,13 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.expression_semantics"></a><h6>
-<a name="id634323"></a>
+<a name="id669449"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
+            is not defined in __unary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -214,7 +214,7 @@
                     while passing an attribute of the type as normally expected by
                     <code class="computeroutput"><span class="identifier">p</span></code>. The type of
                     the supplied attribute will be transformed to the type <code class="computeroutput"><span class="identifier">p</span></code> exposes as its attribute
-                    type (by using the attribute customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>).
+                    type (by using the attribute customization point __customize_transform<span class="underline">attribute</span>_).
                   </p>
                   </td>
 </tr>
@@ -232,7 +232,7 @@
                     attribute is expected to be of the type <code class="computeroutput"><span class="identifier">Exposed</span></code>,
                     it will be transformed to the type <code class="computeroutput"><span class="identifier">p</span></code>
                     exposes as its attribute type (using the attribute customization
-                    point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>).
+                    point __customize_transform<span class="underline">attribute</span>_).
                   </p>
                   </td>
 </tr>
@@ -249,14 +249,14 @@
                     while passing an attribute of type <code class="computeroutput"><span class="identifier">Transformed</span></code>.
                     The supplied attribute is expected to be of the type <code class="computeroutput"><span class="identifier">Exposed</span></code>, it will be transformed
                     to the type <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                    (using the attribute customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>).
+                    (using the attribute customization point __customize_transform<span class="underline">attribute</span>_).
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.attributes"></a><h6>
-<a name="id634629"></a>
+<a name="id669735"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -327,7 +327,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.complexity"></a><h6>
-<a name="id634948"></a>
+<a name="id670054"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -341,7 +341,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.example"></a><h6>
-<a name="id634980"></a>
+<a name="id670085"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -350,8 +350,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -370,7 +369,7 @@
           </p>
 <p>
             The example references data structure <code class="computeroutput"><span class="identifier">int_data</span></code>
-            which needs a specialization of the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>:
+            which needs a specialization of the customization point __customize_transform<span class="underline">attribute</span>_:
           </p>
 <p>
             </p>

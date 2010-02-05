@@ -4,7 +4,7 @@
 <title>Alternative (a | b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="../operator.html" title="Operator">
 <link rel="next" href="and_predicate.html" title="And-Predicate (&amp;a)">
@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.alternative.description"></a><h6>
-<a name="id686945"></a>
+<a name="id720580"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.description">Description</a>
           </h6>
 <p>
@@ -60,17 +60,17 @@
             to put the (expected) most common choice first for maximum efficiency.
           </p>
 <a name="spirit.qi.reference.operator.alternative.header"></a><h6>
-<a name="id687656"></a>
+<a name="id720744"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/alternative.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_alternative</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.operator.alternative.model_of"></a><h6>
-<a name="id687731"></a>
+<a name="id720819"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.model_of">Model
             of</a>
           </h6>
@@ -78,7 +78,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+                __nary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -89,18 +89,18 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
             <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A __parser<span class="underline">concept</span>_
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.alternative.expression_semantics"></a><h6>
-<a name="id687809"></a>
+<a name="id720887"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
+            is not defined in __nary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -134,12 +134,11 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.attributes"></a><h6>
-<a name="id687919"></a>
+<a name="id722644"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __qi_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -181,7 +180,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.complexity"></a><h6>
-<a name="id688478"></a>
+<a name="id723201"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -196,7 +195,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.alternative.example"></a><h6>
-<a name="id688502"></a>
+<a name="id723225"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -205,8 +204,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -243,7 +241,7 @@
 <p>
             </p>
 <p>
-              Extracting the attribute variant (using <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>):
+              Extracting the attribute variant (using __boost<span class="underline">variant</span>_):
             </p>
 <p>
             </p>
@@ -259,8 +257,8 @@
 <p>
               This should print <code class="computeroutput"><span class="string">"Hello"</span></code>.
               Note: There are better ways to extract the value from the variant.
-              See <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
-              visitation. This code is solely for demonstration.
+              See __boost<span class="underline">variant</span>_ visitation.
+              This code is solely for demonstration.
             </p>
 <p>
             </p>
@@ -276,8 +274,9 @@
 <p>
             </p>
 <p>
-              Extracting the attributes using Semantic Actions with <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-              (this should print <code class="computeroutput"><span class="number">123</span></code>):
+              Extracting the attributes using __qi_semantic<span class="underline">actions</span>_
+              with <span class="underline">_phoenix</span>_ (this should print
+              <code class="computeroutput"><span class="number">123</span></code>):
             </p>
 <p>
             </p>

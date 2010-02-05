@@ -4,7 +4,7 @@
 <title>Attributes of Compound Components</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../attributes.html" title="Attributes">
 <link rel="prev" href="primitive_attributes.html" title="Attributes of Primitive Components">
 <link rel="next" href="more_compound_attributes.html" title="More About Attributes of Compound Components">
@@ -28,10 +28,10 @@
         of Compound Components</a>
 </h4></div></div></div>
 <p>
-          <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span> implement
-          well defined attribute type propagation rules for all compound parsers
-          and generators, such as sequences, alternatives, Kleene star, etc. The
-          main attribute propagation rule for a sequences is for instance:
+          <span class="underline">_qi</span>_ and <span class="underline">_karma</span>_
+          implement well defined attribute type propagation rules for all compound
+          parsers and generators, such as sequences, alternatives, Kleene star, etc.
+          The main attribute propagation rule for a sequences is for instance:
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -112,7 +112,7 @@
 <tr><td align="left" valign="top"><p>
             The notation <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>
             is used as a placeholder expression for any fusion sequence holding the
-            types A and B, such as <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> or <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> (for more information see <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>).
+            types A and B, such as <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> or <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> (for more information see <span class="underline">_fusion</span>_).
           </p></td></tr>
 </table></div>
 <p>
@@ -131,12 +131,11 @@
 <p>
           Each compound component implements its own set of attribute propagation
           rules. For a full list of how the different compound generators consume
-          attributes see the sections <a class="link" href="../../qi/quick_reference/compound_attribute_rules.html" title="Compound Attribute Rules">Parser
-          Compound Attribute Rules</a> and <a class="link" href="../../karma/quick_reference/compound_attribute_rules.html" title="Compound Attribute Rules">Generator
-          Compound Attribute Rules</a>.
+          attributes see the sections __sec_qi<span class="underline">compound</span>_
+          and __sec_karma<span class="underline">compound</span>_.
         </p>
 <a name="spirit.abstracts.attributes.compound_attributes.the_attribute_of_sequence_parsers_and_generators"></a><h6>
-<a name="id564279"></a>
+<a name="id599915"></a>
           <a class="link" href="compound_attributes.html#spirit.abstracts.attributes.compound_attributes.the_attribute_of_sequence_parsers_and_generators">The
           Attribute of Sequence Parsers and Generators</a>
         </h6>
@@ -233,13 +232,14 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-            <span class="bold"><strong>For sequences only:</strong></span> <span class="emphasis"><em>Spirit.Qi</em></span>
-            and <span class="emphasis"><em>Spirit.Karma</em></span> expose a set of API functions usable
-            mainly with sequences. Very much like the functions of the <code class="computeroutput"><span class="identifier">scanf</span></code> and <code class="computeroutput"><span class="identifier">printf</span></code>
-            families these functions allow to pass the attributes for each of the
-            elements of the sequence separately. Using the corresponding overload
-            of <span class="emphasis"><em>Qi's</em></span> parse or <span class="emphasis"><em>Karma's</em></span> <code class="computeroutput"><span class="identifier">generate</span><span class="special">()</span></code>
-            the expression above could be rewritten as: 
+            <span class="bold"><strong>For sequences only:</strong></span> <span class="underline">_qi</span>_
+            and <span class="underline">_karma</span>_ expose a set of API
+            functions usable mainly with sequences. Very much like the functions
+            of the <code class="computeroutput"><span class="identifier">scanf</span></code> and <code class="computeroutput"><span class="identifier">printf</span></code> families these functions allow
+            to pass the attributes for each of the elements of the sequence separately.
+            Using the corresponding overload of <span class="emphasis"><em>Qi's</em></span> parse or
+            <span class="emphasis"><em>Karma's</em></span> <code class="computeroutput"><span class="identifier">generate</span><span class="special">()</span></code> the expression above could be rewritten
+            as: 
 </p>
 <pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d1</span> <span class="special">=</span> <span class="number">0.0</span><span class="special">,</span> <span class="identifier">d2</span> <span class="special">=</span> <span class="number">0.0</span><span class="special">;</span>
 <span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">begin</span><span class="special">,</span> <span class="identifier">end</span><span class="special">,</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span><span class="special">,</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">space</span><span class="special">,</span> <span class="identifier">d1</span><span class="special">,</span> <span class="identifier">d2</span><span class="special">);</span>
@@ -252,14 +252,14 @@
 </td></tr>
 </table></div>
 <a name="spirit.abstracts.attributes.compound_attributes.the_attribute_of_alternative_parsers_and_generators"></a><h6>
-<a name="id565170"></a>
+<a name="id600808"></a>
           <a class="link" href="compound_attributes.html#spirit.abstracts.attributes.compound_attributes.the_attribute_of_alternative_parsers_and_generators">The
           Attribute of Alternative Parsers and Generators</a>
         </h6>
 <p>
           Alternative parsers and generators are all about - well - alternatives.
           In order to store possibly different result (attribute) types from the
-          different alternatives we use the data type <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
+          different alternatives we use the data type __boost<span class="underline">variant</span>_.
           The main attribute propagation rule of these components is:
         </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>

@@ -4,7 +4,7 @@
 <title>Ignoring Attribute (omit[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../directive.html" title="Directive">
 <link rel="prev" href="no_case.html" title="Inhibiting Case Sensitivity (no_case[])">
 <link rel="next" href="raw.html" title="Transduction Parsing (raw[])">
@@ -28,25 +28,25 @@
           (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.omit.description"></a><h6>
-<a name="id655349"></a>
+<a name="id689392"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>
-            ignores the attribute of its subject parser replacing it with <code class="computeroutput"><span class="identifier">unused</span></code>.
+            ignores the attribute of its subject parser replacing it with <span class="underline">_unused</span>_.
           </p>
 <a name="spirit.qi.reference.directive.omit.header"></a><h6>
-<a name="id655384"></a>
+<a name="id689424"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/omit.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_omit</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.directive.omit.namespace"></a><h6>
-<a name="id655459"></a>
+<a name="id689499"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -64,14 +64,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.omit.model_of"></a><h6>
-<a name="id655537"></a>
+<a name="id689577"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+                __unary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -81,18 +81,18 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+                A __parser<span class="underline">concept</span>_.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.omit.expression_semantics"></a><h6>
-<a name="id655605"></a>
+<a name="id689636"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
+            is not defined in __unary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -125,7 +125,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.omit.attributes"></a><h6>
-<a name="id655707"></a>
+<a name="id689733"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -153,13 +153,13 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    __unused<span class="underline">type</span>_
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.omit.complexity"></a><h6>
-<a name="id655796"></a>
+<a name="id689819"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -173,7 +173,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.omit.example"></a><h6>
-<a name="id655827"></a>
+<a name="id689850"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -182,8 +182,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

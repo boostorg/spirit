@@ -4,7 +4,7 @@
 <title>Tokenizing Input Data</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../abstracts.html" title="Abstracts">
 <link rel="prev" href="lexer_primitives/lexer_token_values.html" title="About Tokens and Token Values">
 <link rel="next" href="lexer_semantic_actions.html" title="Lexer Semantic Actions">
@@ -28,7 +28,7 @@
         Input Data</a>
 </h4></div></div></div>
 <a name="spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function"></a><h6>
-<a name="id892232"></a>
+<a name="id923816"></a>
           <a class="link" href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function">The
           tokenize function</a>
         </h6>
@@ -38,8 +38,7 @@
           fashion. For instance, you may have a standalone lexer where all that functional
           requirements are implemented inside lexer semantic actions. A good example
           for this is the <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer</a>
-          described in more detail in the section <a class="link" href="../tutorials/lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Lex
-          Quickstart 2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>.
+          described in more detail in the section __sec_lex_quickstart<span class="underline">2</span>_.
         </p>
 <p>
           </p>
@@ -77,8 +76,8 @@
         </p>
 <p>
           The construct used to tokenize the given input, while discarding all generated
-          tokens is a common application of the lexer. For this reason <span class="emphasis"><em>Spirit.Lex</em></span>
-          exposes an API function <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> minimizing the code required:
+          tokens is a common application of the lexer. For this reason <span class="underline">_lex</span>_ exposes an API function <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
+          minimizing the code required:
         </p>
 <pre class="programlisting"><span class="comment">// Read input from the given file
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span> <span class="special">(</span><span class="identifier">read_from_file</span><span class="special">(</span><span class="number">1</span> <span class="special">==</span> <span class="identifier">argc</span> <span class="special">?</span> <span class="string">"word_count.input"</span> <span class="special">:</span> <span class="identifier">argv</span><span class="special">[</span><span class="number">1</span><span class="special">]));</span>
@@ -91,8 +90,7 @@
 </pre>
 <p>
           This code is completely equivalent to the more verbose version as shown
-          in the section <a class="link" href="../tutorials/lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Lex
-          Quickstart 2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>.
+          in the section __sec_lex_quickstart<span class="underline">2</span>_.
           The function <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
           will return either if the end of the input has been reached (in this case
           the return value will be <code class="computeroutput"><span class="keyword">true</span></code>),

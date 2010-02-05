@@ -4,7 +4,7 @@
 <title>Stream Based Parser API</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../parse_api.html" title="Parser API">
 <link rel="prev" href="iterator_api.html" title="Iterator Based Parser API">
 <link rel="next" href="create_parser.html" title="API for Automatic Parser Creation">
@@ -28,21 +28,21 @@
           Based Parser API</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parse_api.stream_api.description"></a><h6>
-<a name="id622377"></a>
+<a name="id655574"></a>
             <a class="link" href="stream_api.html#spirit.qi.reference.parse_api.stream_api.description">Description</a>
           </h6>
 <p>
-            The library provides a couple of Standard IO <a href="http://www.cppreference.com/wiki/io/io_flags#manipulators" target="_top">Manipulators</a>
-            allowing to integrate <span class="emphasis"><em>Spirit.Qi</em></span> input parsing facilities
-            with Standard input streams. These parser manipulators have two forms.
-            The first form, <code class="computeroutput"><span class="identifier">match</span></code>,
+            The library provides a couple of Standard IO <span class="underline">_iomanip</span>_
+            allowing to integrate <span class="underline">_qi</span>_ input
+            parsing facilities with Standard input streams. These parser manipulators
+            have two forms. The first form, <code class="computeroutput"><span class="identifier">match</span></code>,
             works on the character level. The second <code class="computeroutput"><span class="identifier">phrase_match</span></code>
             works on the phrase level and requires a skip parser. Both versions can
             take in attributes by reference that will hold the parsed values on a
             successful parse.
           </p>
 <a name="spirit.qi.reference.parse_api.stream_api.header"></a><h6>
-<a name="id622419"></a>
+<a name="id655616"></a>
             <a class="link" href="stream_api.html#spirit.qi.reference.parse_api.stream_api.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/stream/match_manip.hpp&gt;
@@ -57,9 +57,8 @@
 <p>
             The variadic attributes version of the API allows one or more attributes
             to be passed into the parse manipulators. The manipulators taking two
-            or more attributes are usable when the parser expression is a <a class="link" href="../operator/sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>
-            only. In this case each of the attributes passed have to match the corresponding
-            part of the sequence.
+            or more attributes are usable when the parser expression is a __qi<span class="underline">sequence</span>_ only. In this case each of the
+            attributes passed have to match the corresponding part of the sequence.
           </p>
 <p>
             For the API functions deducing the correct (matching) parser type from
@@ -69,10 +68,10 @@
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_match_auto</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.parse_api.stream_api.namespace"></a><h6>
-<a name="id622615"></a>
+<a name="id655812"></a>
             <a class="link" href="stream_api.html#spirit.qi.reference.parse_api.stream_api.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -106,7 +105,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parse_api.stream_api.synopsis"></a><h6>
-<a name="id622829"></a>
+<a name="id656025"></a>
             <a class="link" href="stream_api.html#spirit.qi.reference.parse_api.stream_api.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">spirit</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">qi</span>
@@ -149,8 +148,8 @@
 <span class="special">}}}</span>
 </pre>
 <p>
-            <span class="emphasis"><em>Spirit.Qi</em></span> parser API functions based on the automatic
-            creation of the matching parser type:
+            <span class="underline">_qi</span>_ parser API functions based
+            on the automatic creation of the matching parser type:
           </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">spirit</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">qi</span>
 <span class="special">{</span>
@@ -169,10 +168,10 @@
 </pre>
 <p>
             All functions above return a standard IO stream manipulator instance
-            (see <a href="http://www.cppreference.com/wiki/io/io_flags#manipulators" target="_top">Manipulators</a>),
-            which when streamed from an input stream will result in parsing the input
-            using the embedded <span class="emphasis"><em>Spirit.Qi</em></span> parser expression.
-            Any error (or failed parse) occuring during the invocation of the <span class="emphasis"><em>Spirit.Qi</em></span>
+            (see <span class="underline">_iomanip</span>_), which when streamed
+            from an input stream will result in parsing the input using the embedded
+            <span class="underline">_qi</span>_ parser expression. Any error
+            (or failed parse) occuring during the invocation of the <span class="underline">_qi</span>_
             parsers will be reflected in the streams status flag (<code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">failbit</span></code>
             will be set).
           </p>
@@ -204,7 +203,7 @@
             to the corresponding argument.
           </p>
 <a name="spirit.qi.reference.parse_api.stream_api.template_parameters"></a><h6>
-<a name="id625744"></a>
+<a name="id660104"></a>
             <a class="link" href="stream_api.html#spirit.qi.reference.parse_api.stream_api.template_parameters">Template
             parameters</a>
           </h6>

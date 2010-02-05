@@ -4,7 +4,7 @@
 <title>Auto</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="action.html" title="Action">
 <link rel="next" href="auxiliary.html" title="Auxiliary">
@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.auto"></a><a class="link" href="auto.html" title="Auto"> Auto</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.auto.description"></a><h6>
-<a name="id771076"></a>
+<a name="id802920"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.description">Description</a>
         </h6>
 <p>
@@ -36,17 +36,17 @@
           based on the supplied attribute type.
         </p>
 <a name="spirit.karma.reference.auto.header"></a><h6>
-<a name="id771100"></a>
+<a name="id802944"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auto.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_auto</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
+          Also, see __include<span class="underline">structure</span>_.
         </p>
 <a name="spirit.karma.reference.auto.namespace"></a><h6>
-<a name="id771175"></a>
+<a name="id803018"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -64,14 +64,14 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auto.model_of"></a><h6>
-<a name="id771253"></a>
+<a name="id803096"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
             </p>
 <p>
-              <a class="link" href="generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
+              __primitive_generator<span class="underline">concept</span>_
             </p>
 <p>
           </p>
@@ -83,21 +83,21 @@
 <dd><p>
               A variable instance of any type for which a mapping to a generator
               type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
-              returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>) or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-              Argument</a> that evaluates to any type for which a mapping to a
-              generator type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
-              returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>).
+              returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>) or a __karma_lazy<span class="underline">argument</span>_ that evaluates to any type for
+              which a mapping to a generator type is defined (the meta function
+              <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code> returns
+              <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>).
             </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.auto.expression_semantics"></a><h6>
-<a name="id771376"></a>
+<a name="id803213"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.expression_semantics">Expression
           Semantics</a>
         </h6>
 <p>
           Semantics of an expression is defined only where it differs from, or is
-          not defined in <a class="link" href="generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+          not defined in __primitive_generator<span class="underline">concept</span>_.
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -148,7 +148,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auto.additional_requirements"></a><h6>
-<a name="id771498"></a>
+<a name="id803327"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.additional_requirements">Additional
           Requirements</a>
         </h6>
@@ -333,11 +333,11 @@
 </table></div>
 <p>
           It is possible to add support for any custom data type by implementing
-          a specialization of the customization point <a class="link" href="../../advanced/customize/auto/create_generator.html" title="Define a Custom Attribute Mapping for a Generator"><code class="computeroutput"><span class="identifier">create_generator</span></code></a>. This customiyation
-          can be used also to redefined anz of the predefined mappings.
+          a specialization of the customization point __customize_create<span class="underline">generator</span>_. This customiyation can be used
+          also to redefined anz of the predefined mappings.
         </p>
 <a name="spirit.karma.reference.auto.attributes"></a><h6>
-<a name="id772194"></a>
+<a name="id804018"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -379,7 +379,7 @@
                 </td>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">unused</span></code>
+                  <span class="underline">_unused</span>_
                 </p>
                 </td>
 </tr>
@@ -394,9 +394,9 @@
             The attribute type <code class="computeroutput"><span class="identifier">hold_any</span></code>
             exposed by some of the <code class="computeroutput"><span class="identifier">auto_</span></code>
             generators is semantically and syntactically equivalent to the type implemented
-            by <a href="../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>. It has
-            been added to <span class="emphasis"><em>Spirit</em></span> as it has better a performance
-            and a smaller footprint if compared to <a href="../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>.
+            by __boost<span class="underline">any</span>_. It has been added
+            to <span class="emphasis"><em>Spirit</em></span> as it has better a performance and a smaller
+            footprint if compared to __boost<span class="underline">any</span>_.
           </p></td></tr>
 </table></div>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -413,7 +413,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.auto.complexity"></a><h6>
-<a name="id772445"></a>
+<a name="id804257"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.complexity">Complexity</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -429,7 +429,7 @@
           </p>
 </blockquote></div>
 <a name="spirit.karma.reference.auto.example"></a><h6>
-<a name="id772476"></a>
+<a name="id804288"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.example">Example</a>
         </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -438,8 +438,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The test harness for the example(s) below is presented in the <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics
-            Examples</a> section.
+            The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
           </p></td></tr>
 </table></div>
 <p>
@@ -500,13 +499,12 @@
           </p>
 <p>
             The following construct is required to allow the <code class="computeroutput"><span class="identifier">complex</span></code>
-            data structure to be utilized as a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+            data structure to be utilized as a <span class="underline">_fusion</span>_
             sequence. This is required as we will emit output for this data structure
-            with a <span class="emphasis"><em>Spirit.Karma</em></span> sequence: <code class="computeroutput"><span class="char">'{'</span>
-            <span class="special">&lt;&lt;</span> <span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span>
-            <span class="special">&lt;&lt;</span> <span class="char">','</span>
-            <span class="special">&lt;&lt;</span> <span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span>
-            <span class="special">&lt;&lt;</span> <span class="char">'}'</span></code>.
+            with a <span class="underline">_karma</span>_ sequence: <code class="computeroutput"><span class="char">'{'</span> <span class="special">&lt;&lt;</span> <span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span> <span class="special">&lt;&lt;</span>
+            <span class="char">','</span> <span class="special">&lt;&lt;</span>
+            <span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span> <span class="special">&lt;&lt;</span>
+            <span class="char">'}'</span></code>.
           </p>
 <p>
           </p>

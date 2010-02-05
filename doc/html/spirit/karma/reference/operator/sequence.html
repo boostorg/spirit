@@ -4,7 +4,7 @@
 <title>Sequences (a &lt;&lt; b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="../operator.html" title="Operator">
 <link rel="next" href="alternative.html" title="Alternative (a | b)">
@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.sequence.description"></a><h6>
-<a name="id848015"></a>
+<a name="id880206"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
@@ -38,17 +38,17 @@
             to right as long as they succeed.
           </p>
 <a name="spirit.karma.reference.operator.sequence.header"></a><h6>
-<a name="id848032"></a>
+<a name="id880223"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/sequence.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.karma.reference.operator.sequence.model_of"></a><h6>
-<a name="id848106"></a>
+<a name="id880297"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
@@ -56,19 +56,19 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/narygenerator.html" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>
+                __nary_generator<span class="underline">concept</span>_
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id848142"></a>
+<a name="id880328"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/narygenerator.html" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>.
+            is not defined in __nary_generator<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -119,7 +119,7 @@
 <tr><td align="left" valign="top">
 <p>
               The simplest way to force a sequence to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a>):
+              is to wrap it into a buffering directive (see __karma<span class="underline">buffer</span>_):
             </p>
 <p>
               
@@ -134,12 +134,11 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.sequence.attributes"></a><h6>
-<a name="id848947"></a>
+<a name="id880501"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __karma_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -212,7 +211,7 @@
             the attribute supplied.
           </p>
 <a name="spirit.karma.reference.operator.sequence.complexity"></a><h6>
-<a name="id849765"></a>
+<a name="id881317"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -227,7 +226,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.example"></a><h6>
-<a name="id849789"></a>
+<a name="id881341"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -236,8 +235,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

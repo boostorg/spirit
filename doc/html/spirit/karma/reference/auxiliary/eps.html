@@ -4,7 +4,7 @@
 <title>Epsilon (eps)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
 <link rel="prev" href="eol.html" title="End of Line (eol)">
 <link rel="next" href="lazy.html" title="Lazy (lazy)">
@@ -33,7 +33,7 @@
             or to insert semantic actions into the generation process.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.description"></a><h6>
-<a name="id777721"></a>
+<a name="id809551"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.description">Description</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             a multi-purpose generator that emits a yero length string.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.simple_form"></a><h6>
-<a name="id777745"></a>
+<a name="id809575"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.simple_form">Simple
             Form</a>
           </h6>
@@ -59,7 +59,7 @@
 <pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span> <span class="special">|</span> <span class="identifier">c</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">[</span><span class="identifier">error</span><span class="special">()];</span> <span class="comment">// Call error if a, b, and c fail to generate
 </span></pre>
 <a name="spirit.karma.reference.auxiliary.eps.semantic_predicate"></a><h6>
-<a name="id777846"></a>
+<a name="id809676"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.semantic_predicate">Semantic
             Predicate</a>
           </h6>
@@ -72,34 +72,33 @@
           </p>
 <p>
             Semantic predicates allow you to attach a conditional function anywhere
-            in the grammar. In this role, the epsilon takes a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-            Argument</a> that returns <code class="computeroutput"><span class="keyword">true</span></code>
-            or <code class="computeroutput"><span class="keyword">false</span></code>. The <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-            Argument</a> is typically a test that is called to resolve ambiguity
-            in the grammar. A generator failure will be reported when the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-            Argument</a> result evaluates to <code class="computeroutput"><span class="keyword">false</span></code>.
+            in the grammar. In this role, the epsilon takes a __karma_lazy<span class="underline">argument</span>_ that returns <code class="computeroutput"><span class="keyword">true</span></code>
+            or <code class="computeroutput"><span class="keyword">false</span></code>. The __karma_lazy<span class="underline">argument</span>_ is typically a test that is called
+            to resolve ambiguity in the grammar. A generator failure will be reported
+            when the __karma_lazy<span class="underline">argument</span>_
+            result evaluates to <code class="computeroutput"><span class="keyword">false</span></code>.
             Otherwise an empty string will be emitted. The general form is:
           </p>
 <pre class="programlisting"><span class="identifier">eps_p</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">rest</span><span class="special">;</span>
 </pre>
 <p>
-            The <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-            Argument</a> <code class="computeroutput"><span class="identifier">fb</span></code> is
-            called to do a semantic test. If the test returns true, <code class="computeroutput"><span class="identifier">rest</span></code> will be evaluated. Otherwise,
-            the production will return early without ever touching rest.
+            The __karma_lazy<span class="underline">argument</span>_ <code class="computeroutput"><span class="identifier">fb</span></code> is called to do a semantic test.
+            If the test returns true, <code class="computeroutput"><span class="identifier">rest</span></code>
+            will be evaluated. Otherwise, the production will return early without
+            ever touching rest.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.header"></a><h6>
-<a name="id778311"></a>
+<a name="id809863"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/eps.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_eps</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.namespace"></a><h6>
-<a name="id778385"></a>
+<a name="id809937"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -117,14 +116,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.eps.model_of"></a><h6>
-<a name="id778463"></a>
+<a name="id810015"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
+                __primitive_generator<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -138,19 +137,19 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fb</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a boolean value.
+                A __karma_lazy<span class="underline">argument</span>_ that
+                evaluates to a boolean value.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.auxiliary.eps.expression_semantics"></a><h6>
-<a name="id778550"></a>
+<a name="id810095"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+            is not defined in __primitive_generator<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -213,7 +212,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.eps.attributes"></a><h6>
-<a name="id778737"></a>
+<a name="id810275"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -242,7 +241,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                    <span class="underline">_unused</span>_
                   </p>
                   </td>
 </tr>
@@ -254,7 +253,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                    <span class="underline">_unused</span>_
                   </p>
                   </td>
 </tr>
@@ -266,14 +265,14 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                    <span class="underline">_unused</span>_
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.eps.complexity"></a><h6>
-<a name="id778899"></a>
+<a name="id810429"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -289,7 +288,7 @@
             The complexity is constant as no output is generated.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.example"></a><h6>
-<a name="id778927"></a>
+<a name="id810457"></a>
             <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -298,8 +297,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

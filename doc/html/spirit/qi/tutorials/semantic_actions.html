@@ -4,7 +4,7 @@
 <title>Semantic Actions</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="warming_up.html" title="Warming up">
 <link rel="next" href="complex___our_first_complex_parser.html" title="Complex - Our first complex parser">
@@ -65,7 +65,7 @@
           simply ignored.
         </p>
 <a name="spirit.qi.tutorials.semantic_actions.examples_of_semantic_actions"></a><h6>
-<a name="id568166"></a>
+<a name="id604903"></a>
           <a class="link" href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.examples_of_semantic_actions">Examples
           of Semantic Actions</a>
         </h6>
@@ -80,16 +80,16 @@
             Using simple function object
           </li>
 <li class="listitem">
-            Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
-            a plain function
+            Using __boost<span class="underline">bind</span>_ with a plain
+            function
           </li>
 <li class="listitem">
-            Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
-            a member function
+            Using __boost<span class="underline">bind</span>_ with a member
+            function
           </li>
 <li class="listitem">
-            Using <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
-</li>
+            Using __boost<span class="underline">lambda</span>_
+          </li>
 </ul></div>
 <p>
           Given:
@@ -182,8 +182,8 @@
 <p>
         </p>
 <p>
-          We can use <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
-          to 'bind' member functions:
+          We can use __boost<span class="underline">bind</span>_ to 'bind'
+          member functions:
         </p>
 <p>
           </p>
@@ -198,7 +198,7 @@
 <p>
         </p>
 <p>
-          Likewise, we can also use <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
+          Likewise, we can also use __boost<span class="underline">bind</span>_
           to 'bind' plain functions:
         </p>
 <p>
@@ -213,7 +213,7 @@
 <p>
         </p>
 <p>
-          Yep, we can also use <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>:
+          Yep, we can also use __boost<span class="underline">lambda</span>_:
         </p>
 <p>
           </p>
@@ -231,23 +231,23 @@
           above are the most common. Attaching semantic actions is the first hurdle
           one has to tackle when getting started with parsing with Spirit. Familiarize
           yourself with this task and get intimate with the tools behind it such
-          as <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> and <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>.
+          as __boost<span class="underline">bind</span>_ and __boost<span class="underline">lambda</span>_.
         </p>
 <p>
           The examples above can be found here: <a href="../../../../../example/qi/actions.cpp" target="_top">../../example/qi/actions.cpp</a>
         </p>
 <a name="spirit.qi.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id570491"></a>
+<a name="id605971"></a>
           <a class="link" href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>
-          <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>, a companion
-          library bundled with Spirit, is specifically suited for binding semantic
-          actions. It is like <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
-          on steroids, with special custom features that make it easy to integrate
-          semantic actions with Spirit. If your requirements go beyond simple to
-          moderate parsing, it is suggested that you use this library. All the following
-          examples in this tutorial will use <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+          <span class="underline">_phoenix</span>_, a companion library bundled
+          with Spirit, is specifically suited for binding semantic actions. It is
+          like __boost<span class="underline">lambda</span>_ on steroids,
+          with special custom features that make it easy to integrate semantic actions
+          with Spirit. If your requirements go beyond simple to moderate parsing,
+          it is suggested that you use this library. All the following examples in
+          this tutorial will use <span class="underline">_phoenix</span>_
           for sematic actions.
         </p>
 <div class="important" title="Important"><table border="0" summary="Important">
@@ -257,29 +257,28 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-            There are different ways to write semantic actions for <span class="emphasis"><em>Spirit.Qi</em></span>:
-            using plain functions, <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
-            <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>, or
-            <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>. The latter
-            three allow you to use special placeholders to control parameter placement
-            (<code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>,
-            etc.). Each of those libraries has it's own implementation of the placeholders,
-            all in different namespaces. You have to make sure not to mix placeholders
-            with a library they don't belong to and not to use different libraries
-            while writing a semantic action.
+            There are different ways to write semantic actions for <span class="underline">_qi</span>_:
+            using plain functions, __boost<span class="underline">bind</span>_,
+            __boost<span class="underline">lambda</span>_, or <span class="underline">_phoenix</span>_.
+            The latter three allow you to use special placeholders to control parameter
+            placement (<code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>, etc.). Each of those libraries
+            has it's own implementation of the placeholders, all in different namespaces.
+            You have to make sure not to mix placeholders with a library they don't
+            belong to and not to use different libraries while writing a semantic
+            action.
           </p>
 <p>
-            Generally, for <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
-            use <code class="computeroutput"><span class="special">::</span><span class="identifier">_1</span></code>,
+            Generally, for __boost<span class="underline">bind</span>_, use
+            <code class="computeroutput"><span class="special">::</span><span class="identifier">_1</span></code>,
             <code class="computeroutput"><span class="special">::</span><span class="identifier">_2</span></code>,
             etc. (yes, these placeholders are defined in the global namespace).
           </p>
 <p>
-            For <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a> use
-            the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lambda</span></code>.
+            For __boost<span class="underline">lambda</span>_ use the placeholders
+            defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lambda</span></code>.
           </p>
 <p>
-            For semantic actions written using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            For semantic actions written using <span class="underline">_phoenix</span>_
             use the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>.
             Please note that all existing placeholders for your convenience are also
             available from the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span></code>.

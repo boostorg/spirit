@@ -4,8 +4,8 @@
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../index.html" title="Spirit 2.2">
-<link rel="up" href="../index.html" title="Spirit 2.2">
+<link rel="home" href="../index.html" title="Spirit 2.3">
+<link rel="up" href="../index.html" title="Spirit 2.3">
 <link rel="prev" href="what_s_new/spirit_1_x.html" title="Spirit Classic">
 <link rel="next" href="structure.html" title="Structure">
 </head>
@@ -30,7 +30,7 @@
       Boost Spirit is an object-oriented, recursive-descent parser and output generation
       library for C++. It allows you to write grammars and format descriptions using
       a format similar to Extended Backus Naur Form (EBNF)
-      <sup>[<a name="id556501" href="#ftn.id556501" class="footnote">2</a>]</sup>
+      <sup>[<a name="id593889" href="#ftn.id593889" class="footnote">2</a>]</sup>
       directly in C++. These inline grammar specifications can mix freely with other
       C++ code and, thanks to the generative power of C++ templates, are immediately
       executable. In retrospect, conventional compiler-compilers or parser-generators
@@ -56,9 +56,9 @@
 <p>
       Since the target input grammars and output formats are written entirely in
       C++ we do not need any separate tools to compile, preprocess or integrate those
-      into the build process. <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-      allows seamless integration of the parsing and output generation process with
-      other C++ code. This often allows for simpler and more efficient code.
+      into the build process. <span class="underline">_spirit</span>_ allows
+      seamless integration of the parsing and output generation process with other
+      C++ code. This often allows for simpler and more efficient code.
     </p>
 <p>
       Both the created parsers and generators are fully attributed, which allows
@@ -73,32 +73,32 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-<a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
-        This is the almost-unchanged code base taken from the former Boost Spirit
-        V1.8 distribution. It has been moved into the namespace boost::spirit::classic.
-        A special compatibility layer has been added to ensure complete compatibility
-        with existing code using Spirit V1.8.
+<span class="underline">_classic</span>_: This is the almost-unchanged
+        code base taken from the former Boost Spirit V1.8 distribution. It has been
+        moved into the namespace boost::spirit::classic. A special compatibility
+        layer has been added to ensure complete compatibility with existing code
+        using Spirit V1.8.
       </li>
 <li class="listitem">
-<span class="emphasis"><em>Spirit.Qi</em></span>: This is the parser library allowing you to
-        build recursive descent parsers. The exposed domain-specific language can
-        be used to describe the grammars to implement, and the rules for storing
+<span class="underline">_qi</span>_: This is the parser library allowing
+        you to build recursive descent parsers. The exposed domain-specific language
+        can be used to describe the grammars to implement, and the rules for storing
         the parsed information.
       </li>
 <li class="listitem">
-<span class="emphasis"><em>Spirit.Lex</em></span>: This is the library usable to create tokenizers
-        (lexers). The domain-specific language exposed by <span class="emphasis"><em>Spirit.Lex</em></span>
-        allows you to define regular expressions used to match tokens (create token
-        definitions), associate these regular expressions with code to be executed
-        whenever they are matched, and to add the token definitions to the lexical
-        analyzer.
+<span class="underline">_lex</span>_: This is the library usable to
+        create tokenizers (lexers). The domain-specific language exposed by <span class="underline">_lex</span>_ allows you to define regular expressions
+        used to match tokens (create token definitions), associate these regular
+        expressions with code to be executed whenever they are matched, and to add
+        the token definitions to the lexical analyzer.
       </li>
 <li class="listitem">
-<span class="emphasis"><em>Spirit.Karma</em></span>: This is the generator library allowing
-        you to create code for recursive descent, data type-driven output formatting.
-        The exposed domain-specific language is almost equivalent to the parser description
-        language used in <span class="emphasis"><em>Spirit.Qi</em></span>, except that it is used to
-        describe the required output format to generate from a given data structure.
+<span class="underline">_karma</span>_: This is the generator library
+        allowing you to create code for recursive descent, data type-driven output
+        formatting. The exposed domain-specific language is almost equivalent to
+        the parser description language used in <span class="underline">_qi</span>_,
+        except that it is used to describe the required output format to generate
+        from a given data structure.
       </li>
 </ul></div>
 <p>
@@ -110,17 +110,17 @@
 <p><br class="figure-break">
     </p>
 <p>
-      The three components, <span class="emphasis"><em>Spirit.Qi</em></span>, <span class="emphasis"><em>Spirit.Karma</em></span>
-      and <span class="emphasis"><em>Spirit.Lex</em></span>, are designed to be used either standalone,
-      or together. The general methodology is to use the token sequence generated
-      by <span class="emphasis"><em>Spirit.Lex</em></span> as the input for a parser generated by
-      <span class="emphasis"><em>Spirit.Qi</em></span>. On the opposite side of the equation, the hierarchical
-      data structures generated by <span class="emphasis"><em>Spirit.Qi</em></span> are used for the
-      output generators created using <span class="emphasis"><em>Spirit.Karma</em></span>. However,
-      there is nothing to stop you from using any of these components all by themselves.
+      The three components, <span class="underline">_qi</span>_, <span class="underline">_karma</span>_ and <span class="underline">_lex</span>_,
+      are designed to be used either standalone, or together. The general methodology
+      is to use the token sequence generated by <span class="underline">_lex</span>_
+      as the input for a parser generated by <span class="underline">_qi</span>_.
+      On the opposite side of the equation, the hierarchical data structures generated
+      by <span class="underline">_qi</span>_ are used for the output generators
+      created using <span class="underline">_karma</span>_. However, there
+      is nothing to stop you from using any of these components all by themselves.
     </p>
 <p>
-      The <a class="link" href="introduction.html#spirit.spiritkarmaflow" title="Figure&#160;2.&#160;The place of Spirit.Qi and Spirit.Karma in a data transformation flow of a typical application">figure</a> below shows the typical
+      The <a class="link" href="introduction.html#spirit.spiritkarmaflow" title="Figure&#160;2.&#160;The place of _qi_ and _karma_ in a data transformation flow of a typical application">figure</a> below shows the typical
       data flow of some input being converted to some internal representation. After
       some (optional) transformation these data are converted back into some different,
       external representation. The picture highlights Spirit's place in this data
@@ -129,21 +129,22 @@
 <p>
       </p>
 <div class="figure">
-<a name="spirit.spiritkarmaflow"></a><p class="title"><b>Figure&#160;2.&#160;The place of <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
-      in a data transformation flow of a typical application</b></p>
-<div class="figure-contents"><span class="inlinemediaobject"><img src=".././images/spiritkarmaflow.png" alt="The place of Spirit.Qi and Spirit.Karma in a data transformation flow of a typical application"></span></div>
+<a name="spirit.spiritkarmaflow"></a><p class="title"><b>Figure&#160;2.&#160;The place of <span class="underline">_qi</span>_
+      and <span class="underline">_karma</span>_ in a data transformation
+      flow of a typical application</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src=".././images/spiritkarmaflow.png" alt="The place of _qi_ and _karma_ in a data transformation flow of a typical application"></span></div>
 </div>
 <p><br class="figure-break">
     </p>
-<a name="spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_"></a><h4>
-<a name="id556719"></a>
-      <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_">A
-      Quick Overview of Parsing with <span class="emphasis"><em>Spirit.Qi</em></span></a>
+<a name="spirit.introduction.a_quick_overview_of_parsing_with__emphasis_role__underline___qi__emphasis__"></a><h4>
+<a name="id594124"></a>
+      <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_parsing_with__emphasis_role__underline___qi__emphasis__">A
+      Quick Overview of Parsing with <span class="underline">_qi</span>_</a>
     </h4>
 <p>
-      <span class="emphasis"><em>Spirit.Qi</em></span> is Spirit's sublibrary dealing with generating
-      parsers based on a given target grammar (essentially a format description of
-      the input data to read).
+      <span class="underline">_qi</span>_ is Spirit's sublibrary dealing with
+      generating parsers based on a given target grammar (essentially a format description
+      of the input data to read).
     </p>
 <p>
       A simple EBNF grammar snippet:
@@ -197,7 +198,7 @@
 </pre>
 <p>
       as seen in math syntax, for example, to mean multiplication or, in our case,
-      as seen in EBNF syntax to mean sequencing (b should follow a). <span class="emphasis"><em>Spirit.Qi</em></span>
+      as seen in EBNF syntax to mean sequencing (b should follow a). <span class="underline">_qi</span>_
       uses the shift <code class="computeroutput"><span class="special">&gt;&gt;</span></code> operator
       instead for this purpose. We take the <code class="computeroutput"><span class="special">&gt;&gt;</span></code>
       operator, with arrows pointing to the right, to mean "is followed by".
@@ -226,10 +227,10 @@
       in C/C++. Finally, we terminate each rule with the ubiquitous semi-colon,
       <code class="computeroutput"><span class="special">;</span></code>.
     </p>
-<a name="spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_"></a><h4>
-<a name="id559314"></a>
-      <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_">A
-      Quick Overview of Output Generation with <span class="emphasis"><em>Spirit.Karma</em></span></a>
+<a name="spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_role__underline___karma__emphasis__"></a><h4>
+<a name="id595086"></a>
+      <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_role__underline___karma__emphasis__">A
+      Quick Overview of Output Generation with <span class="underline">_karma</span>_</a>
     </h4>
 <p>
       Spirit not only allows you to describe the structure of the input, it also
@@ -260,7 +261,7 @@
       of the same <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code>:
     </p>
 <div class="table">
-<a name="id559655"></a><p class="title"><b>Table&#160;2.&#160;Different output formats for `std::vector&lt;int&gt;`</b></p>
+<a name="id595429"></a><p class="title"><b>Table&#160;2.&#160;Different output formats for `std::vector&lt;int&gt;`</b></p>
 <div class="table-contents"><table class="table" summary="Different output formats for `std::vector&lt;int&gt;`">
 <colgroup>
 <col>
@@ -367,19 +368,19 @@
       the trailing <code class="computeroutput"><span class="char">','</span></code>.
     </p>
 <p>
-      Overall, the syntax is similar to <span class="emphasis"><em>Spirit.Qi</em></span> with the exception
-      that we use the <code class="computeroutput"><span class="special">&lt;&lt;</span></code> operator
-      for output concatenation. This should be easy to understand as it follows the
-      conventions used in the Standard's I/O streams.
+      Overall, the syntax is similar to <span class="underline">_qi</span>_
+      with the exception that we use the <code class="computeroutput"><span class="special">&lt;&lt;</span></code>
+      operator for output concatenation. This should be easy to understand as it
+      follows the conventions used in the Standard's I/O streams.
     </p>
 <p>
-      Another important feature of <span class="emphasis"><em>Spirit.Karma</em></span> allows you to
-      fully decouple the data type from the output format. You can use the same output
-      format with different data types as long as these conform conceptually. The
-      next table gives some related examples.
+      Another important feature of <span class="underline">_karma</span>_
+      allows you to fully decouple the data type from the output format. You can
+      use the same output format with different data types as long as these conform
+      conceptually. The next table gives some related examples.
     </p>
 <div class="table">
-<a name="id560039"></a><p class="title"><b>Table&#160;3.&#160;Different data types usable with the output format
+<a name="id595815"></a><p class="title"><b>Table&#160;3.&#160;Different data types usable with the output format
     `*(int_ &lt;&lt; eol)`</b></p>
 <div class="table-contents"><table class="table" summary="Different data types usable with the output format
     `*(int_ &lt;&lt; eol)`">
@@ -453,7 +454,7 @@
 </div>
 <br class="table-break"><div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id556501" href="#id556501" class="para">2</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id593889" href="#id593889" class="para">2</a>] </sup>
           <a href="http://www.cl.cam.ac.uk/%7Emgk25/iso-14977.pdf" target="_top">ISO-EBNF</a>
         </p></div>
 </div>

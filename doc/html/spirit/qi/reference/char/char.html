@@ -4,7 +4,7 @@
 <title>Char (char_, lit)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../char.html" title="Char">
 <link rel="prev" href="../char.html" title="Char">
 <link rel="next" href="char_class.html" title="Char Classification (alnum, digit, etc.)">
@@ -27,32 +27,31 @@
 <a name="spirit.qi.reference.char.char"></a><a class="link" href="char.html" title="Char (char_, lit)"> Char (<code class="computeroutput"><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">lit</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.char.char.description"></a><h6>
-<a name="id646606"></a>
+<a name="id681868"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">char_</span></code> parser matches
             single characters. The <code class="computeroutput"><span class="identifier">char_</span></code>
-            parser has an associated <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-            Encoding Namespace</a>. This is needed when doing basic operations
-            such as inhibiting case sensitivity and dealing with character ranges.
+            parser has an associated __char_encoding<span class="underline">namespace</span>_.
+            This is needed when doing basic operations such as inhibiting case sensitivity
+            and dealing with character ranges.
           </p>
 <p>
             There are various forms of <code class="computeroutput"><span class="identifier">char_</span></code>.
           </p>
 <a name="spirit.qi.reference.char.char.char_"></a><h6>
-<a name="id646653"></a>
+<a name="id681915"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.char_">char_</a>
           </h6>
 <p>
             The no argument form of <code class="computeroutput"><span class="identifier">char_</span></code>
-            matches any character in the assocaiated <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            matches any character in the assocaiated __char_encoding<span class="underline">namespace</span>_.
           </p>
 <pre class="programlisting"><span class="identifier">char_</span>               <span class="comment">// matches any character
 </span></pre>
 <a name="spirit.qi.reference.char.char.char__ch_"></a><h6>
-<a name="id646694"></a>
+<a name="id681956"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.char__ch_">char_(ch)</a>
           </h6>
 <p>
@@ -64,7 +63,7 @@
 </span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// matches x (a char)
 </span></pre>
 <a name="spirit.qi.reference.char.char.char__first__last_"></a><h6>
-<a name="id646782"></a>
+<a name="id682045"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.char__first__last_">char_(first,
             last)</a>
           </h6>
@@ -79,15 +78,15 @@
             A range of characters is created from a low-high character pair. Such
             a parser matches a single character that is in the range, including both
             endpoints. Note, the first character must be <span class="emphasis"><em>before</em></span>
-            the second, according to the underlying <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            the second, according to the underlying __char_encoding<span class="underline">namespace</span>_.
           </p>
 <p>
             Character mapping is inherently platform dependent. It is not guaranteed
             in the standard for example that <code class="computeroutput"><span class="char">'A'</span>
             <span class="special">&lt;</span> <span class="char">'Z'</span></code>,
-            that is why in Spirit2, we purposely attach a specific <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-            Encoding Namespace</a> (such as ASCII, ISO-8859-1) to the <code class="computeroutput"><span class="identifier">char_</span></code> parser to eliminate such ambiguities.
+            that is why in Spirit2, we purposely attach a specific __char_encoding<span class="underline">namespace</span>_ (such as ASCII, ISO-8859-1) to
+            the <code class="computeroutput"><span class="identifier">char_</span></code> parser to eliminate
+            such ambiguities.
           </p>
 <div class="note" title="Note"><table border="0" summary="Note">
 <tr>
@@ -116,7 +115,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.qi.reference.char.char.char__def_"></a><h6>
-<a name="id646962"></a>
+<a name="id682226"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.char__def_">char_(def)</a>
           </h6>
 <p>
@@ -132,7 +131,7 @@
 </span><span class="identifier">char_</span><span class="special">(</span><span class="string">"\x7f\x7e"</span><span class="special">)</span>   <span class="comment">// Hexadecimal 0x7F and 0x7E
 </span></pre>
 <a name="spirit.qi.reference.char.char.lit_ch_"></a><h6>
-<a name="id648242"></a>
+<a name="id683716"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.lit_ch_">lit(ch)</a>
           </h6>
 <p>
@@ -168,17 +167,17 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="comment">// c is a char
 </span></pre>
 <a name="spirit.qi.reference.char.char.header"></a><h6>
-<a name="id648405"></a>
+<a name="id683879"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/char/char.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_char_</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.char.char.namespace"></a><h6>
-<a name="id648480"></a>
+<a name="id683954"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -204,18 +203,17 @@
 </table></div>
 <p>
             In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
-            represents a <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            represents a __char_encoding<span class="underline">namespace</span>_.
           </p>
 <a name="spirit.qi.reference.char.char.model_of"></a><h6>
-<a name="id648599"></a>
+<a name="id684073"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
+                __primitive_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -229,23 +227,19 @@
                 A literal char, e.g. <code class="computeroutput"><span class="char">'x'</span></code>,
                 <code class="computeroutput"><span class="identifier">L</span><span class="char">'x'</span></code>
                 or anything that can be converted to a <code class="computeroutput"><span class="keyword">char</span></code>
-                or <code class="computeroutput"><span class="keyword">wchar_t</span></code>, or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
-                that evaluates to anything that can be converted to a <code class="computeroutput"><span class="keyword">char</span></code> or <code class="computeroutput"><span class="keyword">wchar_t</span></code>.
+                or <code class="computeroutput"><span class="keyword">wchar_t</span></code>, or a __qi_lazy<span class="underline">argument</span>_ that evaluates to anything
+                that can be converted to a <code class="computeroutput"><span class="keyword">char</span></code>
+                or <code class="computeroutput"><span class="keyword">wchar_t</span></code>.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                Encoding Namespace</a>.
+                A __char_encoding<span class="underline">namespace</span>_.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">cs</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../basics.html#spirit.qi.reference.basics.string">String</a>
-                or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a <a class="link" href="../basics.html#spirit.qi.reference.basics.string">String</a>
-                that specifies a char-set definition string following a syntax that
-                resembles posix style regular expression character sets (except the
-                square brackets and the negation <code class="computeroutput"><span class="special">^</span></code>
-                character).
+                A <span class="underline">_string</span>_ or a __qi_lazy<span class="underline">argument</span>_ that evaluates to a <span class="underline">_string</span>_ that specifies a char-set definition
+                string following a syntax that resembles posix style regular expression
+                character sets (except the square brackets and the negation <code class="computeroutput"><span class="special">^</span></code> character).
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">cp</span></code></span></dt>
 <dd><p>
@@ -254,13 +248,13 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.char.char.expression_semantics"></a><h6>
-<a name="id648805"></a>
+<a name="id684274"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>.
+            is not defined in __primitive_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -374,7 +368,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.char.char.attributes"></a><h6>
-<a name="id649212"></a>
+<a name="id684676"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -403,8 +397,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code> or if
-                    <code class="computeroutput"><span class="identifier">c</span></code> is a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>,
+                    <span class="underline">_unused</span>_ or if <code class="computeroutput"><span class="identifier">c</span></code> is a __qi_lazy<span class="underline">argument</span>_,
                     the character type returned by invoking it.
                   </p>
                   </td>
@@ -417,8 +410,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code> or if
-                    <code class="computeroutput"><span class="identifier">c</span></code> is a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>,
+                    <span class="underline">_unused</span>_ or if <code class="computeroutput"><span class="identifier">c</span></code> is a __qi_lazy<span class="underline">argument</span>_,
                     the character type returned by invoking it.
                   </p>
                   </td>
@@ -431,8 +423,8 @@
                   </td>
 <td>
                   <p>
-                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    The character type of the __char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -444,8 +436,8 @@
                   </td>
 <td>
                   <p>
-                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    The character type of the __char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -458,8 +450,8 @@
                   </td>
 <td>
                   <p>
-                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    The character type of the __char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -471,8 +463,8 @@
                   </td>
 <td>
                   <p>
-                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    The character type of the __char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -491,7 +483,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.char.char.complexity"></a><h6>
-<a name="id649604"></a>
+<a name="id685069"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -507,7 +499,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.char.char.example"></a><h6>
-<a name="id649645"></a>
+<a name="id685109"></a>
             <a class="link" href="char.html#spirit.qi.reference.char.char.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -516,8 +508,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -583,7 +574,7 @@
 <p>
           </p>
 <p>
-            Lazy char_ using <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            Lazy char_ using <span class="underline">_phoenix</span>_
           </p>
 <p>
             </p>

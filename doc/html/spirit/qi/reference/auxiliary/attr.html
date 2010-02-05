@@ -4,7 +4,7 @@
 <title>Attribute (attr)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
 <link rel="prev" href="../auxiliary.html" title="Auxiliary">
 <link rel="next" href="attr_cast.html" title="Attribute Transformation Pseudo Generator (attr_cast)">
@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.auxiliary.attr"></a><a class="link" href="attr.html" title="Attribute (attr)"> Attribute (<code class="computeroutput"><span class="identifier">attr</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.auxiliary.attr.description"></a><h6>
-<a name="id631498"></a>
+<a name="id666784"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.description">Description</a>
           </h6>
 <p>
@@ -36,17 +36,17 @@
             its specified parameter as an attribute.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.header"></a><h6>
-<a name="id631514"></a>
+<a name="id666801"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/attr.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_attr</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.namespace"></a><h6>
-<a name="id631589"></a>
+<a name="id666876"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -64,14 +64,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.model_of"></a><h6>
-<a name="id631667"></a>
+<a name="id666954"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
+                __primitive_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -82,25 +82,25 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A arbitrary typed constant value, e.g. 0.0, "Hello", or
-                a variable of arbitrary type or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                Argument</a> that evaluates to an arbitrary type.
+                a variable of arbitrary type or a __qi_lazy<span class="underline">argument</span>_
+                that evaluates to an arbitrary type.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
                 The type of <code class="computeroutput"><span class="identifier">a</span></code> or
-                if it is a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                Argument</a>, its return type.
+                if it is a __qi_lazy<span class="underline">argument</span>_,
+                its return type.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.attr.expression_semantics"></a><h6>
-<a name="id631760"></a>
+<a name="id667042"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>.
+            is not defined in __primitive_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -134,7 +134,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.attributes"></a><h6>
-<a name="id631862"></a>
+<a name="id667140"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -168,7 +168,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.complexity"></a><h6>
-<a name="id631951"></a>
+<a name="id667228"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -185,7 +185,7 @@
             done.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.example"></a><h6>
-<a name="id631979"></a>
+<a name="id667256"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -194,8 +194,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -234,7 +233,7 @@
 <p>
           </p>
 <p>
-            Using <code class="computeroutput"><span class="identifier">attr</span></code> with <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> function objects:
+            Using <code class="computeroutput"><span class="identifier">attr</span></code> with <span class="underline">_phoenix</span>_ function objects:
           </p>
 <p>
             </p>

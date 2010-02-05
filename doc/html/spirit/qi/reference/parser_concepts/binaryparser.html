@@ -4,7 +4,7 @@
 <title>BinaryParser</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="prev" href="unaryparser.html" title="UnaryParser">
 <link rel="next" href="naryparser.html" title="NaryParser">
@@ -27,17 +27,16 @@
 <a name="spirit.qi.reference.parser_concepts.binaryparser"></a><a class="link" href="binaryparser.html" title="BinaryParser">BinaryParser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.binaryparser.description"></a><h6>
-<a name="id610083"></a>
+<a name="id645519"></a>
             <a class="link" href="binaryparser.html#spirit.qi.reference.parser_concepts.binaryparser.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>BinaryParser</em></span> is a composite parser that has a two
             subjects, <code class="computeroutput"><span class="identifier">left</span></code> and <code class="computeroutput"><span class="identifier">right</span></code>. The BinaryParser allows its
-            subjects to be treated in the same way as a single instance of a <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
-            following the Composite Design Pattern.
+            subjects to be treated in the same way as a single instance of a __parser<span class="underline">concept</span>_ following the __composite<span class="underline">pattern</span>_.
           </p>
 <a name="spirit.qi.reference.parser_concepts.binaryparser.refinement_of"></a><h6>
-<a name="id610135"></a>
+<a name="id645569"></a>
             <a class="link" href="binaryparser.html#spirit.qi.reference.parser_concepts.binaryparser.refinement_of">Refinement
             of</a>
           </h6>
@@ -45,7 +44,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                __parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -64,13 +63,13 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.binaryparser.valid_expressions"></a><h6>
-<a name="id610214"></a>
+<a name="id646263"></a>
             <a class="link" href="binaryparser.html#spirit.qi.reference.parser_concepts.binaryparser.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>, for any BinaryParser
-            the following must be met:
+            In addition to the requirements defined in __parser<span class="underline">concept</span>_,
+            for any BinaryParser the following must be met:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -109,7 +108,7 @@
                   </td>
 <td>
                   <p>
-                    <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                    __parser<span class="underline">concept</span>_
                   </p>
                   </td>
 </tr>
@@ -126,14 +125,14 @@
                   </td>
 <td>
                   <p>
-                    <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                    __parser<span class="underline">concept</span>_
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.binaryparser.type_expressions"></a><h6>
-<a name="id610375"></a>
+<a name="id646409"></a>
             <a class="link" href="binaryparser.html#spirit.qi.reference.parser_concepts.binaryparser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -190,15 +189,14 @@
                     Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                     if a certain type, <code class="computeroutput"><span class="identifier">P</span></code>
                     is a BinaryParser, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                    Boolean Constant</a>).
+                    otherwise (See __mpl_boolean<span class="underline">constant</span>_).
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.binaryparser.invariants"></a><h6>
-<a name="id611260"></a>
+<a name="id646609"></a>
             <a class="link" href="binaryparser.html#spirit.qi.reference.parser_concepts.binaryparser.invariants">Invariants</a>
           </h6>
 <p>
@@ -214,12 +212,16 @@
 </li>
 </ul></div>
 <a name="spirit.qi.reference.parser_concepts.binaryparser.models"></a><h6>
-<a name="id611399"></a>
+<a name="id646748"></a>
             <a class="link" href="binaryparser.html#spirit.qi.reference.parser_concepts.binaryparser.models">Models</a>
           </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem"><a class="link" href="../operator/difference.html" title="Difference (a - b)">Difference</a></li>
-<li class="listitem"><a class="link" href="../operator/list.html" title="List (a % b)">List</a></li>
+<li class="listitem">
+              __qi<span class="underline">difference</span>_
+            </li>
+<li class="listitem">
+              __qi<span class="underline">list</span>_
+            </li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

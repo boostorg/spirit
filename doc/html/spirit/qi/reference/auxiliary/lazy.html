@@ -4,7 +4,7 @@
 <title>Lazy (lazy)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
 <link rel="prev" href="eps.html" title="Epsilon (eps)">
 <link rel="next" href="../binary.html" title="Binary">
@@ -27,27 +27,27 @@
 <a name="spirit.qi.reference.auxiliary.lazy"></a><a class="link" href="lazy.html" title="Lazy (lazy)"> Lazy (<code class="computeroutput"><span class="identifier">lazy</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.auxiliary.lazy.description"></a><h6>
-<a name="id637958"></a>
+<a name="id675089"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">lazy</span></code> parser, as its
-            name suggests, invokes a lazy <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            name suggests, invokes a lazy <span class="underline">_phoenix</span>_
             function that returns a parser at parse time. This parser will be used
             once it is created to continue the parse.
           </p>
 <a name="spirit.qi.reference.auxiliary.lazy.header"></a><h6>
-<a name="id639627"></a>
+<a name="id675119"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/lazy.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_lazy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.auxiliary.lazy.namespace"></a><h6>
-<a name="id639702"></a>
+<a name="id675193"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -65,14 +65,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.lazy.model_of"></a><h6>
-<a name="id639780"></a>
+<a name="id675271"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                __parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -82,19 +82,19 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fp</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
-                that evaluates to a <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+                A __qi_lazy<span class="underline">argument</span>_ that evaluates
+                to a __parser<span class="underline">concept</span>_.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.lazy.expression_semantics"></a><h6>
-<a name="id639853"></a>
+<a name="id675335"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+            is not defined in __parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -122,12 +122,11 @@
                   </td>
 <td>
                   <p>
-                    Create a lazy-parser from a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                    Argument</a>, <code class="computeroutput"><span class="identifier">fp</span></code>.
-                    <code class="computeroutput"><span class="identifier">fp</span></code> will be invoked
-                    at parse time. <code class="computeroutput"><span class="identifier">fp</span></code>
-                    is expected to return a <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a> object. This
-                    parser is then invoked in order to parse the input.
+                    Create a lazy-parser from a __qi_lazy<span class="underline">argument</span>_,
+                    <code class="computeroutput"><span class="identifier">fp</span></code>. <code class="computeroutput"><span class="identifier">fp</span></code> will be invoked at parse
+                    time. <code class="computeroutput"><span class="identifier">fp</span></code> is expected
+                    to return a __parser<span class="underline">concept</span>_
+                    object. This parser is then invoked in order to parse the input.
                   </p>
                   </td>
 </tr>
@@ -139,19 +138,18 @@
                   </td>
 <td>
                   <p>
-                    Create a lazy-parser from a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                    Argument</a>, <code class="computeroutput"><span class="identifier">fp</span></code>.
-                    <code class="computeroutput"><span class="identifier">fp</span></code> will be invoked
-                    at parse time. <code class="computeroutput"><span class="identifier">fp</span></code>
-                    is expected to return a <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a> object. This
-                    parser is then invoked in order to parse the input.
+                    Create a lazy-parser from a __qi_lazy<span class="underline">argument</span>_,
+                    <code class="computeroutput"><span class="identifier">fp</span></code>. <code class="computeroutput"><span class="identifier">fp</span></code> will be invoked at parse
+                    time. <code class="computeroutput"><span class="identifier">fp</span></code> is expected
+                    to return a __parser<span class="underline">concept</span>_
+                    object. This parser is then invoked in order to parse the input.
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.lazy.attributes"></a><h6>
-<a name="id640044"></a>
+<a name="id675514"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -199,7 +197,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.lazy.complexity"></a><h6>
-<a name="id640166"></a>
+<a name="id675636"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.complexity">Complexity</a>
           </h6>
 <p>
@@ -207,7 +205,7 @@
             parser is determined by the complexity of the parser returned from <code class="computeroutput"><span class="identifier">fp</span></code>.
           </p>
 <a name="spirit.qi.reference.auxiliary.lazy.example"></a><h6>
-<a name="id640197"></a>
+<a name="id675667"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -216,8 +214,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

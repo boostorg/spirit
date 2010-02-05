@@ -4,7 +4,7 @@
 <title>More About Attributes of Compound Components</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../attributes.html" title="Attributes">
 <link rel="prev" href="compound_attributes.html" title="Attributes of Compound Components">
 <link rel="next" href="nonterminal_attributes.html" title="Attributes of Rules and Grammars">
@@ -107,7 +107,8 @@
 </span>    <span class="identifier">p</span><span class="special">);</span>                                               <span class="comment">// attribute to fill while parsing
 </span></pre>
 <p>
-          and here is the equivalent <span class="emphasis"><em>Spirit.Karma</em></span> code snippet:
+          and here is the equivalent <span class="underline">_karma</span>_
+          code snippet:
         </p>
 <pre class="programlisting"><span class="comment">// the following generates: (1.0, 2.0)
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
@@ -126,9 +127,9 @@
           This behavior should be familiar as it conforms to the way other input
           and output formatting libraries such as <code class="computeroutput"><span class="identifier">scanf</span></code>,
           <code class="computeroutput"><span class="identifier">printf</span></code> or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span></code> are handling their variable parts.
-          In this context you can think about <span class="emphasis"><em>Spirit.Qi</em></span>'s and
-          <span class="emphasis"><em>Spirit.Karma</em></span>'s primitive components (such as the
-          <code class="computeroutput"><span class="identifier">double_</span></code> above) as of being
+          In this context you can think about <span class="underline">_qi</span>_'s
+          and <span class="underline">_karma</span><span class="underline">'s
+          primitive components (such as the `double</span>` above) as of being
           typesafe placeholders for the attribute values.
         </p>
 <div class="tip" title="Tip"><table border="0" summary="Tip">
@@ -156,8 +157,7 @@
           Let's take a look at this from a more formal perspective. The sequence
           attribute propagation rules define a special behavior if generators exposing
           <code class="computeroutput"><span class="identifier">unused_type</span></code> as their attribute
-          are involved (see <a class="link" href="../../karma/quick_reference/compound_attribute_rules.html" title="Compound Attribute Rules">Generator
-          Compound Attribute Rules</a>):
+          are involved (see __sec_karma<span class="underline">compound</span>_):
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>

@@ -4,7 +4,7 @@
 <title>Optional (-a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="not_predicate.html" title="Not-Predicate (!a)">
 <link rel="next" href="permutation.html" title="Permutation (a ^ b)">
@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.optional.description"></a><h6>
-<a name="id698091"></a>
+<a name="id731607"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.description">Description</a>
           </h6>
 <p>
@@ -36,17 +36,17 @@
             its operand zero or one time.
           </p>
 <a name="spirit.qi.reference.operator.optional.header"></a><h6>
-<a name="id698119"></a>
+<a name="id731635"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/optional.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_optional</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.operator.optional.model_of"></a><h6>
-<a name="id698193"></a>
+<a name="id731709"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.model_of">Model
             of</a>
           </h6>
@@ -54,7 +54,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+                __unary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -64,18 +64,18 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A __parser<span class="underline">concept</span>_
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.optional.expression_semantics"></a><h6>
-<a name="id698264"></a>
+<a name="id731770"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
+            is not defined in __unary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -109,12 +109,11 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.optional.attributes"></a><h6>
-<a name="id698362"></a>
+<a name="id731864"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __qi_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -151,7 +150,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.optional.complexity"></a><h6>
-<a name="id698530"></a>
+<a name="id732029"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -164,7 +163,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.optional.example"></a><h6>
-<a name="id698562"></a>
+<a name="id732061"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -173,8 +172,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -199,7 +197,7 @@
             </p>
 <p>
               Parse a person info with name (in quotes) optional age
-              <sup>[<a name="id698778" href="#ftn.id698778" class="footnote">9</a>]</sup>
+              <sup>[<a name="id732277" href="#ftn.id732277" class="footnote">9</a>]</sup>
               and optional sex, all separated by comma.
             </p>
 <p>
@@ -230,7 +228,7 @@
           </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id698778" href="#id698778" class="para">9</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id732277" href="#id732277" class="para">9</a>] </sup>
                   James Bond is shy about his age :-)
                 </p></div>
 </div>

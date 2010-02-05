@@ -4,7 +4,7 @@
 <title>Parser</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="prev" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="next" href="primitiveparser.html" title="PrimitiveParser">
@@ -27,22 +27,23 @@
 <a name="spirit.qi.reference.parser_concepts.parser"></a><a class="link" href="parser.html" title="Parser">Parser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.parser.description"></a><h6>
-<a name="id606484"></a>
+<a name="id643694"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.description">Description</a>
           </h6>
 <p>
             The <span class="emphasis"><em>Parser</em></span> is the most fundamental concept. A Parser
             has a member function, <code class="computeroutput"><span class="identifier">parse</span></code>,
-            that accepts a first-last <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> pair andreturns
-            bool as its result. The iterators delimit the data being parsed.function
-            <code class="computeroutput"><span class="identifier">parse</span></code>, that accepts a
-            first-last <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> pair and returns
-            <code class="computeroutput"><span class="keyword">bool</span></code> as its result. The
-            iterators delimit the data being parsed. The Parser's <code class="computeroutput"><span class="identifier">parse</span></code>
-            member function returns <code class="computeroutput"><span class="keyword">true</span></code>
-            if the parse succeeds, in which case the first iterator is advanced accordingly.
-            Each Parser can represent a specific pattern or algorithm, or it can
-            be a more complex parser formed as a composition of other Parsers.
+            that accepts a first-last <span class="underline">_fwditer</span>_
+            pair andreturns bool as its result. The iterators delimit the data being
+            parsed.function <code class="computeroutput"><span class="identifier">parse</span></code>,
+            that accepts a first-last <span class="underline">_fwditer</span>_
+            pair and returns <code class="computeroutput"><span class="keyword">bool</span></code> as
+            its result. The iterators delimit the data being parsed. The Parser's
+            <code class="computeroutput"><span class="identifier">parse</span></code> member function
+            returns <code class="computeroutput"><span class="keyword">true</span></code> if the parse
+            succeeds, in which case the first iterator is advanced accordingly. Each
+            Parser can represent a specific pattern or algorithm, or it can be a
+            more complex parser formed as a composition of other Parsers.
           </p>
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
@@ -57,34 +58,36 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Iter</span></code></span></dt>
 <dd><p>
-                a <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type.
+                a <span class="underline">_fwditer</span>_ type.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">f</span></code>,
             <code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
-                <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a>. first/last
-                iterator pair.
+                <span class="underline">_fwditer</span>_. first/last iterator
+                pair.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Context</span></code></span></dt>
 <dd><p>
-                The parser's Context type.
+                The parser's <span class="underline">_context</span>_ type.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">context</span></code></span></dt>
 <dd><p>
-                The parser's Context, or <code class="computeroutput"><span class="identifier">unused</span></code>.
+                The parser's <span class="underline">_context</span>_, or
+                <span class="underline">_unused</span>_.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">skip</span></code></span></dt>
 <dd><p>
-                A skip Parser, or <code class="computeroutput"><span class="identifier">unused</span></code>.
+                A skip Parser, or <span class="underline">_unused</span>_.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">attrib</span></code></span></dt>
 <dd><p>
-                A Compatible Attribute, or <code class="computeroutput"><span class="identifier">unused</span></code>.
+                A __compatible<span class="underline">attribute</span>_, or
+                <span class="underline">_unused</span>_.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.parser.valid_expressions"></a><h6>
-<a name="id608439"></a>
+<a name="id643975"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -157,14 +160,14 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">info</span></code>
+                    <span class="underline">_info</span>_
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.type_expressions"></a><h6>
-<a name="id608707"></a>
+<a name="id644240"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -209,15 +212,14 @@
                     Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                     if a certain type, <code class="computeroutput"><span class="identifier">P</span></code>
                     is a Parser, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                    Boolean Constant</a>).
+                    otherwise (See __mpl_boolean<span class="underline">constant</span>_).
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.postcondition"></a><h6>
-<a name="id608905"></a>
+<a name="id644437"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.postcondition">Postcondition</a>
           </h6>
 <p>
@@ -231,15 +233,13 @@
             </li>
 <li class="listitem">
               On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
-              parser is <code class="computeroutput"><span class="identifier">unused</span></code>,
-              <code class="computeroutput"><span class="identifier">f</span></code> is restored to its
-              original position prior to entry.
+              parser is <span class="underline">_unused</span>_, <code class="computeroutput"><span class="identifier">f</span></code> is restored to its original position
+              prior to entry.
             </li>
 <li class="listitem">
               On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
-              parser is not <code class="computeroutput"><span class="identifier">unused</span></code>,
-              <code class="computeroutput"><span class="identifier">f</span></code> is positioned one
-              past the last character/token matching <code class="computeroutput"><span class="identifier">skip</span></code>.
+              parser is not <span class="underline">_unused</span>_, <code class="computeroutput"><span class="identifier">f</span></code> is positioned one past the last
+              character/token matching <code class="computeroutput"><span class="identifier">skip</span></code>.
             </li>
 <li class="listitem">
               On a failed match, <code class="computeroutput"><span class="identifier">attrib</span></code>
@@ -251,7 +251,7 @@
             </li>
 </ul></div>
 <a name="spirit.qi.reference.parser_concepts.parser.models"></a><h6>
-<a name="id609032"></a>
+<a name="id644559"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.models">Models</a>
           </h6>
 <p>

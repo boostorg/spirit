@@ -4,7 +4,7 @@
 <title>Character Generators (char_, lit)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../char.html" title="Char">
 <link rel="prev" href="../char.html" title="Char">
 <link rel="next" href="char_class.html" title="Character Classification (alnum, digit, etc.)">
@@ -28,7 +28,7 @@
           Generators (<code class="computeroutput"><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">lit</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.char.char_generator.description"></a><h6>
-<a name="id789249"></a>
+<a name="id822516"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.description">Description</a>
           </h6>
 <p>
@@ -37,26 +37,25 @@
 <p>
             The <code class="computeroutput"><span class="identifier">char_</span></code> generator emits
             single characters. The <code class="computeroutput"><span class="identifier">char_</span></code>
-            generator has an associated <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>. This is needed when doing basic operations
-            such as forcing lower or upper case and dealing with character ranges.
+            generator has an associated __karma_char_encoding<span class="underline">namespace</span>_.
+            This is needed when doing basic operations such as forcing lower or upper
+            case and dealing with character ranges.
           </p>
 <p>
             There are various forms of <code class="computeroutput"><span class="identifier">char_</span></code>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.char_"></a><h6>
-<a name="id789299"></a>
+<a name="id822568"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char_">char_</a>
           </h6>
 <p>
             The no argument form of <code class="computeroutput"><span class="identifier">char_</span></code>
-            emits any character in the associated <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            emits any character in the associated __karma_char_encoding<span class="underline">namespace</span>_.
           </p>
 <pre class="programlisting"><span class="identifier">char_</span>               <span class="comment">// emits any character as supplied by the attribute
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.char__ch_"></a><h6>
-<a name="id789340"></a>
+<a name="id822609"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__ch_">char_(ch)</a>
           </h6>
 <p>
@@ -68,7 +67,7 @@
 </span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// emits x (a char)
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.char__first__last_"></a><h6>
-<a name="id789431"></a>
+<a name="id822700"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__first__last_">char_(first,
             last)</a>
           </h6>
@@ -83,15 +82,15 @@
             A range of characters is created from a low-high character pair. Such
             a generator emits a single character that is in the range, including
             both endpoints. Note, the first character must be <span class="emphasis"><em>before</em></span>
-            the second, according to the underlying <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            the second, according to the underlying __karma_char_encoding<span class="underline">namespace</span>_.
           </p>
 <p>
             Character mapping is inherently platform dependent. It is not guaranteed
             in the standard for example that <code class="computeroutput"><span class="char">'A'</span>
             <span class="special">&lt;</span> <span class="char">'Z'</span></code>,
-            that is why in Spirit2, we purposely attach a specific <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a> (such as ASCII, ISO-8859-1) to the <code class="computeroutput"><span class="identifier">char_</span></code> generator to eliminate such ambiguities.
+            that is why in Spirit2, we purposely attach a specific __karma_char_encoding<span class="underline">namespace</span>_ (such as ASCII, ISO-8859-1) to
+            the <code class="computeroutput"><span class="identifier">char_</span></code> generator to
+            eliminate such ambiguities.
           </p>
 <div class="note" title="Note"><table border="0" summary="Note">
 <tr>
@@ -120,7 +119,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.char__def_"></a><h6>
-<a name="id789614"></a>
+<a name="id822882"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__def_">char_(def)</a>
           </h6>
 <p>
@@ -140,7 +139,7 @@
             by the attribute.
           </p>
 <a name="spirit.karma.reference.char.char_generator.lit_ch_"></a><h6>
-<a name="id790982"></a>
+<a name="id822999"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.lit_ch_">lit(ch)</a>
           </h6>
 <p>
@@ -180,17 +179,17 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span>      <span class="comment">// c is a char
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.header"></a><h6>
-<a name="id791160"></a>
+<a name="id823176"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_char_</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.karma.reference.char.char_generator.namespace"></a><h6>
-<a name="id791234"></a>
+<a name="id823251"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -216,11 +215,10 @@
 </table></div>
 <p>
             In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
-            represents a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
+            represents a __karma_char_encoding<span class="underline">namespace</span>_.
           </p>
 <a name="spirit.karma.reference.char.char_generator.model_of"></a><h6>
-<a name="id791353"></a>
+<a name="id823369"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.model_of">Model
             of</a>
           </h6>
@@ -228,7 +226,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
+                __primitive_generator<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -239,26 +237,23 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span></code>,
             <code class="computeroutput"><span class="identifier">ch1</span></code>, <code class="computeroutput"><span class="identifier">ch2</span></code></span></dt>
 <dd><p>
-                Character-class specific character (See Character Class Types), or
-                a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a character-class specific character
-                value
+                Character-class specific character (See __char_class<span class="underline">types</span>_),
+                or a __karma_lazy<span class="underline">argument</span>_
+                that evaluates to a character-class specific character value
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">cs</span></code></span></dt>
 <dd><p>
-                Character-set specifier string (See Character Class Types), or a
-                <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a character-set specifier string,
-                or a pointer/reference to a null-terminated array of characters.
-                This string specifies a char-set definition string following a syntax
-                that resembles posix style regular expression character sets (except
-                the square brackets and the negation <code class="computeroutput"><span class="special">^</span></code>
-                character).
+                Character-set specifier string (See __char_class<span class="underline">types</span>_),
+                or a __karma_lazy<span class="underline">argument</span>_
+                that evaluates to a character-set specifier string, or a pointer/reference
+                to a null-terminated array of characters. This string specifies a
+                char-set definition string following a syntax that resembles posix
+                style regular expression character sets (except the square brackets
+                and the negation <code class="computeroutput"><span class="special">^</span></code> character).
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                Encoding Namespace</a>.
+                A __karma_char_encoding<span class="underline">namespace</span>_.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">cg</span></code></span></dt>
 <dd><p>
@@ -267,13 +262,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_generator.expression_semantics"></a><h6>
-<a name="id791507"></a>
+<a name="id823525"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+            is not defined in __primitive_generator<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -516,7 +511,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.attributes"></a><h6>
-<a name="id792294"></a>
+<a name="id824339"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -545,7 +540,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                    <span class="underline">_unused</span>_
                   </p>
                   </td>
 </tr>
@@ -557,7 +552,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                    <span class="underline">_unused</span>_
                   </p>
                   </td>
 </tr>
@@ -571,8 +566,8 @@
                   <p>
                     <code class="computeroutput"><span class="identifier">Ch</span></code>, attribute
                     is mandatory (otherwise compilation will fail). <code class="computeroutput"><span class="identifier">Ch</span></code> is the character type of
-                    the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    the __karma_char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -588,8 +583,8 @@
                     is optional, if it is supplied, the generator compares the attribute
                     with <code class="computeroutput"><span class="identifier">ch</span></code> and succeeds
                     only if both are equal, failing otherwise. <code class="computeroutput"><span class="identifier">Ch</span></code>
-                    is the character type of the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    is the character type of the __karma_char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -605,8 +600,8 @@
                     is optional, if it is supplied, the generator compares the attribute
                     with <code class="computeroutput"><span class="identifier">c</span></code> and succeeds
                     only if both are equal, failing otherwise. <code class="computeroutput"><span class="identifier">Ch</span></code>
-                    is the character type of the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    is the character type of the __karma_char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -624,8 +619,8 @@
                     succeeds if the attribute belongs to the character range <code class="computeroutput"><span class="special">[</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">]</span></code> interpreted in the character
                     set defined by <code class="computeroutput"><span class="identifier">ns</span></code>.
                     <code class="computeroutput"><span class="identifier">Ch</span></code> is the character
-                    type of the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    type of the __karma_char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -642,8 +637,8 @@
                     succeeds if the attribute belongs to the character set <code class="computeroutput"><span class="identifier">cs</span></code>, interpreted in the character
                     set defined by <code class="computeroutput"><span class="identifier">ns</span></code>.
                     <code class="computeroutput"><span class="identifier">Ch</span></code> is the character
-                    type of the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                    type of the __karma_char_encoding<span class="underline">namespace</span>_,
+                    <code class="computeroutput"><span class="identifier">ns</span></code>.
                   </p>
                   </td>
 </tr>
@@ -675,7 +670,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.complexity"></a><h6>
-<a name="id792932"></a>
+<a name="id824973"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -704,7 +699,7 @@
             set, where N is the number of characters in the character set.
           </p>
 <a name="spirit.karma.reference.char.char_generator.example"></a><h6>
-<a name="id793212"></a>
+<a name="id825156"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -713,8 +708,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

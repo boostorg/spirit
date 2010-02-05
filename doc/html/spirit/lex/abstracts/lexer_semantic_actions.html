@@ -4,7 +4,7 @@
 <title>Lexer Semantic Actions</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../abstracts.html" title="Abstracts">
 <link rel="prev" href="lexer_tokenizing.html" title="Tokenizing Input Data">
 <link rel="next" href="lexer_static_model.html" title="The Static Lexer Model">
@@ -30,16 +30,16 @@
 <p>
           The main task of a lexer normally is to recognize tokens in the input.
           Traditionally this has been complemented with the possibility to execute
-          arbitrary code whenever a certain token has been detected. <span class="emphasis"><em>Spirit.Lex</em></span>
+          arbitrary code whenever a certain token has been detected. <span class="underline">_lex</span>_
           has been designed to support this mode of operation as well. We borrow
-          from the concept of semantic actions for parsers (<span class="emphasis"><em>Spirit.Qi</em></span>)
-          and generators (<span class="emphasis"><em>Spirit.Karma</em></span>). Lexer semantic actions
-          may be attached to any token definition. These are C++ functions or function
-          objects that are called whenever a token definition successfully recognizes
-          a portion of the input. Say you have a token definition <code class="computeroutput"><span class="identifier">D</span></code>,
-          and a C++ function <code class="computeroutput"><span class="identifier">f</span></code>, you
-          can make the lexer call <code class="computeroutput"><span class="identifier">f</span></code>
-          whenever it matches an input by attaching <code class="computeroutput"><span class="identifier">f</span></code>:
+          from the concept of semantic actions for parsers (<span class="underline">_qi</span><span class="underline">) and generators (</span><span class="underline">karma</span>_).
+          Lexer semantic actions may be attached to any token definition. These are
+          C++ functions or function objects that are called whenever a token definition
+          successfully recognizes a portion of the input. Say you have a token definition
+          <code class="computeroutput"><span class="identifier">D</span></code>, and a C++ function
+          <code class="computeroutput"><span class="identifier">f</span></code>, you can make the lexer
+          call <code class="computeroutput"><span class="identifier">f</span></code> whenever it matches
+          an input by attaching <code class="computeroutput"><span class="identifier">f</span></code>:
         </p>
 <pre class="programlisting"><span class="identifier">D</span><span class="special">[</span><span class="identifier">f</span><span class="special">]</span>
 </pre>
@@ -115,7 +115,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_semantic_actions.the_context_of_a_lexer_semantic_action"></a><h6>
-<a name="id895137"></a>
+<a name="id927886"></a>
           <a class="link" href="lexer_semantic_actions.html#spirit.lex.abstracts.lexer_semantic_actions.the_context_of_a_lexer_semantic_action">The
           context of a lexer semantic action</a>
         </h6>
@@ -130,7 +130,7 @@
           of the available functionality.
         </p>
 <div class="table">
-<a name="id895157"></a><p class="title"><b>Table&#160;8.&#160;Functions exposed by any context passed to a lexer
+<a name="id927906"></a><p class="title"><b>Table&#160;8.&#160;Functions exposed by any context passed to a lexer
         semantic action</b></p>
 <div class="table-contents"><table class="table" summary="Functions exposed by any context passed to a lexer
         semantic action">
@@ -250,19 +250,19 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.lex.abstracts.lexer_semantic_actions.lexer_semantic_actions_using_phoenix"></a><h6>
-<a name="id895675"></a>
+<a name="id928425"></a>
           <a class="link" href="lexer_semantic_actions.html#spirit.lex.abstracts.lexer_semantic_actions.lexer_semantic_actions_using_phoenix">Lexer
           Semantic Actions Using Phoenix</a>
         </h6>
 <p>
           Even if it is possible to write your own function object implementations
           (i.e. using Boost.Lambda or Boost.Bind), the preferred way of defining
-          lexer semantic actions is to use <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>.
+          lexer semantic actions is to use __boost<span class="underline">phoenix</span>_.
           In this case you can access the parameters described above by using the
-          predefined <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> placeholders:
+          predefined <span class="underline">_spirit</span>_ placeholders:
         </p>
 <div class="table">
-<a name="id895698"></a><p class="title"><b>Table&#160;9.&#160;Predefined Phoenix placeholders for lexer semantic
+<a name="id928447"></a><p class="title"><b>Table&#160;9.&#160;Predefined Phoenix placeholders for lexer semantic
         actions</b></p>
 <div class="table-contents"><table class="table" summary="Predefined Phoenix placeholders for lexer semantic
         actions">
@@ -387,13 +387,13 @@
 </div>
 <br class="table-break"><p>
           The context object passed as the last parameter to any lexer semantic action
-          is not directly accessible while using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+          is not directly accessible while using __boost<span class="underline">phoenix</span>_
           expressions. We rather provide predefine Phoenix functions allowing to
           invoke the different support functions as mentioned above. The following
           table lists the available support functions and describes their functionality:
         </p>
 <div class="table">
-<a name="id895977"></a><p class="title"><b>Table&#160;10.&#160;Support functions usable from Phoenix expressions
+<a name="id928726"></a><p class="title"><b>Table&#160;10.&#160;Support functions usable from Phoenix expressions
         inside lexer semantic actions</b></p>
 <div class="table-contents"><table class="table" summary="Support functions usable from Phoenix expressions
         inside lexer semantic actions">

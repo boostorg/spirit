@@ -4,7 +4,7 @@
 <title>Sequence (a &gt;&gt; b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="plus.html" title="Plus (+a)">
 <link rel="next" href="sequential_or.html" title="Sequential Or (a || b)">
@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.sequence.description"></a><h6>
-<a name="id706505"></a>
+<a name="id738878"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
@@ -40,17 +40,17 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span> <span class="special">&gt;&gt;</span> <span class="special">...</span>
 </pre>
 <a name="spirit.qi.reference.operator.sequence.header"></a><h6>
-<a name="id706581"></a>
+<a name="id738954"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/sequence.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.operator.sequence.model_of"></a><h6>
-<a name="id706655"></a>
+<a name="id739028"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
@@ -58,7 +58,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+                __nary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -69,18 +69,18 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
             <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A __parser<span class="underline">concept</span>_
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id706733"></a>
+<a name="id739097"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
+            is not defined in __nary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -115,12 +115,11 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequence.attributes"></a><h6>
-<a name="id707532"></a>
+<a name="id739202"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __qi_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -165,7 +164,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequence.complexity"></a><h6>
-<a name="id708214"></a>
+<a name="id741662"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -180,7 +179,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.sequence.example"></a><h6>
-<a name="id708238"></a>
+<a name="id741686"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.example">Example</a>
           </h6>
 <p>
@@ -206,8 +205,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -226,7 +224,7 @@
 <p>
             </p>
 <p>
-              Extracting the attribute tuple (using <a href="../../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>):
+              Extracting the attribute tuple (using <span class="underline">_fusion</span>_):
             </p>
 <p>
             </p>
@@ -241,7 +239,7 @@
 <p>
             </p>
 <p>
-              Extracting the attribute vector (using <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>):
+              Extracting the attribute vector (using <span class="underline">_stl</span>_):
             </p>
 <p>
             </p>
@@ -256,7 +254,8 @@
 <p>
             </p>
 <p>
-              Extracting the attributes using Semantic Actions (using <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>):
+              Extracting the attributes using __qi_semantic<span class="underline">actions</span>_
+              (using <span class="underline">_phoenix</span>_):
             </p>
 <p>
             </p>

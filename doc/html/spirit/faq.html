@@ -4,8 +4,8 @@
 <title>Spirit FAQ</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../index.html" title="Spirit 2.2">
-<link rel="up" href="../index.html" title="Spirit 2.2">
+<link rel="home" href="../index.html" title="Spirit 2.3">
+<link rel="up" href="../index.html" title="Spirit 2.3">
 <link rel="prev" href="support/multi_pass.html" title="The multi pass iterator">
 <link rel="next" href="notes.html" title="Notes">
 </head>
@@ -27,7 +27,7 @@
 <a name="spirit.faq"></a><a class="link" href="faq.html" title="Spirit FAQ"> Spirit FAQ</a>
 </h2></div></div></div>
 <a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_"></a><h4>
-<a name="id971930"></a>
+<a name="id999063"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_">I'm
       getting multiple symbol definition errors while using Visual C++. Anything
       I could do about that?</a>
@@ -38,14 +38,14 @@
       Then this FAQ entry might be for you.
     </p>
 <p>
-      <a href="http://www.boost.org/libs/mpl/index.html" target="_top">Boost.Mpl</a> implements
-      a macro <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code> which essentially is a more powerfull version
-      of static_assert. Unfortunately under certain circumstances using this macro
-      may lead to the aformentioned linker errors.
+      <span class="underline">_mpl</span>_ implements a macro <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code>
+      which essentially is a more powerfull version of static_assert. Unfortunately
+      under certain circumstances using this macro may lead to the aformentioned
+      linker errors.
     </p>
 <p>
-      <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> allows you to define
-      a preprocessor constant disabling the usage of <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code>, while switching to <code class="computeroutput"><span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">()</span></code> instead. For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1.
+      <span class="underline">_spirit</span>_ allows you to define a preprocessor
+      constant disabling the usage of <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code>, while switching to <code class="computeroutput"><span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">()</span></code> instead. For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1.
       Do this by adding
     </p>
 <pre class="programlisting"><span class="special">-</span><span class="identifier">DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG</span><span class="special">=</span><span class="number">1</span>
@@ -59,25 +59,24 @@
       into your code before any Spirit headers get included.
     </p>
 <p>
-      Using this trick has no adverse effects on any of the functionality of <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>. The only change you might
-      see while using this workaround is less verbose error messages generated from
-      static_assert.
+      Using this trick has no adverse effects on any of the functionality of <span class="underline">_spirit</span>_. The only change you might see while using
+      this workaround is less verbose error messages generated from static_assert.
     </p>
 <a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_"></a><h4>
-<a name="id972101"></a>
+<a name="id999234"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">I'm
       very confused about the header hell in my boost/spirit directory. What's all
       this about?</a>
     </h4>
 <p>
       The boost/spirit directory currently holds two versions of the Spirit library:
-      <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
-      (former V1.8.x) and SpiritV2. Both are completely independent and usually not
-      used at the same time. Do not mix these two in the same grammar.
+      <span class="underline">_classic</span>_ (former V1.8.x) and SpiritV2.
+      Both are completely independent and usually not used at the same time. Do not
+      mix these two in the same grammar.
     </p>
 <p>
-      <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
-      evolved over years in a fairly complex directory structure:
+      <span class="underline">_classic</span>_ evolved over years in a fairly
+      complex directory structure:
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">actor</span>
 <span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">attribute</span>
@@ -93,7 +92,7 @@
 </pre>
 <p>
       While introducing Spirit V2 we restructured the directory structure in order
-      to accommodate two versions at the same time. All of <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+      to accommodate two versions at the same time. All of <span class="underline">_classic</span>_
       now lives in the directory
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">classic</span> 
@@ -118,10 +117,10 @@
       please report this as a bug.
     </p>
 <p>
-      Spirit V2 is not about parsing only anymore (as <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>).
-      It now consists out of 3 parts (sub-libraries): <span class="emphasis"><em>Spirit.Qi</em></span>,
-      <span class="emphasis"><em>Spirit.Karma</em></span>, and <span class="emphasis"><em>Spirit.Lex</em></span>. The
-      header files for those live in
+      Spirit V2 is not about parsing only anymore (as <span class="underline">_classic</span>_).
+      It now consists out of 3 parts (sub-libraries): <span class="underline">_qi</span>_,
+      <span class="underline">_karma</span>_, and <span class="underline">_lex</span>_.
+      The header files for those live in
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">qi</span>
 <span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">karma</span>
@@ -133,37 +132,37 @@
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span>
 </pre>
 <p>
-      <span class="emphasis"><em>Spirit.Qi</em></span> is the direct successor to <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
-      as it implements a DSEL (domain specific embedded language) allowing to write
-      parsers using the syntax of C++ itself (parsers in the sense turning a sequence
-      of bytes into an internal data structure). It is not compatible with <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>,
+      <span class="underline">_qi</span>_ is the direct successor to <span class="underline">_classic</span>_ as it implements a DSEL (domain specific
+      embedded language) allowing to write parsers using the syntax of C++ itself
+      (parsers in the sense turning a sequence of bytes into an internal data structure).
+      It is not compatible with <span class="underline">_classic</span>_,
       the main concepts are similar, though.
     </p>
 <p>
-      <span class="emphasis"><em>Spirit.Karma</em></span> is the counterpart to <span class="emphasis"><em>Spirit.Qi</em></span>.
-      It implements a similar DSEL but for writing generators (i.e. the things turning
-      internal data structures into a sequence of bytes, most of the time - strings).
-      <span class="emphasis"><em>Spirit.Karma</em></span> is the Yang to <span class="emphasis"><em>Spirit.Qi</em></span>'s
-      Yin, it's almost like a mirrored picture.
+      <span class="underline">_karma</span>_ is the counterpart to <span class="underline">_qi</span>_. It implements a similar DSEL but for writing
+      generators (i.e. the things turning internal data structures into a sequence
+      of bytes, most of the time - strings). <span class="underline">_karma</span>_
+      is the Yang to <span class="underline">_qi</span>_'s Yin, it's almost
+      like a mirrored picture.
     </p>
 <p>
-      <span class="emphasis"><em>Spirit.Lex</em></span> is (as the name implies) a library allowing
-      to write lexical analyzers. These are either usable standalone or can be used
-      as a frontend for <span class="emphasis"><em>Spirit.Qi</em></span> parsers. If you know flex
-      you shouldn't have problems understanding <span class="emphasis"><em>Spirit.Lex</em></span>.
+      <span class="underline">_lex</span>_ is (as the name implies) a library
+      allowing to write lexical analyzers. These are either usable standalone or
+      can be used as a frontend for <span class="underline">_qi</span>_ parsers.
+      If you know flex you shouldn't have problems understanding <span class="underline">_lex</span>_.
       This library actually doesn't implement the lexer itself. All it does is to
       provide an interface to pre-existing lexical analyzers. Currently it's using
-      Ben Hansons excellent <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
-      library (proposed for a Boost review, BTW) as its underlying workhorse.
+      Ben Hansons excellent <span class="underline">_lexertl</span>_ library
+      (proposed for a Boost review, BTW) as its underlying workhorse.
     </p>
 <p>
       Again, don't use any of the header files underneath the boost/spirit/home directory
       directly, always include files from the boost/spirit/include directory.
     </p>
 <p>
-      The last bit missing is <a href="../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+      The last bit missing is __boost<span class="underline">phoenix</span>_
       (which currently still lives under the Spirit umbrella, but already has been
-      accepted as a Boost library, so it will move away). <a href="../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+      accepted as a Boost library, so it will move away). __boost<span class="underline">phoenix</span>_
       is a library allowing to write functional style C++, which is interesting in
       itself, but as it initially has been developed for Spirit, it is nicely integrated
       and very useful when it comes to writing semantic actions. I think using the
@@ -172,21 +171,20 @@
       are available.
     </p>
 <a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_"></a><h4>
-<a name="id972625"></a>
+<a name="id1001404"></a>
       <a class="link" href="faq.html#spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_">Why
       doesn't my symbol table work in a <code class="computeroutput"><span class="identifier">no_case</span></code>
       directive?</a>
     </h4>
 <p>
-      In order to perform case-insensitive parsing (using <a class="link" href="qi/reference/directive/no_case.html" title="Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a>) with a symbol table (i.e.
-      use a <a class="link" href="qi/reference/string/symbols.html" title="Symbols (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span>
-      <span class="identifier">T</span><span class="special">&gt;</span></code></a>
+      In order to perform case-insensitive parsing (using __qi_no<span class="underline">case</span>_)
+      with a symbol table (i.e. use a __qi<span class="underline">symbols</span>_
       parser in a <code class="computeroutput"><span class="identifier">no_case</span></code> directive),
       that symbol table needs to be filled with all-lowercase contents. Entries containing
       one or more uppercase characters will not match any input.
     </p>
 <a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_"></a><h4>
-<a name="id972696"></a>
+<a name="id1001445"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_">I'm
       getting a compilation error mentioning <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span></code>
       and/or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function4</span></code>. What does this mean?</a>
@@ -207,8 +205,8 @@ note: candidates are: ... boost::function4&lt;R,T1,T2,T3,T4&gt;::operator()(T0,T
       then this FAQ entry may help you.
     </p>
 <p>
-      The definition of a Rule or Grammar may contain a skip parser type. If it does,
-      it means that non-terminal can only be used with a skip parser of a compatible
+      The definition of a <span class="underline">_rule</span>_ or <span class="underline">_grammar</span>_ may contain a skip parser type. If it
+      does, it means that non-terminal can only be used with a skip parser of a compatible
       type. The error above arises when this is not the case, i.e.:
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -230,11 +228,11 @@ note: candidates are: ... boost::function4&lt;R,T1,T2,T3,T4&gt;::operator()(T0,T
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-        The same applies to <span class="emphasis"><em>Spirit.Karma</em></span>, replacing 'skip parser'
-        and <code class="computeroutput"><span class="identifier">lexeme</span></code> by 'delimit generator'
-        and <code class="computeroutput"><span class="identifier">verbatim</span></code>. Similarily,
-        corresponding error messages in <span class="emphasis"><em>Spirit.Karma</em></span> reference
-        <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function3</span></code> and the 3rd parameter (instead
+        The same applies to <span class="underline">_karma</span>_, replacing
+        'skip parser' and <code class="computeroutput"><span class="identifier">lexeme</span></code>
+        by 'delimit generator' and <code class="computeroutput"><span class="identifier">verbatim</span></code>.
+        Similarily, corresponding error messages in <span class="underline">_karma</span>_
+        reference <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function3</span></code> and the 3rd parameter (instead
         of the 4th).
       </p></td></tr>
 </table></div>

@@ -4,7 +4,7 @@
 <title>The multi pass iterator</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../index.html" title="Spirit 2.3">
 <link rel="up" href="../support.html" title="Supporting libraries">
 <link rel="prev" href="../support.html" title="Supporting libraries">
 <link rel="next" href="../faq.html" title="Spirit FAQ">
@@ -27,10 +27,10 @@
 <a name="spirit.support.multi_pass"></a><a class="link" href="multi_pass.html" title="The multi pass iterator"> The multi pass iterator</a>
 </h3></div></div></div>
 <p>
-        Backtracking in <span class="emphasis"><em>Spirit.Qi</em></span> requires the use of the following
-        types of iterator: forward, bidirectional, or random access. Because of backtracking,
-        input iterators cannot be used. Therefore, the standard library classes
-        <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istreambuf_iterator</span></code> and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>,
+        Backtracking in <span class="underline">_qi</span>_ requires the use
+        of the following types of iterator: forward, bidirectional, or random access.
+        Because of backtracking, input iterators cannot be used. Therefore, the standard
+        library classes <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istreambuf_iterator</span></code> and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>,
         that fall under the category of input iterators, cannot be used. Another
         input iterator that is of interest is one that wraps a lexer, such as LEX.
       </p>
@@ -40,9 +40,9 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          In general, <span class="emphasis"><em>Spirit.Qi</em></span> generates recursive descent
-          parser which require backtracking parsers by design. For this reason we
-          need to provide at least forward iterators to any of <span class="emphasis"><em>Spirit.Qi</em></span>'s
+          In general, <span class="underline">_qi</span>_ generates recursive
+          descent parser which require backtracking parsers by design. For this reason
+          we need to provide at least forward iterators to any of <span class="underline">_qi</span>_'s
           API functions. This is not an absolute requirement though. In the future,
           we shall see more deterministic parsers that require no more than 1 character
           (token) of lookahead. Such parsers allow us to use input iterators such
@@ -53,22 +53,23 @@
         Backtracking can be implemented only if we are allowed to save an iterator
         position, i.e. making a copy of the current iterator. Unfortunately, with
         an input iterator, there is no way to do so, and thus input iterators will
-        not work with backtracking in <span class="emphasis"><em>Spirit.Qi</em></span>. One solution
-        to this problem is to simply load all the data to be parsed into a container,
-        such as a vector or deque, and then pass the begin and end of the container
-        to <span class="emphasis"><em>Spirit.Qi</em></span>. This method can be too memory intensive
-        for certain applications, which is why the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-        iterator was created.
+        not work with backtracking in <span class="underline">_qi</span>_.
+        One solution to this problem is to simply load all the data to be parsed
+        into a container, such as a vector or deque, and then pass the begin and
+        end of the container to <span class="underline">_qi</span>_. This
+        method can be too memory intensive for certain applications, which is why
+        the <code class="computeroutput"><span class="identifier">multi_pass</span></code> iterator was
+        created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h5>
-<a name="id960431"></a>
+<a name="id990038"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h5>
 <p>
         The <code class="computeroutput"><span class="identifier">multi_pass</span></code> iterator will
         convert any input iterator into a forward iterator suitable for use with
-        <span class="emphasis"><em>Spirit.Qi</em></span>. <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+        <span class="underline">_qi</span>_. <code class="computeroutput"><span class="identifier">multi_pass</span></code>
         will buffer data when needed and will discard the buffer when its contents
         is not needed anymore. This happens either if only one copy of the iterator
         exists or if no backtracking can occur.
@@ -81,16 +82,16 @@
       </p>
 <p>
         Sequences of the form <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>
-        will buffer data as well. This is different from the behaviour of <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
-        but for a good reason. Sequences need to reset the current iterator to its
-        initial state if one of the components of a seqeunce fails to match. To compensate
-        for this behaviour we added functionality to the <code class="computeroutput"><span class="identifier">expect</span></code>
-        parsers (i.e. constructs like <code class="computeroutput"><span class="identifier">a</span>
-        <span class="special">&gt;</span> <span class="identifier">b</span></code>).
-        Expectation points introduce deterministic points into the grammar ensuring
-        no backtracking can occur if they match. For this reason we clear the buffers
-        of any multi_pass iterator on each expectation point, ensuring minimal buffer
-        content even for large grammars.
+        will buffer data as well. This is different from the behaviour of <span class="underline">_classic</span>_ but for a good reason. Sequences need
+        to reset the current iterator to its initial state if one of the components
+        of a seqeunce fails to match. To compensate for this behaviour we added functionality
+        to the <code class="computeroutput"><span class="identifier">expect</span></code> parsers (i.e.
+        constructs like <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
+        <span class="identifier">b</span></code>). Expectation points introduce
+        deterministic points into the grammar ensuring no backtracking can occur
+        if they match. For this reason we clear the buffers of any multi_pass iterator
+        on each expectation point, ensuring minimal buffer content even for large
+        grammars.
       </p>
 <div class="important" title="Important"><table border="0" summary="Important">
 <tr>
@@ -102,7 +103,7 @@
           If you use an error handler in conjunction with the <code class="computeroutput"><span class="identifier">expect</span></code>
           parser while utilizing a <code class="computeroutput"><span class="identifier">multi_pass</span></code>
           iterator and you intend to use the error handler to force a <code class="computeroutput"><span class="identifier">retry</span></code> or a <code class="computeroutput"><span class="identifier">fail</span></code>
-          (see the description of error handlers - <span class="bold"><strong>FIXME</strong></span>:
+          (see the description of error handlers - <span class="underline">_fixme</span>_:
           insert link), then you need to instantiate the error handler using <code class="computeroutput"><span class="identifier">retry</span></code> or <code class="computeroutput"><span class="identifier">fail</span></code>,
           for instance: 
 </p>
@@ -157,7 +158,7 @@
         the <code class="computeroutput"><span class="identifier">flush_multi_pass</span></code> pseudo
         parser in your grammar to ensure that data is not buffered when unnecessary
         (<code class="computeroutput"><span class="identifier">flush_multi_pass</span></code> is available
-        from the <span class="emphasis"><em>Spirit.Qi</em></span> parser <a href="../../../../repository/doc/html/index.html" target="_top">Repository</a>).
+        from the <span class="underline">_qi</span>_ parser <span class="underline">_repo</span>_).
       </p>
 <p>
         Here we present a minimal example showing a minimal use case. The <code class="computeroutput"><span class="identifier">multi_pass</span></code> iterator is highly configurable,
@@ -209,12 +210,12 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h5>
-<a name="id961702"></a>
+<a name="id991311"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h5>
 <p>
-        The <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> <a href="../../../../repository/doc/html/index.html" target="_top">Repository</a>
+        The <span class="underline">_spirit</span>_ <span class="underline">_repo</span>_
         contains the <code class="computeroutput"><span class="identifier">flush_multi_pass</span></code>
         parser component. This is usable in conjunction with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
         iterator to minimize the buffering. It allows to insert explicit synchronization
@@ -231,7 +232,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h5>
-<a name="id961796"></a>
+<a name="id991405"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h5>
@@ -272,7 +273,7 @@
         the functionality groups:
       </p>
 <div class="table">
-<a name="id961901"></a><p class="title"><b>Table&#160;12.&#160;Policies needed for default_policy template</b></p>
+<a name="id991510"></a><p class="title"><b>Table&#160;12.&#160;Policies needed for default_policy template</b></p>
 <div class="table-contents"><table class="table" summary="Policies needed for default_policy template">
 <colgroup>
 <col>
@@ -354,7 +355,7 @@
         we will give some guidelines how you can write your own policy implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h5>
-<a name="id962093"></a>
+<a name="id991702"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h5>
@@ -363,7 +364,7 @@
         policies are defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">iterator_policies</span></code>.
       </p>
 <div class="table">
-<a name="id962135"></a><p class="title"><b>Table&#160;13.&#160;Predefined policy classes</b></p>
+<a name="id991744"></a><p class="title"><b>Table&#160;13.&#160;Predefined policy classes</b></p>
 <div class="table-contents"><table class="table" summary="Predefined policy classes">
 <colgroup>
 <col>
@@ -426,8 +427,8 @@
 <td>
             <p>
               This policy obtains it's input by calling yylex(), which would typically
-              be provided by a scanner generated by <a href="http://flex.sourceforge.net/" target="_top">Flex</a>.
-              If you use this policy your code must link against a <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
+              be provided by a scanner generated by <span class="underline">_flex</span>_.
+              If you use this policy your code must link against a <span class="underline">_flex</span>_
               generated scanner.
             </p>
             </td>
@@ -498,9 +499,9 @@
             <p>
               When this policy is used, the first <code class="computeroutput"><span class="identifier">multi_pass</span></code>
               created will be the one that deletes the shared data. Each copy will
-              not take ownership of the shared data. This works well for <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>,
-              since no dynamic allocation of iterators is done. All copies are made
-              on the stack, so the original iterator has the longest lifespan.
+              not take ownership of the shared data. This works well for <span class="underline">_spirit</span>_, since no dynamic allocation of
+              iterators is done. All copies are made on the stack, so the original
+              iterator has the longest lifespan.
             </p>
             </td>
 </tr>
@@ -614,7 +615,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h5>
-<a name="id965046"></a>
+<a name="id992462"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h5>
@@ -660,7 +661,7 @@
         behaviors while wrapping an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h5>
-<a name="id965468"></a>
+<a name="id995069"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h5>
@@ -685,10 +686,10 @@
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">support_look_ahead</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-        Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
+        Also, see __include<span class="underline">structure</span>_.
       </p>
 <a name="spirit.support.multi_pass.reading_from_standard_input_streams"></a><h5>
-<a name="id965667"></a>
+<a name="id995268"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.reading_from_standard_input_streams">Reading
         from standard input streams</a>
       </h5>
@@ -717,10 +718,10 @@
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">support_istream_iterator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-        Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
+        Also, see __include<span class="underline">structure</span>_.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h5>
-<a name="id965946"></a>
+<a name="id995547"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <code class="computeroutput"><span class="identifier">functor_input</span></code>
         InputPolicy</a>
@@ -779,7 +780,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h5>
-<a name="id966533"></a>
+<a name="id996134"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h5>
@@ -796,7 +797,7 @@
         copies of a particular <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h5>
-<a name="id966607"></a>
+<a name="id996208"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h5>
 <p>
@@ -898,7 +899,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h5>
-<a name="id968909"></a>
+<a name="id997134"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h5>
 <p>
@@ -965,7 +966,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h5>
-<a name="id969443"></a>
+<a name="id997669"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h5>
 <p>
@@ -1024,7 +1025,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h5>
-<a name="id969894"></a>
+<a name="id998120"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h5>
 <p>

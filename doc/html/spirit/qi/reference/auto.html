@@ -4,7 +4,7 @@
 <title>Auto</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="action.html" title="Action">
 <link rel="next" href="auxiliary.html" title="Auxiliary">
@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.auto"></a><a class="link" href="auto.html" title="Auto">Auto</a>
 </h4></div></div></div>
 <a name="spirit.qi.reference.auto.description"></a><h6>
-<a name="id628749"></a>
+<a name="id664188"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.description">Description</a>
         </h6>
 <p>
@@ -36,17 +36,17 @@
           on the supplied attribute type.
         </p>
 <a name="spirit.qi.reference.auto.header"></a><h6>
-<a name="id628773"></a>
+<a name="id664212"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auto.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_auto</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
+          Also, see __include<span class="underline">structure</span>_.
         </p>
 <a name="spirit.qi.reference.auto.namespace"></a><h6>
-<a name="id628847"></a>
+<a name="id664286"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -64,26 +64,26 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auto.model_of"></a><h6>
-<a name="id628925"></a>
+<a name="id664364"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
             </p>
 <p>
-              <a class="link" href="parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
+              __primitive_parser<span class="underline">concept</span>_
             </p>
 <p>
           </p>
 </blockquote></div>
 <a name="spirit.qi.reference.auto.expression_semantics"></a><h6>
-<a name="id628959"></a>
+<a name="id664393"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.expression_semantics">Expression
           Semantics</a>
         </h6>
 <p>
           Semantics of an expression is defined only where it differs from, or is
-          not defined in <a class="link" href="../../karma/reference/generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+          not defined in __primitive_generator<span class="underline">concept</span>_.
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -117,7 +117,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auto.additional_requirements"></a><h6>
-<a name="id629045"></a>
+<a name="id664472"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.additional_requirements">Additional
           Requirements</a>
         </h6>
@@ -289,11 +289,11 @@
 </table></div>
 <p>
           It is possible to add support for any custom data type by implementing
-          a specialization of the customization point <a class="link" href="../../advanced/customize/auto/create_parser.html" title="Define a Custom Attribute Mapping for a Parser"><code class="computeroutput"><span class="identifier">create_parser</span></code></a>. This customiyation
-          can be used also to redefined anz of the predefined mappings.
+          a specialization of the customization point __customize_create<span class="underline">parser</span>_. This customiyation can be used also
+          to redefined anz of the predefined mappings.
         </p>
 <a name="spirit.qi.reference.auto.attributes"></a><h6>
-<a name="id629687"></a>
+<a name="id665109"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -335,13 +335,13 @@
             The attribute type <code class="computeroutput"><span class="identifier">hold_any</span></code>
             exposed by the <code class="computeroutput"><span class="identifier">auto_</span></code>
             parser is semantically and syntactically equivalent to the type implemented
-            by <a href="../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>. It has
-            been added to <span class="emphasis"><em>Spirit</em></span> as it has better a performance
-            and a smaller footprint if compared to <a href="../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>.
+            by __boost<span class="underline">any</span>_. It has been added
+            to <span class="emphasis"><em>Spirit</em></span> as it has better a performance and a smaller
+            footprint if compared to __boost<span class="underline">any</span>_.
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.auto.complexity"></a><h6>
-<a name="id629800"></a>
+<a name="id665370"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.complexity">Complexity</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -357,7 +357,7 @@
           </p>
 </blockquote></div>
 <a name="spirit.qi.reference.auto.example"></a><h6>
-<a name="id629831"></a>
+<a name="id665401"></a>
           <a class="link" href="auto.html#spirit.qi.reference.auto.example">Example</a>
         </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -366,8 +366,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The test harness for the example(s) below is presented in the <a class="link" href="basics.html#spirit.qi.reference.basics.examples">Basics
-            Examples</a> section.
+            The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
           </p></td></tr>
 </table></div>
 <p>
@@ -428,13 +427,12 @@
           </p>
 <p>
             The following construct is required to allow the <code class="computeroutput"><span class="identifier">complex</span></code>
-            data structure to be utilized as a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+            data structure to be utilized as a <span class="underline">_fusion</span>_
             sequence. This is required as we will emit output for this data structure
-            with a <span class="emphasis"><em>Spirit.Qi</em></span> sequence: <code class="computeroutput"><span class="char">'{'</span>
-            <span class="special">&gt;&gt;</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span>
-            <span class="special">&gt;&gt;</span> <span class="char">','</span>
-            <span class="special">&gt;&gt;</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span>
-            <span class="special">&gt;&gt;</span> <span class="char">'}'</span></code>.
+            with a <span class="underline">_qi</span>_ sequence: <code class="computeroutput"><span class="char">'{'</span> <span class="special">&gt;&gt;</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span> <span class="special">&gt;&gt;</span>
+            <span class="char">','</span> <span class="special">&gt;&gt;</span>
+            <span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span> <span class="special">&gt;&gt;</span>
+            <span class="char">'}'</span></code>.
           </p>
 <p>
           </p>

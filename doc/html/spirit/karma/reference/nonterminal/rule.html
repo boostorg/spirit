@@ -4,7 +4,7 @@
 <title>Rule</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../nonterminal.html" title="Nonterminal">
 <link rel="prev" href="../nonterminal.html" title="Nonterminal">
 <link rel="next" href="grammar.html" title="Grammar">
@@ -27,30 +27,29 @@
 <a name="spirit.karma.reference.nonterminal.rule"></a><a class="link" href="rule.html" title="Rule">Rule</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.nonterminal.rule.description"></a><h6>
-<a name="id819533"></a>
+<a name="id852152"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.description">Description</a>
           </h6>
 <p>
             The rule is a polymorphic generator that acts as a named place-holder
             capturing the behavior of a PEG expression assigned to it. Naming a
-            <a class="link" href="../../../abstracts/parsing_expression_grammar.html" title="Parsing Expression Grammar">Parsing Expression
-            Grammar</a> expression allows it to be referenced later and makes
-            it possible for the rule to call itself. This is one of the most important
-            mechanisms and the reason behind the word "recursive" in recursive
-            descent output generation.
+            <span class="underline">_peg</span>_ expression allows it to be
+            referenced later and makes it possible for the rule to call itself. This
+            is one of the most important mechanisms and the reason behind the word
+            "recursive" in recursive descent output generation.
           </p>
 <a name="spirit.karma.reference.nonterminal.rule.header"></a><h6>
-<a name="id819554"></a>
+<a name="id852174"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/nonterminal/rule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_rule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.karma.reference.nonterminal.rule.namespace"></a><h6>
-<a name="id819629"></a>
+<a name="id852248"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -67,14 +66,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.nonterminal.rule.synopsis"></a><h6>
-<a name="id819709"></a>
+<a name="id852328"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A3</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">rule</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.nonterminal.rule.template_parameters"></a><h6>
-<a name="id819803"></a>
+<a name="id852422"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.template_parameters">Template
             parameters</a>
           </h6>
@@ -178,16 +177,14 @@
 <td>
                   <p>
                     Specifies the rule's consumed (value to output) and inherited
-                    (arguments) attributes. More on this here: <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+                    (arguments) attributes. More on this here: __karma_nonterminal<span class="underline">concept</span>_.
                   </p>
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-                    When <code class="computeroutput"><span class="identifier">Signature</span></code>
-                    defaults to <code class="computeroutput"><span class="identifier">unused_type</span></code>,
-                    the effect is the same as specifying a signature of <code class="computeroutput"><span class="keyword">void</span><span class="special">()</span></code>
-                    which is also equivalent to <code class="computeroutput"><span class="identifier">unused_type</span><span class="special">()</span></code>
+                    __unused<span class="underline">type</span>_. When <code class="computeroutput"><span class="identifier">Signature</span></code> defaults to __unused<span class="underline">type</span>_, the effect is the same as
+                    specifying a signature of <code class="computeroutput"><span class="keyword">void</span><span class="special">()</span></code> which is also equivalent to
+                    <code class="computeroutput"><span class="identifier">unused_type</span><span class="special">()</span></code>
                   </p>
                   </td>
 </tr>
@@ -205,7 +202,7 @@
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    __unused<span class="underline">type</span>_
                   </p>
                   </td>
 </tr>
@@ -217,19 +214,19 @@
                   </td>
 <td>
                   <p>
-                    Specifies the rule's local variables. See <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+                    Specifies the rule's local variables. See __karma_nonterminal<span class="underline">concept</span>_.
                   </p>
                   </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    __unused<span class="underline">type</span>_
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.nonterminal.rule.model_of"></a><h6>
-<a name="id821532"></a>
+<a name="id852765"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.model_of">Model
             of</a>
           </h6>
@@ -237,7 +234,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>
+                __karma_nonterminal<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -267,13 +264,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.nonterminal.rule.expression_semantics"></a><h6>
-<a name="id821692"></a>
+<a name="id852920"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+            is not defined in __karma_nonterminal<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -398,7 +395,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.nonterminal.rule.attributes"></a><h6>
-<a name="id822191"></a>
+<a name="id853414"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -406,13 +403,13 @@
               </p>
 <p>
                 The rule's generator attribute is <code class="computeroutput"><span class="identifier">RT</span></code>:
-                The consumed attribute of the rule. See <a class="link" href="../generator_concepts/nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.attributes"><code class="computeroutput"><span class="identifier">Attribute</span></code></a>
+                The consumed attribute of the rule. See __karma_nonterminal<span class="underline">attribute</span>_
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.nonterminal.rule.complexity"></a><h6>
-<a name="id822233"></a>
+<a name="id853450"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -426,7 +423,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.nonterminal.rule.example"></a><h6>
-<a name="id822264"></a>
+<a name="id853482"></a>
             <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -435,8 +432,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

@@ -4,7 +4,7 @@
 <title>Dereference the Iterator pointing into a Container Attribute</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
 <link rel="prev" href="next_iterator.html" title="Increment the Iterator pointing into a Container Attribute">
 <link rel="next" href="compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality">
@@ -28,27 +28,26 @@
           Dereference the Iterator pointing into a Container Attribute</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.deref_iterator"></a><h6>
-<a name="id954172"></a>
+<a name="id981284"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.deref_iterator">deref_iterator</a>
           </h6>
 <p>
             The template <code class="computeroutput"><span class="identifier">deref_iterator</span></code>
             is a type used as an attribute customization point. It is invoked by
-            the <span class="emphasis"><em>Karma</em></span> repetitive generators (such as <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-            (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene
-            (unary <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, and <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>)
+            the <span class="emphasis"><em>Karma</em></span> repetitive generators (such as __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene
+            (unary <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, and <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>)
             in order to dereference an iterator pointing to an element of a container
             holding the attributes to generate output from.
           </p>
 <a name="spirit.advanced.customize.iterate.deref_iterator.module_headers"></a><h6>
-<a name="id954245"></a>
+<a name="id981343"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.module_headers">Module
             Headers</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <div class="note" title="Note"><table border="0" summary="Note">
 <tr>
@@ -62,7 +61,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.namespace"></a><h6>
-<a name="id954335"></a>
+<a name="id981433"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -79,7 +78,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.synopsis"></a><h6>
-<a name="id954413"></a>
+<a name="id981511"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -90,7 +89,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.iterate.deref_iterator.template_parameters"></a><h6>
-<a name="id954545"></a>
+<a name="id981643"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.template_parameters">Template
             parameters</a>
           </h6>
@@ -128,7 +127,7 @@
                   <p>
                     The type, <code class="computeroutput"><span class="identifier">Iterator</span></code>
                     of the iterator to dereference. This is the same as the type
-                    returned by the customization point <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>.
+                    returned by the customization point __customize_container<span class="underline">iterator</span>_.
                   </p>
                   </td>
 <td>
@@ -160,7 +159,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.notation"></a><h6>
-<a name="id954720"></a>
+<a name="id981813"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -182,7 +181,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.expression_semantics"></a><h6>
-<a name="id954810"></a>
+<a name="id981903"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -234,15 +233,15 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.predefined_specializations"></a><h6>
-<a name="id954952"></a>
+<a name="id982045"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.predefined_specializations">Predefined
             Specializations</a>
           </h6>
 <p>
-            <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines
-            specializations of this customization point for several types. The following
-            table lists those types together with the types returned by the embedded
-            typedef <code class="computeroutput"><span class="identifier">type</span></code>:
+            <span class="underline">_spirit</span>_ predefines specializations
+            of this customization point for several types. The following table lists
+            those types together with the types returned by the embedded typedef
+            <code class="computeroutput"><span class="identifier">type</span></code>:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -279,14 +278,13 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code><code class="computeroutput">
-                    <span class="keyword">const</span><span class="special">*</span></code>
+                    __unused<span class="underline">type</span>_<code class="computeroutput"> <span class="keyword">const</span><span class="special">*</span></code>
                   </p>
                   </td>
 <td>
                   <p>
                     The metafunction result <code class="computeroutput"><span class="identifier">type</span></code>
-                    evaluates to <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    evaluates to __unused<span class="underline">type</span>_
                     and the function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns <code class="computeroutput"><span class="identifier">unused</span></code>.
                   </p>
                   </td>
@@ -294,7 +292,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.when_to_implement"></a><h6>
-<a name="id955171"></a>
+<a name="id982261"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.when_to_implement">When
             to implement</a>
           </h6>
@@ -302,7 +300,7 @@
             The customization point <code class="computeroutput"><span class="identifier">deref_iterator</span></code>
             needs to be implemented for a specific iterator type whenever the container
             this iterator belongs to is to be used as an attribute in place of a
-            STL container. It is applicable for generators (<span class="emphasis"><em>Spirit.Karma</em></span>)
+            STL container. It is applicable for generators (<span class="underline">_karma</span>_)
             only. As a rule of thumb: it has to be implemented whenever a certain
             iterator type belongs to a container which is to be passed as an attribute
             to a generator normally exposing a STL container, <code class="computeroutput"><span class="identifier">C</span></code>
@@ -310,7 +308,7 @@
             (i.e. <code class="computeroutput"><span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;::</span><span class="identifier">type</span></code> would normally return <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>).
           </p>
 <a name="spirit.advanced.customize.iterate.deref_iterator.related_attribute_customization_points"></a><h6>
-<a name="id955242"></a>
+<a name="id982333"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
@@ -339,7 +337,7 @@
 <tr>
 <td>
                   <p>
-                    <a class="link" href="../is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">is_container</span></code></a>
+                    __customize_is<span class="underline">container</span>_
                   </p>
                   </td>
 <td>
@@ -352,91 +350,85 @@
 <tr>
 <td>
                   <p>
-                    <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>
+                    __customize_container<span class="underline">iterator</span>_
                   </p>
                   </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                   </p>
                   </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    <a class="link" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>
+                    __customize_begin<span class="underline">container</span>_
                   </p>
                   </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">deref_iterator</span></code></a>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                   </p>
                   </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    <a class="link" href="next_iterator.html" title="Increment the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">next_iterator</span></code></a>
+                    __customize_end<span class="underline">container</span>_
                   </p>
                   </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                   </p>
                   </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    <a class="link" href="compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality"><code class="computeroutput"><span class="identifier">compare_iterators</span></code></a>
+                    __customize_deref<span class="underline">iterator</span>_
                   </p>
                   </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    __customize_next<span class="underline">iterator</span>_
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    __customize_compare<span class="underline">iterators</span>_
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.example"></a><h6>
-<a name="id955729"></a>
+<a name="id982700"></a>
             <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.example">Example</a>
           </h6>
 <p>
@@ -488,19 +480,21 @@
 <p>
           </p>
 <p>
-            as a direct attribute to the <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
-            (<code class="computeroutput"><span class="special">%</span></code>)</a> generator. This
-            type does not expose any of the interfaces of an STL container. It does
-            not even expose the usual semantics of a container. The presented customization
-            points build a counter instance which is incrememnted each time it is
-            accessed. The examples shows how to enable its use as an attribute to
-            <span class="emphasis"><em>Karma's</em></span> repetitive generators.
+            as a direct attribute to the __karma<span class="underline">list</span>_
+            generator. This type does not expose any of the interfaces of an STL
+            container. It does not even expose the usual semantics of a container.
+            The presented customization points build a counter instance which is
+            incrememnted each time it is accessed. The examples shows how to enable
+            its use as an attribute to <span class="emphasis"><em>Karma's</em></span> repetitive generators.
           </p>
 <p>
             In order to make this data structure compatible we need to specialize
-            a couple of attribute customization points: <a class="link" href="../is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">is_container</span></code></a>, <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>, <a class="link" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a>, and <a class="link" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>. In addition,
+            a couple of attribute customization points: __customize_is<span class="underline">container</span>_,
+            __customize_container<span class="underline">iterator</span>_,
+            __customize_begin<span class="underline">container</span>_, and
+            __customize_end<span class="underline">container</span>_. In addition,
             we specialize one of the iterator related customization points as well:
-            <a class="link" href="deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">deref_iterator</span></code></a>.
+            __customize_deref<span class="underline">iterator</span>_.
           </p>
 <p>
             </p>
@@ -593,8 +587,7 @@
           </p>
 <p>
             The last code snippet shows an example using an instance of the data
-            structure <code class="computeroutput"><span class="identifier">client</span><span class="special">::</span><span class="identifier">counter</span></code> to generate output from a
-            <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List (<code class="computeroutput"><span class="special">%</span></code>)</a> generator:
+            structure <code class="computeroutput"><span class="identifier">client</span><span class="special">::</span><span class="identifier">counter</span></code> to generate output from a __karma<span class="underline">list</span>_ generator:
           </p>
 <p>
             </p>

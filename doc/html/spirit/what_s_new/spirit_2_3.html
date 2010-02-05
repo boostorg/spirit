@@ -4,7 +4,7 @@
 <title>Spirit V2.3</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../index.html" title="Spirit 2.3">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="../what_s_new.html" title="What's New">
 <link rel="next" href="spirit_2_2.html" title="Spirit V2.2">
@@ -26,14 +26,14 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="spirit.what_s_new.spirit_2_3"></a><a class="link" href="spirit_2_3.html" title="Spirit V2.3"> Spirit V2.3</a>
 </h3></div></div></div>
-<a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_"></a><h5>
-<a name="id550990"></a>
-        <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_">What's
-        changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+<a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_role__underline___qi__emphasis___and__emphasis_role__underline___karma__emphasis___from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_"></a><h5>
+<a name="id585894"></a>
+        <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_role__underline___qi__emphasis___and__emphasis_role__underline___karma__emphasis___from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_">What's
+        changed in <span class="underline">_qi</span>_ and <span class="underline">_karma</span>_
         from V2.2 (Boost V1.42.0) to 2.3 (Boost V1.43.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_3.new_features"></a><h5>
-<a name="id551011"></a>
+<a name="id585918"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -45,7 +45,8 @@
           right hand side of the <code class="computeroutput"><span class="identifier">rule</span></code>
           (or the embedded parser of <code class="computeroutput"><span class="identifier">attr_cast</span></code>)
           fail parsing. This change affects <span class="emphasis"><em>Qi</em></span> only. See the
-          desciption of the <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> for more details.
+          desciption of the __customize_transform<span class="underline">attribute</span>_
+          for more details.
         </li>
 <li class="listitem">
           Added support for attribute sequences created with <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS</span></code>
@@ -53,9 +54,14 @@
           This support requires to include the new header file: <code class="computeroutput"><span class="preprocessor">#include</span>
           <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">inlcude</span><span class="special">/</span><span class="identifier">support_adapt_class_attributes</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>.
         </li>
+<li class="listitem">
+          Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">ostream_iterator</span></code> as a counterpart to
+          <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">istream_iterator</span></code> (see new header file:
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">iterators</span><span class="special">/</span><span class="identifier">ostream_iterator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>).
+        </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_3.bug_fixes"></a><h5>
-<a name="id551157"></a>
+<a name="id586154"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">

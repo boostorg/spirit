@@ -4,7 +4,7 @@
 <title>Compound Attribute Rules</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../quick_reference.html" title="Quick Reference">
 <link rel="prev" href="primitive_generators/action.html" title="Generator Semantic Actions">
 <link rel="next" href="non_terminals.html" title="Nonterminals">
@@ -28,7 +28,7 @@
         Attribute Rules</a>
 </h4></div></div></div>
 <a name="spirit.karma.quick_reference.compound_attribute_rules.notation"></a><h6>
-<a name="id742381"></a>
+<a name="id776698"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Notation</a>
         </h6>
 <p>
@@ -65,19 +65,19 @@
 <tr><td align="left" valign="top"><p>
             In the attribute tables, we will use <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> and <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></code> as placeholders only. The notation
             of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-            stands for <span class="emphasis"><em>any <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+            stands for <span class="emphasis"><em>any <span class="underline">_stl</span>_
             container</em></span> holding elements of type <code class="computeroutput"><span class="identifier">A</span></code>
-            and the notation <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></code> stands for <span class="emphasis"><em>any <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a> sequence</em></span>
-            holding <code class="computeroutput"><span class="identifier">A</span></code>, <code class="computeroutput"><span class="identifier">B</span></code>, ... etc. elements. The notation
-            of <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span> <span class="special">...&gt;</span></code> stands for <span class="emphasis"><em>a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a></em></span>
+            and the notation <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></code> stands for <span class="emphasis"><em>any <span class="underline">_fusion</span>_ sequence</em></span> holding <code class="computeroutput"><span class="identifier">A</span></code>, <code class="computeroutput"><span class="identifier">B</span></code>,
+            ... etc. elements. The notation of <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span> <span class="special">...&gt;</span></code>
+            stands for <span class="emphasis"><em>a __boost<span class="underline">variant</span>_</em></span>
             capable of holding <code class="computeroutput"><span class="identifier">A</span></code>,
             <code class="computeroutput"><span class="identifier">B</span></code>, ... etc. elements.
             Finally, <code class="computeroutput"><span class="identifier">Unused</span></code> stands
-            for <code class="computeroutput"><span class="identifier">unused_type</span></code>.
+            for __unused<span class="underline">type</span>_.
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.quick_reference.compound_attribute_rules.compound_generator_attribute_types"></a><h6>
-<a name="id744282"></a>
+<a name="id777232"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.compound_generator_attribute_types">Compound
           Generator Attribute Types</a>
         </h6>
@@ -102,8 +102,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)">Sequence
-                  (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)</a>
+                  __karma<span class="underline">sequence</span>_
                 </p>
                 </td>
 <td>
@@ -126,8 +125,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/alternative.html" title="Alternative (a | b)">Alternative
-                  (<code class="computeroutput"><span class="special">|</span></code>)</a>
+                  __karma<span class="underline">alternative</span>_
                 </p>
                 </td>
 <td>
@@ -163,8 +161,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/plus.html" title="Plus (+a)">Plus (unary
-                  <code class="computeroutput"><span class="special">+</span></code>)</a>
+                  __karma<span class="underline">plus</span>_
                 </p>
                 </td>
 <td>
@@ -180,7 +177,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/list.html" title="Lists (a % b)">List (<code class="computeroutput"><span class="special">%</span></code>)</a>
+                  __karma<span class="underline">list</span>_
                 </p>
                 </td>
 <td>
@@ -212,8 +209,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/optional.html" title="Optional (-a)">Optional
-                  (unary <code class="computeroutput"><span class="special">-</span></code>)</a>
+                  __karma<span class="underline">optional</span>_
                 </p>
                 </td>
 <td>
@@ -229,8 +225,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/and_predicate.html" title="And-Predicate (&amp;a)">And
-                  predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a>
+                  __karma_and<span class="underline">predicate</span>_
                 </p>
                 </td>
 <td>
@@ -244,8 +239,7 @@
 <tr>
 <td>
                 <p>
-                  <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
-                  predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>
+                  __karma_not<span class="underline">predicate</span>_
                 </p>
                 </td>
 <td>

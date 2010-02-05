@@ -4,7 +4,7 @@
 <title>Comparing the performance of a single int_ generator</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../numeric_performance.html" title="Performance of Numeric Generators">
 <link rel="prev" href="../numeric_performance.html" title="Performance of Numeric Generators">
 <link rel="next" href="double_performance.html" title="Comparing the performance of a single double_ generator">
@@ -31,8 +31,7 @@
             These performance measurements are centered around default formatting
             of a single <code class="computeroutput"><span class="keyword">int</span></code> integer
             number using different libraries and methods. The overall execution times
-            for those examples are compared below. We compare using <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams, <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>,
-            and <span class="emphasis"><em>Spirit.Karma</em></span>.
+            for those examples are compared below. We compare using <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams, __boost<span class="underline">format</span>_, and <span class="underline">_karma</span>_.
           </p>
 <p>
             For the full source code of the performance test please see here: <a href="../../../../../../benchmarks/karma/int_generator.cpp" target="_top">int_generator.cpp</a>.
@@ -77,7 +76,7 @@
 <p>
           </p>
 <p>
-            Code used to measure the performance for <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>:
+            Code used to measure the performance for __boost<span class="underline">format</span>_:
           </p>
 <p>
             </p>
@@ -96,7 +95,7 @@
 <p>
           </p>
 <p>
-            Code used to measure the performance for <span class="emphasis"><em>Spirit.Karma</em></span>
+            Code used to measure the performance for <span class="underline">_karma</span>_
             using a plain character buffer:
           </p>
 <p>
@@ -123,7 +122,7 @@
             of the results see this <a class="link" href="int_performance.html#spirit.karma.int_performance" title="Figure&#160;3.&#160;Performance comparison for a single int">figure</a>.
           </p>
 <div class="table">
-<a name="id874621"></a><p class="title"><b>Table&#160;5.&#160;Performance comparison for a single int (all
+<a name="id904806"></a><p class="title"><b>Table&#160;5.&#160;Performance comparison for a single int (all
           times in [s], `1e7` iterations)</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a single int (all
           times in [s], `1e7` iterations)">
@@ -251,7 +250,7 @@
 <tr>
 <td>
                 <p>
-                  <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>
+                  __boost<span class="underline">format</span>_
                 </p>
                 </td>
 <td>
@@ -288,7 +287,7 @@
 <tr>
 <td>
                 <p>
-                  <span class="emphasis"><em>Spirit.Karma</em></span> int_
+                  <span class="underline">_karma</span>_ int_
                 </p>
                 </td>
 <td>

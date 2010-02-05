@@ -4,7 +4,7 @@
 <title>Plus (+a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="permutation.html" title="Permutation (a ^ b)">
 <link rel="next" href="sequence.html" title="Sequence (a &gt;&gt; b)">
@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.operator.plus"></a><a class="link" href="plus.html" title="Plus (+a)"> Plus (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.plus.description"></a><h6>
-<a name="id705699"></a>
+<a name="id738089"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.description">Description</a>
           </h6>
 <p>
@@ -35,24 +35,24 @@
             is a unary operator that matches its operand one or more times.
           </p>
 <a name="spirit.qi.reference.operator.plus.header"></a><h6>
-<a name="id705726"></a>
+<a name="id738116"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/plus.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_plus</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.operator.plus.model_of"></a><h6>
-<a name="id705801"></a>
+<a name="id738191"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+                __unary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -62,18 +62,18 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A __parser<span class="underline">concept</span>_
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.plus.expression_semantics"></a><h6>
-<a name="id705869"></a>
+<a name="id738250"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
+            is not defined in __unary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -107,12 +107,11 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.plus.attributes"></a><h6>
-<a name="id705965"></a>
+<a name="id738341"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __qi_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -149,7 +148,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.plus.complexity"></a><h6>
-<a name="id706133"></a>
+<a name="id738506"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -165,7 +164,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.plus.example"></a><h6>
-<a name="id706164"></a>
+<a name="id738538"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -174,8 +173,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>

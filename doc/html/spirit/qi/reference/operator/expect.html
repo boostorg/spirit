@@ -4,7 +4,7 @@
 <title>Expectation (a &gt; b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="difference.html" title="Difference (a - b)">
 <link rel="next" href="kleene.html" title="Kleene (*a)">
@@ -29,44 +29,44 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.expect.description"></a><h6>
-<a name="id691900"></a>
+<a name="id725911"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
           </h6>
 <p>
-            Like the <a class="link" href="sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>,
-            the expectation operator, <code class="computeroutput"><span class="identifier">a</span>
-            <span class="special">&gt;</span> <span class="identifier">b</span></code>,
-            parses two or more operands (<code class="computeroutput"><span class="identifier">a</span></code>,
-            <code class="computeroutput"><span class="identifier">b</span></code>, ... etc.), in sequence:
+            Like the __qi<span class="underline">sequence</span>_, the expectation
+            operator, <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
+            <span class="identifier">b</span></code>, parses two or more operands
+            (<code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">b</span></code>,
+            ... etc.), in sequence:
           </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span> <span class="special">&gt;</span> <span class="special">...</span>
 </pre>
 <p>
-            However, while the plain <a class="link" href="sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>
+            However, while the plain __qi<span class="underline">sequence</span>_
             simply returns a no-match (returns <code class="computeroutput"><span class="keyword">false</span></code>)
             when one of the elements fail, the expectation: <code class="computeroutput"><span class="special">&gt;</span></code>
-            operator throws an <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure"><code class="computeroutput"><span class="identifier">expectation_failure</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iter</span><span class="special">&gt;</span></code> when the second or succeeding operands
+            operator throws an __qi_expectation<span class="underline">failure</span>_<code class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iter</span><span class="special">&gt;</span></code> when the second or succeeding operands
             (all operands except the first) fail to match.
           </p>
 <a name="spirit.qi.reference.operator.expect.header"></a><h6>
-<a name="id692027"></a>
+<a name="id726034"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/expect.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_expect</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see __include<span class="underline">structure</span>_.
           </p>
 <a name="spirit.qi.reference.operator.expect.model_of"></a><h6>
-<a name="id692102"></a>
+<a name="id726109"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+                __nary_parser<span class="underline">concept</span>_
               </p>
 <p>
             </p>
@@ -77,16 +77,16 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
             <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A __parser<span class="underline">concept</span>_
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Iter</span></code></span></dt>
 <dd><p>
-                A <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type
+                A <span class="underline">_fwditer</span>_ type
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.expect.expectation_failure"></a><h6>
-<a name="id692205"></a>
+<a name="id726198"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure">Expectation
             Failure</a>
           </h6>
@@ -98,17 +98,17 @@
 <span class="special">{</span>
     <span class="identifier">Iter</span> <span class="identifier">first</span><span class="special">;</span>           <span class="comment">// [first, last) iterator pointing
 </span>    <span class="identifier">Iter</span> <span class="identifier">last</span><span class="special">;</span>            <span class="comment">// to the error position in the input.
-</span>    <code class="computeroutput"><span class="identifier">info</span></code> <span class="identifier">what_</span><span class="special">;</span>       <span class="comment">// Information about the nature of the error.
+</span>    <span class="identifier">__info__</span> <span class="identifier">what_</span><span class="special">;</span>       <span class="comment">// Information about the nature of the error.
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.operator.expect.expression_semantics"></a><h6>
-<a name="id692358"></a>
+<a name="id726349"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
+            is not defined in __nary_parser<span class="underline">concept</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -143,12 +143,11 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.attributes"></a><h6>
-<a name="id692501"></a>
+<a name="id726487"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
+            See __qi_comp_attr<span class="underline">notation</span>_.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -193,7 +192,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.complexity"></a><h6>
-<a name="id693183"></a>
+<a name="id727166"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -209,7 +208,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.expect.example"></a><h6>
-<a name="id693207"></a>
+<a name="id727190"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -218,8 +217,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
+              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
             </p></td></tr>
 </table></div>
 <p>
@@ -240,13 +238,14 @@
 <p>
             </p>
 <p>
-              The code below uses an expectation operator to throw an <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure"><code class="computeroutput"><span class="identifier">expectation_failure</span></code></a> with a
-              deliberate parsing error when <code class="computeroutput"><span class="string">"o"</span></code>
-              is expected and <code class="computeroutput"><span class="string">"i"</span></code>
-              is what is found in the input. The <code class="computeroutput"><span class="keyword">catch</span></code>
+              The code below uses an expectation operator to throw an __qi_expectation<span class="underline">failure</span>_ with a deliberate parsing error
+              when <code class="computeroutput"><span class="string">"o"</span></code> is expected
+              and <code class="computeroutput"><span class="string">"i"</span></code> is what
+              is found in the input. The <code class="computeroutput"><span class="keyword">catch</span></code>
               block prints the information related to the error. Note: This is low
               level code that demonstrates the <span class="emphasis"><em>bare-metal</em></span>. Typically,
-              you use an Error Handler to deal with the error.
+              you use an __qi_error<span class="underline">handler</span>_
+              to deal with the error.
             </p>
 <p>
             </p>

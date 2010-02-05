@@ -4,7 +4,7 @@
 <title>Spirit V2.1</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../index.html" title="Spirit 2.3">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="spirit_2_2.html" title="Spirit V2.2">
 <link rel="next" href="spirit_1_x.html" title="Spirit Classic">
@@ -26,17 +26,17 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="spirit.what_s_new.spirit_2_1"></a><a class="link" href="spirit_2_1.html" title="Spirit V2.1"> Spirit V2.1</a>
 </h3></div></div></div>
-<a name="spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h5>
-<a name="id551823"></a>
-        <a class="link" href="spirit_2_1.html#spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
-        changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+<a name="spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_role__underline___qi__emphasis___and__emphasis_role__underline___karma__emphasis___from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h5>
+<a name="id590063"></a>
+        <a class="link" href="spirit_2_1.html#spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_role__underline___qi__emphasis___and__emphasis_role__underline___karma__emphasis___from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
+        changed in <span class="underline">_qi</span>_ and <span class="underline">_karma</span>_
         from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-<a href="http://spirit.sourceforge.net" target="_top">Spirit</a> is now based
-          on the newest version of <a href="../../../../../../doc/html/proto.html" target="_top">Boost.Proto</a>
-</li>
+<span class="underline">_spirit</span>_ is now based on the newest
+          version of __boost<span class="underline">proto</span>_
+        </li>
 <li class="listitem">
 <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>, <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_format</span></code>
           now post-skip by default.
@@ -109,12 +109,12 @@
 <li class="listitem">
           Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code>
           allowing to consume the attribute of subject generator without emitting
-          any output (see <a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a>).
+          any output (see __karma<span class="underline">omit</span>_).
         </li>
 <li class="listitem">
           Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code>
           allowing to avoid unwanted output to be generated in case of a generator
-          failing in the middle of a sequence (see <a class="link" href="../karma/reference/directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a>).
+          failing in the middle of a sequence (see __karma<span class="underline">buffer</span>_).
         </li>
 <li class="listitem">
 <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">delimit</span><span class="special">[]</span></code>
@@ -170,10 +170,8 @@
         </li>
 <li class="listitem">
           Qi and Karma rules now do intrinsic attribute transformation based on the
-          attribute customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>.
-        </li>
-<li class="listitem">
-          All char_ parsers now always expose an attribute. Earlier <code class="computeroutput"><span class="identifier">char_</span><span class="special">(...)</span></code>
+          attribute customization point __customize_transform<span class="underline">attribute</span><span class="underline">. * All char</span> parsers now always expose an attribute.
+          Earlier <code class="computeroutput"><span class="identifier">char_</span><span class="special">(...)</span></code>
           didn't expose an attribute while <code class="computeroutput"><span class="identifier">char_</span></code>
           did. If you need a literal parser not exposing any attribute use <code class="computeroutput"><span class="identifier">lit</span><span class="special">(...)</span></code>
           instead.
@@ -184,19 +182,20 @@
           karma::int_generator, and karma::real_generator.
         </li>
 </ul></div>
-<a name="spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h5>
-<a name="id555505"></a>
-        <a class="link" href="spirit_2_1.html#spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
-        changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 (Boost V1.37.0) to 2.1
-        (Boost V1.41.0)</a>
+<a name="spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_role__underline___lex__emphasis___from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_"></a><h5>
+<a name="id590974"></a>
+        <a class="link" href="spirit_2_1.html#spirit.what_s_new.spirit_2_1.what_s_changed_in__emphasis_role__underline___lex__emphasis___from_v2_0__boost_v1_37_0__to_2_1__boost_v1_41_0_">What's
+        changed in <span class="underline">_lex</span>_ from V2.0 (Boost V1.37.0)
+        to 2.1 (Boost V1.41.0)</a>
       </h5>
 <p>
-        Here is a list of changes in <span class="emphasis"><em>Spirit.Lex</em></span> since version
-        2.0. <span class="emphasis"><em>Spirit.Lex</em></span> 2.1 is a complete rewrite of the <span class="emphasis"><em>Spirit.Lex</em></span>
-        distributed with Boost V1.37. As with all code portions of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-        library, <span class="emphasis"><em>Spirit.Lex</em></span> is usable as standalone piece.
-        <span class="emphasis"><em>Spirit.Lex</em></span> now uses the infrastructure provided by
-        <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> version 2.1.
+        Here is a list of changes in <span class="underline">_lex</span>_
+        since version 2.0. <span class="underline">_lex</span>_ 2.1 is a complete
+        rewrite of the <span class="underline">_lex</span>_ distributed with
+        Boost V1.37. As with all code portions of the <span class="underline">_spirit</span>_
+        library, <span class="underline">_lex</span>_ is usable as standalone
+        piece. <span class="underline">_lex</span>_ now uses the infrastructure
+        provided by <span class="underline">_spirit</span>_ version 2.1.
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -244,8 +243,8 @@
           functionality is now available from the lexer class.
         </li>
 <li class="listitem">
-          The <span class="emphasis"><em>Spirit.Lex</em></span> library has been updated to use the
-          newest version of Ben Hansons <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
+          The <span class="underline">_lex</span>_ library has been updated
+          to use the newest version of Ben Hansons <span class="underline">_lexertl</span>_
           lexer construction library (Boost review pending).
         </li>
 <li class="listitem">
@@ -268,21 +267,20 @@
         </li>
 <li class="listitem">
           Lexer semantic actions now have to conform to a changed interface (see
-          <a class="link" href="../lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer Semantic
-          Actions</a> for details).
+          __sec_lex<span class="underline">semactions</span>_ for details).
         </li>
 <li class="listitem">
           Added placeholder symbols usable from the inside of lexer semantic actions
           while using Phoenix: <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_start</span></code>,
           <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_end</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_eoi</span></code>,
           <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_state</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_val</span></code>,
-          and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_pass</span></code> (see <a class="link" href="../lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer
-          Semantic Actions</a> for more details).
+          and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">_pass</span></code> (see __sec_lex<span class="underline">semactions</span>_
+          for more details).
         </li>
 <li class="listitem">
           Added (lazy) support functions usable from the inside of lexer semantic
-          actions while using Phoenix: <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">more</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">less</span><span class="special">()</span></code>, and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lookahead</span><span class="special">()</span></code> (see <a class="link" href="../lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer
-          Semantic Actions</a> for more details).
+          actions while using Phoenix: <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">more</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">less</span><span class="special">()</span></code>, and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lookahead</span><span class="special">()</span></code> (see __sec_lex<span class="underline">semactions</span>_
+          for more details).
         </li>
 <li class="listitem">
           Removed <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">omitted</span></code> in favor of <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">omit</span></code>
