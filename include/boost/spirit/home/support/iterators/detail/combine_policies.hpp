@@ -118,7 +118,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             { Input::advance_input(mp); }
 
         template <typename TokenType, typename MultiPass>
-        inline static TokenType const& get_input(MultiPass& mp)
+        inline static TokenType& get_input(MultiPass& mp)
             { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             { Input::advance_input(mp); }
 
         template <typename TokenType, typename MultiPass>
-        inline static TokenType const& get_input(MultiPass& mp)
+        inline static TokenType& get_input(MultiPass& mp)
             { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
@@ -283,7 +283,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             { Input::advance_input(mp); }
 
         template <typename TokenType, typename MultiPass>
-        inline static TokenType const& get_input(MultiPass& mp)
+        inline static TokenType& get_input(MultiPass& mp)
             { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>
@@ -381,7 +381,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             { Input::advance_input(mp); }
 
         template <typename TokenType, typename MultiPass>
-        inline static TokenType const& get_input(MultiPass& mp)
+        inline static TokenType& get_input(MultiPass& mp)
             { return Input::template get_input<TokenType>(mp); }
 
         template <typename MultiPass>

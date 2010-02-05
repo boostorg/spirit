@@ -67,7 +67,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             static void destroy(MultiPass&) {}
 
             template <typename ValueType, typename MultiPass>
-            static ValueType const& get_input(MultiPass& mp)
+            static ValueType& get_input(MultiPass& mp)
             {
                 return *mp.shared()->input_;
             }
