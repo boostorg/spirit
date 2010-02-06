@@ -26,6 +26,9 @@ main()
         std::vector<int> vec;
         BOOST_TEST((!test_attr("1$", hold[int_ >> ';'], vec)));
         BOOST_TEST(vec.size() == 0);
+        BOOST_TEST((test_attr("1;", hold[int_ >> ';'], vec)));
+        BOOST_TEST(vec.size() == 1);
+        BOOST_TEST(vec[0] == 1);
     }
 
     return boost::report_errors();
