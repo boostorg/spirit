@@ -48,6 +48,7 @@ import testing ;
     [ run qi/lexeme.cpp                     : : : : ]
     [ run qi/lit.cpp                        : : : : ]
     [ run qi/list.cpp                       : : : : ]
+    [ run qi/hold.cpp                       : : : : ]
     [ run qi/match_manip.cpp                : : : : ]
     [ run qi/match_manip_attr.cpp           : : : : ]
     [ run qi/matches.cpp                    : : : : ]
