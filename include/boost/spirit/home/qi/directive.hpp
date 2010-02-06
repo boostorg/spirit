@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/qi/directive/hold.hpp>
 #include <boost/spirit/home/qi/directive/lexeme.hpp>
 #include <boost/spirit/home/qi/directive/matches.hpp>
 #include <boost/spirit/home/qi/directive/no_case.hpp>

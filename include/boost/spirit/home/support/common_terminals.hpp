@@ -38,6 +38,7 @@ namespace boost { namespace spirit
         ( true_ )
         ( false_ )
         ( matches )
+        ( hold )
     )
 
     // Here we are reusing proto::lit
