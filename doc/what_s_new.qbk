@@ -24,6 +24,8 @@
   new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
 * Added `karma::ostream_iterator` as a counterpart to `qi::istream_iterator` 
   (see new header file: `#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>`).
+* Added `qi::hold` allowing to make sure the embedded parser does not touch
+  the passed attribute in case it fails parsing.
 
 [heading Bug Fixes]
 
@@ -31,6 +33,9 @@
   even as their last element.
 * Sequences (in /Qi/ and /Karma/) can now take one element attribute sequences 
   as their attribute.
+* Constructs like `karma::buffer[karma::buffer[...]]` don't result in 
+  performing double buffering anymore. The same is true if an alternative is 
+  wrapped into a `karma::buffer[]` directive (as for instance: `buffer[a] | b`).
 
 [endsect] [/ spirit_2_3]
 

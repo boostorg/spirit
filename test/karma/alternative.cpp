@@ -34,6 +34,8 @@ main()
         BOOST_TEST(test("xi", char_('x') << char_('i') | char_('i')));
         BOOST_TEST(test("i", char_('i') | char_('x') << char_('i')));
 
+        BOOST_TEST(test("x", buffer[char_('x')] | char_('i')));
+
         variant<int, char> v (10);
         BOOST_TEST(test("10", char_ | int_, v));
         BOOST_TEST(test("10", int_ | char_, v));

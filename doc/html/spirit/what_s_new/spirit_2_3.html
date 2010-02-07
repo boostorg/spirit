@@ -27,13 +27,13 @@
 <a name="spirit.what_s_new.spirit_2_3"></a><a class="link" href="spirit_2_3.html" title="Spirit V2.3"> Spirit V2.3</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_role__underline___qi__emphasis___and__emphasis_role__underline___karma__emphasis___from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_"></a><h5>
-<a name="id585894"></a>
+<a name="id583710"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_role__underline___qi__emphasis___and__emphasis_role__underline___karma__emphasis___from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_">What's
         changed in <span class="underline">_qi</span>_ and <span class="underline">_karma</span>_
         from V2.2 (Boost V1.42.0) to 2.3 (Boost V1.43.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_3.new_features"></a><h5>
-<a name="id585918"></a>
+<a name="id583734"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -59,9 +59,13 @@
           <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">istream_iterator</span></code> (see new header file:
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">iterators</span><span class="special">/</span><span class="identifier">ostream_iterator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>).
         </li>
+<li class="listitem">
+          Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">hold</span></code> allowing to make sure the embedded
+          parser does not touch the passed attribute in case it fails parsing.
+        </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_3.bug_fixes"></a><h5>
-<a name="id586154"></a>
+<a name="id583987"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -72,6 +76,12 @@
 <li class="listitem">
           Sequences (in <span class="emphasis"><em>Qi</em></span> and <span class="emphasis"><em>Karma</em></span>) can
           now take one element attribute sequences as their attribute.
+        </li>
+<li class="listitem">
+          Constructs like <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[...]]</span></code>
+          don't result in performing double buffering anymore. The same is true if
+          an alternative is wrapped into a <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code> directive (as for instance: <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span> <span class="special">|</span>
+          <span class="identifier">b</span></code>).
         </li>
 </ul></div>
 </div>
