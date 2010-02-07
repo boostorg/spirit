@@ -97,6 +97,17 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
+    // make sure buffer[buffer[...]] does not result in double buffering
+    template <typename Subject, typename Modifiers>
+    struct make_directive<tag::buffer, buffer_directive<Subject>, Modifiers>
+    {
+        typedef buffer_directive<Subject> result_type;
+        result_type operator()(unused_type
+          , buffer_directive<Subject> const& subject, unused_type) const
+        {
+            return subject;
+        }
+    };
 }}}
 
 namespace boost { namespace spirit { namespace traits
