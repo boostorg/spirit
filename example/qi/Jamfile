@@ -33,6 +33,7 @@ exe key_value_sequence_empty_value : key_value_sequence_empty_value.cpp ;
 exe iter_pos_parser : iter_pos_parser.cpp ;
 exe boost_array : boost_array.cpp ;
 exe display_attribute_type : display_attribute_type.cpp ;
+exe adapt_template_struct : adapt_template_struct.cpp ;
 
 exe calculator1 : calc1.cpp ;
 exe calculator2 : calc2.cpp ;

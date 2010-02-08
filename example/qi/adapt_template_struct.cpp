@@ -5,8 +5,8 @@
 
 //  This example demonstrates a trick allowing to adapt a template data 
 //  structure as a Fusion sequence in order to use is for direct attribute
-//  propagation. See http://boost-spirit.com/home/ 
-//  for more information.
+//  propagation. For more information see 
+//  http://boost-spirit.com/home/2010/02/08/how-to-adapt-templates-as-a-fusion-sequence
 
 #include <boost/spirit/include/qi.hpp>
 
