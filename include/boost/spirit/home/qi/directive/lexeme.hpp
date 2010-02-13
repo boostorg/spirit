@@ -56,7 +56,6 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr) const
         {
-            qi::skip_over(first, last, skipper);
             return subject.parse(first, last, context
               , detail::unused_skipper<Skipper>(skipper), attr);
         }
