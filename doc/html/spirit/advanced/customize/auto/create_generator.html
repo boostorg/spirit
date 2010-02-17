@@ -28,19 +28,19 @@
           Define a Custom Attribute Mapping for a Generator</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.auto.create_generator.create_generator"></a><h6>
-<a name="id987044"></a>
+<a name="id957084"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.create_generator">create_generator</a>
           </h6>
 <p>
             The template <code class="computeroutput"><span class="identifier">create_generator</span></code>
             is a type used as an customization point. It is invoked by the <span class="emphasis"><em>Karma</em></span>
-            __create<span class="underline">generator</span>_ API function
+            <a class="link" href="../../../karma/reference/generate_api/create_generator.html" title="API for Automatic Generator Creation"><code class="computeroutput"><span class="identifier">create_generator</span></code></a> API function
             in order to create a custom mapping of the given data type to a generator
-            expression. This generator expression will be returned from __create<span class="underline">generator</span>_ whenever the given data type is
-            encountered.
+            expression. This generator expression will be returned from <a class="link" href="../../../karma/reference/generate_api/create_generator.html" title="API for Automatic Generator Creation"><code class="computeroutput"><span class="identifier">create_generator</span></code></a> whenever the
+            given data type is encountered.
           </p>
 <a name="spirit.advanced.customize.auto.create_generator.module_headers"></a><h6>
-<a name="id987084"></a>
+<a name="id957134"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.module_headers">Module
             Headers</a>
           </h6>
@@ -48,10 +48,10 @@
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_auto</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.advanced.customize.auto.create_generator.namespace"></a><h6>
-<a name="id987163"></a>
+<a name="id957213"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -68,7 +68,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_generator.synopsis"></a><h6>
-<a name="id987241"></a>
+<a name="id957291"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -79,7 +79,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.auto.create_generator.template_parameters"></a><h6>
-<a name="id987366"></a>
+<a name="id957416"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.template_parameters">Template
             parameters</a>
           </h6>
@@ -148,7 +148,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_generator.notation"></a><h6>
-<a name="id987531"></a>
+<a name="id957582"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -161,7 +161,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.auto.create_generator.expression_semantics"></a><h6>
-<a name="id987571"></a>
+<a name="id957621"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -211,14 +211,14 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_generator.predefined_specializations"></a><h6>
-<a name="id987712"></a>
+<a name="id957763"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.predefined_specializations">Predefined
             Specializations</a>
           </h6>
 <p>
-            <span class="underline">_spirit</span>_ predefines specializations
-            of this customization point for several types. All predefined mappings
-            are listed here: <a class="link" href="../../../karma/reference/auto.html#spirit.karma.reference.auto.additional_requirements">Additional
+            <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines
+            specializations of this customization point for several types. All predefined
+            mappings are listed here: <a class="link" href="../../../karma/reference/auto.html#spirit.karma.reference.auto.additional_requirements">Additional
             Attribute Requirements for Generators</a>.
           </p>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -233,20 +233,19 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_generator.when_to_implement"></a><h6>
-<a name="id987754"></a>
+<a name="id957805"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.when_to_implement">When
             to implement</a>
           </h6>
 <p>
             The customization point <code class="computeroutput"><span class="identifier">create_generator</span></code>
             needs to be implemented for a specific type whenever this type should
-            be usable with the API function __create<span class="underline">generator</span>_
-            (which includes using the <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">auto_</span></code>
-            generator and the special API functions based on the automatic creation
-            of the matching generator type).
+            be usable with the API function <a class="link" href="../../../karma/reference/generate_api/create_generator.html" title="API for Automatic Generator Creation"><code class="computeroutput"><span class="identifier">create_generator</span></code></a> (which includes
+            using the <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">auto_</span></code> generator and the special API
+            functions based on the automatic creation of the matching generator type).
           </p>
 <a name="spirit.advanced.customize.auto.create_generator.example"></a><h6>
-<a name="id987798"></a>
+<a name="id957853"></a>
             <a class="link" href="create_generator.html#spirit.advanced.customize.auto.create_generator.example">Example</a>
           </h6>
 <p>

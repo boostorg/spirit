@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.3">
-<link rel="up" href="../tutorials.html" title="_lex_ Tutorials">
-<link rel="prev" href="lexer_quickstart2.html" title="Quickstart 2 - A better word counter using _lex_">
+<link rel="up" href="../tutorials.html" title="Spirit.Lex Tutorials">
+<link rel="prev" href="lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">
 <link rel="next" href="../abstracts.html" title="Abstracts">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -28,18 +28,18 @@
         3 - Counting Words Using a Parser</a>
 </h4></div></div></div>
 <p>
-          The whole purpose of integrating <span class="underline">_lex</span>_
-          as part of the <span class="underline">_spirit</span>_ library was
-          to add a library allowing the merger of lexical analysis with the parsing
-          process as defined by a <span class="underline">_spirit</span>_
-          grammar. <span class="underline">_spirit</span>_ parsers read their
-          input from an input sequence accessed by iterators. So naturally, we chose
-          iterators to be used as the interface beween the lexer and the parser.
-          A second goal of the lexer/parser integration was to enable the usage of
-          different lexical analyzer libraries. The utilization of iterators seemed
-          to be the right choice from this standpoint as well, mainly because these
-          can be used as an abstraction layer hiding implementation specifics of
-          the used lexer library. The <a class="link" href="lexer_quickstart3.html#spirit.lex.flowcontrol" title="Figure&#160;7.&#160;The common flow control implemented while parsing combined with lexical analysis">picture</a>
+          The whole purpose of integrating <span class="emphasis"><em>Spirit.Lex</em></span> as part
+          of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> library
+          was to add a library allowing the merger of lexical analysis with the parsing
+          process as defined by a <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          grammar. <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> parsers
+          read their input from an input sequence accessed by iterators. So naturally,
+          we chose iterators to be used as the interface beween the lexer and the
+          parser. A second goal of the lexer/parser integration was to enable the
+          usage of different lexical analyzer libraries. The utilization of iterators
+          seemed to be the right choice from this standpoint as well, mainly because
+          these can be used as an abstraction layer hiding implementation specifics
+          of the used lexer library. The <a class="link" href="lexer_quickstart3.html#spirit.lex.flowcontrol" title="Figure&#160;7.&#160;The common flow control implemented while parsing combined with lexical analysis">picture</a>
           below shows the common flow control implemented while parsing combined
           with lexical analysis.
         </p>
@@ -55,7 +55,7 @@
 <p>
           Another problem related to the integration of the lexical analyzer with
           the parser was to find a way how the defined tokens syntactically could
-          be blended with the grammar definition syntax of <span class="underline">_spirit</span>_.
+          be blended with the grammar definition syntax of <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>.
           For tokens defined as instances of the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> class the most natural way of integration
           was to allow to directly use these as parser components. Semantically these
           parser components succeed matching their input whenever the corresponding
@@ -65,17 +65,22 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h6>
-<a name="id915921"></a>
+<a name="id884068"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h6>
 <p>
-          This example uses two of the <span class="underline">_spirit</span>_
-          library components: <span class="underline">_lex</span>_ and <span class="underline">_qi</span>_, consequently we have to <code class="computeroutput"><span class="preprocessor">#include</span></code> the corresponding header files.
-          Again, we need to include a couple of header files from the __boost<span class="underline">phoenix</span>_ library. This example shows how to
-          attach functors to parser components, which could be done using any type
-          of C++ technique resulting in a callable object. Using __boost<span class="underline">phoenix</span>_ for this task simplifies things and
-          avoids adding dependencies to other libraries (__boost<span class="underline">phoenix</span>_
-          is already in use for <span class="underline">_spirit</span>_ anyway).
+          This example uses two of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          library components: <span class="emphasis"><em>Spirit.Lex</em></span> and <span class="emphasis"><em>Spirit.Qi</em></span>,
+          consequently we have to <code class="computeroutput"><span class="preprocessor">#include</span></code>
+          the corresponding header files. Again, we need to include a couple of header
+          files from the <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+          library. This example shows how to attach functors to parser components,
+          which could be done using any type of C++ technique resulting in a callable
+          object. Using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+          for this task simplifies things and avoids adding dependencies to other
+          libraries (<a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+          is already in use for <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          anyway).
         </p>
 <p>
           </p>
@@ -108,18 +113,21 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h6>
-<a name="id916289"></a>
+<a name="id884434"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h6>
 <p>
-          If compared to the two previous quick start examples (__sec_lex_quickstart<span class="underline">1</span>_ and __sec_lex_quickstart<span class="underline">2</span>_)
+          If compared to the two previous quick start examples (<a class="link" href="lexer_quickstart1.html" title="Quickstart 1 - A word counter using Spirit.Lex">Lex
+          Quickstart 1 - A word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>
+          and <a class="link" href="lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Lex Quickstart
+          2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>)
           the token definition class for this example does not reveal any surprises.
           However, it uses lexer token definition macros to simplify the composition
           of the regular expressions, which will be described in more detail in the
-          section <span class="underline">_fixme</span>_. Generally, any token
-          definition is usable without modification from either a standalone lexical
-          analyzer or in conjunction with a parser.
+          section <span class="bold"><strong>FIXME</strong></span>. Generally, any token definition
+          is usable without modification from either a standalone lexical analyzer
+          or in conjunction with a parser.
         </p>
 <p>
           </p>
@@ -158,7 +166,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h6>
-<a name="id916635"></a>
+<a name="id884786"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h6>
@@ -172,7 +180,7 @@
 <li class="listitem">
             Using an instance of a <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>, which is handy whenever you
             need to specify a token attribute (for more information about lexer related
-            attributes please look here: __sec_lex<span class="underline">attributes</span>_).
+            attributes please look here: Lexer Attributes).
           </li>
 <li class="listitem">
             Using a single character as the token, in this case the character represents
@@ -188,8 +196,7 @@
           All three token definition methods require a different method of grammar
           integration. But as you can see from the following code snippet, each of
           these methods are straightforward and blend the corresponding token instances
-          naturally with the surrounding <span class="underline">_qi</span>_
-          grammar syntax.
+          naturally with the surrounding <span class="emphasis"><em>Spirit.Qi</em></span> grammar syntax.
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -247,7 +254,7 @@
                 </td>
 <td>
                 <p>
-                  To use an explicit token id in a <span class="underline">_qi</span>_
+                  To use an explicit token id in a <span class="emphasis"><em>Spirit.Qi</em></span>
                   grammar you are required to wrap it with the special <code class="computeroutput"><span class="identifier">token</span><span class="special">()</span></code>
                   parser component. Parsing of this component will succeed if the
                   current token has the same token id as specified in the expression
@@ -293,15 +300,15 @@
 <p>
         </p>
 <p>
-          As already described (see: __sec<span class="underline">attributes</span>_),
-          the <span class="underline">_qi</span>_ parser library builds upon
-          a set of of fully attributed parser components. Consequently, all token
-          definitions support this attribute model as well. The most natural way
-          of implementing this was to use the token values as the attributes exposed
-          by the parser component corresponding to the token definition (you can
-          read more about this topic here: __sec_lex<span class="underline">tokenvalues</span>_).
-          The example above takes advantage of the full integration of the token
-          values as the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>'s parser attributes: the <code class="computeroutput"><span class="identifier">word</span></code> token definition is declared as
+          As already described (see: <a class="link" href="../../abstracts/attributes.html" title="Attributes">Attributes</a>),
+          the <span class="emphasis"><em>Spirit.Qi</em></span> parser library builds upon a set of
+          of fully attributed parser components. Consequently, all token definitions
+          support this attribute model as well. The most natural way of implementing
+          this was to use the token values as the attributes exposed by the parser
+          component corresponding to the token definition (you can read more about
+          this topic here: <a class="link" href="../abstracts/lexer_primitives/lexer_token_values.html" title="About Tokens and Token Values">About
+          Tokens and Token Values</a>). The example above takes advantage of the
+          full integration of the token values as the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>'s parser attributes: the <code class="computeroutput"><span class="identifier">word</span></code> token definition is declared as
           a <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span></code>,
           making every instance of a <code class="computeroutput"><span class="identifier">word</span></code>
           token carry the string representation of the matched input sequence as
@@ -312,7 +319,7 @@
           <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h6>
-<a name="id918638"></a>
+<a name="id887467"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>
@@ -322,8 +329,8 @@
           as well. The three type definitions (<code class="computeroutput"><span class="keyword">typedef</span></code>
           statements) simplify the creation of the lexical analyzer and the grammar.
           After reading the contents of the given file into memory it calls the function
-          __api_tokenize_and<span class="underline">parse</span>_ to initialize
-          the lexical analysis and parsing processes.
+          <code class="computeroutput"><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code>
+          to initialize the lexical analysis and parsing processes.
         </p>
 <p>
           </p>

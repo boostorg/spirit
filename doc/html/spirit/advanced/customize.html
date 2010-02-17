@@ -46,7 +46,7 @@
         from Attributes</a></span></dt>
 </dl></div>
 <a name="spirit.advanced.customize.why_do_we_need_attribute_customization_points"></a><h5>
-<a name="id949283"></a>
+<a name="id919284"></a>
         <a class="link" href="customize.html#spirit.advanced.customize.why_do_we_need_attribute_customization_points">Why
         do we need Attribute Customization Points</a>
       </h5>
@@ -66,24 +66,24 @@
         </p></td></tr>
 </table></div>
 <p>
-        <span class="underline">_spirit</span>_ has been written with extensibility
-        in mind. It provides many different attribute customization points allowing
-        to integrate custom data types with the process of parsing in <span class="underline">_qi</span>_
-        or output generation with <span class="underline">_karma</span>_.
+        <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> has been written
+        with extensibility in mind. It provides many different attribute customization
+        points allowing to integrate custom data types with the process of parsing
+        in <span class="emphasis"><em>Spirit.Qi</em></span> or output generation with <span class="emphasis"><em>Spirit.Karma</em></span>.
         All attribute customization points are exposed using a similar technique:
-        full or partial template specialization. <span class="underline">_spirit</span>_
+        full or partial template specialization. <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
         generally implements the main template, providing a default implementation.
         You as the user have to provide a partial or full specialization of this
         template for the data types you want to integrate with the library. In fact,
         the library uses these customization points itself for instance to handle
-        the magic of the __unused<span class="underline">type</span>_ attribute
-        type.
+        the magic of the <code class="computeroutput"><span class="identifier">unused_type</span></code>
+        attribute type.
       </p>
 <p>
-        Here is an example showing the __customize_container<span class="underline">value</span>_
-        customization point used by different parsers (such as __qi<span class="underline">kleene</span>_,
-        __qi<span class="underline">plus</span>_, etc.) to find the attribute
-        type to be stored in a supplied STL container:
+        Here is an example showing the <a class="link" href="customize/store_value/container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> customization point
+        used by different parsers (such as <a class="link" href="../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
+        <a class="link" href="../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>, etc.) to find
+        the attribute type to be stored in a supplied STL container:
       </p>
 <p>
         </p>
@@ -106,7 +106,7 @@
         type while parsing the elements to be store in that container.
       </p>
 <p>
-        The following example shows the predefined specialization for __unused<span class="underline">type</span>_:
+        The following example shows the predefined specialization for <code class="computeroutput"><span class="identifier">unused_type</span></code>:
       </p>
 <p>
         </p>
@@ -125,8 +125,8 @@
       </p>
 <p>
         which defines its embedded <code class="computeroutput"><span class="identifier">type</span></code>
-        to be __unused<span class="underline">type</span>_ as well, this way
-        propagating the 'don't care' attribute status to the embedded parser.
+        to be <code class="computeroutput"><span class="identifier">unused_type</span></code> as well,
+        this way propagating the 'don't care' attribute status to the embedded parser.
       </p>
 <p>
         All attribute customization points follow the same scheme. The last template
@@ -139,15 +139,15 @@
         a description which needs to be specialized for what purpose.
       </p>
 <a name="spirit.advanced.customize.the_usage_of_customization_points"></a><h5>
-<a name="id949595"></a>
+<a name="id919605"></a>
         <a class="link" href="customize.html#spirit.advanced.customize.the_usage_of_customization_points">The
         Usage of Customization Points</a>
       </h5>
 <p>
         The different customizations points are used by different parts of the library.
-        Part of the customizations points are used by both, <span class="underline">_qi</span>_
-        and <span class="underline">_karma</span>_, whereas others are specialized
-        to be applied for one of the sub-libraries only. We will explain when a specific
+        Part of the customizations points are used by both, <span class="emphasis"><em>Spirit.Qi</em></span>
+        and <span class="emphasis"><em>Spirit.Karma</em></span>, whereas others are specialized to
+        be applied for one of the sub-libraries only. We will explain when a specific
         customization point needs to be implemented and, equally important, which
         customization points need to be implemented at the same time. Often it is
         not sufficient to provide a specialization for one single customization point

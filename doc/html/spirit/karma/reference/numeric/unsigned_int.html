@@ -29,7 +29,7 @@
           etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.description"></a><h6>
-<a name="id854908"></a>
+<a name="id822325"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.description">Description</a>
           </h6>
 <p>
@@ -44,17 +44,17 @@
             a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.karma.reference.numeric.unsigned_int.header"></a><h6>
-<a name="id854958"></a>
+<a name="id822375"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/uint.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_uint</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.unsigned_int.namespace"></a><h6>
-<a name="id855033"></a>
+<a name="id822450"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -137,14 +137,15 @@
 <tr><td align="left" valign="top"><p>
               <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
               <a class="link" href="../string.html" title="String">String Generators</a>,
-              the __karma<span class="underline">char</span>_, and the Numeric
-              Generators. In general, a char generator is created when you pass in
-              a character, a string generator is created when you pass in a string,
-              and a numeric generator is created when you use a numeric literal.
+              the <a class="link" href="../char.html" title="Char">Character Generators</a>,
+              and the Numeric Generators. In general, a char generator is created
+              when you pass in a character, a string generator is created when you
+              pass in a string, and a numeric generator is created when you use a
+              numeric literal.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.synopsis"></a><h6>
-<a name="id855458"></a>
+<a name="id824528"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -153,7 +154,7 @@
 <span class="keyword">struct</span> <span class="identifier">uint_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.unsigned_int.template_parameters"></a><h6>
-<a name="id855527"></a>
+<a name="id824598"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.template_parameters">Template
             parameters</a>
           </h6>
@@ -219,7 +220,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.model_of"></a><h6>
-<a name="id855654"></a>
+<a name="id824725"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.model_of">Model
             of</a>
           </h6>
@@ -227,7 +228,7 @@
 <p>
               </p>
 <p>
-                __primitive_generator<span class="underline">concept</span>_
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
               </p>
 <p>
             </p>
@@ -237,14 +238,15 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
 <dd><p>
-                Numeric literal, any unsigned integer value, or a __karma_lazy<span class="underline">argument</span>_ that evaluates to an unsigned
-                integer value of type <code class="computeroutput"><span class="identifier">Num</span></code>
+                Numeric literal, any unsigned integer value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to an unsigned integer value of type
+                <code class="computeroutput"><span class="identifier">Num</span></code>
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Num</span></code></span></dt>
 <dd><p>
                 Type of <code class="computeroutput"><span class="identifier">num</span></code>: any
-                unsigned integer type, or in case of a __karma_lazy<span class="underline">argument</span>_,
-                its return value
+                unsigned integer type, or in case of a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a>, its return value
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Radix</span></code></span></dt>
 <dd><p>
@@ -256,13 +258,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.unsigned_int.expression_semantics"></a><h6>
-<a name="id855797"></a>
+<a name="id824876"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __primitive_generator<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -462,7 +464,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.additional_requirements"></a><h6>
-<a name="id856443"></a>
+<a name="id825529"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -516,7 +518,7 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.attributes"></a><h6>
-<a name="id856857"></a>
+<a name="id825943"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -545,7 +547,7 @@
                   </td>
 <td>
                   <p>
-                    <span class="underline">_unused</span>_
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
                   </p>
                   </td>
 </tr>
@@ -755,7 +757,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.complexity"></a><h6>
-<a name="id859460"></a>
+<a name="id826764"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -769,7 +771,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.unsigned_int.example"></a><h6>
-<a name="id859491"></a>
+<a name="id826795"></a>
             <a class="link" href="unsigned_int.html#spirit.karma.reference.numeric.unsigned_int.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -778,7 +780,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>

@@ -27,16 +27,16 @@
 <a name="spirit.karma.reference.generator_concepts.unarygenerator"></a><a class="link" href="unarygenerator.html" title="UnaryGenerator">UnaryGenerator</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.description"></a><h6>
-<a name="id781940"></a>
+<a name="id748432"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>UnaryGenerator</em></span> is a composite generator that has
             a single subject. The UnaryGenerator may change the behavior of its subject
-            following the __delegate<span class="underline">pattern</span>_.
+            following the Delegate Design Pattern.
           </p>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.refinement_of"></a><h6>
-<a name="id781965"></a>
+<a name="id748453"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.refinement_of">Refinement
             of</a>
           </h6>
@@ -44,7 +44,7 @@
 <p>
               </p>
 <p>
-                __generator<span class="underline">concept</span>_
+                <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
               </p>
 <p>
             </p>
@@ -63,13 +63,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions"></a><h6>
-<a name="id782037"></a>
+<a name="id748530"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in __generator<span class="underline">concept</span>_,
-            for any UnaryGenerator the following must be met:
+            In addition to the requirements defined in <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>, for any UnaryGenerator
+            the following must be met:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -107,13 +107,13 @@
                   </td>
 <td>
                   <p>
-                    __generator<span class="underline">concept</span>_
+                    <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.type_expressions"></a><h6>
-<a name="id782141"></a>
+<a name="id748645"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.type_expressions">Type
             Expressions</a>
           </h6>
@@ -158,14 +158,15 @@
                     Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                     if a certain type, <code class="computeroutput"><span class="identifier">G</span></code>
                     is a UnaryGenerator, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See __mpl_boolean<span class="underline">constant</span>_).
+                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                    Boolean Constant</a>).
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.invariants"></a><h6>
-<a name="id782306"></a>
+<a name="id748810"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.invariants">Invariants</a>
           </h6>
 <p>
@@ -176,7 +177,7 @@
 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.models"></a><h6>
-<a name="id782391"></a>
+<a name="id748896"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.models">Models</a>
           </h6>
 <p>
@@ -188,13 +189,17 @@
               (unary <code class="computeroutput"><span class="special">*</span></code>)</a> operator,
             </li>
 <li class="listitem">
-              __karma<span class="underline">plus</span>_ operator,
+<a class="link" href="../operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a> operator,
             </li>
 <li class="listitem">
-              __karma<span class="underline">optional</span>_ operator,
+<a class="link" href="../operator/optional.html" title="Optional (-a)">Optional (unary
+              <code class="computeroutput"><span class="special">-</span></code>)</a> operator,
             </li>
 <li class="listitem">
-              __karma_and<span class="underline">predicate</span>_ and __karma_not<span class="underline">predicate</span>_ operators,
+<a class="link" href="../operator/and_predicate.html" title="And-Predicate (&amp;a)">And predicate
+              (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a> and
+              <a class="link" href="../operator/not_predicate.html" title="Not-Predicate (!a)">Not predicate
+              (unary <code class="computeroutput"><span class="special">!</span></code>)</a> operators,
             </li>
 <li class="listitem">
 <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">left_align</span></code></a>, <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">center</span></code></a>, and <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">right_align</span></code></a> directives,
@@ -203,7 +208,7 @@
 <a class="link" href="../directive/repeat.html" title="Repetition Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a> directive,
             </li>
 <li class="listitem">
-              __karma<span class="underline">verbatim</span>_ directive,
+<a class="link" href="../directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], delimit[])"><code class="computeroutput"><span class="identifier">verbatim</span></code></a> directive,
             </li>
 <li class="listitem">
 <a class="link" href="../directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], delimit[])"><code class="computeroutput"><span class="identifier">delimit</span></code></a> directive,
@@ -215,15 +220,15 @@
 <a class="link" href="../directive/maxwidth.html" title="Controlling the Maximum Field Width (maxwidth[])"><code class="computeroutput"><span class="identifier">maxwidth</span></code></a> directive,
             </li>
 <li class="listitem">
-              __karma<span class="underline">buffer</span>_ directive,
+<a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a> directive,
             </li>
 <li class="listitem">
-              __karma<span class="underline">omit</span>_ directive.
+<a class="link" href="../directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive.
             </li>
 </ul></div>
 <p>
-            <span class="underline">_fixme</span>_ Add more links to models
-            of UnaryGenerator concept
+            <span class="bold"><strong>FIXME</strong></span> Add more links to models of UnaryGenerator
+            concept
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

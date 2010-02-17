@@ -69,7 +69,7 @@
           for testing purposes. "4.toyxml" has an error in it.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.first_cut"></a><h6>
-<a name="id617230"></a>
+<a name="id580327"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.first_cut">First Cut</a>
         </h6>
 <p>
@@ -146,7 +146,7 @@
           by the placeholder <code class="computeroutput"><span class="identifier">_val</span></code>).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.alternates"></a><h6>
-<a name="id619507"></a>
+<a name="id583700"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.alternates">Alternates</a>
         </h6>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
@@ -176,7 +176,7 @@
 <span class="special">;</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___asts_.not_predicate"></a><h6>
-<a name="id619835"></a>
+<a name="id584028"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.not_predicate">Not
           Predicate</a>
         </h6>
@@ -203,7 +203,7 @@
           at this point.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.inherited_attribute"></a><h6>
-<a name="id619990"></a>
+<a name="id584183"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.inherited_attribute">Inherited
           Attribute</a>
         </h6>
@@ -224,12 +224,12 @@
 <span class="special">;</span>
 </pre>
 <p>
-          <code class="computeroutput"><span class="identifier">_r1</span></code> is yet another <span class="underline">_phoenix</span>_ placeholder for the first inherited
-          attribute (we have only one, use <code class="computeroutput"><span class="identifier">_r2</span></code>,
+          <code class="computeroutput"><span class="identifier">_r1</span></code> is yet another <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> placeholder for
+          the first inherited attribute (we have only one, use <code class="computeroutput"><span class="identifier">_r2</span></code>,
           <code class="computeroutput"><span class="identifier">_r3</span></code>, etc. if you have more).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit"></a><h6>
-<a name="id620184"></a>
+<a name="id584377"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit">A Lazy
           Lit</a>
         </h6>
@@ -255,15 +255,15 @@
 <span class="special">;</span>
 </pre>
 <p>
-          Those who know <span class="underline">_fusion</span>_ now will
-          notice <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span></code> and
+          Those who know <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          now will notice <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span></code> and
           <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span></code>. This
           gives us a hint that <code class="computeroutput"><span class="identifier">mini_xml</span></code>
           is a sort of a tuple - a fusion sequence. <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span></code> here is a lazy version of the tuple
-          accessors, provided by <span class="underline">_phoenix</span>_.
+          accessors, provided by <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.how_it_all_works"></a><h6>
-<a name="id620515"></a>
+<a name="id584708"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.how_it_all_works">How
           it all works</a>
         </h6>
@@ -310,7 +310,7 @@
           as <code class="computeroutput"><span class="identifier">_r1</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.the_structures"></a><h6>
-<a name="id620812"></a>
+<a name="id585005"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.the_structures">The
           Structures</a>
         </h6>
@@ -343,7 +343,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants"></a><h6>
-<a name="id621008"></a>
+<a name="id585337"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants">Of
           Alternates and Variants</a>
         </h6>
@@ -351,7 +351,8 @@
           So that's what a <code class="computeroutput"><span class="identifier">mini_xml_node</span></code>
           looks like. We had a hint that it is either a <code class="computeroutput"><span class="identifier">string</span></code>
           or a <code class="computeroutput"><span class="identifier">mini_xml</span></code>. For this,
-          we use __boost<span class="underline">variant</span>_. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">recursive_wrapper</span></code> wraps <code class="computeroutput"><span class="identifier">mini_xml</span></code>, making it a recursive data
+          we use <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
+          <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">recursive_wrapper</span></code> wraps <code class="computeroutput"><span class="identifier">mini_xml</span></code>, making it a recursive data
           structure.
         </p>
 <p>
@@ -369,14 +370,15 @@
           of <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">B</span></code> is the attribute of <code class="computeroutput"><span class="identifier">b</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again"></a><h6>
-<a name="id621172"></a>
+<a name="id585502"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again">Adapting
           structs again</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="identifier">mini_xml</span></code> is no brainier.
           It is a plain ol' struct. But as we've seen in our employee example, we
-          can adapt that to be a <span class="underline">_fusion</span>_ sequence:
+          can adapt that to be a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          sequence:
         </p>
 <p>
           </p>
@@ -394,7 +396,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.one_more_take"></a><h6>
-<a name="id621312"></a>
+<a name="id585642"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.one_more_take">One
           More Take</a>
         </h6>
@@ -462,7 +464,7 @@
           if you missed that). There is some new stuff though. It's all in the <code class="computeroutput"><span class="identifier">xml</span></code> rule:
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.local_variables"></a><h6>
-<a name="id622228"></a>
+<a name="id586558"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.local_variables">Local
           Variables</a>
         </h6>
@@ -484,9 +486,9 @@
 <li class="listitem">
             Upon parsing <code class="computeroutput"><span class="identifier">start_tag</span></code>,
             the parsed start-tag string is placed in the local variable specified
-            by (yet another) <span class="underline">_phoenix</span>_ placeholder:
-            <code class="computeroutput"><span class="identifier">_a</span></code>. We have only one
-            local variable. If we had more, these are designated by <code class="computeroutput"><span class="identifier">_b</span></code>..<code class="computeroutput"><span class="identifier">_z</span></code>.
+            by (yet another) <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            placeholder: <code class="computeroutput"><span class="identifier">_a</span></code>. We have
+            only one local variable. If we had more, these are designated by <code class="computeroutput"><span class="identifier">_b</span></code>..<code class="computeroutput"><span class="identifier">_z</span></code>.
           </li>
 <li class="listitem">
             Then we parse zero or more <code class="computeroutput"><span class="identifier">node</span></code>s.

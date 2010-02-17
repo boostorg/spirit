@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.sequence.description"></a><h6>
-<a name="id736798"></a>
+<a name="id703098"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
@@ -40,17 +40,17 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span> <span class="special">&gt;&gt;</span> <span class="special">...</span>
 </pre>
 <a name="spirit.qi.reference.operator.sequence.header"></a><h6>
-<a name="id736874"></a>
+<a name="id703731"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/sequence.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.sequence.model_of"></a><h6>
-<a name="id736948"></a>
+<a name="id703806"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
@@ -58,7 +58,7 @@
 <p>
               </p>
 <p>
-                __nary_parser<span class="underline">concept</span>_
+                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
               </p>
 <p>
             </p>
@@ -69,18 +69,18 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
             <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                A __parser<span class="underline">concept</span>_
+                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id737016"></a>
+<a name="id703884"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __nary_parser<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -115,11 +115,12 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequence.attributes"></a><h6>
-<a name="id737122"></a>
+<a name="id703994"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <p>
-            See __qi_comp_attr<span class="underline">notation</span>_.
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -164,7 +165,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequence.complexity"></a><h6>
-<a name="id739577"></a>
+<a name="id704676"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -179,7 +180,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.sequence.example"></a><h6>
-<a name="id739601"></a>
+<a name="id704700"></a>
             <a class="link" href="sequence.html#spirit.qi.reference.operator.sequence.example">Example</a>
           </h6>
 <p>
@@ -205,7 +206,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>
@@ -224,7 +226,7 @@
 <p>
             </p>
 <p>
-              Extracting the attribute tuple (using <span class="underline">_fusion</span>_):
+              Extracting the attribute tuple (using <a href="../../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>):
             </p>
 <p>
             </p>
@@ -239,7 +241,7 @@
 <p>
             </p>
 <p>
-              Extracting the attribute vector (using <span class="underline">_stl</span>_):
+              Extracting the attribute vector (using <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>):
             </p>
 <p>
             </p>
@@ -254,8 +256,7 @@
 <p>
             </p>
 <p>
-              Extracting the attributes using __qi_semantic<span class="underline">actions</span>_
-              (using <span class="underline">_phoenix</span>_):
+              Extracting the attributes using Semantic Actions (using <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>):
             </p>
 <p>
             </p>

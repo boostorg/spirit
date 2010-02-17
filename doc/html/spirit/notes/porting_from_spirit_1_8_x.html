@@ -28,50 +28,54 @@
       Spirit 1.8.x</a>
 </h3></div></div></div>
 <p>
-        The current version of <span class="underline">_spirit</span>_ is
-        a complete rewrite of earlier versions (we refer to earlier versions as
-        <span class="underline">_classic</span>_). The parser generators are
-        now only one part of the whole library. The parser submodule of <span class="underline">_spirit</span>_ is now called <span class="underline">_qi</span>_.
-        It is conceptually different and exposes a completely different interface.
-        Generally, there is no easy (or automated) way of converting parsers written
-        for <span class="underline">_classic</span>_ to <span class="underline">_qi</span>_.
-        Therefore this section can give only guidelines on how to approach porting
-        your older parsers to the current version of <span class="underline">_spirit</span>_.
+        The current version of <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+        is a complete rewrite of earlier versions (we refer to earlier versions as
+        <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>).
+        The parser generators are now only one part of the whole library. The parser
+        submodule of <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> is
+        now called <span class="emphasis"><em>Spirit.Qi</em></span>. It is conceptually different and
+        exposes a completely different interface. Generally, there is no easy (or
+        automated) way of converting parsers written for <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        to <span class="emphasis"><em>Spirit.Qi</em></span>. Therefore this section can give only guidelines
+        on how to approach porting your older parsers to the current version of
+        <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.include_files"></a><h5>
-<a name="id999575"></a>
+<a name="id969715"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.include_files">Include
         Files</a>
       </h5>
 <p>
-        The overall directory structure of the <span class="underline">_spirit</span>_
-        directories is described in the section __include<span class="underline">structure</span>_
-        and the FAQ entry __include_structure<span class="underline">faq</span>_.
-        This should give you a good overview on how to find the needed header files
-        for your new parsers. Moreover, each section in the __sec_qi<span class="underline">reference</span>_
-        lists the required include files needed for any particular component.
+        The overall directory structure of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+        directories is described in the section <a class="link" href="../structure/include.html" title="Include">Include
+        Structure</a> and the FAQ entry <a class="link" href="../faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">Header
+        Hell</a>. This should give you a good overview on how to find the needed
+        header files for your new parsers. Moreover, each section in the <a class="link" href="../qi/reference.html" title="Reference">Qi
+        Reference</a> lists the required include files needed for any particular
+        component.
       </p>
 <p>
         It is possible to tell from the name of a header file, what version it belongs
-        to. While all main include files for <span class="underline">_classic</span>_
+        to. While all main include files for <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
         have the string 'classic_' in their name, for instance:
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">classic_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-        we named all main include files for <span class="underline">_qi</span>_
-        to have the string 'qi_' as part of their name, for instance:
+        we named all main include files for <span class="emphasis"><em>Spirit.Qi</em></span> to have
+        the string 'qi_' as part of their name, for instance:
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
         The following table gives a rough list of corresponding header file between
-        <span class="underline">_classic</span>_ and <span class="underline">_qi</span>_,
-        but this can be used as a starting point only, as several components have
-        either been moved to different submodules or might not exist in the never
-        version anymore. We list only include files for the topmost submodules. For
-        header files required for more lower level components please refer to the
-        corresponding reference documentation of this component.
+        <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        and <span class="emphasis"><em>Spirit.Qi</em></span>, but this can be used as a starting point
+        only, as several components have either been moved to different submodules
+        or might not exist in the never version anymore. We list only include files
+        for the topmost submodules. For header files required for more lower level
+        components please refer to the corresponding reference documentation of this
+        component.
       </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -111,8 +115,8 @@
               </td>
 <td>
               <p>
-                none, use __boost<span class="underline">phoenix</span>_ for
-                writing semantic actions
+                none, use <a href="../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+                for writing semantic actions
               </p>
               </td>
 </tr>
@@ -161,8 +165,8 @@
               </td>
 <td>
               <p>
-                none, use <span class="underline">_qi</span>_ predicates instead
-                of if_p, while_p, for_p (included by <code class="computeroutput"><span class="identifier">qi_core</span><span class="special">.</span><span class="identifier">hpp</span></code>),
+                none, use <span class="emphasis"><em>Spirit.Qi</em></span> predicates instead of if_p,
+                while_p, for_p (included by <code class="computeroutput"><span class="identifier">qi_core</span><span class="special">.</span><span class="identifier">hpp</span></code>),
                 the equivalent for lazy_p is now included by <code class="computeroutput"><span class="identifier">qi_auxiliary</span><span class="special">.</span><span class="identifier">hpp</span></code>
               </p>
               </td>
@@ -211,38 +215,38 @@
               </td>
 <td>
               <p>
-                none, not part of <span class="underline">_qi</span>_ anymore,
-                these components will be added over time to the <span class="underline">_repo</span>_
+                none, not part of <span class="emphasis"><em>Spirit.Qi</em></span> anymore, these components
+                will be added over time to the <a href="../../../../repository/doc/html/index.html" target="_top">Repository</a>
               </p>
               </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions"></a><h5>
-<a name="id1000217"></a>
+<a name="id971651"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions">The
         Free Parse Functions</a>
       </h5>
 <p>
         The free parse functions (i.e. the main parser API) has been changed. This
         includes the names of the free functions as well as their interface. In
-        <span class="underline">_classic</span>_ all free functions were named
-        <code class="computeroutput"><span class="identifier">parse</span></code>. In <span class="underline">_qi</span>_
-        they are are named either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>
+        <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        all free functions were named <code class="computeroutput"><span class="identifier">parse</span></code>.
+        In <span class="emphasis"><em>Spirit.Qi</em></span> they are are named either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>
         or <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code> depending on whether the parsing
         should be done using a skipper (<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>)
         or not (<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>). All free functions now return a
         simple <code class="computeroutput"><span class="keyword">bool</span></code>. A returned <code class="computeroutput"><span class="keyword">true</span></code> means success (i.e. the parser has matched)
         or <code class="computeroutput"><span class="keyword">false</span></code> (i.e. the parser didn't
         match). This is equivalent to the former old <code class="computeroutput"><span class="identifier">parse_info</span></code>
-        member <code class="computeroutput"><span class="identifier">hit</span></code>. <span class="underline">_qi</span>_
+        member <code class="computeroutput"><span class="identifier">hit</span></code>. <span class="emphasis"><em>Spirit.Qi</em></span>
         doesn't support tracking of the matched input length anymore. The old <code class="computeroutput"><span class="identifier">parse_info</span></code> member <code class="computeroutput"><span class="identifier">full</span></code>
         can be emulated by comparing the iterators after <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>
         returned.
       </p>
 <p>
         All code examples in this section assume the following include statements
-        and using directives to be inserted. For <span class="underline">_classic</span>_:
+        and using directives to be inserted. For <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
         </p>
@@ -268,7 +272,7 @@
 <p>
       </p>
 <p>
-        and for <span class="underline">_qi</span>_:
+        and for <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
         </p>
@@ -296,7 +300,7 @@
       </p>
 <p>
         The following similar examples should clearify the differences. First the
-        base example in <span class="underline">_classic</span>_:
+        base example in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
         </p>
@@ -321,7 +325,7 @@
 <p>
       </p>
 <p>
-        And here is the equivalent piece of code using <span class="underline">_qi</span>_:
+        And here is the equivalent piece of code using <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
         </p>
@@ -349,7 +353,7 @@
       </p>
 <p>
         The changes required for phrase parsing (i.e. parsing using a skipper) are
-        similar. Here is how phrase parsing works in <span class="underline">_classic</span>_:
+        similar. Here is how phrase parsing works in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
         </p>
@@ -374,7 +378,7 @@
 <p>
       </p>
 <p>
-        And here the equivalent example in <span class="underline">_qi</span>_:
+        And here the equivalent example in <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
         </p>
@@ -401,59 +405,63 @@
 <p>
       </p>
 <p>
-        Note, how character parsers are in a separate namespace (here <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span></code>) as <span class="underline">_qi</span>_
-        now supports working with different character sets. See the section __char_encoding<span class="underline">namespace</span>_ for more information.
+        Note, how character parsers are in a separate namespace (here <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span></code>) as <span class="emphasis"><em>Spirit.Qi</em></span>
+        now supports working with different character sets. See the section <a class="link" href="../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+        Encoding Namespace</a> for more information.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.naming_conventions"></a><h5>
-<a name="id1002613"></a>
+<a name="id975495"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.naming_conventions">Naming
         Conventions</a>
       </h5>
 <p>
-        In <span class="underline">_classic</span>_ all parser primitives
-        have suffixes appended to their names, encoding their type: <code class="computeroutput"><span class="string">"_p"</span></code> for parsers, <code class="computeroutput"><span class="string">"_a"</span></code>
-        for lazy actions, <code class="computeroutput"><span class="string">"_d"</span></code>
-        for directives, etc. In <span class="underline">_qi</span>_ we don't
-        have anything similar. The only suffixes are single underscore letters <code class="computeroutput"><span class="string">"_"</span></code> applied where the name would
-        otherwise conflict with a keyword or predefined name (such as <code class="computeroutput"><span class="identifier">int_</span></code> for the integer parser). Overall,
-        most, if not all primitive parsers and directives have been renamed. Please
-        see the __qi<span class="underline">quickref</span>_ for an overview
-        on the names for the different available parser primitives, directives and
-        operators.
+        In <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        all parser primitives have suffixes appended to their names, encoding their
+        type: <code class="computeroutput"><span class="string">"_p"</span></code> for parsers,
+        <code class="computeroutput"><span class="string">"_a"</span></code> for lazy actions,
+        <code class="computeroutput"><span class="string">"_d"</span></code> for directives,
+        etc. In <span class="emphasis"><em>Spirit.Qi</em></span> we don't have anything similar. The
+        only suffixes are single underscore letters <code class="computeroutput"><span class="string">"_"</span></code>
+        applied where the name would otherwise conflict with a keyword or predefined
+        name (such as <code class="computeroutput"><span class="identifier">int_</span></code> for the
+        integer parser). Overall, most, if not all primitive parsers and directives
+        have been renamed. Please see the <a class="link" href="../qi/quick_reference.html" title="Quick Reference">Qi
+        Quick Reference</a> for an overview on the names for the different available
+        parser primitives, directives and operators.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.parser_attributes"></a><h5>
-<a name="id1002685"></a>
+<a name="id975567"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.parser_attributes">Parser
         Attributes</a>
       </h5>
 <p>
-        In <span class="underline">_classic</span>_ most of the parser primitives
-        don't expose a specific attribute type. Most parsers expose the pair of iterators
-        pointing to the matched input sequence. As in <span class="underline">_qi</span>_
-        all parsers expose a parser specific attribute type it introduces a special
-        directive __qi<span class="underline">raw</span>_<code class="computeroutput"><span class="special">[]</span></code>
-        allowing to achieve a similar effect as in <span class="underline">_classic</span>_.
-        The __qi<span class="underline">raw</span>_<code class="computeroutput"><span class="special">[]</span></code>
-        directive exposes the pair of iterators pointing to the matching sequence
-        of its embedded parser. Even if we very much encourage you to rewrite your
-        parsers to take advantage of the generated parser specific attributes, sometimes
-        it is helpful to get access to the underlying matched input sequence.
+        In <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        most of the parser primitives don't expose a specific attribute type. Most
+        parsers expose the pair of iterators pointing to the matched input sequence.
+        As in <span class="emphasis"><em>Spirit.Qi</em></span> all parsers expose a parser specific
+        attribute type it introduces a special directive <a class="link" href="../qi/reference/directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a><code class="computeroutput"><span class="special">[]</span></code>
+        allowing to achieve a similar effect as in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
+        The <a class="link" href="../qi/reference/directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a><code class="computeroutput"><span class="special">[]</span></code> directive exposes the pair of iterators
+        pointing to the matching sequence of its embedded parser. Even if we very
+        much encourage you to rewrite your parsers to take advantage of the generated
+        parser specific attributes, sometimes it is helpful to get access to the
+        underlying matched input sequence.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules"></a><h5>
-<a name="id1002745"></a>
+<a name="id975636"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules">Grammars
         and Rules</a>
       </h5>
 <p>
         The <code class="computeroutput"><span class="identifier">grammar</span><span class="special">&lt;&gt;</span></code>
         and <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;&gt;</span></code>
-        types are of equal importance to <span class="underline">_qi</span>_
-        as they are for <span class="underline">_classic</span>_. Their main
-        purpose is still the same: they allow to define non-terminals and they are
-        the main building blocks for more complex parsers. Nevertheless, both types
-        have been redesigned and their interfaces have changed. Let's have a look
-        at two examples first, we'll explain the differences afterwards. Here is
-        a simple grammar and its usage in <span class="underline">_classic</span>_:
+        types are of equal importance to <span class="emphasis"><em>Spirit.Qi</em></span> as they are
+        for <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
+        Their main purpose is still the same: they allow to define non-terminals
+        and they are the main building blocks for more complex parsers. Nevertheless,
+        both types have been redesigned and their interfaces have changed. Let's
+        have a look at two examples first, we'll explain the differences afterwards.
+        Here is a simple grammar and its usage in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
         </p>
@@ -518,7 +526,7 @@
 <p>
       </p>
 <p>
-        And here is a similar grammar and its usage in <span class="underline">_qi</span>_:
+        And here is a similar grammar and its usage in <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
         </p>
@@ -600,19 +608,20 @@
 </ul></div>
 <p>
         The first two points are tightly interrelated. The scanner business (see
-        the FAQ number one of <span class="underline">_classic</span>_ here:
-        __scanner<span class="underline">business</span>_) has been a problem
-        for a long time. The grammar and rule types have been specifically redesigned
-        to avoid this problem in the future. This also means that we don't need any
-        delayed instantiation of the inner definition class in a grammar anymore.
-        So the redesign not only helped fixing a long standing design problem, it
-        helped to simplify things considerably.
+        the FAQ number one of <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        here: <a href="../../../../../../libs/spirit/classic/doc/faq.html#scanner_business" target="_top">The
+        Scanner Business</a>) has been a problem for a long time. The grammar
+        and rule types have been specifically redesigned to avoid this problem in
+        the future. This also means that we don't need any delayed instantiation
+        of the inner definition class in a grammar anymore. So the redesign not only
+        helped fixing a long standing design problem, it helped to simplify things
+        considerably.
       </p>
 <p>
-        All <span class="underline">_qi</span>_ parser components have well
-        defined attribute types. Grammars and rules are no exception. But since both
-        need to be generic enough to be usable for any parser their attribute type
-        has to be explicitly specified. In the example above the <code class="computeroutput"><span class="identifier">roman</span></code>
+        All <span class="emphasis"><em>Spirit.Qi</em></span> parser components have well defined attribute
+        types. Grammars and rules are no exception. But since both need to be generic
+        enough to be usable for any parser their attribute type has to be explicitly
+        specified. In the example above the <code class="computeroutput"><span class="identifier">roman</span></code>
         grammar and the rule <code class="computeroutput"><span class="identifier">first</span></code>
         both have an <code class="computeroutput"><span class="keyword">unsigned</span></code> attribute:
       </p>
@@ -639,13 +648,13 @@
           are interpreted as the types of inherited attributes the rule or grammar
           expect to be passed during parsing. For more information please see the
           section about inherited and synthesized attributes for rules and grammars
-          (__sec<span class="underline">attributes</span>_).
+          (<a class="link" href="../abstracts/attributes.html" title="Attributes">Attributes</a>).
         </p></td></tr>
 </table></div>
 <p>
         If no attribute is desired none needs to be specified. The default attribute
-        type for both, grammars and rules, is __unused<span class="underline">type</span>_,
-        which is a special placeholder type. Generally, using __unused<span class="underline">type</span>_
+        type for both, grammars and rules, is <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+        which is a special placeholder type. Generally, using <code class="computeroutput"><span class="identifier">unused_type</span></code>
         as the attribute of a parser is interpreted as 'this parser has no attribute'.
         This is mostly used for parsers applied to parts of the input not carrying
         any significant information, rather being delimiters or structural elements

@@ -28,19 +28,19 @@
           a Custom Attribute Mapping for a Parser</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.auto.create_parser.create_parser"></a><h6>
-<a name="id986242"></a>
+<a name="id956268"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.create_parser">create_parser</a>
           </h6>
 <p>
             The template <code class="computeroutput"><span class="identifier">create_parser</span></code>
             is a type used as an customization point. It is invoked by the <span class="emphasis"><em>Qi</em></span>
-            __create<span class="underline">parser</span>_ API function in
+            <a class="link" href="../../../qi/reference/parse_api/create_parser.html" title="API for Automatic Parser Creation"><code class="computeroutput"><span class="identifier">create_parser</span></code></a> API function in
             order to create a custom mapping of the given data type to a parser expression.
-            This parser expression will be returned from __create<span class="underline">parser</span>_
-            whenever the given data type is encountered.
+            This parser expression will be returned from <a class="link" href="../../../qi/reference/parse_api/create_parser.html" title="API for Automatic Parser Creation"><code class="computeroutput"><span class="identifier">create_parser</span></code></a> whenever the given
+            data type is encountered.
           </p>
 <a name="spirit.advanced.customize.auto.create_parser.module_headers"></a><h6>
-<a name="id986284"></a>
+<a name="id956320"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.module_headers">Module
             Headers</a>
           </h6>
@@ -48,10 +48,10 @@
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_auto</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.advanced.customize.auto.create_parser.namespace"></a><h6>
-<a name="id986361"></a>
+<a name="id956397"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -68,7 +68,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_parser.synopsis"></a><h6>
-<a name="id986434"></a>
+<a name="id956470"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -79,7 +79,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.auto.create_parser.template_parameters"></a><h6>
-<a name="id986557"></a>
+<a name="id956592"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.template_parameters">Template
             parameters</a>
           </h6>
@@ -148,7 +148,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_parser.notation"></a><h6>
-<a name="id986720"></a>
+<a name="id956756"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -161,7 +161,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.auto.create_parser.expression_semantics"></a><h6>
-<a name="id986757"></a>
+<a name="id956793"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -211,14 +211,14 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_parser.predefined_specializations"></a><h6>
-<a name="id986899"></a>
+<a name="id956934"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.predefined_specializations">Predefined
             Specializations</a>
           </h6>
 <p>
-            <span class="underline">_spirit</span>_ predefines specializations
-            of this customization point for several types. All predefined mappings
-            are listed here: <a class="link" href="../../../qi/reference/auto.html#spirit.qi.reference.auto.additional_requirements">Additional
+            <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines
+            specializations of this customization point for several types. All predefined
+            mappings are listed here: <a class="link" href="../../../qi/reference/auto.html#spirit.qi.reference.auto.additional_requirements">Additional
             Attribute Requirements for Parsers</a>.
           </p>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -233,20 +233,19 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.auto.create_parser.when_to_implement"></a><h6>
-<a name="id986943"></a>
+<a name="id956979"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.when_to_implement">When
             to implement</a>
           </h6>
 <p>
             The customization point <code class="computeroutput"><span class="identifier">create_parser</span></code>
             needs to be implemented for a specific type whenever this type should
-            be usable with the API function __create<span class="underline">parser</span>_
-            (which includes using the <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">auto_</span></code>
-            parser and the special API functions based on the automatic creation
-            of the matching parser type).
+            be usable with the API function <a class="link" href="../../../qi/reference/parse_api/create_parser.html" title="API for Automatic Parser Creation"><code class="computeroutput"><span class="identifier">create_parser</span></code></a> (which includes
+            using the <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">auto_</span></code> parser and the special API functions
+            based on the automatic creation of the matching parser type).
           </p>
 <a name="spirit.advanced.customize.auto.create_parser.example"></a><h6>
-<a name="id986989"></a>
+<a name="id957029"></a>
             <a class="link" href="create_parser.html#spirit.advanced.customize.auto.create_parser.example">Example</a>
           </h6>
 <p>

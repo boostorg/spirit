@@ -27,11 +27,11 @@
 <a name="spirit.karma.tutorials.warming_up"></a><a class="link" href="warming_up.html" title="Warming up">Warming up</a>
 </h4></div></div></div>
 <p>
-          Learning how to use <span class="underline">_karma</span>_ is really
-          simple. We will start from trivial examples, ramping up as we go.
+          Learning how to use <span class="emphasis"><em>Spirit.Karma</em></span> is really simple.
+          We will start from trivial examples, ramping up as we go.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__1_generating_a_number"></a><h6>
-<a name="id751534"></a>
+<a name="id718317"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__1_generating_a_number">Trivial
           Example #1 Generating a number</a>
         </h6>
@@ -46,11 +46,12 @@
           and consistent naming conventions will help you finding your way through
           the maze. Especially important to note is that things related to identical
           entities (as in this case, floating point numbers) are named identically
-          in <span class="underline">_karma</span>_ and in <span class="underline">_qi</span><span class="underline">. Actually, both libraries are using the very same variable
-          instance to refer to a floating point generator or parser: `double</span>`.
+          in <span class="emphasis"><em>Spirit.Karma</em></span> and in <span class="emphasis"><em>Spirit.Qi</em></span>.
+          Actually, both libraries are using the very same variable instance to refer
+          to a floating point generator or parser: <code class="computeroutput"><span class="identifier">double_</span></code>.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__2_generating_two_numbers"></a><h6>
-<a name="id751576"></a>
+<a name="id718360"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__2_generating_two_numbers">Trivial
           Example #2 Generating two numbers</a>
         </h6>
@@ -63,7 +64,7 @@
 <p>
           Here you see the familiar floating-point numeric generator <code class="computeroutput"><span class="identifier">double_</span></code> used twice, once for each number.
           If you are used to see the <code class="computeroutput"><span class="char">'&gt;&gt;'</span></code>
-          operator for concatenating two parsers in <span class="underline">_qi</span>_
+          operator for concatenating two parsers in <span class="emphasis"><em>Spirit.Qi</em></span>
           you might wonder, what's that <code class="computeroutput"><span class="char">'&lt;&lt;'</span></code>
           operator doing in there? We decided to distinguish generating and parsing
           of sequences the same way as the std::stream libraries do: we use operator
@@ -88,7 +89,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__3_generating_one_or_more_numbers"></a><h6>
-<a name="id751663"></a>
+<a name="id718446"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__3_generating_one_or_more_numbers">Trivial
           Example #3 Generating one or more numbers</a>
         </h6>
@@ -100,10 +101,10 @@
 </pre>
 <p>
           This is like a regular-expression Kleene Star. We moved the <code class="computeroutput"><span class="special">*</span></code> to the front for the same reasons we did
-          in <span class="underline">_qi</span>_: we must work with the syntax
-          rules of C++. But if you know regular expressions (and for sure you remember
-          those C++ syntax rules) it will start to look very familiar in a matter
-          of a very short time.
+          in <span class="emphasis"><em>Spirit.Qi</em></span>: we must work with the syntax rules of
+          C++. But if you know regular expressions (and for sure you remember those
+          C++ syntax rules) it will start to look very familiar in a matter of a
+          very short time.
         </p>
 <p>
           Any expression that evaluates to a generator may be used with the Kleene
@@ -113,14 +114,13 @@
           numbers, if needed.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__4_generating_a_comma_delimited_list_of_numbers"></a><h6>
-<a name="id751712"></a>
+<a name="id718494"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__4_generating_a_comma_delimited_list_of_numbers">Trivial
           Example #4 Generating a comma-delimited list of numbers</a>
         </h6>
 <p>
-          We follow the lead of <span class="underline">_qi</span>_'s warming
-          up section and will create a generator that produces a comma-delimited
-          list of numbers.
+          We follow the lead of <span class="emphasis"><em>Spirit.Qi</em></span>'s warming up section
+          and will create a generator that produces a comma-delimited list of numbers.
         </p>
 <pre class="programlisting"><span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="special">*(</span><span class="identifier">lit</span><span class="special">(</span><span class="char">','</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">)</span>
 </pre>
@@ -137,7 +137,7 @@
           in the generated output zero or more times.
         </p>
 <a name="spirit.karma.tutorials.warming_up.let_s_generate_"></a><h6>
-<a name="id751848"></a>
+<a name="id718628"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.let_s_generate_">Let's
           Generate!</a>
         </h6>

@@ -28,16 +28,16 @@
           (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.repeat.description"></a><h6>
-<a name="id691078"></a>
+<a name="id655848"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>
             provides a more powerful and flexible mechanism for repeating a parser.
             There are grammars that are impractical and cumbersome, if not impossible,
-            for the basic EBNF iteration syntax (__qi<span class="underline">kleene</span>_
-            and the __qi<span class="underline">plus</span>_) to specify.
-            Examples:
+            for the basic EBNF iteration syntax (<a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>
+            and the <a class="link" href="../operator/plus.html" title="Plus (+a)">Plus</a>)
+            to specify. Examples:
           </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -51,17 +51,17 @@
             </li>
 </ul></div>
 <a name="spirit.qi.reference.directive.repeat.header"></a><h6>
-<a name="id691130"></a>
+<a name="id655900"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/repeat.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_repeat</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.repeat.namespace"></a><h6>
-<a name="id691204"></a>
+<a name="id655974"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -87,14 +87,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.model_of"></a><h6>
-<a name="id691319"></a>
+<a name="id656089"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                __unary_parser<span class="underline">concept</span>_
+                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
               </p>
 <p>
             </p>
@@ -104,26 +104,27 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A __parser<span class="underline">concept</span>_.
+                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">n</span></code>,
             <code class="computeroutput"><span class="identifier">min</span></code>, <code class="computeroutput"><span class="identifier">max</span></code></span></dt>
 <dd><p>
                 An <code class="computeroutput"><span class="keyword">int</span></code> anything that
                 can be converted to an <code class="computeroutput"><span class="keyword">int</span></code>,
-                or a __qi_lazy<span class="underline">argument</span>_ that
-                evaluates to anything that can be converted to an <code class="computeroutput"><span class="keyword">int</span></code>.
+                or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                Argument</a> that evaluates to anything that can be converted
+                to an <code class="computeroutput"><span class="keyword">int</span></code>.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id691439"></a>
+<a name="id656219"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __unary_parser<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -152,7 +153,7 @@
 <td>
                   <p>
                     Repeat <code class="computeroutput"><span class="identifier">a</span></code> zero
-                    or more times. Same as __qi<span class="underline">kleene</span>_.
+                    or more times. Same as <a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>.
                   </p>
                   </td>
 </tr>
@@ -203,11 +204,12 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.attributes"></a><h6>
-<a name="id691744"></a>
+<a name="id656529"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <p>
-            See __qi_comp_attr<span class="underline">notation</span>_.
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -296,7 +298,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.complexity"></a><h6>
-<a name="id692414"></a>
+<a name="id657201"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -311,7 +313,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.repeat.example"></a><h6>
-<a name="id692445"></a>
+<a name="id657232"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -320,7 +322,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>
@@ -406,7 +409,7 @@
 <p>
               </p>
 <p>
-                __pascal<span class="underline">string</span>_
+                <span class="inlinemediaobject"><img src="../../../.././images/pascal_string.png" alt="pascal_string"></span>
               </p>
 <p>
             </p>

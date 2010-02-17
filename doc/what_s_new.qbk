@@ -36,6 +36,8 @@
 * Constructs like `karma::buffer[karma::buffer[...]]` don't result in 
   performing double buffering anymore. The same is true if an alternative is 
   wrapped into a `karma::buffer[]` directive (as for instance: `buffer[a] | b`).
+* The directives `qi::`__qi_raw__ and `qi::`__qi_lexeme__ don't do pre-skipping 
+  anymore.
 
 [endsect] [/ spirit_2_3]
 

@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Introduction to _lex_</title>
+<title>Introduction to Spirit.Lex</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.3">
 <link rel="up" href="../lex.html" title="Lex - Writing Lexical Analyzers">
 <link rel="prev" href="../lex.html" title="Lex - Writing Lexical Analyzers">
-<link rel="next" href="tutorials.html" title="_lex_ Tutorials">
+<link rel="next" href="tutorials.html" title="Spirit.Lex Tutorials">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,20 +22,20 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../lex.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../lex.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="tutorials.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Introduction to _lex_">
+<div class="section" title="Introduction to Spirit.Lex">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="spirit.lex.lexer_introduction"></a><a class="link" href="lexer_introduction.html" title="Introduction to _lex_"> Introduction to <span class="underline">_lex</span>_</a>
+<a name="spirit.lex.lexer_introduction"></a><a class="link" href="lexer_introduction.html" title="Introduction to Spirit.Lex"> Introduction to <span class="emphasis"><em>Spirit.Lex</em></span></a>
 </h3></div></div></div>
 <p>
         Lexical scanning is the process of analyzing the stream of input characters
         and separating it into strings called tokens, separated by whitespace. Most
         compiler texts start here, and devote several chapters to discussing various
-        ways to build scanners. <span class="underline">_lex</span>_ is a
-        library built to take care of the complexities of creating a lexer for your
-        grammar (in this documentation we will use the terms 'lexical analyzer',
-        'lexer' and 'scanner' interchangably). All that is needed to create a lexer
-        is to know the set of patterns describing the different tokens you want to
-        recognize in the input. To make this a bit more formal, here are some definitions:
+        ways to build scanners. <span class="emphasis"><em>Spirit.Lex</em></span> is a library built
+        to take care of the complexities of creating a lexer for your grammar (in
+        this documentation we will use the terms 'lexical analyzer', 'lexer' and
+        'scanner' interchangably). All that is needed to create a lexer is to know
+        the set of patterns describing the different tokens you want to recognize
+        in the input. To make this a bit more formal, here are some definitions:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -56,7 +56,7 @@
         </li>
 </ul></div>
 <a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h5>
-<a name="id906206"></a>
+<a name="id875797"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
         Use a Separate Lexer?</a>
       </h5>
@@ -65,9 +65,9 @@
         feeding the parser with a stream of input tokens only. Theoretically it is
         not necessary implement this separation as in the end there is only one set
         of syntactical rules defining the language, so in theory we could write the
-        whole parser in one module. In fact, <span class="underline">_qi</span>_
-        allows you to write parsers without using a lexer, parsing the input character
-        stream directly, and for the most part this is the way <span class="underline">_spirit</span>_
+        whole parser in one module. In fact, <span class="emphasis"><em>Spirit.Qi</em></span> allows
+        you to write parsers without using a lexer, parsing the input character stream
+        directly, and for the most part this is the way <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
         has been used since its invention.
       </p>
 <p>
@@ -146,30 +146,30 @@
         identifying keywords, storing identifiers in tables, etc.
       </p>
 <p>
-        Now, <span class="underline">_spirit</span>_ follows this structure,
-        where <span class="underline">_lex</span>_ can be used to implement
-        state machine based recognizers, while <span class="underline">_qi</span>_
-        can be used to build recognizers for context free grammars. Since both modules
+        Now, <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> follows this
+        structure, where <span class="emphasis"><em>Spirit.Lex</em></span> can be used to implement
+        state machine based recognizers, while <span class="emphasis"><em>Spirit.Qi</em></span> can
+        be used to build recognizers for context free grammars. Since both modules
         are seemlessly integrated with each other and with the C++ target language
         it is even possible to use the provided functionality to build more complex
         grammar recognizers.
       </p>
-<a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_role__underline___lex__emphasis__"></a><h5>
-<a name="id906419"></a>
-        <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_role__underline___lex__emphasis__">Advantages
-        of using <span class="underline">_lex</span>_</a>
+<a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h5>
+<a name="id876006"></a>
+        <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
+        of using <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>
 <p>
-        The advantage of using <span class="underline">_lex</span>_ to create
-        the lexical analyzer over using more traditional tools such as <span class="underline">_flex</span>_ is its carefully crafted integration with
-        the <span class="underline">_spirit</span>_ library and the C++ host
-        language. You don't need any external tools to generate the code, your lexer
-        will be perfectly integrated with the rest of your program, making it possible
-        to freely access any context information and data structure. Since the C++
-        compiler sees all the code, it will generate optimal code no matter what
-        configuration options have been chosen by the user. <span class="underline">_lex</span>_
-        gives you the vast majority of features you could get from a similar <span class="underline">_flex</span>_ program without the need to leave C++
-        as a host language:
+        The advantage of using <span class="emphasis"><em>Spirit.Lex</em></span> to create the lexical
+        analyzer over using more traditional tools such as <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
+        is its carefully crafted integration with the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+        library and the C++ host language. You don't need any external tools to generate
+        the code, your lexer will be perfectly integrated with the rest of your program,
+        making it possible to freely access any context information and data structure.
+        Since the C++ compiler sees all the code, it will generate optimal code no
+        matter what configuration options have been chosen by the user. <span class="emphasis"><em>Spirit.Lex</em></span>
+        gives you the vast majority of features you could get from a similar <a href="http://flex.sourceforge.net/" target="_top">Flex</a> program without the need
+        to leave C++ as a host language:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -188,44 +188,44 @@
         </li>
 </ul></div>
 <p>
-        Even if it is possible to use <span class="underline">_lex</span>_
-        to generate C++ code representing the lexical analyzer (we will refer to
-        that as the <span class="emphasis"><em>static</em></span> model, described in more detail in
-        the section __sec_lex_static<span class="underline">model</span>_)
-        - a model very similar to the way <span class="underline">_flex</span>_
+        Even if it is possible to use <span class="emphasis"><em>Spirit.Lex</em></span> to generate
+        C++ code representing the lexical analyzer (we will refer to that as the
+        <span class="emphasis"><em>static</em></span> model, described in more detail in the section
+        <a class="link" href="abstracts/lexer_static_model.html" title="The Static Lexer Model">The <span class="emphasis"><em>Static</em></span>
+        Model</a>) - a model very similar to the way <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
         operates - we will mainly focus on the opposite, the <span class="emphasis"><em>dynamic</em></span>
         model. You can directly integrate the token definitions into your C++ program,
         building the lexical analyzer dynamically at runtime. The dynamic model is
-        something not supported by <span class="underline">_flex</span>_ or
-        other lexical scanner generators (such as <span class="underline">_re2c</span>_,
-        <span class="underline">_ragel</span>_, etc.). This dynamic flexibility
-        allows you to speed up the development of your application.
+        something not supported by <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
+        or other lexical scanner generators (such as <a href="http://re2c.sourceforge.net/" target="_top">re2c</a>,
+        <a href="http://www.cs.queensu.ca/~thurston/ragel/" target="_top">Ragel</a>, etc.).
+        This dynamic flexibility allows you to speed up the development of your application.
       </p>
-<a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_role__underline___lex__emphasis__"></a><h5>
-<a name="id906605"></a>
-        <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_role__underline___lex__emphasis__">The
-        Library Structure of <span class="underline">_lex</span>_</a>
+<a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h5>
+<a name="id876109"></a>
+        <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
+        Library Structure of <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>
 <p>
-        The <a class="link" href="lexer_introduction.html#spirit.lexerflow" title="Figure&#160;6.&#160;The Library structure and Common Flow of Information while using _lex_ in an application">figure</a> below shows a high level
-        overview of how the <span class="underline">_lex</span>_ library might
-        be used in an application. <span class="underline">_lex</span>_ allows
-        to create lexical analyzers based on patterns. These patterns are regular
-        expression based rules used to define the different tokens to be recognized
-        in the character input sequence. The input sequence is expected to be provided
-        to the lexical analyzer as an arbitrary standard forward iterator. The lexical
-        analyzer itself exposes a standard forward iterator as well. The difference
-        here is that the exposed iterator provides access to the token sequence instead
-        of to the character sequence. The tokens in this sequence are constructed
-        on the fly by analyzing the underlying character sequence and matching this
+        The <a class="link" href="lexer_introduction.html#spirit.lexerflow" title="Figure&#160;6.&#160;The Library structure and Common Flow of Information while using Spirit.Lex in an application">figure</a> below shows a high level
+        overview of how the <span class="emphasis"><em>Spirit.Lex</em></span> library might be used
+        in an application. <span class="emphasis"><em>Spirit.Lex</em></span> allows to create lexical
+        analyzers based on patterns. These patterns are regular expression based
+        rules used to define the different tokens to be recognized in the character
+        input sequence. The input sequence is expected to be provided to the lexical
+        analyzer as an arbitrary standard forward iterator. The lexical analyzer
+        itself exposes a standard forward iterator as well. The difference here is
+        that the exposed iterator provides access to the token sequence instead of
+        to the character sequence. The tokens in this sequence are constructed on
+        the fly by analyzing the underlying character sequence and matching this
         to the patterns as defined by the application.
       </p>
 <p>
         </p>
 <div class="figure">
 <a name="spirit.lexerflow"></a><p class="title"><b>Figure&#160;6.&#160;The Library structure and Common Flow of Information while
-        using <span class="underline">_lex</span>_ in an application</b></p>
-<div class="figure-contents"><span class="inlinemediaobject"><img src="../.././images/lexerflow.png" alt="The Library structure and Common Flow of Information while using _lex_ in an application"></span></div>
+        using <span class="emphasis"><em>Spirit.Lex</em></span> in an application</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../.././images/lexerflow.png" alt="The Library structure and Common Flow of Information while using Spirit.Lex in an application"></span></div>
 </div>
 <p><br class="figure-break">
       </p>

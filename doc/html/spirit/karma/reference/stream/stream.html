@@ -28,13 +28,13 @@
           etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.stream.stream.description"></a><h6>
-<a name="id891016"></a>
+<a name="id860436"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">stream_generator</span></code>
             is a primitive which allows to use pre-existing standard streaming operators
-            for output generation integrated with <span class="underline">_karma</span>_.
+            for output generation integrated with <span class="emphasis"><em>Spirit.Karma</em></span>.
             It provides a wrapper generator dispatching the value to output to the
             stream operator of the corresponding type. Any value <code class="computeroutput"><span class="identifier">a</span></code>
             to be formatted using the <code class="computeroutput"><span class="identifier">stream_generator</span></code>
@@ -44,17 +44,17 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;,</span> <span class="identifier">A</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 </pre>
 <a name="spirit.karma.reference.stream.stream.header"></a><h6>
-<a name="id891126"></a>
+<a name="id860546"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/stream.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_stream</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.stream.stream.namespace"></a><h6>
-<a name="id891201"></a>
+<a name="id860620"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -80,14 +80,14 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.synopsis"></a><h6>
-<a name="id892007"></a>
+<a name="id860738"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">stream_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.stream.stream.template_parameters"></a><h6>
-<a name="id892061"></a>
+<a name="id860792"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.template_parameters">Template
             parameters</a>
           </h6>
@@ -135,14 +135,14 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.model_of"></a><h6>
-<a name="id892154"></a>
+<a name="id860884"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                __primitive_generator<span class="underline">concept</span>_
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
               </p>
 <p>
             </p>
@@ -154,19 +154,20 @@
 <dd><p>
                 A variable instance of any type with a defined matching streaming
                 <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>
-                or a __karma_lazy<span class="underline">argument</span>_
-                that evaluates to any type with a defined matching streaming <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>.
+                or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to any type with a defined matching
+                streaming <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.stream.stream.expression_semantics"></a><h6>
-<a name="id892236"></a>
+<a name="id860974"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __primitive_generator<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -330,7 +331,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.additional_requirements"></a><h6>
-<a name="id892727"></a>
+<a name="id861683"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -371,7 +372,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.attributes"></a><h6>
-<a name="id892954"></a>
+<a name="id861910"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -413,7 +414,7 @@
                   </td>
 <td>
                   <p>
-                    <span class="underline">_unused</span>_
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
                   </p>
                   </td>
 </tr>
@@ -438,7 +439,7 @@
                   </td>
 <td>
                   <p>
-                    <span class="underline">_unused</span>_
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
                   </p>
                   </td>
 </tr>
@@ -463,7 +464,7 @@
                   </td>
 <td>
                   <p>
-                    <span class="underline">_unused</span>_
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
                   </p>
                   </td>
 </tr>
@@ -477,9 +478,9 @@
 <tr><td align="left" valign="top"><p>
               The attribute type <code class="computeroutput"><span class="identifier">hold_any</span></code>
               exposed by some of the stream generators is semantically and syntactically
-              equivalent to the type implemented by __boost<span class="underline">any</span>_.
+              equivalent to the type implemented by <a href="../../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>.
               It has been added to <span class="emphasis"><em>Spirit</em></span> as it has better a
-              performance and a smaller footprint if compared to __boost<span class="underline">any</span>_.
+              performance and a smaller footprint if compared to <a href="../../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>.
             </p></td></tr>
 </table></div>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -496,7 +497,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.complexity"></a><h6>
-<a name="id893344"></a>
+<a name="id862307"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -509,7 +510,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.stream.stream.example"></a><h6>
-<a name="id893368"></a>
+<a name="id862331"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -518,7 +519,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>

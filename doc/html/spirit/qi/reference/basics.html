@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.basics"></a><a class="link" href="basics.html" title="Basics">Basics</a>
 </h4></div></div></div>
 <a name="spirit.qi.reference.basics.lazy_argument"></a><h6>
-<a name="id646546"></a>
+<a name="id611067"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
         </h6>
 <p>
@@ -45,13 +45,13 @@
 </pre>
 <p>
           where <code class="computeroutput"><span class="identifier">T</span></code>, the function's
-          return value, is compatible with the argument type expected and <code class="computeroutput"><span class="identifier">Context</span></code> is the parser's <span class="underline">_context</span>_
-          type (The first argument is <span class="underline">_unused</span>_
+          return value, is compatible with the argument type expected and <code class="computeroutput"><span class="identifier">Context</span></code> is the parser's Context type
+          (The first argument is <code class="computeroutput"><span class="identifier">unused</span></code>
           to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
-          second argument. This is done for uniformity with <span class="underline">_actions</span>_).
+          second argument. This is done for uniformity with Semantic Actions).
         </p>
 <a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h6>
-<a name="id646688"></a>
+<a name="id611203"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h6>
@@ -112,7 +112,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.reference.basics.examples"></a><h6>
-<a name="id646872"></a>
+<a name="id611387"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
         </h6>
 <p>
@@ -226,7 +226,7 @@
         </p>
 <p>
           The <code class="computeroutput"><span class="identifier">print_info</span></code> utility
-          function prints information contained in the <span class="underline">_info</span>_
+          function prints information contained in the <code class="computeroutput"><span class="identifier">info</span></code>
           class.
         </p>
 <p>
@@ -264,11 +264,11 @@
 <p>
         </p>
 <a name="spirit.qi.reference.basics.string"></a><h6>
-<a name="id650604"></a>
+<a name="id616146"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.string">String</a>
         </h6>
 <a name="spirit.qi.reference.basics.header"></a><h6>
-<a name="id650617"></a>
+<a name="id616159"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;
@@ -308,7 +308,8 @@
                   Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                   if a certain type, <code class="computeroutput"><span class="identifier">S</span></code>
                   is a string, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                  otherwise (See __mpl_boolean<span class="underline">constant</span>_).
+                  otherwise (See <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                  Boolean Constant</a>).
                 </p>
                 </td>
 </tr>
@@ -345,7 +346,7 @@
                 </td>
 <td>
                 <p>
-                  Function that returns an <span class="underline">_stl</span>_
+                  Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
                   iterator from <code class="computeroutput"><span class="identifier">s</span></code>
                   that points to the beginning the string.
                 </p>
@@ -359,7 +360,7 @@
                 </td>
 <td>
                 <p>
-                  Function that returns an <span class="underline">_stl</span>_
+                  Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
                   iterator from <code class="computeroutput"><span class="identifier">s</span></code>
                   that points to the end of the string.
                 </p>
@@ -368,7 +369,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.basics.models"></a><h6>
-<a name="id651089"></a>
+<a name="id616632"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.models">Models</a>
         </h6>
 <p>
@@ -387,8 +388,9 @@
 </ul></div>
 <p>
           The namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code> is open for users to provide their
-          own specializations. The customization points implemented by <span class="underline">_qi</span>_ usable to customize the behavior of parsers
-          are described in the section __sec_customization<span class="underline">points</span>_.
+          own specializations. The customization points implemented by <span class="emphasis"><em>Spirit.Qi</em></span>
+          usable to customize the behavior of parsers are described in the section
+          <a class="link" href="../../advanced/customize.html" title="Customization of Spirit's Attribute Handling">Customization of Attribute Handling</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

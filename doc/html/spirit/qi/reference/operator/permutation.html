@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.permutation.description"></a><h6>
-<a name="id730718"></a>
+<a name="id701249"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.description">Description</a>
           </h6>
 <p>
@@ -43,7 +43,11 @@
 <p>
             The operands are the elements in the permutation set. Each element in
             the permutation set may occur at most once, but not all elements of the
-            given set need to be present. For example:
+            given set need to be present. Note that by this definition, the permutation
+            operator is not limited to strict permutations.
+          </p>
+<p>
+            For example:
           </p>
 <pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">)</span> <span class="special">^</span> <span class="char">'b'</span> <span class="special">^</span> <span class="char">'c'</span>
 </pre>
@@ -53,17 +57,17 @@
 <pre class="programlisting"><span class="string">"a"</span><span class="special">,</span> <span class="string">"ab"</span><span class="special">,</span> <span class="string">"abc"</span><span class="special">,</span> <span class="string">"cba"</span><span class="special">,</span> <span class="string">"bca"</span> <span class="special">...</span> <span class="identifier">etc</span><span class="special">.</span>
 </pre>
 <a name="spirit.qi.reference.operator.permutation.header"></a><h6>
-<a name="id730895"></a>
+<a name="id701429"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/permutation.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_permutation</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.permutation.model_of"></a><h6>
-<a name="id730969"></a>
+<a name="id701503"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.model_of">Model
             of</a>
           </h6>
@@ -71,7 +75,7 @@
 <p>
               </p>
 <p>
-                __nary_parser<span class="underline">concept</span>_
+                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
               </p>
 <p>
             </p>
@@ -82,18 +86,18 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
             <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                A __parser<span class="underline">concept</span>_
+                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.permutation.expression_semantics"></a><h6>
-<a name="id731038"></a>
+<a name="id701581"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __nary_parser<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -128,11 +132,12 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.permutation.attributes"></a><h6>
-<a name="id735411"></a>
+<a name="id701692"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.attributes">Attributes</a>
           </h6>
 <p>
-            See __qi_comp_attr<span class="underline">notation</span>_.
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -172,7 +177,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.permutation.complexity"></a><h6>
-<a name="id735807"></a>
+<a name="id702090"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -188,7 +193,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.permutation.example"></a><h6>
-<a name="id735831"></a>
+<a name="id702114"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -197,7 +202,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>

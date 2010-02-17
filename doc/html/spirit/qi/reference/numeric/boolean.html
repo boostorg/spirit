@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">bool_</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.numeric.boolean.description"></a><h6>
-<a name="id715630"></a>
+<a name="id680637"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.description">Description</a>
           </h6>
 <p>
@@ -39,17 +39,17 @@
             expression requirements (documented below).
           </p>
 <a name="spirit.qi.reference.numeric.boolean.header"></a><h6>
-<a name="id715668"></a>
+<a name="id680675"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric/bool.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_bool</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.numeric.boolean.namespace"></a><h6>
-<a name="id715743"></a>
+<a name="id680750"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -81,14 +81,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.synopsis"></a><h6>
-<a name="id715895"></a>
+<a name="id680902"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">BooleanPolicies</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">bool_parser</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.numeric.boolean.template_parameters"></a><h6>
-<a name="id715960"></a>
+<a name="id680967"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.template_parameters">Template
             parameters</a>
           </h6>
@@ -153,14 +153,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.model_of"></a><h6>
-<a name="id716098"></a>
+<a name="id682198"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                __primitive_parser<span class="underline">concept</span>_
+                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
               </p>
 <p>
             </p>
@@ -186,8 +186,8 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">f</span></code>,
             <code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
-                <span class="underline">_fwditer</span>_. first/last iterator
-                pair.
+                <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a>. first/last
+                iterator pair.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">attr</span></code></span></dt>
 <dd><p>
@@ -204,13 +204,13 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.numeric.boolean.expression_semantics"></a><h6>
-<a name="id716312"></a>
+<a name="id682421"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __primitive_parser<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -288,11 +288,12 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              All boolean parsers properly respect the __qi_no<span class="underline">case</span>_<code class="computeroutput"><span class="special">[]</span></code> directive.
+              All boolean parsers properly respect the <a class="link" href="../directive/no_case.html" title="Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a><code class="computeroutput"><span class="special">[]</span></code>
+              directive.
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.attributes"></a><h6>
-<a name="id716630"></a>
+<a name="id682747"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -306,7 +307,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.numeric.boolean.complexity"></a><h6>
-<a name="id716661"></a>
+<a name="id682779"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -319,7 +320,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.numeric.boolean.minimum_expression_requirements_for__code__phrase_role__identifier__b__phrase___code_"></a><h6>
-<a name="id716685"></a>
+<a name="id682803"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.minimum_expression_requirements_for__code__phrase_role__identifier__b__phrase___code_">Minimum
             Expression Requirements for <code class="computeroutput"><span class="identifier">B</span></code></a>
           </h6>
@@ -359,7 +360,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code_"></a><h6>
-<a name="id716791"></a>
+<a name="id682908"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code_">Boolean
             <code class="computeroutput"><span class="identifier">Policies</span></code></a>
           </h6>
@@ -377,7 +378,7 @@
             and <code class="computeroutput"><span class="string">"false"</span></code>.
           </p>
 <a name="spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__expression_requirements"></a><h6>
-<a name="id716857"></a>
+<a name="id682974"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__expression_requirements">Boolean
             <code class="computeroutput"><span class="identifier">Policies</span></code> Expression Requirements</a>
           </h6>
@@ -443,7 +444,7 @@
             or <code class="computeroutput"><span class="keyword">false</span></code>).
           </p>
 <a name="spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__specializations"></a><h6>
-<a name="id717111"></a>
+<a name="id683229"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__specializations">Boolean
             <code class="computeroutput"><span class="identifier">Policies</span></code> Specializations</a>
           </h6>
@@ -473,7 +474,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.numeric.boolean.example"></a><h6>
-<a name="id717564"></a>
+<a name="id683681"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -482,7 +483,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __qi_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>

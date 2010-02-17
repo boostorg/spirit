@@ -27,16 +27,16 @@
 <a name="spirit.qi.reference.parser_concepts.unaryparser"></a><a class="link" href="unaryparser.html" title="UnaryParser">UnaryParser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.description"></a><h6>
-<a name="id642720"></a>
+<a name="id607151"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>UnaryParser</em></span> is a composite parser that has a single
             subject. The UnaryParser may change the behavior of its subject following
-            the __delegate<span class="underline">pattern</span>_.
+            the Delegate Design Pattern.
           </p>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.refinement_of"></a><h6>
-<a name="id642750"></a>
+<a name="id607176"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.refinement_of">Refinement
             of</a>
           </h6>
@@ -44,7 +44,7 @@
 <p>
               </p>
 <p>
-                __parser<span class="underline">concept</span>_
+                <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
               </p>
 <p>
             </p>
@@ -63,13 +63,13 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.valid_expressions"></a><h6>
-<a name="id642825"></a>
+<a name="id607255"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in __parser<span class="underline">concept</span>_,
-            for any UnaryParser the following must be met:
+            In addition to the requirements defined in <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>, for any UnaryParser
+            the following must be met:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -107,13 +107,13 @@
                   </td>
 <td>
                   <p>
-                    __parser<span class="underline">concept</span>_
+                    <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.type_expressions"></a><h6>
-<a name="id642928"></a>
+<a name="id607369"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -158,14 +158,15 @@
                     Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                     if a certain type, <code class="computeroutput"><span class="identifier">P</span></code>
                     is a UnaryParser, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See __mpl_boolean<span class="underline">constant</span>_).
+                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                    Boolean Constant</a>).
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.invariants"></a><h6>
-<a name="id643095"></a>
+<a name="id607537"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.invariants">Invariants</a>
           </h6>
 <p>
@@ -176,35 +177,19 @@
 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_parser</span><span class="special">&lt;</span><span class="identifier">P</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.models"></a><h6>
-<a name="id643180"></a>
+<a name="id607623"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.models">Models</a>
           </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-              __qi_and<span class="underline">predicate</span>_
-            </li>
-<li class="listitem">
-              __qi<span class="underline">kleene</span>_
-            </li>
-<li class="listitem">
-              __qi<span class="underline">lexeme</span>_
-            </li>
-<li class="listitem">
-              __qi_not<span class="underline">predicate</span>_
-            </li>
-<li class="listitem">
-              __qi<span class="underline">omit</span>_
-            </li>
-<li class="listitem">
-              __qi<span class="underline">plus</span>_
-            </li>
-<li class="listitem">
-              __qi<span class="underline">raw</span>_
-            </li>
+<li class="listitem"><a class="link" href="../operator/and_predicate.html" title="And-Predicate (&amp;a)">And Predicate</a></li>
+<li class="listitem"><a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a></li>
+<li class="listitem"><a class="link" href="../directive/lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a></li>
+<li class="listitem"><a class="link" href="../operator/not_predicate.html" title="Not-Predicate (!a)">Not Predicate</a></li>
+<li class="listitem"><a class="link" href="../directive/omit.html" title="Ignoring Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a></li>
+<li class="listitem"><a class="link" href="../operator/plus.html" title="Plus (+a)">Plus</a></li>
+<li class="listitem"><a class="link" href="../directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a></li>
 <li class="listitem"><a class="link" href="../directive/repeat.html" title="Repetition (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a></li>
-<li class="listitem">
-              __qi<span class="underline">skip</span>_
-            </li>
+<li class="listitem"><a class="link" href="../directive/skip.html" title="Re-Establish Skipping (skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a></li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

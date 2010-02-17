@@ -28,16 +28,16 @@
         Lexer Model</a>
 </h4></div></div></div>
 <p>
-          The documentation of <span class="underline">_lex</span>_ so far
-          mostly was about describing the features of the <span class="emphasis"><em>dynamic</em></span>
-          model, where the tables needed for lexical analysis are generated from
-          the regular expressions at runtime. The big advantage of the dynamic model
-          is its flexibility, and its integration with the <span class="underline">_spirit</span>_
+          The documentation of <span class="emphasis"><em>Spirit.Lex</em></span> so far mostly was
+          about describing the features of the <span class="emphasis"><em>dynamic</em></span> model,
+          where the tables needed for lexical analysis are generated from the regular
+          expressions at runtime. The big advantage of the dynamic model is its flexibility,
+          and its integration with the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
           library and the C++ host language. Its big disadvantage is the need to
           spend additional runtime to generate the tables, which especially might
           be a limitation for larger lexical analyzers. The <span class="emphasis"><em>static</em></span>
-          model strives to build upon the smooth integration with <span class="underline">_spirit</span>_
-          and C++, and reuses large parts of the <span class="underline">_lex</span>_
+          model strives to build upon the smooth integration with <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          and C++, and reuses large parts of the <span class="emphasis"><em>Spirit.Lex</em></span>
           library as described so far, while overcoming the additional runtime requirements
           by using pre-generated tables and tokenizer routines. To make the code
           generation as simple as possible, the static model reuses the token definition
@@ -48,7 +48,7 @@
         </p>
 <p>
           Assuming you already built a dynamic lexer for your problem, there are
-          two more steps needed to create a static lexical analyzer using <span class="underline">_lex</span>_:
+          two more steps needed to create a static lexical analyzer using <span class="emphasis"><em>Spirit.Lex</em></span>:
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
@@ -125,18 +125,17 @@
 <p>
           The only thing changing between the three different use cases is the template
           parameter used to instantiate a concrete token definition. Fot the dynamic
-          model and the code generator you probably will use the __class_lexertl<span class="underline">lexer</span>_ template, where for the static model
-          you will use the __class_lexertl_static<span class="underline">lexer</span>_
-          type as the template parameter.
+          model and the code generator you probably will use the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span></code> template, where for the static
+          model you will use the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;&gt;</span></code> type as the template parameter.
         </p>
 <p>
           This example not only shows how to build a static lexer, but it additionally
           demonstrates how such a lexer can be used for parsing in conjunction with
-          a <span class="underline">_qi</span>_ grammar. For completeness,
-          we provide the simple grammar used in this example. As you can see, this
-          grammar does not have any dependencies on the static lexical analyzer,
-          and for this reason it is not different from a grammar used either without
-          a lexer or using a dynamic lexical analyzer as described before.
+          a <span class="emphasis"><em>Spirit.Qi</em></span> grammar. For completeness, we provide
+          the simple grammar used in this example. As you can see, this grammar does
+          not have any dependencies on the static lexical analyzer, and for this
+          reason it is not different from a grammar used either without a lexer or
+          using a dynamic lexical analyzer as described before.
         </p>
 <p>
           </p>
@@ -176,7 +175,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id928657"></a>
+<a name="id896851"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -184,9 +183,9 @@
           The first additional step to perform in order to create a static lexical
           analyzer is to create a small standalone program for creating the lexer
           tables and the corresponding tokenization function. For this purpose the
-          <span class="underline">_lex</span>_ library exposes a special API
-          - the function __api_generate<span class="underline">static</span>_.
-          It implements the whole code generator, no further code is needed. All
+          <span class="emphasis"><em>Spirit.Lex</em></span> library exposes a special API - the function
+          <code class="computeroutput"><span class="identifier">generate_static_dfa</span><span class="special">()</span></code>
+          . It implements the whole code generator, no further code is needed. All
           what it takes to invoke this function is to supply a token definition instance,
           an output stream to use to generate the code to, and an optional string
           to be used as a suffix for the name of the generated function. All in all
@@ -231,15 +230,15 @@
 </tr>
 <tr><td align="left" valign="top"><p>
             The generated code will have compiled in the version number of the current
-            <span class="underline">_lex</span>_ library. This version number
-            is used at compilation time of your static lexer object to ensure this
-            is compiled using exactly the same version of the <span class="underline">_lex</span>_
+            <span class="emphasis"><em>Spirit.Lex</em></span> library. This version number is used
+            at compilation time of your static lexer object to ensure this is compiled
+            using exactly the same version of the <span class="emphasis"><em>Spirit.Lex</em></span>
             library as the lexer tables have been generated with. If the versions
             do not match you will see an compilation error mentioning an <code class="computeroutput"><span class="identifier">incompatible_static_lexer_version</span></code>.
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id929012"></a>
+<a name="id897209"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -248,11 +247,9 @@
           one is to change your main program at two places. First, you need to change
           the type of the used lexer (that is the template parameter used while instantiating
           your token definition class). While in the dynamic model we have been using
-          the __class_lexertl<span class="underline">lexer</span>_ template,
-          we now need to change that to the __class_lexertl_static<span class="underline">lexer</span>_
-          type. The second change is tightly related to the first one and involves
-          correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code>
-          statement to:
+          the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span></code>
+          template, we now need to change that to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;&gt;</span></code> type. The second change is tightly
+          related to the first one and involves correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code> statement to:
         </p>
 <p>
           </p>

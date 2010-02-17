@@ -28,26 +28,25 @@
         if a Type Should be Treated as a Container (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.is_container.is_container"></a><h6>
-<a name="id949633"></a>
+<a name="id919641"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.is_container">is_container</a>
         </h6>
 <p>
           The template <code class="computeroutput"><span class="identifier">is_container</span></code>
           is a template meta-function used as an attribute customization point. It
-          is invoked by the <span class="emphasis"><em>Qi</em></span> __qi<span class="underline">sequence</span>_
+          is invoked by the <span class="emphasis"><em>Qi</em></span> <a class="link" href="../../qi/reference/operator/sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>
           (<code class="computeroutput"><span class="special">&gt;&gt;</span></code>) and <span class="emphasis"><em>Karma</em></span>
-          __karma<span class="underline">sequence</span>_ operators in order
-          to determine whether a supplied attribute can potentially be treated as
-          a container.
+          <a class="link" href="../../karma/reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)">Sequence (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)</a> operators in order to determine
+          whether a supplied attribute can potentially be treated as a container.
         </p>
 <a name="spirit.advanced.customize.is_container.header"></a><h6>
-<a name="id949681"></a>
+<a name="id919696"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          Also, see __include<span class="underline">structure</span>_.
+          Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 <div class="note" title="Note"><table border="0" summary="Note">
 <tr>
@@ -61,7 +60,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.is_container.namespace"></a><h6>
-<a name="id949766"></a>
+<a name="id919781"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -78,7 +77,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.synopsis"></a><h6>
-<a name="id949840"></a>
+<a name="id919854"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -88,7 +87,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.is_container.template_parameters"></a><h6>
-<a name="id949938"></a>
+<a name="id919953"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.template_parameters">Template
           parameters</a>
         </h6>
@@ -157,7 +156,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.notation"></a><h6>
-<a name="id950104"></a>
+<a name="id920118"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.notation">Notation</a>
         </h6>
 <div class="variablelist">
@@ -175,7 +174,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.is_container.expression_semantics"></a><h6>
-<a name="id950339"></a>
+<a name="id920184"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -207,24 +206,29 @@
                   Result of the metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                   if a given type, <code class="computeroutput"><span class="identifier">C</span></code>,
                   is to be treated as a container, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                  otherwise (See __mpl_boolean<span class="underline">constant</span>_).
+                  otherwise (See <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                  Boolean Constant</a>).
                 </p>
                 </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.predefined_specializations"></a><h6>
-<a name="id950467"></a>
+<a name="id920354"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.predefined_specializations">Predefined
           Specializations</a>
         </h6>
 <p>
-          <span class="underline">_spirit</span>_ predefines specializations
+          <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines specializations
           of this customization point for several types. The following table lists
           those types together with the conditions for which the corresponding specializations
-          will evaluate to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code> (see __mpl_boolean<span class="underline">constant</span>_):
+          will evaluate to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code> (see <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+          Boolean Constant</a>):
         </p>
 <div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
+<colgroup>
+<col>
+<col>
+</colgroup>
 <thead><tr>
 <th>
                 <p>
@@ -285,16 +289,19 @@
 <tr>
 <td>
                 <p>
-                  __unused<span class="underline">type</span><span class="underline">]
-                  [Returns `mpl::false</span>`.
+                  <code class="computeroutput"><span class="identifier">unused_type</span></code>
                 </p>
                 </td>
-<td class="auto-generated">&#160;</td>
+<td>
+                <p>
+                  Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>.
+                </p>
+                </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.when_to_implement"></a><h6>
-<a name="id950858"></a>
+<a name="id920765"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.when_to_implement">When
           to implement</a>
         </h6>
@@ -302,8 +309,7 @@
           The customization point <code class="computeroutput"><span class="identifier">is_container</span></code>
           needs to be implemented for a specific type whenever this type is to be
           used as an attribute in place of a STL container. It is applicable for
-          parsers (<span class="underline">_qi</span><span class="underline">)
-          and generators (</span><span class="underline">karma</span>_).
+          parsers (<span class="emphasis"><em>Spirit.Qi</em></span>) and generators (<span class="emphasis"><em>Spirit.Karma</em></span>).
           As a rule of thumb: it has to be implemented whenever a certain type is
           to be passed as an attribute to a parser or a generator normally exposing
           a STL container, <code class="computeroutput"><span class="identifier">C</span></code> and
@@ -317,7 +323,7 @@
           for any meaningful operation on the component <code class="computeroutput"><span class="identifier">a</span></code>.
         </p>
 <a name="spirit.advanced.customize.is_container.related_attribute_customization_points"></a><h6>
-<a name="id951021"></a>
+<a name="id920924"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.related_attribute_customization_points">Related
           Attribute Customization Points</a>
         </h6>
@@ -346,7 +352,7 @@
 <tr>
 <td>
                 <p>
-                  __customize_container<span class="underline">value</span>_
+                  <a class="link" href="store_value/container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a>
                 </p>
                 </td>
 <td>
@@ -359,12 +365,14 @@
 <tr>
 <td>
                 <p>
-                  __customize_push_back<span class="underline">container</span>_
+                  <a class="link" href="store_value/push_back.html" title="Store a Parsed Attribute Value into a Container (Qi)"><code class="computeroutput"><span class="identifier">push_back_container</span></code></a>
                 </p>
                 </td>
 <td>
                 <p>
-                  Qi: __qi<span class="underline">list</span>_, __qi<span class="underline">kleene</span>_, __qi<span class="underline">plus</span>_,
+                  Qi: <a class="link" href="../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
+                  <a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
+                  <a class="link" href="../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
                   <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
                 </p>
                 </td>
@@ -372,85 +380,103 @@
 <tr>
 <td>
                 <p>
-                  __customize_container<span class="underline">iterator</span>_
+                  <a class="link" href="iterate/container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>
                 </p>
                 </td>
 <td>
                 <p>
-                  Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                  <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  __customize_begin<span class="underline">container</span>_
-                </p>
-                </td>
-<td>
-                <p>
-                  Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                  <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                  (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus
+                  (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+                  <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                 </p>
                 </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  __customize_end<span class="underline">container</span>_
+                  <a class="link" href="iterate/begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a>
                 </p>
                 </td>
 <td>
                 <p>
-                  Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                  <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  __customize_deref<span class="underline">iterator</span>_
-                </p>
-                </td>
-<td>
-                <p>
-                  Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                  <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                  (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus
+                  (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+                  <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                 </p>
                 </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  __customize_next<span class="underline">iterator</span>_
+                  <a class="link" href="iterate/end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>
                 </p>
                 </td>
 <td>
                 <p>
-                  Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                  <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                  (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus
+                  (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+                  <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                 </p>
                 </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  __customize_compare<span class="underline">iterators</span>_
+                  <a class="link" href="iterate/deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">deref_iterator</span></code></a>
                 </p>
                 </td>
 <td>
                 <p>
-                  Karma: __karma<span class="underline">list</span>_, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                  <code class="computeroutput"><span class="special">*</span></code>)</a>, __karma<span class="underline">plus</span>_, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                  (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus
+                  (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+                  <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="iterate/next_iterator.html" title="Increment the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">next_iterator</span></code></a>
+                </p>
+                </td>
+<td>
+                <p>
+                  Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                  (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus
+                  (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+                  <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a class="link" href="iterate/compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality"><code class="computeroutput"><span class="identifier">compare_iterators</span></code></a>
+                </p>
+                </td>
+<td>
+                <p>
+                  Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                  (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus
+                  (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+                  <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
                 </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.example"></a><h6>
-<a name="id951429"></a>
+<a name="id921456"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.example">Example</a>
         </h6>
 <p>

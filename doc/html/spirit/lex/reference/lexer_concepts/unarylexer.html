@@ -27,16 +27,16 @@
 <a name="spirit.lex.reference.lexer_concepts.unarylexer"></a><a class="link" href="unarylexer.html" title="UnaryLexer">UnaryLexer</a>
 </h5></div></div></div>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.description"></a><h6>
-<a name="id936675"></a>
+<a name="id906443"></a>
             <a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>UnaryLexer</em></span> is a composite lexer component that has
             a single subject. The UnaryLexer may change the behavior of its subject
-            following the __delegate<span class="underline">pattern</span>_.
+            following the Delegate Design Pattern.
           </p>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.refinement_of"></a><h6>
-<a name="id936705"></a>
+<a name="id906468"></a>
             <a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.refinement_of">Refinement
             of</a>
           </h6>
@@ -44,7 +44,7 @@
 <p>
               </p>
 <p>
-                __lexer<span class="underline">concept</span>_
+                <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a>
               </p>
 <p>
             </p>
@@ -63,13 +63,13 @@
 </dl>
 </div>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.valid_expressions"></a><h6>
-<a name="id936780"></a>
+<a name="id906547"></a>
             <a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in __lexer<span class="underline">concept</span>_,
-            for any UnaryLexer the following must be met:
+            In addition to the requirements defined in <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a>, for any UnaryLexer the
+            following must be met:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -107,13 +107,13 @@
                   </td>
 <td>
                   <p>
-                    __lexer<span class="underline">concept</span>_
+                    <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a>
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.type_expressions"></a><h6>
-<a name="id936887"></a>
+<a name="id906663"></a>
             <a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.type_expressions">Type
             Expressions</a>
           </h6>
@@ -158,14 +158,15 @@
                     Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                     if a certain type, <code class="computeroutput"><span class="identifier">L</span></code>
                     is a UnaryLexer, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See __mpl_boolean<span class="underline">constant</span>_).
+                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                    Boolean Constant</a>).
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.invariants"></a><h6>
-<a name="id937056"></a>
+<a name="id906834"></a>
             <a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.invariants">Invariants</a>
           </h6>
 <p>
@@ -176,7 +177,7 @@
 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_lexer</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.models"></a><h6>
-<a name="id937141"></a>
+<a name="id906919"></a>
             <a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.models">Models</a>
           </h6>
 <p>
@@ -186,8 +187,8 @@
               action lexer component (allowing to attach semantic actions)
             </li></ul></div>
 <p>
-            <span class="underline">_fixme</span>_ Add more links to models
-            of UnaryLexer concept
+            <span class="bold"><strong>FIXME</strong></span> Add more links to models of UnaryLexer
+            concept
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

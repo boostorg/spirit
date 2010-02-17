@@ -28,26 +28,24 @@
         Attributes of Primitive Components</a>
 </h4></div></div></div>
 <p>
-          Parsers and generators in <span class="underline">_spirit</span>_
-          are fully attributed. <span class="underline">_qi</span>_ parsers
-          always <span class="emphasis"><em>expose</em></span> an attribute specific to their type.
-          This is called <span class="emphasis"><em>synthesized attribute</em></span> as it is returned
-          from a successful match representing the matched input sequence. For instance,
-          numeric parsers, such as <code class="computeroutput"><span class="identifier">int_</span></code>
-          or <code class="computeroutput"><span class="identifier">double_</span></code>, return the
-          <code class="computeroutput"><span class="keyword">int</span></code> or <code class="computeroutput"><span class="keyword">double</span></code>
-          value converted from the matched input sequence. Other primitive parser
-          components have other intuitive attribute types, such as for instance
-          <code class="computeroutput"><span class="identifier">int_</span></code> which has <code class="computeroutput"><span class="keyword">int</span></code>, or <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code>
-          which has <code class="computeroutput"><span class="keyword">char</span></code>. Forprimitive
-          parsers apply the normal C++ convertibility rules: you can use any Other
-          primitive parser components have other intuitive attribute types, e.g.
-          the parser <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code> has <code class="computeroutput"><span class="keyword">char</span></code>
-          as attribute type. For primitive parsers the normal C++ convertibility
-          rules apply: you can use any C++ type to receive the parsed value as long
-          as the attribute type of the parser is convertible to the type provided.
-          The following example shows how a synthesized parser attribute (the <code class="computeroutput"><span class="keyword">int</span></code> value) is extracted by calling the API
-          function <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>:
+          Parsers and generators in <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          are fully attributed. <span class="emphasis"><em>Spirit.Qi</em></span> parsers always <span class="emphasis"><em>expose</em></span>
+          an attribute specific to their type. This is called <span class="emphasis"><em>synthesized
+          attribute</em></span> as it is returned from a successful match representing
+          the matched input sequence. For instance, numeric parsers, such as <code class="computeroutput"><span class="identifier">int_</span></code> or <code class="computeroutput"><span class="identifier">double_</span></code>,
+          return the <code class="computeroutput"><span class="keyword">int</span></code> or <code class="computeroutput"><span class="keyword">double</span></code> value converted from the matched
+          input sequence. Other primitive parser components have other intuitive
+          attribute types, such as for instance <code class="computeroutput"><span class="identifier">int_</span></code>
+          which has <code class="computeroutput"><span class="keyword">int</span></code>, or <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code> which has <code class="computeroutput"><span class="keyword">char</span></code>.
+          Forprimitive parsers apply the normal C++ convertibility rules: you can
+          use any Other primitive parser components have other intuitive attribute
+          types, e.g. the parser <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code>
+          has <code class="computeroutput"><span class="keyword">char</span></code> as attribute type.
+          For primitive parsers the normal C++ convertibility rules apply: you can
+          use any C++ type to receive the parsed value as long as the attribute type
+          of the parser is convertible to the type provided. The following example
+          shows how a synthesized parser attribute (the <code class="computeroutput"><span class="keyword">int</span></code>
+          value) is extracted by calling the API function <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>:
         </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">value</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span><span class="string">"123"</span><span class="special">);</span>
@@ -56,7 +54,7 @@
 </span></pre>
 <p>
           The attribute type of a generator defines what data types this generator
-          is able to consume in order to produce its output. <span class="underline">_karma</span>_
+          is able to consume in order to produce its output. <span class="emphasis"><em>Spirit.Karma</em></span>
           generators always <span class="emphasis"><em>expect</em></span> an attribute specific to
           their type. This is called <span class="emphasis"><em>consumed attribute</em></span> and
           is expected to be passed to the generator. The consumed attribute is most
@@ -78,7 +76,9 @@
           very similar to the corresponding parser components. For instance, the
           <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code> generator has <code class="computeroutput"><span class="keyword">char</span></code>
           as consumed attribute. For a full list of available parser and generator
-          primitives and their attribute types please see the sections __sec_qi<span class="underline">primitive</span>_ and __sec_karma<span class="underline">primitive</span>_.
+          primitives and their attribute types please see the sections <a class="link" href="../../qi/quick_reference/qi_parsers.html" title="Qi Parsers">Qi
+          Parsers</a> and <a class="link" href="../../karma/quick_reference/primitive_generators.html" title="Karma Generators">Karma
+          Generators</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

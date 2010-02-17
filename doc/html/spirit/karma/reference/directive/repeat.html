@@ -28,7 +28,7 @@
           Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.repeat.description"></a><h6>
-<a name="id833052"></a>
+<a name="id800050"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
@@ -52,17 +52,17 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.directive.repeat.header"></a><h6>
-<a name="id833105"></a>
+<a name="id800103"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/repeat.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_repeat</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.repeat.namespace"></a><h6>
-<a name="id834279"></a>
+<a name="id800177"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -88,7 +88,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.model_of"></a><h6>
-<a name="id834395"></a>
+<a name="id800294"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.model_of">Model
             of</a>
           </h6>
@@ -96,7 +96,7 @@
 <p>
               </p>
 <p>
-                __unary_generator<span class="underline">concept</span>_
+                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
@@ -110,8 +110,8 @@
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">num</span><span class="special">,</span> <span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span></code></span></dt>
 <dd><p>
-                Numeric literals, any unsigned integer value, or a __karma_lazy<span class="underline">argument</span>_ that evaluates to an unsigned
-                integer value
+                Numeric literals, any unsigned integer value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to an unsigned integer value
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">inf</span></code></span></dt>
 <dd><p>
@@ -120,13 +120,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id834509"></a>
+<a name="id800416"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __unary_generator<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -237,11 +237,12 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.attributes"></a><h6>
-<a name="id834917"></a>
+<a name="id800831"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <p>
-            See __karma_comp_attr<span class="underline">notation</span>_.
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -358,7 +359,7 @@
 <tr><td align="left" valign="top">
 <p>
               The simplest way to force a <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code> directive to behave as if it did
-              buffering is to wrap it into a buffering directive (see __karma<span class="underline">buffer</span>_):
+              buffering is to wrap it into a buffering directive (see <a class="link" href="buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a>):
             </p>
 <p>
               
@@ -384,7 +385,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.complexity"></a><h6>
-<a name="id835786"></a>
+<a name="id804445"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -399,7 +400,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.repeat.example"></a><h6>
-<a name="id835810"></a>
+<a name="id804469"></a>
             <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -408,7 +409,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>

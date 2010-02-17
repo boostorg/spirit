@@ -33,9 +33,10 @@
           (where <code class="computeroutput"><span class="identifier">real</span></code> and <code class="computeroutput"><span class="identifier">imag</span></code> are the real and imaginary parts
           of the complex number) or as a simple <code class="computeroutput"><span class="identifier">real</span></code>
           if the imaginary part happens to be equal to zero. This example will highlight
-          the power of <span class="underline">_karma</span>_ allowing to
-          combine compile time definition of formatting rules with runtime based
-          decisions which of the rules to apply. Also this time, we're using __boost<span class="underline">phoenix</span>_ to do the semantic actions.
+          the power of <span class="emphasis"><em>Spirit.Karma</em></span> allowing to combine compile
+          time definition of formatting rules with runtime based decisions which
+          of the rules to apply. Also this time, we're using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+          to do the semantic actions.
         </p>
 <p>
           Our goal is to allow for two different output formats to be applied depending
@@ -58,7 +59,7 @@
           make the first alternative fail. So, if the first alternative fails the
           second one will be chosen instead. The decision about whether to choose
           the first alternative has to be made at runtime as only then we actually
-          know the value of the imaginary part of the complex number. <span class="underline">_karma</span>_
+          know the value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
           provides us with with a primitive generator <code class="computeroutput"><span class="identifier">eps</span><span class="special">()</span></code>, which is usable as a semantic predicate.
           It has the property to 'succeed' generating only if its argument is true
           (while it never generates any output on its own).
@@ -120,26 +121,26 @@
 <p>
           which passes <code class="computeroutput"><span class="identifier">n</span></code> to the first
           element of the generator the semantic action is attached to. Remember,
-          semantic actions in <span class="underline">_karma</span>_ are called
-          before the corresponding generator is invoked and they are expected to
-          provide the generator with the data to be used. The semantic action above
-          assigns the value to be generated (<code class="computeroutput"><span class="identifier">n</span></code>)
+          semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> are called before
+          the corresponding generator is invoked and they are expected to provide
+          the generator with the data to be used. The semantic action above assigns
+          the value to be generated (<code class="computeroutput"><span class="identifier">n</span></code>)
           to the generator (actually, the attribute of <code class="computeroutput"><span class="identifier">double_</span></code>).
           <code class="computeroutput"><span class="identifier">_1</span></code> is a Phoenix placeholder
           referring to the attribute of the generator the semantic action is attached
           to. If you need more information about semantic actions, you may want to
-          read about them in this section: __karma<span class="underline">actions</span>_.
+          read about them in this section: <a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic
+          Actions</a>.
         </p>
 <p>
           These semantic actions are easy to understand but have the unexpected side
           effect of being slightly less efficient than it could be. In addition they
           tend to make the formatting grammar less readable. We will see in one of
           the next sections how it is possible to use other, built-in features of
-          <span class="underline">_karma</span>_ to get rid of the semantic
-          actions altogether. When writing your grammars in Spirit you should always
-          try to avoid semantic actions which is often possible. Semantic actions
-          are really powerful tools but grammars tend to be more efficient and readable
-          without them.
+          <span class="emphasis"><em>Spirit.Karma</em></span> to get rid of the semantic actions altogether.
+          When writing your grammars in Spirit you should always try to avoid semantic
+          actions which is often possible. Semantic actions are really powerful tools
+          but grammars tend to be more efficient and readable without them.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

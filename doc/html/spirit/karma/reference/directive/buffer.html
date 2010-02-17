@@ -28,28 +28,29 @@
           Output Buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.buffer.description"></a><h6>
-<a name="id843233"></a>
+<a name="id811661"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.description">Description</a>
           </h6>
 <p>
-            All generator components (except the __karma<span class="underline">alternative</span>_
-            generator) pass their generated output directly to the underlying output
-            stream. If a generator fails halfway through, the output generated so
-            far is not 'rolled back'. The buffering generator directive allows to
-            avoid this unwanted output to be generated. It temporarily redirects
-            the output produced by the embedded generator into a buffer. This buffer
-            is flushed to the underlying stream only after the embedded generator
-            succeeded, but is discarded otherwise.
+            All generator components (except the <a class="link" href="../operator/alternative.html" title="Alternative (a | b)">Alternative
+            (<code class="computeroutput"><span class="special">|</span></code>)</a> generator) pass
+            their generated output directly to the underlying output stream. If a
+            generator fails halfway through, the output generated so far is not 'rolled
+            back'. The buffering generator directive allows to avoid this unwanted
+            output to be generated. It temporarily redirects the output produced
+            by the embedded generator into a buffer. This buffer is flushed to the
+            underlying stream only after the embedded generator succeeded, but is
+            discarded otherwise.
           </p>
 <a name="spirit.karma.reference.directive.buffer.header"></a><h6>
-<a name="id843256"></a>
+<a name="id811689"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/buffer.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_buffer</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see __include<span class="underline">structure</span>_.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
@@ -66,7 +67,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.buffer.model_of"></a><h6>
-<a name="id843396"></a>
+<a name="id811830"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.model_of">Model
             of</a>
           </h6>
@@ -74,7 +75,7 @@
 <p>
               </p>
 <p>
-                __unary_generator<span class="underline">concept</span>_
+                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
@@ -93,13 +94,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.buffer.expression_semantics"></a><h6>
-<a name="id843478"></a>
+<a name="id811919"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in __unary_generator<span class="underline">concept</span>_.
+            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -144,15 +145,17 @@
 </tr>
 <tr><td align="left" valign="top"><p>
               If you want to make the buffered generator succeed regardless of the
-              outcome of the embedded generator, simply wrap the <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code> into an additional optional: <code class="computeroutput"><span class="special">-</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code> (see __karma<span class="underline">optional</span>_).
+              outcome of the embedded generator, simply wrap the <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code> into an additional optional: <code class="computeroutput"><span class="special">-</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code> (see <a class="link" href="../operator/optional.html" title="Optional (-a)">Optional
+              (unary <code class="computeroutput"><span class="special">-</span></code>)</a>).
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.buffer.attributes"></a><h6>
-<a name="id843636"></a>
+<a name="id812244"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.attributes">Attributes</a>
           </h6>
 <p>
-            See __karma_comp_attr<span class="underline">notation</span>_.
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -189,7 +192,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.buffer.complexity"></a><h6>
-<a name="id843806"></a>
+<a name="id812416"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -205,7 +208,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.buffer.example"></a><h6>
-<a name="id843830"></a>
+<a name="id812440"></a>
             <a class="link" href="buffer.html#spirit.karma.reference.directive.buffer.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -214,7 +217,8 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the __karma_basics<span class="underline">examples</span>_ section.
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
             </p></td></tr>
 </table></div>
 <p>
@@ -254,7 +258,8 @@
 <p>
             Basic usage of a buffering generator directive. It shows how the partial
             output generated in the first example does not show up in the generated
-            output as the plus generator fails (no data is available, see __karma<span class="underline">plus</span>_).
+            output as the plus generator fails (no data is available, see <a class="link" href="../operator/plus.html" title="Plus (+a)">Plus
+            (unary <code class="computeroutput"><span class="special">+</span></code>)</a>).
           </p>
 <p>
             </p>
