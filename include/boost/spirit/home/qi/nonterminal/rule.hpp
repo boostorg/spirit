@@ -262,10 +262,12 @@ namespace boost { namespace spirit { namespace qi
           , Context& caller_context, Skipper const& skipper
           , Attribute& attr, Params const& params) const
         {
-            //$$$ do a preskip if this is an implied lexeme $$$
-
             if (f)
             {
+                // do a preskip if this is an implied lexeme
+                if (is_same<skipper_type, unused_type>::value)
+                    qi::skip_over(first, last, skipper);
+
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 // do down-stream transformation, provides attribute for
