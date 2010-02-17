@@ -55,6 +55,7 @@ namespace boost { namespace spirit { namespace qi
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper, Attribute& attr) const
         {
+            qi::skip_over(first, last, skipper);
             Iterator i = first;
             if (subject.parse(i, last, context, skipper, unused))
             {
