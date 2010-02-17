@@ -201,7 +201,7 @@ See here for more information about [qi_auto Auto Parsers].
     [[[qi_repeat `repeat(N, M)[a]`]]      [`vector<A>`]             [Repeat `a` `N` to `M` times]]
     [[[qi_repeat `repeat(N, inf)[a]`]]    [`vector<A>`]             [Repeat `a` `N` or more times]]
 
-    [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme]]
+    [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme or no_skip.]]
     [[__qi_skip__`(p)[a]`]          [`A`]                           [Use `p` as a skipper for parsing `a`]]
 ]
 

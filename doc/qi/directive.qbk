@@ -80,7 +80,7 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`lexeme[a]`]      [Turns off white space skipping for the
+    [[`lexeme[a]`]      [Pre-skip and turn off white space skipping for the
                         subject parser, `a` (and all its children).]]
 ]
 
@@ -119,9 +119,9 @@ Simple usage of `lexeme[]`:
 
 [heading Description]
 
-The `no_skip[]` directive turns off white space skipping. The difference to 
+The `no_skip[]` directive turns off white space skipping. The difference to
 __qi_lexeme__ is that it does not do pre-skipping in any case. Otherwise it is
-completely equivalent to the __qi_lexeme__ directive. 
+completely equivalent to the __qi_lexeme__ directive.
 
 [heading Header]
 
@@ -152,8 +152,8 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`no_skip[a]`]     [Turns off white space skipping for the 
-                         subject parser, `a` (and all its children). This 
+    [[`no_skip[a]`]     [Turns off white space skipping for the
+                         subject parser, `a` (and all its children). This
                          directive does not pre-skips.]]
 ]
 
@@ -163,7 +163,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`no_skip[a]`]      
+    [[`no_skip[a]`]
 [``a: A --> no_skip[a]: A
 a: Unused --> no_skip[a]: Unused``]]
 ]
@@ -582,10 +582,10 @@ Some using declarations:
 
 [heading Description]
 
-The `skip` directive is the inverse of __qi_lexeme__. While the
-__qi_lexeme__ directive turns off white space skipping, the `skip`
-directive turns it on again. This is simply done by wrapping the parts
-inside the `skip` directive:
+The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip
+`no_skip`]. While the __qi_lexeme__ directive turns off white space
+skipping, the `skip` directive turns it on again. This is simply done by
+wrapping the parts inside the `skip` directive:
 
     skip[a]
 
@@ -629,7 +629,7 @@ not defined in __unary_parser_concept__.
 [table
     [[Expression]       [Semantics]]
 
-    [[`skip[a]`]        [Re-establish the skipper that got inhibited by lexeme]]
+    [[`skip[a]`]        [Re-establish the skipper that got inhibited by lexeme or no_skip]]
     [[`skip(p)[a]`]     [Use `p` as a skipper for parsing `a`]]
 ]
 
@@ -641,10 +641,10 @@ See __qi_comp_attr_notation__.
     [[Expression]       [Attribute]]
     [[`skip[a]`]
 [``a: A --> skip[a]: A
-a: Unused --> lexeme[a]: Unused``]]
+a: Unused --> skip[a]: Unused``]]
     [[`skip(p)[a]`]
 [``a: A --> skip(p)[a]: A
-a: Unused --> lexeme[a]: Unused``]]
+a: Unused --> skip(p)[a]: Unused``]]
 ]
 
 [heading Complexity]
