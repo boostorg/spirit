@@ -26,6 +26,8 @@
   (see new header file: `#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>`).
 * Added `qi::hold` allowing to make sure the embedded parser does not touch
   the passed attribute in case it fails parsing.
+* Added [qi_no_skip `qi::no_skip`] directive, which is equivalent to 
+  `qi::`__qi_lexeme__, except that it does not pre-skip.
 
 [heading Bug Fixes]
 
@@ -36,8 +38,6 @@
 * Constructs like `karma::buffer[karma::buffer[...]]` don't result in 
   performing double buffering anymore. The same is true if an alternative is 
   wrapped into a `karma::buffer[]` directive (as for instance: `buffer[a] | b`).
-* The directives `qi::`__qi_raw__ and `qi::`__qi_lexeme__ don't do pre-skipping 
-  anymore.
 
 [endsect] [/ spirit_2_3]
 

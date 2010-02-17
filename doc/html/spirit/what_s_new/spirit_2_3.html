@@ -27,13 +27,13 @@
 <a name="spirit.what_s_new.spirit_2_3"></a><a class="link" href="spirit_2_3.html" title="Spirit V2.3"> Spirit V2.3</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_"></a><h5>
-<a name="id547126"></a>
+<a name="id539480"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.2 (Boost V1.42.0) to 2.3 (Boost V1.43.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_3.new_features"></a><h5>
-<a name="id547148"></a>
+<a name="id539502"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -62,9 +62,14 @@
           Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">hold</span></code> allowing to make sure the embedded
           parser does not touch the passed attribute in case it fails parsing.
         </li>
+<li class="listitem">
+          Added <a class="link" href="../qi/reference/directive/no_skip.html" title="Inhibiting Skipping Without Pre-skip (no_skip[])"><code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">no_skip</span></code></a> directive, which is equivalent
+          to <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span></code><a class="link" href="../qi/reference/directive/lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>,
+          except that it does not pre-skip.
+        </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_3.bug_fixes"></a><h5>
-<a name="id547406"></a>
+<a name="id539799"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -81,11 +86,6 @@
           don't result in performing double buffering anymore. The same is true if
           an alternative is wrapped into a <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code> directive (as for instance: <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span> <span class="special">|</span>
           <span class="identifier">b</span></code>).
-        </li>
-<li class="listitem">
-          The directives <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span></code><a class="link" href="../qi/reference/directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a>
-          and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span></code><a class="link" href="../qi/reference/directive/lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>
-          don't do pre-skipping anymore.
         </li>
 </ul></div>
 </div>

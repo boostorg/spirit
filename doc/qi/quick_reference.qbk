@@ -188,7 +188,8 @@ See here for more information about [qi_auto Auto Parsers].
 
 [table
     [[Expression]                   [Attribute]                     [Description]]
-    [[__qi_lexeme__`[a]`]           [`A`]                           [Disable skip parsing for `a`]]
+    [[__qi_lexeme__`[a]`]           [`A`]                           [Disable skip parsing for `a`, does pre-skipping]]
+    [[[qi_no_skip `no_skip[a]`]]    [`A`]                           [Disable skip parsing for `a`, no pre-skipping]]
     [[__qi_no_case__`[a]`]          [`A`]                           [Inhibits case-sensitivity for `a`]]
     [[__qi_omit__`[a]`]             [`Unused`]                      [Ignores the attribute type of `a`]]
     [[__qi_matches__`[a]`]          [`bool`]                        [Return if the embedded parser `a` matched its input]]

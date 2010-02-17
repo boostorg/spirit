@@ -53,6 +53,7 @@ import testing ;
     [ run qi/match_manip_attr.cpp           : : : : ]
     [ run qi/matches.cpp                    : : : : ]
     [ run qi/no_case.cpp                    : : : : ]
+    [ run qi/no_skip.cpp                    : : : : ]
     [ run qi/not_predicate.cpp              : : : : ]
     [ run qi/optional.cpp                   : : : : ]
     [ run qi/parse_attr.cpp                 : : : : ]

@@ -10,7 +10,7 @@
 
 This module includes different directives usable to augment and parametrize 
 other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`, 
-`matches`, and `skip` directives.
+`matches`, `no_skip`, and `skip` directives.
 
 
 [heading Module Header]
@@ -99,6 +99,79 @@ Some using declarations:
 Simple usage of `lexeme[]`:
 
 [reference_lexeme]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:no_skip Inhibiting Skipping Without Pre-skip (`no_skip[]`)]
+
+[heading Description]
+
+The `no_skip[]` directive turns off white space skipping. The difference to 
+__qi_lexeme__ is that it does not do pre-skipping in any case. Otherwise it is
+completely equivalent to the __qi_lexeme__ directive. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/no_skip.hpp>
+    #include <boost/spirit/include/qi_no_skip.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::no_skip // alias: boost::spirit::qi::no_skip` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`no_skip[a]`]     [Turns off white space skipping for the 
+                         subject parser, `a` (and all its children). This 
+                         directive does not pre-skips.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`no_skip[a]`]      
+[``a: A --> no_skip[a]: A
+a: Unused --> no_skip[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_using_declarations_no_skip]
+
+Simple usage of `no_skip[]`:
+
+[reference_no_skip]
 
 [endsect]
 

@@ -362,6 +362,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_raw__                     [link spirit.qi.reference.directive.raw `raw`]]
 [template qi_repeat[str]            [link spirit.qi.reference.directive.repeat [str]]]
 [def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
+[template qi_no_skip[str]           [link spirit.qi.reference.directive.no_skip [str]]]
 
 [/ operator]
 [def __qi_alternative__             [link spirit.qi.reference.operator.alternative Alternative]]
