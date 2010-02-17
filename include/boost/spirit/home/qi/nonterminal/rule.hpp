@@ -220,7 +220,8 @@ namespace boost { namespace spirit { namespace qi
             if (f)
             {
                 // do a preskip if this is an implied lexeme
-                if (!is_same<Skipper, skipper_type>::value)
+                if (is_same<skipper_type, unused_type>::value
+                    && !is_same<Skipper, skipper_type>::value)
                     qi::skip_over(first, last, skipper);
 
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
