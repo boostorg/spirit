@@ -49,7 +49,7 @@ erroneous embedded white spaces in inputs such as `"1 2 345"` which will
 be parsed as `"12345"`.
 
 [note Keep in mind that `lexeme[]` pre-skips spaces. If this is not
-desired, use the [qi_no_skip] directive instead.]
+desired, use the [qi_no_skip `no_skip`] directive instead.]
 
 [heading Header]
 
@@ -582,8 +582,8 @@ Some using declarations:
 
 [heading Description]
 
-The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip
-`no_skip`]. While the __qi_lexeme__ directive turns off white space
+The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip `no_skip[]`]. 
+While the __qi_lexeme__ directive turns off white space
 skipping, the `skip` directive turns it on again. This is simply done by
 wrapping the parts inside the `skip` directive:
 
