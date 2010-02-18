@@ -29,6 +29,7 @@ namespace boost { namespace spirit
     BOOST_SPIRIT_DEFINE_TERMINALS(
         ( verbatim )
         ( lexeme )
+        ( no_skip )
         ( omit )
         ( raw )
         ( inf )
