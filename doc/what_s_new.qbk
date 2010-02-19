@@ -28,6 +28,9 @@
   the passed attribute in case it fails parsing.
 * Added [qi_no_skip `qi::no_skip`] directive, which is equivalent to 
   `qi::`__qi_lexeme__, except that it does not pre-skip.
+* Added [karma_no_delimit `karma::no_delimit`] directive, which is equivalent to 
+  `karma::`__karma_verbatim__, except that it does not perform a post-delimiting
+  step.
 
 [heading Bug Fixes]
 

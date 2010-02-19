@@ -183,6 +183,7 @@
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer`]]
 [template karma_repeat[str]         [link spirit.karma.reference.directive.repeat [str]]]
 [def __karma_verbatim__             [link spirit.karma.reference.directive.delimit `verbatim`]]
+[template karma_no_delimit[str]     [link spirit.karma.reference.directive.delimit [str]]]
 [template karma_delimit[str]        [link spirit.karma.reference.directive.delimit [str]]]
 [template karma_upperlower[str]     [link spirit.karma.reference.directive.upperlower [str]]]
 [template karma_maxwidth[str]       [link spirit.karma.reference.directive.maxwidth [str]]]

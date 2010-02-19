@@ -10,10 +10,10 @@
 
 This module includes different generator directives. It includes alignment 
 directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
-(`repeat[]`), directives controlling automatic delimiting (`verbatim[]` and 
-`delimit[]`), controlling case sensitivity (`upper[]` and `lower[]`), field
-width (`maxwidth[]`), buffering (`buffer[]`), splitting into columns 
-(`columns[]`) and attribute handling (`omit[]`).
+(`repeat[]`), directives controlling automatic delimiting (`verbatim[]`, 
+`no_delimit[]`, and `delimit[]`), controlling case sensitivity (`upper[]` and 
+`lower[]`), field width (`maxwidth[]`), buffering (`buffer[]`), splitting into 
+columns (`columns[]`) and attribute handling (`omit[]`).
 
 [heading Module Header]
 
@@ -423,13 +423,14 @@ Basic usage of `repeat` generator directive:
 [endsect] [/ repeat]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:delimit Directives Controlling Automatic Delimiting (`verbatim[]`, `delimit[]`)]
+[section:delimit Directives Controlling Automatic Delimiting (`verbatim[]`, `no_delimit[]`, `delimit[]`)]
 
 [heading Description]
 
-The directives `delimit[]` and `verbatim[]` can be used to control automatic
-delimiting. The directive `verbatim[]` disables any automatic delimiting, while 
-the directive `delimit[]` (re-)enables automatic delimiting.
+The directives `delimit[]`, `no_delimit[]`, and `verbatim[]` can be used to 
+control automatic delimiting. The directives `verbatim[]` and `no_delimit[]` 
+disable any automatic delimiting, while the directive `delimit[]` (re-)enables 
+automatic delimiting.
 
 [heading Header]
 
@@ -437,6 +438,11 @@ For the `verbatim[]` directive:
 
     // forwards to <boost/spirit/home/karma/directive/verbatim.hpp>
     #include <boost/spirit/include/karma_verbatim.hpp>
+
+For the `no_delimit[]` directive:
+
+    // forwards to <boost/spirit/home/karma/directive/no_delimit.hpp>
+    #include <boost/spirit/include/karma_no_delimit.hpp>
 
 For the `delimit[]` directive:
 
@@ -449,8 +455,9 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::verbatim  // alias: boost::spirit::karma::verbatim` ]]
-    [[`boost::spirit::delimit   // alias: boost::spirit::karma::delimit` ]]
+    [[`boost::spirit::verbatim      // alias: boost::spirit::karma::verbatim` ]]
+    [[`boost::spirit::no_delimit    // alias: boost::spirit::karma::no_delimit` ]]
+    [[`boost::spirit::delimit       // alias: boost::spirit::karma::delimit` ]]
 ]
 
 [heading Model of]
@@ -487,7 +494,17 @@ defined in __unary_generator_concept__.
                          as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error). This 
                          directive it has no effect if it is used when no 
-                         delimiting is active.]]
+                         delimiting is active. When delimiting is active this
+                         directive performs a post-delimit step (which is 
+                         different from the behavior of `no_delimit[]`).]]
+    [[`no_delimit[a]`]    [Disable automatic delimiting for the embedded generator
+                         `a`. The directive succeeds
+                         as long as the embedded generator succeeded (unless 
+                         the underlying output stream reports an error). This 
+                         directive it has no effect if it is used when no 
+                         delimiting is active. When delimiting is active this
+                         directive does not perform a post-delimit step (which is 
+                         different from the behavior of `verbatim[]`.]]
 ]
 
 [heading Attributes]
@@ -505,13 +522,16 @@ a: Unused, d: D --> delimit(d)[a]: Unused``]]
     [[`verbatim[a]`]
 [``a: A --> verbatim[a]: A
 a: Unused --> verbatim[a]: Unused``]]
+    [[`no_delimit[a]`]
+[``a: A --> no_delimit[a]: A
+a: Unused --> no_delimit[a]: Unused``]]
 ]
 
 [heading Complexity]
 
-[:The overall complexity of the generator directives `delimit[]` and `verbatim[]` 
-  is defined by the complexity of its embedded generators. The complexity of the 
-  directives themselves is O(1).]
+[:The overall complexity of the generator directives `delimit[]`, `verbatim[]`, 
+  and `no_delimit[]` is defined by the complexity of its embedded generators. 
+  The complexity of the directives themselves is O(1).]
 
 [heading Example]
 
@@ -530,7 +550,7 @@ Basic usage of `delimit` generator directive:
 
 [reference_karma_delimit]
 
-[endsect] [/ verbatim/delimit]
+[endsect] [/ verbatim/delimit/no_delimit]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:upperlower Directives Controlling Case Sensitivity (`upper[]`, `lower[]`)]

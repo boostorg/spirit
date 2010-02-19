@@ -239,7 +239,7 @@ namespace boost { namespace spirit { namespace qi
                 context_type context(attr_);
 
                 // If you are seeing a compilation error here stating that the
-                // forth parameter can't be converted to a qi::reference
+                // forth parameter can't be converted to a required target type
                 // then you are probably trying to use a rule or a grammar with
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
@@ -284,7 +284,7 @@ namespace boost { namespace spirit { namespace qi
                 context_type context(attr_, params, caller_context);
 
                 // If you are seeing a compilation error here stating that the
-                // forth parameter can't be converted to a qi::reference
+                // forth parameter can't be converted to a required target type
                 // then you are probably trying to use a rule or a grammar with
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))

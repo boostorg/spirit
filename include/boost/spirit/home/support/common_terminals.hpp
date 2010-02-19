@@ -28,6 +28,7 @@ namespace boost { namespace spirit
     // Our basic terminals
     BOOST_SPIRIT_DEFINE_TERMINALS(
         ( verbatim )
+        ( no_delimit )
         ( lexeme )
         ( no_skip )
         ( omit )
