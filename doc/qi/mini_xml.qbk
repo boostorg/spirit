@@ -31,8 +31,11 @@ Along the way, we'll see new features:
 The full cpp files for these examples can be found here:
 [@../../example/qi/mini_xml1.cpp] and here: [@../../example/qi/mini_xml2.cpp]
 
-There are a couple of sample toy-xml files in: [@../../example/qi/mini_xml_samples]
-for testing purposes. "4.toyxml" has an error in it.
+There are a couple of sample toy-xml files in the mini_xml_samples subdirectory: 
+[@../../example/qi/mini_xml_samples/1.toyxml], 
+[@../../example/qi/mini_xml_samples/2.toyxml], and
+[@../../example/qi/mini_xml_samples/3.toyxml] for testing purposes. 
+The example [@../../example/qi/mini_xml_samples/4.toyxml] has an error in it.
 
 [import ../../example/qi/mini_xml1.cpp]
 [import ../../example/qi/mini_xml2.cpp]
