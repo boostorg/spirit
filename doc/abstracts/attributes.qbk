@@ -219,7 +219,7 @@ typesafe placeholders for the attribute values.
       using /Spirit's/ multi-attribute API function:
       ``
           double d1 = 0.0, d2 = 0.0;
-          qi::parse(begin, end, '(' >> qi::double_ >> ", " >> qi::double_ << ')', d1, d2);
+          qi::parse(begin, end, '(' >> qi::double_ >> ", " >> qi::double_ >> ')', d1, d2);
           karma::generate(out, '(' << karma::double_ << ", " << karma::double_ << ')', d1, d2);
       ``
       which provides a clear and comfortable syntax, more similar to the 
