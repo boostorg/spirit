@@ -9,9 +9,9 @@
 [section Number List Attribute - one more, with style]
 
 You've seen that the `double_` parser has a `double` attribute. All parsers have
-an attribute, even complex parsers, those that are composed from primitives
+an attribute, even complex parsers. Those that are composed from primitives
 using operators, like the list parser, also have an attribute. It so happens that
-the the attribute of a list parser:
+the attribute of a list parser:
 
     p % d
 

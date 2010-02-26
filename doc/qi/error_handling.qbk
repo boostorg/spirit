@@ -100,7 +100,7 @@ points" in the grammar. Those are the places where backtracking *cannot* occur.
 For our example above, when you get a `"</"`, you definitely must see a valid
 end-tag label next. It should be the one you got from the start-tag. After that,
 you definitely must have a `'>'` next. Otherwise, there is no point in
-proceeding forward and trying other branches, regardless where they are. The
+proceeding and trying other branches, regardless where they are. The
 input is definitely erroneous. When this happens, an expectation_failure
 exception is thrown. Somewhere outward, the error handler will catch the
 exception.
