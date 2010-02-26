@@ -144,6 +144,9 @@ import testing ;
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
     [ compile support/multi_pass_regression002.cpp : : support_multi_pass_regression002 ]
     
+
+    # regression tests
+    [ run qi/clear_test.cpp                  : : : : ]
     ;
 
 }
