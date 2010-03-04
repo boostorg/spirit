@@ -19,6 +19,7 @@ namespace boost { namespace spirit {
     {
         // input policies
         struct input_iterator;
+        struct buffering_input_iterator;
         struct istream;
         struct lex_input;
         struct functor_input;
@@ -41,13 +42,13 @@ namespace boost { namespace spirit {
 #if defined(BOOST_SPIRIT_DEBUG)
         template<typename Ownership = ref_counted
           , typename Checking = buf_id_check
-          , typename Input = input_iterator
+          , typename Input = buffering_input_iterator
           , typename Storage = split_std_deque>
         struct default_policy;
 #else
         template<typename Ownership = ref_counted
           , typename Checking = no_check
-          , typename Input = input_iterator
+          , typename Input = buffering_input_iterator
           , typename Storage = split_std_deque>
         struct default_policy;
 #endif
