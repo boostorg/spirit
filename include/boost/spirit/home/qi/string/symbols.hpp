@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace qi
         {
             lookup->for_each(f);
         }
-        
+
         template <typename Str>
         value_type& at(Str const& str)
         {
@@ -363,7 +363,7 @@ public:
         typedef no_case_filter<
             typename spirit::detail::get_encoding<
                 Modifiers
-              , char_encoding::standard
+              , char_encoding::default_
               , no_case::value>::type>
         nc_filter;
 

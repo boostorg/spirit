@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch_, Context&) const
         {
-            return traits::ischar<CharParam, char_encoding>::call(ch_) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch_) &&
                    ch == char_type(ch_);
         }
 
@@ -296,7 +296,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch, Context&) const
         {
-            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch) &&
                    chset.test(char_type(ch));
         }
 
@@ -358,7 +358,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch, Context&) const
         {
-            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch) &&
                    chset.test(char_type(ch));
         }
 
@@ -414,19 +414,19 @@ namespace boost { namespace spirit { namespace qi
 
     template <typename Modifiers>
     struct make_primitive<char, Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_> {};
 
     template <typename Modifiers>
     struct make_primitive<char const(&)[2], Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_> {};
 
     template <typename Modifiers>
     struct make_primitive<wchar_t, Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_wide> {};
 
     template <typename Modifiers>
     struct make_primitive<wchar_t const(&)[2], Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_wide> {};
 
     template <typename CharEncoding, typename Modifiers>
     struct make_primitive<
