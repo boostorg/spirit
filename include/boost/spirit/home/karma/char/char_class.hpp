@@ -192,7 +192,7 @@ namespace boost { namespace spirit { namespace karma
 
         typedef char_class<
             tag_type
-          , typename spirit::detail::get_encoding<
+          , typename spirit::detail::get_encoding_with_case<
                 Modifiers, CharEncoding, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
         > result_type;

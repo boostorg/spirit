@@ -13,13 +13,14 @@
 #endif
 
 #include <boost/spirit/home/support/terminal.hpp>
-#include <boost/spirit/home/support/char_encoding/default.hpp>
-#include <boost/spirit/home/support/char_encoding/default_wide.hpp>
+#include <boost/spirit/home/support/char_encoding/default_encoding.hpp>
+#include <boost/spirit/home/support/char_encoding/default_wide_encoding.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/iso8859_1.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/mpl/vector.hpp>
 
 #if defined(BOOST_SPIRIT_UNICODE)
 # include <boost/spirit/home/support/char_encoding/unicode.hpp>
@@ -27,6 +28,17 @@
 
 namespace boost { namespace spirit
 {
+    typedef mpl::vector<
+            spirit::char_encoding::ascii
+          , spirit::char_encoding::iso8859_1
+          , spirit::char_encoding::standard
+          , spirit::char_encoding::standard_wide
+#if defined(BOOST_SPIRIT_UNICODE)
+          , spirit::char_encoding::unicode
+#endif
+        >
+    char_encodings;
+
     // Our basic terminals
     BOOST_SPIRIT_DEFINE_TERMINALS(
         ( verbatim )
@@ -158,11 +170,12 @@ namespace boost { namespace spirit
         BOOST_SPIRIT_CHAR_CODE(upper, spirit::char_encoding::charset)           \
         BOOST_SPIRIT_CHAR_CODE(lowernum, spirit::char_encoding::charset)        \
         BOOST_SPIRIT_CHAR_CODE(uppernum, spirit::char_encoding::charset)        \
+        BOOST_SPIRIT_CHAR_CODE(encoding, spirit::char_encoding::charset)        \
     }}}                                                                         \
     /***/
 
-BOOST_SPIRIT_DEFINE_CHAR_CODES(default_)
-BOOST_SPIRIT_DEFINE_CHAR_CODES(default_wide)
+BOOST_SPIRIT_DEFINE_CHAR_CODES(default_encoding)
+BOOST_SPIRIT_DEFINE_CHAR_CODES(default_wide_encoding)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(ascii)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(iso8859_1)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(standard)

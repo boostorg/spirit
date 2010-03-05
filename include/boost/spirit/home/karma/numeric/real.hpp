@@ -279,7 +279,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef any_real_generator<
                 T, Policies
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
             > result_type;
@@ -326,7 +326,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_real_generator<
                 T, Policies
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , false
@@ -379,7 +379,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_real_generator<
                 T, real_policies<T>
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , true

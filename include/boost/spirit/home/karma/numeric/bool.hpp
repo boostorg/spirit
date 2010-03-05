@@ -246,7 +246,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef any_bool_generator<
                 T
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , Policies
@@ -271,7 +271,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_bool_generator<
                 bool
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , bool_policies<>, false
@@ -316,7 +316,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_bool_generator<
                 T
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , Policies, false
@@ -359,7 +359,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_bool_generator<
                 bool
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , bool_policies<>, true
