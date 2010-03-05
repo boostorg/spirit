@@ -85,21 +85,23 @@ namespace boost { namespace spirit { namespace qi
         typedef proto::extends<terminal, this_type> base_type;
         typedef mpl::vector<T1, T2, T3, T4> template_params;
 
-        // locals_type is a sequence of types to be used as local variables
+        // The rule's locals_type: a sequence of types to be used as local variables
         typedef typename
             spirit::detail::extract_locals<template_params>::type
         locals_type;
 
-        // The skip-parser type
+        // The rule's skip-parser type
         typedef typename
             spirit::detail::extract_component<
                 qi::domain, template_params>::type
         skipper_type;
 
+        // The rule's signature
         typedef typename
             spirit::detail::extract_sig<template_params>::type
         sig_type;
 
+        // The rule's encoding type
         typedef typename
             spirit::detail::extract_encoding<template_params>::type
         encoding_type;
