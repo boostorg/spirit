@@ -39,6 +39,26 @@ namespace boost { namespace spirit
         >
     char_encodings;
 
+    template <typename T>
+    struct is_char_encoding : mpl::false_ {};
+
+    template <>
+    struct is_char_encoding<spirit::char_encoding::ascii> : mpl::true_ {};
+
+    template <>
+    struct is_char_encoding<spirit::char_encoding::iso8859_1> : mpl::true_ {};
+
+    template <>
+    struct is_char_encoding<spirit::char_encoding::standard> : mpl::true_ {};
+
+    template <>
+    struct is_char_encoding<spirit::char_encoding::standard_wide> : mpl::true_ {};
+
+#if defined(BOOST_SPIRIT_UNICODE)
+    template <>
+    struct is_char_encoding<spirit::char_encoding::unicode> : mpl::true_ {};
+#endif
+
     // Our basic terminals
     BOOST_SPIRIT_DEFINE_TERMINALS(
         ( verbatim )
