@@ -185,6 +185,11 @@ All predefined `multi_pass` policies are defined in the namespace
     [[*InputPolicy* classes]]
     [[`input_iterator`]   [This policy directs `multi_pass` to read from an 
                            input iterator of type `Input`.]]
+    [[`buffering_input_iterator`]   [This policy directs `multi_pass` to read from an 
+                           input iterator of type `Input`. Aditionally it buffers
+                           the last character received from the underlying iterator.
+                           This allows to wrap iterators not buffering the last 
+                           character on their own (as `std::istreambuf_iterator`).]]
     [[`istream`]          [This policy directs `multi_pass` to read from an 
                            input stream of type `Input` (usually a 
                            `std::basic_istream`).]]
@@ -281,7 +286,7 @@ because it uses the `iterator_policies::first_owner` OwnershipPolicy and the
       , iterator_policies::default_policy<
             iterator_policies::first_owner
           , iterator_policies::no_check
-          , iterator_policies::input_iterator
+          , iterator_policies::buffering_input_iterator
           , iterator_policies::split_std_deque
         > 
     > first_owner_multi_pass_type;
@@ -291,7 +296,7 @@ The default template parameters for `iterator_policies::default_policy` are:
 * `iterator_policies::ref_counted` OwnershipPolicy
 * `iterator_policies::no_check` CheckingPolicy, if `BOOST_SPIRIT_DEBUG` is 
   defined: `iterator_policies::buf_id_check` CheckingPolicy 
-* `iterator_policies::input_iterator` InputPolicy, and
+* `iterator_policies::buffering_input_iterator` InputPolicy, and
 * `iterator_policies::split_std_deque` StoragePolicy. 
 
 So if you use `multi_pass<std::istream_iterator<char> >` you will get those 
