@@ -21,7 +21,7 @@ namespace boost { namespace spirit { namespace detail
     {
         // Extract the implicit encoding from the Modifiers
         // If one is not found, Encoding is used. The explicit
-        // encoding is the fifst viable encoding that can be
+        // encoding is the first viable encoding that can be
         // extracted from the Modifiers (there can be more than one).
 
         typedef typename
