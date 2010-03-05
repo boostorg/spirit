@@ -50,6 +50,9 @@ namespace boost { namespace spirit { namespace qi
     // prefixed with a character set namespace.
     using namespace boost::spirit::default_encoding;
 
+    // Import encoding
+    using spirit::encoding;
+
     ///////////////////////////////////////////////////////////////////////////
     // Generic char classification parser (for alnum, alpha, graph, etc.)
     ///////////////////////////////////////////////////////////////////////////

@@ -59,6 +59,12 @@ namespace boost { namespace spirit
     struct is_char_encoding<spirit::char_encoding::unicode> : mpl::true_ {};
 #endif
 
+    template <typename Encoding>
+    struct encoding
+        : proto::terminal<tag::char_code<tag::encoding, Encoding> >::type
+    {
+    };
+
     // Our basic terminals
     BOOST_SPIRIT_DEFINE_TERMINALS(
         ( verbatim )
@@ -190,7 +196,6 @@ namespace boost { namespace spirit
         BOOST_SPIRIT_CHAR_CODE(upper, spirit::char_encoding::charset)           \
         BOOST_SPIRIT_CHAR_CODE(lowernum, spirit::char_encoding::charset)        \
         BOOST_SPIRIT_CHAR_CODE(uppernum, spirit::char_encoding::charset)        \
-        BOOST_SPIRIT_CHAR_CODE(encoding, spirit::char_encoding::charset)        \
     }}}                                                                         \
     /***/
 
