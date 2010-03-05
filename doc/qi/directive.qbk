@@ -29,11 +29,9 @@ The `lexeme` directive makes its subject a primitive. In a logical point
 of view, lexemes (and primitives) are minimal atomic units (e.g. words,
 numbers, identifiers, etc). These are the things that you'd normally put
 in the lexer (hinting at the term "lexeme"), but in a lexer-less world,
-you put in a lexeme.
-
-Seeing its subject as a primitive, the `lexeme` directive does an
-initial pre-skip (as all primitives do) and turns off white space
-skipping.
+you put these in a lexeme. Seeing its subject as a primitive, the
+`lexeme` directive does an initial pre-skip (as all primitives do) and
+turns off white space skipping.
 
 At the phrase level, the parser ignores white spaces, possibly including
 comments. Use `lexeme` in situations where you want to work at the
