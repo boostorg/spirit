@@ -31,17 +31,17 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
-    // hoist the char classification namespaces into qi sub-namespaces of the 
+    // hoist the char classification namespaces into qi sub-namespaces of the
     // same name
     namespace ascii { using namespace boost::spirit::ascii; }
     namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
     namespace standard { using namespace boost::spirit::standard; }
     namespace standard_wide { using namespace boost::spirit::standard_wide; }
 
-    // Import the standard namespace into the qi namespace. This allows 
-    // for default handling of all character/string related operations if not 
+    // Import the default_ namespace into the qi namespace. This allows
+    // for default handling of all character/string related operations if not
     // prefixed with a character set namespace.
-    using namespace boost::spirit::standard;
+    using namespace boost::spirit::default_;
 
     ///////////////////////////////////////////////////////////////////////////
     // Generic char classification parser (for alnum, alpha, graph, etc.)
@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace qi
         bool test(CharParam ch, Context&) const
         {
             using spirit::char_class::classify;
-            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch) &&
                    classify<char_encoding>::is(classification(), ch);
         }
 

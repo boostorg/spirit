@@ -13,6 +13,7 @@
 #endif
 
 #include <boost/spirit/home/support/terminal.hpp>
+#include <boost/spirit/home/support/char_encoding/default.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
@@ -159,6 +160,7 @@ namespace boost { namespace spirit
     }}}                                                                         \
     /***/
 
+BOOST_SPIRIT_DEFINE_CHAR_CODES(default_)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(ascii)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(iso8859_1)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(standard)
