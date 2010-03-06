@@ -109,7 +109,6 @@ namespace boost { namespace spirit { namespace detail
         typedef typename fusion::result_of::as_list<params>::type type;
     };
 
-
     ///////////////////////////////////////////////////////////////////////////
     template <typename Types>
     struct extract_encoding

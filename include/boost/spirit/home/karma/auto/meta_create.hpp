@@ -51,57 +51,57 @@ namespace boost { namespace spirit { namespace karma
     template <typename String> 
     struct meta_create_string 
     {
-        typedef spirit::standard::string_type type; 
-        static type const& call() { return spirit::standard::string; }
+        typedef spirit::default_encoding::string_type type; 
+        static type const& call() { return spirit::default_encoding::string; }
     };
 
     template <> 
     struct meta_create_string<wchar_t*>
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     template <> 
     struct meta_create_string<wchar_t const*>
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     template <int N> 
     struct meta_create_string<wchar_t[N]>
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     template <int N> 
     struct meta_create_string<wchar_t const[N]>
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     template <int N> 
     struct meta_create_string<wchar_t(&)[N]>
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     template <int N> 
     struct meta_create_string<wchar_t const(&)[N]>
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     template <typename Traits, typename Allocator> 
     struct meta_create_string<std::basic_string<wchar_t, Traits, Allocator> >
     {
-        typedef spirit::standard_wide::string_type type; 
-        static type const& call() { return spirit::standard_wide::string; }
+        typedef spirit::default_wide_encoding::string_type type; 
+        static type const& call() { return spirit::default_wide_encoding::string; }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -203,14 +203,14 @@ namespace boost { namespace spirit { namespace karma
     template <> 
     struct meta_create<char> 
     { 
-        typedef spirit::standard::char_type type; 
-        static type const& call() { return spirit::standard::char_; }
+        typedef spirit::default_encoding::char_type type;
+        static type const& call() { return spirit::default_encoding::char_; }
     };
     template <> 
     struct meta_create<wchar_t> 
     { 
-        typedef spirit::standard_wide::char_type type; 
-        static type const& call() { return spirit::standard_wide::char_; }
+        typedef spirit::default_wide_encoding::char_type type;
+        static type const& call() { return spirit::default_wide_encoding::char_; }
     };
 
     // boolean generator

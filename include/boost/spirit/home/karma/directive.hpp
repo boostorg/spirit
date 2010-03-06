@@ -10,6 +10,8 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/karma/directive/encoding.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 //  directives related to alignment 
 //  left_align[...], right_align[...], center[...]
