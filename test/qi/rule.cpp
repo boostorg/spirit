@@ -433,7 +433,7 @@ main()
         r = no_case[char_('á')];
         BOOST_TEST(test("Á", r));
 
-        r = no_case[no_case[char_("å-ï")]];
+        r = no_case[char_("å-ï")];
         BOOST_TEST(test("É", r));
         BOOST_TEST(!test("ÿ", r));
 

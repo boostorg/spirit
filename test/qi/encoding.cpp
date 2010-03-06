@@ -29,8 +29,9 @@ main()
     using boost::spirit::qi::no_case;
     using boost::spirit::qi::char_;
     using boost::spirit::qi::encoding;
+    namespace char_encoding = boost::spirit::char_encoding;
 
-    encoding<boost::spirit::char_encoding::iso8859_1> iso8859_1;
+    encoding<char_encoding::iso8859_1> iso8859_1;
 
 // needed for VC7.1 only
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
