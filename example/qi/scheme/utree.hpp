@@ -28,8 +28,10 @@ namespace scheme { namespace detail
     struct visit_impl;
     struct index_impl;
 
+    ///////////////////////////////////////////////////////////////////////////
     // Our utree can store these types. This enum tells us what type
     // of data is stored in the discriminated union.
+    ///////////////////////////////////////////////////////////////////////////
     struct utree_type
     {
         enum info
@@ -44,6 +46,7 @@ namespace scheme { namespace detail
         };
     };
 
+    ///////////////////////////////////////////////////////////////////////////
     // Our POD fast string. This implementation is very primitive and is not
     // meant to be used stand-alone. This is the internal data representation
     // of strings in our utree. This is deliberately a POD to allow it to be
@@ -56,7 +59,7 @@ namespace scheme { namespace detail
     // characters are allowed, making it suitable to encode raw binary. The
     // string length is encoded in the first byte if the string is placed in-situ,
     // else, the length plus a pointer to the string in the heap are stored.
-
+    ///////////////////////////////////////////////////////////////////////////
     struct fast_string // Keep this a POD!
     {
         static std::size_t const
@@ -77,89 +80,25 @@ namespace scheme { namespace detail
             heap_store heap;
         };
 
-        utree_type::info get_type() const
-        {
-            return static_cast<utree_type::info>(buff[small_string_size]);
-        }
-
-        void set_type(utree_type::info t)
-        {
-            buff[small_string_size] = static_cast<char>(t);
-        }
-
-        std::size_t size() const
-        {
-            BOOST_ASSERT(get_type() == utree_type::small_string_type
-                || get_type() == utree_type::heap_string_type);
-
-            if (get_type() == utree_type::small_string_type)
-                return buff[0];
-            else
-                return heap.size;
-        }
-
-        char const* str() const
-        {
-            BOOST_ASSERT(get_type() == utree_type::small_string_type
-                || get_type() == utree_type::heap_string_type);
-
-            if (get_type() == utree_type::small_string_type)
-                return buff + 1;
-            else
-                return heap.str;
-        }
+        utree_type::info get_type() const;
+        void set_type(utree_type::info t);
+        std::size_t size() const;
+        char const* str() const;
 
         template <typename Iterator>
-        void construct(Iterator f, Iterator l)
-        {
-            unsigned const size = l-f;
-            char* str;
-            if (size <= small_string_size)
-            {
-                // if it fits, store it in-situ; the first byte
-                // is the length of the string.
-                str = buff + 1;
-                buff[0] = size;
-                set_type(utree_type::small_string_type);
-            }
-            else
-            {
-                // else, store it in the heap
-                str = new char[size];
-                heap.str = str;
-                heap.size = size;
-                set_type(utree_type::heap_string_type);
-            }
-            for (std::size_t i = 0; i != size; ++i)
-                *str++ = *f++;
-        }
+        void construct(Iterator f, Iterator l);
 
-        void swap(fast_string& other)
-        {
-            fast_string temp = other;
-            other = *this;
-            *this = temp;
-        }
-
-        void free()
-        {
-            if (get_type() == utree_type::heap_string_type)
-            {
-                delete [] heap.str;
-                heap.str = 0;
-            }
-        }
-
-        void copy(fast_string const& other)
-        {
-            construct(other.str(), other.str() + other.size());
-        }
+        void swap(fast_string& other);
+        void free();
+        void copy(fast_string const& other);
     };
 
+    ///////////////////////////////////////////////////////////////////////////
     // Our POD double linked list. Straightforward implementation.
     // This implementation is very primitive and is not meant to be
     // used stand-alone. This is the internal data representation
     // of lists in our utree.
+    ///////////////////////////////////////////////////////////////////////////
     struct list // keep this a POD!
     {
         struct node;
@@ -169,11 +108,7 @@ namespace scheme { namespace detail
 
         void free();
         void copy(list const& other);
-        void default_construct()
-        {
-            first = last = 0;
-            size = 0;
-        }
+        void default_construct();
 
         template <typename T>
         void insert_before(T const& val, node* node);
@@ -199,6 +134,20 @@ namespace scheme { namespace detail
 
 namespace scheme
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // The main utree (Universal Tree) class
+    // The utree is a hierarchical, dynamic type that can store:
+    //  - a nil
+    //  - a bool
+    //  - an integer
+    //  - a double
+    //  - a string (textual or binary)
+    //  - a (doubly linked) list of utree
+    //
+    // The utree has minimal memory footprint. The data structure size is
+    // 16 bits on a 32-bit platform. Being a container of itself, it can
+    // represent tree structures.
+    ///////////////////////////////////////////////////////////////////////////
     class utree
     {
     public:
@@ -213,13 +162,14 @@ namespace scheme
 
         struct nil {};
 
-        utree() { set_type(type::nil_type); }
-        explicit utree(bool b) : b(b) { set_type(type::bool_type); }
-        explicit utree(unsigned i) : i(i) { set_type(type::int_type); }
-        explicit utree(int i) : i(i) { set_type(type::int_type); }
-        explicit utree(double d) : d(d) { set_type(type::double_type); }
-        explicit utree(char const* str) { s.construct(str, str+strlen(str)); }
-        explicit utree(std::string const& str) { s.construct(str.begin(), str.end()); }
+        utree();
+        explicit utree(bool b);
+        explicit utree(unsigned i);
+        explicit utree(int i);
+        explicit utree(double d);
+        explicit utree(char const* str);
+        explicit utree(char const* str, std::size_t len);
+        explicit utree(std::string const& str);
 
         template <typename F>
         typename F::result_type
@@ -249,7 +199,6 @@ namespace scheme
         ~utree() { free(*this); }
 
         utree& operator=(utree const& other);
-
         utree& operator=(bool b);
         utree& operator=(unsigned i);
         utree& operator=(int i);
@@ -308,30 +257,14 @@ namespace scheme
         friend struct detail::index_impl;
         friend struct ulist;
 
-        type::info get_type() const
-        {
-            // the fast string holds the type info
-            return s.get_type();
-        }
-
-        void set_type(type::info t)
-        {
-            // the fast string holds the type info
-            s.set_type(t);
-        }
-
+        type::info get_type() const;
+        void set_type(type::info t);
         void ensure_list_type();
-
         static void free(utree& x);
         static void copy(utree& x, utree const& other);
 
         struct construct_list {};
-
-        utree(construct_list)
-        {
-            l.default_construct();
-            set_type(type::list_type);
-        }
+        utree(construct_list);
 
         union
         {
@@ -346,28 +279,14 @@ namespace scheme
     std::ostream& operator<<(std::ostream& out, utree const& val);
     bool operator==(utree const& a, utree const& b);
     bool operator<(utree const& a, utree const& b);
-    std::ostream& operator<<(std::ostream& out, utree const& val);
+    bool operator!=(utree const& a, utree const& b);
+    bool operator>(utree const& a, utree const& b);
+    bool operator<=(utree const& a, utree const& b);
+    bool operator>=(utree const& a, utree const& b);
 
-    inline bool operator!=(utree const& a, utree const& b)
-    {
-        return !(a == b);
-    }
-
-    inline bool operator>(utree const& a, utree const& b)
-    {
-        return b < a;
-    }
-
-    inline bool operator<=(utree const& a, utree const& b)
-    {
-        return !(b < a);
-    }
-
-    inline bool operator>=(utree const& a, utree const& b)
-    {
-        return !(a < b);
-    }
-
+    ///////////////////////////////////////////////////////////////////////////
+    // The ulist is a utility class for easy construction of utree lists
+    ///////////////////////////////////////////////////////////////////////////
     struct ulist : utree
     {
         ulist() : utree(construct_list()) {}
@@ -376,6 +295,84 @@ namespace scheme
 
 namespace scheme { namespace detail
 {
+    inline utree_type::info fast_string::get_type() const
+    {
+        return static_cast<utree_type::info>(buff[small_string_size]);
+    }
+
+    inline void fast_string::set_type(utree_type::info t)
+    {
+        buff[small_string_size] = static_cast<char>(t);
+    }
+
+    inline std::size_t fast_string::size() const
+    {
+        BOOST_ASSERT(get_type() == utree_type::small_string_type
+            || get_type() == utree_type::heap_string_type);
+
+        if (get_type() == utree_type::small_string_type)
+            return buff[0];
+        else
+            return heap.size;
+    }
+
+    inline char const* fast_string::str() const
+    {
+        BOOST_ASSERT(get_type() == utree_type::small_string_type
+            || get_type() == utree_type::heap_string_type);
+
+        if (get_type() == utree_type::small_string_type)
+            return buff + 1;
+        else
+            return heap.str;
+    }
+
+    template <typename Iterator>
+    inline void fast_string::construct(Iterator f, Iterator l)
+    {
+        unsigned const size = l-f;
+        char* str;
+        if (size <= small_string_size)
+        {
+            // if it fits, store it in-situ; the first byte
+            // is the length of the string.
+            str = buff + 1;
+            buff[0] = size;
+            set_type(utree_type::small_string_type);
+        }
+        else
+        {
+            // else, store it in the heap
+            str = new char[size];
+            heap.str = str;
+            heap.size = size;
+            set_type(utree_type::heap_string_type);
+        }
+        for (std::size_t i = 0; i != size; ++i)
+            *str++ = *f++;
+    }
+
+    inline void fast_string::swap(fast_string& other)
+    {
+        fast_string temp = other;
+        other = *this;
+        *this = temp;
+    }
+
+    inline void fast_string::free()
+    {
+        if (get_type() == utree_type::heap_string_type)
+        {
+            delete [] heap.str;
+            heap.str = 0;
+        }
+    }
+
+    inline void fast_string::copy(fast_string const& other)
+    {
+        construct(other.str(), other.str() + other.size());
+    }
+
     struct list::node : boost::noncopyable
     {
         template <typename T>
@@ -448,6 +445,12 @@ namespace scheme { namespace detail
             push_back(p->val);
             p = p->next;
         }
+    }
+
+    inline void list::default_construct()
+    {
+        first = last = 0;
+        size = 0;
     }
 
     template <typename T>
@@ -790,6 +793,50 @@ namespace scheme { namespace detail
 
 namespace scheme
 {
+    inline utree::utree()
+    {
+        set_type(type::nil_type);
+    }
+
+    inline utree::utree(bool b)
+        : b(b)
+    {
+        set_type(type::bool_type);
+    }
+
+    inline utree::utree(unsigned i)
+        : i(i)
+    {
+        set_type(type::int_type);
+    }
+
+    inline utree::utree(int i)
+        : i(i)
+    {
+        set_type(type::int_type);
+    }
+
+    inline utree::utree(double d)
+        : d(d)
+    {
+        set_type(type::double_type);
+    }
+
+    inline utree::utree(char const* str)
+    {
+        s.construct(str, str + strlen(str));
+    }
+
+    inline utree::utree(char const* str, std::size_t len)
+    {
+        s.construct(str, str + len);
+    }
+
+    inline utree::utree(std::string const& str)
+    {
+        s.construct(str.begin(), str.end());
+    }
+
     inline utree& utree::operator=(utree const& other)
     {
         if (this != &other)
@@ -916,17 +963,24 @@ namespace scheme
         return utree::visit(a, b, detail::utree_is_less_than());
     }
 
-    inline void utree::ensure_list_type()
+    inline bool operator!=(utree const& a, utree const& b)
     {
-        if (get_type() == type::nil_type)
-        {
-            set_type(type::list_type);
-            l.default_construct();
-        }
-        else
-        {
-            BOOST_ASSERT(get_type() == type::list_type);
-        }
+        return !(a == b);
+    }
+
+    inline bool operator>(utree const& a, utree const& b)
+    {
+        return b < a;
+    }
+
+    inline bool operator<=(utree const& a, utree const& b)
+    {
+        return !(b < a);
+    }
+
+    inline bool operator>=(utree const& a, utree const& b)
+    {
+        return !(a < b);
     }
 
     template <typename T>
@@ -1067,6 +1121,35 @@ namespace scheme
         return l.last->val;
     }
 
+    inline void utree::swap(utree& other)
+    {
+        s.swap(other.s);
+    }
+
+    inline utree::type::info utree::get_type() const
+    {
+        // the fast string holds the type info
+        return s.get_type();
+    }
+
+    inline void utree::set_type(type::info t)
+    {
+        // the fast string holds the type info
+        s.set_type(t);
+    }
+
+    inline void utree::ensure_list_type()
+    {
+        if (get_type() == type::nil_type)
+        {
+            set_type(type::list_type);
+            l.default_construct();
+        }
+        else
+        {
+            BOOST_ASSERT(get_type() == type::list_type);
+        }
+    }
 
     inline void utree::free(utree& x)
     {
@@ -1109,9 +1192,10 @@ namespace scheme
         }
     }
 
-    inline void utree::swap(utree& other)
+    inline utree::utree(construct_list)
     {
-        s.swap(other.s);
+        l.default_construct();
+        set_type(type::list_type);
     }
 }
 
