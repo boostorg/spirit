@@ -3,12 +3,14 @@
 
 namespace
 {
-    void print(scheme::utree const& val, bool no_endl = false);
-    void print(char ch, bool ignored)
-    {
-        std::cout << ch;
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // simple utree printing facility prints the utree in a single line
+    ///////////////////////////////////////////////////////////////////////////
+    void print(char ch);
+    void print(scheme::utree const& val);
+    void println(scheme::utree const& val);
 
+    // simple_print visitor
     struct simple_print
     {
         typedef void result_type;
@@ -26,7 +28,7 @@ namespace
 
         void operator()(bool b) const
         {
-            std::cout << (b?"true":"false");
+            std::cout << (b ? "true" : "false");
         }
 
         template <typename Iterator>
@@ -38,25 +40,34 @@ namespace
             char const start = is_string ? '"' : '(';
             char const end = is_string ? '"' : ')';
 
-            std::cout << start;
+            print(start);
             for (iterator i = range.begin(); i != range.end(); ++i)
             {
                 if (!is_string)
                 {
                     if (i != range.begin())
-                        std::cout << ", ";
+                        print(',');
                 }
-                print(*i, true);
+                print(*i);
             }
-            std::cout << end;
+            print(end);
         }
     };
 
-    inline void print(scheme::utree const& val, bool no_endl)
+    inline void print(char ch)
+    {
+        std::cout << ch;
+    }
+
+    inline void print(scheme::utree const& val)
     {
         scheme::utree::visit(val, simple_print());
-        if (!no_endl)
-            std::cout << std::endl;
+    }
+
+    inline void println(scheme::utree const& val)
+    {
+        print(val);
+        std::cout << std::endl;
     }
 }
 
@@ -67,38 +78,39 @@ int main()
 
     {
         // test the size
-        std::cout << sizeof(scheme::utree) << std::endl;
+        std::cout << "size of utree is: "
+            << sizeof(scheme::utree) << " bytes" << std::endl;
     }
 
     {
         utree val;
-        print(val);
+        println(val);
     }
 
     {
         utree val(true);
-        print(val);
+        println(val);
     }
 
     {
         utree val(123);
-        print(val);
+        println(val);
     }
 
     {
         utree val(123.456);
-        print(val);
+        println(val);
     }
 
     {
         utree val("Hello, World");
-        print(val);
+        println(val);
         utree val2;
         val2 = val;
-        print(val2);
+        println(val2);
         utree val3("Hello, World. Chuckie is back!!!");
         val = val3;
-        print(val);
+        println(val);
 
         utree val4("Apple");
         utree val5("Apple");
@@ -116,32 +128,32 @@ int main()
         val2.push_back(123.456);
         val2.push_back("Mah Doggie");
         val.push_back(val2);
-        print(val);
-        print(val.front());
+        println(val);
+        println(val.front());
 
         utree val3;
         val3.swap(val);
-        print(val);
+        println(val);
         val3.swap(val);
-        print(val);
+        println(val);
         val.push_back("Ba Ba Black Sheep");
-        print(val);
+        println(val);
         val.pop_front();
-        print(val);
+        println(val);
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
         BOOST_ASSERT(val.size() == 4);
-        print(val);
+        println(val);
         val.pop_back();
-        print(val);
+        println(val);
         BOOST_ASSERT(val.size() == 3);
         val.erase(val.end());
-        print(val);
+        println(val);
         BOOST_ASSERT(val.size() == 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
-        print(val);
+        println(val);
     }
 
     {

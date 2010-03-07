@@ -30,7 +30,7 @@ namespace scheme { namespace detail
 
     ///////////////////////////////////////////////////////////////////////////
     // Our utree can store these types. This enum tells us what type
-    // of data is stored in the discriminated union.
+    // of data is stored in utree's discriminated union.
     ///////////////////////////////////////////////////////////////////////////
     struct utree_type
     {
@@ -51,8 +51,8 @@ namespace scheme { namespace detail
     // meant to be used stand-alone. This is the internal data representation
     // of strings in our utree. This is deliberately a POD to allow it to be
     // placed in a union. This POD fast string specifically utilizes
-    // (sizeof(double) * 2) - 2 * sizeof(char) (14 bytes in a 32 bit system).
-    // Two extra bytes are used by utree to store management info.
+    // (sizeof(double) * 2) - (2 * sizeof(char)). In a 32 bit system, this is
+    // 14 bytes. The two extra bytes are used by utree to store management info.
     //
     // It is a const string (i.e. immutable). It stores the characters directly
     // if possible and only uses the heap if the string does not fit. Null
