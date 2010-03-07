@@ -171,6 +171,17 @@ namespace scheme
         explicit utree(char const* str, std::size_t len);
         explicit utree(std::string const& str);
 
+        utree(utree const& other);
+        ~utree();
+
+        utree& operator=(utree const& other);
+        utree& operator=(bool b);
+        utree& operator=(unsigned i);
+        utree& operator=(int i);
+        utree& operator=(double d);
+        utree& operator=(char const* s);
+        utree& operator=(std::string const& s);
+
         template <typename F>
         typename F::result_type
         static visit(utree const& x, F f);
@@ -194,17 +205,6 @@ namespace scheme
         template <typename F>
         typename F::result_type
         static visit(utree& x, utree& y, F f);
-
-        utree(utree const& other) { copy(*this, other); }
-        ~utree() { free(*this); }
-
-        utree& operator=(utree const& other);
-        utree& operator=(bool b);
-        utree& operator=(unsigned i);
-        utree& operator=(int i);
-        utree& operator=(double d);
-        utree& operator=(char const* s);
-        utree& operator=(std::string const& s);
 
         template <typename T>
         void push_back(T const& val);
@@ -260,8 +260,8 @@ namespace scheme
         type::info get_type() const;
         void set_type(type::info t);
         void ensure_list_type();
-        static void free(utree& x);
-        static void copy(utree& x, utree const& other);
+        void free();
+        void copy(utree const& other);
 
         struct construct_list {};
         utree(construct_list);
@@ -349,7 +349,9 @@ namespace scheme { namespace detail
             set_type(utree_type::heap_string_type);
         }
         for (std::size_t i = 0; i != size; ++i)
+        {
             *str++ = *f++;
+        }
     }
 
     inline void fast_string::swap(fast_string& other)
@@ -411,15 +413,26 @@ namespace scheme { namespace detail
         friend class boost::iterator_core_access;
         friend class scheme::utree;
 
-        void increment() { node = node->next; }
-        void decrement() { node = node->prev; }
+        void increment()
+        {
+            node = node->next;
+        }
+
+        void decrement()
+        {
+            node = node->prev;
+        }
 
         bool equal(node_iterator const& other) const
         {
             return node == other.node;
         }
 
-        utree& dereference() const { return node->val; }
+        utree& dereference() const
+        {
+            return node->val;
+        }
+
         list::node* node;
     };
 
@@ -613,7 +626,7 @@ namespace scheme { namespace detail
                 if (!is_string)
                 {
                     if (i != range.begin())
-                        out << ',';
+                        out << ", ";
                 }
                 out << *i;
             }
@@ -798,26 +811,22 @@ namespace scheme
         set_type(type::nil_type);
     }
 
-    inline utree::utree(bool b)
-        : b(b)
+    inline utree::utree(bool b) : b(b)
     {
         set_type(type::bool_type);
     }
 
-    inline utree::utree(unsigned i)
-        : i(i)
+    inline utree::utree(unsigned i) : i(i)
     {
         set_type(type::int_type);
     }
 
-    inline utree::utree(int i)
-        : i(i)
+    inline utree::utree(int i) : i(i)
     {
         set_type(type::int_type);
     }
 
-    inline utree::utree(double d)
-        : d(d)
+    inline utree::utree(double d) : d(d)
     {
         set_type(type::double_type);
     }
@@ -837,19 +846,29 @@ namespace scheme
         s.construct(str.begin(), str.end());
     }
 
+    inline utree::utree(utree const& other)
+    {
+        copy(other);
+    }
+
+    inline utree::~utree()
+    {
+        free();
+    }
+
     inline utree& utree::operator=(utree const& other)
     {
         if (this != &other)
         {
-            free(*this);
-            copy(*this, other);
+            free();
+            copy(other);
         }
         return *this;
     }
 
     inline utree& utree::operator=(bool b_)
     {
-        free(*this);
+        free();
         b = b_;
         set_type(type::bool_type);
         return *this;
@@ -857,7 +876,7 @@ namespace scheme
 
     inline utree& utree::operator=(unsigned i_)
     {
-        free(*this);
+        free();
         i = i_;
         set_type(type::int_type);
         return *this;
@@ -865,7 +884,7 @@ namespace scheme
 
     inline utree& utree::operator=(int i_)
     {
-        free(*this);
+        free();
         i = i_;
         set_type(type::int_type);
         return *this;
@@ -873,7 +892,7 @@ namespace scheme
 
     inline utree& utree::operator=(double d_)
     {
-        free(*this);
+        free();
         d = d_;
         set_type(type::double_type);
         return *this;
@@ -881,14 +900,14 @@ namespace scheme
 
     inline utree& utree::operator=(char const* s_)
     {
-        free(*this);
+        free();
         s.construct(s_, s_ + strlen(s_));
         return *this;
     }
 
     inline utree& utree::operator=(std::string const& s_)
     {
-        free(*this);
+        free();
         s.construct(s_.begin(), s_.end());
         return *this;
     }
@@ -1033,7 +1052,7 @@ namespace scheme
     inline void utree::clear()
     {
         BOOST_ASSERT(get_type() == type::list_type);
-        free(*this);
+        free();
     }
 
     inline void utree::pop_front()
@@ -1151,43 +1170,41 @@ namespace scheme
         }
     }
 
-    inline void utree::free(utree& x)
+    inline void utree::free()
     {
-        switch (x.get_type())
+        switch (get_type())
         {
-            default:
-                break;
             case type::heap_string_type:
-                x.s.free();
+                s.free();
                 break;
             case type::list_type:
-                x.l.free();
+                l.free();
                 break;
         };
     }
 
-    inline void utree::copy(utree& x, utree const& other)
+    inline void utree::copy(utree const& other)
     {
-        x.set_type(other.get_type());
+        set_type(other.get_type());
         switch (other.get_type())
         {
             case type::nil_type:
                 break;
             case type::bool_type:
-                x.b = other.b;
+                b = other.b;
                 break;
             case type::int_type:
-                x.i = other.i;
+                i = other.i;
                 break;
             case type::double_type:
-                x.d = other.d;
+                d = other.d;
                 break;
             case type::small_string_type:
             case type::heap_string_type:
-                x.s.copy(other.s);
+                s.copy(other.s);
                 break;
             case type::list_type:
-                x.l.copy(other.l);
+                l.copy(other.l);
                 break;
         }
     }
