@@ -14,6 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/type_traits/is_pointer.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -111,7 +112,7 @@ namespace scheme { namespace detail
         template <typename Iterator>
         void construct(Iterator f, Iterator l)
         {
-            unsigned const size = (l-f)+1;
+            unsigned const size = l-f;
             char* str;
             if (size <= small_string_size)
             {
@@ -129,7 +130,7 @@ namespace scheme { namespace detail
                 this->heap.size = size;
                 set_type(utree_type::heap_string_type);
             }
-            for (int i = 0; i != size; ++i)
+            for (std::size_t i = 0; i != size; ++i)
                 *str++ = *f++;
         }
 
@@ -343,7 +344,6 @@ namespace scheme
     };
 
     std::ostream& operator<<(std::ostream& out, utree const& val);
-
     bool operator==(utree const& a, utree const& b);
     bool operator<(utree const& a, utree const& b);
     std::ostream& operator<<(std::ostream& out, utree const& val);
@@ -412,7 +412,7 @@ namespace scheme { namespace detail
     private:
 
         friend class boost::iterator_core_access;
-        friend class utree;
+        friend class scheme::utree;
 
         void increment() { node = node->next; }
         void decrement() { node = node->prev; }
@@ -595,23 +595,26 @@ namespace scheme { namespace detail
             out << (b?"true":"false");
         }
 
-        void operator()(char const* s) const
-        {
-            out << '"' << s << '"';
-        }
-
         template <typename Iterator>
         void operator()(boost::iterator_range<Iterator> const& range) const
         {
-            out << '[';
+            // This code works for both strings and lists
+            bool const is_string = boost::is_pointer<Iterator>::value;
+            char const start = is_string ? '"' : '[';
+            char const end = is_string ? '"' : ']';
+
+            out << start;
             for (typename boost::iterator_range<Iterator>::const_iterator
                 i = range.begin(); i != range.end(); ++i)
             {
-                if (i != range.begin())
-                    out << ',';
+                if (!is_string)
+                {
+                    if (i != range.begin())
+                        out << ',';
+                }
                 out << *i;
             }
-            out << ']';
+            out << end;
         }
     };
 
@@ -641,17 +644,13 @@ namespace scheme { namespace detail
         template <typename T>
         bool operator()(const T& a, const T& b) const
         {
+            // This code works for lists and strings as well
             return a == b;
         }
 
         bool operator()(utree::nil, utree::nil) const
         {
             return true;
-        }
-
-        bool operator()(char const* a, char const* b) const
-        {
-            return strcmp(a, b) == 0; // $$$ use utf8 comparison here! $$$
         }
     };
 
@@ -681,6 +680,7 @@ namespace scheme { namespace detail
         template <typename T>
         bool operator()(const T& a, const T& b) const
         {
+            // This code works for lists and strings as well
             return a < b;
         }
 
@@ -688,11 +688,6 @@ namespace scheme { namespace detail
         {
             BOOST_ASSERT(false);
             return false; // no less than comparison for nil
-        }
-
-        bool operator()(char const* a, char const* b) const
-        {
-            return strcmp(a, b) < 0; // $$$ use utf8 comparison here! $$$
         }
     };
 
@@ -714,6 +709,7 @@ namespace scheme { namespace detail
             iterator;
 
             typedef boost::iterator_range<iterator> list_range;
+            typedef boost::iterator_range<string_type> string_range;
             typedef detail::utree_type type;
 
             switch (x.get_type())
@@ -730,7 +726,7 @@ namespace scheme { namespace detail
                 case type::list_type:
                     return f(list_range(iterator(x.l.first), iterator(0)));
                 default:
-                    return f(string_type(x.s.str()));
+                    return f(string_range(x.s.str(), x.s.str() + x.s.size()));
             }
         }
 
@@ -749,6 +745,7 @@ namespace scheme { namespace detail
             iterator;
 
             typedef boost::iterator_range<iterator> list_range;
+            typedef boost::iterator_range<string_type> string_range;
             typedef detail::utree_type type;
 
             switch (x.get_type())
@@ -767,7 +764,8 @@ namespace scheme { namespace detail
                         y, detail::bind<F, list_range>(f,
                         list_range(iterator(x.l.first), iterator(0))));
                 default:
-                    return visit_impl::apply(y, detail::bind(f, string_type(x.s.str())));
+                    return visit_impl::apply(y, detail::bind(
+                        f, string_range(x.s.str(), x.s.str() + x.s.size())));
             }
         }
     };
@@ -923,8 +921,7 @@ namespace scheme
         if (this->get_type() == type::nil_type)
         {
             this->set_type(type::list_type);
-            this->l.first = this->l.last = 0;
-            this->l.size = 0;
+            this->l.default_construct();
         }
         else
         {

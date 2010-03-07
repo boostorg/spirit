@@ -40,6 +40,13 @@ int main()
         utree val3("Hello, World. Chuckie is back!!!");
         val = val3;
         std::cout << val << std::endl;
+
+        utree val4("Apple");
+        utree val5("Apple");
+        BOOST_ASSERT(val4 == val5);
+
+        utree val6("ApplePie");
+        BOOST_ASSERT(val4 < val6);
     }
 
     {
