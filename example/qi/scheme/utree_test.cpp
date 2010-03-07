@@ -1,6 +1,65 @@
 #include "utree.hpp"
 #include <iostream>
 
+namespace
+{
+    void print(scheme::utree const& val, bool no_endl = false);
+    void print(char ch, bool ignored)
+    {
+        std::cout << ch;
+    }
+
+    struct simple_print
+    {
+        typedef void result_type;
+
+        void operator()(scheme::utree::nil) const
+        {
+            std::cout << "nil";
+        }
+
+        template <typename T>
+        void operator()(T val) const
+        {
+            std::cout << val;
+        }
+
+        void operator()(bool b) const
+        {
+            std::cout << (b?"true":"false");
+        }
+
+        template <typename Iterator>
+        void operator()(boost::iterator_range<Iterator> const& range) const
+        {
+            // This code works for both strings and lists
+            typedef typename boost::iterator_range<Iterator>::const_iterator iterator;
+            bool const is_string = boost::is_pointer<Iterator>::value;
+            char const start = is_string ? '"' : '(';
+            char const end = is_string ? '"' : ')';
+
+            std::cout << start;
+            for (iterator i = range.begin(); i != range.end(); ++i)
+            {
+                if (!is_string)
+                {
+                    if (i != range.begin())
+                        std::cout << ", ";
+                }
+                print(*i, true);
+            }
+            std::cout << end;
+        }
+    };
+
+    inline void print(scheme::utree const& val, bool no_endl)
+    {
+        scheme::utree::visit(val, simple_print());
+        if (!no_endl)
+            std::cout << std::endl;
+    }
+}
+
 int main()
 {
     using scheme::utree;
@@ -13,33 +72,33 @@ int main()
 
     {
         utree val;
-        std::cout << val << std::endl;
+        print(val);
     }
 
     {
         utree val(true);
-        std::cout << val << std::endl;
+        print(val);
     }
 
     {
         utree val(123);
-        std::cout << val << std::endl;
+        print(val);
     }
 
     {
         utree val(123.456);
-        std::cout << val << std::endl;
+        print(val);
     }
 
     {
         utree val("Hello, World");
-        std::cout << val << std::endl;
+        print(val);
         utree val2;
         val2 = val;
-        std::cout << val2 << std::endl;
+        print(val2);
         utree val3("Hello, World. Chuckie is back!!!");
         val = val3;
-        std::cout << val << std::endl;
+        print(val);
 
         utree val4("Apple");
         utree val5("Apple");
@@ -57,32 +116,32 @@ int main()
         val2.push_back(123.456);
         val2.push_back("Mah Doggie");
         val.push_back(val2);
-        std::cout << val << std::endl;
-        std::cout << val.front() << std::endl;
+        print(val);
+        print(val.front());
 
         utree val3;
         val3.swap(val);
-        std::cout << val << std::endl;
+        print(val);
         val3.swap(val);
-        std::cout << val << std::endl;
+        print(val);
         val.push_back("Ba Ba Black Sheep");
-        std::cout << val << std::endl;
+        print(val);
         val.pop_front();
-        std::cout << val << std::endl;
+        print(val);
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
         BOOST_ASSERT(val.size() == 4);
-        std::cout << val << std::endl;
+        print(val);
         val.pop_back();
-        std::cout << val << std::endl;
+        print(val);
         BOOST_ASSERT(val.size() == 3);
         val.erase(val.end());
-        std::cout << val << std::endl;
+        print(val);
         BOOST_ASSERT(val.size() == 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
-        std::cout << val << std::endl;
+        print(val);
     }
 
     {

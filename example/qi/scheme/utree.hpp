@@ -276,7 +276,6 @@ namespace scheme
         };
     };
 
-    std::ostream& operator<<(std::ostream& out, utree const& val);
     bool operator==(utree const& a, utree const& b);
     bool operator<(utree const& a, utree const& b);
     bool operator!=(utree const& a, utree const& b);
@@ -587,52 +586,6 @@ namespace scheme { namespace detail
     {
         return bind_impl<F, X>(f, x);
     }
-
-    struct utree_print
-    {
-        typedef void result_type;
-        std::ostream& out;
-        utree_print(std::ostream& out)
-          : out(out) {}
-
-        void operator()(utree::nil) const
-        {
-            out << "nil";
-        }
-
-        template <typename T>
-        void operator()(T val) const
-        {
-            out << val;
-        }
-
-        void operator()(bool b) const
-        {
-            out << (b?"true":"false");
-        }
-
-        template <typename Iterator>
-        void operator()(boost::iterator_range<Iterator> const& range) const
-        {
-            // This code works for both strings and lists
-            typedef typename boost::iterator_range<Iterator>::const_iterator iterator;
-            bool const is_string = boost::is_pointer<Iterator>::value;
-            char const start = is_string ? '"' : '[';
-            char const end = is_string ? '"' : ']';
-
-            out << start;
-            for (iterator i = range.begin(); i != range.end(); ++i)
-            {
-                if (!is_string)
-                {
-                    if (i != range.begin())
-                        out << ", ";
-                }
-                out << *i;
-            }
-            out << end;
-        }
-    };
 
     struct utree_is_equal
     {
@@ -964,12 +917,6 @@ namespace scheme
     {
         BOOST_ASSERT(get_type() == type::list_type && size() > i);
         return detail::index_impl::apply(l.first, i);
-    }
-
-    inline std::ostream& operator<<(std::ostream& out, utree const& val)
-    {
-        utree::visit(val, detail::utree_print(out));
-        return out;
     }
 
     inline bool operator==(utree const& a, utree const& b)
