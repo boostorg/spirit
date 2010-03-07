@@ -22,10 +22,10 @@
 
 namespace scheme
 {
-    using boost::spirit::qi::grammar;
-    using boost::spirit::qi::rule;
     using boost::spirit::unicode::char_;
     using boost::spirit::unicode::space;
+    using boost::spirit::qi::grammar;
+    using boost::spirit::qi::rule;
     using boost::spirit::qi::eol;
     using boost::spirit::qi::_val;
     using boost::spirit::qi::_r1;
