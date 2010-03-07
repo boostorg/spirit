@@ -514,21 +514,24 @@ namespace boost { namespace spirit { namespace char_class
         static Char
         to(tag::lower, Char ch)
         {
-            return static_cast<Char>(CharEncoding::tolower(detail::cast_char<char_type>(ch)));
+            return static_cast<Char>(
+                CharEncoding::tolower(detail::cast_char<char_type>(ch)));
         }
 
         template <typename Char>
         static Char
         to(tag::upper, Char ch)
         {
-            return static_cast<Char>(CharEncoding::toupper(detail::cast_char<char_type>(ch)));
+            return static_cast<Char>(
+                CharEncoding::toupper(detail::cast_char<char_type>(ch)));
         }
 
         template <typename Char>
         static Char
         to(tag::ucs4, Char ch)
         {
-            return static_cast<Char>(CharEncoding::toucs4(detail::cast_char<char_type>(ch)));
+            return static_cast<Char>(
+                CharEncoding::toucs4(detail::cast_char<char_type>(ch)));
         }
 
         template <typename Char>

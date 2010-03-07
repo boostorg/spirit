@@ -24,6 +24,7 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/remove_const.hpp>
 #include <string>
 
 #if defined(_MSC_VER)
@@ -262,32 +263,41 @@ namespace boost { namespace spirit { namespace qi
         template <typename String>
         char_set(String const& str)
         {
-            typedef typename traits::char_type_of<String>::type in_type;
+            using spirit::detail::cast_char;
+
+            typedef typename
+                remove_const<
+                    typename traits::char_type_of<String>::type
+                >::type
+            in_type;
 
             BOOST_SPIRIT_ASSERT_MSG((
-                (sizeof(char_type) == sizeof(in_type))
+                (sizeof(char_type) >= sizeof(in_type))
             ), cannot_convert_string, (String));
 
-            char_type const* definition =
-                (char_type const*)traits::get_c_string(str);
-            char_type ch = *definition++;
+            in_type const* definition =
+                (in_type const*)traits::get_c_string(str);
+            in_type ch = *definition++;
             while (ch)
             {
-                char_type next = *definition++;
+                in_type next = *definition++;
                 if (next == '-')
                 {
                     next = *definition++;
                     if (next == 0)
                     {
-                        chset.set(ch);
+                        chset.set(cast_char<char_type>(ch));
                         chset.set('-');
                         break;
                     }
-                    chset.set(ch, next);
+                    chset.set(
+                        cast_char<char_type>(ch),
+                        cast_char<char_type>(next)
+                    );
                 }
                 else
                 {
-                    chset.set(ch);
+                    chset.set(cast_char<char_type>(ch));
                 }
                 ch = next;
             }
