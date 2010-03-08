@@ -26,6 +26,7 @@ namespace scheme
 {
     using boost::spirit::unicode::char_;
     using boost::spirit::unicode::space;
+    using boost::spirit::unicode::print;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::eol;
@@ -40,6 +41,7 @@ namespace scheme
     using boost::spirit::qi::hex;
     using boost::spirit::qi::oct;
     using boost::spirit::qi::no_case;
+    using boost::spirit::qi::lexeme;
     using boost::phoenix::function;
 
     typedef boost::spirit::char_encoding::unicode unicode;
@@ -54,6 +56,9 @@ namespace scheme
                     space                           // tab/space/cr/lf
                 |   ';' >> *(char_ - eol) >> eol    // comments
                 ;
+
+            //~ start.name("white_space");
+            //~ debug(start);
         }
 
         rule<Iterator, unicode> start;
@@ -72,6 +77,19 @@ namespace scheme
                 insert_iter out_iter(utf8);
                 boost::utf8_output_iterator<insert_iter> utf8_iter(out_iter);
                 *utf8_iter++ = code_point;
+            }
+        };
+
+        struct push_symbol_utf8
+        {
+            template <typename S, typename C>
+            struct result { typedef void type; };
+
+            void operator()(std::string& utf8, uchar code_point) const
+            {
+                if (utf8.size() == 0)
+                    utf8 += ';';    // mark a symbol with prefix ';'
+                push_utf8()(utf8, code_point);
             }
         };
 
@@ -117,6 +135,11 @@ namespace scheme
                 >> *(str_esc(_val) | (char_ - '"')  [push_utf8(_val, _1)])
                 >> '"'
                 ;
+
+            //~ start.name("string");
+            //~ str_esc.name("str_esc");
+            //~ debug(start);
+            //~ debug(str_esc);
         }
 
         rule<Iterator, unicode, void(std::string&)> str_esc;
@@ -128,37 +151,43 @@ namespace scheme
     {
         sexpr() : sexpr::base_type(start)
         {
-            function<detail::push_utf8> push_utf8;
-            function<detail::push_esc> push_esc;
+            real_parser<double, strict_real_policies<double> > strict_double;
+            function<detail::push_symbol_utf8> push_symbol_utf8;
 
             start   = atom | list;
 
             list    = '(' >> *start >> ')';
 
-            atom    =   number                      [_val = _1]
-                    |   string                      [_val = _1]
-                    |   symbol                      [_val = _1]
+            atom    =   number                          [_val = _1]
+                    |   string                          [_val = _1]
+                    |   symbol                          [_val = _1]
                     ;
 
-            char const* symbol_start = "a-zA-Z!#$%&'*+,-./:;<=>?@[\\]^_`{|}~";
-            char const* symbol_rest = "a-zA-Z0-9!#$%&'*+,-./:;<=>?@[\\]^_`{|}~";
+            char const* exclude = " ();\"\n\r\t";
+            symbol  = +lexeme[print - char_(exclude)]   [push_symbol_utf8(_val, _1)];
 
-            symbol  =   char_(symbol_start)         [push_utf8(_val, _1)]
-                    >> +char_(symbol_rest)          [push_utf8(_val, _1)]
+            number  = strict_double                     [_val = _1]
+                    | int_                              [_val = _1]
+                    | no_case["0x"] >> hex              [_val = _1]
+                    | '0' >> oct                        [_val = _1]
                     ;
 
-            number  = strict_double                 [_val = _1]
-                    | int_                          [_val = _1]
-                    | no_case["0x"] >> hex          [_val = _1]
-                    | '0' >> oct                    [_val = _1]
-                    ;
+            //~ start.name("sexpr");
+            //~ list.name("list");
+            //~ atom.name("atom");
+            //~ symbol.name("symbol");
+            //~ number.name("number");
+            //~ debug(start);
+            //~ debug(list);
+            //~ debug(atom);
+            //~ debug(symbol);
+            //~ debug(number);
         }
 
         rule<Iterator, unicode, white_space<Iterator>, utree()> start, list;
         rule<Iterator, unicode, utree()> atom, number;
         rule<Iterator, unicode, std::string()> symbol;
         string<Iterator> string;
-        real_parser<double, strict_real_policies<double> > strict_double;
     };
 }
 

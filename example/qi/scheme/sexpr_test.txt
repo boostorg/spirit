@@ -1,1 +1,8 @@
-(123.45 "this is a \u20AC string" (92 ("another string" apple)))
+﻿(
+    123.45
+    "this is a \u20AC string"           ; A UTF-8 string
+    "Τη γλώσσα μου έδωσαν ελληνική"     ; Another UTF-8 string
+    (
+        92 ("another string" apple Sîne)
+    )
+)

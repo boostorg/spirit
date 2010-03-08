@@ -34,26 +34,41 @@ namespace
             std::cout << (b ? "true" : "false");
         }
 
+        template <typename Range> // for lists
+        void print_string_or_list(Range range, boost::mpl::false_) const
+        {
+            typedef typename Range::const_iterator iterator;
+            print('(');
+            for (iterator i = range.begin(); i != range.end(); ++i)
+            {
+                if (i != range.begin())
+                    print(' ');
+                print(*i);
+            }
+            print(')');
+        }
+
+        template <typename Range> // for strings
+        void print_string_or_list(Range range, boost::mpl::true_) const
+        {
+            typedef typename Range::const_iterator iterator;
+            iterator i = range.begin();
+            bool const is_symbol = *i == ';';
+            if (!is_symbol)
+                print('"');
+            else
+                ++i;
+            for (; i != range.end(); ++i)
+                print(*i);
+            if (!is_symbol)
+                print('"');
+        }
+
         template <typename Iterator>
         void operator()(boost::iterator_range<Iterator> const& range) const
         {
             // This code works for both strings and lists
-            typedef typename boost::iterator_range<Iterator>::const_iterator iterator;
-            bool const is_string = boost::is_pointer<Iterator>::value;
-            char const start = is_string ? '"' : '(';
-            char const end = is_string ? '"' : ')';
-
-            print(start);
-            for (iterator i = range.begin(); i != range.end(); ++i)
-            {
-                if (!is_string)
-                {
-                    if (i != range.begin())
-                        print(' ');
-                }
-                print(*i);
-            }
-            print(end);
+            print_string_or_list(range, boost::is_pointer<Iterator>());
         }
     };
 

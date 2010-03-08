@@ -9,6 +9,15 @@
 #include <iostream>
 #include <fstream>
 
+namespace scheme
+{
+    inline std::ostream& operator<<(std::ostream& out, utree const& x)
+    {
+        println(x);
+        return out;
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,6 +43,18 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    char prefix[4];     // Read the UTF-8 prefix (0xEF 0xBB 0xBF)
+    in >> prefix[0];    // marking the beginning of a UTF-8 file
+    in >> prefix[1];
+    in >> prefix[2];
+    prefix[3] = 0;
+    if (std::string("\xef\xbb\xbf") != prefix)
+    {
+        std::cerr << "Not a UTF-8 file: "
+            << filename << std::endl;
+        return 1;
+    }
+
     std::string source_code; // We will read the contents here.
     in.unsetf(std::ios::skipws); // No white space skipping!
     std::copy(
@@ -41,7 +62,7 @@ int main(int argc, char **argv)
         std::istream_iterator<char>(),
         std::back_inserter(source_code));
 
-    typedef std::string::const_iterator iterator_type;
+    typedef boost::u8_to_u32_iterator<std::string::const_iterator> iterator_type;
     iterator_type first = source_code.begin();
     iterator_type last = source_code.end();
 
