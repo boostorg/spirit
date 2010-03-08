@@ -88,7 +88,8 @@ namespace scheme
             void operator()(std::string& utf8, uchar code_point) const
             {
                 if (utf8.size() == 0)
-                    utf8 += ';';    // mark a symbol with prefix ';'
+                    utf8 += '\0';   //  mark a symbol with prefix 0
+                                    //  (a 0 byte at the beginningsignifies a symbol)
                 push_utf8()(utf8, code_point);
             }
         };

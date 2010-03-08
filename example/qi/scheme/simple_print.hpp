@@ -53,7 +53,7 @@ namespace
         {
             typedef typename Range::const_iterator iterator;
             iterator i = range.begin();
-            bool const is_symbol = *i == ';';
+            bool const is_symbol = *i == '\0';  // a 0 byte at the beginning signifies a symbol
             if (!is_symbol)
                 print('"');
             else
