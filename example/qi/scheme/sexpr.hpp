@@ -87,7 +87,7 @@ namespace scheme
             {
                 if (utf8.size() == 0)
                     utf8 += '\0';   //  mark a symbol with prefix 0
-                                    //  (a 0 byte at the beginningsignifies a symbol)
+                                    //  (a 0 byte at the beginning signifies a symbol)
                 push_utf8()(utf8, code_point);
             }
         };
