@@ -42,8 +42,6 @@ namespace boost { namespace spirit { namespace karma
 {
     // hoist the char classification namespaces into karma sub-namespaces of 
     // the same name
-    namespace default_encoding { using namespace boost::spirit::default_encoding; }
-    namespace default_wide_encoding { using namespace boost::spirit::default_wide_encoding; }
     namespace ascii { using namespace boost::spirit::ascii; }
     namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
     namespace standard { using namespace boost::spirit::standard; }

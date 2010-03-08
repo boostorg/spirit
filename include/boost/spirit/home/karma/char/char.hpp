@@ -354,20 +354,20 @@ namespace boost { namespace spirit { namespace karma
     // literals: 'x', "x"
     template <typename Modifiers>
     struct make_primitive<char, Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::default_encoding> {};
+      : detail::basic_literal<Modifiers, char_encoding::standard> {};
 
     template <typename Modifiers>
     struct make_primitive<char const(&)[2], Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::default_encoding> {};
+      : detail::basic_literal<Modifiers, char_encoding::standard> {};
 
     // literals: L'x', L"x"
     template <typename Modifiers>
     struct make_primitive<wchar_t, Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::default_wide_encoding> {};
+      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
 
     template <typename Modifiers>
     struct make_primitive<wchar_t const(&)[2], Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::default_wide_encoding> {};
+      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
 
     // char_
     template <typename CharEncoding, typename Modifiers>
