@@ -43,16 +43,19 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    char prefix[4];     // Read the UTF-8 prefix (0xEF 0xBB 0xBF)
-    in >> prefix[0];    // marking the beginning of a UTF-8 file
-    in >> prefix[1];
-    in >> prefix[2];
-    prefix[3] = 0;
-    if (std::string("\xef\xbb\xbf") != prefix)
+    // Ignore the BOM marking the beginning of a UTF-8 file in Windows
+	char c = in.peek();
+    if (c == '\xef')
     {
-        std::cerr << "Not a UTF-8 file: "
-            << filename << std::endl;
-        return 1;
+        char s[3];
+        in >> s[0] >> s[1] >> s[2];
+        s[3] = '\0';
+        if (s != std::string("\xef\xbb\xbf"))
+        {
+            std::cerr << "Error: Unexpected characters from input file: "
+                << filename << std::endl;
+            return 1;
+        }
     }
 
     std::string source_code; // We will read the contents here.

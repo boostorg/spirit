@@ -42,6 +42,7 @@ namespace scheme
     using boost::spirit::qi::oct;
     using boost::spirit::qi::no_case;
     using boost::spirit::qi::lexeme;
+    using boost::spirit::qi::lit;
     using boost::phoenix::function;
 
     typedef boost::spirit::char_encoding::unicode unicode;
@@ -160,6 +161,8 @@ namespace scheme
             list    = '(' >> *start >> ')';
 
             atom    =   number                          [_val = _1]
+                    |   lit("true")                     [_val = true]
+                    |   lit("false")                    [_val = false]
                     |   string                          [_val = _1]
                     |   symbol                          [_val = _1]
                     ;
