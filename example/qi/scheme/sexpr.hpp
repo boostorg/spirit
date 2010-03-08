@@ -57,9 +57,6 @@ namespace scheme
                     space                           // tab/space/cr/lf
                 |   ';' >> *(char_ - eol) >> eol    // comments
                 ;
-
-            //~ start.name("white_space");
-            //~ debug(start);
         }
 
         rule<Iterator, unicode> start;
@@ -137,11 +134,6 @@ namespace scheme
                 >> *(str_esc(_val) | (char_ - '"')  [push_utf8(_val, _1)])
                 >> '"'
                 ;
-
-            //~ start.name("string");
-            //~ str_esc.name("str_esc");
-            //~ debug(start);
-            //~ debug(str_esc);
         }
 
         rule<Iterator, unicode, void(std::string&)> str_esc;
@@ -160,32 +152,21 @@ namespace scheme
 
             list    = '(' >> *start >> ')';
 
-            atom    =   number                          [_val = _1]
-                    |   lit("true")                     [_val = true]
-                    |   lit("false")                    [_val = false]
-                    |   string                          [_val = _1]
-                    |   symbol                          [_val = _1]
+            atom    = number                            [_val = _1]
+                    | lit("true")                       [_val = true]
+                    | lit("false")                      [_val = false]
+                    | string                            [_val = _1]
+                    | symbol                            [_val = _1]
                     ;
 
             char const* exclude = " ();\"\n\r\t";
             symbol  = +lexeme[print - char_(exclude)]   [push_symbol_utf8(_val, _1)];
 
             number  = strict_double                     [_val = _1]
+                    | lexeme[no_case["0x"] >> hex]      [_val = _1]
+                    | lexeme['0' >> oct]                [_val = _1]
                     | int_                              [_val = _1]
-                    | no_case["0x"] >> hex              [_val = _1]
-                    | '0' >> oct                        [_val = _1]
                     ;
-
-            //~ start.name("sexpr");
-            //~ list.name("list");
-            //~ atom.name("atom");
-            //~ symbol.name("symbol");
-            //~ number.name("number");
-            //~ debug(start);
-            //~ debug(list);
-            //~ debug(atom);
-            //~ debug(symbol);
-            //~ debug(number);
         }
 
         rule<Iterator, unicode, white_space<Iterator>, utree()> start, list;

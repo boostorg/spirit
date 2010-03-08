@@ -2,7 +2,8 @@
     123.45
     true
     false
-    987
+    0xFF
+    077
     "this is a \u20AC string"           ; A UTF-8 string
     "Τη γλώσσα μου έδωσαν ελληνική"     ; Another UTF-8 string
     (
