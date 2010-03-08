@@ -18,8 +18,9 @@
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
-# pragma warning(disable: 4804) // unsafe mix of type 'const bool' and type 'const int' in operation
-# pragma warning(disable: 4805) // unsafe mix of type 'const bool' and type 'const int' in operation
+# pragma warning(disable: 4804)
+# pragma warning(disable: 4805)
+# pragma warning(disable: 4244)
 #endif
 
 namespace scheme { namespace detail
@@ -331,7 +332,7 @@ namespace scheme { namespace detail
     {
         unsigned const size = l-f;
         char* str;
-        if (size <= small_string_size)
+        if (size < small_string_size)
         {
             // if it fits, store it in-situ; the first byte
             // is the length of the string.
@@ -468,6 +469,7 @@ namespace scheme { namespace detail
     template <typename T>
     inline void list::insert_before(T const& val, node* np)
     {
+        BOOST_ASSERT(np != 0);
         node* new_node = new node(val, np, np->prev);
         if (np->prev)
             np->prev->next = new_node;
@@ -480,6 +482,7 @@ namespace scheme { namespace detail
     template <typename T>
     inline void list::insert_after(T const& val, node* np)
     {
+        BOOST_ASSERT(np != 0);
         node* new_node = new node(val, np->next, np);
         if (np->next)
             np->next->prev = new_node;
@@ -534,6 +537,7 @@ namespace scheme { namespace detail
 
     inline list::node* list::erase(node* pos)
     {
+        BOOST_ASSERT(pos != 0);
         if (pos == first)
         {
             pop_front();
@@ -967,8 +971,16 @@ namespace scheme
     inline utree::iterator utree::insert(iterator pos, T const& val)
     {
         ensure_list_type();
-        l.insert_before(val, pos.node);
-        return utree::iterator(pos.node->prev);
+        if (pos.node == l.last)
+        {
+            push_back(val);
+            return begin();
+        }
+        else
+        {
+            l.insert_before(val, pos.node);
+            return utree::iterator(pos.node->prev);
+        }
     }
 
 
@@ -984,7 +996,7 @@ namespace scheme
     {
         ensure_list_type();
         while (first != last)
-            l.insert_before(*first++, pos.node);
+            insert(pos, *first++);
     }
 
     template <typename Iter>
@@ -998,8 +1010,9 @@ namespace scheme
 
     inline void utree::clear()
     {
-        BOOST_ASSERT(get_type() == type::list_type);
+        // clear will always make this a nil type
         free();
+        set_type(type::nil_type);
     }
 
     inline void utree::pop_front()
@@ -1029,13 +1042,13 @@ namespace scheme
 
     inline utree::iterator utree::begin()
     {
-        BOOST_ASSERT(get_type() == type::list_type);
+        ensure_list_type();
         return iterator(l.first);
     }
 
     inline utree::iterator utree::end()
     {
-        BOOST_ASSERT(get_type() == type::list_type);
+        ensure_list_type();
         return iterator(l.last);
     }
 
@@ -1053,14 +1066,18 @@ namespace scheme
 
     inline bool utree::empty() const
     {
-        BOOST_ASSERT(get_type() == type::list_type);
-        return l.first == l.last;
+        if (get_type() == type::list_type)
+            return l.size == 0;
+        BOOST_ASSERT(get_type() == type::nil_type);
+        return true;
     }
 
     inline std::size_t utree::size() const
     {
-        BOOST_ASSERT(get_type() == type::list_type);
-        return l.size;
+        if (get_type() == type::list_type)
+            return l.size;
+        BOOST_ASSERT(get_type() == type::nil_type);
+        return 0;
     }
 
     inline utree& utree::front()

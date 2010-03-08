@@ -20,6 +20,8 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
+#include "utree.hpp"
+
 namespace scheme
 {
     using boost::spirit::unicode::char_;
@@ -31,6 +33,13 @@ namespace scheme
     using boost::spirit::qi::_r1;
     using boost::spirit::qi::_1;
     using boost::spirit::qi::uint_parser;
+    using boost::spirit::qi::real_parser;
+    using boost::spirit::qi::strict_real_policies;
+    using boost::spirit::qi::char_set;
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::hex;
+    using boost::spirit::qi::oct;
+    using boost::spirit::qi::no_case;
     using boost::phoenix::function;
 
     typedef boost::spirit::char_encoding::unicode unicode;
@@ -112,6 +121,44 @@ namespace scheme
 
         rule<Iterator, unicode, void(std::string&)> str_esc;
         rule<Iterator, unicode, std::string()> start;
+    };
+
+    template <typename Iterator>
+    struct sexpr : grammar<Iterator, unicode, white_space<Iterator>, utree()>
+    {
+        sexpr() : sexpr::base_type(start)
+        {
+            function<detail::push_utf8> push_utf8;
+            function<detail::push_esc> push_esc;
+
+            start   = atom | list;
+
+            list    = '(' >> *start >> ')';
+
+            atom    =   number                      [_val = _1]
+                    |   string                      [_val = _1]
+                    |   symbol                      [_val = _1]
+                    ;
+
+            char const* symbol_start = "a-zA-Z!#$%&'*+,-./:;<=>?@[\\]^_`{|}~";
+            char const* symbol_rest = "a-zA-Z0-9!#$%&'*+,-./:;<=>?@[\\]^_`{|}~";
+
+            symbol  =   char_(symbol_start)         [push_utf8(_val, _1)]
+                    >> +char_(symbol_rest)          [push_utf8(_val, _1)]
+                    ;
+
+            number  = strict_double                 [_val = _1]
+                    | int_                          [_val = _1]
+                    | no_case["0x"] >> hex          [_val = _1]
+                    | '0' >> oct                    [_val = _1]
+                    ;
+        }
+
+        rule<Iterator, unicode, white_space<Iterator>, utree()> start, list;
+        rule<Iterator, unicode, utree()> atom, number;
+        rule<Iterator, unicode, std::string()> symbol;
+        string<Iterator> string;
+        real_parser<double, strict_real_policies<double> > strict_double;
     };
 }
 

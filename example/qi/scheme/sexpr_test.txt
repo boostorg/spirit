@@ -1,0 +1,1 @@
+(123.45 "this is a \u20AC string" (92 ("another string" apple)))
