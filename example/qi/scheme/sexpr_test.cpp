@@ -1,4 +1,4 @@
-﻿/*=============================================================================
+/*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -13,6 +13,7 @@ namespace scheme
 {
     inline std::ostream& operator<<(std::ostream& out, utree const& x)
     {
+        using ::detail::println;
         println(x);
         return out;
     }
@@ -23,6 +24,8 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
+    using ::detail::println;
+
     char const* filename;
     if (argc > 1)
     {
@@ -66,8 +69,8 @@ int main(int argc, char **argv)
         std::back_inserter(source_code));
 
     typedef boost::u8_to_u32_iterator<std::string::const_iterator> iterator_type;
-    iterator_type first = source_code.begin();
-    iterator_type last = source_code.end();
+    iterator_type first(source_code.begin());
+    iterator_type last(source_code.end());
 
     scheme::sexpr<iterator_type> p;
     scheme::white_space<iterator_type> ws;

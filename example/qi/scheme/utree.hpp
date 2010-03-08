@@ -146,7 +146,7 @@ namespace scheme
     //  - a (doubly linked) list of utree
     //
     // The utree has minimal memory footprint. The data structure size is
-    // 16 bits on a 32-bit platform. Being a container of itself, it can
+    // 16 bytes on a 32-bit platform. Being a container of itself, it can
     // represent tree structures.
     ///////////////////////////////////////////////////////////////////////////
     class utree
@@ -165,7 +165,7 @@ namespace scheme
 
         utree();
         explicit utree(bool b);
-        explicit utree(unsigned i);
+        explicit utree(unsigned int i);
         explicit utree(int i);
         explicit utree(double d);
         explicit utree(char const* str);
@@ -177,7 +177,7 @@ namespace scheme
 
         utree& operator=(utree const& other);
         utree& operator=(bool b);
-        utree& operator=(unsigned i);
+        utree& operator=(unsigned int i);
         utree& operator=(int i);
         utree& operator=(double d);
         utree& operator=(char const* s);
@@ -519,6 +519,7 @@ namespace scheme { namespace detail
 
     inline void list::pop_front()
     {
+        BOOST_ASSERT(size != 0);
         node* np = first;
         first = first->next;
         first->prev = 0;
@@ -528,6 +529,7 @@ namespace scheme { namespace detail
 
     inline void list::pop_back()
     {
+        BOOST_ASSERT(size != 0);
         node* np = last;
         last = last->prev;
         last->next = 0;
@@ -687,6 +689,8 @@ namespace scheme { namespace detail
 
             switch (x.get_type())
             {
+                default:
+                    BOOST_ASSERT(false); // can't happen
                 case type::nil_type:
                     typename UTreeX::nil arg;
                     return f(arg);
@@ -698,7 +702,8 @@ namespace scheme { namespace detail
                     return f(x.d);
                 case type::list_type:
                     return f(list_range(iterator(x.l.first), iterator(0)));
-                default:
+                case type::heap_string_type:
+                case type::small_string_type:
                     return f(string_range(x.s.str(), x.s.str() + x.s.size()));
             }
         }
@@ -723,6 +728,8 @@ namespace scheme { namespace detail
 
             switch (x.get_type())
             {
+                default:
+                    BOOST_ASSERT(false); // can't happen
                 case type::nil_type:
                     typename UTreeX::nil x_;
                     return visit_impl::apply(y, detail::bind(f, x_));
@@ -736,7 +743,8 @@ namespace scheme { namespace detail
                     return visit_impl::apply(
                         y, detail::bind<F, list_range>(f,
                         list_range(iterator(x.l.first), iterator(0))));
-                default:
+                case type::heap_string_type:
+                case type::small_string_type:
                     return visit_impl::apply(y, detail::bind(
                         f, string_range(x.s.str(), x.s.str() + x.s.size())));
             }
@@ -773,7 +781,7 @@ namespace scheme
         set_type(type::bool_type);
     }
 
-    inline utree::utree(unsigned i) : i(i)
+    inline utree::utree(unsigned int i) : i(i)
     {
         set_type(type::int_type);
     }
@@ -831,7 +839,7 @@ namespace scheme
         return *this;
     }
 
-    inline utree& utree::operator=(unsigned i_)
+    inline utree& utree::operator=(unsigned int i_)
     {
         free();
         i = i_;
@@ -1143,6 +1151,8 @@ namespace scheme
                 break;
             case type::list_type:
                 l.free();
+                break;
+            default:
                 break;
         };
     }

@@ -40,6 +40,7 @@ namespace scheme
     using boost::spirit::qi::int_;
     using boost::spirit::qi::hex;
     using boost::spirit::qi::oct;
+    using boost::spirit::qi::bool_;
     using boost::spirit::qi::no_case;
     using boost::spirit::qi::lexeme;
     using boost::spirit::qi::lit;
@@ -153,8 +154,7 @@ namespace scheme
             list    = '(' >> *start >> ')';
 
             atom    = number                            [_val = _1]
-                    | lit("true")                       [_val = true]
-                    | lit("false")                      [_val = false]
+                    | bool_                             [_val = _1]
                     | string                            [_val = _1]
                     | symbol                            [_val = _1]
                     ;
@@ -172,7 +172,7 @@ namespace scheme
         rule<Iterator, unicode, white_space<Iterator>, utree()> start, list;
         rule<Iterator, unicode, utree()> atom, number;
         rule<Iterator, unicode, std::string()> symbol;
-        string<Iterator> string;
+        scheme::string<Iterator> string;
     };
 }
 

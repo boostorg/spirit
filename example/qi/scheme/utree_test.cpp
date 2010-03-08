@@ -6,6 +6,7 @@ int main()
 {
     using scheme::utree;
     using scheme::ulist;
+    using ::detail::println;
 
     {
         // test the size

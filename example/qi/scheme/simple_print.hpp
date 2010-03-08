@@ -4,7 +4,7 @@
 #include "utree.hpp"
 #include <iostream>
 
-namespace
+namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     // simple utree printing facility prints the utree in a single line
@@ -42,10 +42,10 @@ namespace
             for (iterator i = range.begin(); i != range.end(); ++i)
             {
                 if (i != range.begin())
-                    print(' ');
-                print(*i);
+                    detail::print(' ');
+                detail::print(*i);
             }
-            print(')');
+            detail::print(')');
         }
 
         template <typename Range> // for strings
@@ -55,13 +55,13 @@ namespace
             iterator i = range.begin();
             bool const is_symbol = *i == '\0';  // a 0 byte at the beginning signifies a symbol
             if (!is_symbol)
-                print('"');
+                detail::print('"');
             else
                 ++i;
             for (; i != range.end(); ++i)
-                print(*i);
+                detail::print(*i);
             if (!is_symbol)
-                print('"');
+                detail::print('"');
         }
 
         template <typename Iterator>
@@ -84,7 +84,7 @@ namespace
 
     inline void println(scheme::utree const& val)
     {
-        print(val);
+        detail::print(val);
         std::cout << std::endl;
     }
 }
