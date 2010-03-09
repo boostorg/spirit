@@ -106,14 +106,16 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             void advance_input()
             {
-                curtok_ = *input_++;
-                input_is_valid_ = true;
+                ++input_;
+                input_is_valid_ = false;
             }
 
             result_type& get_input()
             {
-                if (!input_is_valid_) 
-                    advance_input();
+                if (!input_is_valid_) {
+                    curtok_ = *input_;
+                    input_is_valid_ = true;
+                }
                 return curtok_;
             }
 
