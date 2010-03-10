@@ -119,13 +119,15 @@ namespace scheme
     {
         string() : string::base_type(start)
         {
-            uint_parser<uchar, 16> hex;
+            uint_parser<uchar, 16, 4, 4> hex4;
+            uint_parser<uchar, 16, 8, 8> hex8;
             function<detail::push_utf8> push_utf8;
             function<detail::push_esc> push_esc;
 
             str_esc
                 =  '\\'
-                >>  (   ('u' >> hex)                [push_utf8(_r1, _1)]
+                >>  (   ('u' >> hex4)               [push_utf8(_r1, _1)]
+                    |   ('U' >> hex8)               [push_utf8(_r1, _1)]
                     |   char_("btnfr\\\"'")         [push_esc(_r1, _1)]
                     )
                 ;

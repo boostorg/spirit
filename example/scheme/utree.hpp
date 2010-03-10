@@ -613,7 +613,9 @@ namespace scheme { namespace detail
         bool operator()(const A& a, const B& b) const
         {
             return dispatch(a, b,
-                boost::mpl::and_<boost::is_arithmetic<A>, boost::is_arithmetic<B> >());
+                boost::mpl::and_<
+                    boost::is_arithmetic<A>,
+                    boost::is_arithmetic<B> >());
         }
 
         template <typename T>
@@ -649,7 +651,9 @@ namespace scheme { namespace detail
         bool operator()(const A& a, const B& b) const
         {
             return dispatch(a, b,
-                boost::mpl::and_<boost::is_arithmetic<A>, boost::is_arithmetic<B> >());
+                boost::mpl::and_<
+                    boost::is_arithmetic<A>,
+                    boost::is_arithmetic<B> >());
         }
 
         template <typename T>
@@ -753,14 +757,14 @@ namespace scheme { namespace detail
 
     struct index_impl
     {
-        static utree& apply(detail::list::node* node, std::size_t i)
+        static utree& apply(list::node* node, std::size_t i)
         {
             for (; i > 0; --i)
                 node = node->next;
             return node->val;
         }
 
-        static utree const& apply(detail::list::node const* node, std::size_t i)
+        static utree const& apply(list::node const* node, std::size_t i)
         {
             for (; i > 0; --i)
                 node = node->next;
