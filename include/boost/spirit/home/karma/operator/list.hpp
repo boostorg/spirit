@@ -42,10 +42,12 @@ namespace boost { namespace spirit { namespace karma
         // (left) generator succeeds
         template <
             typename OutputIterator, typename Context, typename Delimiter
-          , typename Iterator>
+          , typename Iterator, typename Attribute>
         bool generate_left(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Iterator& it, Iterator& end) const
+          , Delimiter const& d, Iterator& it, Iterator& end, Attribute const&) const
         {
+            // Failing subject generators are just skipped. This allows to 
+            // selectively generate items in the provided attribute.
             while (!traits::compare(it, end))
             {
                 if (left.generate(sink, ctx, d, traits::deref(it)))
@@ -53,6 +55,18 @@ namespace boost { namespace spirit { namespace karma
                 traits::next(it);
             }
             return false;
+        }
+
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Iterator>
+        bool generate_left(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Iterator&, Iterator&, unused_type) const
+        {
+            // There is no way to distinguish a failed generator from a 
+            // generator to be skipped. We assume the user takes responsibility
+            // for ending the loop if no attribute is specified.
+            return left.generate(sink, ctx, d, unused);
         }
 
     public:
@@ -92,7 +106,7 @@ namespace boost { namespace spirit { namespace karma
             iterator_type it = traits::begin(attr);
             iterator_type end = traits::end(attr);
 
-            if (generate_left(sink, ctx, d, it, end))
+            if (generate_left(sink, ctx, d, it, end, attr))
             {
                 for (traits::next(it); !traits::compare(it, end); traits::next(it))
                 {
@@ -104,7 +118,7 @@ namespace boost { namespace spirit { namespace karma
                         if (!right.generate(sink, ctx, d, unused))
                             return false;     // shouldn't happen
 
-                        if (!generate_left(sink, ctx, d, it, end))
+                        if (!generate_left(sink, ctx, d, it, end, attr))
                             break;            // return true as one item succeeded
                     }
                     buffering.buffer_copy();

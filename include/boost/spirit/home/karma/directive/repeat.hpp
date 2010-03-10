@@ -141,10 +141,12 @@ namespace boost { namespace spirit { namespace karma
         // (left) generator succeeds
         template <
             typename OutputIterator, typename Context, typename Delimiter
-          , typename Iterator>
+          , typename Iterator, typename Attribute>
         bool generate_subject(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Iterator& it, Iterator& end) const
+          , Delimiter const& d, Iterator& it, Iterator& end, Attribute const&) const
         {
+            // Failing subject generators are just skipped. This allows to 
+            // selectively generate items in the provided attribute.
             while (!traits::compare(it, end))
             {
                 if (subject.generate(sink, ctx, d, traits::deref(it)))
@@ -152,6 +154,18 @@ namespace boost { namespace spirit { namespace karma
                 traits::next(it);
             }
             return false;
+        }
+
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Iterator>
+        bool generate_subject(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Iterator&, Iterator&, unused_type) const
+        {
+            // There is no way to distinguish a failed generator from a 
+            // generator to be skipped. We assume the user takes responsibility
+            // for ending the loop if no attribute is specified.
+            return subject.generate(sink, ctx, d, unused);
         }
 
     public:
@@ -188,7 +202,7 @@ namespace boost { namespace spirit { namespace karma
             // generate the minimal required amount of output
             for (/**/; !iter.got_min(i); ++i, traits::next(it))
             {
-                if (!generate_subject(sink, ctx, d, it, end))
+                if (!generate_subject(sink, ctx, d, it, end, attr))
                 {
                     // if we fail before reaching the minimum iteration
                     // required, do not output anything and return false
@@ -200,7 +214,7 @@ namespace boost { namespace spirit { namespace karma
             for (/**/; detail::sink_is_good(sink) && !iter.got_max(i); 
                  ++i, traits::next(it))
             {
-                if (!generate_subject(sink, ctx, d, it, end))
+                if (!generate_subject(sink, ctx, d, it, end, attr))
                     break;
             }
             return detail::sink_is_good(sink);

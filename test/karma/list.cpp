@@ -29,9 +29,28 @@
 #include "test.hpp"
 
 using namespace spirit_test;
+using boost::spirit::unused_type;
 
-int
-main()
+///////////////////////////////////////////////////////////////////////////////
+struct action 
+{
+    action (std::vector<char>& vec) 
+      : vec(vec), it(vec.begin()) 
+    {}
+
+    void operator()(unsigned& value, unused_type const&, bool& pass) const
+    {
+       pass = (it != vec.end());
+       if (pass)
+           value = *it++;
+    }
+
+    std::vector<char>& vec;
+    mutable std::vector<char>::iterator it;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+int main()
 {
     using namespace boost::spirit;
     using namespace boost::spirit::ascii;
@@ -41,26 +60,26 @@ main()
     std::vector<char> v;
     v += 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h';
 
-//     {
-//         BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ',', v));
-//         BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
-//             char_ % ',', v, space));
-//     }
-// 
-//     {
-//         std::string s ("abcdefgh");
-//         BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ',', s));
-//         BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
-//             char_ % ',', s, space));
-//     }
-// 
-//     { // actions
-//         namespace phx = boost::phoenix;
-// 
-//         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[_1 = phx::ref(v)]));
-//         BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
-//             (char_ % ',')[_1 = phx::ref(v)], space));
-//     }
+    {
+        BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ',', v));
+        BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
+            char_ % ',', v, space));
+    }
+
+    {
+        std::string s ("abcdefgh");
+        BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ',', s));
+        BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
+            char_ % ',', s, space));
+    }
+
+    { // actions
+        namespace phx = boost::phoenix;
+
+        BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[_1 = phx::ref(v)]));
+        BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
+            (char_ % ',')[_1 = phx::ref(v)], space));
+    }
 
     // failing sub-generators
     {
@@ -96,6 +115,13 @@ main()
 
         r = &char_('A') << char_;
         BOOST_TEST(!test("", r % ',', v2));
+    }
+
+    {
+        // make sure user defined end condition is applied if no attribute
+        // is passed in
+        BOOST_TEST(test("[61,62,63,64,65,66,67,68]", 
+            '[' << hex[action(v)] % ',' << ']'));
     }
 
     return boost::report_errors();
