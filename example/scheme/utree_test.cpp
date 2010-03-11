@@ -151,5 +151,23 @@ int main()
         BOOST_ASSERT(a[11] == utree(12));
     }
 
+    { // test references
+        utree val(123);
+        utree ref(boost::ref(val));
+        println(std::cout, ref);
+        BOOST_ASSERT(ref == utree(123));
+
+        val.clear();
+        val.push_back(1);
+        val.push_back(2);
+        val.push_back(3);
+        val.push_back(4);
+        println(std::cout, ref);
+        BOOST_ASSERT(ref[0] == utree(1));
+        BOOST_ASSERT(ref[1] == utree(2));
+        BOOST_ASSERT(ref[2] == utree(3));
+        BOOST_ASSERT(ref[3] == utree(4));
+    }
+
     return 0;
 }

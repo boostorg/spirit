@@ -15,6 +15,7 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/type_traits/is_pointer.hpp>
+#include <boost/ref.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -43,7 +44,8 @@ namespace scheme { namespace detail
             double_type,
             small_string_type,
             heap_string_type,
-            list_type
+            list_type,
+            reference_type
         };
     };
 
@@ -172,8 +174,8 @@ namespace scheme
         explicit utree(char const* str);
         explicit utree(char const* str, std::size_t len);
         explicit utree(std::string const& str);
+        explicit utree(boost::reference_wrapper<utree> ref);
 
-        utree(utree const& other);
         utree(utree const& other);
         ~utree();
 
@@ -184,6 +186,7 @@ namespace scheme
         utree& operator=(double d);
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
+        utree& operator=(boost::reference_wrapper<utree> ref);
 
         template <typename F>
         typename F::result_type
@@ -276,6 +279,7 @@ namespace scheme
             bool b;
             int i;
             double d;
+            utree* p;
         };
     };
 
@@ -711,6 +715,8 @@ namespace scheme { namespace detail
                 case type::heap_string_type:
                 case type::small_string_type:
                     return f(string_range(x.s.str(), x.s.str() + x.s.size()));
+                case type::reference_type:
+                    return apply(*x.p, f);
             }
         }
 
@@ -753,6 +759,8 @@ namespace scheme { namespace detail
                 case type::small_string_type:
                     return visit_impl::apply(y, detail::bind(
                         f, string_range(x.s.str(), x.s.str() + x.s.size())));
+                case type::reference_type:
+                    return apply(*x.p, y, f);
             }
         }
     };
@@ -815,6 +823,12 @@ namespace scheme
     inline utree::utree(std::string const& str)
     {
         s.construct(str.begin(), str.end());
+    }
+
+    inline utree::utree(boost::reference_wrapper<utree> ref)
+      : p(ref.get_pointer())
+    {
+        set_type(type::reference_type);
     }
 
     inline utree::utree(utree const& other)
@@ -883,6 +897,14 @@ namespace scheme
         return *this;
     }
 
+    inline utree& utree::operator=(boost::reference_wrapper<utree> ref)
+    {
+        free();
+        p = ref.get_pointer();
+        set_type(type::reference_type);
+        return *this;
+    }
+
     template <typename F>
     typename F::result_type
     inline utree::visit(utree const& x, F f)
@@ -927,12 +949,16 @@ namespace scheme
 
     inline utree& utree::operator[](std::size_t i)
     {
+        if (get_type() == type::reference_type)
+            return (*p)[i];
         BOOST_ASSERT(get_type() == type::list_type && size() > i);
         return detail::index_impl::apply(l.first, i);
     }
 
     inline utree const& utree::operator[](std::size_t i) const
     {
+        if (get_type() == type::reference_type)
+            return (*(utree const*)p)[i];
         BOOST_ASSERT(get_type() == type::list_type && size() > i);
         return detail::index_impl::apply(l.first, i);
     }
@@ -970,6 +996,8 @@ namespace scheme
     template <typename T>
     inline void utree::push_front(T const& val)
     {
+        if (get_type() == type::reference_type)
+            return p->push_front(val);
         ensure_list_type();
         l.push_front(val);
     }
@@ -977,6 +1005,8 @@ namespace scheme
     template <typename T>
     inline void utree::push_back(T const& val)
     {
+        if (get_type() == type::reference_type)
+            return p->push_back(val);
         ensure_list_type();
         l.push_back(val);
     }
@@ -984,6 +1014,8 @@ namespace scheme
     template <typename T>
     inline utree::iterator utree::insert(iterator pos, T const& val)
     {
+        if (get_type() == type::reference_type)
+            return p->insert(pos, val);
         ensure_list_type();
         if (pos.node == l.last)
         {
@@ -1001,6 +1033,8 @@ namespace scheme
     template <typename T>
     inline void utree::insert(iterator pos, std::size_t n, T const& val)
     {
+        if (get_type() == type::reference_type)
+            return p->insert(pos, n, val);
         for (std::size_t i = 0; i != n; ++i)
             insert(pos, val);
     }
@@ -1008,6 +1042,8 @@ namespace scheme
     template <typename Iter>
     inline void utree::insert(iterator pos, Iter first, Iter last)
     {
+        if (get_type() == type::reference_type)
+            return p->insert(pos, first, last);
         ensure_list_type();
         while (first != last)
             insert(pos, *first++);
@@ -1016,6 +1052,8 @@ namespace scheme
     template <typename Iter>
     inline void utree::assign(Iter first, Iter last)
     {
+        if (get_type() == type::reference_type)
+            return p->assign(first, last);
         ensure_list_type();
         clear();
         while (first != last)
@@ -1024,6 +1062,8 @@ namespace scheme
 
     inline void utree::clear()
     {
+        if (get_type() == type::reference_type)
+            return p->clear();
         // clear will always make this a nil type
         free();
         set_type(type::nil_type);
@@ -1031,24 +1071,32 @@ namespace scheme
 
     inline void utree::pop_front()
     {
+        if (get_type() == type::reference_type)
+            return p->pop_front();
         BOOST_ASSERT(get_type() == type::list_type);
         l.pop_front();
     }
 
     inline void utree::pop_back()
     {
+        if (get_type() == type::reference_type)
+            return p->pop_back();
         BOOST_ASSERT(get_type() == type::list_type);
         l.pop_back();
     }
 
     inline utree::iterator utree::erase(iterator pos)
     {
+        if (get_type() == type::reference_type)
+            return p->erase(pos);
         BOOST_ASSERT(get_type() == type::list_type);
         return iterator(l.erase(pos.node));
     }
 
     inline utree::iterator utree::erase(iterator first, iterator last)
     {
+        if (get_type() == type::reference_type)
+            return p->erase(first, last);
         while (first != last)
             erase(first++);
         return last;
@@ -1056,30 +1104,40 @@ namespace scheme
 
     inline utree::iterator utree::begin()
     {
+        if (get_type() == type::reference_type)
+            return p->begin();
         ensure_list_type();
         return iterator(l.first);
     }
 
     inline utree::iterator utree::end()
     {
+        if (get_type() == type::reference_type)
+            return p->end();
         ensure_list_type();
         return iterator(l.last);
     }
 
     inline utree::const_iterator utree::begin() const
     {
+        if (get_type() == type::reference_type)
+            return ((utree const*)p)->begin();
         BOOST_ASSERT(get_type() == type::list_type);
         return const_iterator(l.first);
     }
 
     inline utree::const_iterator utree::end() const
     {
+        if (get_type() == type::reference_type)
+            return ((utree const*)p)->end();
         BOOST_ASSERT(get_type() == type::list_type);
         return const_iterator(l.last);
     }
 
     inline bool utree::empty() const
     {
+        if (get_type() == type::reference_type)
+            return ((utree const*)p)->empty();
         if (get_type() == type::list_type)
             return l.size == 0;
         BOOST_ASSERT(get_type() == type::nil_type);
@@ -1088,6 +1146,8 @@ namespace scheme
 
     inline std::size_t utree::size() const
     {
+        if (get_type() == type::reference_type)
+            return ((utree const*)p)->size();
         if (get_type() == type::list_type)
             return l.size;
         BOOST_ASSERT(get_type() == type::nil_type);
@@ -1096,24 +1156,32 @@ namespace scheme
 
     inline utree& utree::front()
     {
+        if (get_type() == type::reference_type)
+            return p->front();
         BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
         return l.first->val;
     }
 
     inline utree& utree::back()
     {
+        if (get_type() == type::reference_type)
+            return p->back();
         BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
         return l.last->val;
     }
 
     inline utree const& utree::front() const
     {
+        if (get_type() == type::reference_type)
+            return ((utree const*)p)->front();
         BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
         return l.first->val;
     }
 
     inline utree const& utree::back() const
     {
+        if (get_type() == type::reference_type)
+            return ((utree const*)p)->back();
         BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
         return l.last->val;
     }
@@ -1178,6 +1246,9 @@ namespace scheme
                 break;
             case type::double_type:
                 d = other.d;
+                break;
+            case type::reference_type:
+                p = other.p;
                 break;
             case type::small_string_type:
             case type::heap_string_type:

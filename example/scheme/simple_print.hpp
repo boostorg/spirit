@@ -83,7 +83,7 @@ namespace detail
 
     inline std::ostream& println(std::ostream& out, scheme::utree const& val)
     {
-        out << detail::print(out, val) << std::endl;
+        detail::print(out, val) << std::endl;
         return out;
     }
 }
