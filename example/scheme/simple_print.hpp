@@ -56,15 +56,26 @@ namespace detail
         {
             typedef typename Range::const_iterator iterator;
             iterator i = range.begin();
-            bool const is_symbol = *i == '\0';  // a 0 byte at the beginning signifies a symbol
-            if (!is_symbol)
-                (*this)('"');
+            if (*i == '\1') // a 1 byte at the beginning signifies a byte stream
+            {
+                out << "b"; ++i;
+                for (; i != range.end(); ++i)
+                    out << std::setw(2) << std::setfill('0')
+                        << std::hex << int((unsigned char)*i);
+                out << std::dec;
+            }
             else
-                ++i;
-            for (; i != range.end(); ++i)
-                (*this)(*i);
-            if (!is_symbol)
-                (*this)('"');
+            {
+                bool const is_symbol = *i == '\0';  // a 0 byte at the beginning signifies a symbol
+                if (!is_symbol)
+                    out << '"';
+                else
+                    ++i;
+                for (; i != range.end(); ++i)
+                    out << *i;
+                if (!is_symbol)
+                    out << '"';
+            }
         }
 
         template <typename Iterator>

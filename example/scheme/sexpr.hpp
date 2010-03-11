@@ -93,6 +93,20 @@ namespace scheme
             }
         };
 
+        struct push_binary
+        {
+            template <typename S, typename C>
+            struct result { typedef void type; };
+
+            void operator()(std::string& utf8, char byte) const
+            {
+                if (utf8.size() == 0)
+                    utf8 += '\1';   //  mark a symbol with prefix 1
+                                    //  (a 1 byte at the beginning signifies a binary stream)
+                utf8 += byte;
+            }
+        };
+
         struct push_esc
         {
             template <typename S, typename C>
@@ -149,7 +163,9 @@ namespace scheme
         sexpr() : sexpr::base_type(start)
         {
             real_parser<double, strict_real_policies<double> > strict_double;
+            uint_parser<unsigned char, 16, 2, 2> hex2;
             function<detail::push_symbol_utf8> push_symbol_utf8;
+            function<detail::push_binary> push_binary;
 
             start   = atom | list;
 
@@ -158,6 +174,7 @@ namespace scheme
             atom    = number                            [_val = _1]
                     | bool_                             [_val = _1]
                     | string                            [_val = _1]
+                    | byte_str                          [_val = _1]
                     | symbol                            [_val = _1]
                     ;
 
@@ -169,11 +186,14 @@ namespace scheme
                     | lexeme['0' >> oct]                [_val = _1]
                     | int_                              [_val = _1]
                     ;
+
+            byte_str = lexeme[no_case['b'] >> +(hex2    [push_binary(_val, _1)])];
         }
 
         rule<Iterator, unicode, white_space<Iterator>, utree()> start, list;
         rule<Iterator, unicode, utree()> atom, number;
         rule<Iterator, unicode, std::string()> symbol;
+        rule<Iterator, unicode, std::string()> byte_str;
         scheme::string<Iterator> string;
     };
 }
