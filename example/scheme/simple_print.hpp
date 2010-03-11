@@ -9,43 +9,46 @@ namespace detail
     ///////////////////////////////////////////////////////////////////////////
     // simple utree printing facility prints the utree in a single line
     ///////////////////////////////////////////////////////////////////////////
-    void print(char ch);
-    void print(scheme::utree const& val);
-    void println(scheme::utree const& val);
+
+    std::ostream& print(std::ostream& out, scheme::utree const& val);
+    std::ostream& println(std::ostream& out, scheme::utree const& val);
 
     // simple_print visitor
     struct simple_print
     {
         typedef void result_type;
 
+        std::ostream& out;
+        simple_print(std::ostream& out) : out(out) {}
+
         void operator()(scheme::utree::nil) const
         {
-            std::cout << "nil";
+            out << "nil";
         }
 
         template <typename T>
         void operator()(T val) const
         {
-            std::cout << val;
+            out << val;
         }
 
         void operator()(bool b) const
         {
-            std::cout << (b ? "true" : "false");
+            out << (b ? "true" : "false");
         }
 
         template <typename Range> // for lists
         void print_string_or_list(Range range, boost::mpl::false_) const
         {
             typedef typename Range::const_iterator iterator;
-            print('(');
+            (*this)('(');
             for (iterator i = range.begin(); i != range.end(); ++i)
             {
                 if (i != range.begin())
-                    detail::print(' ');
-                detail::print(*i);
+                    (*this)(' ');
+                scheme::utree::visit(*i, *this);
             }
-            detail::print(')');
+            (*this)(')');
         }
 
         template <typename Range> // for strings
@@ -55,13 +58,13 @@ namespace detail
             iterator i = range.begin();
             bool const is_symbol = *i == '\0';  // a 0 byte at the beginning signifies a symbol
             if (!is_symbol)
-                detail::print('"');
+                (*this)('"');
             else
                 ++i;
             for (; i != range.end(); ++i)
-                detail::print(*i);
+                (*this)(*i);
             if (!is_symbol)
-                detail::print('"');
+                (*this)('"');
         }
 
         template <typename Iterator>
@@ -72,20 +75,16 @@ namespace detail
         }
     };
 
-    inline void print(char ch)
+    inline std::ostream& print(std::ostream& out, scheme::utree const& val)
     {
-        std::cout << ch;
+        scheme::utree::visit(val, simple_print(out));
+        return out;
     }
 
-    inline void print(scheme::utree const& val)
+    inline std::ostream& println(std::ostream& out, scheme::utree const& val)
     {
-        scheme::utree::visit(val, simple_print());
-    }
-
-    inline void println(scheme::utree const& val)
-    {
-        detail::print(val);
-        std::cout << std::endl;
+        out << detail::print(out, val) << std::endl;
+        return out;
     }
 }
 

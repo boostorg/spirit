@@ -9,16 +9,6 @@
 #include <iostream>
 #include <fstream>
 
-namespace scheme
-{
-    inline std::ostream& operator<<(std::ostream& out, utree const& x)
-    {
-        using ::detail::println;
-        println(x);
-        return out;
-    }
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +69,7 @@ int main(int argc, char **argv)
     if (phrase_parse(first, last, p, ws, result))
     {
         std::cout << "success: ";
-        println(result);
+        println(std::cout, result);
         std::cout << std::endl;
     }
     else

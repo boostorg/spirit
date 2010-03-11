@@ -16,33 +16,33 @@ int main()
 
     {
         utree val;
-        println(val);
+        println(std::cout, val);
     }
 
     {
         utree val(true);
-        println(val);
+        println(std::cout, val);
     }
 
     {
         utree val(123);
-        println(val);
+        println(std::cout, val);
     }
 
     {
         utree val(123.456);
-        println(val);
+        println(std::cout, val);
     }
 
     {
         utree val("Hello, World");
-        println(val);
+        println(std::cout, val);
         utree val2;
         val2 = val;
-        println(val2);
+        println(std::cout, val2);
         utree val3("Hello, World. Chuckie is back!!!");
         val = val3;
-        println(val);
+        println(std::cout, val);
 
         utree val4("Apple");
         utree val5("Apple");
@@ -60,32 +60,32 @@ int main()
         val2.push_back(123.456);
         val2.push_back("Mah Doggie");
         val.push_back(val2);
-        println(val);
-        println(val.front());
+        println(std::cout, val);
+        println(std::cout, val.front());
 
         utree val3;
         val3.swap(val);
-        println(val);
+        println(std::cout, val);
         val3.swap(val);
-        println(val);
+        println(std::cout, val);
         val.push_back("Ba Ba Black Sheep");
-        println(val);
+        println(std::cout, val);
         val.pop_front();
-        println(val);
+        println(std::cout, val);
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
         BOOST_ASSERT(val.size() == 4);
-        println(val);
+        println(std::cout, val);
         val.pop_back();
-        println(val);
+        println(std::cout, val);
         BOOST_ASSERT(val.size() == 3);
         val.erase(val.end());
-        println(val);
+        println(std::cout, val);
         BOOST_ASSERT(val.size() == 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
-        println(val);
+        println(std::cout, val);
     }
 
     {
@@ -95,7 +95,7 @@ int main()
         val.insert(val.end(), "Chuckie");
         val.insert(val.end(), "Poly");
         val.insert(val.end(), "Mochi");
-        println(val);
+        println(std::cout, val);
     }
 
     {

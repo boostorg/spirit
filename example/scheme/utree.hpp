@@ -144,6 +144,7 @@ namespace scheme
     //  - a double
     //  - a string (textual or binary)
     //  - a (doubly linked) list of utree
+    //  - a reference to a utree
     //
     // The utree has minimal memory footprint. The data structure size is
     // 16 bytes on a 32-bit platform. Being a container of itself, it can
@@ -172,6 +173,7 @@ namespace scheme
         explicit utree(char const* str, std::size_t len);
         explicit utree(std::string const& str);
 
+        utree(utree const& other);
         utree(utree const& other);
         ~utree();
 
