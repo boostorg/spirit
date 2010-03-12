@@ -117,9 +117,9 @@ namespace boost { namespace spirit { namespace iterator_policies
         inline static void advance_input(MultiPass& mp)
             { Input::advance_input(mp); }
 
-        template <typename TokenType, typename MultiPass>
-        inline static TokenType& get_input(MultiPass& mp)
-            { return Input::template get_input<TokenType>(mp); }
+        template <typename MultiPass>
+        inline static typename MultiPass::reference get_input(MultiPass& mp)
+            { return Input::get_input(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -193,9 +193,9 @@ namespace boost { namespace spirit { namespace iterator_policies
         inline static void advance_input(MultiPass& mp)
             { Input::advance_input(mp); }
 
-        template <typename TokenType, typename MultiPass>
-        inline static TokenType& get_input(MultiPass& mp)
-            { return Input::template get_input<TokenType>(mp); }
+        template <typename MultiPass>
+        inline static typename MultiPass::reference get_input(MultiPass& mp)
+            { return Input::get_input(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -282,9 +282,9 @@ namespace boost { namespace spirit { namespace iterator_policies
         inline static void advance_input(MultiPass& mp)
             { Input::advance_input(mp); }
 
-        template <typename TokenType, typename MultiPass>
-        inline static TokenType& get_input(MultiPass& mp)
-            { return Input::template get_input<TokenType>(mp); }
+        template <typename MultiPass>
+        inline static typename MultiPass::reference get_input(MultiPass& mp)
+            { return Input::get_input(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)
@@ -380,9 +380,9 @@ namespace boost { namespace spirit { namespace iterator_policies
         inline static void advance_input(MultiPass& mp)
             { Input::advance_input(mp); }
 
-        template <typename TokenType, typename MultiPass>
-        inline static TokenType& get_input(MultiPass& mp)
-            { return Input::template get_input<TokenType>(mp); }
+        template <typename MultiPass>
+        inline static typename MultiPass::reference get_input(MultiPass& mp)
+            { return Input::get_input(mp); }
 
         template <typename MultiPass>
         inline static bool input_at_eof(MultiPass const& mp)

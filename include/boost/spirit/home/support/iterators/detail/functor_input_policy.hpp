@@ -58,8 +58,8 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         public:
             // get the next token
-            template <typename ValueType, typename MultiPass>
-            static ValueType& get_input(MultiPass& mp)
+            template <typename MultiPass>
+            static typename MultiPass::reference get_input(MultiPass& mp)
             {
                 value_type& curtok = mp.shared()->curtok;
                 if (!input_is_valid(mp, curtok))

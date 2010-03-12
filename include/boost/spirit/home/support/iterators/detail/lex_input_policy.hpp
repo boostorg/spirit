@@ -38,7 +38,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         public:
             template <typename MultiPass>
-            static value_type& get_input(MultiPass& mp)
+            static typename MultiPass::reference get_input(MultiPass& mp)
             {
                 value_type& curtok = mp.shared()->curtok;
                 if (-1 == curtok)

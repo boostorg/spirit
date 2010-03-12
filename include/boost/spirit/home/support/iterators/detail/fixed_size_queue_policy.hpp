@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             {
                 if (mp.queuePosition == mp.shared()->queuedElements.end())
                 {
-                    return MultiPass::template get_input<Value>(mp);
+                    return MultiPass::get_input(mp);
                 }
                 return *mp.queuePosition;
             }
@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace iterator_policies
                         mp.shared()->queuedElements.pop_front();
 
                     mp.shared()->queuedElements.push_back(
-                        MultiPass::template get_input<Value>(mp));
+                        MultiPass::get_input(mp));
                     MultiPass::advance_input(mp);
                 }
                 ++mp.queuePosition;
