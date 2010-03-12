@@ -56,7 +56,7 @@ namespace detail
         {
             typedef typename Range::const_iterator iterator;
             iterator i = range.begin();
-            if (*i == '\1') // a 1 byte at the beginning signifies a byte stream
+            if (*i == '\1') // a 1 byte at the beginning signifies a byte string
             {
                 out << "b"; ++i;
                 for (; i != range.end(); ++i)

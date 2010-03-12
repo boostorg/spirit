@@ -101,8 +101,8 @@ namespace scheme
             void operator()(std::string& utf8, char byte) const
             {
                 if (utf8.size() == 0)
-                    utf8 += '\1';   //  mark a symbol with prefix 1
-                                    //  (a 1 byte at the beginning signifies a binary stream)
+                    utf8 += '\1';   //  mark a byte string with prefix 1
+                                    //  (a 1 byte at the beginning signifies a byte string)
                 utf8 += byte;
             }
         };
