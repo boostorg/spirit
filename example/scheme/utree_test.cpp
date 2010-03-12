@@ -169,5 +169,18 @@ int main()
         BOOST_ASSERT(ref[3] == utree(4));
     }
 
+    { // put it in an array
+
+        utree vals[] = {
+            utree(123),
+            utree("Hello, World"),
+            utree(123.456)
+        };
+
+        println(std::cout, vals[0]);
+        println(std::cout, vals[1]);
+        println(std::cout, vals[2]);
+    }
+
     return 0;
 }

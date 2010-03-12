@@ -15,6 +15,7 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/type_traits/is_pointer.hpp>
+#include <boost/type_traits/alignment_of.hpp>
 #include <boost/ref.hpp>
 #include "detail/utree_detail1.hpp"
 

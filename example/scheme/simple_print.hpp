@@ -59,9 +59,10 @@ namespace detail
             if (*i == '\1') // a 1 byte at the beginning signifies a byte string
             {
                 out << "b"; ++i;
+                out.width(2);
+                out.setf('0');
                 for (; i != range.end(); ++i)
-                    out << std::setw(2) << std::setfill('0')
-                        << std::hex << int((unsigned char)*i);
+                    out << std::hex << int((unsigned char)*i);
                 out << std::dec;
             }
             else
