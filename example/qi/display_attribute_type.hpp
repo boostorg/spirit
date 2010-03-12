@@ -41,7 +41,7 @@ namespace tools
     void display_attribute_of_parser(std::ostream& os, T const &) 
     {
         typedef typename attribute_of_parser<T>::type type;
-        std::cout << typeid(type).name() << std::endl;
+        os << typeid(type).name() << std::endl;
     }
 }
 
