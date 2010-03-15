@@ -60,7 +60,7 @@ namespace detail
             {
                 out << "b"; ++i;
                 out.width(2);
-                out.setf('0');
+                out.fill('0');
                 for (; i != range.end(); ++i)
                     out << std::hex << int((unsigned char)*i);
                 out << std::dec;

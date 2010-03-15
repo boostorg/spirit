@@ -25,7 +25,7 @@ namespace scheme { namespace detail
             || get_type() == utree_type::heap_string_type);
 
         if (get_type() == utree_type::small_string_type)
-            return buff[0];
+            return small_string_size - buff[small_string_size - 1];
         else
             return heap.size;
     }
@@ -36,7 +36,7 @@ namespace scheme { namespace detail
             || get_type() == utree_type::heap_string_type);
 
         if (get_type() == utree_type::small_string_type)
-            return buff + 1;
+            return buff;
         else
             return heap.str;
     }
@@ -48,16 +48,16 @@ namespace scheme { namespace detail
         char* str;
         if (size < small_string_size)
         {
-            // if it fits, store it in-situ; the first byte
-            // is the length of the string.
-            str = buff + 1;
-            buff[0] = size;
+            // if it fits, store it in-situ; small_string_size minus the length
+            // of the string is placed in buff[small_string_size - 1]
+            str = buff;
+            buff[small_string_size - 1] = small_string_size - size;
             set_type(utree_type::small_string_type);
         }
         else
         {
             // else, store it in the heap
-            str = new char[size];
+            str = new char[size + 1]; // add one for the null char
             heap.str = str;
             heap.size = size;
             set_type(utree_type::heap_string_type);
@@ -66,6 +66,7 @@ namespace scheme { namespace detail
         {
             *str++ = *f++;
         }
+        *str = '\0'; // add the null char
     }
 
     inline void fast_string::swap(fast_string& other)
