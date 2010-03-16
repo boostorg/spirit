@@ -102,7 +102,7 @@ defined in __unary_generator_concept__.
                                      generators `a` and `pad` do not fail (except 
                                      if the underlying output stream reports an 
                                      error).]]
-    [[`left_align(pad, width)[a]`]  [Generate `a` left aligned in a column of 
+    [[`left_align(width, pad)[a]`]  [Generate `a` left aligned in a column of 
                                      the given `width`, while using the generator 
                                      `pad` to emit the necessary padding. This 
                                      generator succeeds as long as its embedded 
@@ -133,7 +133,7 @@ defined in __unary_generator_concept__.
                                      generators `a` and `pad` do not fail (except 
                                      if the underlying output stream reports an 
                                      error).]]
-    [[`center(pad, width)[a]`]      [Generate `a` centered in a column of 
+    [[`center(width, pad)[a]`]      [Generate `a` centered in a column of 
                                      the given `width`, while using the generator 
                                      `pad` to emit the necessary padding. This 
                                      generator succeeds as long as its embedded 
@@ -164,7 +164,7 @@ defined in __unary_generator_concept__.
                                      generators `a` and `pad` do not fail (except 
                                      if the underlying output stream reports an 
                                      error).]]
-    [[`right_align(pad, width)[a]`] [Generate `a` right aligned in a column of 
+    [[`right_align(width, pad)[a]`] [Generate `a` right aligned in a column of 
                                      the given `width`, while using the generator 
                                      `pad` to emit the necessary padding. This 
                                      generator succeeds as long as its embedded 
