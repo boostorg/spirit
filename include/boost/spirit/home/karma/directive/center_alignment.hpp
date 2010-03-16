@@ -273,7 +273,7 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
-    // creates center(pad, width)[] directive generator
+    // creates center(width, pad)[] directive generator
     template <typename Width, typename Padding, typename Subject
       , typename Modifiers>
     struct make_directive<
