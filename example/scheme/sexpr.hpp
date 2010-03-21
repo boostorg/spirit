@@ -89,20 +89,6 @@ namespace scheme
             }
         };
 
-        struct push_binary
-        {
-            template <typename S, typename C>
-            struct result { typedef void type; };
-
-            void operator()(std::string& utf8, char byte) const
-            {
-                if (utf8.size() == 0)
-                    utf8 += '\1';   //  mark a byte string with prefix 1
-                                    //  (a 1 byte at the beginning signifies a byte string)
-                utf8 += byte;
-            }
-        };
-
         struct push_esc
         {
             template <typename S, typename C>
@@ -161,7 +147,6 @@ namespace scheme
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
             function<detail::push_symbol> push_symbol;
-            function<detail::push_binary> push_binary;
 
             start   = atom | list;
 
@@ -183,13 +168,13 @@ namespace scheme
                     | int_                              [_val = _1]
                     ;
 
-            byte_str = lexeme[no_case['b'] >> +(hex2    [push_binary(_val, _1)])];
+            byte_str = lexeme[no_case['b'] >> +hex2];
         }
 
         rule<Iterator, white_space<Iterator>, utree()> start, list;
         rule<Iterator, utree()> atom, number;
         rule<Iterator, std::string()> symbol;
-        rule<Iterator, std::string()> byte_str;
+        rule<Iterator, binary_string()> byte_str;
         scheme::string<Iterator> string;
     };
 }

@@ -9,48 +9,55 @@
 
 namespace scheme { namespace detail
 {
+    inline char& fast_string::info()
+    {
+        return buff[small_string_size];
+    }
+
+    inline char fast_string::info() const
+    {
+        return buff[small_string_size];
+    }
+
     inline utree_type::info fast_string::get_type() const
     {
-        return static_cast<utree_type::info>(buff[small_string_size] & 0x7);
+        return static_cast<utree_type::info>((info() & 0x0F) >> 1);
     }
 
     inline void fast_string::set_type(utree_type::info t)
     {
-        buff[small_string_size] = static_cast<char>(t)
-                                | (buff[small_string_size] & 0xF8);
+        info() = (static_cast<char>(t) << 1) | (info() & 0xF1);
     }
 
     inline int fast_string::get_subtype() const
     {
-        return buff[small_string_size] >> 3;
+        return info() >> 4;
     }
 
     inline void fast_string::set_subtype(int t)
     {
-        buff[small_string_size] = (t << 3)
-                                | (buff[small_string_size] & 0x7);
+        info() = (t << 4) | (info() & 0x0F);
+    }
+
+    inline bool fast_string::is_heap_allocated() const
+    {
+        return info() & 0x01;
     }
 
     inline std::size_t fast_string::size() const
     {
-        BOOST_ASSERT(get_type() == utree_type::small_string_type
-            || get_type() == utree_type::heap_string_type);
-
-        if (get_type() == utree_type::small_string_type)
-            return small_string_size - buff[small_string_size - 1];
-        else
+        if (is_heap_allocated())
             return heap.size;
+        else
+            return small_string_size - buff[small_string_size - 1];
     }
 
     inline char const* fast_string::str() const
     {
-        BOOST_ASSERT(get_type() == utree_type::small_string_type
-            || get_type() == utree_type::heap_string_type);
-
-        if (get_type() == utree_type::small_string_type)
-            return buff;
-        else
+        if (is_heap_allocated())
             return heap.str;
+        else
+            return buff;
     }
 
     template <typename Iterator>
@@ -64,15 +71,17 @@ namespace scheme { namespace detail
             // of the string is placed in buff[small_string_size - 1]
             str = buff;
             buff[small_string_size - 1] = small_string_size - size;
-            set_type(utree_type::small_string_type);
+            info() &= ~0x1;
         }
         else
         {
+            BOOST_ASSERT(size < 200);
+
             // else, store it in the heap
             str = new char[size + 1]; // add one for the null char
             heap.str = str;
             heap.size = size;
-            set_type(utree_type::heap_string_type);
+            info() |= 0x1;
         }
         for (std::size_t i = 0; i != size; ++i)
         {
@@ -83,14 +92,12 @@ namespace scheme { namespace detail
 
     inline void fast_string::swap(fast_string& other)
     {
-        fast_string temp = other;
-        other = *this;
-        *this = temp;
+        std::swap(*this, other);
     }
 
     inline void fast_string::free()
     {
-        if (get_type() == utree_type::heap_string_type)
+        if (is_heap_allocated())
         {
             delete [] heap.str;
             heap.str = 0;
@@ -352,7 +359,13 @@ namespace scheme { namespace detail
             return a == b;
         }
 
-        bool operator()(utree::nil, utree::nil) const
+        template <typename Base>
+        bool operator()(binary<Base> const& a, binary<Base> const& b) const
+        {
+            return false;
+        }
+
+        bool operator()(nil, nil) const
         {
             return true;
         }
@@ -390,10 +403,91 @@ namespace scheme { namespace detail
             return a < b;
         }
 
-        bool operator()(utree::nil, utree::nil) const
+        template <typename Base>
+        bool operator()(binary<Base> const& a, binary<Base> const& b) const
+        {
+            BOOST_ASSERT(false);
+            return false; // no less than comparison for binary
+        }
+
+        bool operator()(nil, nil) const
         {
             BOOST_ASSERT(false);
             return false; // no less than comparison for nil
+        }
+    };
+
+    struct utree_print
+    {
+        typedef void result_type;
+
+        std::ostream& out;
+        utree_print(std::ostream& out) : out(out) {}
+
+        void operator()(scheme::nil) const
+        {
+            out << "nil";
+        }
+
+        template <typename T>
+        void operator()(T val) const
+        {
+            out << val;
+        }
+
+        void operator()(bool b) const
+        {
+            out << (b ? "true" : "false");
+        }
+
+        template <typename Base>
+        void operator()(binary<Base> b) const
+        {
+            out << "b";
+            out.width(2);
+            out.fill('0');
+
+            typedef typename Base::const_iterator iterator;
+            for (iterator i = b.begin(); i != b.end(); ++i)
+                out << std::hex << int((unsigned char)*i);
+            out << std::dec;
+        }
+
+        template <typename Range> // for lists
+        void print_string_or_list(Range range, boost::mpl::false_) const
+        {
+            typedef typename Range::const_iterator iterator;
+            (*this)('(');
+            for (iterator i = range.begin(); i != range.end(); ++i)
+            {
+                if (i != range.begin())
+                    (*this)(' ');
+                scheme::utree::visit(*i, *this);
+            }
+            (*this)(')');
+        }
+
+        template <typename Range> // for strings
+        void print_string_or_list(Range range, boost::mpl::true_) const
+        {
+            typedef typename Range::const_iterator iterator;
+            iterator i = range.begin();
+            bool const is_symbol = *i == '\0';  // a 0 byte at the beginning signifies a symbol
+            if (!is_symbol)
+                out << '"';
+            else
+                ++i;
+            for (; i != range.end(); ++i)
+                out << *i;
+            if (!is_symbol)
+                out << '"';
+        }
+
+        template <typename Iterator>
+        void operator()(boost::iterator_range<Iterator> const& range) const
+        {
+            // This code works for both strings and lists
+            print_string_or_list(range, boost::is_pointer<Iterator>());
         }
     };
 
@@ -423,7 +517,7 @@ namespace scheme { namespace detail
                 default:
                     BOOST_ASSERT(false); // can't happen
                 case type::nil_type:
-                    typename UTreeX::nil arg;
+                    nil arg;
                     return f(arg);
                 case type::bool_type:
                     return f(x.b);
@@ -433,9 +527,10 @@ namespace scheme { namespace detail
                     return f(x.d);
                 case type::list_type:
                     return f(list_range(iterator(x.l.first), iterator(0)));
-                case type::heap_string_type:
-                case type::small_string_type:
+                case type::string_type:
                     return f(string_range(x.s.str(), x.s.str() + x.s.size()));
+                case type::binary_type:
+                    return f(binary_range(x.s.str(), x.s.size()));
                 case type::reference_type:
                     return apply(*x.p, f);
             }
@@ -464,7 +559,7 @@ namespace scheme { namespace detail
                 default:
                     BOOST_ASSERT(false); // can't happen
                 case type::nil_type:
-                    typename UTreeX::nil x_;
+                    nil x_;
                     return visit_impl::apply(y, detail::bind(f, x_));
                 case type::bool_type:
                     return visit_impl::apply(y, detail::bind(f, x.b));
@@ -476,10 +571,12 @@ namespace scheme { namespace detail
                     return visit_impl::apply(
                         y, detail::bind<F, list_range>(f,
                         list_range(iterator(x.l.first), iterator(0))));
-                case type::heap_string_type:
-                case type::small_string_type:
+                case type::string_type:
                     return visit_impl::apply(y, detail::bind(
                         f, string_range(x.s.str(), x.s.str() + x.s.size())));
+                case type::binary_type:
+                    return visit_impl::apply(y, detail::bind(
+                        f, binary_range(x.s.str(), x.s.size())));
                 case type::reference_type:
                     return apply(*x.p, y, f);
             }
@@ -534,16 +631,26 @@ namespace scheme
     inline utree::utree(char const* str)
     {
         s.construct(str, str + strlen(str));
+        set_type(type::string_type);
     }
 
     inline utree::utree(char const* str, std::size_t len)
     {
         s.construct(str, str + len);
+        set_type(type::string_type);
     }
 
     inline utree::utree(std::string const& str)
     {
         s.construct(str.begin(), str.end());
+        set_type(type::string_type);
+    }
+
+    template <typename Base>
+    inline utree::utree(binary<Base> const& bin)
+    {
+        s.construct(bin.begin(), bin.end());
+        set_type(type::binary_type);
     }
 
     inline utree::utree(boost::reference_wrapper<utree> ref)
@@ -608,6 +715,7 @@ namespace scheme
     {
         free();
         s.construct(s_, s_ + strlen(s_));
+        set_type(type::string_type);
         return *this;
     }
 
@@ -615,6 +723,16 @@ namespace scheme
     {
         free();
         s.construct(s_.begin(), s_.end());
+        set_type(type::string_type);
+        return *this;
+    }
+
+    template <typename Base>
+    inline utree& utree::operator=(binary<Base> const& bin)
+    {
+        free();
+        s.construct(bin.begin(), bin.end());
+        set_type(type::binary_type);
         return *this;
     }
 
@@ -712,6 +830,12 @@ namespace scheme
     inline bool operator>=(utree const& a, utree const& b)
     {
         return !(a < b);
+    }
+
+    inline std::ostream& operator<<(std::ostream& out, utree const& x)
+    {
+        utree::visit(x, detail::utree_print(out));
+        return out;
     }
 
     template <typename T>
@@ -941,7 +1065,8 @@ namespace scheme
     {
         switch (get_type())
         {
-            case type::heap_string_type:
+            case type::binary_type:
+            case type::string_type:
                 s.free();
                 break;
             case type::list_type:
@@ -971,8 +1096,8 @@ namespace scheme
             case type::reference_type:
                 p = other.p;
                 break;
-            case type::small_string_type:
-            case type::heap_string_type:
+            case type::string_type:
+            case type::binary_type:
                 s.copy(other.s);
                 break;
             case type::list_type:

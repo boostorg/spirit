@@ -10,6 +10,8 @@
 #include <cstddef>
 #include <algorithm>
 #include <string>
+#include <ostream>
+
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
@@ -21,6 +23,11 @@
 
 namespace scheme
 {
+    struct nil {};
+
+    template <typename Base>
+    struct binary;
+
     ///////////////////////////////////////////////////////////////////////////
     // The main utree (Universal Tree) class
     // The utree is a hierarchical, dynamic type that can store:
@@ -28,7 +35,8 @@ namespace scheme
     //  - a bool
     //  - an integer
     //  - a double
-    //  - a string (textual or binary)
+    //  - a string
+    //  - binary data
     //  - a (doubly linked) list of utree
     //  - a reference to a utree
     //
@@ -48,16 +56,6 @@ namespace scheme
         typedef std::ptrdiff_t difference_type;
         typedef std::size_t size_type;
 
-        struct nil {};
-
-        struct binary
-        {
-            binary(unsigned char bits[], std::size_t len)
-              : bits(bits), len(len) {}
-            unsigned char* bits;
-            std::size_t len;
-        };
-
         utree();
         explicit utree(bool b);
         explicit utree(unsigned int i);
@@ -66,6 +64,9 @@ namespace scheme
         explicit utree(char const* str);
         explicit utree(char const* str, std::size_t len);
         explicit utree(std::string const& str);
+
+        template <typename Base>
+        explicit utree(binary<Base> const& bin);
         explicit utree(boost::reference_wrapper<utree> ref);
 
         utree(utree const& other);
@@ -78,6 +79,9 @@ namespace scheme
         utree& operator=(double d);
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
+
+        template <typename Base>
+        utree& operator=(binary<Base> const& bin);
         utree& operator=(boost::reference_wrapper<utree> ref);
 
         template <typename F>
@@ -181,14 +185,25 @@ namespace scheme
     bool operator>(utree const& a, utree const& b);
     bool operator<=(utree const& a, utree const& b);
     bool operator>=(utree const& a, utree const& b);
+    std::ostream& operator<<(std::ostream& out, utree const& x);
 
-    ///////////////////////////////////////////////////////////////////////////
-    // The ulist is a utility class for easy construction of utree lists
-    ///////////////////////////////////////////////////////////////////////////
-    struct ulist : utree
+    template <typename Base>
+    struct binary : Base
     {
-        ulist() : utree(construct_list()) {}
+        binary()
+          : Base() {}
+
+        template <typename Iterator>
+        binary(Iterator bits, std::size_t len)
+          : Base(bits, bits + len) {}
+
+        template <typename Iterator>
+        binary(Iterator first, Iterator last)
+          : Base(first, last) {}
     };
+
+    typedef binary<boost::iterator_range<char const*> > binary_range;
+    typedef binary<std::string> binary_string;
 }
 
 #include "detail/utree_detail2.hpp"

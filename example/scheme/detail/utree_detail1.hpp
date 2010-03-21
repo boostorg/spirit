@@ -32,8 +32,8 @@ namespace scheme { namespace detail
             bool_type,
             int_type,
             double_type,
-            small_string_type,
-            heap_string_type,
+            string_type,
+            binary_type,
             list_type,
             reference_type
         };
@@ -117,6 +117,7 @@ namespace scheme { namespace detail
         void set_type(utree_type::info t);
         int get_subtype() const;
         void set_subtype(int t);
+        bool is_heap_allocated() const;
 
         std::size_t size() const;
         char const* str() const;
@@ -127,6 +128,9 @@ namespace scheme { namespace detail
         void swap(fast_string& other);
         void free();
         void copy(fast_string const& other);
+
+        char& info();
+        char info() const;
     };
 }}
 
