@@ -11,12 +11,24 @@ namespace scheme { namespace detail
 {
     inline utree_type::info fast_string::get_type() const
     {
-        return static_cast<utree_type::info>(buff[small_string_size]);
+        return static_cast<utree_type::info>(buff[small_string_size] & 0x7);
     }
 
     inline void fast_string::set_type(utree_type::info t)
     {
-        buff[small_string_size] = static_cast<char>(t);
+        buff[small_string_size] = static_cast<char>(t)
+                                | (buff[small_string_size] & 0xF8);
+    }
+
+    inline int fast_string::get_subtype() const
+    {
+        return buff[small_string_size] >> 3;
+    }
+
+    inline void fast_string::set_subtype(int t)
+    {
+        buff[small_string_size] = (t << 3)
+                                | (buff[small_string_size] & 0x7);
     }
 
     inline std::size_t fast_string::size() const

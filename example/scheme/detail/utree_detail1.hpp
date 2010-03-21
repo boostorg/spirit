@@ -115,6 +115,9 @@ namespace scheme { namespace detail
 
         utree_type::info get_type() const;
         void set_type(utree_type::info t);
+        int get_subtype() const;
+        void set_subtype(int t);
+
         std::size_t size() const;
         char const* str() const;
 

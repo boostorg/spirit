@@ -58,7 +58,7 @@ int main(int argc, char **argv)
         std::istream_iterator<char>(),
         std::back_inserter(source_code));
 
-    typedef boost::u8_to_u32_iterator<std::string::const_iterator> iterator_type;
+    typedef std::string::const_iterator iterator_type;
     iterator_type first(source_code.begin());
     iterator_type last(source_code.end());
 

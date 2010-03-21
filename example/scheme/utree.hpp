@@ -50,6 +50,14 @@ namespace scheme
 
         struct nil {};
 
+        struct binary
+        {
+            binary(unsigned char bits[], std::size_t len)
+              : bits(bits), len(len) {}
+            unsigned char* bits;
+            std::size_t len;
+        };
+
         utree();
         explicit utree(bool b);
         explicit utree(unsigned int i);

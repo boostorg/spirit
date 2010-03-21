@@ -9,8 +9,6 @@
 
 #include <string>
 
-#define BOOST_SPIRIT_UNICODE // We'll use unicode (UTF8) all throughout
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/spirit/include/qi.hpp>
@@ -24,9 +22,8 @@
 
 namespace scheme
 {
-    using boost::spirit::unicode::char_;
-    using boost::spirit::unicode::space;
-    using boost::spirit::unicode::print;
+    using boost::spirit::ascii::char_;
+    using boost::spirit::ascii::space;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::eol;
@@ -46,11 +43,10 @@ namespace scheme
     using boost::spirit::qi::lit;
     using boost::phoenix::function;
 
-    typedef boost::spirit::char_encoding::unicode unicode;
     typedef boost::uint32_t uchar; // a unicode code point
 
     template <typename Iterator>
-    struct white_space : grammar<Iterator, unicode>
+    struct white_space : grammar<Iterator>
     {
         white_space() : white_space::base_type(start)
         {
@@ -60,7 +56,7 @@ namespace scheme
                 ;
         }
 
-        rule<Iterator, unicode> start;
+        rule<Iterator> start;
     };
 
     namespace detail
@@ -79,17 +75,17 @@ namespace scheme
             }
         };
 
-        struct push_symbol_utf8
+        struct push_symbol
         {
             template <typename S, typename C>
             struct result { typedef void type; };
 
-            void operator()(std::string& utf8, uchar code_point) const
+            void operator()(std::string& utf8, char ch) const
             {
                 if (utf8.size() == 0)
                     utf8 += '\0';   //  mark a symbol with prefix 0
                                     //  (a 0 byte at the beginning signifies a symbol)
-                push_utf8()(utf8, code_point);
+                utf8 += ch;
             }
         };
 
@@ -129,7 +125,7 @@ namespace scheme
     }
 
     template <typename Iterator>
-    struct string : grammar<Iterator, unicode, std::string()>
+    struct string : grammar<Iterator, std::string()>
     {
         string() : string::base_type(start)
         {
@@ -148,23 +144,23 @@ namespace scheme
 
             start
                 = '"'
-                >> *(str_esc(_val) | (char_ - '"')  [push_utf8(_val, _1)])
+                >> *(str_esc(_val) | (~char_('"'))  [_val += _1])
                 >> '"'
                 ;
         }
 
-        rule<Iterator, unicode, void(std::string&)> str_esc;
-        rule<Iterator, unicode, std::string()> start;
+        rule<Iterator, void(std::string&)> str_esc;
+        rule<Iterator, std::string()> start;
     };
 
     template <typename Iterator>
-    struct sexpr : grammar<Iterator, unicode, white_space<Iterator>, utree()>
+    struct sexpr : grammar<Iterator, white_space<Iterator>, utree()>
     {
         sexpr() : sexpr::base_type(start)
         {
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
-            function<detail::push_symbol_utf8> push_symbol_utf8;
+            function<detail::push_symbol> push_symbol;
             function<detail::push_binary> push_binary;
 
             start   = atom | list;
@@ -178,8 +174,8 @@ namespace scheme
                     | symbol                            [_val = _1]
                     ;
 
-            char const* exclude = " ();\"\n\r\t";
-            symbol  = +lexeme[print - char_(exclude)]   [push_symbol_utf8(_val, _1)];
+            char const* exclude = " ();\"\0-\31\127";
+            symbol  = +lexeme[~char_(exclude)]          [push_symbol(_val, _1)];
 
             number  = strict_double                     [_val = _1]
                     | lexeme[no_case["0x"] >> hex]      [_val = _1]
@@ -190,10 +186,10 @@ namespace scheme
             byte_str = lexeme[no_case['b'] >> +(hex2    [push_binary(_val, _1)])];
         }
 
-        rule<Iterator, unicode, white_space<Iterator>, utree()> start, list;
-        rule<Iterator, unicode, utree()> atom, number;
-        rule<Iterator, unicode, std::string()> symbol;
-        rule<Iterator, unicode, std::string()> byte_str;
+        rule<Iterator, white_space<Iterator>, utree()> start, list;
+        rule<Iterator, utree()> atom, number;
+        rule<Iterator, std::string()> symbol;
+        rule<Iterator, std::string()> byte_str;
         scheme::string<Iterator> string;
     };
 }
