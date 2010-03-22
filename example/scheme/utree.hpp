@@ -23,10 +23,105 @@
 
 namespace scheme
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // Our utree can store these types. This enum tells us what type
+    // of data is stored in utree's discriminated union.
+    ///////////////////////////////////////////////////////////////////////////
+    struct utree_type
+    {
+        enum info
+        {
+            nil_type,
+            bool_type,
+            int_type,
+            double_type,
+            string_type,
+            symbol_type,
+            binary_type,
+            list_type,
+            reference_type
+        };
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The nil type
+    ///////////////////////////////////////////////////////////////////////////
     struct nil {};
 
-    template <typename Base>
-    struct binary;
+    ///////////////////////////////////////////////////////////////////////////
+    // A typed string with parametric Base storage. The storage can be any
+    // range or (stl container) of chars.
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Base, utree_type::info type_>
+    struct basic_string : Base
+    {
+        static utree_type::info const type = type_;
+
+        basic_string()
+          : Base() {}
+
+        basic_string(Base const& base)
+          : Base(base) {}
+
+        template <typename Iterator>
+        basic_string(Iterator bits, std::size_t len)
+          : Base(bits, bits + len) {}
+
+        template <typename Iterator>
+        basic_string(Iterator first, Iterator last)
+          : Base(first, last) {}
+
+        basic_string& operator=(basic_string const& other)
+        {
+            Base::operator=(other);
+            return *this;
+        }
+
+        basic_string& operator=(Base const& other)
+        {
+            Base::operator=(other);
+            return *this;
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Binary string
+    ///////////////////////////////////////////////////////////////////////////
+    typedef basic_string<
+        boost::iterator_range<char const*>,
+        utree_type::binary_type>
+    binary_range;
+
+    typedef basic_string<
+        std::string,
+        utree_type::binary_type>
+    binary_string;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Our UTF-8 string
+    ///////////////////////////////////////////////////////////////////////////
+    typedef basic_string<
+        boost::iterator_range<char const*>,
+        utree_type::string_type>
+    utf8_string_range;
+
+    typedef basic_string<
+        std::string,
+        utree_type::string_type>
+    utf8_string;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Our UTF-8 symbol (for identifiers)
+    ///////////////////////////////////////////////////////////////////////////
+    typedef basic_string<
+        boost::iterator_range<char const*>,
+        utree_type::symbol_type>
+    utf8_symbol_range;
+
+    typedef basic_string<
+        std::string,
+        utree_type::symbol_type>
+    utf8_symbol;
 
     ///////////////////////////////////////////////////////////////////////////
     // The main utree (Universal Tree) class
@@ -36,6 +131,7 @@ namespace scheme
     //  - an integer
     //  - a double
     //  - a string
+    //  - a symbol (identifier)
     //  - binary data
     //  - a (doubly linked) list of utree
     //  - a reference to a utree
@@ -56,6 +152,9 @@ namespace scheme
         typedef std::ptrdiff_t difference_type;
         typedef std::size_t size_type;
 
+        typedef boost::iterator_range<iterator> range;
+        typedef boost::iterator_range<const_iterator> const_range;
+
         utree();
         explicit utree(bool b);
         explicit utree(unsigned int i);
@@ -64,10 +163,10 @@ namespace scheme
         explicit utree(char const* str);
         explicit utree(char const* str, std::size_t len);
         explicit utree(std::string const& str);
-
-        template <typename Base>
-        explicit utree(binary<Base> const& bin);
         explicit utree(boost::reference_wrapper<utree> ref);
+
+        template <typename Base, utree_type::info type_>
+        explicit utree(basic_string<Base, type_> const& bin);
 
         utree(utree const& other);
         ~utree();
@@ -79,10 +178,10 @@ namespace scheme
         utree& operator=(double d);
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
-
-        template <typename Base>
-        utree& operator=(binary<Base> const& bin);
         utree& operator=(boost::reference_wrapper<utree> ref);
+
+        template <typename Base, utree_type::info type_>
+        utree& operator=(basic_string<Base, type_> const& bin);
 
         template <typename F>
         typename F::result_type
@@ -152,7 +251,7 @@ namespace scheme
 
     private:
 
-        typedef detail::utree_type type;
+        typedef utree_type type;
 
         template <typename UTreeX, typename UTreeY>
         friend struct detail::visit_impl;
@@ -186,24 +285,6 @@ namespace scheme
     bool operator<=(utree const& a, utree const& b);
     bool operator>=(utree const& a, utree const& b);
     std::ostream& operator<<(std::ostream& out, utree const& x);
-
-    template <typename Base>
-    struct binary : Base
-    {
-        binary()
-          : Base() {}
-
-        template <typename Iterator>
-        binary(Iterator bits, std::size_t len)
-          : Base(bits, bits + len) {}
-
-        template <typename Iterator>
-        binary(Iterator first, Iterator last)
-          : Base(first, last) {}
-    };
-
-    typedef binary<boost::iterator_range<char const*> > binary_range;
-    typedef binary<std::string> binary_string;
 }
 
 #include "detail/utree_detail2.hpp"

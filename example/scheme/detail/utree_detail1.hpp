@@ -21,25 +21,6 @@ namespace scheme { namespace detail
     struct index_impl;
 
     ///////////////////////////////////////////////////////////////////////////
-    // Our utree can store these types. This enum tells us what type
-    // of data is stored in utree's discriminated union.
-    ///////////////////////////////////////////////////////////////////////////
-    struct utree_type
-    {
-        enum info
-        {
-            nil_type,
-            bool_type,
-            int_type,
-            double_type,
-            string_type,
-            binary_type,
-            list_type,
-            reference_type
-        };
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     // Our POD double linked list. Straightforward implementation.
     // This implementation is very primitive and is not meant to be
     // used stand-alone. This is the internal data representation
@@ -99,7 +80,10 @@ namespace scheme { namespace detail
                 / sizeof(char);
 
         static std::size_t const
-            small_string_size = buff_size-(sizeof(char)*2);
+            small_string_size = buff_size-sizeof(char);
+
+        static std::size_t const
+            max_string_len = small_string_size - 1;
 
         struct heap_store
         {
@@ -113,10 +97,8 @@ namespace scheme { namespace detail
             heap_store heap;
         };
 
-        utree_type::info get_type() const;
-        void set_type(utree_type::info t);
-        int get_subtype() const;
-        void set_subtype(int t);
+        int get_type() const;
+        void set_type(int t);
         bool is_heap_allocated() const;
 
         std::size_t size() const;

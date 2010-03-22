@@ -75,20 +75,6 @@ namespace scheme
             }
         };
 
-        struct push_symbol
-        {
-            template <typename S, typename C>
-            struct result { typedef void type; };
-
-            void operator()(std::string& utf8, char ch) const
-            {
-                if (utf8.size() == 0)
-                    utf8 += '\0';   //  mark a symbol with prefix 0
-                                    //  (a 0 byte at the beginning signifies a symbol)
-                utf8 += ch;
-            }
-        };
-
         struct push_esc
         {
             template <typename S, typename C>
@@ -146,7 +132,6 @@ namespace scheme
         {
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
-            function<detail::push_symbol> push_symbol;
 
             start   = atom | list;
 
@@ -160,7 +145,7 @@ namespace scheme
                     ;
 
             char const* exclude = " ();\"\0-\31\127";
-            symbol  = +lexeme[~char_(exclude)]          [push_symbol(_val, _1)];
+            symbol  = lexeme[+(~char_(exclude))];
 
             number  = strict_double                     [_val = _1]
                     | lexeme[no_case["0x"] >> hex]      [_val = _1]
@@ -173,7 +158,7 @@ namespace scheme
 
         rule<Iterator, white_space<Iterator>, utree()> start, list;
         rule<Iterator, utree()> atom, number;
-        rule<Iterator, std::string()> symbol;
+        rule<Iterator, utf8_symbol()> symbol;
         rule<Iterator, binary_string()> byte_str;
         scheme::string<Iterator> string;
     };

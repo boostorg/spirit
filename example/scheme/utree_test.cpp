@@ -5,7 +5,6 @@
 int main()
 {
     using scheme::utree;
-    using scheme::ulist;
     using ::detail::println;
 
     {
@@ -68,7 +67,7 @@ int main()
         println(std::cout, val);
         val3.swap(val);
         println(std::cout, val);
-        val.push_back("Ba Ba Black Sheep");
+        val.push_back("another string");
         println(std::cout, val);
         val.pop_front();
         println(std::cout, val);
