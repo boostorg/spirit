@@ -36,7 +36,7 @@ namespace tools
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, T);
+        BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, T);
 
         typedef typename attribute_of_parser<T>::type type;
         std::cout << typeid(type).name() << std::endl;
@@ -48,7 +48,7 @@ namespace tools
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, T);
+        BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, T);
 
         typedef typename attribute_of_parser<T>::type type;
         os << typeid(type).name() << std::endl;
