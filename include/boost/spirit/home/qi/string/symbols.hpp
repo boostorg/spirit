@@ -263,7 +263,7 @@ public:
 
             template <typename Iterator>
             adder const&
-            operator()(Iterator const& first, Iterator const& last, T const& val = T()) const
+            operator()(Iterator const& first, Iterator const& last, T const& val) const
             {
                 sym.lookup->add(first, last, val);
                 return *this;
