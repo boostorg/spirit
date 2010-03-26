@@ -39,170 +39,170 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Attribute
-                  </p>
+                    <p>
+                      Attribute
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Description
-                  </p>
+                    <p>
+                      Description
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/operator/not_predicate.html" title="Not-Predicate (!a)"><code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/operator/not_predicate.html" title="Not-Predicate (!a)"><code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">A</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">A</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Not predicate. Ensure that <code class="computeroutput"><span class="identifier">a</span></code>
-                    does not succeed generating, but don't create any output
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="../../reference/operator/not_predicate.html" title="Not-Predicate (!a)"><code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code></a>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">A</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    And predicate. Ensure that <code class="computeroutput"><span class="identifier">a</span></code>
-                    does succeed generating, but don't create any output
-                  </p>
+                    <p>
+                      Not predicate. Ensure that <code class="computeroutput"><span class="identifier">a</span></code>
+                      does not succeed generating, but don't create any output
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/operator/optional.html" title="Optional (-a)"><code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/operator/not_predicate.html" title="Not-Predicate (!a)"><code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">A</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Optional. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                    zero or one time
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="../../reference/operator/kleene.html" title="Kleene Star (*a)"><code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code></a>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Kleene. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                    zero or more times
-                  </p>
+                    <p>
+                      And predicate. Ensure that <code class="computeroutput"><span class="identifier">a</span></code>
+                      does succeed generating, but don't create any output
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/operator/plus.html" title="Plus (+a)"><code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/operator/optional.html" title="Optional (-a)"><code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Plus. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                    one or more times
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="../../reference/operator/alternative.html" title="Alternative (a | b)"><code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                    <span class="identifier">b</span></code></a>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
-                    <span class="identifier">B</span><span class="special">&gt;</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Alternative. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                    or <code class="computeroutput"><span class="identifier">b</span></code>
-                  </p>
+                    <p>
+                      Optional. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      zero or one time
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)"><code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
-                    <span class="identifier">b</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/operator/kleene.html" title="Kleene Star (*a)"><code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
-                    <span class="identifier">B</span><span class="special">&gt;</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Sequence. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                    followed by <code class="computeroutput"><span class="identifier">b</span></code>
-                  </p>
+                    <p>
+                      Kleene. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      zero or more times
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/operator/list.html" title="Lists (a % b)"><code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
-                    <span class="identifier">b</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/operator/plus.html" title="Plus (+a)"><code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    List. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                    delimited <code class="computeroutput"><span class="identifier">b</span></code> one
-                    or more times
-                  </p>
+                    <p>
+                      Plus. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      one or more times
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <a class="link" href="../../reference/operator/alternative.html" title="Alternative (a | b)"><code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                      <span class="identifier">b</span></code></a>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                      <span class="identifier">B</span><span class="special">&gt;</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Alternative. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      or <code class="computeroutput"><span class="identifier">b</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <a class="link" href="../../reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)"><code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+                      <span class="identifier">b</span></code></a>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                      <span class="identifier">B</span><span class="special">&gt;</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Sequence. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      followed by <code class="computeroutput"><span class="identifier">b</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <a class="link" href="../../reference/operator/list.html" title="Lists (a % b)"><code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+                      <span class="identifier">b</span></code></a>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      List. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      delimited <code class="computeroutput"><span class="identifier">b</span></code>
+                      one or more times
+                    </p>
                   </td>
 </tr>
 </tbody>

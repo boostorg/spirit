@@ -32,115 +32,117 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">G</span></code></span></dt>
 <dd><p>
-              Generator type
-            </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">g</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span>
-          <span class="identifier">b</span><span class="special">,</span>
-          <span class="identifier">c</span><span class="special">,</span>
-          <span class="identifier">d</span></code></span></dt>
+                Generator type
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">g</span><span class="special">,</span>
+            <span class="identifier">a</span><span class="special">,</span>
+            <span class="identifier">b</span><span class="special">,</span>
+            <span class="identifier">c</span><span class="special">,</span>
+            <span class="identifier">d</span></code></span></dt>
 <dd><p>
-              Generator objects
-            </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span>
-          <span class="identifier">C</span><span class="special">,</span>
-          <span class="identifier">D</span></code></span></dt>
+                Generator objects
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span><span class="special">,</span>
+            <span class="identifier">B</span><span class="special">,</span>
+            <span class="identifier">C</span><span class="special">,</span>
+            <span class="identifier">D</span></code></span></dt>
 <dd><p>
-              Attribute types of generators <code class="computeroutput"><span class="identifier">a</span></code>,
-              <code class="computeroutput"><span class="identifier">b</span></code>, <code class="computeroutput"><span class="identifier">c</span></code>,
-              and <code class="computeroutput"><span class="identifier">d</span></code>
-            </p></dd>
+                Attribute types of generators <code class="computeroutput"><span class="identifier">a</span></code>,
+                <code class="computeroutput"><span class="identifier">b</span></code>, <code class="computeroutput"><span class="identifier">c</span></code>, and <code class="computeroutput"><span class="identifier">d</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">I</span></code></span></dt>
 <dd><p>
-              The iterator type used for generation
-            </p></dd>
+                The iterator type used for generation
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Unused</span></code></span></dt>
 <dd><p>
-              An <code class="computeroutput"><span class="identifier">unused_type</span></code>
-            </p></dd>
+                An <code class="computeroutput"><span class="identifier">unused_type</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Context</span></code></span></dt>
 <dd><p>
-              The enclosing rule's <code class="computeroutput"><span class="identifier">Context</span></code>
-              type
-            </p></dd>
+                The enclosing rule's <code class="computeroutput"><span class="identifier">Context</span></code>
+                type
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">attrib</span></code></span></dt>
 <dd><p>
-              An attribute value
-            </p></dd>
+                An attribute value
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Attrib</span></code></span></dt>
 <dd><p>
-              An attribute type
-            </p></dd>
+                An attribute type
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-              A boolean expression
-            </p></dd>
+                A boolean expression
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">B</span></code></span></dt>
 <dd><p>
-              A type to be interpreted in boolean expressions
-            </p></dd>
+                A type to be interpreted in boolean expressions
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fg</span></code></span></dt>
 <dd><p>
-              A (lazy generator) function with signature <code class="computeroutput"><span class="identifier">G</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span></code>
-            </p></dd>
+                A (lazy generator) function with signature <code class="computeroutput"><span class="identifier">G</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fa</span></code></span></dt>
 <dd><p>
-              A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
-              flag that can be set to false to force the generator to fail. Both
-              <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean
-              flag are optional.
-            </p></dd>
+                A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
+                flag that can be set to false to force the generator to fail. Both
+                <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean
+                flag are optional.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">outiter</span></code></span></dt>
 <dd><p>
-              An output iterator to receive the generated output
-            </p></dd>
+                An output iterator to receive the generated output
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Ch</span></code></span></dt>
 <dd><p>
-              Character-class specific character type (See Character Class Types)
-            </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span><span class="special">,</span> <span class="identifier">ch2</span></code></span></dt>
+                Character-class specific character type (See Character Class Types)
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span><span class="special">,</span>
+            <span class="identifier">ch2</span></code></span></dt>
 <dd><p>
-              Character-class specific character (See Character Class Types)
-            </p></dd>
+                Character-class specific character (See Character Class Types)
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">charset</span></code></span></dt>
 <dd><p>
-              Character-set specifier string (example: <code class="computeroutput"><span class="string">"a-z0-9"</span></code>)
-            </p></dd>
+                Character-set specifier string (example: <code class="computeroutput"><span class="string">"a-z0-9"</span></code>)
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">str</span></code></span></dt>
 <dd><p>
-              Character-class specific string (See Character Class Types)
-            </p></dd>
+                Character-class specific string (See Character Class Types)
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Str</span></code></span></dt>
 <dd><p>
-              Attribute of <code class="computeroutput"><span class="identifier">str</span></code>:
-              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
-              where <code class="computeroutput"><span class="identifier">T</span></code> is the underlying
-              character type of <code class="computeroutput"><span class="identifier">str</span></code>
-            </p></dd>
+                Attribute of <code class="computeroutput"><span class="identifier">str</span></code>:
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+                where <code class="computeroutput"><span class="identifier">T</span></code> is the underlying
+                character type of <code class="computeroutput"><span class="identifier">str</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
 <dd><p>
-              Numeric literal, any integer or real number type
-            </p></dd>
+                Numeric literal, any integer or real number type
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Num</span></code></span></dt>
 <dd><p>
-              Attribute of <code class="computeroutput"><span class="identifier">num</span></code>: any
-              integer or real number type
-            </p></dd>
+                Attribute of <code class="computeroutput"><span class="identifier">num</span></code>:
+                any integer or real number type
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;&gt;</span></code></span></dt>
 <dd><p>
-              Used as a placeholder for a fusion sequence
-            </p></dd>
+                Used as a placeholder for a fusion sequence
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;&gt;</span></code></span></dt>
 <dd><p>
-              Used as a placeholder for an STL container
-            </p></dd>
+                Used as a placeholder for an STL container
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;&gt;</span></code></span></dt>
 <dd><p>
-              Used as a placeholder for a boost::variant
-            </p></dd>
+                Used as a placeholder for a boost::variant
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code></span></dt>
 <dd><p>
-              Used as a placeholder for a boost::optional
-            </p></dd>
+                Used as a placeholder for a boost::optional
+              </p></dd>
 </dl>
 </div>
 </div>

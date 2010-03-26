@@ -175,7 +175,7 @@ So, going back to our `quoted_string` rule:
 
 is a simplified version of:
 
-    quoted_string = lexeme['"' >> +(char_ - '"') >> '"'][val_ = _1];
+    quoted_string = lexeme['"' >> +(char_ - '"') >> '"'][_val = _1];
 
 The attribute of the `quoted_string` rule: `std::string` *is compatible* with
 the attribute of the RHS: `std::vector<char>`. The RHS extracts the parsed
