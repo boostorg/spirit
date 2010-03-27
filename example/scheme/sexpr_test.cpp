@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     }
 
     // Ignore the BOM marking the beginning of a UTF-8 file in Windows
-	char c = in.peek();
+    char c = in.peek();
     if (c == '\xef')
     {
         char s[3];
@@ -62,8 +62,8 @@ int main(int argc, char **argv)
     iterator_type first(source_code.begin());
     iterator_type last(source_code.end());
 
-    scheme::sexpr<iterator_type> p;
-    scheme::white_space<iterator_type> ws;
+    scheme::input::sexpr<iterator_type> p;
+    scheme::input::white_space<iterator_type> ws;
 
     scheme::utree result;
     if (phrase_parse(first, last, p, ws, result))

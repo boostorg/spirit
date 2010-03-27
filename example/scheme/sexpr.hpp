@@ -20,7 +20,7 @@
 
 #include "utree.hpp"
 
-namespace scheme
+namespace scheme { namespace input
 {
     using boost::spirit::ascii::char_;
     using boost::spirit::ascii::space;
@@ -160,8 +160,8 @@ namespace scheme
         rule<Iterator, utree()> atom, number;
         rule<Iterator, utf8_symbol()> symbol;
         rule<Iterator, binary_string()> byte_str;
-        scheme::string<Iterator> string;
+        scheme::input::string<Iterator> string;
     };
-}
+}}
 
 #endif
