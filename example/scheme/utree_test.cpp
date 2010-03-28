@@ -5,6 +5,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+#include <boost/config/warning_disable.hpp>
+
 #include "utree.hpp"
 #include "simple_print.hpp"
 #include <iostream>

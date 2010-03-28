@@ -19,6 +19,8 @@ namespace scheme { namespace detail
     template <typename UTreeX, typename UTreeY>
     struct visit_impl;
     struct index_impl;
+    template <typename T>
+    struct get_impl;
 
     ///////////////////////////////////////////////////////////////////////////
     // Our POD double linked list. Straightforward implementation.

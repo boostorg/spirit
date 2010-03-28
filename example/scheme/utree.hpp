@@ -249,6 +249,8 @@ namespace scheme
         bool empty() const;
         std::size_t size() const;
 
+        int which() const;
+
     private:
 
         typedef utree_type type;
@@ -257,6 +259,7 @@ namespace scheme
         friend struct detail::visit_impl;
         friend struct detail::index_impl;
         friend struct ulist;
+        template <typename T> friend struct detail::get_impl;
 
         type::info get_type() const;
         void set_type(type::info t);

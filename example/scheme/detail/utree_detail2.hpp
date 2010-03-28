@@ -997,6 +997,11 @@ namespace scheme
         return 0;
     }
 
+    inline int utree::which() const
+    {
+        return get_type();
+    }
+
     inline utree& utree::front()
     {
         if (get_type() == type::reference_type)
