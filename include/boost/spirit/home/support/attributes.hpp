@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/attributes_fwd.hpp>
+#include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/as_variant.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/fusion/include/transform.hpp>
@@ -32,6 +33,9 @@
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/deref.hpp>
+#include <boost/mpl/distance.hpp>
+#include <boost/mpl/or.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
@@ -74,6 +78,82 @@ namespace boost { namespace spirit { namespace traits
     struct variant_type<boost::optional<T> >
       : variant_type<T>
     {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The compute_compatible_component_variant 
+    ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        //  A component is compatible to a given Attribute type if the 
+        //  Attribute is the same as the expected type of the component
+        template <typename Expected, typename Attribute>
+        struct attribute_is_compatible 
+          : is_convertible<Attribute, Expected> 
+        {};
+
+        template <typename Expected, typename Attribute>
+        struct attribute_is_compatible<Expected, boost::optional<Attribute> >
+          : is_convertible<Attribute, Expected> 
+        {};
+
+        template <typename Container>
+        struct is_hold_any_container
+          : is_same<hold_any, typename traits::container_value<Container>::type> 
+        {};
+    }
+
+    template <typename Expected, typename Attribute, typename IsNotVariant = mpl::false_>
+    struct compute_compatible_component_variant
+      : mpl::or_<
+            traits::detail::attribute_is_compatible<Expected, Attribute>
+          , is_same<hold_any, Expected> 
+          , mpl::eval_if<
+                is_container<Expected>
+              , traits::detail::is_hold_any_container<Expected>
+              , mpl::false_> > 
+    {};
+
+    template <typename Expected, typename Variant>
+    struct compute_compatible_component_variant<Expected, Variant, mpl::false_>
+    {
+        typedef typename traits::variant_type<Variant>::type variant_type;
+        typedef typename variant_type::types types;
+        typedef typename mpl::end<types>::type end;
+
+        typedef typename 
+            mpl::find_if<types, is_same<Expected, mpl::_1> >::type 
+        iter;
+
+        typedef typename mpl::distance<
+            typename mpl::begin<types>::type, iter
+        >::type distance;
+
+        // true_ if the attribute matches one of the types in the variant
+        typedef typename mpl::not_<is_same<iter, end> >::type type;
+        enum { value = type::value };
+
+        // return the type in the variant the attribute is compatible with
+        typedef typename 
+            mpl::eval_if<type, mpl::deref<iter>, mpl::identity<unused_type> >::type 
+        compatible_type;
+    };
+
+    template <typename Expected, typename Attribute>
+    struct compute_compatible_component
+      : compute_compatible_component_variant<Expected, Attribute
+          , typename spirit::traits::not_is_variant<Attribute>::type> {};
+
+    template <typename Expected>
+    struct compute_compatible_component<Expected, unused_type>
+      : mpl::false_ {};
+
+    template <typename Attribute>
+    struct compute_compatible_component<unused_type, Attribute>
+      : mpl::false_ {};
+
+    template <>
+    struct compute_compatible_component<unused_type, unused_type>
+      : mpl::false_ {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
