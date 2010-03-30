@@ -11,8 +11,8 @@
 #include <fstream>
 #include <iterator>
 
-#include "input/sexpr.hpp"
-#include "output/sexpr.hpp"
+#include "input/parse_sexpr_impl.hpp"
+#include "output/generate_sexpr_impl.hpp"
 
 namespace client
 {
@@ -42,21 +42,7 @@ namespace client
             }
         }
 
-        std::string source_code;      // We will read the contents here.
-        in.unsetf(std::ios::skipws);  // No white space skipping!
-        std::copy(
-            std::istream_iterator<char>(in),
-            std::istream_iterator<char>(),
-            std::back_inserter(source_code));
-
-        typedef std::string::const_iterator iterator_type;
-        iterator_type first(source_code.begin());
-        iterator_type last(source_code.end());
-
-        scheme::input::sexpr<iterator_type> p;
-        scheme::input::white_space<iterator_type> ws;
-
-        return phrase_parse(first, last, p, ws, result);
+        return scheme::input::parse_sexpr(in, result);
     }
 
     bool generate_sexpr_to_file(scheme::utree const& tree, char const* filename)
@@ -70,19 +56,7 @@ namespace client
             exit(-1);
         }
 
-        typedef std::back_insert_iterator<std::string> output_iterator_type;
-        using boost::spirit::karma::space;
-
-        std::string output;
-        output_iterator_type sink(output);
-        scheme::output::sexpr<output_iterator_type> g;
-        if (!generate_delimited(sink, g, space, tree))
-        {
-            return false;
-        }
-
-        out << output;
-        return true;
+        return scheme::output::generate_sexpr(out, tree);
     }
 }
 

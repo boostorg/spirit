@@ -7,6 +7,7 @@
 #include <boost/config/warning_disable.hpp>
 
 #include "input/sexpr.hpp"
+#include "input/parse_sexpr_impl.hpp"
 #include "simple_print.hpp"
 #include <iostream>
 #include <fstream>
@@ -53,22 +54,8 @@ int main(int argc, char **argv)
         }
     }
 
-    std::string source_code; // We will read the contents here.
-    in.unsetf(std::ios::skipws); // No white space skipping!
-    std::copy(
-        std::istream_iterator<char>(in),
-        std::istream_iterator<char>(),
-        std::back_inserter(source_code));
-
-    typedef std::string::const_iterator iterator_type;
-    iterator_type first(source_code.begin());
-    iterator_type last(source_code.end());
-
-    scheme::input::sexpr<iterator_type> p;
-    scheme::input::white_space<iterator_type> ws;
-
     scheme::utree result;
-    if (phrase_parse(first, last, p, ws, result))
+    if (scheme::input::parse_sexpr(in, result))
     {
         std::cout << "success: ";
         println(std::cout, result);

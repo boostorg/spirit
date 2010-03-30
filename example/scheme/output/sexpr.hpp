@@ -12,8 +12,8 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/include/karma.hpp>
 
-#include "utree.hpp"
-#include "detail/utree_detail3.hpp"
+#include "../utree.hpp"
+#include "../detail/utree_detail3.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
