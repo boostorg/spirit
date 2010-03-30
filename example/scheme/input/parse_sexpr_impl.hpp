@@ -46,7 +46,7 @@ namespace scheme { namespace input
         scheme::input::sexpr<iterator_type> p;
         scheme::input::white_space<iterator_type> ws;
 
-        return phrase_parse(first, last, *p, ws, result);
+        return phrase_parse(first, last, +p, ws, result);
     }
 }}
 
