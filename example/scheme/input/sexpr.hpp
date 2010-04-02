@@ -136,27 +136,28 @@ namespace scheme { namespace input
 
             list    = '(' >> *start >> ')';
 
-            atom    = number                            [_val = _1]
-                    | bool_                             [_val = _1]
-                    | string                            [_val = _1]
-                    | byte_str                          [_val = _1]
-                    | symbol                            [_val = _1]
+            atom    = strict_double
+                    | integer
+                    | bool_
+                    | string
+                    | byte_str
+                    | symbol
                     ;
 
             char const* exclude = " ();\"\0-\31\127";
             symbol  = lexeme[+(~char_(exclude))];
 
-            number  = strict_double                     [_val = _1]
-                    | lexeme[no_case["0x"] >> hex]      [_val = _1]
-                    | lexeme['0' >> oct]                [_val = _1]
-                    | int_                              [_val = _1]
+            integer = lexeme[no_case["0x"] >> hex]
+                    | lexeme['0' >> oct]
+                    | int_
                     ;
 
             byte_str = lexeme[no_case['b'] >> +hex2];
         }
 
         rule<Iterator, white_space<Iterator>, utree()> start, list;
-        rule<Iterator, utree()> atom, number;
+        rule<Iterator, int()> integer;
+        rule<Iterator, utree()> atom;
         rule<Iterator, utf8_symbol()> symbol;
         rule<Iterator, binary_string()> byte_str;
         scheme::input::string<Iterator> string;
