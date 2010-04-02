@@ -6,19 +6,22 @@
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
 
-#include "input/sexpr.hpp"
-#include "input/parse_sexpr_impl.hpp"
-#include "simple_print.hpp"
+#include "../input/sexpr.hpp"
+#include "../input/parse_sexpr_impl.hpp"
 #include <iostream>
 #include <fstream>
+
+inline std::ostream& println(std::ostream& out, scheme::utree const& val)
+{
+    out << val << std::endl;
+    return out;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
-    using ::detail::println;
-
     char const* filename;
     if (argc > 1)
     {

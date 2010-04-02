@@ -7,14 +7,18 @@
 
 #include <boost/config/warning_disable.hpp>
 
-#include "utree.hpp"
-#include "simple_print.hpp"
+#include "../utree.hpp"
 #include <iostream>
+
+inline std::ostream& println(std::ostream& out, scheme::utree const& val)
+{
+    out << val << std::endl;
+    return out;
+}
 
 int main()
 {
     using scheme::utree;
-    using ::detail::println;
 
     {
         // test the size
