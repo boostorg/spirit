@@ -315,167 +315,6 @@ namespace scheme { namespace detail
         return bind_impl<F, X>(f, x);
     }
 
-    struct utree_is_equal
-    {
-        typedef bool result_type;
-
-        template <typename A, typename B>
-        bool dispatch(const A&, const B&, boost::mpl::false_) const
-        {
-            return false; // cannot compare different types by default
-        }
-
-        template <typename A, typename B>
-        bool dispatch(const A& a, const B& b, boost::mpl::true_) const
-        {
-            return a == b; // for arithmetic types
-        }
-
-        template <typename A, typename B>
-        bool operator()(const A& a, const B& b) const
-        {
-            return dispatch(a, b,
-                boost::mpl::and_<
-                    boost::is_arithmetic<A>,
-                    boost::is_arithmetic<B> >());
-        }
-
-        template <typename T>
-        bool operator()(const T& a, const T& b) const
-        {
-            // This code works for lists
-            return a == b;
-        }
-
-        template <typename Base, utree_type::info type_>
-        bool operator()(
-            basic_string<Base, type_> const& a,
-            basic_string<Base, type_> const& b) const
-        {
-            return static_cast<Base const&>(a) == static_cast<Base const&>(b);
-        }
-
-        bool operator()(nil, nil) const
-        {
-            return true;
-        }
-    };
-
-    struct utree_is_less_than
-    {
-        typedef bool result_type;
-
-        template <typename A, typename B>
-        bool dispatch(const A&, const B&, boost::mpl::false_) const
-        {
-            return false; // cannot compare different types by default
-        }
-
-        template <typename A, typename B>
-        bool dispatch(const A& a, const B& b, boost::mpl::true_) const
-        {
-            return a < b; // for arithmetic types
-        }
-
-        template <typename A, typename B>
-        bool operator()(const A& a, const B& b) const
-        {
-            return dispatch(a, b,
-                boost::mpl::and_<
-                    boost::is_arithmetic<A>,
-                    boost::is_arithmetic<B> >());
-        }
-
-        template <typename T>
-        bool operator()(const T& a, const T& b) const
-        {
-            // This code works for lists
-            return a < b;
-        }
-
-        template <typename Base, utree_type::info type_>
-        bool operator()(
-            basic_string<Base, type_> const& a,
-            basic_string<Base, type_> const& b) const
-        {
-            return static_cast<Base const&>(a) < static_cast<Base const&>(b);
-        }
-
-        bool operator()(nil, nil) const
-        {
-            BOOST_ASSERT(false);
-            return false; // no less than comparison for nil
-        }
-    };
-
-    struct utree_print
-    {
-        typedef void result_type;
-
-        std::ostream& out;
-        utree_print(std::ostream& out) : out(out) {}
-
-        void operator()(scheme::nil) const
-        {
-            out << "nil";
-        }
-
-        template <typename T>
-        void operator()(T val) const
-        {
-            out << val;
-        }
-
-        void operator()(bool b) const
-        {
-            out << (b ? "true" : "false");
-        }
-
-        void operator()(binary_range const& b) const
-        {
-            out << "b";
-            out.width(2);
-            out.fill('0');
-
-            typedef binary_range::const_iterator iterator;
-            for (iterator i = b.begin(); i != b.end(); ++i)
-                out << std::hex << int((unsigned char)*i);
-            out << std::dec;
-        }
-
-        void operator()(utf8_string_range const& str) const
-        {
-            typedef utf8_string_range::const_iterator iterator;
-            iterator i = str.begin();
-            out << '"';
-            for (; i != str.end(); ++i)
-                out << *i;
-            out << '"';
-        }
-
-        void operator()(utf8_symbol_range const& str) const
-        {
-            typedef utf8_symbol_range::const_iterator iterator;
-            iterator i = str.begin();
-            for (; i != str.end(); ++i)
-                out << *i;
-        }
-
-        template <typename Iterator>
-        void operator()(boost::iterator_range<Iterator> const& range) const
-        {
-            typedef typename boost::iterator_range<Iterator>::const_iterator iterator;
-            (*this)('(');
-            for (iterator i = range.begin(); i != range.end(); ++i)
-            {
-                if (i != range.begin())
-                    (*this)(' ');
-                scheme::utree::visit(*i, *this);
-            }
-            (*this)(')');
-        }
-    };
-
     template <typename UTreeX, typename UTreeY = UTreeX>
     struct visit_impl
     {
@@ -524,6 +363,9 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, f);
+
+                case type::function_type:
+                    return f(x.f);
             }
         }
 
@@ -577,6 +419,9 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, y, f);
+
+                case type::function_type:
+                    return visit_impl::apply(y, detail::bind(f, x.f));
             }
         }
     };
@@ -655,6 +500,12 @@ namespace scheme
       : p(ref.get_pointer())
     {
         set_type(type::reference_type);
+    }
+
+    inline utree::utree(function_ptr fptr)
+      : f(fptr)
+    {
+        set_type(type::function_type);
     }
 
     inline utree::utree(utree const& other)
@@ -742,6 +593,14 @@ namespace scheme
         return *this;
     }
 
+    inline utree& utree::operator=(function_ptr fptr)
+    {
+        free();
+        f = fptr;
+        set_type(type::function_type);
+        return *this;
+    }
+
     template <typename F>
     typename F::result_type
     inline utree::visit(utree const& x, F f)
@@ -798,42 +657,6 @@ namespace scheme
             return (*(utree const*)p)[i];
         BOOST_ASSERT(get_type() == type::list_type && size() > i);
         return detail::index_impl::apply(l.first, i);
-    }
-
-    inline bool operator==(utree const& a, utree const& b)
-    {
-        return utree::visit(a, b, detail::utree_is_equal());
-    }
-
-    inline bool operator<(utree const& a, utree const& b)
-    {
-        return utree::visit(a, b, detail::utree_is_less_than());
-    }
-
-    inline bool operator!=(utree const& a, utree const& b)
-    {
-        return !(a == b);
-    }
-
-    inline bool operator>(utree const& a, utree const& b)
-    {
-        return b < a;
-    }
-
-    inline bool operator<=(utree const& a, utree const& b)
-    {
-        return !(b < a);
-    }
-
-    inline bool operator>=(utree const& a, utree const& b)
-    {
-        return !(a < b);
-    }
-
-    inline std::ostream& operator<<(std::ostream& out, utree const& x)
-    {
-        utree::visit(x, detail::utree_print(out));
-        return out;
     }
 
     template <typename T>

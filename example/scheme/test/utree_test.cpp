@@ -8,6 +8,7 @@
 #include <boost/config/warning_disable.hpp>
 
 #include "../utree.hpp"
+#include "../utree_operators.hpp"
 #include <iostream>
 
 inline std::ostream& println(std::ostream& out, scheme::utree const& val)
@@ -192,6 +193,18 @@ int main()
         println(std::cout, vals[0]);
         println(std::cout, vals[1]);
         println(std::cout, vals[2]);
+    }
+
+    { // arithmetic
+        BOOST_ASSERT((utree(456) + utree(123)) == utree(456 + 123));
+        BOOST_ASSERT((utree(456) + utree(123.456)) == utree(456 + 123.456));
+        BOOST_ASSERT((utree(456) - utree(123)) == utree(456 - 123));
+        BOOST_ASSERT((utree(456) - utree(123.456)) == utree(456 - 123.456));
+        BOOST_ASSERT((utree(456) * utree(123)) == utree(456 * 123));
+        BOOST_ASSERT((utree(456) * utree(123.456)) == utree(456 * 123.456));
+        BOOST_ASSERT((utree(456) / utree(123)) == utree(456 / 123));
+        BOOST_ASSERT((utree(456) / utree(123.456)) == utree(456 / 123.456));
+        BOOST_ASSERT((utree(456) % utree(123)) == utree(456 % 123));
     }
 
     return 0;
