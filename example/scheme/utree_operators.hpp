@@ -29,6 +29,12 @@ namespace scheme
     utree operator/(utree const& a, utree const& b);
     utree operator%(utree const& a, utree const& b);
 
+    utree operator&(utree const& a, utree const& b);
+    utree operator|(utree const& a, utree const& b);
+    utree operator^(utree const& a, utree const& b);
+    utree operator<<(utree const& a, utree const& b);
+    utree operator>>(utree const& a, utree const& b);
+
     // Implementation
     struct utree_is_equal
     {
@@ -326,6 +332,12 @@ namespace scheme
     SCHEME_CREATE_ARITHMETIC_FUNCTION(divides, a/b);
     SCHEME_CREATE_INTEGRAL_FUNCTION(modulus, a%b);
 
+    SCHEME_CREATE_INTEGRAL_FUNCTION(bitand_, a&b);
+    SCHEME_CREATE_INTEGRAL_FUNCTION(bitor_, a|b);
+    SCHEME_CREATE_INTEGRAL_FUNCTION(bitxor_, a^b);
+    SCHEME_CREATE_INTEGRAL_FUNCTION(shift_left, a<<b);
+    SCHEME_CREATE_INTEGRAL_FUNCTION(shift_right, a>>b);
+
     inline utree operator+(utree const& a, utree const& b)
     {
         return utree::visit(a, b, arithmetic_function_plus);
@@ -349,6 +361,27 @@ namespace scheme
     inline utree operator%(utree const& a, utree const& b)
     {
         return utree::visit(a, b, integral_function_modulus);
+    }
+
+    inline utree operator&(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, integral_function_bitand_);
+    }
+    inline utree operator|(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, integral_function_bitor_);
+    }
+    inline utree operator^(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, integral_function_bitxor_);
+    }
+    inline utree operator<<(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, integral_function_shift_left);
+    }
+    inline utree operator>>(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, integral_function_shift_right);
     }
 }
 

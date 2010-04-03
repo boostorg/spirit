@@ -195,7 +195,7 @@ int main()
         println(std::cout, vals[2]);
     }
 
-    { // arithmetic
+    { // operators
         BOOST_ASSERT((utree(456) + utree(123)) == utree(456 + 123));
         BOOST_ASSERT((utree(456) + utree(123.456)) == utree(456 + 123.456));
         BOOST_ASSERT((utree(456) - utree(123)) == utree(456 - 123));
@@ -205,6 +205,12 @@ int main()
         BOOST_ASSERT((utree(456) / utree(123)) == utree(456 / 123));
         BOOST_ASSERT((utree(456) / utree(123.456)) == utree(456 / 123.456));
         BOOST_ASSERT((utree(456) % utree(123)) == utree(456 % 123));
+
+        BOOST_ASSERT((utree(456) & utree(123)) == utree(456 & 123));
+        BOOST_ASSERT((utree(456) | utree(123)) == utree(456 | 123));
+        BOOST_ASSERT((utree(456) ^ utree(123)) == utree(456 ^ 123));
+        BOOST_ASSERT((utree(456) << utree(3)) == utree(456 << 3));
+        BOOST_ASSERT((utree(456) >> utree(2)) == utree(456 >> 2));
     }
 
     return 0;
