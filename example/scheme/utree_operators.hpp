@@ -21,6 +21,8 @@ namespace scheme
     bool operator>(utree const& a, utree const& b);
     bool operator<=(utree const& a, utree const& b);
     bool operator>=(utree const& a, utree const& b);
+
+    // Printing
     std::ostream& operator<<(std::ostream& out, utree const& x);
 
     // Logical operators
