@@ -14,7 +14,7 @@
 
 namespace scheme
 {
-    // Available operators
+    // Relational operators
     bool operator==(utree const& a, utree const& b);
     bool operator<(utree const& a, utree const& b);
     bool operator!=(utree const& a, utree const& b);
@@ -23,17 +23,26 @@ namespace scheme
     bool operator>=(utree const& a, utree const& b);
     std::ostream& operator<<(std::ostream& out, utree const& x);
 
+    // Logical operators
+    utree operator&&(utree const& a, utree const& b);
+    utree operator||(utree const& a, utree const& b);
+    utree operator!(utree const& a);
+
+    // Arithmetic operators
     utree operator+(utree const& a, utree const& b);
     utree operator-(utree const& a, utree const& b);
     utree operator*(utree const& a, utree const& b);
     utree operator/(utree const& a, utree const& b);
     utree operator%(utree const& a, utree const& b);
+    utree operator-(utree const& a);
 
+    // Bitwise operators
     utree operator&(utree const& a, utree const& b);
     utree operator|(utree const& a, utree const& b);
     utree operator^(utree const& a, utree const& b);
     utree operator<<(utree const& a, utree const& b);
     utree operator>>(utree const& a, utree const& b);
+    utree operator~(utree const& a);
 
     // Implementation
     struct utree_is_equal
@@ -198,6 +207,40 @@ namespace scheme
     };
 
     template <typename Base>
+    struct logical_function
+    {
+        typedef utree result_type;
+
+        // binary
+        utree operator()(bool a, bool b) const
+        {
+            return Base::eval(a, b); // for boolean types
+        }
+
+        // binary
+        template <typename A, typename B>
+        utree operator()(A const& a, B const& b) const
+        {
+            // $$$ Throw exception here? $$$
+            return utree(); // cannot apply to non booleans
+        }
+
+        // unary
+        utree operator()(bool a) const
+        {
+            return Base::eval(a); // for boolean types
+        }
+
+        // unary
+        template <typename A>
+        utree operator()(A const& a) const
+        {
+            // $$$ Throw exception here? $$$
+            return utree(); // cannot apply to non booleans
+        }
+    };
+
+    template <typename Base>
     struct arithmetic_function
     {
         typedef utree result_type;
@@ -206,7 +249,7 @@ namespace scheme
         utree dispatch(A&, B&, boost::mpl::false_) const
         {
             // $$$ Throw exception here? $$$
-            return utree(); // cannot apply to different types
+            return utree(); // cannot apply to non-arithmetic types
         }
 
         template <typename A, typename B>
@@ -215,6 +258,7 @@ namespace scheme
             return Base::eval(a, b); // for arithmetic types
         }
 
+        // binary
         template <typename A, typename B>
         utree operator()(A& a, B& b) const
         {
@@ -222,6 +266,26 @@ namespace scheme
                 boost::mpl::and_<
                     boost::is_arithmetic<A>,
                     boost::is_arithmetic<B> >());
+        }
+
+        template <typename A>
+        utree dispatch(A&, boost::mpl::false_) const
+        {
+            // $$$ Throw exception here? $$$
+            return utree(); // cannot apply to non-arithmetic types
+        }
+
+        template <typename A>
+        utree dispatch(A& a, boost::mpl::true_) const
+        {
+            return Base::eval(a); // for arithmetic types
+        }
+
+        // unary
+        template <typename A>
+        utree operator()(A& a) const
+        {
+            return dispatch(a, boost::is_arithmetic<A>());
         }
     };
 
@@ -234,7 +298,7 @@ namespace scheme
         utree dispatch(A&, B&, boost::mpl::false_) const
         {
             // $$$ Throw exception here? $$$
-            return utree(); // cannot apply to different types
+            return utree(); // cannot apply to non-integral types
         }
 
         template <typename A, typename B>
@@ -243,6 +307,7 @@ namespace scheme
             return Base::eval(a, b); // for integral types
         }
 
+        // binary
         template <typename A, typename B>
         utree operator()(A& a, B& b) const
         {
@@ -251,6 +316,26 @@ namespace scheme
                     boost::is_integral<A>,
                     boost::is_integral<B> >());
         }
+
+        template <typename A>
+        utree dispatch(A&, boost::mpl::false_) const
+        {
+            // $$$ Throw exception here? $$$
+            return utree(); // cannot apply to non-integral types
+        }
+
+        template <typename A>
+        utree dispatch(A& a, boost::mpl::true_) const
+        {
+            return Base::eval(a); // for integral types
+        }
+
+        // unary
+        template <typename A>
+        utree operator()(A& a) const
+        {
+            return dispatch(a, boost::is_integral<A>());
+        }
     };
 
 #define SCHEME_CREATE_FUNCTION(name, expr, base)                                \
@@ -258,6 +343,11 @@ namespace scheme
     {                                                                           \
         template <typename A, typename B>                                       \
         static utree eval(A& a, B& b)                                           \
+        {                                                                       \
+            return utree(expr);                                                 \
+        }                                                                       \
+        template <typename A>                                                   \
+        static utree eval(A& a)                                                 \
         {                                                                       \
             return utree(expr);                                                 \
         }                                                                       \
@@ -274,20 +364,8 @@ namespace scheme
     SCHEME_CREATE_FUNCTION(name, expr, integral_function)                       \
     /***/
 
-#define SCHEME_CREATE_ARITHMETIC_OPERATOR(name, op)                             \
-    SCHEME_CREATE_FUNCTION(name, a op b, arithmetic_function)                   \
-    inline utree operator op (utree const& a, utree const& b)                   \
-    {                                                                           \
-        return utree::visit(a, b, BOOST_PP_CAT(arithmetic_function, name));     \
-    }                                                                           \
-    /***/
-
-#define SCHEME_CREATE_INTEGRAL_OPERATOR(name, op)                               \
-    SCHEME_CREATE_FUNCTION(name, a op b, integral_function)                     \
-    inline utree operator op (utree const& a, utree const& b)                   \
-    {                                                                           \
-        return utree::visit(a, b, BOOST_PP_CAT(integral_function, name));       \
-    }                                                                           \
+#define SCHEME_CREATE_LOGICAL_FUNCTION(name, expr)                              \
+    SCHEME_CREATE_FUNCTION(name, expr, logical_function)                        \
     /***/
 
     inline bool operator==(utree const& a, utree const& b)
@@ -326,17 +404,38 @@ namespace scheme
         return out;
     }
 
+    SCHEME_CREATE_LOGICAL_FUNCTION(and_, a&&b);
+    SCHEME_CREATE_LOGICAL_FUNCTION(or_, a||b);
+    SCHEME_CREATE_LOGICAL_FUNCTION(not_, !a);
+
     SCHEME_CREATE_ARITHMETIC_FUNCTION(plus, a+b);
     SCHEME_CREATE_ARITHMETIC_FUNCTION(minus, a-b);
     SCHEME_CREATE_ARITHMETIC_FUNCTION(times, a*b);
     SCHEME_CREATE_ARITHMETIC_FUNCTION(divides, a/b);
     SCHEME_CREATE_INTEGRAL_FUNCTION(modulus, a%b);
+    SCHEME_CREATE_ARITHMETIC_FUNCTION(negate, -a);
 
     SCHEME_CREATE_INTEGRAL_FUNCTION(bitand_, a&b);
     SCHEME_CREATE_INTEGRAL_FUNCTION(bitor_, a|b);
     SCHEME_CREATE_INTEGRAL_FUNCTION(bitxor_, a^b);
     SCHEME_CREATE_INTEGRAL_FUNCTION(shift_left, a<<b);
     SCHEME_CREATE_INTEGRAL_FUNCTION(shift_right, a>>b);
+    SCHEME_CREATE_INTEGRAL_FUNCTION(invert, ~a);
+
+    inline utree operator&&(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, logical_function_and_);
+    }
+
+    inline utree operator||(utree const& a, utree const& b)
+    {
+        return utree::visit(a, b, logical_function_or_);
+    }
+
+    inline utree operator!(utree const& a)
+    {
+        return utree::visit(a, logical_function_not_);
+    }
 
     inline utree operator+(utree const& a, utree const& b)
     {
@@ -363,25 +462,39 @@ namespace scheme
         return utree::visit(a, b, integral_function_modulus);
     }
 
+    inline utree operator-(utree const& a)
+    {
+        return utree::visit(a, arithmetic_function_negate);
+    }
+
     inline utree operator&(utree const& a, utree const& b)
     {
         return utree::visit(a, b, integral_function_bitand_);
     }
+
     inline utree operator|(utree const& a, utree const& b)
     {
         return utree::visit(a, b, integral_function_bitor_);
     }
+
     inline utree operator^(utree const& a, utree const& b)
     {
         return utree::visit(a, b, integral_function_bitxor_);
     }
+
     inline utree operator<<(utree const& a, utree const& b)
     {
         return utree::visit(a, b, integral_function_shift_left);
     }
+
     inline utree operator>>(utree const& a, utree const& b)
     {
         return utree::visit(a, b, integral_function_shift_right);
+    }
+
+    inline utree operator~(utree const& a)
+    {
+        return utree::visit(a, integral_function_invert);
     }
 }
 
