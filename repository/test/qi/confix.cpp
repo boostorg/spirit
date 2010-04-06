@@ -132,7 +132,7 @@ int main()
         debug(c);
         debug(start);
 
-        start = repo::confix(a, c)[b];
+        start = repo::confix(a.alias(), c.alias())[b];
         BOOST_TEST(test("abc", start));
     }
 
