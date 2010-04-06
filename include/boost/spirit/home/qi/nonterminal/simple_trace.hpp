@@ -114,6 +114,9 @@ namespace boost { namespace spirit { namespace qi
             for (int i = 0; first != last && i != n && *first; ++i, ++first)
                 detail::token_printer(BOOST_SPIRIT_DEBUG_OUT, *first);
             BOOST_SPIRIT_DEBUG_OUT << "</" << tag << '>' << std::endl;
+            
+            // $$$ FIXME convert invalid xml characters (e.g. '<') to valid 
+            // character entities. $$$
         }
 
         template <typename Iterator, typename Context, typename State>
