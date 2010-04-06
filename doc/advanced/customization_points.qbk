@@ -242,6 +242,7 @@ Also, see __include_structure__.
         typedef <unspecified> type;
         static type pre(Exposed& val);
         static void post(Exposed& val, type attr);    // Qi only
+        static void fail(Exposed&);                   // Qi only
     };
 
 [heading Template parameters]
@@ -301,6 +302,12 @@ Also, see __include_structure__.
                          component and is expected to propagate the result back 
                          into the supplied attribute instance. This function 
                          will be called in /Qi/ only.]]
+    [[
+``void transform_attribute<Exposed, Transformed>::fail(exposed)``]
+                        [Handling failing parse operations of the
+                         right hand side component for `rule` (or the embedded 
+                         component for `attr_cast`). This function 
+                         will be called in /Qi/ only.]]
 ]
 
 [heading Predefined Specializations]
@@ -311,6 +318,14 @@ Also, see __include_structure__.
                                    `pre()` returns a new instance of `Transformed`
                                    constructed from the argument of type `Exposed`, 
                                    `post()` assigns `transformed` to `exposed`.]]
+    [[`optional<Exposed>`, `Transformed`, 
+      `typename disable_if<is_same<optional<Exposed>, Transformed> >::type`]   
+                                  [`type` evaluates to `Transformed&`, 
+                                   `pre()` returns a reference to the instance of `Transformed`
+                                   stored in the passed optional (the argument of type `optional<Exposed>`), 
+                                   the optional instance is initialized, if needed.
+                                   `post()` does nothing, `fail()` resets the
+                                   optional (its parameter) instance to the non-initialzed state.]]
     [[`Exposed&`, `Transformed`]  [`type` evaluates to `Transformed`, 
                                    `pre()` returns a new instance of `Transformed`
                                    constructed from the argument of type `Exposed`, 

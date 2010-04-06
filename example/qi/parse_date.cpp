@@ -59,6 +59,10 @@ namespace boost { namespace spirit { namespace traits
             d = boost::gregorian::date(fusion::at_c<0>(v), fusion::at_c<1>(v)
               , fusion::at_c<2>(v));
         }
+
+        // The function fail() is called whenever the parsing of the right hand
+        // side of the rule fails. We don't need to do anything here.
+        static void fail(boost::gregorian::date&) {}
     };
 }}}
 

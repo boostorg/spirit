@@ -285,6 +285,7 @@ namespace boost { namespace spirit { namespace traits
         typedef int& type;
         static int& pre(int_data& d) { return d.i; }
         static void post(int_data& val, int const& attr) {}
+        static void fail(int_data&) {}
     };
 }}}
 //]

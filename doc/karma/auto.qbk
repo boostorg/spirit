@@ -115,7 +115,7 @@ customiyation can be used also to redefined anz of the predefined mappings.
 
 [heading Complexity]
 
-[The complexity of the `auto_` generator depends on the attribute type. Each 
+[:The complexity of the `auto_` generator depends on the attribute type. Each 
  attribute type results in a different generator type to be instantiated which 
  defines the overall complexity.]
 

@@ -47,7 +47,6 @@ main()
         BOOST_TEST((test("xi", char_('x') >> char_('i'))));
         BOOST_TEST((!test("xi", char_('x') >> char_('o'))));
         BOOST_TEST((test("xin", char_('x') >> char_('i') >> char_('n'))));
-
     }
 
     {
@@ -84,7 +83,15 @@ main()
     }
 
     {
-        // "hello" has an unused_type. unused attrubutes are not part of the sequence
+        // unused_type means we don't care about the attribute, even at the end
+        vector<char, char> attr;
+        BOOST_TEST((test_attr("acb", char_ >> char_ >> 'b', attr)));
+        BOOST_TEST((at_c<0>(attr) == 'a'));
+        BOOST_TEST((at_c<1>(attr) == 'c'));
+    }
+
+    {
+        // "hello" has an unused_type. unused attributes are not part of the sequence
         vector<char, char> attr;
         BOOST_TEST((test_attr("a hello c", char_ >> "hello" >> char_, attr, space)));
         BOOST_TEST((at_c<0>(attr) == 'a'));

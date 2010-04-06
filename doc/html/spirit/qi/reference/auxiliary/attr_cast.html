@@ -28,7 +28,7 @@
           Transformation Pseudo Generator (<code class="computeroutput"><span class="identifier">attr_cast</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.description"></a><h6>
-<a name="id685799"></a>
+<a name="id633736"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.description">Description</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             component using the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr_cast.header"></a><h6>
-<a name="id685867"></a>
+<a name="id633804"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/attr_cast.hpp&gt;
@@ -51,7 +51,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr_cast.namespace"></a><h6>
-<a name="id687182"></a>
+<a name="id633878"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -69,14 +69,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.synopsis"></a><h6>
-<a name="id687262"></a>
+<a name="id633957"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;</span>
 <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">attr_cast</span><span class="special">(&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;);</span>
 </pre>
 <a name="spirit.qi.reference.auxiliary.attr_cast.template_parameters"></a><h6>
-<a name="id687334"></a>
+<a name="id634029"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.template_parameters">Template
             parameters</a>
           </h6>
@@ -153,7 +153,7 @@
             not explicitly specified.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr_cast.model_of"></a><h6>
-<a name="id687566"></a>
+<a name="id634262"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.model_of">Model
             of</a>
           </h6>
@@ -176,7 +176,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.expression_semantics"></a><h6>
-<a name="id687628"></a>
+<a name="id634323"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -256,7 +256,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.attributes"></a><h6>
-<a name="id687934"></a>
+<a name="id634629"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -327,7 +327,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.complexity"></a><h6>
-<a name="id688253"></a>
+<a name="id634948"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -341,7 +341,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.auxiliary.attr_cast.example"></a><h6>
-<a name="id688284"></a>
+<a name="id634980"></a>
             <a class="link" href="attr_cast.html#spirit.qi.reference.auxiliary.attr_cast.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -395,6 +395,7 @@
         <span class="keyword">typedef</span> <span class="keyword">int</span><span class="special">&amp;</span> <span class="identifier">type</span><span class="special">;</span>
         <span class="keyword">static</span> <span class="keyword">int</span><span class="special">&amp;</span> <span class="identifier">pre</span><span class="special">(</span><span class="identifier">int_data</span><span class="special">&amp;</span> <span class="identifier">d</span><span class="special">)</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">d</span><span class="special">.</span><span class="identifier">i</span><span class="special">;</span> <span class="special">}</span>
         <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">post</span><span class="special">(</span><span class="identifier">int_data</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">,</span> <span class="keyword">int</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">{}</span>
+        <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">fail</span><span class="special">(</span><span class="identifier">int_data</span><span class="special">&amp;)</span> <span class="special">{}</span>
     <span class="special">};</span>
 <span class="special">}}}</span>
 </pre>

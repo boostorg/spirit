@@ -90,7 +90,7 @@ customiyation can be used also to redefined anz of the predefined mappings.
 
 [heading Complexity]
 
-[The complexity of the `auto_` parser depends on the supplied attribute type. Each 
+[:The complexity of the `auto_` parser depends on the supplied attribute type. Each 
  attribute type results in a different parser type to be instantiated which 
  defines the overall complexity.]
 

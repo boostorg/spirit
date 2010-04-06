@@ -94,6 +94,7 @@ namespace boost { namespace spirit { namespace qi
             if (!compile<qi::domain>(subject).
                     parse(first, last, context, skipper, attr_))
             {
+                transform::fail(attr);
                 return false;
             }
 

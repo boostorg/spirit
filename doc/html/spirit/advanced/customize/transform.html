@@ -28,7 +28,7 @@
         Attribute to a Different Type (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.transform.transform_attribute"></a><h6>
-<a name="id977978"></a>
+<a name="id924612"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.transform_attribute">transform_attribute</a>
         </h6>
 <p>
@@ -41,7 +41,7 @@
           or the embedded component (for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
         </p>
 <a name="spirit.advanced.customize.transform.module_headers"></a><h6>
-<a name="id978055"></a>
+<a name="id924689"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.module_headers">Module
           Headers</a>
         </h6>
@@ -62,7 +62,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.transform.namespace"></a><h6>
-<a name="id978140"></a>
+<a name="id924774"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -79,7 +79,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.synopsis"></a><h6>
-<a name="id978213"></a>
+<a name="id924848"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Exposed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -88,10 +88,11 @@
     <span class="keyword">typedef</span> <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">type</span><span class="special">;</span>
     <span class="keyword">static</span> <span class="identifier">type</span> <span class="identifier">pre</span><span class="special">(</span><span class="identifier">Exposed</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">);</span>
     <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">post</span><span class="special">(</span><span class="identifier">Exposed</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">,</span> <span class="identifier">type</span> <span class="identifier">attr</span><span class="special">);</span>    <span class="comment">// Qi only
+</span>    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">fail</span><span class="special">(</span><span class="identifier">Exposed</span><span class="special">&amp;);</span>                   <span class="comment">// Qi only
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.transform.template_parameters"></a><h6>
-<a name="id978406"></a>
+<a name="id925071"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.template_parameters">Template
           parameters</a>
         </h6>
@@ -178,7 +179,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.notation"></a><h6>
-<a name="id978592"></a>
+<a name="id925257"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.notation">Notation</a>
         </h6>
 <div class="variablelist" title="Notation">
@@ -207,7 +208,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.transform.expression_semantics"></a><h6>
-<a name="id978730"></a>
+<a name="id925395"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -290,10 +291,28 @@
                 </p>
                 </td>
 </tr>
+<tr>
+<td>
+                <p>
+                  
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">fail</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
+<p>
+                </p>
+                </td>
+<td>
+                <p>
+                  Handling failing parse operations of the right hand side component
+                  for <code class="computeroutput"><span class="identifier">rule</span></code> (or the
+                  embedded component for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
+                  This function will be called in <span class="emphasis"><em>Qi</em></span> only.
+                </p>
+                </td>
+</tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.predefined_specializations"></a><h6>
-<a name="id979064"></a>
+<a name="id925809"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -331,6 +350,25 @@
                   <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
                   assigns <code class="computeroutput"><span class="identifier">transformed</span></code>
                   to <code class="computeroutput"><span class="identifier">exposed</span></code>.
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;</span></code>,
+                  <code class="computeroutput"><span class="identifier">Transformed</span></code>, <code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">disable_if</span><span class="special">&lt;</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;,</span> <span class="identifier">Transformed</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span></code>
+                </p>
+                </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                  to <code class="computeroutput"><span class="identifier">Transformed</span><span class="special">&amp;</span></code>, <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code> returns a reference to the instance
+                  of <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                  stored in the passed optional (the argument of type <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;</span></code>),
+                  the optional instance is initialized, if needed. <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
+                  does nothing, <code class="computeroutput"><span class="identifier">fail</span><span class="special">()</span></code> resets the optional (its parameter)
+                  instance to the non-initialzed state.
                 </p>
                 </td>
 </tr>
@@ -452,7 +490,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.when_to_implement"></a><h6>
-<a name="id979779"></a>
+<a name="id926759"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.when_to_implement">When
           to implement</a>
         </h6>
@@ -469,7 +507,7 @@
           is not constructible from the type <code class="computeroutput"><span class="identifier">Exposed</span></code>.
         </p>
 <a name="spirit.advanced.customize.transform.example"></a><h6>
-<a name="id979846"></a>
+<a name="id926826"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.example">Example</a>
         </h6>
 <p>

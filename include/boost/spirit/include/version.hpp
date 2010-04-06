@@ -14,7 +14,7 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x2020
-#define SPIRIT_PIZZA_VERSION COSMIC_KARMA  // :-)
+#define SPIRIT_VERSION 0x2030
+#define SPIRIT_PIZZA_VERSION HAWAII  // :-)
 
 #endif

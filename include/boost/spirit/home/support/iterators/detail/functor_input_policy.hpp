@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace iterator_policies
         {
             explicit shared(Functor const& x) : curtok(0) {}
 
-            result_type curtok;
+            typename Functor::result_type curtok;
         };
     };
 

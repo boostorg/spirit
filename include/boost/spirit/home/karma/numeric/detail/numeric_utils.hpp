@@ -85,6 +85,7 @@ namespace boost { namespace spirit { namespace karma
         }                                                                     \
     /**/
 
+        BOOST_SPIRIT_ABSOLUTE_VALUE(signed char, unsigned char);
         BOOST_SPIRIT_ABSOLUTE_VALUE(char, unsigned char);
         BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
         BOOST_SPIRIT_ABSOLUTE_VALUE(int, unsigned int);

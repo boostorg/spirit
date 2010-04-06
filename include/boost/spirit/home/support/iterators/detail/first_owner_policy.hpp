@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace iterator_policies
     struct first_owner
     {
         ///////////////////////////////////////////////////////////////////////
-        struct unique // : detail::default_ownership_policy
+        struct unique : detail::default_ownership_policy
         {
             unique() : first(true) {}
             unique(unique const&) : first(false) {}

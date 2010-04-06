@@ -69,7 +69,7 @@
           for testing purposes. "4.toyxml" has an error in it.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.first_cut"></a><h6>
-<a name="id637197"></a>
+<a name="id583545"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.first_cut">First Cut</a>
         </h6>
 <p>
@@ -87,6 +87,7 @@
     <span class="special">{</span>
         <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
         <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">lexeme</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">raw</span><span class="special">;</span>
         <span class="keyword">using</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
         <span class="keyword">using</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">string</span><span class="special">;</span>
         <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">labels</span><span class="special">;</span>
@@ -94,13 +95,13 @@
         <span class="keyword">using</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">at_c</span><span class="special">;</span>
         <span class="keyword">using</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">push_back</span><span class="special">;</span>
 
-        <span class="identifier">text</span> <span class="special">=</span> <span class="identifier">lexeme</span><span class="special">[+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'&lt;'</span><span class="special">)</span>        <span class="special">[</span><span class="identifier">_val</span> <span class="special">+=</span> <span class="identifier">_1</span><span class="special">]];</span>
-        <span class="identifier">node</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">xml</span> <span class="special">|</span> <span class="identifier">text</span><span class="special">)</span>                 <span class="special">[</span><span class="identifier">_val</span> <span class="special">=</span> <span class="identifier">_1</span><span class="special">];</span>
+        <span class="identifier">text</span> <span class="special">%=</span> <span class="identifier">lexeme</span><span class="special">[+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'&lt;'</span><span class="special">)</span>       <span class="special">]</span> <span class="special">;</span> <span class="comment">// [_val = phoenix::construct&lt;std::string&gt;(begin(_1),end(_1))];
+</span>        <span class="identifier">node</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">xml</span> <span class="special">|</span> <span class="identifier">text</span><span class="special">)</span>                 <span class="special">[</span><span class="identifier">_val</span> <span class="special">=</span> <span class="identifier">_1</span><span class="special">];</span>
 
-        <span class="identifier">start_tag</span> <span class="special">=</span>
+        <span class="identifier">start_tag</span> <span class="special">%=</span>
                 <span class="char">'&lt;'</span>
             <span class="special">&gt;&gt;</span>  <span class="special">!</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'/'</span><span class="special">)</span>
-            <span class="special">&gt;&gt;</span>  <span class="identifier">lexeme</span><span class="special">[+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'&gt;'</span><span class="special">)</span>       <span class="special">[</span><span class="identifier">_val</span> <span class="special">+=</span> <span class="identifier">_1</span><span class="special">]]</span>
+            <span class="special">&gt;&gt;</span>  <span class="identifier">raw</span><span class="special">[</span><span class="identifier">lexeme</span><span class="special">[+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'&gt;'</span><span class="special">)]]</span>
             <span class="special">&gt;&gt;</span>  <span class="char">'&gt;'</span>
         <span class="special">;</span>
 
@@ -145,7 +146,7 @@
           by the placeholder <code class="computeroutput"><span class="identifier">_val</span></code>).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.alternates"></a><h6>
-<a name="id639475"></a>
+<a name="id586027"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.alternates">Alternates</a>
         </h6>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
@@ -175,7 +176,7 @@
 <span class="special">;</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___asts_.not_predicate"></a><h6>
-<a name="id639802"></a>
+<a name="id586354"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.not_predicate">Not
           Predicate</a>
         </h6>
@@ -202,7 +203,7 @@
           at this point.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.inherited_attribute"></a><h6>
-<a name="id639957"></a>
+<a name="id586509"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.inherited_attribute">Inherited
           Attribute</a>
         </h6>
@@ -228,7 +229,7 @@
           <code class="computeroutput"><span class="identifier">_r3</span></code>, etc. if you have more).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit"></a><h6>
-<a name="id640152"></a>
+<a name="id586703"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit">A Lazy
           Lit</a>
         </h6>
@@ -262,7 +263,7 @@
           accessors, provided by <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.how_it_all_works"></a><h6>
-<a name="id640483"></a>
+<a name="id587035"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.how_it_all_works">How
           it all works</a>
         </h6>
@@ -309,7 +310,7 @@
           as <code class="computeroutput"><span class="identifier">_r1</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.the_structures"></a><h6>
-<a name="id640779"></a>
+<a name="id587331"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.the_structures">The
           Structures</a>
         </h6>
@@ -342,7 +343,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants"></a><h6>
-<a name="id640975"></a>
+<a name="id587527"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants">Of
           Alternates and Variants</a>
         </h6>
@@ -369,7 +370,7 @@
           of <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">B</span></code> is the attribute of <code class="computeroutput"><span class="identifier">b</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again"></a><h6>
-<a name="id641139"></a>
+<a name="id587691"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again">Adapting
           structs again</a>
         </h6>
@@ -395,7 +396,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.one_more_take"></a><h6>
-<a name="id641280"></a>
+<a name="id587900"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.one_more_take">One
           More Take</a>
         </h6>
@@ -463,7 +464,7 @@
           if you missed that). There is some new stuff though. It's all in the <code class="computeroutput"><span class="identifier">xml</span></code> rule:
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.local_variables"></a><h6>
-<a name="id642264"></a>
+<a name="id588816"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.local_variables">Local
           Variables</a>
         </h6>

@@ -157,8 +157,8 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         // checking policy functions are forwarded to the Checking type
         template <typename MultiPass>
-        inline static void check(MultiPass const& mp) 
-            { Checking::check(mp); }
+        inline static void docheck(MultiPass const& mp) 
+            { Checking::docheck(mp); }
 
         template <typename MultiPass>
         inline static void clear_queue(MultiPass& mp) 
@@ -207,8 +207,8 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         // checking policy functions are forwarded to the Checking type
         template <typename MultiPass>
-        inline static void check(MultiPass const& mp) 
-            { Checking::check(mp); }
+        inline static void docheck(MultiPass const& mp) 
+            { Checking::docheck(mp); }
 
         template <typename MultiPass>
         inline static void clear_queue(MultiPass& mp) 
@@ -333,8 +333,8 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         // checking policy functions are forwarded to the Checking type
         template <typename MultiPass>
-        inline static void check(MultiPass const& mp) 
-            { Checking::check(mp); }
+        inline static void docheck(MultiPass const& mp) 
+            { Checking::docheck(mp); }
 
         template <typename MultiPass>
         inline static void clear_queue(MultiPass& mp) 
@@ -394,8 +394,8 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         // checking policy functions are forwarded to the Checking type
         template <typename MultiPass>
-        inline static void check(MultiPass const& mp) 
-            { Checking::check(mp); }
+        inline static void docheck(MultiPass const& mp) 
+            { Checking::docheck(mp); }
 
         template <typename MultiPass>
         inline static void clear_queue(MultiPass& mp) 

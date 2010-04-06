@@ -219,6 +219,9 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 traits::post_transform(attr, attr_);
                 return true;
             }
+
+            // inform attribute transformation of failed rhs
+            traits::fail_transform(attr, attr_);
             return false;
         }
 
@@ -269,6 +272,9 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 traits::post_transform(attr, attr_);
                 return true;
             }
+
+            // inform attribute transformation of failed rhs
+            traits::fail_transform(attr, attr_);
             return false;
         }
 

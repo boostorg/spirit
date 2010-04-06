@@ -31,6 +31,7 @@
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
 #include <vector>
 #include <utility>
@@ -110,6 +111,15 @@ namespace boost { namespace spirit { namespace traits
                 attribute_of<Component, Context, Iterator>::type>
         {};
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Retrieve the attribute type to use from the given type
+    //
+    // This is needed to extract the correct attribute type from proxy classes
+    // as utilized in FUSION_ADAPT_CLASS
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Enable/* = void*/>
+    struct attribute_type : mpl::identity<Attribute> {};
 
     ///////////////////////////////////////////////////////////////////////////
     // pass_attribute
@@ -423,6 +433,9 @@ namespace boost { namespace spirit { namespace traits
         { 
             post(val, attr, is_convertible<Transformed, Exposed>());
         }
+
+        // fail() will be called by Qi rule's if the rhs failed parsing
+        static void fail(Exposed&) {}
     };
 
     template <typename Exposed, typename Transformed>
@@ -430,7 +443,25 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef Transformed type;
         static Transformed pre(Exposed const& val) { return Transformed(val); }
-        // Karma only, no post() required
+        // Karma only, no post() and no fail() required
+    };
+
+    template <typename Exposed, typename Transformed>
+    struct transform_attribute<optional<Exposed>, Transformed, 
+        typename disable_if<is_same<optional<Exposed>, Transformed> >::type>
+    {
+        typedef Transformed& type;
+        static Transformed& pre(optional<Exposed>& val) 
+        { 
+            if (!val)
+                val = Transformed();
+            return boost::get<Transformed>(val); 
+        }
+        static void post(optional<Exposed>&, Transformed const&) {}
+        static void fail(optional<Exposed>& val) 
+        {
+             val = none_t();    // leave optional uninitialized if rhs failed
+        }
     };
 
     // handle case where no transformation is required as the types are the same
@@ -440,6 +471,7 @@ namespace boost { namespace spirit { namespace traits
         typedef Attribute& type;
         static Attribute& pre(Attribute& val) { return val; }
         static void post(Attribute&, Attribute const&) {}
+        static void fail(Attribute&) {}
     };
 
     template <typename Attribute>
@@ -447,7 +479,7 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef Attribute const& type;
         static Attribute const& pre(Attribute const& val) { return val; }
-        // Karma only, no post() required
+        // Karma only, no post() and no fail() required
     };
 
     // reference types need special handling
@@ -462,6 +494,7 @@ namespace boost { namespace spirit { namespace traits
         typedef Attribute& type;
         static Attribute& pre(Attribute& val) { return val; }
         static void post(Attribute&, Attribute const&) {}
+        static void fail(Attribute&) {}
     };
 
     template <typename Attribute>
@@ -476,6 +509,7 @@ namespace boost { namespace spirit { namespace traits
         typedef unused_type type;
         static unused_type pre(unused_type) { return unused; }
         static void post(unused_type, unused_type) {}
+        static void fail(unused_type) {}
     };
 
     template <>
@@ -523,6 +557,13 @@ namespace boost { namespace spirit { namespace traits
     void post_transform(Exposed& dest, Transformed const& attr)
     {
         return transform_attribute<Exposed, Transformed>::post(dest, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Exposed, typename Transformed>
+    void fail_transform(Exposed& dest, Transformed const&)
+    {
+        return transform_attribute<Exposed, Transformed>::fail(dest);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -647,19 +688,14 @@ namespace boost { namespace spirit { namespace traits
     // meta function to return whether the argument is a one element fusion 
     // sequence
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
+    template <typename T, bool IsSeq = fusion::traits::is_sequence<T>::value>
     struct one_element_sequence 
-      : mpl::false_ 
+      : mpl::false_
     {};
 
     template <typename T>
-    struct one_element_sequence<fusion::vector1<T> > 
-      : mpl::true_ 
-    {};
-
-    template <typename T>
-    struct one_element_sequence<fusion::vector<T> > 
-      : mpl::true_ 
+    struct one_element_sequence<T, true> 
+      : mpl::bool_<mpl::size<T>::value == 1>
     {};
 
     ///////////////////////////////////////////////////////////////////////////

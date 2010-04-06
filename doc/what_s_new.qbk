@@ -8,7 +8,32 @@
 
 [section What's New]
 
-[heading Spirit V2.2] 
+[section:spirit_2_3 Spirit V2.3] 
+
+[heading What's changed in __qi__ and __karma__ from V2.2 (Boost V1.42.0) to 2.3 (Boost V1.43.0)]
+
+[heading New Features]
+
+* The customization point `transform_attribute` now has to implement a third 
+  function: `void fail(Exposed&)`, which normally will do nothing. This function
+  will be called whenever the right hand side of the `rule` (or the embedded
+  parser of `attr_cast`) fail parsing. This change affects /Qi/ only. See
+  the desciption of the __customize_transform_attribute__ for more details.
+* Added support for attribute sequences created with `BOOST_FUSION_ADAPT_CLASS` 
+  and `BOOST_FUSION_ADAPT_CLASS_NAMED`. This support requires to include the 
+  new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
+
+[heading Bug Fixes]
+
+* Sequences (in /Qi/ and /Karma/) may now have a component having no attribute 
+  even as their last element.
+* Sequences (in /Qi/ and /Karma/) can now take one element attribute sequences 
+  as their attribute.
+
+[endsect] [/ spirit_2_3]
+
+[//////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_2 Spirit V2.2] 
 
 [heading What's changed in __qi__ and __karma__ from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)]
 
@@ -55,7 +80,10 @@
   internally utilize a `std::stream_iterator` anymore as this iterator is of 
   the type `std::input_iterator_tag` only, which is not sufficient for __qi__.
 
-[heading Spirit V2.1] 
+[endsect] [/ spirit_2_2]
+
+[//////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_1 Spirit V2.1] 
 
 [heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
 
@@ -190,7 +218,10 @@ __lex__ now uses the infrastructure provided by __spirit__ version 2.1.
 * Removed `lex::omitted` in favor of `lex::omit` to unify the overall 
   interface.
 
-[heading Spirit Classic]
+[endsect] [/ spirit_2_1]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_1_x Spirit Classic]
 
 The Spirit V1.8.x code base has been integrated with Spirit V2. It is
 now called __classic__. Since the directory structure has changed (the
@@ -225,5 +256,7 @@ recommended, though, as it may result in naming clashes.
 The change of the namespace will be automatically deactivated whenever
 the deprecated include files are being used. This ensures full
 backwards compatibility for existing applications.
+
+[endsect] [/ spirit_1_x]
 
 [endsect]
