@@ -58,29 +58,29 @@ pages and pages of reference doumentation.
     [[`char_(ch, ch2)`]         [`Ch`]            [Matches a range of chars from `ch` to `ch2` (inclusive)]]
     [[`char_(charset)`]         [`Ch`]            [Matches a character set `charset`]]
 
-    [[`alnum`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`alnum`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isalnum` in the current character set]]
-    [[`alpha`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`alpha`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isalpha` in the current character set]]
-    [[`blank`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`blank`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isblank` in the current character set]]
-    [[`cntrl`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`cntrl`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::iscntrl` in the current character set]]
-    [[`digit`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`digit`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isdigit` in the current character set]]
-    [[`graph`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`graph`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isgraph` in the current character set]]
-    [[`print`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`print`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isprint` in the current character set]]
-    [[`punct`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`punct`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::ispunct` in the current character set]]
-    [[`space`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`space`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isspace` in the current character set]]
-    [[`xdigit`]                 [`Ch`]            [Matches a character based on the equivalent of 
+    [[`xdigit`]                 [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isxdigit` in the current character set]]
-    [[`lower`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`lower`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::islower` in the current character set]]
-    [[`upper`]                  [`Ch`]            [Matches a character based on the equivalent of 
+    [[`upper`]                  [`Ch`]            [Matches a character based on the equivalent of
                                                   `std::isupper` in the current character set]]
 ]
 
@@ -109,7 +109,7 @@ pages and pages of reference doumentation.
 [endsect]
 [section:string String Parsers]
 
-[table 
+[table
     [[Expression]           [Attribute]                 [Description]]
     [[[qi_lit_string `str`]]          [`Unused`]    [Matches `str`]]
     [[[qi_lit_string `lit(str)`]]     [`Unused`]    [Matches `str`]]
@@ -138,7 +138,7 @@ pages and pages of reference doumentation.
 [endsect]
 [section:auxiliary Auxiliary Parsers]
 
-[table 
+[table
     [[Expression]           [Attribute]                 [Description]]
     [[__qi_eol__]           [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
     [[__qi_eoi__]           [`Unused`]                  [Matches the end of input (first == last)]]
@@ -148,14 +148,14 @@ pages and pages of reference doumentation.
                             is the return type of `fp`] [Invoke `fp` at parse time, returning a parser
                                                         `p` which is then called to parse.]]
     [[`fp`]                 [see `lazy(fp)` above]      [Equivalent to `lazy(fp)`]]
-    [[__qi_attr__]          [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
+    [[__qi_attr__]          [`Attrib`]                  [Doesn't consume/parse any input, but exposes the
                                                          argument `attrib` as its attribute.]]
 ]
 
 [endsect]
 [section:binary Binary Parsers]
 
-[table 
+[table
     [[Expression]           [Attribute]                 [Description]]
     [[`byte_`]              [8 bits native endian]      [Matches an 8 bit binary]]
     [[`word`]               [16 bits native endian]     [Matches a 16 bit binary]]
@@ -175,7 +175,7 @@ pages and pages of reference doumentation.
 
 See here for more information about [qi_auto Auto Parsers].
 
-[table 
+[table
     [[Expression]           [Attribute]     [Description]]
     [[[qi_auto `auto_`]]    [`hold_any`]    [Parse input using a parser
                                              created from the supplied attribute type
@@ -186,9 +186,10 @@ See here for more information about [qi_auto Auto Parsers].
 
 [section:directive Parser Directives]
 
-[table 
+[table
     [[Expression]                   [Attribute]                     [Description]]
-    [[__qi_lexeme__`[a]`]           [`A`]                           [Disable skip parsing for `a`]]
+    [[__qi_lexeme__`[a]`]           [`A`]                           [Disable skip parsing for `a`, does pre-skipping]]
+    [[[qi_no_skip `no_skip[a]`]]    [`A`]                           [Disable skip parsing for `a`, no pre-skipping]]
     [[__qi_no_case__`[a]`]          [`A`]                           [Inhibits case-sensitivity for `a`]]
     [[__qi_omit__`[a]`]             [`Unused`]                      [Ignores the attribute type of `a`]]
     [[__qi_matches__`[a]`]          [`bool`]                        [Return if the embedded parser `a` matched its input]]
@@ -200,18 +201,18 @@ See here for more information about [qi_auto Auto Parsers].
     [[[qi_repeat `repeat(N, M)[a]`]]      [`vector<A>`]             [Repeat `a` `N` to `M` times]]
     [[[qi_repeat `repeat(N, inf)[a]`]]    [`vector<A>`]             [Repeat `a` `N` or more times]]
 
-    [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme]]
+    [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme or no_skip.]]
     [[__qi_skip__`(p)[a]`]          [`A`]                           [Use `p` as a skipper for parsing `a`]]
 ]
 
 [endsect]
 [section:operator Parser Operators]
 
-[table 
+[table
     [[Expression]           [Attribute]                 [Description]]
-    [[`!a`]                 [`Unused`]                  [Not predicate. If the predicate `a` matches, 
+    [[`!a`]                 [`Unused`]                  [Not predicate. If the predicate `a` matches,
                                                         fail. Otherwise, return a zero length match.]]
-    [[`&a`]                 [`Unused`]                  [And predicate. If the predicate `a` matches, 
+    [[`&a`]                 [`Unused`]                  [And predicate. If the predicate `a` matches,
                                                         return a zero length match. Otherwise, fail.]]
     [[`-a`]                 [`optional<A>`]             [Optional. Parse `a` zero or one time]]
     [[`*a`]                 [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
@@ -222,7 +223,10 @@ See here for more information about [qi_auto Auto Parsers].
                                                         expected to match when `a` matches, otherwise,
                                                         an `expectation_failure` is thrown.]]
     [[`a - b`]              [`A`]                       [Difference. Parse `a` but not `b`]]
-    [[`a || b`]             [`tuple<A, B>`]             [Sequential Or. Parse `a` or `b` or `a` followed by `b`]]
+    [[`a || b`]             [`tuple<`
+                                `optional<A>,`
+                                `optional<B> >`
+                            ]                           [Sequential Or. Parse `a` or `b` or `a` followed by `b`]]
     [[`a % b`]              [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
     [[`a ^ b`]              [`tuple<`
                                 `optional<A>,`
@@ -233,7 +237,7 @@ See here for more information about [qi_auto Auto Parsers].
 [endsect]
 [section:action Parser Semantic Actions]
 
-[table 
+[table
     [[Expression]           [Attribute]                 [Description]]
     [[`p[fa]`]              [Attribute of `p`]          [Call semantic action, `fa` if p succeeds.]]
 ]
@@ -253,24 +257,24 @@ attribute types. `composite-expression` is the expression involving the
 operands and `composite-attribute` is the resulting attribute type of
 the composite expression.
 
-For instance: 
+For instance:
 
     a: A, b: B --> (a >> b): tuple<A, B>
 
 reads as: given, `a` and `b` are parsers, and `A` is the type of the
 attribute of `a`, and `B` is the type of the attribute of `b`, then the
-type of the attribute of `a >> b` will be `tuple<A, B>`. 
+type of the attribute of `a >> b` will be `tuple<A, B>`.
 
 [important In the attribute tables, we will use `vector<A>` and
 `tuple<A, B...>` as placeholders only. The notation of `vector<A>`
 stands for ['any __stl__ container] holding elements of type `A` and the
 notation `tuple<A, B...>` stands for ['any __fusion__ sequence] holding
 `A`, `B`, ... etc. elements. Finally, `Unused` stands for
-__unused_type__. ] 
+__unused_type__. ]
 
 [heading Compound Parser Attribute Types]
 
-[table 
+[table
     [[Expression]           [Attribute]]
 
     [[`a >> b`]
@@ -322,7 +326,7 @@ a: Unused, b: B --> (a % b): Unused``]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[`a || b`] 
+    [[`a || b`]
 [``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a || b): optional<A>
 a: Unused, b: B --> (a || b): optional<B>
@@ -436,7 +440,7 @@ objects, the allowed signatures are:
 The `unused_type` is used in the signatures above to signify 'don't
 care'.
 
-For more detailed information about semantic actions see: 
+For more detailed information about semantic actions see:
 [link spirit.qi.tutorials.semantic_actions here].
 
 [endsect]
@@ -458,11 +462,11 @@ information from the `Attrib` and `Context` that are otherwise fiddly to extract
     [[`_pass`]                  [Assign `false` to `_pass` to force a parser failure.]]
 ]
 
-[important  All placeholders mentioned above are defined in the namespace 
-           `boost::spirit` and, for your convenience, are available in the 
+[important  All placeholders mentioned above are defined in the namespace
+           `boost::spirit` and, for your convenience, are available in the
            namespace `boost::spirit::qi` as well.]
 
-For more detailed information about semantic actions see: 
+For more detailed information about semantic actions see:
 [link spirit.qi.tutorials.semantic_actions here].
 
 [endsect]

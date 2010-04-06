@@ -4,7 +4,7 @@
 <title>Parser Directives</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../qi_parsers.html" title="Qi Parsers">
 <link rel="prev" href="auto.html" title="Auto Parsers">
 <link rel="next" href="operator.html" title="Parser Operators">
@@ -64,7 +64,26 @@
                   </td>
 <td>
                   <p>
-                    Disable skip parsing for <code class="computeroutput"><span class="identifier">a</span></code>
+                    Disable skip parsing for <code class="computeroutput"><span class="identifier">a</span></code>,
+                    does pre-skipping
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../../reference/directive/no_skip.html" title="Inhibiting Skipping Without Pre-skip (no_skip[])"><code class="computeroutput"><span class="identifier">no_skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Disable skip parsing for <code class="computeroutput"><span class="identifier">a</span></code>,
+                    no pre-skipping
                   </p>
                   </td>
 </tr>
@@ -223,7 +242,7 @@
                   </td>
 <td>
                   <p>
-                    Re-establish the skipper that got inhibited by lexeme
+                    Re-establish the skipper that got inhibited by lexeme or no_skip.
                   </p>
                   </td>
 </tr>

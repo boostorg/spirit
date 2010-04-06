@@ -33,7 +33,7 @@ namespace
     }
 
     template <typename TST, typename Char>
-    void check(TST const& tst, Char const* s, bool expected, int N = 0, int val = -1)
+    void docheck(TST const& tst, Char const* s, bool expected, int N = 0, int val = -1)
     {
         Char const* first = s;
         Char const* last = s;
@@ -95,20 +95,20 @@ void tests()
     { // basic tests
         Lookup lookup;
 
-        check(lookup, "not-yet-there", false);
-        check(lookup, "", false);
+        docheck(lookup, "not-yet-there", false);
+        docheck(lookup, "", false);
 
         add(lookup, "apple", 123);
-        check(lookup, "apple", true, 5, 123); // full match
-        check(lookup, "banana", false); // no-match
-        check(lookup, "applexxx", true, 5, 123); // partial match
+        docheck(lookup, "apple", true, 5, 123); // full match
+        docheck(lookup, "banana", false); // no-match
+        docheck(lookup, "applexxx", true, 5, 123); // partial match
 
         add(lookup, "applepie", 456);
-        check(lookup, "applepie", true, 8, 456); // full match
-        check(lookup, "banana", false); // no-match
-        check(lookup, "applepiexxx", true, 8, 456); // partial match
-        check(lookup, "apple", true, 5, 123); // full match
-        check(lookup, "applexxx", true, 5, 123); // partial match
+        docheck(lookup, "applepie", true, 8, 456); // full match
+        docheck(lookup, "banana", false); // no-match
+        docheck(lookup, "applepiexxx", true, 8, 456); // partial match
+        docheck(lookup, "apple", true, 5, 123); // full match
+        docheck(lookup, "applexxx", true, 5, 123); // partial match
     }
 
     { // variation of above
@@ -117,11 +117,11 @@ void tests()
         add(lookup, "applepie", 456);
         add(lookup, "apple", 123);
 
-        check(lookup, "applepie", true, 8, 456); // full match
-        check(lookup, "banana", false); // no-match
-        check(lookup, "applepiexxx", true, 8, 456); // partial match
-        check(lookup, "apple", true, 5, 123); // full match
-        check(lookup, "applexxx", true, 5, 123); // partial match
+        docheck(lookup, "applepie", true, 8, 456); // full match
+        docheck(lookup, "banana", false); // no-match
+        docheck(lookup, "applepiexxx", true, 8, 456); // partial match
+        docheck(lookup, "apple", true, 5, 123); // full match
+        docheck(lookup, "applexxx", true, 5, 123); // partial match
     }
     { // variation of above
         Lookup lookup;
@@ -129,11 +129,11 @@ void tests()
         add(lookup, "applepie", 456);
         add(lookup, "apple", 123);
 
-        check(lookup, "applepie", true, 8, 456); // full match
-        check(lookup, "banana", false); // no-match
-        check(lookup, "applepiexxx", true, 8, 456); // partial match
-        check(lookup, "apple", true, 5, 123); // full match
-        check(lookup, "applexxx", true, 5, 123); // partial match
+        docheck(lookup, "applepie", true, 8, 456); // full match
+        docheck(lookup, "banana", false); // no-match
+        docheck(lookup, "applepiexxx", true, 8, 456); // partial match
+        docheck(lookup, "apple", true, 5, 123); // full match
+        docheck(lookup, "applexxx", true, 5, 123); // partial match
     }
 
     { // narrow char tests
@@ -144,28 +144,28 @@ void tests()
         add(lookup, "applepie", 4);
         add(lookup, "apple", 5);
 
-        check(lookup, "pineapple", true, 9, 1);
-        check(lookup, "orange", true, 6, 2);
-        check(lookup, "banana", true, 6, 3);
-        check(lookup, "apple", true, 5, 5);
-        check(lookup, "pizza", false);
-        check(lookup, "steak", false);
-        check(lookup, "applepie", true, 8, 4);
-        check(lookup, "bananarama", true, 6, 3);
-        check(lookup, "applet", true, 5, 5);
-        check(lookup, "applepi", true, 5, 5);
-        check(lookup, "appl", false);
+        docheck(lookup, "pineapple", true, 9, 1);
+        docheck(lookup, "orange", true, 6, 2);
+        docheck(lookup, "banana", true, 6, 3);
+        docheck(lookup, "apple", true, 5, 5);
+        docheck(lookup, "pizza", false);
+        docheck(lookup, "steak", false);
+        docheck(lookup, "applepie", true, 8, 4);
+        docheck(lookup, "bananarama", true, 6, 3);
+        docheck(lookup, "applet", true, 5, 5);
+        docheck(lookup, "applepi", true, 5, 5);
+        docheck(lookup, "appl", false);
 
-        check(lookup, "pineapplez", true, 9, 1);
-        check(lookup, "orangez", true, 6, 2);
-        check(lookup, "bananaz", true, 6, 3);
-        check(lookup, "applez", true, 5, 5);
-        check(lookup, "pizzaz", false);
-        check(lookup, "steakz", false);
-        check(lookup, "applepiez", true, 8, 4);
-        check(lookup, "bananaramaz", true, 6, 3);
-        check(lookup, "appletz", true, 5, 5);
-        check(lookup, "applepix", true, 5, 5);
+        docheck(lookup, "pineapplez", true, 9, 1);
+        docheck(lookup, "orangez", true, 6, 2);
+        docheck(lookup, "bananaz", true, 6, 3);
+        docheck(lookup, "applez", true, 5, 5);
+        docheck(lookup, "pizzaz", false);
+        docheck(lookup, "steakz", false);
+        docheck(lookup, "applepiez", true, 8, 4);
+        docheck(lookup, "bananaramaz", true, 6, 3);
+        docheck(lookup, "appletz", true, 5, 5);
+        docheck(lookup, "applepix", true, 5, 5);
     }
 
     { // wide char tests
@@ -176,28 +176,28 @@ void tests()
         add(lookup, L"applepie", 4);
         add(lookup, L"apple", 5);
 
-        check(lookup, L"pineapple", true, 9, 1);
-        check(lookup, L"orange", true, 6, 2);
-        check(lookup, L"banana", true, 6, 3);
-        check(lookup, L"apple", true, 5, 5);
-        check(lookup, L"pizza", false);
-        check(lookup, L"steak", false);
-        check(lookup, L"applepie", true, 8, 4);
-        check(lookup, L"bananarama", true, 6, 3);
-        check(lookup, L"applet", true, 5, 5);
-        check(lookup, L"applepi", true, 5, 5);
-        check(lookup, L"appl", false);
+        docheck(lookup, L"pineapple", true, 9, 1);
+        docheck(lookup, L"orange", true, 6, 2);
+        docheck(lookup, L"banana", true, 6, 3);
+        docheck(lookup, L"apple", true, 5, 5);
+        docheck(lookup, L"pizza", false);
+        docheck(lookup, L"steak", false);
+        docheck(lookup, L"applepie", true, 8, 4);
+        docheck(lookup, L"bananarama", true, 6, 3);
+        docheck(lookup, L"applet", true, 5, 5);
+        docheck(lookup, L"applepi", true, 5, 5);
+        docheck(lookup, L"appl", false);
 
-        check(lookup, L"pineapplez", true, 9, 1);
-        check(lookup, L"orangez", true, 6, 2);
-        check(lookup, L"bananaz", true, 6, 3);
-        check(lookup, L"applez", true, 5, 5);
-        check(lookup, L"pizzaz", false);
-        check(lookup, L"steakz", false);
-        check(lookup, L"applepiez", true, 8, 4);
-        check(lookup, L"bananaramaz", true, 6, 3);
-        check(lookup, L"appletz", true, 5, 5);
-        check(lookup, L"applepix", true, 5, 5);
+        docheck(lookup, L"pineapplez", true, 9, 1);
+        docheck(lookup, L"orangez", true, 6, 2);
+        docheck(lookup, L"bananaz", true, 6, 3);
+        docheck(lookup, L"applez", true, 5, 5);
+        docheck(lookup, L"pizzaz", false);
+        docheck(lookup, L"steakz", false);
+        docheck(lookup, L"applepiez", true, 8, 4);
+        docheck(lookup, L"bananaramaz", true, 6, 3);
+        docheck(lookup, L"appletz", true, 5, 5);
+        docheck(lookup, L"applepix", true, 5, 5);
     }
 
     { // test remove
@@ -208,48 +208,48 @@ void tests()
         add(lookup, "applepie", 4);
         add(lookup, "apple", 5);
 
-        check(lookup, "pineapple", true, 9, 1);
-        check(lookup, "orange", true, 6, 2);
-        check(lookup, "banana", true, 6, 3);
-        check(lookup, "apple", true, 5, 5);
-        check(lookup, "applepie", true, 8, 4);
-        check(lookup, "bananarama", true, 6, 3);
-        check(lookup, "applet", true, 5, 5);
-        check(lookup, "applepi", true, 5, 5);
-        check(lookup, "appl", false);
+        docheck(lookup, "pineapple", true, 9, 1);
+        docheck(lookup, "orange", true, 6, 2);
+        docheck(lookup, "banana", true, 6, 3);
+        docheck(lookup, "apple", true, 5, 5);
+        docheck(lookup, "applepie", true, 8, 4);
+        docheck(lookup, "bananarama", true, 6, 3);
+        docheck(lookup, "applet", true, 5, 5);
+        docheck(lookup, "applepi", true, 5, 5);
+        docheck(lookup, "appl", false);
 
         remove(lookup, "banana");
-        check(lookup, "pineapple", true, 9, 1);
-        check(lookup, "orange", true, 6, 2);
-        check(lookup, "banana", false);
-        check(lookup, "apple", true, 5, 5);
-        check(lookup, "applepie", true, 8, 4);
-        check(lookup, "bananarama", false);
-        check(lookup, "applet", true, 5, 5);
-        check(lookup, "applepi", true, 5, 5);
-        check(lookup, "appl", false);
+        docheck(lookup, "pineapple", true, 9, 1);
+        docheck(lookup, "orange", true, 6, 2);
+        docheck(lookup, "banana", false);
+        docheck(lookup, "apple", true, 5, 5);
+        docheck(lookup, "applepie", true, 8, 4);
+        docheck(lookup, "bananarama", false);
+        docheck(lookup, "applet", true, 5, 5);
+        docheck(lookup, "applepi", true, 5, 5);
+        docheck(lookup, "appl", false);
 
         remove(lookup, "apple");
-        check(lookup, "pineapple", true, 9, 1);
-        check(lookup, "orange", true, 6, 2);
-        check(lookup, "apple", false);
-        check(lookup, "applepie", true, 8, 4);
-        check(lookup, "applet", false);
-        check(lookup, "applepi", false);
-        check(lookup, "appl", false);
+        docheck(lookup, "pineapple", true, 9, 1);
+        docheck(lookup, "orange", true, 6, 2);
+        docheck(lookup, "apple", false);
+        docheck(lookup, "applepie", true, 8, 4);
+        docheck(lookup, "applet", false);
+        docheck(lookup, "applepi", false);
+        docheck(lookup, "appl", false);
 
         remove(lookup, "orange");
-        check(lookup, "pineapple", true, 9, 1);
-        check(lookup, "orange", false);
-        check(lookup, "applepie", true, 8, 4);
+        docheck(lookup, "pineapple", true, 9, 1);
+        docheck(lookup, "orange", false);
+        docheck(lookup, "applepie", true, 8, 4);
 
         remove(lookup, "pineapple");
-        check(lookup, "pineapple", false);
-        check(lookup, "orange", false);
-        check(lookup, "applepie", true, 8, 4);
+        docheck(lookup, "pineapple", false);
+        docheck(lookup, "orange", false);
+        docheck(lookup, "applepie", true, 8, 4);
 
         remove(lookup, "applepie");
-        check(lookup, "applepie", false);
+        docheck(lookup, "applepie", false);
     }
 
     { // copy/assign/clear test
@@ -261,41 +261,41 @@ void tests()
         add(lookupa, "apple", 5);
 
         Lookup lookupb(lookupa); // copy ctor
-        check(lookupb, "pineapple", true, 9, 1);
-        check(lookupb, "orange", true, 6, 2);
-        check(lookupb, "banana", true, 6, 3);
-        check(lookupb, "apple", true, 5, 5);
-        check(lookupb, "pizza", false);
-        check(lookupb, "steak", false);
-        check(lookupb, "applepie", true, 8, 4);
-        check(lookupb, "bananarama", true, 6, 3);
-        check(lookupb, "applet", true, 5, 5);
-        check(lookupb, "applepi", true, 5, 5);
-        check(lookupb, "appl", false);
+        docheck(lookupb, "pineapple", true, 9, 1);
+        docheck(lookupb, "orange", true, 6, 2);
+        docheck(lookupb, "banana", true, 6, 3);
+        docheck(lookupb, "apple", true, 5, 5);
+        docheck(lookupb, "pizza", false);
+        docheck(lookupb, "steak", false);
+        docheck(lookupb, "applepie", true, 8, 4);
+        docheck(lookupb, "bananarama", true, 6, 3);
+        docheck(lookupb, "applet", true, 5, 5);
+        docheck(lookupb, "applepi", true, 5, 5);
+        docheck(lookupb, "appl", false);
 
         lookupb.clear(); // clear
-        check(lookupb, "pineapple", false);
-        check(lookupb, "orange", false);
-        check(lookupb, "banana", false);
-        check(lookupb, "apple", false);
-        check(lookupb, "applepie", false);
-        check(lookupb, "bananarama", false);
-        check(lookupb, "applet", false);
-        check(lookupb, "applepi", false);
-        check(lookupb, "appl", false);
+        docheck(lookupb, "pineapple", false);
+        docheck(lookupb, "orange", false);
+        docheck(lookupb, "banana", false);
+        docheck(lookupb, "apple", false);
+        docheck(lookupb, "applepie", false);
+        docheck(lookupb, "bananarama", false);
+        docheck(lookupb, "applet", false);
+        docheck(lookupb, "applepi", false);
+        docheck(lookupb, "appl", false);
 
         lookupb = lookupa; // assign
-        check(lookupb, "pineapple", true, 9, 1);
-        check(lookupb, "orange", true, 6, 2);
-        check(lookupb, "banana", true, 6, 3);
-        check(lookupb, "apple", true, 5, 5);
-        check(lookupb, "pizza", false);
-        check(lookupb, "steak", false);
-        check(lookupb, "applepie", true, 8, 4);
-        check(lookupb, "bananarama", true, 6, 3);
-        check(lookupb, "applet", true, 5, 5);
-        check(lookupb, "applepi", true, 5, 5);
-        check(lookupb, "appl", false);
+        docheck(lookupb, "pineapple", true, 9, 1);
+        docheck(lookupb, "orange", true, 6, 2);
+        docheck(lookupb, "banana", true, 6, 3);
+        docheck(lookupb, "apple", true, 5, 5);
+        docheck(lookupb, "pizza", false);
+        docheck(lookupb, "steak", false);
+        docheck(lookupb, "applepie", true, 8, 4);
+        docheck(lookupb, "bananarama", true, 6, 3);
+        docheck(lookupb, "applet", true, 5, 5);
+        docheck(lookupb, "applepi", true, 5, 5);
+        docheck(lookupb, "appl", false);
     }
 
     { // test for_each

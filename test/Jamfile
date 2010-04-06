@@ -48,10 +48,12 @@ import testing ;
     [ run qi/lexeme.cpp                     : : : : ]
     [ run qi/lit.cpp                        : : : : ]
     [ run qi/list.cpp                       : : : : ]
+    [ run qi/hold.cpp                       : : : : ]
     [ run qi/match_manip.cpp                : : : : ]
     [ run qi/match_manip_attr.cpp           : : : : ]
     [ run qi/matches.cpp                    : : : : ]
     [ run qi/no_case.cpp                    : : : : ]
+    [ run qi/no_skip.cpp                    : : : : ]
     [ run qi/not_predicate.cpp              : : : : ]
     [ run qi/optional.cpp                   : : : : ]
     [ run qi/parse_attr.cpp                 : : : : ]
@@ -138,6 +140,13 @@ import testing ;
     [ run lex/regression004.cpp             : : : : lex_regression004 ]
     [ run lex/regression005.cpp             : : : : lex_regression005 ]
 
+    # support tests
+    [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
+    [ compile support/multi_pass_regression002.cpp : : support_multi_pass_regression002 ]
+    
+
+    # regression tests
+    [ run qi/clear_test.cpp                  : : : : ]
     ;
 
 }

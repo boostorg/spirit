@@ -8,9 +8,9 @@
 
 [section:directive Directive]
 
-This module includes different directives usable to augment and parametrize 
-other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`, 
-`matches`, and `skip` directives.
+This module includes different directives usable to augment and parametrize
+other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`,
+`matches`, `no_skip`, and `skip` directives.
 
 
 [heading Module Header]
@@ -25,12 +25,21 @@ Also, see __include_structure__.
 
 [heading Description]
 
-The `lexeme[]` directive turns off white space skipping. At the phrase
-level, the parser ignores white spaces, possibly including comments. Use
-`lexeme` in situations where you want to work at the character level
-instead of the phrase level. Parsers can be made to work at the
-character level by enclosing the pertinent parts inside the `lexeme`
-directive. For example, here's a rule that parses integers:
+The `lexeme` directive makes its subject a primitive. In a logical point
+of view, lexemes (and primitives) are minimal atomic units (e.g. words,
+numbers, identifiers, etc). These are the things that you'd normally put
+in the lexer (hinting at the term "lexeme"), but in a lexer-less world,
+you put in a lexeme.
+
+Seeing its subject as a primitive, the `lexeme` directive does an
+initial pre-skip (as all primitives do) and turns off white space
+skipping.
+
+At the phrase level, the parser ignores white spaces, possibly including
+comments. Use `lexeme` in situations where you want to work at the
+character level instead of the phrase level. Parsers can be made to work
+at the character level by enclosing the pertinent parts inside the
+`lexeme` directive. For example, here's a rule that parses integers:
 
     integer = lexeme[ -(lit('+') | '-') >> +digit ];
 
@@ -38,6 +47,9 @@ The `lexeme` directive instructs its subject parser to work on the
 character level. Without it, the `integer` rule would have allowed
 erroneous embedded white spaces in inputs such as `"1 2 345"` which will
 be parsed as `"12345"`.
+
+[note Keep in mind that `lexeme[]` pre-skips spaces. If this is not
+desired, use the [qi_no_skip `no_skip`] directive instead.]
 
 [heading Header]
 
@@ -68,7 +80,7 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`lexeme[a]`]      [Turns off white space skipping for the 
+    [[`lexeme[a]`]      [Pre-skip and turn off white space skipping for the
                         subject parser, `a` (and all its children).]]
 ]
 
@@ -78,7 +90,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`lexeme[a]`]      
+    [[`lexeme[a]`]
 [``a: A --> lexeme[a]: A
 a: Unused --> lexeme[a]: Unused``]]
 ]
@@ -103,6 +115,79 @@ Simple usage of `lexeme[]`:
 [endsect]
 
 [/------------------------------------------------------------------------------]
+[section:no_skip Inhibiting Skipping Without Pre-skip (`no_skip[]`)]
+
+[heading Description]
+
+The `no_skip[]` directive turns off white space skipping. The difference to
+__qi_lexeme__ is that it does not do pre-skipping in any case. Otherwise it is
+completely equivalent to the __qi_lexeme__ directive.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/no_skip.hpp>
+    #include <boost/spirit/include/qi_no_skip.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::no_skip // alias: boost::spirit::qi::no_skip` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`no_skip[a]`]     [Turns off white space skipping for the
+                         subject parser, `a` (and all its children). This
+                         directive does not pre-skips.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`no_skip[a]`]
+[``a: A --> no_skip[a]: A
+a: Unused --> no_skip[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_using_declarations_no_skip]
+
+Simple usage of `no_skip[]`:
+
+[reference_no_skip]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
 [section:no_case Inhibiting Case Sensitivity (`no_case[]`)]
 
 [heading Description]
@@ -110,7 +195,7 @@ Simple usage of `lexeme[]`:
 The `no_case[]` directive does not consume any input. The actual
 matching is done by its subject parser. It's purpose is to force
 matching of the subject parser (and all its children) to be case
-insensitive. 
+insensitive.
 
 [heading Header]
 
@@ -126,7 +211,7 @@ Also, see __include_structure__.
     [[`ns::no_case`]]
 ]
 
-In the table above, `ns` represents a __char_encoding_namespace__. 
+In the table above, `ns` represents a __char_encoding_namespace__.
 
 [heading Model of]
 
@@ -154,7 +239,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`ns::no_case[a]`] 
+    [[`ns::no_case[a]`]
 [``a: A --> ns::no_case[a]: A
 a: Unused --> ns::no_case[a]: Unused``]]
 ]
@@ -176,7 +261,7 @@ Simple usage of `no_case[]`:
 
 [reference_no_case]
 
-A more sophisticated use case of `no_case[]` in conjunction with a symbol 
+A more sophisticated use case of `no_case[]` in conjunction with a symbol
 table (see __qi_symbols__ for more details):
 
 [reference_symbols_with_no_case]
@@ -289,7 +374,7 @@ not defined in __unary_parser_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`raw[a]`]         [Disregard the attribute of the subject parser, `a`.
-                        Expose instead the half-open range `[first, last)` 
+                        Expose instead the half-open range `[first, last)`
                         pointing to the matched characters from the input stream.]]
 ]
 
@@ -298,9 +383,9 @@ not defined in __unary_parser_concept__.
 See __qi_comp_attr_notation__.
 
 [table
-    [[Expression]       [Attribute]]    
-    [[`raw[a]`] 
-[``a: A --> raw[a]: boost::iterator_range<Iter> 
+    [[Expression]       [Attribute]]
+    [[`raw[a]`]
+[``a: A --> raw[a]: boost::iterator_range<Iter>
 a: Unused --> raw[a]: Unused``]]
 ]
 
@@ -330,7 +415,7 @@ Some using declarations:
 
 The `repeat[]` provides a more powerful and flexible mechanism for
 repeating a parser. There are grammars that are impractical and
-cumbersome, if not impossible, for the basic EBNF iteration syntax 
+cumbersome, if not impossible, for the basic EBNF iteration syntax
 (__qi_kleene__ and the __qi_plus__) to specify. Examples:
 
 * A file name may have a maximum of 255 characters only.
@@ -358,8 +443,8 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`a`]                [A __parser_concept__.]]
-    [[`n`, `min`, `max`]  [An `int` anything that can be converted to an 
-                          `int`, or a __qi_lazy_argument__ that evaluates to 
+    [[`n`, `min`, `max`]  [An `int` anything that can be converted to an
+                          `int`, or a __qi_lazy_argument__ that evaluates to
                           anything that can be converted to an `int`.]]
 ]
 
@@ -373,7 +458,7 @@ not defined in __unary_parser_concept__.
     [[`repeat[a]`]              [Repeat `a` zero or more times. Same as __qi_kleene__.]]
     [[`repeat(n)[a]`]           [Repeat `a` exactly `n` times.]]
     [[`repeat(min, max)[a]`]    [Repeat `a` at least `min` times and at most `max` times.]]
-    [[`repeat(min, inf)[a]`]    [Repeat `a` at least `min` or more (continuing until `a` 
+    [[`repeat(min, inf)[a]`]    [Repeat `a` at least `min` or more (continuing until `a`
                                 fails or the input is consumed).]]
 ]
 
@@ -381,7 +466,7 @@ not defined in __unary_parser_concept__.
 
 See __qi_comp_attr_notation__.
 
-[table 
+[table
     [[Expression]             [Attribute]]
     [[`repeat[a]`]
 [``a: A --> repeat[a]: vector<A>
@@ -401,7 +486,7 @@ a: Unused --> repeat(min, inf)[a]: Unused``]]
 
 [:The overall complexity is defined by the complexity of its subject
 parser. The complexity of `repeat` itself is O(N), where N is the number
-of repetitions to execute.] 
+of repetitions to execute.]
 
 [heading Example]
 
@@ -415,7 +500,7 @@ Some using declarations:
 [reference_using_declarations_repeat]
 
 [reference_repeat]
-    
+
 The Loop parsers can be dynamic. Consider the parsing of a binary file
 of Pascal-style length prefixed string, where the first byte determines
 the length of the incoming string. Here's a sample input:
@@ -463,7 +548,7 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`matches[a]`]     [Execute the subject parser `a`, and return as its 
+    [[`matches[a]`]     [Execute the subject parser `a`, and return as its
                          attribute whether it succeeded. The directive itself
                          does always succeed.]]
 ]
@@ -497,10 +582,10 @@ Some using declarations:
 
 [heading Description]
 
-The `skip` directive is the inverse of __qi_lexeme__. While the
-__qi_lexeme__ directive turns off white space skipping, the `skip`
-directive turns it on again. This is simply done by wrapping the parts
-inside the `skip` directive:
+The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip `no_skip[]`]. 
+While the __qi_lexeme__ directive turns off white space
+skipping, the `skip` directive turns it on again. This is simply done by
+wrapping the parts inside the `skip` directive:
 
     skip[a]
 
@@ -511,7 +596,7 @@ It is also possible to supply a skip parser to the `skip` directive:
 This makes it possible to:
 
 * Perform localized phrase level parsing while doing character level parsing.
-* Replace the current skipper anywhere with an entirely different 
+* Replace the current skipper anywhere with an entirely different
   skipper while doing phrase level parsing.
 
 [heading Header]
@@ -543,8 +628,8 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    
-    [[`skip[a]`]        [Re-establish the skipper that got inhibited by lexeme]]
+
+    [[`skip[a]`]        [Re-establish the skipper that got inhibited by lexeme or no_skip]]
     [[`skip(p)[a]`]     [Use `p` as a skipper for parsing `a`]]
 ]
 
@@ -554,12 +639,12 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`skip[a]`]      
+    [[`skip[a]`]
 [``a: A --> skip[a]: A
-a: Unused --> lexeme[a]: Unused``]]
-    [[`skip(p)[a]`]      
+a: Unused --> skip[a]: Unused``]]
+    [[`skip(p)[a]`]
 [``a: A --> skip(p)[a]: A
-a: Unused --> lexeme[a]: Unused``]]
+a: Unused --> skip(p)[a]: Unused``]]
 ]
 
 [heading Complexity]

@@ -22,6 +22,15 @@
 * Added support for attribute sequences created with `BOOST_FUSION_ADAPT_CLASS` 
   and `BOOST_FUSION_ADAPT_CLASS_NAMED`. This support requires to include the 
   new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
+* Added `karma::ostream_iterator` as a counterpart to `qi::istream_iterator` 
+  (see new header file: `#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>`).
+* Added `qi::hold` allowing to make sure the embedded parser does not touch
+  the passed attribute in case it fails parsing.
+* Added [qi_no_skip `qi::no_skip`] directive, which is equivalent to 
+  `qi::`__qi_lexeme__, except that it does not pre-skip.
+* Added [karma_no_delimit `karma::no_delimit`] directive, which is equivalent to 
+  `karma::`__karma_verbatim__, except that it does not perform a post-delimiting
+  step.
 
 [heading Bug Fixes]
 
@@ -29,6 +38,9 @@
   even as their last element.
 * Sequences (in /Qi/ and /Karma/) can now take one element attribute sequences 
   as their attribute.
+* Constructs like `karma::buffer[karma::buffer[...]]` don't result in 
+  performing double buffering anymore. The same is true if an alternative is 
+  wrapped into a `karma::buffer[]` directive (as for instance: `buffer[a] | b`).
 
 [endsect] [/ spirit_2_3]
 

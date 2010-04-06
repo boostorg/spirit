@@ -8,7 +8,7 @@
 
 [article Spirit
     [quickbook 1.4]
-    [version 2.2]
+    [version 2.3]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 Joel de Guzman, Hartmut Kaiser]
     [purpose Parser and Generator Library]
@@ -110,7 +110,7 @@
 
 [def __api_tokenize_and_parse__ `tokenize_and_parse()` [/link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
 [def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
-[def __api_generate_static__    `generate_static()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
+[def __api_generate_static__    `generate_static_dfa()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
 [template karma_format[str]     [link spirit.karma.reference.generate_api.stream_api [str]]]
 
@@ -183,6 +183,7 @@
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer`]]
 [template karma_repeat[str]         [link spirit.karma.reference.directive.repeat [str]]]
 [def __karma_verbatim__             [link spirit.karma.reference.directive.delimit `verbatim`]]
+[template karma_no_delimit[str]     [link spirit.karma.reference.directive.delimit [str]]]
 [template karma_delimit[str]        [link spirit.karma.reference.directive.delimit [str]]]
 [template karma_upperlower[str]     [link spirit.karma.reference.directive.upperlower [str]]]
 [template karma_maxwidth[str]       [link spirit.karma.reference.directive.maxwidth [str]]]
@@ -362,6 +363,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_raw__                     [link spirit.qi.reference.directive.raw `raw`]]
 [template qi_repeat[str]            [link spirit.qi.reference.directive.repeat [str]]]
 [def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
+[template qi_no_skip[str]           [link spirit.qi.reference.directive.no_skip [str]]]
 
 [/ operator]
 [def __qi_alternative__             [link spirit.qi.reference.operator.alternative Alternative]]
@@ -390,13 +392,10 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __create_parser__              [link spirit.qi.reference.parse_api.create_parser `create_parser`]]
 
 
-[/ $$$ End $$$ ]
-[/ ----------------------------------------------------------------------------]
-
 [/ Here we go ]
 
 This is the documentation of the newest version of __spirit__ (currently, 
-V2.1). If you're looking for the documentation of Spirit's previous version 
+V2.3). If you're looking for the documentation of Spirit's previous version 
 (formerly Spirit V1.8), see __classic__. 
 
 [include preface.qbk]

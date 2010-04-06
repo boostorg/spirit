@@ -4,7 +4,7 @@
 <title>Mini XML - ASTs!</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="employee___parsing_into_structs.html" title="Employee - Parsing into structs">
 <link rel="next" href="mini_xml___error_handling.html" title="Mini XML - Error Handling">
@@ -65,11 +65,15 @@
           and here: <a href="../../../../../example/qi/mini_xml2.cpp" target="_top">../../example/qi/mini_xml2.cpp</a>
         </p>
 <p>
-          There are a couple of sample toy-xml files in: <a href="../../../../../example/qi/mini_xml_samples" target="_top">../../example/qi/mini_xml_samples</a>
-          for testing purposes. "4.toyxml" has an error in it.
+          There are a couple of sample toy-xml files in the mini_xml_samples subdirectory:
+          <a href="../../../../../example/qi/mini_xml_samples/1.toyxml" target="_top">../../example/qi/mini_xml_samples/1.toyxml</a>,
+          <a href="../../../../../example/qi/mini_xml_samples/2.toyxml" target="_top">../../example/qi/mini_xml_samples/2.toyxml</a>,
+          and <a href="../../../../../example/qi/mini_xml_samples/3.toyxml" target="_top">../../example/qi/mini_xml_samples/3.toyxml</a>
+          for testing purposes. The example <a href="../../../../../example/qi/mini_xml_samples/4.toyxml" target="_top">../../example/qi/mini_xml_samples/4.toyxml</a>
+          has an error in it.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.first_cut"></a><h6>
-<a name="id583545"></a>
+<a name="id667177"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.first_cut">First Cut</a>
         </h6>
 <p>
@@ -146,7 +150,7 @@
           by the placeholder <code class="computeroutput"><span class="identifier">_val</span></code>).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.alternates"></a><h6>
-<a name="id586027"></a>
+<a name="id669458"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.alternates">Alternates</a>
         </h6>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
@@ -176,7 +180,7 @@
 <span class="special">;</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___asts_.not_predicate"></a><h6>
-<a name="id586354"></a>
+<a name="id669785"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.not_predicate">Not
           Predicate</a>
         </h6>
@@ -203,7 +207,7 @@
           at this point.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.inherited_attribute"></a><h6>
-<a name="id586509"></a>
+<a name="id669940"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.inherited_attribute">Inherited
           Attribute</a>
         </h6>
@@ -229,7 +233,7 @@
           <code class="computeroutput"><span class="identifier">_r3</span></code>, etc. if you have more).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit"></a><h6>
-<a name="id586703"></a>
+<a name="id670135"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit">A Lazy
           Lit</a>
         </h6>
@@ -263,7 +267,7 @@
           accessors, provided by <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.how_it_all_works"></a><h6>
-<a name="id587035"></a>
+<a name="id670466"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.how_it_all_works">How
           it all works</a>
         </h6>
@@ -310,7 +314,7 @@
           as <code class="computeroutput"><span class="identifier">_r1</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.the_structures"></a><h6>
-<a name="id587331"></a>
+<a name="id670762"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.the_structures">The
           Structures</a>
         </h6>
@@ -343,7 +347,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants"></a><h6>
-<a name="id587527"></a>
+<a name="id671027"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants">Of
           Alternates and Variants</a>
         </h6>
@@ -370,7 +374,7 @@
           of <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">B</span></code> is the attribute of <code class="computeroutput"><span class="identifier">b</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again"></a><h6>
-<a name="id587691"></a>
+<a name="id671191"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again">Adapting
           structs again</a>
         </h6>
@@ -396,7 +400,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.one_more_take"></a><h6>
-<a name="id587900"></a>
+<a name="id671331"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.one_more_take">One
           More Take</a>
         </h6>
@@ -464,7 +468,7 @@
           if you missed that). There is some new stuff though. It's all in the <code class="computeroutput"><span class="identifier">xml</span></code> rule:
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.local_variables"></a><h6>
-<a name="id588816"></a>
+<a name="id672247"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.local_variables">Local
           Variables</a>
         </h6>

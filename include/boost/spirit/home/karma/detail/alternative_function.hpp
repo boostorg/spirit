@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/directive/buffer.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
@@ -238,6 +239,20 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             if (r) 
                 buffering.buffer_copy();
             return r;
+        }
+
+        // avoid double buffering
+        template <typename Component>
+        bool operator()(buffer_directive<Component> const& component)
+        {
+            typedef typename 
+                traits::attribute_of<Component, Context>::type
+            expected_type;
+            typedef alternative_generate<
+                buffer_directive<Component>, Attribute, expected_type>
+            generate;
+
+            return generate::call(component, sink, ctx, delim, attr);
         }
 
         OutputIterator& sink;

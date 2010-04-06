@@ -15,6 +15,7 @@
 #include <boost/function.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/fusion/include/vector.hpp>
@@ -34,6 +35,7 @@
 #include <boost/spirit/home/qi/reference.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/parameterized.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/parser_binder.hpp>
+#include <boost/spirit/home/qi/skip_over.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -153,7 +155,7 @@ namespace boost { namespace spirit { namespace qi
         {
             // The following assertion fires when you try to initialize a rule
             // from an uninitialized one. Did you mean to refer to the right
-            // hand side rule instead of assigning from it? In this case you 
+            // hand side rule instead of assigning from it? In this case you
             // should write lhs = rhs.alias();
             BOOST_ASSERT(rhs.f);
 
@@ -215,13 +217,15 @@ namespace boost { namespace spirit { namespace qi
           , Context& /*context*/, Skipper const& skipper
           , Attribute& attr) const
         {
-            //$$$ do a preskip if this is an implied lexeme $$$
-
             if (f)
             {
+                // do a preskip if this is an implied lexeme
+                if (is_same<skipper_type, unused_type>::value)
+                    qi::skip_over(first, last, skipper);
+
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
-                // do down-stream transformation, provides attribute for 
+                // do down-stream transformation, provides attribute for
                 // rhs parser
                 typedef traits::transform_attribute<
                     typename make_attribute::type, attr_type> transform;
@@ -234,13 +238,13 @@ namespace boost { namespace spirit { namespace qi
                 // attributes, without passing values for them.
                 context_type context(attr_);
 
-                // If you are seeing a compilation error here stating that the 
-                // forth parameter can't be converted to a qi::reference
-                // then you are probably trying to use a rule or a grammar with 
+                // If you are seeing a compilation error here stating that the
+                // forth parameter can't be converted to a required target type
+                // then you are probably trying to use a rule or a grammar with
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
-                    // do up-stream transformation, this integrates the results 
+                    // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
                     traits::post_transform(attr, attr_);
                     return true;
@@ -258,13 +262,15 @@ namespace boost { namespace spirit { namespace qi
           , Context& caller_context, Skipper const& skipper
           , Attribute& attr, Params const& params) const
         {
-            //$$$ do a preskip if this is an implied lexeme $$$
-
             if (f)
             {
+                // do a preskip if this is an implied lexeme
+                if (is_same<skipper_type, unused_type>::value)
+                    qi::skip_over(first, last, skipper);
+
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
-                // do down-stream transformation, provides attribute for 
+                // do down-stream transformation, provides attribute for
                 // rhs parser
                 typedef traits::transform_attribute<
                     typename make_attribute::type, attr_type> transform;
@@ -277,13 +283,13 @@ namespace boost { namespace spirit { namespace qi
                 // attributes, passing values of incompatible types for them.
                 context_type context(attr_, params, caller_context);
 
-                // If you are seeing a compilation error here stating that the 
-                // forth parameter can't be converted to a qi::reference
-                // then you are probably trying to use a rule or a grammar with 
+                // If you are seeing a compilation error here stating that the
+                // forth parameter can't be converted to a required target type
+                // then you are probably trying to use a rule or a grammar with
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
-                    // do up-stream transformation, this integrates the results 
+                    // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
                     traits::post_transform(attr, attr_);
                     return true;

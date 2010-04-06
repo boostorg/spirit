@@ -419,6 +419,23 @@ main()
     }
     
     {
+        //[reference_using_declarations_no_skip
+        using boost::spirit::qi::no_skip;
+        using boost::spirit::qi::char_;
+        //]
+        
+        //[reference_no_skip
+        /*`The use of no_skip here will prevent skipping of whitespace in front 
+           and in between the characters of the string `'  abc  '`.*/
+        
+        std::string str;
+        test_phrase_parser_attr("'  abc  '", 
+            '\'' >> no_skip[~+char_('\'')] >> '\'', space, str); 
+        std::cout << str << std::endl;    // will output: >  abc  <
+        //]
+    }
+    
+    {
         //[reference_using_declarations_no_case
         using boost::spirit::ascii::no_case;
         using boost::spirit::ascii::char_;

@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace detail
         static void advance_input(MultiPass& mp);
 
         template <typename TokenType, typename MultiPass>
-        static TokenType const& get_input(MultiPass& mp);
+        static TokenType& get_input(MultiPass& mp);
 
         template <typename MultiPass>
         static bool input_at_eof(MultiPass const& mp);

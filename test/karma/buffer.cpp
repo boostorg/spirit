@@ -31,6 +31,7 @@ main()
         v.push_back(1.0);
         v.push_back(2.0);
         BOOST_TEST(test("[1.02.0]", buffer['[' << +double_ << ']'], v));
+        BOOST_TEST(test("[1.02.0]", buffer[buffer['[' << +double_ << ']']], v));
     }
 
     {

@@ -31,8 +31,10 @@
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/proto/proto_fwd.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
+#include <boost/range/iterator_range.hpp>
 #include <vector>
 #include <utility>
 
@@ -774,6 +776,16 @@ namespace boost { namespace spirit { namespace traits
         static void call(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& val)
         {
             apply_visitor(detail::clear_visitor(), val);
+        }
+    };
+
+    // iterator range
+    template <typename T>
+    struct clear_value<iterator_range<T> >
+    {
+        static void call(iterator_range<T>& val)
+        {
+            val = iterator_range<T>(val.end(), val.end());
         }
     };
 

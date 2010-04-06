@@ -15,7 +15,7 @@ expression such as:
     a | b
 
 yields a new parser type which is a composite of its operands, `a` and
-`b`. 
+`b`.
 
 This module includes different parsers which get instantiated if one of
 the overloaded operators is used with more primitive parser constructs.
@@ -37,7 +37,7 @@ Also, see __include_structure__.
 [heading Description]
 
 The alternative operator, `a | b`, matches one of two or more operands
-(`a`, `b`, ... etc.): 
+(`a`, `b`, ... etc.):
 
     a | b | ...
 
@@ -87,7 +87,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`a | b`]  
+    [[`a | b`]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): optional<A>
 a: A, b: B, c: Unused --> (a | b | c): optional<variant<A, B> >
@@ -130,7 +130,7 @@ length match only if its predicate matches.
 
     // forwards to <boost/spirit/home/qi/operator/and_predicate.hpp>
     #include <boost/spirit/include/qi_and_predicate.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -148,7 +148,7 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`&a`]             [If the predicate `a` matches, return a zero 
+    [[`&a`]             [If the predicate `a` matches, return a zero
                         length match. Otherwise, fail.]]
 ]
 
@@ -192,7 +192,7 @@ RHS.]
 
     // forwards to <boost/spirit/home/qi/operator/difference.hpp>
     #include <boost/spirit/include/qi_difference.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -299,7 +299,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`a > b`]  
+    [[`a > b`]
 [``a: A, b: B --> (a > b): tuple<A, B>
 a: A, b: Unused --> (a > b): A
 a: Unused, b: B --> (a > b): B
@@ -343,7 +343,7 @@ zero or more times.
 
     // forwards to <boost/spirit/home/qi/operator/kleene.hpp>
     #include <boost/spirit/include/qi_kleene.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -404,7 +404,7 @@ equivalent to `a >> *(b >> a)`.
 
     // forwards to <boost/spirit/home/qi/operator/list.hpp>
     #include <boost/spirit/include/qi_list.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -422,8 +422,8 @@ not defined in __binary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`a % b`]          [Match a list of one or more repetitions of `a` 
-                        separated by occurrences of `b`. This is equivalent 
+    [[`a % b`]          [Match a list of one or more repetitions of `a`
+                        separated by occurrences of `b`. This is equivalent
                         to `a >> *(b >> a)`.]]
 ]
 
@@ -468,7 +468,7 @@ length match only if its predicate fails to match.
 
     // forwards to <boost/spirit/home/qi/operator/not_predicate.hpp>
     #include <boost/spirit/include/qi_not_predicate.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -486,7 +486,7 @@ not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`!a`]             [If the predicate `a` matches, fail. Otherwise, 
+    [[`!a`]             [If the predicate `a` matches, fail. Otherwise,
                         return a zero length match.]]
 ]
 
@@ -524,7 +524,7 @@ operand zero or one time.
 
     // forwards to <boost/spirit/home/qi/operator/optional.hpp>
     #include <boost/spirit/include/qi_optional.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -575,13 +575,16 @@ __qi_basics_examples__ section.]
 [heading Description]
 
 The permutation operator, `a ^ b`, matches one or more operands (`a`, `b`,
-... etc.) in any order: 
+... etc.) in any order:
 
     a ^ b ^ ...
 
 The operands are the elements in the permutation set. Each element in
 the permutation set may occur at most once, but not all elements of the
-given set need to be present. For example:
+given set need to be present. Note that by this definition, the
+permutation operator is not limited to strict permutations.
+
+For example:
 
      char_('a') ^ 'b' ^ 'c'
 
@@ -611,7 +614,7 @@ defined in __nary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`a ^ b`]          [Match `a` or `b` in any order. Each operand 
+    [[`a ^ b`]          [Match `a` or `b` in any order. Each operand
                         may match zero or one time as long as at least
                         one operand matches.]]
 ]
@@ -622,7 +625,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`a ^ b`]  
+    [[`a ^ b`]
 [``a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a ^ b): optional<A>
 a: Unused, b: B --> (a ^ b): optional<B>
@@ -661,7 +664,7 @@ or more times.
 
     // forwards to <boost/spirit/home/qi/operator/plus.hpp>
     #include <boost/spirit/include/qi_plus.hpp>
-    
+
 Also, see __include_structure__.
 
 [heading Model of]
@@ -749,7 +752,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`a >> b`]  
+    [[`a >> b`]
 [``a: A, b: B --> (a >> b): tuple<A, B>
 a: A, b: Unused --> (a >> b): A
 a: Unused, b: B --> (a >> b): B
@@ -822,7 +825,7 @@ See __qi_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`a || b`]  
+    [[`a || b`]
 [``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a || b): optional<A>
 a: Unused, b: B --> (a || b): optional<B>
@@ -831,15 +834,15 @@ a: Unused, b: Unused --> (a || b): Unused
 a: A, b: A --> (a || b): vector<optional<A> >``]]
 ]
 
-[note The sequential-or parser behaves attribute-wise very similar to the 
-      plain sequence parser (`a >> b`) in the sense that it exposes the 
-      attributes of its elements separately. For instance, if you attach a 
+[note The sequential-or parser behaves attribute-wise very similar to the
+      plain sequence parser (`a >> b`) in the sense that it exposes the
+      attributes of its elements separately. For instance, if you attach a
       semantic action to the whole sequential-or:
       ``
           (int_ || int_)[print_pair(_1, _2)]
       ``
       the function object `print_pair` would be invoked with the
-      attribute of the first `int_` (`boost::optional<int>`) as its first 
+      attribute of the first `int_` (`boost::optional<int>`) as its first
       parameter and the attribute of the second `int_` (`boost::optional<int>`
       as well) as its second parameter.]
 

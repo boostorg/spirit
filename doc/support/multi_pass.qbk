@@ -374,14 +374,14 @@ object must be default constructible. Here is an example:
 
     // create two iterators using the define function object, one of which is 
     // an end iterator
-    typedef multi_pass<my_functor
+    typedef multi_pass<iterate_a2m
       , iterator_policies::functor_input
       , iterator_policies::first_owner
       , iterator_policies::no_check
       , iterator_policies::split_std_deque> 
     functor_multi_pass_type;
 
-    functor_multi_pass_type first = functor_multi_pass_t(my_functor());
+    functor_multi_pass_type first = functor_multi_pass_t(iterate_a2m());
     functor_multi_pass_type last;
 
     // use the iterators: this will print "ABCDEFGHIJKL"

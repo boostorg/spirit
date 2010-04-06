@@ -4,10 +4,10 @@
 <title>Inhibiting Skipping (lexeme[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.3">
 <link rel="up" href="../directive.html" title="Directive">
 <link rel="prev" href="../directive.html" title="Directive">
-<link rel="next" href="no_case.html" title="Inhibiting Case Sensitivity (no_case[])">
+<link rel="next" href="no_skip.html" title="Inhibiting Skipping Without Pre-skip (no_skip[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../directive.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="no_case.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../directive.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="no_skip.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="Inhibiting Skipping (lexeme[])">
 <div class="titlepage"><div><div><h5 class="title">
@@ -28,17 +28,29 @@
           Skipping (<code class="computeroutput"><span class="identifier">lexeme</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.lexeme.description"></a><h6>
-<a name="id652058"></a>
+<a name="id736139"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.description">Description</a>
           </h6>
 <p>
-            The <code class="computeroutput"><span class="identifier">lexeme</span><span class="special">[]</span></code>
-            directive turns off white space skipping. At the phrase level, the parser
-            ignores white spaces, possibly including comments. Use <code class="computeroutput"><span class="identifier">lexeme</span></code> in situations where you want
-            to work at the character level instead of the phrase level. Parsers can
-            be made to work at the character level by enclosing the pertinent parts
-            inside the <code class="computeroutput"><span class="identifier">lexeme</span></code> directive.
-            For example, here's a rule that parses integers:
+            The <code class="computeroutput"><span class="identifier">lexeme</span></code> directive
+            makes its subject a primitive. In a logical point of view, lexemes (and
+            primitives) are minimal atomic units (e.g. words, numbers, identifiers,
+            etc). These are the things that you'd normally put in the lexer (hinting
+            at the term "lexeme"), but in a lexer-less world, you put in
+            a lexeme.
+          </p>
+<p>
+            Seeing its subject as a primitive, the <code class="computeroutput"><span class="identifier">lexeme</span></code>
+            directive does an initial pre-skip (as all primitives do) and turns off
+            white space skipping.
+          </p>
+<p>
+            At the phrase level, the parser ignores white spaces, possibly including
+            comments. Use <code class="computeroutput"><span class="identifier">lexeme</span></code>
+            in situations where you want to work at the character level instead of
+            the phrase level. Parsers can be made to work at the character level
+            by enclosing the pertinent parts inside the <code class="computeroutput"><span class="identifier">lexeme</span></code>
+            directive. For example, here's a rule that parses integers:
           </p>
 <pre class="programlisting"><span class="identifier">integer</span> <span class="special">=</span> <span class="identifier">lexeme</span><span class="special">[</span> <span class="special">-(</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'+'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'-'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">digit</span> <span class="special">];</span>
 </pre>
@@ -50,8 +62,18 @@
             <code class="computeroutput"><span class="string">"1 2 345"</span></code> which
             will be parsed as <code class="computeroutput"><span class="string">"12345"</span></code>.
           </p>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              Keep in mind that <code class="computeroutput"><span class="identifier">lexeme</span><span class="special">[]</span></code> pre-skips spaces. If this is not
+              desired, use the <a class="link" href="no_skip.html" title="Inhibiting Skipping Without Pre-skip (no_skip[])"><code class="computeroutput"><span class="identifier">no_skip</span></code></a> directive instead.
+            </p></td></tr>
+</table></div>
 <a name="spirit.qi.reference.directive.lexeme.header"></a><h6>
-<a name="id652205"></a>
+<a name="id736324"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/lexeme.hpp&gt;
@@ -61,7 +83,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.lexeme.namespace"></a><h6>
-<a name="id652279"></a>
+<a name="id736398"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -79,7 +101,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.lexeme.model_of"></a><h6>
-<a name="id652357"></a>
+<a name="id738122"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -101,7 +123,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.lexeme.expression_semantics"></a><h6>
-<a name="id652428"></a>
+<a name="id738193"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -134,13 +156,15 @@
                   </td>
 <td>
                   <p>
-                    Turns off white space skipping for the subject parser, <code class="computeroutput"><span class="identifier">a</span></code> (and all its children).
+                    Pre-skip and turn off white space skipping for the subject parser,
+                    <code class="computeroutput"><span class="identifier">a</span></code> (and all its
+                    children).
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.lexeme.attributes"></a><h6>
-<a name="id652532"></a>
+<a name="id738298"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.attributes">Attributes</a>
           </h6>
 <p>
@@ -182,7 +206,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.lexeme.complexity"></a><h6>
-<a name="id652704"></a>
+<a name="id738470"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -196,7 +220,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.lexeme.example"></a><h6>
-<a name="id652735"></a>
+<a name="id738501"></a>
             <a class="link" href="lexeme.html#spirit.qi.reference.directive.lexeme.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -257,7 +281,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../directive.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="no_case.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../directive.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="no_skip.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

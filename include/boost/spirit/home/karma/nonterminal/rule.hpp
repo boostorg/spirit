@@ -16,6 +16,7 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/fusion/include/vector.hpp>
@@ -241,6 +242,10 @@ namespace boost { namespace spirit { namespace karma
                 // an incompatible delimiter type.
                 if (f(sink, context, delim))
                 {
+                    // do a post-delimit if this is an implied verbatim
+                    if (is_same<delimiter_type, unused_type>::value)
+                        karma::delimit_out(sink, delim);
+
                     return true;
                 }
             }
@@ -271,6 +276,10 @@ namespace boost { namespace spirit { namespace karma
                 // an incompatible delimiter type.
                 if (f(sink, context, delim))
                 {
+                    // do a post-delimit if this is an implied verbatim
+                    if (is_same<delimiter_type, unused_type>::value)
+                        karma::delimit_out(sink, delim);
+
                     return true;
                 }
             }
