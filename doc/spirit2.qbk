@@ -23,7 +23,7 @@
 
 [/ Some links ]
 
-[def __spirit__                 [@http://spirit.sourceforge.net Spirit]]
+[def __spirit__                 [@http://boost-spirit.com Spirit]]
 [def __spirit_list__            [@http://www.nabble.com/The-Spirit-Parser-Library-f3430.html Spirit General List]]
 [def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
 [def __boost_phoenix__          [@../../phoenix/doc/html/index.html Boost.Phoenix]]

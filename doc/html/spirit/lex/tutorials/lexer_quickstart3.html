@@ -29,11 +29,11 @@
 </h4></div></div></div>
 <p>
           The whole purpose of integrating <span class="emphasis"><em>Spirit.Lex</em></span> as part
-          of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> library
-          was to add a library allowing the merger of lexical analysis with the parsing
-          process as defined by a <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-          grammar. <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> parsers
-          read their input from an input sequence accessed by iterators. So naturally,
+          of the <a href="http://boost-spirit.com" target="_top">Spirit</a> library was
+          to add a library allowing the merger of lexical analysis with the parsing
+          process as defined by a <a href="http://boost-spirit.com" target="_top">Spirit</a>
+          grammar. <a href="http://boost-spirit.com" target="_top">Spirit</a> parsers read
+          their input from an input sequence accessed by iterators. So naturally,
           we chose iterators to be used as the interface beween the lexer and the
           parser. A second goal of the lexer/parser integration was to enable the
           usage of different lexical analyzer libraries. The utilization of iterators
@@ -55,7 +55,7 @@
 <p>
           Another problem related to the integration of the lexical analyzer with
           the parser was to find a way how the defined tokens syntactically could
-          be blended with the grammar definition syntax of <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>.
+          be blended with the grammar definition syntax of <a href="http://boost-spirit.com" target="_top">Spirit</a>.
           For tokens defined as instances of the <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> class the most natural way of integration
           was to allow to directly use these as parser components. Semantically these
           parser components succeed matching their input whenever the corresponding
@@ -65,11 +65,11 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h6>
-<a name="id898614"></a>
+<a name="id944664"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h6>
 <p>
-          This example uses two of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          This example uses two of the <a href="http://boost-spirit.com" target="_top">Spirit</a>
           library components: <span class="emphasis"><em>Spirit.Lex</em></span> and <span class="emphasis"><em>Spirit.Qi</em></span>,
           consequently we have to <code class="computeroutput"><span class="preprocessor">#include</span></code>
           the corresponding header files. Again, we need to include a couple of header
@@ -79,7 +79,7 @@
           object. Using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
           for this task simplifies things and avoids adding dependencies to other
           libraries (<a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
-          is already in use for <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          is already in use for <a href="http://boost-spirit.com" target="_top">Spirit</a>
           anyway).
         </p>
 <p>
@@ -113,7 +113,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h6>
-<a name="id898980"></a>
+<a name="id945030"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h6>
@@ -166,7 +166,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h6>
-<a name="id899332"></a>
+<a name="id945382"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h6>
@@ -319,7 +319,7 @@
           <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h6>
-<a name="id900211"></a>
+<a name="id947515"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>

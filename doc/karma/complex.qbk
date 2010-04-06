@@ -230,3 +230,68 @@ element of the tuple, i.e. the real part of our complex number.
 
 [endsect]
 
+[/////////////////////////////////////////////////////////////////////////////]
+[section:karma_adapted_complex Complex - Fully Integrated]
+
+[import ../../example/karma/complex_number_adapt.cpp]
+
+Until now, we have been working around the fact that `std::complex<>` is not 
+a native __fusion__ sequence. We have not been able to use it with the same
+simplicity and natural grace of a `fusion::tuple<>` or a similar __fusion__
+data structure. Fortunately, starting with Boost V1.43 it is possible to
+adapt any data structure (not only, as before, structures with publicly 
+accessible members) as a __fusion__ sequence. All we have to do is to employ one
+of the new `BOOST_FUSION_ADAPT_CLASS` macros.
+
+[heading Adapting a Class As a Fusion Sequence]
+
+Let us start with the code again, following up with the explanations afterwards.
+
+Wouldn't it be optimal if we could pass our instance of a `std::complex<>` 
+directly to /Karma's/ `generate()` function:
+
+[tutorial_karma_complex_number_adapt]
+
+Indeed, this is possible! All we have to supply to make this work is a magic
+incantation (somewhere in the global namespace):
+
+[tutorial_karma_complex_number_adapt_class]
+
+Most of the formatting grammar itself has not changed from the last section. We
+still utilize a very similar scheme. We have an alternative providing the 
+formatting rules for our both use cases: one for the full complex format and 
+one for complex numbers with a zero imaginary part. But instead of selecting 
+the required alternative by comparing the imaginary part to zero in the grammar
+we assume to receive a boolean attribute carrying this information:
+
+    &true_ << "(" << double_ << ", " << double_ << ")"
+
+This reads as: 'if the first (boolean) element of the supplied fusion sequence
+is `true`, proceed as specified, else select the next alternative'. The next 
+alternative now accounts for the boolean element as well, but is otherwise 
+(almost) unchanged from the last section's example.
+
+Now it should be clear why our adapt construct above exposes a three element
+__fusion__ sequence: a boolean and two double values (the real and the 
+imaginary part of the complex number). We want it to match the requirements of
+our formatting grammar, which expects those exact values. The 
+`BOOST_FUSION_ADAPT_CLASS` macro allows us to specify an arbitrary accessor 
+construct, not necessarily limited to just calling a member function of the 
+object instance (represented by `obj` in the context of this macro). This 
+allows us to nicely encapsulate the decision logic into the class adaptation.
+
+Here is the last new bit of information. If you look closely you realize the
+second alternative to be 'shorter' than the first one. It consumes only
+two elements of the supplied fusion sequence: it ignores the boolean and uses 
+the real part of the complex number to generate its output. If there are more
+elements in our attribute than needed, we now can safely omit them from the 
+grammar (which is a new 'feature' added to __spirit__ in V1.43 as well). 
+Note, we could have written the alternative as
+
+    &false_ << double_
+
+but this would have been a bit less efficient as we needed to compare the 
+boolean value again, while the final solution provided will just ignore it.
+
+[endsect]
+

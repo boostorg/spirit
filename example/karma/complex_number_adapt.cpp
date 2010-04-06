@@ -29,13 +29,16 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // The following macro adapts the type std::complex<double> as a fusion 
-// sequence. We can leave off the setters as Karma does not need them.
+// sequence. 
+//[tutorial_karma_complex_number_adapt_class
+// We can leave off the setters as Karma does not need them.
 BOOST_FUSION_ADAPT_CLASS(
     std::complex<double>,
-    (bool, bool, obj.imag() != 0, )
-    (double, double, obj.real(), )
-    (double, double, obj.imag(), )
+    (bool, bool, obj.imag() != 0, /**/)
+    (double, double, obj.real(), /**/)
+    (double, double, obj.imag(), /**/)
 )
+//]
 
 namespace client
 {
@@ -71,7 +74,7 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     //  Our complex number generator
     ///////////////////////////////////////////////////////////////////////////
-    //[tutorial_karma_complex_number_easier
+    //[tutorial_karma_complex_number_adapt
     template <typename OutputIterator>
     bool generate_complex(OutputIterator sink, std::complex<double> const& c)
     {
@@ -86,7 +89,7 @@ namespace client
             //  Begin grammar
             (
                &true_ << '(' << double_ << ", " << double_ << ')'
-            |   omit[bool_] << double_ << omit[double_]
+            |   omit[bool_]  << double_ 
             ),
             //  End grammar
 
