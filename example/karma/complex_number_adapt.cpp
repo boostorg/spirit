@@ -11,7 +11,7 @@
 //  Look'ma, still no semantic actions! And no explicit access to member 
 //  functions any more.
 //
-//  [ HK July 26, 2009 ]  spirit2
+//  [ HK April 6, 2010 ]  spirit2
 //
 ///////////////////////////////////////////////////////////////////////////////
 
