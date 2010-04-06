@@ -51,7 +51,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             void swap(unique& x)
             {
-                spirit::detail::swap(buf_id, x.buf_id);
+                boost::swap(buf_id, x.buf_id);
             }
 
             // called to verify that everything is ok.

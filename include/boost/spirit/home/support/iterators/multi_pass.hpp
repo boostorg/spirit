@@ -99,7 +99,7 @@ namespace boost { namespace spirit
 
         void swap(multi_pass& x)
         {
-            spirit::detail::swap(this->member, x.member);
+            boost::swap(this->member, x.member);
             this->policies_base_type::swap(x);
         }
 

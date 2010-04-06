@@ -17,15 +17,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace detail
 {
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    inline void swap(T& t1, T& t2)
-    {
-        using std::swap;
-        using boost::spirit::swap;
-        swap(t1, t2);
-    }
-
 #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
     ///////////////////////////////////////////////////////////////////////////
     //  Meta-function to generate a std::iterator<> base class for multi_pass. 
