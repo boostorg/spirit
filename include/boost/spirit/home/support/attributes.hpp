@@ -520,6 +520,16 @@ namespace boost { namespace spirit { namespace traits
         static void fail(Exposed&) {}
     };
 
+    // handle case where no transformation is required as the types are the same
+    template <typename Attribute>
+    struct default_transform_attribute<Attribute, Attribute>
+    {
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute&, Attribute const&) {}
+        static void fail(Attribute&) {}
+    };
+
     template <typename Exposed, typename Transformed>
     struct proxy_transform_attribute
     {
@@ -530,6 +540,16 @@ namespace boost { namespace spirit { namespace traits
 
         // fail() will be called by Qi rule's if the rhs failed parsing
         static void fail(Exposed&) {}
+    };
+
+    // handle case where no transformation is required as the types are the same
+    template <typename Attribute>
+    struct proxy_transform_attribute<Attribute, Attribute>
+    {
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute&, Attribute const&) {}
+        static void fail(Attribute&) {}
     };
 
     template <typename Exposed, typename Transformed, typename Enable/* = void*/>
@@ -571,16 +591,6 @@ namespace boost { namespace spirit { namespace traits
         {
              val = none_t();    // leave optional uninitialized if rhs failed
         }
-    };
-
-    // handle case where no transformation is required as the types are the same
-    template <typename Attribute>
-    struct transform_attribute<Attribute, Attribute>
-    {
-        typedef Attribute& type;
-        static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute&) {}
     };
 
     template <typename Attribute>
