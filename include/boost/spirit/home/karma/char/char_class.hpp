@@ -46,11 +46,17 @@ namespace boost { namespace spirit { namespace karma
     namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
     namespace standard { using namespace boost::spirit::standard; }
     namespace standard_wide { using namespace boost::spirit::standard_wide; }
+#if defined(BOOST_SPIRIT_UNICODE)
+    namespace unicode { using namespace boost::spirit::unicode; }
+#endif
 
     // Import the standard namespace into the karma namespace. This allows 
     // for default handling of all character/string related operations if not 
     // prefixed with a character set namespace.
     using namespace boost::spirit::standard;
+
+    // Import encoding
+    using spirit::encoding;
 
     ///////////////////////////////////////////////////////////////////////////
     //

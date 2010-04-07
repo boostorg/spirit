@@ -31,6 +31,10 @@
 * Added [karma_no_delimit `karma::no_delimit`] directive, which is equivalent to 
   `karma::`__karma_verbatim__, except that it does not perform a post-delimiting
   step.
+* Added a new input_iterator policy for the `multi_pass` iterator framework
+  (named `buffering_input_iterator`) allowing to wrap underlying input 
+  iterators which do not store the last character read from the input (such as
+  `std::istream_iterator`). This is now used as the default input policy.
 
 [heading Bug Fixes]
 
@@ -41,6 +45,13 @@
 * Constructs like `karma::buffer[karma::buffer[...]]` don't result in 
   performing double buffering anymore. The same is true if an alternative is 
   wrapped into a `karma::buffer[]` directive (as for instance: `buffer[a] | b`).
+* The __karma__ output iterator (which is used internally, but also is exposed
+  when using the stream based API) is now properly copyable (thanks to Jonas 
+  Persson for reporting this issue).
+* The default `multi_pass` iterator is now usable with underlying input 
+  iterators which do not store the last character read from the input (such as
+  `std::istream_iterator`). Thanks to Larry Evans and Peter Schueller for 
+  independently reporting this problem.
 
 [endsect] [/ spirit_2_3]
 

@@ -27,13 +27,13 @@
 <a name="spirit.what_s_new.spirit_2_3"></a><a class="link" href="spirit_2_3.html" title="Spirit V2.3"> Spirit V2.3</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_"></a><h5>
-<a name="id618436"></a>
+<a name="id588945"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_2_3__boost_v1_43_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.2 (Boost V1.42.0) to 2.3 (Boost V1.43.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_3.new_features"></a><h5>
-<a name="id618457"></a>
+<a name="id588966"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -72,9 +72,16 @@
           equivalent to <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span></code><a class="link" href="../karma/reference/directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], no_delimit[], delimit[])"><code class="computeroutput"><span class="identifier">verbatim</span></code></a>,
           except that it does not perform a post-delimiting step.
         </li>
+<li class="listitem">
+          Added a new input_iterator policy for the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+          iterator framework (named <code class="computeroutput"><span class="identifier">buffering_input_iterator</span></code>)
+          allowing to wrap underlying input iterators which do not store the last
+          character read from the input (such as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>).
+          This is now used as the default input policy.
+        </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_3.bug_fixes"></a><h5>
-<a name="id618795"></a>
+<a name="id589336"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -91,6 +98,18 @@
           don't result in performing double buffering anymore. The same is true if
           an alternative is wrapped into a <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code> directive (as for instance: <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span> <span class="special">|</span>
           <span class="identifier">b</span></code>).
+        </li>
+<li class="listitem">
+          The <span class="emphasis"><em>Spirit.Karma</em></span> output iterator (which is used internally,
+          but also is exposed when using the stream based API) is now properly copyable
+          (thanks to Jonas Persson for reporting this issue).
+        </li>
+<li class="listitem">
+          The default <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+          iterator is now usable with underlying input iterators which do not store
+          the last character read from the input (such as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>).
+          Thanks to Larry Evans and Peter Schueller for independently reporting this
+          problem.
         </li>
 </ul></div>
 </div>

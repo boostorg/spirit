@@ -203,13 +203,13 @@ namespace boost { namespace spirit { namespace karma
     template <> 
     struct meta_create<char> 
     { 
-        typedef spirit::standard::char_type type; 
+        typedef spirit::standard::char_type type;
         static type const& call() { return spirit::standard::char_; }
     };
     template <> 
     struct meta_create<wchar_t> 
     { 
-        typedef spirit::standard_wide::char_type type; 
+        typedef spirit::standard_wide::char_type type;
         static type const& call() { return spirit::standard_wide::char_; }
     };
 

@@ -84,7 +84,7 @@ main()
 
     {
         // we use the hoisted qi namespace this time
-        using namespace boost::spirit::qi::iso8859_1; 
+        using namespace boost::spirit::qi::iso8859_1;
         BOOST_TEST(test("1", alnum));
         BOOST_TEST(!test(" ", alnum));
         BOOST_TEST(!test("1", alpha));
@@ -171,7 +171,7 @@ main()
         BOOST_TEST(test(L"f", xdigit));
         BOOST_TEST(!test(L"g", xdigit));
     }
-    
+
     {
         using namespace boost::spirit::unicode;
         BOOST_TEST(test(L"1", alnum));
@@ -196,6 +196,18 @@ main()
         BOOST_TEST(test(L"0", xdigit));
         BOOST_TEST(test(L"f", xdigit));
         BOOST_TEST(!test(L"g", xdigit));
+
+// needed for VC7.1 only
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("german")
+#endif
+        BOOST_TEST(test("é", alpha));
+        BOOST_TEST(test("é", lower));
+        BOOST_TEST(!test("é", upper));
+
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("")
+#endif
     }
 
     {   // test attribute extraction

@@ -363,7 +363,7 @@ public:
         typedef no_case_filter<
             typename spirit::detail::get_encoding_with_case<
                 Modifiers
-              , char_encoding::default_encoding
+              , char_encoding::standard
               , no_case::value>::type>
         nc_filter;
 

@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef PHOENIX_DETAIL_TYPE_DEDUCTION_HPP
@@ -193,11 +193,11 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/spirit/home/phoenix/detail/local_reference.hpp>
 
-namespace boost 
+namespace boost
 {
     struct error_cant_deduce_type {};
 }
-    
+
 namespace boost { namespace type_deduction_detail
 {
     typedef char(&bool_value_type)[1];
@@ -377,7 +377,10 @@ namespace boost { namespace type_deduction_detail
 
     template <typename X, typename Y>
     typename disable_if<
-        is_basic<typename X::value_type>
+        mpl::or_<
+            is_basic<typename X::value_type>
+          , is_same<typename add_reference<X>::type, typename X::reference>
+        >
       , container_reference_type
     >::type
     test(typename X::reference);
@@ -395,7 +398,10 @@ namespace boost { namespace type_deduction_detail
 
     template <typename X, typename Y>
     typename disable_if<
-        is_basic<typename X::value_type>
+        mpl::or_<
+            is_basic<typename X::value_type>
+          , is_same<typename add_reference<X>::type, typename X::const_reference>
+        >
       , container_const_reference_type
     >::type
     test(typename X::const_reference);

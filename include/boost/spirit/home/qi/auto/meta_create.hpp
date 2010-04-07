@@ -135,14 +135,14 @@ namespace boost { namespace spirit { namespace qi
     template <>
     struct meta_create<char>
     {
-        typedef spirit::default_encoding::char_type type;
-        static type const& call() { return spirit::default_encoding::char_; }
+        typedef spirit::standard::char_type type;
+        static type const& call() { return spirit::standard::char_; }
     };
     template <>
     struct meta_create<wchar_t>
     {
-        typedef spirit::default_wide_encoding::char_type type;
-        static type const& call() { return spirit::default_wide_encoding::char_; }
+        typedef spirit::standard_wide::char_type type;
+        static type const& call() { return spirit::standard_wide::char_; }
     };
 
     // boolean generator

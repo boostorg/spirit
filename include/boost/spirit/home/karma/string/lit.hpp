@@ -197,9 +197,9 @@ namespace boost { namespace spirit { namespace karma
       , Modifiers>
     {
         static bool const lower = 
-            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
         static bool const upper = 
-            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef any_string<
             typename spirit::detail::get_encoding_with_case<
@@ -248,9 +248,9 @@ namespace boost { namespace spirit { namespace karma
       , Modifiers>
     {
         static bool const lower = 
-            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
         static bool const upper = 
-            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef typename add_const<A0>::type const_string;
         typedef literal_string<

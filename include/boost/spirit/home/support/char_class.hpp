@@ -18,11 +18,51 @@
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/type_traits/is_signed.hpp>
+#include <boost/type_traits/make_unsigned.hpp>
+#include <boost/type_traits/make_signed.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4800) // 'int' : forcing value to bool 'true' or 'false' warning
 #endif
+
+namespace boost { namespace spirit { namespace detail
+{
+    // Here's the thing... typical encodings (except ASCII) deal with unsigned
+    // integers > 127. ASCII uses only 127. Yet, most char and wchar_t are signed.
+    // Thus, a char with value > 127 is negative (e.g. char 233 is -23). When you
+    // cast this to an unsigned int with 32 bits, you get 4294967273!
+    //
+    // The trick is to cast to an unsigned version of the source char first
+    // before casting to the target. {P.S. Don't worry about the code, the
+    // optimizer will optimize the if-else branches}
+
+    template <typename TargetChar, typename SourceChar>
+    TargetChar cast_char(SourceChar ch)
+    {
+        if (is_signed<TargetChar>::value != is_signed<SourceChar>::value)
+        {
+            if (is_signed<SourceChar>::value)
+            {
+                 // source is signed, target is unsigned
+                typedef typename make_unsigned<SourceChar>::type USourceChar;
+                return TargetChar(USourceChar(ch));
+            }
+            else
+            {
+                 // source is unsigned, target is signed
+                typedef typename make_signed<SourceChar>::type SSourceChar;
+                return TargetChar(SSourceChar(ch));
+            }
+        }
+        else
+        {
+            // source and target has same signedness
+            return TargetChar(ch); // just cast
+        }
+    }
+}}}
 
 namespace boost { namespace spirit { namespace tag
 {
@@ -250,7 +290,8 @@ namespace boost { namespace spirit { namespace char_class
         is(tag::name, Char ch)                                                  \
         {                                                                       \
             return CharEncoding::isname                                         \
-                BOOST_PREVENT_MACRO_SUBSTITUTION (char_type(ch));               \
+                BOOST_PREVENT_MACRO_SUBSTITUTION                                \
+                    (detail::cast_char<char_type>(ch));                         \
         }                                                                       \
         /***/
 
@@ -274,16 +315,16 @@ namespace boost { namespace spirit { namespace char_class
         static bool
         is(tag::lowernum, Char ch)
         {
-            return CharEncoding::islower(char_type(ch)) ||
-                   CharEncoding::isdigit(char_type(ch));
+            return CharEncoding::islower(detail::cast_char<char_type>(ch)) ||
+                   CharEncoding::isdigit(detail::cast_char<char_type>(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::uppernum, Char ch)
         {
-            return CharEncoding::isupper(char_type(ch)) ||
-                   CharEncoding::isdigit(char_type(ch));
+            return CharEncoding::isupper(detail::cast_char<char_type>(ch)) ||
+                   CharEncoding::isdigit(detail::cast_char<char_type>(ch));
         }
 
 #if defined(BOOST_SPIRIT_UNICODE)
@@ -293,7 +334,7 @@ namespace boost { namespace spirit { namespace char_class
         static bool                                                             \
         is(tag::name, Char ch)                                                  \
         {                                                                       \
-            return CharEncoding::is_##name(char_type(ch));                      \
+            return CharEncoding::is_##name(detail::cast_char<char_type>(ch));   \
         }                                                                       \
         /***/
 
@@ -473,21 +514,24 @@ namespace boost { namespace spirit { namespace char_class
         static Char
         to(tag::lower, Char ch)
         {
-            return static_cast<Char>(CharEncoding::tolower(char_type(ch)));
+            return static_cast<Char>(
+                CharEncoding::tolower(detail::cast_char<char_type>(ch)));
         }
 
         template <typename Char>
         static Char
         to(tag::upper, Char ch)
         {
-            return static_cast<Char>(CharEncoding::toupper(char_type(ch)));
+            return static_cast<Char>(
+                CharEncoding::toupper(detail::cast_char<char_type>(ch)));
         }
 
         template <typename Char>
         static Char
         to(tag::ucs4, Char ch)
         {
-            return static_cast<Char>(CharEncoding::toucs4(char_type(ch)));
+            return static_cast<Char>(
+                CharEncoding::toucs4(detail::cast_char<char_type>(ch)));
         }
 
         template <typename Char>

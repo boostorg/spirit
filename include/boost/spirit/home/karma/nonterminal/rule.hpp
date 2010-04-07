@@ -68,24 +68,25 @@ namespace boost { namespace spirit { namespace karma
       , typename T1 = unused_type
       , typename T2 = unused_type
       , typename T3 = unused_type
+      , typename T4 = unused_type
     >
     struct rule
       : proto::extends<
             typename proto::terminal<
-                reference<rule<OutputIterator, T1, T2, T3> const>
+                reference<rule<OutputIterator, T1, T2, T3, T4> const>
             >::type
-          , rule<OutputIterator, T1, T2, T3>
+          , rule<OutputIterator, T1, T2, T3, T4>
         >
-      , generator<rule<OutputIterator, T1, T2, T3> >
+      , generator<rule<OutputIterator, T1, T2, T3, T4> >
     {
         typedef mpl::int_<generator_properties::all_properties> properties;
 
         typedef OutputIterator iterator_type;
-        typedef rule<OutputIterator, T1, T2, T3> this_type;
+        typedef rule<OutputIterator, T1, T2, T3, T4> this_type;
         typedef reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
         typedef proto::extends<terminal, this_type> base_type;
-        typedef mpl::vector<T1, T2, T3> template_params;
+        typedef mpl::vector<T1, T2, T3, T4> template_params;
 
         // the output iterator is always wrapped by karma
         typedef detail::output_iterator<OutputIterator, properties> 
@@ -102,9 +103,15 @@ namespace boost { namespace spirit { namespace karma
                 karma::domain, template_params>::type
         delimiter_type;
 
+        // The rule's signature
         typedef typename
             spirit::detail::extract_sig<template_params>::type
         sig_type;
+
+        // The rule's encoding type
+        typedef typename
+            spirit::detail::extract_encoding<template_params>::type
+        encoding_type;
 
         // This is the rule's attribute type
         typedef typename
@@ -133,6 +140,14 @@ namespace boost { namespace spirit { namespace karma
             bool(output_iterator&, context_type&, delimiter_type const&)>
         function_type;
 
+        typedef typename
+            mpl::if_<
+                is_same<encoding_type, unused_type>
+              , unused_type
+              , tag::char_code<tag::encoding, encoding_type>
+            >::type
+        encoding_modifier_type;
+
         explicit rule(std::string const& name_ = "unnamed-rule")
           : base_type(terminal::make(reference_(*this)))
           , name_(name_)
@@ -156,7 +171,8 @@ namespace boost { namespace spirit { namespace karma
             // the expression (expr) is not a valid spirit karma expression.
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-            f = detail::bind_generator<mpl::false_>(compile<karma::domain>(expr));
+            f = detail::bind_generator<mpl::false_>(
+                compile<karma::domain>(expr, encoding_modifier_type()));
         }
 
         rule& operator=(rule const& rhs)
@@ -190,7 +206,8 @@ namespace boost { namespace spirit { namespace karma
             // the expression (expr) is not a valid spirit karma expression.
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-            f = detail::bind_generator<mpl::false_>(compile<karma::domain>(expr));
+            f = detail::bind_generator<mpl::false_>(
+                compile<karma::domain>(expr, encoding_modifier_type()));
             return *this;
         }
 
@@ -203,7 +220,8 @@ namespace boost { namespace spirit { namespace karma
             // the expression (expr) is not a valid spirit karma expression.
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-            r.f = detail::bind_generator<mpl::true_>(compile<karma::domain>(expr));
+            r.f = detail::bind_generator<mpl::true_>(
+                compile<karma::domain>(expr, encoding_modifier_type()));
             return r;
         }
 

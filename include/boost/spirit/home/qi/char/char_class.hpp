@@ -35,8 +35,6 @@ namespace boost { namespace spirit { namespace qi
 {
     // hoist the char classification namespaces into qi sub-namespaces of the
     // same name
-    namespace default_encoding { using namespace boost::spirit::default_encoding; }
-    namespace default_wide_encoding { using namespace boost::spirit::default_wide_encoding; }
     namespace ascii { using namespace boost::spirit::ascii; }
     namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
     namespace standard { using namespace boost::spirit::standard; }
@@ -45,10 +43,10 @@ namespace boost { namespace spirit { namespace qi
     namespace unicode { using namespace boost::spirit::unicode; }
 #endif
 
-    // Import the default_encoding namespace into the qi namespace. This allows
+    // Import the standard namespace into the qi namespace. This allows
     // for default handling of all character/string related operations if not
     // prefixed with a character set namespace.
-    using namespace boost::spirit::default_encoding;
+    using namespace boost::spirit::standard;
 
     // Import encoding
     using spirit::encoding;

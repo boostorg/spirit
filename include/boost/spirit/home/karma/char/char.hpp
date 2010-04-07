@@ -374,9 +374,9 @@ namespace boost { namespace spirit { namespace karma
     struct make_primitive<tag::char_code<tag::char_, CharEncoding>, Modifiers>
     {
         static bool const lower =
-            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
         static bool const upper =
-            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef any_char<
             typename spirit::detail::get_encoding_with_case<
@@ -400,9 +400,9 @@ namespace boost { namespace spirit { namespace karma
       , Modifiers>
     {
         static bool const lower =
-            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
         static bool const upper =
-            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef typename spirit::detail::get_encoding_with_case<
             Modifiers, CharEncoding, lower || upper>::type encoding;
@@ -432,9 +432,9 @@ namespace boost { namespace spirit { namespace karma
       , Modifiers>
     {
         static bool const lower =
-            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
         static bool const upper =
-            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef literal_char<
             typename spirit::detail::get_encoding_with_case<
@@ -460,9 +460,9 @@ namespace boost { namespace spirit { namespace karma
       , Modifiers>
     {
         static bool const lower =
-            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
         static bool const upper =
-            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef char_range<
             typename spirit::detail::get_encoding_with_case<

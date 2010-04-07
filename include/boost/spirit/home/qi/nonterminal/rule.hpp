@@ -154,7 +154,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Expr>
-        rule (Expr const& expr, std::string const& name_ = "unnamed-rule")
+        rule(Expr const& expr, std::string const& name_ = "unnamed-rule")
           : base_type(terminal::make(reference_(*this)))
           , name_(name_)
         {

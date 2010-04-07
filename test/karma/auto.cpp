@@ -5,9 +5,8 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/mpl/print.hpp>
-#include <boost/fusion/include/std_pair.hpp>
 
+#include <boost/fusion/include/std_pair.hpp>
 #include <boost/spirit/include/karma_bool.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
