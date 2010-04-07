@@ -8,6 +8,7 @@
 #include <boost/config/warning_disable.hpp>
 
 #include "../utree.hpp"
+#include "../utree_operators.hpp"
 #include <iostream>
 
 inline std::ostream& println(std::ostream& out, scheme::utree const& val)
@@ -192,6 +193,31 @@ int main()
         println(std::cout, vals[0]);
         println(std::cout, vals[1]);
         println(std::cout, vals[2]);
+    }
+
+    { // operators
+
+        BOOST_ASSERT((utree(true) && utree(true)) == utree(true));
+        BOOST_ASSERT((utree(true) || utree(false)) == utree(true));
+        BOOST_ASSERT(!utree(true) == utree(false));
+
+        BOOST_ASSERT((utree(456) + utree(123)) == utree(456 + 123));
+        BOOST_ASSERT((utree(456) + utree(123.456)) == utree(456 + 123.456));
+        BOOST_ASSERT((utree(456) - utree(123)) == utree(456 - 123));
+        BOOST_ASSERT((utree(456) - utree(123.456)) == utree(456 - 123.456));
+        BOOST_ASSERT((utree(456) * utree(123)) == utree(456 * 123));
+        BOOST_ASSERT((utree(456) * utree(123.456)) == utree(456 * 123.456));
+        BOOST_ASSERT((utree(456) / utree(123)) == utree(456 / 123));
+        BOOST_ASSERT((utree(456) / utree(123.456)) == utree(456 / 123.456));
+        BOOST_ASSERT((utree(456) % utree(123)) == utree(456 % 123));
+        BOOST_ASSERT(-utree(456) == utree(-456));
+
+        BOOST_ASSERT((utree(456) & utree(123)) == utree(456 & 123));
+        BOOST_ASSERT((utree(456) | utree(123)) == utree(456 | 123));
+        BOOST_ASSERT((utree(456) ^ utree(123)) == utree(456 ^ 123));
+        BOOST_ASSERT((utree(456) << utree(3)) == utree(456 << 3));
+        BOOST_ASSERT((utree(456) >> utree(2)) == utree(456 >> 2));
+        BOOST_ASSERT(~utree(456) == utree(~456));
     }
 
     return 0;

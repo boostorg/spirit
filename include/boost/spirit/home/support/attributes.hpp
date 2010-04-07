@@ -25,6 +25,8 @@
 #include <boost/fusion/include/pop_front.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/for_each.hpp>
+#include <boost/fusion/include/is_view.hpp>
+#include <boost/fusion/include/is_sequence.hpp>
 #include <boost/foreach.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -51,6 +53,19 @@ namespace boost { namespace spirit { namespace traits
     // including generalized attribute transformation utilities for Spirit
     // components.
     ///////////////////////////////////////////////////////////////////////////
+
+    template <typename T, typename Enable/* = void*/>
+    struct is_proxy : mpl::false_ {};
+
+    template <typename T>
+    struct is_proxy<T,
+        typename enable_if<
+            mpl::and_<
+                fusion::traits::is_sequence<T>,
+                fusion::traits::is_view<T>
+            >
+        >::type>
+      : mpl::true_ {};
 
     template <typename T>
     struct not_is_variant
@@ -80,25 +95,25 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    // The compute_compatible_component_variant 
+    // The compute_compatible_component_variant
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
-        //  A component is compatible to a given Attribute type if the 
+        //  A component is compatible to a given Attribute type if the
         //  Attribute is the same as the expected type of the component
         template <typename Expected, typename Attribute>
-        struct attribute_is_compatible 
-          : is_convertible<Attribute, Expected> 
+        struct attribute_is_compatible
+          : is_convertible<Attribute, Expected>
         {};
 
         template <typename Expected, typename Attribute>
         struct attribute_is_compatible<Expected, boost::optional<Attribute> >
-          : is_convertible<Attribute, Expected> 
+          : is_convertible<Attribute, Expected>
         {};
 
         template <typename Container>
         struct is_hold_any_container
-          : is_same<hold_any, typename traits::container_value<Container>::type> 
+          : is_same<hold_any, typename traits::container_value<Container>::type>
         {};
     }
 
@@ -106,11 +121,11 @@ namespace boost { namespace spirit { namespace traits
     struct compute_compatible_component_variant
       : mpl::or_<
             traits::detail::attribute_is_compatible<Expected, Attribute>
-          , is_same<hold_any, Expected> 
+          , is_same<hold_any, Expected>
           , mpl::eval_if<
                 is_container<Expected>
               , traits::detail::is_hold_any_container<Expected>
-              , mpl::false_> > 
+              , mpl::false_> >
     {};
 
     template <typename Expected, typename Variant>
@@ -120,8 +135,8 @@ namespace boost { namespace spirit { namespace traits
         typedef typename variant_type::types types;
         typedef typename mpl::end<types>::type end;
 
-        typedef typename 
-            mpl::find_if<types, is_same<Expected, mpl::_1> >::type 
+        typedef typename
+            mpl::find_if<types, is_same<Expected, mpl::_1> >::type
         iter;
 
         typedef typename mpl::distance<
@@ -133,8 +148,8 @@ namespace boost { namespace spirit { namespace traits
         enum { value = type::value };
 
         // return the type in the variant the attribute is compatible with
-        typedef typename 
-            mpl::eval_if<type, mpl::deref<iter>, mpl::identity<unused_type> >::type 
+        typedef typename
+            mpl::eval_if<type, mpl::deref<iter>, mpl::identity<unused_type> >::type
         compatible_type;
     };
 
@@ -488,38 +503,69 @@ namespace boost { namespace spirit { namespace traits
     // attributes. This template can be used as a customization point, where
     // the user is able specify specific transformation rules for any attribute
     // type.
-    //
-    // The default attribute transformation (where the exposed attribute type is
-    // different from the required transformed attribute type) relies on the
-    // convertibility 'exposed type' --> 'transformed type', which has to exist
-    // in order to successfully execute the pre transform step.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed, typename Enable/* = void*/>
-    struct transform_attribute
+    template <typename Exposed, typename Transformed>
+    struct default_transform_attribute
     {
         typedef Transformed type;
 
-        static Transformed pre(Exposed& val) { return Transformed(val); }
-
-        // By default do post transformation only if types are convertible,
-        // otherwise we assume no post transform is required (i.e. the user
-        // utilizes nview et.al.).
-        static void post(Exposed&, Transformed const&, mpl::false_)
-        {
-        }
-        static void post(Exposed& val, Transformed const& attr, mpl::true_)
-        {
-            assign_to(attr, val);
-        }
+        static Transformed pre(Exposed& val) { return Transformed(); }
 
         static void post(Exposed& val, Transformed const& attr)
         {
-            post(val, attr, is_convertible<Transformed, Exposed>());
+            assign_to(attr, val);
         }
 
         // fail() will be called by Qi rule's if the rhs failed parsing
         static void fail(Exposed&) {}
     };
+
+    // handle case where no transformation is required as the types are the same
+    template <typename Attribute>
+    struct default_transform_attribute<Attribute, Attribute>
+    {
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute&, Attribute const&) {}
+        static void fail(Attribute&) {}
+    };
+
+    template <typename Exposed, typename Transformed>
+    struct proxy_transform_attribute
+    {
+        typedef Transformed type;
+
+        static Transformed pre(Exposed& val) { return Transformed(val); }
+        static void post(Exposed& val, Transformed const& attr) { /* no-op */ }
+
+        // fail() will be called by Qi rule's if the rhs failed parsing
+        static void fail(Exposed&) {}
+    };
+
+    // handle case where no transformation is required as the types are the same
+    template <typename Attribute>
+    struct proxy_transform_attribute<Attribute, Attribute>
+    {
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute&, Attribute const&) {}
+        static void fail(Attribute&) {}
+    };
+
+    template <typename Exposed, typename Transformed, typename Enable/* = void*/>
+    struct transform_attribute
+      : default_transform_attribute<Exposed, Transformed> {};
+
+    template <typename Exposed, typename Transformed>
+    struct transform_attribute<Exposed, Transformed,
+        typename enable_if<
+                    mpl::and_<
+                        mpl::not_<is_const<Exposed> >,
+                        mpl::not_<is_reference<Exposed> >,
+                        is_proxy<Transformed>
+                    >
+                  >::type>
+            : proxy_transform_attribute<Exposed, Transformed> {};
 
     template <typename Exposed, typename Transformed>
     struct transform_attribute<Exposed const, Transformed>
@@ -545,16 +591,6 @@ namespace boost { namespace spirit { namespace traits
         {
              val = none_t();    // leave optional uninitialized if rhs failed
         }
-    };
-
-    // handle case where no transformation is required as the types are the same
-    template <typename Attribute>
-    struct transform_attribute<Attribute, Attribute>
-    {
-        typedef Attribute& type;
-        static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute&) {}
     };
 
     template <typename Attribute>

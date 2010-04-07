@@ -134,6 +134,7 @@ import testing ;
     [ run lex/set_token_value_phoenix.cpp   : : : : ]
     [ run lex/semantic_actions.cpp          : : : : ]
 
+    # run Lex regression tests
     [ run lex/regression001.cpp             : : : : lex_regression001 ]
     [ run lex/regression002.cpp             : : : : lex_regression002 ]
     [ run lex/regression003_generate.cpp    : $(LEX_DIR)/matlib_static.h : : : lex_regression003_generate ]
@@ -150,7 +151,9 @@ import testing ;
 
 
     # regression tests
-    [ run qi/clear_test.cpp                  : : : : ]
+    [ run qi/clear_test.cpp                 : : : : ]
+    [ run qi/reorder_test.cpp               : : : : ]
+
     ;
 
 }

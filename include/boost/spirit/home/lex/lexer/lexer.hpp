@@ -166,6 +166,17 @@ namespace boost { namespace spirit { namespace lex
                     return *this;
                 }
 
+//                 template <typename F>
+//                 adder const& operator()(char_type c, id_type token_id, F act) const
+//                 {
+//                     if (id_type() == token_id)
+//                         token_id = def.def.get_next_id();
+//                     std::size_t unique_id = 
+//                         def.def.add_token (def.state.c_str(), s, token_id);
+//                     def.def.add_action(unique_id, def.state.c_str(), act);
+//                     return *this;
+//                 }
+
                 lexer_def_& def;
 
             private:

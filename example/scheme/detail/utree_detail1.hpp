@@ -14,6 +14,8 @@
 # pragma warning(disable: 4244)
 #endif
 
+#include <boost/type_traits/alignment_of.hpp>
+
 namespace scheme { namespace detail
 {
     template <typename UTreeX, typename UTreeY>

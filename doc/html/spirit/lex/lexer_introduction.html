@@ -56,7 +56,7 @@
         </li>
 </ul></div>
 <a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h5>
-<a name="id889820"></a>
+<a name="id931786"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
         Use a Separate Lexer?</a>
       </h5>
@@ -67,7 +67,7 @@
         of syntactical rules defining the language, so in theory we could write the
         whole parser in one module. In fact, <span class="emphasis"><em>Spirit.Qi</em></span> allows
         you to write parsers without using a lexer, parsing the input character stream
-        directly, and for the most part this is the way <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+        directly, and for the most part this is the way <a href="http://boost-spirit.com" target="_top">Spirit</a>
         has been used since its invention.
       </p>
 <p>
@@ -146,23 +146,22 @@
         identifying keywords, storing identifiers in tables, etc.
       </p>
 <p>
-        Now, <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> follows this
-        structure, where <span class="emphasis"><em>Spirit.Lex</em></span> can be used to implement
-        state machine based recognizers, while <span class="emphasis"><em>Spirit.Qi</em></span> can
-        be used to build recognizers for context free grammars. Since both modules
-        are seemlessly integrated with each other and with the C++ target language
-        it is even possible to use the provided functionality to build more complex
-        grammar recognizers.
+        Now, <a href="http://boost-spirit.com" target="_top">Spirit</a> follows this structure,
+        where <span class="emphasis"><em>Spirit.Lex</em></span> can be used to implement state machine
+        based recognizers, while <span class="emphasis"><em>Spirit.Qi</em></span> can be used to build
+        recognizers for context free grammars. Since both modules are seemlessly
+        integrated with each other and with the C++ target language it is even possible
+        to use the provided functionality to build more complex grammar recognizers.
       </p>
 <a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id890029"></a>
+<a name="id933255"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
         of using <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>
 <p>
         The advantage of using <span class="emphasis"><em>Spirit.Lex</em></span> to create the lexical
         analyzer over using more traditional tools such as <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
-        is its carefully crafted integration with the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+        is its carefully crafted integration with the <a href="http://boost-spirit.com" target="_top">Spirit</a>
         library and the C++ host language. You don't need any external tools to generate
         the code, your lexer will be perfectly integrated with the rest of your program,
         making it possible to freely access any context information and data structure.
@@ -202,7 +201,7 @@
         This dynamic flexibility allows you to speed up the development of your application.
       </p>
 <a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id890132"></a>
+<a name="id933358"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
         Library Structure of <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>

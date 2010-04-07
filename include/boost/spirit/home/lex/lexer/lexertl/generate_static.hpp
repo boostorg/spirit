@@ -917,7 +917,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     generate_static(Lexer const& lexer, std::ostream& os
       , char const* name_suffix, F f)
     {
-        if (!lexer.init_dfa())
+        if (!lexer.init_dfa(true))    // always minimize DFA for static lexers
             return false;
         return detail::generate_cpp(lexer.state_machine_, lexer.rules_, os
           , name_suffix, f);

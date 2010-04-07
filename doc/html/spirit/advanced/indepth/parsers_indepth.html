@@ -30,8 +30,8 @@
 <p>
           This section is not for the faint of heart. In here, are distilled the
           inner workings of <span class="emphasis"><em>Spirit.Qi</em></span> parsers, using real code
-          from the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> library
-          as examples. On the other hand, here is no reason to fear reading on, though.
+          from the <a href="http://boost-spirit.com" target="_top">Spirit</a> library as
+          examples. On the other hand, here is no reason to fear reading on, though.
           We tried to explain things step by step while highlighting the important
           insights.
         </p>
@@ -121,7 +121,7 @@
 <p>
           The <span class="emphasis"><em>parse</em></span> is the main parser entry point. <span class="emphasis"><em>skipper</em></span>
           can be an <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-          It's a type used every where in <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          It's a type used every where in <a href="http://boost-spirit.com" target="_top">Spirit</a>
           to signify "don't-care". There is an overload for <span class="emphasis"><em>skip</em></span>
           for <code class="computeroutput"><span class="identifier">unused_type</span></code> that is
           simply a no-op. That way, we do not have to write multiple parse functions
@@ -197,12 +197,12 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id927912"></a>
+<a name="id969870"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
 <p>
-          For our disection study, we will use a <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          For our disection study, we will use a <a href="http://boost-spirit.com" target="_top">Spirit</a>
           primitive, the <code class="computeroutput"><span class="identifier">int_parser</span></code>
           in the boost::spirit::qi namespace.
         </p>
@@ -286,9 +286,9 @@
           The actual parsing code is placed in <code class="computeroutput"><span class="identifier">extract_int</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">MinDigits</span><span class="special">,</span> <span class="identifier">MaxDigits</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">);</span></code>
         </p>
 <p>
-          This simple no-frills protocol is one of the reasons why <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          This simple no-frills protocol is one of the reasons why <a href="http://boost-spirit.com" target="_top">Spirit</a>
           is fast. If you know the internals of <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
-          and perhaps even wrote some parsers with it, this simple <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          and perhaps even wrote some parsers with it, this simple <a href="http://boost-spirit.com" target="_top">Spirit</a>
           mechanism is a joy to work with. There are no scanners and all that crap.
         </p>
 <p>
@@ -353,12 +353,12 @@
           Notice that <code class="computeroutput"><span class="identifier">int_parser</span></code>
           is placed in the namespace boost::spirit::qi while these <span class="emphasis"><em>enablers</em></span>
           are in namespace boost::spirit. The reason is that these placeholders are
-          shared by other <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-          <span class="emphasis"><em>domains</em></span>. <span class="emphasis"><em>Spirit.Qi</em></span>, the parser
-          is one domain. <span class="emphasis"><em>Spirit.Karma</em></span>, the generator is another
-          domain. Other parser technologies may be developed and placed in yet another
-          domain. Yet, all these can potentially share the same placeholders for
-          interoperability. The interpretation of these placeholders is domain-specific.
+          shared by other <a href="http://boost-spirit.com" target="_top">Spirit</a> <span class="emphasis"><em>domains</em></span>.
+          <span class="emphasis"><em>Spirit.Qi</em></span>, the parser is one domain. <span class="emphasis"><em>Spirit.Karma</em></span>,
+          the generator is another domain. Other parser technologies may be developed
+          and placed in yet another domain. Yet, all these can potentially share
+          the same placeholders for interoperability. The interpretation of these
+          placeholders is domain-specific.
         </p>
 <p>
           Now that we enabled the placeholders, we have to write generators for them.
@@ -450,7 +450,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id929951"></a>
+<a name="id972995"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -629,12 +629,12 @@
           This is a recurring pattern. The reason why we do it this way is because
           attr <span class="bold"><strong>can</strong></span> be <code class="computeroutput"><span class="identifier">unused_type</span></code>.
           <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">push_back</span></code> takes care of that detail.
-          The overload for unused_type is a no-op. Now, you can imagine why <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> is fast! The parsers
-          are so simple and the generated code is as efficient as a hand rolled loop.
-          All these parser compositions and recursive parse invocations are extensively
+          The overload for unused_type is a no-op. Now, you can imagine why <a href="http://boost-spirit.com" target="_top">Spirit</a> is fast! The parsers are so
+          simple and the generated code is as efficient as a hand rolled loop. All
+          these parser compositions and recursive parse invocations are extensively
           inlined by a modern C++ compiler. In the end, you get a tight loop when
           you use the kleene. No more excess baggage. If the attribute is unused,
-          then there is no code generated for that. That's how <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+          then there is no code generated for that. That's how <a href="http://boost-spirit.com" target="_top">Spirit</a>
           is designed.
         </p>
 <p>

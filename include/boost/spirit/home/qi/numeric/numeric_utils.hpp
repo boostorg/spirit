@@ -51,10 +51,8 @@ namespace boost { namespace spirit { namespace qi
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            Iterator& first, Iterator const& last,
-            Attribute& attr)
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator const& last, T& attr)
         {
             if (first == last)
                 return false;
@@ -70,12 +68,25 @@ namespace boost { namespace spirit { namespace qi
 
             Iterator save = first;
             if (!extract_type::parse(first, last,
-                detail::cast_unsigned<Attribute>::call(attr)))
+                detail::cast_unsigned<T>::call(attr)))
             {
                 first = save;
                 return false;
             }
             return true;
+        }
+
+        template <typename Iterator, typename Attribute>
+        static bool call(Iterator& first, Iterator const& last, Attribute& attr_)
+        {
+            // this case is called when Attribute is not T
+            T attr;
+            if (call(first, last, attr))
+            {
+                traits::assign_to(attr, attr_);
+                return true;
+            }
+            return false;
         }
     };
 
@@ -90,8 +101,8 @@ namespace boost { namespace spirit { namespace qi
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
-        template <typename Iterator, typename Attribute>
-        static bool call(Iterator& first, Iterator const& last, Attribute& attr)
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator const& last, T& attr)
         {
             if (first == last)
                 return false;
@@ -117,6 +128,19 @@ namespace boost { namespace spirit { namespace qi
                 return false;
             }
             return true;
+        }
+
+        template <typename Iterator, typename Attribute>
+        static bool call(Iterator& first, Iterator const& last, Attribute& attr_)
+        {
+            // this case is called when Attribute is not T
+            T attr;
+            if (call(first, last, attr))
+            {
+                traits::assign_to(attr, attr_);
+                return true;
+            }
+            return false;
         }
     };
 }}}

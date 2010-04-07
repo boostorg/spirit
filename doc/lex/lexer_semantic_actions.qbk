@@ -154,7 +154,7 @@ described above by using the predefined __spirit__ placeholders:
 
 The context object passed as the last parameter to any lexer semantic action is 
 not directly accessible while using __boost_phoenix__ expressions. We rather provide
-predefine Phoenix functions allowing to invoke the different support functions
+predefined Phoenix functions allowing to invoke the different support functions
 as mentioned above. The following table lists the available support functions 
 and describes their functionality:
  

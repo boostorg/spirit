@@ -16,8 +16,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <boost/type_traits/is_pointer.hpp>
-#include <boost/type_traits/alignment_of.hpp>
 #include <boost/ref.hpp>
 #include "detail/utree_detail1.hpp"
 
@@ -39,7 +37,8 @@ namespace scheme
             symbol_type,
             binary_type,
             list_type,
-            reference_type
+            reference_type,
+            function_type
         };
     };
 
@@ -47,6 +46,17 @@ namespace scheme
     // The nil type
     ///////////////////////////////////////////////////////////////////////////
     struct nil {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The environment (this is forward declared)
+    ///////////////////////////////////////////////////////////////////////////
+    class environment;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Function pointer
+    ///////////////////////////////////////////////////////////////////////////
+    class utree; // forward
+    typedef utree (*function_ptr)(environment* env, utree& args);
 
     ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
@@ -164,6 +174,7 @@ namespace scheme
         explicit utree(char const* str, std::size_t len);
         explicit utree(std::string const& str);
         explicit utree(boost::reference_wrapper<utree> ref);
+        explicit utree(function_ptr fptr);
 
         template <typename Base, utree_type::info type_>
         explicit utree(basic_string<Base, type_> const& bin);
@@ -179,6 +190,7 @@ namespace scheme
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
         utree& operator=(boost::reference_wrapper<utree> ref);
+        utree& operator=(function_ptr fptr);
 
         template <typename Base, utree_type::info type_>
         utree& operator=(basic_string<Base, type_> const& bin);
@@ -278,16 +290,9 @@ namespace scheme
             int i;
             double d;
             utree* p;
+            function_ptr f;
         };
     };
-
-    bool operator==(utree const& a, utree const& b);
-    bool operator<(utree const& a, utree const& b);
-    bool operator!=(utree const& a, utree const& b);
-    bool operator>(utree const& a, utree const& b);
-    bool operator<=(utree const& a, utree const& b);
-    bool operator>=(utree const& a, utree const& b);
-    std::ostream& operator<<(std::ostream& out, utree const& x);
 }
 
 #include "detail/utree_detail2.hpp"
