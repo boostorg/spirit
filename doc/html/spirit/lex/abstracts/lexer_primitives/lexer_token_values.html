@@ -50,7 +50,7 @@
             library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id935475"></a>
+<a name="id902355"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -153,27 +153,28 @@
 <dl>
 <dt><span class="term">Iterator</span></dt>
 <dd><p>
-                This is the type of the iterator used to access the underlying input
-                stream. It defaults to a plain <code class="computeroutput"><span class="keyword">char</span>
-                <span class="keyword">const</span><span class="special">*</span></code>.
-              </p></dd>
+                  This is the type of the iterator used to access the underlying
+                  input stream. It defaults to a plain <code class="computeroutput"><span class="keyword">char</span>
+                  <span class="keyword">const</span><span class="special">*</span></code>.
+                </p></dd>
 <dt><span class="term">AttributeTypes</span></dt>
 <dd><p>
-                This is either a mpl sequence containing all attribute types used
-                for the token definitions or the type <code class="computeroutput"><span class="identifier">omit</span></code>.
-                If the mpl sequence is empty (which is the default), all token instances
-                will store a <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span></code> pointing to the start and the
-                end of the matched section in the input stream. If the type is <code class="computeroutput"><span class="identifier">omit</span></code>, the generated tokens will
-                contain no token value (attribute) at all.
-              </p></dd>
+                  This is either a mpl sequence containing all attribute types used
+                  for the token definitions or the type <code class="computeroutput"><span class="identifier">omit</span></code>.
+                  If the mpl sequence is empty (which is the default), all token
+                  instances will store a <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span></code> pointing to the start and the
+                  end of the matched section in the input stream. If the type is
+                  <code class="computeroutput"><span class="identifier">omit</span></code>, the generated
+                  tokens will contain no token value (attribute) at all.
+                </p></dd>
 <dt><span class="term">HasState</span></dt>
 <dd><p>
-                This is either <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                or <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>, allowing control as to
-                whether the generated token instances will contain the lexer state
-                they were generated in. The default is mpl::true_, so all token instances
-                will contain the lexer state.
-              </p></dd>
+                  This is either <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                  or <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>, allowing control as to
+                  whether the generated token instances will contain the lexer state
+                  they were generated in. The default is mpl::true_, so all token
+                  instances will contain the lexer state.
+                </p></dd>
 </dl>
 </div>
 <p>
@@ -184,7 +185,7 @@
             time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id936009"></a>
+<a name="id902893"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -207,22 +208,22 @@
 <dl>
 <dt><span class="term">Attribute</span></dt>
 <dd><p>
-                This is the type of the token value (attribute) supported by token
-                instances representing this token type. This attribute type is exposed
-                to the <span class="emphasis"><em>Spirit.Qi</em></span> library, whenever this token
-                definition is used as a parser component. The default attribute type
-                is <code class="computeroutput"><span class="identifier">unused_type</span></code>, which
-                means the token instance holds a <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a> pointing
-                to the start and the end of the matched section in the input stream.
-                If the attribute is <code class="computeroutput"><span class="identifier">omit</span></code>
-                the token instance will expose no token type at all. Any other type
-                will be used directly as the token value type.
-              </p></dd>
+                  This is the type of the token value (attribute) supported by token
+                  instances representing this token type. This attribute type is
+                  exposed to the <span class="emphasis"><em>Spirit.Qi</em></span> library, whenever
+                  this token definition is used as a parser component. The default
+                  attribute type is <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+                  which means the token instance holds a <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a> pointing
+                  to the start and the end of the matched section in the input stream.
+                  If the attribute is <code class="computeroutput"><span class="identifier">omit</span></code>
+                  the token instance will expose no token type at all. Any other
+                  type will be used directly as the token value type.
+                </p></dd>
 <dt><span class="term">Char</span></dt>
 <dd><p>
-                This is the value type of the iterator for the underlying input sequence.
-                It defaults to <code class="computeroutput"><span class="keyword">char</span></code>.
-              </p></dd>
+                  This is the value type of the iterator for the underlying input
+                  sequence. It defaults to <code class="computeroutput"><span class="keyword">char</span></code>.
+                </p></dd>
 </dl>
 </div>
 <p>
@@ -256,7 +257,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lex__phrase__phrase_role__special______phrase__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_"></a><h6>
-<a name="id936270"></a>
+<a name="id903155"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lex__phrase__phrase_role__special______phrase__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_">Examples
             of using <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code></a>
           </h6>

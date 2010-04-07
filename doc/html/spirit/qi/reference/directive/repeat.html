@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.repeat.description"></a><h6>
-<a name="id698514"></a>
+<a name="id667702"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
@@ -51,7 +51,7 @@
             </li>
 </ul></div>
 <a name="spirit.qi.reference.directive.repeat.header"></a><h6>
-<a name="id698566"></a>
+<a name="id667753"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/repeat.hpp&gt;
@@ -61,33 +61,33 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.repeat.namespace"></a><h6>
-<a name="id698640"></a>
+<a name="id667828"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
 <thead><tr><th>
-                  <p>
-                    Name
-                  </p>
+                    <p>
+                      Name
+                    </p>
                   </th></tr></thead>
 <tbody>
 <tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repeat</span> <span class="comment">// alias:
-                    boost::spirit::qi::repeat</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repeat</span> <span class="comment">//
+                      alias: boost::spirit::qi::repeat</span></code>
+                    </p>
                   </td></tr>
 <tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">inf</span> <span class="comment">// alias:
-                    boost::spirit::qi::inf</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">inf</span> <span class="comment">// alias:
+                      boost::spirit::qi::inf</span></code>
+                    </p>
                   </td></tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.model_of"></a><h6>
-<a name="id698755"></a>
+<a name="id667944"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -104,21 +104,20 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">n</span></code>,
-            <code class="computeroutput"><span class="identifier">min</span></code>, <code class="computeroutput"><span class="identifier">max</span></code></span></dt>
+                  A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+                </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">n</span></code>, <code class="computeroutput"><span class="identifier">min</span></code>, <code class="computeroutput"><span class="identifier">max</span></code></span></dt>
 <dd><p>
-                An <code class="computeroutput"><span class="keyword">int</span></code> anything that
-                can be converted to an <code class="computeroutput"><span class="keyword">int</span></code>,
-                or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                Argument</a> that evaluates to anything that can be converted
-                to an <code class="computeroutput"><span class="keyword">int</span></code>.
-              </p></dd>
+                  An <code class="computeroutput"><span class="keyword">int</span></code> anything that
+                  can be converted to an <code class="computeroutput"><span class="keyword">int</span></code>,
+                  or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                  Argument</a> that evaluates to anything that can be converted
+                  to an <code class="computeroutput"><span class="keyword">int</span></code>.
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id698885"></a>
+<a name="id668077"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -133,78 +132,79 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Repeat <code class="computeroutput"><span class="identifier">a</span></code> zero
-                    or more times. Same as <a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Repeat <code class="computeroutput"><span class="identifier">a</span></code> exactly
-                    <code class="computeroutput"><span class="identifier">n</span></code> times.
-                  </p>
+                    <p>
+                      Repeat <code class="computeroutput"><span class="identifier">a</span></code> zero
+                      or more times. Same as <a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
-                    <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Repeat <code class="computeroutput"><span class="identifier">a</span></code> at least
-                    <code class="computeroutput"><span class="identifier">min</span></code> times and
-                    at most <code class="computeroutput"><span class="identifier">max</span></code> times.
-                  </p>
+                    <p>
+                      Repeat <code class="computeroutput"><span class="identifier">a</span></code> exactly
+                      <code class="computeroutput"><span class="identifier">n</span></code> times.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
-                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
+                      <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Repeat <code class="computeroutput"><span class="identifier">a</span></code> at least
-                    <code class="computeroutput"><span class="identifier">min</span></code> or more (continuing
-                    until <code class="computeroutput"><span class="identifier">a</span></code> fails
-                    or the input is consumed).
-                  </p>
+                    <p>
+                      Repeat <code class="computeroutput"><span class="identifier">a</span></code> at
+                      least <code class="computeroutput"><span class="identifier">min</span></code> times
+                      and at most <code class="computeroutput"><span class="identifier">max</span></code>
+                      times.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
+                      <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Repeat <code class="computeroutput"><span class="identifier">a</span></code> at
+                      least <code class="computeroutput"><span class="identifier">min</span></code> or
+                      more (continuing until <code class="computeroutput"><span class="identifier">a</span></code>
+                      fails or the input is consumed).
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.attributes"></a><h6>
-<a name="id699194"></a>
+<a name="id668393"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <p>
@@ -218,87 +218,87 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Attribute
-                  </p>
+                    <p>
+                      Attribute
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
-                    <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
+                      <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
-                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
+                      <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.complexity"></a><h6>
-<a name="id699866"></a>
+<a name="id671392"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -313,7 +313,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.repeat.example"></a><h6>
-<a name="id699898"></a>
+<a name="id671424"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

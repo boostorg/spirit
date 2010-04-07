@@ -35,7 +35,7 @@
             and <span class="emphasis"><em>Spirit.Karma</em></span>.
           </p>
 <p>
-            For the full source code of the performance test please see here: <a href="../../../../../../benchmarks/karma/double_performance.cpp" target="_top">double_performance.cpp</a>.
+            For the full source code of the performance test please see here: <a href="../../../../../../optimization/karma/double_performance.cpp" target="_top">double_performance.cpp</a>.
             All the measurements have been done by executing <code class="computeroutput"><span class="number">1e6</span></code>
             iterations for each formatting type (NUMITERATIONS is set to <code class="computeroutput"><span class="number">1e6</span></code> in the code shown below).
           </p>
@@ -133,10 +133,10 @@
             of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure&#160;4.&#160;Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id921193"></a><p class="title"><b>Table&#160;6.&#160;Performance comparison for a single double (all
-          times in [s], `1e6` iterations)</b></p>
-<div class="table-contents"><table class="table" summary="Performance comparison for a single double (all
-          times in [s], `1e6` iterations)">
+<a name="id887844"></a><p class="title"><b>Table&#160;6.&#160;Performance comparison for a single double (all times in [s],
+            `1e6` iterations)</b></p>
+<div class="table-contents"><table class="table" summary="Performance comparison for a single double (all times in [s],
+            `1e6` iterations)">
 <colgroup>
 <col>
 <col>
@@ -148,189 +148,189 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Library
-                </p>
-                </th>
+                    <p>
+                      Library
+                    </p>
+                  </th>
 <th>
-                <p>
-                  gcc 4.4.0 (32 bit)
-                </p>
-                </th>
+                    <p>
+                      gcc 4.4.0 (32 bit)
+                    </p>
+                  </th>
 <th>
-                <p>
-                  VC++ 10 (32 bit)
-                </p>
-                </th>
+                    <p>
+                      VC++ 10 (32 bit)
+                    </p>
+                  </th>
 <th>
-                <p>
-                  Intel 11.1 (32 bit)
-                </p>
-                </th>
+                    <p>
+                      Intel 11.1 (32 bit)
+                    </p>
+                  </th>
 <th>
-                <p>
-                  gcc 4.4.0 (64 bit)
-                </p>
-                </th>
+                    <p>
+                      gcc 4.4.0 (64 bit)
+                    </p>
+                  </th>
 <th>
-                <p>
-                  VC++ 10 (64 bit)
-                </p>
-                </th>
+                    <p>
+                      VC++ 10 (64 bit)
+                    </p>
+                  </th>
 <th>
-                <p>
-                  Intel 11.1 (64 bit)
-                </p>
-                </th>
+                    <p>
+                      Intel 11.1 (64 bit)
+                    </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  sprintf
-                </p>
-                </td>
+                    <p>
+                      sprintf
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.755
-                </p>
-                </td>
+                    <p>
+                      0.755
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.965
-                </p>
-                </td>
+                    <p>
+                      0.965
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.880
-                </p>
-                </td>
+                    <p>
+                      0.880
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.713
-                </p>
-                </td>
+                    <p>
+                      0.713
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.807
-                </p>
-                </td>
+                    <p>
+                      0.807
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.694
-                </p>
-                </td>
+                    <p>
+                      0.694
+                    </p>
+                  </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  iostreams
-                </p>
-                </td>
+                    <p>
+                      iostreams
+                    </p>
+                  </td>
 <td>
-                <p>
-                  2.316
-                </p>
-                </td>
+                    <p>
+                      2.316
+                    </p>
+                  </td>
 <td>
-                <p>
-                  2.624
-                </p>
-                </td>
+                    <p>
+                      2.624
+                    </p>
+                  </td>
 <td>
-                <p>
-                  1.964
-                </p>
-                </td>
+                    <p>
+                      1.964
+                    </p>
+                  </td>
 <td>
-                <p>
-                  1.634
-                </p>
-                </td>
+                    <p>
+                      1.634
+                    </p>
+                  </td>
 <td>
-                <p>
-                  1.468
-                </p>
-                </td>
+                    <p>
+                      1.468
+                    </p>
+                  </td>
 <td>
-                <p>
-                  1.354
-                </p>
-                </td>
+                    <p>
+                      1.354
+                    </p>
+                  </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>
-                </p>
-                </td>
+                    <p>
+                      <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>
+                    </p>
+                  </td>
 <td>
-                <p>
-                  3.188
-                </p>
-                </td>
+                    <p>
+                      3.188
+                    </p>
+                  </td>
 <td>
-                <p>
-                  3.737
-                </p>
-                </td>
+                    <p>
+                      3.737
+                    </p>
+                  </td>
 <td>
-                <p>
-                  2.878
-                </p>
-                </td>
+                    <p>
+                      2.878
+                    </p>
+                  </td>
 <td>
-                <p>
-                  3.217
-                </p>
-                </td>
+                    <p>
+                      3.217
+                    </p>
+                  </td>
 <td>
-                <p>
-                  2.672
-                </p>
-                </td>
+                    <p>
+                      2.672
+                    </p>
+                  </td>
 <td>
-                <p>
-                  2.011
-                </p>
-                </td>
+                    <p>
+                      2.011
+                    </p>
+                  </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <span class="emphasis"><em>Spirit.Karma</em></span> double_
-                </p>
-                </td>
+                    <p>
+                      <span class="emphasis"><em>Spirit.Karma</em></span> double_
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.813
-                </p>
-                </td>
+                    <p>
+                      0.813
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.561
-                </p>
-                </td>
+                    <p>
+                      0.561
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.368
-                </p>
-                </td>
+                    <p>
+                      0.368
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.426
-                </p>
-                </td>
+                    <p>
+                      0.426
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.260
-                </p>
-                </td>
+                    <p>
+                      0.260
+                    </p>
+                  </td>
 <td>
-                <p>
-                  0.218
-                </p>
-                </td>
+                    <p>
+                      0.218
+                    </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>

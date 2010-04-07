@@ -65,7 +65,7 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h6>
-<a name="id932631"></a>
+<a name="id898614"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -113,7 +113,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h6>
-<a name="id932997"></a>
+<a name="id898980"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h6>
@@ -166,7 +166,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h6>
-<a name="id933349"></a>
+<a name="id899332"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h6>
@@ -205,61 +205,61 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Token definition
-                </p>
+                  <p>
+                    Token definition
+                  </p>
                 </th>
 <th>
-                <p>
-                  Parser integration
-                </p>
+                  <p>
+                    Parser integration
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  The <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>
-                  instance is directly usable as a parser component. Parsing of this
-                  component will succeed if the regular expression used to define
-                  this has been matched successfully.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  single character
-                </p>
-                </td>
-<td>
-                <p>
-                  The single character is directly usable in the grammar. However,
-                  under certain circumstances it needs to be wrapped by a <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>
-                  parser component. Parsing of this component will succeed if the
-                  single character has been matched.
-                </p>
+                  <p>
+                    The <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code> instance is directly
+                    usable as a parser component. Parsing of this component will
+                    succeed if the regular expression used to define this has been
+                    matched successfully.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  explicit token id
-                </p>
+                  <p>
+                    single character
+                  </p>
                 </td>
 <td>
-                <p>
-                  To use an explicit token id in a <span class="emphasis"><em>Spirit.Qi</em></span>
-                  grammar you are required to wrap it with the special <code class="computeroutput"><span class="identifier">token</span><span class="special">()</span></code>
-                  parser component. Parsing of this component will succeed if the
-                  current token has the same token id as specified in the expression
-                  <code class="computeroutput"><span class="identifier">token</span><span class="special">(&lt;</span><span class="identifier">id</span><span class="special">&gt;)</span></code>.
-                </p>
+                  <p>
+                    The single character is directly usable in the grammar. However,
+                    under certain circumstances it needs to be wrapped by a <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>
+                    parser component. Parsing of this component will succeed if the
+                    single character has been matched.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    explicit token id
+                  </p>
+                </td>
+<td>
+                  <p>
+                    To use an explicit token id in a <span class="emphasis"><em>Spirit.Qi</em></span>
+                    grammar you are required to wrap it with the special <code class="computeroutput"><span class="identifier">token</span><span class="special">()</span></code>
+                    parser component. Parsing of this component will succeed if the
+                    current token has the same token id as specified in the expression
+                    <code class="computeroutput"><span class="identifier">token</span><span class="special">(&lt;</span><span class="identifier">id</span><span class="special">&gt;)</span></code>.
+                  </p>
                 </td>
 </tr>
 </tbody>
@@ -319,7 +319,7 @@
           <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h6>
-<a name="id934219"></a>
+<a name="id900211"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>

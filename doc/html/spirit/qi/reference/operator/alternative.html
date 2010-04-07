@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.alternative.description"></a><h6>
-<a name="id728456"></a>
+<a name="id697144"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.description">Description</a>
           </h6>
 <p>
@@ -60,7 +60,7 @@
             to put the (expected) most common choice first for maximum efficiency.
           </p>
 <a name="spirit.qi.reference.operator.alternative.header"></a><h6>
-<a name="id728621"></a>
+<a name="id697309"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/alternative.hpp&gt;
@@ -70,7 +70,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.alternative.model_of"></a><h6>
-<a name="id728695"></a>
+<a name="id697383"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.model_of">Model
             of</a>
           </h6>
@@ -86,15 +86,14 @@
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
-            <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
-              </p></dd>
+                  A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.alternative.expression_semantics"></a><h6>
-<a name="id728773"></a>
+<a name="id697462"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -109,32 +108,33 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                    <span class="identifier">b</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                      <span class="identifier">b</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Match <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code>.
-                  </p>
+                    <p>
+                      Match <code class="computeroutput"><span class="identifier">a</span></code> or
+                      <code class="computeroutput"><span class="identifier">b</span></code>.
+                    </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.attributes"></a><h6>
-<a name="id728884"></a>
+<a name="id697575"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.attributes">Attributes</a>
           </h6>
 <p>
@@ -148,26 +148,26 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Attribute
-                  </p>
+                    <p>
+                      Attribute
+                    </p>
                   </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                    <span class="identifier">b</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                      <span class="identifier">b</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
@@ -176,12 +176,12 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.complexity"></a><h6>
-<a name="id729457"></a>
+<a name="id698137"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -196,7 +196,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.alternative.example"></a><h6>
-<a name="id729481"></a>
+<a name="id698161"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

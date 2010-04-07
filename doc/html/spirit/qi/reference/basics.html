@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.basics"></a><a class="link" href="basics.html" title="Basics">Basics</a>
 </h4></div></div></div>
 <a name="spirit.qi.reference.basics.lazy_argument"></a><h6>
-<a name="id653270"></a>
+<a name="id621185"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
         </h6>
 <p>
@@ -51,7 +51,7 @@
           second argument. This is done for uniformity with Semantic Actions).
         </p>
 <a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h6>
-<a name="id653407"></a>
+<a name="id621322"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h6>
@@ -112,7 +112,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.reference.basics.examples"></a><h6>
-<a name="id653591"></a>
+<a name="id621506"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
         </h6>
 <p>
@@ -264,11 +264,11 @@
 <p>
         </p>
 <a name="spirit.qi.reference.basics.string"></a><h6>
-<a name="id658349"></a>
+<a name="id626264"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.string">String</a>
         </h6>
 <a name="spirit.qi.reference.basics.header"></a><h6>
-<a name="id658363"></a>
+<a name="id626278"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;
@@ -286,90 +286,90 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Semantics
-                </p>
+                  <p>
+                    Semantics
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_string</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_string</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                  if a certain type, <code class="computeroutput"><span class="identifier">S</span></code>
-                  is a string, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                  otherwise (See <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                  Boolean Constant</a>).
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">char_type_of</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Metafunction that returns the underlying char type of a string
-                  type, <code class="computeroutput"><span class="identifier">S</span></code>.
-                </p>
+                  <p>
+                    Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    if a certain type, <code class="computeroutput"><span class="identifier">S</span></code>
+                    is a string, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
+                    otherwise (See <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                    Boolean Constant</a>).
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_c_string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">char_type_of</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Function that returns the underlying raw C-string from <code class="computeroutput"><span class="identifier">s</span></code>.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_begin</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
-                  iterator from <code class="computeroutput"><span class="identifier">s</span></code>
-                  that points to the beginning the string.
-                </p>
+                  <p>
+                    Metafunction that returns the underlying char type of a string
+                    type, <code class="computeroutput"><span class="identifier">S</span></code>.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_end</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_c_string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
-                  iterator from <code class="computeroutput"><span class="identifier">s</span></code>
-                  that points to the end of the string.
-                </p>
+                  <p>
+                    Function that returns the underlying raw C-string from <code class="computeroutput"><span class="identifier">s</span></code>.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_begin</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+                    iterator from <code class="computeroutput"><span class="identifier">s</span></code>
+                    that points to the beginning the string.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_end</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+                    iterator from <code class="computeroutput"><span class="identifier">s</span></code>
+                    that points to the end of the string.
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.basics.models"></a><h6>
-<a name="id658835"></a>
+<a name="id626826"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.models">Models</a>
         </h6>
 <p>

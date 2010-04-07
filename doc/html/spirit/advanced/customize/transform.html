@@ -28,7 +28,7 @@
         Attribute to a Different Type (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.transform.transform_attribute"></a><h6>
-<a name="id969186"></a>
+<a name="id935233"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.transform_attribute">transform_attribute</a>
         </h6>
 <p>
@@ -41,7 +41,7 @@
           or the embedded component (for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
         </p>
 <a name="spirit.advanced.customize.transform.module_headers"></a><h6>
-<a name="id969263"></a>
+<a name="id935310"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.module_headers">Module
           Headers</a>
         </h6>
@@ -62,24 +62,24 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.transform.namespace"></a><h6>
-<a name="id969348"></a>
+<a name="id935395"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
 <thead><tr><th>
-                <p>
-                  Name
-                </p>
+                  <p>
+                    Name
+                  </p>
                 </th></tr></thead>
 <tbody><tr><td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code>
+                  </p>
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.synopsis"></a><h6>
-<a name="id969421"></a>
+<a name="id935468"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Exposed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -92,7 +92,7 @@
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.transform.template_parameters"></a><h6>
-<a name="id969644"></a>
+<a name="id935692"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.template_parameters">Template
           parameters</a>
         </h6>
@@ -104,82 +104,82 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Parameter
-                </p>
+                  <p>
+                    Parameter
+                  </p>
                 </th>
 <th>
-                <p>
-                  Description
-                </p>
+                  <p>
+                    Description
+                  </p>
                 </th>
 <th>
-                <p>
-                  Default
-                </p>
+                  <p>
+                    Default
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Exposed</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Exposed</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  The attribute type supplied to the component which needs to be
-                  transformed.
-                </p>
+                  <p>
+                    The attribute type supplied to the component which needs to be
+                    transformed.
+                  </p>
                 </td>
 <td>
-                <p>
-                  none
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The attribute type expected by the component to be provided as
-                  the result of the transformation.
-                </p>
-                </td>
-<td>
-                <p>
-                  none
-                </p>
+                  <p>
+                    none
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Enable</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Helper template parameter usable to selectively enable or disable
-                  certain specializations of <code class="computeroutput"><span class="identifier">transform_attribute</span></code>
-                  utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
-                  or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
-                </p>
+                  <p>
+                    The attribute type expected by the component to be provided as
+                    the result of the transformation.
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">void</span></code>
-                </p>
+                  <p>
+                    none
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Enable</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Helper template parameter usable to selectively enable or disable
+                    certain specializations of <code class="computeroutput"><span class="identifier">transform_attribute</span></code>
+                    utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
+                    or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">void</span></code>
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.notation"></a><h6>
-<a name="id969830"></a>
+<a name="id935887"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.notation">Notation</a>
         </h6>
 <div class="variablelist" title="Notation">
@@ -187,28 +187,28 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Exposed</span></code></span></dt>
 <dd><p>
-              The type, <code class="computeroutput"><span class="identifier">Exposed</span></code> is
-              the type of the attribute as passed in by the user.
-            </p></dd>
+                The type, <code class="computeroutput"><span class="identifier">Exposed</span></code>
+                is the type of the attribute as passed in by the user.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Transformed</span></code></span></dt>
 <dd><p>
-              The type, <code class="computeroutput"><span class="identifier">Transformed</span></code>
-              is the type of the attribute as passed along to the right hand side
-              of the <code class="computeroutput"><span class="identifier">rule</span></code> (embedded
-              component of <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
-            </p></dd>
+                The type, <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                is the type of the attribute as passed along to the right hand side
+                of the <code class="computeroutput"><span class="identifier">rule</span></code> (embedded
+                component of <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">exposed</span></code></span></dt>
 <dd><p>
-              An instance of type <code class="computeroutput"><span class="identifier">Exposed</span></code>.
-            </p></dd>
+                An instance of type <code class="computeroutput"><span class="identifier">Exposed</span></code>.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">transformed</span></code></span></dt>
 <dd><p>
-              An instance of type <code class="computeroutput"><span class="identifier">Transformed</span></code>.
-            </p></dd>
+                An instance of type <code class="computeroutput"><span class="identifier">Transformed</span></code>.
+              </p></dd>
 </dl>
 </div>
 <a name="spirit.advanced.customize.transform.expression_semantics"></a><h6>
-<a name="id969968"></a>
+<a name="id936030"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -219,100 +219,100 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Semantics
-                </p>
+                  <p>
+                    Semantics
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Evaluates to the type to be used as the result of the transformation
-                  (to be passed to the right hand side of the <code class="computeroutput"><span class="identifier">rule</span></code>
-                  or to the embedded component of the <code class="computeroutput"><span class="identifier">attr_cast</span></code>.
-                  Most of the time this is equal to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
-                  but in other cases this might evaluate to <code class="computeroutput"><span class="identifier">Transformed</span><span class="special">&amp;</span></code> instead avoiding superfluous
-                  object creation.
-                </p>
+                  <p>
+                    Evaluates to the type to be used as the result of the transformation
+                    (to be passed to the right hand side of the <code class="computeroutput"><span class="identifier">rule</span></code>
+                    or to the embedded component of the <code class="computeroutput"><span class="identifier">attr_cast</span></code>.
+                    Most of the time this is equal to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
+                    but in other cases this might evaluate to <code class="computeroutput"><span class="identifier">Transformed</span><span class="special">&amp;</span></code> instead avoiding superfluous
+                    object creation.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  
+                  <p>
+                    
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">type</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">pre</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
 <p>
-                </p>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Do <code class="computeroutput"><span class="identifier">pre</span></code>-transformation
-                  before invoking the right hand side component for <code class="computeroutput"><span class="identifier">rule</span></code> (or the embedded component
-                  for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
-                  This takes the attribute supplied as by the user (of type <code class="computeroutput"><span class="identifier">Exposed</span></code>) and returns the attribute
-                  to be passed down the component hierarchy (of the type as exposed
-                  by the metafunction <code class="computeroutput"><span class="identifier">type</span></code>).
-                  This function will be called in <span class="emphasis"><em>Qi</em></span> and for
-                  <span class="emphasis"><em>Karma</em></span>.
-                </p>
+                  <p>
+                    Do <code class="computeroutput"><span class="identifier">pre</span></code>-transformation
+                    before invoking the right hand side component for <code class="computeroutput"><span class="identifier">rule</span></code> (or the embedded component
+                    for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
+                    This takes the attribute supplied as by the user (of type <code class="computeroutput"><span class="identifier">Exposed</span></code>) and returns the attribute
+                    to be passed down the component hierarchy (of the type as exposed
+                    by the metafunction <code class="computeroutput"><span class="identifier">type</span></code>).
+                    This function will be called in <span class="emphasis"><em>Qi</em></span> and for
+                    <span class="emphasis"><em>Karma</em></span>.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  
+                  <p>
+                    
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">post</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">,</span> <span class="identifier">transformed</span><span class="special">)</span></pre>
 <p>
-                </p>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Do <code class="computeroutput"><span class="identifier">post</span></code>-transformation
-                  after the invocation of the right hand side component for <code class="computeroutput"><span class="identifier">rule</span></code> (or the embedded component
-                  for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
-                  This takes the original attribute as supplied by the user and the
-                  attribute as returned from the right hand side (embedded) component
-                  and is expected to propagate the result back into the supplied
-                  attribute instance. This function will be called in <span class="emphasis"><em>Qi</em></span>
-                  only.
-                </p>
+                  <p>
+                    Do <code class="computeroutput"><span class="identifier">post</span></code>-transformation
+                    after the invocation of the right hand side component for <code class="computeroutput"><span class="identifier">rule</span></code> (or the embedded component
+                    for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
+                    This takes the original attribute as supplied by the user and
+                    the attribute as returned from the right hand side (embedded)
+                    component and is expected to propagate the result back into the
+                    supplied attribute instance. This function will be called in
+                    <span class="emphasis"><em>Qi</em></span> only.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  
+                  <p>
+                    
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">fail</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
 <p>
-                </p>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Handling failing parse operations of the right hand side component
-                  for <code class="computeroutput"><span class="identifier">rule</span></code> (or the
-                  embedded component for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
-                  This function will be called in <span class="emphasis"><em>Qi</em></span> only.
-                </p>
+                  <p>
+                    Handling failing parse operations of the right hand side component
+                    for <code class="computeroutput"><span class="identifier">rule</span></code> (or
+                    the embedded component for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
+                    This function will be called in <span class="emphasis"><em>Qi</em></span> only.
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.predefined_specializations"></a><h6>
-<a name="id970382"></a>
+<a name="id936520"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -323,174 +323,178 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Template parameters
-                </p>
+                  <p>
+                    Template parameters
+                  </p>
                 </th>
 <th>
-                <p>
-                  Semantics
-                </p>
+                  <p>
+                    Semantics
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Exposed</span></code>, <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Exposed</span></code>, <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
-                  to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  returns a new instance of <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                  constructed from the argument of type <code class="computeroutput"><span class="identifier">Exposed</span></code>,
-                  <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
-                  assigns <code class="computeroutput"><span class="identifier">transformed</span></code>
-                  to <code class="computeroutput"><span class="identifier">exposed</span></code>.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;</span></code>,
-                  <code class="computeroutput"><span class="identifier">Transformed</span></code>, <code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">disable_if</span><span class="special">&lt;</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;,</span> <span class="identifier">Transformed</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
-                  to <code class="computeroutput"><span class="identifier">Transformed</span><span class="special">&amp;</span></code>, <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code> returns a reference to the instance
-                  of <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                  stored in the passed optional (the argument of type <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;</span></code>),
-                  the optional instance is initialized, if needed. <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
-                  does nothing, <code class="computeroutput"><span class="identifier">fail</span><span class="special">()</span></code> resets the optional (its parameter)
-                  instance to the non-initialzed state.
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                    to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    returns a new instance of <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                    constructed from the argument of type <code class="computeroutput"><span class="identifier">Exposed</span></code>,
+                    <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
+                    assigns <code class="computeroutput"><span class="identifier">transformed</span></code>
+                    to <code class="computeroutput"><span class="identifier">exposed</span></code>.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Exposed</span><span class="special">&amp;</span></code>,
-                  <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;</span></code>,
+                    <code class="computeroutput"><span class="identifier">Transformed</span></code>,
+                    <code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">disable_if</span><span class="special">&lt;</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;,</span> <span class="identifier">Transformed</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
-                  to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  returns a new instance of <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                  constructed from the argument of type <code class="computeroutput"><span class="identifier">Exposed</span></code>,
-                  <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
-                  assigns <code class="computeroutput"><span class="identifier">transformed</span></code>
-                  to <code class="computeroutput"><span class="identifier">exposed</span></code>.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Attrib</span><span class="special">&amp;</span></code>,
-                  <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
-                  to <code class="computeroutput"><span class="identifier">Attrib</span><span class="special">&amp;</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> does nothing.
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                    to <code class="computeroutput"><span class="identifier">Transformed</span><span class="special">&amp;</span></code>, <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code> returns a reference to the
+                    instance of <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                    stored in the passed optional (the argument of type <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">&gt;</span></code>),
+                    the optional instance is initialized, if needed. <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
+                    does nothing, <code class="computeroutput"><span class="identifier">fail</span><span class="special">()</span></code> resets the optional (its parameter)
+                    instance to the non-initialzed state.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Exposed</span> <span class="keyword">const</span></code>,
-                  <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Exposed</span><span class="special">&amp;</span></code>,
+                    <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  (usind in <span class="emphasis"><em>Karma</em></span> only) <code class="computeroutput"><span class="identifier">type</span></code>
-                  evaluates to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> is not implemented.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  (usind in <span class="emphasis"><em>Karma</em></span> only) <code class="computeroutput"><span class="identifier">type</span></code>
-                  evaluates to <code class="computeroutput"><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> is not implemented.
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                    to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    returns a new instance of <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                    constructed from the argument of type <code class="computeroutput"><span class="identifier">Exposed</span></code>,
+                    <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
+                    assigns <code class="computeroutput"><span class="identifier">transformed</span></code>
+                    to <code class="computeroutput"><span class="identifier">exposed</span></code>.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Attrib</span> <span class="keyword">const</span></code>,
-                  <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attrib</span><span class="special">&amp;</span></code>,
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  (usind in <span class="emphasis"><em>Karma</em></span> only) <code class="computeroutput"><span class="identifier">type</span></code>
-                  evaluates to <code class="computeroutput"><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> is not implemented.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">unused_type</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
-                  to <code class="computeroutput"><span class="identifier">unused_type</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  and <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
-                  do nothing.
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                    to <code class="computeroutput"><span class="identifier">Attrib</span><span class="special">&amp;</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> does nothing.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Attrib</span></code>, <code class="computeroutput"><span class="identifier">unused_type</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Exposed</span> <span class="keyword">const</span></code>,
+                    <code class="computeroutput"><span class="identifier">Transformed</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">type</span></code> evaluates
-                  to <code class="computeroutput"><span class="identifier">unused_type</span></code>,
-                  <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
-                  and <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
-                  do nothing.
-                </p>
+                  <p>
+                    (usind in <span class="emphasis"><em>Karma</em></span> only) <code class="computeroutput"><span class="identifier">type</span></code>
+                    evaluates to <code class="computeroutput"><span class="identifier">Transformed</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> is not implemented.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    (usind in <span class="emphasis"><em>Karma</em></span> only) <code class="computeroutput"><span class="identifier">type</span></code>
+                    evaluates to <code class="computeroutput"><span class="identifier">Attrib</span>
+                    <span class="keyword">const</span><span class="special">&amp;</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> is not implemented.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attrib</span> <span class="keyword">const</span></code>,
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    (usind in <span class="emphasis"><em>Karma</em></span> only) <code class="computeroutput"><span class="identifier">type</span></code>
+                    evaluates to <code class="computeroutput"><span class="identifier">Attrib</span>
+                    <span class="keyword">const</span><span class="special">&amp;</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    returns it's argument, <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code> is not implemented.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                    to <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    and <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
+                    do nothing.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>, <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">type</span></code> evaluates
+                    to <code class="computeroutput"><span class="identifier">unused_type</span></code>,
+                    <code class="computeroutput"><span class="identifier">pre</span><span class="special">()</span></code>
+                    and <code class="computeroutput"><span class="identifier">post</span><span class="special">()</span></code>
+                    do nothing.
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.when_to_implement"></a><h6>
-<a name="id973039"></a>
+<a name="id937409"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.when_to_implement">When
           to implement</a>
         </h6>
@@ -507,7 +511,7 @@
           is not constructible from the type <code class="computeroutput"><span class="identifier">Exposed</span></code>.
         </p>
 <a name="spirit.advanced.customize.transform.example"></a><h6>
-<a name="id973106"></a>
+<a name="id937476"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.example">Example</a>
         </h6>
 <p>

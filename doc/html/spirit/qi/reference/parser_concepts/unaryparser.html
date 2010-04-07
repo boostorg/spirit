@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.parser_concepts.unaryparser"></a><a class="link" href="unaryparser.html" title="UnaryParser">UnaryParser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.description"></a><h6>
-<a name="id649355"></a>
+<a name="id616650"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             the Delegate Design Pattern.
           </p>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.refinement_of"></a><h6>
-<a name="id649380"></a>
+<a name="id616675"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.refinement_of">Refinement
             of</a>
           </h6>
@@ -54,16 +54,16 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">p</span></code></span></dt>
 <dd><p>
-                A UnaryParser.
-              </p></dd>
+                  A UnaryParser.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">P</span></code></span></dt>
 <dd><p>
-                A UnaryParser type.
-              </p></dd>
+                  A UnaryParser type.
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.valid_expressions"></a><h6>
-<a name="id649459"></a>
+<a name="id617871"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -79,41 +79,41 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Return type
-                  </p>
+                    <p>
+                      Return type
+                    </p>
                   </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">p</span><span class="special">.</span><span class="identifier">subject</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">p</span><span class="special">.</span><span class="identifier">subject</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Subject parser.
-                  </p>
+                    <p>
+                      Subject parser.
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                    </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.type_expressions"></a><h6>
-<a name="id649573"></a>
+<a name="id617991"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -124,49 +124,49 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Description
-                  </p>
+                    <p>
+                      Description
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">P</span><span class="special">::</span><span class="identifier">subject_type</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">P</span><span class="special">::</span><span class="identifier">subject_type</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    The subject parser type.
-                  </p>
+                    <p>
+                      The subject parser type.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_unary_parser</span><span class="special">&lt;</span><span class="identifier">P</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_unary_parser</span><span class="special">&lt;</span><span class="identifier">P</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                    if a certain type, <code class="computeroutput"><span class="identifier">P</span></code>
-                    is a UnaryParser, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                    Boolean Constant</a>).
-                  </p>
+                    <p>
+                      Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                      if a certain type, <code class="computeroutput"><span class="identifier">P</span></code>
+                      is a UnaryParser, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
+                      otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                      Boolean Constant</a>).
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.invariants"></a><h6>
-<a name="id649741"></a>
+<a name="id618163"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.invariants">Invariants</a>
           </h6>
 <p>
@@ -177,7 +177,7 @@
 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_parser</span><span class="special">&lt;</span><span class="identifier">P</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.models"></a><h6>
-<a name="id650446"></a>
+<a name="id618248"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.models">Models</a>
           </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">

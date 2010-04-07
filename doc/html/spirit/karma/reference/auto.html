@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.auto"></a><a class="link" href="auto.html" title="Auto"> Auto</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.auto.description"></a><h6>
-<a name="id810622"></a>
+<a name="id779956"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.description">Description</a>
         </h6>
 <p>
@@ -36,7 +36,7 @@
           based on the supplied attribute type.
         </p>
 <a name="spirit.karma.reference.auto.header"></a><h6>
-<a name="id810646"></a>
+<a name="id779980"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auto.hpp&gt;
@@ -46,25 +46,25 @@
           Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 <a name="spirit.karma.reference.auto.namespace"></a><h6>
-<a name="id810720"></a>
+<a name="id780055"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
 <thead><tr><th>
-                <p>
-                  Name
-                </p>
+                  <p>
+                    Name
+                  </p>
                 </th></tr></thead>
 <tbody><tr><td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">auto_</span> <span class="comment">// alias:
-                  boost::spirit::karma::auto_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">auto_</span> <span class="comment">// alias:
+                    boost::spirit::karma::auto_</span></code>
+                  </p>
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auto.model_of"></a><h6>
-<a name="id810798"></a>
+<a name="id780134"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -81,17 +81,17 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">s</span></code></span></dt>
 <dd><p>
-              A variable instance of any type for which a mapping to a generator
-              type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
-              returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>) or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-              Argument</a> that evaluates to any type for which a mapping to a
-              generator type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
-              returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>).
-            </p></dd>
+                A variable instance of any type for which a mapping to a generator
+                type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
+                returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>) or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to any type for which a mapping to
+                a generator type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
+                returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>).
+              </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.auto.expression_semantics"></a><h6>
-<a name="id810922"></a>
+<a name="id780606"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -106,49 +106,49 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Description
-                </p>
+                  <p>
+                    Description
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">auto_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">auto_</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Create a generator instance compatible with the supplied attribute
-                  type and use it for output generation. This generator never fails
-                  (unless the underlying output stream reports an error).
-                </p>
+                  <p>
+                    Create a generator instance compatible with the supplied attribute
+                    type and use it for output generation. This generator never fails
+                    (unless the underlying output stream reports an error).
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">auto_</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">auto_</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Create a generator instance compatible with the supplied literal
-                  value. This generator never fails (unless the underlying output
-                  stream reports an error).
-                </p>
+                  <p>
+                    Create a generator instance compatible with the supplied literal
+                    value. This generator never fails (unless the underlying output
+                    stream reports an error).
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auto.additional_requirements"></a><h6>
-<a name="id811043"></a>
+<a name="id780731"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.additional_requirements">Additional
           Requirements</a>
         </h6>
@@ -168,165 +168,165 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Attribute type
-                </p>
+                  <p>
+                    Attribute type
+                  </p>
                 </th>
 <th>
-                <p>
-                  Generator type
-                </p>
+                  <p>
+                    Generator type
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">char</span></code>, <code class="computeroutput"><span class="keyword">wchar_t</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">char</span></code>, <code class="computeroutput"><span class="keyword">wchar_t</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">standard</span><span class="special">::</span><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">standard_wide</span><span class="special">::</span><span class="identifier">char_</span></code>
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">short</span></code>, <code class="computeroutput"><span class="keyword">int</span></code>, <code class="computeroutput"><span class="keyword">long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">short_</span></code>, <code class="computeroutput"><span class="identifier">int_</span></code>, <code class="computeroutput"><span class="identifier">long_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">standard</span><span class="special">::</span><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">standard_wide</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">short</span></code>,
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span></code>,
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">short</span></code>, <code class="computeroutput"><span class="keyword">int</span></code>, <code class="computeroutput"><span class="keyword">long</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">ushort_</span></code>, <code class="computeroutput"><span class="identifier">uint_</span></code>, <code class="computeroutput"><span class="identifier">ulong_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">short_</span></code>, <code class="computeroutput"><span class="identifier">int_</span></code>, <code class="computeroutput"><span class="identifier">long_</span></code>
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">float</span></code>, <code class="computeroutput"><span class="keyword">double</span></code>, <code class="computeroutput"><span class="keyword">long</span>
-                  <span class="keyword">double</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">short</span></code>,
+                    <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span></code>,
+                    <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">float_</span></code>, <code class="computeroutput"><span class="identifier">double_</span></code>, <code class="computeroutput"><span class="identifier">long_double</span></code>
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">short</span></code>, <code class="computeroutput"><span class="keyword">int</span></code>, <code class="computeroutput"><span class="keyword">long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">short_</span></code>, <code class="computeroutput"><span class="identifier">int_</span></code>, <code class="computeroutput"><span class="identifier">long_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ushort_</span></code>, <code class="computeroutput"><span class="identifier">uint_</span></code>, <code class="computeroutput"><span class="identifier">ulong_</span></code>
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></code>,
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span>
-                  <span class="keyword">long</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">float</span></code>, <code class="computeroutput"><span class="keyword">double</span></code>, <code class="computeroutput"><span class="keyword">long</span>
+                    <span class="keyword">double</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">long_long</span></code>, <code class="computeroutput"><span class="identifier">ulong_long</span></code>
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">bool</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">bool_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">float_</span></code>, <code class="computeroutput"><span class="identifier">double_</span></code>, <code class="computeroutput"><span class="identifier">long_double</span></code>
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  Any string (<code class="computeroutput"><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span></code>,
-                  <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>, etc.)
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">short</span></code>, <code class="computeroutput"><span class="keyword">int</span></code>, <code class="computeroutput"><span class="keyword">long</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">string</span></code>
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  Any (STL) container
-                </p>
-                </td>
-<td>
-                <p>
-                  Kleene Star (unary <code class="computeroutput"><span class="char">'*'</span></code>)
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">short_</span></code>, <code class="computeroutput"><span class="identifier">int_</span></code>, <code class="computeroutput"><span class="identifier">long_</span></code>
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  Any Fusion sequence
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></code>,
+                    <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span>
+                    <span class="keyword">long</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Sequence operator (<code class="computeroutput"><span class="char">'&lt;&lt;'</span></code>)
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Optional operator (unary <code class="computeroutput"><span class="char">'-'</span></code>)
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">long_long</span></code>, <code class="computeroutput"><span class="identifier">ulong_long</span></code>
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;&gt;</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">bool</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Alternative operator (<code class="computeroutput"><span class="char">'|'</span></code>)
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">bool_</span></code>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Any string (<code class="computeroutput"><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span></code>,
+                    <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>, etc.)
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">string</span></code>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Any (STL) container
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Kleene Star (unary <code class="computeroutput"><span class="char">'*'</span></code>)
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Any Fusion sequence
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Sequence operator (<code class="computeroutput"><span class="char">'&lt;&lt;'</span></code>)
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Optional operator (unary <code class="computeroutput"><span class="char">'-'</span></code>)
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;&gt;</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Alternative operator (<code class="computeroutput"><span class="char">'|'</span></code>)
+                  </p>
                 </td>
 </tr>
 </tbody>
@@ -337,7 +337,7 @@
           can be used also to redefined anz of the predefined mappings.
         </p>
 <a name="spirit.karma.reference.auto.attributes"></a><h6>
-<a name="id811739"></a>
+<a name="id781445"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -347,40 +347,40 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Attribute
-                </p>
+                  <p>
+                    Attribute
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">auto_</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">auto_</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">hold_any</span></code>, attribute
-                  is mandatory (otherwise compilation will fail)
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">hold_any</span></code>, attribute
+                    is mandatory (otherwise compilation will fail)
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">auto_</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">auto_</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">unused</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
                 </td>
 </tr>
 </tbody>
@@ -413,7 +413,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.auto.complexity"></a><h6>
-<a name="id811980"></a>
+<a name="id781690"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.complexity">Complexity</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -429,7 +429,7 @@
           </p>
 </blockquote></div>
 <a name="spirit.karma.reference.auto.example"></a><h6>
-<a name="id812011"></a>
+<a name="id781721"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.example">Example</a>
         </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

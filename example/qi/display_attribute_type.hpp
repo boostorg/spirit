@@ -33,6 +33,11 @@ namespace tools
     template <typename T>
     void display_attribute_of_parser(T const &) 
     {
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, T);
+
         typedef typename attribute_of_parser<T>::type type;
         std::cout << typeid(type).name() << std::endl;
     }
@@ -40,8 +45,13 @@ namespace tools
     template <typename T>
     void display_attribute_of_parser(std::ostream& os, T const &) 
     {
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, T);
+
         typedef typename attribute_of_parser<T>::type type;
-        std::cout << typeid(type).name() << std::endl;
+        os << typeid(type).name() << std::endl;
     }
 }
 

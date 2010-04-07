@@ -39,6 +39,36 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject>
     struct plus : unary_generator<plus<Subject> >
     {
+    private:
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate_subject(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr, bool& result) const
+        {
+            // Ignore return value, failing subject generators are just 
+            // skipped. This allows to selectively generate items in the 
+            // provided attribute.
+            if (subject.generate(sink, ctx, d, attr))
+                result = true;
+            return true;
+        }
+
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate_subject(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, unused_type, bool& result) const
+        {
+            // There is no way to distinguish a failed generator from a 
+            // generator to be skipped. We assume the user takes responsibility
+            // for ending the loop if no attribute is specified.
+            if (subject.generate(sink, ctx, d, unused)) {
+                result = true;
+                return true;
+            }
+            return false;
+        }
+
+    public:
         typedef Subject subject_type;
         typedef typename subject_type::properties properties;
 
@@ -78,8 +108,8 @@ namespace boost { namespace spirit { namespace karma
             for (/**/; detail::sink_is_good(sink) && !traits::compare(it, end); 
                  traits::next(it))
             {
-                if (subject.generate(sink, ctx, d, traits::deref(it)))
-                    result = true;
+                if (!generate_subject(sink, ctx, d, traits::deref(it), result))
+                    break;
             }
             return result && detail::sink_is_good(sink);
         }

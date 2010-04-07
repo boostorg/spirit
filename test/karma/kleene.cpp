@@ -27,6 +27,24 @@
 using namespace spirit_test;
 
 ///////////////////////////////////////////////////////////////////////////////
+struct action 
+{
+    action (std::vector<char>& vec) 
+      : vec(vec), it(vec.begin()) 
+    {}
+
+    void operator()(unsigned& value, boost::spirit::unused_type, bool& pass) const
+    {
+       pass = (it != vec.end());
+       if (pass)
+           value = *it++;
+    }
+
+    std::vector<char>& vec;
+    mutable std::vector<char>::iterator it;
+};
+
+///////////////////////////////////////////////////////////////////////////////
 int main()
 {
     using namespace boost::spirit;
@@ -120,6 +138,16 @@ int main()
 
         r = &char_('A') << char_;
         BOOST_TEST(test("", *r, v2));
+    }
+
+    {
+        // make sure user defined end condition is applied if no attribute
+        // is passed in
+        using namespace boost::assign;
+
+        std::vector<char> v;
+        v += 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h';
+        BOOST_TEST(test("[6162636465666768]", '[' << *hex[action(v)] << ']'));
     }
 
     return boost::report_errors();

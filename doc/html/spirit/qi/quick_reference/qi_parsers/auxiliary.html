@@ -35,145 +35,147 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Attribute
-                  </p>
+                    <p>
+                      Attribute
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Description
-                  </p>
+                    <p>
+                      Description
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/auxiliary/eol.html" title="End of Line (eol)"><code class="computeroutput"><span class="identifier">eol</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/auxiliary/eol.html" title="End of Line (eol)"><code class="computeroutput"><span class="identifier">eol</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Unused</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Unused</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Matches the end of line (<code class="computeroutput"><span class="special">\</span><span class="identifier">r</span></code> or <code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code> or <code class="computeroutput"><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">n</span></code>)
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="../../reference/auxiliary/eoi.html" title="End of Input (eoi)"><code class="computeroutput"><span class="identifier">eoi</span></code></a>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Unused</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Matches the end of input (first == last)
-                  </p>
+                    <p>
+                      Matches the end of line (<code class="computeroutput"><span class="special">\</span><span class="identifier">r</span></code> or <code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code> or <code class="computeroutput"><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">n</span></code>)
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/auxiliary/eoi.html" title="End of Input (eoi)"><code class="computeroutput"><span class="identifier">eoi</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Unused</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Unused</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Match an empty string
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="../../reference/auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Unused</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    If <code class="computeroutput"><span class="identifier">b</span></code> is true,
-                    match an empty string
-                  </p>
+                    <p>
+                      Matches the end of input (first == last)
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/auxiliary/lazy.html" title="Lazy (lazy)"><code class="computeroutput"><span class="identifier">lazy</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></code>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Attribute of <code class="computeroutput"><span class="identifier">P</span></code>
-                    where <code class="computeroutput"><span class="identifier">P</span></code> is the
-                    return type of <code class="computeroutput"><span class="identifier">fp</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Unused</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Invoke <code class="computeroutput"><span class="identifier">fp</span></code> at
-                    parse time, returning a parser <code class="computeroutput"><span class="identifier">p</span></code>
-                    which is then called to parse.
-                  </p>
+                    <p>
+                      Match an empty string
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">fp</span></code>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    see <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></code>
-                    above
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Unused</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Equivalent to <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></code>
-                  </p>
+                    <p>
+                      If <code class="computeroutput"><span class="identifier">b</span></code> is true,
+                      match an empty string
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../../reference/auxiliary/attr.html" title="Attribute (attr)"><code class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">attrib</span><span class="special">)</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../../reference/auxiliary/lazy.html" title="Lazy (lazy)"><code class="computeroutput"><span class="identifier">lazy</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                  </p>
+                    <p>
+                      Attribute of <code class="computeroutput"><span class="identifier">P</span></code>
+                      where <code class="computeroutput"><span class="identifier">P</span></code> is
+                      the return type of <code class="computeroutput"><span class="identifier">fp</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Doesn't consume/parse any input, but exposes the argument <code class="computeroutput"><span class="identifier">attrib</span></code> as its attribute.
-                  </p>
+                    <p>
+                      Invoke <code class="computeroutput"><span class="identifier">fp</span></code> at
+                      parse time, returning a parser <code class="computeroutput"><span class="identifier">p</span></code>
+                      which is then called to parse.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fp</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      see <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></code>
+                      above
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Equivalent to <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <a class="link" href="../../reference/auxiliary/attr.html" title="Attribute (attr)"><code class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">attrib</span><span class="special">)</span></code></a>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Doesn't consume/parse any input, but exposes the argument
+                      <code class="computeroutput"><span class="identifier">attrib</span></code> as its
+                      attribute.
+                    </p>
                   </td>
 </tr>
 </tbody>

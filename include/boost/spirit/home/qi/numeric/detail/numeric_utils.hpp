@@ -19,7 +19,10 @@
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/is_signed.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/and.hpp>
 
 #include <limits>
 #include <boost/limits.hpp>
@@ -350,8 +353,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 }
             }
 
-            typedef typename 
-                traits::attribute_type<Attribute>::type 
+            typedef typename
+                traits::attribute_type<Attribute>::type
             attribute_type;
 
             attribute_type val = Accumulate ? attr : attribute_type(0);
@@ -455,8 +458,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 }
             }
 
-            typedef typename 
-                traits::attribute_type<Attribute>::type 
+            typedef typename
+                traits::attribute_type<Attribute>::type
             attribute_type;
 
             attribute_type val = Accumulate ? attr : attribute_type(0);
@@ -511,6 +514,35 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     };
 
 #undef SPIRIT_NUMERIC_INNER_LOOP
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Cast an signed integer to an unsigned integer
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T,
+        bool force_unsigned
+            = mpl::and_<is_integral<T>, is_signed<T> >::value>
+    struct cast_unsigned;
+
+    template <typename T>
+    struct cast_unsigned<T, true>
+    {
+        typedef typename make_unsigned<T>::type unsigned_type;
+        typedef typename make_unsigned<T>::type& unsigned_type_ref;
+
+        static unsigned_type_ref call(T& n)
+        {
+            return unsigned_type_ref(n);
+        }
+    };
+
+    template <typename T>
+    struct cast_unsigned<T, false>
+    {
+        static T& call(T& n)
+        {
+            return n;
+        }
+    };
 
 }}}}
 

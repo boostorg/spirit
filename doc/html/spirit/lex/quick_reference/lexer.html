@@ -28,577 +28,577 @@
         Expressions</a>
 </h4></div></div></div>
 <div class="table">
-<a name="id949955"></a><p class="title"><b>Table&#160;11.&#160;Regular expressions
-        support</b></p>
-<div class="table-contents"><table class="table" summary="Regular expressions
-        support">
+<a name="id914520"></a><p class="title"><b>Table&#160;11.&#160;Regular expressions support</b></p>
+<div class="table-contents"><table class="table" summary="Regular expressions support">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
-              <p>
-                Expression
-              </p>
-              </th>
+                  <p>
+                    Expression
+                  </p>
+                </th>
 <th>
-              <p>
-                Meaning
-              </p>
-              </th>
+                  <p>
+                    Meaning
+                  </p>
+                </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">x</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">x</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Match any character <code class="computeroutput"><span class="identifier">x</span></code>
-              </p>
-              </td>
+                  <p>
+                    Match any character <code class="computeroutput"><span class="identifier">x</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">.</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">.</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Match any except newline (or optionally <span class="bold"><strong>any</strong></span>
-                character)
-              </p>
-              </td>
+                  <p>
+                    Match any except newline (or optionally <span class="bold"><strong>any</strong></span>
+                    character)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="string">"..."</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="string">"..."</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                All characters taken as literals between double quotes, except escape
-                sequences
-              </p>
-              </td>
+                  <p>
+                    All characters taken as literals between double quotes, except
+                    escape sequences
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">[</span><span class="identifier">xyz</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">[</span><span class="identifier">xyz</span><span class="special">]</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A character class; in this case matches <code class="computeroutput"><span class="identifier">x</span></code>,
-                <code class="computeroutput"><span class="identifier">y</span></code> or <code class="computeroutput"><span class="identifier">z</span></code>
-              </p>
-              </td>
+                  <p>
+                    A character class; in this case matches <code class="computeroutput"><span class="identifier">x</span></code>,
+                    <code class="computeroutput"><span class="identifier">y</span></code> or <code class="computeroutput"><span class="identifier">z</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">[</span><span class="identifier">abj</span><span class="special">-</span><span class="identifier">oZ</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">[</span><span class="identifier">abj</span><span class="special">-</span><span class="identifier">oZ</span><span class="special">]</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A character class with a range in it; matches <code class="computeroutput"><span class="identifier">a</span></code>,
-                <code class="computeroutput"><span class="identifier">b</span></code> any letter from
-                <code class="computeroutput"><span class="identifier">j</span></code> through <code class="computeroutput"><span class="identifier">o</span></code> or a <code class="computeroutput"><span class="identifier">Z</span></code>
-              </p>
-              </td>
+                  <p>
+                    A character class with a range in it; matches <code class="computeroutput"><span class="identifier">a</span></code>,
+                    <code class="computeroutput"><span class="identifier">b</span></code> any letter
+                    from <code class="computeroutput"><span class="identifier">j</span></code> through
+                    <code class="computeroutput"><span class="identifier">o</span></code> or a <code class="computeroutput"><span class="identifier">Z</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">[^</span><span class="identifier">A</span><span class="special">-</span><span class="identifier">Z</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">[^</span><span class="identifier">A</span><span class="special">-</span><span class="identifier">Z</span><span class="special">]</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A negated character class i.e. any character but those in the class.
-                In this case, any character except an uppercase letter
-              </p>
-              </td>
+                  <p>
+                    A negated character class i.e. any character but those in the
+                    class. In this case, any character except an uppercase letter
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">*</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">*</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Zero or more r's (greedy), where r is any regular expression
-              </p>
-              </td>
+                  <p>
+                    Zero or more r's (greedy), where r is any regular expression
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">*?</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">*?</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Zero or more r's (abstemious), where r is any regular expression
-              </p>
-              </td>
+                  <p>
+                    Zero or more r's (abstemious), where r is any regular expression
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">+</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">+</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                One or more r's (greedy)
-              </p>
-              </td>
+                  <p>
+                    One or more r's (greedy)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">+?</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">+?</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                One or more r's (abstemious)
-              </p>
-              </td>
+                  <p>
+                    One or more r's (abstemious)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">?</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">?</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Zero or one r's (greedy), i.e. optional
-              </p>
-              </td>
+                  <p>
+                    Zero or one r's (greedy), i.e. optional
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">??</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">??</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Zero or one r's (abstemious), i.e. optional
-              </p>
-              </td>
+                  <p>
+                    Zero or one r's (abstemious), i.e. optional
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">5</span><span class="special">}</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">5</span><span class="special">}</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Anywhere between two and five r's (greedy)
-              </p>
-              </td>
+                  <p>
+                    Anywhere between two and five r's (greedy)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">5</span><span class="special">}?</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">5</span><span class="special">}?</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Anywhere between two and five r's (abstemious)
-              </p>
-              </td>
+                  <p>
+                    Anywhere between two and five r's (abstemious)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,}</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,}</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Two or more r's (greedy)
-              </p>
-              </td>
+                  <p>
+                    Two or more r's (greedy)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,}?</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,}?</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Two or more r's (abstemious)
-              </p>
-              </td>
+                  <p>
+                    Two or more r's (abstemious)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">4</span><span class="special">}</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">4</span><span class="special">}</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Exactly four r's
-              </p>
-              </td>
+                  <p>
+                    Exactly four r's
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">{</span><span class="identifier">NAME</span><span class="special">}</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">{</span><span class="identifier">NAME</span><span class="special">}</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                The macro <code class="computeroutput"><span class="identifier">NAME</span></code> (see
-                below)
-              </p>
-              </td>
+                  <p>
+                    The macro <code class="computeroutput"><span class="identifier">NAME</span></code>
+                    (see below)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="string">"[xyz]\"foo"</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="string">"[xyz]\"foo"</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                The literal string <code class="computeroutput"><span class="special">[</span><span class="identifier">xyz</span><span class="special">]\</span><span class="error">"</span><span class="identifier">foo</span></code>
-              </p>
-              </td>
+                  <p>
+                    The literal string <code class="computeroutput"><span class="special">[</span><span class="identifier">xyz</span><span class="special">]\</span><span class="error">"</span><span class="identifier">foo</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">X</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">X</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                If X is <code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">b</span></code>, <code class="computeroutput"><span class="identifier">e</span></code>,
-                <code class="computeroutput"><span class="identifier">n</span></code>, <code class="computeroutput"><span class="identifier">r</span></code>, <code class="computeroutput"><span class="identifier">f</span></code>,
-                <code class="computeroutput"><span class="identifier">t</span></code>, <code class="computeroutput"><span class="identifier">v</span></code> then the ANSI-C interpretation
-                of <code class="computeroutput"><span class="special">\</span><span class="identifier">x</span></code>.
-                Otherwise a literal <code class="computeroutput"><span class="identifier">X</span></code>
-                (used to escape operators such as <code class="computeroutput"><span class="special">*</span></code>)
-              </p>
-              </td>
+                  <p>
+                    If X is <code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">b</span></code>, <code class="computeroutput"><span class="identifier">e</span></code>,
+                    <code class="computeroutput"><span class="identifier">n</span></code>, <code class="computeroutput"><span class="identifier">r</span></code>, <code class="computeroutput"><span class="identifier">f</span></code>,
+                    <code class="computeroutput"><span class="identifier">t</span></code>, <code class="computeroutput"><span class="identifier">v</span></code> then the ANSI-C interpretation
+                    of <code class="computeroutput"><span class="special">\</span><span class="identifier">x</span></code>.
+                    Otherwise a literal <code class="computeroutput"><span class="identifier">X</span></code>
+                    (used to escape operators such as <code class="computeroutput"><span class="special">*</span></code>)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="number">0</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="number">0</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A NUL character (ASCII code 0)
-              </p>
-              </td>
+                  <p>
+                    A NUL character (ASCII code 0)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="number">123</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="number">123</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                The character with octal value 123
-              </p>
-              </td>
+                  <p>
+                    The character with octal value 123
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">x2a</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">x2a</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                The character with hexadecimal value 2a
-              </p>
-              </td>
+                  <p>
+                    The character with hexadecimal value 2a
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">cX</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">cX</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A named control character <code class="computeroutput"><span class="identifier">X</span></code>.
-              </p>
-              </td>
+                  <p>
+                    A named control character <code class="computeroutput"><span class="identifier">X</span></code>.
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">a</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">a</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for Alert (bell).
-              </p>
-              </td>
+                  <p>
+                    A shortcut for Alert (bell).
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">b</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">b</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for Backspace
-              </p>
-              </td>
+                  <p>
+                    A shortcut for Backspace
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">e</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">e</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for ESC (escape character <code class="computeroutput"><span class="number">0x1b</span></code>)
-              </p>
-              </td>
+                  <p>
+                    A shortcut for ESC (escape character <code class="computeroutput"><span class="number">0x1b</span></code>)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for newline
-              </p>
-              </td>
+                  <p>
+                    A shortcut for newline
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">r</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">r</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for carriage return
-              </p>
-              </td>
+                  <p>
+                    A shortcut for carriage return
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">f</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">f</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for form feed <code class="computeroutput"><span class="number">0x0c</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for form feed <code class="computeroutput"><span class="number">0x0c</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">t</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">t</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for horizontal tab <code class="computeroutput"><span class="number">0x09</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for horizontal tab <code class="computeroutput"><span class="number">0x09</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">v</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">v</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for vertical tab <code class="computeroutput"><span class="number">0x0b</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for vertical tab <code class="computeroutput"><span class="number">0x0b</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">d</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">d</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for <code class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for <code class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">D</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">D</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for <code class="computeroutput"><span class="special">[^</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for <code class="computeroutput"><span class="special">[^</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">s</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">s</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for <code class="computeroutput"><span class="special">[\</span><span class="identifier">x20</span><span class="special">\</span><span class="identifier">t</span><span class="special">\</span><span class="identifier">n</span><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">f</span><span class="special">\</span><span class="identifier">v</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for <code class="computeroutput"><span class="special">[\</span><span class="identifier">x20</span><span class="special">\</span><span class="identifier">t</span><span class="special">\</span><span class="identifier">n</span><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">f</span><span class="special">\</span><span class="identifier">v</span><span class="special">]</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">S</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">S</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for <code class="computeroutput"><span class="special">[^\</span><span class="identifier">x20</span><span class="special">\</span><span class="identifier">t</span><span class="special">\</span><span class="identifier">n</span><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">f</span><span class="special">\</span><span class="identifier">v</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for <code class="computeroutput"><span class="special">[^\</span><span class="identifier">x20</span><span class="special">\</span><span class="identifier">t</span><span class="special">\</span><span class="identifier">n</span><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">f</span><span class="special">\</span><span class="identifier">v</span><span class="special">]</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">w</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">w</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for <code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z0</span><span class="special">-</span><span class="number">9</span><span class="identifier">_</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for <code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z0</span><span class="special">-</span><span class="number">9</span><span class="identifier">_</span><span class="special">]</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">\</span><span class="identifier">W</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">\</span><span class="identifier">W</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                A shortcut for <code class="computeroutput"><span class="special">[^</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z0</span><span class="special">-</span><span class="number">9</span><span class="identifier">_</span><span class="special">]</span></code>
-              </p>
-              </td>
+                  <p>
+                    A shortcut for <code class="computeroutput"><span class="special">[^</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z0</span><span class="special">-</span><span class="number">9</span><span class="identifier">_</span><span class="special">]</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">(</span><span class="identifier">r</span><span class="special">)</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">(</span><span class="identifier">r</span><span class="special">)</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Match an <code class="computeroutput"><span class="identifier">r</span></code>; parenthesis
-                are used to override precedence (see below)
-              </p>
-              </td>
+                  <p>
+                    Match an <code class="computeroutput"><span class="identifier">r</span></code>; parenthesis
+                    are used to override precedence (see below)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">(?</span><span class="identifier">r</span><span class="special">-</span><span class="identifier">s</span><span class="special">:</span><span class="identifier">pattern</span><span class="special">)</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">(?</span><span class="identifier">r</span><span class="special">-</span><span class="identifier">s</span><span class="special">:</span><span class="identifier">pattern</span><span class="special">)</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                apply option 'r' and omit option 's' while interpreting pattern.
-                Options may be zero or more of the characters 'i' or 's'. 'i' means
-                case-insensitive. '-i' means case-sensitive. 's' alters the meaning
-                of the '.' syntax to match any single character whatsoever. '-s'
-                alters the meaning of '.' to match any character except '<code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code>'.
-              </p>
-              </td>
+                  <p>
+                    apply option 'r' and omit option 's' while interpreting pattern.
+                    Options may be zero or more of the characters 'i' or 's'. 'i'
+                    means case-insensitive. '-i' means case-sensitive. 's' alters
+                    the meaning of the '.' syntax to match any single character whatsoever.
+                    '-s' alters the meaning of '.' to match any character except
+                    '<code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code>'.
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">rs</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">rs</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                The regular expression <code class="computeroutput"><span class="identifier">r</span></code>
-                followed by the regular expression <code class="computeroutput"><span class="identifier">s</span></code>
-                (a sequence)
-              </p>
-              </td>
+                  <p>
+                    The regular expression <code class="computeroutput"><span class="identifier">r</span></code>
+                    followed by the regular expression <code class="computeroutput"><span class="identifier">s</span></code>
+                    (a sequence)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span><span class="special">|</span><span class="identifier">s</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span><span class="special">|</span><span class="identifier">s</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                Either an <code class="computeroutput"><span class="identifier">r</span></code> or and
-                <code class="computeroutput"><span class="identifier">s</span></code>
-              </p>
-              </td>
+                  <p>
+                    Either an <code class="computeroutput"><span class="identifier">r</span></code> or
+                    and <code class="computeroutput"><span class="identifier">s</span></code>
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="special">^</span><span class="identifier">r</span></code>
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="special">^</span><span class="identifier">r</span></code>
+                  </p>
+                </td>
 <td>
-              <p>
-                An <code class="computeroutput"><span class="identifier">r</span></code> but only at
-                the beginning of a line (i.e. when just starting to scan, or right
-                after a newline has been scanned)
-              </p>
-              </td>
+                  <p>
+                    An <code class="computeroutput"><span class="identifier">r</span></code> but only
+                    at the beginning of a line (i.e. when just starting to scan,
+                    or right after a newline has been scanned)
+                  </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">r</span></code>$
-              </p>
-              </td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">r</span></code>$
+                  </p>
+                </td>
 <td>
-              <p>
-                An <code class="computeroutput"><span class="identifier">r</span></code> but only at
-                the end of a line (i.e. just before a newline)
-              </p>
-              </td>
+                  <p>
+                    An <code class="computeroutput"><span class="identifier">r</span></code> but only
+                    at the end of a line (i.e. just before a newline)
+                  </p>
+                </td>
 </tr>
 </tbody>
 </table></div>
@@ -638,7 +638,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.quick_reference.lexer.regular_expression_precedence"></a><h6>
-<a name="id953058"></a>
+<a name="id917705"></a>
           <a class="link" href="lexer.html#spirit.lex.quick_reference.lexer.regular_expression_precedence">Regular
           Expression Precedence</a>
         </h6>
@@ -656,7 +656,7 @@
           </li>
 </ul></div>
 <a name="spirit.lex.quick_reference.lexer.macros"></a><h6>
-<a name="id953163"></a>
+<a name="id917811"></a>
           <a class="link" href="lexer.html#spirit.lex.quick_reference.lexer.macros">Macros</a>
         </h6>
 <p>

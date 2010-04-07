@@ -39,6 +39,31 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject>
     struct kleene : unary_generator<kleene<Subject> >
     {
+    private:
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate_subject(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr) const
+        {
+            // Ignore return value, failing subject generators are just 
+            // skipped. This allows to selectively generate items in the 
+            // provided attribute.
+            subject.generate(sink, ctx, d, attr);
+            return true;
+        }
+
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate_subject(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, unused_type) const
+        {
+            // There is no way to distinguish a failed generator from a 
+            // generator to be skipped. We assume the user takes responsibility
+            // for ending the loop if no attribute is specified.
+            return subject.generate(sink, ctx, d, unused);
+        }
+
+    public:
         typedef Subject subject_type;
         typedef typename subject_type::properties properties;
 
@@ -72,10 +97,8 @@ namespace boost { namespace spirit { namespace karma
             for (/**/; detail::sink_is_good(sink) && !traits::compare(it, end); 
                  traits::next(it))
             {
-                // Ignore return value, failing subject generators are just 
-                // skipped. This allows to selectively generate items in the 
-                // provided attribute.
-                subject.generate(sink, ctx, d, traits::deref(it));
+                if (!generate_subject(sink, ctx, d, traits::deref(it)))
+                    break;
             }
             return detail::sink_is_good(sink);
         }

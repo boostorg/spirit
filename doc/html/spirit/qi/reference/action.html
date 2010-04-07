@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.action"></a><a class="link" href="action.html" title="Action">Action</a>
 </h4></div></div></div>
 <a name="spirit.qi.reference.action.description"></a><h6>
-<a name="id666599"></a>
+<a name="id634474"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.description">Description</a>
         </h6>
 <p>
@@ -38,7 +38,7 @@
           is an arbitrary parser expression.
         </p>
 <a name="spirit.qi.reference.action.header"></a><h6>
-<a name="id666633"></a>
+<a name="id634508"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/action.hpp&gt;
@@ -48,7 +48,7 @@
           Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 <a name="spirit.qi.reference.action.model_of"></a><h6>
-<a name="id666708"></a>
+<a name="id634583"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -63,34 +63,34 @@
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
-          <code class="computeroutput"><span class="identifier">p</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">p</span></code></span></dt>
 <dd><p>
-              Instances of a parser, <code class="computeroutput"><span class="identifier">P</span></code>
-            </p></dd>
+                Instances of a parser, <code class="computeroutput"><span class="identifier">P</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-              Attribute type exposed by a parser, <code class="computeroutput"><span class="identifier">a</span></code>
-            </p></dd>
+                Attribute type exposed by a parser, <code class="computeroutput"><span class="identifier">a</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fa</span></code></span></dt>
 <dd><p>
-              A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
-              flag that can be set to false to force the parser to fail. Both <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean flag are
-              optional. For more information see below.
-            </p></dd>
+                A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
+                flag that can be set to false to force the parser to fail. Both
+                <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean
+                flag are optional. For more information see below.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Attrib</span></code></span></dt>
 <dd><p>
-              The attribute obtained from the parse.
-            </p></dd>
+                The attribute obtained from the parse.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Context</span></code></span></dt>
 <dd><p>
-              The type of the parser execution context. For more information see
-              below.
-            </p></dd>
+                The type of the parser execution context. For more information see
+                below.
+              </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.action.expression_semantics"></a><h6>
-<a name="id666903"></a>
+<a name="id634784"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -105,30 +105,30 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Semantics
-                </p>
+                  <p>
+                    Semantics
+                  </p>
                 </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">p</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">p</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  If <code class="computeroutput"><span class="identifier">p</span></code> is successful,
-                  call semantic action, <code class="computeroutput"><span class="identifier">fa</span></code>.
-                  The function or function object <code class="computeroutput"><span class="identifier">fa</span></code>
-                  is provided the attribute value parsed by the parser <code class="computeroutput"><span class="identifier">p</span></code>, plus some more context information
-                  and a mutable bool flag which can be used to fail parsing.
-                </p>
+                  <p>
+                    If <code class="computeroutput"><span class="identifier">p</span></code> is successful,
+                    call semantic action, <code class="computeroutput"><span class="identifier">fa</span></code>.
+                    The function or function object <code class="computeroutput"><span class="identifier">fa</span></code>
+                    is provided the attribute value parsed by the parser <code class="computeroutput"><span class="identifier">p</span></code>, plus some more context information
+                    and a mutable bool flag which can be used to fail parsing.
+                  </p>
                 </td>
 </tr></tbody>
 </table></div>
@@ -168,7 +168,7 @@
           and not generating any output.
         </p>
 <a name="spirit.qi.reference.action.attributes"></a><h6>
-<a name="id667351"></a>
+<a name="id635234"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -178,34 +178,34 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Attribute
-                </p>
+                  <p>
+                    Attribute
+                  </p>
                 </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                  <span class="identifier">A</span> <span class="special">--&gt;</span>
-                  <span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]:</span>
-                  <span class="identifier">A</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                    <span class="identifier">A</span> <span class="special">--&gt;</span>
+                    <span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]:</span>
+                    <span class="identifier">A</span></code>
+                  </p>
                 </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.action.complexity"></a><h6>
-<a name="id667473"></a>
+<a name="id635359"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.complexity">Complexity</a>
         </h6>
 <p>
@@ -214,7 +214,7 @@
           or function object used as the semantic action.
         </p>
 <a name="spirit.qi.reference.action.example"></a><h6>
-<a name="id667490"></a>
+<a name="id635376"></a>
           <a class="link" href="action.html#spirit.qi.reference.action.example">Example</a>
         </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

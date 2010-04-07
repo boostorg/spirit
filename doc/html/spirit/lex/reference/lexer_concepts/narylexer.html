@@ -27,7 +27,7 @@
 <a name="spirit.lex.reference.lexer_concepts.narylexer"></a><a class="link" href="narylexer.html" title="NaryLexer">NaryLexer</a>
 </h5></div></div></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.description"></a><h6>
-<a name="id954786"></a>
+<a name="id920555"></a>
             <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             Design Pattern.
           </p>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.refinement_of"></a><h6>
-<a name="id954822"></a>
+<a name="id920591"></a>
             <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.refinement_of">Refinement
             of</a>
           </h6>
@@ -55,16 +55,16 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
-                A NaryLexer.
-              </p></dd>
+                  A NaryLexer.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">L</span></code></span></dt>
 <dd><p>
-                A NaryLexer type.
-              </p></dd>
+                  A NaryLexer type.
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.valid_expressions"></a><h6>
-<a name="id954904"></a>
+<a name="id920675"></a>
             <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -80,42 +80,42 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Return type
-                  </p>
+                    <p>
+                      Return type
+                    </p>
                   </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    The tuple of elements.
-                  </p>
+                    <p>
+                      The tuple of elements.
+                    </p>
                   </td>
 <td>
-                  <p>
-                    A <a href="../../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-                    Sequence of <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a> types.
-                  </p>
+                    <p>
+                      A <a href="../../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+                      Sequence of <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a> types.
+                    </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.type_expressions"></a><h6>
-<a name="id955028"></a>
+<a name="id920804"></a>
             <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.type_expressions">Type
             Expressions</a>
           </h6>
@@ -126,49 +126,49 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Description
-                  </p>
+                    <p>
+                      Description
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements_type</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements_type</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Elements tuple type.
-                  </p>
+                    <p>
+                      Elements tuple type.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_nary_lexer</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_nary_lexer</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                    if a certain type, <code class="computeroutput"><span class="identifier">L</span></code>
-                    is a NaryLexer, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                    Boolean Constant</a>).
-                  </p>
+                    <p>
+                      Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                      if a certain type, <code class="computeroutput"><span class="identifier">L</span></code>
+                      is a NaryLexer, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
+                      otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                      Boolean Constant</a>).
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.invariants"></a><h6>
-<a name="id955200"></a>
+<a name="id920978"></a>
             <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.invariants">Invariants</a>
           </h6>
 <p>
@@ -180,7 +180,7 @@
 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_lexer</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.models"></a><h6>
-<a name="id955285"></a>
+<a name="id921063"></a>
             <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.models">Models</a>
           </h6>
 <p>

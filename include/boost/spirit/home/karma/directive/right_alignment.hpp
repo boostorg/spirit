@@ -266,7 +266,7 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
-    // creates right_align(pad, width)[] directive generator
+    // creates right_align(width, pad)[] directive generator
     template <typename Width, typename Padding, typename Subject
       , typename Modifiers>
     struct make_directive<

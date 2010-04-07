@@ -28,7 +28,7 @@
           Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.upperlower.description"></a><h6>
-<a name="id851054"></a>
+<a name="id822284"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.description">Description</a>
           </h6>
 <p>
@@ -38,7 +38,7 @@
             Encoding Namespace</a>).
           </p>
 <a name="spirit.karma.reference.directive.upperlower.header"></a><h6>
-<a name="id851119"></a>
+<a name="id822349"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/upper_lower_case.hpp&gt;
@@ -48,26 +48,26 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.upperlower.namespace"></a><h6>
-<a name="id851193"></a>
+<a name="id822423"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
 <thead><tr><th>
-                  <p>
-                    Name
-                  </p>
+                    <p>
+                      Name
+                    </p>
                   </th></tr></thead>
 <tbody>
 <tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span></code>
+                    </p>
                   </td></tr>
 <tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span></code>
+                    </p>
                   </td></tr>
 </tbody>
 </table></div>
@@ -77,7 +77,7 @@
             Encoding Namespace</a>.
           </p>
 <a name="spirit.karma.reference.directive.upperlower.model_of"></a><h6>
-<a name="id851300"></a>
+<a name="id822530"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.model_of">Model
             of</a>
           </h6>
@@ -95,21 +95,21 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A generator object
-              </p></dd>
+                  A generator object
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-                Attribute type of the generator <code class="computeroutput"><span class="identifier">a</span></code>
-              </p></dd>
+                  Attribute type of the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
-                Encoding Namespace</a>.
-              </p></dd>
+                  A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                  Encoding Namespace</a>.
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.upperlower.expression_semantics"></a><h6>
-<a name="id851419"></a>
+<a name="id822652"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -152,45 +152,47 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Generate <code class="computeroutput"><span class="identifier">a</span></code> as
-                    lower case, interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>. The directive succeeds
-                    as long as the embedded generator succeeded (unless the underlying
-                    output stream reports an error).
-                  </p>
+                    <p>
+                      Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      as lower case, interpreted in the character set defined by
+                      <code class="computeroutput"><span class="identifier">ns</span></code>. The directive
+                      succeeds as long as the embedded generator succeeded (unless
+                      the underlying output stream reports an error).
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Generate <code class="computeroutput"><span class="identifier">a</span></code> as
-                    upper case, interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>. The directive succeeds
-                    as long as the embedded generator succeeded (unless the underlying
-                    output stream reports an error).
-                  </p>
+                    <p>
+                      Generate <code class="computeroutput"><span class="identifier">a</span></code>
+                      as upper case, interpreted in the character set defined by
+                      <code class="computeroutput"><span class="identifier">ns</span></code>. The directive
+                      succeeds as long as the embedded generator succeeded (unless
+                      the underlying output stream reports an error).
+                    </p>
                   </td>
 </tr>
 </tbody>
@@ -219,7 +221,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.attributes"></a><h6>
-<a name="id852020"></a>
+<a name="id823257"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.attributes">Attributes</a>
           </h6>
 <p>
@@ -233,53 +235,53 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Attribute
-                  </p>
+                    <p>
+                      Attribute
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.complexity"></a><h6>
-<a name="id852349"></a>
+<a name="id823589"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -296,7 +298,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.upperlower.example"></a><h6>
-<a name="id852409"></a>
+<a name="id823649"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

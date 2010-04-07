@@ -105,7 +105,7 @@ int main()
                 karma::string << karma::string << karma::double_;
 
         BOOST_TEST(test("s11s122.5\ns21s223.4", r % karma::eol, v));
-        BOOST_TEST(test_delimited("s11s122.5\n s21s223.4", 
+        BOOST_TEST(test_delimited("s11s122.5 \n s21s223.4 ", 
             r % karma::eol, v, ' '));
     }
 

@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.action"></a><a class="link" href="action.html" title="Action">Action</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.action.description"></a><h6>
-<a name="id809112"></a>
+<a name="id778445"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.description">Description</a>
         </h6>
 <p>
@@ -39,7 +39,7 @@
           generator expression.
         </p>
 <a name="spirit.karma.reference.action.header"></a><h6>
-<a name="id809148"></a>
+<a name="id778481"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/action.hpp&gt;
@@ -49,7 +49,7 @@
           Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 <a name="spirit.karma.reference.action.model_of"></a><h6>
-<a name="id809222"></a>
+<a name="id778556"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -64,35 +64,34 @@
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
-          <code class="computeroutput"><span class="identifier">g</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">g</span></code></span></dt>
 <dd><p>
-              Instances of a generator, <code class="computeroutput"><span class="identifier">G</span></code>
-            </p></dd>
+                Instances of a generator, <code class="computeroutput"><span class="identifier">G</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-              Attribute type exposed by a generator, <code class="computeroutput"><span class="identifier">a</span></code>
-            </p></dd>
+                Attribute type exposed by a generator, <code class="computeroutput"><span class="identifier">a</span></code>
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fa</span></code></span></dt>
 <dd><p>
-              A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
-              flag that can be set to false to force the generator to fail. Both
-              <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean
-              flag are optional. For more information see below.
-            </p></dd>
+                A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
+                flag that can be set to false to force the generator to fail. Both
+                <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean
+                flag are optional. For more information see below.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Attrib</span></code></span></dt>
 <dd><p>
-              The attribute to be used to generate output from.
-            </p></dd>
+                The attribute to be used to generate output from.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Context</span></code></span></dt>
 <dd><p>
-              The type of the generator execution context. For more information see
-              below.
-            </p></dd>
+                The type of the generator execution context. For more information
+                see below.
+              </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.action.expression_semantics"></a><h6>
-<a name="id809420"></a>
+<a name="id778761"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -107,30 +106,30 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Semantics
-                </p>
+                  <p>
+                    Semantics
+                  </p>
                 </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">g</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">g</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Call semantic action, <code class="computeroutput"><span class="identifier">fa</span></code>
-                  <span class="emphasis"><em>before</em></span> invoking <code class="computeroutput"><span class="identifier">g</span></code>.
-                  The function or function object <code class="computeroutput"><span class="identifier">fa</span></code>
-                  is expected to provide the value to generate output from to the
-                  generator <code class="computeroutput"><span class="identifier">g</span></code>.
-                </p>
+                  <p>
+                    Call semantic action, <code class="computeroutput"><span class="identifier">fa</span></code>
+                    <span class="emphasis"><em>before</em></span> invoking <code class="computeroutput"><span class="identifier">g</span></code>.
+                    The function or function object <code class="computeroutput"><span class="identifier">fa</span></code>
+                    is expected to provide the value to generate output from to the
+                    generator <code class="computeroutput"><span class="identifier">g</span></code>.
+                  </p>
                 </td>
 </tr></tbody>
 </table></div>
@@ -170,7 +169,7 @@
           and not generating any output.
         </p>
 <a name="spirit.karma.reference.action.attributes"></a><h6>
-<a name="id809874"></a>
+<a name="id779217"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -180,34 +179,34 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Expression
-                </p>
+                  <p>
+                    Expression
+                  </p>
                 </th>
 <th>
-                <p>
-                  Attribute
-                </p>
+                  <p>
+                    Attribute
+                  </p>
                 </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                  <span class="identifier">A</span> <span class="special">--&gt;</span>
-                  <span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]:</span>
-                  <span class="identifier">A</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                    <span class="identifier">A</span> <span class="special">--&gt;</span>
+                    <span class="identifier">a</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]:</span>
+                    <span class="identifier">A</span></code>
+                  </p>
                 </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.action.complexity"></a><h6>
-<a name="id809996"></a>
+<a name="id779342"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.complexity">Complexity</a>
         </h6>
 <p>
@@ -228,7 +227,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.action.example"></a><h6>
-<a name="id810028"></a>
+<a name="id779374"></a>
           <a class="link" href="action.html#spirit.karma.reference.action.example">Example</a>
         </h6>
 <div class="note" title="Note"><table border="0" summary="Note">

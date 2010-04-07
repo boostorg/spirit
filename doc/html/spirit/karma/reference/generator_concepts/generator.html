@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.generator_concepts.generator"></a><a class="link" href="generator.html" title="Generator">Generator</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.generator_concepts.generator.description"></a><h6>
-<a name="id790546"></a>
+<a name="id760383"></a>
             <a class="link" href="generator.html#spirit.karma.reference.generator_concepts.generator.description">Description</a>
           </h6>
 <p>
@@ -46,42 +46,42 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">g</span></code></span></dt>
 <dd><p>
-                A <code class="computeroutput"><span class="identifier">Generator</span></code>.
-              </p></dd>
+                  A <code class="computeroutput"><span class="identifier">Generator</span></code>.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">G</span></code></span></dt>
 <dd><p>
-                A <code class="computeroutput"><span class="identifier">Generator</span></code> type.
-              </p></dd>
+                  A <code class="computeroutput"><span class="identifier">Generator</span></code> type.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">OutIter</span></code></span></dt>
 <dd><p>
-                An <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
-                type.
-              </p></dd>
+                  An <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
+                  type.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">sink</span></code></span></dt>
 <dd><p>
-                An <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
-                instance.
-              </p></dd>
+                  An <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
+                  instance.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Context</span></code></span></dt>
 <dd><p>
-                The generator's Context type.
-              </p></dd>
+                  The generator's Context type.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">context</span></code></span></dt>
 <dd><p>
-                The generator's Context, or <code class="computeroutput"><span class="identifier">unused</span></code>.
-              </p></dd>
+                  The generator's Context, or <code class="computeroutput"><span class="identifier">unused</span></code>.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">delimit</span></code></span></dt>
 <dd><p>
-                A delimiter Generator, or <code class="computeroutput"><span class="identifier">unused</span></code>.
-              </p></dd>
+                  A delimiter Generator, or <code class="computeroutput"><span class="identifier">unused</span></code>.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">attrib</span></code></span></dt>
 <dd><p>
-                A Compatible Attributes, or <code class="computeroutput"><span class="identifier">unused</span></code>.
-              </p></dd>
+                  A Compatible Attributes, or <code class="computeroutput"><span class="identifier">unused</span></code>.
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.generator_concepts.generator.valid_expressions"></a><h6>
-<a name="id790800"></a>
+<a name="id760646"></a>
             <a class="link" href="generator.html#spirit.karma.reference.generator_concepts.generator.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -104,67 +104,67 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Return type
-                  </p>
+                    <p>
+                      Return type
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">g</span><span class="special">.</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">context</span><span class="special">,</span> <span class="identifier">delimit</span><span class="special">,</span> <span class="identifier">attrib</span><span class="special">)</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Generate the output sequence by inserting the generated characters/tokens
-                    into <code class="computeroutput"><span class="identifier">sink</span></code>. Use
-                    the <code class="computeroutput"><span class="identifier">delimit</span></code> generator
-                    for delimiting. Return <code class="computeroutput"><span class="keyword">true</span></code>
-                    if successful, otherwise return <code class="computeroutput"><span class="keyword">false</span></code>.
-                  </p>
+                    <p>
+                      Generate the output sequence by inserting the generated characters/tokens
+                      into <code class="computeroutput"><span class="identifier">sink</span></code>.
+                      Use the <code class="computeroutput"><span class="identifier">delimit</span></code>
+                      generator for delimiting. Return <code class="computeroutput"><span class="keyword">true</span></code>
+                      if successful, otherwise return <code class="computeroutput"><span class="keyword">false</span></code>.
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">bool</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="keyword">bool</span></code>
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">what</span><span class="special">(</span><span class="identifier">context</span><span class="special">)</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">what</span><span class="special">(</span><span class="identifier">context</span><span class="special">)</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Get information about a Generator.
-                  </p>
+                    <p>
+                      Get information about a Generator.
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">info</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">info</span></code>
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.generator.type_expressions"></a><h6>
-<a name="id791061"></a>
+<a name="id760915"></a>
             <a class="link" href="generator.html#spirit.karma.reference.generator_concepts.generator.type_expressions">Type
             Expressions</a>
           </h6>
@@ -175,63 +175,63 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Description
-                  </p>
+                    <p>
+                      Description
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">G</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">attribute</span><span class="special">&lt;</span><span class="identifier">Context</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">G</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">attribute</span><span class="special">&lt;</span><span class="identifier">Context</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    The Generator's attribute.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                    if a certain type, <code class="computeroutput"><span class="identifier">G</span></code>
-                    is a Generator, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                    Boolean Constant</a>).
-                  </p>
+                    <p>
+                      The Generator's attribute.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">G</span><span class="special">::</span><span class="identifier">properties</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    An <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">int_</span></code> (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                    Integral Constant</a>) holding a value from the <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generator_properties</span></code> enumeration.
-                    The default value is <code class="computeroutput"><span class="identifier">generator_properties</span><span class="special">::</span><span class="identifier">no_properties</span></code>
-                  </p>
+                    <p>
+                      Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                      if a certain type, <code class="computeroutput"><span class="identifier">G</span></code>
+                      is a Generator, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
+                      otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                      Boolean Constant</a>).
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">G</span><span class="special">::</span><span class="identifier">properties</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      An <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">int_</span></code> (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                      Integral Constant</a>) holding a value from the <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generator_properties</span></code> enumeration.
+                      The default value is <code class="computeroutput"><span class="identifier">generator_properties</span><span class="special">::</span><span class="identifier">no_properties</span></code>
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.generator.postcondition"></a><h6>
-<a name="id791326"></a>
+<a name="id761186"></a>
             <a class="link" href="generator.html#spirit.karma.reference.generator_concepts.generator.postcondition">Postcondition</a>
           </h6>
 <p>
@@ -253,7 +253,7 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.generator_concepts.generator.models"></a><h6>
-<a name="id791396"></a>
+<a name="id761255"></a>
             <a class="link" href="generator.html#spirit.karma.reference.generator_concepts.generator.models">Models</a>
           </h6>
 <p>

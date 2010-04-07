@@ -61,7 +61,7 @@
         iterator was created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h5>
-<a name="id1008065"></a>
+<a name="id974663"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h5>
@@ -209,7 +209,7 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h5>
-<a name="id1009335"></a>
+<a name="id975934"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h5>
@@ -231,7 +231,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h5>
-<a name="id1009429"></a>
+<a name="id976574"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h5>
@@ -252,14 +252,14 @@
 <dl>
 <dt><span class="term">Input</span></dt>
 <dd><p>
-            The type multi_pass uses to acquire it's input. This is typically an
-            input iterator, or functor.
-          </p></dd>
+              The type multi_pass uses to acquire it's input. This is typically an
+              input iterator, or functor.
+            </p></dd>
 <dt><span class="term">Policies</span></dt>
 <dd><p>
-            The combined policies to use to create an instance of a multi_pass iterator.
-            This combined policy type is described below
-          </p></dd>
+              The combined policies to use to create an instance of a multi_pass
+              iterator. This combined policy type is described below
+            </p></dd>
 </dl>
 </div>
 <p>
@@ -272,7 +272,7 @@
         the functionality groups:
       </p>
 <div class="table">
-<a name="id1009535"></a><p class="title"><b>Table&#160;12.&#160;Policies needed for default_policy template</b></p>
+<a name="id976682"></a><p class="title"><b>Table&#160;12.&#160;Policies needed for default_policy template</b></p>
 <div class="table-contents"><table class="table" summary="Policies needed for default_policy template">
 <colgroup>
 <col>
@@ -280,69 +280,69 @@
 </colgroup>
 <thead><tr>
 <th>
-            <p>
-              Template Parameter
-            </p>
-            </th>
+                <p>
+                  Template Parameter
+                </p>
+              </th>
 <th>
-            <p>
-              Description
-            </p>
-            </th>
+                <p>
+                  Description
+                </p>
+              </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">OwnershipPolicy</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">OwnershipPolicy</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy determines how <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              deals with it's shared components.
-            </p>
-            </td>
+                <p>
+                  This policy determines how <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  deals with it's shared components.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">CheckingPolicy</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">CheckingPolicy</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy determines how checking for invalid iterators is done.
-            </p>
-            </td>
+                <p>
+                  This policy determines how checking for invalid iterators is done.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">InputPolicy</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">InputPolicy</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              A class that defines how <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              acquires its input. The <code class="computeroutput"><span class="identifier">InputPolicy</span></code>
-              is parameterized by the <code class="computeroutput"><span class="identifier">Input</span></code>
-              template parameter to the <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
-            </p>
-            </td>
+                <p>
+                  A class that defines how <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  acquires its input. The <code class="computeroutput"><span class="identifier">InputPolicy</span></code>
+                  is parameterized by the <code class="computeroutput"><span class="identifier">Input</span></code>
+                  template parameter to the <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">StoragePolicy</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">StoragePolicy</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              The buffering scheme used by <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              is determined and managed by the StoragePolicy.
-            </p>
-            </td>
+                <p>
+                  The buffering scheme used by <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  is determined and managed by the StoragePolicy.
+                </p>
+              </td>
 </tr>
 </tbody>
 </table></div>
@@ -354,7 +354,7 @@
         we will give some guidelines how you can write your own policy implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h5>
-<a name="id1009727"></a>
+<a name="id976879"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h5>
@@ -363,7 +363,7 @@
         policies are defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">iterator_policies</span></code>.
       </p>
 <div class="table">
-<a name="id1009769"></a><p class="title"><b>Table&#160;13.&#160;Predefined policy classes</b></p>
+<a name="id976921"></a><p class="title"><b>Table&#160;13.&#160;Predefined policy classes</b></p>
 <div class="table-contents"><table class="table" summary="Predefined policy classes">
 <colgroup>
 <col>
@@ -371,266 +371,270 @@
 </colgroup>
 <thead><tr>
 <th>
-            <p>
-              Class name
-            </p>
-            </th>
+                <p>
+                  Class name
+                </p>
+              </th>
 <th>
-            <p>
-              Description
-            </p>
-            </th>
+                <p>
+                  Description
+                </p>
+              </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-            <p>
-              <span class="bold"><strong>InputPolicy</strong></span> classes
-            </p>
-            </td>
+                <p>
+                  <span class="bold"><strong>InputPolicy</strong></span> classes
+                </p>
+              </td>
 <td class="auto-generated">&#160;</td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">input_iterator</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">input_iterator</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              to read from an input iterator of type <code class="computeroutput"><span class="identifier">Input</span></code>.
-            </p>
-            </td>
+                <p>
+                  This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  to read from an input iterator of type <code class="computeroutput"><span class="identifier">Input</span></code>.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">buffering_input_iterator</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">buffering_input_iterator</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              to read from an input iterator of type <code class="computeroutput"><span class="identifier">Input</span></code>.
-              Aditionally it buffers the last character received from the underlying
-              iterator. This allows to wrap iterators not buffering the last character
-              on their own (as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istreambuf_iterator</span></code>).
-            </p>
-            </td>
+                <p>
+                  This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  to read from an input iterator of type <code class="computeroutput"><span class="identifier">Input</span></code>.
+                  Aditionally it buffers the last character received from the underlying
+                  iterator. This allows to wrap iterators not buffering the last
+                  character on their own (as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istreambuf_iterator</span></code>).
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">istream</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">istream</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              to read from an input stream of type <code class="computeroutput"><span class="identifier">Input</span></code>
-              (usually a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span></code>).
-            </p>
-            </td>
+                <p>
+                  This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  to read from an input stream of type <code class="computeroutput"><span class="identifier">Input</span></code>
+                  (usually a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span></code>).
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">lex_input</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">lex_input</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy obtains it's input by calling yylex(), which would typically
-              be provided by a scanner generated by <a href="http://flex.sourceforge.net/" target="_top">Flex</a>.
-              If you use this policy your code must link against a <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
-              generated scanner.
-            </p>
-            </td>
+                <p>
+                  This policy obtains it's input by calling yylex(), which would
+                  typically be provided by a scanner generated by <a href="http://flex.sourceforge.net/" target="_top">Flex</a>.
+                  If you use this policy your code must link against a <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
+                  generated scanner.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">functor_input</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">functor_input</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This input policy obtains it's data by calling a functor of type <code class="computeroutput"><span class="identifier">Input</span></code>. The functor must meet certain
-              requirements. It must have a typedef called <code class="computeroutput"><span class="identifier">result_type</span></code>
-              which should be the type returned from <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>. Also, since an input policy needs
-              a way to determine when the end of input has been reached, the functor
-              must contain a static variable named <code class="computeroutput"><span class="identifier">eof</span></code>
-              which is comparable to a variable of <code class="computeroutput"><span class="identifier">result_type</span></code>.
-            </p>
-            </td>
+                <p>
+                  This input policy obtains it's data by calling a functor of type
+                  <code class="computeroutput"><span class="identifier">Input</span></code>. The functor
+                  must meet certain requirements. It must have a typedef called
+                  <code class="computeroutput"><span class="identifier">result_type</span></code> which
+                  should be the type returned from <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>. Also, since an input policy
+                  needs a way to determine when the end of input has been reached,
+                  the functor must contain a static variable named <code class="computeroutput"><span class="identifier">eof</span></code> which is comparable to a
+                  variable of <code class="computeroutput"><span class="identifier">result_type</span></code>.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">split_functor_input</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">split_functor_input</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This is essentially the same as the <code class="computeroutput"><span class="identifier">functor_input</span></code>
-              policy except that the (user supplied) funtion object exposes separate
-              <code class="computeroutput"><span class="identifier">unique</span></code> and <code class="computeroutput"><span class="identifier">shared</span></code> sub classes, allowing to integrate
-              the functors <span class="emphasis"><em>unique</em></span> data members with the <code class="computeroutput"><span class="identifier">multi_pass</span></code> data items held by each
-              instance and its <span class="emphasis"><em>shared</em></span> data members will be integrated
-              with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              members shared by all copies.
-            </p>
-            </td>
+                <p>
+                  This is essentially the same as the <code class="computeroutput"><span class="identifier">functor_input</span></code>
+                  policy except that the (user supplied) funtion object exposes separate
+                  <code class="computeroutput"><span class="identifier">unique</span></code> and <code class="computeroutput"><span class="identifier">shared</span></code> sub classes, allowing
+                  to integrate the functors <span class="emphasis"><em>unique</em></span> data members
+                  with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  data items held by each instance and its <span class="emphasis"><em>shared</em></span>
+                  data members will be integrated with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  members shared by all copies.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <span class="bold"><strong>OwnershipPolicy</strong></span> classes
-            </p>
-            </td>
+                <p>
+                  <span class="bold"><strong>OwnershipPolicy</strong></span> classes
+                </p>
+              </td>
 <td class="auto-generated">&#160;</td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">ref_counted</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">ref_counted</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This class uses a reference counting scheme. The <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              will delete it's shared components when the count reaches zero.
-            </p>
-            </td>
+                <p>
+                  This class uses a reference counting scheme. The <code class="computeroutput"><span class="identifier">multi_pass</span></code> will delete it's shared
+                  components when the count reaches zero.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">first_owner</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">first_owner</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              When this policy is used, the first <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              created will be the one that deletes the shared data. Each copy will
-              not take ownership of the shared data. This works well for <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>,
-              since no dynamic allocation of iterators is done. All copies are made
-              on the stack, so the original iterator has the longest lifespan.
-            </p>
-            </td>
+                <p>
+                  When this policy is used, the first <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  created will be the one that deletes the shared data. Each copy
+                  will not take ownership of the shared data. This works well for
+                  <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>, since
+                  no dynamic allocation of iterators is done. All copies are made
+                  on the stack, so the original iterator has the longest lifespan.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <span class="bold"><strong>CheckingPolicy</strong></span> classes
-            </p>
-            </td>
+                <p>
+                  <span class="bold"><strong>CheckingPolicy</strong></span> classes
+                </p>
+              </td>
 <td class="auto-generated">&#160;</td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">no_check</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">no_check</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy does no checking at all.
-            </p>
-            </td>
+                <p>
+                  This policy does no checking at all.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">buf_id_check</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">buf_id_check</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy keeps around a buffer id, or a buffer age. Every time
-              <code class="computeroutput"><span class="identifier">clear_queue</span><span class="special">()</span></code>
-              is called on a <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-              iterator, it is possible that all other iterators become invalid. When
-              <code class="computeroutput"><span class="identifier">clear_queue</span><span class="special">()</span></code>
-              is called, <code class="computeroutput"><span class="identifier">buf_id_check</span></code>
-              increments the buffer id. When an iterator is dereferenced, this policy
-              checks that the buffer id of the iterator matches the shared buffer
-              id. This policy is most effective when used together with the <code class="computeroutput"><span class="identifier">split_std_deque</span></code> StoragePolicy. It
-              should not be used with the <code class="computeroutput"><span class="identifier">fixed_size_queue</span></code>
-              StoragePolicy, because it will not detect iterator dereferences that
-              are out of range.
-            </p>
-            </td>
+                <p>
+                  This policy keeps around a buffer id, or a buffer age. Every time
+                  <code class="computeroutput"><span class="identifier">clear_queue</span><span class="special">()</span></code>
+                  is called on a <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  iterator, it is possible that all other iterators become invalid.
+                  When <code class="computeroutput"><span class="identifier">clear_queue</span><span class="special">()</span></code> is called, <code class="computeroutput"><span class="identifier">buf_id_check</span></code>
+                  increments the buffer id. When an iterator is dereferenced, this
+                  policy checks that the buffer id of the iterator matches the shared
+                  buffer id. This policy is most effective when used together with
+                  the <code class="computeroutput"><span class="identifier">split_std_deque</span></code>
+                  StoragePolicy. It should not be used with the <code class="computeroutput"><span class="identifier">fixed_size_queue</span></code>
+                  StoragePolicy, because it will not detect iterator dereferences
+                  that are out of range.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              full_check
-            </p>
-            </td>
+                <p>
+                  full_check
+                </p>
+              </td>
 <td>
-            <p>
-              This policy has not been implemented yet. When it is, it will keep
-              track of all iterators and make sure that they are all valid. This
-              will be mostly useful for debugging purposes as it will incur significant
-              overhead.
-            </p>
-            </td>
+                <p>
+                  This policy has not been implemented yet. When it is, it will keep
+                  track of all iterators and make sure that they are all valid. This
+                  will be mostly useful for debugging purposes as it will incur significant
+                  overhead.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <span class="bold"><strong>StoragePolicy</strong></span> classes
-            </p>
-            </td>
+                <p>
+                  <span class="bold"><strong>StoragePolicy</strong></span> classes
+                </p>
+              </td>
 <td class="auto-generated">&#160;</td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">split_std_deque</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">split_std_deque</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              Despite its name this policy keeps all buffered data in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>. All data is stored as long
-              as there is more than one iterator. Once the iterator count goes down
-              to one, and the queue is no longer needed, it is cleared, freeing up
-              memory. The queue can also be forcibly cleared by calling <code class="computeroutput"><span class="identifier">multi_pass</span><span class="special">::</span><span class="identifier">clear_queue</span><span class="special">()</span></code>.
-            </p>
-            </td>
+                <p>
+                  Despite its name this policy keeps all buffered data in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>. All data is stored as
+                  long as there is more than one iterator. Once the iterator count
+                  goes down to one, and the queue is no longer needed, it is cleared,
+                  freeing up memory. The queue can also be forcibly cleared by calling
+                  <code class="computeroutput"><span class="identifier">multi_pass</span><span class="special">::</span><span class="identifier">clear_queue</span><span class="special">()</span></code>.
+                </p>
+              </td>
 </tr>
 <tr>
 <td>
-            <p>
-              <code class="computeroutput"><span class="identifier">fixed_size_queue</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span></code>
-            </p>
-            </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">fixed_size_queue</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span></code>
+                </p>
+              </td>
 <td>
-            <p>
-              This policy keeps a circular buffer that is size <code class="computeroutput"><span class="identifier">N</span><span class="special">+</span><span class="number">1</span></code> and
-              stores <code class="computeroutput"><span class="identifier">N</span></code> elements.
-              <code class="computeroutput"><span class="identifier">fixed_size_queue</span></code> is
-              a template with a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>
-              parameter that specified the queue size. It is your responsibility
-              to ensure that <code class="computeroutput"><span class="identifier">N</span></code> is
-              big enough for your parser. Whenever the foremost iterator is incremented,
-              the last character of the buffer is automatically erased. Currently
-              there is no way to tell if an iterator is trailing too far behind and
-              has become invalid. No dynamic allocation is done by this policy during
-              normal iterator operation, only on initial construction. The memory
-              usage of this <code class="computeroutput"><span class="identifier">StoragePolicy</span></code>
-              is set at <code class="computeroutput"><span class="identifier">N</span><span class="special">+</span><span class="number">1</span></code> bytes, unlike <code class="computeroutput"><span class="identifier">split_std_deque</span></code>,
-              which is unbounded.
-            </p>
-            </td>
+                <p>
+                  This policy keeps a circular buffer that is size <code class="computeroutput"><span class="identifier">N</span><span class="special">+</span><span class="number">1</span></code> and stores <code class="computeroutput"><span class="identifier">N</span></code>
+                  elements. <code class="computeroutput"><span class="identifier">fixed_size_queue</span></code>
+                  is a template with a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>
+                  parameter that specified the queue size. It is your responsibility
+                  to ensure that <code class="computeroutput"><span class="identifier">N</span></code>
+                  is big enough for your parser. Whenever the foremost iterator is
+                  incremented, the last character of the buffer is automatically
+                  erased. Currently there is no way to tell if an iterator is trailing
+                  too far behind and has become invalid. No dynamic allocation is
+                  done by this policy during normal iterator operation, only on initial
+                  construction. The memory usage of this <code class="computeroutput"><span class="identifier">StoragePolicy</span></code>
+                  is set at <code class="computeroutput"><span class="identifier">N</span><span class="special">+</span><span class="number">1</span></code> bytes, unlike <code class="computeroutput"><span class="identifier">split_std_deque</span></code>,
+                  which is unbounded.
+                </p>
+              </td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h5>
-<a name="id1010957"></a>
+<a name="id977712"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h5>
@@ -677,7 +681,7 @@
         behaviors while wrapping an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h5>
-<a name="id1011380"></a>
+<a name="id978134"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h5>
@@ -705,7 +709,7 @@
         Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
       </p>
 <a name="spirit.support.multi_pass.reading_from_standard_input_streams"></a><h5>
-<a name="id1011579"></a>
+<a name="id978334"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.reading_from_standard_input_streams">Reading
         from standard input streams</a>
       </h5>
@@ -737,7 +741,7 @@
         Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h5>
-<a name="id1011857"></a>
+<a name="id978612"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <code class="computeroutput"><span class="identifier">functor_input</span></code>
         InputPolicy</a>
@@ -796,7 +800,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h5>
-<a name="id1012444"></a>
+<a name="id979481"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h5>
@@ -813,7 +817,7 @@
         copies of a particular <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h5>
-<a name="id1012518"></a>
+<a name="id979555"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h5>
 <p>
@@ -855,8 +859,8 @@
 </span>        <span class="comment">//
 </span>        <span class="comment">// This method is expected to return a refernce to the next 
 </span>        <span class="comment">// character/token
-</span>        <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ValueType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">MultiPass</span><span class="special">&gt;</span>
-        <span class="keyword">static</span> <span class="identifier">ValueType</span><span class="special">&amp;</span> <span class="identifier">get_input</span><span class="special">(</span><span class="identifier">MultiPass</span><span class="special">&amp;</span> <span class="identifier">mp</span><span class="special">)</span>
+</span>        <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">MultiPass</span><span class="special">&gt;</span>
+        <span class="keyword">static</span> <span class="keyword">typename</span> <span class="identifier">MultiPass</span><span class="special">::</span><span class="identifier">reference</span> <span class="identifier">get_input</span><span class="special">(</span><span class="identifier">MultiPass</span><span class="special">&amp;</span> <span class="identifier">mp</span><span class="special">);</span>
 
         <span class="comment">// advance_input is called whenever the underlying input stream 
 </span>        <span class="comment">// should be advanced so that the next call to get_input will be 
@@ -915,7 +919,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h5>
-<a name="id1015766"></a>
+<a name="id980477"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h5>
 <p>
@@ -982,7 +986,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h5>
-<a name="id1016300"></a>
+<a name="id981011"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h5>
 <p>
@@ -1041,7 +1045,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h5>
-<a name="id1016752"></a>
+<a name="id982555"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h5>
 <p>

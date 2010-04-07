@@ -28,7 +28,7 @@
           Store a Parsed Attribute Value into a Container (Qi)</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.store_value.push_back.push_back_container"></a><h6>
-<a name="id978926"></a>
+<a name="id945209"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.push_back_container">push_back_container</a>
           </h6>
 <p>
@@ -39,7 +39,7 @@
             to store a parsed attribute value into a container.
           </p>
 <a name="spirit.advanced.customize.store_value.push_back.module_headers"></a><h6>
-<a name="id978976"></a>
+<a name="id945258"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.module_headers">Module
             Headers</a>
           </h6>
@@ -60,24 +60,24 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.store_value.push_back.namespace"></a><h6>
-<a name="id979066"></a>
+<a name="id945348"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
 <thead><tr><th>
-                  <p>
-                    Name
-                  </p>
+                    <p>
+                      Name
+                    </p>
                   </th></tr></thead>
 <tbody><tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code>
+                    </p>
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.push_back.synopsis"></a><h6>
-<a name="id979349"></a>
+<a name="id945426"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -87,7 +87,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.store_value.push_back.template_parameters"></a><h6>
-<a name="id979491"></a>
+<a name="id945568"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.template_parameters">Template
             parameters</a>
           </h6>
@@ -99,84 +99,84 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Parameter
-                  </p>
+                    <p>
+                      Parameter
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Description
-                  </p>
+                    <p>
+                      Description
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Default
-                  </p>
+                    <p>
+                      Default
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Container</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Container</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    The type, <code class="computeroutput"><span class="identifier">Container</span></code>
-                    needs to be tested whether it has to be treated as a container
-                  </p>
+                    <p>
+                      The type, <code class="computeroutput"><span class="identifier">Container</span></code>
+                      needs to be tested whether it has to be treated as a container
+                    </p>
                   </td>
 <td>
-                  <p>
-                    none
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    The type, <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                    is the one returned from the customization point <a class="link" href="container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> and
-                    represents the attribute value to be stored in the container
-                    of type <code class="computeroutput"><span class="identifier">Container</span></code>.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    none
-                  </p>
+                    <p>
+                      none
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Enable</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Helper template parameter usable to selectively enable or disable
-                    certain specializations of <code class="computeroutput"><span class="identifier">push_back_container</span></code>
-                    utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
-                    or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
-                  </p>
+                    <p>
+                      The type, <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                      is the one returned from the customization point <a class="link" href="container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> and
+                      represents the attribute value to be stored in the container
+                      of type <code class="computeroutput"><span class="identifier">Container</span></code>.
+                    </p>
                   </td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">void</span></code>
-                  </p>
+                    <p>
+                      none
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Enable</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Helper template parameter usable to selectively enable or disable
+                      certain specializations of <code class="computeroutput"><span class="identifier">push_back_container</span></code>
+                      utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
+                      or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="keyword">void</span></code>
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.push_back.notation"></a><h6>
-<a name="id979710"></a>
+<a name="id945797"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -184,33 +184,32 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">C</span></code></span></dt>
 <dd><p>
-                A type to be used as a container to store attribute values in.
-              </p></dd>
+                  A type to be used as a container to store attribute values in.
+                </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">c</span></code></span></dt>
 <dd>
 <p>
-                A container instance of type <code class="computeroutput"><span class="identifier">C</span></code>.
-              </p>
+                  A container instance of type <code class="computeroutput"><span class="identifier">C</span></code>.
+                </p>
 <p>
-                [<code class="computeroutput"><span class="identifier">Attrib</span></code>
-              </p>
+                  [<code class="computeroutput"><span class="identifier">Attrib</span></code>
+                </p>
 <p>
-                A type to be used as a container to store attribute values in.
-              </p>
+                  A type to be used as a container to store attribute values in.
+                </p>
 </dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">attr</span></code></span></dt>
 <dd><p>
-                A attribute instance of type <code class="computeroutput"><span class="identifier">Attrib</span></code>.
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">T1</span></code>,
-            <code class="computeroutput"><span class="identifier">T2</span></code>, ...</span></dt>
+                  A attribute instance of type <code class="computeroutput"><span class="identifier">Attrib</span></code>.
+                </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">T1</span></code>, <code class="computeroutput"><span class="identifier">T2</span></code>, ...</span></dt>
 <dd><p>
-                Arbitrary types
-              </p></dd>
+                  Arbitrary types
+                </p></dd>
 </dl>
 </div>
 <a name="spirit.advanced.customize.store_value.push_back.expression_semantics"></a><h6>
-<a name="id979848"></a>
+<a name="id945940"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -221,40 +220,40 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Expression
-                  </p>
+                    <p>
+                      Expression
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Semantics
-                  </p>
+                    <p>
+                      Semantics
+                    </p>
                   </th>
 </tr></thead>
 <tbody><tr>
 <td>
-                  <p>
-                    
+                    <p>
+                      
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">push_back_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">,</span> <span class="identifier">Attrib</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">c</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span></pre>
 <p>
-                  </p>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Static function that is invoked whenever an attribute value,
-                    <code class="computeroutput"><span class="identifier">attr</span></code> needs to
-                    be stored into the container instance <code class="computeroutput"><span class="identifier">c</span></code>.
-                    This function should return <code class="computeroutput"><span class="keyword">true</span></code>
-                    on success and <code class="computeroutput"><span class="keyword">false</span></code>
-                    otherwise. Returning <code class="computeroutput"><span class="keyword">false</span></code>
-                    causes the corresponding parser to fail.
-                  </p>
+                    <p>
+                      Static function that is invoked whenever an attribute value,
+                      <code class="computeroutput"><span class="identifier">attr</span></code> needs
+                      to be stored into the container instance <code class="computeroutput"><span class="identifier">c</span></code>.
+                      This function should return <code class="computeroutput"><span class="keyword">true</span></code>
+                      on success and <code class="computeroutput"><span class="keyword">false</span></code>
+                      otherwise. Returning <code class="computeroutput"><span class="keyword">false</span></code>
+                      causes the corresponding parser to fail.
+                    </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.push_back.predefined_specializations"></a><h6>
-<a name="id979997"></a>
+<a name="id946091"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.predefined_specializations">Predefined
             Specializations</a>
           </h6>
@@ -271,85 +270,85 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Template Parameters
-                  </p>
+                    <p>
+                      Template Parameters
+                    </p>
                   </th>
 <th>
-                  <p>
-                    Value
-                  </p>
+                    <p>
+                      Value
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">C</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">C</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Store the provided attribute instance <code class="computeroutput"><span class="identifier">attr</span></code>
-                    into the given container <code class="computeroutput"><span class="identifier">c</span></code>
-                    using the function call <code class="computeroutput"><span class="identifier">c</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">attr</span><span class="special">)</span></code>.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span></code>,
-                    <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    If the provided instance of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is not initialized, invoke
-                    the appropriate initialization and afterwards apply the customization
-                    point <code class="computeroutput"><span class="identifier">push_back_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">,</span> <span class="identifier">Attrib</span><span class="special">&gt;</span></code>, treating the instance held
-                    by the optional (of type <code class="computeroutput"><span class="identifier">C</span></code>)
-                    as the container to store the attribute in.
-                  </p>
+                    <p>
+                      Store the provided attribute instance <code class="computeroutput"><span class="identifier">attr</span></code>
+                      into the given container <code class="computeroutput"><span class="identifier">c</span></code>
+                      using the function call <code class="computeroutput"><span class="identifier">c</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">c</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">attr</span><span class="special">)</span></code>.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">,</span>
-                    <span class="identifier">T2</span><span class="special">,</span>
-                    <span class="special">...&gt;</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span></code>,
+                      <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    If the instance of the variant currently holds a value with a
-                    type, <code class="computeroutput"><span class="identifier">TN</span></code>, for
-                    which <code class="computeroutput"><span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                    evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>,
-                    this customization point specialization will apply <code class="computeroutput"><span class="identifier">push_back_container</span><span class="special">&lt;</span><span class="identifier">TN</span><span class="special">,</span>
-                    <span class="identifier">Attrib</span><span class="special">&gt;</span></code>,
-                    treating the instance held by the variant (of type <code class="computeroutput"><span class="identifier">TN</span></code>) as the container to store
-                    the attribute in. Otherwise it will raise an assertion.
-                  </p>
+                    <p>
+                      If the provided instance of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is not initialized,
+                      invoke the appropriate initialization and afterwards apply
+                      the customization point <code class="computeroutput"><span class="identifier">push_back_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">,</span> <span class="identifier">Attrib</span><span class="special">&gt;</span></code>, treating the instance
+                      held by the optional (of type <code class="computeroutput"><span class="identifier">C</span></code>)
+                      as the container to store the attribute in.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
-                  </p>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">,</span>
+                      <span class="identifier">T2</span><span class="special">,</span>
+                      <span class="special">...&gt;</span></code>, <code class="computeroutput"><span class="identifier">Attrib</span></code>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Do nothing.
-                  </p>
+                    <p>
+                      If the instance of the variant currently holds a value with
+                      a type, <code class="computeroutput"><span class="identifier">TN</span></code>,
+                      for which <code class="computeroutput"><span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                      evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>,
+                      this customization point specialization will apply <code class="computeroutput"><span class="identifier">push_back_container</span><span class="special">&lt;</span><span class="identifier">TN</span><span class="special">,</span>
+                      <span class="identifier">Attrib</span><span class="special">&gt;</span></code>,
+                      treating the instance held by the variant (of type <code class="computeroutput"><span class="identifier">TN</span></code>) as the container to store
+                      the attribute in. Otherwise it will raise an assertion.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Do nothing.
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.push_back.when_to_implement"></a><h6>
-<a name="id980405"></a>
+<a name="id946505"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.when_to_implement">When
             to Implement</a>
           </h6>
@@ -371,7 +370,7 @@
             stands for any meaningful operation on the component <code class="computeroutput"><span class="identifier">a</span></code>.
           </p>
 <a name="spirit.advanced.customize.store_value.push_back.related_attribute_customization_points"></a><h6>
-<a name="id980555"></a>
+<a name="id946655"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
@@ -386,51 +385,51 @@
 </colgroup>
 <thead><tr>
 <th>
-                  <p>
-                    Name
-                  </p>
+                    <p>
+                      Name
+                    </p>
                   </th>
 <th>
-                  <p>
-                    When to implement
-                  </p>
+                    <p>
+                      When to implement
+                    </p>
                   </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Qi: <a class="link" href="../../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
-                    <a class="link" href="../../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
-                    <a class="link" href="../../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
-                    <a class="link" href="../../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
-                  </p>
+                    <p>
+                      Qi: <a class="link" href="../../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
+                      <a class="link" href="../../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
+                      <a class="link" href="../../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
+                      <a class="link" href="../../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
+                    </p>
                   </td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <a class="link" href="../clear_value.html" title="Re-Initialize an Attribute Value before Parsing (Qi)"><code class="computeroutput"><span class="identifier">clear_value</span></code></a>
-                  </p>
+                    <p>
+                      <a class="link" href="../clear_value.html" title="Re-Initialize an Attribute Value before Parsing (Qi)"><code class="computeroutput"><span class="identifier">clear_value</span></code></a>
+                    </p>
                   </td>
 <td>
-                  <p>
-                    Qi: <a class="link" href="../../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
-                    <a class="link" href="../../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
-                    <a class="link" href="../../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
-                    <a class="link" href="../../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
-                  </p>
+                    <p>
+                      Qi: <a class="link" href="../../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
+                      <a class="link" href="../../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
+                      <a class="link" href="../../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
+                      <a class="link" href="../../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
+                    </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.push_back.example"></a><h6>
-<a name="id980698"></a>
+<a name="id946801"></a>
             <a class="link" href="push_back.html#spirit.advanced.customize.store_value.push_back.example">Example</a>
           </h6>
 <p>

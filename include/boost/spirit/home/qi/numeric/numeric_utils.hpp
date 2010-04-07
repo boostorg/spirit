@@ -52,7 +52,9 @@ namespace boost { namespace spirit { namespace qi
             not_supported_radix, ());
 
         template <typename Iterator, typename Attribute>
-        static bool call(Iterator& first, Iterator const& last, Attribute& attr)
+        static bool call(
+            Iterator& first, Iterator const& last,
+            Attribute& attr)
         {
             if (first == last)
                 return false;
@@ -67,7 +69,8 @@ namespace boost { namespace spirit { namespace qi
             extract_type;
 
             Iterator save = first;
-            if (!extract_type::parse(first, last, attr))
+            if (!extract_type::parse(first, last,
+                detail::cast_unsigned<Attribute>::call(attr)))
             {
                 first = save;
                 return false;
