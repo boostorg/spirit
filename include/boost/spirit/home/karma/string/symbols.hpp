@@ -534,7 +534,7 @@ namespace boost { namespace spirit { namespace karma
             lower || upper
           , symbols<
                 Attribute, T, Lookup
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type>
           , reference_>::type

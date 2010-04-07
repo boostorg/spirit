@@ -41,7 +41,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.tutorials.roman_numerals.symbol_table"></a><h6>
-<a name="id659687"></a>
+<a name="id644395"></a>
           <a class="link" href="roman_numerals.html#spirit.qi.tutorials.roman_numerals.symbol_table">Symbol
           Table</a>
         </h6>
@@ -50,13 +50,13 @@
           of characters (a <code class="computeroutput"><span class="keyword">char</span></code>, <code class="computeroutput"><span class="keyword">wchar_t</span></code>, <code class="computeroutput"><span class="keyword">int</span></code>,
           enumeration etc.) . The template class, parameterized by the character
           type, can work efficiently with 8, 16, 32 and even 64 bit characters. Mutable
-          data of type T is associated with each symbol.
+          data of type T are associated with each symbol.
         </p>
 <p>
-          Traditionally, symbol table management is maintained seperately outside
+          Traditionally, symbol table management is maintained separately outside
           the BNF grammar through semantic actions. Contrary to standard practice,
           the Spirit symbol table class <code class="computeroutput"><span class="identifier">symbols</span></code>
-          is a parser, an object of which may be used anywhere in the EBNF grammar
+          is a parser. An object of which may be used anywhere in the EBNF grammar
           specification. It is an example of a dynamic parser. A dynamic parser is
           characterized by its ability to modify its behavior at run time. Initially,
           an empty symbols object matches nothing. At any time, symbols may be added
@@ -173,7 +173,7 @@
           They are all parsers.
         </p>
 <a name="spirit.qi.tutorials.roman_numerals.rules"></a><h6>
-<a name="id660670"></a>
+<a name="id645378"></a>
           <a class="link" href="roman_numerals.html#spirit.qi.tutorials.roman_numerals.rules">Rules</a>
         </h6>
 <p>
@@ -183,11 +183,11 @@
           is passed into the <code class="computeroutput"><span class="identifier">phrase_parse</span></code>
           function, used, and then destroyed. This is fine for small parsers. When
           the expressions get complicated, you'd want to break the expressions into
-          smaller easier to understand pieces, name them, and refer to them from
+          smaller easier-to-understand pieces, name them, and refer to them from
           other parser expressions by name.
         </p>
 <p>
-          A parser expression can be assigned to, what is called, a "rule".
+          A parser expression can be assigned to what is called a "rule".
           There are various ways to declare rules. The simplest form is:
         </p>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span> <span class="identifier">r</span><span class="special">;</span>
@@ -253,7 +253,7 @@
 <pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">double_</span><span class="special">);</span>
 </pre>
 <a name="spirit.qi.tutorials.roman_numerals.grammars"></a><h6>
-<a name="id661062"></a>
+<a name="id645771"></a>
           <a class="link" href="roman_numerals.html#spirit.qi.tutorials.roman_numerals.grammars">Grammars</a>
         </h6>
 <p>
@@ -329,10 +329,10 @@
 <code class="computeroutput"><span class="identifier">roman</span><span class="special">::</span><span class="identifier">base_type</span></code> is a typedef for <code class="computeroutput"><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
             <span class="keyword">unsigned</span><span class="special">()&gt;</span></code>.
             If <code class="computeroutput"><span class="identifier">roman</span></code> was not a template,
-            you can simply write: base_type(start)
+            you could simply write: base_type(start)
           </li>
 <li class="listitem">
-            But it's best to make your grammar templates, so that they can be reused
+            It's best to make your grammar templates such that they can be reused
             for different iterator types.
           </li>
 <li class="listitem">
@@ -358,7 +358,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.tutorials.roman_numerals.let_s_parse_"></a><h6>
-<a name="id663654"></a>
+<a name="id648363"></a>
           <a class="link" href="roman_numerals.html#spirit.qi.tutorials.roman_numerals.let_s_parse_">Let's Parse!</a>
         </h6>
 <p>
@@ -391,11 +391,10 @@
 <p>
           <code class="computeroutput"><span class="identifier">roman_parser</span></code> is an object
           of type <code class="computeroutput"><span class="identifier">roman</span></code>, our roman
-          numeral parser. This time around, we are using the no-skipping version
-          of the parse functions. We do not want to skip any spaces! We are also
-          passing in an attribute, <code class="computeroutput"><span class="keyword">unsigned</span>
-          <span class="identifier">result</span></code>, which will receive the
-          parsed value.
+          numeral parser. This time around we are using the no-skipping version of
+          the parse functions. We do not want to skip any spaces! We are also passing
+          in an attribute, <code class="computeroutput"><span class="keyword">unsigned</span> <span class="identifier">result</span></code>, which will receive the parsed
+          value.
         </p>
 <p>
           The full cpp file for this example can be found here: <a href="../../../../../example/qi/roman.cpp" target="_top">../../example/qi/roman.cpp</a>

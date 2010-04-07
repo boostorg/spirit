@@ -50,6 +50,7 @@ namespace boost { namespace spirit { namespace tag
     struct lowernum {};
     struct uppernum {};
     struct ucs4 {};
+    struct encoding {};
 
 #if defined(BOOST_SPIRIT_UNICODE)
 ///////////////////////////////////////////////////////////////////////////
@@ -216,13 +217,17 @@ namespace boost { namespace spirit { namespace tag
     ///////////////////////////////////////////////////////////////////////////
     // This composite tag type encodes both the character
     // set and the specific char tag (used for classification
-    // or conversion). char_code_base can be used to test for
-    // modifier membership (see modifier.hpp)
+    // or conversion). char_code_base and char_encoding_base
+    // can be used to test for modifier membership (see modifier.hpp)
     template <typename CharClass>
     struct char_code_base {};
 
+    template <typename CharEncoding>
+    struct char_encoding_base {};
+
     template <typename CharClass, typename CharEncoding>
-    struct char_code : char_code_base<CharClass>
+    struct char_code
+        : char_code_base<CharClass>, char_encoding_base<CharEncoding>
     {
         typedef CharEncoding char_encoding; // e.g. ascii
         typedef CharClass char_class;       // e.g. tag::alnum

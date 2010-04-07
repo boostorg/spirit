@@ -368,7 +368,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename OutputIterator, typename Properties, typename Derived>
     class output_iterator 
       : public make_output_iterator<OutputIterator, Properties, Derived>::type
-      , boost::noncopyable
     {
     private:
         // base iterator type
@@ -383,24 +382,24 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         typedef void reference;
 
         explicit output_iterator(OutputIterator& sink_)
-          : sink(sink_)
+          : sink(&sink_)
         {}
         output_iterator(output_iterator const& rhs)
-          : base_iterator(rhs), boost::noncopyable(), sink(rhs.sink)
+          : base_iterator(rhs), sink(rhs.sink)
         {}
 
         output_iterator& operator*() { return *this; }
         output_iterator& operator++() 
         { 
             if (!this->base_iterator::has_buffer())
-                ++sink;           // increment only if not buffering
+                ++(*sink);           // increment only if not buffering
             return *this; 
         } 
         output_iterator operator++(int) 
         {
             if (!this->base_iterator::has_buffer()) {
                 output_iterator t(*this);
-                ++sink; 
+                ++(*sink); 
                 return t; 
             }
             return *this;
@@ -415,7 +414,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         void operator=(T const& value) 
         { 
             if (this->base_iterator::output(value))
-                *sink = value; 
+                *(*sink) = value; 
         }
 #if defined(BOOST_MSVC)
 #pragma warning (pop)
@@ -426,11 +425,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     protected:
         // this is the wrapped user supplied output iterator
-        OutputIterator& sink;
-
-    private:
-        // suppress warning about assignment operator not being generated
-        output_iterator& operator=(output_iterator const&);
+        OutputIterator* sink;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -450,11 +445,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         output_iterator(base_iterator_type& sink)
           : base_type(sink) {}
 
-        ostream_type& get_ostream() { return this->sink.get_ostream(); }
-        ostream_type const& get_ostream() const { return this->sink.get_ostream(); }
+        ostream_type& get_ostream() { return (*this->sink).get_ostream(); }
+        ostream_type const& get_ostream() const { return (*this->sink).get_ostream(); }
 
         // expose good bit of underlying stream object
-        bool good() const { return this->sink.get_ostream().good(); }
+        bool good() const { return (*this->sink).get_ostream().good(); }
     };
 
     ///////////////////////////////////////////////////////////////////////////

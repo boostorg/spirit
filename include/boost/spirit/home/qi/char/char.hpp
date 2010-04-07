@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch_, Context&) const
         {
-            return traits::ischar<CharParam, char_encoding>::call(ch_) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch_) &&
                    ch == char_type(ch_);
         }
 
@@ -296,7 +296,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch, Context&) const
         {
-            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch) &&
                    chset.test(char_type(ch));
         }
 
@@ -358,7 +358,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch, Context&) const
         {
-            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch) &&
                    chset.test(char_type(ch));
         }
 
@@ -392,7 +392,7 @@ namespace boost { namespace spirit { namespace qi
                 >::value;
 
             typedef literal_char<
-                typename spirit::detail::get_encoding<
+                typename spirit::detail::get_encoding_with_case<
                     Modifiers, Encoding, no_case>::type
               , no_attr
               , no_case>
@@ -414,25 +414,29 @@ namespace boost { namespace spirit { namespace qi
 
     template <typename Modifiers>
     struct make_primitive<char, Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_encoding> {};
 
     template <typename Modifiers>
     struct make_primitive<char const(&)[2], Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_encoding> {};
 
     template <typename Modifiers>
     struct make_primitive<wchar_t, Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_wide_encoding> {};
 
     template <typename Modifiers>
     struct make_primitive<wchar_t const(&)[2], Modifiers>
-      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
+      : detail::basic_literal<Modifiers, char_encoding::default_wide_encoding> {};
 
     template <typename CharEncoding, typename Modifiers>
     struct make_primitive<
         terminal<tag::char_code<tag::char_, CharEncoding> >, Modifiers>
     {
-        typedef tag::char_code<tag::char_, CharEncoding> tag;
+        typedef typename
+            spirit::detail::get_encoding<Modifiers, CharEncoding>::type
+        char_encoding;
+
+        typedef tag::char_code<tag::char_, char_encoding> tag;
         typedef char_class<tag> result_type;
         result_type operator()(unused_type, unused_type) const
         {
@@ -449,16 +453,17 @@ namespace boost { namespace spirit { namespace qi
       , Modifiers>
     {
         static bool const no_case =
-            has_modifier<
-                Modifiers
-              , tag::char_code<tag::no_case, CharEncoding>
-            >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::no_case> >::value;
+
+        typedef typename
+            spirit::detail::get_encoding<Modifiers, CharEncoding>::type
+        char_encoding;
 
         typedef typename
             mpl::if_<
                 traits::is_string<A0>
-              , char_set<CharEncoding, no_case>
-              , literal_char<CharEncoding, false, no_case>
+              , char_set<char_encoding, no_case>
+              , literal_char<char_encoding, false, no_case>
             >::type
         result_type;
 
@@ -478,12 +483,13 @@ namespace boost { namespace spirit { namespace qi
       , Modifiers>
     {
         static bool const no_case =
-            has_modifier<
-                Modifiers
-              , tag::char_code<tag::no_case, CharEncoding>
-            >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::no_case> >::value;
 
-        typedef literal_char<CharEncoding, false, no_case> result_type;
+        typedef typename
+            spirit::detail::get_encoding<Modifiers, CharEncoding>::type
+        char_encoding;
+
+        typedef literal_char<char_encoding, false, no_case> result_type;
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
@@ -501,12 +507,13 @@ namespace boost { namespace spirit { namespace qi
       , Modifiers>
     {
         static bool const no_case =
-            has_modifier<
-                Modifiers
-              , tag::char_code<tag::no_case, CharEncoding>
-            >::value;
+            has_modifier<Modifiers, tag::char_code_base<tag::no_case> >::value;
 
-        typedef char_range<CharEncoding, no_case> result_type;
+        typedef typename
+            spirit::detail::get_encoding<Modifiers, CharEncoding>::type
+        char_encoding;
+
+        typedef char_range<char_encoding, no_case> result_type;
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const

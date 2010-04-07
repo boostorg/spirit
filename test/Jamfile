@@ -1,6 +1,6 @@
 #==============================================================================
-#   Copyright (c) 2001-2009 Joel de Guzman
-#   Copyright (c) 2001-2009 Hartmut Kaiser
+#   Copyright (c) 2001-2010 Joel de Guzman
+#   Copyright (c) 2001-2010 Hartmut Kaiser
 #
 #   Use, modification and distribution is subject to the Boost Software
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -38,6 +38,7 @@ import testing ;
     [ run qi/char_class.cpp                 : : : : ]
     #[ run qi/debug.cpp                      : : : : ]
     [ run qi/difference.cpp                 : : : : ]
+    [ run qi/encoding.cpp                   : : : : ]
     [ run qi/end.cpp                        : : : : ]
     [ run qi/eps.cpp                        : : : : ]
     [ run qi/expect.cpp                     : : : : ]
@@ -143,7 +144,8 @@ import testing ;
     # support tests
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
     [ compile support/multi_pass_regression002.cpp : : support_multi_pass_regression002 ]
-    
+    [ compile support/multi_pass_regression003.cpp : : support_multi_pass_regression003 ]
+
 
     # regression tests
     [ run qi/clear_test.cpp                  : : : : ]

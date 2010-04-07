@@ -27,23 +27,25 @@ namespace boost { namespace spirit { namespace qi
       , typename T1 = unused_type
       , typename T2 = unused_type
       , typename T3 = unused_type
+      , typename T4 = unused_type
     >
     struct grammar
       : proto::extends<
             typename proto::terminal<
-                reference<rule<Iterator, T1, T2, T3> const>
+                reference<rule<Iterator, T1, T2, T3, T4> const>
             >::type
-          , grammar<Iterator, T1, T2, T3>
+          , grammar<Iterator, T1, T2, T3, T4>
         >
-      , parser<grammar<Iterator, T1, T2, T3> >
+      , parser<grammar<Iterator, T1, T2, T3, T4> >
       , noncopyable
     {
         typedef Iterator iterator_type;
-        typedef rule<Iterator, T1, T2, T3> start_type;
+        typedef rule<Iterator, T1, T2, T3, T4> start_type;
         typedef typename start_type::sig_type sig_type;
         typedef typename start_type::locals_type locals_type;
         typedef typename start_type::skipper_type skipper_type;
-        typedef grammar<Iterator, T1, T2, T3> base_type;
+        typedef typename start_type::encoding_type encoding_type;
+        typedef grammar<Iterator, T1, T2, T3, T4> base_type;
         typedef reference<start_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
 
@@ -56,19 +58,20 @@ namespace boost { namespace spirit { namespace qi
         , name_(name_)
         {}
 
-        // This constructor is used to catch if the start rule is not 
-        // compatible with the grammar. 
-        template <typename Iterator_, typename T1_, typename T2_, typename T3_>
+        // This constructor is used to catch if the start rule is not
+        // compatible with the grammar.
+        template <typename Iterator_,
+            typename T1_, typename T2_, typename T3_, typename T4_>
         grammar(
-            rule<Iterator_, T1_, T2_, T3_> const&
+            rule<Iterator_, T1_, T2_, T3_, T4_> const&
           , std::string const& = "unnamed-grammar")
         {
-            // If you see the assertion below failing then the start rule 
-            // passed to the constructor of the grammar is not compatible with 
+            // If you see the assertion below failing then the start rule
+            // passed to the constructor of the grammar is not compatible with
             // the grammar (i.e. it uses different template parameters).
             BOOST_SPIRIT_ASSERT_MSG(
-                (is_same<start_type, rule<Iterator_, T1_, T2_, T3_> >::value)
-              , incompatible_start_rule, (rule<Iterator_, T1_, T2_, T3_>));
+                (is_same<start_type, rule<Iterator_, T1_, T2_, T3_, T4_> >::value)
+              , incompatible_start_rule, (rule<Iterator_, T1_, T2_, T3_, T4_>));
         }
 
         std::string name() const

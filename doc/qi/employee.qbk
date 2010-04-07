@@ -88,7 +88,7 @@ The expression:
 
     a - b
 
-parses `a` but not `b`. Its attribute is just `A`, the attribute of `a`. `b`'s
+parses `a` but not `b`. Its attribute is just `A`; the attribute of `a`. `b`'s
 attribute is ignored. Hence, the attribute of:
 
     char_ - '"'
@@ -99,8 +99,8 @@ is just `char`.
 
     +a
 
-is similar to kleene star. Rather than match everything, `+a` matches one or more.
-Like it's related function, the kleene star, its attribute is a `std::vector<A>` 
+is similar to Kleene star. Rather than match everything, `+a` matches one or more.
+Like it's related function, the Kleene star, its attribute is a `std::vector<A>` 
 where `A` is the attribute of `a`. So, putting all these together, the attribute 
 of
 
@@ -145,9 +145,9 @@ whole expression's attribute should have been:
 
     fusion::vector<std::vector<char> >
 
-But wait, there's one more collapsing rule: If after the attribute is a single
-element `fusion::vector`, The element is stripped naked from its container. So,
-to make a long story short, the attribute of the expression:
+But wait, there's one more collapsing rule: If the attribute is followed by a 
+single element `fusion::vector`, The element is stripped naked from its container. 
+To make a long story short, the attribute of the expression:
 
     '"' >> +(char_ - '"') >> '"'
 
@@ -161,9 +161,9 @@ It is typical to see rules like:
 
     r = p[_val = _1];
 
-If you have a rule definition like above where the attribute of the RHS (right
-hand side) of the rule is compatibe with the attribute of the LHS (left hand
-side), then you can rewrite it as:
+If you have a rule definition such as the above, where the attribute of the RHS 
+(right hand side) of the rule is compatibe with the attribute of the LHS (left 
+hand side), then you can rewrite it as:
 
     r %= p;
 

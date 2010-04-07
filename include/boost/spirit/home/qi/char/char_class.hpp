@@ -17,6 +17,8 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/modify.hpp>
+#include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/mpl/eval_if.hpp>
 
 namespace boost { namespace spirit
 {
@@ -31,17 +33,25 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
-    // hoist the char classification namespaces into qi sub-namespaces of the 
+    // hoist the char classification namespaces into qi sub-namespaces of the
     // same name
+    namespace default_encoding { using namespace boost::spirit::default_encoding; }
+    namespace default_wide_encoding { using namespace boost::spirit::default_wide_encoding; }
     namespace ascii { using namespace boost::spirit::ascii; }
     namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
     namespace standard { using namespace boost::spirit::standard; }
     namespace standard_wide { using namespace boost::spirit::standard_wide; }
+#if defined(BOOST_SPIRIT_UNICODE)
+    namespace unicode { using namespace boost::spirit::unicode; }
+#endif
 
-    // Import the standard namespace into the qi namespace. This allows 
-    // for default handling of all character/string related operations if not 
+    // Import the default_encoding namespace into the qi namespace. This allows
+    // for default handling of all character/string related operations if not
     // prefixed with a character set namespace.
-    using namespace boost::spirit::standard;
+    using namespace boost::spirit::default_encoding;
+
+    // Import encoding
+    using spirit::encoding;
 
     ///////////////////////////////////////////////////////////////////////////
     // Generic char classification parser (for alnum, alpha, graph, etc.)
@@ -57,7 +67,7 @@ namespace boost { namespace spirit { namespace qi
         bool test(CharParam ch, Context&) const
         {
             using spirit::char_class::classify;
-            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+            return traits::ischar<CharParam, char_encoding>::call(ch) &&
                    classify<char_encoding>::is(classification(), ch);
         }
 
@@ -90,9 +100,13 @@ namespace boost { namespace spirit { namespace qi
         static bool const no_case =
             has_modifier<Modifiers, tag::char_code_base<tag::no_case> >::value;
 
+        typedef typename
+            spirit::detail::get_encoding<Modifiers, CharEncoding>::type
+        char_encoding;
+
         typedef tag::char_code<
             typename detail::make_char_class<CharClass, no_case>::type
-          , CharEncoding>
+          , char_encoding>
         tag;
 
         typedef char_class<tag> result_type;

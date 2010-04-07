@@ -10,6 +10,7 @@
 #include <boost/spirit/include/qi_string.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_auxiliary.hpp>
+#include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -37,6 +38,7 @@ main()
     using boost::spirit::qi::fail;
     using boost::spirit::qi::on_error;
     using boost::spirit::qi::debug;
+    using boost::spirit::qi::lit;
 
     namespace phx = boost::phoenix;
 
@@ -134,7 +136,7 @@ main()
         {
             char const *s1 = " a b a a b b a c ... "
               , *const e1 = s1 + std::strlen(s1);
-            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_postskip) 
+            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_postskip)
               && s1 == e1 - 5);
         }
 
@@ -142,17 +144,17 @@ main()
         {
             char const *s1 = " a a a a b a b a b a a a b b b c "
               , *const e1 = s1 + std::strlen(s1);
-            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::postskip) 
+            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::postskip)
               && s1 == e1);
         }
         {
             char const *s1 = " a a a a b a b a b a a a b b b c "
               , *const e1 = s1 + std::strlen(s1);
-            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_postskip) 
+            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_postskip)
               && s1 == e1 - 1);
         }
     }
-    
+
     { // test unassigned rule
 
         rule<char const*> a;
@@ -417,6 +419,33 @@ main()
         BOOST_TEST(!test("(123;456)", r));
         BOOST_TEST(!test("[123,456]", r));
     }
+
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("french")
+#endif
+    { // specifying the encoding
+
+        typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
+        rule<char const*, iso8859_1> r;
+
+        r = no_case['·'];
+        BOOST_TEST(test("¡", r));
+        r = no_case[char_('·')];
+        BOOST_TEST(test("¡", r));
+
+        r = no_case[char_("Â-Ô")];
+        BOOST_TEST(test("…", r));
+        BOOST_TEST(!test("ˇ", r));
+
+        r = no_case["·¡"];
+        BOOST_TEST(test("¡·", r));
+        r = no_case[lit("·¡")];
+        BOOST_TEST(test("¡·", r));
+    }
+
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("")
+#endif
 
     return boost::report_errors();
 }

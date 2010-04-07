@@ -17,7 +17,7 @@ more hierarchy: teams, departments, corporations. Then we'll have an AST
 representation of it all.
 
 In this example (actually two examples), we'll now explore how to create
-ASTs. We will parse a minimalistic XML like language and compile the results
+ASTs. We will parse a minimalistic XML-like language and compile the results
 into our data structures in the form of a tree.
 
 Along the way, we'll see new features:
@@ -65,7 +65,7 @@ and its definition:
 
     node = (xml | text)                 [_val = _1];
 
-We'll see what a `mini_xml_node` structure is later. Looking at the rule
+We'll see a `mini_xml_node` structure later. Looking at the rule
 definition, we see some alternation going on here. An xml `node` is
 either an `xml` OR `text`. Hmmm... hold on to that thought...
 
@@ -88,7 +88,7 @@ add: `!char_('/')`. This is a "Not Predicate":
 
     !p
 
-It will try the parser, `p`. If it is successful, fail, otherwise, pass. In
+It will try the parser, `p`. If it is successful, fail; otherwise, pass. In
 other words, it negates the result of `p`. Like the `eps`, it does not consume
 any input though. It will always rewind the iterator position to where it
 was upon entry. So, the expression:

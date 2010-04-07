@@ -202,7 +202,7 @@ namespace boost { namespace spirit { namespace karma
             has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
         typedef any_string<
-            typename spirit::detail::get_encoding<
+            typename spirit::detail::get_encoding_with_case<
                 Modifiers, CharEncoding, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
         > result_type;
@@ -227,7 +227,7 @@ namespace boost { namespace spirit { namespace karma
         typedef typename add_const<T>::type const_string;
         typedef literal_string<
             const_string
-          , typename spirit::detail::get_encoding<
+          , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
           , true
@@ -255,7 +255,7 @@ namespace boost { namespace spirit { namespace karma
         typedef typename add_const<A0>::type const_string;
         typedef literal_string<
             const_string
-          , typename spirit::detail::get_encoding<
+          , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
           , false

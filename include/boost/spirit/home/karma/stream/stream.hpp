@@ -283,7 +283,7 @@ namespace boost { namespace spirit { namespace karma
 
         typedef any_stream_generator<
             Char
-          , typename spirit::detail::get_encoding<
+          , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
         > result_type;
@@ -322,7 +322,7 @@ namespace boost { namespace spirit { namespace karma
         typedef typename add_const<A0>::type const_attribute;
         typedef lit_stream_generator<
             const_attribute, Char
-          , typename spirit::detail::get_encoding<
+          , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
         > result_type;

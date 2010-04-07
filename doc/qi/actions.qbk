@@ -100,7 +100,7 @@ for binding semantic actions. It is like __boost_lambda__ on steroids, with
 special custom features that make it easy to integrate semantic actions with
 Spirit. If your requirements go beyond simple to moderate parsing, it is 
 suggested that you use this library. All the following examples in this tutorial
-will use __phoenix__ for sematic actions.
+will use __phoenix__ for semantic actions.
 
 [important There are different ways to write semantic actions for __qi__: 
            using plain functions, __boost_bind__, __boost_lambda__, or 

@@ -19,12 +19,12 @@ This example demonstrates:
 The symbol table holds a dictionary of symbols where each symbol is a sequence
 of characters (a `char`, `wchar_t`, `int`, enumeration etc.) . The template
 class, parameterized by the character type, can work efficiently with 8, 16, 32
-and even 64 bit characters. Mutable data of type T is associated with each
+and even 64 bit characters. Mutable data of type T are associated with each
 symbol.
 
-Traditionally, symbol table management is maintained seperately outside the BNF
+Traditionally, symbol table management is maintained separately outside the BNF
 grammar through semantic actions. Contrary to standard practice, the Spirit
-symbol table class `symbols` is a parser, an object of which may be used
+symbol table class `symbols` is a parser. An object of which may be used
 anywhere in the EBNF grammar specification. It is an example of a dynamic
 parser. A dynamic parser is characterized by its ability to modify its behavior
 at run time. Initially, an empty symbols object matches nothing. At any time,
@@ -63,10 +63,10 @@ Up until now, we've been inlining our parser expressions, passing them directly
 to the `phrase_parse` function. The expression evaluates into a temporary,
 unnamed parser which is passed into the `phrase_parse` function, used, and then
 destroyed. This is fine for small parsers. When the expressions get complicated,
-you'd want to break the expressions into smaller easier to understand pieces,
+you'd want to break the expressions into smaller easier-to-understand pieces,
 name them, and refer to them from other parser expressions by name.
 
-A parser expression can be assigned to, what is called, a "rule". There are
+A parser expression can be assigned to what is called a "rule". There are
 various ways to declare rules. The simplest form is:
 
     rule<Iterator> r;
@@ -137,9 +137,9 @@ Things to take notice of:
   numerals.
 
 * `roman::base_type` is a typedef for `grammar<Iterator, unsigned()>`. If
-   `roman` was not a template, you can simply write: base_type(start)
+   `roman` was not a template, you could simply write: base_type(start)
 
-* But it's best to make your grammar templates, so that they can be reused
+* It's best to make your grammar templates such that they can be reused
   for different iterator types.
 
 * `_val` is another __phoenix__ placeholder representing the rule's synthesized
@@ -160,7 +160,7 @@ Things to take notice of:
 [tutorial_roman_grammar_parse]
 
 `roman_parser` is an object of type `roman`, our roman numeral parser. This time
-around, we are using the no-skipping version of the parse functions. We do not
+around we are using the no-skipping version of the parse functions. We do not
 want to skip any spaces! We are also passing in an attribute, `unsigned result`,
 which will receive the parsed value.
 

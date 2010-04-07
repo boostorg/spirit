@@ -353,7 +353,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef any_uint_generator<
                 T
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , Radix
@@ -414,7 +414,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_uint_generator<
                 T
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , Radix, false
@@ -483,7 +483,7 @@ namespace boost { namespace spirit { namespace karma
 
             typedef literal_uint_generator<
                 T
-              , typename spirit::detail::get_encoding<
+              , typename spirit::detail::get_encoding_with_case<
                     Modifiers, unused_type, lower || upper>::type
               , typename detail::get_casetag<Modifiers, lower || upper>::type
               , 10, true
