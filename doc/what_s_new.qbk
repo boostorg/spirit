@@ -10,7 +10,7 @@
 
 [section:spirit_2_3 Spirit V2.3] 
 
-[heading What's changed in __qi__ and __karma__ from V2.2 (Boost V1.42.0) to 2.3 (Boost V1.43.0)]
+[heading What's changed in __qi__ and __karma__ from V2.2 (Boost V1.42.0) to V2.3 (Boost V1.43.0)]
 
 [heading New Features]
 
@@ -53,12 +53,23 @@
   `std::istream_iterator`). Thanks to Larry Evans and Peter Schueller for 
   independently reporting this problem.
 
+[heading What's changed in __lex__ from V2.2 (Boost V1.42.0) to V2.3 (Boost V1.43.0)]
+
+[heading New Lexer Features]
+
+* The library does not minize the generated lexer tables for dynamic lexers by 
+  default anymore. The generated tables will now be minimized for static lexers 
+  only.
+* The function `lexer<>::init_dfa()` now takes a single boolean parameter 
+  (which defaults to `false`) allowing to force minimazation of the generated
+  lexer tables.
+
 [endsect] [/ spirit_2_3]
 
 [//////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_2 Spirit V2.2] 
 
-[heading What's changed in __qi__ and __karma__ from V2.1 (Boost V1.41.0) to 2.2 (Boost V1.42.0)]
+[heading What's changed in __qi__ and __karma__ from V2.1 (Boost V1.41.0) to V2.2 (Boost V1.42.0)]
 
 [heading New Features]
 
@@ -108,7 +119,7 @@
 [//////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_1 Spirit V2.1] 
 
-[heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
+[heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to V2.1 (Boost V1.41.0)]
 
 * __spirit__ is now based on the newest version of __boost_proto__
 * `qi::phrase_parse`, `qi::phrase_format` now post-skip by default.
@@ -177,7 +188,7 @@
   do not exist anymore. These have been replaced with qi::int_parser, 
   qi::real_parser, karma::int_generator, and karma::real_generator.
 
-[heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
+[heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to V2.1 (Boost V1.41.0)]
 
 Here is a list of changes in __lex__ since version 2.0. __lex__ 2.1 is a 
 complete rewrite of the __lex__ distributed with Boost V1.37. As with all
