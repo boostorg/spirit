@@ -55,8 +55,8 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // Function pointer
     ///////////////////////////////////////////////////////////////////////////
-    class utree; // forward
-    typedef utree (*function_ptr)(environment* env, utree& args);
+    class utree;
+    typedef utree (*function_ptr)(environment& env);
 
     ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
@@ -261,7 +261,10 @@ namespace scheme
         bool empty() const;
         std::size_t size() const;
 
-        int which() const;
+        utree_type::info which() const;
+
+        template <typename T>
+        T as() const;
 
     private:
 
@@ -270,17 +273,15 @@ namespace scheme
         template <typename UTreeX, typename UTreeY>
         friend struct detail::visit_impl;
         friend struct detail::index_impl;
-        friend struct ulist;
-        template <typename T> friend struct detail::get_impl;
+
+        template <typename T>
+        friend struct detail::get_impl;
 
         type::info get_type() const;
         void set_type(type::info t);
         void ensure_list_type();
         void free();
         void copy(utree const& other);
-
-        struct construct_list {};
-        utree(construct_list);
 
         union
         {

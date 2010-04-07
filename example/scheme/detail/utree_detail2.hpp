@@ -820,7 +820,7 @@ namespace scheme
         return 0;
     }
 
-    inline int utree::which() const
+    inline utree_type::info utree::which() const
     {
         return get_type();
     }
@@ -934,10 +934,36 @@ namespace scheme
         }
     }
 
-    inline utree::utree(construct_list)
+    template <typename To>
+    struct utree_cast
     {
-        l.default_construct();
-        set_type(type::list_type);
+        typedef To result_type;
+
+        template <typename From>
+        To dispatch(From const& val, boost::mpl::true_) const
+        {
+            return To(val); // From is convertible to To
+        }
+
+        template <typename From>
+        To dispatch(From const& val, boost::mpl::false_) const
+        {
+            // From is NOT convertible to To !!!
+            BOOST_ASSERT(false);
+            return To();
+        }
+
+        template <typename From>
+        To operator()(From const& val) const
+        {
+            return dispatch(val, boost::is_convertible<From, To>());
+        }
+    };
+
+    template <typename T>
+    inline T utree::as() const
+    {
+        return utree::visit(*this, utree_cast<T>());
     }
 }
 

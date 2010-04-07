@@ -206,12 +206,19 @@ namespace scheme
             }
             (*this)(')');
         }
+
+        void operator()(function_ptr fptr) const
+        {
+            out << "function-pointer(" << fptr << ')';
+        }
     };
 
     template <typename Base>
     struct logical_function
     {
         typedef utree result_type;
+
+        // In scheme, anything except false is true
 
         // binary
         utree operator()(bool a, bool b) const
@@ -220,25 +227,37 @@ namespace scheme
         }
 
         // binary
+        template <typename A>
+        utree operator()(A const& a, bool b) const
+        {
+            return Base::eval(true, b);
+        }
+
+        // binary
+        template <typename B>
+        utree operator()(bool a, B const& b) const
+        {
+            return Base::eval(a, true);
+        }
+
+        // binary
         template <typename A, typename B>
         utree operator()(A const& a, B const& b) const
         {
-            // $$$ Throw exception here? $$$
-            return utree(); // cannot apply to non booleans
+            return Base::eval(true, true);
         }
 
         // unary
         utree operator()(bool a) const
         {
-            return Base::eval(a); // for boolean types
+            return Base::eval(a);
         }
 
         // unary
         template <typename A>
         utree operator()(A const& a) const
         {
-            // $$$ Throw exception here? $$$
-            return utree(); // cannot apply to non booleans
+            return Base::eval(true);
         }
     };
 
@@ -248,21 +267,21 @@ namespace scheme
         typedef utree result_type;
 
         template <typename A, typename B>
-        utree dispatch(A&, B&, boost::mpl::false_) const
+        utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
             // $$$ Throw exception here? $$$
             return utree(); // cannot apply to non-arithmetic types
         }
 
         template <typename A, typename B>
-        utree dispatch(A& a, B& b, boost::mpl::true_) const
+        utree dispatch(A const& a, B const& b, boost::mpl::true_) const
         {
             return Base::eval(a, b); // for arithmetic types
         }
 
         // binary
         template <typename A, typename B>
-        utree operator()(A& a, B& b) const
+        utree operator()(A const& a, B const& b) const
         {
             return dispatch(a, b,
                 boost::mpl::and_<
@@ -271,21 +290,21 @@ namespace scheme
         }
 
         template <typename A>
-        utree dispatch(A&, boost::mpl::false_) const
+        utree dispatch(A const&, boost::mpl::false_) const
         {
             // $$$ Throw exception here? $$$
             return utree(); // cannot apply to non-arithmetic types
         }
 
         template <typename A>
-        utree dispatch(A& a, boost::mpl::true_) const
+        utree dispatch(A const& a, boost::mpl::true_) const
         {
             return Base::eval(a); // for arithmetic types
         }
 
         // unary
         template <typename A>
-        utree operator()(A& a) const
+        utree operator()(A const& a) const
         {
             return dispatch(a, boost::is_arithmetic<A>());
         }
@@ -297,21 +316,21 @@ namespace scheme
         typedef utree result_type;
 
         template <typename A, typename B>
-        utree dispatch(A&, B&, boost::mpl::false_) const
+        utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
             // $$$ Throw exception here? $$$
             return utree(); // cannot apply to non-integral types
         }
 
         template <typename A, typename B>
-        utree dispatch(A& a, B& b, boost::mpl::true_) const
+        utree dispatch(A const& a, B const& b, boost::mpl::true_) const
         {
             return Base::eval(a, b); // for integral types
         }
 
         // binary
         template <typename A, typename B>
-        utree operator()(A& a, B& b) const
+        utree operator()(A const a, B const& b) const
         {
             return dispatch(a, b,
                 boost::mpl::and_<
@@ -320,21 +339,21 @@ namespace scheme
         }
 
         template <typename A>
-        utree dispatch(A&, boost::mpl::false_) const
+        utree dispatch(A const&, boost::mpl::false_) const
         {
             // $$$ Throw exception here? $$$
             return utree(); // cannot apply to non-integral types
         }
 
         template <typename A>
-        utree dispatch(A& a, boost::mpl::true_) const
+        utree dispatch(A const& a, boost::mpl::true_) const
         {
             return Base::eval(a); // for integral types
         }
 
         // unary
         template <typename A>
-        utree operator()(A& a) const
+        utree operator()(A const& a) const
         {
             return dispatch(a, boost::is_integral<A>());
         }
@@ -344,12 +363,12 @@ namespace scheme
     struct BOOST_PP_CAT(function_impl_, name)                                   \
     {                                                                           \
         template <typename A, typename B>                                       \
-        static utree eval(A& a, B& b)                                           \
+        static utree eval(A const& a, B const& b)                               \
         {                                                                       \
             return utree(expr);                                                 \
         }                                                                       \
         template <typename A>                                                   \
-        static utree eval(A& a)                                                 \
+        static utree eval(A const& a)                                           \
         {                                                                       \
             return utree(expr);                                                 \
         }                                                                       \

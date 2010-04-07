@@ -18,6 +18,7 @@
 #include <boost/regex/pending/unicode_iterator.hpp>
 
 #include "../utree.hpp"
+#include "../utree_operators.hpp"
 
 namespace scheme { namespace input
 {
