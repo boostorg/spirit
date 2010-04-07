@@ -46,9 +46,9 @@ struct custom_int
     custom_int() : n(0) {}
     explicit custom_int(int n_) : n(n_) {}
     custom_int& operator=(int n_) { n = n_; return *this; }
-    friend custom_int operator*(custom_int a, custom_int b) 
+    friend custom_int operator*(custom_int a, custom_int b)
         { return custom_int(a.n * b.n); }
-    friend custom_int operator+(custom_int a, custom_int b) 
+    friend custom_int operator+(custom_int a, custom_int b)
         { return custom_int(a.n + b.n); }
 };
 
@@ -197,17 +197,17 @@ main()
         BOOST_TEST(test("   456", uint_[ref(n) = _1], space));
         BOOST_TEST(n == 456);
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // Check overflow is parse error
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::uint_;
+        boost::spirit::qi::uint_parser<boost::uint8_t> uint_;
         boost::uint8_t u;
 
         BOOST_TEST(!test_attr("999", uint_, u));
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  custom uint tests
     ///////////////////////////////////////////////////////////////////////////
