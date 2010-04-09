@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace qi
       , Iterator last
       , Expr const& expr)
     {
-        // Make sure the iterator is at least a forward_iterator. If you got an 
+        // Make sure the iterator is at least a forward_iterator. If you got a 
         // compilation error here, then you are using an input_iterator while
         // calling this function, you need to supply at least a 
         // forward_iterator instead.
@@ -34,6 +34,18 @@ namespace boost { namespace spirit { namespace qi
         return detail::parse_impl<Expr>::call(first, last, expr);
     }
 
+    template <typename Iterator, typename Expr>
+    inline bool
+    parse(
+        Iterator const& first_
+      , Iterator last
+      , Expr const& expr)
+    {
+        Iterator first = first_;
+        return parse(first, last, expr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Expr, typename Attr>
     inline bool
     parse(
@@ -42,7 +54,7 @@ namespace boost { namespace spirit { namespace qi
       , Expr const& expr
       , Attr& attr)
     {
-        // Make sure the iterator is at least a forward_iterator. If you got an 
+        // Make sure the iterator is at least a forward_iterator. If you got a 
         // compilation error here, then you are using an input_iterator while
         // calling this function, you need to supply at least a 
         // forward_iterator instead.
@@ -56,6 +68,18 @@ namespace boost { namespace spirit { namespace qi
         return compile<qi::domain>(expr).parse(first, last, unused, unused, attr);
     }
 
+    template <typename Iterator, typename Expr, typename Attr>
+    inline bool
+    parse(
+        Iterator const& first_
+      , Iterator last
+      , Expr const& expr
+      , Attr& attr)
+    {
+        Iterator first = first_;
+        return parse(first, last, expr, attr);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Expr, typename Skipper>
     inline bool
@@ -66,7 +90,7 @@ namespace boost { namespace spirit { namespace qi
       , Skipper const& skipper
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
     {
-        // Make sure the iterator is at least a forward_iterator. If you got an 
+        // Make sure the iterator is at least a forward_iterator. If you got a 
         // compilation error here, then you are using an input_iterator while
         // calling this function, you need to supply at least a 
         // forward_iterator instead.
@@ -76,6 +100,20 @@ namespace boost { namespace spirit { namespace qi
             first, last, expr, skipper, post_skip);
     }
 
+    template <typename Iterator, typename Expr, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Expr const& expr
+      , Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
+    {
+        Iterator first = first_;
+        return phrase_parse(first, last, expr, skipper, post_skip);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Expr, typename Skipper, typename Attr>
     inline bool
     phrase_parse(
@@ -86,7 +124,7 @@ namespace boost { namespace spirit { namespace qi
       , BOOST_SCOPED_ENUM(skip_flag) post_skip
       , Attr& attr)
     {
-        // Make sure the iterator is at least a forward_iterator. If you got an 
+        // Make sure the iterator is at least a forward_iterator. If you got a 
         // compilation error here, then you are using an input_iterator while
         // calling this function, you need to supply at least a 
         // forward_iterator instead.
@@ -116,12 +154,40 @@ namespace boost { namespace spirit { namespace qi
     template <typename Iterator, typename Expr, typename Skipper, typename Attr>
     inline bool
     phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Expr const& expr
+      , Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip
+      , Attr& attr)
+    {
+        Iterator first = first_;
+        return phrase_parse(first, last, expr, skipper, post_skip, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Expr, typename Skipper, typename Attr>
+    inline bool
+    phrase_parse(
         Iterator& first
       , Iterator last
       , Expr const& expr
       , Skipper const& skipper
       , Attr& attr)
     {
+        return phrase_parse(first, last, expr, skipper, skip_flag::postskip, attr);
+    }
+
+    template <typename Iterator, typename Expr, typename Skipper, typename Attr>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Expr const& expr
+      , Skipper const& skipper
+      , Attr& attr)
+    {
+        Iterator first = first_;
         return phrase_parse(first, last, expr, skipper, skip_flag::postskip, attr);
     }
 
