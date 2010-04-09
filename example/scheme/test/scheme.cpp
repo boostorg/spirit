@@ -26,6 +26,15 @@ inline std::ostream& println(std::ostream& out, scheme::utree const& val)
 namespace scheme
 {
 ///////////////////////////////////////////////////////////////////////////////
+//  Utilities
+///////////////////////////////////////////////////////////////////////////////
+    inline std::string get_symbol(utree const& s)
+    {
+        utf8_symbol_range symbol = s.as<utf8_symbol_range>();
+        return std::string(symbol.begin(), symbol.end());
+    }
+
+///////////////////////////////////////////////////////////////////////////////
 //  The runtime interpreter
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -71,6 +80,19 @@ namespace scheme
     {
         return function(argument_impl(n));
     }
+
+    struct make_arg
+    {
+        int n;
+        make_arg(int n) : n(n) {}
+
+        typedef function result_type;
+        function operator()(function_list& operands)
+        {
+            // check arity here!
+            return function(argument_impl(n));
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     // reference
@@ -129,6 +151,49 @@ namespace scheme
 
     make_plus const plus = {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    // fcall
+    ///////////////////////////////////////////////////////////////////////////
+    struct fcall_impl
+    {
+        function f;
+        function_list operands;
+
+        fcall_impl(function const& f, function_list& operands_)
+          : f(f)
+        {
+            // we take ownership of the operands
+            operands_.swap(operands);
+        }
+
+        typedef utree result_type;
+        utree operator()(utree const& args) const
+        {
+            utree fargs;
+            BOOST_FOREACH(function const& operand, operands)
+            {
+                fargs.push_back(operand(args));
+            }
+            return f(fargs);
+        }
+    };
+
+    struct make_fcall
+    {
+        function f;
+        int arity;
+        make_fcall(function const& f, int arity)
+          : f(f), arity(arity) {}
+
+        typedef function result_type;
+        function operator()(function_list& operands)
+        {
+            // $$$ use throw $$$
+            BOOST_ASSERT(operands.size() == arity);
+            return function(fcall_impl(f, operands));
+        }
+    };
+
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
@@ -136,7 +201,8 @@ namespace scheme
 
     struct compiler_environment
     {
-        compiler_environment() {}
+        compiler_environment(compiler_environment* parent = 0)
+          : parent(parent) {}
 
         void define(std::string const& name, make_function const& def)
         {
@@ -151,9 +217,12 @@ namespace scheme
                 i = definitions.find(name);
             if (i != definitions.end())
                 return &i->second;
+            else if (parent != 0)
+                return parent->find(name);
             return 0;
         }
 
+        compiler_environment* parent;
         std::map<std::string, make_function> definitions;
     };
 
@@ -163,9 +232,12 @@ namespace scheme
     {
         typedef function result_type;
 
-        compiler_environment& env;
-        compiler(compiler_environment& env)
-          : env(env) {}
+        mutable compiler_environment* env;
+        compiler(compiler_environment* env)
+          : env(env)
+        {
+            BOOST_ASSERT(env != 0);
+        }
 
         function operator()(nil) const
         {
@@ -180,20 +252,71 @@ namespace scheme
 
         function operator()(utf8_symbol_range const& str) const
         {
-            return function(); // $$$ implement me $$$
+            std::string name(str.begin(), str.end());
+
+            if (make_function* mf = env->find(name))
+            {
+                function_list flist;
+                return (*mf)(flist);
+            }
+            // $$$ throw? $$$
+            return function();
+        }
+
+        void define_function(
+            std::string const& name,
+            std::vector<std::string> const& args,
+            utree const& body) const
+        {
+            compiler_environment local_env(env);
+            for (std::size_t i = 0; i < args.size(); ++i)
+                local_env.define(args[i], make_arg(i));
+            make_fcall mf(compile(body, local_env), args.size());
+            env->define(name, make_function(mf));
         }
 
         template <typename Iterator>
         function operator()(boost::iterator_range<Iterator> const& range) const
         {
-            utf8_symbol_range symbol = range.begin()->as<utf8_symbol_range>();
-            std::string fname(symbol.begin(), symbol.end());
-            if (make_function* mf = env.find(fname))
+            //~ if (range.begin()->which() == utree_type::list_type)
+                //~ BOOST_FOREACH(utree const& x, range)
+                //~ {
+                    //~ compile()
+                //~ }
+
+            std::string name(get_symbol(*range.begin()));
+
+            if (name == "define")
+            {
+                Iterator i = range.begin(); ++i;
+                if (i->which() == utree_type::list_type)
+                {
+                    // a function
+                    utree const& decl = *i++;
+
+
+                    Iterator di = decl.begin();
+                    std::string fname(get_symbol(*di++));
+                    std::vector<std::string> args;
+                    while (di != decl.end())
+                        args.push_back(get_symbol(*di++));
+                    std::cout << "decl: " << decl << " arity:" << args.size() << std::endl;
+
+                    define_function(fname, args, *i);
+                    return function();
+                }
+                else
+                {
+                    // constants
+                }
+            }
+
+            if (make_function* mf = env->find(name))
             {
                 function_list flist;
                 Iterator i = range.begin(); ++i;
                 for (; i != range.end(); ++i)
-                    flist.push_back(compile(*i, env));
+                    flist.push_back(compile(*i, *env));
                 return (*mf)(flist);
             }
 
@@ -203,7 +326,7 @@ namespace scheme
 
     function compile(utree const& ast, compiler_environment& env)
     {
-        return utree::visit(ast, compiler(env));
+        return utree::visit(ast, compiler(&env));
     }
 
     void build_basic_environment(compiler_environment& env)
@@ -218,6 +341,9 @@ namespace scheme
 int main()
 {
     std::string in;
+    scheme::compiler_environment env;
+    scheme::build_basic_environment(env);
+
     while (std::getline(std::cin, in))
     {
         if (in.empty() || in[0] == 'q' || in[0] == 'Q')
@@ -232,11 +358,12 @@ int main()
         iterator_type last = in.end();
         if (phrase_parse(first, last, p, ws, result))
         {
-            std::cout << "success: ";
-            scheme::compiler_environment env;
-            scheme::build_basic_environment(env);
+            std::cout << "success: expr =" << result;
             scheme::function f = compile(result, env);
-            std::cout << "result: " << f(scheme::utree()) << std::endl;
+            if (f)
+                std::cout << " result: " << f(scheme::utree()) << std::endl;
+            else
+                std::cout << std::endl;
         }
         else
         {
