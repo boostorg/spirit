@@ -352,7 +352,7 @@ int main()
         typedef std::string::const_iterator iterator_type;
         scheme::utree result;
         scheme::input::sexpr<iterator_type> p;
-        scheme::input::white_space<iterator_type> ws;
+        scheme::input::sexpr_white_space<iterator_type> ws;
 
         iterator_type first = in.begin();
         iterator_type last = in.end();
