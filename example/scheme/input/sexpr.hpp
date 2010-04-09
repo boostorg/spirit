@@ -19,6 +19,7 @@
 
 #include "../utree.hpp"
 #include "../utree_operators.hpp"
+#include "string.hpp"
 
 namespace scheme { namespace input
 {
@@ -27,28 +28,23 @@ namespace scheme { namespace input
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::eol;
-    using boost::spirit::qi::_val;
-    using boost::spirit::qi::_r1;
-    using boost::spirit::qi::_1;
     using boost::spirit::qi::uint_parser;
     using boost::spirit::qi::real_parser;
     using boost::spirit::qi::strict_real_policies;
-    using boost::spirit::qi::char_set;
     using boost::spirit::qi::int_;
     using boost::spirit::qi::hex;
     using boost::spirit::qi::oct;
     using boost::spirit::qi::bool_;
     using boost::spirit::qi::no_case;
     using boost::spirit::qi::lexeme;
-    using boost::spirit::qi::lit;
     using boost::phoenix::function;
 
     typedef boost::uint32_t uchar; // a unicode code point
 
     template <typename Iterator>
-    struct white_space : grammar<Iterator>
+    struct sexpr_white_space : grammar<Iterator>
     {
-        white_space() : white_space::base_type(start)
+        sexpr_white_space() : sexpr_white_space::base_type(start)
         {
             start =
                     space                           // tab/space/cr/lf
@@ -59,74 +55,8 @@ namespace scheme { namespace input
         rule<Iterator> start;
     };
 
-    namespace detail
-    {
-        struct push_utf8
-        {
-            template <typename S, typename C>
-            struct result { typedef void type; };
-
-            void operator()(std::string& utf8, uchar code_point) const
-            {
-                typedef std::back_insert_iterator<std::string> insert_iter;
-                insert_iter out_iter(utf8);
-                boost::utf8_output_iterator<insert_iter> utf8_iter(out_iter);
-                *utf8_iter++ = code_point;
-            }
-        };
-
-        struct push_esc
-        {
-            template <typename S, typename C>
-            struct result { typedef void type; };
-
-            void operator()(std::string& utf8, uchar c) const
-            {
-                switch (c)
-                {
-                    case 'b': utf8 += '\b';     break;
-                    case 't': utf8 += '\t';     break;
-                    case 'n': utf8 += '\n';     break;
-                    case 'f': utf8 += '\f';     break;
-                    case 'r': utf8 += '\r';     break;
-                    case '"': utf8 += '"';      break;
-                    case '\\': utf8 += '\\';    break;
-                }
-            }
-        };
-    }
-
     template <typename Iterator>
-    struct string : grammar<Iterator, std::string()>
-    {
-        string() : string::base_type(start)
-        {
-            uint_parser<uchar, 16, 4, 4> hex4;
-            uint_parser<uchar, 16, 8, 8> hex8;
-            function<detail::push_utf8> push_utf8;
-            function<detail::push_esc> push_esc;
-
-            str_esc
-                =  '\\'
-                >>  (   ('u' >> hex4)               [push_utf8(_r1, _1)]
-                    |   ('U' >> hex8)               [push_utf8(_r1, _1)]
-                    |   char_("btnfr\\\"'")         [push_esc(_r1, _1)]
-                    )
-                ;
-
-            start
-                = '"'
-                >> *(str_esc(_val) | (~char_('"'))  [_val += _1])
-                >> '"'
-                ;
-        }
-
-        rule<Iterator, void(std::string&)> str_esc;
-        rule<Iterator, std::string()> start;
-    };
-
-    template <typename Iterator>
-    struct sexpr : grammar<Iterator, white_space<Iterator>, utree()>
+    struct sexpr : grammar<Iterator, sexpr_white_space<Iterator>, utree()>
     {
         sexpr() : sexpr::base_type(start)
         {
@@ -156,7 +86,7 @@ namespace scheme { namespace input
             byte_str = lexeme[no_case['b'] >> +hex2];
         }
 
-        rule<Iterator, white_space<Iterator>, utree()> start, list;
+        rule<Iterator, sexpr_white_space<Iterator>, utree()> start, list;
         rule<Iterator, int()> integer;
         rule<Iterator, utree()> atom;
         rule<Iterator, utf8_symbol()> symbol;

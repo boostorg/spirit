@@ -62,7 +62,7 @@ namespace client
 
 int main(int argc, char **argv)
 {
-    char const* filename_in;
+    char const* filename_in = NULL;
     if (argc > 1)
     {
         filename_in = argv[1];
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    char const* filename_out;
+    char const* filename_out = NULL;
     if (argc > 2)
     {
         filename_out = argv[2];

@@ -73,7 +73,8 @@ namespace scheme
             typedef boost::iterator_range<utree::iterator> type;
             static type call(utree const& x) 
             { 
-                return type(utree::iterator(x.l.first), utree::iterator(0)); 
+                return type(utree::iterator(x.l.first)
+                  , utree::iterator(0, x.l.last)); 
             }
         };
 
@@ -83,7 +84,8 @@ namespace scheme
             typedef boost::iterator_range<utree::const_iterator> type;
             static type call(utree const& x) 
             { 
-                return type(utree::const_iterator(x.l.first), utree::const_iterator(0)); 
+                return type(utree::const_iterator(x.l.first)
+                    , utree::const_iterator(0, x.l.last)); 
             }
         };
 
