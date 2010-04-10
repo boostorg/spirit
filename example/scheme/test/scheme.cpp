@@ -232,11 +232,10 @@ namespace scheme
     {
         typedef function result_type;
 
-        mutable compiler_environment* env;
-        compiler(compiler_environment* env)
+        mutable compiler_environment& env;
+        compiler(compiler_environment& env)
           : env(env)
         {
-            BOOST_ASSERT(env != 0);
         }
 
         function operator()(nil) const
@@ -254,7 +253,7 @@ namespace scheme
         {
             std::string name(str.begin(), str.end());
 
-            if (make_function* mf = env->find(name))
+            if (make_function* mf = env.find(name))
             {
                 function_list flist;
                 return (*mf)(flist);
@@ -272,18 +271,20 @@ namespace scheme
             for (std::size_t i = 0; i < args.size(); ++i)
                 local_env.define(args[i], make_arg(i));
             make_fcall mf(compile(body, local_env), args.size());
-            env->define(name, make_function(mf));
+            env.define(name, make_function(mf));
+        }
+
+        void define_nullary_function(
+            std::string const& name,
+            utree const& body) const
+        {
+            make_fcall mf(compile(body, env), 0);
+            env.define(name, make_function(mf));
         }
 
         template <typename Iterator>
         function operator()(boost::iterator_range<Iterator> const& range) const
         {
-            //~ if (range.begin()->which() == utree_type::list_type)
-                //~ BOOST_FOREACH(utree const& x, range)
-                //~ {
-                    //~ compile()
-                //~ }
-
             std::string name(get_symbol(*range.begin()));
 
             if (name == "define")
@@ -300,23 +301,23 @@ namespace scheme
                     std::vector<std::string> args;
                     while (di != decl.end())
                         args.push_back(get_symbol(*di++));
-                    std::cout << "decl: " << decl << " arity:" << args.size() << std::endl;
-
                     define_function(fname, args, *i);
-                    return function();
                 }
                 else
                 {
-                    // constants
+                    // constants (nullary functions)
+                    std::string fname(get_symbol(*i++));
+                    define_nullary_function(fname, *i);
                 }
+                return function(val(utree(utf8_symbol("<function>"))));
             }
 
-            if (make_function* mf = env->find(name))
+            if (make_function* mf = env.find(name))
             {
                 function_list flist;
                 Iterator i = range.begin(); ++i;
                 for (; i != range.end(); ++i)
-                    flist.push_back(compile(*i, *env));
+                    flist.push_back(compile(*i, env));
                 return (*mf)(flist);
             }
 
@@ -326,7 +327,19 @@ namespace scheme
 
     function compile(utree const& ast, compiler_environment& env)
     {
-        return utree::visit(ast, compiler(&env));
+        return utree::visit(ast, compiler(env));
+    }
+
+    void compile_all(
+        utree const& ast,
+        compiler_environment& env,
+        function_list& results)
+    {
+        BOOST_FOREACH(utree const& program, ast)
+        {
+            scheme::function f = compile(program, env);
+            results.push_back(f);
+        }
     }
 
     void build_basic_environment(compiler_environment& env)
@@ -338,40 +351,61 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int main()
+int main(int argc, char **argv)
 {
-    std::string in;
-    scheme::compiler_environment env;
-    scheme::build_basic_environment(env);
-
-    while (std::getline(std::cin, in))
+    char const* filename = NULL;
+    if (argc > 1)
     {
-        if (in.empty() || in[0] == 'q' || in[0] == 'Q')
-            break;
+        filename = argv[1];
+    }
+    else
+    {
+        std::cerr << "Error: No input file provided." << std::endl;
+        return 1;
+    }
 
-        typedef std::string::const_iterator iterator_type;
-        scheme::utree result;
-        scheme::input::sexpr<iterator_type> p;
-        scheme::input::sexpr_white_space<iterator_type> ws;
+    std::ifstream in(filename, std::ios_base::in);
 
-        iterator_type first = in.begin();
-        iterator_type last = in.end();
-        if (phrase_parse(first, last, p, ws, result))
+    if (!in)
+    {
+        std::cerr << "Error: Could not open input file: "
+            << filename << std::endl;
+        return 1;
+    }
+
+    // Ignore the BOM marking the beginning of a UTF-8 file in Windows
+    char c = in.peek();
+    if (c == '\xef')
+    {
+        char s[3];
+        in >> s[0] >> s[1] >> s[2];
+        s[3] = '\0';
+        if (s != std::string("\xef\xbb\xbf"))
         {
-            std::cout << "success: expr =" << result;
-            scheme::function f = compile(result, env);
-            if (f)
-                std::cout << " result: " << f(scheme::utree()) << std::endl;
-            else
-                std::cout << std::endl;
-        }
-        else
-        {
-            std::cout << "parse error" << std::endl;
+            std::cerr << "Error: Unexpected characters from input file: "
+                << filename << std::endl;
+            return 1;
         }
     }
 
-    std::cout << "Bye... :-) \n\n";
+    scheme::utree program;
+    if (scheme::input::parse_sexpr_list(in, program))
+    {
+        std::cout << "success: " << std::endl;
+        scheme::compiler_environment env;
+        scheme::build_basic_environment(env);
+        scheme::function_list flist;
+        compile_all(program, env, flist);
+        BOOST_FOREACH(scheme::function const& f, flist)
+        {
+            std::cout << " result: " << f(scheme::utree()) << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "parse error" << std::endl;
+    }
+
     return 0;
 }
 
