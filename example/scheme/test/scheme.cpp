@@ -109,7 +109,7 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     struct plus_function : composite
     {
-        plus_function(function_list& elements)
+        plus_function(function_list const& elements)
           : composite(elements) {}
 
         typedef utree result_type;
@@ -141,7 +141,7 @@ namespace scheme
     struct call_function : composite
     {
         function f;
-        call_function(function const& f, function_list& elements)
+        call_function(function const& f, function_list const& elements)
           : composite(elements), f(f) {}
 
         typedef utree result_type;
