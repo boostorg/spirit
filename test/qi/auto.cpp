@@ -83,8 +83,6 @@ int main()
         BOOST_TEST(test_create_parser("1", i) && i == 1);
         double d = 0;
         BOOST_TEST(test_create_parser("1.1", d) && d == 1.1);
-        std::string s;
-        BOOST_TEST(test_create_parser("test", s) && s == "test");
         char c = '\0';
         BOOST_TEST(test_create_parser("a", c) && c == 'a');
         wchar_t wc = L'\0';
@@ -169,10 +167,6 @@ int main()
         BOOST_TEST(test_attr("1", auto_, i) && i == 1);
         double d = 0;
         BOOST_TEST(test_attr("1.1", auto_, d) && d == 1.1);
-        std::string s;
-        BOOST_TEST(test_attr("test", auto_, s) && s == "test");
-        std::basic_string<wchar_t> ws;
-        BOOST_TEST(test_attr(L"test", auto_, ws) && ws == L"test");
         char c = '\0';
         BOOST_TEST(test_attr("a", auto_, c) && c == 'a');
         wchar_t wc = L'\0';
@@ -180,8 +174,6 @@ int main()
 
         b = false;
         BOOST_TEST(test_attr("TRUE", no_case[auto_], b) && b == true);
-        s.clear();
-        BOOST_TEST(test_attr("TEST", no_case[auto_], s) && s == "TEST");
 
         // test containers
         std::vector<int> v;
@@ -223,7 +215,6 @@ int main()
         BOOST_TEST(test_rule("true", true));
         BOOST_TEST(test_rule("1", 1));
         BOOST_TEST(test_rule("1.1", 1.1));
-        BOOST_TEST(test_rule("test", std::string("test")));
 
         // test containers
         std::vector<int> v;

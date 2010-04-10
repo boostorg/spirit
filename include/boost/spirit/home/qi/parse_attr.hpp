@@ -168,7 +168,6 @@ namespace boost { namespace spirit { namespace qi
         return qi::phrase_parse(first, last, expr, skipper, skip_flag::postskip
           , BOOST_PP_ENUM_PARAMS(N, attr));
     }
-
 }}}
 
 #undef BOOST_SPIRIT_QI_ATTRIBUTE_REFERENCE
