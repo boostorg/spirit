@@ -22,6 +22,7 @@ inline std::ostream& println(std::ostream& out, scheme::utree const& val)
 #include <map>
 #include <boost/function.hpp>
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 
 namespace scheme
 {
@@ -44,10 +45,10 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // values
     ///////////////////////////////////////////////////////////////////////////
-    struct value_impl
+    struct value
     {
         utree val;
-        value_impl(utree const& val) : val(val) {}
+        value(utree const& val) : val(val) {}
 
         typedef utree result_type;
         utree operator()(utree const& /*args*/) const
@@ -56,18 +57,24 @@ namespace scheme
         }
     };
 
-    inline function val(utree const& val)
+    struct value_composer
     {
-        return function(value_impl(val));
-    }
+        typedef function result_type;
+        function operator()(utree const& val) const
+        {
+            return function(value(val));
+        }
+    };
+
+    value_composer const val = {};
 
     ///////////////////////////////////////////////////////////////////////////
     // arguments
     ///////////////////////////////////////////////////////////////////////////
-    struct argument_impl
+    struct argument
     {
         int n;
-        argument_impl(int n) : n(n) {}
+        argument(int n) : n(n) {}
 
         typedef utree result_type;
         utree operator()(utree const& args) const
@@ -76,101 +83,72 @@ namespace scheme
         }
     };
 
-    inline function arg(int n)
+    struct argument_composer
     {
-        return function(argument_impl(n));
-    }
-
-    struct make_arg
-    {
-        int n;
-        make_arg(int n) : n(n) {}
-
         typedef function result_type;
-        function operator()(function_list& operands)
+        function operator()(int n) const
         {
-            // check arity here!
-            return function(argument_impl(n));
+            return function(argument(n));
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    // reference
-    ///////////////////////////////////////////////////////////////////////////
-    struct reference_impl
-    {
-        function& f;
-        reference_impl(function& f) : f(f) {}
+    argument_composer const arg = {};
 
-        typedef utree result_type;
-        utree operator()(utree const& args) const
-        {
-            return f(args);
-        }
+    ///////////////////////////////////////////////////////////////////////////
+    // composite
+    ///////////////////////////////////////////////////////////////////////////
+    struct composite
+    {
+        function_list elements;
+        composite(function_list const& elements)
+          : elements(elements) {}
     };
-
-    inline function ref(function& f)
-    {
-        return function(reference_impl(f));
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     // plus
     ///////////////////////////////////////////////////////////////////////////
-    struct plus_impl
+    struct plus_function : composite
     {
-        function_list operands;
-
-        plus_impl(function_list& operands_)
-        {
-            // we take ownership of the operands
-            operands_.swap(operands);
-        }
+        plus_function(function_list& elements)
+          : composite(elements) {}
 
         typedef utree result_type;
         utree operator()(utree const& args) const
         {
             utree result(0);
-            BOOST_FOREACH(function const& operand, operands)
+            BOOST_FOREACH(function const& element, elements)
             {
-                result = result + operand(args);
+                result = result + element(args);
             }
             return result;
         }
     };
 
-    struct make_plus
+    struct plus_composer
     {
         typedef function result_type;
-        function operator()(function_list& operands)
+        function operator()(function_list& elements)
         {
-            // check arity here!
-            return function(plus_impl(operands));
+            return function(plus_function(elements));
         }
     };
 
-    make_plus const plus = {};
+    plus_composer const plus = {};
 
     ///////////////////////////////////////////////////////////////////////////
-    // fcall
+    // call
     ///////////////////////////////////////////////////////////////////////////
-    struct fcall_impl
+    struct call_function : composite
     {
         function f;
-        function_list operands;
-
-        fcall_impl(function const& f, function_list& operands_)
-          : f(f)
-        {
-            // we take ownership of the operands
-            operands_.swap(operands);
-        }
+        call_function(function const& f, function_list& elements)
+          : composite(elements), f(f) {}
 
         typedef utree result_type;
         utree operator()(utree const& args) const
         {
             utree fargs;
-            BOOST_FOREACH(function const& operand, operands)
+            BOOST_FOREACH(function const& operand, elements)
             {
                 fargs.push_back(operand(args));
             }
@@ -178,25 +156,43 @@ namespace scheme
         }
     };
 
-    struct make_fcall
+    struct call_composer
     {
         function f;
         int arity;
-        make_fcall(function const& f, int arity)
+        call_composer(function const& f, int arity)
           : f(f), arity(arity) {}
 
         typedef function result_type;
-        function operator()(function_list& operands)
+        function operator()(function_list& elements)
         {
             // $$$ use throw $$$
-            BOOST_ASSERT(operands.size() == arity);
-            return function(fcall_impl(f, operands));
+            BOOST_ASSERT(elements.size() == arity);
+            return function(call_function(f, elements));
         }
     };
+
+    inline call_composer const call(function const& f, int arity)
+    {
+        return call_composer(f, arity);
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
+    //~ struct make_arg
+    //~ {
+        //~ int n;
+        //~ make_arg(int n) : n(n) {}
+
+        //~ typedef function result_type;
+        //~ function operator()(function_list& elements)
+        //~ {
+            //~ // check arity here!
+            //~ return function(argument(n));
+        //~ }
+    //~ };
+
     typedef boost::function<function(function_list&)> make_function;
 
     struct compiler_environment
@@ -269,17 +265,17 @@ namespace scheme
         {
             compiler_environment local_env(env);
             for (std::size_t i = 0; i < args.size(); ++i)
-                local_env.define(args[i], make_arg(i));
-            make_fcall mf(compile(body, local_env), args.size());
-            env.define(name, make_function(mf));
+                local_env.define(args[i], boost::bind(arg, i));
+            env.define(name,
+                make_function(call(compile(body, local_env), args.size())));
         }
 
         void define_nullary_function(
             std::string const& name,
             utree const& body) const
         {
-            make_fcall mf(compile(body, env), 0);
-            env.define(name, make_function(mf));
+            env.define(name,
+                make_function(call(compile(body, env), 0)));
         }
 
         template <typename Iterator>
@@ -294,8 +290,6 @@ namespace scheme
                 {
                     // a function
                     utree const& decl = *i++;
-
-
                     Iterator di = decl.begin();
                     std::string fname(get_symbol(*di++));
                     std::vector<std::string> args;
@@ -344,7 +338,7 @@ namespace scheme
 
     void build_basic_environment(compiler_environment& env)
     {
-        env.define("+", make_plus());
+        env.define("+", plus_composer());
     }
 }
 
