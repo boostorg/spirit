@@ -180,36 +180,23 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
-    //~ struct make_arg
-    //~ {
-        //~ int n;
-        //~ make_arg(int n) : n(n) {}
-
-        //~ typedef function result_type;
-        //~ function operator()(function_list& elements)
-        //~ {
-            //~ // check arity here!
-            //~ return function(argument(n));
-        //~ }
-    //~ };
-
-    typedef boost::function<function(function_list&)> make_function;
+    typedef boost::function<function(function_list&)> function_compiler;
 
     struct compiler_environment
     {
         compiler_environment(compiler_environment* parent = 0)
           : parent(parent) {}
 
-        void define(std::string const& name, make_function const& def)
+        void define(std::string const& name, function_compiler const& def)
         {
             // $$$ use exceptions here $$$
             BOOST_ASSERT(definitions.find(name) == definitions.end());
             definitions[name] = def;
         }
 
-        make_function* find(std::string const& name)
+        function_compiler* find(std::string const& name)
         {
-            std::map<std::string, make_function>::iterator
+            std::map<std::string, function_compiler>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
                 return &i->second;
@@ -219,7 +206,7 @@ namespace scheme
         }
 
         compiler_environment* parent;
-        std::map<std::string, make_function> definitions;
+        std::map<std::string, function_compiler> definitions;
     };
 
     function compile(utree const& ast, compiler_environment& env);
@@ -249,7 +236,7 @@ namespace scheme
         {
             std::string name(str.begin(), str.end());
 
-            if (make_function* mf = env.find(name))
+            if (function_compiler* mf = env.find(name))
             {
                 function_list flist;
                 return (*mf)(flist);
@@ -267,7 +254,7 @@ namespace scheme
             for (std::size_t i = 0; i < args.size(); ++i)
                 local_env.define(args[i], boost::bind(arg, i));
             env.define(name,
-                make_function(call(compile(body, local_env), args.size())));
+                function_compiler(call(compile(body, local_env), args.size())));
         }
 
         void define_nullary_function(
@@ -275,7 +262,7 @@ namespace scheme
             utree const& body) const
         {
             env.define(name,
-                make_function(call(compile(body, env), 0)));
+                function_compiler(call(compile(body, env), 0)));
         }
 
         template <typename Iterator>
@@ -306,7 +293,7 @@ namespace scheme
                 return function(val(utree(utf8_symbol("<function>"))));
             }
 
-            if (make_function* mf = env.find(name))
+            if (function_compiler* mf = env.find(name))
             {
                 function_list flist;
                 Iterator i = range.begin(); ++i;
