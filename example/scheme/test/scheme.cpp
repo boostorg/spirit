@@ -24,6 +24,17 @@ inline std::ostream& println(std::ostream& out, scheme::utree const& val)
 ///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
+    { // testing the c++ side
+
+        using scheme::plus;
+        using scheme::_1;
+        using scheme::_2;
+
+        std::cout << "result: " << plus(11, 22, 33)() << std::endl;
+        std::cout << "result: " << plus(11, 22, _1)(33) << std::endl;
+        std::cout << "result: " << plus(11, _1, _2)(22, 33) << std::endl;
+    }
+
     char const* filename = NULL;
     if (argc > 1)
     {
@@ -65,11 +76,11 @@ int main(int argc, char **argv)
         std::cout << "success: " << std::endl;
         scheme::compiler_environment env;
         scheme::build_basic_environment(env);
-        scheme::function_list flist;
+        scheme::actor_list flist;
         compile_all(program, env, flist);
-        BOOST_FOREACH(scheme::function const& f, flist)
+        BOOST_FOREACH(scheme::actor const& f, flist)
         {
-            std::cout << " result: " << f(scheme::utree()) << std::endl;
+            std::cout << " result: " << f() << std::endl;
         }
     }
     else

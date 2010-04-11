@@ -166,18 +166,18 @@ namespace scheme
         typedef boost::iterator_range<const_iterator> const_range;
 
         utree();
-        explicit utree(bool b);
-        explicit utree(unsigned int i);
-        explicit utree(int i);
-        explicit utree(double d);
-        explicit utree(char const* str);
-        explicit utree(char const* str, std::size_t len);
-        explicit utree(std::string const& str);
-        explicit utree(boost::reference_wrapper<utree> ref);
-        explicit utree(function_ptr fptr);
+        utree(bool b);
+        utree(unsigned int i);
+        utree(int i);
+        utree(double d);
+        utree(char const* str);
+        utree(char const* str, std::size_t len);
+        utree(std::string const& str);
+        utree(boost::reference_wrapper<utree> ref);
+        utree(function_ptr fptr);
 
         template <typename Base, utree_type::info type_>
-        explicit utree(basic_string<Base, type_> const& bin);
+        utree(basic_string<Base, type_> const& bin);
 
         utree(utree const& other);
         ~utree();

@@ -25,8 +25,6 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
-    typedef boost::function<function(function_list&)> function_compiler;
-
     class compiler_environment
     {
     public:
@@ -34,16 +32,16 @@ namespace scheme
         compiler_environment(compiler_environment* parent = 0)
           : outer(parent) {}
 
-        void define(std::string const& name, function_compiler const& def)
+        void define(std::string const& name, function_composer const& def)
         {
             // $$$ use exceptions here $$$
             BOOST_ASSERT(definitions.find(name) == definitions.end());
             definitions[name] = def;
         }
 
-        function_compiler* find(std::string const& name)
+        function_composer* find(std::string const& name)
         {
-            std::map<std::string, function_compiler>::iterator
+            std::map<std::string, function_composer>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
                 return &i->second;
@@ -57,14 +55,14 @@ namespace scheme
     private:
 
         compiler_environment* outer;
-        std::map<std::string, function_compiler> definitions;
+        std::map<std::string, function_composer> definitions;
     };
 
-    function compile(utree const& ast, compiler_environment& env);
+    actor compile(utree const& ast, compiler_environment& env);
 
     struct compiler
     {
-        typedef function result_type;
+        typedef actor result_type;
 
         mutable compiler_environment& env;
         compiler(compiler_environment& env)
@@ -72,28 +70,27 @@ namespace scheme
         {
         }
 
-        function operator()(nil) const
+        actor operator()(nil) const
         {
             return scheme::val(utree());
         }
 
         template <typename T>
-        function operator()(T const& val) const
+        actor operator()(T const& val) const
         {
             return scheme::val(utree(val));
         }
 
-        function operator()(utf8_symbol_range const& str) const
+        actor operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
-
-            if (function_compiler* mf = env.find(name))
+            if (function_composer* mf = env.find(name))
             {
-                function_list flist;
+                actor_list flist;
                 return (*mf)(flist);
             }
             // $$$ throw? $$$
-            return function();
+            return actor();
         }
 
         void define_function(
@@ -103,9 +100,13 @@ namespace scheme
         {
             compiler_environment local_env(env);
             for (std::size_t i = 0; i < args.size(); ++i)
-                local_env.define(args[i], boost::bind(arg, i));
+            {
+                boost::function<actor(actor_list const&)>
+                    f = boost::bind(arg, i);
+                local_env.define(args[i], f);
+            }
             env.define(name,
-                function_compiler(call(compile(body, local_env), args.size())));
+                function_composer(call(compile(body, local_env), args.size())));
         }
 
         void define_nullary_function(
@@ -113,11 +114,11 @@ namespace scheme
             utree const& body) const
         {
             env.define(name,
-                function_compiler(call(compile(body, env), 0)));
+                function_composer(call(compile(body, env), 0)));
         }
 
         template <typename Iterator>
-        function operator()(boost::iterator_range<Iterator> const& range) const
+        actor operator()(boost::iterator_range<Iterator> const& range) const
         {
             std::string name(get_symbol(*range.begin()));
 
@@ -141,23 +142,23 @@ namespace scheme
                     std::string fname(get_symbol(*i++));
                     define_nullary_function(fname, *i);
                 }
-                return function(val(utree(utf8_symbol("<function>"))));
+                return actor(val(utf8_symbol("<function>")));
             }
 
-            if (function_compiler* mf = env.find(name))
+            if (function_composer* mf = env.find(name))
             {
-                function_list flist;
+                actor_list flist;
                 Iterator i = range.begin(); ++i;
                 for (; i != range.end(); ++i)
                     flist.push_back(compile(*i, env));
                 return (*mf)(flist);
             }
 
-            return function(); // $$$ implement me $$$
+            return actor(); // $$$ implement me $$$
         }
     };
 
-    function compile(utree const& ast, compiler_environment& env)
+    actor compile(utree const& ast, compiler_environment& env)
     {
         return utree::visit(ast, compiler(env));
     }
@@ -165,18 +166,18 @@ namespace scheme
     void compile_all(
         utree const& ast,
         compiler_environment& env,
-        function_list& results)
+        actor_list& results)
     {
         BOOST_FOREACH(utree const& program, ast)
         {
-            scheme::function f = compile(program, env);
+            scheme::actor f = compile(program, env);
             results.push_back(f);
         }
     }
 
     void build_basic_environment(compiler_environment& env)
     {
-        env.define("+", plus_composer());
+        env.define("+", plus);
     }
 }
 
