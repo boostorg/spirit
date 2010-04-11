@@ -30,9 +30,10 @@ int main(int argc, char **argv)
         using scheme::_1;
         using scheme::_2;
 
-        std::cout << "result: " << plus(11, 22, 33)() << std::endl;
-        std::cout << "result: " << plus(11, 22, _1)(33) << std::endl;
-        std::cout << "result: " << plus(11, _1, _2)(22, 33) << std::endl;
+        std::cout << "result: " << plus(11, 22, 33)         () << std::endl;
+        std::cout << "result: " << plus(11, 22, _1)         (33) << std::endl;
+        std::cout << "result: " << plus(11, _1, _2)         (22, 33) << std::endl;
+        std::cout << "result: " << plus(11, plus(_1, _2))   (22, 33) << std::endl;
     }
 
     char const* filename = NULL;
@@ -74,7 +75,7 @@ int main(int argc, char **argv)
     if (scheme::input::parse_sexpr_list(in, program))
     {
         std::cout << "success: " << std::endl;
-        scheme::compiler_environment env;
+        scheme::environment env;
         scheme::build_basic_environment(env);
         scheme::actor_list flist;
         compile_all(program, env, flist);

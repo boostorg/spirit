@@ -25,11 +25,11 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
-    class compiler_environment
+    class environment
     {
     public:
 
-        compiler_environment(compiler_environment* parent = 0)
+        environment(environment* parent = 0)
           : outer(parent) {}
 
         void define(std::string const& name, function_composer const& def)
@@ -50,22 +50,22 @@ namespace scheme
             return 0;
         }
 
-        compiler_environment* parent() const { return outer; }
+        environment* parent() const { return outer; }
 
     private:
 
-        compiler_environment* outer;
+        environment* outer;
         std::map<std::string, function_composer> definitions;
     };
 
-    actor compile(utree const& ast, compiler_environment& env);
+    actor compile(utree const& ast, environment& env);
 
     struct compiler
     {
         typedef actor result_type;
 
-        mutable compiler_environment& env;
-        compiler(compiler_environment& env)
+        mutable environment& env;
+        compiler(environment& env)
           : env(env)
         {
         }
@@ -98,7 +98,7 @@ namespace scheme
             std::vector<std::string> const& args,
             utree const& body) const
         {
-            compiler_environment local_env(env);
+            environment local_env(env);
             for (std::size_t i = 0; i < args.size(); ++i)
             {
                 boost::function<actor(actor_list const&)>
@@ -158,14 +158,14 @@ namespace scheme
         }
     };
 
-    actor compile(utree const& ast, compiler_environment& env)
+    actor compile(utree const& ast, environment& env)
     {
         return utree::visit(ast, compiler(env));
     }
 
     void compile_all(
         utree const& ast,
-        compiler_environment& env,
+        environment& env,
         actor_list& results)
     {
         BOOST_FOREACH(utree const& program, ast)
@@ -175,7 +175,7 @@ namespace scheme
         }
     }
 
-    void build_basic_environment(compiler_environment& env)
+    void build_basic_environment(environment& env)
     {
         env.define("+", plus);
     }
