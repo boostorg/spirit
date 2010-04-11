@@ -52,6 +52,11 @@
   iterators which do not store the last character read from the input (such as
   `std::istream_iterator`). Thanks to Larry Evans and Peter Schueller for 
   independently reporting this problem.
+* The directive `karma::omit[]` now does not accept an arbitrary attribute 
+  type anymore.
+* The __karma__ predicates (the and-predicate and the not-predicate) and the 
+  directive `karma::omit[]` now disable output alltogether instead of 
+  intercepting the output into a buffer which got discarded as before.
 
 [heading What's changed in __lex__ from V2.2 (Boost V1.42.0) to V2.3 (Boost V1.43.0)]
 
