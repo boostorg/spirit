@@ -106,7 +106,7 @@ namespace scheme
                 local_env.define(args[i], f);
             }
             env.define(name,
-                function_composer(call(compile(body, local_env), args.size())));
+                function_composer(lambda(compile(body, local_env), args.size())));
         }
 
         void define_nullary_function(
@@ -114,7 +114,7 @@ namespace scheme
             utree const& body) const
         {
             env.define(name,
-                function_composer(call(compile(body, env), 0)));
+                function_composer(lambda(compile(body, env), 0)));
         }
 
         template <typename Iterator>

@@ -234,13 +234,13 @@ namespace scheme
     function_composer const plus = plus_composer();
 
     ///////////////////////////////////////////////////////////////////////////
-    // call
+    // lambda
     ///////////////////////////////////////////////////////////////////////////
-    struct call_function
+    struct lambda_function
     {
         actor_list elements;
         actor f;
-        call_function(actor const& f, actor_list const& elements)
+        lambda_function(actor const& f, actor_list const& elements)
           : elements(elements), f(f) {}
 
         typedef utree result_type;
@@ -255,11 +255,11 @@ namespace scheme
         }
     };
 
-    struct call_composer
+    struct lambda_composer
     {
         actor f;
         int arity;
-        call_composer(actor const& f, int arity)
+        lambda_composer(actor const& f, int arity)
           : f(f), arity(arity) {}
 
         typedef actor result_type;
@@ -267,13 +267,13 @@ namespace scheme
         {
             // $$$ use throw $$$
             BOOST_ASSERT(elements.size() == arity);
-            return actor(call_function(f, elements));
+            return actor(lambda_function(f, elements));
         }
     };
 
-    inline function_composer const call(actor const& f, int arity)
+    inline function_composer const lambda(actor const& f, int arity)
     {
-        return call_composer(f, arity);
+        return lambda_composer(f, arity);
     }
 }
 
