@@ -132,6 +132,17 @@ namespace boost { namespace spirit { namespace karma
             }
         };
 
+        // specialization for pointers
+        template <typename T>
+        struct absolute_value_helper<T*>
+        {
+            typedef std::size_t result_type;
+            static std::size_t call (T* p)
+            {
+                return std::size_t(p);
+            }
+        };
+
         template <typename T>
         typename absolute_value_helper<T>::result_type
         absolute_value(T n)
@@ -565,7 +576,8 @@ namespace boost { namespace spirit { namespace karma
         static bool
         call(OutputIterator& sink, T const& n)
         {
-            typename detail::absolute_value_helper<T>::result_type un = n;
+            typedef typename detail::absolute_value_helper<T>::result_type type;
+            type un = type(n);
             return base_type::call(sink, un, un, 0);
         }
     };
