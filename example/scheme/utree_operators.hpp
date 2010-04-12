@@ -28,8 +28,9 @@ namespace scheme
     bool operator<=(utree const& a, utree const& b);
     bool operator>=(utree const& a, utree const& b);
 
-    // Printing
+    // Input and output
     std::ostream& operator<<(std::ostream& out, utree const& x);
+    std::istream& operator>>(std::istream& in, utree& x);
 
     // Logical operators
     utree operator&&(utree const& a, utree const& b);
@@ -146,73 +147,73 @@ namespace scheme
         }
     };
 
-    struct utree_print
-    {
-        typedef void result_type;
-
-        std::ostream& out;
-        utree_print(std::ostream& out) : out(out) {}
-
-        void operator()(scheme::nil) const
-        {
-            out << "nil";
-        }
-
-        template <typename T>
-        void operator()(T val) const
-        {
-            out << val;
-        }
-
-        void operator()(bool b) const
-        {
-            out << (b ? "true" : "false");
-        }
-
-        void operator()(binary_range const& b) const
-        {
-            out << "b";
-            out.width(2);
-            out.fill('0');
-
-            typedef binary_range::const_iterator iterator;
-            for (iterator i = b.begin(); i != b.end(); ++i)
-                out << std::hex << int((unsigned char)*i);
-            out << std::dec;
-        }
-
-        void operator()(utf8_string_range const& str) const
-        {
-            typedef utf8_string_range::const_iterator iterator;
-            iterator i = str.begin();
-            out << '"';
-            for (; i != str.end(); ++i)
-                out << *i;
-            out << '"';
-        }
-
-        void operator()(utf8_symbol_range const& str) const
-        {
-            typedef utf8_symbol_range::const_iterator iterator;
-            iterator i = str.begin();
-            for (; i != str.end(); ++i)
-                out << *i;
-        }
-
-        template <typename Iterator>
-        void operator()(boost::iterator_range<Iterator> const& range) const
-        {
-            typedef typename boost::iterator_range<Iterator>::const_iterator iterator;
-            (*this)('(');
-            for (iterator i = range.begin(); i != range.end(); ++i)
-            {
-                if (i != range.begin())
-                    (*this)(' ');
-                scheme::utree::visit(*i, *this);
-            }
-            (*this)(')');
-        }
-    };
+//     struct utree_print
+//     {
+//         typedef void result_type;
+// 
+//         std::ostream& out;
+//         utree_print(std::ostream& out) : out(out) {}
+// 
+//         void operator()(scheme::nil) const
+//         {
+//             out << "nil";
+//         }
+// 
+//         template <typename T>
+//         void operator()(T val) const
+//         {
+//             out << val;
+//         }
+// 
+//         void operator()(bool b) const
+//         {
+//             out << (b ? "true" : "false");
+//         }
+// 
+//         void operator()(binary_range const& b) const
+//         {
+//             out << "b";
+//             out.width(2);
+//             out.fill('0');
+// 
+//             typedef binary_range::const_iterator iterator;
+//             for (iterator i = b.begin(); i != b.end(); ++i)
+//                 out << std::hex << int((unsigned char)*i);
+//             out << std::dec;
+//         }
+// 
+//         void operator()(utf8_string_range const& str) const
+//         {
+//             typedef utf8_string_range::const_iterator iterator;
+//             iterator i = str.begin();
+//             out << '"';
+//             for (; i != str.end(); ++i)
+//                 out << *i;
+//             out << '"';
+//         }
+// 
+//         void operator()(utf8_symbol_range const& str) const
+//         {
+//             typedef utf8_symbol_range::const_iterator iterator;
+//             iterator i = str.begin();
+//             for (; i != str.end(); ++i)
+//                 out << *i;
+//         }
+// 
+//         template <typename Iterator>
+//         void operator()(boost::iterator_range<Iterator> const& range) const
+//         {
+//             typedef typename boost::iterator_range<Iterator>::const_iterator iterator;
+//             (*this)('(');
+//             for (iterator i = range.begin(); i != range.end(); ++i)
+//             {
+//                 if (i != range.begin())
+//                     (*this)(' ');
+//                 scheme::utree::visit(*i, *this);
+//             }
+//             (*this)(')');
+//         }
+//     };
 
     template <typename Base>
     struct logical_function
@@ -422,11 +423,11 @@ namespace scheme
         return !(a < b);
     }
 
-    inline std::ostream& operator<<(std::ostream& out, utree const& x)
-    {
-        utree::visit(x, utree_print(out));
-        return out;
-    }
+//     inline std::ostream& operator<<(std::ostream& out, utree const& x)
+//     {
+//         utree::visit(x, utree_print(out));
+//         return out;
+//     }
 
     SCHEME_CREATE_LOGICAL_FUNCTION(and_, a&&b);
     SCHEME_CREATE_LOGICAL_FUNCTION(or_, a||b);

@@ -12,19 +12,19 @@
 #include <string>
 #include <ostream>
 
-#if defined(BOOST_MSVC)
-# pragma warning(push)
-# pragma warning(disable: 4804)
-# pragma warning(disable: 4805)
-# pragma warning(disable: 4244)
-#endif
-
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/ref.hpp>
 #include "detail/utree_detail1.hpp"
+
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4804)
+# pragma warning(disable: 4805)
+# pragma warning(disable: 4244)
+#endif
 
 namespace scheme
 {
@@ -259,6 +259,9 @@ namespace scheme
         template <typename T>
         T as() const;
 
+        utree& deref();
+        utree const& deref() const;
+
     private:
 
         typedef utree_type type;
@@ -288,10 +291,10 @@ namespace scheme
     };
 }
 
-#include "detail/utree_detail2.hpp"
-
 #if defined(BOOST_MSVC)
 # pragma warning(pop)
 #endif
+
+#include "detail/utree_detail2.hpp"
 
 #endif

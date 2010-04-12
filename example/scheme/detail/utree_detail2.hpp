@@ -191,6 +191,7 @@ namespace scheme { namespace detail
     inline void list::copy(list const& other)
     {
         first = last = 0;
+        size = 0;
         node* p = other.first;
         while (p != 0)
         {
@@ -962,6 +963,16 @@ namespace scheme
     inline T utree::as() const
     {
         return utree::visit(*this, utree_cast<T>());
+    }
+
+    inline utree& utree::deref()
+    {
+        return (get_type() == type::reference_type) ? *p : *this;
+    }
+
+    inline utree const& utree::deref() const
+    {
+        return (get_type() == type::reference_type) ? *p : *this;
     }
 }
 

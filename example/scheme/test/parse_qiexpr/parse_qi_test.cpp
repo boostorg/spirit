@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iterator>
 
+#include "../../utree.hpp"
 #include "../../input/parse_qiexpr.hpp"
 #include "../../output/generate_sexpr.hpp"
 

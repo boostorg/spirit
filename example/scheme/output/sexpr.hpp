@@ -132,15 +132,6 @@ namespace boost { namespace spirit { namespace traits
         typedef scheme::binary_string compatible_type;
         typedef mpl::int_<scheme::utree_type::binary_type> distance;
     };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::function_ptr, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::function_ptr compatible_type;
-        typedef mpl::int_<scheme::utree_type::function_type> distance;
-    };
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -176,7 +167,6 @@ namespace scheme { namespace output
                       | symbol
                       | byte_str
                       | list
-                      | function_
                       | nil_
                       ;
 
@@ -185,7 +175,6 @@ namespace scheme { namespace output
             string_   = '"' << string << '"';
             symbol    = string;
             byte_str  = 'b' << *right_align(2, '0')[hex2];
-            function_ = verbatim["function_ptr(" << hex << ")"];
             nil_      = eps;
         }
 
@@ -196,7 +185,6 @@ namespace scheme { namespace output
         rule<OutputIterator, utf8_symbol_range()> symbol;
         rule<OutputIterator, utf8_string_range()> string_;
         rule<OutputIterator, binary_range()> byte_str;
-        rule<OutputIterator, function_ptr()> function_;
         rule<OutputIterator, nil()> nil_;
     };
 }}

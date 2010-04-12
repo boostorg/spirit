@@ -3,7 +3,24 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  
-char_("abc")
+// parser primitives
 char_
+char_("abc")
 char_('a')
 char_('a', 'b')
+ 
+// sequences
+char_ >> char_
+char_ >> char_('a') >> char_('a', 'b')
+(char_ >> char_('a')) >> char_('a', 'b')
+char_ >> (char_('a') >> char_('a', 'b'))
+char_ >> (char_('a')) >> char_('a', 'b')
+ 
+// alternatives and sequences
+char_ | char_
+char_ | char_('a') >> char_('a', 'b')
+(char_ | char_('a')) | char_('a', 'b')
+char_ >> (char_('a') | char_('a', 'b'))
+char_ >> char_('a') | char_('a', 'b')
+(char_ >> char_('a')) | char_('a', 'b')
+
