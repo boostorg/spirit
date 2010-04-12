@@ -1,3 +1,5 @@
 (define (dbl x) (+ x x))
 (define len 123)
 (dbl len)
+(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))
+(factorial 10)

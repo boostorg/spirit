@@ -77,8 +77,9 @@ int main(int argc, char **argv)
         std::cout << "success: " << std::endl;
         scheme::environment env;
         scheme::build_basic_environment(env);
+        scheme::actor_list fragments;
         scheme::actor_list flist;
-        compile_all(program, env, flist);
+        compile_all(program, env, flist, fragments);
         BOOST_FOREACH(scheme::actor const& f, flist)
         {
             std::cout << " result: " << f() << std::endl;

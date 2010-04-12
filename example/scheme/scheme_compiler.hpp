@@ -39,6 +39,14 @@ namespace scheme
             definitions[name] = def;
         }
 
+        //~ function_composer&
+        //~ forward_declare(std::string const& name)
+        //~ {
+            //~ // $$$ use exceptions here $$$
+            //~ BOOST_ASSERT(definitions.find(name) == definitions.end());
+            //~ return definitions[name];
+        //~ }
+
         function_composer* find(std::string const& name)
         {
             std::map<std::string, function_composer>::iterator
@@ -58,15 +66,16 @@ namespace scheme
         std::map<std::string, function_composer> definitions;
     };
 
-    actor compile(utree const& ast, environment& env);
+    actor compile(utree const& ast, environment& env, actor_list& fragments);
 
     struct compiler
     {
         typedef actor result_type;
 
-        mutable environment& env;
-        compiler(environment& env)
-          : env(env)
+        environment& env;
+        actor_list& fragments;
+        compiler(environment& env, actor_list& fragments)
+          : env(env), fragments(fragments)
         {
         }
 
@@ -98,23 +107,32 @@ namespace scheme
             std::vector<std::string> const& args,
             utree const& body) const
         {
-            environment local_env(env);
+            environment local_env(&this->env);
             for (std::size_t i = 0; i < args.size(); ++i)
             {
                 boost::function<actor(actor_list const&)>
                     f = boost::bind(arg, i);
                 local_env.define(args[i], f);
             }
-            env.define(name,
-                function_composer(lambda(compile(body, local_env), args.size())));
+
+            fragments.push_back(actor());
+            actor& f = fragments.back();
+            env.define(name, lambda(f, args.size()));
+            f = compile(body, local_env, fragments);
+
+
+            //~ function_composer& fc = env.forward_declare(name);
+            //~ fc = lambda(compile(body, local_env), args.size());
         }
 
         void define_nullary_function(
             std::string const& name,
             utree const& body) const
         {
-            env.define(name,
-                function_composer(lambda(compile(body, env), 0)));
+            fragments.push_back(actor());
+            actor& f = fragments.back();
+            env.define(name, lambda(f, 0));
+            f = compile(body, env, fragments);
         }
 
         template <typename Iterator>
@@ -150,7 +168,7 @@ namespace scheme
                 actor_list flist;
                 Iterator i = range.begin(); ++i;
                 for (; i != range.end(); ++i)
-                    flist.push_back(compile(*i, env));
+                    flist.push_back(compile(*i, env, fragments));
                 return (*mf)(flist);
             }
 
@@ -158,26 +176,31 @@ namespace scheme
         }
     };
 
-    actor compile(utree const& ast, environment& env)
+    actor compile(utree const& ast, environment& env, actor_list& fragments)
     {
-        return utree::visit(ast, compiler(env));
+        return utree::visit(ast, compiler(env, fragments));
     }
 
     void compile_all(
         utree const& ast,
         environment& env,
-        actor_list& results)
+        actor_list& results,
+        actor_list& fragments)
     {
         BOOST_FOREACH(utree const& program, ast)
         {
-            scheme::actor f = compile(program, env);
+            scheme::actor f = compile(program, env, fragments);
             results.push_back(f);
         }
     }
 
     void build_basic_environment(environment& env)
     {
+        env.define("if", if_);
+        env.define("<=", less_than_equal);
         env.define("+", plus);
+        env.define("-", minus);
+        env.define("*", times);
     }
 }
 

@@ -12,6 +12,13 @@
 #include <string>
 #include <ostream>
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4804)
+# pragma warning(disable: 4805)
+# pragma warning(disable: 4244)
+#endif
+
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
@@ -297,4 +304,9 @@ namespace scheme
 }
 
 #include "detail/utree_detail2.hpp"
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
+
 #endif

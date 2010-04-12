@@ -5,7 +5,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #if !defined(BOOST_SPIRIT_SCHEME_INTERPRETER)
-#define BOOST_SPIRIT_SCHEME_INTERPRETER 
+#define BOOST_SPIRIT_SCHEME_INTERPRETER
 
 #include <list>
 #include <boost/function.hpp>
@@ -202,6 +202,71 @@ namespace scheme
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // if
+    ///////////////////////////////////////////////////////////////////////////
+    struct if_function
+    {
+        actor cond;
+        actor then;
+        actor else_;
+        if_function(
+            actor const& cond, actor const& then, actor const& else_)
+          : cond(cond), then(then), else_(else_) {}
+
+        typedef utree result_type;
+        utree operator()(utree const& args) const
+        {
+            return cond(args).as<bool>() ? then(args) : else_(args);
+        }
+    };
+
+    struct if_composer
+    {
+        typedef actor result_type;
+        actor operator()(actor_list const& elements) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            actor if_ = *i++;
+            actor then = *i++;
+            actor else_ = *i;
+            return actor(if_function(if_, then, else_));
+        }
+    };
+
+    function_composer const if_ = if_composer();
+
+    ///////////////////////////////////////////////////////////////////////////
+    // less_than_equal
+    ///////////////////////////////////////////////////////////////////////////
+    struct less_than_equal_function
+    {
+        actor a;
+        actor b;
+        less_than_equal_function(actor const& a, actor const& b)
+          : a(a), b(b) {}
+
+        typedef utree result_type;
+        utree operator()(utree const& args) const
+        {
+            return a(args) <= b(args);
+        }
+    };
+
+    struct less_than_equal_composer
+    {
+        typedef actor result_type;
+        actor operator()(actor_list const& elements) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            actor a = *i++;
+            actor b = *i;
+            return actor(less_than_equal_function(a, b));
+        }
+    };
+
+    function_composer const less_than_equal = less_than_equal_composer();
+
+    ///////////////////////////////////////////////////////////////////////////
     // plus
     ///////////////////////////////////////////////////////////////////////////
     struct plus_function
@@ -234,12 +299,80 @@ namespace scheme
     function_composer const plus = plus_composer();
 
     ///////////////////////////////////////////////////////////////////////////
+    // minus
+    ///////////////////////////////////////////////////////////////////////////
+    struct minus_function
+    {
+        actor_list elements;
+        minus_function(actor_list const& elements)
+          : elements(elements) {}
+
+        typedef utree result_type;
+        utree operator()(utree const& args) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            utree result = (*i++)(args);
+            boost::iterator_range<actor_list::const_iterator>
+                rest(i++, elements.end());
+            BOOST_FOREACH(actor const& element, rest)
+            {
+                result = result - element(args);
+            }
+            return result;
+        }
+    };
+
+    struct minus_composer
+    {
+        typedef actor result_type;
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(minus_function(elements));
+        }
+    };
+
+    function_composer const minus = minus_composer();
+
+    ///////////////////////////////////////////////////////////////////////////
+    // times
+    ///////////////////////////////////////////////////////////////////////////
+    struct times_function
+    {
+        actor_list elements;
+        times_function(actor_list const& elements)
+          : elements(elements) {}
+
+        typedef utree result_type;
+        utree operator()(utree const& args) const
+        {
+            utree result(1);
+            BOOST_FOREACH(actor const& element, elements)
+            {
+                result = result * element(args);
+            }
+            return result;
+        }
+    };
+
+    struct times_composer
+    {
+        typedef actor result_type;
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(times_function(elements));
+        }
+    };
+
+    function_composer const times = times_composer();
+
+    ///////////////////////////////////////////////////////////////////////////
     // lambda
     ///////////////////////////////////////////////////////////////////////////
     struct lambda_function
     {
         actor_list elements;
-        actor f;
+        // we must hold f by reference because functions can be recursive
+        boost::reference_wrapper<actor const> f;
         lambda_function(actor const& f, actor_list const& elements)
           : elements(elements), f(f) {}
 
@@ -251,13 +384,14 @@ namespace scheme
             {
                 fargs.push_back(element(args));
             }
-            return f(fargs);
+            return f.get()(fargs);
         }
     };
 
     struct lambda_composer
     {
-        actor f;
+        // we must hold f by reference because functions can be recursive
+        boost::reference_wrapper<actor const> f;
         int arity;
         lambda_composer(actor const& f, int arity)
           : f(f), arity(arity) {}
