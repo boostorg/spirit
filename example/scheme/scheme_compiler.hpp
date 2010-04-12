@@ -11,6 +11,9 @@
 #include <map>
 #include <boost/bind.hpp>
 
+#include "scheme_intinsics.hpp"
+#include "scheme_interpreter.hpp"
+
 namespace scheme
 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,18 +37,10 @@ namespace scheme
 
         void define(std::string const& name, function_composer const& def)
         {
-            // $$$ use exceptions here $$$
+            // $$$ use exceptions here? $$$
             BOOST_ASSERT(definitions.find(name) == definitions.end());
             definitions[name] = def;
         }
-
-        //~ function_composer&
-        //~ forward_declare(std::string const& name)
-        //~ {
-            //~ // $$$ use exceptions here $$$
-            //~ BOOST_ASSERT(definitions.find(name) == definitions.end());
-            //~ return definitions[name];
-        //~ }
 
         function_composer* find(std::string const& name)
         {
@@ -119,10 +114,6 @@ namespace scheme
             actor& f = fragments.back();
             env.define(name, lambda(f, args.size()));
             f = compile(body, local_env, fragments);
-
-
-            //~ function_composer& fc = env.forward_declare(name);
-            //~ fc = lambda(compile(body, local_env), args.size());
         }
 
         void define_nullary_function(
@@ -139,6 +130,7 @@ namespace scheme
         actor operator()(boost::iterator_range<Iterator> const& range) const
         {
             std::string name(get_symbol(*range.begin()));
+            std::string fname;
 
             if (name == "define")
             {
@@ -148,7 +140,7 @@ namespace scheme
                     // a function
                     utree const& decl = *i++;
                     Iterator di = decl.begin();
-                    std::string fname(get_symbol(*di++));
+                    fname = get_symbol(*di++);
                     std::vector<std::string> args;
                     while (di != decl.end())
                         args.push_back(get_symbol(*di++));
@@ -157,10 +149,10 @@ namespace scheme
                 else
                 {
                     // constants (nullary functions)
-                    std::string fname(get_symbol(*i++));
+                    fname = get_symbol(*i++);
                     define_nullary_function(fname, *i);
                 }
-                return actor(val(utf8_symbol("<function>")));
+                return actor(val(utf8_symbol("<define " + fname + ">")));
             }
 
             if (function_composer* mf = env.find(name))

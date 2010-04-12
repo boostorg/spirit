@@ -8,7 +8,6 @@
 
 #include "../input/sexpr.hpp"
 #include "../input/parse_sexpr_impl.hpp"
-#include "../scheme_interpreter.hpp"
 #include "../scheme_compiler.hpp"
 #include <iostream>
 #include <fstream>
