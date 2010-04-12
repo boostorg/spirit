@@ -9,6 +9,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -327,7 +328,7 @@ main()
         test_parser("x", lit('x'));                 // explicit literal
         test_parser("x", char_('x'));               // ascii::char_
         //]
-        
+
         //[reference_char_range
         char ch;
         test_parser_attr("5", char_('0','9'), ch);  // ascii::char_ range
@@ -430,7 +431,7 @@ main()
         
         std::string str;
         test_phrase_parser_attr("'  abc  '", 
-            '\'' >> no_skip[~+char_('\'')] >> '\'', space, str); 
+            '\'' >> no_skip[+~char_('\'')] >> '\'', str); 
         std::cout << str << std::endl;    // will output: >  abc  <
         //]
     }

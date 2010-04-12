@@ -24,9 +24,10 @@ namespace boost { namespace spirit { namespace karma
             buffering = 0x01,        // generator requires buffering
             counting = 0x02,         // generator requires counting
             tracking = 0x04,         // generator requires position tracking
+            disabling = 0x08,        // generator requires disabling of output
 
             countingbuffer = 0x03,   // buffering | counting
-            all_properties = 0x07    // buffering | counting | tracking
+            all_properties = 0x0f    // buffering | counting | tracking | disabling
         };
     };
 

@@ -25,13 +25,51 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       , typename enable_if<traits::meta_create_exists<qi::domain, Expr> >::type>
     {
         template <typename Iterator>
-        static bool call(
-            Iterator& first
-          , Iterator last
-          , Expr const& expr)
+        static bool call(Iterator& first, Iterator last, Expr& expr)
+        {
+            return qi::parse(first, last, create_parser<Expr>(), expr);
+        }
+
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator last, Expr const& expr)
         {
             return qi::parse(first, last, create_parser<Expr>()
               , const_cast<Expr&>(expr));
+        }
+    };
+
+    // the following specializations are needed to explicitly disambiguate 
+    // the two possible specializations for parse_impl<char> and 
+    // parse_impl<wchar_t>
+    template <>
+    struct parse_impl<char>
+    {
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator last, char& expr)
+        {
+            return qi::parse(first, last, create_parser<char>(), expr);
+        }
+
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator last, char const&)
+        {
+            return qi::parse(first, last, create_parser<char>());
+        }
+    };
+
+    template <>
+    struct parse_impl<wchar_t>
+    {
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator last, wchar_t& expr)
+        {
+            return qi::parse(first, last, create_parser<wchar_t>(), expr);
+        }
+
+        template <typename Iterator>
+        static bool call(Iterator& first, Iterator last, wchar_t const&)
+        {
+            return qi::parse(first, last, create_parser<wchar_t>());
         }
     };
 
@@ -41,19 +79,105 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       , typename enable_if<traits::meta_create_exists<qi::domain, Expr> >::type>
     {
         template <typename Iterator, typename Skipper>
-        static bool call(
-            Iterator& first
-          , Iterator last
-          , Expr const& expr
-          , Skipper const& skipper
-          , BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        static bool call(Iterator& first, Iterator last, Expr& expr
+          , Skipper const& skipper, BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        {
+            return qi::phrase_parse(first, last, create_parser<Expr>()
+              , skipper, post_skip, expr);
+        }
+
+        template <typename Iterator, typename Skipper>
+        static bool call(Iterator& first, Iterator last, Expr const& expr
+          , Skipper const& skipper, BOOST_SCOPED_ENUM(skip_flag) post_skip)
         {
             return qi::phrase_parse(first, last, create_parser<Expr>()
               , skipper, post_skip, const_cast<Expr&>(expr));
         }
     };
 
+    // the following specializations are needed to explicitly disambiguate 
+    // the two possible specializations for phrase_parse_impl<char> and 
+    // phrase_parse_impl<wchar_t>
+    template <>
+    struct phrase_parse_impl<char>
+    {
+        template <typename Iterator, typename Skipper>
+        static bool call(Iterator& first, Iterator last, char& expr
+          , Skipper const& skipper, BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        {
+            return qi::phrase_parse(first, last, create_parser<char>()
+              , skipper, post_skip, expr);
+        }
+
+        template <typename Iterator, typename Skipper>
+        static bool call(Iterator& first, Iterator last, char const&
+          , Skipper const& skipper, BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        {
+            return qi::phrase_parse(first, last, create_parser<char>()
+              , skipper, post_skip);
+        }
+    };
+
+    template <>
+    struct phrase_parse_impl<wchar_t>
+    {
+        template <typename Iterator, typename Skipper>
+        static bool call(Iterator& first, Iterator last, wchar_t& expr
+          , Skipper const& skipper, BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        {
+            return qi::phrase_parse(first, last, create_parser<wchar_t>()
+              , skipper, post_skip, expr);
+        }
+
+        template <typename Iterator, typename Skipper>
+        static bool call(Iterator& first, Iterator last, wchar_t const&
+          , Skipper const& skipper, BOOST_SCOPED_ENUM(skip_flag) post_skip)
+        {
+            return qi::phrase_parse(first, last, create_parser<wchar_t>()
+              , skipper, post_skip);
+        }
+    };
 }}}}
+
+namespace boost { namespace spirit { namespace qi
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Expr>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , Expr& expr)
+    {
+        // Make sure the iterator is at least a forward_iterator. If you got a 
+        // compilation error here, then you are using an input_iterator while
+        // calling this function, you need to supply at least a 
+        // forward_iterator instead.
+        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+
+        return detail::parse_impl<Expr>::call(first, last, expr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Expr, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , Expr& expr
+      , Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
+    {
+        // Make sure the iterator is at least a forward_iterator. If you got a 
+        // compilation error here, then you are using an input_iterator while
+        // calling this function, you need to supply at least a 
+        // forward_iterator instead.
+        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+
+        return detail::phrase_parse_impl<Expr>::call(
+            first, last, expr, skipper, post_skip);
+    }
+}}}
 
 #endif
 

@@ -123,6 +123,20 @@ namespace boost { namespace spirit { namespace qi
           , BOOST_PP_ENUM_PARAMS(N, attr));
     }
 
+    template <typename Iterator, typename Expr, typename Skipper
+      , BOOST_PP_ENUM_PARAMS(N, typename A)>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Expr const& expr
+      , Skipper const& skipper
+      , BOOST_PP_ENUM_BINARY_PARAMS(N, A, & attr))
+    {
+        Iterator first = first_;
+        return qi::phrase_parse(first, last, expr, skipper, skip_flag::postskip
+          , BOOST_PP_ENUM_PARAMS(N, attr));
+    }
 }}}
 
 #undef BOOST_SPIRIT_QI_ATTRIBUTE_REFERENCE

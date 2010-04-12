@@ -18,6 +18,7 @@
 #include <boost/variant.hpp>
 #include <boost/optional.hpp>
 #include <boost/config.hpp>
+#include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
@@ -82,7 +83,9 @@ namespace boost { namespace spirit { namespace qi
 
     template <typename T>
     struct meta_create_impl<T
-          , typename enable_if<traits::is_container<T> >::type>
+          , typename enable_if<mpl::and_<
+                traits::is_container<T>, mpl::not_<traits::is_string<T> > >
+            >::type>
       : meta_create_container<T> {};
 
     template <typename T>

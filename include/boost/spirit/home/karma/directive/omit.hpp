@@ -43,19 +43,32 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef Subject subject_type;
 
+        typedef mpl::int_<
+            generator_properties::disabling | subject_type::properties::value
+        > properties;
+
         omit_directive(Subject const& subject)
           : subject(subject) {}
 
-        template <typename Context, typename Iterator>
+        template <typename Context, typename Iterator = unused_type>
         struct attribute
           : traits::attribute_of<subject_type, Context, Iterator>
         {};
 
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator&, Context&, Delimiter const&
-          , Attribute const&) const
+        bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
+          , Attribute const& attr) const
         {
+            // We need to actually execute the output operation as we don't 
+            // have any other means to verify, whether the passed attribute is 
+            // compatible with the subject. As soon as we will have a
+            // traits::is_compatible_attribute<> meta-function, this can be 
+            // replaced by a compile-time assertion and a runtime no-op.
+
+            // wrap the given output iterator to avoid output
+            detail::disable_output<OutputIterator> disable(sink);
+            subject.generate(sink, ctx, d, attr);
             return true;
         }
 
