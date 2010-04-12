@@ -38,7 +38,7 @@
     {
         actor_list elements;
         BOOST_PP_REPEAT(N, SCHEME_PUSH_ELEMENT, _);
-        return f(elements);
+        return derived()(elements);
     }
 
 #undef N

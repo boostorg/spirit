@@ -25,14 +25,25 @@ int main(int argc, char **argv)
 {
     { // testing the c++ side
 
+        using scheme::if_;
         using scheme::plus;
+        using scheme::times;
+        using scheme::minus;
+        using scheme::lte;
         using scheme::_1;
         using scheme::_2;
+        using scheme::actor;
+        using scheme::function;
 
         std::cout << "result: " << plus(11, 22, 33)         () << std::endl;
         std::cout << "result: " << plus(11, 22, _1)         (33) << std::endl;
         std::cout << "result: " << plus(11, _1, _2)         (22, 33) << std::endl;
         std::cout << "result: " << plus(11, plus(_1, _2))   (22, 33) << std::endl;
+
+        function factorial;
+        factorial = if_(lte(_1, 0), 1, times(_1, factorial(minus(_1, 1))));
+
+        std::cout << "result: " << factorial(_1)            (10) << std::endl;
     }
 
     char const* filename = NULL;

@@ -25,6 +25,21 @@ namespace scheme
         return std::string(symbol.begin(), symbol.end());
     }
 
+    struct external_function : composite<external_function>
+    {
+        // we must hold f by reference because functions can be recursive
+        boost::reference_wrapper<actor const> f;
+
+        external_function(actor const& f)
+          : f(f) {}
+
+        using base_type::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(lambda_function(f, elements));
+        }
+    };
+
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
@@ -112,7 +127,7 @@ namespace scheme
 
             fragments.push_back(actor());
             actor& f = fragments.back();
-            env.define(name, lambda(f, args.size()));
+            env.define(name, function_composer(external_function(f)));
             f = compile(body, local_env, fragments);
         }
 
@@ -122,7 +137,7 @@ namespace scheme
         {
             fragments.push_back(actor());
             actor& f = fragments.back();
-            env.define(name, lambda(f, 0));
+            env.define(name, function_composer(external_function(f)));
             f = compile(body, env, fragments);
         }
 

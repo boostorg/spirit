@@ -145,7 +145,7 @@ namespace scheme
     actor const _10 = arg(10);
 
     ///////////////////////////////////////////////////////////////////////////
-    // function_composer
+    // composite
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     inline actor as_function(T const& val)
@@ -158,7 +158,47 @@ namespace scheme
         return f;
     }
 
-    struct function_composer
+    template <typename Derived>
+    struct composite
+    {
+        typedef actor result_type;
+        typedef composite<Derived> base_type;
+
+        actor operator()(actor_list const& elements) const
+        {
+            return derived()(elements);
+        }
+
+        template <typename A0>
+        actor operator()(A0 const& _0) const
+        {
+            actor_list elements;
+            elements.push_back(as_function(_0));
+            return derived()(elements);
+        }
+
+        template <typename A0, typename A1>
+        actor operator()(A0 const& _0, A1 const& _1) const
+        {
+            actor_list elements;
+            elements.push_back(as_function(_0));
+            elements.push_back(as_function(_1));
+            return derived()(elements);
+        }
+
+        // More operators
+        #include "detail/scheme_function_composer_call.hpp"
+
+        Derived const& derived() const
+        {
+            return *static_cast<Derived const*>(this);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // function_composer
+    ///////////////////////////////////////////////////////////////////////////
+    struct function_composer : composite<function_composer>
     {
         boost::function<actor(actor_list const&)> f;
 
@@ -173,32 +213,11 @@ namespace scheme
             return f.empty();
         }
 
-        typedef actor result_type;
-
+        using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
             return f(elements);
         }
-
-        template <typename A0>
-        actor operator()(A0 const& _0) const
-        {
-            actor_list elements;
-            elements.push_back(as_function(_0));
-            return f(elements);
-        }
-
-        template <typename A0, typename A1>
-        actor operator()(A0 const& _0, A1 const& _1) const
-        {
-            actor_list elements;
-            elements.push_back(as_function(_0));
-            elements.push_back(as_function(_1));
-            return f(elements);
-        }
-
-        // More operators
-        #include "detail/scheme_function_composer_call.hpp"
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -224,27 +243,29 @@ namespace scheme
         }
     };
 
-    struct lambda_composer
+    struct function : composite<function>
     {
         // we must hold f by reference because functions can be recursive
-        boost::reference_wrapper<actor const> f;
-        std::size_t arity;
-        lambda_composer(actor const& f, std::size_t arity)
-          : f(f), arity(arity) {}
+        actor f;
 
-        typedef actor result_type;
+        using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
-            // $$$ use throw $$$
-            BOOST_ASSERT(elements.size() == arity);
             return actor(lambda_function(f, elements));
         }
-    };
 
-    inline function_composer const lambda(actor const& f, std::size_t arity)
-    {
-        return function_composer(lambda_composer(f, arity));
-    }
+        function& operator=(function const& other)
+        {
+            f = other.f;
+            return *this;
+        }
+
+        function& operator=(actor const& f_)
+        {
+            f = f_;
+            return *this;
+        }
+    };
 }
 
 #endif
