@@ -32,7 +32,6 @@ int main(int argc, char **argv)
         using scheme::lte;
         using scheme::_1;
         using scheme::_2;
-        using scheme::actor;
         using scheme::function;
 
         std::cout << "result: " << plus(11, 22, 33)         () << std::endl;

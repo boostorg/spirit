@@ -245,7 +245,6 @@ namespace scheme
 
     struct function : composite<function>
     {
-        // we must hold f by reference because functions can be recursive
         actor f;
 
         using base_type::operator();
