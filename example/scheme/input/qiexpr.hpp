@@ -40,8 +40,6 @@ namespace scheme { namespace input
                 |   "//" >> *(char_ - eol) >> eol   // comments
                 |   "/*" >> *(char_ - "*/") >> "*/"
                 ;
-
-//             start.name("ws"); debug(start);
         }
 
         rule<Iterator> start;
@@ -51,9 +49,15 @@ namespace scheme { namespace input
     // a list of names for all supported parser primitives taking no parameters
     static char const* const primitives0[] = 
     {
+    // character parsers
         "char_"
+      , "alnum", "alpha", "blank", "cntrl", "digit", "graph", "print", "punct"
+      , "space", "xdigit"
+      , "lower", "upper"
+    // numerics
       , "long_long", "long_", "int_", "short_"
       , "ulong_long", "ulong_", "uint_", "ushort_"
+      , "bin", "oct", "hex"
       , "bool_", "true_", "false_"
       , "long_double", "double_", "float_"
       , 0

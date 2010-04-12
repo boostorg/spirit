@@ -32,6 +32,7 @@ namespace scheme
             utree_type::list_type);
         SCHEME_GET_UTREE_TYPE(boost::iterator_range<utree::const_iterator>, 
             utree_type::list_type);
+        SCHEME_GET_UTREE_TYPE(function_ptr, utree_type::function_type);
 
 #undef SCHEME_GET_UTREE_TYPE
 
@@ -118,16 +119,26 @@ namespace scheme
                 return type(x.s.str(), x.s.size()); 
             }
         };
+
+        template <>
+        struct get_impl<function_ptr>
+        {
+            typedef function_ptr type;
+            static type call(utree const& x) 
+            { 
+                return type(x.f); 
+            }
+        };
     }
 
     template <typename T>
-    typename detail::get_impl<T>::type 
-    get(utree const& x)
+    typename scheme::detail::get_impl<T>::type 
+    get(scheme::utree const& x)
     {
-        if (x.which() != detail::get_utree_type<T>::value)
+        if (x.which() != scheme::detail::get_utree_type<T>::value)
             throw boost::bad_get();
 
-        return detail::get_impl<T>::call(x);
+        return scheme::detail::get_impl<T>::call(x);
     }
 }
 

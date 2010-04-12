@@ -12,12 +12,20 @@
 namespace scheme { namespace output
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputStream>
-    bool generate_sexpr(OutputStream& os, utree const& tree);
+    template <typename Char>
+    bool generate_sexpr(std::basic_ostream<Char>& os, utree const& tree);
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputStream>
-    bool generate_sexpr_list(OutputStream& os, utree const& tree);
+    template <typename Char>
+    bool generate_sexpr_list(std::basic_ostream<Char>& os, utree const& tree);
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    bool generate_sexpr(std::basic_string<Char>& os, utree const& tree);
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    bool generate_sexpr_list(std::basic_string<Char>& os, utree const& tree);
 }}
 
 #endif

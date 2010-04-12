@@ -8,14 +8,24 @@
 
 #include "../utree.hpp"
 #include "../input/sexpr.hpp"
+#include <iosfwd>
+#include <string>
 
 namespace scheme { namespace input
 {
-    template <typename InputStream>
-    bool parse_sexpr(InputStream& is, utree& result);
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    bool parse_sexpr(std::basic_istream<Char>& is, utree& result);
 
-    template <typename InputStream>
-    bool parse_sexpr_list(InputStream& is, utree& result);
+    template <typename Char>
+    bool parse_sexpr_list(std::basic_istream<Char>& is, utree& result);
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    bool parse_sexpr(std::basic_string<Char>& str, utree& result);
+
+    template <typename Char>
+    bool parse_sexpr_list(std::basic_string<Char>& str, utree& result);
 }}
 
 #endif

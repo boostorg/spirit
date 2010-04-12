@@ -6,14 +6,14 @@
 #if !defined(SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM)
 #define SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM
 
+#include "../utree.hpp"
+#include "../detail/utree_detail3.hpp"
+
 #include <string>
 
 #include <boost/cstdint.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/include/karma.hpp>
-
-#include "../utree.hpp"
-#include "../detail/utree_detail3.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
@@ -132,6 +132,15 @@ namespace boost { namespace spirit { namespace traits
         typedef scheme::binary_string compatible_type;
         typedef mpl::int_<scheme::utree_type::binary_type> distance;
     };
+
+    template <>
+    struct compute_compatible_component_variant<
+            scheme::function_ptr, scheme::utree>
+      : mpl::true_
+    {
+        typedef scheme::function_ptr compatible_type;
+        typedef mpl::int_<scheme::utree_type::function_type> distance;
+    };
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,12 +152,15 @@ namespace scheme { namespace output
     using boost::spirit::karma::double_;
     using boost::spirit::karma::int_;
     using boost::spirit::karma::char_;
+    using boost::spirit::karma::string;
     using boost::spirit::karma::bool_;
     using boost::spirit::karma::eps;
     using boost::spirit::karma::space_type;
     using boost::spirit::karma::uint_generator;
-
-    typedef boost::uint32_t uchar; // a unicode code point
+    using boost::spirit::karma::verbatim;
+    using boost::spirit::karma::delimit;
+    using boost::spirit::karma::hex;
+    using boost::spirit::karma::right_align;
 
     template <typename OutputIterator>
     struct sexpr : grammar<OutputIterator, space_type, utree()>
@@ -160,18 +172,20 @@ namespace scheme { namespace output
             start     = double_
                       | int_
                       | bool_
-                      | string
+                      | string_
                       | symbol
                       | byte_str
                       | list
+                      | function_
                       | nil_
                       ;
 
             list      = '(' << *start << ')';
 
-            string    = '"' << *char_ << '"';
-            symbol    = *char_;
-            byte_str  = 'b' << *hex2;
+            string_   = '"' << string << '"';
+            symbol    = string;
+            byte_str  = 'b' << *right_align(2, '0')[hex2];
+            function_ = verbatim["function_ptr(" << hex << ")"];
             nil_      = eps;
         }
 
@@ -180,8 +194,9 @@ namespace scheme { namespace output
         rule<OutputIterator, space_type, utree()> start;
         rule<OutputIterator, space_type, utree_list()> list;
         rule<OutputIterator, utf8_symbol_range()> symbol;
-        rule<OutputIterator, utf8_string_range()> string;
+        rule<OutputIterator, utf8_string_range()> string_;
         rule<OutputIterator, binary_range()> byte_str;
+        rule<OutputIterator, function_ptr()> function_;
         rule<OutputIterator, nil()> nil_;
     };
 }}

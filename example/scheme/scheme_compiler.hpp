@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_SCHEME_INTERPRETER)
-#define BOOST_SPIRIT_SCHEME_INTERPRETERnamespace scheme
+#if !defined(BOOST_SPIRIT_SCHEME_COMPILER)
+#define BOOST_SPIRIT_SCHEME_COMPILER
 
 #include <vector>
 #include <map>
