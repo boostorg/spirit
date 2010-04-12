@@ -280,8 +280,11 @@ namespace scheme
         typedef utree result_type;
         utree operator()(utree const& args) const
         {
-            utree result(0);
-            BOOST_FOREACH(actor const& element, elements)
+            actor_list::const_iterator i = elements.begin();
+            utree result = (*i++)(args);
+            boost::iterator_range<actor_list::const_iterator>
+                rest(i++, elements.end());
+            BOOST_FOREACH(actor const& element, rest)
             {
                 result = result + element(args);
             }
@@ -349,8 +352,11 @@ namespace scheme
         typedef utree result_type;
         utree operator()(utree const& args) const
         {
-            utree result(1);
-            BOOST_FOREACH(actor const& element, elements)
+            actor_list::const_iterator i = elements.begin();
+            utree result = (*i++)(args);
+            boost::iterator_range<actor_list::const_iterator>
+                rest(i++, elements.end());
+            BOOST_FOREACH(actor const& element, rest)
             {
                 result = result * element(args);
             }

@@ -7,6 +7,11 @@
 #if !defined(BOOST_SPIRIT_UTREE_DETAIL2)
 #define BOOST_SPIRIT_UTREE_DETAIL2
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4800)
+#endif
+
 namespace scheme { namespace detail
 {
     inline char& fast_string::info()
@@ -959,5 +964,9 @@ namespace scheme
         return utree::visit(*this, utree_cast<T>());
     }
 }
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif

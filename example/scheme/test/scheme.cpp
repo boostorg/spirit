@@ -82,7 +82,7 @@ int main(int argc, char **argv)
         compile_all(program, env, flist, fragments);
         BOOST_FOREACH(scheme::actor const& f, flist)
         {
-            std::cout << " result: " << f() << std::endl;
+            std::cout << "result: " << f() << std::endl;
         }
     }
     else

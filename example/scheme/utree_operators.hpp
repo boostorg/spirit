@@ -7,6 +7,12 @@
 #if !defined(BOOST_SPIRIT_UTREE_OPERATORS)
 #define BOOST_SPIRIT_UTREE_OPERATORS
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4804)
+# pragma warning(disable: 4805)
+#endif
+
 #include "utree.hpp"
 #include <boost/preprocessor/cat.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
@@ -515,5 +521,9 @@ namespace scheme
         return utree::visit(a, integral_function_invert);
     }
 }
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif
