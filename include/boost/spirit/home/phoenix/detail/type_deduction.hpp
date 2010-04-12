@@ -182,6 +182,7 @@
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/is_reference.hpp>
