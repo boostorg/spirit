@@ -7,11 +7,6 @@
 #if !defined(BOOST_SPIRIT_UTREE_OPERATORS)
 #define BOOST_SPIRIT_UTREE_OPERATORS
 
-#if defined(BOOST_MSVC)
-# pragma warning(push)
-# pragma warning(disable: 4804)
-#endif
-
 #include "utree.hpp"
 #include <boost/preprocessor/cat.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
@@ -211,11 +206,6 @@ namespace scheme
             }
             (*this)(')');
         }
-
-        void operator()(function_ptr fptr) const
-        {
-            out << "function-pointer(" << fptr << ')';
-        }
     };
 
     template <typename Base>
@@ -375,6 +365,8 @@ namespace scheme
         template <typename A>                                                   \
         static utree eval(A const& a)                                           \
         {                                                                       \
+            static int b;                                                       \
+            (void) b;                                                           \
             return utree(expr);                                                 \
         }                                                                       \
     };                                                                          \
@@ -523,9 +515,5 @@ namespace scheme
         return utree::visit(a, integral_function_invert);
     }
 }
-
-#if defined(BOOST_MSVC)
-# pragma warning(pop)
-#endif
 
 #endif

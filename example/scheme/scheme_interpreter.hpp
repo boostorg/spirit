@@ -233,7 +233,8 @@ namespace scheme
         }
     };
 
-    function_composer const if_ = if_composer();
+    function_composer const if_
+        = function_composer(if_composer());
 
     ///////////////////////////////////////////////////////////////////////////
     // less_than_equal
@@ -264,7 +265,8 @@ namespace scheme
         }
     };
 
-    function_composer const less_than_equal = less_than_equal_composer();
+    function_composer const less_than_equal
+        = function_composer(less_than_equal_composer());
 
     ///////////////////////////////////////////////////////////////////////////
     // plus
@@ -296,7 +298,8 @@ namespace scheme
         }
     };
 
-    function_composer const plus = plus_composer();
+    function_composer const plus
+        = function_composer(plus_composer());
 
     ///////////////////////////////////////////////////////////////////////////
     // minus
@@ -331,7 +334,8 @@ namespace scheme
         }
     };
 
-    function_composer const minus = minus_composer();
+    function_composer const minus
+        = function_composer(minus_composer());
 
     ///////////////////////////////////////////////////////////////////////////
     // times
@@ -363,7 +367,8 @@ namespace scheme
         }
     };
 
-    function_composer const times = times_composer();
+    function_composer const times
+        = function_composer(times_composer());
 
     ///////////////////////////////////////////////////////////////////////////
     // lambda
@@ -392,8 +397,8 @@ namespace scheme
     {
         // we must hold f by reference because functions can be recursive
         boost::reference_wrapper<actor const> f;
-        int arity;
-        lambda_composer(actor const& f, int arity)
+        std::size_t arity;
+        lambda_composer(actor const& f, std::size_t arity)
           : f(f), arity(arity) {}
 
         typedef actor result_type;
@@ -405,9 +410,9 @@ namespace scheme
         }
     };
 
-    inline function_composer const lambda(actor const& f, int arity)
+    inline function_composer const lambda(actor const& f, std::size_t arity)
     {
-        return lambda_composer(f, arity);
+        return function_composer(lambda_composer(f, arity));
     }
 }
 

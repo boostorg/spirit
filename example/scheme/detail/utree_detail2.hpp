@@ -375,9 +375,6 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, f);
-
-                case type::function_type:
-                    return f(x.f);
             }
         }
 
@@ -431,9 +428,6 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, y, f);
-
-                case type::function_type:
-                    return visit_impl::apply(y, detail::bind(f, x.f));
             }
         }
     };
@@ -512,12 +506,6 @@ namespace scheme
       : p(ref.get_pointer())
     {
         set_type(type::reference_type);
-    }
-
-    inline utree::utree(function_ptr fptr)
-      : f(fptr)
-    {
-        set_type(type::function_type);
     }
 
     inline utree::utree(utree const& other)
@@ -602,14 +590,6 @@ namespace scheme
         free();
         p = ref.get_pointer();
         set_type(type::reference_type);
-        return *this;
-    }
-
-    inline utree& utree::operator=(function_ptr fptr)
-    {
-        free();
-        f = fptr;
-        set_type(type::function_type);
         return *this;
     }
 

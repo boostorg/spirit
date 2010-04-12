@@ -44,8 +44,7 @@ namespace scheme
             symbol_type,
             binary_type,
             list_type,
-            reference_type,
-            function_type
+            reference_type
         };
     };
 
@@ -53,17 +52,6 @@ namespace scheme
     // The nil type
     ///////////////////////////////////////////////////////////////////////////
     struct nil {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    // The environment (this is forward declared)
-    ///////////////////////////////////////////////////////////////////////////
-    class environment;
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Function pointer
-    ///////////////////////////////////////////////////////////////////////////
-    class utree;
-    typedef utree (*function_ptr)(environment& env);
 
     ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
@@ -181,7 +169,6 @@ namespace scheme
         utree(char const* str, std::size_t len);
         utree(std::string const& str);
         utree(boost::reference_wrapper<utree> ref);
-        utree(function_ptr fptr);
 
         template <typename Base, utree_type::info type_>
         utree(basic_string<Base, type_> const& bin);
@@ -197,7 +184,6 @@ namespace scheme
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
         utree& operator=(boost::reference_wrapper<utree> ref);
-        utree& operator=(function_ptr fptr);
 
         template <typename Base, utree_type::info type_>
         utree& operator=(basic_string<Base, type_> const& bin);
@@ -298,7 +284,6 @@ namespace scheme
             int i;
             double d;
             utree* p;
-            function_ptr f;
         };
     };
 }
