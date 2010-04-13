@@ -17,32 +17,10 @@
 namespace scheme
 {
 ///////////////////////////////////////////////////////////////////////////////
-//  Utilities
+//  The environment
 ///////////////////////////////////////////////////////////////////////////////
-    inline std::string get_symbol(utree const& s)
-    {
-        utf8_symbol_range symbol = s.as<utf8_symbol_range>();
-        return std::string(symbol.begin(), symbol.end());
-    }
+    typedef boost::function<actor(actor_list const&)> compiled_function;
 
-    struct external_function : composite<external_function>
-    {
-        // we must hold f by reference because functions can be recursive
-        boost::reference_wrapper<actor const> f;
-
-        external_function(actor const& f)
-          : f(f) {}
-
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
-        {
-            return actor(apply_function(f, elements));
-        }
-    };
-
-///////////////////////////////////////////////////////////////////////////////
-//  The compiler
-///////////////////////////////////////////////////////////////////////////////
     class environment
     {
     public:
@@ -50,17 +28,17 @@ namespace scheme
         environment(environment* parent = 0)
           : outer(parent) {}
 
-        template <typename FunctionCall>
-        void define(std::string const& name, FunctionCall const& f)
+        template <typename Function>
+        void define(std::string const& name, Function const& f)
         {
             // $$$ use exceptions here? $$$
             BOOST_ASSERT(definitions.find(name) == definitions.end());
-            definitions[name] = function_call(f);
+            definitions[name] = compiled_function(f);
         }
 
-        function_call* find(std::string const& name)
+        compiled_function* find(std::string const& name)
         {
-            std::map<std::string, function_call>::iterator
+            std::map<std::string, compiled_function>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
                 return &i->second;
@@ -74,10 +52,28 @@ namespace scheme
     private:
 
         environment* outer;
-        std::map<std::string, function_call> definitions;
+        std::map<std::string, compiled_function> definitions;
     };
 
     actor compile(utree const& ast, environment& env, actor_list& fragments);
+
+///////////////////////////////////////////////////////////////////////////////
+//  The compiler
+///////////////////////////////////////////////////////////////////////////////
+    struct external_function : composite<external_function>
+    {
+        // we must hold f by reference because functions can be recursive
+        boost::reference_wrapper<actor const> f;
+
+        external_function(actor const& f)
+          : f(f) {}
+
+        using base_type::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(lambda_function(f, elements));
+        }
+    };
 
     struct compiler
     {
@@ -104,7 +100,7 @@ namespace scheme
         actor operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
-            if (function_call* mf = env.find(name))
+            if (compiled_function* mf = env.find(name))
             {
                 actor_list flist;
                 return (*mf)(flist);
@@ -167,7 +163,7 @@ namespace scheme
                 return actor(val(utf8_symbol("<define " + fname + ">")));
             }
 
-            if (function_call* mf = env.find(name))
+            if (compiled_function* mf = env.find(name))
             {
                 actor_list flist;
                 Iterator i = range.begin(); ++i;
@@ -177,6 +173,12 @@ namespace scheme
             }
 
             return actor(); // $$$ implement me $$$
+        }
+
+        static std::string get_symbol(utree const& s)
+        {
+            utf8_symbol_range symbol = s.as<utf8_symbol_range>();
+            return std::string(symbol.begin(), symbol.end());
         }
     };
 

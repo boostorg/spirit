@@ -30,7 +30,6 @@ namespace scheme
     typedef std::list<actor> actor_list;
     typedef boost::iterator_range<utree const*> args_type;
     typedef boost::function<utree(args_type args)> actor_function;
-    typedef boost::function<actor(actor_list const&)> delayed_function;
 
     struct actor
     {
@@ -201,35 +200,15 @@ namespace scheme
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // function_call
-    ///////////////////////////////////////////////////////////////////////////
-    struct function_call : composite<function_call>
-    {
-        delayed_function f;
-
-        function_call()
-          : f() {}
-
-        function_call(delayed_function const& f)
-          : f(f) {}
-
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
-        {
-            return f(elements);
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     // function
     ///////////////////////////////////////////////////////////////////////////
-    struct apply_function
+    struct lambda_function
     {
         actor_list elements;
         // we must hold f by reference because functions can be recursive
         boost::reference_wrapper<actor const> f;
 
-        apply_function(actor const& f, actor_list const& elements)
+        lambda_function(actor const& f, actor_list const& elements)
           : elements(elements), f(f) {}
 
         typedef utree result_type;
@@ -264,7 +243,7 @@ namespace scheme
         using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
-            return actor(apply_function(f, elements));
+            return actor(lambda_function(f, elements));
         }
 
         function& operator=(function const& other)
