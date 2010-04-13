@@ -36,7 +36,7 @@ namespace scheme
         using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
-            return actor(lambda_function(f, elements));
+            return actor(apply_function(f, elements));
         }
     };
 
@@ -50,16 +50,17 @@ namespace scheme
         environment(environment* parent = 0)
           : outer(parent) {}
 
-        void define(std::string const& name, function_composer const& def)
+        template <typename FunctionCall>
+        void define(std::string const& name, FunctionCall const& f)
         {
             // $$$ use exceptions here? $$$
             BOOST_ASSERT(definitions.find(name) == definitions.end());
-            definitions[name] = def;
+            definitions[name] = function_call(f);
         }
 
-        function_composer* find(std::string const& name)
+        function_call* find(std::string const& name)
         {
-            std::map<std::string, function_composer>::iterator
+            std::map<std::string, function_call>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
                 return &i->second;
@@ -73,7 +74,7 @@ namespace scheme
     private:
 
         environment* outer;
-        std::map<std::string, function_composer> definitions;
+        std::map<std::string, function_call> definitions;
     };
 
     actor compile(utree const& ast, environment& env, actor_list& fragments);
@@ -103,7 +104,7 @@ namespace scheme
         actor operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
-            if (function_composer* mf = env.find(name))
+            if (function_call* mf = env.find(name))
             {
                 actor_list flist;
                 return (*mf)(flist);
@@ -119,15 +120,11 @@ namespace scheme
         {
             environment local_env(&this->env);
             for (std::size_t i = 0; i < args.size(); ++i)
-            {
-                boost::function<actor(actor_list const&)>
-                    f = boost::bind(arg, i);
-                local_env.define(args[i], f);
-            }
+                local_env.define(args[i], boost::bind(arg, i));
 
             fragments.push_back(actor());
             actor& f = fragments.back();
-            env.define(name, function_composer(external_function(f)));
+            env.define(name, external_function(f));
             f = compile(body, local_env, fragments);
         }
 
@@ -137,7 +134,7 @@ namespace scheme
         {
             fragments.push_back(actor());
             actor& f = fragments.back();
-            env.define(name, function_composer(external_function(f)));
+            env.define(name, external_function(f));
             f = compile(body, env, fragments);
         }
 
@@ -170,7 +167,7 @@ namespace scheme
                 return actor(val(utf8_symbol("<define " + fname + ">")));
             }
 
-            if (function_composer* mf = env.find(name))
+            if (function_call* mf = env.find(name))
             {
                 actor_list flist;
                 Iterator i = range.begin(); ++i;
@@ -183,7 +180,8 @@ namespace scheme
         }
     };
 
-    actor compile(utree const& ast, environment& env, actor_list& fragments)
+    inline actor compile(
+        utree const& ast, environment& env, actor_list& fragments)
     {
         return utree::visit(ast, compiler(env, fragments));
     }

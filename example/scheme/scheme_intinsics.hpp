@@ -24,7 +24,7 @@ namespace scheme
           : cond(cond), then(then), else_(else_) {}
 
         typedef utree result_type;
-        utree operator()(utree const& args) const
+        utree operator()(args_type args) const
         {
             return cond(args).as<bool>() ? then(args) : else_(args);
         }
@@ -43,8 +43,7 @@ namespace scheme
         }
     };
 
-    function_composer const if_
-        = function_composer(if_composer());
+    if_composer const if_ = if_composer();
 
     ///////////////////////////////////////////////////////////////////////////
     // less_than_equal
@@ -57,7 +56,7 @@ namespace scheme
           : a(a), b(b) {}
 
         typedef utree result_type;
-        utree operator()(utree const& args) const
+        utree operator()(args_type args) const
         {
             return a(args) <= b(args);
         }
@@ -75,10 +74,9 @@ namespace scheme
         }
     };
 
-    function_composer const less_than_equal
-        = function_composer(less_than_equal_composer());
-
-    function_composer const lte = less_than_equal; // synonym
+    less_than_equal_composer const less_than_equal
+        = less_than_equal_composer();
+    less_than_equal_composer const lte = less_than_equal; // synonym
 
     ///////////////////////////////////////////////////////////////////////////
     // vararg_function
@@ -92,7 +90,7 @@ namespace scheme
           : elements(elements) {}
 
         using composite<Derived>::operator();
-        utree operator()(utree const& args) const
+        utree operator()(args_type args) const
         {
             actor_list::const_iterator i = elements.begin();
             utree result = (*i++)(args);
@@ -125,17 +123,16 @@ namespace scheme
         }
     };
 
-    struct plus_composer
+    struct plus_composer : composite<plus_composer>
     {
-        typedef actor result_type;
+        using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
             return actor(plus_function(elements));
         }
     };
 
-    function_composer const plus
-        = function_composer(plus_composer());
+    plus_composer const plus = plus_composer();
 
     ///////////////////////////////////////////////////////////////////////////
     // minus
@@ -151,17 +148,16 @@ namespace scheme
         }
     };
 
-    struct minus_composer
+    struct minus_composer : composite<minus_composer>
     {
-        typedef actor result_type;
+        using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
             return actor(minus_function(elements));
         }
     };
 
-    function_composer const minus
-        = function_composer(minus_composer());
+    minus_composer const minus = minus_composer();
 
     ///////////////////////////////////////////////////////////////////////////
     // times
@@ -177,17 +173,16 @@ namespace scheme
         }
     };
 
-    struct times_composer
+    struct times_composer : composite<times_composer>
     {
-        typedef actor result_type;
+        using base_type::operator();
         actor operator()(actor_list const& elements) const
         {
             return actor(times_function(elements));
         }
     };
 
-    function_composer const times
-        = function_composer(times_composer());
+    times_composer const times = times_composer();
 }
 
 #endif

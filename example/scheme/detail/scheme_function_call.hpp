@@ -13,7 +13,7 @@
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 
-#define SCHEME_PUSH_ELEMENT(z, n, _) elements.push_back(_##n);
+#define SCHEME_PUSH_ELEMENT(z, n, _) elements[n] = _##n;
 
 #define BOOST_PP_ITERATION_PARAMS_1                                             \
     (3, (3, BOOST_PP_DEC(SCHEME_COMPOSITE_LIMIT),                               \
@@ -36,9 +36,9 @@
     template <BOOST_PP_ENUM_PARAMS(N, typename A)>
     utree operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& _)) const
     {
-        utree elements;
+        boost::array<utree, N> elements;
         BOOST_PP_REPEAT(N, SCHEME_PUSH_ELEMENT, _);
-        return f(elements);
+        return f(get_range(elements));
     }
 
 #undef N

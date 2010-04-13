@@ -17,7 +17,7 @@
 
 #define BOOST_PP_ITERATION_PARAMS_1                                             \
     (3, (3, BOOST_PP_DEC(SCHEME_COMPOSITE_LIMIT),                               \
-    "libs/spirit/example/scheme/detail/scheme_function_composer_call.hpp"))
+    "libs/spirit/example/scheme/detail/scheme_composite_call.hpp"))
 #include BOOST_PP_ITERATE()
 
 #undef SCHEME_PUSH_ELEMENT
