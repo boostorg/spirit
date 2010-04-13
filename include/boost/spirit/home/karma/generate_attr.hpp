@@ -199,7 +199,7 @@ namespace boost { namespace spirit { namespace karma
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
         OutputIterator sink = sink_;
-        return karma::generate_delimited(sink, expr, delimiter, 
+        return karma::generate_delimited(sink, expr, delimiter 
           , delimit_flag::dont_predelimit, BOOST_PP_ENUM_PARAMS(N, attr));
     }
 
