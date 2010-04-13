@@ -111,7 +111,7 @@ namespace scheme
         }
     };
 
-    struct plus_composite : vararg_composite<plus_function> {};
+    struct plus_composite : nary_composite<plus_function> {};
     plus_composite const plus = plus_composite();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -129,7 +129,7 @@ namespace scheme
         }
     };
 
-    struct minus_composite : vararg_composite<minus_function> {};
+    struct minus_composite : nary_composite<minus_function> {};
     minus_composite const minus = minus_composite();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ namespace scheme
         }
     };
 
-    struct times_composite : vararg_composite<times_function> {};
+    struct times_composite : nary_composite<times_function> {};
     times_composite const times = times_composite();
 }
 

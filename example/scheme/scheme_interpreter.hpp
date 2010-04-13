@@ -320,9 +320,9 @@ namespace scheme
     };
 
     template <typename Function>
-    struct vararg_composite : composite<vararg_composite<Function> >
+    struct nary_composite : composite<nary_composite<Function> >
     {
-        using composite<vararg_composite<Function> >::operator();
+        using composite<nary_composite<Function> >::operator();
         actor operator()(actor_list const& elements) const
         {
             return actor(Function(elements));
