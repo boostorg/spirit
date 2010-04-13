@@ -226,7 +226,7 @@ namespace scheme
     template <typename Function>
     struct unary_composite : composite<unary_composite<Function> >
     {
-        using base_type::operator();
+        using composite<unary_composite<Function> >::operator();
         actor operator()(actor_list const& elements) const
         {
             return actor(Function(elements.front()));
@@ -261,7 +261,7 @@ namespace scheme
     template <typename Function>
     struct binary_composite : composite<binary_composite<Function> >
     {
-        using base_type::operator();
+        using composite<binary_composite<Function> >::operator();
         actor operator()(actor_list const& elements) const
         {
             actor_list::const_iterator i = elements.begin();
@@ -306,7 +306,7 @@ namespace scheme
     template <typename Function>
     struct vararg_composite : composite<vararg_composite<Function> >
     {
-        using base_type::operator();
+        using composite<vararg_composite<Function> >::operator();
         actor operator()(actor_list const& elements) const
         {
             return actor(Function(elements));
