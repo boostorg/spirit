@@ -1,4 +1,4 @@
-/*=============================================================================
+﻿/*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -107,6 +107,7 @@ namespace scheme
                 return (*mf)(flist);
             }
             // $$$ throw? $$$
+            BOOST_ASSERT(false);
             return actor();
         }
 
@@ -182,6 +183,7 @@ namespace scheme
                 return (*mf)(flist);
             }
 
+            BOOST_ASSERT(false);
             return actor(); // $$$ implement me $$$
         }
 

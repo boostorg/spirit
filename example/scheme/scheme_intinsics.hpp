@@ -21,7 +21,12 @@ namespace scheme
         actor else_;
         if_function(
             actor const& cond, actor const& then, actor const& else_)
-          : cond(cond), then(then), else_(else_) {}
+          : cond(cond), then(then), else_(else_)
+        {
+            BOOST_ASSERT(!cond.empty());
+            BOOST_ASSERT(!then.empty());
+            BOOST_ASSERT(!else_.empty());
+        }
 
         typedef utree result_type;
         utree operator()(args_type args) const

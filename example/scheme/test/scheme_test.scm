@@ -10,3 +10,12 @@
         (* n (factorial (- n 1)))))
 
 (factorial 10) ; 3628800
+
+; Fibonacci using lambda
+(define fib
+  (lambda (n)
+    (if (< n 2)
+        n
+        (+ (fib (- n 1)) (fib (- n 2))))))
+
+(fib 10)

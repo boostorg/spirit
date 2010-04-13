@@ -75,7 +75,7 @@ namespace scheme { namespace input
                     | symbol
                     ;
 
-            char const* exclude = " ();\"\0-\31\127";
+            std::string exclude = std::string(" ();\"\x01-\x1f\x7f") + '\0';
             symbol  = lexeme[+(~char_(exclude))];
 
             integer = lexeme[no_case["0x"] >> hex]

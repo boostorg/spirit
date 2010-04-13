@@ -212,7 +212,10 @@ namespace scheme
         typedef unary_function<Derived> base_type;
 
         unary_function(actor const& a)
-          : a(a) {}
+          : a(a)
+        {
+            BOOST_ASSERT(!a.empty());
+        }
 
         typedef utree result_type;
         utree operator()(args_type args) const
@@ -247,7 +250,11 @@ namespace scheme
         typedef binary_function<Derived> base_type;
 
         binary_function(actor const& a, actor const& b)
-          : a(a), b(b) {}
+          : a(a), b(b)
+        {
+            BOOST_ASSERT(!a.empty());
+            BOOST_ASSERT(!b.empty());
+        }
 
         typedef utree result_type;
         utree operator()(args_type args) const
@@ -283,7 +290,13 @@ namespace scheme
         typedef nary_function<Derived> base_type;
         actor_list elements;
         nary_function(actor_list const& elements)
-          : elements(elements) {}
+          : elements(elements)
+        {
+            BOOST_FOREACH(actor const& element, elements)
+            {
+                BOOST_ASSERT(!element.empty());
+            }
+        }
 
         using composite<Derived>::operator();
         utree operator()(args_type args) const
