@@ -17,8 +17,14 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 
 #include "../utree.hpp"
+#include "../detail/utree_detail3.hpp"
 #include "../utree_operators.hpp"
 #include "string.hpp"
+
+namespace boost { namespace spirit { namespace traits
+{
+    void print_attribute(std::ostream& out, scheme::utree const& val);
+}}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace scheme { namespace input 
@@ -30,6 +36,7 @@ namespace scheme { namespace input
     using boost::spirit::qi::eol;
     using boost::spirit::qi::_val;
     using boost::spirit::qi::_1;
+    using boost::spirit::qi::_2;
     using boost::phoenix::push_back;
     using boost::phoenix::function;
 
@@ -61,27 +68,66 @@ namespace scheme { namespace input
             return u.front() == symbol;
         }
 
+        inline bool is_list_node(utree const& u, utree const& symbol)
+        {
+            if (u.which() != utree_type::list_type)
+                return false;
+            if (symbol.which() == utree_type::list_type)
+                return u.front() == symbol.front();
+            return u.front() == symbol;
+        }
+
         ///////////////////////////////////////////////////////////////////////
         // ensure the given utree instance represents a list whose first 
         // element is the symbol this function object has been constructed from
         struct make_list_node
         {
-            template <typename S, typename C>
+            template <typename T1, typename T2 = nil, typename T3 = nil>
             struct result { typedef void type; };
 
             explicit make_list_node(char const* symbol_)
               : symbol(symbol_)
             {}
 
-            void operator()(utree& seq, utree const& element) const
+            // If called with one parameter the given node needs to be 
+            // converted into a list whose first element is the symbol.
+            //
+            // i.e: 
+            //   lit: ("abc") --> (lit "abc")
+            void operator()(utree& u) const
             {
-                if (!is_list_node(seq, symbol)) {
+                u.push_front(symbol);
+            }
+
+            // If called with two parameters we ensure the given node is a 
+            // (new) list whose first element is the symbol and we append the 
+            // given element to that list.
+            //
+            // i.e.: 
+            //   >>: (char_), (char_ "abc")    --> (>> (char_) (char_ "abc"))
+            //   >>: (>> (char_ "a")), (char_) --> (>> (char_ "a") (char_))
+            void operator()(utree& val, utree const& element) const
+            {
+                if (!is_list_node(val, symbol)) {
                     utree u;
                     u.push_back(symbol);
-                    u.push_back(seq);
-                    seq = u;
+                    if (val.which() != utree_type::nil_type)
+                        u.push_back(val);
+                    val = u;
                 }
-                seq.push_back(element);
+                val.push_back(element);
+            }
+
+            void operator()(utree& val, utree const& element, utree const& sym) const
+            {
+                if (!is_list_node(val, sym)) {
+                    utree u;
+                    u.push_back(sym);
+                    if (val.which() != utree_type::nil_type)
+                        u.push_back(val);
+                    val = u;
+                }
+                val.push_back(element);
             }
 
             utf8_symbol symbol;
@@ -104,12 +150,21 @@ namespace scheme { namespace input
       , "bin", "oct", "hex"
       , "bool_", "true_", "false_"
       , "long_double", "double_", "float_"
+
+      // binary
+      , "qword", "dword", "word", "byte_"
+      , "little_qword", "little_dword", "little_word"
+      , "big_qword", "big_dword", "big_word"
+
+      // auxiliary
+      , "eol", "eoi", "eps"
       , 0
     };
 
     // a list of names for all supported parser primitives taking 1 parameter
     static char const* const primitives1[] = 
     {
+        // character parsers
         "char_", "lit", "string"
       , 0
     };
@@ -118,6 +173,23 @@ namespace scheme { namespace input
     static char const* const primitives2[] = 
     {
         "char_"
+      , 0
+    };
+
+    // a list of names for all supported parser directives taking 0 parameter
+    static char const* const directives0[] = 
+    {
+        // manage skip parser
+        "lexeme", "skip", "no_skip"
+
+        // case management
+      , "no_case"
+
+        // auxiliary
+      , "omit", "raw"
+
+        // encoding
+      , "ascii", "standard", "standard_wide", "iso8859_1", "unicode"
       , 0
     };
 
@@ -132,34 +204,71 @@ namespace scheme { namespace input
         {
             typedef function<detail::make_list_node> make_list_type;
 
+            make_list_type make_directive = detail::make_list_node("");
+
             make_list_type make_sequence = detail::make_list_node(">>");
+            make_list_type make_permutation = detail::make_list_node("^");
             make_list_type make_alternative = detail::make_list_node("|");
+
+            make_list_type make_kleene = detail::make_list_node("*");
+            make_list_type make_plus = detail::make_list_node("+");
+            make_list_type make_optional = detail::make_list_node("-");
+            make_list_type make_and_pred = detail::make_list_node("&");
+            make_list_type make_not_pred = detail::make_list_node("!");
+
+            make_list_type make_literal = detail::make_list_node("lit");
 
             start = -alternative;
 
             // A | B
             alternative =
-                    sequence          [ _val = _1 ]
-                >> *( '|' >> sequence [ make_alternative(_val, _1) ] )
+                    permutation           [ _val = _1 ]
+                >> *( '|' >> permutation  [ make_alternative(_val, _1) ] )
+                ;
+
+            // A ^ B
+            permutation = 
+                    sequence              [ _val = _1 ]
+                >> *( "^" >> sequence     [ make_permutation(_val, _1) ] )
                 ;
 
             // A >> B
             sequence = 
-                    term              [ _val = _1 ]
-                >> *( ">>" >> term    [ make_sequence(_val, _1) ] )
+                    unary_term            [ _val = _1 ]
+                >> *( ">>" >> unary_term  [ make_sequence(_val, _1) ] )
+                ;
+
+            // unary operators
+            unary_term = 
+                    '*' >> term           [ make_kleene(_val, _1) ]
+                |   '+' >> term           [ make_plus(_val, _1) ]
+                |   '-' >> term           [ make_optional(_val, _1) ]
+                |   '&' >> term           [ make_and_pred(_val, _1) ]
+                |   '!' >> term           [ make_not_pred(_val, _1) ]
+                |   term                  [ _val = _1 ]
                 ;
 
             // A, (A)
             term =
                     primitive
+                |   directive
                 |   '(' >> alternative >> ')'
                 ;
 
+            // any parser directive 
+            directive =
+                    (directive0 >> '[' >> alternative >> ']')
+                    [
+                        make_directive(_val, _2, _1)
+                    ]
+                ;
+
             // any primitive parser
-            primitive =
+            primitive %=
                     primitive2 >> '(' >> literal >> ',' >> literal >> ')'
                 |   primitive1 >> '(' >> literal >> ')'
                 |   primitive0        // taking no parameter
+                |   literal               [ make_literal(_val) ]
                 ;
 
             // a literal (either 'x' or "abc")
@@ -189,11 +298,32 @@ namespace scheme { namespace input
                 u.push_back(utf8_symbol(*p));
                 primitive2.add(*p, u);
             }
+
+            for (char const* const* p = directives0; *p; ++p)
+            {
+                utree u = utree(utf8_symbol(*p));
+                directive0.add(*p, u);
+            }
+
+#if defined(BOOST_SPIRIT_DEBUG)
+            start.name("name"); debug(start);
+            directive.name("directive"); debug(directive);
+            primitive.name("primitive"); debug(primitive);
+            unary_term.name("unary_term"); debug(unary_term);
+            term.name("term"); debug(term);
+            literal.name("literal"); debug(literal);
+            alternative.name("alternative"); debug(alternative);
+            permutation.name("permutation"); debug(permutation);
+            sequence.name("sequence"); debug(sequence);
+#endif
         }
 
         typedef rule<Iterator, qiexpr_white_space<Iterator>, utree()> rule_type;
 
-        rule_type start, alternative, sequence, primitive, term, literal;
+        rule_type start, directive, primitive, unary_term, term, literal;
+        rule_type alternative, permutation, sequence;
+
+        symbols<char_type, utree> directive0, directive1;
         symbols<char_type, utree> primitive0, primitive1, primitive2;
         scheme::input::string<Iterator> string_lit;
     };

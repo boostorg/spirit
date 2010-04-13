@@ -8,6 +8,8 @@ char_
 char_("abc")
 char_('a')
 char_('a', 'b')
+'a'
+"abc"
  
 // sequences
 char_ >> char_
@@ -23,4 +25,16 @@ char_ | char_('a') >> char_('a', 'b')
 char_ >> (char_('a') | char_('a', 'b'))
 char_ >> char_('a') | char_('a', 'b')
 (char_ >> char_('a')) | char_('a', 'b')
+ 
+// unary operators
+*double_
++long_
+&int_ >> double_
+!int_ >> *double_
+char_ >> *(',' >> char_)
+ 
+// directives
+lexeme[*double_]
+
+
 

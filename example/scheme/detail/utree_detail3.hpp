@@ -26,7 +26,9 @@ namespace scheme
         SCHEME_GET_UTREE_TYPE(int, utree_type::int_type);
         SCHEME_GET_UTREE_TYPE(double, utree_type::double_type);
         SCHEME_GET_UTREE_TYPE(utf8_string_range, utree_type::string_type);
+        SCHEME_GET_UTREE_TYPE(utf8_string, utree_type::string_type);
         SCHEME_GET_UTREE_TYPE(utf8_symbol_range, utree_type::symbol_type);
+        SCHEME_GET_UTREE_TYPE(utf8_symbol, utree_type::string_type);
         SCHEME_GET_UTREE_TYPE(binary_range, utree_type::binary_type);
         SCHEME_GET_UTREE_TYPE(boost::iterator_range<utree::iterator>, 
             utree_type::list_type);
@@ -100,9 +102,29 @@ namespace scheme
         };
 
         template <>
+        struct get_impl<utf8_string>
+        {
+            typedef utf8_string type;
+            static type call(utree const& x) 
+            { 
+                return type(x.s.str(), x.s.size()); 
+            }
+        };
+
+        template <>
         struct get_impl<utf8_symbol_range>
         {
             typedef utf8_symbol_range type;
+            static type call(utree const& x) 
+            { 
+                return type(x.s.str(), x.s.size()); 
+            }
+        };
+
+        template <>
+        struct get_impl<utf8_symbol>
+        {
+            typedef utf8_symbol type;
             static type call(utree const& x) 
             { 
                 return type(x.s.str(), x.s.size()); 
@@ -119,20 +141,24 @@ namespace scheme
             }
         };
     }
+}
 
-    ///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+namespace boost
+{
     template <typename T>
-    typename detail::get_impl<T>::type 
-    get(utree const& x)
+    typename scheme::detail::get_impl<T>::type 
+    get(scheme::utree const& x)
     {
-        if (x.which() != detail::get_utree_type<T>::value)
+        if (x.which() != 
+            (scheme::utree_type::info)scheme::detail::get_utree_type<T>::value)
         {
-            if (x.which() == utree_type::reference_type)
+            if (x.which() == scheme::utree_type::reference_type)
                 return get<T>(x.deref());
 
             throw boost::bad_get();
         }
-        return detail::get_impl<T>::call(x);
+        return scheme::detail::get_impl<T>::call(x);
     }
 }
 

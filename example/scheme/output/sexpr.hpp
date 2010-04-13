@@ -19,12 +19,9 @@
 namespace boost { namespace spirit { namespace traits
 {
     // the specialization below tells Spirit to handle scheme::utree as if it 
-    // where a 'real' variant
-    template <typename T>
-    struct not_is_variant;
-
+    // where a 'real' variant (in the context of karma)
     template <>
-    struct not_is_variant<scheme::utree>
+    struct not_is_variant<scheme::utree, karma::domain>
       : mpl::false_ {};
 
     // The specializations below tell Spirit to verify whether an attribute 
@@ -175,7 +172,7 @@ namespace scheme { namespace output
             string_   = '"' << string << '"';
             symbol    = string;
             byte_str  = 'b' << *right_align(2, '0')[hex2];
-            nil_      = eps;
+            nil_      = eps << "<nil>";
         }
 
         typedef boost::iterator_range<utree::const_iterator> utree_list;
