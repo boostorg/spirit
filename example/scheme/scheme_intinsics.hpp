@@ -30,7 +30,7 @@ namespace scheme
         }
     };
 
-    struct if_composer : composite<if_composer>
+    struct if_composite : composite<if_composite>
     {
         using base_type::operator();
         actor operator()(actor_list const& elements) const
@@ -43,71 +43,30 @@ namespace scheme
         }
     };
 
-    if_composer const if_ = if_composer();
+    if_composite const if_ = if_composite();
 
     ///////////////////////////////////////////////////////////////////////////
     // less_than_equal
     ///////////////////////////////////////////////////////////////////////////
     struct less_than_equal_function
+      : binary_function<less_than_equal_function>
     {
-        actor a;
-        actor b;
         less_than_equal_function(actor const& a, actor const& b)
-          : a(a), b(b) {}
+          : base_type(a, b) {}
 
         typedef utree result_type;
-        utree operator()(args_type args) const
+        utree eval(utree const& a, utree const& b) const
         {
-            return a(args) <= b(args);
+            return a <= b;
         }
     };
 
-    struct less_than_equal_composer : composite<less_than_equal_composer>
-    {
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
-        {
-            actor_list::const_iterator i = elements.begin();
-            actor a = *i++;
-            actor b = *i;
-            return actor(less_than_equal_function(a, b));
-        }
-    };
+    struct less_than_equal_composite
+      : binary_composite<less_than_equal_function> {};
 
-    less_than_equal_composer const less_than_equal
-        = less_than_equal_composer();
-    less_than_equal_composer const lte = less_than_equal; // synonym
-
-    ///////////////////////////////////////////////////////////////////////////
-    // vararg_function
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Derived>
-    struct vararg_function : composite<Derived>
-    {
-        typedef vararg_function<Derived> base_type;
-        actor_list elements;
-        vararg_function(actor_list const& elements)
-          : elements(elements) {}
-
-        using composite<Derived>::operator();
-        utree operator()(args_type args) const
-        {
-            actor_list::const_iterator i = elements.begin();
-            utree result = (*i++)(args);
-            boost::iterator_range<actor_list::const_iterator>
-                rest(i++, elements.end());
-            BOOST_FOREACH(actor const& element, rest)
-            {
-                derived().eval(result, element(args));
-            }
-            return result;
-        }
-
-        Derived const& derived() const
-        {
-            return *static_cast<Derived const*>(this);
-        }
-    };
+    less_than_equal_composite const less_than_equal
+        = less_than_equal_composite();
+    less_than_equal_composite const lte = less_than_equal; // synonym
 
     ///////////////////////////////////////////////////////////////////////////
     // plus
@@ -123,16 +82,8 @@ namespace scheme
         }
     };
 
-    struct plus_composer : composite<plus_composer>
-    {
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
-        {
-            return actor(plus_function(elements));
-        }
-    };
-
-    plus_composer const plus = plus_composer();
+    struct plus_composite : vararg_composite<plus_function> {};
+    plus_composite const plus = plus_composite();
 
     ///////////////////////////////////////////////////////////////////////////
     // minus
@@ -148,16 +99,8 @@ namespace scheme
         }
     };
 
-    struct minus_composer : composite<minus_composer>
-    {
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
-        {
-            return actor(minus_function(elements));
-        }
-    };
-
-    minus_composer const minus = minus_composer();
+    struct minus_composite : vararg_composite<minus_function> {};
+    minus_composite const minus = minus_composite();
 
     ///////////////////////////////////////////////////////////////////////////
     // times
@@ -173,16 +116,8 @@ namespace scheme
         }
     };
 
-    struct times_composer : composite<times_composer>
-    {
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
-        {
-            return actor(times_function(elements));
-        }
-    };
-
-    times_composer const times = times_composer();
+    struct times_composite : vararg_composite<times_function> {};
+    times_composite const times = times_composite();
 }
 
 #endif

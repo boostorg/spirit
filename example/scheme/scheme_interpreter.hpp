@@ -89,10 +89,10 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // values
     ///////////////////////////////////////////////////////////////////////////
-    struct value
+    struct value_function
     {
         utree val;
-        value(utree const& val) : val(val) {}
+        value_function(utree const& val) : val(val) {}
 
         typedef utree result_type;
         utree operator()(args_type /*args*/) const
@@ -101,24 +101,24 @@ namespace scheme
         }
     };
 
-    struct value_composer
+    struct value
     {
         typedef actor result_type;
         actor operator()(utree const& val) const
         {
-            return actor(value(val));
+            return actor(value_function(val));
         }
     };
 
-    value_composer const val = {};
+    value const val = {};
 
     ///////////////////////////////////////////////////////////////////////////
     // arguments
     ///////////////////////////////////////////////////////////////////////////
-    struct argument
+    struct argument_function
     {
-        int n;
-        argument(int n) : n(n) {}
+        std::size_t n;
+        argument_function(std::size_t n) : n(n) {}
 
         typedef utree result_type;
         utree operator()(args_type args) const
@@ -127,16 +127,16 @@ namespace scheme
         }
     };
 
-    struct argument_composer
+    struct argument
     {
         typedef actor result_type;
-        actor operator()(int n) const
+        actor operator()(std::size_t n) const
         {
-            return actor(argument(n));
+            return actor(argument_function(n));
         }
     };
 
-    argument_composer const arg = {};
+    argument const arg = {};
     actor const _1 = arg(0);
     actor const _2 = arg(1);
     actor const _3 = arg(2);
@@ -151,17 +151,6 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // composite
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    inline actor as_function(T const& val)
-    {
-        return scheme::val(utree(val));
-    }
-
-    inline actor const& as_function(actor const& f)
-    {
-        return f;
-    }
-
     template <typename Derived>
     struct composite
     {
@@ -196,6 +185,130 @@ namespace scheme
         Derived const& derived() const
         {
             return *static_cast<Derived const*>(this);
+        }
+
+        template <typename T>
+        static actor as_function(T const& val)
+        {
+            return scheme::val(utree(val));
+        }
+
+        static actor const& as_function(actor const& f)
+        {
+            return f;
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // unary_function
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Derived>
+    struct unary_function
+    {
+        actor a;
+        typedef unary_function<Derived> base_type;
+
+        unary_function(actor const& a)
+          : a(a) {}
+
+        typedef utree result_type;
+        utree operator()(args_type args) const
+        {
+            return derived().eval(a(args));
+        }
+
+        Derived const& derived() const
+        {
+            return *static_cast<Derived const*>(this);
+        }
+    };
+
+    template <typename Function>
+    struct unary_composite : composite<unary_composite<Function> >
+    {
+        using base_type::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(Function(elements.front()));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // binary_function
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Derived>
+    struct binary_function
+    {
+        actor a;
+        actor b;
+        typedef binary_function<Derived> base_type;
+
+        binary_function(actor const& a, actor const& b)
+          : a(a), b(b) {}
+
+        typedef utree result_type;
+        utree operator()(args_type args) const
+        {
+            return derived().eval(a(args), b(args));
+        }
+
+        Derived const& derived() const
+        {
+            return *static_cast<Derived const*>(this);
+        }
+    };
+
+    template <typename Function>
+    struct binary_composite : composite<binary_composite<Function> >
+    {
+        using base_type::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            actor a = *i++;
+            actor b = *i;
+            return actor(Function(a, b));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // vararg_function
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Derived>
+    struct vararg_function : composite<Derived>
+    {
+        typedef vararg_function<Derived> base_type;
+        actor_list elements;
+        vararg_function(actor_list const& elements)
+          : elements(elements) {}
+
+        using composite<Derived>::operator();
+        utree operator()(args_type args) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            utree result = (*i++)(args);
+            boost::iterator_range<actor_list::const_iterator>
+                rest(i++, elements.end());
+            BOOST_FOREACH(actor const& element, rest)
+            {
+                derived().eval(result, element(args));
+            }
+            return result;
+        }
+
+        Derived const& derived() const
+        {
+            return *static_cast<Derived const*>(this);
+        }
+    };
+
+    template <typename Function>
+    struct vararg_composite : composite<vararg_composite<Function> >
+    {
+        using base_type::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(Function(elements));
         }
     };
 
