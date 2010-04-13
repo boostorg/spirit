@@ -46,6 +46,29 @@ namespace scheme
     if_composite const if_ = if_composite();
 
     ///////////////////////////////////////////////////////////////////////////
+    // less_than
+    ///////////////////////////////////////////////////////////////////////////
+    struct less_than_function
+      : binary_function<less_than_function>
+    {
+        less_than_function(actor const& a, actor const& b)
+          : base_type(a, b) {}
+
+        typedef utree result_type;
+        utree eval(utree const& a, utree const& b) const
+        {
+            return a < b;
+        }
+    };
+
+    struct less_than_composite
+      : binary_composite<less_than_function> {};
+
+    less_than_composite const less_than
+        = less_than_composite();
+    less_than_composite const lt = less_than; // synonym
+
+    ///////////////////////////////////////////////////////////////////////////
     // less_than_equal
     ///////////////////////////////////////////////////////////////////////////
     struct less_than_equal_function
@@ -71,14 +94,15 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // plus
     ///////////////////////////////////////////////////////////////////////////
-    struct plus_function : vararg_function<plus_function>
+    struct plus_function : nary_function<plus_function>
     {
         plus_function(actor_list const& elements)
           : base_type(elements) {}
 
-        void eval(utree& result, utree const& element) const
+        bool eval(utree& result, utree const& element) const
         {
             result = result + element;
+            return true;
         }
     };
 
@@ -88,14 +112,15 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // minus
     ///////////////////////////////////////////////////////////////////////////
-    struct minus_function : vararg_function<minus_function>
+    struct minus_function : nary_function<minus_function>
     {
         minus_function(actor_list const& elements)
           : base_type(elements) {}
 
-        void eval(utree& result, utree const& element) const
+        bool eval(utree& result, utree const& element) const
         {
             result = result - element;
+            return true;
         }
     };
 
@@ -105,14 +130,15 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // times
     ///////////////////////////////////////////////////////////////////////////
-    struct times_function : vararg_function<times_function>
+    struct times_function : nary_function<times_function>
     {
         times_function(actor_list const& elements)
           : base_type(elements) {}
 
-        void eval(utree& result, utree const& element) const
+        bool eval(utree& result, utree const& element) const
         {
             result = result * element;
+            return true;
         }
     };
 

@@ -272,14 +272,14 @@ namespace scheme
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // vararg_function
+    // nary_function
     ///////////////////////////////////////////////////////////////////////////
     template <typename Derived>
-    struct vararg_function : composite<Derived>
+    struct nary_function : composite<Derived>
     {
-        typedef vararg_function<Derived> base_type;
+        typedef nary_function<Derived> base_type;
         actor_list elements;
-        vararg_function(actor_list const& elements)
+        nary_function(actor_list const& elements)
           : elements(elements) {}
 
         using composite<Derived>::operator();
@@ -291,7 +291,8 @@ namespace scheme
                 rest(i++, elements.end());
             BOOST_FOREACH(actor const& element, rest)
             {
-                derived().eval(result, element(args));
+                if (!derived().eval(result, element(args)))
+                    break; // allow short-circuit evaluation
             }
             return result;
         }

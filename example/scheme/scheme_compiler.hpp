@@ -55,11 +55,12 @@ namespace scheme
         std::map<std::string, compiled_function> definitions;
     };
 
-    actor compile(utree const& ast, environment& env, actor_list& fragments);
-
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
+    actor compile(
+        utree const& ast, environment& env, actor_list& fragments);
+
     struct external_function : composite<external_function>
     {
         // we must hold f by reference because functions can be recursive
@@ -78,9 +79,9 @@ namespace scheme
     struct compiler
     {
         typedef actor result_type;
-
         environment& env;
         actor_list& fragments;
+
         compiler(environment& env, actor_list& fragments)
           : env(env), fragments(fragments)
         {
@@ -109,58 +110,67 @@ namespace scheme
             return actor();
         }
 
-        void define_function(
-            std::string const& name,
+        actor make_lambda(
             std::vector<std::string> const& args,
             utree const& body) const
         {
             environment local_env(&this->env);
             for (std::size_t i = 0; i < args.size(); ++i)
                 local_env.define(args[i], boost::bind(arg, i));
-
-            fragments.push_back(actor());
-            actor& f = fragments.back();
-            env.define(name, external_function(f));
-            f = compile(body, local_env, fragments);
+            return compile(body, local_env, fragments);
         }
 
-        void define_nullary_function(
+        void define_function(
             std::string const& name,
+            std::vector<std::string> const& args,
             utree const& body) const
         {
             fragments.push_back(actor());
             actor& f = fragments.back();
             env.define(name, external_function(f));
-            f = compile(body, env, fragments);
+            f = make_lambda(args, body);
         }
 
         template <typename Iterator>
         actor operator()(boost::iterator_range<Iterator> const& range) const
         {
             std::string name(get_symbol(*range.begin()));
-            std::string fname;
 
             if (name == "define")
             {
+                std::string fname;
+                std::vector<std::string> args;
+
                 Iterator i = range.begin(); ++i;
                 if (i->which() == utree_type::list_type)
                 {
-                    // a function
+                    // (define (f x) ...body...)
                     utree const& decl = *i++;
                     Iterator di = decl.begin();
                     fname = get_symbol(*di++);
-                    std::vector<std::string> args;
                     while (di != decl.end())
                         args.push_back(get_symbol(*di++));
-                    define_function(fname, args, *i);
                 }
                 else
                 {
-                    // constants (nullary functions)
+                    // (define f ...body...)
                     fname = get_symbol(*i++);
-                    define_nullary_function(fname, *i);
                 }
+
+                define_function(fname, args, *i);
                 return actor(val(utf8_symbol("<define " + fname + ">")));
+            }
+
+            if (name == "lambda")
+            {
+                // (lambda (x) ...body...)
+                Iterator i = range.begin(); ++i;
+                utree const& arg_names = *i++;
+                Iterator ai = arg_names.begin();
+                std::vector<std::string> args;
+                while (ai != arg_names.end())
+                    args.push_back(get_symbol(*ai++));
+                return make_lambda(args, *i);
             }
 
             if (compiled_function* mf = env.find(name))
@@ -204,6 +214,7 @@ namespace scheme
     void build_basic_environment(environment& env)
     {
         env.define("if", if_);
+        env.define("<", less_than);
         env.define("<=", less_than_equal);
         env.define("+", plus);
         env.define("-", minus);
