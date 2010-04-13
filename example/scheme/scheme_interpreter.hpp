@@ -1,4 +1,4 @@
-/*=============================================================================
+﻿/*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -39,7 +39,10 @@ namespace scheme
           : f() {}
 
         actor(actor_function const& f)
-          : f(f) {}
+          : f(f)
+        {
+            BOOST_ASSERT(!f.empty());
+        }
 
         bool empty() const
         {
@@ -123,7 +126,7 @@ namespace scheme
         typedef utree result_type;
         utree operator()(args_type args) const
         {
-            return utree(boost::ref(args[n]));
+            return utree(boost::ref(*(args.begin()+n)));
         }
     };
 
