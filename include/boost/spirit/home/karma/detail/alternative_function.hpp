@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename Component, typename Attribute, typename Expected>
     struct alternative_generate<Component, Attribute, Expected
       , typename enable_if<
-            traits::compute_compatible_component<Expected, Attribute> >::type>
+            traits::compute_compatible_component<Expected, Attribute, karma::domain> >::type>
     {
         template <typename OutputIterator, typename Context, typename Delimiter>
         static bool
@@ -88,7 +88,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
 #endif
             return call(component, sink, ctx, d, attr
-              , spirit::traits::not_is_variant<Attribute>());
+              , spirit::traits::not_is_variant<Attribute, karma::domain>());
         }
 
         template <typename OutputIterator, typename Context, typename Delimiter>
@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
 #endif
             typedef
-                traits::compute_compatible_component<Expected, Attribute>
+                traits::compute_compatible_component<Expected, Attribute, domain>
             component_type;
 
             typedef typename component_type::distance distance_type;

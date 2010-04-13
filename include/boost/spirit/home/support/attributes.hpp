@@ -67,19 +67,19 @@ namespace boost { namespace spirit { namespace traits
         >::type>
       : mpl::true_ {};
 
-    template <typename T>
+    template <typename T, typename Domain>
     struct not_is_variant
       : mpl::true_
     {};
 
-    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T), typename Domain>
+    struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, Domain>
       : mpl::false_
     {};
 
-    template <typename T>
-    struct not_is_variant<boost::optional<T> >
-      : not_is_variant<T>
+    template <typename T, typename Domain>
+    struct not_is_variant<boost::optional<T>, Domain>
+      : not_is_variant<T, Domain>
     {};
 
     // we treat every type as if it where the variant (as this meta function is
@@ -153,31 +153,31 @@ namespace boost { namespace spirit { namespace traits
         compatible_type;
     };
 
-    template <typename Expected, typename Attribute>
+    template <typename Expected, typename Attribute, typename Domain>
     struct compute_compatible_component
       : compute_compatible_component_variant<Expected, Attribute
-          , typename spirit::traits::not_is_variant<Attribute>::type> {};
+          , typename spirit::traits::not_is_variant<Attribute, Domain>::type> {};
 
-    template <typename Expected>
-    struct compute_compatible_component<Expected, unused_type>
+    template <typename Expected, typename Domain>
+    struct compute_compatible_component<Expected, unused_type, Domain>
       : mpl::false_ {};
 
-    template <typename Attribute>
-    struct compute_compatible_component<unused_type, Attribute>
+    template <typename Attribute, typename Domain>
+    struct compute_compatible_component<unused_type, Attribute, Domain>
       : mpl::false_ {};
 
-    template <>
-    struct compute_compatible_component<unused_type, unused_type>
+    template <typename Domain>
+    struct compute_compatible_component<unused_type, unused_type, Domain>
       : mpl::false_ {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
+    template <typename T, typename Domain>
     struct not_is_optional
       : mpl::true_
     {};
 
-    template <typename T>
-    struct not_is_optional<boost::optional<T> >
+    template <typename T, typename Domain>
+    struct not_is_optional<boost::optional<T>, Domain>
       : mpl::false_
     {};
 
