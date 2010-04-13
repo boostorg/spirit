@@ -11,7 +11,7 @@
 #include <map>
 #include <boost/bind.hpp>
 
-#include "scheme_intinsics.hpp"
+#include "scheme_intrinsics.hpp"
 #include "scheme_interpreter.hpp"
 
 namespace scheme
