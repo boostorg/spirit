@@ -5,8 +5,8 @@
 
 #include <fstream>
 
-#include "../../input/parse_qiexpr.hpp"
-#include "../../input/parse_qiexpr_impl.hpp"
+#include "../../qi/parse_qiexpr.hpp"
+#include "../../qi/parse_qiexpr_impl.hpp"
 
 // explicit template instantiation for the function parse_sexpr 
 namespace scheme { namespace input

@@ -10,8 +10,8 @@
 #include <boost/spirit/include/support_istream_iterator.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
-#include "../input/qiexpr.hpp"
-#include "../input/parse_qiexpr.hpp"
+#include "../qi/qiexpr_parser.hpp"
+#include "../qi/parse_qiexpr.hpp"
 
 namespace scheme { namespace input
 {
