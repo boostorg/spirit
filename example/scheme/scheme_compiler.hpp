@@ -1,4 +1,4 @@
-﻿/*=============================================================================
+/*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -222,6 +222,40 @@ namespace scheme
         env.define("-", minus);
         env.define("*", times);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // interpreter
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Source>
+    struct interpreter : composite<interpreter<Source> >
+    {
+        interpreter(Source const& in, environment* outer = 0)
+        {
+            if (outer == 0)
+                build_basic_environment(env);
+
+            if (input::parse_sexpr_list(in, program))
+            {
+                compile_all(program, env, flist, fragments);
+            }
+            else
+            {
+                // $$$ Use exceptions $$$
+                BOOST_ASSERT(false);
+            }
+        }
+
+        using composite<interpreter<Source> >::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(lambda_function(flist.back(), elements));
+        }
+
+        environment env;
+        utree program;
+        actor_list fragments;
+        actor_list flist;
+    };
 }
 
 #endif

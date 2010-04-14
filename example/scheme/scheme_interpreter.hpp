@@ -126,7 +126,7 @@ namespace scheme
         typedef utree result_type;
         utree operator()(args_type args) const
         {
-            return utree(boost::ref(*(args.begin()+n)));
+            return utree(boost::ref(args[n]));
         }
     };
 
