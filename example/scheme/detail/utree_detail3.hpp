@@ -148,8 +148,7 @@ namespace scheme
             typedef utree const& type;
             static type call(utree const& x) 
             { 
-                return (x.which() == scheme::utree_type::reference_type) ? 
-                    x.deref() : x; 
+                return x.which() == utree_type::reference_type ? *x.p : x; 
             }
         };
     }
