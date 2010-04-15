@@ -13,6 +13,7 @@
 #include <boost/array.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
+#include "utree.hpp"
 
 #define SCHEME_COMPOSITE_LIMIT 10
 

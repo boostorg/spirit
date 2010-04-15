@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_SCHEME_INTRINSICS
 
 #include "scheme_interpreter.hpp"
+#include "utree_operators.hpp"
 
 namespace scheme
 {

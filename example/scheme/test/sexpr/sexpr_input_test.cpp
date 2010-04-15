@@ -6,19 +6,34 @@
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
 
-#include "../input/sexpr.hpp"
-#include "../input/parse_sexpr_impl.hpp"
-#include "../scheme_compiler.hpp"
-#include "../utree_io.hpp"
+#include "../../input/sexpr.hpp"
+#include "../../input/parse_sexpr_impl.hpp"
+#include "../../utree_io.hpp"
 #include <iostream>
 #include <fstream>
+
+inline std::ostream& println(std::ostream& out, scheme::utree const& val)
+{
+    out << val << std::endl;
+    return out;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int main()
+int main(int argc, char **argv)
 {
-    char const* filename = "factorial.scm";
+    char const* filename = NULL;
+    if (argc > 1)
+    {
+        filename = argv[1];
+    }
+    else
+    {
+        std::cerr << "Error: No input file provided." << std::endl;
+        return 1;
+    }
+
     std::ifstream in(filename, std::ios_base::in);
 
     if (!in)
@@ -43,11 +58,17 @@ int main()
         }
     }
 
-    using scheme::interpreter;
-    using scheme::_1;
-
-    scheme::interpreter factorial(in);
-    std::cout << factorial(10) << std::endl;
+    scheme::utree result;
+    if (scheme::input::parse_sexpr(in, result))
+    {
+        std::cout << "success: ";
+        println(std::cout, result);
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "parse error" << std::endl;
+    }
 
     return 0;
 }

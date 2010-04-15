@@ -19,7 +19,7 @@ namespace scheme { namespace input
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char>
-    inline bool parse_sexpr(std::basic_istream<Char>& is, utree& result)
+    bool parse_sexpr(std::basic_istream<Char>& is, utree& result)
     {
         // no white space skipping in the stream!
         is.unsetf(std::ios::skipws);
@@ -37,7 +37,7 @@ namespace scheme { namespace input
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char>
-    inline bool parse_sexpr_list(std::basic_istream<Char>& is, utree& result)
+    bool parse_sexpr_list(std::basic_istream<Char>& is, utree& result)
     {
         // no white space skipping in the stream!
         is.unsetf(std::ios::skipws);
@@ -55,7 +55,6 @@ namespace scheme { namespace input
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Range>
-    inline
     typename boost::disable_if<boost::is_base_of<std::ios_base, Range>, bool>::type
     parse_sexpr(Range const& rng, utree& result)
     {
@@ -69,7 +68,6 @@ namespace scheme { namespace input
     }
 
     template <typename Range>
-    inline
     typename boost::disable_if<boost::is_base_of<std::ios_base, Range>, bool>::type
     parse_sexpr_list(Range const& rng, utree& result)
     {

@@ -13,6 +13,7 @@
 
 #include "scheme_intrinsics.hpp"
 #include "scheme_interpreter.hpp"
+#include "input/parse_sexpr.hpp"
 
 namespace scheme
 {
