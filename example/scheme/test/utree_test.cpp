@@ -11,13 +11,13 @@
 #include "../utree_operators.hpp"
 #include "../utree_io.hpp"
 #include <iostream>
+#include <sstream>
 
-inline std::ostream& println(std::ostream& out, scheme::utree const& val)
+inline void check(scheme::utree const& val, std::string expected)
 {
-    if (val.which() == scheme::utree_type::list_type)
-        out << "size:" << val.size() << " ";
-    out << val << std::endl;
-    return out;
+    std::stringstream s;
+    s << val;
+    BOOST_ASSERT(s.str() == expected);
 }
 
 int main()
@@ -32,33 +32,33 @@ int main()
 
     {
         utree val;
-        println(std::cout, val);
+        check(val, "<nil>");
     }
 
     {
         utree val(true);
-        println(std::cout, val);
+        check(val, "true");
     }
 
     {
         utree val(123);
-        println(std::cout, val);
+        check(val, "123");
     }
 
     {
         utree val(123.456);
-        println(std::cout, val);
+        check(val, "123.456");
     }
 
     {
         utree val("Hello, World");
-        println(std::cout, val);
+        check(val, "\"Hello, World\"");
         utree val2;
         val2 = val;
-        println(std::cout, val2);
+        check(val2, "\"Hello, World\"");
         utree val3("Hello, World. Chuckie is back!!!");
         val = val3;
-        println(std::cout, val);
+        check(val, "\"Hello, World. Chuckie is back!!!\"");
 
         utree val4("Apple");
         utree val5("Apple");
@@ -78,35 +78,35 @@ int main()
         val2.push_back("Mah Doggie");
         val.push_back(val2);
         BOOST_ASSERT(val.size() == 3);
-        println(std::cout, val);
-        println(std::cout, val.front());
+        check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
+        check(val.front(), "123");
 
         utree val3;
         val3.swap(val);
         BOOST_ASSERT(val3.size() == 3);
-        println(std::cout, val);
+        check(val, "<nil>");
         val3.swap(val);
-        println(std::cout, val);
+        check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
         val.push_back("another string");
         BOOST_ASSERT(val.size() == 4);
-        println(std::cout, val);
+        check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )");
         val.pop_front();
-        println(std::cout, val);
+        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )");
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
         BOOST_ASSERT(val.size() == 4);
-        println(std::cout, val);
+        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" \"another string\" )");
         val.pop_back();
-        println(std::cout, val);
+        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" )");
         BOOST_ASSERT(val.size() == 3);
         utree::iterator it = val.end(); --it;
         val.erase(it);
-        println(std::cout, val);
+        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
         BOOST_ASSERT(val.size() == 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
-        println(std::cout, val);
+        check(val, "( 123.456 \"Mah Doggie\" \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
         BOOST_ASSERT(val.size() == 4);
     }
 
@@ -117,7 +117,7 @@ int main()
         val.insert(val.end(), "Chuckie");
         val.insert(val.end(), "Poly");
         val.insert(val.end(), "Mochi");
-        println(std::cout, val);
+        check(val, "( 123 \"Mia\" \"Chuckie\" \"Poly\" \"Mochi\" )");
     }
 
     {
@@ -176,7 +176,7 @@ int main()
     { // test references
         utree val(123);
         utree ref(boost::ref(val));
-        println(std::cout, ref);
+        check(ref, "123");
         BOOST_ASSERT(ref == utree(123));
 
         val.clear();
@@ -184,7 +184,7 @@ int main()
         val.push_back(2);
         val.push_back(3);
         val.push_back(4);
-        println(std::cout, ref);
+        check(ref, "( 1 2 3 4 )");
         BOOST_ASSERT(ref[0] == utree(1));
         BOOST_ASSERT(ref[1] == utree(2));
         BOOST_ASSERT(ref[2] == utree(3));
@@ -199,9 +199,9 @@ int main()
             utree(123.456)
         };
 
-        println(std::cout, vals[0]);
-        println(std::cout, vals[1]);
-        println(std::cout, vals[2]);
+        check(vals[0], "123");
+        check(vals[1], "\"Hello, World\"");
+        check(vals[2], "123.456");
     }
 
     { // operators

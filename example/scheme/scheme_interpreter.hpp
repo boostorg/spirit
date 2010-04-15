@@ -30,7 +30,7 @@ namespace scheme
 
     typedef std::list<function> actor_list;
     typedef boost::iterator_range<utree const*> args_type;
-    typedef boost::function<utree(args_type args)> actor_function;
+    typedef boost::function<utree(args_type args)> stored_function;
 
     ///////////////////////////////////////////////////////////////////////////
     // actor
@@ -89,11 +89,11 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     struct function : actor<function>
     {
-        actor_function f;
+        stored_function f;
         function()
           : f() {}
 
-        function(actor_function const& f)
+        function(stored_function const& f)
           : f(f)
         {
             BOOST_ASSERT(!f.empty());

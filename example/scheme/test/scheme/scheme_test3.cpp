@@ -6,6 +6,8 @@
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
 
+#include "../../input/sexpr.hpp"
+#include "../../input/parse_sexpr_impl.hpp"
 #include "../../scheme_compiler.hpp"
 #include "../../utree_io.hpp"
 
@@ -15,7 +17,6 @@
 int main()
 {
     using scheme::interpreter;
-    using scheme::_1;
     using scheme::utree;
 
     utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";

@@ -1,0 +1,27 @@
+#==============================================================================
+#   Copyright (c) 2001-2007 Joel de Guzman
+#
+#   Distributed under the Boost Software License, Version 1.0. (See accompanying
+#   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+project spirit-scheme-tests
+    : requirements <toolset>gcc:<c++-template-depth>300
+    :
+    :
+    ;
+
+# bring in rules for testing
+import testing ;
+
+{
+    test-suite spirit_v2 :
+
+    # run Qi tests
+    [ run utree_test.cpp                    : : : : ]
+
+    ;
+}
+
+
+
+
