@@ -18,7 +18,7 @@
 
 #include <utree/utree.hpp>
 #include <utree/detail/utree_detail3.hpp>
-#include <utree_operators.hpp>
+#include <utree/operators.hpp>
 #include <input/string.hpp>
 
 namespace boost { namespace spirit { namespace traits
