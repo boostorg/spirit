@@ -12,8 +12,8 @@
 #include <boost/spirit/include/support_istream_iterator.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
-#include "../input/sexpr.hpp"
-#include "../input/parse_sexpr.hpp"
+#include <input/sexpr.hpp>
+#include <input/parse_sexpr.hpp>
 
 namespace scheme { namespace input
 {

@@ -7,8 +7,8 @@
 #if !defined(BOOST_SPIRIT_PARSE_SEXPR)
 #define BOOST_SPIRIT_PARSE_SEXPR
 
-#include "../utree.hpp"
-#include "../input/sexpr.hpp"
+#include <utree/utree.hpp>
+#include <input/sexpr.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include <iosfwd>

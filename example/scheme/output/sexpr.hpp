@@ -1,13 +1,13 @@
 //  Copyright (c) 2001-2010 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM)
 #define SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM
 
-#include "../utree.hpp"
-#include "../detail/utree_detail3.hpp"
+#include <utree/utree.hpp>
+#include <utree/detail/utree_detail3.hpp>
 
 #include <string>
 
@@ -18,13 +18,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
-    // the specialization below tells Spirit to handle scheme::utree as if it 
+    // the specialization below tells Spirit to handle scheme::utree as if it
     // where a 'real' variant (in the context of karma)
     template <>
     struct not_is_variant<scheme::utree, karma::domain>
       : mpl::false_ {};
 
-    // The specializations below tell Spirit to verify whether an attribute 
+    // The specializations below tell Spirit to verify whether an attribute
     // type is compatible with a given variant type
     template <>
     struct compute_compatible_component_variant<

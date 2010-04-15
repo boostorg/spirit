@@ -11,8 +11,8 @@
 #include <boost/spirit/include/karma_list.hpp>
 #include <boost/spirit/include/support_ostream_iterator.hpp>
 
-#include "../output/sexpr.hpp"
-#include "../output/generate_sexpr.hpp"
+#include <output/sexpr.hpp>
+#include <output/generate_sexpr.hpp>
 
 namespace scheme { namespace output
 {

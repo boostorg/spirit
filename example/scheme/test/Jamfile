@@ -5,7 +5,9 @@
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 project spirit-scheme-tests
-    : requirements <toolset>gcc:<c++-template-depth>300
+    : requirements
+        <toolset>gcc:<c++-template-depth>300
+        <include>../
     :
     :
     ;
@@ -14,13 +16,24 @@ project spirit-scheme-tests
 import testing ;
 
 {
-    test-suite spirit_v2 :
+    test-suite utree :
 
-    # run Qi tests
-    [ run utree_test.cpp                    : : : : ]
+    # run utree tests
+    [ run utree/utree_test.cpp                    : : : : ]
 
     ;
 }
+
+exe sexpr_input_test : sexpr/sexpr_input_test.cpp ;
+exe sexpr_output_test : sexpr/sexpr_output_test.cpp ;
+
+exe generate_sexpr_to_ostream : parse_qiexpr/generate_sexpr_to_ostream.cpp ;
+exe parse_qi_test : parse_qiexpr/parse_qi_test.cpp ;
+exe parse_qiexpr : parse_qiexpr/parse_qiexpr.cpp ;
+
+exe scheme_test1 : scheme/scheme_test1.cpp ;
+exe scheme_test2 : scheme/scheme_test2.cpp ;
+exe scheme_test3 : scheme/scheme_test3.cpp ;
 
 
 

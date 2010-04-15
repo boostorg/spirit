@@ -11,9 +11,9 @@
 #include <map>
 #include <boost/bind.hpp>
 
-#include "scheme_intrinsics.hpp"
-#include "scheme_interpreter.hpp"
-#include "input/parse_sexpr.hpp"
+#include <scheme/intrinsics.hpp>
+#include <scheme/interpreter.hpp>
+#include <input/parse_sexpr.hpp>
 
 namespace scheme
 {

@@ -6,10 +6,10 @@
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
 
-#include "../../input/sexpr.hpp"
-#include "../../input/parse_sexpr_impl.hpp"
-#include "../../scheme_compiler.hpp"
-#include "../../utree_io.hpp"
+#include <input/sexpr.hpp>
+#include <input/parse_sexpr_impl.hpp>
+#include <scheme/compiler.hpp>
+#include <utree/io.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program

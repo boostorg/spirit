@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2010 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_QIEXPR_PARSER)
@@ -16,10 +16,10 @@
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
-#include "../utree.hpp"
-#include "../detail/utree_detail3.hpp"
-#include "../utree_operators.hpp"
-#include "../input/string.hpp"
+#include <utree/utree.hpp>
+#include <utree/detail/utree_detail3.hpp>
+#include <utree_operators.hpp>
+#include <input/string.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace traits
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace scheme { namespace qi 
+namespace scheme { namespace qi
 {
     using boost::spirit::ascii::space;
     using boost::spirit::ascii::char_;
@@ -60,7 +60,7 @@ namespace scheme { namespace qi
     namespace detail
     {
         ///////////////////////////////////////////////////////////////////////
-        // return true if the utree instance represents a list whose first 
+        // return true if the utree instance represents a list whose first
         // element is a symbol node equal to the second argument
         inline bool is_list_node(utree const& u, utf8_symbol const& symbol)
         {
@@ -79,7 +79,7 @@ namespace scheme { namespace qi
         }
 
         ///////////////////////////////////////////////////////////////////////
-        // ensure the given utree instance represents a list whose first 
+        // ensure the given utree instance represents a list whose first
         // element is the symbol this function object has been constructed from
         struct make_list_node
         {
@@ -90,21 +90,21 @@ namespace scheme { namespace qi
               : symbol(symbol_)
             {}
 
-            // If called with one parameter the given node needs to be 
+            // If called with one parameter the given node needs to be
             // converted into a list whose first element is the symbol.
             //
-            // i.e: 
+            // i.e:
             //   lit: ("abc") --> (lit "abc")
             void operator()(utree& u) const
             {
                 u.push_front(symbol);
             }
 
-            // If called with two parameters we ensure the given node is a 
-            // (new) list whose first element is the symbol and we append the 
+            // If called with two parameters we ensure the given node is a
+            // (new) list whose first element is the symbol and we append the
             // given element to that list.
             //
-            // i.e.: 
+            // i.e.:
             //   >>: (char_), (char_ "abc")    --> (>> (char_) (char_ "abc"))
             //   >>: (>> (char_ "a")), (char_) --> (>> (char_ "a") (char_))
             void operator()(utree& val, utree const& element) const
@@ -137,7 +137,7 @@ namespace scheme { namespace qi
 
     ///////////////////////////////////////////////////////////////////////////
     // a list of names for all supported parser primitives taking no parameters
-    static char const* const primitives0[] = 
+    static char const* const primitives0[] =
     {
       // character parsers
         "char_"
@@ -163,7 +163,7 @@ namespace scheme { namespace qi
     };
 
     // a list of names for all supported parser primitives taking 1 parameter
-    static char const* const primitives1[] = 
+    static char const* const primitives1[] =
     {
         // character parsers
         "char_", "lit", "string"
@@ -171,14 +171,14 @@ namespace scheme { namespace qi
     };
 
     // a list of names for all supported parser primitives taking 2 parameter
-    static char const* const primitives2[] = 
+    static char const* const primitives2[] =
     {
         "char_"
       , 0
     };
 
     // a list of names for all supported parser directives taking 0 parameter
-    static char const* const directives0[] = 
+    static char const* const directives0[] =
     {
         // manage skip parser
         "lexeme", "skip", "no_skip"
@@ -196,10 +196,10 @@ namespace scheme { namespace qi
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct qiexpr_parser 
+    struct qiexpr_parser
       : grammar<Iterator, qiexpr_white_space<Iterator>, utree()>
     {
-        typedef typename boost::detail::iterator_traits<Iterator>::value_type 
+        typedef typename boost::detail::iterator_traits<Iterator>::value_type
             char_type;
 
         qiexpr_parser() : qiexpr_parser::base_type(start)
@@ -229,19 +229,19 @@ namespace scheme { namespace qi
                 ;
 
             // A ^ B
-            permutation = 
+            permutation =
                     sequence              [ _val = _1 ]
                 >> *( "^" >> sequence     [ make_permutation(_val, _1) ] )
                 ;
 
             // A >> B
-            sequence = 
+            sequence =
                     unary_term            [ _val = _1 ]
                 >> *( ">>" >> unary_term  [ make_sequence(_val, _1) ] )
                 ;
 
             // unary operators
-            unary_term = 
+            unary_term =
                     '*' >> term           [ make_kleene(_val, _1) ]
                 |   '+' >> term           [ make_plus(_val, _1) ]
                 |   '-' >> term           [ make_optional(_val, _1) ]
@@ -257,7 +257,7 @@ namespace scheme { namespace qi
                 |   '(' >> alternative >> ')'
                 ;
 
-            // any parser directive 
+            // any parser directive
             directive =
                     (directive0 >> '[' >> alternative >> ']')
                     [
@@ -274,7 +274,7 @@ namespace scheme { namespace qi
                 ;
 
             // a literal (either 'x' or "abc")
-            literal = 
+            literal =
                     string_lit            [ push_back(_val, _1) ]
                 |   string_lit.char_lit   [ push_back(_val, _1) ]
                 ;

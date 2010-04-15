@@ -7,8 +7,8 @@
 #if !defined(BOOST_SPIRIT_SCHEME_INTRINSICS)
 #define BOOST_SPIRIT_SCHEME_INTRINSICS
 
-#include "scheme_interpreter.hpp"
-#include "utree_operators.hpp"
+#include <scheme/interpreter.hpp>
+#include <utree/operators.hpp>
 
 namespace scheme
 {

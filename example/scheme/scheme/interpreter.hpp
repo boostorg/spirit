@@ -13,7 +13,7 @@
 #include <boost/array.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
-#include "utree.hpp"
+#include <utree/utree.hpp>
 
 #define SCHEME_COMPOSITE_LIMIT 10
 
@@ -69,7 +69,7 @@ namespace scheme
         }
 
         // More operators
-        #include "detail/scheme_function_call.hpp"
+        #include <scheme/detail/function_call.hpp>
 
         template <std::size_t n>
         static args_type
@@ -202,7 +202,7 @@ namespace scheme
         }
 
         // More operators
-        #include "detail/scheme_composite_call.hpp"
+        #include <scheme/detail/composite_call.hpp>
 
         Derived const& derived() const
         {

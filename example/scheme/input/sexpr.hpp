@@ -17,9 +17,9 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
-#include "../utree.hpp"
-#include "../utree_operators.hpp"
-#include "string.hpp"
+#include <utree/utree.hpp>
+#include <utree/operators.hpp>
+#include <input/string.hpp>
 
 namespace scheme { namespace input
 {

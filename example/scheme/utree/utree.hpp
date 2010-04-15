@@ -17,7 +17,7 @@
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/ref.hpp>
-#include "detail/utree_detail1.hpp"
+#include <utree/detail/utree_detail1.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -295,6 +295,6 @@ namespace scheme
 # pragma warning(pop)
 #endif
 
-#include "detail/utree_detail2.hpp"
+#include <utree/detail/utree_detail2.hpp>
 
 #endif
