@@ -7,7 +7,7 @@
 
 #include <boost/config/warning_disable.hpp>
 
-#include <utree.hpp>
+#include <utree/utree.hpp>
 #include <utree/operators.hpp>
 #include <utree/io.hpp>
 #include <iostream>
