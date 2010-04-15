@@ -38,7 +38,7 @@
     {
         boost::array<utree, N> elements;
         BOOST_PP_REPEAT(N, SCHEME_PUSH_ELEMENT, _);
-        return f(get_range(elements));
+        return derived()(get_range(elements));
     }
 
 #undef N

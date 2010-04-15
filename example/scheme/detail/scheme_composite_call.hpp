@@ -34,7 +34,7 @@
 #define N BOOST_PP_ITERATION()
 
     template <BOOST_PP_ENUM_PARAMS(N, typename A)>
-    actor operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& _)) const
+    function operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& _)) const
     {
         actor_list elements;
         BOOST_PP_REPEAT(N, SCHEME_PUSH_ELEMENT, _);

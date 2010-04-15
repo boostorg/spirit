@@ -19,7 +19,7 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  The environment
 ///////////////////////////////////////////////////////////////////////////////
-    typedef boost::function<actor(actor_list const&)> compiled_function;
+    typedef boost::function<function(actor_list const&)> compiled_function;
 
     class environment
     {
@@ -58,27 +58,27 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  The compiler
 ///////////////////////////////////////////////////////////////////////////////
-    actor compile(
+    function compile(
         utree const& ast, environment& env, actor_list& fragments);
 
     struct external_function : composite<external_function>
     {
         // we must hold f by reference because functions can be recursive
-        boost::reference_wrapper<actor const> f;
+        boost::reference_wrapper<function const> f;
 
-        external_function(actor const& f)
+        external_function(function const& f)
           : f(f) {}
 
         using base_type::operator();
-        actor operator()(actor_list const& elements) const
+        function operator()(actor_list const& elements) const
         {
-            return actor(lambda_function(f, elements));
+            return function(lambda_function(f, elements));
         }
     };
 
     struct compiler
     {
-        typedef actor result_type;
+        typedef function result_type;
         environment& env;
         actor_list& fragments;
 
@@ -87,18 +87,18 @@ namespace scheme
         {
         }
 
-        actor operator()(nil) const
+        function operator()(nil) const
         {
             return scheme::val(utree());
         }
 
         template <typename T>
-        actor operator()(T const& val) const
+        function operator()(T const& val) const
         {
             return scheme::val(utree(val));
         }
 
-        actor operator()(utf8_symbol_range const& str) const
+        function operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
             if (compiled_function* mf = env.find(name))
@@ -108,10 +108,10 @@ namespace scheme
             }
             // $$$ throw? $$$
             BOOST_ASSERT(false);
-            return actor();
+            return function();
         }
 
-        actor make_lambda(
+        function make_lambda(
             std::vector<std::string> const& args,
             utree const& body) const
         {
@@ -121,19 +121,20 @@ namespace scheme
             return compile(body, local_env, fragments);
         }
 
-        void define_function(
+        function define_function(
             std::string const& name,
             std::vector<std::string> const& args,
             utree const& body) const
         {
-            fragments.push_back(actor());
-            actor& f = fragments.back();
+            fragments.push_back(function());
+            function& f = fragments.back();
             env.define(name, external_function(f));
             f = make_lambda(args, body);
+            return f;
         }
 
         template <typename Iterator>
-        actor operator()(boost::iterator_range<Iterator> const& range) const
+        function operator()(boost::iterator_range<Iterator> const& range) const
         {
             std::string name(get_symbol(*range.begin()));
 
@@ -158,8 +159,7 @@ namespace scheme
                     fname = get_symbol(*i++);
                 }
 
-                define_function(fname, args, *i);
-                return actor(val(utf8_symbol("<define " + fname + ">")));
+                return define_function(fname, args, *i);
             }
 
             if (name == "lambda")
@@ -184,7 +184,7 @@ namespace scheme
             }
 
             BOOST_ASSERT(false);
-            return actor(); // $$$ implement me $$$
+            return function(); // $$$ implement me $$$
         }
 
         static std::string get_symbol(utree const& s)
@@ -194,7 +194,7 @@ namespace scheme
         }
     };
 
-    inline actor compile(
+    inline function compile(
         utree const& ast, environment& env, actor_list& fragments)
     {
         return utree::visit(ast, compiler(env, fragments));
@@ -208,7 +208,7 @@ namespace scheme
     {
         BOOST_FOREACH(utree const& program, ast)
         {
-            scheme::actor f = compile(program, env, fragments);
+            scheme::function f = compile(program, env, fragments);
             results.push_back(f);
         }
     }
@@ -226,10 +226,10 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // interpreter
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Source>
-    struct interpreter : composite<interpreter<Source> >
+    struct interpreter : actor<interpreter>
     {
-        interpreter(Source const& in, environment* outer = 0)
+        template <typename Source>
+        interpreter(Source& in, environment* outer = 0)
         {
             if (outer == 0)
                 build_basic_environment(env);
@@ -245,10 +245,9 @@ namespace scheme
             }
         }
 
-        using composite<interpreter<Source> >::operator();
-        actor operator()(actor_list const& elements) const
+        utree eval(args_type args) const
         {
-            return actor(lambda_function(flist.back(), elements));
+            return flist.back()(args);
         }
 
         environment env;

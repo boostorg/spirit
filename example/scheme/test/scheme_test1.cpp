@@ -33,14 +33,14 @@ int main(int argc, char **argv)
         using scheme::lte;
         using scheme::_1;
         using scheme::_2;
-        using scheme::function;
+        using scheme::lambda;
 
         std::cout << "result: " << plus(11, 22, 33)         () << std::endl;
         std::cout << "result: " << plus(11, 22, _1)         (33) << std::endl;
         std::cout << "result: " << plus(11, _1, _2)         (22, 33) << std::endl;
         std::cout << "result: " << plus(11, plus(_1, _2))   (22, 33) << std::endl;
 
-        function factorial;
+        lambda factorial;
         factorial = if_(lte(_1, 0), 1, times(_1, factorial(minus(_1, 1))));
 
         std::cout << "result: " << factorial(_1)            (10) << std::endl;
@@ -90,10 +90,23 @@ int main(int argc, char **argv)
         scheme::actor_list fragments;
         scheme::actor_list flist;
         compile_all(program, env, flist, fragments);
-        BOOST_FOREACH(scheme::actor const& f, flist)
-        {
-            std::cout << "result: " << f() << std::endl;
-        }
+
+        scheme::actor_list::iterator i = flist.begin();
+
+        std::cout << "the 1st is the define dbl:" << std::endl;
+        std::cout << "(dbl 555): " << (*i++)(555) << std::endl;
+        std::cout << "the 2nd is the define len:" << std::endl;
+        std::cout << "len: " << (*i++)() << std::endl;
+        std::cout << "the 3rd is a function call:" << std::endl;
+        std::cout << "(dbl len): " << (*i++)() << std::endl;
+        std::cout << "the 4th is the define factorial:" << std::endl;
+        std::cout << "(factorial 5): " << (*i++)(5) << std::endl;
+        std::cout << "the 5th is a function call:" << std::endl;
+        std::cout << "(factorial 10): " << (*i++)() << std::endl;
+        std::cout << "the 6th is the define fib:" << std::endl;
+        std::cout << "(fib 5): " << (*i++)(5) << std::endl;
+        std::cout << "the 7th is a function call:" << std::endl;
+        std::cout << "(fib 10): " << (*i++)() << std::endl;
     }
     else
     {

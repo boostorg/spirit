@@ -23,22 +23,76 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    // actor
+    // typedefs
     ///////////////////////////////////////////////////////////////////////////
-    struct actor;
+    struct function;
 
-    typedef std::list<actor> actor_list;
+    typedef std::list<function> actor_list;
     typedef boost::iterator_range<utree const*> args_type;
     typedef boost::function<utree(args_type args)> actor_function;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // actor
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Derived>
     struct actor
     {
         typedef utree result_type;
+        typedef actor<Derived> base_type;
 
-        actor()
+        utree operator()(args_type args) const
+        {
+            return derived().eval(args);
+        }
+
+        utree operator()() const
+        {
+            return derived().eval(args_type());
+        }
+
+        template <typename A0>
+        utree operator()(A0 const& _0) const
+        {
+            boost::array<utree, 1> elements;
+            elements[0] = _0;
+            return derived().eval(get_range(elements));
+        }
+
+        template <typename A0, typename A1>
+        utree operator()(A0 const& _0, A1 const& _1) const
+        {
+            boost::array<utree, 2> elements;
+            elements[0] = _0;
+            elements[1] = _1;
+            return derived().eval(get_range(elements));
+        }
+
+        // More operators
+        #include "detail/scheme_function_call.hpp"
+
+        template <std::size_t n>
+        static args_type
+        get_range(boost::array<utree, n> const& array)
+        {
+            return args_type(array.begin(), array.end());
+        }
+
+        Derived const& derived() const
+        {
+            return *static_cast<Derived const*>(this);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // function
+    ///////////////////////////////////////////////////////////////////////////
+    struct function : actor<function>
+    {
+        actor_function f;
+        function()
           : f() {}
 
-        actor(actor_function const& f)
+        function(actor_function const& f)
           : f(f)
         {
             BOOST_ASSERT(!f.empty());
@@ -49,56 +103,21 @@ namespace scheme
             return f.empty();
         }
 
-        utree operator()() const
+        utree eval(args_type args) const
         {
-            return f(args_type());
-        }
-
-        utree operator()(args_type x) const
-        {
-            return f(x);
-        }
-
-        template <typename A0>
-        utree operator()(A0 const& _0) const
-        {
-            boost::array<utree, 1> elements;
-            elements[0] = _0;
-            return f(get_range(elements));
-        }
-
-        template <typename A0, typename A1>
-        utree operator()(A0 const& _0, A1 const& _1) const
-        {
-            boost::array<utree, 2> elements;
-            elements[0] = _0;
-            elements[1] = _1;
-            return f(get_range(elements));
-        }
-
-        // More operators
-        #include "detail/scheme_function_call.hpp"
-
-        actor_function f;
-
-        template <std::size_t n>
-        static args_type
-        get_range(boost::array<utree, n> const& array)
-        {
-            return args_type(array.begin(), array.end());
+            return f(args);
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
     // values
     ///////////////////////////////////////////////////////////////////////////
-    struct value_function
+    struct value_function : actor<value_function>
     {
         utree val;
         value_function(utree const& val) : val(val) {}
 
-        typedef utree result_type;
-        utree operator()(args_type /*args*/) const
+        utree eval(args_type /*args*/) const
         {
             return utree(boost::ref(val));
         }
@@ -106,10 +125,10 @@ namespace scheme
 
     struct value
     {
-        typedef actor result_type;
-        actor operator()(utree const& val) const
+        typedef function result_type;
+        function operator()(utree const& val) const
         {
-            return actor(value_function(val));
+            return function(value_function(val));
         }
     };
 
@@ -118,13 +137,12 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // arguments
     ///////////////////////////////////////////////////////////////////////////
-    struct argument_function
+    struct argument_function : actor<argument_function>
     {
         std::size_t n;
         argument_function(std::size_t n) : n(n) {}
 
-        typedef utree result_type;
-        utree operator()(args_type args) const
+        utree eval(args_type args) const
         {
             return utree(boost::ref(args[n]));
         }
@@ -132,24 +150,24 @@ namespace scheme
 
     struct argument
     {
-        typedef actor result_type;
-        actor operator()(std::size_t n) const
+        typedef function result_type;
+        function operator()(std::size_t n) const
         {
-            return actor(argument_function(n));
+            return function(argument_function(n));
         }
     };
 
     argument const arg = {};
-    actor const _1 = arg(0);
-    actor const _2 = arg(1);
-    actor const _3 = arg(2);
-    actor const _4 = arg(3);
-    actor const _5 = arg(4);
-    actor const _6 = arg(5);
-    actor const _7 = arg(6);
-    actor const _8 = arg(7);
-    actor const _9 = arg(8);
-    actor const _10 = arg(10);
+    function const _1 = arg(0);
+    function const _2 = arg(1);
+    function const _3 = arg(2);
+    function const _4 = arg(3);
+    function const _5 = arg(4);
+    function const _6 = arg(5);
+    function const _7 = arg(6);
+    function const _8 = arg(7);
+    function const _9 = arg(8);
+    function const _10 = arg(10);
 
     ///////////////////////////////////////////////////////////////////////////
     // composite
@@ -157,29 +175,29 @@ namespace scheme
     template <typename Derived>
     struct composite
     {
-        typedef actor result_type;
+        typedef function result_type;
         typedef composite<Derived> base_type;
 
-        actor operator()(actor_list const& elements) const
+        function operator()(actor_list const& elements) const
         {
-            return derived()(elements);
+            return derived().compose(elements);
         }
 
         template <typename A0>
-        actor operator()(A0 const& _0) const
+        function operator()(A0 const& _0) const
         {
             actor_list elements;
             elements.push_back(as_function(_0));
-            return derived()(elements);
+            return derived().compose(elements);
         }
 
         template <typename A0, typename A1>
-        actor operator()(A0 const& _0, A1 const& _1) const
+        function operator()(A0 const& _0, A1 const& _1) const
         {
             actor_list elements;
             elements.push_back(as_function(_0));
             elements.push_back(as_function(_1));
-            return derived()(elements);
+            return derived().compose(elements);
         }
 
         // More operators
@@ -191,12 +209,12 @@ namespace scheme
         }
 
         template <typename T>
-        static actor as_function(T const& val)
+        static function as_function(T const& val)
         {
             return scheme::val(utree(val));
         }
 
-        static actor const& as_function(actor const& f)
+        static function const& as_function(function const& f)
         {
             return f;
         }
@@ -206,19 +224,18 @@ namespace scheme
     // unary_function
     ///////////////////////////////////////////////////////////////////////////
     template <typename Derived>
-    struct unary_function
+    struct unary_function : actor<unary_function<Derived> >
     {
-        actor a;
+        function a;
         typedef unary_function<Derived> base_type;
 
-        unary_function(actor const& a)
+        unary_function(function const& a)
           : a(a)
         {
             BOOST_ASSERT(!a.empty());
         }
 
-        typedef utree result_type;
-        utree operator()(args_type args) const
+        utree eval(args_type args) const
         {
             return derived().eval(a(args));
         }
@@ -232,10 +249,9 @@ namespace scheme
     template <typename Function>
     struct unary_composite : composite<unary_composite<Function> >
     {
-        using composite<unary_composite<Function> >::operator();
-        actor operator()(actor_list const& elements) const
+        function compose(actor_list const& elements) const
         {
-            return actor(Function(elements.front()));
+            return function(Function(elements.front()));
         }
     };
 
@@ -243,21 +259,20 @@ namespace scheme
     // binary_function
     ///////////////////////////////////////////////////////////////////////////
     template <typename Derived>
-    struct binary_function
+    struct binary_function : actor<binary_function<Derived> >
     {
-        actor a;
-        actor b;
+        function a;
+        function b;
         typedef binary_function<Derived> base_type;
 
-        binary_function(actor const& a, actor const& b)
+        binary_function(function const& a, function const& b)
           : a(a), b(b)
         {
             BOOST_ASSERT(!a.empty());
             BOOST_ASSERT(!b.empty());
         }
 
-        typedef utree result_type;
-        utree operator()(args_type args) const
+        utree eval(args_type args) const
         {
             return derived().eval(a(args), b(args));
         }
@@ -271,13 +286,12 @@ namespace scheme
     template <typename Function>
     struct binary_composite : composite<binary_composite<Function> >
     {
-        using composite<binary_composite<Function> >::operator();
-        actor operator()(actor_list const& elements) const
+        function compose(actor_list const& elements) const
         {
             actor_list::const_iterator i = elements.begin();
-            actor a = *i++;
-            actor b = *i;
-            return actor(Function(a, b));
+            function a = *i++;
+            function b = *i;
+            return function(Function(a, b));
         }
     };
 
@@ -285,27 +299,27 @@ namespace scheme
     // nary_function
     ///////////////////////////////////////////////////////////////////////////
     template <typename Derived>
-    struct nary_function : composite<Derived>
+    struct nary_function : actor<nary_function<Derived> >
     {
-        typedef nary_function<Derived> base_type;
         actor_list elements;
+        typedef nary_function<Derived> base_type;
+
         nary_function(actor_list const& elements)
           : elements(elements)
         {
-            BOOST_FOREACH(actor const& element, elements)
+            BOOST_FOREACH(function const& element, elements)
             {
                 BOOST_ASSERT(!element.empty());
             }
         }
 
-        using composite<Derived>::operator();
-        utree operator()(args_type args) const
+        utree eval(args_type args) const
         {
             actor_list::const_iterator i = elements.begin();
             utree result = (*i++)(args);
             boost::iterator_range<actor_list::const_iterator>
                 rest(i++, elements.end());
-            BOOST_FOREACH(actor const& element, rest)
+            BOOST_FOREACH(function const& element, rest)
             {
                 if (!derived().eval(result, element(args)))
                     break; // allow short-circuit evaluation
@@ -322,34 +336,33 @@ namespace scheme
     template <typename Function>
     struct nary_composite : composite<nary_composite<Function> >
     {
-        using composite<nary_composite<Function> >::operator();
-        actor operator()(actor_list const& elements) const
+        function compose(actor_list const& elements) const
         {
-            return actor(Function(elements));
+            return function(Function(elements));
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // function
+    // lambda
     ///////////////////////////////////////////////////////////////////////////
-    struct lambda_function
+    struct lambda_function : actor<lambda_function>
     {
         actor_list elements;
         // we must hold f by reference because functions can be recursive
-        boost::reference_wrapper<actor const> f;
+        boost::reference_wrapper<function const> f;
 
-        lambda_function(actor const& f, actor_list const& elements)
+        lambda_function(function const& f, actor_list const& elements)
           : elements(elements), f(f) {}
 
         typedef utree result_type;
-        utree operator()(args_type args) const
+        utree eval(args_type args) const
         {
             if (!elements.empty())
             {
                 boost::scoped_array<utree>
                     fargs(new utree[elements.size()]);
                 std::size_t i = 0;
-                BOOST_FOREACH(actor const& element, elements)
+                BOOST_FOREACH(function const& element, elements)
                 {
                     fargs[i++] = element(args);
                 }
@@ -363,26 +376,25 @@ namespace scheme
         }
     };
 
-    struct function : composite<function>
+    struct lambda : composite<lambda>
     {
-        actor f;
+        function f;
 
-        function() : f() {}
-        function(actor const& f) : f(f) {}
+        lambda() : f() {}
+        lambda(function const& f) : f(f) {}
 
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
+        function compose(actor_list const& elements) const
         {
-            return actor(lambda_function(f, elements));
+            return function(lambda_function(f, elements));
         }
 
-        function& operator=(function const& other)
+        lambda& operator=(lambda const& other)
         {
             f = other.f;
             return *this;
         }
 
-        function& operator=(actor const& f_)
+        lambda& operator=(function const& f_)
         {
             f = f_;
             return *this;

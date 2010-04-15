@@ -14,13 +14,13 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // if
     ///////////////////////////////////////////////////////////////////////////
-    struct if_function
+    struct if_function : actor<if_function>
     {
-        actor cond;
-        actor then;
-        actor else_;
+        function cond;
+        function then;
+        function else_;
         if_function(
-            actor const& cond, actor const& then, actor const& else_)
+            function const& cond, function const& then, function const& else_)
           : cond(cond), then(then), else_(else_)
         {
             BOOST_ASSERT(!cond.empty());
@@ -29,7 +29,7 @@ namespace scheme
         }
 
         typedef utree result_type;
-        utree operator()(args_type args) const
+        utree eval(args_type args) const
         {
             return cond(args).as<bool>() ? then(args) : else_(args);
         }
@@ -37,14 +37,13 @@ namespace scheme
 
     struct if_composite : composite<if_composite>
     {
-        using base_type::operator();
-        actor operator()(actor_list const& elements) const
+        function compose(actor_list const& elements) const
         {
             actor_list::const_iterator i = elements.begin();
-            actor if_ = *i++;
-            actor then = *i++;
-            actor else_ = *i;
-            return actor(if_function(if_, then, else_));
+            function if_ = *i++;
+            function then = *i++;
+            function else_ = *i;
+            return function(if_function(if_, then, else_));
         }
     };
 
@@ -56,7 +55,7 @@ namespace scheme
     struct less_than_function
       : binary_function<less_than_function>
     {
-        less_than_function(actor const& a, actor const& b)
+        less_than_function(function const& a, function const& b)
           : base_type(a, b) {}
 
         typedef utree result_type;
@@ -79,7 +78,7 @@ namespace scheme
     struct less_than_equal_function
       : binary_function<less_than_equal_function>
     {
-        less_than_equal_function(actor const& a, actor const& b)
+        less_than_equal_function(function const& a, function const& b)
           : base_type(a, b) {}
 
         typedef utree result_type;
