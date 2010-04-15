@@ -7,7 +7,7 @@
 
 #include <boost/config/warning_disable.hpp>
 
-#include <utree/utree.hpp>
+#include <utree.hpp>
 #include <utree/operators.hpp>
 #include <utree/io.hpp>
 #include <iostream>
@@ -17,7 +17,7 @@ inline void check(scheme::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    BOOST_ASSERT(s.str() == expected);
+    BOOST_ASSERT(s.str() == expected + " ");
 }
 
 int main()
