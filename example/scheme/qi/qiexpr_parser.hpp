@@ -3,8 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(BOOST_SPIRIT_QIEXPR)
-#define BOOST_SPIRIT_QIEXPR
+#if !defined(BOOST_SPIRIT_QIEXPR_PARSER)
+#define BOOST_SPIRIT_QIEXPR_PARSER
 
 #include <string>
 
@@ -27,9 +27,10 @@ namespace boost { namespace spirit { namespace traits
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace scheme { namespace input 
+namespace scheme { namespace qi 
 {
     using boost::spirit::ascii::space;
+    using boost::spirit::ascii::char_;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::symbols;
@@ -195,12 +196,13 @@ namespace scheme { namespace input
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct qiexpr : grammar<Iterator, qiexpr_white_space<Iterator>, utree()>
+    struct qiexpr_parser 
+      : grammar<Iterator, qiexpr_white_space<Iterator>, utree()>
     {
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
 
-        qiexpr() : qiexpr::base_type(start)
+        qiexpr_parser() : qiexpr_parser::base_type(start)
         {
             typedef function<detail::make_list_node> make_list_type;
 

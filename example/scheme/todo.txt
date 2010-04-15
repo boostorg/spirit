@@ -1,2 +1,3 @@
 Sexpr:
-- allow sheme-ish #t and #f
+- allow scheme-ish #t and #f
+- write parser and generator for binary on disk representation of sexpr
