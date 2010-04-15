@@ -17,7 +17,7 @@ inline void check(scheme::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    BOOST_ASSERT(s.str() == expected);
+    BOOST_ASSERT(s.str() == expected + " ");
 }
 
 int main()
