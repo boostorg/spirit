@@ -28,12 +28,13 @@ namespace scheme
         SCHEME_GET_UTREE_TYPE(utf8_string_range, utree_type::string_type);
         SCHEME_GET_UTREE_TYPE(utf8_string, utree_type::string_type);
         SCHEME_GET_UTREE_TYPE(utf8_symbol_range, utree_type::symbol_type);
-        SCHEME_GET_UTREE_TYPE(utf8_symbol, utree_type::string_type);
+        SCHEME_GET_UTREE_TYPE(utf8_symbol, utree_type::symbol_type);
         SCHEME_GET_UTREE_TYPE(binary_range, utree_type::binary_type);
         SCHEME_GET_UTREE_TYPE(boost::iterator_range<utree::iterator>, 
             utree_type::list_type);
         SCHEME_GET_UTREE_TYPE(boost::iterator_range<utree::const_iterator>, 
             utree_type::list_type);
+        SCHEME_GET_UTREE_TYPE(utree, utree_type::reference_type);
 
 #undef SCHEME_GET_UTREE_TYPE
 
@@ -138,6 +139,16 @@ namespace scheme
             static type call(utree const& x) 
             { 
                 return type(x.s.str(), x.s.size()); 
+            }
+        };
+
+        template <>
+        struct get_impl<utree>
+        {
+            typedef utree const& type;
+            static type call(utree const& x) 
+            { 
+                return x.which() == utree_type::reference_type ? *x.p : x; 
             }
         };
     }
