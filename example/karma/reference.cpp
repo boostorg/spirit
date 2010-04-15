@@ -183,7 +183,7 @@ struct int_data
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<int_data const, int>
+    struct transform_attribute<int_data const, int, karma::domain>
     {
         typedef int type;
         static int pre(int_data const& d) { return d.i; }

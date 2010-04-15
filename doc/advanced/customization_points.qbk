@@ -217,6 +217,10 @@ point. It is invoked by /Qi/ `rule` and `attr_cast`, and /Karma/ `rule` and
 provided attribute to the attribute type expected by the right hand side 
 component (for `rule`) or the embedded component (for `attr_cast`).
 
+[note The interface of this customization point has been changed with Boost 
+      V1.44. We added the `Domain` template parameter to allow for more fine 
+      grained specializations for __qi__ and __karma__.]
+
 [heading Module Headers]
 
     #include <boost/spirit/home/support/attributes.hpp>
@@ -236,7 +240,7 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Exposed, typename Transformed, typename Enable>
+    template <typename Exposed, typename Transformed, typename Domain, typename Enable>
     struct transform_attribute
     {
         typedef <unspecified> type;
@@ -253,6 +257,9 @@ Also, see __include_structure__.
                              which needs to be transformed.]    [none]]
     [[`Transformed`]        [The attribute type expected by the component
                              to be provided as the result of the transformation.] [none]]
+    [[`Domain`]             [The domain of the sub library the template is 
+                             instantiated in. Typically this is either `qi::domain`
+                             or `karma::domain`.]        [none]]
     [[`Enable`]             [Helper template parameter usable to selectively
                              enable or disable certain specializations
                              of `transform_attribute` utilizing SFINAE (i.e.
@@ -267,6 +274,9 @@ Also, see __include_structure__.
     [[`Transformed`]      [The type, `Transformed` is the type of the attribute 
                            as passed along to the right hand side of the `rule`
                            (embedded component of `attr_cast`).]]
+    [[`Domain`]             [The domain of the sub library the template is 
+                             instantiated in. Typically this is either `qi::domain`
+                             or `karma::domain`.]]
     [[`exposed`]          [An instance of type `Exposed`.]]
     [[`transformed`]      [An instance of type `Transformed`.]]
 ]
@@ -275,7 +285,7 @@ Also, see __include_structure__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`transform_attribute<Exposed, Transformed>::type`] 
+    [[`transform_attribute<Exposed, Transformed, Domain>::type`] 
                         [Evaluates to the type to be used as the result of the 
                          transformation (to be passed to the right hand side of
                          the `rule` or to the embedded component of the 
@@ -284,7 +294,7 @@ Also, see __include_structure__.
                          `Transformed&` instead avoiding superfluous object
                          creation.]]
     [[
-``type transform_attribute<Exposed, Transformed>::pre(exposed)``]
+``type transform_attribute<Exposed, Transformed, Domain>::pre(exposed)``]
                         [Do `pre`-transformation before invoking the right hand
                          side component for `rule` (or the embedded component 
                          for `attr_cast`). This takes the attribute supplied as by
@@ -293,7 +303,7 @@ Also, see __include_structure__.
                          as exposed by the metafunction `type`). This function
                          will be called in /Qi/ and for /Karma/.]]
     [[
-``void transform_attribute<Exposed, Transformed>::post(exposed, transformed)``]
+``void transform_attribute<Exposed, Transformed, Domain>::post(exposed, transformed)``]
                         [Do `post`-transformation after the invocation of the 
                          right hand side component for `rule` (or the embedded 
                          component for `attr_cast`). This takes the original 
@@ -303,7 +313,7 @@ Also, see __include_structure__.
                          into the supplied attribute instance. This function 
                          will be called in /Qi/ only.]]
     [[
-``void transform_attribute<Exposed, Transformed>::fail(exposed)``]
+``void transform_attribute<Exposed, Transformed, Domain>::fail(exposed)``]
                         [Handling failing parse operations of the
                          right hand side component for `rule` (or the embedded 
                          component for `attr_cast`). This function 

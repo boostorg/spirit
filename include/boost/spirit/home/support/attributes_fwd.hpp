@@ -49,10 +49,12 @@ namespace boost { namespace spirit { namespace traits
     // the user is able specify specific transformation rules for any attribute
     // type.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed, typename Enable = void>
+    template <typename Exposed, typename Transformed, typename Domain
+      , typename Enable = void>
     struct transform_attribute;
 
     ///////////////////////////////////////////////////////////////////////////
+    // Qi only
     template <typename Attribute, typename Iterator, typename Enable = void>
     struct assign_to_attribute_from_iterators;
 
@@ -60,6 +62,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_value;
 
     ///////////////////////////////////////////////////////////////////////////
+    // Karma only
     template <typename Attribute, typename Enable = void>
     struct extract_from_attribute;
 
@@ -82,6 +85,7 @@ namespace boost { namespace spirit { namespace traits
     struct is_container;
 
     ///////////////////////////////////////////////////////////////////////////
+    // Qi only
     template <typename Container, typename T, typename Enable = void>
     struct push_back_container;
 
@@ -90,6 +94,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////
     // Determine the iterator type of the given container type
+    // Karma only
     ///////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct begin_container;
@@ -114,7 +119,7 @@ namespace boost { namespace spirit { namespace result_of
     template <typename Attribute>
     struct extract_from;
 
-    template <typename Exposed, typename Transformed>
+    template <typename Exposed, typename Transformed, typename Domain>
     struct pre_transform;
 
     template <typename T>

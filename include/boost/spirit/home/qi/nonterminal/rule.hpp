@@ -246,7 +246,8 @@ namespace boost { namespace spirit { namespace qi
                 // do down-stream transformation, provides attribute for
                 // rhs parser
                 typedef traits::transform_attribute<
-                    typename make_attribute::type, attr_type> transform;
+                    typename make_attribute::type, attr_type, domain> 
+                transform;
 
                 typename make_attribute::type made_attr = make_attribute::call(attr);
                 typename transform::type attr_ = transform::pre(made_attr);
@@ -291,7 +292,8 @@ namespace boost { namespace spirit { namespace qi
                 // do down-stream transformation, provides attribute for
                 // rhs parser
                 typedef traits::transform_attribute<
-                    typename make_attribute::type, attr_type> transform;
+                    typename make_attribute::type, attr_type, domain> 
+                transform;
 
                 typename make_attribute::type made_attr = make_attribute::call(attr);
                 typename transform::type attr_ = transform::pre(made_attr);

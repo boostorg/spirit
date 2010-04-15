@@ -76,7 +76,8 @@ namespace boost { namespace spirit { namespace karma
           , Attribute const& attr) const
         {
             typedef traits::transform_attribute<
-                Attribute const, transformed_attribute_type> transform;
+                Attribute const, transformed_attribute_type, domain> 
+            transform;
 
             return compile<karma::domain>(subject).generate(
                 sink, ctx, d, transform::pre(attr));

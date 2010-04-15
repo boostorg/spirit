@@ -54,7 +54,7 @@ struct test_int_data1
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<test_int_data1, int>
+    struct transform_attribute<test_int_data1, int, qi::domain>
     {
         typedef int type;
         static int pre(test_int_data1& d) { return d.i; }
@@ -74,7 +74,7 @@ struct test_int_data2
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<test_int_data2, int>
+    struct transform_attribute<test_int_data2, int, qi::domain>
     {
         typedef int& type;
         static int& pre(test_int_data2& d) { return d.i; }
