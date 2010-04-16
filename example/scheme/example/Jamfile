@@ -13,6 +13,8 @@ project spirit-scheme-tests
     ;
 
 # bring in rules for testing
+# [ run sources : cmdlineargs : input files : requirements : name ]
+
 import testing ;
 
 {
@@ -27,16 +29,16 @@ import testing ;
 exe sexpr_input_test : sexpr/sexpr_input_test.cpp ;
 exe sexpr_output_test : sexpr/sexpr_output_test.cpp ;
 
-exe parse_qi_test 
-   : parse_qiexpr/generate_sexpr_to_ostream.cpp 
-     parse_qiexpr/parse_qi_test.cpp 
-     parse_qiexpr/parse_qiexpr.cpp 
+exe parse_qi_test
+   : parse_qiexpr/generate_sexpr_to_ostream.cpp
+     parse_qiexpr/parse_qi_test.cpp
+     parse_qiexpr/parse_qiexpr.cpp
    ;
 
-exe generate_qi_test 
+exe generate_qi_test
    : parse_qiexpr/parse_qiexpr.cpp
-     generate_qiexpr/generate_qi_test.cpp 
-     generate_qiexpr/generate_qiexpr.cpp 
+     generate_qiexpr/generate_qi_test.cpp
+     generate_qiexpr/generate_qiexpr.cpp
    ;
 
 exe scheme_test1 : scheme/scheme_test1.cpp ;
