@@ -28,6 +28,109 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
+    namespace detail
+    {
+        ///////////////////////////////////////////////////////////////////////
+        // extract first and second element of a fusion sequence
+        template <typename T>
+        struct add_const_ref 
+          : add_reference<typename add_const<T>::type> 
+        {};
+
+        template <typename T, int N>
+        struct value_at_c 
+          : add_const_ref<typename fusion::result_of::value_at_c<T, N>::type> 
+        {};
+    }
+
+    template <typename T, typename Attribute, typename Enable = void>
+    struct symbols_lookup
+    {
+        typedef 
+            mpl::eval_if<fusion::traits::is_sequence<T>
+              , detail::value_at_c<T, 0>
+              , detail::add_const_ref<T> > sequence_type;
+        typedef typename 
+            mpl::eval_if<traits::is_container<T>
+              , traits::container_value<T>
+              , sequence_type>::type type;
+
+        // fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::true_)
+        {
+            return fusion::at_c<0>(t);
+        }
+
+        // container
+        template <typename T_, typename IsSequence>
+        static type call(T_ const& t, mpl::true_, IsSequence)
+        {
+            return t[0];
+        }
+
+        // not a container and not a fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::false_)
+        {
+            return t;
+        }
+
+        static type call(T const& t)
+        {
+            typedef typename traits::is_container<T>::type is_container;
+            typedef typename fusion::traits::is_sequence<T>::type is_sequence;
+
+            return call(t, is_container(), is_sequence());
+        }
+    };
+
+    template <typename T, typename Attribute, typename Enable = void>
+    struct symbols_value
+    {
+        typedef 
+            mpl::eval_if<fusion::traits::is_sequence<T>
+              , detail::value_at_c<T, 1>
+              , mpl::identity<unused_type> > sequence_type;
+        typedef typename 
+            mpl::eval_if<traits::is_container<T>
+              , traits::container_value<T>
+              , sequence_type>::type type;
+
+        // fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::true_)
+        {
+            return fusion::at_c<1>(t);
+        }
+
+        // container
+        template <typename T_, typename IsSequence>
+        static type call(T_ const& t, mpl::true_, IsSequence)
+        {
+            return t[1];
+        }
+
+        // not a container nor a fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::false_)
+        {
+            return unused;
+        }
+
+        static type call(T const& t)
+        {
+            typedef typename traits::is_container<T>::type is_container;
+            typedef typename fusion::traits::is_sequence<T>::type is_sequence;
+
+            return call(t, is_container(), is_sequence());
+        }
+    };
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -68,72 +171,6 @@ namespace boost { namespace spirit { namespace karma
               , Attribute const& attr)
             {
                 return karma::generate(sink, expr, attr);
-            }
-        };
-
-        ///////////////////////////////////////////////////////////////////////
-        // extract first and second element of a fusion sequence
-        template <typename T>
-        struct first
-        {
-            typedef typename 
-                mpl::eval_if<fusion::traits::is_sequence<T>
-                  , fusion::result_of::value_at_c<T, 0>, mpl::identity<T> 
-            >::type type;
-            typedef typename add_reference<
-                typename add_const<type>::type
-            >::type result_type;
-
-            template <typename T_>
-            static result_type
-            call(T_ const& t, mpl::true_)
-            {
-                return fusion::at_c<0>(t);
-            }
-
-            template <typename T_>
-            static result_type
-            call(T_ const& t, mpl::false_)
-            {
-                return t;
-            }
-
-            static result_type
-            call(T const& t)
-            {
-                return call(t, fusion::traits::is_sequence<T>());
-            }
-        };
-
-        template <typename T>
-        struct second
-        {
-            typedef typename 
-                mpl::eval_if<fusion::traits::is_sequence<T>
-                  , fusion::result_of::value_at_c<T, 1>, mpl::identity<unused_type> 
-            >::type type;
-            typedef typename add_reference<
-                typename add_const<type>::type
-            >::type result_type;
-
-            template <typename T_>
-            static result_type
-            call(T_ const& t, mpl::true_)
-            {
-                return fusion::at_c<1>(t);
-            }
-
-            template <typename T_>
-            static result_type
-            call(T_ const& t, mpl::false_)
-            {
-                return unused;
-            }
-
-            static result_type
-            call(T const& t)
-            {
-                return call(t, fusion::traits::is_sequence<T>());
             }
         };
     }
@@ -285,13 +322,13 @@ namespace boost { namespace spirit { namespace karma
           , Attr const& attr) const
         {
             typename Lookup::iterator it = lookup->find(
-                detail::first<Attr>::call(attr));
+                traits::symbols_lookup<Attr, Attribute>::call(attr));
             if (it == lookup->end())
                 return false;
 
             return karma::detail::generate_encoded<CharEncoding, Tag>::call(
                         sink, (*it).second
-                      , detail::second<Attr>::call(attr)) && 
+                      , traits::symbols_value<Attr, Attribute>::call(attr)) && 
                    karma::delimit_out(sink, d);
         }
 
@@ -526,14 +563,14 @@ namespace boost { namespace spirit { namespace karma
           , Attr const& attr) const
         {
             typename Lookup::iterator it = lookup->find(
-                detail::first<Attr>::call(attr));
+                traits::symbols_lookup<Attr, Attribute>::call(attr));
             if (it == lookup->end())
                 return false;
 
             return karma::detail::generate_encoded<CharEncoding, Tag>::
                       call(sink
-                        , detail::first<Attr>::call(attr)
-                        , detail::second<Attr>::call(attr)) && 
+                        , traits::symbols_lookup<Attr, Attribute>::call(attr)
+                        , unused) && 
                    karma::delimit_out(sink, d);
         }
 
