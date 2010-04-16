@@ -478,6 +478,32 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
+    template <typename CharEncoding, typename Modifiers, typename Char>
+    struct make_primitive<
+        terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>
+          , fusion::vector2<Char(&)[2], Char(&)[2]> // For single char strings
+        >
+      , Modifiers>
+    {
+        static bool const lower =
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+        static bool const upper =
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+        typedef char_range<
+            typename spirit::detail::get_encoding_with_case<
+                Modifiers, CharEncoding, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+        > result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
+        {
+            return result_type(fusion::at_c<0>(term.args)[0]
+              , fusion::at_c<1>(term.args)[0]);
+        }
+    };
 }}}   // namespace boost::spirit::karma
 
 #endif
