@@ -216,7 +216,7 @@ namespace boost { namespace spirit { namespace karma
             if (!traits::has_optional_value(attr))
                 return false;       // fail if it's an uninitialized optional
 
-            return insert_int(sink, traits::extract_from(attr, context)) &&
+            return insert_int(sink, traits::extract_from<T>(attr, context)) &&
                    delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -263,7 +263,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
     public:
-        template <typename Context, typename Unused>
+        template <typename Context, typename Unused = unused_type>
         struct attribute
           : mpl::if_c<no_attribute, unused_type, T>
         {};
@@ -287,8 +287,9 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& context
           , Delimiter const& d, Attribute const& attr) const
         {
+            typedef typename attribute<Context>::type attribute_type;
             if (!traits::has_optional_value(attr) || 
-                n_ != traits::extract_from(attr, context))
+                n_ != traits::extract_from<attribute_type>(attr, context))
             {
                 return false;
             }

@@ -199,7 +199,8 @@ namespace boost { namespace spirit { namespace karma
 #pragma warning(push)
 #pragma warning(disable: 4244)
 #endif
-            p = traits::extract_from(attr, context);
+            typedef typename karma::detail::integer<bits>::type attribute_type;
+            p = traits::extract_from<attribute_type>(attr, context);
 #if defined(BOOST_MSVC)
 #pragma warning(pop)
 #endif

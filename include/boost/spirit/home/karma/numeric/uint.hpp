@@ -250,7 +250,7 @@ namespace boost { namespace spirit { namespace karma
                 return false;       // fail if it's an uninitialized optional
 
             return uint_inserter<Radix, CharEncoding, Tag>::
-                        call(sink, traits::extract_from(attr, context)) &&
+                        call(sink, traits::extract_from<T>(attr, context)) &&
                    delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -286,7 +286,7 @@ namespace boost { namespace spirit { namespace karma
       : primitive_generator<literal_uint_generator<T, CharEncoding, Tag, Radix
           , no_attribute> >
     {
-        template <typename Context, typename Unused>
+        template <typename Context, typename Unused = unused_type>
         struct attribute
           : mpl::if_c<no_attribute, unused_type, T>
         {};
@@ -310,8 +310,9 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& context
           , Delimiter const& d, Attribute const& attr) const
         {
+            typedef typename attribute<Context>::type attribute_type;
             if (!traits::has_optional_value(attr) || 
-                n_ != traits::extract_from(attr, context))
+                n_ != traits::extract_from<attribute_type>(attr, context))
             {
                 return false;
             }

@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // Karma only
-    template <typename Attribute, typename Enable = void>
+    template <typename Attribute, typename Exposed, typename Enable = void>
     struct extract_from_attribute;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -116,7 +116,7 @@ namespace boost { namespace spirit { namespace traits
 namespace boost { namespace spirit { namespace result_of
 {
     // forward declaration only
-    template <typename Attribute>
+    template <typename Exposed, typename Attribute>
     struct extract_from;
 
     template <typename Exposed, typename Transformed, typename Domain>
