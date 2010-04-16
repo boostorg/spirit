@@ -27,9 +27,8 @@ exe generate_qi_test
      generate_qiexpr/generate_qiexpr.cpp
    ;
 
-exe scheme_test1 : scheme/scheme_test1.cpp ;
-exe scheme_test2 : scheme/scheme_test2.cpp ;
-exe scheme_test3 : scheme/scheme_test3.cpp ;
+exe factorial1 : scheme/factorial1.cpp ;
+exe factorial2 : scheme/factorial2.cpp ;
 
 
 
