@@ -36,7 +36,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename RHS, typename LHSAttribute>
     struct has_same_elements<RHS, LHSAttribute, true>
       : mpl::or_<
-            is_convertible<typename LHSAttribute::value_type, RHS>
+            is_convertible<RHS, typename LHSAttribute::value_type>
           , is_same<typename LHSAttribute::value_type, hold_any>
         > {};
 
