@@ -100,6 +100,23 @@ int main()
         BOOST_TEST(test_delimited("12.4 ", start, v, space));
     }
 
+    // test handling of single element fusion sequences
+    {
+        using boost::fusion::vector;
+        karma::rule<outiter_type, vector<int>()> r = int_;
+
+        vector<int> v = 1;
+        BOOST_TEST(test("1", r, v));
+    }
+
+    {
+        using boost::fusion::vector;
+        karma::rule<outiter_type, space_type, vector<int>()> r = int_;
+
+        vector<int> v = 1;
+        BOOST_TEST(test_delimited("1 ", r, v, space));
+    }
+
     return boost::report_errors();
 }
 

@@ -447,6 +447,29 @@ main()
 #pragma setlocale("")
 #endif
 
+    {
+        typedef boost::variant<double, int> v_type;
+        rule<const char*, v_type()> r1 = int_;
+        v_type v;
+        BOOST_TEST(test_attr("1", r1, v) && v.which() == 1 && 
+            boost::get<int>(v) == 1);
+
+        typedef boost::optional<int> ov_type;
+        rule<const char*, ov_type()> r2 = int_;
+        ov_type ov;
+        BOOST_TEST(test_attr("1", r2, ov) && ov && boost::get<int>(ov) == 1);
+    }
+
+    // test handling of single element fusion sequences
+    {
+        using boost::fusion::vector;
+        using boost::fusion::at_c;
+        rule<const char*, vector<int>()> r = int_;
+
+        vector<int> v = 0;
+        BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
+    }
+
     return boost::report_errors();
 }
 
