@@ -153,6 +153,7 @@ import testing ;
     # regression tests
     [ run qi/clear_test.cpp                 : : : : ]
     [ run qi/reorder_test.cpp               : : : : ]
+    [ run karma/karma_optional_double.cpp   : : : : ]
 
     ;
 

@@ -649,7 +649,10 @@ namespace boost { namespace spirit { namespace traits
     struct transform_attribute<Exposed, Transformed, karma::domain>
     {
         typedef Transformed type;
-        static Transformed pre(Exposed& val) { return Transformed(val); }
+        static Transformed pre(Exposed& val) 
+        { 
+            return Transformed(extract_from<Exposed>(val, unused));
+        }
         // Karma only, no post() and no fail() required
     };
 
@@ -657,7 +660,10 @@ namespace boost { namespace spirit { namespace traits
     struct transform_attribute<Exposed const, Transformed, karma::domain>
     {
         typedef Transformed type;
-        static Transformed pre(Exposed const& val) { return Transformed(val); }
+        static Transformed pre(Exposed const& val) 
+        { 
+            return Transformed(extract_from<Exposed>(val, unused));
+        }
         // Karma only, no post() and no fail() required
     };
 
