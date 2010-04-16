@@ -123,12 +123,12 @@ namespace scheme { namespace input
             struct result { typedef void type; };
 
             void operator()(
-                Iterator first, Iterator err_pos,
-                Iterator last, info const& what) const
+                Iterator first, Iterator last,
+                Iterator err_pos, info const& what) const
             {
                 if (!errorf.empty())
                 {
-                    errorf(first, err_pos, last, what);
+                    errorf(first, last, err_pos, what);
                 }
                 else
                 {
