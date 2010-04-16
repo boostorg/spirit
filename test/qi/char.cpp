@@ -116,6 +116,9 @@ main()
         BOOST_TEST(test(L"x", L"x"));
         BOOST_TEST(test("x", ascii::char_("x")));
         BOOST_TEST(test(L"x", wide::char_(L"x")));
+
+        BOOST_TEST(test("x", ascii::char_("a", "z")));
+        BOOST_TEST(test(L"x", ascii::char_(L"a", L"z")));
     }
 
     {
