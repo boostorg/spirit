@@ -246,6 +246,13 @@ namespace scheme
             }
         }
 
+        interpreter(utree const& program, environment* outer = 0)
+        {
+            if (outer == 0)
+                build_basic_environment(env);
+            compile_all(program, env, flist, fragments);
+        }
+
         utree eval(args_type args) const
         {
             return flist.back()(args);

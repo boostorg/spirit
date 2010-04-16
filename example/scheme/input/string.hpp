@@ -22,7 +22,7 @@
 
 namespace scheme { namespace input
 {
-    using boost::spirit::ascii::char_;
+    using boost::spirit::standard::char_;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::_val;
