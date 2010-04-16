@@ -52,6 +52,18 @@ main()
         }
 
         {
+            // a single element
+            char attr = 'a';
+            BOOST_TEST((test("ab", char_ << 'b', attr)));
+        }
+
+        {
+            // a single element fusion sequence
+            fusion::vector<char> attr = 'a';
+            BOOST_TEST((test("ab", char_ << 'b', attr)));
+        }
+
+        {
             fusion::vector<char, char, std::string> p ('a', 'b', "cdefg");
             BOOST_TEST(test("abcdefg", char_ << char_ << string, p));
             BOOST_TEST(test_delimited("a b cdefg ", 

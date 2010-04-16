@@ -106,6 +106,13 @@ main()
     }
 
     {
+        // a single element fusion sequence
+        vector<char> attr;
+        BOOST_TEST((test_attr("ab", char_ >> 'b', attr)));
+        BOOST_TEST((at_c<0>(attr) == 'a'));
+    }
+
+    {
         // make sure single element tuples get passed through if the rhs 
         // has a single element tuple as its attribute
         vector<double, int> fv;

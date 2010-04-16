@@ -18,6 +18,16 @@
 
 namespace fusion = boost::fusion;
 
+template <typename T>
+inline std::vector<T> 
+make_vector(T const& t1, T const& t2)
+{
+    std::vector<T> v;
+    v.push_back(t1);
+    v.push_back(t2);
+    return v;
+}
+
 int main()
 {
     using spirit_test::test;
@@ -165,6 +175,58 @@ int main()
 
         // make sure it plays well with other generators
         BOOST_TEST((test("Joelyo", sym << "yo", fusion::make_vector('j', "Joel"))));
+
+        sym.remove
+            ('j')
+            ('h')
+        ;
+
+        BOOST_TEST((!test("", sym, 'j')));
+        BOOST_TEST((!test("", sym, 'h')));
+    }
+
+    { // more advanced
+        using boost::spirit::karma::rule;
+        using boost::spirit::karma::lit;
+        using boost::spirit::karma::char_;
+
+        typedef spirit_test::output_iterator<char>::type output_iterator_type;
+
+        symbols<char, rule<output_iterator_type, char()> > sym;
+        rule<output_iterator_type, char()> r1 = char_;
+        
+        sym.add
+            ('j', r1.alias())
+            ('h', r1.alias())
+            ('t', r1.alias())
+            ('k', r1.alias())
+        ;
+
+        boost::mpl::true_ f = 
+            boost::mpl::bool_<boost::spirit::traits::is_generator<
+                symbols<char, rule<output_iterator_type, char()> > >::value>();
+
+        // silence stupid compiler warnings 
+        // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
+        BOOST_TEST((f.value));
+
+        BOOST_TEST((test("J", sym, make_vector('j', 'J'))));
+        BOOST_TEST((test("H", sym, make_vector('h', 'H'))));
+        BOOST_TEST((test("T", sym, make_vector('t', 'T'))));
+        BOOST_TEST((test("K", sym, make_vector('k', 'K'))));
+        BOOST_TEST((!test("", sym, 'x')));
+
+        // test copy
+        symbols<char, rule<output_iterator_type, char()> > sym2;
+        sym2 = sym;
+        BOOST_TEST((test("J", sym2, make_vector('j', 'J'))));
+        BOOST_TEST((test("H", sym2, make_vector('h', 'H'))));
+        BOOST_TEST((test("T", sym2, make_vector('t', 'T'))));
+        BOOST_TEST((test("K", sym2, make_vector('k', 'K'))));
+        BOOST_TEST((!test("", sym2, 'x')));
+
+        // make sure it plays well with other generators
+        BOOST_TEST((test("Jyo", sym << "yo", make_vector('j', 'J'))));
 
         sym.remove
             ('j')
