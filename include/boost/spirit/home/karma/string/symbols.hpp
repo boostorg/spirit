@@ -30,22 +30,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
-    namespace detail
-    {
-        ///////////////////////////////////////////////////////////////////////
-        // extract first and second element of a fusion sequence
-        template <typename T>
-        struct add_const_ref 
-          : add_reference<typename add_const<T>::type> 
-        {};
-
-        template <typename T, int N>
-        struct value_at_c 
-          : add_const_ref<typename fusion::result_of::value_at_c<T, N>::type> 
-        {};
-    }
-
-    template <typename T, typename Attribute, typename Enable = void>
+    template <typename Attribute, typename T, typename Enable = void>
     struct symbols_lookup
     {
         typedef 
@@ -87,7 +72,18 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    template <typename T, typename Attribute, typename Enable = void>
+    template <typename Attribute>
+    struct symbols_lookup<Attribute, Attribute>
+    {
+        typedef Attribute const& type;
+
+        static type call(Attribute const& t)
+        {
+            return t;
+        }
+    };
+
+    template <typename Attribute, typename T, typename Enable = void>
     struct symbols_value
     {
         typedef 
@@ -126,6 +122,17 @@ namespace boost { namespace spirit { namespace traits
             typedef typename fusion::traits::is_sequence<T>::type is_sequence;
 
             return call(t, is_container(), is_sequence());
+        }
+    };
+
+    template <typename Attribute>
+    struct symbols_value<Attribute, Attribute>
+    {
+        typedef unused_type type;
+
+        static type call(Attribute const&)
+        {
+            return unused;
         }
     };
 }}}
@@ -322,13 +329,13 @@ namespace boost { namespace spirit { namespace karma
           , Attr const& attr) const
         {
             typename Lookup::iterator it = lookup->find(
-                traits::symbols_lookup<Attr, Attribute>::call(attr));
+                traits::symbols_lookup<Attribute, Attr>::call(attr));
             if (it == lookup->end())
                 return false;
 
             return karma::detail::generate_encoded<CharEncoding, Tag>::call(
                         sink, (*it).second
-                      , traits::symbols_value<Attr, Attribute>::call(attr)) && 
+                      , traits::symbols_value<Attribute, Attr>::call(attr)) && 
                    karma::delimit_out(sink, d);
         }
 
@@ -563,13 +570,13 @@ namespace boost { namespace spirit { namespace karma
           , Attr const& attr) const
         {
             typename Lookup::iterator it = lookup->find(
-                traits::symbols_lookup<Attr, Attribute>::call(attr));
+                traits::symbols_lookup<Attribute, Attr>::call(attr));
             if (it == lookup->end())
                 return false;
 
             return karma::detail::generate_encoded<CharEncoding, Tag>::
                       call(sink
-                        , traits::symbols_lookup<Attr, Attribute>::call(attr)
+                        , traits::symbols_lookup<Attribute, Attr>::call(attr)
                         , unused) && 
                    karma::delimit_out(sink, d);
         }

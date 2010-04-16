@@ -40,6 +40,7 @@
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/distance.hpp>
 #include <boost/mpl/or.hpp>
+#include <boost/mpl/has_xxx.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
@@ -120,7 +121,8 @@ namespace boost { namespace spirit { namespace traits
         {};
     }
 
-    template <typename Expected, typename Attribute, typename IsNotVariant = mpl::false_>
+    template <typename Expected, typename Attribute
+      , typename IsNotVariant = mpl::false_, typename Enable = void>
     struct compute_compatible_component_variant
       : mpl::or_<
             traits::detail::attribute_is_compatible<Expected, Attribute>
@@ -131,8 +133,14 @@ namespace boost { namespace spirit { namespace traits
               , mpl::false_> >
     {};
 
+    namespace detail
+    {
+        BOOST_MPL_HAS_XXX_TRAIT_DEF(types)
+    }
+
     template <typename Expected, typename Variant>
-    struct compute_compatible_component_variant<Expected, Variant, mpl::false_>
+    struct compute_compatible_component_variant<Expected, Variant, mpl::false_
+      , typename enable_if<detail::has_types<Variant> >::type>
     {
         typedef typename traits::variant_type<Variant>::type variant_type;
         typedef typename variant_type::types types;
