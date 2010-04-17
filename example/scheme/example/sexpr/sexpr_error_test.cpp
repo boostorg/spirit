@@ -43,7 +43,7 @@ int main()
     test("(abc \n(\"a string\" 456) \ndef)", "ok.sexpr");
     test("(abc \n(\"a string\" 456 \ndef)", "missing close paren.sexpr");
     test("(abc \n(\"a string 456) \ndef)", "missing double quote.sexpr");
-    test("(abc \n(\"a string 0ggg) \ndef)", "erronoeus octal.sexpr");
+    test("(abc \n(\"a string\" 0ggg) \ndef)", "erronoeus octal.sexpr");
     return 0;
 }
 
