@@ -16,7 +16,9 @@ namespace scheme
     // line_pos_iterator: a lighweight line position iterator. This iterator
     // adapter only stores the current line number, nothing else. Unlike
     // spirit classic's position_iterator, it does not store the column
-    // number and does not need an end iterator.
+    // number and does not need an end iterator. The current column can be
+    // computed, if needed. Some utilities line oriented are provided
+    // including computation of the current column.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
     class line_pos_iterator
@@ -103,6 +105,28 @@ namespace scheme
         if (last == current)
             last = upper_bound;
         return iterator_range<Iterator>(first, last);
+    }
+
+    // Get the current column. Applicable to any iterator.
+    template <typename Iterator>
+    inline std::size_t
+    get_column(
+        Iterator lower_bound, Iterator current, int tabs = 4)
+    {
+        std::size_t column = 1;
+        Iterator first = get_line_start(lower_bound, current);
+        for (Iterator i = first; i != current; ++i)
+        {
+            switch (*i)
+            {
+                case '\t':
+                    column += tabs - (column - 1) % tabs;
+                    break;
+                default:
+                    ++column;
+            }
+        }
+        return column;
     }
 }
 
