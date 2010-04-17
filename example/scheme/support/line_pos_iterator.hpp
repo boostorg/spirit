@@ -33,11 +33,11 @@ namespace scheme
 
         line_pos_iterator()
           : line_pos_iterator::iterator_adaptor_(),
-            line(0), prev(0) {}
+            line(1), prev(0) {}
 
         explicit line_pos_iterator(Iterator base)
           : line_pos_iterator::iterator_adaptor_(base),
-            line(0), prev(0) {}
+            line(1), prev(0) {}
 
         std::size_t position() const
         {

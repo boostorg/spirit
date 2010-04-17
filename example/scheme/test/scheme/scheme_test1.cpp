@@ -59,7 +59,7 @@ int main(int argc, char **argv)
     }
 
     scheme::utree program;
-    BOOST_TEST(scheme::input::parse_sexpr_list(in, program));
+    BOOST_TEST(scheme::input::parse_sexpr_list(in, program, filename));
 
     scheme::environment env;
     scheme::build_basic_environment(env);

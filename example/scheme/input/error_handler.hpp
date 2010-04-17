@@ -9,6 +9,8 @@
 
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
+#include <support/line_pos_iterator.hpp>
+#include <string>
 #include <iostream>
 
 namespace scheme { namespace input
@@ -19,23 +21,29 @@ namespace scheme { namespace input
         template <typename, typename, typename, typename>
         struct result { typedef void type; };
 
+        std::string source_file;
+        error_handler(std::string const& source_file = "")
+          : source_file(source_file) {}
+
         void operator()(
             Iterator first, Iterator last,
             Iterator err_pos, boost::spirit::info const& what) const
         {
-            // Default handler
             Iterator eol = err_pos;
-            while (eol != last && *eol != '\n' && *eol != '\r')
-                ++eol;
+            int line = get_line(err_pos);
 
-            std::cerr
-                << "Error! Expecting "
-                << what
-                << " here: \""
-                << std::string(err_pos, eol)
-                << "\""
-                << std::endl
-            ;
+            if (source_file != "")
+                std::cerr << source_file;
+
+            if (line != -1)
+            {
+                if (source_file != "")
+                    std::cerr << '(' << line << ')';
+                else
+                    std::cerr << "line(" << line << ')';
+            }
+
+            std::cerr << " : Error! Expecting "  << what << std::endl;
         }
     };
 }}

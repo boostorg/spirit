@@ -66,8 +66,8 @@ namespace scheme { namespace input
         typename ErrorHandler = input::error_handler<Iterator> >
     struct sexpr : grammar<Iterator, sexpr_white_space<Iterator>, utree()>
     {
-        sexpr()
-          : sexpr::base_type(start), error_handler(ErrorHandler())
+        sexpr(std::string const& source_file = "")
+          : sexpr::base_type(start), error_handler(ErrorHandler(source_file))
         {
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
