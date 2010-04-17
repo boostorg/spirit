@@ -14,6 +14,7 @@
 
 #include <input/sexpr.hpp>
 #include <input/parse_sexpr.hpp>
+#include <support/line_pos_iterator.hpp>
 
 namespace scheme { namespace input
 {
