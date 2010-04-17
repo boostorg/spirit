@@ -25,9 +25,15 @@ namespace scheme { namespace input
         // no white space skipping in the stream!
         is.unsetf(std::ios::skipws);
 
-        typedef boost::spirit::basic_istream_iterator<Char> iterator_type;
-        iterator_type first(is);
-        iterator_type last;
+        typedef
+            boost::spirit::basic_istream_iterator<Char>
+        stream_iterator_type;
+        stream_iterator_type sfirst(is);
+        stream_iterator_type slast;
+
+        typedef line_pos_iterator<stream_iterator_type> iterator_type;
+        iterator_type first(sfirst);
+        iterator_type last(slast);
 
         scheme::input::sexpr<iterator_type> p;
         scheme::input::sexpr_white_space<iterator_type> ws;
@@ -43,9 +49,15 @@ namespace scheme { namespace input
         // no white space skipping in the stream!
         is.unsetf(std::ios::skipws);
 
-        typedef boost::spirit::basic_istream_iterator<Char> iterator_type;
-        iterator_type first(is);
-        iterator_type last;
+        typedef
+            boost::spirit::basic_istream_iterator<Char>
+        stream_iterator_type;
+        stream_iterator_type sfirst(is);
+        stream_iterator_type slast;
+
+        typedef line_pos_iterator<stream_iterator_type> iterator_type;
+        iterator_type first(sfirst);
+        iterator_type last(slast);
 
         scheme::input::sexpr<iterator_type> p;
         scheme::input::sexpr_white_space<iterator_type> ws;
@@ -59,35 +71,45 @@ namespace scheme { namespace input
     typename boost::disable_if<boost::is_base_of<std::ios_base, Range>, bool>::type
     parse_sexpr(Range const& rng, utree& result)
     {
-        typedef typename Range::const_iterator iterator_type;
+        typedef
+            line_pos_iterator<typename Range::const_iterator>
+        iterator_type;
 
         scheme::input::sexpr<iterator_type> p;
         scheme::input::sexpr_white_space<iterator_type> ws;
 
+        iterator_type first(rng.begin());
+        iterator_type last(rng.end());
+
         using boost::spirit::qi::phrase_parse;
-        return phrase_parse(rng.begin(), rng.end(), p, ws, result);
+        return phrase_parse(first, last, p, ws, result);
     }
 
     template <typename Range>
     typename boost::disable_if<boost::is_base_of<std::ios_base, Range>, bool>::type
     parse_sexpr_list(Range const& rng, utree& result)
     {
-        typedef typename Range::const_iterator iterator_type;
+        typedef
+            line_pos_iterator<typename Range::const_iterator>
+        iterator_type;
 
         scheme::input::sexpr<iterator_type> p;
         scheme::input::sexpr_white_space<iterator_type> ws;
 
+        iterator_type first(rng.begin());
+        iterator_type last(rng.end());
+
         using boost::spirit::qi::phrase_parse;
-        return phrase_parse(rng.begin(), rng.end(), +p, ws, result);
+        return phrase_parse(first, last, +p, ws, result);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    inline bool parse_sexpr(utree const& in, utree& result)
+    bool parse_sexpr(utree const& in, utree& result)
     {
         return parse_sexpr(in.as<utf8_string_range>(), result);
     }
 
-    inline bool parse_sexpr_list(utree const& in, utree& result)
+    bool parse_sexpr_list(utree const& in, utree& result)
     {
         return parse_sexpr_list(in.as<utf8_string_range>(), result);
     }

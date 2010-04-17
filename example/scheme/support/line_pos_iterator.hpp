@@ -32,11 +32,11 @@ namespace scheme
     public:
 
         line_pos_iterator()
-          : line_pos_iterator::iterator_adaptor_()
+          : line_pos_iterator::iterator_adaptor_(),
             line(0), prev(0) {}
 
         explicit line_pos_iterator(Iterator base)
-          : node_iter::iterator_adaptor_(base)
+          : line_pos_iterator::iterator_adaptor_(base),
             line(0), prev(0) {}
 
         std::size_t position() const
@@ -49,7 +49,8 @@ namespace scheme
         friend class boost::iterator_core_access;
         void increment()
         {
-            typename Iterator::reference ref = *(this->base());
+            typename std::iterator_traits<Iterator>::reference
+                ref = *(this->base());
             switch (ref)
             {
                 case '\r':
@@ -67,7 +68,7 @@ namespace scheme
         }
 
         std::size_t line;
-        typename Iterator::value_type prev;
+        typename std::iterator_traits<Iterator>::value_type prev;
     };
 
     ///////////////////////////////////////////////////////////////////////////
