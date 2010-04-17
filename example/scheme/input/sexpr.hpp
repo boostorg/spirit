@@ -72,9 +72,10 @@ namespace scheme { namespace input
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
 
-            start   = atom | list;
+            start   = element.alias();
+            element = atom | list;
 
-            list    = '(' > *start > ')';
+            list    = '(' > *element > ')';
 
             atom    = strict_double
                     | integer
@@ -95,6 +96,7 @@ namespace scheme { namespace input
             byte_str = lexeme[no_case['b'] > +hex2];
 
             start.name("sexpr");
+            start.name("sexpr");
             list.name("list");
             atom.name("atom");
             symbol.name("symbol");
@@ -103,7 +105,8 @@ namespace scheme { namespace input
             on_error<fail>(start, error_handler(_1, _2, _3, _4));
         }
 
-        rule<Iterator, sexpr_white_space<Iterator>, utree()> start, list;
+        rule<Iterator, sexpr_white_space<Iterator>, utree()>
+            start, list, element;
         rule<Iterator, int()> integer;
         rule<Iterator, utree()> atom;
         rule<Iterator, utf8_symbol()> symbol;
