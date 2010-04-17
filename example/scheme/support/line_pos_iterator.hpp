@@ -96,7 +96,7 @@ namespace scheme
     // Get the iterator range containing the current line. Applicable to
     // any iterator.
     template <typename Iterator>
-    inline iterator_range<Iterator>
+    inline boost::iterator_range<Iterator>
     get_current_line(
         Iterator lower_bound, Iterator current, Iterator upper_bound)
     {
@@ -104,7 +104,7 @@ namespace scheme
         Iterator last = get_line_start(current, upper_bound);
         if (last == current)
             last = upper_bound;
-        return iterator_range<Iterator>(first, last);
+        return boost::iterator_range<Iterator>(first, last);
     }
 
     // Get the current column. Applicable to any iterator.
