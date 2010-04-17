@@ -40,10 +40,19 @@ namespace scheme { namespace input
                 if (source_file != "")
                     std::cerr << '(' << line << ')';
                 else
-                    std::cerr << "line(" << line << ')';
+                    std::cerr << '(' << line << ')';
             }
 
-            std::cerr << " : Error! Expecting "  << what << std::endl;
+            std::cerr << " : Error! Expecting "  << what;
+            //~ if (line != -1)
+            //~ {
+                //~ std::size_t col = get_column(first, err_pos, 4);
+                //~ std::cerr << " near column " << col << std::endl;
+            //~ }
+            //~ else
+            //~ {
+                std::cerr << std::endl;
+            //~ }
         }
     };
 }}
