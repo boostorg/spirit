@@ -81,24 +81,28 @@ namespace scheme { namespace input
             function<detail::push_esc> push_esc;
 
             char_esc
-                =  '\\'
-                >>  (   ('u' >> hex4)               [push_utf8(_r1, _1)]
-                    |   ('U' >> hex8)               [push_utf8(_r1, _1)]
-                    |   char_("btnfr\\\"'")         [push_esc(_r1, _1)]
-                    )
+                = '\\'
+                > (   ('u' > hex4)                  [push_utf8(_r1, _1)]
+                  |   ('U' > hex8)                  [push_utf8(_r1, _1)]
+                  |   char_("btnfr\\\"'")           [push_esc(_r1, _1)]
+                  )
                 ;
 
             char_lit
-                =  '\''
-                >> (char_esc(_val) | (~char_('\'')) [_val += _1])
-                >> '\''
+                = '\''
+                > (char_esc(_val) | (~char_('\''))  [_val += _1])
+                > '\''
                 ;
 
             start
                 =  '"'
-                >> *(char_esc(_val) | (~char_('"')) [_val += _1])
-                >> '"'
+                > *(char_esc(_val) | (~char_('"'))  [_val += _1])
+                > '"'
                 ;
+
+            char_esc.name("char_esc");
+            char_lit.name("char_lit");
+            start.name("string");
         }
 
         rule<Iterator, void(std::string&)> char_esc;

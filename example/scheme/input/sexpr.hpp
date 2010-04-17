@@ -20,6 +20,7 @@
 #include <utree/utree.hpp>
 #include <utree/operators.hpp>
 #include <input/string.hpp>
+#include <input/error_handler.hpp>
 
 namespace scheme { namespace input
 {
@@ -44,7 +45,6 @@ namespace scheme { namespace input
     using boost::spirit::qi::_3;
     using boost::spirit::qi::_4;
     using boost::spirit::info;
-    using boost::phoenix::function;
 
     typedef boost::uint32_t uchar; // a unicode code point
 
@@ -65,8 +65,8 @@ namespace scheme { namespace input
     template <typename Iterator>
     struct sexpr : grammar<Iterator, sexpr_white_space<Iterator>, utree()>
     {
-        typedef
-            boost::function<void(Iterator, Iterator, Iterator, info const&)>
+        typedef typename
+            input::error_handler<Iterator>::errorf_type
         errorf_type;
 
         sexpr(errorf_type errorf = errorf_type())
@@ -113,38 +113,7 @@ namespace scheme { namespace input
         rule<Iterator, binary_string()> byte_str;
         scheme::input::string<Iterator> string;
 
-        struct error_handler_
-        {
-            errorf_type errorf;
-            error_handler_(errorf_type errorf)
-              : errorf(errorf) {}
-
-            template <typename, typename, typename, typename>
-            struct result { typedef void type; };
-
-            void operator()(
-                Iterator first, Iterator last,
-                Iterator err_pos, info const& what) const
-            {
-                if (!errorf.empty())
-                {
-                    errorf(first, last, err_pos, what);
-                }
-                else
-                {
-                    std::cout
-                        << "Error! Expecting "
-                        << what                         // what failed?
-                        << " here: \""
-                        << std::string(err_pos, last)   // iterators to error-pos, end
-                        << "\""
-                        << std::endl
-                    ;
-                }
-            }
-        };
-
-        function<error_handler_> const error_handler;
+        function<input::error_handler<Iterator> > const error_handler;
     };
 }}
 
