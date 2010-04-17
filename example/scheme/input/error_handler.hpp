@@ -9,7 +9,6 @@
 
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/function.hpp>
 #include <iostream>
 
 namespace scheme { namespace input
@@ -17,18 +16,6 @@ namespace scheme { namespace input
     template <typename Iterator>
     struct error_handler
     {
-        typedef
-            boost::function<
-                void(
-                    Iterator, Iterator, Iterator,
-                    boost::spirit::info const&
-                )>
-        errorf_type;
-
-        errorf_type errorf;
-        error_handler(errorf_type errorf)
-          : errorf(errorf) {}
-
         template <typename, typename, typename, typename>
         struct result { typedef void type; };
 
@@ -36,27 +23,19 @@ namespace scheme { namespace input
             Iterator first, Iterator last,
             Iterator err_pos, boost::spirit::info const& what) const
         {
-            if (!errorf.empty())
-            {
-                // "Overridden"
-                errorf(first, last, err_pos, what);
-            }
-            else
-            {
-                // Default handler
-                Iterator eol = err_pos;
-                while (eol != last && *eol != '\n' && *eol != '\r')
-                    ++eol;
+            // Default handler
+            Iterator eol = err_pos;
+            while (eol != last && *eol != '\n' && *eol != '\r')
+                ++eol;
 
-                std::cerr
-                    << "Error! Expecting "
-                    << what
-                    << " here: \""
-                    << std::string(err_pos, eol)
-                    << "\""
-                    << std::endl
-                ;
-            }
+            std::cerr
+                << "Error! Expecting "
+                << what
+                << " here: \""
+                << std::string(err_pos, eol)
+                << "\""
+                << std::endl
+            ;
         }
     };
 }}

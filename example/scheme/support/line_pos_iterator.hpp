@@ -65,6 +65,7 @@ namespace scheme
                     break;
             }
             prev = ref;
+            ++this->base_reference();
         }
 
         std::size_t line;
@@ -74,6 +75,19 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // Utilities
     ///////////////////////////////////////////////////////////////////////////
+
+    // Get the line position. Returns -1 if Iterator is not a line_pos_iterator.
+    template <typename Iterator>
+    inline int get_line(Iterator i)
+    {
+        return -1;
+    }
+
+    template <typename Iterator>
+    inline int get_line(line_pos_iterator<Iterator> i)
+    {
+        return i.position();
+    }
 
     // Get an iterator to the beginning of the line. Applicable to any
     // iterator.

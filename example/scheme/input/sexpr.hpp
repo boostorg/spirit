@@ -62,15 +62,12 @@ namespace scheme { namespace input
         rule<Iterator> start;
     };
 
-    template <typename Iterator>
+    template <typename Iterator,
+        typename ErrorHandler = input::error_handler<Iterator> >
     struct sexpr : grammar<Iterator, sexpr_white_space<Iterator>, utree()>
     {
-        typedef typename
-            input::error_handler<Iterator>::errorf_type
-        errorf_type;
-
-        sexpr(errorf_type errorf = errorf_type())
-          : sexpr::base_type(start), error_handler(errorf)
+        sexpr()
+          : sexpr::base_type(start), error_handler(ErrorHandler())
         {
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
@@ -113,7 +110,7 @@ namespace scheme { namespace input
         rule<Iterator, binary_string()> byte_str;
         scheme::input::string<Iterator> string;
 
-        function<input::error_handler<Iterator> > const error_handler;
+        function<ErrorHandler> const error_handler;
     };
 }}
 
