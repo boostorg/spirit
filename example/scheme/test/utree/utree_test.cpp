@@ -229,5 +229,24 @@ int main()
         BOOST_TEST(~utree(456) == utree(~456));
     }
 
+    { // test reference iterator
+        utree val;
+        val.push_back(1);
+        val.push_back(2);
+        val.push_back(3);
+        val.push_back(4);
+        check(val, "( 1 2 3 4 )");
+
+        utree::ref_iterator b = val.ref_begin();
+        utree::ref_iterator e = val.ref_end();
+
+        utree ref(boost::make_iterator_range(b, e));
+        BOOST_TEST(ref[0] == utree(1));
+        BOOST_TEST(ref[1] == utree(2));
+        BOOST_TEST(ref[2] == utree(3));
+        BOOST_TEST(ref[3] == utree(4));
+        check(ref, "( 1 2 3 4 )");
+    }
+
     return boost::report_errors();
 }

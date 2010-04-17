@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -152,6 +153,8 @@ namespace scheme
         typedef utree value_type;
         typedef detail::list::node_iterator<utree> iterator;
         typedef detail::list::node_iterator<utree const> const_iterator;
+        typedef detail::list::node_iterator<boost::reference_wrapper<utree> > 
+            ref_iterator;
         typedef utree& reference;
         typedef utree const& const_reference;
         typedef std::ptrdiff_t difference_type;
@@ -169,6 +172,8 @@ namespace scheme
         utree(char const* str, std::size_t len);
         utree(std::string const& str);
         utree(boost::reference_wrapper<utree> ref);
+        template <typename Iter>
+        utree(boost::iterator_range<Iter> r);
 
         template <typename Base, utree_type::info type_>
         utree(basic_string<Base, type_> const& bin);
@@ -184,6 +189,8 @@ namespace scheme
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
         utree& operator=(boost::reference_wrapper<utree> ref);
+        template <typename Iter>
+        utree& operator=(boost::iterator_range<Iter> r);
 
         template <typename Base, utree_type::info type_>
         utree& operator=(basic_string<Base, type_> const& bin);
@@ -250,6 +257,9 @@ namespace scheme
         iterator end();
         const_iterator begin() const;
         const_iterator end() const;
+
+        ref_iterator ref_begin();
+        ref_iterator ref_end();
 
         bool empty() const;
         std::size_t size() const;

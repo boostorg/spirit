@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -166,7 +167,7 @@ namespace scheme { namespace detail
             return node == other.node;
         }
 
-        utree& dereference() const
+        reference dereference() const
         {
             return node->val;
         }
@@ -174,6 +175,70 @@ namespace scheme { namespace detail
         list::node* node;
         list::node* prev;
     };
+
+    template <typename Value>
+    class list::node_iterator<boost::reference_wrapper<Value> >
+      : public boost::iterator_facade<
+            node_iterator<boost::reference_wrapper<Value> >
+          , boost::reference_wrapper<Value>
+          , boost::bidirectional_traversal_tag
+        >
+    {
+    public:
+
+        node_iterator()
+          : node(0), prev(0), curr(nil_node) {}
+
+        explicit node_iterator(list::node* node)
+          : node(node), prev(node->prev), curr(node->val) {}
+
+        node_iterator(list::node* node, list::node* prev)
+          : node(node), prev(prev), curr(node ? node->val : nil_node) {}
+
+    private:
+
+        friend class boost::iterator_core_access;
+        friend class scheme::utree;
+
+        void increment()
+        {
+            if (node != 0) // not at end
+            {
+                prev = node;
+                node = node->next;
+                curr = boost::ref(node ? node->val : nil_node);
+            }
+        }
+
+        void decrement()
+        {
+            if (prev != 0) // not at begin
+            {
+                node = prev;
+                prev = prev->prev;
+                curr = boost::ref(node ? node->val : nil_node);
+            }
+        }
+
+        bool equal(node_iterator const& other) const
+        {
+            return node == other.node;
+        }
+
+        reference dereference() const
+        {
+            return curr;
+        }
+
+        list::node* node;
+        list::node* prev;
+
+        static Value nil_node;
+        mutable boost::reference_wrapper<Value> curr;
+    };
+
+    template <typename Value>
+    Value list::node_iterator<boost::reference_wrapper<Value> >::nil_node = Value();
 
     inline void list::free()
     {
@@ -514,6 +579,13 @@ namespace scheme
         set_type(type::reference_type);
     }
 
+    template <typename Iter>
+    utree::utree(boost::iterator_range<Iter> r)
+    {
+        set_type(type::nil_type);
+        assign(r.begin(), r.end());
+    }
+
     inline utree::utree(utree const& other)
     {
         copy(other);
@@ -597,6 +669,13 @@ namespace scheme
         p = ref.get_pointer();
         set_type(type::reference_type);
         return *this;
+    }
+
+    template <typename Iter>
+    utree& utree::operator=(boost::iterator_range<Iter> r)
+    {
+        free();
+        assign(r.begin(), r.end());
     }
 
     template <typename F>
@@ -781,6 +860,22 @@ namespace scheme
             return p->end();
         ensure_list_type();
         return iterator(0, l.last);
+    }
+
+    inline utree::ref_iterator utree::ref_begin()
+    {
+        if (get_type() == type::reference_type)
+            return p->ref_begin();
+        ensure_list_type();
+        return ref_iterator(l.first);
+    }
+
+    inline utree::ref_iterator utree::ref_end()
+    {
+        if (get_type() == type::reference_type)
+            return p->ref_end();
+        ensure_list_type();
+        return ref_iterator(0, l.last);
     }
 
     inline utree::const_iterator utree::begin() const
