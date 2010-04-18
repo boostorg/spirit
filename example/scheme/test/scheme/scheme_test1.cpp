@@ -76,6 +76,7 @@ int main(int argc, char **argv)
     BOOST_TEST((*i++)() == 3628800);
     BOOST_TEST((*i++)(5) == 5);
     BOOST_TEST((*i++)() == 55);
+    BOOST_TEST((*i++)() == 21);
 
     return boost::report_errors();
 }

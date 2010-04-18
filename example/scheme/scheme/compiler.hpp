@@ -47,6 +47,14 @@ namespace scheme
         }
     };
 
+    struct incorrect_arity : scheme_exception
+    {
+        virtual const char* what() const throw()
+        {
+            return "scheme: Invalid number of parameters to function call";
+        }
+    };
+
 ///////////////////////////////////////////////////////////////////////////////
 //  The environment
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,30 +68,33 @@ namespace scheme
           : outer(parent) {}
 
         template <typename Function>
-        void define(std::string const& name, Function const& f)
+        void define(std::string const& name, Function const& f, int arity)
         {
             if (definitions.find(name) != definitions.end())
                 throw duplicate_identifier();
-            definitions[name] = compiled_function(f);
+            definitions[name] = std::make_pair(compiled_function(f), arity);
         }
 
-        compiled_function* find(std::string const& name)
+        std::pair<compiled_function*, int>
+        find(std::string const& name)
         {
-            std::map<std::string, compiled_function>::iterator
+            std::map<std::string, map_element>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
-                return &i->second;
+                return std::make_pair(&i->second.first, i->second.second);
             else if (outer != 0)
                 return outer->find(name);
-            return 0;
+            return std::make_pair((compiled_function*)0, 0);
         }
 
         environment* parent() const { return outer; }
 
     private:
 
+        typedef std::pair<compiled_function, int> map_element;
+
         environment* outer;
-        std::map<std::string, compiled_function> definitions;
+        std::map<std::string, map_element> definitions;
     };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,10 +154,11 @@ namespace scheme
         function operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
-            if (compiled_function* mf = env.find(name))
+            std::pair<compiled_function*, int> r = env.find(name);
+            if (r.first)
             {
                 actor_list flist;
-                return (*mf)(flist);
+                return (*r.first)(flist);
             }
             throw identifier_not_found();
             return function();
@@ -158,7 +170,7 @@ namespace scheme
         {
             environment local_env(&this->env);
             for (std::size_t i = 0; i < args.size(); ++i)
-                local_env.define(args[i], boost::bind(arg, i));
+                local_env.define(args[i], boost::bind(arg, i), args.size());
             return compile(body, local_env, fragments, line, source_file);
         }
 
@@ -169,7 +181,7 @@ namespace scheme
         {
             fragments.push_back(function());
             function& f = fragments.back();
-            env.define(name, external_function(f));
+            env.define(name, external_function(f), 0);
             f = make_lambda(args, body);
             return f;
         }
@@ -217,14 +229,20 @@ namespace scheme
                     return make_lambda(args, *i);
                 }
 
-                if (compiled_function* mf = env.find(name))
+                // (f x)
+                std::pair<compiled_function*, int> r = env.find(name);
+                if (r.first)
                 {
                     actor_list flist;
                     Iterator i = range.begin(); ++i;
                     for (; i != range.end(); ++i)
                         flist.push_back(
                             compile(*i, env, fragments, line, source_file));
-                    return (*mf)(flist);
+
+                    // Arity check
+                    if (r.second != -1 && int(flist.size()) < r.second)
+                        throw incorrect_arity();
+                    return (*r.first)(flist);
                 }
 
                 throw unknown_expression();
@@ -283,12 +301,12 @@ namespace scheme
 
     void build_basic_environment(environment& env)
     {
-        env.define("if", if_);
-        env.define("<", less_than);
-        env.define("<=", less_than_equal);
-        env.define("+", plus);
-        env.define("-", minus);
-        env.define("*", times);
+        env.define("if", if_, 3);
+        env.define("<", less_than, 2);
+        env.define("<=", less_than_equal, 2);
+        env.define("+", plus, -1);
+        env.define("-", minus, -1);
+        env.define("*", times, -1);
     }
 
     ///////////////////////////////////////////////////////////////////////////
