@@ -181,7 +181,7 @@ namespace scheme
         {
             fragments.push_back(function());
             function& f = fragments.back();
-            env.define(name, external_function(f), 0);
+            env.define(name, external_function(f), args.size());
             f = make_lambda(args, body);
             return f;
         }
@@ -212,6 +212,16 @@ namespace scheme
                     {
                         // (define f ...body...)
                         fname = get_symbol(*i++);
+
+                        // (define f (lambda (x) ...body...))
+                        if (i->which() == utree_type::list_type
+                            && get_symbol((*i)[0]) == "lambda")
+                        {
+                            utree const& arg_names = (*i)[1];
+                            Iterator ai = arg_names.begin();
+                            while (ai != arg_names.end())
+                                args.push_back(get_symbol(*ai++));
+                        }
                     }
 
                     return define_function(fname, args, *i);
@@ -240,8 +250,16 @@ namespace scheme
                             compile(*i, env, fragments, line, source_file));
 
                     // Arity check
-                    if (r.second != -1 && int(flist.size()) < r.second)
-                        throw incorrect_arity();
+                    if (r.second < 0) // non-fixed arity
+                    {
+                        if (int(flist.size()) < -r.second)
+                            throw incorrect_arity();
+                    }
+                    else // fixed arity
+                    {
+                        if (int(flist.size()) != r.second)
+                            throw incorrect_arity();
+                    }
                     return (*r.first)(flist);
                 }
 
@@ -304,9 +322,9 @@ namespace scheme
         env.define("if", if_, 3);
         env.define("<", less_than, 2);
         env.define("<=", less_than_equal, 2);
-        env.define("+", plus, -1);
-        env.define("-", minus, -1);
-        env.define("*", times, -1);
+        env.define("+", plus, -2);
+        env.define("-", minus, -2);
+        env.define("*", times, -2);
     }
 
     ///////////////////////////////////////////////////////////////////////////

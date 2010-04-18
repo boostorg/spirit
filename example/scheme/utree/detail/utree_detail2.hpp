@@ -773,7 +773,6 @@ namespace scheme
         }
     }
 
-
     template <typename T>
     inline void utree::insert(iterator pos, std::size_t n, T const& val)
     {
