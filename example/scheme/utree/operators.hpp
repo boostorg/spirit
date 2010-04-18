@@ -150,38 +150,38 @@ namespace scheme
 //     struct utree_print
 //     {
 //         typedef void result_type;
-// 
+//
 //         std::ostream& out;
 //         utree_print(std::ostream& out) : out(out) {}
-// 
+//
 //         void operator()(scheme::nil) const
 //         {
 //             out << "nil";
 //         }
-// 
+//
 //         template <typename T>
 //         void operator()(T val) const
 //         {
 //             out << val;
 //         }
-// 
+//
 //         void operator()(bool b) const
 //         {
 //             out << (b ? "true" : "false");
 //         }
-// 
+//
 //         void operator()(binary_range const& b) const
 //         {
 //             out << "b";
 //             out.width(2);
 //             out.fill('0');
-// 
+//
 //             typedef binary_range::const_iterator iterator;
 //             for (iterator i = b.begin(); i != b.end(); ++i)
 //                 out << std::hex << int((unsigned char)*i);
 //             out << std::dec;
 //         }
-// 
+//
 //         void operator()(utf8_string_range const& str) const
 //         {
 //             typedef utf8_string_range::const_iterator iterator;
@@ -191,7 +191,7 @@ namespace scheme
 //                 out << *i;
 //             out << '"';
 //         }
-// 
+//
 //         void operator()(utf8_symbol_range const& str) const
 //         {
 //             typedef utf8_symbol_range::const_iterator iterator;
@@ -199,7 +199,7 @@ namespace scheme
 //             for (; i != str.end(); ++i)
 //                 out << *i;
 //         }
-// 
+//
 //         template <typename Iterator>
 //         void operator()(boost::iterator_range<Iterator> const& range) const
 //         {

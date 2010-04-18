@@ -65,7 +65,7 @@ int main(int argc, char **argv)
     scheme::build_basic_environment(env);
     scheme::actor_list fragments;
     scheme::actor_list flist;
-    compile_all(program, env, flist, fragments);
+    compile_all(program, env, flist, fragments, filename);
 
     scheme::actor_list::iterator i = flist.begin();
 

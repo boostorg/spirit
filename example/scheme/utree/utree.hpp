@@ -153,7 +153,7 @@ namespace scheme
         typedef utree value_type;
         typedef detail::list::node_iterator<utree> iterator;
         typedef detail::list::node_iterator<utree const> const_iterator;
-        typedef detail::list::node_iterator<boost::reference_wrapper<utree> > 
+        typedef detail::list::node_iterator<boost::reference_wrapper<utree> >
             ref_iterator;
         typedef utree& reference;
         typedef utree const& const_reference;
@@ -271,6 +271,9 @@ namespace scheme
 
         utree& deref();
         utree const& deref() const;
+
+        short tag() const;
+        void tag(short tag);
 
     private:
 

@@ -17,7 +17,7 @@ namespace scheme
     // adapter only stores the current line number, nothing else. Unlike
     // spirit classic's position_iterator, it does not store the column
     // number and does not need an end iterator. The current column can be
-    // computed, if needed. Some utilities line oriented are provided
+    // computed, if needed. Some line oriented utilities are provided
     // including computation of the current column.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>

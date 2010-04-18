@@ -258,6 +258,7 @@ namespace scheme { namespace detail
         first = last = 0;
         size = 0;
         node* p = other.first;
+        tag = other.tag;
         while (p != 0)
         {
             push_back(p->val);
@@ -1069,10 +1070,21 @@ namespace scheme
     {
         return (get_type() == type::reference_type) ? *p : *this;
     }
+
+    inline short utree::tag() const
+    {
+        BOOST_ASSERT(get_type() == type::list_type);
+        return l.tag;
+    }
+
+    inline void utree::tag(short tag)
+    {
+        ensure_list_type();
+        l.tag = tag;
+    }
 }
 
 #if defined(BOOST_MSVC)
 # pragma warning(pop)
 #endif
-
 #endif
