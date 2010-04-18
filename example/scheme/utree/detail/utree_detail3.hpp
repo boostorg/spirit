@@ -162,12 +162,12 @@ namespace boost
     typename scheme::detail::get_impl<T>::type 
     get(scheme::utree const& x)
     {
+        if (x.which() == scheme::utree_type::reference_type)
+            return get<T>(x.deref());
+
         if (x.which() != 
             (scheme::utree_type::info)scheme::detail::get_utree_type<T>::value)
         {
-            if (x.which() == scheme::utree_type::reference_type)
-                return get<T>(x.deref());
-
             throw boost::bad_get();
         }
         return scheme::detail::get_impl<T>::call(x);

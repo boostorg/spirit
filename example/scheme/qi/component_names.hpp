@@ -67,6 +67,13 @@ namespace scheme { namespace qi
       , "ascii", "standard", "standard_wide", "iso8859_1", "unicode"
       , 0
     };
+
+    // a list of names for all supported unary parser operators 
+    static char const* const unary_names[] = 
+    {
+        "*", "+", "-", "!", "&"
+      , 0
+    };
 }}
 
 #endif

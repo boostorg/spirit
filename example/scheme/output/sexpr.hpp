@@ -8,136 +8,13 @@
 
 #include <utree/utree.hpp>
 #include <utree/detail/utree_detail3.hpp>
+#include <output/utree_traits.hpp>
 
 #include <string>
 
 #include <boost/cstdint.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/include/karma.hpp>
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // the specialization below tells Spirit to handle scheme::utree as if it
-    // where a 'real' variant (in the context of karma)
-    template <>
-    struct not_is_variant<scheme::utree, karma::domain>
-      : mpl::false_ {};
-
-    // The specializations below tell Spirit to verify whether an attribute
-    // type is compatible with a given variant type
-    template <>
-    struct compute_compatible_component_variant<
-            boost::iterator_range<scheme::utree::iterator>, scheme::utree>
-      : mpl::true_
-    {
-        typedef boost::iterator_range<scheme::utree::iterator> compatible_type;
-        typedef mpl::int_<scheme::utree_type::list_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            boost::iterator_range<scheme::utree::const_iterator>, scheme::utree>
-      : mpl::true_
-    {
-        typedef boost::iterator_range<scheme::utree::const_iterator> compatible_type;
-        typedef mpl::int_<scheme::utree_type::list_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<scheme::nil, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::nil compatible_type;
-        typedef mpl::int_<scheme::utree_type::nil_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<bool, scheme::utree>
-      : mpl::true_
-    {
-        typedef bool compatible_type;
-        typedef mpl::int_<scheme::utree_type::bool_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<int, scheme::utree>
-      : mpl::true_
-    {
-        typedef int compatible_type;
-        typedef mpl::int_<scheme::utree_type::int_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<double, scheme::utree>
-      : mpl::true_
-    {
-        typedef double compatible_type;
-        typedef mpl::int_<scheme::utree_type::double_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::utf8_string_range, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::utf8_string_range compatible_type;
-        typedef mpl::int_<scheme::utree_type::string_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::utf8_string, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::utf8_string compatible_type;
-        typedef mpl::int_<scheme::utree_type::string_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::utf8_symbol_range, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::utf8_symbol_range compatible_type;
-        typedef mpl::int_<scheme::utree_type::symbol_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::utf8_symbol, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::utf8_symbol compatible_type;
-        typedef mpl::int_<scheme::utree_type::symbol_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::binary_range, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::binary_range compatible_type;
-        typedef mpl::int_<scheme::utree_type::binary_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<
-            scheme::binary_string, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::binary_string compatible_type;
-        typedef mpl::int_<scheme::utree_type::binary_type> distance;
-    };
-
-    template <>
-    struct compute_compatible_component_variant<scheme::utree, scheme::utree>
-      : mpl::true_
-    {
-        typedef scheme::utree compatible_type;
-        typedef mpl::int_<scheme::utree_type::reference_type> distance;
-    };
-}}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace scheme { namespace output
