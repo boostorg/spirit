@@ -232,6 +232,12 @@ namespace scheme
         {
             std::string name(get_symbol(*range.begin()));
 
+            if (name == "quote")
+            {
+                Iterator i = range.begin(); ++i;
+                return scheme::val(*i);
+            }
+
             if (name == "define")
             {
                 std::string fname;
