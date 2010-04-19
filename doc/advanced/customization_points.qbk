@@ -978,6 +978,11 @@ attribute instance provided by the user. The customization point
 `extract_from` is utilized to adapt this extraction for any data type possibly
 used to store the values to output.
 
+[note The interface of this customization point has been changed with Boost 
+      V1.44. We added the `Exposed` template parameter to allow for more fine 
+      grained specializations of the required __karma__ attribute 
+      transformations.]
+
 [heading Module Headers]
 
     #include <boost/spirit/home/karma/detail/extract_from.hpp>
@@ -997,7 +1002,7 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Attrib, typename Enable>
+    template <typename Exposed, typename Attrib, typename Enable>
     struct extract_from_attribute
     {
         typedef <unspecified> type;
@@ -1010,6 +1015,9 @@ Also, see __include_structure__.
 
 [table
     [[Parameter]            [Description]               [Default]]
+    [[`Exposed`]            [The type, `Exposed` of the attribute natively
+                             exposed by the component the `extract_from` is
+                             invoked from.]             [none]]
     [[`Attrib`]             [The type, `Attrib` of the attribute to be used to
                              generate output from.]                 [none]]
     [[`Enable`]             [Helper template parameter usable to selectively
@@ -1023,6 +1031,7 @@ Also, see __include_structure__.
 [heading Notation]
 
 [variablelist Notation
+    [[`Exposed`]    [A type exposed as the native attribute of a component.]]
     [[`Attrib`]     [A type to be used to generate output from.]]
     [[`attr`]       [A attribute instance of type `Attrib`.]]
 ]
@@ -1032,7 +1041,7 @@ Also, see __include_structure__.
 [table
     [[Expression]       [Semantics]]
     [[
-``extract_from_attribute<Attrib>::call(attr, ctx)``] 
+``extract_from_attribute<Exposed, Attrib>::call(attr, ctx)``] 
                         [Extract the value to generate 
                          output from and return it to the caller.]]
 ]
