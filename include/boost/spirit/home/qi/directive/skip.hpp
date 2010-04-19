@@ -20,7 +20,7 @@
 #include <boost/spirit/home/qi/detail/unused_skipper.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>

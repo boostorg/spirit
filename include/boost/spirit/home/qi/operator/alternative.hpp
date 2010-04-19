@@ -15,7 +15,7 @@
 #include <boost/spirit/home/qi/detail/alternative_function.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>

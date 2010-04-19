@@ -15,7 +15,7 @@
 // we support Phoenix attributes only starting with V2.2
 #if SPIRIT_VERSION >= 0x2020
 
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 
 #include <boost/spirit/include/phoenix_core.hpp>

@@ -9,7 +9,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
@@ -31,7 +31,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename Attribute, typename T, typename Enable = void>
+    template <typename T, typename Attribute, typename Enable = void>
     struct symbols_lookup
     {
         typedef 
@@ -142,7 +142,7 @@ namespace boost { namespace spirit { namespace traits
 namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute, typename T>
+    template <typename T, typename Attribute>
     struct symbols_lookup
       : mpl::if_<
             traits::not_is_unused<T>
@@ -185,7 +185,7 @@ namespace boost { namespace spirit { namespace karma
 
     template <
         typename Attribute = char, typename T = unused_type
-      , typename Lookup = typename symbols_lookup<Attribute, T>::type
+      , typename Lookup = typename symbols_lookup<T, Attribute>::type
       , typename CharEncoding = unused_type, typename Tag = unused_type>
     struct symbols
       : proto::extends<
@@ -330,7 +330,7 @@ namespace boost { namespace spirit { namespace karma
           , Attr const& attr) const
         {
             typename Lookup::iterator it = lookup->find(
-                traits::symbols_lookup<Attribute, Attr>::call(attr));
+                traits::symbols_lookup<Attr, Attribute>::call(attr));
             if (it == lookup->end())
                 return false;
 
@@ -571,13 +571,13 @@ namespace boost { namespace spirit { namespace karma
           , Attr const& attr) const
         {
             typename Lookup::iterator it = lookup->find(
-                traits::symbols_lookup<Attribute, Attr>::call(attr));
+                traits::symbols_lookup<Attr, Attribute>::call(attr));
             if (it == lookup->end())
                 return false;
 
             return karma::detail::generate_encoded<CharEncoding, Tag>::
                       call(sink
-                        , traits::symbols_lookup<Attribute, Attr>::call(attr)
+                        , traits::symbols_lookup<Attr, Attribute>::call(attr)
                         , unused) && 
                    karma::delimit_out(sink, d);
         }

@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/unused.hpp>

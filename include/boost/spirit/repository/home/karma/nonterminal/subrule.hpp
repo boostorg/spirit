@@ -20,7 +20,7 @@
 #include <boost/spirit/home/karma/nonterminal/detail/parameterized.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/nonterminal/extract_param.hpp>

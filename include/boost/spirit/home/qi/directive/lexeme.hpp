@@ -17,7 +17,7 @@
 #include <boost/spirit/home/qi/detail/unused_skipper.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 
 namespace boost { namespace spirit

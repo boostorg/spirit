@@ -18,7 +18,7 @@
 #include <boost/spirit/home/karma/detail/pass_container.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/algorithm/any_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/sequence_base_id.hpp>

@@ -12,7 +12,7 @@
 
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 
 #include <boost/ref.hpp>

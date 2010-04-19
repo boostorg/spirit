@@ -14,7 +14,7 @@
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/container.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 
 namespace boost { namespace spirit
@@ -96,6 +96,14 @@ namespace boost { namespace spirit { namespace qi
       : make_unary_composite<Elements, kleene>
     {};
     //]
+
+//     ///////////////////////////////////////////////////////////////////////////
+//     // Define what attributes are compatible with a kleene
+//     template <typename Attribute, typename Subject, typename Context, typename Iterator>
+//     struct is_attribute_compatible<Attribute, kleene<Subject>, Context, Iterator>
+//       : traits::is_container_compatible<qi::domain, Attribute
+//               , kleene<Subject>, Context, Iterator>
+//     {};
 }}}
 
 namespace boost { namespace spirit { namespace traits

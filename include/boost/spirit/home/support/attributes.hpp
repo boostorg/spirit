@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace traits
         {};
     }
 
-    template <typename Expected, typename Attribute
+    template <typename Attribute, typename Expected
       , typename IsNotVariant = mpl::false_, typename Enable = void>
     struct compute_compatible_component_variant
       : mpl::or_<
@@ -138,8 +138,8 @@ namespace boost { namespace spirit { namespace traits
         BOOST_MPL_HAS_XXX_TRAIT_DEF(types)
     }
 
-    template <typename Expected, typename Variant>
-    struct compute_compatible_component_variant<Expected, Variant, mpl::false_
+    template <typename Variant, typename Expected>
+    struct compute_compatible_component_variant<Variant, Expected, mpl::false_
       , typename enable_if<detail::has_types<Variant> >::type>
     {
         typedef typename traits::variant_type<Variant>::type variant_type;
@@ -162,11 +162,17 @@ namespace boost { namespace spirit { namespace traits
         typedef typename
             mpl::eval_if<type, mpl::deref<iter>, mpl::identity<unused_type> >::type
         compatible_type;
+
+        // return whether the given type is compatible with the Expected type 
+        static bool is_compatible(int which)
+        {
+            return which == distance::value;
+        }
     };
 
     template <typename Expected, typename Attribute, typename Domain>
     struct compute_compatible_component
-      : compute_compatible_component_variant<Expected, Attribute
+      : compute_compatible_component_variant<Attribute, Expected
           , typename spirit::traits::not_is_variant<Attribute, Domain>::type> {};
 
     template <typename Expected, typename Domain>
@@ -508,221 +514,16 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // transform_attribute
+    //  transform_attribute
     //
-    // Sometimes the user needs to transform the attribute types for certain
-    // attributes. This template can be used as a customization point, where
-    // the user is able specify specific transformation rules for any attribute
-    // type.
+    //  Sometimes the user needs to transform the attribute types for certain
+    //  attributes. This template can be used as a customization point, where
+    //  the user is able specify specific transformation rules for any attribute
+    //  type.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    struct default_transform_attribute
-    {
-        typedef Transformed type;
-
-        static Transformed pre(Exposed& val) { return Transformed(); }
-
-        static void post(Exposed& val, Transformed const& attr)
-        {
-            assign_to(attr, val);
-        }
-
-        // fail() will be called by Qi rule's if the rhs failed parsing
-        static void fail(Exposed&) {}
-    };
-
-    // handle case where no transformation is required as the types are the same
-    template <typename Attribute>
-    struct default_transform_attribute<Attribute, Attribute>
-    {
-        typedef Attribute& type;
-        static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute&) {}
-    };
-
-    template <typename Exposed, typename Transformed>
-    struct proxy_transform_attribute
-    {
-        typedef Transformed type;
-
-        static Transformed pre(Exposed& val) { return Transformed(val); }
-        static void post(Exposed& val, Transformed const& attr) { /* no-op */ }
-
-        // fail() will be called by Qi rule's if the rhs failed parsing
-        static void fail(Exposed&) {}
-    };
-
-    // handle case where no transformation is required as the types are the same
-    template <typename Attribute>
-    struct proxy_transform_attribute<Attribute, Attribute>
-    {
-        typedef Attribute& type;
-        static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute&) {}
-    };
-
-    // main specialization for Qi
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed, Transformed, qi::domain>
-      : mpl::if_<
-            mpl::and_<
-                mpl::not_<is_const<Exposed> >
-              , mpl::not_<is_reference<Exposed> >
-              , is_proxy<Transformed> >
-          , proxy_transform_attribute<Exposed, Transformed>
-          , default_transform_attribute<Exposed, Transformed> 
-        >::type 
-    {};
-
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<optional<Exposed>, Transformed, qi::domain
-      , typename disable_if<is_same<optional<Exposed>, Transformed> >::type>
-    {
-        typedef Transformed& type;
-        static Transformed& pre(optional<Exposed>& val)
-        {
-            if (!val)
-                val = Transformed();
-            return boost::get<Transformed>(val);
-        }
-        static void post(optional<Exposed>&, Transformed const&) {}
-        static void fail(optional<Exposed>& val)
-        {
-             val = none_t();    // leave optional uninitialized if rhs failed
-        }
-    };
-
-    // reference types need special handling
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed&, Transformed, qi::domain>
-      : transform_attribute<Exposed, Transformed, qi::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute&, Attribute, qi::domain>
-    {
-        typedef Attribute& type;
-        static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute&) {}
-    };
-
-    // unused_type needs some special handling as well
-    template <>
-    struct transform_attribute<unused_type, unused_type, qi::domain>
-    {
-        typedef unused_type type;
-        static unused_type pre(unused_type) { return unused; }
-        static void post(unused_type, unused_type) {}
-        static void fail(unused_type) {}
-    };
-
-    template <>
-    struct transform_attribute<unused_type const, unused_type, qi::domain>
-      : transform_attribute<unused_type, unused_type, qi::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute, qi::domain>
-      : transform_attribute<unused_type, unused_type, qi::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type const, Attribute, qi::domain>
-      : transform_attribute<unused_type, unused_type, qi::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute, unused_type, qi::domain>
-      : transform_attribute<unused_type, unused_type, qi::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const, unused_type, qi::domain>
-      : transform_attribute<unused_type, unused_type, qi::domain>
-    {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed, Transformed, karma::domain>
-    {
-        typedef Transformed type;
-        static Transformed pre(Exposed& val) 
-        { 
-            return Transformed(extract_from<Exposed>(val, unused));
-        }
-        // Karma only, no post() and no fail() required
-    };
-
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed const, Transformed, karma::domain>
-    {
-        typedef Transformed type;
-        static Transformed pre(Exposed const& val) 
-        { 
-            return Transformed(extract_from<Exposed>(val, unused));
-        }
-        // Karma only, no post() and no fail() required
-    };
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const, Attribute, karma::domain>
-    {
-        typedef Attribute const& type;
-        static Attribute const& pre(Attribute const& val) { return val; }
-        // Karma only, no post() and no fail() required
-    };
-
-    // reference types need special handling
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed&, Transformed, karma::domain>
-      : transform_attribute<Exposed, Transformed, karma::domain>
-    {};
-
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed const&, Transformed, karma::domain>
-      : transform_attribute<Exposed const, Transformed, karma::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const&, Attribute, karma::domain>
-      : transform_attribute<Attribute const, Attribute, karma::domain>
-    {};
-
-    // unused_type needs some special handling as well
-    template <>
-    struct transform_attribute<unused_type, unused_type, karma::domain>
-    {
-        typedef unused_type type;
-        static unused_type pre(unused_type) { return unused; }
-    };
-
-    template <>
-    struct transform_attribute<unused_type const, unused_type, karma::domain>
-      : transform_attribute<unused_type, unused_type, karma::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute, karma::domain>
-      : transform_attribute<unused_type, unused_type, karma::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type const, Attribute, karma::domain>
-      : transform_attribute<unused_type, unused_type, karma::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute, unused_type, karma::domain>
-      : transform_attribute<unused_type, unused_type, karma::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const, unused_type, karma::domain>
-      : transform_attribute<unused_type, unused_type, karma::domain>
-    {};
+    template <typename Exposed, typename Transformed, typename Domain
+      , typename Enable/* = void*/>
+    struct transform_attribute;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Domain, typename Transformed, typename Exposed>

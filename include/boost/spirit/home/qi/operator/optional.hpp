@@ -12,7 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>

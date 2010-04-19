@@ -14,7 +14,7 @@
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/lazy.hpp>

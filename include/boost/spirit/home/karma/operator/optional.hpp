@@ -16,7 +16,7 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/optional.hpp>
