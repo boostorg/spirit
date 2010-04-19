@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace traits
     // type is compatible with a given variant type
     template <>
     struct compute_compatible_component_variant<
-            iterator_range<scheme::utree::iterator>, scheme::utree>
+            scheme::utree, iterator_range<scheme::utree::iterator> >
       : mpl::true_
     {
         typedef iterator_range<scheme::utree::iterator> compatible_type;
@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            iterator_range<scheme::utree::const_iterator>, scheme::utree>
+            scheme::utree, iterator_range<scheme::utree::const_iterator> >
       : mpl::true_
     {
         typedef iterator_range<scheme::utree::const_iterator> compatible_type;
@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<scheme::nil, scheme::utree>
+    struct compute_compatible_component_variant<scheme::utree, scheme::nil>
       : mpl::true_
     {
         typedef scheme::nil compatible_type;
@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<bool, scheme::utree>
+    struct compute_compatible_component_variant<scheme::utree, bool>
       : mpl::true_
     {
         typedef bool compatible_type;
@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<int, scheme::utree>
+    struct compute_compatible_component_variant<scheme::utree, int>
       : mpl::true_
     {
         typedef int compatible_type;
@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<double, scheme::utree>
+    struct compute_compatible_component_variant<scheme::utree, double>
       : mpl::true_
     {
         typedef double compatible_type;
@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            scheme::utf8_string_range, scheme::utree>
+            scheme::utree, scheme::utf8_string_range>
       : mpl::true_
     {
         typedef scheme::utf8_string_range compatible_type;
@@ -101,7 +101,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            scheme::utf8_string, scheme::utree>
+            scheme::utree, scheme::utf8_string>
       : mpl::true_
     {
         typedef scheme::utf8_string compatible_type;
@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            scheme::utf8_symbol_range, scheme::utree>
+            scheme::utree, scheme::utf8_symbol_range>
       : mpl::true_
     {
         typedef scheme::utf8_symbol_range compatible_type;
@@ -123,7 +123,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            scheme::utf8_symbol, scheme::utree>
+            scheme::utree, scheme::utf8_symbol>
       : mpl::true_
     {
         typedef scheme::utf8_symbol compatible_type;
@@ -134,7 +134,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            scheme::binary_range, scheme::utree>
+            scheme::utree, scheme::binary_range>
       : mpl::true_
     {
         typedef scheme::binary_range compatible_type;
@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            scheme::binary_string, scheme::utree>
+            scheme::utree, scheme::binary_string>
       : mpl::true_
     {
         typedef scheme::binary_string compatible_type;
@@ -158,7 +158,7 @@ namespace boost { namespace spirit { namespace traits
     struct compute_compatible_component_variant<scheme::utree, scheme::utree>
       : mpl::true_
     {
-        typedef iterator_range<scheme::utree::const_iterator> compatible_type;
+        typedef scheme::utree compatible_type;
         typedef mpl::int_<scheme::utree_type::reference_type> distance;
 
         static bool is_compatible(int d) 
@@ -169,7 +169,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Sequence>
-    struct compute_compatible_component_variant<Sequence, scheme::utree
+    struct compute_compatible_component_variant<scheme::utree, Sequence
           , mpl::false_
           , typename enable_if<fusion::traits::is_sequence<Sequence> >::type>
       : mpl::true_
@@ -182,13 +182,14 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct symbols_lookup<scheme::utf8_symbol, scheme::utree>
+    struct symbols_lookup<scheme::utree, scheme::utf8_symbol>
     {
         typedef std::string type;
 
         static type call(scheme::utree const& t)
         {
-            return boost::get<scheme::utf8_symbol>(t);
+            scheme::utf8_symbol_range r = boost::get<scheme::utf8_symbol_range>(t);
+            return std::string(r.begin(), r.end());
         }
     };
 
@@ -199,9 +200,10 @@ namespace boost { namespace spirit { namespace traits
         typedef std::string type;
 
         template <typename Context>
-        static type call(scheme::utree const& attr, Context&)
+        static type call(scheme::utree const& t, Context&)
         {
-            return boost::get<scheme::utf8_symbol>(attr);
+            scheme::utf8_symbol_range r = boost::get<scheme::utf8_symbol_range>(t);
+            return std::string(r.begin(), r.end());
         }
     };
 
@@ -211,9 +213,10 @@ namespace boost { namespace spirit { namespace traits
         typedef std::string type;
 
         template <typename Context>
-        static type call(scheme::utree const& attr, Context&)
+        static type call(scheme::utree const& t, Context&)
         {
-            return boost::get<scheme::utf8_string>(attr);
+            scheme::utf8_string_range r = boost::get<scheme::utf8_string_range>(t);
+            return std::string(r.begin(), r.end());
         }
     };
 
@@ -223,9 +226,10 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef std::string type;
 
-        static type pre(scheme::utree const& val) 
+        static type pre(scheme::utree const& t) 
         { 
-            return boost::get<scheme::utf8_string>(val); 
+            scheme::utf8_string_range r = boost::get<scheme::utf8_string_range>(t);
+            return std::string(r.begin(), r.end());
         }
     };
 
@@ -234,11 +238,22 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef std::string type;
 
-        static type pre(scheme::utree const& val) 
+        static type pre(scheme::utree const& t) 
         { 
-            return boost::get<scheme::utf8_symbol>(val); 
+            scheme::utf8_symbol_range r = boost::get<scheme::utf8_symbol_range>(t);
+            return std::string(r.begin(), r.end());
         }
     };
 }}}
+
+///////////////////////////////////////////////////////////////////////////////
+namespace boost
+{
+    template <typename T>
+    inline T get(scheme::utree const& x)
+    {
+        return x.as<T>();
+    }
+}
 
 #endif

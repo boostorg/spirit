@@ -12,7 +12,6 @@
 #include <boost/spirit/include/karma.hpp>
 
 #include <utree/utree.hpp>
-#include <utree/detail/utree_detail3.hpp>
 #include <utree/operators.hpp>
 #include <output/utree_traits.hpp>
 #include <qi/component_names.hpp>
@@ -62,6 +61,7 @@ namespace scheme { namespace qi
                 |   primitive2 << '(' << literal << ',' << literal << ')'
                 |   primitive1 << '(' << literal << ')'
                 |   primitive0 << -omit[node]
+                |   repeat(1)[alternative]
                 ;
 
             symbol = string(_r1);

@@ -17,7 +17,6 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <utree/utree.hpp>
-#include <utree/detail/utree_detail3.hpp>
 #include <utree/operators.hpp>
 #include <input/string.hpp>
 #include <qi/component_names.hpp>

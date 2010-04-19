@@ -1043,6 +1043,16 @@ namespace scheme
         }
     }
 
+    template <typename T>
+    struct is_iterator_range 
+      : boost::mpl::false_ 
+    {};
+
+    template <typename Iterator>
+    struct is_iterator_range<boost::iterator_range<Iterator> >
+      : boost::mpl::true_
+    {};
+
     template <typename To>
     struct utree_cast
     {
@@ -1065,7 +1075,13 @@ namespace scheme
         template <typename From>
         To operator()(From const& val) const
         {
-            return dispatch(val, boost::is_convertible<From, To>());
+            // boost::iterator_range has a templated constructor, accepting
+            // any argument and hence any type is 'convertible' to it. 
+            typedef typename boost::mpl::eval_if<
+                is_iterator_range<To>
+              , boost::is_same<From, To>, boost::is_convertible<From, To>
+            >::type is_convertible;
+            return dispatch(val, is_convertible());
         }
     };
 
