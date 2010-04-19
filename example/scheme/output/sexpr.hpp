@@ -57,7 +57,7 @@ namespace scheme { namespace output
 
             string_   = '"' << string << '"';
             symbol    = string;
-            byte_str  = 'b' << *right_align(2, '0')[hex2];
+            byte_str  = '#' << *right_align(2, '0')[hex2] << '#';
             nil_      = eps << "<nil>";
             ref_      = start;
         }
