@@ -119,7 +119,7 @@ namespace scheme { namespace input
                     | int_
                     ;
 
-            byte_str = lexeme[no_case['b'] > +hex2];
+            byte_str = lexeme['#' > +hex2 > '#'];
 
             start.name("sexpr");
             start.name("sexpr");

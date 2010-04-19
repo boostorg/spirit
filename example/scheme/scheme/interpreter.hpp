@@ -171,6 +171,45 @@ namespace scheme
     function const _10 = arg(10);
 
     ///////////////////////////////////////////////////////////////////////////
+    // variable arguments.
+    // Collects the arguments from n to last in a utree list.
+    ///////////////////////////////////////////////////////////////////////////
+    struct vararg_function : actor<vararg_function>
+    {
+        std::size_t n;
+        vararg_function(std::size_t n) : n(n) {}
+
+        utree eval(args_type args) const
+        {
+            utree result;
+            for (std::size_t i = n; i < args.size(); ++i)
+                result.push_back(boost::ref(args[i]));
+            return result;
+        }
+    };
+
+    struct vararg
+    {
+        typedef function result_type;
+        function operator()(std::size_t n) const
+        {
+            return function(vararg_function(n));
+        }
+    };
+
+    vararg const varg = {};
+    function const _1_ = varg(0);
+    function const _2_ = varg(1);
+    function const _3_ = varg(2);
+    function const _4_ = varg(3);
+    function const _5_ = varg(4);
+    function const _6_ = varg(5);
+    function const _7_ = varg(6);
+    function const _8_ = varg(7);
+    function const _9_ = varg(8);
+    function const _10_ = varg(10);
+
+    ///////////////////////////////////////////////////////////////////////////
     // composite
     ///////////////////////////////////////////////////////////////////////////
     template <typename Derived>

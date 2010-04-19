@@ -6,7 +6,7 @@
     077
     "this is a \u20AC string"           ; A UTF-8 string
     "Τη γλώσσα μου έδωσαν ελληνική"     ; Another UTF-8 string
-	b0123456789ABCDEF0123456789abcdef	; A binary stream
+	#0123456789ABCDEF0123456789abcdef#  ; A binary stream
     (
         92 ("another string" apple Sîne)
     )

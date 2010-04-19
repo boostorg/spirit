@@ -31,6 +31,7 @@ exe generate_qi_test
 exe factorial1 : scheme/factorial1.cpp ;
 exe factorial2 : scheme/factorial2.cpp ;
 
+exe scheme_error_test : scheme/scheme_error_test.cpp ;
 
 
 

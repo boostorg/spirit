@@ -69,7 +69,9 @@ namespace scheme { namespace input
         scheme::input::sexpr_white_space<iterator_type> ws;
 
         using boost::spirit::qi::phrase_parse;
-        return phrase_parse(first, last, +p, ws, result);
+        bool ok = phrase_parse(first, last, +p, ws, result);
+        result.tag(1); // line
+        return ok;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -112,7 +114,9 @@ namespace scheme { namespace input
         iterator_type last(rng.end());
 
         using boost::spirit::qi::phrase_parse;
-        return phrase_parse(first, last, +p, ws, result);
+        bool ok = phrase_parse(first, last, +p, ws, result);
+        result.tag(1); // line
+        return ok;
     }
 
     ///////////////////////////////////////////////////////////////////////////

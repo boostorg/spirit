@@ -23,27 +23,43 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
     struct scheme_exception : std::exception {};
 
-    struct identifier_not_found : scheme_exception
+    struct compilation_error : std::exception
     {
         virtual const char* what() const throw()
         {
-            return "scheme: Identifier not found";
+            return "scheme: Compilation error";
+        }
+    };
+
+    struct identifier_expected : scheme_exception
+    {
+        virtual const char* what() const throw()
+        {
+            return "scheme: Identifier expected";
+        }
+    };
+
+    struct identifier_not_found : scheme_exception
+    {
+        std::string msg;
+        identifier_not_found(std::string const& id)
+          : msg("scheme: Identifier (" + id + ") not found") {}
+
+        virtual const char* what() const throw()
+        {
+            return msg.c_str();;
         }
     };
 
     struct duplicate_identifier : scheme_exception
     {
+        std::string msg;
+        duplicate_identifier(std::string const& id)
+          : msg("scheme: Duplicate identifier (" + id + ')') {}
+
         virtual const char* what() const throw()
         {
             return "scheme: Duplicate identifier";
-        }
-    };
-
-    struct unknown_expression : scheme_exception
-    {
-        virtual const char* what() const throw()
-        {
-            return "scheme: Unknown_expression";
         }
     };
 
@@ -71,7 +87,7 @@ namespace scheme
         void define(std::string const& name, Function const& f, int arity)
         {
             if (definitions.find(name) != definitions.end())
-                throw duplicate_identifier();
+                throw duplicate_identifier(name);
             definitions[name] = std::make_pair(compiled_function(f), arity);
         }
 
@@ -85,6 +101,16 @@ namespace scheme
             else if (outer != 0)
                 return outer->find(name);
             return std::make_pair((compiled_function*)0, 0);
+        }
+
+        void undefine(std::string const& name)
+        {
+            definitions.erase(name);
+        }
+
+        bool defined(std::string const& name)
+        {
+            return definitions.find(name) != definitions.end();
         }
 
         environment* parent() const { return outer; }
@@ -160,7 +186,7 @@ namespace scheme
                 actor_list flist;
                 return (*r.first)(flist);
             }
-            throw identifier_not_found();
+            throw identifier_not_found(name);
             return function();
         }
 
@@ -179,109 +205,111 @@ namespace scheme
             std::vector<std::string> const& args,
             utree const& body) const
         {
-            fragments.push_back(function());
-            function& f = fragments.back();
-            env.define(name, external_function(f), args.size());
-            f = make_lambda(args, body);
-            return f;
+            try
+            {
+                if (env.defined(name))
+                    throw duplicate_identifier(name);
+                fragments.push_back(function());
+                function& f = fragments.back();
+                env.define(name, external_function(f), args.size());
+                f = make_lambda(args, body);
+                return f;
+            }
+            catch (compilation_error const&)
+            {
+                env.undefine(name);
+                throw;
+            }
         }
 
         template <typename Iterator>
         function operator()(boost::iterator_range<Iterator> const& range) const
         {
-            try
+            std::string name(get_symbol(*range.begin()));
+
+            if (name == "define")
             {
-                std::string name(get_symbol(*range.begin()));
+                std::string fname;
+                std::vector<std::string> args;
 
-                if (name == "define")
+                Iterator i = range.begin(); ++i;
+                if (i->which() == utree_type::list_type)
                 {
-                    std::string fname;
-                    std::vector<std::string> args;
+                    // (define (f x) ...body...)
+                    utree const& decl = *i++;
+                    Iterator di = decl.begin();
+                    fname = get_symbol(*di++);
+                    while (di != decl.end())
+                        args.push_back(get_symbol(*di++));
+                }
+                else
+                {
+                    // (define f ...body...)
+                    fname = get_symbol(*i++);
 
-                    Iterator i = range.begin(); ++i;
-                    if (i->which() == utree_type::list_type)
+                    // (define f (lambda (x) ...body...))
+                    if (i->which() == utree_type::list_type
+                        && get_symbol((*i)[0]) == "lambda")
                     {
-                        // (define (f x) ...body...)
-                        utree const& decl = *i++;
-                        Iterator di = decl.begin();
-                        fname = get_symbol(*di++);
-                        while (di != decl.end())
-                            args.push_back(get_symbol(*di++));
+                        utree const& arg_names = (*i)[1];
+                        Iterator ai = arg_names.begin();
+                        while (ai != arg_names.end())
+                            args.push_back(get_symbol(*ai++));
                     }
-                    else
-                    {
-                        // (define f ...body...)
-                        fname = get_symbol(*i++);
-
-                        // (define f (lambda (x) ...body...))
-                        if (i->which() == utree_type::list_type
-                            && get_symbol((*i)[0]) == "lambda")
-                        {
-                            utree const& arg_names = (*i)[1];
-                            Iterator ai = arg_names.begin();
-                            while (ai != arg_names.end())
-                                args.push_back(get_symbol(*ai++));
-                        }
-                    }
-
-                    return define_function(fname, args, *i);
                 }
 
-                if (name == "lambda")
-                {
-                    // (lambda (x) ...body...)
-                    Iterator i = range.begin(); ++i;
-                    utree const& arg_names = *i++;
-                    Iterator ai = arg_names.begin();
-                    std::vector<std::string> args;
-                    while (ai != arg_names.end())
-                        args.push_back(get_symbol(*ai++));
-                    return make_lambda(args, *i);
-                }
-
-                // (f x)
-                std::pair<compiled_function*, int> r = env.find(name);
-                if (r.first)
-                {
-                    actor_list flist;
-                    Iterator i = range.begin(); ++i;
-                    for (; i != range.end(); ++i)
-                        flist.push_back(
-                            compile(*i, env, fragments, line, source_file));
-
-                    // Arity check
-                    if (r.second < 0) // non-fixed arity
-                    {
-                        if (int(flist.size()) < -r.second)
-                            throw incorrect_arity();
-                    }
-                    else // fixed arity
-                    {
-                        if (int(flist.size()) != r.second)
-                            throw incorrect_arity();
-                    }
-                    return (*r.first)(flist);
-                }
-
-                throw unknown_expression();
+                return define_function(fname, args, *i);
             }
 
-            catch (scheme_exception const& x)
+            if (name == "lambda")
             {
-                if (source_file != "")
-                    std::cerr << source_file;
-
-                if (line != -1)
-                    std::cerr << '(' << line << ')';
-
-                std::cerr << " : Error! "  << x.what() << std::endl;
+                // (lambda (x) ...body...)
+                Iterator i = range.begin(); ++i;
+                utree const& arg_names = *i++;
+                Iterator ai = arg_names.begin();
+                std::vector<std::string> args;
+                while (ai != arg_names.end())
+                    args.push_back(get_symbol(*ai++));
+                return make_lambda(args, *i);
             }
 
+            // (f x)
+            std::pair<compiled_function*, int> r = env.find(name);
+            if (r.first)
+            {
+                actor_list flist;
+                Iterator i = range.begin(); ++i;
+                for (; i != range.end(); ++i)
+                    flist.push_back(
+                        compile(*i, env, fragments, line, source_file));
+
+                // Arity check
+                if (r.second < 0) // non-fixed arity
+                {
+                    if (int(flist.size()) < -r.second)
+                        throw incorrect_arity();
+                }
+                else // fixed arity
+                {
+                    if (int(flist.size()) != r.second)
+                        throw incorrect_arity();
+                }
+                return (*r.first)(flist);
+            }
+            else
+            {
+                throw identifier_not_found(name);
+            }
+
+            // Just return the list $$$ TODO $$$ how do we disambiguate lists
+            // and function calls?
             return function();
         }
 
         static std::string get_symbol(utree const& s)
         {
+            if (s.which() != utree_type::symbol_type)
+                throw identifier_expected();
             utf8_symbol_range symbol = s.as<utf8_symbol_range>();
             return std::string(symbol.begin(), symbol.end());
         }
@@ -296,8 +324,25 @@ namespace scheme
     {
         int line = (ast.which() == utree_type::list_type)
             ? ast.tag() : parent_line;
-        return utree::visit(ast,
-            compiler(env, fragments, line, source_file));
+
+        try
+        {
+            return utree::visit(ast,
+                compiler(env, fragments, line, source_file));
+        }
+        catch (scheme_exception const& x)
+        {
+            if (source_file != "")
+                std::cerr << source_file;
+
+            if (line != -1)
+                std::cerr << '(' << line << ')';
+
+            std::cerr << " : Error! "  << x.what() << std::endl;
+            throw compilation_error();
+        }
+
+        return function();
     }
 
     void compile_all(
@@ -311,8 +356,15 @@ namespace scheme
             ? ast.tag() : 1;
         BOOST_FOREACH(utree const& program, ast)
         {
-            scheme::function
+            scheme::function f;
+            try
+            {
                 f = compile(program, env, fragments, line, source_file);
+            }
+            catch (compilation_error const& x)
+            {
+                continue; // try the next expression
+            }
             results.push_back(f);
         }
     }
@@ -341,14 +393,9 @@ namespace scheme
             if (outer == 0)
                 build_basic_environment(env);
 
-            if (input::parse_sexpr_list(in, program))
+            if (input::parse_sexpr_list(in, program, source_file))
             {
                 compile_all(program, env, flist, fragments, source_file);
-            }
-            else
-            {
-                // $$$ Use exceptions $$$
-                BOOST_ASSERT(false);
             }
         }
 
@@ -362,6 +409,11 @@ namespace scheme
         utree eval(args_type args) const
         {
             return flist.back()(args);
+        }
+
+        bool empty() const
+        {
+            return flist.empty() || flist.back().empty();
         }
 
         environment env;
