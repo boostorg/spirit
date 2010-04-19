@@ -35,6 +35,21 @@ namespace scheme { namespace detail
         info() = (t << 1) | (info() & 1);
     }
 
+    short fast_string::tag() const
+    {
+        // warning the tag is not allowed for fast_string!!! it's only
+        // placed here to avoid excess padding.
+        return (int(buff[small_string_size-2]) << 8) + buff[small_string_size-1];
+    }
+
+    void fast_string::tag(short tag)
+    {
+        // warning the tag is not allowed for fast_string!!! it's only
+        // placed here to avoid excess padding.
+        buff[small_string_size-2] = tag >> 8;
+        buff[small_string_size-1] = tag & 0xff;
+    }
+
     inline bool fast_string::is_heap_allocated() const
     {
         return info() & 1;
@@ -258,7 +273,6 @@ namespace scheme { namespace detail
         first = last = 0;
         size = 0;
         node* p = other.first;
-        tag = other.tag;
         while (p != 0)
         {
             push_back(p->val);
@@ -1024,6 +1038,7 @@ namespace scheme
                 break;
             case type::list_type:
                 l.copy(other.l);
+                s.tag(other.s.tag());
                 break;
         }
     }
@@ -1073,13 +1088,13 @@ namespace scheme
     inline short utree::tag() const
     {
         BOOST_ASSERT(get_type() == type::list_type);
-        return l.tag;
+        return s.tag();
     }
 
     inline void utree::tag(short tag)
     {
         ensure_list_type();
-        l.tag = tag;
+        s.tag(tag);
     }
 }
 

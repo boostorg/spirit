@@ -248,5 +248,12 @@ int main()
         check(ref, "( 1 2 3 4 )");
     }
 
+    {
+        // check the tag
+        utree x;
+        x.tag(123);
+        BOOST_TEST(x.tag() == 123);
+    }
+
     return boost::report_errors();
 }

@@ -65,9 +65,14 @@ namespace scheme
 
     struct incorrect_arity : scheme_exception
     {
+        std::string msg;
+        incorrect_arity(std::string const& id)
+          : msg("scheme: Invalid number of parameters to function call ("
+                + id + ')') {}
+
         virtual const char* what() const throw()
         {
-            return "scheme: Invalid number of parameters to function call";
+            return msg.c_str();;
         }
     };
 
@@ -287,12 +292,12 @@ namespace scheme
                 if (r.second < 0) // non-fixed arity
                 {
                     if (int(flist.size()) < -r.second)
-                        throw incorrect_arity();
+                        throw incorrect_arity(name);
                 }
                 else // fixed arity
                 {
                     if (int(flist.size()) != r.second)
-                        throw incorrect_arity();
+                        throw incorrect_arity(name);
                 }
                 return (*r.first)(flist);
             }

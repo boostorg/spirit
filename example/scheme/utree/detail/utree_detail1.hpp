@@ -53,7 +53,6 @@ namespace scheme { namespace detail
         node* first;
         node* last;
         std::size_t size;
-        short tag;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -111,6 +110,9 @@ namespace scheme { namespace detail
 
         char& info();
         char info() const;
+
+        short tag() const;
+        void tag(short tag);
     };
 }}
 
