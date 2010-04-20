@@ -8,6 +8,7 @@
 #define SPIRIT_QI_DETAIL_ATTRIBUTES_APR_18_2010_0458PM
 
 #include <boost/spirit/home/qi/domain.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

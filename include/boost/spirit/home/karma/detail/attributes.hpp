@@ -8,6 +8,7 @@
 #define SPIRIT_KARMA_DETAIL_ATTRIBUTES_APR_18_2010_0453PM
 
 #include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

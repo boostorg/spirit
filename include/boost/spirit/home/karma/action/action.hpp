@@ -56,7 +56,11 @@ namespace boost { namespace spirit { namespace karma
             // create a attribute if none is supplied
             // this creates a _copy_ of the attribute because the semantic
             // action will likely change parts of this
-            typename make_attribute::value_type attr = make_attribute::call(attr_);
+            typedef traits::transform_attribute<
+                typename make_attribute::type, attr_type, domain> transform;
+
+            typename transform::type attr = 
+                traits::pre_transform<domain, attr_type>(make_attribute::call(attr_));
 
             // call the function, passing the attribute, the context and a bool 
             // flag that the client can set to false to fail generating.

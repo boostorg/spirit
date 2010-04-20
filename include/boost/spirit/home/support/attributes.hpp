@@ -17,8 +17,6 @@
 #include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/as_variant.hpp>
-#include <boost/spirit/home/qi/domain.hpp>
-#include <boost/spirit/home/karma/domain.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/filter_if.hpp>
