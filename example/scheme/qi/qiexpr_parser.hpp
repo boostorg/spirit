@@ -183,11 +183,11 @@ namespace scheme { namespace qi
 
             // unary operators
             unary_term =
-                    '*' >> alternative    [ make_kleene(_val, _1) ]
-                |   '+' >> alternative    [ make_plus(_val, _1) ]
-                |   '-' >> alternative    [ make_optional(_val, _1) ]
-                |   '&' >> alternative    [ make_and_pred(_val, _1) ]
-                |   '!' >> alternative    [ make_not_pred(_val, _1) ]
+                    '*' >> term           [ make_kleene(_val, _1) ]
+                |   '+' >> term           [ make_plus(_val, _1) ]
+                |   '-' >> term           [ make_optional(_val, _1) ]
+                |   '&' >> term           [ make_and_pred(_val, _1) ]
+                |   '!' >> term           [ make_not_pred(_val, _1) ]
                 |   term                  [ _val = _1 ]
                 ;
 
