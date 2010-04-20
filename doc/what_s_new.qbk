@@ -8,6 +8,44 @@
 
 [section What's New]
 
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_4 Spirit V2.4] 
+
+[heading What's changed in __qi__ and __karma__ from V2.3 (Boost V1.43.0) to V2.4 (Boost V1.44.0)]
+
+[heading New Features]
+
+* The customization point __customize_transform_attribute__ now takes an additional template
+  parameter `Domain` allowing to better specialize the customization point
+  for either `qi::domain` or `karma::domain`. 
+
+[important This is a interface breaking change requiring to modify exising 
+           code. If you have a specialization of this customization point in 
+           your code you need to add the specialization for the new template 
+           parameter, i.e. either `qi::domain` or `karma::domain`.]
+* Semantic actions in __qi__ now implicitly invoke the function `pre` of the
+  customization point __customize_transform_attribute__ to convert the supplied 
+  attribute to the exposed attribute type, as needed. The functions 
+  `post` and `fail` of this customization point are not invoked by this 
+  component (as this would not make any sense).
+* Semantic actions in __karma__ now implicitly invoke the function `pre` of the
+  customization point __customize_transform_attribute__ to convert the supplied 
+  attribute to the consumend attribute type, as needed. 
+
+[heading Bug Fixes]
+
+* Components in __qi__ and __karma__ now accept one element Fusion sequences as
+  there attributes as long as the element in the Fusion sequence is compatible
+  with the component's attribute type.
+* The character range parser and generator components can now additionally be 
+  written as `char_("a", "z")` instead of `char_('a', 'z')` making it 
+  consistent with the syntax of the `char_('a')` component (which can be 
+  written as `char_("a")` as well). Please note that the mixed syntax forms,
+  i.e. `char_('a', "z")` and `char_("a", 'z')`, are not supported.
+
+[endsect] [/ spirit_2_4]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_3 Spirit V2.3] 
 
 [heading What's changed in __qi__ and __karma__ from V2.2 (Boost V1.42.0) to V2.3 (Boost V1.43.0)]
@@ -57,6 +95,7 @@
 * The __karma__ predicates (the and-predicate and the not-predicate) and the 
   directive `karma::omit[]` now disable output alltogether instead of 
   intercepting the output into a buffer which got discarded as before.
+* Fixed `karma::rule` to properly handles optional attributes.
 
 [heading What's changed in __lex__ from V2.2 (Boost V1.42.0) to V2.3 (Boost V1.43.0)]
 

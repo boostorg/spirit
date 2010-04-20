@@ -212,10 +212,12 @@ __customize_use_as_container_example__, and __customize_counter_example__.
 [heading transform_attribute]
 
 The template `transform_attribute` is a type used as an attribute customization 
-point. It is invoked by /Qi/ `rule` and `attr_cast`, and /Karma/ `rule` and 
-[karma_attr_cast `attr_cast`]. It is used to automatically transform the user 
+point. It is invoked by /Qi/ `rule`, semantic action and `attr_cast`, and /Karma/ 
+`rule`, semantic action and [karma_attr_cast `attr_cast`]. It is used to 
+automatically transform the user 
 provided attribute to the attribute type expected by the right hand side 
-component (for `rule`) or the embedded component (for `attr_cast`).
+component (for `rule`), the semantic action, or the embedded component 
+(for `attr_cast`).
 
 [note The interface of this customization point has been changed with Boost 
       V1.44. We added the `Domain` template parameter to allow for more fine 
