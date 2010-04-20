@@ -15,6 +15,16 @@
 #include <boost/spirit/include/karma.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
+namespace boost
+{
+    template <typename T>
+    inline T get(scheme::utree const& x)
+    {
+        return x.as<T>();
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -245,15 +255,5 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 }}}
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost
-{
-    template <typename T>
-    inline T get(scheme::utree const& x)
-    {
-        return x.as<T>();
-    }
-}
 
 #endif

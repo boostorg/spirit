@@ -35,14 +35,14 @@ namespace scheme { namespace detail
         info() = (t << 1) | (info() & 1);
     }
 
-    short fast_string::tag() const
+    inline short fast_string::tag() const
     {
         // warning the tag is not allowed for fast_string!!! it's only
         // placed here to avoid excess padding.
         return (int(buff[small_string_size-2]) << 8) + buff[small_string_size-1];
     }
 
-    void fast_string::tag(short tag)
+    inline void fast_string::tag(short tag)
     {
         // warning the tag is not allowed for fast_string!!! it's only
         // placed here to avoid excess padding.
