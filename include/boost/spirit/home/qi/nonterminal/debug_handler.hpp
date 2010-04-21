@@ -92,7 +92,7 @@ namespace boost { namespace spirit { namespace qi
               , typename rule_type::skipper_type
               , F>
         debug_handler;
-        r.f = debug_handler(r.f, f. r.name());
+        r.f = debug_handler(r.f, f, r.name());
     }
 
     struct simple_trace;
