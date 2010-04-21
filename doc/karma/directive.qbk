@@ -13,7 +13,7 @@ directives (`left_align[]`, `center[]`, and `right_align[]`), repetition
 (`repeat[]`), directives controlling automatic delimiting (`verbatim[]`, 
 `no_delimit[]`, and `delimit[]`), controlling case sensitivity (`upper[]` and 
 `lower[]`), field width (`maxwidth[]`), buffering (`buffer[]`), splitting into 
-columns (`columns[]`) and attribute handling (`omit[]`).
+columns (`columns[]`) and attribute handling (`omit[]` and `skip[]`).
 
 [heading Module Header]
 
@@ -882,12 +882,15 @@ as the plus generator fails (no data is available, see __karma_plus__).
 [endsect] [/ buffer]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:omit Consume Attribute (`omit[]`)]
+[section:omit Consume Attribute (`omit[]` and `skip[]`)]
 
 [heading Description]
 
-Consumes the attribute type of the embedded generator without generating 
-any output. 
+The directives `omit[]` and `skip[]` consumes the attribute type of the 
+embedded generator without generating any output. The `omit[]` directive
+will still execute the embedded generator while discarding the generated output
+afterwards. The `skip[]` directive will not execute the embedded generator, but 
+will use it onlz to extract the exposed attribute type.
 
 [heading Header]
 
@@ -899,6 +902,7 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::omit // alias: boost::spirit::karma::omit` ]]
+    [[`boost::spirit::skip // alias: boost::spirit::karma::skip` ]]
 ]
 
 [heading Model of]
@@ -918,7 +922,12 @@ defined in __unary_generator_concept__.
     [[Expression]       [Semantics]]
     [[`omit[a]`]        [The `omit` directive consumes the attribute type of the 
                          embedded generator `A` without generating any output. 
-                         It succeeds always.]]
+                         It succeeds always. The embedded generator is executed
+                         and any generated output is discarded.]]
+    [[`skip[a]`]        [The `skip` directive consumes the attribute type of the 
+                         embedded generator `A` without generating any output. 
+                         It succeeds always. The embedded generator is not 
+                         executed.]]
 ]
 
 [heading Attributes]
@@ -930,12 +939,16 @@ See __karma_comp_attr_notation__.
     [[`omit[a]`]
 [``a: A --> omit[a]: A
 a: Unused --> omit[a]: Unused``]]
+    [[`skip[a]`]
+[``a: A --> skip[a]: A
+a: Unused --> skip[a]: Unused``]]
 ]
 
 [heading Complexity]
 
-[:The overall complexity of the `omit` generator directive is O(1) as it does
-  not generate any output.]
+[:The overall complexity of the `omit[]` directive depends on the complexity
+  of the embedded generator. The overall complexity of the `skip[]` generator 
+  directive is O(1) as it does not generate any output.]
 
 [heading Example]
 
@@ -985,6 +998,13 @@ the `omit` directive:
 
 which is at the same time more readable and more efficient as we don't have to 
 use semantic actions.
+
+The semantics of using the `skip[]` directive are identical to the `omit[]`
+directive, except that it does not actually execute the embedded generator. 
+For this reason it is usually preferrable to utilize the `skip[]` directive 
+instead of the `omit[]` directive. On the other hand, the `omit[]` directive
+is very useful whenever the embedded generator produces side effects (has
+semantic actions which need to be executed).
 
 [endsect] [/ omit]
 

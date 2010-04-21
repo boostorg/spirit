@@ -31,6 +31,9 @@
 * Semantic actions in __karma__ now implicitly invoke the function `pre` of the
   customization point __customize_transform_attribute__ to convert the supplied 
   attribute to the consumend attribute type, as needed. 
+* Added the __karma__ __karma_skip__ directive which is semantically equivalent
+  to the __karma__ __karma_omit__ directive except that it will not execute the 
+  embedded generator.
 
 [heading Bug Fixes]
 
