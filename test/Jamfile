@@ -87,6 +87,7 @@ import testing ;
     [ run karma/char.cpp                    : : : : karma_char ]
     [ run karma/char_class.cpp              : : : : karma_char_class ]
     [ run karma/columns.cpp                 : : : : ]
+    [ run karma/debug.cpp                   : : : : karma_debug ]
     [ run karma/delimiter.cpp               : : : : ]
     [ run karma/encoding.cpp                : : : : karma_encoding ]
     [ run karma/eol.cpp                     : : : : karma_eol ]

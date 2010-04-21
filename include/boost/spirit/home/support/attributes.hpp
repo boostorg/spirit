@@ -539,20 +539,6 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    void post_transform(Exposed& dest, Transformed const& attr)
-    {
-        return transform_attribute<Exposed, Transformed, qi::domain>::post(dest, attr);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    void fail_transform(Exposed& dest, Transformed const&)
-    {
-        return transform_attribute<Exposed, Transformed, qi::domain>::fail(dest);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // make_attribute
     //
     // All parsers and generators have specific attribute types.

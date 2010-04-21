@@ -12,5 +12,7 @@
 
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
 #include <boost/spirit/home/karma/nonterminal/grammar.hpp>
+#include <boost/spirit/home/karma/nonterminal/debug_handler.hpp>
+#include <boost/spirit/home/karma/nonterminal/simple_trace.hpp>
 
 #endif
