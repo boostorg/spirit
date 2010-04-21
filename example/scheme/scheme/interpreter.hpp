@@ -29,7 +29,6 @@ namespace scheme
     struct function;
 
     typedef std::list<function> actor_list;
-    typedef boost::iterator_range<utree const*> args_type;
     typedef boost::function<utree(args_type args)> stored_function;
 
     ///////////////////////////////////////////////////////////////////////////

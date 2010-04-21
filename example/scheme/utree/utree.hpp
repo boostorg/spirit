@@ -45,7 +45,8 @@ namespace scheme
             symbol_type,
             binary_type,
             list_type,
-            reference_type
+            reference_type,
+            function_type
         };
     };
 
@@ -130,6 +131,29 @@ namespace scheme
     utf8_symbol;
 
     ///////////////////////////////////////////////////////////////////////////
+    // Our function type
+    ///////////////////////////////////////////////////////////////////////////
+    class utree;
+    typedef boost::iterator_range<utree const*> args_type;
+
+    struct polymorphic_function_base
+    {
+        virtual ~polymorphic_function_base() {};
+        virtual utree operator()(args_type args) const = 0;
+        virtual polymorphic_function_base* clone() const = 0;
+    };
+
+    template <typename F>
+    struct polymorphic_function : polymorphic_function_base
+    {
+        F f;
+        polymorphic_function(F f = F());
+        virtual ~polymorphic_function();
+        virtual utree operator()(args_type args) const;
+        virtual polymorphic_function_base* clone() const;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // The main utree (Universal Tree) class
     // The utree is a hierarchical, dynamic type that can store:
     //  - a nil
@@ -172,8 +196,12 @@ namespace scheme
         utree(char const* str, std::size_t len);
         utree(std::string const& str);
         utree(boost::reference_wrapper<utree> ref);
+
         template <typename Iter>
         utree(boost::iterator_range<Iter> r);
+
+        template <typename F>
+        utree(polymorphic_function<F> const& pf);
 
         template <typename Base, utree_type::info type_>
         utree(basic_string<Base, type_> const& bin);
@@ -189,6 +217,10 @@ namespace scheme
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
         utree& operator=(boost::reference_wrapper<utree> ref);
+
+        template <typename F>
+        utree& operator=(polymorphic_function<F> const& pf);
+
         template <typename Iter>
         utree& operator=(boost::iterator_range<Iter> r);
 
@@ -275,6 +307,8 @@ namespace scheme
         short tag() const;
         void tag(short tag);
 
+        utree eval(args_type args) const;
+
     private:
 
         typedef utree_type type;
@@ -300,6 +334,7 @@ namespace scheme
             int i;
             double d;
             utree* p;
+            polymorphic_function_base* pf;
         };
     };
 }

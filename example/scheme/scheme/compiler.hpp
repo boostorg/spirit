@@ -372,7 +372,7 @@ namespace scheme
             {
                 f = compile(program, env, fragments, line, source_file);
             }
-            catch (compilation_error const& x)
+            catch (compilation_error const&)
             {
                 continue; // try the next expression
             }

@@ -17,8 +17,16 @@ inline void check(scheme::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    BOOST_TEST(s.str() == expected + " ");
+    BOOST_ASSERT(s.str() == expected + " ");
 }
+
+struct one_two_three
+{
+    scheme::utree operator()(scheme::args_type) const
+    {
+        return scheme::utree(123);
+    }
+};
 
 int main()
 {
@@ -253,6 +261,12 @@ int main()
         utree x;
         x.tag(123);
         BOOST_TEST(x.tag() == 123);
+    }
+
+    {
+        // test functions
+        utree f = scheme::polymorphic_function<one_two_three>();
+        f.eval(scheme::args_type());
     }
 
     return boost::report_errors();

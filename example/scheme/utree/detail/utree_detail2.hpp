@@ -538,6 +538,30 @@ namespace scheme { namespace detail
 
 namespace scheme
 {
+    template <typename F>
+    polymorphic_function<F>::polymorphic_function(F f)
+      : f(f)
+    {
+    }
+
+    template <typename F>
+    polymorphic_function<F>::~polymorphic_function()
+    {
+    };
+
+    template <typename F>
+    utree polymorphic_function<F>::operator()(args_type args) const
+    {
+        return f(args);
+    }
+
+    template <typename F>
+    polymorphic_function_base*
+    polymorphic_function<F>::clone() const
+    {
+        return new polymorphic_function<F>(*this);
+    }
+
     inline utree::utree()
     {
         set_type(type::nil_type);
@@ -594,8 +618,15 @@ namespace scheme
         set_type(type::reference_type);
     }
 
+    template <typename F>
+    inline utree::utree(polymorphic_function<F> const& pf)
+      : pf(new polymorphic_function<F>(pf))
+    {
+        set_type(type::function_type);
+    }
+
     template <typename Iter>
-    utree::utree(boost::iterator_range<Iter> r)
+    inline utree::utree(boost::iterator_range<Iter> r)
     {
         set_type(type::nil_type);
         assign(r.begin(), r.end());
@@ -686,8 +717,17 @@ namespace scheme
         return *this;
     }
 
+    template <typename F>
+    utree& utree::operator=(polymorphic_function<F> const& pf)
+    {
+        free();
+        pf = new polymorphic_function<F>(pf);
+        set_type(type::function_type);
+        return *this;
+    }
+
     template <typename Iter>
-    utree& utree::operator=(boost::iterator_range<Iter> r)
+    inline utree& utree::operator=(boost::iterator_range<Iter> r)
     {
         free();
         assign(r.begin(), r.end());
@@ -1007,6 +1047,9 @@ namespace scheme
             case type::list_type:
                 l.free();
                 break;
+            case type::function_type:
+                delete pf;
+                break;
             default:
                 break;
         };
@@ -1031,6 +1074,9 @@ namespace scheme
             case type::reference_type:
                 p = other.p;
                 break;
+            case type::function_type:
+                pf = other.pf->clone();
+                break;
             case type::string_type:
             case type::symbol_type:
             case type::binary_type:
@@ -1044,8 +1090,8 @@ namespace scheme
     }
 
     template <typename T>
-    struct is_iterator_range 
-      : boost::mpl::false_ 
+    struct is_iterator_range
+      : boost::mpl::false_
     {};
 
     template <typename Iterator>
@@ -1076,7 +1122,7 @@ namespace scheme
         To operator()(From const& val) const
         {
             // boost::iterator_range has a templated constructor, accepting
-            // any argument and hence any type is 'convertible' to it. 
+            // any argument and hence any type is 'convertible' to it.
             typedef typename boost::mpl::eval_if<
                 is_iterator_range<To>
               , boost::is_same<From, To>, boost::is_convertible<From, To>
@@ -1111,6 +1157,12 @@ namespace scheme
     {
         ensure_list_type();
         s.tag(tag);
+    }
+
+    inline utree utree::eval(args_type args) const
+    {
+        BOOST_ASSERT(get_type() == type::function_type);
+        return (*pf)(args);
     }
 }
 
