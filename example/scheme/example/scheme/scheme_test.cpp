@@ -40,7 +40,9 @@ int main(int argc, char **argv)
         }
     }
 
-    scheme::interpreter factorial(in, filename);
+    scheme::interpreter f(in, filename);
+    if (!f.empty())
+        f();
     return 0;
 }
 

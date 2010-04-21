@@ -149,6 +149,24 @@ namespace scheme
 
     struct times_composite : nary_composite<times_function> {};
     times_composite const times = times_composite();
+
+    ///////////////////////////////////////////////////////////////////////////
+    // display
+    ///////////////////////////////////////////////////////////////////////////
+    struct display_function : unary_function<display_function>
+    {
+        display_function(function const& a)
+          : base_type(a) {}
+
+        utree eval(utree const& element) const
+        {
+            std::cout << element;
+            return utree();
+        }
+    };
+
+    struct display_composite : unary_composite<display_function> {};
+    display_composite const display = display_composite();
 }
 
 #endif

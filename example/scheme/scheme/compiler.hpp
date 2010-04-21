@@ -10,8 +10,10 @@
 #include <vector>
 #include <map>
 #include <exception>
+#include <cstdlib>
 
 #include <boost/bind.hpp>
+#include <boost/tuple/tuple.hpp>
 #include <scheme/intrinsics.hpp>
 #include <scheme/interpreter.hpp>
 #include <input/parse_sexpr.hpp>
@@ -27,7 +29,7 @@ namespace scheme
     {
         virtual const char* what() const throw()
         {
-            return "scheme: Compilation error";
+            return "scheme: Compilation error.";
         }
     };
 
@@ -35,7 +37,7 @@ namespace scheme
     {
         virtual const char* what() const throw()
         {
-            return "scheme: Identifier expected";
+            return "scheme: Identifier expected.";
         }
     };
 
@@ -43,7 +45,7 @@ namespace scheme
     {
         std::string msg;
         identifier_not_found(std::string const& id)
-          : msg("scheme: Identifier (" + id + ") not found") {}
+          : msg("scheme: Identifier (" + id + ") not found.") {}
 
         virtual const char* what() const throw()
         {
@@ -59,16 +61,25 @@ namespace scheme
 
         virtual const char* what() const throw()
         {
-            return "scheme: Duplicate identifier";
+            return "scheme: Duplicate identifier.";
         }
     };
 
     struct incorrect_arity : scheme_exception
     {
         std::string msg;
-        incorrect_arity(std::string const& id)
+        incorrect_arity(std::string const& id, int arity, bool fixed)
           : msg("scheme: Invalid number of parameters to function call ("
-                + id + ')') {}
+                + id + ").")
+        {
+            if (!fixed)
+                msg += std::string(" Expecting at least ");
+            else
+                msg += std::string(" Expecting ");
+
+            char buff[std::numeric_limits<int>::digits10];
+            msg += std::string(ltoa(arity, buff, 10)) + " arguments.";
+        }
 
         virtual const char* what() const throw()
         {
@@ -89,23 +100,27 @@ namespace scheme
           : outer(parent) {}
 
         template <typename Function>
-        void define(std::string const& name, Function const& f, int arity)
+        void define(std::string const& name, Function const& f, int arity, bool fixed)
         {
             if (definitions.find(name) != definitions.end())
                 throw duplicate_identifier(name);
-            definitions[name] = std::make_pair(compiled_function(f), arity);
+            definitions[name] = boost::make_tuple(compiled_function(f), arity, fixed);
         }
 
-        std::pair<compiled_function*, int>
+        boost::tuple<compiled_function*, int, bool>
         find(std::string const& name)
         {
             std::map<std::string, map_element>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
-                return std::make_pair(&i->second.first, i->second.second);
+                return boost::make_tuple(
+                    &boost::get<0>(i->second),
+                    boost::get<1>(i->second),
+                    boost::get<2>(i->second)
+                );
             else if (outer != 0)
                 return outer->find(name);
-            return std::make_pair((compiled_function*)0, 0);
+            return boost::make_tuple((compiled_function*)0, 0, false);
         }
 
         void undefine(std::string const& name)
@@ -122,7 +137,7 @@ namespace scheme
 
     private:
 
-        typedef std::pair<compiled_function, int> map_element;
+        typedef boost::tuple<compiled_function, int, bool> map_element;
 
         environment* outer;
         std::map<std::string, map_element> definitions;
@@ -185,11 +200,11 @@ namespace scheme
         function operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
-            std::pair<compiled_function*, int> r = env.find(name);
-            if (r.first)
+            boost::tuple<compiled_function*, int, bool> r = env.find(name);
+            if (boost::get<0>(r))
             {
                 actor_list flist;
-                return (*r.first)(flist);
+                return (*boost::get<0>(r))(flist);
             }
             throw identifier_not_found(name);
             return function();
@@ -201,8 +216,8 @@ namespace scheme
         {
             environment local_env(&this->env);
             for (std::size_t i = 0; i < args.size(); ++i)
-                local_env.define(args[i], boost::bind(arg, i), args.size());
-            return compile(body, local_env, fragments, line, source_file);
+                local_env.define(args[i], boost::bind(arg, i), 0, false);
+            return protect(compile(body, local_env, fragments, line, source_file));
         }
 
         function define_function(
@@ -216,8 +231,8 @@ namespace scheme
                     throw duplicate_identifier(name);
                 fragments.push_back(function());
                 function& f = fragments.back();
-                env.define(name, external_function(f), args.size());
-                f = make_lambda(args, body);
+                env.define(name, external_function(f), args.size(), true); // $$$ fixed arity for now $$$
+                f = make_lambda(args, body)(); // unprotect (evaluate returns a function)
                 return f;
             }
             catch (compilation_error const&)
@@ -266,6 +281,8 @@ namespace scheme
                         Iterator ai = arg_names.begin();
                         while (ai != arg_names.end())
                             args.push_back(get_symbol(*ai++));
+
+                        return define_function(fname, args, (*i)[2]);
                     }
                 }
 
@@ -285,8 +302,8 @@ namespace scheme
             }
 
             // (f x)
-            std::pair<compiled_function*, int> r = env.find(name);
-            if (r.first)
+            boost::tuple<compiled_function*, int, bool> r = env.find(name);
+            if (boost::get<0>(r))
             {
                 actor_list flist;
                 Iterator i = range.begin(); ++i;
@@ -295,17 +312,17 @@ namespace scheme
                         compile(*i, env, fragments, line, source_file));
 
                 // Arity check
-                if (r.second < 0) // non-fixed arity
+                if (!boost::get<2>(r)) // non-fixed arity
                 {
-                    if (int(flist.size()) < -r.second)
-                        throw incorrect_arity(name);
+                    if (int(flist.size()) < boost::get<1>(r))
+                        throw incorrect_arity(name, boost::get<1>(r), false);
                 }
                 else // fixed arity
                 {
-                    if (int(flist.size()) != r.second)
-                        throw incorrect_arity(name);
+                    if (int(flist.size()) != boost::get<1>(r))
+                        throw incorrect_arity(name, boost::get<1>(r), true);
                 }
-                return (*r.first)(flist);
+                return (*boost::get<0>(r))(flist);
             }
             else
             {
@@ -382,12 +399,13 @@ namespace scheme
 
     void build_basic_environment(environment& env)
     {
-        env.define("if", if_, 3);
-        env.define("<", less_than, 2);
-        env.define("<=", less_than_equal, 2);
-        env.define("+", plus, -2);
-        env.define("-", minus, -2);
-        env.define("*", times, -2);
+        env.define("if", if_, 3, true);
+        env.define("display", display, 1, true);
+        env.define("<", less_than, 2, true);
+        env.define("<=", less_than_equal, 2, true);
+        env.define("+", plus, 2, false);
+        env.define("-", minus, 2, false);
+        env.define("*", times, 2, false);
     }
 
     ///////////////////////////////////////////////////////////////////////////

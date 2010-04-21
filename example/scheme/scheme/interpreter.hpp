@@ -138,6 +138,11 @@ namespace scheme
 
     value const val = {};
 
+    inline function protect(function const& f)
+    {
+        return val(f.f);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // arguments
     ///////////////////////////////////////////////////////////////////////////
@@ -148,7 +153,10 @@ namespace scheme
 
         utree eval(args_type args) const
         {
-            return utree(boost::ref(args[n]));
+            if (args[n].which() != utree_type::function_type)
+                return utree(boost::ref(args[n]));
+            else
+                return args[n].eval(args);
         }
     };
 
