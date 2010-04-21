@@ -27,9 +27,7 @@ namespace scheme
     // typedefs
     ///////////////////////////////////////////////////////////////////////////
     struct function;
-
     typedef std::list<function> actor_list;
-    typedef boost::function<utree(args_type args)> stored_function;
 
     ///////////////////////////////////////////////////////////////////////////
     // actor
@@ -88,24 +86,24 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     struct function : actor<function>
     {
-        stored_function f;
+        utree f;
         function()
           : f() {}
 
-        function(stored_function const& f)
-          : f(f)
+        template <typename F>
+        function(F const& f)
+          : f(polymorphic_function<F>(f))
         {
-            BOOST_ASSERT(!f.empty());
         }
 
         bool empty() const
         {
-            return f.empty();
+            return f.which() != utree_type::function_type;
         }
 
         utree eval(args_type args) const
         {
-            return f(args);
+            return f.eval(args);
         }
     };
 
