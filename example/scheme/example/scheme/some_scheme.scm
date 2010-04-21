@@ -1,3 +1,1 @@
-(define (apply x f) (display (f x)))
-
-(apply 123 (lambda (x) (+ x 1)))
+(display (xxx 2 3 4 5))

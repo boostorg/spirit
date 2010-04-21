@@ -352,6 +352,14 @@ namespace scheme
             return function();
         }
 
+        function operator()(polymorphic_function_base const& pf) const
+        {
+            // Can't reach here. Surely, at this point, we don't have
+            // utree functions yet. The utree AST should be pure data.
+            throw compilation_error();
+            return function();
+        }
+
         static std::string get_symbol(utree const& s)
         {
             if (s.which() != utree_type::symbol_type)

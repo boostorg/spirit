@@ -98,6 +98,11 @@ namespace scheme
         {
             return true;
         }
+
+        bool operator()(polymorphic_function_base const& a, polymorphic_function_base const& b) const
+        {
+            return false; // just don't allow comparison of functions
+        }
     };
 
     struct utree_is_less_than
@@ -144,6 +149,12 @@ namespace scheme
         {
             BOOST_ASSERT(false);
             return false; // no less than comparison for nil
+        }
+
+        bool operator()(polymorphic_function_base const& a, polymorphic_function_base const& b) const
+        {
+            BOOST_ASSERT(false);
+            return false; // no less than comparison of functions
         }
     };
 
@@ -212,6 +223,11 @@ namespace scheme
                 scheme::utree::visit(*i, *this);
             }
             (*this)(')');
+        }
+
+        void operator()(polymorphic_function_base const& pf) const
+        {
+            return (*this)("<function>");
         }
     };
 #endif
@@ -333,7 +349,7 @@ namespace scheme
 
         // binary
         template <typename A, typename B>
-        utree operator()(A const a, B const& b) const
+        utree operator()(A const& a, B const& b) const
         {
             return dispatch(a, b,
                 boost::mpl::and_<

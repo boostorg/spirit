@@ -461,6 +461,9 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, f);
+
+                case type::function_type:
+                    return f(*x.pf);
             }
         }
 
@@ -514,6 +517,10 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, y, f);
+
+                case type::function_type:
+                    return visit_impl::apply(y, detail::bind(f, *x.pf));
+
             }
         }
     };
