@@ -57,11 +57,11 @@ namespace scheme
     {
         std::string msg;
         duplicate_identifier(std::string const& id)
-          : msg("scheme: Duplicate identifier (" + id + ')') {}
+          : msg("scheme: Duplicate identifier (" + id + ").") {}
 
         virtual const char* what() const throw()
         {
-            return "scheme: Duplicate identifier.";
+            return msg.c_str();
         }
     };
 
@@ -83,7 +83,22 @@ namespace scheme
 
         virtual const char* what() const throw()
         {
-            return msg.c_str();;
+            return msg.c_str();
+        }
+    };
+
+    struct function_application_expected : scheme_exception
+    {
+        std::string msg;
+        function_application_expected(utree const& got)
+        {
+            // $$$ TODO: add got to message $$$
+            msg = "scheme: Function application expected";
+        }
+
+        virtual const char* what() const throw()
+        {
+            return msg.c_str();
         }
     };
 
@@ -245,6 +260,9 @@ namespace scheme
         template <typename Iterator>
         function operator()(boost::iterator_range<Iterator> const& range) const
         {
+            if (range.begin()->which() != utree_type::symbol_type)
+                throw function_application_expected(*range.begin());
+
             std::string name(get_symbol(*range.begin()));
 
             if (name == "quote")
@@ -329,8 +347,8 @@ namespace scheme
                 throw identifier_not_found(name);
             }
 
-            // Just return the list $$$ TODO $$$ how do we disambiguate lists
-            // and function calls?
+            // Can't reach here
+            throw compilation_error();
             return function();
         }
 
