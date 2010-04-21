@@ -90,6 +90,12 @@ namespace scheme
         function()
           : f() {}
 
+        function(utree const& f)
+          : f(f)
+        {
+            BOOST_ASSERT(!empty());
+        }
+
         template <typename F>
         function(F const& f)
           : f(polymorphic_function<F>(f))
