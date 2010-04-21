@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
     if (!in)
     {
-        std::cerr << "scheme_error.scm not found" << std::endl;
+        std::cerr << filename << " not found" << std::endl;
         return -1;
     }
 
