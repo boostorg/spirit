@@ -1132,7 +1132,7 @@ namespace scheme
     };
 
     template <typename T>
-    inline T utree::as() const
+    inline T utree::get() const
     {
         return utree::visit(*this, utree_cast<T>());
     }

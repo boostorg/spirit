@@ -299,7 +299,7 @@ namespace scheme
         utree_type::info which() const;
 
         template <typename T>
-        T as() const;
+        T get() const;
 
         utree& deref();
         utree const& deref() const;

@@ -32,7 +32,7 @@ namespace scheme
         typedef utree result_type;
         utree eval(args_type args) const
         {
-            return cond(args).as<bool>() ? then(args) : else_(args);
+            return cond(args).get<bool>() ? then(args) : else_(args);
         }
     };
 

@@ -321,7 +321,7 @@ namespace scheme
         {
             if (s.which() != utree_type::symbol_type)
                 throw identifier_expected();
-            utf8_symbol_range symbol = s.as<utf8_symbol_range>();
+            utf8_symbol_range symbol = s.get<utf8_symbol_range>();
             return std::string(symbol.begin(), symbol.end());
         }
     };

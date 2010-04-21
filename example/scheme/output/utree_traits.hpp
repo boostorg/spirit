@@ -20,7 +20,7 @@ namespace boost
     template <typename T>
     inline T get(scheme::utree const& x)
     {
-        return x.as<T>();
+        return x.get<T>();
     }
 }
 
