@@ -235,6 +235,17 @@ int main()
         BOOST_TEST(test("abc", r, p));
     }
 
+    {
+        std::list<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        v.push_back(4);
+
+        BOOST_TEST(test("1234", repeat(2)[int_] << *int_, v));
+        BOOST_TEST(test_delimited("1 2 3 4 ", repeat(2)[int_] << *int_, v, char(' ')));
+    }
+
     return boost::report_errors();
 }
 
