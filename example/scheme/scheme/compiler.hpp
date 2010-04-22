@@ -352,7 +352,7 @@ namespace scheme
             return function();
         }
 
-        function operator()(polymorphic_function_base const& pf) const
+        function operator()(function_base const& pf) const
         {
             // Can't reach here. Surely, at this point, we don't have
             // utree functions yet. The utree AST should be pure data.

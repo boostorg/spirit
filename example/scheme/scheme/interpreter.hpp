@@ -98,7 +98,7 @@ namespace scheme
 
         template <typename F>
         function(F const& f)
-          : f(polymorphic_function<F>(f))
+          : f(stored_function<F>(f))
         {
         }
 

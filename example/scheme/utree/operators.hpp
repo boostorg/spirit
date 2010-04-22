@@ -13,6 +13,7 @@
 # pragma warning(disable: 4805)
 #endif
 
+#include <exception>
 #include <utree/utree.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
@@ -20,6 +21,24 @@
 
 namespace scheme
 {
+    struct utree_exception : std::exception {};
+
+    struct illegal_arithmetic_operation : utree_exception
+    {
+        virtual const char* what() const throw()
+        {
+            return "utree: Illegal arithmetic operation.";
+        }
+    };
+
+    struct illegal_integral_operation : utree_exception
+    {
+        virtual const char* what() const throw()
+        {
+            return "utree: Illegal integral operation.";
+        }
+    };
+
     // Relational operators
     bool operator==(utree const& a, utree const& b);
     bool operator<(utree const& a, utree const& b);
@@ -99,7 +118,7 @@ namespace scheme
             return true;
         }
 
-        bool operator()(polymorphic_function_base const& a, polymorphic_function_base const& b) const
+        bool operator()(function_base const& a, function_base const& b) const
         {
             return false; // just don't allow comparison of functions
         }
@@ -151,7 +170,7 @@ namespace scheme
             return false; // no less than comparison for nil
         }
 
-        bool operator()(polymorphic_function_base const& a, polymorphic_function_base const& b) const
+        bool operator()(function_base const& a, function_base const& b) const
         {
             BOOST_ASSERT(false);
             return false; // no less than comparison of functions
@@ -225,7 +244,7 @@ namespace scheme
             (*this)(')');
         }
 
-        void operator()(polymorphic_function_base const& pf) const
+        void operator()(function_base const& pf) const
         {
             return (*this)("<function>");
         }
@@ -288,7 +307,7 @@ namespace scheme
         template <typename A, typename B>
         utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
-            // $$$ Throw exception here? $$$
+            throw illegal_arithmetic_operation();
             return utree(); // cannot apply to non-arithmetic types
         }
 
@@ -311,7 +330,7 @@ namespace scheme
         template <typename A>
         utree dispatch(A const&, boost::mpl::false_) const
         {
-            // $$$ Throw exception here? $$$
+            throw illegal_arithmetic_operation();
             return utree(); // cannot apply to non-arithmetic types
         }
 
@@ -337,7 +356,7 @@ namespace scheme
         template <typename A, typename B>
         utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
-            // $$$ Throw exception here? $$$
+            throw illegal_integral_operation();
             return utree(); // cannot apply to non-integral types
         }
 
@@ -360,7 +379,7 @@ namespace scheme
         template <typename A>
         utree dispatch(A const&, boost::mpl::false_) const
         {
-            // $$$ Throw exception here? $$$
+            throw illegal_integral_operation();
             return utree(); // cannot apply to non-integral types
         }
 

@@ -265,8 +265,27 @@ int main()
 
     {
         // test functions
-        utree f = scheme::polymorphic_function<one_two_three>();
+        utree f = scheme::stored_function<one_two_three>();
         f.eval(scheme::args_type());
+    }
+
+    {
+        // shallow ranges
+        utree val;
+        val.push_back(1);
+        val.push_back(2);
+        val.push_back(3);
+        val.push_back(4);
+
+        utree::iterator i = val.begin(); ++i;
+        utree alias(utree::range(i, val.end()), scheme::shallow);
+
+        check(alias, "( 2 3 4 )");
+        BOOST_TEST(alias.size() == 3);
+        BOOST_TEST(alias.front() == 2);
+        BOOST_TEST(alias.back() == 4);
+        BOOST_TEST(!alias.empty());
+        BOOST_TEST(alias[1] == 3);
     }
 
     return boost::report_errors();

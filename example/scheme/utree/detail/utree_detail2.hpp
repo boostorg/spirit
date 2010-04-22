@@ -182,7 +182,7 @@ namespace scheme { namespace detail
             return node == other.node;
         }
 
-        reference dereference() const
+        typename node_iterator::reference dereference() const
         {
             return node->val;
         }
@@ -240,7 +240,7 @@ namespace scheme { namespace detail
             return node == other.node;
         }
 
-        reference dereference() const
+        typename node_iterator::reference dereference() const
         {
             return curr;
         }
@@ -450,6 +450,9 @@ namespace scheme { namespace detail
                 case type::list_type:
                     return f(list_range(iterator(x.l.first), iterator(0, x.l.last)));
 
+                case type::range_type:
+                    return f(list_range(iterator(x.r.first), iterator(0, x.r.last)));
+
                 case type::string_type:
                     return f(utf8_string_range(x.s.str(), x.s.size()));
 
@@ -503,6 +506,11 @@ namespace scheme { namespace detail
                         y, detail::bind<F, list_range>(f,
                         list_range(iterator(x.l.first), iterator(0, x.l.last))));
 
+                case type::range_type:
+                    return visit_impl::apply(
+                        y, detail::bind<F, list_range>(f,
+                        list_range(iterator(x.r.first), iterator(0, x.r.last))));
+
                 case type::string_type:
                     return visit_impl::apply(y, detail::bind(
                         f, utf8_string_range(x.s.str(), x.s.size())));
@@ -546,27 +554,27 @@ namespace scheme { namespace detail
 namespace scheme
 {
     template <typename F>
-    polymorphic_function<F>::polymorphic_function(F f)
+    stored_function<F>::stored_function(F f)
       : f(f)
     {
     }
 
     template <typename F>
-    polymorphic_function<F>::~polymorphic_function()
+    stored_function<F>::~stored_function()
     {
     };
 
     template <typename F>
-    utree polymorphic_function<F>::operator()(args_type args) const
+    utree stored_function<F>::operator()(args_type args) const
     {
         return f(args);
     }
 
     template <typename F>
-    polymorphic_function_base*
-    polymorphic_function<F>::clone() const
+    function_base*
+    stored_function<F>::clone() const
     {
-        return new polymorphic_function<F>(*this);
+        return new stored_function<F>(*this);
     }
 
     inline utree::utree()
@@ -626,8 +634,8 @@ namespace scheme
     }
 
     template <typename F>
-    inline utree::utree(polymorphic_function<F> const& pf)
-      : pf(new polymorphic_function<F>(pf))
+    inline utree::utree(stored_function<F> const& pf)
+      : pf(new stored_function<F>(pf))
     {
         set_type(type::function_type);
     }
@@ -637,6 +645,20 @@ namespace scheme
     {
         set_type(type::nil_type);
         assign(r.begin(), r.end());
+    }
+
+    inline utree::utree(range r, shallow_tag)
+    {
+        this->r.first = r.begin().node;
+        this->r.last = r.end().prev;
+        set_type(type::range_type);
+    }
+
+    inline utree::utree(const_range r, shallow_tag)
+    {
+        this->r.first = r.begin().node;
+        this->r.last = r.end().prev;
+        set_type(type::range_type);
     }
 
     inline utree::utree(utree const& other)
@@ -725,10 +747,10 @@ namespace scheme
     }
 
     template <typename F>
-    utree& utree::operator=(polymorphic_function<F> const& pf)
+    utree& utree::operator=(stored_function<F> const& pf)
     {
         free();
-        pf = new polymorphic_function<F>(pf);
+        pf = new stored_function<F>(pf);
         set_type(type::function_type);
         return *this;
     }
@@ -738,6 +760,7 @@ namespace scheme
     {
         free();
         assign(r.begin(), r.end());
+        return *this;
     }
 
     template <typename F>
@@ -786,6 +809,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return (*p)[i];
+        else if (get_type() == type::range_type)
+            return detail::index_impl::apply(r.first, i);
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type && size() > i);
         return detail::index_impl::apply(l.first, i);
     }
@@ -794,6 +821,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return (*(utree const*)p)[i];
+        else if (get_type() == type::range_type)
+            return detail::index_impl::apply(r.first, i);
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type && size() > i);
         return detail::index_impl::apply(l.first, i);
     }
@@ -911,6 +942,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->begin();
+        else if (get_type() == type::range_type)
+            return iterator(r.first);
+
+        // otherwise...
         ensure_list_type();
         return iterator(l.first);
     }
@@ -919,6 +954,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->end();
+        else if (get_type() == type::range_type)
+            return iterator(0, r.first);
+
+        // otherwise...
         ensure_list_type();
         return iterator(0, l.last);
     }
@@ -927,6 +966,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->ref_begin();
+        else if (get_type() == type::range_type)
+            return ref_iterator(r.first);
+
+        // otherwise...
         ensure_list_type();
         return ref_iterator(l.first);
     }
@@ -935,6 +978,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->ref_end();
+        else if (get_type() == type::range_type)
+            return ref_iterator(0, r.first);
+
+        // otherwise...
         ensure_list_type();
         return ref_iterator(0, l.last);
     }
@@ -943,6 +990,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return ((utree const*)p)->begin();
+        else if (get_type() == type::range_type)
+            return const_iterator(r.first);
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type);
         return const_iterator(l.first);
     }
@@ -951,6 +1002,10 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return ((utree const*)p)->end();
+        else if (get_type() == type::range_type)
+            return const_iterator(0, r.first);
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type);
         return const_iterator(0, l.last);
     }
@@ -959,7 +1014,9 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return ((utree const*)p)->empty();
-        if (get_type() == type::list_type)
+        else if (get_type() == type::range_type)
+            return r.first == 0;
+        else if (get_type() == type::list_type)
             return l.size == 0;
         BOOST_ASSERT(get_type() == type::nil_type);
         return true;
@@ -968,9 +1025,24 @@ namespace scheme
     inline std::size_t utree::size() const
     {
         if (get_type() == type::reference_type)
+        {
             return ((utree const*)p)->size();
-        if (get_type() == type::list_type)
+        }
+        else if (get_type() == type::range_type)
+        {
+            std::size_t size = 0;
+            detail::list::node* n = r.first;
+            while (n)
+            {
+                n = n->next;
+                ++size;
+            }
+            return size;
+        }
+        else if (get_type() == type::list_type)
+        {
             return l.size;
+        }
         BOOST_ASSERT(get_type() == type::nil_type);
         return 0;
     }
@@ -983,7 +1055,16 @@ namespace scheme
     inline utree& utree::front()
     {
         if (get_type() == type::reference_type)
+        {
             return p->front();
+        }
+        else if (get_type() == type::range_type)
+        {
+            BOOST_ASSERT(r.first != 0);
+            return r.first->val;
+        }
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
         return l.first->val;
     }
@@ -991,7 +1072,16 @@ namespace scheme
     inline utree& utree::back()
     {
         if (get_type() == type::reference_type)
+        {
             return p->back();
+        }
+        else if (get_type() == type::range_type)
+        {
+            BOOST_ASSERT(r.last != 0);
+            return r.last->val;
+        }
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
         return l.last->val;
     }
@@ -999,7 +1089,16 @@ namespace scheme
     inline utree const& utree::front() const
     {
         if (get_type() == type::reference_type)
+        {
             return ((utree const*)p)->front();
+        }
+        else if (get_type() == type::range_type)
+        {
+            BOOST_ASSERT(r.first != 0);
+            return r.first->val;
+        }
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
         return l.first->val;
     }
@@ -1007,7 +1106,16 @@ namespace scheme
     inline utree const& utree::back() const
     {
         if (get_type() == type::reference_type)
+        {
             return ((utree const*)p)->back();
+        }
+        else if (get_type() == type::range_type)
+        {
+            BOOST_ASSERT(r.last != 0);
+            return r.last->val;
+        }
+
+        // otherwise...
         BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
         return l.last->val;
     }
@@ -1080,6 +1188,9 @@ namespace scheme
                 break;
             case type::reference_type:
                 p = other.p;
+                break;
+            case type::range_type:
+                r = other.r;
                 break;
             case type::function_type:
                 pf = other.pf->clone();

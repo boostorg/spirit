@@ -56,6 +56,15 @@ namespace scheme { namespace detail
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // A range of utree(s) using an iterator range (begin/end) of node(s)
+    ///////////////////////////////////////////////////////////////////////////
+    struct range
+    {
+        list::node* first;
+        list::node* last;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // Our POD fast string. This implementation is very primitive and is not
     // meant to be used stand-alone. This is the internal data representation
     // of strings in our utree. This is deliberately a POD to allow it to be
