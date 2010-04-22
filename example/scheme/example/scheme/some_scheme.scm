@@ -1,3 +1,5 @@
-(define (display-all first . rest) (display first) (display rest))
+(define (foo x)
+    (define (bar y z) (list x y z))
+    (bar 9 x))
 
-(display-all 123 456 999 666)
+(display (foo 100))

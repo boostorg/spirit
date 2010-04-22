@@ -244,20 +244,25 @@ namespace scheme
                     local_env.define(args[i], boost::bind(arg, i), 0, false);
             }
 
-            if (body.size() == 1)
+            actor_list flist;
+            BOOST_FOREACH(utree const& item, body)
             {
-                return protect(compile(body[0], local_env, fragments, line, source_file));
+                function f = compile(item, local_env, fragments, line, source_file);
+                if (!is_define(item))
+                    flist.push_back(f);
             }
-            else
-            {
-                actor_list flist;
-                BOOST_FOREACH(utree const& item, body)
-                {
-                    flist.push_back(
-                        compile(item, local_env, fragments, line, source_file));
-                }
+            if (flist.size() > 1)
                 return protect(block(flist));
-            }
+            else
+                return protect(flist.front());
+        }
+
+        bool is_define(utree const& item) const
+        {
+            if (item.which() != utree_type::list_type ||
+                item.begin()->which() != utree_type::symbol_type)
+                return false;
+            return get_symbol(*item.begin()) == "define";
         }
 
         function define_function(
@@ -491,6 +496,7 @@ namespace scheme
     {
         env.define("if", if_, 3, true);
         env.define("begin", block, 1, false);
+        env.define("list", list, 1, false);
         env.define("display", display, 1, true);
         env.define("front", front, 1, true);
         env.define("back", back, 1, true);

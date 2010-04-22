@@ -22,3 +22,10 @@
 (define (display-all first . rest) (display first) (display rest))
 
 (display-all 123 456 999 666)
+
+
+(define (display-all first . rest)
+    (display first)
+    (display (begin 1 2 rest)))
+
+(display-all 123 456 999 666)
