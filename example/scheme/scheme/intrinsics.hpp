@@ -51,122 +51,166 @@ namespace scheme
     if_composite const if_ = if_composite();
 
     ///////////////////////////////////////////////////////////////////////////
-    // less_than
+    // list
     ///////////////////////////////////////////////////////////////////////////
-    struct less_than_function
-      : binary_function<less_than_function>
+    struct list_function : actor<list_function>
     {
-        less_than_function(function const& a, function const& b)
-          : base_type(a, b) {}
-
-        typedef utree result_type;
-        utree eval(utree const& a, utree const& b) const
+        actor_list elements;
+        list_function(actor_list const& elements)
+          : elements(elements)
         {
-            return a < b;
+            BOOST_FOREACH(function const& element, elements)
+            {
+                BOOST_ASSERT(!element.empty());
+            }
+        }
+
+        utree eval(args_type args) const
+        {
+			utree result;
+            BOOST_FOREACH(function const& element, elements)
+            {
+                result.push_back(element(args));
+            }
+            return result;
         }
     };
 
-    struct less_than_composite
-      : binary_composite<less_than_function> {};
+    struct list_composite : composite<list_composite>
+    {
+        function compose(actor_list const& elements) const
+        {
+            return function(list_function(elements));
+        }
+    };
 
-    less_than_composite const less_than
-        = less_than_composite();
+    list_composite const list = list_composite();
+
+    ///////////////////////////////////////////////////////////////////////////
+    // block
+    ///////////////////////////////////////////////////////////////////////////
+    struct block_function : actor<block_function>
+    {
+        actor_list elements;
+        block_function(actor_list const& elements)
+          : elements(elements)
+        {
+            BOOST_FOREACH(function const& element, elements)
+            {
+                BOOST_ASSERT(!element.empty());
+            }
+        }
+
+        utree eval(args_type args) const
+        {
+            BOOST_ASSERT(!elements.empty());
+            actor_list::const_iterator end = elements.end();
+            boost::iterator_range<actor_list::const_iterator>
+                head_elements(elements.begin(), end--);
+            BOOST_FOREACH(function const& element, head_elements)
+            {
+                element(args);
+            }
+            return (*end)(args);
+        }
+    };
+
+    struct block_composite : composite<block_composite>
+    {
+        function compose(actor_list const& elements) const
+        {
+            return function(block_function(elements));
+        }
+    };
+
+    block_composite const block = block_composite();
+
+    ///////////////////////////////////////////////////////////////////////////
+    // SCHEME_UNARY_INTRINSIC
+    ///////////////////////////////////////////////////////////////////////////
+#define SCHEME_UNARY_INTRINSIC(name, expression)                                \
+    struct name##_function : unary_function<name##_function>                    \
+    {                                                                           \
+        name##_function(function const& a)                                      \
+          : base_type(a) {}                                                     \
+                                                                                \
+        utree eval(utree const& element) const                                  \
+        {                                                                       \
+            return expression;                                                  \
+        }                                                                       \
+    };                                                                          \
+                                                                                \
+    struct name##_composite : unary_composite<name##_function> {};              \
+    name##_composite const name = name##_composite()                            \
+    /***/
+
+    ///////////////////////////////////////////////////////////////////////////
+    // SCHEME_BINARY_INTRINSIC
+    ///////////////////////////////////////////////////////////////////////////
+#define SCHEME_BINARY_INTRINSIC(name, expression)                               \
+    struct name##_function                                                      \
+      : binary_function<name##_function>                                        \
+    {                                                                           \
+        name##_function(function const& a, function const& b)                   \
+          : base_type(a, b) {}                                                  \
+                                                                                \
+        typedef utree result_type;                                              \
+        utree eval(utree const& a, utree const& b) const                        \
+        {                                                                       \
+            return expression;                                                  \
+        }                                                                       \
+    };                                                                          \
+                                                                                \
+    struct name##_composite                                                     \
+      : binary_composite<name##_function> {};                                   \
+                                                                                \
+    name##_composite const name = name##_composite()                            \
+    /***/
+
+    ///////////////////////////////////////////////////////////////////////////
+    // SCHEME_NARY_INTRINSIC
+    ///////////////////////////////////////////////////////////////////////////
+#define SCHEME_NARY_INTRINSIC(name, expression)                                 \
+    struct name##_function : nary_function<name##_function>                     \
+    {                                                                           \
+        name##_function(actor_list const& elements)                             \
+          : base_type(elements) {}                                              \
+                                                                                \
+        bool eval(utree& result, utree const& element) const                    \
+        {                                                                       \
+            expression;                                                         \
+            return true;                                                        \
+        }                                                                       \
+    };                                                                          \
+                                                                                \
+    struct name##_composite : nary_composite<name##_function> {};               \
+    name##_composite const name = name##_composite()                            \
+    /***/
+
+    ///////////////////////////////////////////////////////////////////////////
+    // unary intrinsics
+    ///////////////////////////////////////////////////////////////////////////
+    SCHEME_UNARY_INTRINSIC(display, (std::cout << element, utree()));
+    SCHEME_UNARY_INTRINSIC(front, element.front());
+    SCHEME_UNARY_INTRINSIC(back, element.back());
+    SCHEME_UNARY_INTRINSIC(rest, utree_functions::rest(element));
+
+    ///////////////////////////////////////////////////////////////////////////
+    // binary intrinsics
+    ///////////////////////////////////////////////////////////////////////////
+    SCHEME_BINARY_INTRINSIC(less_than, a < b);
     less_than_composite const lt = less_than; // synonym
 
-    ///////////////////////////////////////////////////////////////////////////
-    // less_than_equal
-    ///////////////////////////////////////////////////////////////////////////
-    struct less_than_equal_function
-      : binary_function<less_than_equal_function>
-    {
-        less_than_equal_function(function const& a, function const& b)
-          : base_type(a, b) {}
-
-        typedef utree result_type;
-        utree eval(utree const& a, utree const& b) const
-        {
-            return a <= b;
-        }
-    };
-
-    struct less_than_equal_composite
-      : binary_composite<less_than_equal_function> {};
-
-    less_than_equal_composite const less_than_equal
-        = less_than_equal_composite();
+    SCHEME_BINARY_INTRINSIC(less_than_equal, a <= b);
     less_than_equal_composite const lte = less_than_equal; // synonym
 
     ///////////////////////////////////////////////////////////////////////////
-    // plus
+    // nary intrinsics
     ///////////////////////////////////////////////////////////////////////////
-    struct plus_function : nary_function<plus_function>
-    {
-        plus_function(actor_list const& elements)
-          : base_type(elements) {}
-
-        bool eval(utree& result, utree const& element) const
-        {
-            result = result + element;
-            return true;
-        }
-    };
-
-    struct plus_composite : nary_composite<plus_function> {};
-    plus_composite const plus = plus_composite();
-
-    ///////////////////////////////////////////////////////////////////////////
-    // minus
-    ///////////////////////////////////////////////////////////////////////////
-    struct minus_function : nary_function<minus_function>
-    {
-        minus_function(actor_list const& elements)
-          : base_type(elements) {}
-
-        bool eval(utree& result, utree const& element) const
-        {
-            result = result - element;
-            return true;
-        }
-    };
-
-    struct minus_composite : nary_composite<minus_function> {};
-    minus_composite const minus = minus_composite();
-
-    ///////////////////////////////////////////////////////////////////////////
-    // times
-    ///////////////////////////////////////////////////////////////////////////
-    struct times_function : nary_function<times_function>
-    {
-        times_function(actor_list const& elements)
-          : base_type(elements) {}
-
-        bool eval(utree& result, utree const& element) const
-        {
-            result = result * element;
-            return true;
-        }
-    };
-
-    struct times_composite : nary_composite<times_function> {};
-    times_composite const times = times_composite();
-
-    ///////////////////////////////////////////////////////////////////////////
-    // display
-    ///////////////////////////////////////////////////////////////////////////
-    struct display_function : unary_function<display_function>
-    {
-        display_function(function const& a)
-          : base_type(a) {}
-
-        utree eval(utree const& element) const
-        {
-            std::cout << element;
-            return utree();
-        }
-    };
-
-    struct display_composite : unary_composite<display_function> {};
-    display_composite const display = display_composite();
+    SCHEME_NARY_INTRINSIC(plus, result = result + element);
+    SCHEME_NARY_INTRINSIC(minus, result = result - element);
+    SCHEME_NARY_INTRINSIC(times, result = result * element);
+    SCHEME_NARY_INTRINSIC(divide, result = result / element);
 }
 
 #endif

@@ -10,10 +10,10 @@
 #include <vector>
 #include <map>
 #include <exception>
-#include <cstdlib>
 
 #include <boost/bind.hpp>
 #include <boost/tuple/tuple.hpp>
+#include <boost/lexical_cast.hpp>
 #include <scheme/intrinsics.hpp>
 #include <scheme/interpreter.hpp>
 #include <input/parse_sexpr.hpp>
@@ -27,6 +27,7 @@ namespace scheme
 
     struct compilation_error : std::exception
     {
+        ~compilation_error() throw() {}
         virtual const char* what() const throw()
         {
             return "scheme: Compilation error.";
@@ -35,6 +36,7 @@ namespace scheme
 
     struct identifier_expected : scheme_exception
     {
+        ~identifier_expected() throw() {}
         virtual const char* what() const throw()
         {
             return "scheme: Identifier expected.";
@@ -46,6 +48,7 @@ namespace scheme
         std::string msg;
         identifier_not_found(std::string const& id)
           : msg("scheme: Identifier (" + id + ") not found.") {}
+        ~identifier_not_found() throw() {}
 
         virtual const char* what() const throw()
         {
@@ -58,6 +61,7 @@ namespace scheme
         std::string msg;
         duplicate_identifier(std::string const& id)
           : msg("scheme: Duplicate identifier (" + id + ").") {}
+        ~duplicate_identifier() throw() {}
 
         virtual const char* what() const throw()
         {
@@ -77,9 +81,9 @@ namespace scheme
             else
                 msg += std::string(" Expecting ");
 
-            char buff[std::numeric_limits<int>::digits10];
-            msg += std::string(ltoa(arity, buff, 10)) + " arguments.";
+            msg += boost::lexical_cast<std::string>(arity) + " arguments.";
         }
+        ~incorrect_arity() throw() {}
 
         virtual const char* what() const throw()
         {
@@ -95,6 +99,7 @@ namespace scheme
             // $$$ TODO: add got to message $$$
             msg = "scheme: Function application expected";
         }
+        ~function_application_expected() throw() {}
 
         virtual const char* what() const throw()
         {
@@ -227,27 +232,35 @@ namespace scheme
 
         function make_lambda(
             std::vector<std::string> const& args,
+            bool fixed_arity,
             utree const& body) const
         {
             environment local_env(&this->env);
             for (std::size_t i = 0; i < args.size(); ++i)
-                local_env.define(args[i], boost::bind(arg, i), 0, false);
-            return protect(compile(body, local_env, fragments, line, source_file));
+            {
+                if (!fixed_arity && (args.size() - 1) == i)
+                    local_env.define(args[i], boost::bind(varg, i), 0, false);
+                else
+                    local_env.define(args[i], boost::bind(arg, i), 0, false);
+            }
+            return protect(compile(body[0], local_env, fragments, line, source_file));
         }
 
         function define_function(
             std::string const& name,
-            std::vector<std::string> const& args,
+            std::vector<std::string>& args,
+            bool fixed_arity,
             utree const& body) const
         {
             try
             {
                 if (env.defined(name))
                     throw duplicate_identifier(name);
+
                 fragments.push_back(function());
                 function& f = fragments.back();
-                env.define(name, external_function(f), args.size(), true); // $$$ fixed arity for now $$$
-                f = make_lambda(args, body)(); // unprotect (evaluate returns a function)
+                env.define(name, external_function(f), args.size(), fixed_arity);
+                f = make_lambda(args, fixed_arity, body)(); // unprotect (evaluate returns a function)
                 return f;
             }
             catch (compilation_error const&)
@@ -257,9 +270,10 @@ namespace scheme
             }
         }
 
-        template <typename Iterator>
-        function operator()(boost::iterator_range<Iterator> const& range) const
+        function operator()(utree::const_range const& range) const
         {
+            typedef utree::const_range::iterator iterator;
+
             if (range.begin()->which() != utree_type::symbol_type)
                 throw function_application_expected(*range.begin());
 
@@ -267,7 +281,7 @@ namespace scheme
 
             if (name == "quote")
             {
-                Iterator i = range.begin(); ++i;
+                iterator i = range.begin(); ++i;
                 return scheme::val(*i);
             }
 
@@ -275,16 +289,24 @@ namespace scheme
             {
                 std::string fname;
                 std::vector<std::string> args;
+                bool fixed_arity = true;
 
-                Iterator i = range.begin(); ++i;
+                iterator i = range.begin(); ++i;
                 if (i->which() == utree_type::list_type)
                 {
                     // (define (f x) ...body...)
                     utree const& decl = *i++;
-                    Iterator di = decl.begin();
+                    iterator di = decl.begin();
                     fname = get_symbol(*di++);
                     while (di != decl.end())
-                        args.push_back(get_symbol(*di++));
+                    {
+                        std::string sym = get_symbol(*di++);
+                        if (sym == ".")
+                           // check that . is one pos behind the last arg
+                           fixed_arity = false;
+                        else
+                            args.push_back(sym);
+                    }
                 }
                 else
                 {
@@ -296,51 +318,79 @@ namespace scheme
                         && get_symbol((*i)[0]) == "lambda")
                     {
                         utree const& arg_names = (*i)[1];
-                        Iterator ai = arg_names.begin();
+                        iterator ai = arg_names.begin();
                         while (ai != arg_names.end())
-                            args.push_back(get_symbol(*ai++));
+                        {
+                            std::string sym = get_symbol(*ai++);
+                            if (sym == ".")
+                                // check that . is one pos behind the last arg
+                                fixed_arity = false;
+                            else
+                                args.push_back(sym);
+                        };
 
-                        return define_function(fname, args, (*i)[2]);
+                        iterator bi = i->begin(); ++bi; ++bi; // (*i)[2]
+                        utree body(utree::const_range(bi, i->end()), shallow);
+                        return define_function(fname, args, fixed_arity, body);
                     }
                 }
 
-                return define_function(fname, args, *i);
+                utree body(utree::const_range(i, range.end()), shallow);
+                return define_function(fname, args, fixed_arity, body);
             }
 
             if (name == "lambda")
             {
                 // (lambda (x) ...body...)
-                Iterator i = range.begin(); ++i;
+                iterator i = range.begin(); ++i;
                 utree const& arg_names = *i++;
-                Iterator ai = arg_names.begin();
+                iterator ai = arg_names.begin();
                 std::vector<std::string> args;
+                bool fixed_arity = true;
+
                 while (ai != arg_names.end())
-                    args.push_back(get_symbol(*ai++));
-                return make_lambda(args, *i);
+                {
+                    std::string sym = get_symbol(*ai++);
+                    if (sym == ".")
+                        // check that . is one pos behind the last arg
+                        fixed_arity = false;
+                    else
+                        args.push_back(sym);
+                }
+
+                utree body(utree::const_range(i, range.end()), shallow);
+                return make_lambda(args, fixed_arity, body);
             }
 
             // (f x)
             boost::tuple<compiled_function*, int, bool> r = env.find(name);
             if (boost::get<0>(r))
             {
+                compiled_function* cf = boost::get<0>(r);
+                int arity = boost::get<1>(r);
+                bool fixed_arity = boost::get<2>(r);
+
                 actor_list flist;
-                Iterator i = range.begin(); ++i;
-                for (; i != range.end(); ++i)
+                iterator i = range.begin(); ++i;
+                int size = 0;
+                for (; i != range.end(); ++i, ++size)
+                {
                     flist.push_back(
                         compile(*i, env, fragments, line, source_file));
+                }
 
                 // Arity check
-                if (!boost::get<2>(r)) // non-fixed arity
+                if (!fixed_arity) // non-fixed arity
                 {
-                    if (int(flist.size()) < boost::get<1>(r))
-                        throw incorrect_arity(name, boost::get<1>(r), false);
+                    if (size < arity)
+                        throw incorrect_arity(name, arity, false);
                 }
                 else // fixed arity
                 {
-                    if (int(flist.size()) != boost::get<1>(r))
-                        throw incorrect_arity(name, boost::get<1>(r), true);
+                    if (size != arity)
+                        throw incorrect_arity(name, arity, true);
                 }
-                return (*boost::get<0>(r))(flist);
+                return (*cf)(flist);
             }
             else
             {
@@ -426,12 +476,17 @@ namespace scheme
     void build_basic_environment(environment& env)
     {
         env.define("if", if_, 3, true);
+        env.define("begin", block, 1, false);
         env.define("display", display, 1, true);
+        env.define("front", front, 1, true);
+        env.define("back", back, 1, true);
+        env.define("rest", rest, 1, true);
         env.define("<", less_than, 2, true);
         env.define("<=", less_than_equal, 2, true);
         env.define("+", plus, 2, false);
         env.define("-", minus, 2, false);
         env.define("*", times, 2, false);
+        env.define("/", divide, 2, false);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -1,1 +1,4 @@
-(display (xxx 2 3 4 5))
+(define (display-all . args)
+    (display args))
+
+(display-all 123 456 999 666)

@@ -366,6 +366,7 @@ namespace scheme
 
         utree eval(args_type args) const
         {
+            BOOST_ASSERT(!elements.empty());
             actor_list::const_iterator i = elements.begin();
             utree result = (*i++)(args);
             boost::iterator_range<actor_list::const_iterator>

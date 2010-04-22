@@ -181,6 +181,20 @@ int main()
         BOOST_TEST(a[11] == utree(12));
     }
 
+    {
+        // test empty list
+        utree a;
+        a.push_back(1);
+        a.pop_front();
+        check(a, "( )");
+
+        // the other way around
+        utree b;
+        b.push_front(1);
+        b.pop_back();
+        check(b, "( )");
+    }
+
     { // test references
         utree val(123);
         utree ref(boost::ref(val));

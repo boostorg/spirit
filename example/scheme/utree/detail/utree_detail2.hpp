@@ -148,9 +148,6 @@ namespace scheme { namespace detail
         node_iterator()
           : node(0) {}
 
-        explicit node_iterator(list::node* node)
-          : node(node), prev(node->prev) {}
-
         node_iterator(list::node* node, list::node* prev)
           : node(node), prev(prev) {}
 
@@ -203,9 +200,6 @@ namespace scheme { namespace detail
 
         node_iterator()
           : node(0), prev(0), curr(nil_node) {}
-
-        explicit node_iterator(list::node* node)
-          : node(node), prev(node->prev), curr(node->val) {}
 
         node_iterator(list::node* node, list::node* prev)
           : node(node), prev(prev), curr(node ? node->val : nil_node) {}
@@ -340,21 +334,39 @@ namespace scheme { namespace detail
     inline void list::pop_front()
     {
         BOOST_ASSERT(size != 0);
-        node* np = first;
-        first = first->next;
-        first->prev = 0;
-        delete np;
-        --size;
+        if (first == last) // there's only one item
+        {
+            delete first;
+            size = 0;
+            first = last = 0;
+        }
+        else
+        {
+            node* np = first;
+            first = first->next;
+            first->prev = 0;
+            delete np;
+            --size;
+        }
     }
 
     inline void list::pop_back()
     {
         BOOST_ASSERT(size != 0);
-        node* np = last;
-        last = last->prev;
-        last->next = 0;
-        delete np;
-        --size;
+        if (first == last) // there's only one item
+        {
+            delete first;
+            size = 0;
+            first = last = 0;
+        }
+        else
+        {
+            node* np = last;
+            last = last->prev;
+            last->next = 0;
+            delete np;
+            --size;
+        }
     }
 
     inline list::node* list::erase(node* pos)
@@ -448,10 +460,10 @@ namespace scheme { namespace detail
                     return f(x.d);
 
                 case type::list_type:
-                    return f(list_range(iterator(x.l.first), iterator(0, x.l.last)));
+                    return f(list_range(iterator(x.l.first, 0), iterator(0, x.l.last)));
 
                 case type::range_type:
-                    return f(list_range(iterator(x.r.first), iterator(0, x.r.last)));
+                    return f(list_range(iterator(x.r.first, 0), iterator(0, x.r.last)));
 
                 case type::string_type:
                     return f(utf8_string_range(x.s.str(), x.s.size()));
@@ -504,12 +516,12 @@ namespace scheme { namespace detail
                 case type::list_type:
                     return visit_impl::apply(
                         y, detail::bind<F, list_range>(f,
-                        list_range(iterator(x.l.first), iterator(0, x.l.last))));
+                        list_range(iterator(x.l.first, 0), iterator(0, x.l.last))));
 
                 case type::range_type:
                     return visit_impl::apply(
                         y, detail::bind<F, list_range>(f,
-                        list_range(iterator(x.r.first), iterator(0, x.r.last))));
+                        list_range(iterator(x.r.first, 0), iterator(0, x.r.last))));
 
                 case type::string_type:
                     return visit_impl::apply(y, detail::bind(
@@ -861,7 +873,7 @@ namespace scheme
         else
         {
             l.insert_before(val, pos.node);
-            return utree::iterator(pos.node->prev);
+            return utree::iterator(pos.node->prev, pos.node->prev->prev);
         }
     }
 
@@ -943,11 +955,11 @@ namespace scheme
         if (get_type() == type::reference_type)
             return p->begin();
         else if (get_type() == type::range_type)
-            return iterator(r.first);
+            return iterator(r.first, 0);
 
         // otherwise...
         ensure_list_type();
-        return iterator(l.first);
+        return iterator(l.first, 0);
     }
 
     inline utree::iterator utree::end()
@@ -967,11 +979,11 @@ namespace scheme
         if (get_type() == type::reference_type)
             return p->ref_begin();
         else if (get_type() == type::range_type)
-            return ref_iterator(r.first);
+            return ref_iterator(r.first, 0);
 
         // otherwise...
         ensure_list_type();
-        return ref_iterator(l.first);
+        return ref_iterator(l.first, 0);
     }
 
     inline utree::ref_iterator utree::ref_end()
@@ -991,11 +1003,11 @@ namespace scheme
         if (get_type() == type::reference_type)
             return ((utree const*)p)->begin();
         else if (get_type() == type::range_type)
-            return const_iterator(r.first);
+            return const_iterator(r.first, 0);
 
         // otherwise...
         BOOST_ASSERT(get_type() == type::list_type);
-        return const_iterator(l.first);
+        return const_iterator(l.first, 0);
     }
 
     inline utree::const_iterator utree::end() const
