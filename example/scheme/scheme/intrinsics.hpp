@@ -104,9 +104,9 @@ namespace scheme
         utree eval(args_type args) const
         {
             BOOST_ASSERT(!elements.empty());
-            actor_list::const_iterator end = elements.end();
+            actor_list::const_iterator end = elements.end(); --end;
             boost::iterator_range<actor_list::const_iterator>
-                head_elements(elements.begin(), end--);
+                head_elements(elements.begin(), end);
             BOOST_FOREACH(function const& element, head_elements)
             {
                 element(args);

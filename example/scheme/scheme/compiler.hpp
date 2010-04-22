@@ -243,7 +243,21 @@ namespace scheme
                 else
                     local_env.define(args[i], boost::bind(arg, i), 0, false);
             }
-            return protect(compile(body[0], local_env, fragments, line, source_file));
+
+            if (body.size() == 1)
+            {
+                return protect(compile(body[0], local_env, fragments, line, source_file));
+            }
+            else
+            {
+                actor_list flist;
+                BOOST_FOREACH(utree const& item, body)
+                {
+                    flist.push_back(
+                        compile(item, local_env, fragments, line, source_file));
+                }
+                return protect(block(flist));
+            }
         }
 
         function define_function(
