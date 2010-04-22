@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
+#include <boost/spirit/home/karma/nonterminal/debug_handler_state.hpp>
 #include <boost/function.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
@@ -21,13 +22,6 @@
 
 namespace boost { namespace spirit { namespace karma
 {
-    enum debug_handler_state
-    {
-        pre_generate
-      , successful_generate
-      , failed_generate
-    };
-
     template <
         typename OutputIterator, typename Context, typename Delimiter
       , typename Properties, typename F>

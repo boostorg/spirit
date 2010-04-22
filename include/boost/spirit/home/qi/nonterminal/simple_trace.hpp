@@ -13,6 +13,7 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/qi/nonterminal/debug_handler_state.hpp>
 #include <boost/fusion/include/out.hpp>
 #include <iostream>
 #include <boost/mpl/if.hpp>

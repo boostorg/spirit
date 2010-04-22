@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
+#include <boost/spirit/home/qi/nonterminal/debug_handler_state.hpp>
 #include <boost/spirit/home/qi/operator/expect.hpp>
 #include <boost/function.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -22,13 +23,6 @@
 
 namespace boost { namespace spirit { namespace qi
 {
-    enum debug_handler_state
-    {
-        pre_parse
-      , successful_parse
-      , failed_parse
-    };
-
     template <
         typename Iterator, typename Context
       , typename Skipper, typename F>
