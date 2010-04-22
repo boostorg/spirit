@@ -36,7 +36,7 @@ import testing ;
     [ run qi/bool.cpp                       : : : : ]
     [ run qi/char.cpp                       : : : : ]
     [ run qi/char_class.cpp                 : : : : ]
-    #[ run qi/debug.cpp                      : : : : ]
+    [ run qi/debug.cpp                      : : : : ]
     [ run qi/difference.cpp                 : : : : ]
     [ run qi/encoding.cpp                   : : : : ]
     [ run qi/end.cpp                        : : : : ]
