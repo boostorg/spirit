@@ -67,7 +67,7 @@ namespace scheme
 
         utree eval(args_type args) const
         {
-			utree result;
+            utree result;
             BOOST_FOREACH(function const& element, elements)
             {
                 result.push_back(element(args));
