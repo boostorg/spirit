@@ -15,6 +15,10 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/fusion/include/out.hpp>
 #include <iostream>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 
 //  The stream to use for debug output
 #if !defined(BOOST_SPIRIT_DEBUG_OUT)

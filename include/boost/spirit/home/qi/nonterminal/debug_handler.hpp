@@ -14,7 +14,6 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
 #include <boost/spirit/home/qi/operator/expect.hpp>
-#include <boost/spirit/home/qi/nonterminal/simple_trace.hpp>
 #include <boost/function.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
