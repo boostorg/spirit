@@ -12,6 +12,8 @@
 #endif
 
 #include <boost/mpl/identity.hpp>
+#include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/common_terminals.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -22,7 +24,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct get_casetag<Modifiers, true>
       : mpl::if_<has_modifier<Modifiers, tag::char_code_base<tag::lower> >
           , tag::lower, tag::upper> {};
-
 }}}}
 
 #endif

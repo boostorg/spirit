@@ -17,6 +17,7 @@
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/support_unused.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -95,6 +96,39 @@ int main()
             BOOST_TEST(test("a12c", char_ << int_ << char_, p));
             BOOST_TEST(test_delimited("a 12 c ", 
                 char_ << int_ << char_, p, char(' ')));
+        }
+
+        {
+            // element sequence can be shorter and longer than the attribute 
+            // sequence
+            using boost::spirit::karma::strict;
+            using boost::spirit::karma::relaxed;
+
+            fusion::vector<char, int, char> p ('a', 12, 'c');
+            BOOST_TEST(test("a12", char_ << int_, p));
+            BOOST_TEST(test_delimited("a 12 ", char_ << int_, p, char(' ')));
+
+            BOOST_TEST(test("a12", relaxed[char_ << int_], p));
+            BOOST_TEST(test_delimited("a 12 ", relaxed[char_ << int_], p, char(' ')));
+
+            BOOST_TEST(!test("", strict[char_ << int_], p));
+            BOOST_TEST(!test_delimited("", strict[char_ << int_], p, char(' ')));
+
+            fusion::vector<char, int> p1 ('a', 12);
+            BOOST_TEST(test("a12c", char_ << int_ << char_('c'), p1));
+            BOOST_TEST(test_delimited("a 12 c ", char_ << int_ << char_('c'), 
+                p1, char(' ')));
+
+            BOOST_TEST(test("a12c", relaxed[char_ << int_ << char_('c')], p1));
+            BOOST_TEST(test_delimited("a 12 c ", 
+                relaxed[char_ << int_ << char_('c')], p1, char(' ')));
+
+            BOOST_TEST(!test("", strict[char_ << int_ << char_('c')], p1));
+            BOOST_TEST(!test_delimited("", strict[char_ << int_ << char_('c')], 
+                p1, char(' ')));
+
+            BOOST_TEST(test("a12", strict[char_ << int_], p1));
+            BOOST_TEST(test_delimited("a 12 ", strict[char_ << int_], p1, char(' ')));
         }
 
         {

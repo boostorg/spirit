@@ -16,6 +16,7 @@
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_directive.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -108,6 +109,9 @@ int main()
 
     // failing sub-generators
     {
+        using boost::spirit::karma::strict;
+        using boost::spirit::karma::relaxed;
+
         using namespace boost::assign;
 
         typedef std::pair<char, char> data;
@@ -124,20 +128,32 @@ int main()
 
         r = &char_('d') << char_;
         BOOST_TEST(test("d", +r, v2));
+        BOOST_TEST(test("d", relaxed[+r], v2));
+        BOOST_TEST(!test("", strict[+r], v2));
 
         r = &char_('a') << char_;
-        BOOST_TEST(test("a",+r, v2));
+        BOOST_TEST(test("a", +r, v2));
+        BOOST_TEST(test("a", relaxed[+r], v2));
+        BOOST_TEST(test("a", strict[+r], v2));
 
         r = &char_('g') << char_;
         BOOST_TEST(test("g", +r, v2));
+        BOOST_TEST(test("g", relaxed[+r], v2));
+        BOOST_TEST(!test("", strict[+r], v2));
 
         r = !char_('d') << char_;
         BOOST_TEST(test("abcefg", +r, v2));
+        BOOST_TEST(test("abcefg", relaxed[+r], v2));
+        BOOST_TEST(test("abc", strict[+r], v2));
 
         r = !char_('a') << char_;
         BOOST_TEST(test("bcdefg", +r, v2));
+        BOOST_TEST(test("bcdefg", relaxed[+r], v2));
+        BOOST_TEST(!test("", strict[+r], v2));
 
         r = !char_('g') << char_;
+        BOOST_TEST(test("abcdef", +r, v2));
+        BOOST_TEST(test("abcdef", +r, v2));
         BOOST_TEST(test("abcdef", +r, v2));
 
         r = &char_('A') << char_;

@@ -16,6 +16,7 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/detail/fail_function.hpp>
 #include <boost/spirit/home/karma/detail/pass_container.hpp>
+#include <boost/spirit/home/karma/detail/get_stricttag.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
@@ -44,7 +45,6 @@ namespace boost { namespace spirit
     template <>
     struct flatten_tree<karma::domain, proto::tag::shift_left> // flattens <<
       : mpl::true_ {};
-
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -84,12 +84,36 @@ namespace boost { namespace spirit { namespace traits
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename Elements>
-    struct sequence : nary_generator<sequence<Elements> >
+    namespace detail
+    {
+        template <typename T>
+        struct attribute_size
+          : fusion::result_of::size<T>
+        {};
+
+        template <>
+        struct attribute_size<unused_type>
+          : mpl::int_<0>
+        {};
+
+        template <typename Attribute>
+        inline int attr_size(Attribute const& attr)
+        {
+            return fusion::size(attr);
+        }
+
+        inline int attr_size(unused_type)
+        {
+            return 0;
+        }
+    }
+
+    template <typename Elements, typename Strict, typename Derived>
+    struct base_sequence : nary_generator<Derived>
     {
         typedef typename traits::sequence_properties<Elements>::type properties;
 
-        sequence(Elements const& elements)
+        base_sequence(Elements const& elements)
           : elements(elements) {}
 
         typedef Elements elements_type;
@@ -138,6 +162,14 @@ namespace boost { namespace spirit { namespace karma
                   , mpl::not_<traits::one_element_sequence<Attribute> >
                 >::type 
             >::type attr(attr_);
+
+            // fail generating if sequences have not the same (logical) length
+            if (Strict::value && 
+                detail::attribute_size<attr_type_>::value != 
+                    detail::attr_size(attr_))
+            {
+                return false;
+            }
 
             // return false if *any* of the generators fail
             return !spirit::any_if(elements, attr, fail_function(sink, ctx, d)
@@ -192,15 +224,47 @@ namespace boost { namespace spirit { namespace karma
         Elements elements;
     };
 
+    template <typename Elements>
+    struct sequence 
+      : base_sequence<Elements, mpl::false_, sequence<Elements> >
+    {
+        typedef base_sequence<Elements, mpl::false_, sequence> base_sequence_;
+
+        sequence(Elements const& subject)
+          : base_sequence_(subject) {}
+    };
+
+    template <typename Elements>
+    struct strict_sequence 
+      : base_sequence<Elements, mpl::true_, strict_sequence<Elements> >
+    {
+        typedef base_sequence<Elements, mpl::true_, strict_sequence> 
+            base_sequence_;
+
+        strict_sequence(Elements const& subject)
+          : base_sequence_(subject) {}
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename Elements, bool strict_mode = false>
+        struct make_sequence 
+          : make_nary_composite<Elements, sequence>
+        {};
+
+        template <typename Elements>
+        struct make_sequence<Elements, true> 
+          : make_nary_composite<Elements, strict_sequence>
+        {};
+    }
+
     template <typename Elements, typename Modifiers>
     struct make_composite<proto::tag::shift_left, Elements, Modifiers>
-      : make_nary_composite<Elements, sequence>
+      : detail::make_sequence<Elements, detail::get_stricttag<Modifiers>::value>
     {};
-
 }}} 
 
 namespace boost { namespace spirit { namespace traits
@@ -209,6 +273,9 @@ namespace boost { namespace spirit { namespace traits
     struct has_semantic_action<karma::sequence<Elements> >
       : nary_has_semantic_action<Elements> {};
 
+    template <typename Elements>
+    struct has_semantic_action<karma::strict_sequence<Elements> >
+      : nary_has_semantic_action<Elements> {};
 }}}
 
 #endif

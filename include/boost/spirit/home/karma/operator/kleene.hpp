@@ -15,6 +15,7 @@
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/detail/output_iterator.hpp>
+#include <boost/spirit/home/karma/detail/get_stricttag.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
@@ -30,14 +31,13 @@ namespace boost { namespace spirit
     template <>
     struct use_operator<karma::domain, proto::tag::dereference> // enables *g
       : mpl::true_ {};
-
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename Subject>
-    struct kleene : unary_generator<kleene<Subject> >
+    template <typename Subject, typename Strict, typename Derived>
+    struct base_kleene : unary_generator<Derived>
     {
     private:
         template <
@@ -49,8 +49,8 @@ namespace boost { namespace spirit { namespace karma
             // Ignore return value, failing subject generators are just 
             // skipped. This allows to selectively generate items in the 
             // provided attribute.
-            subject.generate(sink, ctx, d, attr);
-            return true;
+            bool r = subject.generate(sink, ctx, d, attr);
+            return !Strict::value || r;
         }
 
         template <typename OutputIterator, typename Context, typename Delimiter>
@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace karma
             >
         {};
 
-        kleene(Subject const& subject)
+        base_kleene(Subject const& subject)
           : subject(subject) {}
 
         template <
@@ -112,14 +112,48 @@ namespace boost { namespace spirit { namespace karma
         Subject subject;
     };
 
+    template <typename Subject>
+    struct kleene 
+      : base_kleene<Subject, mpl::false_, kleene<Subject> >
+    {
+        typedef base_kleene<Subject, mpl::false_, kleene> base_kleene_;
+
+        kleene(Subject const& subject)
+          : base_kleene_(subject) 
+        {}
+    };
+
+    template <typename Subject>
+    struct strict_kleene 
+      : base_kleene<Subject, mpl::true_, strict_kleene<Subject> >
+    {
+        typedef base_kleene<Subject, mpl::true_, strict_kleene> base_kleene_;
+
+        strict_kleene(Subject const& subject)
+          : base_kleene_(subject) 
+        {}
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Elements, typename Modifiers>
-    struct make_composite<proto::tag::dereference, Elements, Modifiers>
-      : make_unary_composite<Elements, kleene>
-    {};
+    namespace detail
+    {
+        template <typename Subject, bool strict_mode = false>
+        struct make_kleene 
+          : make_unary_composite<Subject, kleene>
+        {};
 
+        template <typename Subject>
+        struct make_kleene<Subject, true> 
+          : make_unary_composite<Subject, strict_kleene>
+        {};
+    }
+
+    template <typename Subject, typename Modifiers>
+    struct make_composite<proto::tag::dereference, Subject, Modifiers>
+      : detail::make_kleene<Subject, detail::get_stricttag<Modifiers>::value>
+    {};
 }}}
 
 namespace boost { namespace spirit { namespace traits
@@ -128,6 +162,9 @@ namespace boost { namespace spirit { namespace traits
     struct has_semantic_action<karma::kleene<Subject> >
       : unary_has_semantic_action<Subject> {};
 
+    template <typename Subject>
+    struct has_semantic_action<karma::strict_kleene<Subject> >
+      : unary_has_semantic_action<Subject> {};
 }}}
 
 #endif

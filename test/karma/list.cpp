@@ -6,6 +6,8 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#include <boost/mpl/print.hpp>
+
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -83,6 +85,9 @@ int main()
 
     // failing sub-generators
     {
+        using boost::spirit::karma::strict;
+        using boost::spirit::karma::relaxed;
+
         typedef std::pair<char, char> data;
         std::vector<data> v2;
         v2 += std::make_pair('a', 'a'), 
@@ -97,21 +102,33 @@ int main()
 
         r = &char_('d') << char_;
         BOOST_TEST(test("d", r % ',', v2));
+        BOOST_TEST(test("d", relaxed[r % ','], v2));
+        BOOST_TEST(!test("", strict[r % ','], v2));
 
         r = &char_('a') << char_;
         BOOST_TEST(test("a", r % ',', v2));
+        BOOST_TEST(test("a", relaxed[r % ','], v2));
+        BOOST_TEST(test("a", strict[r % ','], v2));
 
         r = &char_('g') << char_;
         BOOST_TEST(test("g", r % ',', v2));
+        BOOST_TEST(test("g", relaxed[r % ','], v2));
+        BOOST_TEST(!test("", strict[r % ','], v2));
 
         r = !char_('d') << char_;
         BOOST_TEST(test("a,b,c,e,f,g", r % ',', v2));
+        BOOST_TEST(test("a,b,c,e,f,g", relaxed[r % ','], v2));
+        BOOST_TEST(test("a,b,c", strict[r % ','], v2));
 
         r = !char_('a') << char_;
         BOOST_TEST(test("b,c,d,e,f,g", r % ',', v2));
+        BOOST_TEST(test("b,c,d,e,f,g", relaxed[r % ','], v2));
+        BOOST_TEST(!test("", strict[r % ','], v2));
 
         r = !char_('g') << char_;
         BOOST_TEST(test("a,b,c,d,e,f", r % ',', v2));
+        BOOST_TEST(test("a,b,c,d,e,f", relaxed[r % ','], v2));
+        BOOST_TEST(test("a,b,c,d,e,f", strict[r % ','], v2));
 
         r = &char_('A') << char_;
         BOOST_TEST(!test("", r % ',', v2));

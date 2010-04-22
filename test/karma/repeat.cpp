@@ -17,6 +17,7 @@
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -142,6 +143,9 @@ int main()
 
     // failing sub-generators
     {
+        using boost::spirit::karma::strict;
+        using boost::spirit::karma::relaxed;
+
         using namespace boost::assign;
         namespace karma = boost::spirit::karma;
 
@@ -163,22 +167,47 @@ int main()
 
         r = &char_('d') << char_;
         BOOST_TEST(test("d", repeat[r], v2));
+        BOOST_TEST(test("d", relaxed[repeat[r]], v2));
+        BOOST_TEST(test("", strict[repeat[r]], v2));
 
         r = !char_('d') << char_;
         BOOST_TEST(test("abcefg", repeat(6)[r], v2));
         BOOST_TEST(!test("", repeat(5)[r], v2));
+        BOOST_TEST(test("abcefg", relaxed[repeat(6)[r]], v2));
+        BOOST_TEST(!test("", relaxed[repeat(5)[r]], v2));
+        BOOST_TEST(!test("", strict[repeat(6)[r]], v2));
+        BOOST_TEST(!test("", strict[repeat(5)[r]], v2));
 
         r = !char_('c') << char_;
         BOOST_TEST(test("abd", repeat(3)[r], v2));
+        BOOST_TEST(test("abd", relaxed[repeat(3)[r]], v2));
+        BOOST_TEST(!test("", strict[repeat(3)[r]], v2));
 
         r = !char_('a') << char_;
         BOOST_TEST(test("bcdef", repeat(3, 5)[r], v2));
         BOOST_TEST(test("bcd", repeat(3, 5)[r], v3));
         BOOST_TEST(!test("", repeat(4, 5)[r], v3));
+        BOOST_TEST(test("bcdef", relaxed[repeat(3, 5)[r]], v2));
+        BOOST_TEST(test("bcd", relaxed[repeat(3, 5)[r]], v3));
+        BOOST_TEST(!test("", relaxed[repeat(4, 5)[r]], v3));
+        BOOST_TEST(!test("", strict[repeat(3, 5)[r]], v2));
+        BOOST_TEST(!test("", strict[repeat(3, 5)[r]], v3));
+        BOOST_TEST(!test("", strict[repeat(4, 5)[r]], v3));
 
         BOOST_TEST(test("bcd", repeat(3, inf)[r], v3));
         BOOST_TEST(test("bcdefg", repeat(3, inf)[r], v2));
         BOOST_TEST(!test("", repeat(4, inf)[r], v3));
+
+        r = !char_('g') << char_;
+        BOOST_TEST(test("abcde", repeat(3, 5)[r], v2));
+        BOOST_TEST(test("abcd", repeat(3, 5)[r], v3));
+        BOOST_TEST(!test("", repeat(4, 5)[r], v3));
+        BOOST_TEST(test("abcde", relaxed[repeat(3, 5)[r]], v2));
+        BOOST_TEST(test("abcd", relaxed[repeat(3, 5)[r]], v3));
+        BOOST_TEST(!test("", relaxed[repeat(4, 5)[r]], v3));
+        BOOST_TEST(test("abcde", strict[repeat(3, 5)[r]], v2));
+        BOOST_TEST(test("abcd", strict[repeat(3, 5)[r]], v3));
+        BOOST_TEST(!test("", strict[repeat(5)[r]], v3));
     }
 
     {
