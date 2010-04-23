@@ -67,12 +67,11 @@ namespace boost { namespace spirit { namespace karma
         std::string rule_name;
     };
 
-    template <
-        typename OutputIterator, typename T0, typename T1, typename T2
-      , typename F>
-    void debug(rule<OutputIterator, T0, T1, T2>& r, F f)
+    template <typename OutputIterator
+      , typename T1, typename T2, typename T3, typename T4, typename F>
+    void debug(rule<OutputIterator, T1, T2, T3, T4>& r, F f)
     {
-        typedef rule<OutputIterator, T0, T1, T2> rule_type;
+        typedef rule<OutputIterator, T1, T2, T3, T4> rule_type;
 
         typedef
             debug_handler<
@@ -87,10 +86,11 @@ namespace boost { namespace spirit { namespace karma
 
     struct simple_trace;
 
-    template <typename OutputIterator, typename T0, typename T1, typename T2>
-    void debug(rule<OutputIterator, T0, T1, T2>& r)
+    template <typename OutputIterator
+      , typename T1, typename T2, typename T3, typename T4>
+    void debug(rule<OutputIterator, T1, T2, T3, T4>& r)
     {
-        typedef rule<OutputIterator, T0, T1, T2> rule_type;
+        typedef rule<OutputIterator, T1, T2, T3, T4> rule_type;
 
         typedef
             debug_handler<
@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace karma
   #if defined(BOOST_SPIRIT_KARMA_DEBUG)
     #define BOOST_SPIRIT_DEBUG_NODE(r)  r.name(#r); debug(r)
   #else
-    #define BOOST_SPIRIT_DEBUG_NODE(r)
+    #define BOOST_SPIRIT_DEBUG_NODE(r)  r.name(#r);
   #endif
 #endif
 

@@ -72,12 +72,11 @@ namespace boost { namespace spirit { namespace qi
         std::string rule_name;
     };
 
-    template <
-        typename Iterator, typename T0, typename T1, typename T2
-      , typename F>
-    void debug(rule<Iterator, T0, T1, T2>& r, F f)
+    template <typename OutputIterator
+      , typename T1, typename T2, typename T3, typename T4, typename F>
+    void debug(rule<Iterator, T1, T2, T3, T4>& r, F f)
     {
-        typedef rule<Iterator, T0, T1, T2> rule_type;
+        typedef rule<Iterator, T1, T2, T3, T4> rule_type;
 
         typedef
             debug_handler<
@@ -91,10 +90,11 @@ namespace boost { namespace spirit { namespace qi
 
     struct simple_trace;
 
-    template <typename Iterator, typename T0, typename T1, typename T2>
-    void debug(rule<Iterator, T0, T1, T2>& r)
+    template <typename OutputIterator
+      , typename T1, typename T2, typename T3, typename T4>
+    void debug(rule<Iterator, T1, T2, T3, T4>& r)
     {
-        typedef rule<Iterator, T0, T1, T2> rule_type;
+        typedef rule<Iterator, T1, T2, T3, T4> rule_type;
 
         typedef
             debug_handler<
@@ -114,7 +114,7 @@ namespace boost { namespace spirit { namespace qi
   #if defined(BOOST_SPIRIT_DEBUG) || defined(BOOST_SPIRIT_QI_DEBUG)
     #define BOOST_SPIRIT_DEBUG_NODE(r)  r.name(#r); debug(r)
   #else
-    #define BOOST_SPIRIT_DEBUG_NODE(r)
+    #define BOOST_SPIRIT_DEBUG_NODE(r)  r.name(#r);
   #endif
 #endif
 
