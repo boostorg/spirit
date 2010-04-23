@@ -79,10 +79,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         > base_type;
 
     public:
-        indirect_iterator()
-          : iter_(0) 
-        {}
-
         indirect_iterator(Iterator& iter)
           : iter_(&iter)
         {}
@@ -97,9 +93,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         bool equal(indirect_iterator const& other) const
         {
-            if (0 == iter_)
-                return 0 == other.iter_;
-            return other.iter_ != 0 && *iter_ == *other.iter_;
+            return *iter_ == *other.iter_;
         }
 
         typename base_type::reference dereference() const
@@ -135,7 +129,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             iterator_type;
 
         pass_container(F const& f, Attr const& attr)
-          : f(f), attr(attr), iter(traits::begin(attr)) {}
+          : f(f), attr(attr), iter(traits::begin(attr)), end(traits::end(attr)) 
+        {}
 
         // this is for the case when the current element expects an attribute
         // which is taken from the next entry in the container
@@ -143,7 +138,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            iterator_type end = traits::end(attr);
             if (!traits::compare(iter, end) && !f(component, traits::deref(iter))) 
             {
                 // needs to return false as long as everything is ok
@@ -163,7 +157,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             typedef typename make_indirect_iterator<iterator_type>::type 
                 indirect_iterator_type;
 
-            iterator_type end = traits::end(attr);
             indirect_iterator_type ind_iter(iter);
             indirect_iterator_type ind_end(end);
 
@@ -221,7 +214,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             typedef typename make_indirect_iterator<iterator_type>::type 
                 indirect_iterator_type;
 
-            iterator_type end = traits::end(attr);
             indirect_iterator_type ind_iter(iter);
             indirect_iterator_type ind_end(end);
 
@@ -245,6 +237,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         F f;
         Attr const& attr;
         mutable iterator_type iter;
+        mutable iterator_type end;
 
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
