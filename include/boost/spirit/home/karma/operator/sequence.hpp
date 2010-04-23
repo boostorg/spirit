@@ -118,6 +118,64 @@ namespace boost { namespace spirit { namespace karma
         {
             return 0;
         }
+
+        ///////////////////////////////////////////////////////////////////////
+        // This is a wrapper for any iterator allowing to pass a reference of it
+        // to the components of the sequence
+        template <typename Iterator>
+        class indirect_iterator
+          : public boost::iterator_facade<
+                indirect_iterator<Iterator>
+              , typename boost::detail::iterator_traits<Iterator>::value_type
+              , boost::forward_traversal_tag
+              , typename boost::detail::iterator_traits<Iterator>::value_type const&>
+        {
+            typedef typename boost::detail::iterator_traits<Iterator>::value_type
+                base_value_type;
+
+            typedef boost::iterator_facade<
+                indirect_iterator<Iterator>, base_value_type
+              , boost::forward_traversal_tag, base_value_type const&
+            > base_type;
+
+        public:
+            indirect_iterator(Iterator& iter)
+              : iter_(&iter)
+            {}
+
+        private:
+            friend class boost::iterator_core_access;
+
+            void increment()
+            {
+                ++*iter_;
+            }
+
+            bool equal(indirect_iterator const& other) const
+            {
+                return *iter_ == *other.iter_;
+            }
+
+            typename base_type::reference dereference() const
+            {
+                return **iter_;
+            }
+
+        private:
+            Iterator* iter_;
+        };
+
+        template <typename Iterator>
+        struct make_indirect_iterator
+        {
+            typedef indirect_iterator<Iterator> type;
+        };
+
+        template <>
+        struct make_indirect_iterator<unused_type const*>
+        {
+            typedef unused_type const* type;
+        };
     }
 
     template <typename Elements, typename Strict, typename Derived>
@@ -197,12 +255,23 @@ namespace boost { namespace spirit { namespace karma
             typedef detail::fail_function<
                 OutputIterator, Context, Delimiter> fail_function;
 
-            detail::pass_container<fail_function, Attribute, Strict> pass(
-                fail_function(sink, ctx, d), attr_);
+            typedef typename traits::container_iterator<Attribute const>::type 
+                iterator_type;
+            typedef typename detail::make_indirect_iterator<iterator_type>::type 
+                indirect_iterator_type;
+            typedef detail::pass_container<
+                fail_function, Attribute, indirect_iterator_type, Strict>
+            pass_container;
+
+            iterator_type begin = traits::begin(attr_);
+            iterator_type end = traits::end(attr_);
+
+            pass_container pass(fail_function(sink, ctx, d), 
+                indirect_iterator_type(begin), indirect_iterator_type(end));
             bool r = fusion::any(elements, pass);
 
             // fail generating if sequences have not the same (logical) length
-            return !r && (!Strict::value || pass.iter == traits::end(attr_));
+            return !r && (!Strict::value || begin == end);
         }
 
         // main generate function. Dispatches to generate_impl depending

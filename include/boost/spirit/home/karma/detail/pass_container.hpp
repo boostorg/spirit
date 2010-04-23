@@ -60,76 +60,16 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 #undef BOOST_SPIRIT_IS_CONVERTIBLE
 
     ///////////////////////////////////////////////////////////////////////////
-    // This is a wrapper for any iterator allowing to pass a reference of it
-    // to the components of the sequence
-    template <typename Iterator>
-    class indirect_iterator
-      : public boost::iterator_facade<
-            indirect_iterator<Iterator>
-          , typename boost::detail::iterator_traits<Iterator>::value_type
-          , boost::forward_traversal_tag
-          , typename boost::detail::iterator_traits<Iterator>::value_type const&>
-    {
-        typedef typename boost::detail::iterator_traits<Iterator>::value_type
-            base_value_type;
-
-        typedef boost::iterator_facade<
-            indirect_iterator<Iterator>, base_value_type
-          , boost::forward_traversal_tag, base_value_type const&
-        > base_type;
-
-    public:
-        indirect_iterator(Iterator& iter)
-          : iter_(&iter)
-        {}
-
-    private:
-        friend class boost::iterator_core_access;
-
-        void increment()
-        {
-            ++*iter_;
-        }
-
-        bool equal(indirect_iterator const& other) const
-        {
-            return *iter_ == *other.iter_;
-        }
-
-        typename base_type::reference dereference() const
-        {
-            return **iter_;
-        }
-
-    private:
-        Iterator* iter_;
-    };
-
-    template <typename Iterator>
-    struct make_indirect_iterator
-    {
-        typedef indirect_iterator<Iterator> type;
-    };
-
-    template <>
-    struct make_indirect_iterator<unused_type const*>
-    {
-        typedef unused_type const* type;
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
     // to the sequence is an STL container. This is a wrapper around F.
     // The function F does the actual generating.
-    template <typename F, typename Attr, typename Strict>
+    template <typename F, typename Attr, typename Iterator, typename Strict>
     struct pass_container
     {
         typedef typename F::context_type context_type;
-        typedef typename traits::container_iterator<Attr const>::type 
-            iterator_type;
 
-        pass_container(F const& f, Attr const& attr)
-          : f(f), attr(attr), iter(traits::begin(attr)), end(traits::end(attr)) 
+        pass_container(F const& f, Iterator begin, Iterator end)
+          : f(f), iter(begin), end(end) 
         {}
 
         // this is for the case when the current element expects an attribute
@@ -154,13 +94,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {
-            typedef typename make_indirect_iterator<iterator_type>::type 
-                indirect_iterator_type;
-
-            indirect_iterator_type ind_iter(iter);
-            indirect_iterator_type ind_end(end);
-
-            return f(component, make_iterator_range(ind_iter, ind_end));
+            return f(component, make_iterator_range(iter, end));
         }
 
         // This handles the distinction between elements in a sequence expecting
@@ -211,13 +145,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
-            typedef typename make_indirect_iterator<iterator_type>::type 
-                indirect_iterator_type;
-
-            indirect_iterator_type ind_iter(iter);
-            indirect_iterator_type ind_end(end);
-
-            return f(component, make_iterator_range(ind_iter, ind_end));
+            return f(component, make_iterator_range(iter, end));
         }
 
         // Dispatches to dispatch_main depending on the attribute type
@@ -235,9 +163,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         F f;
-        Attr const& attr;
-        mutable iterator_type iter;
-        mutable iterator_type end;
+        mutable Iterator iter;
+        mutable Iterator end;
 
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
