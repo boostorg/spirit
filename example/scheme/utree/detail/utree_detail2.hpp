@@ -577,9 +577,9 @@ namespace scheme
     };
 
     template <typename F>
-    utree stored_function<F>::operator()(args_type args) const
+    utree stored_function<F>::operator()(scope const& env) const
     {
-        return f(args);
+        return f(env);
     }
 
     template <typename F>
@@ -1289,10 +1289,10 @@ namespace scheme
         s.tag(tag);
     }
 
-    inline utree utree::eval(args_type args) const
+    inline utree utree::eval(scope const& env) const
     {
         BOOST_ASSERT(get_type() == type::function_type);
-        return (*pf)(args);
+        return (*pf)(env);
     }
 }
 

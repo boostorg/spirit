@@ -21,8 +21,8 @@ int main()
     using scheme::utree;
 
     utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";
-    scheme::interpreter factorial(src);
-    BOOST_TEST(factorial(10) == 3628800);
+    scheme::interpreter program(src);
+    BOOST_TEST(program["factorial"](10) == 3628800);
 
     return boost::report_errors();
 }

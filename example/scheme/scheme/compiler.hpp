@@ -117,7 +117,9 @@ namespace scheme
     public:
 
         environment(environment* parent = 0)
-          : outer(parent) {}
+          : outer(parent),
+            depth(parent? parent->depth + 1 : 0)
+        {}
 
         template <typename Function>
         void define(std::string const& name, Function const& f, int arity, bool fixed)
@@ -154,6 +156,7 @@ namespace scheme
         }
 
         environment* parent() const { return outer; }
+        int level() const { return depth; }
 
     private:
 
@@ -161,6 +164,7 @@ namespace scheme
 
         environment* outer;
         std::map<std::string, map_element> definitions;
+        int depth;
     };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -177,14 +181,15 @@ namespace scheme
     {
         // we must hold f by reference because functions can be recursive
         boost::reference_wrapper<function const> f;
+        int level;
 
-        external_function(function const& f)
-          : f(f) {}
+        external_function(function const& f, int level)
+          : f(f), level(level) {}
 
         using base_type::operator();
         function operator()(actor_list const& elements) const
         {
-            return function(lambda_function(f, elements));
+            return function(lambda_function(f, elements, level));
         }
     };
 
@@ -239,9 +244,11 @@ namespace scheme
             for (std::size_t i = 0; i < args.size(); ++i)
             {
                 if (!fixed_arity && (args.size() - 1) == i)
-                    local_env.define(args[i], boost::bind(varg, i), 0, false);
+                    local_env.define(args[i],
+                        boost::bind(varg, i, local_env.level()), 0, false);
                 else
-                    local_env.define(args[i], boost::bind(arg, i), 0, false);
+                    local_env.define(args[i],
+                        boost::bind(arg, i, local_env.level()), 0, false);
             }
 
             actor_list flist;
@@ -257,7 +264,7 @@ namespace scheme
                 return protect(flist.front());
         }
 
-        bool is_define(utree const& item) const
+        static bool is_define(utree const& item)
         {
             if (item.which() != utree_type::list_type ||
                 item.begin()->which() != utree_type::symbol_type)
@@ -278,7 +285,7 @@ namespace scheme
 
                 fragments.push_back(function());
                 function& f = fragments.back();
-                env.define(name, external_function(f), args.size(), fixed_arity);
+                env.define(name, external_function(f, env.level()), args.size(), fixed_arity);
                 f = make_lambda(args, fixed_arity, body)(); // unprotect (evaluate returns a function)
                 return f;
             }
@@ -482,7 +489,24 @@ namespace scheme
             scheme::function f;
             try
             {
-                f = compile(program, env, fragments, line, source_file);
+                if (!compiler::is_define(program))
+                {
+                    if (source_file != "")
+                        std::cerr << source_file;
+
+                    int progline = (program.which() == utree_type::list_type)
+                        ? program.tag() : line;
+
+                    if (progline != -1)
+                        std::cerr << '(' << progline << ')';
+
+                    std::cerr << " : Error! scheme: Function definition expected." << std::endl;
+                    continue; // try the next expression
+                }
+                else
+                {
+                    f = compile(program, env, fragments, line, source_file);
+                }
             }
             catch (compilation_error const&)
             {
@@ -501,6 +525,7 @@ namespace scheme
         env.define("front", front, 1, true);
         env.define("back", back, 1, true);
         env.define("rest", rest, 1, true);
+        env.define("=", equal, 2, true);
         env.define("<", less_than, 2, true);
         env.define("<=", less_than_equal, 2, true);
         env.define("+", plus, 2, false);
@@ -512,7 +537,7 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // interpreter
     ///////////////////////////////////////////////////////////////////////////
-    struct interpreter : actor<interpreter>
+    struct interpreter
     {
         template <typename Source>
         interpreter(
@@ -529,21 +554,46 @@ namespace scheme
             }
         }
 
-        interpreter(utree const& program, environment* outer = 0)
+        interpreter(
+            utree const& program,
+            environment* outer = 0)
         {
             if (outer == 0)
                 build_basic_environment(env);
             compile_all(program, env, flist, fragments);
         }
 
-        utree eval(args_type args) const
+        function operator[](std::string const& name)
         {
-            return flist.back()(args);
-        }
+            boost::tuple<compiled_function*, int, bool> r = env.find(name);
+            if (boost::get<0>(r))
+            {
+                compiled_function* cf = boost::get<0>(r);
+                int arity = boost::get<1>(r);
+                bool fixed_arity = boost::get<2>(r);
+                actor_list flist;
 
-        bool empty() const
-        {
-            return flist.empty() || flist.back().empty();
+                if (arity > 0)
+                {
+                    for (int i = 0; i < (arity-1); ++i)
+                        flist.push_back(arg(i));
+
+                    if (fixed_arity)
+                        flist.push_back(arg(arity-1));
+                    else
+                        flist.push_back(varg(arity-1));
+                }
+                return (*cf)(flist);
+            }
+            else
+            {
+                std::cerr
+                    << " : Error! scheme: Function "
+                    << name
+                    << " not found."
+                    << std::endl;
+                return function();
+            }
         }
 
         environment env;

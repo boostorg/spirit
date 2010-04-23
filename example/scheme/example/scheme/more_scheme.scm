@@ -29,3 +29,26 @@
     (display (begin 1 2 rest)))
 
 (display-all 123 456 999 666)
+
+
+(define (foo x)
+    (define (bar y z) (list x y z))
+    (bar 9 (+ x 2)))
+
+(display (foo 100))
+
+; The hello-world for interpreters ;-)
+(define (factorial n)
+  (if (<= n 0) 1
+    (* n (factorial (- n 1)))))
+
+(display (factorial 10))
+
+
+
+(define (foo x)
+    (define (bar y z) (list x y z))
+    (bar 9 (+ x 2)))
+
+(define (main)
+    (display (foo 100))) ; prints ( 100 9 102 )

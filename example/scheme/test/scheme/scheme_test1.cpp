@@ -58,25 +58,25 @@ int main(int argc, char **argv)
         BOOST_TEST(s != std::string("\xef\xbb\xbf"));
     }
 
-    scheme::utree program;
-    BOOST_TEST(scheme::input::parse_sexpr_list(in, program, filename));
+    //~ scheme::utree program;
+    //~ BOOST_TEST(scheme::input::parse_sexpr_list(in, program, filename));
 
-    scheme::environment env;
-    scheme::build_basic_environment(env);
-    scheme::actor_list fragments;
-    scheme::actor_list flist;
-    compile_all(program, env, flist, fragments, filename);
+    //~ scheme::environment env;
+    //~ scheme::build_basic_environment(env);
+    //~ scheme::actor_list fragments;
+    //~ scheme::actor_list flist;
+    //~ compile_all(program, env, flist, fragments, filename);
 
-    scheme::actor_list::iterator i = flist.begin();
+    //~ scheme::actor_list::iterator i = flist.begin();
 
-    BOOST_TEST((*i++)(555) == 1110);
-    BOOST_TEST((*i++)() == 123);
-    BOOST_TEST((*i++)() == 246);
-    BOOST_TEST((*i++)(5) == 120);
-    BOOST_TEST((*i++)() == 3628800);
-    BOOST_TEST((*i++)(5) == 5);
-    BOOST_TEST((*i++)() == 55);
-    BOOST_TEST((*i++)() == 21);
+    //~ BOOST_TEST((*i++)(555) == 1110);
+    //~ BOOST_TEST((*i++)() == 123);
+    //~ BOOST_TEST((*i++)() == 246);
+    //~ BOOST_TEST((*i++)(5) == 120);
+    //~ BOOST_TEST((*i++)() == 3628800);
+    //~ BOOST_TEST((*i++)(5) == 5);
+    //~ BOOST_TEST((*i++)() == 55);
+    //~ BOOST_TEST((*i++)() == 21);
 
     return boost::report_errors();
 }

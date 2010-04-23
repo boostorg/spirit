@@ -40,9 +40,9 @@ int main(int argc, char **argv)
         }
     }
 
-    scheme::interpreter f(in, filename);
-    if (!f.empty())
-        f();
+    scheme::interpreter program(in, filename);
+    scheme::function main_ = program["main"];
+    main_(); // call main
     return 0;
 }
 

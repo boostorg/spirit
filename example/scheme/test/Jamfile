@@ -22,8 +22,8 @@ import testing ;
 
     # run utree tests
     [ run utree/utree_test.cpp                    : : : : ]
-    [ run scheme/scheme_test1.cpp                 : scheme/scheme_test1.scm : : : ]
-    [ run scheme/scheme_test2.cpp                 : scheme/factorial.scm : : : ]
+    #[ run scheme/scheme_test1.cpp                 : scheme/scheme_test1.scm : : : ]
+    [ run scheme/scheme_test2.cpp                 : scheme/scheme_test.scm test1 test2 test3 test4 : : : ]
     [ run scheme/scheme_test3.cpp                 : : : : ]
 
     ;

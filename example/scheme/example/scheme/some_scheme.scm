@@ -1,5 +1,7 @@
-(define (foo x)
-    (define (bar y z) (list x y z))
-    (bar 9 x))
+; The hello-world for interpreters ;-)
+(define (factorial n)
+  (if (<= n 0) 1
+    (* n (factorial (- n 1)))))
 
-(display (foo 100))
+(define (main)
+    (display (factorial 10)))

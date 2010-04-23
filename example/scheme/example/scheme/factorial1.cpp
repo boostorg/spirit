@@ -5,7 +5,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
-
+#include <input/parse_sexpr_impl.hpp>
 #include <scheme/compiler.hpp>
 #include <utree/io.hpp>
 #include <iostream>
@@ -44,8 +44,8 @@ int main()
     using scheme::interpreter;
     using scheme::_1;
 
-    scheme::interpreter factorial(in);
-    std::cout << factorial(10) << std::endl;
+    scheme::interpreter program(in);
+    std::cout << program["factorial"](10) << std::endl;
 
     return 0;
 }

@@ -39,8 +39,17 @@ int main(int argc, char **argv)
     using scheme::interpreter;
     using scheme::_1;
 
-    scheme::interpreter factorial(in);
-    BOOST_TEST(factorial(10) == 3628800);
+    scheme::interpreter program(in);
+
+    for (int i = 2; i < argc; ++i)
+    {
+        bool r = program[argv[i]]() == true;
+        if (r)
+            std::cout << "Success: " << argv[i] << std::endl;
+        else
+            std::cout << "Fail: " << argv[i] << std::endl;
+        BOOST_TEST(r);
+    }
 
     return boost::report_errors();
 }

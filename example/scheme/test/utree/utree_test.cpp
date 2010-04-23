@@ -22,7 +22,7 @@ inline void check(scheme::utree const& val, std::string expected)
 
 struct one_two_three
 {
-    scheme::utree operator()(scheme::args_type) const
+    scheme::utree operator()(scheme::scope) const
     {
         return scheme::utree(123);
     }
@@ -280,7 +280,7 @@ int main()
     {
         // test functions
         utree f = scheme::stored_function<one_two_three>();
-        f.eval(scheme::args_type());
+        f.eval(scheme::scope());
     }
 
     {

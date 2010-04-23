@@ -135,12 +135,12 @@ namespace scheme
     // Our function type
     ///////////////////////////////////////////////////////////////////////////
     class utree;
-    typedef boost::iterator_range<utree const*> args_type;
+    class scope;
 
     struct function_base
     {
         virtual ~function_base() {};
-        virtual utree operator()(args_type args) const = 0;
+        virtual utree operator()(scope const& env) const = 0;
         virtual function_base* clone() const = 0;
     };
 
@@ -150,7 +150,7 @@ namespace scheme
         F f;
         stored_function(F f = F());
         virtual ~stored_function();
-        virtual utree operator()(args_type args) const;
+        virtual utree operator()(scope const& env) const;
         virtual function_base* clone() const;
     };
 
@@ -317,7 +317,7 @@ namespace scheme
         short tag() const;
         void tag(short tag);
 
-        utree eval(args_type args) const;
+        utree eval(scope const& env) const;
 
     private:
 
@@ -347,6 +347,30 @@ namespace scheme
             utree* p;
             function_base* pf;
         };
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The scope
+    ///////////////////////////////////////////////////////////////////////////
+    class scope : public boost::iterator_range<utree const*>
+    {
+    public:
+
+        scope(utree const* first = 0,
+            utree const* last = 0,
+            scope const* parent = 0)
+          : boost::iterator_range<utree const*>(first, last),
+            parent(parent),
+            depth(parent? parent->depth + 1 : 0)
+        {}
+
+        scope const* outer() const { return parent; }
+        int level() const { return depth; }
+
+    private:
+
+        scope const* parent;
+        int depth;
     };
 }
 
