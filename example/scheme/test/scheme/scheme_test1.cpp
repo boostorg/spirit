@@ -16,7 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int main(int argc, char **argv)
+int main()
 {
     using scheme::utree;
 
@@ -41,42 +41,6 @@ int main(int argc, char **argv)
 
         BOOST_TEST(factorial(_1)            (10)        == utree(3628800));
     }
-
-    BOOST_TEST(argc > 1);
-    char const* filename = filename = argv[1];
-    std::ifstream in(filename, std::ios_base::in);
-
-    BOOST_TEST(in);
-
-    // Ignore the BOM marking the beginning of a UTF-8 file in Windows
-    char c = in.peek();
-    if (c == '\xef')
-    {
-        char s[3];
-        in >> s[0] >> s[1] >> s[2];
-        s[3] = '\0';
-        BOOST_TEST(s != std::string("\xef\xbb\xbf"));
-    }
-
-    //~ scheme::utree program;
-    //~ BOOST_TEST(scheme::input::parse_sexpr_list(in, program, filename));
-
-    //~ scheme::environment env;
-    //~ scheme::build_basic_environment(env);
-    //~ scheme::actor_list fragments;
-    //~ scheme::actor_list flist;
-    //~ compile_all(program, env, flist, fragments, filename);
-
-    //~ scheme::actor_list::iterator i = flist.begin();
-
-    //~ BOOST_TEST((*i++)(555) == 1110);
-    //~ BOOST_TEST((*i++)() == 123);
-    //~ BOOST_TEST((*i++)() == 246);
-    //~ BOOST_TEST((*i++)(5) == 120);
-    //~ BOOST_TEST((*i++)() == 3628800);
-    //~ BOOST_TEST((*i++)(5) == 5);
-    //~ BOOST_TEST((*i++)() == 55);
-    //~ BOOST_TEST((*i++)() == 21);
 
     return boost::report_errors();
 }

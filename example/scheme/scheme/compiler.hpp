@@ -107,6 +107,15 @@ namespace scheme
         }
     };
 
+    struct no_body : scheme_exception
+    {
+        ~no_body() throw() {}
+        virtual const char* what() const throw()
+        {
+            return "scheme: No expression in body.";
+        }
+    };
+
 ///////////////////////////////////////////////////////////////////////////////
 //  The environment
 ///////////////////////////////////////////////////////////////////////////////
@@ -252,6 +261,9 @@ namespace scheme
             }
 
             actor_list flist;
+            if (body.size() == 0)
+                throw no_body();
+
             BOOST_FOREACH(utree const& item, body)
             {
                 function f = compile(item, local_env, fragments, line, source_file);
@@ -286,10 +298,10 @@ namespace scheme
                 fragments.push_back(function());
                 function& f = fragments.back();
                 env.define(name, external_function(f, env.level()), args.size(), fixed_arity);
-                f = make_lambda(args, fixed_arity, body)(); // unprotect (evaluate returns a function)
+                f = make_lambda(args, fixed_arity, body)(); // unprotect (eval returns a function)
                 return f;
             }
-            catch (compilation_error const&)
+            catch (std::exception const&)
             {
                 env.undefine(name);
                 throw;
