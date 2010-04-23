@@ -17,14 +17,16 @@
 int main()
 {
     using scheme::interpreter;
+    using scheme::function;
     using scheme::utree;
 
     utree src =
         "(define (factorial n) "
             "(if (<= n 0) 1 (* n (factorial (- n 1)))))";
 
-    scheme::interpreter program(src);
-    std::cout << program["factorial"](10) << std::endl;
+    interpreter program(src);
+    function factorial = program["factorial"];
+    std::cout << factorial(10) << std::endl;
 
     return 0;
 }

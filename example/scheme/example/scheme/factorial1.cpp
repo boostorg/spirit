@@ -11,21 +11,8 @@
 #include <iostream>
 #include <fstream>
 
-///////////////////////////////////////////////////////////////////////////////
-//  Main program
-///////////////////////////////////////////////////////////////////////////////
-int main()
+void ignore_bom(std::ifstream& in)
 {
-    char const* filename = "factorial.scm";
-    std::ifstream in(filename, std::ios_base::in);
-
-    if (!in)
-    {
-        std::cerr << "Error: Could not open input file: "
-            << filename << std::endl;
-        return 1;
-    }
-
     // Ignore the BOM marking the beginning of a UTF-8 file in Windows
     char c = in.peek();
     if (c == '\xef')
@@ -40,12 +27,30 @@ int main()
             return 1;
         }
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  Main program
+///////////////////////////////////////////////////////////////////////////////
+int main()
+{
+    char const* filename = "factorial.scm";
+    std::ifstream in(filename, std::ios_base::in);
+
+    if (!in)
+    {
+        std::cerr << "Error: Could not open input file: "
+            << filename << std::endl;
+        return -1;
+    }
+    ignore_bom(in);
 
     using scheme::interpreter;
-    using scheme::_1;
+    using scheme::function;
 
-    scheme::interpreter program(in);
-    std::cout << program["factorial"](10) << std::endl;
+    interpreter program(in);
+    function factorial = program["factorial"];
+    std::cout << factorial(10) << std::endl;
 
     return 0;
 }
