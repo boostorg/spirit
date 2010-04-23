@@ -127,13 +127,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     // This function handles the case where the attribute (Attr) given
     // to the sequence is an STL container. This is a wrapper around F.
     // The function F does the actual generating.
-    template <typename F, typename Attr>
+    template <typename F, typename Attr, typename Strict>
     struct pass_container
     {
         typedef typename F::context_type context_type;
-        typedef typename traits::container_iterator<Attr>::type iterator_type;
+        typedef typename traits::container_iterator<Attr const>::type 
+            iterator_type;
 
-        pass_container(F const& f, Attr& attr)
+        pass_container(F const& f, Attr const& attr)
           : f(f), attr(attr), iter(traits::begin(attr)) {}
 
         // this is for the case when the current element expects an attribute
@@ -236,6 +237,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             typedef typename traits::attribute_of<
                 Component, context_type>::type lhs_attribute;
 
+            // false means everything went ok
             return dispatch_main(component
               , has_same_elements<rhs, lhs_attribute>());
         }
@@ -248,15 +250,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // silence MSVC warning C4512: assignment operator could not be generated
         pass_container& operator= (pass_container const&);
     };
-
-    // Utility function to make a pass_container
-    template <typename F, typename Attr>
-    pass_container<F, Attr>
-    inline make_pass_container(F const& f, Attr& attr)
-    {
-        return pass_container<F, Attr>(f, attr);
-    }
-
 }}}}
 
 #endif

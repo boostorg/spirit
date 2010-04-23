@@ -119,8 +119,7 @@ namespace boost { namespace spirit { namespace karma
         typedef base_kleene<Subject, mpl::false_, kleene> base_kleene_;
 
         kleene(Subject const& subject)
-          : base_kleene_(subject) 
-        {}
+          : base_kleene_(subject) {}
     };
 
     template <typename Subject>
@@ -130,8 +129,7 @@ namespace boost { namespace spirit { namespace karma
         typedef base_kleene<Subject, mpl::true_, strict_kleene> base_kleene_;
 
         strict_kleene(Subject const& subject)
-          : base_kleene_(subject) 
-        {}
+          : base_kleene_(subject) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////

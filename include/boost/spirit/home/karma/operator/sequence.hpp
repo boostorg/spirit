@@ -97,12 +97,24 @@ namespace boost { namespace spirit { namespace karma
         {};
 
         template <typename Attribute>
-        inline int attr_size(Attribute const& attr)
+        inline typename enable_if<
+            fusion::traits::is_sequence<Attribute>, std::size_t
+        >::type
+        attr_size(Attribute const& attr)
         {
             return fusion::size(attr);
         }
 
-        inline int attr_size(unused_type)
+        template <typename Attribute>
+        inline typename enable_if<
+            traits::is_container<Attribute>, std::size_t
+        >::type
+        attr_size(Attribute const& attr)
+        {
+            return attr.size();
+        }
+
+        inline std::size_t attr_size(unused_type)
         {
             return 0;
         }
@@ -163,17 +175,13 @@ namespace boost { namespace spirit { namespace karma
                 >::type 
             >::type attr(attr_);
 
-            // fail generating if sequences have not the same (logical) length
-            if (Strict::value && 
-                detail::attribute_size<attr_type_>::value != 
-                    detail::attr_size(attr_))
-            {
-                return false;
-            }
-
             // return false if *any* of the generators fail
-            return !spirit::any_if(elements, attr, fail_function(sink, ctx, d)
-              , predicate());
+            bool r = spirit::any_if(elements, attr
+                          , fail_function(sink, ctx, d), predicate());
+
+            // fail generating if sequences have not the same (logical) length
+            return !r && (!Strict::value || 
+                detail::attribute_size<attr_type_>::value == detail::attr_size(attr_));
         }
 
         // Special case when Attribute is an stl container and the sequence's
@@ -189,8 +197,12 @@ namespace boost { namespace spirit { namespace karma
             typedef detail::fail_function<
                 OutputIterator, Context, Delimiter> fail_function;
 
-            return !fusion::any(elements, detail::make_pass_container(
-                fail_function(sink, ctx, d), attr_));
+            detail::pass_container<fail_function, Attribute, Strict> pass(
+                fail_function(sink, ctx, d), attr_);
+            bool r = fusion::any(elements, pass);
+
+            // fail generating if sequences have not the same (logical) length
+            return !r && (!Strict::value || pass.iter == traits::end(attr_));
         }
 
         // main generate function. Dispatches to generate_impl depending

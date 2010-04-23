@@ -244,8 +244,7 @@ namespace boost { namespace spirit { namespace karma
         > base_repeat_generator_;
 
         repeat_generator(Subject const& subject, LoopIter const& iter)
-          : base_repeat_generator_(subject, iter) 
-        {}
+          : base_repeat_generator_(subject, iter) {}
     };
 
     template <typename Subject, typename LoopIter>
@@ -259,8 +258,7 @@ namespace boost { namespace spirit { namespace karma
         > base_repeat_generator_;
 
         strict_repeat_generator(Subject const& subject, LoopIter const& iter)
-          : base_repeat_generator_(subject, iter) 
-        {}
+          : base_repeat_generator_(subject, iter) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////

@@ -129,22 +129,20 @@ namespace boost { namespace spirit { namespace karma
     struct plus 
       : base_plus<Subject, mpl::false_, plus<Subject> >
     {
-        typedef base_plus<Subject, mpl::false_, plus> base_plus;
+        typedef base_plus<Subject, mpl::false_, plus> base_plus_;
 
         plus(Subject const& subject)
-          : base_plus(subject) 
-        {}
+          : base_plus_(subject) {}
     };
 
     template <typename Subject>
     struct strict_plus 
       : base_plus<Subject, mpl::true_, strict_plus<Subject> >
     {
-        typedef base_plus<Subject, mpl::true_, strict_plus> base_plus;
+        typedef base_plus<Subject, mpl::true_, strict_plus> base_plus_;
 
         strict_plus(Subject const& subject)
-          : base_plus(subject) 
-        {}
+          : base_plus_(subject) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////
