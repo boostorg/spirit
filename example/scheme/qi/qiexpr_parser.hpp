@@ -151,24 +151,24 @@ namespace scheme { namespace qi
 
             make_list_type make_directive = detail::make_list_node("");
 
-            make_list_type make_sequence = detail::make_list_node(">>");
-            make_list_type make_permutation = detail::make_list_node("^");
-            make_list_type make_alternative = detail::make_list_node("|");
+            make_list_type make_sequence = detail::make_list_node("qi:>>");
+            make_list_type make_permutation = detail::make_list_node("qi:^");
+            make_list_type make_alternative = detail::make_list_node("qi:|");
 
-            make_list_type make_kleene = detail::make_list_node("*");
-            make_list_type make_plus = detail::make_list_node("+");
-            make_list_type make_optional = detail::make_list_node("-");
-            make_list_type make_and_pred = detail::make_list_node("&");
-            make_list_type make_not_pred = detail::make_list_node("!");
+            make_list_type make_kleene = detail::make_list_node("qi:*");
+            make_list_type make_plus = detail::make_list_node("qi:+");
+            make_list_type make_optional = detail::make_list_node("qi:-");
+            make_list_type make_and_pred = detail::make_list_node("qi:&");
+            make_list_type make_not_pred = detail::make_list_node("qi:!");
 
-            make_list_type make_literal = detail::make_list_node("lit");
+            make_list_type make_literal = detail::make_list_node("qi:lit");
 
             start = -alternative;
 
             // A | B
             alternative =
                     permutation           [ _val = _1 ]
-                >> *( '|' >> permutation  [ make_alternative(_val, _1) ] )
+                >> *( "|" >> permutation  [ make_alternative(_val, _1) ] )
                 ;
 
             // A ^ B
@@ -185,11 +185,11 @@ namespace scheme { namespace qi
 
             // unary operators
             unary_term =
-                    '*' >> unary_term     [ make_kleene(_val, _1) ]
-                |   '+' >> unary_term     [ make_plus(_val, _1) ]
-                |   '-' >> unary_term     [ make_optional(_val, _1) ]
-                |   '&' >> unary_term     [ make_and_pred(_val, _1) ]
-                |   '!' >> unary_term     [ make_not_pred(_val, _1) ]
+                    "*" >> unary_term     [ make_kleene(_val, _1) ]
+                |   "+" >> unary_term     [ make_plus(_val, _1) ]
+                |   "-" >> unary_term     [ make_optional(_val, _1) ]
+                |   "&" >> unary_term     [ make_and_pred(_val, _1) ]
+                |   "!" >> unary_term     [ make_not_pred(_val, _1) ]
                 |   term                  [ _val = _1 ]
                 ;
 
@@ -223,30 +223,31 @@ namespace scheme { namespace qi
                 ;
 
             // fill the symbol tables with all known primitive parser names
+            std::string name("qi:");
             for (char const* const* p = primitives0; *p; ++p)
             {
                 utree u;
-                u.push_back(utf8_symbol(*p));
+                u.push_back(utf8_symbol(name + *p));
                 primitive0.add(*p, u);
             }
 
             for (char const* const* p = primitives1; *p; ++p)
             {
                 utree u;
-                u.push_back(utf8_symbol(*p));
+                u.push_back(utf8_symbol(name + *p));
                 primitive1.add(*p, u);
             }
 
             for (char const* const* p = primitives2; *p; ++p)
             {
                 utree u;
-                u.push_back(utf8_symbol(*p));
+                u.push_back(utf8_symbol(name + *p));
                 primitive2.add(*p, u);
             }
 
             for (char const* const* p = directives0; *p; ++p)
             {
-                utree u = utree(utf8_symbol(*p));
+                utree u = utree(utf8_symbol(name + *p));
                 directive0.add(*p, u);
             }
 

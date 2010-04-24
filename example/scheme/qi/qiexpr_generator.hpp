@@ -53,24 +53,24 @@ namespace scheme { namespace qi
                 ;
 
             alternative = 
-                    &symbol(std::string("|")) 
+                    &symbol(std::string("qi:|")) 
                         << '(' << strict[permutation % '|'] << ')'
                 |   permutation
                 ;
 
             permutation = 
-                    &symbol(std::string("^")) 
+                    &symbol(std::string("qi:^")) 
                         << '(' << strict[sequence % '^'] << ')'
                 |   sequence
                 ;
 
             sequence = 
-                    &symbol(std::string(">>")) 
+                    &symbol(std::string("qi:>>")) 
                         << '(' << strict[term % ">>"] << ')'
                 |   term
                 ;
 
-            term %= 
+            term = 
                 strict[
                     unary << '(' << repeat(1)[alternative] << ')'
                 |   primitive2 << '(' << literal << ',' << literal << ')'
@@ -88,20 +88,21 @@ namespace scheme { namespace qi
             nil = eps;
 
             // fill the symbol tables with all known primitive parser names
+            std::string name("qi:");
             for (char const* const* p = primitives0; *p; ++p)
-                primitive0.add(utf8_symbol(*p));
+                primitive0.add(utf8_symbol(name + *p));
 
             for (char const* const* p = primitives1; *p; ++p)
-                primitive1.add(utf8_symbol(*p));
+                primitive1.add(utf8_symbol(name + *p));
 
             for (char const* const* p = primitives2; *p; ++p)
-                primitive2.add(utf8_symbol(*p));
+                primitive2.add(utf8_symbol(name + *p));
 
             for (char const* const* p = unary_names; *p; ++p)
-                unary.add(utf8_symbol(*p));
+                unary.add(utf8_symbol(name + *p));
 
             for (char const* const* p = directives0; *p; ++p)
-                directive0.add(utf8_symbol(*p));
+                directive0.add(utf8_symbol(name + *p));
 
             BOOST_SPIRIT_DEBUG_NODE(start);
             BOOST_SPIRIT_DEBUG_NODE(alternative);
