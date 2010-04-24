@@ -203,6 +203,17 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <>
+    struct symbols_lookup<scheme::utf8_symbol, scheme::utf8_symbol>
+    {
+        typedef std::string type;
+
+        static type call(scheme::utf8_symbol const& t)
+        {
+            return t;
+        }
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     template <>
     struct extract_from_attribute<scheme::utree, scheme::utf8_symbol>

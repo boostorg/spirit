@@ -7,6 +7,11 @@
 #if !defined(BOOST_SPIRIT_UTREE_OPERATORS)
 #define BOOST_SPIRIT_UTREE_OPERATORS
 
+#include <utree/utree.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
+#include <boost/type_traits/is_integral.hpp>
+
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4804)
@@ -50,6 +55,8 @@ namespace scheme
     // Input and output
     std::ostream& operator<<(std::ostream& out, utree const& x);
     std::istream& operator>>(std::istream& in, utree& x);
+
+    std::ostream& operator<<(std::ostream& out, nil const& x);
 
     // Logical operators
     utree operator&&(utree const& a, utree const& b);
@@ -466,6 +473,11 @@ namespace scheme
         return out;
     }
 #endif
+
+    inline std::ostream& operator<<(std::ostream& out, nil const& x)
+    {
+        return out;
+    }
 
     SCHEME_CREATE_LOGICAL_FUNCTION(and_, a&&b);
     SCHEME_CREATE_LOGICAL_FUNCTION(or_, a||b);

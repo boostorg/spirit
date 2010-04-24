@@ -1044,8 +1044,7 @@ namespace scheme
             return r.first == 0;
         else if (get_type() == type::list_type)
             return l.size == 0;
-        BOOST_ASSERT(get_type() == type::nil_type);
-        return true;
+        return get_type() == type::nil_type;
     }
 
     inline std::size_t utree::size() const

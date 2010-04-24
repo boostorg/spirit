@@ -3,6 +3,10 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+// #define BOOST_SPIRIT_KARMA_DEBUG
+
+#include <utree/operators.hpp>
+
 #include <qi/generate_qiexpr.hpp>
 #include <qi/generate_qiexpr_impl.hpp>
 
@@ -12,3 +16,7 @@ namespace scheme { namespace output
     template bool generate_qiexpr(utree& u, std::string& str);
 }}
 
+namespace scheme
+{
+    std::ostream& operator<<(std::ostream& out, nil const& x);
+}

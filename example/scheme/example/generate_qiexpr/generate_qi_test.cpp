@@ -12,6 +12,7 @@
 #include <iterator>
 
 #include <utree/utree.hpp>
+#include <utree/operators.hpp>
 #include <qi/parse_qiexpr.hpp>
 #include <qi/generate_qiexpr.hpp>
 
@@ -37,7 +38,7 @@ int main(int argc, char **argv)
             }
             else
             {
-                std::cout << "generate error" << std::endl;
+                std::cout << "generate error: " << result << std::endl;
             }
         }
         else

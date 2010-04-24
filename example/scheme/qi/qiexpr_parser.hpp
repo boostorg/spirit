@@ -21,9 +21,11 @@
 #include <input/string.hpp>
 #include <qi/component_names.hpp>
 
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
-    void print_attribute(std::ostream& out, scheme::utree const& val);
+    template <typename Out>
+    void print_attribute(Out& out, scheme::utree const& val);
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,7 +41,6 @@ namespace scheme { namespace qi
     using boost::spirit::qi::_1;
     using boost::spirit::qi::_2;
     using boost::phoenix::push_back;
-    using boost::phoenix::function;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
@@ -145,7 +146,8 @@ namespace scheme { namespace qi
 
         qiexpr_parser() : qiexpr_parser::base_type(start)
         {
-            typedef function<detail::make_list_node> make_list_type;
+            namespace phoenix = boost::phoenix;
+            typedef phoenix::function<detail::make_list_node> make_list_type;
 
             make_list_type make_directive = detail::make_list_node("");
 
@@ -183,11 +185,11 @@ namespace scheme { namespace qi
 
             // unary operators
             unary_term =
-                    '*' >> term           [ make_kleene(_val, _1) ]
-                |   '+' >> term           [ make_plus(_val, _1) ]
-                |   '-' >> term           [ make_optional(_val, _1) ]
-                |   '&' >> term           [ make_and_pred(_val, _1) ]
-                |   '!' >> term           [ make_not_pred(_val, _1) ]
+                    '*' >> unary_term     [ make_kleene(_val, _1) ]
+                |   '+' >> unary_term     [ make_plus(_val, _1) ]
+                |   '-' >> unary_term     [ make_optional(_val, _1) ]
+                |   '&' >> unary_term     [ make_and_pred(_val, _1) ]
+                |   '!' >> unary_term     [ make_not_pred(_val, _1) ]
                 |   term                  [ _val = _1 ]
                 ;
 
@@ -216,8 +218,8 @@ namespace scheme { namespace qi
 
             // a literal (either 'x' or "abc")
             literal =
-                    string_lit            [ push_back(_val, _1) ]
-                |   string_lit.char_lit   [ push_back(_val, _1) ]
+                    string_lit            [ phoenix::push_back(_val, _1) ]
+                |   string_lit.char_lit   [ phoenix::push_back(_val, _1) ]
                 ;
 
             // fill the symbol tables with all known primitive parser names
@@ -248,17 +250,15 @@ namespace scheme { namespace qi
                 directive0.add(*p, u);
             }
 
-#if defined(BOOST_SPIRIT_DEBUG)
-            start.name("name"); debug(start);
-            directive.name("directive"); debug(directive);
-            primitive.name("primitive"); debug(primitive);
-            unary_term.name("unary_term"); debug(unary_term);
-            term.name("term"); debug(term);
-            literal.name("literal"); debug(literal);
-            alternative.name("alternative"); debug(alternative);
-            permutation.name("permutation"); debug(permutation);
-            sequence.name("sequence"); debug(sequence);
-#endif
+            BOOST_SPIRIT_DEBUG_NODE(start);
+            BOOST_SPIRIT_DEBUG_NODE(directive);
+            BOOST_SPIRIT_DEBUG_NODE(primitive);
+            BOOST_SPIRIT_DEBUG_NODE(unary_term);
+            BOOST_SPIRIT_DEBUG_NODE(term);
+            BOOST_SPIRIT_DEBUG_NODE(literal);
+            BOOST_SPIRIT_DEBUG_NODE(alternative);
+            BOOST_SPIRIT_DEBUG_NODE(permutation);
+            BOOST_SPIRIT_DEBUG_NODE(sequence);
         }
 
         typedef rule<Iterator, qiexpr_white_space<Iterator>, utree()> rule_type;
