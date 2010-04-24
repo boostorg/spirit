@@ -302,5 +302,20 @@ int main()
         BOOST_TEST(alias[1] == 3);
     }
 
+    {
+        using scheme::utf8_string_range;
+        using scheme::shallow;
+
+        // shallow string ranges
+        char const* s = "Hello, World";
+        utree val(utf8_string_range(s, s + std::strlen(s)), shallow);
+        check(val, "\"Hello, World\"");
+
+        utf8_string_range r = val.get<utf8_string_range>();
+        utf8_string_range pf(r.begin()+1, r.end()-1);
+        val = utree(pf, shallow);
+        check(val, "\"ello, Worl\"");
+    }
+
     return boost::report_errors();
 }

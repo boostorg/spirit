@@ -170,7 +170,7 @@ namespace scheme
         }
     };
 
-    template <>
+    template <> // scoped = false
     struct argument_function<false> : actor<argument_function<false> >
     {
         std::size_t n;
@@ -250,7 +250,7 @@ namespace scheme
         }
     };
 
-    template <>
+    template <> // scoped = false
     struct vararg_function<false> : actor<vararg_function<false> >
     {
         std::size_t n;
@@ -287,7 +287,7 @@ namespace scheme
     // scoped varg
     vararg<true> const varg = {};
 
-    // unscoped arg
+    // unscoped varg
     vararg<false> const unscoped_varg = {};
 
     // unscoped vargs

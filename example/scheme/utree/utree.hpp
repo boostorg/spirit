@@ -42,6 +42,7 @@ namespace scheme
             int_type,
             double_type,
             string_type,
+            string_range_type,
             symbol_type,
             binary_type,
             list_type,
@@ -169,10 +170,13 @@ namespace scheme
     //  - an integer
     //  - a double
     //  - a string
+    //  - a string range
     //  - a symbol (identifier)
     //  - binary data
     //  - a (doubly linked) list of utree
+    //  - an iterator_range of list::iterator
     //  - a reference to a utree
+    //  - a function
     //
     // The utree has minimal memory footprint. The data structure size is
     // 16 bytes on a 32-bit platform. Being a container of itself, it can
@@ -209,12 +213,13 @@ namespace scheme
         utree(boost::iterator_range<Iter> r);
         utree(range r, shallow_tag);
         utree(const_range r, shallow_tag);
+        utree(utf8_string_range const& str, shallow_tag);
 
         template <typename F>
         utree(stored_function<F> const& pf);
 
         template <typename Base, utree_type::info type_>
-        utree(basic_string<Base, type_> const& bin);
+        utree(basic_string<Base, type_> const& str);
 
         utree(utree const& other);
         ~utree();
@@ -341,6 +346,7 @@ namespace scheme
             detail::fast_string s;
             detail::list l;
             detail::range r;
+            detail::string_range sr;
             bool b;
             int i;
             double d;

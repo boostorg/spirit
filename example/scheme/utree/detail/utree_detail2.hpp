@@ -468,6 +468,9 @@ namespace scheme { namespace detail
                 case type::string_type:
                     return f(utf8_string_range(x.s.str(), x.s.size()));
 
+                case type::string_range_type:
+                    return f(utf8_string_range(x.sr.first, x.sr.last));
+
                 case type::symbol_type:
                     return f(utf8_symbol_range(x.s.str(), x.s.size()));
 
@@ -526,6 +529,10 @@ namespace scheme { namespace detail
                 case type::string_type:
                     return visit_impl::apply(y, detail::bind(
                         f, utf8_string_range(x.s.str(), x.s.size())));
+
+                case type::string_range_type:
+                    return visit_impl::apply(y, detail::bind(
+                        f, utf8_string_range(x.sr.first, x.sr.last)));
 
                 case type::symbol_type:
                     return visit_impl::apply(y, detail::bind(
@@ -671,6 +678,13 @@ namespace scheme
         this->r.first = r.begin().node;
         this->r.last = r.end().prev;
         set_type(type::range_type);
+    }
+
+    inline utree::utree(utf8_string_range const& str, shallow_tag)
+    {
+        this->sr.first = str.begin();
+        this->sr.last = str.end();
+        set_type(type::string_range_type);
     }
 
     inline utree::utree(utree const& other)
@@ -1203,6 +1217,9 @@ namespace scheme
                 break;
             case type::range_type:
                 r = other.r;
+                break;
+            case type::string_range_type:
+                sr = other.sr;
                 break;
             case type::function_type:
                 pf = other.pf->clone();

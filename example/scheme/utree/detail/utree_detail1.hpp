@@ -65,6 +65,15 @@ namespace scheme { namespace detail
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // A range of char*s
+    ///////////////////////////////////////////////////////////////////////////
+    struct string_range
+    {
+        char const* first;
+        char const* last;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // Our POD fast string. This implementation is very primitive and is not
     // meant to be used stand-alone. This is the internal data representation
     // of strings in our utree. This is deliberately a POD to allow it to be
