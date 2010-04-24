@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace qi
         std::string rule_name;
     };
 
-    template <typename OutputIterator
+    template <typename Iterator
       , typename T1, typename T2, typename T3, typename T4, typename F>
     void debug(rule<Iterator, T1, T2, T3, T4>& r, F f)
     {
@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace qi
 
     struct simple_trace;
 
-    template <typename OutputIterator
+    template <typename Iterator
       , typename T1, typename T2, typename T3, typename T4>
     void debug(rule<Iterator, T1, T2, T3, T4>& r)
     {
