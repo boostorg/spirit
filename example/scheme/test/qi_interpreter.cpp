@@ -16,98 +16,74 @@
 namespace scheme
 {
     ///////////////////////////////////////////////////////////////////////////
-    // parser
+    // parser compiler
     ///////////////////////////////////////////////////////////////////////////
-    using boost::spirit::unused;
     namespace qi = boost::spirit::qi;
     namespace spirit = boost::spirit;
 
-    typedef boost::iterator_range<char const*> source_type;
+    typedef qi::rule<char const*> skipper_type;
+    typedef qi::rule<char const*, utree(), skipper_type> rule_type;
 
-    template <typename Parser, bool no_attr>
-    struct qi_parser_function
-      : actor<qi_parser_function<Parser, no_attr> >
+    template <typename Rule>
+    class rule_fragments
     {
-        Parser p;
-        qi_parser_function(Parser const& p)
-          : p(p) {}
+    public:
 
-        utree eval(scope const& env) const
+        rule_fragments() {};
+
+        template <typename Expr>
+        boost::tuple<Rule const&, int>
+        new_rule(Expr const& expr)
         {
-            // the source input
-            source_type rng = env[0].get<source_type>();
-            char const* iter = rng.begin();
+            rules.push_back(Rule());
+            rules.front() = expr;
+            return boost::tuple<Rule const&, int>(
+                rules.front(), rules.size()-1);
+        }
 
-            // the skipper
-            utree const& skipper = env[1];
+        Rule const& get_rule(int id) const
+        {
+            return rules[i];
+        }
 
-            // do a pre-skip
-            while (skipper.eval(env) == true)
-                ;
+    private:
 
-            // the attribute
-            utree& attribute = env[2];
-            bool r = false;
-            if (r = p.parse(iter, rng.end(), unused, unused, attribute))
-                env[0] = source_type(iter, rng.end());
+        std::vector<Rule> rules;
+    };
 
-            return r;
+    struct primitive_parser_composite : composite<primitive_parser_composite>
+    {
+        int id;
+        primitive_parser_composite(int id)
+          : id(id)
+        {
+        }
+
+        function compose(actor_list const& elements) const
+        {
+            return val(id);
         }
     };
 
-    template <typename Parser>
-    struct qi_parser_function<Parser, true> // unused attribute
-      : actor<qi_parser_function<Parser, true> >
+    template <typename Fragments, typename Expr>
+    inline primitive_parser_composite
+    make_primitive_parser_composite(Fragments& fragments, Expr const& expr)
     {
-        Parser p;
-        qi_parser_function(Parser const& p)
-          : p(p) {}
+        return primitive_parser_composite(
+            boost::get<1>(fragments.new_rule(expr)));
+    }
 
-        utree eval(scope const& env) const
-        {
-            // the source input
-            source_type rng = env[0].get<source_type>();
-            char const* iter = rng.begin();
-
-            // the skipper
-            utree const& skipper = env[1];
-
-            // do a pre-skip
-            while (skipper.eval(env) == true)
-                ;
-
-            bool r = false;
-            if (r = p.parse(iter, rng.end(), unused, unused, unused))
-                env[0] = source_type(iter, rng.end());
-
-            return r;
-        }
-    };
-
-    struct qi_parser
+    template <typename Fragments>
+    void build_qi_environment(Fragments& fragments, environment& env)
     {
-        typedef function result_type;
-
-        template <typename Expression>
-        function operator()(Expression const& expr) const
-        {
-            typedef typename
-                boost::spirit::result_of::compile<
-                    qi::domain, Expression>::type
-            parser_type;
-
-            typedef boost::is_same<
-                typename spirit::traits::attribute_of<parser_type>::type,
-                spirit::unused_type>
-            is_unused;
-
-            return function(qi_parser_function<parser_type, is_unused::value>(
-                qi::compile<qi::domain>(expr)));
-        }
-    };
-
-    qi_parser const primitive_parser = {};
-    function const space = primitive_parser(qi::space);
+        build_basic_environment(env);
+        env.define("qi:space",
+            make_primitive_parser_composite(fragments, qi::space), 0, true);
+        env.define("qi:alpha",
+            make_primitive_parser_composite(fragments, qi::alpha), 0, true);
+        env.define("qi:int_",
+            make_primitive_parser_composite(fragments, qi::int_), 0, true);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -116,11 +92,21 @@ namespace scheme
 int main()
 {
     using scheme::interpreter;
+    using scheme::environment;
+    using scheme::build_qi_environment;
+    using scheme::rule_fragments;
+    using scheme::rule_type;
     using scheme::utree;
 
-    utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";
-    scheme::interpreter program(src);
-    BOOST_TEST(program["factorial"](10) == 3628800);
+    environment env;
+    rule_fragments<rule_type> fragments;
+    build_qi_environment(fragments, env);
+
+    {
+        utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";
+        interpreter program(src, &env);
+        BOOST_TEST(program["factorial"](10) == 3628800);
+    }
 
     return boost::report_errors();
 }
