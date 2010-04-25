@@ -177,6 +177,12 @@ namespace scheme
             return false; // no less than comparison for nil
         }
 
+        bool operator()(any_ptr const& a, any_ptr const& b) const
+        {
+            BOOST_ASSERT(false);
+            return false; // no less than comparison for any_ptr
+        }
+
         bool operator()(function_base const& a, function_base const& b) const
         {
             BOOST_ASSERT(false);
@@ -249,6 +255,11 @@ namespace scheme
                 scheme::utree::visit(*i, *this);
             }
             (*this)(')');
+        }
+
+        void operator()(any_ptr const& p) const
+        {
+            return (*this)("<pointer>");
         }
 
         void operator()(function_base const& pf) const

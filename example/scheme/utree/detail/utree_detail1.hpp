@@ -13,7 +13,9 @@ namespace scheme { namespace detail
 {
     template <typename UTreeX, typename UTreeY>
     struct visit_impl;
+
     struct index_impl;
+
     template <typename T>
     struct get_impl;
 
@@ -71,6 +73,15 @@ namespace scheme { namespace detail
     {
         char const* first;
         char const* last;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // A void* plus type_info
+    ///////////////////////////////////////////////////////////////////////////
+    struct void_ptr
+    {
+        void* p;
+        std::type_info const* i;
     };
 
     ///////////////////////////////////////////////////////////////////////////

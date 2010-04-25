@@ -12,12 +12,17 @@
 #include <algorithm>
 #include <string>
 #include <ostream>
+#include <typeinfo>
 
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/is_polymorphic.hpp>
+#include <boost/utility/enable_if.hpp>
 #include <boost/ref.hpp>
+
 #include <utree/detail/utree_detail1.hpp>
 
 #if defined(BOOST_MSVC)
@@ -48,6 +53,7 @@ namespace scheme
             list_type,
             range_type,
             reference_type,
+            any_type,
             function_type
         };
     };
@@ -163,6 +169,52 @@ namespace scheme
     shallow_tag const shallow = {};
 
     ///////////////////////////////////////////////////////////////////////////
+    // A void* plus type_info
+    ///////////////////////////////////////////////////////////////////////////
+    class any_ptr
+    {
+    public:
+
+        template <typename Ptr>
+        typename boost::disable_if<
+            boost::is_polymorphic<
+                typename boost::remove_pointer<Ptr>::type>,
+            Ptr>::type
+        get() const
+        {
+            if (*i == typeid(Ptr))
+            {
+                return static_cast<Ptr>(p);
+            }
+            throw std::bad_cast();
+        }
+
+        template <typename T>
+        any_ptr(T* p)
+          : p(p), i(&typeid(T*))
+        {}
+
+        friend bool operator==(any_ptr const& a, any_ptr const& b)
+        {
+            return (a.p == b.p) && (*a.i == *b.i);
+        }
+
+    private:
+
+        // constructor is private
+        any_ptr(void* p, std::type_info const* i)
+          : p(p), i(i) {}
+
+        template <typename UTreeX, typename UTreeY>
+        friend struct detail::visit_impl;
+
+        friend class utree;
+
+        void* p;
+        std::type_info const* i;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // The main utree (Universal Tree) class
     // The utree is a hierarchical, dynamic type that can store:
     //  - a nil
@@ -176,6 +228,7 @@ namespace scheme
     //  - a (doubly linked) list of utree
     //  - an iterator_range of list::iterator
     //  - a reference to a utree
+    //  - a pointer or reference to any type
     //  - a function
     //
     // The utree has minimal memory footprint. The data structure size is
@@ -201,6 +254,7 @@ namespace scheme
 
         utree();
         utree(bool b);
+        utree(char c);
         utree(unsigned int i);
         utree(int i);
         utree(double d);
@@ -208,6 +262,7 @@ namespace scheme
         utree(char const* str, std::size_t len);
         utree(std::string const& str);
         utree(boost::reference_wrapper<utree> ref);
+        utree(any_ptr const& p);
 
         template <typename Iter>
         utree(boost::iterator_range<Iter> r);
@@ -347,6 +402,7 @@ namespace scheme
             detail::list l;
             detail::range r;
             detail::string_range sr;
+            detail::void_ptr v;
             bool b;
             int i;
             double d;
@@ -358,14 +414,14 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // The scope
     ///////////////////////////////////////////////////////////////////////////
-    class scope : public boost::iterator_range<utree const*>
+    class scope : public boost::iterator_range<utree*>
     {
     public:
 
-        scope(utree const* first = 0,
-            utree const* last = 0,
+        scope(utree* first = 0,
+            utree* last = 0,
             scope const* parent = 0)
-          : boost::iterator_range<utree const*>(first, last),
+          : boost::iterator_range<utree*>(first, last),
             parent(parent),
             depth(parent? parent->depth + 1 : 0)
         {}

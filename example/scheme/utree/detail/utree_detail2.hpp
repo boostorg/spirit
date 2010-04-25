@@ -13,6 +13,10 @@
 # pragma warning(disable: 4800)
 #endif
 
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/is_pointer.hpp>
+#include <boost/utility/enable_if.hpp>
+
 namespace scheme { namespace detail
 {
     inline char& fast_string::info()
@@ -480,6 +484,9 @@ namespace scheme { namespace detail
                 case type::reference_type:
                     return apply(*x.p, f);
 
+                case type::any_type:
+                    return f(any_ptr(x.v.p, x.v.i));
+
                 case type::function_type:
                     return f(*x.pf);
             }
@@ -545,6 +552,10 @@ namespace scheme { namespace detail
                 case type::reference_type:
                     return apply(*x.p, y, f);
 
+                case type::any_type:
+                    return visit_impl::apply(
+                        y, detail::bind(f, any_ptr(x.v.p, x.v.i)));
+
                 case type::function_type:
                     return visit_impl::apply(y, detail::bind(f, *x.pf));
 
@@ -606,6 +617,13 @@ namespace scheme
         set_type(type::bool_type);
     }
 
+    inline utree::utree(char c)
+    {
+        // char constructs a single element string
+        s.construct(&c, &c+1);
+        set_type(type::string_type);
+    }
+
     inline utree::utree(unsigned int i) : i(i)
     {
         set_type(type::int_type);
@@ -650,6 +668,13 @@ namespace scheme
       : p(ref.get_pointer())
     {
         set_type(type::reference_type);
+    }
+
+    inline utree::utree(any_ptr const& p)
+    {
+        v.p = p.p;
+        v.i = p.i;
+        set_type(type::any_type);
     }
 
     template <typename F>
@@ -1214,6 +1239,9 @@ namespace scheme
             case type::reference_type:
                 p = other.p;
                 break;
+            case type::any_type:
+                v = other.v;
+                break;
             case type::range_type:
                 r = other.r;
                 break;
@@ -1260,7 +1288,7 @@ namespace scheme
         To dispatch(From const& val, boost::mpl::false_) const
         {
             // From is NOT convertible to To !!!
-            BOOST_ASSERT(false);
+            throw std::bad_cast();
             return To();
         }
 
@@ -1274,6 +1302,25 @@ namespace scheme
               , boost::is_same<From, To>, boost::is_convertible<From, To>
             >::type is_convertible;
             return dispatch(val, is_convertible());
+        }
+    };
+
+    template <typename T>
+    struct utree_cast<T*>
+    {
+        typedef T* result_type;
+
+        template <typename From>
+        T* operator()(From const& val) const
+        {
+            // From is NOT convertible to T !!!
+            throw std::bad_cast();
+            return 0;
+        }
+
+        T* operator()(any_ptr const& p) const
+        {
+            return p.get<T*>();
         }
     };
 

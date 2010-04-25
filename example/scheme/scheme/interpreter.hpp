@@ -17,6 +17,11 @@
 
 #define SCHEME_COMPOSITE_LIMIT 10
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4018)
+#endif
+
 namespace scheme
 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -70,7 +75,7 @@ namespace scheme
 
         template <std::size_t n>
         static scope
-        get_range(boost::array<utree, n> const& array)
+        get_range(boost::array<utree, n>& array)
         {
             return scope(array.begin(), array.end());
         }
@@ -121,7 +126,7 @@ namespace scheme
         utree val;
         value_function(utree const& val) : val(val) {}
 
-        utree eval(scope /*env*/) const
+        utree eval(scope const& /*env*/) const
         {
             return utree(boost::ref(val));
         }
@@ -506,7 +511,7 @@ namespace scheme
                 {
                     fargs[i++] = element(env);
                 }
-                utree const* fi = fargs.get();
+                utree* fi = fargs.get();
                 return f.get()(scope(fi, fi+elements.size(), outer));
             }
             else
@@ -541,5 +546,9 @@ namespace scheme
         }
     };
 }
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif
