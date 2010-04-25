@@ -103,9 +103,9 @@ int main()
     build_qi_environment(fragments, env);
 
     {
-        utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";
-        interpreter program(src, &env);
-        BOOST_TEST(program["factorial"](10) == 3628800);
+        utree src = "(define foo 123)";
+        interpreter parser(src, "parse.scm", &env);
+        std::cout << parser["qi:int_"]() << std::endl;
     }
 
     return boost::report_errors();

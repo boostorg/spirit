@@ -556,6 +556,7 @@ namespace scheme
             Source& in,
             std::string const& source_file = "",
             environment* outer = 0)
+          : env(outer)
         {
             if (outer == 0)
                 build_basic_environment(env);
@@ -569,6 +570,7 @@ namespace scheme
         interpreter(
             utree const& program,
             environment* outer = 0)
+          : env(outer)
         {
             if (outer == 0)
                 build_basic_environment(env);
