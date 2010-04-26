@@ -64,8 +64,7 @@ bool parse_grammar(std::string str)
 {
     // parse it
     scheme::utree result;
-//     if (scheme::input::parse_qi_grammar(str, result))
-    scheme::input::parse_qi_grammar(str, result);
+    if (scheme::input::parse_qi_grammar(str, result))
     {
         if (scheme::output::generate_sexpr_list(std::cout, result))
         {
