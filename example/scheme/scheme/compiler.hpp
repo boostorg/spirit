@@ -322,32 +322,33 @@ namespace scheme
         {
             try
             {
+                function* fp = 0;
                 if (env.defined(name))
                 {
-                    function* fp = env.find_forward(name);
-                    if (fp == 0 || !fp->empty())
+                    fp = env.find_forward(name);
+                    if (fp != 0 && !fp->empty())
                         throw body_already_defined(name);
+                }
 
-                    function lambda = make_lambda(args, fixed_arity, body);
-                    if (!lambda.empty())
-                        *fp = lambda(); // unprotect (eval returns a function)
-                    else
-                        throw no_body();
-                    return *fp;
+                if (fp == 0)
+                {
+                    fragments.push_back(function());
+                    fp = &fragments.back();
+                    env.define(name, external_function(*fp, env.level()), args.size(), fixed_arity);
+                }
 
+                function lambda = make_lambda(args, fixed_arity, body);
+                if (!lambda.empty())
+                {
+                    // unprotect (eval returns a function)
+                    *fp = lambda();
                 }
                 else
                 {
-                    fragments.push_back(function());
-                    function& f = fragments.back();
-                    env.define(name, external_function(f, env.level()), args.size(), fixed_arity);
-                    function lambda = make_lambda(args, fixed_arity, body);
-                    if (!lambda.empty())
-                        f = lambda(); // unprotect (eval returns a function)
-                    else
-                        env.forward_declare(name, &f); // allow forward declaration of scheme functions
-                    return f;
+                    // allow forward declaration of scheme functions
+                    env.forward_declare(name, fp);
                 }
+                return *fp;
             }
             catch (std::exception const&)
             {

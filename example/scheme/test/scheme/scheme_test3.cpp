@@ -35,6 +35,7 @@ int main()
     {
         // test forward declaration (a scheme extension)
         utree src =
+            "(define (dbl n))" // multiple forward declarations allowed
             "(define (dbl n))"
             "(define foo (dbl 10))"
             "(define (dbl n) (* n 2))"
