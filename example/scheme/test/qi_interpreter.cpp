@@ -41,7 +41,7 @@ namespace scheme { namespace qi
         int new_rule(Expr const& expr)
         {
             rules.push_back(Rule());
-            rules.front() = expr;
+            rules.back() = expr;
             return rules.size()-1;
         }
 
@@ -211,11 +211,11 @@ int main()
             "(define r (qi:char_ \"x\"))"
             "(define r2 (qi:int_))";
         interpreter parser(src, "parse.scm", &env);
-        //~ std::cout << parser["r"]() << std::endl;
-        //~ std::cout << parser["r2"]() << std::endl;
 
         BOOST_TEST(test("x", fragments.get_rule(parser["r"]()), space));
         BOOST_TEST(!test("y", fragments.get_rule(parser["r"]()), space));
+        BOOST_TEST(test("1234", fragments.get_rule(parser["r2"]()), space));
+        BOOST_TEST(!test("x1234", fragments.get_rule(parser["r2"]()), space));
 
 
     }
