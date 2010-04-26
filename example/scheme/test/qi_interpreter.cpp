@@ -12,8 +12,11 @@
 #include <scheme/compiler.hpp>
 #include <utree/io.hpp>
 #include <boost/spirit/include/qi.hpp>
+#include <map>
 
 #include "../../../test/qi/test.hpp"
+
+#define SCHEME_QI_COMPILER_LIMIT 20
 
 namespace scheme { namespace qi
 {
@@ -28,36 +31,42 @@ namespace scheme { namespace qi
 
     ///////////////////////////////////////////////////////////////////////////
     // All rule are stored here. Rules are held in the utree by its id;
-    // i.e. it's index in the vector.
+    // i.e. its index in the vector.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Rule>
     class rule_fragments
     {
     public:
 
-        rule_fragments() {};
+        rule_fragments()
+          : index(0)
+        {
+        };
 
         template <typename Expr>
         int new_rule(Expr const& expr)
         {
-            rules.push_back(Rule());
-            rules.back() = expr;
-            return rules.size()-1;
+            rules[index] = expr;
+            return index++;
         }
 
-        Rule const& get_rule(int id) const
+        Rule const& operator[](int id) const
         {
-            return rules[id];
+            typename std::map<int, Rule>::const_iterator
+                iter = rules.find(id);
+            BOOST_ASSERT(iter != rules.end());
+            return iter->second;
         }
 
-        Rule const& get_rule(utree const& id) const
+        Rule const& operator[](utree const& id) const
         {
-            return rules[id.get<int>()];
+            return (*this)[id.get<int>()];
         }
 
     private:
 
-        std::vector<Rule> rules;
+        int index;
+        std::map<int, Rule> rules;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -146,11 +155,11 @@ namespace scheme { namespace qi
     };
 
     template <typename Fragments>
-    struct unary_char_composite
-      : composite<unary_char_composite<Fragments> >
+    struct char_composite
+      : composite<char_composite<Fragments> >
     {
         Fragments& fragments;
-        unary_char_composite(Fragments& fragments)
+        char_composite(Fragments& fragments)
           : fragments(fragments) {}
 
         function compose(actor_list const& elements) const
@@ -161,6 +170,92 @@ namespace scheme { namespace qi
             function empty;
             function const& a = *i++;
             function const& b = (i == elements.end())? empty : *i;
+            return function(function_type(fragments, a, b));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Handles the compilation of kleene *a
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Fragments>
+    struct kleene_function : actor<kleene_function<Fragments> >
+    {
+        Fragments& fragments;
+        function a;
+        kleene_function(
+            Fragments& fragments, function const& a)
+          : a(a), fragments(fragments)
+        {
+        }
+
+        utree eval(utree const& a) const
+        {
+            return fragments.new_rule(*fragments[a]); // *a
+        }
+
+        utree eval(scope const& env) const
+        {
+            return eval(a(env));
+        }
+    };
+
+    template <typename Fragments>
+    struct kleene_composite
+      : composite<kleene_composite<Fragments> >
+    {
+        Fragments& fragments;
+        kleene_composite(Fragments& fragments)
+          : fragments(fragments) {}
+
+        function compose(actor_list const& elements) const
+        {
+            typedef kleene_function<Fragments> function_type;
+            return function(function_type(fragments, elements.front()));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Handles the compilation of difference a - b
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Fragments>
+    struct difference_function : actor<difference_function<Fragments> >
+    {
+        Fragments& fragments;
+        function a;
+        function b;
+        difference_function(
+            Fragments& fragments, function const& a, function const& b)
+          : a(a), b(b), fragments(fragments)
+        {
+        }
+
+        utree eval(utree const& a, utree const& b) const
+        {
+            return fragments.new_rule(
+                fragments[a] - fragments[b]); // a - b
+        }
+
+        utree eval(scope const& env) const
+        {
+            return eval(a(env), b(env));
+        }
+    };
+
+    template <typename Fragments>
+    struct difference_composite
+      : composite<difference_composite<Fragments> >
+    {
+        Fragments& fragments;
+        difference_composite(Fragments& fragments)
+          : fragments(fragments) {}
+
+        function compose(actor_list const& elements) const
+        {
+            typedef difference_function<Fragments> function_type;
+            actor_list::const_iterator i = elements.begin();
+
+            function const& a = *i++;
+            function const& b = *i;
             return function(function_type(fragments, a, b));
         }
     };
@@ -183,7 +278,13 @@ namespace scheme { namespace qi
             make_primitive_parser_composite(fragments, qi::int_), 0, true);
 
         env.define("qi:char_",
-            unary_char_composite<Fragments>(fragments), 1, false);
+            char_composite<Fragments>(fragments), 1, false);
+
+        env.define("qi:*",
+            kleene_composite<Fragments>(fragments), 1, true);
+
+        env.define("qi:-",
+            difference_composite<Fragments>(fragments), 2, true);
     }
 }}
 
@@ -208,16 +309,19 @@ int main()
 
     {
         utree src =
-            "(define r (qi:char_ \"x\"))"
-            "(define r2 (qi:int_))";
+            "(define charx (qi:char_ \"x\"))"
+            "(define integer (qi:int_))"
+            "(define int_not_0 (qi:- (qi:int_) (qi:char_ \"0\")))"
+            "(define integers (qi:* (qi:int_)))";
         interpreter parser(src, "parse.scm", &env);
 
-        BOOST_TEST(test("x", fragments.get_rule(parser["r"]()), space));
-        BOOST_TEST(!test("y", fragments.get_rule(parser["r"]()), space));
-        BOOST_TEST(test("1234", fragments.get_rule(parser["r2"]()), space));
-        BOOST_TEST(!test("x1234", fragments.get_rule(parser["r2"]()), space));
-
-
+        BOOST_TEST(test("x",        fragments[parser["charx"]()],       space));
+        BOOST_TEST(!test("y",       fragments[parser["charx"]()],       space));
+        BOOST_TEST(test("1234",     fragments[parser["integer"]()],     space));
+        BOOST_TEST(!test("x1234",   fragments[parser["integer"]()],     space));
+        BOOST_TEST(test("1 2 3 4",  fragments[parser["integers"]()],    space));
+        BOOST_TEST(test("1",        fragments[parser["int_not_0"]()],   space));
+        BOOST_TEST(!test("0",       fragments[parser["int_not_0"]()],   space));
     }
 
     return boost::report_errors();
