@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <strstream>
 #include <map>
 
 #include "../../../../test/qi/test.hpp"
@@ -49,6 +50,9 @@ namespace scheme { namespace qi
         int new_rule()
         {
             rules[index];
+            std::stringstream str;
+            str << qi::what(expr);
+            rules[index].name(str.str());
             return index++;
         }
 
