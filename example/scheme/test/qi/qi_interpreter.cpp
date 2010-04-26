@@ -575,6 +575,8 @@ int main()
 
         interpreter parser(in, filename, &env);
 
+        //~ fragments[parser["expression"]()];
+
         BOOST_TEST(!test("1 + 1",
             fragments[parser["expression"]()], space));
 
