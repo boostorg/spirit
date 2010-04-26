@@ -12,6 +12,9 @@
 #include <scheme/compiler.hpp>
 #include <utree/io.hpp>
 #include <boost/spirit/include/qi.hpp>
+
+#include <iostream>
+#include <fstream>
 #include <map>
 
 #include "../../../../test/qi/test.hpp"
@@ -372,6 +375,109 @@ namespace scheme { namespace qi
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // Handles the compilation of alternatives a | b
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Fragments>
+    struct alternative_function : actor<alternative_function<Fragments> >
+    {
+        Fragments& fragments;
+        actor_list elements;
+        alternative_function(
+            Fragments& fragments, actor_list const& elements)
+          : elements(elements), fragments(fragments)
+        {
+        }
+
+        utree eval(utree const& a, utree const& b) const
+        {
+            // a | b
+            return fragments.new_rule(
+                fragments[a] | fragments[b]);
+        }
+
+        utree eval(utree const& a, utree const& b, utree const& c) const
+        {
+            // a | b | c
+            return fragments.new_rule(
+                fragments[a] | fragments[b] | fragments[c]);
+        }
+
+        utree eval(utree const& a, utree const& b, utree const& c,
+            utree const& d) const
+        {
+            // a | b | c | d
+            return fragments.new_rule(
+                fragments[a] | fragments[b] | fragments[c] |
+                fragments[d]);
+        }
+
+        utree eval(utree const& a, utree const& b, utree const& c,
+            utree const& d, utree const& e) const
+        {
+            // a | b | c | d | e
+            return fragments.new_rule(
+                fragments[a] | fragments[b] | fragments[c] |
+                fragments[d] | fragments[e]);
+        }
+
+        utree eval(scope const& env) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            switch (elements.size())
+            {
+                case 2:
+                {
+                    function const& a = *i++;
+                    function const& b = *i;
+                    return eval(a(env), b(env));
+                }
+                case 3:
+                {
+                    function const& a = *i++;
+                    function const& b = *i++;
+                    function const& c = *i;
+                    return eval(a(env), b(env), c(env));
+                }
+                case 4:
+                {
+                    function const& a = *i++;
+                    function const& b = *i++;
+                    function const& c = *i++;
+                    function const& d = *i;
+                    return eval(a(env), b(env), c(env), d(env));
+                }
+                case 5:
+                {
+                    function const& a = *i++;
+                    function const& b = *i++;
+                    function const& c = *i++;
+                    function const& d = *i++;
+                    function const& e = *i;
+                    return eval(a(env), b(env), c(env), d(env), e(env));
+                }
+
+                // $$$ Use Boost PP using SCHEME_QI_COMPILER_LIMIT $$$
+            }
+            return utree();
+        }
+    };
+
+    template <typename Fragments>
+    struct alternative_composite
+      : composite<alternative_composite<Fragments> >
+    {
+        Fragments& fragments;
+        alternative_composite(Fragments& fragments)
+          : fragments(fragments) {}
+
+        function compose(actor_list const& elements) const
+        {
+            typedef alternative_function<Fragments> function_type;
+            return function(function_type(fragments, elements));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // Build our scheme compiler environment.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Fragments>
@@ -399,6 +505,9 @@ namespace scheme { namespace qi
 
         env.define("qi:>>",
             sequence_composite<Fragments>(fragments), 2, false);
+
+        env.define("qi:|",
+            alternative_composite<Fragments>(fragments), 2, false);
     }
 }}
 
@@ -449,7 +558,25 @@ int main()
     }
 
     {
-        //~ utree src =
+        char const* filename = filename = "calc.scm";
+        std::ifstream in(filename, std::ios_base::in);
+
+        BOOST_TEST(in);
+
+        // Ignore the BOM marking the beginning of a UTF-8 file in Windows
+        char c = in.peek();
+        if (c == '\xef')
+        {
+            char s[3];
+            in >> s[0] >> s[1] >> s[2];
+            s[3] = '\0';
+            BOOST_TEST(s != std::string("\xef\xbb\xbf"));
+        }
+
+        interpreter parser(in, filename, &env);
+
+        BOOST_TEST(!test("1 + 1",
+            fragments[parser["expression"]()], space));
 
     }
 

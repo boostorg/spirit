@@ -401,7 +401,8 @@ namespace scheme
                     fname = get_symbol(*i++);
 
                     // (define f (lambda (x) ...body...))
-                    if (i->which() == utree_type::list_type
+                    if (i != range.end()
+                        && i->which() == utree_type::list_type
                         && get_symbol((*i)[0]) == "lambda")
                     {
                         utree const& arg_names = (*i)[1];
