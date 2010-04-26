@@ -96,10 +96,7 @@ namespace scheme
           : f() {}
 
         function(utree const& f)
-          : f(f)
-        {
-            BOOST_ASSERT(!empty());
-        }
+          : f(f) {}
 
         template <typename F>
         function(F const& f)

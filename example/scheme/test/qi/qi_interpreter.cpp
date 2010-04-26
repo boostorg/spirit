@@ -14,7 +14,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <map>
 
-#include "../../../test/qi/test.hpp"
+#include "../../../../test/qi/test.hpp"
 
 #define SCHEME_QI_COMPILER_LIMIT 20
 
@@ -446,6 +446,11 @@ int main()
         BOOST_TEST(!test("0",       fragments[parser["nonzero"]()],     space));
         BOOST_TEST(test("(1, 2)",   fragments[parser["intpair"]()],     space));
         BOOST_TEST(!test("(1, x)",  fragments[parser["intpair"]()],     space));
+    }
+
+    {
+        //~ utree src =
+
     }
 
     return boost::report_errors();

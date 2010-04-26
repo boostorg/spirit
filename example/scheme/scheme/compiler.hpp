@@ -69,6 +69,19 @@ namespace scheme
         }
     };
 
+    struct body_already_defined : scheme_exception
+    {
+        std::string msg;
+        body_already_defined(std::string const& id)
+          : msg("scheme: Multiple definition (" + id + ").") {}
+        ~body_already_defined() throw() {}
+
+        virtual const char* what() const throw()
+        {
+            return msg.c_str();
+        }
+    };
+
     struct incorrect_arity : scheme_exception
     {
         std::string msg;
@@ -164,6 +177,21 @@ namespace scheme
             return definitions.find(name) != definitions.end();
         }
 
+        void forward_declare(std::string const& name, function* f)
+        {
+            forwards[name] = f;
+        }
+
+        function* find_forward(std::string const& name)
+        {
+            std::map<std::string, function*>::iterator
+                iter = forwards.find(name);
+            if (iter == forwards.end())
+                return 0;
+            else
+                return iter->second;
+        }
+
         environment* parent() const { return outer; }
         int level() const { return depth; }
 
@@ -173,6 +201,7 @@ namespace scheme
 
         environment* outer;
         std::map<std::string, map_element> definitions;
+        std::map<std::string, function*> forwards;
         int depth;
     };
 
@@ -262,7 +291,8 @@ namespace scheme
 
             actor_list flist;
             if (body.size() == 0)
-                throw no_body();
+                return function();
+                //~ throw no_body();
 
             BOOST_FOREACH(utree const& item, body)
             {
@@ -293,13 +323,31 @@ namespace scheme
             try
             {
                 if (env.defined(name))
-                    throw duplicate_identifier(name);
+                {
+                    function* fp = env.find_forward(name);
+                    if (fp == 0 || !fp->empty())
+                        throw body_already_defined(name);
 
-                fragments.push_back(function());
-                function& f = fragments.back();
-                env.define(name, external_function(f, env.level()), args.size(), fixed_arity);
-                f = make_lambda(args, fixed_arity, body)(); // unprotect (eval returns a function)
-                return f;
+                    function lambda = make_lambda(args, fixed_arity, body);
+                    if (!lambda.empty())
+                        *fp = lambda(); // unprotect (eval returns a function)
+                    else
+                        throw no_body();
+                    return *fp;
+
+                }
+                else
+                {
+                    fragments.push_back(function());
+                    function& f = fragments.back();
+                    env.define(name, external_function(f, env.level()), args.size(), fixed_arity);
+                    function lambda = make_lambda(args, fixed_arity, body);
+                    if (!lambda.empty())
+                        f = lambda(); // unprotect (eval returns a function)
+                    else
+                        env.forward_declare(name, &f); // allow forward declaration of scheme functions
+                    return f;
+                }
             }
             catch (std::exception const&)
             {

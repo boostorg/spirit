@@ -32,6 +32,17 @@ int main()
         BOOST_TEST(program["factorial"](10) == 3628800);
     }
 
+    {
+        // test forward declaration (a scheme extension)
+        utree src =
+            "(define (dbl n))"
+            "(define foo (dbl 10))"
+            "(define (dbl n) (* n 2))"
+            ;
+        scheme::interpreter program(src);
+        BOOST_TEST(program["foo"](10) == 20);
+    }
+
     return boost::report_errors();
 }
 
