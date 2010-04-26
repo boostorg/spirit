@@ -110,6 +110,12 @@ namespace scheme { namespace qi
         {
         }
 
+        utree eval() const
+        {
+            // char_
+            return fragments.new_rule(qi::char_);
+        }
+
         utree eval(utree const& a) const
         {
             // $$$ use exceptions here $$$.
@@ -147,7 +153,9 @@ namespace scheme { namespace qi
 
         utree eval(scope const& env) const
         {
-            if (b.empty())
+            if (a.empty())
+                return eval();
+            else if (b.empty())
                 return eval(a(env));
             else
                 return eval(a(env), b(env));
@@ -168,7 +176,7 @@ namespace scheme { namespace qi
             actor_list::const_iterator i = elements.begin();
 
             function empty;
-            function const& a = *i++;
+            function const& a = (i == elements.end())? empty : *i++;
             function const& b = (i == elements.end())? empty : *i;
             return function(function_type(fragments, a, b));
         }
@@ -261,6 +269,109 @@ namespace scheme { namespace qi
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // Handles the compilation of sequence a >> b
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Fragments>
+    struct sequence_function : actor<sequence_function<Fragments> >
+    {
+        Fragments& fragments;
+        actor_list elements;
+        sequence_function(
+            Fragments& fragments, actor_list const& elements)
+          : elements(elements), fragments(fragments)
+        {
+        }
+
+        utree eval(utree const& a, utree const& b) const
+        {
+            // a >> b
+            return fragments.new_rule(
+                fragments[a] >> fragments[b]);
+        }
+
+        utree eval(utree const& a, utree const& b, utree const& c) const
+        {
+            // a >> b >> c
+            return fragments.new_rule(
+                fragments[a] >> fragments[b] >> fragments[c]);
+        }
+
+        utree eval(utree const& a, utree const& b, utree const& c,
+            utree const& d) const
+        {
+            // a >> b >> c >> d
+            return fragments.new_rule(
+                fragments[a] >> fragments[b] >> fragments[c] >>
+                fragments[d]);
+        }
+
+        utree eval(utree const& a, utree const& b, utree const& c,
+            utree const& d, utree const& e) const
+        {
+            // a >> b >> c >> d >> e
+            return fragments.new_rule(
+                fragments[a] >> fragments[b] >> fragments[c] >>
+                fragments[d] >> fragments[e]);
+        }
+
+        utree eval(scope const& env) const
+        {
+            actor_list::const_iterator i = elements.begin();
+            switch (elements.size())
+            {
+                case 2:
+                {
+                    function const& a = *i++;
+                    function const& b = *i;
+                    return eval(a(env), b(env));
+                }
+                case 3:
+                {
+                    function const& a = *i++;
+                    function const& b = *i++;
+                    function const& c = *i;
+                    return eval(a(env), b(env), c(env));
+                }
+                case 4:
+                {
+                    function const& a = *i++;
+                    function const& b = *i++;
+                    function const& c = *i++;
+                    function const& d = *i;
+                    return eval(a(env), b(env), c(env), d(env));
+                }
+                case 5:
+                {
+                    function const& a = *i++;
+                    function const& b = *i++;
+                    function const& c = *i++;
+                    function const& d = *i++;
+                    function const& e = *i;
+                    return eval(a(env), b(env), c(env), d(env), e(env));
+                }
+
+                // $$$ Use Boost PP using SCHEME_QI_COMPILER_LIMIT $$$
+            }
+            return utree();
+        }
+    };
+
+    template <typename Fragments>
+    struct sequence_composite
+      : composite<sequence_composite<Fragments> >
+    {
+        Fragments& fragments;
+        sequence_composite(Fragments& fragments)
+          : fragments(fragments) {}
+
+        function compose(actor_list const& elements) const
+        {
+            typedef sequence_function<Fragments> function_type;
+            return function(function_type(fragments, elements));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // Build our scheme compiler environment.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Fragments>
@@ -278,13 +389,16 @@ namespace scheme { namespace qi
             make_primitive_parser_composite(fragments, qi::int_), 0, true);
 
         env.define("qi:char_",
-            char_composite<Fragments>(fragments), 1, false);
+            char_composite<Fragments>(fragments), 0, false);
 
         env.define("qi:*",
             kleene_composite<Fragments>(fragments), 1, true);
 
         env.define("qi:-",
             difference_composite<Fragments>(fragments), 2, true);
+
+        env.define("qi:>>",
+            sequence_composite<Fragments>(fragments), 2, false);
     }
 }}
 
@@ -311,17 +425,27 @@ int main()
         utree src =
             "(define charx (qi:char_ \"x\"))"
             "(define integer (qi:int_))"
-            "(define int_not_0 (qi:- (qi:int_) (qi:char_ \"0\")))"
-            "(define integers (qi:* (qi:int_)))";
+            "(define nonzero (qi:- (qi:int_) (qi:char_ \"0\")))"
+            "(define integers (qi:* (qi:int_)))"
+            "(define intpair (qi:>> "
+                "(qi:char_ \"(\") "
+                "(qi:int_) "
+                "(qi:char_ \",\") "
+                "(qi:int_) "
+                "(qi:char_ \")\")))"
+            ;
         interpreter parser(src, "parse.scm", &env);
 
+        BOOST_TEST(test("z",        fragments[parser["qi:char_"]()],    space));
         BOOST_TEST(test("x",        fragments[parser["charx"]()],       space));
         BOOST_TEST(!test("y",       fragments[parser["charx"]()],       space));
         BOOST_TEST(test("1234",     fragments[parser["integer"]()],     space));
         BOOST_TEST(!test("x1234",   fragments[parser["integer"]()],     space));
         BOOST_TEST(test("1 2 3 4",  fragments[parser["integers"]()],    space));
-        BOOST_TEST(test("1",        fragments[parser["int_not_0"]()],   space));
-        BOOST_TEST(!test("0",       fragments[parser["int_not_0"]()],   space));
+        BOOST_TEST(test("1",        fragments[parser["nonzero"]()],     space));
+        BOOST_TEST(!test("0",       fragments[parser["nonzero"]()],     space));
+        BOOST_TEST(test("(1, 2)",   fragments[parser["intpair"]()],     space));
+        BOOST_TEST(!test("(1, x)",  fragments[parser["intpair"]()],     space));
     }
 
     return boost::report_errors();
