@@ -555,11 +555,12 @@ namespace scheme
         interpreter(
             Source& in,
             std::string const& source_file = "",
-            environment* outer = 0)
-          : env(outer)
+            environment* envp = 0)
         {
-            if (outer == 0)
+            if (envp == 0)
                 build_basic_environment(env);
+            else
+                env = *envp;
 
             if (input::parse_sexpr_list(in, program, source_file))
             {
@@ -569,11 +570,13 @@ namespace scheme
 
         interpreter(
             utree const& program,
-            environment* outer = 0)
-          : env(outer)
+            environment* envp = 0)
         {
-            if (outer == 0)
+            if (envp == 0)
                 build_basic_environment(env);
+            else
+                env = *envp;
+
             compile_all(program, env, flist, fragments);
         }
 
