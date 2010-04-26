@@ -40,6 +40,7 @@ namespace scheme { namespace qi
     using boost::spirit::qi::_val;
     using boost::spirit::qi::_1;
     using boost::spirit::qi::_2;
+    using boost::spirit::qi::lexeme;
     using boost::phoenix::push_back;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -84,7 +85,7 @@ namespace scheme { namespace qi
         // element is the symbol this function object has been constructed from
         struct make_list_node
         {
-            template <typename T1, typename T2 = nil, typename T3 = nil>
+            template <typename T1, typename T2 = nil>
             struct result { typedef void type; };
 
             explicit make_list_node(char const* symbol_)
@@ -120,6 +121,15 @@ namespace scheme { namespace qi
                 val.push_back(element);
             }
 
+            utf8_symbol symbol;
+        };
+
+        ///////////////////////////////////////////////////////////////////////
+        struct make_directive_node
+        {
+            template <typename T1, typename T2, typename T3>
+            struct result { typedef void type; };
+
             void operator()(utree& val, utree const& element, utree const& sym) const
             {
                 if (!is_list_node(val, sym)) {
@@ -131,8 +141,29 @@ namespace scheme { namespace qi
                 }
                 val.push_back(element);
             }
+        };
 
-            utf8_symbol symbol;
+        ///////////////////////////////////////////////////////////////////////
+        // this creates a scheme definition:
+        //
+        //  i.e. (define (_1) exp)
+        struct make_define_node
+        {
+            template <typename T1, typename T2, typename T3>
+            struct result { typedef void type; };
+
+            explicit make_define_node() : define_("define") {}
+
+            void operator()(utree& val, utree const& name, utree const& exp) const
+            {
+                val.push_back(define_);
+                utree n;
+                n.push_back(name);
+                val.push_back(n);
+                val.push_back(exp);
+            }
+
+            utf8_symbol define_;
         };
     }
 
@@ -144,12 +175,16 @@ namespace scheme { namespace qi
         typedef typename boost::detail::iterator_traits<Iterator>::value_type
             char_type;
 
-        qiexpr_parser() : qiexpr_parser::base_type(start)
+        qiexpr_parser() : qiexpr_parser::base_type(rhs)
         {
             namespace phoenix = boost::phoenix;
             typedef phoenix::function<detail::make_list_node> make_list_type;
+            typedef phoenix::function<detail::make_directive_node> make_directive_type;
+            typedef phoenix::function<detail::make_define_node> make_define_type;
 
-            make_list_type make_directive = detail::make_list_node("");
+            make_directive_type make_directive = detail::make_directive_node();
+
+            make_define_type make_define = detail::make_define_node();
 
             make_list_type make_sequence = detail::make_list_node("qi:>>");
             make_list_type make_permutation = detail::make_list_node("qi:^");
@@ -163,7 +198,20 @@ namespace scheme { namespace qi
 
             make_list_type make_literal = detail::make_list_node("qi:lit");
 
-            start = -alternative;
+            // grammar definition
+            grammar_ = +rule_
+                ;
+
+            // rule definition
+            rule_ = 
+                    (symbol >> '=' >> alternative)
+                    [
+                        make_define(_val, _1, _2)
+                    ]
+                ;
+
+            // right hand side of a rule (any parser expression)
+            rhs = -alternative;
 
             // A | B
             alternative =
@@ -222,6 +270,9 @@ namespace scheme { namespace qi
                 |   string_lit.char_lit   [ phoenix::push_back(_val, _1) ]
                 ;
 
+            std::string exclude = std::string(" ();\"\x01-\x1f\x7f") + '\0';
+            symbol  = lexeme[+(~char_(exclude))];
+
             // fill the symbol tables with all known primitive parser names
             std::string name("qi:");
             for (char const* const* p = primitives0; *p; ++p)
@@ -251,12 +302,15 @@ namespace scheme { namespace qi
                 directive0.add(*p, u);
             }
 
-            BOOST_SPIRIT_DEBUG_NODE(start);
+            BOOST_SPIRIT_DEBUG_NODE(grammar_);
+            BOOST_SPIRIT_DEBUG_NODE(rule_);
+            BOOST_SPIRIT_DEBUG_NODE(rhs);
             BOOST_SPIRIT_DEBUG_NODE(directive);
             BOOST_SPIRIT_DEBUG_NODE(primitive);
             BOOST_SPIRIT_DEBUG_NODE(unary_term);
             BOOST_SPIRIT_DEBUG_NODE(term);
             BOOST_SPIRIT_DEBUG_NODE(literal);
+            BOOST_SPIRIT_DEBUG_NODE(symbol);
             BOOST_SPIRIT_DEBUG_NODE(alternative);
             BOOST_SPIRIT_DEBUG_NODE(permutation);
             BOOST_SPIRIT_DEBUG_NODE(sequence);
@@ -264,8 +318,10 @@ namespace scheme { namespace qi
 
         typedef rule<Iterator, qiexpr_white_space<Iterator>, utree()> rule_type;
 
-        rule_type start, directive, primitive, unary_term, term, literal;
+        rule_type grammar_, rule_;
+        rule_type rhs, directive, primitive, unary_term, term, literal;
         rule_type alternative, permutation, sequence;
+        rule<Iterator, utf8_symbol()> symbol;
 
         symbols<char_type, utree> directive0, directive1;
         symbols<char_type, utree> primitive0, primitive1, primitive2;

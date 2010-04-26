@@ -17,7 +17,7 @@ namespace scheme { namespace input
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename String>
-    bool parse_qiexpr(String const& str, utree& result)
+    bool parse_qi_expr(String const& str, utree& result)
     {
         typedef typename String::const_iterator iterator_type;
 
@@ -27,6 +27,34 @@ namespace scheme { namespace input
         iterator_type begin = str.begin();
         iterator_type end = str.end();
         return phrase_parse(begin, end, p, ws, result) && begin == end;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename String>
+    bool parse_qi_rule(String const& str, utree& result)
+    {
+        typedef typename String::const_iterator iterator_type;
+
+        scheme::qi::qiexpr_parser<iterator_type> p;
+        scheme::qi::qiexpr_white_space<iterator_type> ws;
+
+        iterator_type begin = str.begin();
+        iterator_type end = str.end();
+        return phrase_parse(begin, end, p.rule_, ws, result) && begin == end;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename String>
+    bool parse_qi_grammar(String const& str, utree& result)
+    {
+        typedef typename String::const_iterator iterator_type;
+
+        scheme::qi::qiexpr_parser<iterator_type> p;
+        scheme::qi::qiexpr_white_space<iterator_type> ws;
+
+        iterator_type begin = str.begin();
+        iterator_type end = str.end();
+        return phrase_parse(begin, end, p.grammar_, ws, result) && begin == end;
     }
 }}
 

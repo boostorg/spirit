@@ -29,7 +29,7 @@ int main(int argc, char **argv)
         str += '\n';
 
         scheme::utree result;
-        if (scheme::input::parse_qiexpr(str, result))
+        if (scheme::input::parse_qi_expr(str, result))
         {
             std::string str;
             if (scheme::output::generate_qiexpr(result, str))

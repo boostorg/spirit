@@ -13,6 +13,7 @@
 namespace scheme { namespace output
 {
     template bool generate_sexpr(BOOST_TYPEOF(std::cout)&, utree const& result);
+    template bool generate_sexpr_list(BOOST_TYPEOF(std::cout)&, utree const& result);
 }}
 
 ///////////////////////////////////////////////////////////////////////////////

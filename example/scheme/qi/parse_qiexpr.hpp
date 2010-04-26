@@ -11,7 +11,13 @@
 namespace scheme { namespace input
 {
     template <typename String>
-    bool parse_qiexpr(String const& str, utree& result);
+    bool parse_qi_expr(String const& str, utree& result);
+
+    template <typename String>
+    bool parse_qi_rule(String const& str, utree& result);
+
+    template <typename String>
+    bool parse_qi_grammar(String const& str, utree& result);
 }}
 
 #endif
