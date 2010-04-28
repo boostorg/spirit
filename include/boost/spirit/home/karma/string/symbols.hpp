@@ -561,7 +561,7 @@ namespace boost { namespace spirit { namespace karma
             typename Lookup::iterator it = lookup->find(attr);
             if (it == lookup->end()) 
                 add(attr);
-            return &unused;
+            return unused;
         }
 
         ///////////////////////////////////////////////////////////////////////
