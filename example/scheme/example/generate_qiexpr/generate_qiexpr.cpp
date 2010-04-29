@@ -14,6 +14,7 @@
 namespace scheme { namespace output
 {
     template bool generate_qi_expr(utree& u, std::string& str);
+    template bool generate_qi_expr_list(utree& u, std::string& str);
 }}
 
 namespace scheme

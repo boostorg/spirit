@@ -14,6 +14,7 @@ namespace scheme { namespace output
 {
     template bool generate_sexpr(BOOST_TYPEOF(std::cout)&, utree const& result);
     template bool generate_sexpr(std::string& str, utree const& result);
+    template bool generate_sexpr_list(std::string& str, utree const& result);
 }}
 
 #if defined(SCHEME_USE_SPIRIT_IO)

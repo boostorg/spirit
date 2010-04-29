@@ -24,8 +24,8 @@ bool test_rhs(std::string const& str, scheme::utree& result)
 {
     if (scheme::input::parse_qi_expr(str, result))
     {
-//         std::string scheme_str;
-//         scheme::output::generate_sexpr(scheme_str, result);
+        std::string scheme_str;
+        scheme::output::generate_sexpr(scheme_str, result);
 
         std::string strout;
         if (scheme::output::generate_qi_expr(result, strout))
@@ -72,10 +72,10 @@ bool test_grammar(std::string str)
     if (scheme::input::parse_qi_grammar(str, result))
     {
         std::string scheme_str;
-        scheme::output::generate_sexpr(scheme_str, result);
+        scheme::output::generate_sexpr_list(scheme_str, result);
 
         std::string strout;
-        if (scheme::output::generate_qi_expr(result, strout))
+        if (scheme::output::generate_qi_expr_list(result, strout))
         {
             std::cout << strout << std::endl;
             return true;
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     }
 
     // now test grammar rule
-//     BOOST_TEST(test_grammar(rules));
+    BOOST_TEST(test_grammar(rules));
 
     return boost::report_errors();
 }

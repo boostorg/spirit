@@ -33,6 +33,26 @@ namespace scheme { namespace qi
     using boost::spirit::karma::symbols;
 
     ///////////////////////////////////////////////////////////////////////////
+    namespace traits
+    {
+        template <typename Count>
+        struct deref_spec 
+          : boost::spirit::result_of::terminal<boost::spirit::tag::repeat(Count)>
+        {};
+    };
+
+    template <typename Count>
+    inline typename traits::deref_spec<Count>::type
+    deref_spec(Count const& count)
+    {
+        using boost::spirit::karma::repeat;
+        return repeat(count);
+    }
+
+    typedef traits::deref_spec<int>::type deref_tag_type;
+    deref_tag_type const deref = deref_spec(1);
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator>
     struct qiexpr_generator : grammar<OutputIterator, space_type, utree()>
     {
@@ -43,20 +63,23 @@ namespace scheme { namespace qi
             using boost::spirit::karma::eps;
             using boost::spirit::karma::ascii::string;
             using boost::spirit::karma::omit;
-            using boost::spirit::karma::repeat;
             using boost::spirit::karma::_r1;
             using boost::spirit::karma::strict;
             using boost::spirit::karma::eol;
 
             start = 
                     nil 
-                |   rule_ % eol
                 |   rule_
+                ;
+
+            grammar_ =
+                    nil 
+                |   rule_ % eol
                 ;
 
             rule_ =
                     &symbol(std::string("define")) 
-                        << repeat(1)[rule_name] << '=' << repeat(1)[alternative]
+                        << deref[rule_name] << '=' << deref[alternative]
                 |   alternative
                 ;
 
@@ -79,18 +102,18 @@ namespace scheme { namespace qi
                 ;
 
             term = strict[
-                        unary << '(' << repeat(1)[alternative] << ')'
+                        unary << '(' << deref[alternative] << ')'
                     |   primitive2 << '(' << literal << ',' << literal << ')'
                     |   primitive1 << '(' << literal << ')'
                     |   primitive0_rule
-                    |   directive0 << '[' << repeat(1)[alternative] << ']'
+                    |   directive0 << '[' << deref[alternative] << ']'
                     |   alternative_rule 
                 ];
 
-            primitive0_rule = strict[repeat(1)[primitive0]];
+            primitive0_rule = strict[deref[primitive0]];
             alternative_rule = alternative;
 
-            rule_name = strict[repeat(1)[any_symbol]];
+            rule_name = strict[deref[any_symbol]];
 
             any_symbol = string;
             symbol = string(_r1);
@@ -115,6 +138,7 @@ namespace scheme { namespace qi
                 directive0.add(utf8_symbol(name + *p));
 
             BOOST_SPIRIT_DEBUG_NODE(start);
+            BOOST_SPIRIT_DEBUG_NODE(grammar_);
             BOOST_SPIRIT_DEBUG_NODE(rule_);
             BOOST_SPIRIT_DEBUG_NODE(rule_name);
             BOOST_SPIRIT_DEBUG_NODE(alternative);
@@ -132,7 +156,8 @@ namespace scheme { namespace qi
         typedef rule<OutputIterator, space_type, utree()> delimiting_rule_type;
 
         delimiting_rule_type start, alternative, permutation, sequence, term;
-        delimiting_rule_type rule_, rule_name, primitive0_rule, alternative_rule;
+        delimiting_rule_type grammar_, rule_;
+        delimiting_rule_type rule_name, primitive0_rule, alternative_rule;
         rule<OutputIterator, nil()> nil;
         rule<OutputIterator, scheme::utf8_string()> literal;
         rule<OutputIterator, scheme::utf8_symbol(std::string)> symbol;
