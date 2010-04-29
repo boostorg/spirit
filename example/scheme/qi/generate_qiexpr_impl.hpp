@@ -16,7 +16,7 @@ namespace scheme { namespace output
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename String>
-    bool generate_qiexpr(utree& u, String& str)
+    bool generate_qi_expr(utree& u, String& str)
     {
         using boost::spirit::karma::space;
 

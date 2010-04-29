@@ -4,15 +4,14 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config/warning_disable.hpp>
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/lexical_cast.hpp>
 
 #define BOOST_SPIRIT_UNICODE
 
 #include <iostream>
 #include <fstream>
 #include <iterator>
-
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include <utree/utree.hpp>
 #include <qi/parse_qiexpr.hpp>

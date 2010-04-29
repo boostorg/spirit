@@ -943,7 +943,10 @@ namespace scheme
         ensure_list_type();
         clear();
         while (first != last)
-            push_back(*first++);
+        {
+            push_back(*first);
+            ++first;
+        }
     }
 
     inline void utree::clear()

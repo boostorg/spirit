@@ -41,14 +41,22 @@ namespace scheme { namespace qi
             namespace phoenix = boost::phoenix;
 
             using boost::spirit::karma::eps;
-            using boost::spirit::karma::string;
+            using boost::spirit::karma::ascii::string;
             using boost::spirit::karma::omit;
             using boost::spirit::karma::repeat;
             using boost::spirit::karma::_r1;
             using boost::spirit::karma::strict;
+            using boost::spirit::karma::eol;
 
             start = 
                     nil 
+                |   rule_ % eol
+                |   rule_
+                ;
+
+            rule_ =
+                    &symbol(std::string("define")) 
+                        << repeat(1)[rule_name] << '=' << repeat(1)[alternative]
                 |   alternative
                 ;
 
@@ -70,19 +78,21 @@ namespace scheme { namespace qi
                 |   term
                 ;
 
-            term = 
-                strict[
-                    unary << '(' << repeat(1)[alternative] << ')'
-                |   primitive2 << '(' << literal << ',' << literal << ')'
-                |   primitive1 << '(' << literal << ')'
-                |   primitive0_rule
-                |   directive0 << '[' << repeat(1)[alternative] << ']'
-                |   alternative_rule 
+            term = strict[
+                        unary << '(' << repeat(1)[alternative] << ')'
+                    |   primitive2 << '(' << literal << ',' << literal << ')'
+                    |   primitive1 << '(' << literal << ')'
+                    |   primitive0_rule
+                    |   directive0 << '[' << repeat(1)[alternative] << ']'
+                    |   alternative_rule 
                 ];
 
             primitive0_rule = strict[repeat(1)[primitive0]];
             alternative_rule = alternative;
 
+            rule_name = strict[repeat(1)[any_symbol]];
+
+            any_symbol = string;
             symbol = string(_r1);
             literal = '"' << string << '"';
             nil = eps;
@@ -105,6 +115,8 @@ namespace scheme { namespace qi
                 directive0.add(utf8_symbol(name + *p));
 
             BOOST_SPIRIT_DEBUG_NODE(start);
+            BOOST_SPIRIT_DEBUG_NODE(rule_);
+            BOOST_SPIRIT_DEBUG_NODE(rule_name);
             BOOST_SPIRIT_DEBUG_NODE(alternative);
             BOOST_SPIRIT_DEBUG_NODE(permutation);
             BOOST_SPIRIT_DEBUG_NODE(sequence);
@@ -112,6 +124,7 @@ namespace scheme { namespace qi
             BOOST_SPIRIT_DEBUG_NODE(nil);
             BOOST_SPIRIT_DEBUG_NODE(literal);
             BOOST_SPIRIT_DEBUG_NODE(symbol);
+            BOOST_SPIRIT_DEBUG_NODE(any_symbol);
             BOOST_SPIRIT_DEBUG_NODE(primitive0_rule);
             BOOST_SPIRIT_DEBUG_NODE(alternative_rule);
         }
@@ -119,10 +132,11 @@ namespace scheme { namespace qi
         typedef rule<OutputIterator, space_type, utree()> delimiting_rule_type;
 
         delimiting_rule_type start, alternative, permutation, sequence, term;
-        delimiting_rule_type primitive0_rule, alternative_rule;
+        delimiting_rule_type rule_, rule_name, primitive0_rule, alternative_rule;
         rule<OutputIterator, nil()> nil;
         rule<OutputIterator, scheme::utf8_string()> literal;
         rule<OutputIterator, scheme::utf8_symbol(std::string)> symbol;
+        rule<OutputIterator, scheme::utf8_symbol()> any_symbol;
 
         symbols<scheme::utf8_symbol> unary, directive0;
         symbols<scheme::utf8_symbol> primitive0, primitive1, primitive2;

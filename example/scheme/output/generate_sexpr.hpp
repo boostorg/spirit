@@ -21,11 +21,11 @@ namespace scheme { namespace output
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char>
-    bool generate_sexpr(std::basic_string<Char>& os, utree const& tree);
+    bool generate_sexpr(std::basic_string<Char>& str, utree const& tree);
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char>
-    bool generate_sexpr_list(std::basic_string<Char>& os, utree const& tree);
+    bool generate_sexpr_list(std::basic_string<Char>& str, utree const& tree);
 }}
 
 #endif

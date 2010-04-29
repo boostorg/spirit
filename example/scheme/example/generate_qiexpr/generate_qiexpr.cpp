@@ -13,7 +13,7 @@
 // explicit template instantiation for the function generate_qiexpr 
 namespace scheme { namespace output
 {
-    template bool generate_qiexpr(utree& u, std::string& str);
+    template bool generate_qi_expr(utree& u, std::string& str);
 }}
 
 namespace scheme

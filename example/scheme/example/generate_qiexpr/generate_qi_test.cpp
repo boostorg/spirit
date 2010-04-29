@@ -4,6 +4,8 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config/warning_disable.hpp>
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/lexical_cast.hpp>
 
 #define BOOST_SPIRIT_UNICODE
 
@@ -13,14 +15,83 @@
 
 #include <utree/utree.hpp>
 #include <utree/operators.hpp>
+#include <output/generate_sexpr.hpp>
 #include <qi/parse_qiexpr.hpp>
 #include <qi/generate_qiexpr.hpp>
+
+///////////////////////////////////////////////////////////////////////////////
+bool test_rhs(std::string const& str, scheme::utree& result) 
+{
+    if (scheme::input::parse_qi_expr(str, result))
+    {
+//         std::string scheme_str;
+//         scheme::output::generate_sexpr(scheme_str, result);
+
+        std::string strout;
+        if (scheme::output::generate_qi_expr(result, strout))
+        {
+            std::cout << strout << std::endl;
+            return true;
+        }
+        else
+        {
+            std::cout << "generate error: " << result << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "parse error" << std::endl;
+    }
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool test_rule(std::string str) 
+{
+    // construct a rule
+    str = "name = " + str;
+
+    // parse it
+    scheme::utree result;
+    BOOST_TEST(scheme::input::parse_qi_rule(str, result));
+
+    std::string strout;
+    if (scheme::output::generate_qi_expr(result, strout))
+    {
+        std::cout << strout << std::endl;
+        return true;
+    }
+    return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool test_grammar(std::string str) 
+{
+    // parse it
+    scheme::utree result;
+    if (scheme::input::parse_qi_grammar(str, result))
+    {
+        std::string scheme_str;
+        scheme::output::generate_sexpr(scheme_str, result);
+
+        std::string strout;
+        if (scheme::output::generate_qi_expr(result, strout))
+        {
+            std::cout << strout << std::endl;
+            return true;
+        }
+    }
+    return false;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
+    std::string rules;
+    int i = 0;
+
     std::string str;
     while (std::getline(std::cin, str))
     {
@@ -28,23 +99,23 @@ int main(int argc, char **argv)
             break;
         str += '\n';
 
+        bool r = false;
         scheme::utree result;
-        if (scheme::input::parse_qi_expr(str, result))
+        BOOST_TEST(r = test_rhs(str, result));
+
+        if (r && result.which() != scheme::utree_type::nil_type)
         {
-            std::string str;
-            if (scheme::output::generate_qiexpr(result, str))
+            BOOST_TEST(r = test_rule(str));
+            if (r) 
             {
-                std::cout << str << std::endl;
+                rules += "rule" + boost::lexical_cast<std::string>(++i) 
+                            + " = " + str + "\n";
             }
-            else
-            {
-                std::cout << "generate error: " << result << std::endl;
-            }
-        }
-        else
-        {
-            std::cout << "parse error" << std::endl;
         }
     }
-    return 0;
+
+    // now test grammar rule
+//     BOOST_TEST(test_grammar(rules));
+
+    return boost::report_errors();
 }

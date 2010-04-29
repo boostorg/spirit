@@ -1,5 +1,3 @@
-int_ >> *(('+' >> int_) | ('-' >> int_))
-
 //  Copyright (c) 2001-2010 Hartmut Kaiser
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -39,6 +37,9 @@ char_ >> *(',' >> char_)
  
 // directives
 lexeme[*double_]
+ 
+// calculator :-P
+int_ >> *(('+' >> int_) | ('-' >> int_))
 
 
 
