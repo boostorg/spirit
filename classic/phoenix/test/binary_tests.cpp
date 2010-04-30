@@ -63,9 +63,9 @@ main()
     BOOST_TEST((arg1 * arg2)(i2, i3) == i2 * i3);
     BOOST_TEST((arg1 / arg2)(i2, i3) == i2 / i3);
     BOOST_TEST((arg1 % arg2)(i2, i3) == i2 % i3);
-    BOOST_TEST((arg1 & arg2)(i2, i3) == i2 & i3);
-    BOOST_TEST((arg1 | arg2)(i2, i3) == i2 | i3);
-    BOOST_TEST((arg1 ^ arg2)(i2, i3) == i2 ^ i3);
+    BOOST_TEST((arg1 & arg2)(i2, i3) == (i2 & i3));
+    BOOST_TEST((arg1 | arg2)(i2, i3) == (i2 | i3));
+    BOOST_TEST((arg1 ^ arg2)(i2, i3) == (i2 ^ i3));
     BOOST_TEST((arg1 << arg2)(i2, i3) == i2 << i3);
     BOOST_TEST((arg1 >> arg2)(i2, i3) == i2 >> i3);
 
