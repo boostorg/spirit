@@ -86,6 +86,18 @@ namespace boost { namespace spirit { namespace karma
 
     struct simple_trace;
 
+    namespace detail {
+      // This class provides an extra level of indirection through a
+      // template to produce the simple_trace type. This way, the use
+      // of simple_trace below is hidden behind a dependent type, so
+      // that compilers eagerly type-checking template definitions
+      // won't complain that simple_trace is incomplete.
+      template<typename T>
+      struct get_simple_trace {
+        typedef simple_trace type;
+      };
+    }
+
     template <typename OutputIterator
       , typename T1, typename T2, typename T3, typename T4>
     void debug(rule<OutputIterator, T1, T2, T3, T4>& r)
@@ -100,7 +112,9 @@ namespace boost { namespace spirit { namespace karma
               , typename rule_type::properties
               , simple_trace>
         debug_handler;
-        r.f = debug_handler(r.f, simple_trace(), r.name());
+        typedef typename karma::detail::get_simple_trace<OutputIterator>::type 
+          trace;
+        r.f = debug_handler(r.f, trace(), r.name());
     }
 
 }}}
