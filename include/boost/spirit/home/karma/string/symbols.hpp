@@ -556,7 +556,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Attr>
-        value_type& at(Attr const& attr)
+        value_type at(Attr const& attr)
         {
             typename Lookup::iterator it = lookup->find(attr);
             if (it == lookup->end()) 
