@@ -186,6 +186,26 @@ namespace boost { namespace spirit { namespace traits
       : mpl::false_ {};
 
     ///////////////////////////////////////////////////////////////////////////
+    // return the type currently stored in the given variant
+    template <typename T, typename Enable = void>
+    struct variant_which;
+
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct variant_which<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    {
+        static int call(boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& v)
+        {
+            return v.which();
+        }
+    };
+
+    template <typename T>
+    int which(T const& v)
+    {
+        return variant_which<T>::call(v);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Domain>
     struct not_is_optional
       : mpl::true_
