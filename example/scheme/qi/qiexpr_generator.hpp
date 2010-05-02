@@ -39,7 +39,7 @@ namespace scheme { namespace qi
         struct deref_spec 
           : boost::spirit::result_of::terminal<boost::spirit::tag::repeat(Count)>
         {};
-    };
+    }
 
     template <typename Count>
     inline typename traits::deref_spec<Count>::type
@@ -66,6 +66,7 @@ namespace scheme { namespace qi
             using boost::spirit::karma::_r1;
             using boost::spirit::karma::strict;
             using boost::spirit::karma::eol;
+            using boost::phoenix::ref;
 
             start = 
                     nil 
@@ -78,25 +79,25 @@ namespace scheme { namespace qi
                 ;
 
             rule_ =
-                    &symbol(std::string("define")) 
+                    &symbol(ref("define")) 
                         << deref[rule_name] << '=' << deref[alternative]
                 |   alternative
                 ;
 
             alternative = 
-                    &symbol(std::string("qi:|")) 
+                    &symbol(ref("qi:|")) 
                         << '(' << strict[permutation % '|'] << ')'
                 |   permutation
                 ;
 
             permutation = 
-                    &symbol(std::string("qi:^")) 
+                    &symbol(ref("qi:^")) 
                         << '(' << strict[sequence % '^'] << ')'
                 |   sequence
                 ;
 
             sequence = 
-                    &symbol(std::string("qi:>>")) 
+                    &symbol(ref("qi:>>")) 
                         << '(' << strict[term % ">>"] << ')'
                 |   term
                 ;

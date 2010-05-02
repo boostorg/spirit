@@ -33,6 +33,16 @@ namespace boost { namespace spirit { namespace traits
     struct not_is_variant<scheme::utree, karma::domain>
       : mpl::false_ {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization tells Spirit how to extract the type of the value 
+    // stored in the given utree node
+    template <>
+    struct variant_which<scheme::utree>
+    {
+        static int call(scheme::utree const& u) { return u.which(); }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // The specializations below tell Spirit to verify whether an attribute
     // type is compatible with a given variant type
     template <>
