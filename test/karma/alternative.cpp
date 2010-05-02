@@ -16,6 +16,7 @@
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
+#include <boost/spirit/include/karma_auxiliary.hpp>
 
 #include "test.hpp"
 
@@ -165,6 +166,16 @@ main()
         BOOST_TEST(test("11", char_ | lit(11), v));
         BOOST_TEST(test("11", double_ | lit(11), v));
         BOOST_TEST(!test("", char_ | int_, v));
+    }
+
+    {
+        // in strict mode if nothing matches, the alternative will fail
+        variant<double, char const*> v (10.0);
+        BOOST_TEST(!test("11", strict[char_ | lit(11)], v));
+        BOOST_TEST(test("11", strict[lit(11) | char_] , v));
+
+        v = "c";
+        BOOST_TEST(!test("11", strict[char_ | lit(11)], v));
     }
 
     {
