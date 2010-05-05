@@ -34,17 +34,31 @@
 * Added the __karma__ __karma_skip__ directive which is semantically equivalent
   to the __karma__ __karma_omit__ directive except that it will not execute the 
   embedded generator.
+* Added debug support to __karma__ rules. 
+* Added strict mode to __karma__, leaving the current behavior (unchanged) as 
+  relaxed mode. Added __karma__ compile time directives `strict[]` and 
+  `relaxed[]` allowing to switch between the two.
+* Added __karma__ debug mode.
 
 [heading Bug Fixes]
 
 * Components in __qi__ and __karma__ now accept one element Fusion sequences as
-  there attributes as long as the element in the Fusion sequence is compatible
+  their attributes as long as the element in the Fusion sequence is compatible
   with the component's attribute type.
 * The character range parser and generator components can now additionally be 
   written as `char_("a", "z")` instead of `char_('a', 'z')` making it 
   consistent with the syntax of the `char_('a')` component (which can be 
   written as `char_("a")` as well). Please note that the mixed syntax forms,
   i.e. `char_('a', "z")` and `char_("a", 'z')`, are not supported.
+* Fixed attribute handling in __karma__ sequences when all elements of that
+  sequence consume either the same attribute type or containers of that 
+  attribute type and the passed in attribute is a container of that attribute 
+  type as well. In this case using a repetitive container was supported only
+  when it was the last element of the sequence. Now it is possible to 
+  have a [karma_repeat `repeat`]`(num)[a]` generator at any position (well, 
+  actually you can have any repetitive container at any position now, but this 
+  doesn't always make sense as it normally would eat up all supplied attribute 
+  values).
 
 [endsect] [/ spirit_2_4]
 

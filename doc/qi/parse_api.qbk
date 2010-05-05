@@ -195,7 +195,7 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::qi::match` ]]
-    [[`boost::spirit::qi::match_delimited` ]]
+    [[`boost::spirit::qi::phrase_match` ]]
     [[`boost::spirit::qi::skip_flag::postskip` ]]
     [[`boost::spirit::qi::skip_flag::dont_postskip` ]]
 ]
