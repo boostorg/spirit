@@ -132,9 +132,7 @@ int main()
 
             std::string value("foo ' bar");
             BOOST_TEST(test("\"foo ' bar\"", '"' << strict[*(~char_('*'))] << '"', value));
-
-// This currently fails even after it perfectly generated the attribute
-//             BOOST_TEST(test("\"foo ' bar\"", strict['"' << *(~char_('*')) << '"'], value));
+            BOOST_TEST(test("\"foo ' bar\"", strict['"' << *(~char_('*')) << '"'], value));
         }
 
         {
