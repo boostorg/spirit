@@ -239,6 +239,14 @@ namespace boost { namespace spirit { namespace karma
 
             // fail generating if sequences have not the same (logical) length
             return !r && (!Strict::value || 
+                // This ignores container element count (which is not good), 
+                // but allows valid attributes to succeed. This will lead to 
+                // false positives (failing generators, even if they shouldn't)
+                // if the embedded component is restricting the number of 
+                // container elements it consumes (i.e. repeat). This solution 
+                // is not optimal but much better than letting _all_ repetitive
+                // components fail.
+                Pred1::value ||
                 detail::attribute_size<attr_type_>::value == detail::attr_size(attr_));
         }
 
