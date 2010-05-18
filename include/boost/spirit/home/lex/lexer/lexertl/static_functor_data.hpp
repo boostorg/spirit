@@ -346,7 +346,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 Iterator end = this->first_;
                 std::size_t unique_id = boost::lexer::npos;
-                return id == next(end, unique_id);
+                return id == this->next(end, unique_id);
             }
 
             // The adjust_start() and revert_adjust_start() are helper 
