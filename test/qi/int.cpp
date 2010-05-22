@@ -178,11 +178,9 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     {
         boost::spirit::qi::int_parser<boost::int8_t> int8_;
-        boost::spirit::qi::int_parser<boost::int16_t> int16_;
         char c;
 
         BOOST_TEST(!test_attr("999", int8_, c));
-        BOOST_TEST(!test_attr("999", int16_, c));
     }
 
     ///////////////////////////////////////////////////////////////////////////

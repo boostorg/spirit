@@ -203,11 +203,9 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     {
         boost::spirit::qi::uint_parser<boost::uint8_t> uint8_;
-        boost::spirit::qi::uint_parser<boost::uint16_t> uint16_;
         boost::uint8_t u;
 
         BOOST_TEST(!test_attr("999", uint8_, u));
-        BOOST_TEST(!test_attr("999", uint16_, u));
     }
 
     ///////////////////////////////////////////////////////////////////////////
