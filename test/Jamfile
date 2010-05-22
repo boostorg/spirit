@@ -152,6 +152,7 @@ import testing ;
 
 
     # regression tests
+    [ compile qi/attr_with_action.cpp         : : qi_attr_with_action ]
     [ run qi/clear_test.cpp                   : : : : ]
     [ run qi/reorder_test.cpp                 : : : : ]
     [ run karma/karma_optional_double.cpp     : : : : ]
