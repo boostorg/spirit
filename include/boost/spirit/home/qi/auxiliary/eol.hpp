@@ -32,6 +32,7 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace qi
 {
     using spirit::eol;
+    using spirit::eol_type;
 
     struct eol_parser : primitive_parser<eol_parser>
     {

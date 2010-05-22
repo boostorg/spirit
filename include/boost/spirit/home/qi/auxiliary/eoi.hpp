@@ -32,6 +32,7 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace qi
 {
     using spirit::eoi;
+    using spirit::eoi_type;
 
     struct eoi_parser : primitive_parser<eoi_parser>
     {
