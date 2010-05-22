@@ -108,7 +108,7 @@ a parser in this mode checks the provided input against
 the given parser expression allowing to verify whether the input is parsable.
 For generators this mode doesn't make any sense. What is output generation 
 without generating any output? So we always will have to supply the data the 
-output should be generated from. In our example we supply a vector of `double`
+output should be generated from. In our example we supply a list of `double`
 numbers as the last parameter to the function `generate_delimited` (see code 
 below).
 

@@ -118,11 +118,11 @@
 
 [heading New Lexer Features]
 
-* The library does not minize the generated lexer tables for dynamic lexers by 
+* The library does not minimize the generated lexer tables for dynamic lexers by 
   default anymore. The generated tables will now be minimized for static lexers 
   only.
 * The function `lexer<>::init_dfa()` now takes a single boolean parameter 
-  (which defaults to `false`) allowing to force minimazation of the generated
+  (which defaults to `false`) allowing to force minimization of the generated
   lexer tables.
 
 [endsect] [/ spirit_2_3]

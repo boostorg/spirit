@@ -64,7 +64,7 @@ Also, see __include_structure__.
     [[`boost::spirit::ulong_long    // alias: boost::spirit::qi::ulong_long`]]
 ]
 
-[important `ulong_long` is only available on platforms where the preprocessor
+[note `ulong_long` is only available on platforms where the preprocessor
 constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `unsigned long long` (64 bit) unsigned integer
 types).]
@@ -119,6 +119,12 @@ not defined in __primitive_parser_concept__.
     [[`uint_`]          [Create a `uint_parser<unsigned int, 10, 1, -1>`]]
     [[`ulong_long`]     [Create a `uint_parser<unsigned long long, 10, 1, -1>`]]
 ]
+
+[important All numeric parsers check for overflow conditions based on the type `T`
+      the corresponding `uint_parser<>` has been instantiated with. If the 
+      parsed number overflows this type the parsing fails. Please be aware
+      that the overflow check is not based on the type of the supplied 
+      attribute but solely depends on the template parameter `T`.]
 
 [heading Attributes]
 
@@ -199,7 +205,7 @@ Also, see __include_structure__.
     [[`boost::spirit::long_long     // alias: boost::spirit::qi::long_long`]]
 ]
 
-[important `long_long` is only available on platforms where the preprocessor
+[note `long_long` is only available on platforms where the preprocessor
 constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `signed long long` (64 bit) unsigned integer types).]
 
@@ -250,6 +256,12 @@ not defined in __primitive_parser_concept__.
     [[`int_`]           [Create an `int_parser<int, 10, 1, -1>`]]
     [[`long_long`]      [Create an `int_parser<long long, 10, 1, -1>`]]
 ]
+
+[important All numeric parsers check for overflow conditions based on the type `T`
+      the corresponding `int_parser<>` has been instantiated with. If the 
+      parsed number overflows this type the parsing fails. Please be aware
+      that the overflow check is not based on the type of the supplied 
+      attribute but solely depends on the template parameter `T`.]
 
 [heading Attributes]
 

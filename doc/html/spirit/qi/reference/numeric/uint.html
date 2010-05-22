@@ -22,13 +22,13 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../numeric.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="int.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Unsigned Integers (uint_, etc.)">
+<div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="spirit.qi.reference.numeric.uint"></a><a class="link" href="uint.html" title="Unsigned Integers (uint_, etc.)"> Unsigned Integers
           (<code class="computeroutput"><span class="identifier">uint_</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.numeric.uint.description"></a><h6>
-<a name="id724675"></a>
+<a name="id943601"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.description">Description</a>
           </h6>
 <p>
@@ -42,7 +42,7 @@
             is a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.qi.reference.numeric.uint.header"></a><h6>
-<a name="id724721"></a>
+<a name="id943646"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric/uint.hpp&gt;
@@ -52,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.numeric.uint.namespace"></a><h6>
-<a name="id724795"></a>
+<a name="id943721"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -107,10 +107,10 @@
                   </td></tr>
 </tbody>
 </table></div>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="note"><table border="0" summary="Note">
 <tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
-<th align="left">Important</th>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
               <code class="computeroutput"><span class="identifier">ulong_long</span></code> is only
@@ -121,7 +121,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.synopsis"></a><h6>
-<a name="id725141"></a>
+<a name="id944066"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -132,7 +132,7 @@
 <span class="keyword">struct</span> <span class="identifier">uint_parser</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.numeric.uint.template_parameters"></a><h6>
-<a name="id725237"></a>
+<a name="id944162"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.template_parameters">Template
             parameters</a>
           </h6>
@@ -233,7 +233,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.model_of"></a><h6>
-<a name="id726522"></a>
+<a name="id944347"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -245,7 +245,7 @@
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">NP</span></code></span></dt>
@@ -261,7 +261,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.numeric.uint.expression_semantics"></a><h6>
-<a name="id726617"></a>
+<a name="id944442"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -398,8 +398,23 @@
 </tr>
 </tbody>
 </table></div>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              All numeric parsers check for overflow conditions based on the type
+              <code class="computeroutput"><span class="identifier">T</span></code> the corresponding
+              <code class="computeroutput"><span class="identifier">uint_parser</span><span class="special">&lt;&gt;</span></code>
+              has been instantiated with. If the parsed number overflows this type
+              the parsing fails. Please be aware that the overflow check is not based
+              on the type of the supplied attribute but solely depends on the template
+              parameter <code class="computeroutput"><span class="identifier">T</span></code>.
+            </p></td></tr>
+</table></div>
 <a name="spirit.qi.reference.numeric.uint.attributes"></a><h6>
-<a name="id727244"></a>
+<a name="id945101"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -413,7 +428,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.numeric.uint.complexity"></a><h6>
-<a name="id727275"></a>
+<a name="id945132"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -426,7 +441,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.numeric.uint.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_"></a><h6>
-<a name="id727299"></a>
+<a name="id945156"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_">Minimum
             Expression Requirements for <code class="computeroutput"><span class="identifier">T</span></code></a>
           </h6>
@@ -574,10 +589,10 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.example"></a><h6>
-<a name="id727828"></a>
+<a name="id946930"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.example">Example</a>
           </h6>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
