@@ -53,7 +53,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         public:
             typedef Iterator base_iterator_type;
-            typedef unused_type token_value_type;
+            typedef iterator_range<Iterator> token_value_type;
+            typedef token_value_type get_value_type;
             typedef std::size_t state_type;
             typedef char_type const* state_name_type;
             typedef unused_type semantic_actions_type;
@@ -212,7 +213,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         public:
             typedef Iterator base_iterator_type;
-            typedef unused_type token_value_type;
+            typedef iterator_range<Iterator> token_value_type;
+            typedef token_value_type get_value_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::state_name_type state_name_type;
             typedef typename base_type::semantic_actions_type 
@@ -292,6 +294,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         public:
             typedef Iterator base_iterator_type;
             typedef TokenValue token_value_type;
+            typedef TokenValue const& get_value_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::state_name_type state_name_type;
 
