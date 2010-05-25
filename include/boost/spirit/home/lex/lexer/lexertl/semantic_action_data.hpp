@@ -102,6 +102,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 if (unique_id >= actions.size() || !actions[unique_id]) 
                     return pass_flags::pass_normal;
 
+                // set token value 
+                data.set_end(end);
+
                 // Note: all arguments might be changed by the invoked semantic 
                 //       action
                 BOOST_SCOPED_ENUM(pass_flags) match = pass_flags::pass_normal;
