@@ -14,7 +14,7 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x2030
-#define SPIRIT_PIZZA_VERSION HAWAII  // :-)
+#define SPIRIT_VERSION 0x2040
+#define SPIRIT_PIZZA_VERSION CATFISH_WITH_RASPBERRY_JELLY  // :-)
 
 #endif
