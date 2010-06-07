@@ -12,6 +12,8 @@
 
 #include <limits>
 #include <boost/config.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/not.hpp>
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
@@ -236,7 +238,10 @@ namespace boost { namespace spirit { namespace karma
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
-        BOOST_SPIRIT_ASSERT_MSG(!std::numeric_limits<T>::is_signed,
+        BOOST_SPIRIT_ASSERT_MSG( 
+            // the following is a workaround for STLPort, where the simpler
+            // `!std::numeric_limits<T>::is_signed` wouldn't compile
+            mpl::not_<mpl::bool_<std::numeric_limits<T>::is_signed> >::value,
             signed_unsigned_mismatch, ());
 
         // int has a Attribute attached
@@ -299,7 +304,10 @@ namespace boost { namespace spirit { namespace karma
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
-        BOOST_SPIRIT_ASSERT_MSG(!std::numeric_limits<T>::is_signed,
+        BOOST_SPIRIT_ASSERT_MSG(
+            // the following is a workaround for STLPort, where the simpler
+            // `!std::numeric_limits<T>::is_signed wouldn't` compile
+            mpl::not_<mpl::bool_<std::numeric_limits<T>::is_signed> >::value,
             signed_unsigned_mismatch, ());
 
         // A uint(1U) which additionally has an associated attribute emits
