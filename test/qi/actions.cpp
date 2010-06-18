@@ -42,6 +42,23 @@ struct fun_action
     }
 };
 
+void fail (int, boost::spirit::unused_type, bool& pass)
+{ 
+    pass = false; 
+} 
+
+struct setnext
+{
+    setnext(char& next) : next(next) {}
+
+    void operator()(char c, unused_type, unused_type) const
+    {
+        next = c;
+    }
+
+    char& next;
+};
+
 int main()
 {
     namespace qi = boost::spirit::qi;
@@ -81,8 +98,16 @@ int main()
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[lambda::var(x) += lambda::_1] >> '}');
     }
-
     BOOST_TEST(x == (42*6));
+
+    {
+       std::string input("1234 6543"); 
+       char next = '\0';
+       BOOST_TEST(qi::phrase_parse(input.begin(), input.end(),
+          qi::int_[fail] | qi::digit[setnext(next)] , qi::space));
+       BOOST_TEST(next == '1'); 
+    }
+
     return boost::report_errors();
 }
 
