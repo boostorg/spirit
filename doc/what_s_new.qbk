@@ -59,6 +59,7 @@
   actually you can have any repetitive container at any position now, but this 
   doesn't always make sense as it normally would eat up all supplied attribute 
   values).
+* Fixed debug output for variants where a variant element is an STL sequence.
 
 [endsect] [/ spirit_2_4]
 
