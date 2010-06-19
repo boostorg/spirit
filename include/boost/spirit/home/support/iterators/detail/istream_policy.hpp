@@ -48,14 +48,19 @@ namespace boost { namespace spirit { namespace iterator_policies
             static typename MultiPass::reference get_input(MultiPass& mp)
             {
                 if (!mp.shared()->initialized_)
-                    advance_input(mp);
+                    mp.shared()->read_one();
                 return mp.shared()->curtok_;
             }
 
             template <typename MultiPass>
             static void advance_input(MultiPass& mp)
             {
-                mp.shared()->read_one();
+                // We invalidate the currently cached input character to avoid
+                // reading more input from the underlying iterator than 
+                // required. Without this we would always read ahead one 
+                // character, even if this character never gets consumed by the 
+                // client.
+                mp.shared()->peek_one();
             }
 
             // test, whether we reached the end of the underlying stream
@@ -89,9 +94,20 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             void read_one()
             {
-                if (!(input_ >> curtok_))
+                if (!(input_ >> curtok_)) {
+                    initialized_ = false;
                     eof_reached_ = true;
-                initialized_ = true;
+                }
+                else {
+                    initialized_ = true;
+                }
+            }
+
+            void peek_one()
+            {
+                input_.peek();    // try for eof
+                initialized_ = false;
+                eof_reached_ = input_.eof();
             }
 
             T& input_;
