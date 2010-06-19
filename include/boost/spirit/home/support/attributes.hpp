@@ -864,7 +864,8 @@ namespace boost { namespace spirit { namespace traits
     template <typename Out, typename T>
     inline void print_attribute(Out& out, T const& val)
     {
-        detail::print_attribute_impl(out, val, is_container<T>());
+        detail::print_attribute_impl(out, val, 
+            mpl::and_<is_container<T>, not_is_variant<T, void> >());
     }
 }}}
 
