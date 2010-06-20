@@ -411,8 +411,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         if (it == last)                                                         \
             break;                                                              \
         ch = *it;                                                               \
-        if (!radix_check::is_valid(ch) || !extractor::call(ch, count, val))     \
+        if (!radix_check::is_valid(ch))                                         \
             break;                                                              \
+        if (!extractor::call(ch, count, val))                                   \
+            return false;                                                       \
         ++it;                                                                   \
         ++count;                                                                \
     /**/
