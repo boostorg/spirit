@@ -345,6 +345,20 @@ main()
         first = str; last = str + 2;
         BOOST_TEST(!sym.prefix_find(first, last) && first == str);
     }
+	
+	{
+		// remove bug
+		
+		std::string s;
+		symbols<char, double> vars;
+		
+		vars.add("l1", 12.0);
+		vars.add("l2", 0.0);
+		vars.remove("l2");
+		vars.find("l1");
+		double* d = vars.find("l1");
+        BOOST_TEST(d != 0);		
+	}
 
     return boost::report_errors();
 }

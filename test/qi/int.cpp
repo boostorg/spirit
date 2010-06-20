@@ -116,8 +116,7 @@ main()
         BOOST_TEST(!test_attr("+", int_, i));
 
         // Bug report from Steve Nutt
-        BOOST_TEST(test_attr("5368709120", int_, i, false));
-        BOOST_TEST(i == 536870912);
+        BOOST_TEST(!test_attr("5368709120", int_, i));
 
         // with leading zeros
         BOOST_TEST(test("0000000000123456", int_));
@@ -181,6 +180,11 @@ main()
         char c;
 
         BOOST_TEST(!test_attr("999", int8_, c));
+
+        int i;
+        using boost::spirit::short_;
+        BOOST_TEST(!test_attr("32769", short_, i, false));
+        BOOST_TEST(!test_attr("41234", short_, i, false));
     }
 
     ///////////////////////////////////////////////////////////////////////////
