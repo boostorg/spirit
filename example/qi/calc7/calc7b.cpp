@@ -6,12 +6,6 @@
 =============================================================================*/
 #include "calc7b.hpp"
 
-// This is not really called. Its only purpose is to
-// instantiate the constructor of the grammar.
-void instantiate_expression()
-{
-    typedef std::string::const_iterator iterator_type;
-    qi::symbols<char, int> vars;
-    std::vector<int> code;
-    expression<iterator_type> g(code, vars);
-}
+typedef std::string::const_iterator iterator_type;
+template struct expression<iterator_type>;
+
