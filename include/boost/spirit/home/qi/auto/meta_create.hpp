@@ -241,13 +241,13 @@ namespace boost { namespace spirit { namespace traits
     struct create_parser : qi::meta_create<T> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    // dispatch this to the qi related specializations
+    // dispatch this to the Qi related specializations
     template <typename T>
     struct meta_create<qi::domain, T>
       : create_parser<typename spirit::detail::remove_const_ref<T>::type> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    // Check whether a valid mapping exits for the given data type to a Karma
+    // Check whether a valid mapping exits for the given data type to a Qi
     // component
     template <typename T>
     struct meta_create_exists<qi::domain, T>
