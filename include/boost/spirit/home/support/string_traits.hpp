@@ -151,10 +151,10 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     inline typename add_const<T>::type* get_end(T* str)
     {
-      T* last = str;
-      while (*last)
-        last++;
-      return last;
+        T* last = str;
+        while (*last)
+            last++;
+        return last;
     }
 #else
     template <typename T>
@@ -166,10 +166,10 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     inline T const* get_end(T const* str)
     {
-      T const* last = str;
-      while (*last)
-        last++;
-      return last;
+        T const* last = str;
+        while (*last)
+            last++;
+        return last;
     }
 
     template <typename T>
