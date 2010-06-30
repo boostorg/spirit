@@ -22,7 +22,11 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
     struct parse_impl<Expr
-      , typename enable_if<traits::meta_create_exists<qi::domain, Expr> >::type>
+      , typename enable_if<
+            mpl::and_<
+                traits::meta_create_exists<qi::domain, Expr>
+              , mpl::not_<traits::matches<qi::domain, Expr> > >
+        >::type>
     {
         template <typename Iterator>
         static bool call(Iterator& first, Iterator last, Expr& expr)
@@ -76,7 +80,11 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
     struct phrase_parse_impl<Expr
-      , typename enable_if<traits::meta_create_exists<qi::domain, Expr> >::type>
+      , typename enable_if<
+            mpl::and_<
+                traits::meta_create_exists<qi::domain, Expr>
+              , mpl::not_<traits::matches<qi::domain, Expr> > >
+        >::type>
     {
         template <typename Iterator, typename Skipper>
         static bool call(Iterator& first, Iterator last, Expr& expr
