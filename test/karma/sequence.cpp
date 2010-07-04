@@ -16,10 +16,12 @@
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
+#include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/support_unused.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/vector.hpp>
 
 #include "test.hpp"
@@ -27,8 +29,26 @@
 using namespace spirit_test;
 
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
+// lazy version of fusion::size
+struct seqsize_impl
+{
+    template <typename Sequence>
+    struct result 
+      : boost::fusion::result_of::size<Sequence>
+    {};
+
+    template <typename Sequence>
+    typename result<Sequence>::type
+    operator()(Sequence const& seq) const
+    {
+        return boost::fusion::size(seq);
+    }
+};
+
+boost::phoenix::function<seqsize_impl> const seqsize = seqsize_impl();
+
+///////////////////////////////////////////////////////////////////////////////
+int main()
 {
     using namespace boost::spirit;
     using namespace boost::spirit::ascii;
@@ -195,6 +215,35 @@ main()
         v.push_back("abc2");
         v.push_back("abc3");
         BOOST_TEST(test("abc1,abc2,abc3", l, v));
+    }
+
+    {
+        namespace karma = boost::spirit::karma;
+        namespace phoenix = boost::phoenix;
+
+        typedef spirit_test::output_iterator<char>::type outiter_type;
+        typedef fusion::vector<char, char, char> vector_type;
+        
+        vector_type p ('a', 'b', 'c');
+        BOOST_TEST(test("ab", char_ << char_, p));
+
+        karma::rule<outiter_type, vector_type()> r;
+        r %= char_ << char_ << &karma::eps[seqsize(_val) == 3];
+        BOOST_TEST(!test("", r, p));
+
+        r %= char_ << char_ << char_ << &karma::eps[seqsize(_val) == 3];
+        BOOST_TEST(test("abc", r, p));
+    }
+
+    {
+        std::list<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        v.push_back(4);
+
+        BOOST_TEST(test("1234", repeat(2)[int_] << *int_, v));
+        BOOST_TEST(test_delimited("1 2 3 4 ", repeat(2)[int_] << *int_, v, char(' ')));
     }
 
     return boost::report_errors();

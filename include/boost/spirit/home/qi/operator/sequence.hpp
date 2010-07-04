@@ -61,6 +61,20 @@ namespace boost { namespace spirit { namespace qi
     struct make_composite<proto::tag::shift_right, Elements, Modifiers>
       : make_nary_composite<Elements, sequence>
     {};
+
+//     ///////////////////////////////////////////////////////////////////////////
+//     // Define what attributes are compatible with a sequence
+//     template <typename Attribute, typename Elements, typename Context, typename Iterator>
+//     struct is_attribute_compatible<Attribute, sequence<Elements>, Context, Iterator>
+//       : mpl::or_<
+//             is_convertible<Attribute
+//               , typename traits::attribute_of<sequence<Elements>, Context, Iterator>::type> 
+//           , traits::is_fusion_sequence_compatible<qi::domain, Attribute
+//               , sequence<Elements>, Context, Iterator> 
+//           , traits::is_container_compatible<qi::domain, Attribute
+//               , sequence<Elements>, Context, Iterator>
+//         >
+//     {};
 }}}
 
 namespace boost { namespace spirit { namespace traits

@@ -14,7 +14,7 @@
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/variant.hpp>
 #include <boost/mpl/bool.hpp>
 

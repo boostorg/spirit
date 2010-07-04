@@ -17,8 +17,16 @@ inline void check(scheme::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    BOOST_TEST(s.str() == expected + " ");
+    BOOST_ASSERT(s.str() == expected + " ");
 }
+
+struct one_two_three
+{
+    scheme::utree operator()(scheme::args_type) const
+    {
+        return scheme::utree(123);
+    }
+};
 
 int main()
 {
@@ -173,6 +181,20 @@ int main()
         BOOST_TEST(a[11] == utree(12));
     }
 
+    {
+        // test empty list
+        utree a;
+        a.push_back(1);
+        a.pop_front();
+        check(a, "( )");
+
+        // the other way around
+        utree b;
+        b.push_front(1);
+        b.pop_back();
+        check(b, "( )");
+    }
+
     { // test references
         utree val(123);
         utree ref(boost::ref(val));
@@ -246,6 +268,38 @@ int main()
         BOOST_TEST(ref[2] == utree(3));
         BOOST_TEST(ref[3] == utree(4));
         check(ref, "( 1 2 3 4 )");
+    }
+
+    {
+        // check the tag
+        utree x;
+        x.tag(123);
+        BOOST_TEST(x.tag() == 123);
+    }
+
+    {
+        // test functions
+        utree f = scheme::stored_function<one_two_three>();
+        f.eval(scheme::args_type());
+    }
+
+    {
+        // shallow ranges
+        utree val;
+        val.push_back(1);
+        val.push_back(2);
+        val.push_back(3);
+        val.push_back(4);
+
+        utree::iterator i = val.begin(); ++i;
+        utree alias(utree::range(i, val.end()), scheme::shallow);
+
+        check(alias, "( 2 3 4 )");
+        BOOST_TEST(alias.size() == 3);
+        BOOST_TEST(alias.front() == 2);
+        BOOST_TEST(alias.back() == 4);
+        BOOST_TEST(!alias.empty());
+        BOOST_TEST(alias[1] == 3);
     }
 
     return boost::report_errors();

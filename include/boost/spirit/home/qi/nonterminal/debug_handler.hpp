@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
+#include <boost/spirit/home/qi/nonterminal/debug_handler_state.hpp>
 #include <boost/spirit/home/qi/operator/expect.hpp>
 #include <boost/function.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -22,13 +23,6 @@
 
 namespace boost { namespace spirit { namespace qi
 {
-    enum debug_handler_state
-    {
-        pre_parse
-      , successful_parse
-      , failed_parse
-    };
-
     template <
         typename Iterator, typename Context
       , typename Skipper, typename F>
@@ -92,7 +86,7 @@ namespace boost { namespace spirit { namespace qi
               , typename rule_type::skipper_type
               , F>
         debug_handler;
-        r.f = debug_handler(r.f, f. r.name());
+        r.f = debug_handler(r.f, f, r.name());
     }
 
     struct simple_trace;
@@ -130,10 +124,12 @@ namespace boost { namespace spirit { namespace qi
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Utility macro for easy enabling of rule and grammar debugging
-#if defined(BOOST_SPIRIT_DEBUG)
-#define BOOST_SPIRIT_DEBUG_NODE(r)  r.name(#r); debug(r)
-#else
-#define BOOST_SPIRIT_DEBUG_NODE(r)
+#if !defined(BOOST_SPIRIT_DEBUG_NODE)
+  #if defined(BOOST_SPIRIT_DEBUG) || defined(BOOST_SPIRIT_QI_DEBUG)
+    #define BOOST_SPIRIT_DEBUG_NODE(r)  r.name(#r); debug(r)
+  #else
+    #define BOOST_SPIRIT_DEBUG_NODE(r)
+  #endif
 #endif
 
 #endif

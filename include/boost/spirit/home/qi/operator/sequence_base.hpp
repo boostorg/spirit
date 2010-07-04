@@ -13,7 +13,7 @@
 
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/detail/pass_container.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/algorithm/any_if.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/spirit/home/support/unused.hpp>

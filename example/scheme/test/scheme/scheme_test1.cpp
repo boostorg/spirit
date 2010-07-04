@@ -77,7 +77,11 @@ int main(int argc, char **argv)
     scheme::utree program;
     BOOST_TEST(scheme::input::parse_sexpr_list(in, program, filename));
 
-        scheme::actor_list::iterator i = flist.begin();
+    scheme::environment env;
+    scheme::build_basic_environment(env);
+    scheme::actor_list fragments;
+    scheme::actor_list flist;
+    compile_all(program, env, flist, fragments, filename);
 
         std::cout << "the 1st is the define dbl:" << std::endl;
         std::cout << "(dbl 555): " << (*i++)(555) << std::endl;
@@ -99,7 +103,16 @@ int main(int argc, char **argv)
         std::cout << "parse error" << std::endl;
     }
 
-    return 0;
+    BOOST_TEST((*i++)(555) == 1110);
+    BOOST_TEST((*i++)() == 123);
+    BOOST_TEST((*i++)() == 246);
+    BOOST_TEST((*i++)(5) == 120);
+    BOOST_TEST((*i++)() == 3628800);
+    BOOST_TEST((*i++)(5) == 5);
+    BOOST_TEST((*i++)() == 55);
+    BOOST_TEST((*i++)() == 21);
+
+    return boost::report_errors();
 }
 
 

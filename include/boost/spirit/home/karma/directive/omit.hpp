@@ -16,7 +16,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 
 namespace boost { namespace spirit
 {
@@ -27,19 +27,24 @@ namespace boost { namespace spirit
     struct use_directive<karma::domain, tag::omit> // enables omit
       : mpl::true_ {};
 
+    template <>
+    struct use_directive<karma::domain, tag::skip> // enables skip
+      : mpl::true_ {};
 }}
 
 namespace boost { namespace spirit { namespace karma
 {
     using spirit::omit;
     using spirit::omit_type;
+    using spirit::skip;
+    using spirit::skip_type;
 
     ///////////////////////////////////////////////////////////////////////////
     // omit_directive consumes the attribute of subject generator without
     // generating anything
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject>
-    struct omit_directive : unary_generator<omit_directive<Subject> >
+    template <typename Subject, bool Execute>
+    struct omit_directive : unary_generator<omit_directive<Subject, Execute> >
     {
         typedef Subject subject_type;
 
@@ -60,22 +65,23 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            // We need to actually execute the output operation as we don't 
+            // We need to actually compile the output operation as we don't 
             // have any other means to verify, whether the passed attribute is 
-            // compatible with the subject. As soon as we will have a
-            // traits::is_compatible_attribute<> meta-function, this can be 
-            // replaced by a compile-time assertion and a runtime no-op.
+            // compatible with the subject. 
 
-            // wrap the given output iterator to avoid output
-            detail::disable_output<OutputIterator> disable(sink);
-            subject.generate(sink, ctx, d, attr);
+            // omit[] will execute the code, while skip[] doesn't execute it
+            if (Execute) {
+                // wrap the given output iterator to avoid output
+                detail::disable_output<OutputIterator> disable(sink);
+                subject.generate(sink, ctx, d, attr);
+            }
             return true;
         }
 
         template <typename Context>
         info what(Context& context) const
         {
-            return info("omit", subject.what(context));
+            return info(Execute ? "omit" : "skip", subject.what(context));
         }
 
         Subject subject;
@@ -87,7 +93,7 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject, typename Modifiers>
     struct make_directive<tag::omit, Subject, Modifiers>
     {
-        typedef omit_directive<Subject> result_type;
+        typedef omit_directive<Subject, true> result_type;
         result_type operator()(unused_type, Subject const& subject
           , unused_type) const
         {
@@ -95,14 +101,23 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
+    template <typename Subject, typename Modifiers>
+    struct make_directive<tag::skip, Subject, Modifiers>
+    {
+        typedef omit_directive<Subject, false> result_type;
+        result_type operator()(unused_type, Subject const& subject
+          , unused_type) const
+        {
+            return result_type(subject);
+        }
+    };
 }}}
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename Subject>
-    struct has_semantic_action<karma::omit_directive<Subject> >
+    template <typename Subject, bool Execute>
+    struct has_semantic_action<karma::omit_directive<Subject, Execute> >
       : unary_has_semantic_action<Subject> {};
-
 }}}
 
 #endif

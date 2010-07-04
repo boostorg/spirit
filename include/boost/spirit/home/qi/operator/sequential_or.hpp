@@ -13,7 +13,7 @@
 
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/detail/pass_function.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/spirit/home/support/algorithm/any_if_ns.hpp>
 #include <boost/fusion/include/as_vector.hpp>

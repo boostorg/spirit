@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/type_traits/is_base_of.hpp>
@@ -22,6 +22,7 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repeat.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/iterator/iterator_facade.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -58,6 +59,71 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
 #undef BOOST_SPIRIT_IS_CONVERTIBLE
 
+    ///////////////////////////////////////////////////////////////////////////
+    // This is a wrapper for any iterator allowing to pass a reference of it
+    // to the components of the sequence
+    template <typename Iterator>
+    class indirect_iterator
+      : public boost::iterator_facade<
+            indirect_iterator<Iterator>
+          , typename boost::detail::iterator_traits<Iterator>::value_type
+          , boost::forward_traversal_tag
+          , typename boost::detail::iterator_traits<Iterator>::value_type const&>
+    {
+        typedef typename boost::detail::iterator_traits<Iterator>::value_type
+            base_value_type;
+
+        typedef boost::iterator_facade<
+            indirect_iterator<Iterator>, base_value_type
+          , boost::forward_traversal_tag, base_value_type const&
+        > base_type;
+
+    public:
+        indirect_iterator()
+          : iter_(0) 
+        {}
+
+        indirect_iterator(Iterator& iter)
+          : iter_(&iter)
+        {}
+
+    private:
+        friend class boost::iterator_core_access;
+
+        void increment()
+        {
+            ++*iter_;
+        }
+
+        bool equal(indirect_iterator const& other) const
+        {
+            if (0 == iter_)
+                return 0 == other.iter_;
+            return other.iter_ != 0 && *iter_ == *other.iter_;
+        }
+
+        typename base_type::reference dereference() const
+        {
+            return **iter_;
+        }
+
+    private:
+        Iterator* iter_;
+    };
+
+    template <typename Iterator>
+    struct make_indirect_iterator
+    {
+        typedef indirect_iterator<Iterator> type;
+    };
+
+    template <>
+    struct make_indirect_iterator<unused_type const*>
+    {
+        typedef unused_type const* type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
     // to the sequence is an STL container. This is a wrapper around F.
     // The function F does the actual generating.
@@ -65,6 +131,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct pass_container
     {
         typedef typename F::context_type context_type;
+        typedef typename traits::container_iterator<Attr>::type iterator_type;
 
         pass_container(F const& f, Attr& attr)
           : f(f), attr(attr), iter(traits::begin(attr)) {}
@@ -75,8 +142,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            typename traits::container_iterator<Attr>::type end = 
-                traits::end(attr);
+            iterator_type end = traits::end(attr);
             if (!traits::compare(iter, end) && !f(component, traits::deref(iter))) 
             {
                 // needs to return false as long as everything is ok
@@ -93,12 +159,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {
-            typename traits::container_iterator<Attr>::type end = 
-                traits::end(attr);
-            bool result = f(component, make_iterator_range(iter, end));
-            if (result)
-                iter = traits::end(attr);     // adjust current iter to the end 
-            return result;
+            typedef typename make_indirect_iterator<iterator_type>::type 
+                indirect_iterator_type;
+
+            iterator_type end = traits::end(attr);
+            indirect_iterator_type ind_iter(iter);
+            indirect_iterator_type ind_end(end);
+
+            return f(component, make_iterator_range(ind_iter, ind_end));
         }
 
         // This handles the distinction between elements in a sequence expecting
@@ -149,12 +217,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
-            typename traits::container_iterator<Attr>::type end = 
-                traits::end(attr);
-            bool result = f(component, make_iterator_range(iter, end));
-            if (result)
-                iter = traits::end(attr);     // adjust current iter to the end 
-            return result;
+            typedef typename make_indirect_iterator<iterator_type>::type 
+                indirect_iterator_type;
+
+            iterator_type end = traits::end(attr);
+            indirect_iterator_type ind_iter(iter);
+            indirect_iterator_type ind_end(end);
+
+            return f(component, make_iterator_range(ind_iter, ind_end));
         }
 
         // Dispatches to dispatch_main depending on the attribute type
@@ -172,7 +242,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         F f;
         Attr const& attr;
-        mutable typename traits::container_iterator<Attr>::type iter;
+        mutable iterator_type iter;
 
     private:
         // silence MSVC warning C4512: assignment operator could not be generated

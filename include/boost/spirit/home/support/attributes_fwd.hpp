@@ -82,8 +82,20 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename Iterator, typename Enable = void>
     struct assign_to_attribute_from_iterators;
 
+    template <typename Iterator, typename Attribute>
+    void assign_to(Iterator const& first, Iterator const& last, Attribute& attr);
+
+    template <typename Iterator>
+    void assign_to(Iterator const&, Iterator const&, unused_type);
+
     template <typename Attribute, typename T, typename Enable = void>
     struct assign_to_attribute_from_value;
+
+    template <typename T, typename Attribute>
+    void assign_to(T const& val, Attribute& attr);
+
+    template <typename T>
+    void assign_to(T const&, unused_type);
 
     ///////////////////////////////////////////////////////////////////////////
     // Karma only

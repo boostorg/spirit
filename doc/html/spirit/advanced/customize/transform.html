@@ -4,7 +4,7 @@
 <title>Transform an Attribute to a Different Type (Qi and Karma)</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.3">
+<link rel="home" href="../../../index.html" title="Spirit 2.4">
 <link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
 <link rel="prev" href="is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)">
 <link rel="next" href="assign_to.html" title="Store a Parsed Attribute Value (Qi)">
@@ -28,20 +28,34 @@
         Attribute to a Different Type (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.transform.transform_attribute"></a><h6>
-<a name="id977280"></a>
+<a name="id997492"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.transform_attribute">transform_attribute</a>
         </h6>
 <p>
           The template <code class="computeroutput"><span class="identifier">transform_attribute</span></code>
           is a type used as an attribute customization point. It is invoked by <span class="emphasis"><em>Qi</em></span>
-          <code class="computeroutput"><span class="identifier">rule</span></code> and <code class="computeroutput"><span class="identifier">attr_cast</span></code>, and <span class="emphasis"><em>Karma</em></span>
-          <code class="computeroutput"><span class="identifier">rule</span></code> and <a class="link" href="../../karma/reference/auxiliary/attr_cast.html" title="Attribute Transformation Pseudo Generator (attr_cast)"><code class="computeroutput"><span class="identifier">attr_cast</span></code></a>. It is used to automatically
+          <code class="computeroutput"><span class="identifier">rule</span></code>, semantic action and
+          <code class="computeroutput"><span class="identifier">attr_cast</span></code>, and <span class="emphasis"><em>Karma</em></span>
+          <code class="computeroutput"><span class="identifier">rule</span></code>, semantic action and
+          <a class="link" href="../../karma/reference/auxiliary/attr_cast.html" title="Attribute Transformation Pseudo Generator (attr_cast)"><code class="computeroutput"><span class="identifier">attr_cast</span></code></a>. It is used to automatically
           transform the user provided attribute to the attribute type expected by
-          the right hand side component (for <code class="computeroutput"><span class="identifier">rule</span></code>)
-          or the embedded component (for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
+          the right hand side component (for <code class="computeroutput"><span class="identifier">rule</span></code>),
+          the semantic action, or the embedded component (for <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
         </p>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            The interface of this customization point has been changed with Boost
+            V1.44. We added the <code class="computeroutput"><span class="identifier">Domain</span></code>
+            template parameter to allow for more fine grained specializations for
+            <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>.
+          </p></td></tr>
+</table></div>
 <a name="spirit.advanced.customize.transform.module_headers"></a><h6>
-<a name="id977356"></a>
+<a name="id997590"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.module_headers">Module
           Headers</a>
         </h6>
@@ -62,7 +76,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.transform.namespace"></a><h6>
-<a name="id977442"></a>
+<a name="id997676"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -79,10 +93,10 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.synopsis"></a><h6>
-<a name="id977515"></a>
+<a name="id997749"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.synopsis">Synopsis</a>
         </h6>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Exposed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Exposed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Domain</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">transform_attribute</span>
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">type</span><span class="special">;</span>
@@ -92,7 +106,7 @@
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.transform.template_parameters"></a><h6>
-<a name="id977738"></a>
+<a name="id997985"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.template_parameters">Template
           parameters</a>
         </h6>
@@ -159,6 +173,25 @@
 <tr>
 <td>
                   <p>
+                    <code class="computeroutput"><span class="identifier">Domain</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The domain of the sub library the template is instantiated in.
+                    Typically this is either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span></code>
+                    or <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span></code>.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    none
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
                     <code class="computeroutput"><span class="identifier">Enable</span></code>
                   </p>
                 </td>
@@ -179,7 +212,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.notation"></a><h6>
-<a name="id977934"></a>
+<a name="id998242"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.notation">Notation</a>
         </h6>
 <div class="variablelist" title="Notation">
@@ -197,6 +230,12 @@
                 of the <code class="computeroutput"><span class="identifier">rule</span></code> (embedded
                 component of <code class="computeroutput"><span class="identifier">attr_cast</span></code>).
               </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Domain</span></code></span></dt>
+<dd><p>
+                The domain of the sub library the template is instantiated in. Typically
+                this is either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span></code>
+                or <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span></code>.
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">exposed</span></code></span></dt>
 <dd><p>
                 An instance of type <code class="computeroutput"><span class="identifier">Exposed</span></code>.
@@ -208,7 +247,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.transform.expression_semantics"></a><h6>
-<a name="id978076"></a>
+<a name="id998433"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -233,7 +272,7 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                    <code class="computeroutput"><span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="identifier">Domain</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
                   </p>
                 </td>
 <td>
@@ -252,7 +291,7 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">type</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">pre</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">type</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="identifier">Domain</span><span class="special">&gt;::</span><span class="identifier">pre</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -274,7 +313,7 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">post</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">,</span> <span class="identifier">transformed</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="identifier">Domain</span><span class="special">&gt;::</span><span class="identifier">post</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">,</span> <span class="identifier">transformed</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -296,7 +335,7 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;::</span><span class="identifier">fail</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">void</span> <span class="identifier">transform_attribute</span><span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">,</span> <span class="identifier">Domain</span><span class="special">&gt;::</span><span class="identifier">fail</span><span class="special">(</span><span class="identifier">exposed</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -312,7 +351,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.predefined_specializations"></a><h6>
-<a name="id978498"></a>
+<a name="id999025"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -494,7 +533,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.transform.when_to_implement"></a><h6>
-<a name="id979387"></a>
+<a name="id999914"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.when_to_implement">When
           to implement</a>
         </h6>
@@ -511,7 +550,7 @@
           is not constructible from the type <code class="computeroutput"><span class="identifier">Exposed</span></code>.
         </p>
 <a name="spirit.advanced.customize.transform.example"></a><h6>
-<a name="id980820"></a>
+<a name="id999981"></a>
           <a class="link" href="transform.html#spirit.advanced.customize.transform.example">Example</a>
         </h6>
 <p>

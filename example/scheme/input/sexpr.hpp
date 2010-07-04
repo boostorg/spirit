@@ -40,10 +40,15 @@ namespace scheme { namespace input
     using boost::spirit::qi::lexeme;
     using boost::spirit::qi::on_error;
     using boost::spirit::qi::fail;
+    using boost::spirit::qi::_val;
     using boost::spirit::qi::_1;
     using boost::spirit::qi::_2;
     using boost::spirit::qi::_3;
     using boost::spirit::qi::_4;
+    using boost::spirit::qi::locals;
+    using boost::spirit::qi::raw;
+    using boost::spirit::qi::eps;
+    using boost::spirit::qi::omit;
     using boost::spirit::info;
 
     typedef boost::uint32_t uchar; // a unicode code point
@@ -62,6 +67,23 @@ namespace scheme { namespace input
         rule<Iterator> start;
     };
 
+    struct save_line_pos_
+    {
+        template <typename Utree, typename Range>
+        struct result { typedef void type; };
+
+        template <typename Range>
+        void operator()(utree& ast, Range const& rng) const
+        {
+            int n = get_line(rng.begin());
+            BOOST_ASSERT(n <= (std::numeric_limits<short>::max)());
+            ast.tag(n);
+        }
+    };
+
+    boost::phoenix::function<save_line_pos_> const
+        save_line_pos = save_line_pos_();
+
     template <typename Iterator,
         typename ErrorHandler = input::error_handler<Iterator> >
     struct sexpr : grammar<Iterator, sexpr_white_space<Iterator>, utree()>
@@ -75,7 +97,11 @@ namespace scheme { namespace input
             start   = element.alias();
             element = atom | list;
 
-            list    = '(' > *element > ')';
+            list    %= '('
+                    > omit[raw[eps]         [save_line_pos(_val, _1)]]
+                    > *element
+                    > ')'
+                    ;
 
             atom    = strict_double
                     | integer
@@ -93,7 +119,7 @@ namespace scheme { namespace input
                     | int_
                     ;
 
-            byte_str = lexeme[no_case['b'] > +hex2];
+            byte_str = lexeme['#' > +hex2 > '#'];
 
             start.name("sexpr");
             start.name("sexpr");
@@ -106,7 +132,7 @@ namespace scheme { namespace input
         }
 
         rule<Iterator, sexpr_white_space<Iterator>, utree()>
-            start, list, element;
+            start, element, list;
         rule<Iterator, int()> integer;
         rule<Iterator, utree()> atom;
         rule<Iterator, utf8_symbol()> symbol;

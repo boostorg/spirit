@@ -4,7 +4,7 @@
 <title>Generator Directives</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.3">
+<link rel="home" href="../../../../index.html" title="Spirit 2.4">
 <link rel="up" href="../primitive_generators.html" title="Karma Generators">
 <link rel="prev" href="operators.html" title="Generator Operators">
 <link rel="next" href="action.html" title="Generator Semantic Actions">
@@ -499,7 +499,7 @@
 <tr>
 <td>
                     <p>
-                      <a class="link" href="../../reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a><code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                      <a class="link" href="../../reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a><code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
                     </p>
                   </td>
 <td>
@@ -510,7 +510,27 @@
 <td>
                     <p>
                       Consume the attribute type of <code class="computeroutput"><span class="identifier">a</span></code>
-                      without generating anything
+                      without generating anything. The embedded generator will be
+                      always executed.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <a class="link" href="../../reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a><code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">A</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Consume the attribute type of <code class="computeroutput"><span class="identifier">a</span></code>
+                      without generating anything. The embedded generator will never
+                      be executed.
                     </p>
                   </td>
 </tr>

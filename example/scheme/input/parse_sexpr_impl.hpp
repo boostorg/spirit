@@ -69,7 +69,9 @@ namespace scheme { namespace input
         scheme::input::sexpr_white_space<iterator_type> ws;
 
         using boost::spirit::qi::phrase_parse;
-        return phrase_parse(first, last, +p, ws, result);
+        bool ok = phrase_parse(first, last, +p, ws, result);
+        result.tag(1); // line
+        return ok;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -112,7 +114,9 @@ namespace scheme { namespace input
         iterator_type last(rng.end());
 
         using boost::spirit::qi::phrase_parse;
-        return phrase_parse(first, last, +p, ws, result);
+        bool ok = phrase_parse(first, last, +p, ws, result);
+        result.tag(1); // line
+        return ok;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -121,7 +125,7 @@ namespace scheme { namespace input
         utree& result,
         std::string const& source_file)
     {
-        return parse_sexpr(in.as<utf8_string_range>(), result, source_file);
+        return parse_sexpr(in.get<utf8_string_range>(), result, source_file);
     }
 
     bool parse_sexpr_list(
@@ -129,7 +133,7 @@ namespace scheme { namespace input
         utree& result,
         std::string const& source_file)
     {
-        return parse_sexpr_list(in.as<utf8_string_range>(), result, source_file);
+        return parse_sexpr_list(in.get<utf8_string_range>(), result, source_file);
     }
 }}
 

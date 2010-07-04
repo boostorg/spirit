@@ -14,7 +14,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/directive/buffer.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/karma/detail/output_iterator.hpp>
 #include <boost/spirit/home/support/container.hpp>
@@ -114,8 +114,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 traits::compute_compatible_component<Expected, Attribute, domain>
             component_type;
 
-            typedef typename component_type::distance distance_type;
-
             // if we got passed an empty optional, just fail generation
             if (!traits::has_optional_value(attr))
                 return false;
@@ -124,7 +122,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             // expectations
             typename traits::optional_attribute<Attribute>::type attr_ = 
                 traits::optional_value(attr);
-            if (attr_.which() != distance_type::value)
+            if (!component_type::is_compatible(attr_.which()))
                 return false;
 
             // returns true if any of the generators succeed

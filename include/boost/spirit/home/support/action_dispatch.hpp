@@ -78,7 +78,6 @@ namespace boost { namespace spirit { namespace traits
             return true;
         }
     };
-
 }}}
 
 #endif

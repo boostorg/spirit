@@ -29,7 +29,7 @@
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/info.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/nonterminal/extract_param.hpp>
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/qi/reference.hpp>

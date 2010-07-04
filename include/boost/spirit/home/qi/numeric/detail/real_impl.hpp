@@ -17,7 +17,7 @@
 #include <limits>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/detail/pow10.hpp>
 #include <boost/spirit/home/support/detail/sign.hpp>
 #include <boost/assert.hpp>

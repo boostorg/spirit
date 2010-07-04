@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,15 +13,20 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/qi/nonterminal/debug_handler_state.hpp>
 #include <boost/fusion/include/out.hpp>
 #include <iostream>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 
 //  The stream to use for debug output
 #if !defined(BOOST_SPIRIT_DEBUG_OUT)
 #define BOOST_SPIRIT_DEBUG_OUT std::cerr
 #endif
 
-//  number of input tokens to print while debugging
+//  number of tokens to print while debugging
 #if !defined(BOOST_SPIRIT_DEBUG_PRINT_SOME)
 #define BOOST_SPIRIT_DEBUG_PRINT_SOME 20
 #endif
@@ -95,6 +101,12 @@ namespace boost { namespace spirit { namespace qi
 
     struct simple_trace
     {
+        int& get_indent() const
+        {
+            static int indent = 0;
+            return indent;
+        }
+
         void print_indent(int n) const
         {
             n *= BOOST_SPIRIT_DEBUG_INDENT;
@@ -108,7 +120,7 @@ namespace boost { namespace spirit { namespace qi
           , int indent
           , Iterator first, Iterator const& last) const
         {
-            print_indent(indent);
+            print_indent(get_indent());
             BOOST_SPIRIT_DEBUG_OUT << '<' << tag << '>';
             int const n = BOOST_SPIRIT_DEBUG_PRINT_SOME;
             for (int i = 0; first != last && i != n && *first; ++i, ++first)
@@ -127,20 +139,18 @@ namespace boost { namespace spirit { namespace qi
           , State state
           , std::string const& rule_name) const
         {
-            int static indent = 0;
-
             switch (state)
             {
                 case pre_parse:
-                    print_indent(indent++);
+                    print_indent(get_indent()++);
                     BOOST_SPIRIT_DEBUG_OUT
                         << '<' << rule_name << '>'
                         << std::endl;
-                    print_some("try", indent, first, last);
+                    print_some("try", get_indent(), first, last);
                     break;
                 case successful_parse:
-                    print_some("success", indent, first, last);
-                    print_indent(indent);
+                    print_some("success", get_indent(), first, last);
+                    print_indent(get_indent());
                     BOOST_SPIRIT_DEBUG_OUT
                         << "<attributes>";
                     traits::print_attribute(
@@ -155,15 +165,15 @@ namespace boost { namespace spirit { namespace qi
                             << context.locals
                             << "</locals>";
                     BOOST_SPIRIT_DEBUG_OUT << std::endl;
-                    print_indent(--indent);
+                    print_indent(--get_indent());
                     BOOST_SPIRIT_DEBUG_OUT
                         << "</" << rule_name << '>'
                         << std::endl;
                     break;
                 case failed_parse:
-                    print_indent(indent);
+                    print_indent(get_indent());
                     BOOST_SPIRIT_DEBUG_OUT << "<fail/>" << std::endl;
-                    print_indent(--indent);
+                    print_indent(--get_indent());
                     BOOST_SPIRIT_DEBUG_OUT
                         << "</" << rule_name << '>'
                         << std::endl;

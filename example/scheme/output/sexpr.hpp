@@ -7,7 +7,6 @@
 #define SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM
 
 #include <utree/utree.hpp>
-#include <utree/detail/utree_detail3.hpp>
 #include <output/utree_traits.hpp>
 
 #include <string>
@@ -49,7 +48,7 @@ namespace scheme { namespace output
                       | symbol
                       | byte_str
                       | list
-                      | nil_
+                      | nil
                       | ref_
                       ;
 
@@ -57,9 +56,17 @@ namespace scheme { namespace output
 
             string_   = '"' << string << '"';
             symbol    = string;
-            byte_str  = 'b' << *right_align(2, '0')[hex2];
-            nil_      = eps << "<nil>";
+            byte_str  = '#' << *right_align(2, '0')[hex2] << '#';
+            nil       = eps << "<nil>";
             ref_      = start;
+
+            start.name("start");
+            list.name("list");
+            string_.name("string_");
+            symbol.name("symbol");
+            byte_str.name("byte_str");
+            nil.name("nil");
+            ref_.name("ref_");
         }
 
         typedef boost::iterator_range<utree::const_iterator> utree_list;
@@ -69,7 +76,7 @@ namespace scheme { namespace output
         rule<OutputIterator, utf8_symbol_range()> symbol;
         rule<OutputIterator, utf8_string_range()> string_;
         rule<OutputIterator, binary_range()> byte_str;
-        rule<OutputIterator, nil()> nil_;
+        rule<OutputIterator, nil()> nil;
         rule<OutputIterator, space_type, utree()> ref_;
     };
 }}

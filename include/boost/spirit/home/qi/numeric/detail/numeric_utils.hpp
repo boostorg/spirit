@@ -15,7 +15,7 @@
 
 #include <boost/detail/iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/utility/enable_if.hpp>

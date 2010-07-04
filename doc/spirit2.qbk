@@ -8,7 +8,7 @@
 
 [article Spirit
     [quickbook 1.4]
-    [version 2.3]
+    [version 2.4]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 Joel de Guzman, Hartmut Kaiser]
     [purpose Parser and Generator Library]
@@ -180,6 +180,7 @@
 [def __karma_directive__            [link spirit.karma.reference.directive Generator Directives]]
 [template karma_align[str]          [link spirit.karma.reference.directive.alignment [str]]]
 [def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit`]]
+[def __karma_skip__                 [link spirit.karma.reference.directive.omit `skip`]]
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer`]]
 [template karma_repeat[str]         [link spirit.karma.reference.directive.repeat [str]]]
 [def __karma_verbatim__             [link spirit.karma.reference.directive.delimit `verbatim`]]
@@ -395,7 +396,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [/ Here we go ]
 
 This is the documentation of the newest version of __spirit__ (currently, 
-V2.3). If you're looking for the documentation of Spirit's previous version 
+V2.4). If you're looking for the documentation of Spirit's previous version 
 (formerly Spirit V1.8), see __classic__. 
 
 [include preface.qbk]

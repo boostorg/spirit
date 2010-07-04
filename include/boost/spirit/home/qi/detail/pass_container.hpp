@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/is_convertible.hpp>

@@ -15,7 +15,7 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/detail/output_iterator.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 
 namespace boost { namespace spirit

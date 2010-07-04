@@ -8,6 +8,9 @@
 
 #include <utree/utree.hpp>
 #include <utree/operators.hpp>
+
+#if defined(SCHEME_USE_SPIRIT_IO)
+
 #include <input/parse_sexpr_impl.hpp>
 #include <output/generate_sexpr_impl.hpp>
 
@@ -27,5 +30,7 @@ namespace scheme
         return in;
     }
 }
+
+#endif
 
 #endif

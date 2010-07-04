@@ -21,7 +21,7 @@
 #include <boost/spirit/home/support/make_component.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/qi/auxiliary/eps.hpp>
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
