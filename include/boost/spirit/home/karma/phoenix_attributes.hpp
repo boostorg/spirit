@@ -94,8 +94,8 @@ namespace boost { namespace spirit { namespace traits
     // Handle Phoenix actors as attributes, just invoke the function object
     // and deal with the result as the attribute.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Eval>
-    struct extract_from_attribute<phoenix::actor<Eval> >
+    template <typename Eval, typename Exposed>
+    struct extract_from_attribute<phoenix::actor<Eval>, Exposed>
     {
         typedef typename boost::result_of<phoenix::actor<Eval>()>::type type;
 

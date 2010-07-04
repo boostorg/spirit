@@ -1,10 +1,10 @@
 //  Copyright (c) 2001-2010 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(BOOST_SPIRIT_QIEXPR)
-#define BOOST_SPIRIT_QIEXPR
+#if !defined(BOOST_SPIRIT_QIEXPR_PARSER)
+#define BOOST_SPIRIT_QIEXPR_PARSER
 
 #include <string>
 
@@ -16,10 +16,11 @@
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
-#include "../utree.hpp"
-#include "../detail/utree_detail3.hpp"
-#include "../utree_operators.hpp"
-#include "../input/string.hpp"
+#include <utree/utree.hpp>
+#include <utree/detail/utree_detail3.hpp>
+#include <utree/operators.hpp>
+#include <input/string.hpp>
+#include <qi/component_names.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -27,9 +28,10 @@ namespace boost { namespace spirit { namespace traits
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace scheme { namespace input 
+namespace scheme { namespace qi
 {
     using boost::spirit::ascii::space;
+    using boost::spirit::ascii::char_;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::symbols;
@@ -59,7 +61,7 @@ namespace scheme { namespace input
     namespace detail
     {
         ///////////////////////////////////////////////////////////////////////
-        // return true if the utree instance represents a list whose first 
+        // return true if the utree instance represents a list whose first
         // element is a symbol node equal to the second argument
         inline bool is_list_node(utree const& u, utf8_symbol const& symbol)
         {
@@ -78,7 +80,7 @@ namespace scheme { namespace input
         }
 
         ///////////////////////////////////////////////////////////////////////
-        // ensure the given utree instance represents a list whose first 
+        // ensure the given utree instance represents a list whose first
         // element is the symbol this function object has been constructed from
         struct make_list_node
         {
@@ -89,21 +91,21 @@ namespace scheme { namespace input
               : symbol(symbol_)
             {}
 
-            // If called with one parameter the given node needs to be 
+            // If called with one parameter the given node needs to be
             // converted into a list whose first element is the symbol.
             //
-            // i.e: 
+            // i.e:
             //   lit: ("abc") --> (lit "abc")
             void operator()(utree& u) const
             {
                 u.push_front(symbol);
             }
 
-            // If called with two parameters we ensure the given node is a 
-            // (new) list whose first element is the symbol and we append the 
+            // If called with two parameters we ensure the given node is a
+            // (new) list whose first element is the symbol and we append the
             // given element to that list.
             //
-            // i.e.: 
+            // i.e.:
             //   >>: (char_), (char_ "abc")    --> (>> (char_) (char_ "abc"))
             //   >>: (>> (char_ "a")), (char_) --> (>> (char_ "a") (char_))
             void operator()(utree& val, utree const& element) const
@@ -135,72 +137,14 @@ namespace scheme { namespace input
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // a list of names for all supported parser primitives taking no parameters
-    static char const* const primitives0[] = 
-    {
-      // character parsers
-        "char_"
-      , "alnum", "alpha", "blank", "cntrl", "digit", "graph", "print", "punct"
-      , "space", "xdigit"
-      , "lower", "upper"
-
-      // numerics
-      , "long_long", "long_", "int_", "short_"
-      , "ulong_long", "ulong_", "uint_", "ushort_"
-      , "bin", "oct", "hex"
-      , "bool_", "true_", "false_"
-      , "long_double", "double_", "float_"
-
-      // binary
-      , "qword", "dword", "word", "byte_"
-      , "little_qword", "little_dword", "little_word"
-      , "big_qword", "big_dword", "big_word"
-
-      // auxiliary
-      , "eol", "eoi", "eps"
-      , 0
-    };
-
-    // a list of names for all supported parser primitives taking 1 parameter
-    static char const* const primitives1[] = 
-    {
-        // character parsers
-        "char_", "lit", "string"
-      , 0
-    };
-
-    // a list of names for all supported parser primitives taking 2 parameter
-    static char const* const primitives2[] = 
-    {
-        "char_"
-      , 0
-    };
-
-    // a list of names for all supported parser directives taking 0 parameter
-    static char const* const directives0[] = 
-    {
-        // manage skip parser
-        "lexeme", "skip", "no_skip"
-
-        // case management
-      , "no_case"
-
-        // auxiliary
-      , "omit", "raw"
-
-        // encoding
-      , "ascii", "standard", "standard_wide", "iso8859_1", "unicode"
-      , 0
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct qiexpr : grammar<Iterator, qiexpr_white_space<Iterator>, utree()>
+    struct qiexpr_parser
+      : grammar<Iterator, qiexpr_white_space<Iterator>, utree()>
     {
-        typedef typename boost::detail::iterator_traits<Iterator>::value_type 
+        typedef typename boost::detail::iterator_traits<Iterator>::value_type
             char_type;
 
-        qiexpr() : qiexpr::base_type(start)
+        qiexpr_parser() : qiexpr_parser::base_type(start)
         {
             typedef function<detail::make_list_node> make_list_type;
 
@@ -227,24 +171,24 @@ namespace scheme { namespace input
                 ;
 
             // A ^ B
-            permutation = 
+            permutation =
                     sequence              [ _val = _1 ]
                 >> *( "^" >> sequence     [ make_permutation(_val, _1) ] )
                 ;
 
             // A >> B
-            sequence = 
+            sequence =
                     unary_term            [ _val = _1 ]
                 >> *( ">>" >> unary_term  [ make_sequence(_val, _1) ] )
                 ;
 
             // unary operators
-            unary_term = 
-                    '*' >> term           [ make_kleene(_val, _1) ]
-                |   '+' >> term           [ make_plus(_val, _1) ]
-                |   '-' >> term           [ make_optional(_val, _1) ]
-                |   '&' >> term           [ make_and_pred(_val, _1) ]
-                |   '!' >> term           [ make_not_pred(_val, _1) ]
+            unary_term =
+                    '*' >> alternative    [ make_kleene(_val, _1) ]
+                |   '+' >> alternative    [ make_plus(_val, _1) ]
+                |   '-' >> alternative    [ make_optional(_val, _1) ]
+                |   '&' >> alternative    [ make_and_pred(_val, _1) ]
+                |   '!' >> alternative    [ make_not_pred(_val, _1) ]
                 |   term                  [ _val = _1 ]
                 ;
 
@@ -255,7 +199,7 @@ namespace scheme { namespace input
                 |   '(' >> alternative >> ')'
                 ;
 
-            // any parser directive 
+            // any parser directive
             directive =
                     (directive0 >> '[' >> alternative >> ']')
                     [
@@ -272,7 +216,7 @@ namespace scheme { namespace input
                 ;
 
             // a literal (either 'x' or "abc")
-            literal = 
+            literal =
                     string_lit            [ push_back(_val, _1) ]
                 |   string_lit.char_lit   [ push_back(_val, _1) ]
                 ;

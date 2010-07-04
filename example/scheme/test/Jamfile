@@ -1,0 +1,48 @@
+#==============================================================================
+#   Copyright (c) 2001-2007 Joel de Guzman
+#
+#   Distributed under the Boost Software License, Version 1.0. (See accompanying
+#   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+project spirit-scheme-tests
+    : requirements
+        <toolset>gcc:<c++-template-depth>300
+        <include>../
+    :
+    :
+    ;
+
+# bring in rules for testing
+import testing ;
+
+{
+    test-suite utree :
+
+    # run utree tests
+    [ run utree/utree_test.cpp                    : : : : ]
+
+    ;
+}
+
+exe sexpr_input_test : sexpr/sexpr_input_test.cpp ;
+exe sexpr_output_test : sexpr/sexpr_output_test.cpp ;
+
+exe parse_qi_test 
+   : parse_qiexpr/generate_sexpr_to_ostream.cpp 
+     parse_qiexpr/parse_qi_test.cpp 
+     parse_qiexpr/parse_qiexpr.cpp 
+   ;
+
+exe generate_qi_test 
+   : parse_qiexpr/parse_qiexpr.cpp
+     generate_qiexpr/generate_qi_test.cpp 
+     generate_qiexpr/generate_qiexpr.cpp 
+   ;
+
+exe scheme_test1 : scheme/scheme_test1.cpp ;
+exe scheme_test2 : scheme/scheme_test2.cpp ;
+exe scheme_test3 : scheme/scheme_test3.cpp ;
+
+
+
+

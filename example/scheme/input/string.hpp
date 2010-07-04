@@ -17,12 +17,12 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
-#include "../utree.hpp"
-#include "../utree_operators.hpp"
+#include <utree/utree.hpp>
+#include <utree/operators.hpp>
 
 namespace scheme { namespace input
 {
-    using boost::spirit::ascii::char_;
+    using boost::spirit::standard::char_;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::_val;
@@ -81,24 +81,28 @@ namespace scheme { namespace input
             function<detail::push_esc> push_esc;
 
             char_esc
-                =  '\\'
-                >>  (   ('u' >> hex4)               [push_utf8(_r1, _1)]
-                    |   ('U' >> hex8)               [push_utf8(_r1, _1)]
-                    |   char_("btnfr\\\"'")         [push_esc(_r1, _1)]
-                    )
+                = '\\'
+                > (   ('u' > hex4)                  [push_utf8(_r1, _1)]
+                  |   ('U' > hex8)                  [push_utf8(_r1, _1)]
+                  |   char_("btnfr\\\"'")           [push_esc(_r1, _1)]
+                  )
                 ;
 
             char_lit
-                =  '\''
-                >> (char_esc(_val) | (~char_('\'')) [_val += _1])
-                >> '\''
+                = '\''
+                > (char_esc(_val) | (~char_('\''))  [_val += _1])
+                > '\''
                 ;
 
             start
                 =  '"'
-                >> *(char_esc(_val) | (~char_('"')) [_val += _1])
-                >> '"'
+                > *(char_esc(_val) | (~char_('"'))  [_val += _1])
+                > '"'
                 ;
+
+            char_esc.name("char_esc");
+            char_lit.name("char_lit");
+            start.name("string");
         }
 
         rule<Iterator, void(std::string&)> char_esc;

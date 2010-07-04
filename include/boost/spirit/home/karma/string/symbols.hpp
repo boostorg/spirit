@@ -13,6 +13,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
+#include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/detail/string_generate.hpp>
@@ -28,8 +29,119 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Attribute, typename T, typename Enable = void>
+    struct symbols_lookup
+    {
+        typedef 
+            mpl::eval_if<fusion::traits::is_sequence<T>
+              , detail::value_at_c<T, 0>
+              , detail::add_const_ref<T> > sequence_type;
+        typedef typename 
+            mpl::eval_if<traits::is_container<T>
+              , traits::container_value<T>
+              , sequence_type>::type type;
+
+        // fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::true_)
+        {
+            return fusion::at_c<0>(t);
+        }
+
+        // container
+        template <typename T_, typename IsSequence>
+        static type call(T_ const& t, mpl::true_, IsSequence)
+        {
+            return t[0];
+        }
+
+        // not a container and not a fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::false_)
+        {
+            return t;
+        }
+
+        static type call(T const& t)
+        {
+            typedef typename traits::is_container<T>::type is_container;
+            typedef typename fusion::traits::is_sequence<T>::type is_sequence;
+
+            return call(t, is_container(), is_sequence());
+        }
+    };
+
+    template <typename Attribute>
+    struct symbols_lookup<Attribute, Attribute>
+    {
+        typedef Attribute const& type;
+
+        static type call(Attribute const& t)
+        {
+            return t;
+        }
+    };
+
+    template <typename Attribute, typename T, typename Enable = void>
+    struct symbols_value
+    {
+        typedef 
+            mpl::eval_if<fusion::traits::is_sequence<T>
+              , detail::value_at_c<T, 1>
+              , mpl::identity<unused_type> > sequence_type;
+        typedef typename 
+            mpl::eval_if<traits::is_container<T>
+              , traits::container_value<T>
+              , sequence_type>::type type;
+
+        // fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::true_)
+        {
+            return fusion::at_c<1>(t);
+        }
+
+        // container
+        template <typename T_, typename IsSequence>
+        static type call(T_ const& t, mpl::true_, IsSequence)
+        {
+            return t[1];
+        }
+
+        // not a container nor a fusion sequence
+        template <typename T_>
+        static type call(T_ const& t, mpl::false_, mpl::false_)
+        {
+            return unused;
+        }
+
+        static type call(T const& t)
+        {
+            typedef typename traits::is_container<T>::type is_container;
+            typedef typename fusion::traits::is_sequence<T>::type is_sequence;
+
+            return call(t, is_container(), is_sequence());
+        }
+    };
+
+    template <typename Attribute>
+    struct symbols_value<Attribute, Attribute>
+    {
+        typedef unused_type type;
+
+        static type call(Attribute const&)
+        {
+            return unused;
+        }
+    };
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename T>
     struct symbols_lookup
       : mpl::if_<
@@ -40,6 +152,37 @@ namespace boost { namespace spirit { namespace karma
     {};
 
     ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        ///////////////////////////////////////////////////////////////////////
+        template <typename CharEncoding, typename Tag>
+        struct generate_encoded
+        {
+            typedef typename 
+                proto::terminal<tag::char_code<Tag, CharEncoding> >::type
+            encoding_type;
+
+            template <typename OutputIterator, typename Expr, typename Attribute>
+            static bool call(OutputIterator& sink, Expr const& expr
+              , Attribute const& attr)
+            {
+                encoding_type const encoding = encoding_type();
+                return karma::generate(sink, encoding[expr], attr);
+            }
+        };
+
+        template <>
+        struct generate_encoded<unused_type, unused_type>
+        {
+            template <typename OutputIterator, typename Expr, typename Attribute>
+            static bool call(OutputIterator& sink, Expr const& expr
+              , Attribute const& attr)
+            {
+                return karma::generate(sink, expr, attr);
+            }
+        };
+    }
+
     template <
         typename Attribute = char, typename T = unused_type
       , typename Lookup = typename symbols_lookup<Attribute, T>::type
@@ -186,13 +329,15 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attr const& attr) const
         {
-            typename Lookup::iterator it = lookup->find(attr);
+            typename Lookup::iterator it = lookup->find(
+                traits::symbols_lookup<Attribute, Attr>::call(attr));
             if (it == lookup->end())
                 return false;
 
-            return spirit::karma::detail::string_generate(
-                       sink, (*it).second, CharEncoding(), Tag()) &&
-                   spirit::karma::delimit_out(sink, d);
+            return karma::detail::generate_encoded<CharEncoding, Tag>::call(
+                        sink, (*it).second
+                      , traits::symbols_value<Attribute, Attr>::call(attr)) && 
+                   karma::delimit_out(sink, d);
         }
 
         template <typename Context>
@@ -425,13 +570,16 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attr const& attr) const
         {
-            typename Lookup::iterator it = lookup->find(attr);
+            typename Lookup::iterator it = lookup->find(
+                traits::symbols_lookup<Attribute, Attr>::call(attr));
             if (it == lookup->end())
                 return false;
 
-            return spirit::karma::detail::string_generate(
-                       sink, attr, CharEncoding(), Tag()) &&
-                   spirit::karma::delimit_out(sink, d);
+            return karma::detail::generate_encoded<CharEncoding, Tag>::
+                      call(sink
+                        , traits::symbols_lookup<Attribute, Attr>::call(attr)
+                        , unused) && 
+                   karma::delimit_out(sink, d);
         }
 
         template <typename Context>

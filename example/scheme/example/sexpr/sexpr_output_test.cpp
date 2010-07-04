@@ -11,8 +11,8 @@
 #include <fstream>
 #include <iterator>
 
-#include "../input/parse_sexpr_impl.hpp"
-#include "../output/generate_sexpr_impl.hpp"
+#include <input/parse_sexpr_impl.hpp>
+#include <output/generate_sexpr_impl.hpp>
 
 namespace client
 {

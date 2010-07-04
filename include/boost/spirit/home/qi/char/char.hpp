@@ -534,6 +534,33 @@ namespace boost { namespace spirit { namespace qi
             );
         }
     };
+
+    template <typename CharEncoding, typename Modifiers, typename Char>
+    struct make_primitive<
+        terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>
+          , fusion::vector2<Char(&)[2], Char(&)[2]> // For single char strings
+        >
+      , Modifiers>
+    {
+        static bool const no_case =
+            has_modifier<Modifiers, tag::char_code_base<tag::no_case> >::value;
+
+        typedef typename
+            spirit::detail::get_encoding<Modifiers, CharEncoding>::type
+        char_encoding;
+
+        typedef char_range<char_encoding, no_case> result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
+        {
+            return result_type(
+                fusion::at_c<0>(term.args)[0]
+              , fusion::at_c<1>(term.args)[0]
+            );
+        }
+    };
 }}}
 
 #endif

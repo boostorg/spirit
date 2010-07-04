@@ -49,7 +49,7 @@ struct test_int_data1
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<test_int_data1 const, int>
+    struct transform_attribute<test_int_data1 const, int, karma::domain>
     {
         typedef int type;
         static int pre(test_int_data1 const& d) { return d.i; }
@@ -68,7 +68,7 @@ struct test_int_data2
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<test_int_data2 const, int>
+    struct transform_attribute<test_int_data2 const, int, karma::domain>
     {
         typedef int const& type;
         static int const& pre(test_int_data2 const& d) { return d.i; }

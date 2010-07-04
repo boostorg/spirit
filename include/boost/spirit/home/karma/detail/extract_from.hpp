@@ -27,89 +27,130 @@ namespace boost { namespace spirit { namespace traits
     //  optimization will easily strip these away.
     ///////////////////////////////////////////////////////////////////////////
 
+    namespace detail
+    {
+        ///////////////////////////////////////////////////////////////////////
+        // extract first and second element of a fusion sequence
+        template <typename T>
+        struct add_const_ref 
+          : add_reference<typename add_const<T>::type> 
+        {};
+
+        template <typename T, int N>
+        struct value_at_c 
+          : add_const_ref<typename fusion::result_of::value_at_c<T, N>::type> 
+        {};
+    }
+
+    // forward declaration only
+    template <typename Exposed, typename Attribute, typename Context>
+    typename spirit::result_of::extract_from<Exposed, Attribute>::type
+    extract_from(Attribute const& attr, Context& ctx);
+
     // This is the default case: the plain attribute values
-    template <typename Attribute, typename Enable/* = void*/>
+    template <typename Attribute, typename Exposed, typename Enable/*= void*/>
     struct extract_from_attribute
     {
-        typedef Attribute const& type;
+        typedef typename traits::one_element_sequence<Attribute>::type 
+            is_one_element_sequence;
+
+        typedef typename mpl::eval_if<
+            is_one_element_sequence
+          , detail::value_at_c<Attribute, 0>
+          , mpl::identity<Attribute const&>
+        >::type type;
 
         template <typename Context>
-        static type call(Attribute const& attr, Context&)
+        static type call(Attribute const& attr, Context&, mpl::false_)
         {
             return attr;
+        }
+
+        // This handles the case where the attribute is a single element fusion
+        // sequence. We silently extract the only element and treat it as the 
+        // attribute to generate output from.
+        template <typename Context>
+        static type call(Attribute const& attr, Context& ctx, mpl::true_)
+        {
+            return extract_from<Exposed>(fusion::at_c<0>(attr), ctx);
+        }
+
+        template <typename Context>
+        static type call(Attribute const& attr, Context& ctx)
+        {
+            return call(attr, ctx, is_one_element_sequence());
         }
     };
 
     // This handles optional attributes. 
-    template <typename Attribute>
-    struct extract_from_attribute<optional<Attribute> >
+    template <typename Attribute, typename Exposed>
+    struct extract_from_attribute<optional<Attribute>, Exposed>
     {
         typedef Attribute const& type;
 
         template <typename Context>
-        static type call(optional<Attribute> const& attr, Context&)
+        static type call(optional<Attribute> const& attr, Context& ctx)
         {
-            return boost::get<Attribute>(attr);
+            return extract_from<Exposed>(boost::get<Attribute>(attr), ctx);
         }
     };
 
-    template <typename Attribute>
-    struct extract_from_attribute<optional<Attribute const> >
+    template <typename Attribute, typename Exposed>
+    struct extract_from_attribute<optional<Attribute const>, Exposed>
     {
         typedef Attribute const& type;
 
         template <typename Context>
-        static type call(optional<Attribute const> const& attr, Context&)
+        static type call(optional<Attribute const> const& attr, Context& ctx)
         {
-            return boost::get<Attribute const>(attr);
+            return extract_from<Exposed>(boost::get<Attribute const>(attr), ctx);
         }
     };
 
     // This handles attributes wrapped inside a boost::ref(). 
-    template <typename Attribute>
-    struct extract_from_attribute<reference_wrapper<Attribute> >
+    template <typename Attribute, typename Exposed>
+    struct extract_from_attribute<reference_wrapper<Attribute>, Exposed>
     {
         typedef Attribute const& type;
 
         template <typename Context>
-        static type call(reference_wrapper<Attribute> const& attr, Context&)
+        static type call(reference_wrapper<Attribute> const& attr, Context& ctx)
         {
-            return attr.get();
+            return extract_from<Exposed>(attr.get(), ctx);
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute, typename Context>
-    typename spirit::result_of::extract_from<Attribute>::type
-    extract_from(Attribute const& attr, Context& context)
+    template <typename Exposed, typename Attribute, typename Context>
+    typename spirit::result_of::extract_from<Exposed, Attribute>::type
+    extract_from(Attribute const& attr, Context& ctx)
     {
-        return extract_from_attribute<Attribute>::call(attr, context);
+        return extract_from_attribute<Attribute, Exposed>::call(attr, ctx);
     }
 
-    template <typename Context>
+    template <typename Exposed, typename Context>
     unused_type extract_from(unused_type, Context&)
     {
         return unused;
     }
-
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace result_of
 {
-    template <typename Attribute>
+    template <typename Exposed, typename Attribute>
     struct extract_from
-      : traits::extract_from_attribute<Attribute>
+      : traits::extract_from_attribute<Attribute, Exposed>
     {};
 
-    template <>
-    struct extract_from<unused_type>
+    template <typename Exposed>
+    struct extract_from<Exposed, unused_type>
     {
         typedef unused_type type;
     };
 
-    template <>
-    struct extract_from<unused_type const>
+    template <typename Exposed>
+    struct extract_from<Exposed, unused_type const>
     {
         typedef unused_type type;
     };

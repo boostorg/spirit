@@ -56,7 +56,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     inline bool string_generate(OutputIterator& sink
       , Container const& c, Filter filter)
     {
-        typedef typename traits::container_iterator<Container>::type iterator;
+        typedef typename traits::container_iterator<Container const>::type 
+            iterator;
+
         iterator end = boost::end(c);
         for (iterator it = boost::begin(c); it != end; ++it)
         {

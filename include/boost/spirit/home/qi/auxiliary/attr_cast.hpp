@@ -87,7 +87,8 @@ namespace boost { namespace spirit { namespace qi
             // do down-stream transformation, provides attribute for embedded
             // parser
             typedef traits::transform_attribute<
-                exposed_attribute_type, transformed_attribute_type> transform;
+                exposed_attribute_type, transformed_attribute_type, domain> 
+            transform;
 
             typename transform::type attr_ = transform::pre(attr);
 

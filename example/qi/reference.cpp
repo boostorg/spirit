@@ -281,7 +281,7 @@ namespace boost { namespace spirit { namespace traits
     // in this case we just expose the embedded 'int' as the attribute instance 
     // to use, allowing to leave the function 'post()' empty
     template <>
-    struct transform_attribute<int_data, int>
+    struct transform_attribute<int_data, int, qi::domain>
     {
         typedef int& type;
         static int& pre(int_data& d) { return d.i; }

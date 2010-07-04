@@ -127,6 +127,9 @@ main()
 
         BOOST_TEST(test(L"x", char_(L"x")));
 
+        BOOST_TEST(test("a", char_("a", "z"), 'a'));
+        BOOST_TEST(test(L"a", char_(L"a", L"z"), L'a'));
+
 #if defined(KARMA_FAIL_COMPILATION)
         BOOST_TEST(test("x", char_));           // anychar without a parameter doesn't make any sense
 #endif

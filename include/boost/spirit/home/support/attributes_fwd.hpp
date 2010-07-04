@@ -12,6 +12,30 @@
 #pragma once
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace result_of
+{
+    // forward declaration only
+    template <typename Exposed, typename Attribute>
+    struct extract_from;
+
+    template <typename Exposed, typename Transformed, typename Domain>
+    struct pre_transform;
+
+    template <typename T>
+    struct optional_value;
+
+    template <typename Container>
+    struct begin;
+
+    template <typename Container>
+    struct end;
+
+    template <typename Iterator>
+    struct deref;
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -49,10 +73,12 @@ namespace boost { namespace spirit { namespace traits
     // the user is able specify specific transformation rules for any attribute
     // type.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed, typename Enable = void>
+    template <typename Exposed, typename Transformed, typename Domain
+      , typename Enable = void>
     struct transform_attribute;
 
     ///////////////////////////////////////////////////////////////////////////
+    // Qi only
     template <typename Attribute, typename Iterator, typename Enable = void>
     struct assign_to_attribute_from_iterators;
 
@@ -60,8 +86,13 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_value;
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute, typename Enable = void>
+    // Karma only
+    template <typename Attribute, typename Exposed, typename Enable = void>
     struct extract_from_attribute;
+
+    template <typename Exposed, typename Attribute, typename Context>
+    typename spirit::result_of::extract_from<Exposed, Attribute>::type
+    extract_from(Attribute const& attr, Context& ctx);
 
     ///////////////////////////////////////////////////////////////////////////
     // Clear data efficiently
@@ -82,6 +113,7 @@ namespace boost { namespace spirit { namespace traits
     struct is_container;
 
     ///////////////////////////////////////////////////////////////////////////
+    // Qi only
     template <typename Container, typename T, typename Enable = void>
     struct push_back_container;
 
@@ -90,6 +122,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////
     // Determine the iterator type of the given container type
+    // Karma only
     ///////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct begin_container;
@@ -105,29 +138,6 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Iterator, typename Enable = void>
     struct compare_iterators;
-}}}
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace result_of
-{
-    // forward declaration only
-    template <typename Attribute>
-    struct extract_from;
-
-    template <typename Exposed, typename Transformed>
-    struct pre_transform;
-
-    template <typename T>
-    struct optional_value;
-
-    template <typename Container>
-    struct begin;
-
-    template <typename Container>
-    struct end;
-
-    template <typename Iterator>
-    struct deref;
 }}}
 
 #endif

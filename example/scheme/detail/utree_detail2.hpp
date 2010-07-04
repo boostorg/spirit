@@ -65,7 +65,7 @@ namespace scheme { namespace detail
             // if it fits, store it in-situ; small_string_size minus the length
             // of the string is placed in buff[small_string_size - 1]
             str = buff;
-            buff[small_string_size - 1] = max_string_len - size;
+            buff[small_string_size - 1] = static_cast<char>(max_string_len - size);
             info() &= ~0x1;
         }
         else

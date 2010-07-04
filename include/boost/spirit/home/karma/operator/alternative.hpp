@@ -12,7 +12,6 @@
 #endif
 
 #include <boost/spirit/home/karma/detail/alternative_function.hpp>
-#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>

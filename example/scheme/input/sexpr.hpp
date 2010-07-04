@@ -17,13 +17,15 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
-#include "../utree.hpp"
-#include "string.hpp"
+#include <utree/utree.hpp>
+#include <utree/operators.hpp>
+#include <input/string.hpp>
+#include <input/error_handler.hpp>
 
 namespace scheme { namespace input
 {
-    using boost::spirit::ascii::char_;
-    using boost::spirit::ascii::space;
+    using boost::spirit::standard::char_;
+    using boost::spirit::standard::space;
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::eol;
@@ -36,7 +38,13 @@ namespace scheme { namespace input
     using boost::spirit::qi::bool_;
     using boost::spirit::qi::no_case;
     using boost::spirit::qi::lexeme;
-    using boost::phoenix::function;
+    using boost::spirit::qi::on_error;
+    using boost::spirit::qi::fail;
+    using boost::spirit::qi::_1;
+    using boost::spirit::qi::_2;
+    using boost::spirit::qi::_3;
+    using boost::spirit::qi::_4;
+    using boost::spirit::info;
 
     typedef boost::uint32_t uchar; // a unicode code point
 
@@ -54,17 +62,20 @@ namespace scheme { namespace input
         rule<Iterator> start;
     };
 
-    template <typename Iterator>
+    template <typename Iterator,
+        typename ErrorHandler = input::error_handler<Iterator> >
     struct sexpr : grammar<Iterator, sexpr_white_space<Iterator>, utree()>
     {
-        sexpr() : sexpr::base_type(start)
+        sexpr(std::string const& source_file = "")
+          : sexpr::base_type(start), error_handler(ErrorHandler(source_file))
         {
             real_parser<double, strict_real_policies<double> > strict_double;
             uint_parser<unsigned char, 16, 2, 2> hex2;
 
-            start   = atom | list;
+            start   = element.alias();
+            element = atom | list;
 
-            list    = '(' >> *start >> ')';
+            list    = '(' > *element > ')';
 
             atom    = strict_double
                     | integer
@@ -77,20 +88,32 @@ namespace scheme { namespace input
             std::string exclude = std::string(" ();\"\x01-\x1f\x7f") + '\0';
             symbol  = lexeme[+(~char_(exclude))];
 
-            integer = lexeme[no_case["0x"] >> hex]
+            integer = lexeme[no_case["0x"] > hex]
                     | lexeme['0' >> oct]
                     | int_
                     ;
 
-            byte_str = lexeme[no_case['b'] >> +hex2];
+            byte_str = lexeme[no_case['b'] > +hex2];
+
+            start.name("sexpr");
+            start.name("sexpr");
+            list.name("list");
+            atom.name("atom");
+            symbol.name("symbol");
+            integer.name("integer");
+            byte_str.name("byte_str");
+            on_error<fail>(start, error_handler(_1, _2, _3, _4));
         }
 
-        rule<Iterator, sexpr_white_space<Iterator>, utree()> start, list;
+        rule<Iterator, sexpr_white_space<Iterator>, utree()>
+            start, list, element;
         rule<Iterator, int()> integer;
         rule<Iterator, utree()> atom;
         rule<Iterator, utf8_symbol()> symbol;
         rule<Iterator, binary_string()> byte_str;
         scheme::input::string<Iterator> string;
+
+        function<ErrorHandler> const error_handler;
     };
 }}
 

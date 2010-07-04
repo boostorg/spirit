@@ -6,7 +6,7 @@
 #if !defined(BOOST_SPIRIT_PARSE_QIEXPR)
 #define BOOST_SPIRIT_PARSE_QIEXPR
 
-#include "../utree.hpp"
+#include <utree/utree.hpp>
 
 namespace scheme { namespace input
 {

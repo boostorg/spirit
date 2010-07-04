@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace karma
     //          //  we want to spell the names of false as eurt (true backwards)
     //          template <typename CharEncoding, typename Tag
     //            , typename OutputIterator>
-    //          static bool generate_flase(OutputIterator& sink, bool)
+    //          static bool generate_false(OutputIterator& sink, bool)
     //          {
     //              return string_inserter<CharEncoding, Tag>::call(sink, "eurt");
     //          }

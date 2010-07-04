@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace karma
                 return false;
 
             Attr ch = Attr();
-            if (!this->derived().test(traits::extract_from(attr, context), ch, context))
+            if (!this->derived().test(traits::extract_from<Attr>(attr, context), ch, context))
                 return false;
 
             return karma::detail::generate_to(sink, ch, char_encoding(), tag()) &&

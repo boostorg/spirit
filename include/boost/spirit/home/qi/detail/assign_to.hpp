@@ -15,7 +15,7 @@
 
 #include <boost/spirit/home/qi/detail/construct.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attributes_fwd.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/ref.hpp>
@@ -87,13 +87,44 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Attribute>
+    void assign_to(T const& val, Attribute& attr);
+
     template <typename Attribute, typename T, typename Enable>
     struct assign_to_attribute_from_value
     {
+        typedef typename traits::one_element_sequence<Attribute>::type 
+            is_one_element_sequence;
+
+        typedef typename mpl::eval_if<
+            is_one_element_sequence
+          , fusion::result_of::at_c<Attribute, 0>
+          , mpl::identity<Attribute&>
+        >::type type;
+
+        template <typename T_>
+        static void 
+        call(T_ const& val, Attribute& attr, mpl::false_)
+        {
+            attr = static_cast<Attribute>(val);
+        }
+
+        // This handles the case where the attribute is a single element fusion
+        // sequence. We silently assign to the only element and treat it as the 
+        // attribute to parse the results into.
+        template <typename T_>
+        static void 
+        call(T_ const& val, Attribute& attr, mpl::true_)
+        {
+            typedef typename fusion::result_of::value_at_c<Attribute, 0>::type 
+                element_type;
+            fusion::at_c<0>(attr) = static_cast<element_type>(val);
+        }
+
         static void 
         call(T const& val, Attribute& attr)
         {
-            attr = static_cast<Attribute>(val);
+            call(val, attr, is_one_element_sequence());
         }
     };
 
@@ -103,7 +134,7 @@ namespace boost { namespace spirit { namespace traits
         static void 
         call(T const& val, reference_wrapper<Attribute> attr)
         {
-            attr = static_cast<Attribute>(val.get());
+            assign_to(val.get(), attr);
         }
     };
 
@@ -128,7 +159,6 @@ namespace boost { namespace spirit { namespace traits
     assign_to(T const&, unused_type)
     {
     }
-
 }}}
 
 #endif
