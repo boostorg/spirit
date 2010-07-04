@@ -9,6 +9,7 @@
 
 #include "../utree.hpp"
 #include "../utree_operators.hpp"
+#include "../utree_io.hpp"
 #include <iostream>
 
 inline std::ostream& println(std::ostream& out, scheme::utree const& val)
@@ -23,49 +24,49 @@ int main()
 {
     using scheme::utree;
 
-    //~ {
-        //~ // test the size
-        //~ std::cout << "size of utree is: "
-            //~ << sizeof(scheme::utree) << " bytes" << std::endl;
-    //~ }
+    {
+        // test the size
+        std::cout << "size of utree is: "
+            << sizeof(scheme::utree) << " bytes" << std::endl;
+    }
 
-    //~ {
-        //~ utree val;
-        //~ println(std::cout, val);
-    //~ }
+    {
+        utree val;
+        println(std::cout, val);
+    }
 
-    //~ {
-        //~ utree val(true);
-        //~ println(std::cout, val);
-    //~ }
+    {
+        utree val(true);
+        println(std::cout, val);
+    }
 
-    //~ {
-        //~ utree val(123);
-        //~ println(std::cout, val);
-    //~ }
+    {
+        utree val(123);
+        println(std::cout, val);
+    }
 
-    //~ {
-        //~ utree val(123.456);
-        //~ println(std::cout, val);
-    //~ }
+    {
+        utree val(123.456);
+        println(std::cout, val);
+    }
 
-    //~ {
-        //~ utree val("Hello, World");
-        //~ println(std::cout, val);
-        //~ utree val2;
-        //~ val2 = val;
-        //~ println(std::cout, val2);
-        //~ utree val3("Hello, World. Chuckie is back!!!");
-        //~ val = val3;
-        //~ println(std::cout, val);
+    {
+        utree val("Hello, World");
+        println(std::cout, val);
+        utree val2;
+        val2 = val;
+        println(std::cout, val2);
+        utree val3("Hello, World. Chuckie is back!!!");
+        val = val3;
+        println(std::cout, val);
 
-        //~ utree val4("Apple");
-        //~ utree val5("Apple");
-        //~ BOOST_ASSERT(val4 == val5);
+        utree val4("Apple");
+        utree val5("Apple");
+        BOOST_ASSERT(val4 == val5);
 
-        //~ utree val6("ApplePie");
-        //~ BOOST_ASSERT(val4 < val6);
-    //~ }
+        utree val6("ApplePie");
+        BOOST_ASSERT(val4 < val6);
+    }
 
     {
         utree val;

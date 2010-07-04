@@ -1,47 +1,44 @@
-/*=============================================================================
+﻿/*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_SCHEME_INTERPRETER)
-#define BOOST_SPIRIT_SCHEME_INTERPRETERnamespace scheme
+#if !defined(BOOST_SPIRIT_SCHEME_COMPILER)
+#define BOOST_SPIRIT_SCHEME_COMPILER
 
 #include <vector>
 #include <map>
 #include <boost/bind.hpp>
 
+#include "scheme_intrinsics.hpp"
+#include "scheme_interpreter.hpp"
+
 namespace scheme
 {
 ///////////////////////////////////////////////////////////////////////////////
-//  Utilities
+//  The environment
 ///////////////////////////////////////////////////////////////////////////////
-    inline std::string get_symbol(utree const& s)
-    {
-        utf8_symbol_range symbol = s.as<utf8_symbol_range>();
-        return std::string(symbol.begin(), symbol.end());
-    }
+    typedef boost::function<actor(actor_list const&)> compiled_function;
 
-///////////////////////////////////////////////////////////////////////////////
-//  The compiler
-///////////////////////////////////////////////////////////////////////////////
-    class environment
+    class compiler_environment
     {
     public:
 
         environment(environment* parent = 0)
           : outer(parent) {}
 
-        void define(std::string const& name, function_compiler const& def)
+        template <typename Function>
+        void define(std::string const& name, Function const& f)
         {
-            // $$$ use exceptions here $$$
+            // $$$ use exceptions here? $$$
             BOOST_ASSERT(definitions.find(name) == definitions.end());
-            definitions[name] = def;
+            definitions[name] = compiled_function(f);
         }
 
-        function_compiler* find(std::string const& name)
+        compiled_function* find(std::string const& name)
         {
-            std::map<std::string, function_compiler>::iterator
+            std::map<std::string, compiled_function>::iterator
                 i = definitions.find(name);
             if (i != definitions.end())
                 return &i->second;
@@ -55,43 +52,73 @@ namespace scheme
     private:
 
         environment* outer;
-        std::map<std::string, function_compiler> definitions;
+        std::map<std::string, compiled_function> definitions;
     };
 
-    actor compile(utree const& ast, environment& env);
+///////////////////////////////////////////////////////////////////////////////
+//  The compiler
+///////////////////////////////////////////////////////////////////////////////
+    actor compile(
+        utree const& ast, environment& env, actor_list& fragments);
+
+    struct external_function : composite<external_function>
+    {
+        // we must hold f by reference because functions can be recursive
+        boost::reference_wrapper<actor const> f;
+
+        external_function(actor const& f)
+          : f(f) {}
+
+        using base_type::operator();
+        actor operator()(actor_list const& elements) const
+        {
+            return actor(lambda_function(f, elements));
+        }
+    };
 
     struct compiler
     {
-        typedef function result_type;
+        typedef actor result_type;
+        environment& env;
+        actor_list& fragments;
 
-        mutable environment& env;
-        compiler(environment& env)
-          : env(env)
+        compiler(environment& env, actor_list& fragments)
+          : env(env), fragments(fragments)
         {
         }
 
-        function operator()(nil) const
+        actor operator()(nil) const
         {
             return scheme::val(utree());
         }
 
         template <typename T>
-        function operator()(T const& val) const
+        actor operator()(T const& val) const
         {
             return scheme::val(utree(val));
         }
 
-        function operator()(utf8_symbol_range const& str) const
+        actor operator()(utf8_symbol_range const& str) const
         {
             std::string name(str.begin(), str.end());
-
-            if (function_compiler* mf = env.find(name))
+            if (compiled_function* mf = env.find(name))
             {
-                function_list flist;
+                actor_list flist;
                 return (*mf)(flist);
             }
             // $$$ throw? $$$
-            return function();
+            BOOST_ASSERT(false);
+            return actor();
+        }
+
+        actor make_lambda(
+            std::vector<std::string> const& args,
+            utree const& body) const
+        {
+            environment local_env(&this->env);
+            for (std::size_t i = 0; i < args.size(); ++i)
+                local_env.define(args[i], boost::bind(arg, i));
+            return compile(body, local_env, fragments);
         }
 
         void define_function(
@@ -99,82 +126,101 @@ namespace scheme
             std::vector<std::string> const& args,
             utree const& body) const
         {
-            environment local_env(env);
-            for (std::size_t i = 0; i < args.size(); ++i)
-                local_env.define(args[i], boost::bind(arg, i));
-            env.define(name,
-                function_composer(lambda(compile(body, local_env), args.size())));
-        }
-
-        void define_nullary_function(
-            std::string const& name,
-            utree const& body) const
-        {
-            env.define(name,
-                function_composer(lambda(compile(body, env), 0)));
+            fragments.push_back(actor());
+            actor& f = fragments.back();
+            env.define(name, external_function(f));
+            f = make_lambda(args, body);
         }
 
         template <typename Iterator>
-        function operator()(boost::iterator_range<Iterator> const& range) const
+        actor operator()(boost::iterator_range<Iterator> const& range) const
         {
             std::string name(get_symbol(*range.begin()));
 
             if (name == "define")
             {
+                std::string fname;
+                std::vector<std::string> args;
+
                 Iterator i = range.begin(); ++i;
                 if (i->which() == utree_type::list_type)
                 {
-                    // a function
+                    // (define (f x) ...body...)
                     utree const& decl = *i++;
                     Iterator di = decl.begin();
-                    std::string fname(get_symbol(*di++));
-                    std::vector<std::string> args;
+                    fname = get_symbol(*di++);
                     while (di != decl.end())
                         args.push_back(get_symbol(*di++));
-                    define_function(fname, args, *i);
                 }
                 else
                 {
-                    // constants (nullary functions)
-                    std::string fname(get_symbol(*i++));
-                    define_nullary_function(fname, *i);
+                    // (define f ...body...)
+                    fname = get_symbol(*i++);
                 }
-                return function(val(utree(utf8_symbol("<function>"))));
+
+                define_function(fname, args, *i);
+                return actor(val(utf8_symbol("<define " + fname + ">")));
             }
 
-            if (function_compiler* mf = env.find(name))
+            if (name == "lambda")
             {
-                function_list flist;
+                // (lambda (x) ...body...)
+                Iterator i = range.begin(); ++i;
+                utree const& arg_names = *i++;
+                Iterator ai = arg_names.begin();
+                std::vector<std::string> args;
+                while (ai != arg_names.end())
+                    args.push_back(get_symbol(*ai++));
+                return make_lambda(args, *i);
+            }
+
+            if (compiled_function* mf = env.find(name))
+            {
+                actor_list flist;
                 Iterator i = range.begin(); ++i;
                 for (; i != range.end(); ++i)
-                    flist.push_back(compile(*i, env));
+                    flist.push_back(compile(*i, env, fragments));
                 return (*mf)(flist);
             }
 
-            return function(); // $$$ implement me $$$
+            BOOST_ASSERT(false);
+            return actor(); // $$$ implement me $$$
+        }
+
+        static std::string get_symbol(utree const& s)
+        {
+            utf8_symbol_range symbol = s.as<utf8_symbol_range>();
+            return std::string(symbol.begin(), symbol.end());
         }
     };
 
-    actor compile(utree const& ast, environment& env)
+    inline actor compile(
+        utree const& ast, environment& env, actor_list& fragments)
     {
-        return utree::visit(ast, compiler(env));
+        return utree::visit(ast, compiler(env, fragments));
     }
 
     void compile_all(
         utree const& ast,
         environment& env,
-        function_list& results)
+        actor_list& results,
+        actor_list& fragments)
     {
         BOOST_FOREACH(utree const& program, ast)
         {
-            scheme::function f = compile(program, env);
+            scheme::actor f = compile(program, env, fragments);
             results.push_back(f);
         }
     }
 
     void build_basic_environment(environment& env)
     {
-        env.define("+", plus_composer());
+        env.define("if", if_);
+        env.define("<", less_than);
+        env.define("<=", less_than_equal);
+        env.define("+", plus);
+        env.define("-", minus);
+        env.define("*", times);
     }
 }
 

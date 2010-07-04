@@ -7,13 +7,6 @@
 #if !defined(BOOST_SPIRIT_UTREE_DETAIL1)
 #define BOOST_SPIRIT_UTREE_DETAIL1
 
-#if defined(BOOST_MSVC)
-# pragma warning(push)
-# pragma warning(disable: 4804)
-# pragma warning(disable: 4805)
-# pragma warning(disable: 4244)
-#endif
-
 #include <boost/type_traits/alignment_of.hpp>
 
 namespace scheme { namespace detail

@@ -1,0 +1,2 @@
+Sexpr:
+- allow sheme-ish #t and #f

@@ -17,30 +17,62 @@
 namespace scheme { namespace output
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputStream>
-    bool generate_sexpr(OutputStream& os, utree const& tree)
+    template <typename Char>
+    bool generate_sexpr(std::basic_ostream<Char>& os, utree const& tree)
     {
         typedef boost::spirit::ostream_iterator output_iterator_type;
-        using boost::spirit::karma::space;
 
-        output_iterator_type sink(os);
+        using boost::spirit::karma::space;
+        using boost::spirit::karma::generate_delimited;
 
         scheme::output::sexpr<output_iterator_type> g;
-        return generate_delimited(sink, g, space, tree);
+
+        return generate_delimited(output_iterator_type(os), g, space, tree);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputStream>
-    bool generate_sexpr_list(OutputStream& os, utree const& tree)
+    template <typename Char>
+    bool generate_sexpr_list(std::basic_ostream<Char>& os, utree const& tree)
     {
         typedef boost::spirit::ostream_iterator output_iterator_type;
+
         using boost::spirit::karma::space;
         using boost::spirit::karma::eol;
-
-        output_iterator_type sink(os);
+        using boost::spirit::karma::generate_delimited;
 
         scheme::output::sexpr<output_iterator_type> g;
-        return generate_delimited(sink, g % eol, space, tree);
+
+        return generate_delimited(output_iterator_type(os), g % eol, space, tree);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    bool generate_sexpr(std::basic_string<Char>& os, utree const& tree)
+    {
+        typedef std::basic_string<Char> string_type;
+        typedef std::back_insert_iterator<string_type> output_iterator_type;
+
+        using boost::spirit::karma::space;
+        using boost::spirit::karma::generate_delimited;
+
+        scheme::output::sexpr<output_iterator_type> g;
+        return generate_delimited(output_iterator_type(os), g, space, tree);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    bool generate_sexpr_list(std::basic_string<Char>& os, utree const& tree)
+    {
+        typedef std::basic_string<Char> string_type;
+        typedef std::back_insert_iterator<string_type> output_iterator_type;
+
+        using boost::spirit::karma::space;
+        using boost::spirit::karma::eol;
+        using boost::spirit::karma::generate_delimited;
+
+        scheme::output::sexpr<output_iterator_type> g;
+
+        return generate_delimited(output_iterator_type(os), g % eol, space, tree);
     }
 }}
 

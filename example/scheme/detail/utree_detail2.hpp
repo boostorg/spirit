@@ -7,6 +7,11 @@
 #if !defined(BOOST_SPIRIT_UTREE_DETAIL2)
 #define BOOST_SPIRIT_UTREE_DETAIL2
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4800)
+#endif
+
 namespace scheme { namespace detail
 {
     inline char& fast_string::info()
@@ -186,6 +191,7 @@ namespace scheme { namespace detail
     inline void list::copy(list const& other)
     {
         first = last = 0;
+        size = 0;
         node* p = other.first;
         while (p != 0)
         {
@@ -375,9 +381,6 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, f);
-
-                case type::function_type:
-                    return f(x.f);
             }
         }
 
@@ -431,9 +434,6 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, y, f);
-
-                case type::function_type:
-                    return visit_impl::apply(y, detail::bind(f, x.f));
             }
         }
     };
@@ -512,12 +512,6 @@ namespace scheme
       : p(ref.get_pointer())
     {
         set_type(type::reference_type);
-    }
-
-    inline utree::utree(function_ptr fptr)
-      : f(fptr)
-    {
-        set_type(type::function_type);
     }
 
     inline utree::utree(utree const& other)
@@ -602,14 +596,6 @@ namespace scheme
         free();
         p = ref.get_pointer();
         set_type(type::reference_type);
-        return *this;
-    }
-
-    inline utree& utree::operator=(function_ptr fptr)
-    {
-        free();
-        f = fptr;
-        set_type(type::function_type);
         return *this;
     }
 
@@ -952,6 +938,20 @@ namespace scheme
         l.default_construct();
         set_type(type::list_type);
     }
+
+    inline utree& utree::deref()
+    {
+        return (get_type() == type::reference_type) ? *p : *this;
+    }
+
+    inline utree const& utree::deref() const
+    {
+        return (get_type() == type::reference_type) ? *p : *this;
+    }
 }
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif

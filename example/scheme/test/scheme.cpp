@@ -8,8 +8,8 @@
 
 #include "../input/sexpr.hpp"
 #include "../input/parse_sexpr_impl.hpp"
-#include "../scheme_interpreter.hpp"
 #include "../scheme_compiler.hpp"
+#include "../utree_io.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -26,14 +26,23 @@ int main(int argc, char **argv)
 {
     { // testing the c++ side
 
+        using scheme::if_;
         using scheme::plus;
+        using scheme::times;
+        using scheme::minus;
+        using scheme::lte;
         using scheme::_1;
         using scheme::_2;
+        using scheme::function;
 
-        std::cout << "result: " << plus(11, 22, 33)         () << std::endl;
-        std::cout << "result: " << plus(11, 22, _1)         (33) << std::endl;
-        std::cout << "result: " << plus(11, _1, _2)         (22, 33) << std::endl;
-        std::cout << "result: " << plus(11, plus(_1, _2))   (22, 33) << std::endl;
+        std::cout << "result: " << plus(11, 22, 33)() << std::endl;
+        std::cout << "result: " << plus(11, 22, _1)(33) << std::endl;
+        std::cout << "result: " << plus(11, _1, _2)(22, 33) << std::endl;
+
+        function factorial;
+        factorial = if_(lte(_1, 0), 1, times(_1, factorial(minus(_1, 1))));
+
+        std::cout << "result: " << factorial(_1)            (10) << std::endl;
     }
 
     char const* filename = NULL;
@@ -77,11 +86,12 @@ int main(int argc, char **argv)
         std::cout << "success: " << std::endl;
         scheme::environment env;
         scheme::build_basic_environment(env);
-        scheme::function_list flist;
-        compile_all(program, env, flist);
-        BOOST_FOREACH(scheme::function const& f, flist)
+        scheme::actor_list fragments;
+        scheme::actor_list flist;
+        compile_all(program, env, flist, fragments);
+        BOOST_FOREACH(scheme::actor const& f, flist)
         {
-            std::cout << " result: " << f(scheme::utree()) << std::endl;
+            std::cout << "result: " << f() << std::endl;
         }
     }
     else

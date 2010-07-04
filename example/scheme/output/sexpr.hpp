@@ -6,25 +6,22 @@
 #if !defined(SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM)
 #define SCHEME_OUTPUT_SEXPR_MAR_8_2010_829AM
 
+#include "../utree.hpp"
+#include "../detail/utree_detail3.hpp"
+
 #include <string>
 
 #include <boost/cstdint.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/include/karma.hpp>
 
-#include "../utree.hpp"
-#include "../detail/utree_detail3.hpp"
-
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
     // the specialization below tells Spirit to handle scheme::utree as if it 
-    // where a 'real' variant
-    template <typename T>
-    struct not_is_variant;
-
+    // where a 'real' variant (in the context of karma)
     template <>
-    struct not_is_variant<scheme::utree>
+    struct not_is_variant<scheme::utree, karma::domain>
       : mpl::false_ {};
 
     // The specializations below tell Spirit to verify whether an attribute 
@@ -143,12 +140,15 @@ namespace scheme { namespace output
     using boost::spirit::karma::double_;
     using boost::spirit::karma::int_;
     using boost::spirit::karma::char_;
+    using boost::spirit::karma::string;
     using boost::spirit::karma::bool_;
     using boost::spirit::karma::eps;
     using boost::spirit::karma::space_type;
     using boost::spirit::karma::uint_generator;
-
-    typedef boost::uint32_t uchar; // a unicode code point
+    using boost::spirit::karma::verbatim;
+    using boost::spirit::karma::delimit;
+    using boost::spirit::karma::hex;
+    using boost::spirit::karma::right_align;
 
     template <typename OutputIterator>
     struct sexpr : grammar<OutputIterator, space_type, utree()>
@@ -160,7 +160,7 @@ namespace scheme { namespace output
             start     = double_
                       | int_
                       | bool_
-                      | string
+                      | string_
                       | symbol
                       | byte_str
                       | list
@@ -169,10 +169,10 @@ namespace scheme { namespace output
 
             list      = '(' << *start << ')';
 
-            string    = '"' << *char_ << '"';
-            symbol    = *char_;
-            byte_str  = 'b' << *hex2;
-            nil_      = eps;
+            string_   = '"' << string << '"';
+            symbol    = string;
+            byte_str  = 'b' << *right_align(2, '0')[hex2];
+            nil_      = eps << "<nil>";
         }
 
         typedef boost::iterator_range<utree::const_iterator> utree_list;
@@ -180,7 +180,7 @@ namespace scheme { namespace output
         rule<OutputIterator, space_type, utree()> start;
         rule<OutputIterator, space_type, utree_list()> list;
         rule<OutputIterator, utf8_symbol_range()> symbol;
-        rule<OutputIterator, utf8_string_range()> string;
+        rule<OutputIterator, utf8_string_range()> string_;
         rule<OutputIterator, binary_range()> byte_str;
         rule<OutputIterator, nil()> nil_;
     };

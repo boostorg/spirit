@@ -10,8 +10,8 @@
 #include <boost/spirit/include/support_istream_iterator.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
-#include "../input/qiexpr.hpp"
-#include "../input/parse_qiexpr.hpp"
+#include "../qi/qiexpr_parser.hpp"
+#include "../qi/parse_qiexpr.hpp"
 
 namespace scheme { namespace input
 {
@@ -24,7 +24,9 @@ namespace scheme { namespace input
         scheme::input::qiexpr<iterator_type> p;
         scheme::input::qiexpr_white_space<iterator_type> ws;
 
-        return phrase_parse(str.begin(), str.end(), p, ws, result);
+        iterator_type begin = str.begin();
+        iterator_type end = str.end();
+        return phrase_parse(begin, end, p, ws, result) && begin == end;
     }
 }}
 

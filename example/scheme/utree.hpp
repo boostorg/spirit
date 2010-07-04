@@ -19,6 +19,13 @@
 #include <boost/ref.hpp>
 #include "detail/utree_detail1.hpp"
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4804)
+# pragma warning(disable: 4805)
+# pragma warning(disable: 4244)
+#endif
+
 namespace scheme
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -37,8 +44,7 @@ namespace scheme
             symbol_type,
             binary_type,
             list_type,
-            reference_type,
-            function_type
+            reference_type
         };
     };
 
@@ -46,17 +52,6 @@ namespace scheme
     // The nil type
     ///////////////////////////////////////////////////////////////////////////
     struct nil {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    // The environment (this is forward declared)
-    ///////////////////////////////////////////////////////////////////////////
-    class environment;
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Function pointer
-    ///////////////////////////////////////////////////////////////////////////
-    class utree; // forward
-    typedef utree (*function_ptr)(environment* env, utree& args);
 
     ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
@@ -166,18 +161,17 @@ namespace scheme
         typedef boost::iterator_range<const_iterator> const_range;
 
         utree();
-        explicit utree(bool b);
-        explicit utree(unsigned int i);
-        explicit utree(int i);
-        explicit utree(double d);
-        explicit utree(char const* str);
-        explicit utree(char const* str, std::size_t len);
-        explicit utree(std::string const& str);
-        explicit utree(boost::reference_wrapper<utree> ref);
-        explicit utree(function_ptr fptr);
+        utree(bool b);
+        utree(unsigned int i);
+        utree(int i);
+        utree(double d);
+        utree(char const* str);
+        utree(char const* str, std::size_t len);
+        utree(std::string const& str);
+        utree(boost::reference_wrapper<utree> ref);
 
         template <typename Base, utree_type::info type_>
-        explicit utree(basic_string<Base, type_> const& bin);
+        utree(basic_string<Base, type_> const& bin);
 
         utree(utree const& other);
         ~utree();
@@ -190,7 +184,6 @@ namespace scheme
         utree& operator=(char const* s);
         utree& operator=(std::string const& s);
         utree& operator=(boost::reference_wrapper<utree> ref);
-        utree& operator=(function_ptr fptr);
 
         template <typename Base, utree_type::info type_>
         utree& operator=(basic_string<Base, type_> const& bin);
@@ -263,6 +256,9 @@ namespace scheme
 
         int which() const;
 
+        utree& deref();
+        utree const& deref() const;
+
     private:
 
         typedef utree_type type;
@@ -290,10 +286,14 @@ namespace scheme
             int i;
             double d;
             utree* p;
-            function_ptr f;
         };
     };
 }
 
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
+
 #include "detail/utree_detail2.hpp"
+
 #endif
