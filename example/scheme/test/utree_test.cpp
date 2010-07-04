@@ -13,6 +13,8 @@
 
 inline std::ostream& println(std::ostream& out, scheme::utree const& val)
 {
+    if (val.which() == scheme::utree_type::list_type)
+        out << "size:" << val.size() << " ";
     out << val << std::endl;
     return out;
 }
@@ -21,67 +23,71 @@ int main()
 {
     using scheme::utree;
 
-    {
-        // test the size
-        std::cout << "size of utree is: "
-            << sizeof(scheme::utree) << " bytes" << std::endl;
-    }
+    //~ {
+        //~ // test the size
+        //~ std::cout << "size of utree is: "
+            //~ << sizeof(scheme::utree) << " bytes" << std::endl;
+    //~ }
 
-    {
-        utree val;
-        println(std::cout, val);
-    }
+    //~ {
+        //~ utree val;
+        //~ println(std::cout, val);
+    //~ }
 
-    {
-        utree val(true);
-        println(std::cout, val);
-    }
+    //~ {
+        //~ utree val(true);
+        //~ println(std::cout, val);
+    //~ }
 
-    {
-        utree val(123);
-        println(std::cout, val);
-    }
+    //~ {
+        //~ utree val(123);
+        //~ println(std::cout, val);
+    //~ }
 
-    {
-        utree val(123.456);
-        println(std::cout, val);
-    }
+    //~ {
+        //~ utree val(123.456);
+        //~ println(std::cout, val);
+    //~ }
 
-    {
-        utree val("Hello, World");
-        println(std::cout, val);
-        utree val2;
-        val2 = val;
-        println(std::cout, val2);
-        utree val3("Hello, World. Chuckie is back!!!");
-        val = val3;
-        println(std::cout, val);
+    //~ {
+        //~ utree val("Hello, World");
+        //~ println(std::cout, val);
+        //~ utree val2;
+        //~ val2 = val;
+        //~ println(std::cout, val2);
+        //~ utree val3("Hello, World. Chuckie is back!!!");
+        //~ val = val3;
+        //~ println(std::cout, val);
 
-        utree val4("Apple");
-        utree val5("Apple");
-        BOOST_ASSERT(val4 == val5);
+        //~ utree val4("Apple");
+        //~ utree val5("Apple");
+        //~ BOOST_ASSERT(val4 == val5);
 
-        utree val6("ApplePie");
-        BOOST_ASSERT(val4 < val6);
-    }
+        //~ utree val6("ApplePie");
+        //~ BOOST_ASSERT(val4 < val6);
+    //~ }
 
     {
         utree val;
         val.push_back(123);
         val.push_back("Chuckie");
+        BOOST_ASSERT(val.size() == 2);
         utree val2;
         val2.push_back(123.456);
         val2.push_back("Mah Doggie");
         val.push_back(val2);
+        BOOST_ASSERT(val.size() == 3);
         println(std::cout, val);
         println(std::cout, val.front());
 
         utree val3;
         val3.swap(val);
+        BOOST_ASSERT(val3.size() == 3);
         println(std::cout, val);
         val3.swap(val);
         println(std::cout, val);
         val.push_back("another string");
+        BOOST_ASSERT(val.size() == 4);
         println(std::cout, val);
         val.pop_front();
         println(std::cout, val);
@@ -93,12 +99,14 @@ int main()
         val.pop_back();
         println(std::cout, val);
         BOOST_ASSERT(val.size() == 3);
-        val.erase(val.end());
+        utree::iterator it = val.end(); --it;
+        val.erase(it);
         println(std::cout, val);
         BOOST_ASSERT(val.size() == 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
         println(std::cout, val);
+        BOOST_ASSERT(val.size() == 4);
     }
 
     {

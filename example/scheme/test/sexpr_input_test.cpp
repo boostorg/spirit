@@ -22,7 +22,7 @@ inline std::ostream& println(std::ostream& out, scheme::utree const& val)
 ///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
-    char const* filename;
+    char const* filename = NULL;
     if (argc > 1)
     {
         filename = argv[1];

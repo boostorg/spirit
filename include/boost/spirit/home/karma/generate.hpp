@@ -24,11 +24,21 @@ namespace boost { namespace spirit { namespace karma
         return detail::generate_impl<Expr>::call(sink, expr);
     }
 
+    template <typename OutputIterator, typename Expr>
+    inline bool
+    generate(
+        OutputIterator const& sink_
+      , Expr const& expr)
+    {
+        OutputIterator sink = sink_;
+        return generate(sink, expr);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator, typename Expr, typename Attr>
     inline bool
     generate(
-        OutputIterator& target_sink
+        OutputIterator& sink_
       , Expr const& expr
       , Attr const& attr)
     {
@@ -43,7 +53,7 @@ namespace boost { namespace spirit { namespace karma
 
         // wrap user supplied iterator into our own output iterator
         detail::output_iterator<OutputIterator
-          , mpl::int_<properties::value> > sink(target_sink);
+          , mpl::int_<properties::value> > sink(sink_);
         return compile<karma::domain>(expr).generate(sink, unused, unused, attr);
     }
 
@@ -63,6 +73,17 @@ namespace boost { namespace spirit { namespace karma
         return compile<karma::domain>(expr).generate(sink, unused, unused, attr);
     }
 
+    template <typename OutputIterator, typename Expr, typename Attr>
+    inline bool
+    generate(
+        OutputIterator const& sink_
+      , Expr const& expr
+      , Attr const& attr)
+    {
+        OutputIterator sink = sink_;
+        return generate(sink, expr, attr);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator, typename Expr, typename Delimiter>
     inline bool
@@ -75,6 +96,19 @@ namespace boost { namespace spirit { namespace karma
     {
         return detail::generate_delimited_impl<Expr>::call(
             sink, expr, delimiter, pre_delimit);
+    }
+
+    template <typename OutputIterator, typename Expr, typename Delimiter>
+    inline bool
+    generate_delimited(
+        OutputIterator const& sink_
+      , Expr const& expr
+      , Delimiter const& delimiter
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = 
+            delimit_flag::dont_predelimit)
+    {
+        OutputIterator sink = sink_;
+        return generate_delimited(sink, expr, delimiter, pre_delimit);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -107,12 +141,11 @@ namespace boost { namespace spirit { namespace karma
             generate(sink, unused, delimiter_, attr);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator, typename Expr, typename Delimiter
       , typename Attribute>
     inline bool
     generate_delimited(
-        OutputIterator& target_sink
+        OutputIterator& sink_
       , Expr const& expr
       , Delimiter const& delimiter
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
@@ -128,13 +161,27 @@ namespace boost { namespace spirit { namespace karma
         // wrap user supplied iterator into our own output iterator
         detail::output_iterator<OutputIterator
           , mpl::int_<properties::value | delimiter_properties::value>
-        > sink(target_sink);
+        > sink(sink_);
         return karma::generate_delimited(sink, expr, delimiter, pre_delimit, attr);
     }
 
+    template <typename OutputIterator, typename Expr, typename Delimiter
+      , typename Attribute>
+    inline bool
+    generate_delimited(
+        OutputIterator const& sink_
+      , Expr const& expr
+      , Delimiter const& delimiter
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
+      , Attribute const& attr)
+    {
+        OutputIterator sink = sink_;
+        return generate_delimited(sink, expr, delimiter, pre_delimit, attr);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator, typename Expr, typename Attribute
-      , typename Delimiter>
+    template <typename OutputIterator, typename Expr, typename Delimiter
+      , typename Attribute>
     inline bool
     generate_delimited(
         OutputIterator& sink
@@ -142,6 +189,20 @@ namespace boost { namespace spirit { namespace karma
       , Delimiter const& delimiter
       , Attribute const& attr)
     {
+        return karma::generate_delimited(sink, expr, delimiter
+          , delimit_flag::dont_predelimit, attr);
+    }
+
+    template <typename OutputIterator, typename Expr, typename Delimiter
+      , typename Attribute>
+    inline bool
+    generate_delimited(
+        OutputIterator const& sink_
+      , Expr const& expr
+      , Delimiter const& delimiter
+      , Attribute const& attr)
+    {
+        OutputIterator sink = sink_;
         return karma::generate_delimited(sink, expr, delimiter
           , delimit_flag::dont_predelimit, attr);
     }

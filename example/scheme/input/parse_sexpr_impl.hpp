@@ -27,7 +27,7 @@ namespace scheme { namespace input
         iterator_type last;
 
         scheme::input::sexpr<iterator_type> p;
-        scheme::input::white_space<iterator_type> ws;
+        scheme::input::sexpr_white_space<iterator_type> ws;
 
         return phrase_parse(first, last, p, ws, result);
     }
@@ -44,7 +44,7 @@ namespace scheme { namespace input
         iterator_type last;
 
         scheme::input::sexpr<iterator_type> p;
-        scheme::input::white_space<iterator_type> ws;
+        scheme::input::sexpr_white_space<iterator_type> ws;
 
         return phrase_parse(first, last, +p, ws, result);
     }

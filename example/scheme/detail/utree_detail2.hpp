@@ -127,8 +127,11 @@ namespace scheme { namespace detail
         node_iterator()
           : node(0) {}
 
-        explicit node_iterator(list::node* p)
-          : node(p) {}
+        explicit node_iterator(list::node* node)
+          : node(node), prev(node->prev) {}
+
+        node_iterator(list::node* node, list::node* prev)
+          : node(node), prev(prev) {}
 
     private:
 
@@ -137,12 +140,20 @@ namespace scheme { namespace detail
 
         void increment()
         {
-            node = node->next;
+            if (node != 0) // not at end
+            {
+                prev = node;
+                node = node->next;
+            }
         }
 
         void decrement()
         {
-            node = node->prev;
+            if (prev != 0) // not at begin
+            {
+                node = prev;
+                prev = prev->prev;
+            }
         }
 
         bool equal(node_iterator const& other) const
@@ -156,6 +167,7 @@ namespace scheme { namespace detail
         }
 
         list::node* node;
+        list::node* prev;
     };
 
     inline void list::free()
@@ -350,7 +362,7 @@ namespace scheme { namespace detail
                     return f(x.d);
 
                 case type::list_type:
-                    return f(list_range(iterator(x.l.first), iterator(0)));
+                    return f(list_range(iterator(x.l.first), iterator(0, x.l.last)));
 
                 case type::string_type:
                     return f(utf8_string_range(x.s.str(), x.s.size()));
@@ -403,7 +415,7 @@ namespace scheme { namespace detail
                 case type::list_type:
                     return visit_impl::apply(
                         y, detail::bind<F, list_range>(f,
-                        list_range(iterator(x.l.first), iterator(0))));
+                        list_range(iterator(x.l.first), iterator(0, x.l.last))));
 
                 case type::string_type:
                     return visit_impl::apply(y, detail::bind(
@@ -683,7 +695,7 @@ namespace scheme
         if (get_type() == type::reference_type)
             return p->insert(pos, val);
         ensure_list_type();
-        if (pos.node == l.last)
+        if (pos == end())
         {
             push_back(val);
             return begin();
@@ -756,7 +768,8 @@ namespace scheme
         if (get_type() == type::reference_type)
             return p->erase(pos);
         BOOST_ASSERT(get_type() == type::list_type);
-        return iterator(l.erase(pos.node));
+        detail::list::node* np = l.erase(pos.node);
+        return iterator(np, np?np->prev:l.last);
     }
 
     inline utree::iterator utree::erase(iterator first, iterator last)
@@ -781,7 +794,7 @@ namespace scheme
         if (get_type() == type::reference_type)
             return p->end();
         ensure_list_type();
-        return iterator(l.last);
+        return iterator(0, l.last);
     }
 
     inline utree::const_iterator utree::begin() const
@@ -797,7 +810,7 @@ namespace scheme
         if (get_type() == type::reference_type)
             return ((utree const*)p)->end();
         BOOST_ASSERT(get_type() == type::list_type);
-        return const_iterator(l.last);
+        return const_iterator(0, l.last);
     }
 
     inline bool utree::empty() const

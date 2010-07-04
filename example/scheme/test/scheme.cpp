@@ -8,6 +8,8 @@
 
 #include "../input/sexpr.hpp"
 #include "../input/parse_sexpr_impl.hpp"
+#include "../scheme_interpreter.hpp"
+#include "../scheme_compiler.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -17,85 +19,24 @@ inline std::ostream& println(std::ostream& out, scheme::utree const& val)
     return out;
 }
 
-#include <boost/unordered_map.hpp>
-
-namespace scheme
-{
-    class environment
-    {
-    public:
-
-        environment(environment* parent = 0)
-          : bindings(), parent(parent) {}
-
-        void define(std::string const& name, utree const& def)
-        {
-            // check for duplicate names
-            BOOST_ASSERT(bindings.find(name) == bindings.end());
-            // $$$ TODO Use exceptions $$$
-            bindings[name] = def;
-        }
-
-        utree* find(std::string const& name)
-        {
-            map::iterator i = bindings.find(name);
-            if (i == bindings.end())
-            {
-                if (parent)
-                    return parent->find(name);
-                return 0;
-            }
-            return &i->second;
-        }
-
-    private:
-
-        typedef boost::unordered_map<std::string, utree> map;
-        map bindings;
-        environment* parent;
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Intrinsic functions
-    ///////////////////////////////////////////////////////////////////////////
-    struct arithmetic_function
-    {
-        typedef bool result_type;
-
-        template <typename A, typename B>
-        bool dispatch(const A&, const B&, boost::mpl::false_) const
-        {
-            return false; // cannot compare different types by default
-        }
-
-        template <typename A, typename B>
-        bool dispatch(const A& a, const B& b, boost::mpl::true_) const
-        {
-            return a == b; // for arithmetic types
-        }
-
-        template <typename A, typename B>
-        bool operator()(const A& a, const B& b) const
-        {
-            return dispatch(a, b,
-                boost::mpl::and_<
-                    boost::is_arithmetic<A>,
-                    boost::is_arithmetic<B> >());
-        }
-    };
-
-    utree plus(environment*, utree& args)
-    {
-
-    }
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
-    char const* filename;
+    { // testing the c++ side
+
+        using scheme::plus;
+        using scheme::_1;
+        using scheme::_2;
+
+        std::cout << "result: " << plus(11, 22, 33)         () << std::endl;
+        std::cout << "result: " << plus(11, 22, _1)         (33) << std::endl;
+        std::cout << "result: " << plus(11, _1, _2)         (22, 33) << std::endl;
+        std::cout << "result: " << plus(11, plus(_1, _2))   (22, 33) << std::endl;
+    }
+
+    char const* filename = NULL;
     if (argc > 1)
     {
         filename = argv[1];
@@ -130,12 +71,18 @@ int main(int argc, char **argv)
         }
     }
 
-    scheme::utree result;
-    if (scheme::input::parse_sexpr(in, result))
+    scheme::utree program;
+    if (scheme::input::parse_sexpr_list(in, program))
     {
-        std::cout << "success: ";
-        println(std::cout, result);
-        std::cout << std::endl;
+        std::cout << "success: " << std::endl;
+        scheme::environment env;
+        scheme::build_basic_environment(env);
+        scheme::function_list flist;
+        compile_all(program, env, flist);
+        BOOST_FOREACH(scheme::function const& f, flist)
+        {
+            std::cout << " result: " << f(scheme::utree()) << std::endl;
+        }
     }
     else
     {

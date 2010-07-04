@@ -144,6 +144,7 @@ namespace scheme { namespace output
     using boost::spirit::karma::int_;
     using boost::spirit::karma::char_;
     using boost::spirit::karma::bool_;
+    using boost::spirit::karma::eps;
     using boost::spirit::karma::space_type;
     using boost::spirit::karma::uint_generator;
 
@@ -163,6 +164,7 @@ namespace scheme { namespace output
                       | symbol
                       | byte_str
                       | list
+                      | nil_
                       ;
 
             list      = '(' << *start << ')';
@@ -170,6 +172,7 @@ namespace scheme { namespace output
             string    = '"' << *char_ << '"';
             symbol    = *char_;
             byte_str  = 'b' << *hex2;
+            nil_      = eps;
         }
 
         typedef boost::iterator_range<utree::const_iterator> utree_list;
@@ -179,6 +182,7 @@ namespace scheme { namespace output
         rule<OutputIterator, utf8_symbol_range()> symbol;
         rule<OutputIterator, utf8_string_range()> string;
         rule<OutputIterator, binary_range()> byte_str;
+        rule<OutputIterator, nil()> nil_;
     };
 }}
 
