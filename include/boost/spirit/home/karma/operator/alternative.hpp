@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/karma/detail/alternative_function.hpp>
+#include <boost/spirit/home/karma/detail/get_stricttag.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
@@ -75,8 +76,8 @@ namespace boost { namespace spirit { namespace traits
 
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename Elements>
-    struct alternative : nary_generator<alternative<Elements> >
+    template <typename Elements, typename Strict, typename Derived>
+    struct base_alternative : nary_generator<Derived>
     {
         typedef typename traits::alternative_properties<Elements>::type 
             properties;
@@ -97,7 +98,7 @@ namespace boost { namespace spirit { namespace karma
             typedef typename traits::build_variant<all_attributes>::type type;
         };
 
-        alternative(Elements const& elements)
+        base_alternative(Elements const& elements)
           : elements(elements) {}
 
         template <
@@ -107,7 +108,7 @@ namespace boost { namespace spirit { namespace karma
           , Delimiter const& d, Attribute const& attr) const
         {
             typedef detail::alternative_generate_function<
-                OutputIterator, Context, Delimiter, Attribute
+                OutputIterator, Context, Delimiter, Attribute, Strict
             > functor;
 
             // f return true if *any* of the parser succeeds
@@ -127,12 +128,48 @@ namespace boost { namespace spirit { namespace karma
         Elements elements;
     };
 
+    template <typename Elements>
+    struct alternative 
+      : base_alternative<Elements, mpl::false_, alternative<Elements> >
+    {
+        typedef base_alternative<Elements, mpl::false_, alternative> 
+            base_alternative_;
+
+        alternative(Elements const& elements)
+          : base_alternative_(elements) {}
+    };
+
+    template <typename Elements>
+    struct strict_alternative 
+      : base_alternative<Elements, mpl::true_, strict_alternative<Elements> >
+    {
+        typedef base_alternative<Elements, mpl::true_, strict_alternative> 
+            base_alternative_;
+
+        strict_alternative(Elements const& elements)
+          : base_alternative_(elements) {}
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename Elements, bool strict_mode = false>
+        struct make_alternative 
+          : make_nary_composite<Elements, alternative>
+        {};
+
+        template <typename Elements>
+        struct make_alternative<Elements, true> 
+          : make_nary_composite<Elements, strict_alternative>
+        {};
+    }
+
     template <typename Elements, typename Modifiers>
     struct make_composite<proto::tag::bitwise_or, Elements, Modifiers>
-      : make_nary_composite<Elements, alternative>
+      : detail::make_alternative<Elements
+          , detail::get_stricttag<Modifiers>::value>
     {};
 
 }}}
@@ -143,6 +180,9 @@ namespace boost { namespace spirit { namespace traits
     struct has_semantic_action<karma::alternative<Elements> >
       : nary_has_semantic_action<Elements> {};
 
+    template <typename Elements>
+    struct has_semantic_action<karma::strict_alternative<Elements> >
+      : nary_has_semantic_action<Elements> {};
 }}}
 
 #endif
