@@ -11,6 +11,8 @@
 // explicit template instantiation for the function parse_qiexpr 
 namespace scheme { namespace input
 {
-    template bool parse_qiexpr(std::string const&, utree& result);
+    template bool parse_qi_expr(std::string const&, utree& result);
+    template bool parse_qi_rule(std::string const&, utree& result);
+    template bool parse_qi_grammar(std::string const&, utree& result);
 }}
 

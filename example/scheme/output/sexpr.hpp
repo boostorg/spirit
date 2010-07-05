@@ -23,14 +23,10 @@ namespace scheme { namespace output
     using boost::spirit::karma::rule;
     using boost::spirit::karma::double_;
     using boost::spirit::karma::int_;
-    using boost::spirit::karma::char_;
     using boost::spirit::karma::string;
     using boost::spirit::karma::bool_;
     using boost::spirit::karma::eps;
-    using boost::spirit::karma::space_type;
     using boost::spirit::karma::uint_generator;
-    using boost::spirit::karma::verbatim;
-    using boost::spirit::karma::delimit;
     using boost::spirit::karma::hex;
     using boost::spirit::karma::right_align;
 

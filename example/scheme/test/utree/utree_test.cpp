@@ -12,6 +12,7 @@
 #include <utree/io.hpp>
 #include <iostream>
 #include <sstream>
+#include <cstdlib>
 
 inline void check(scheme::utree const& val, std::string expected)
 {
@@ -22,7 +23,7 @@ inline void check(scheme::utree const& val, std::string expected)
 
 struct one_two_three
 {
-    scheme::utree operator()(scheme::args_type) const
+    scheme::utree operator()(scheme::scope) const
     {
         return scheme::utree(123);
     }
@@ -51,6 +52,12 @@ int main()
     {
         utree val(123);
         check(val, "123");
+    }
+
+    {
+        // single element string
+        utree val('x');
+        check(val, "\"x\"");
     }
 
     {
@@ -280,7 +287,7 @@ int main()
     {
         // test functions
         utree f = scheme::stored_function<one_two_three>();
-        f.eval(scheme::args_type());
+        f.eval(scheme::scope());
     }
 
     {
@@ -300,6 +307,32 @@ int main()
         BOOST_TEST(alias.back() == 4);
         BOOST_TEST(!alias.empty());
         BOOST_TEST(alias[1] == 3);
+    }
+
+    {
+        // shallow string ranges
+
+        using scheme::utf8_string_range;
+        using scheme::shallow;
+
+        char const* s = "Hello, World";
+        utree val(utf8_string_range(s, s + strlen(s)), shallow);
+        check(val, "\"Hello, World\"");
+
+        utf8_string_range r = val.get<utf8_string_range>();
+        utf8_string_range pf(r.begin()+1, r.end()-1);
+        val = utree(pf, shallow);
+        check(val, "\"ello, Worl\"");
+    }
+
+    {
+        // any pointer
+
+        using scheme::any_ptr;
+
+        int n = 123;
+        utree up = any_ptr(&n);
+        BOOST_TEST(*up.get<int*>() == 123);
     }
 
     return boost::report_errors();

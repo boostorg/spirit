@@ -34,7 +34,7 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace karma
 {
     using boost::spirit::eol;
-    using boost::spirit::eoi_type;
+    using boost::spirit::eol_type;
 
     struct eol_generator : primitive_generator<eol_generator>
     {

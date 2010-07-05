@@ -144,6 +144,7 @@ import testing ;
     [ run lex/regression003_switch.cpp             : : : <dependency>.//lex_regression003_generate_switch : lex_regression003_switch ]
     [ run lex/regression004.cpp             : : : : lex_regression004 ]
     [ run lex/regression005.cpp             : : : : lex_regression005 ]
+    [ run lex/regression006.cpp             : : : : lex_regression006 ]
 
     # support tests
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
@@ -152,6 +153,7 @@ import testing ;
 
 
     # regression tests
+    [ compile qi/attr_with_action.cpp         : : qi_attr_with_action ]
     [ run qi/clear_test.cpp                   : : : : ]
     [ run qi/reorder_test.cpp                 : : : : ]
     [ run karma/karma_optional_double.cpp     : : : : ]

@@ -12,12 +12,17 @@
 #include <algorithm>
 #include <string>
 #include <ostream>
+#include <typeinfo>
 
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/is_polymorphic.hpp>
+#include <boost/utility/enable_if.hpp>
 #include <boost/ref.hpp>
+
 #include <utree/detail/utree_detail1.hpp>
 
 #if defined(BOOST_MSVC)
@@ -42,11 +47,13 @@ namespace scheme
             int_type,
             double_type,
             string_type,
+            string_range_type,
             symbol_type,
             binary_type,
             list_type,
             range_type,
             reference_type,
+            any_type,
             function_type
         };
     };
@@ -135,12 +142,12 @@ namespace scheme
     // Our function type
     ///////////////////////////////////////////////////////////////////////////
     class utree;
-    typedef boost::iterator_range<utree const*> args_type;
+    class scope;
 
     struct function_base
     {
         virtual ~function_base() {};
-        virtual utree operator()(args_type args) const = 0;
+        virtual utree operator()(scope const& env) const = 0;
         virtual function_base* clone() const = 0;
     };
 
@@ -150,7 +157,7 @@ namespace scheme
         F f;
         stored_function(F f = F());
         virtual ~stored_function();
-        virtual utree operator()(args_type args) const;
+        virtual utree operator()(scope const& env) const;
         virtual function_base* clone() const;
     };
 
@@ -162,6 +169,52 @@ namespace scheme
     shallow_tag const shallow = {};
 
     ///////////////////////////////////////////////////////////////////////////
+    // A void* plus type_info
+    ///////////////////////////////////////////////////////////////////////////
+    class any_ptr
+    {
+    public:
+
+        template <typename Ptr>
+        typename boost::disable_if<
+            boost::is_polymorphic<
+                typename boost::remove_pointer<Ptr>::type>,
+            Ptr>::type
+        get() const
+        {
+            if (*i == typeid(Ptr))
+            {
+                return static_cast<Ptr>(p);
+            }
+            throw std::bad_cast();
+        }
+
+        template <typename T>
+        any_ptr(T* p)
+          : p(p), i(&typeid(T*))
+        {}
+
+        friend bool operator==(any_ptr const& a, any_ptr const& b)
+        {
+            return (a.p == b.p) && (*a.i == *b.i);
+        }
+
+    private:
+
+        // constructor is private
+        any_ptr(void* p, std::type_info const* i)
+          : p(p), i(i) {}
+
+        template <typename UTreeX, typename UTreeY>
+        friend struct detail::visit_impl;
+
+        friend class utree;
+
+        void* p;
+        std::type_info const* i;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // The main utree (Universal Tree) class
     // The utree is a hierarchical, dynamic type that can store:
     //  - a nil
@@ -169,10 +222,14 @@ namespace scheme
     //  - an integer
     //  - a double
     //  - a string
+    //  - a string range
     //  - a symbol (identifier)
     //  - binary data
     //  - a (doubly linked) list of utree
+    //  - an iterator_range of list::iterator
     //  - a reference to a utree
+    //  - a pointer or reference to any type
+    //  - a function
     //
     // The utree has minimal memory footprint. The data structure size is
     // 16 bytes on a 32-bit platform. Being a container of itself, it can
@@ -197,6 +254,7 @@ namespace scheme
 
         utree();
         utree(bool b);
+        utree(char c);
         utree(unsigned int i);
         utree(int i);
         utree(double d);
@@ -204,17 +262,19 @@ namespace scheme
         utree(char const* str, std::size_t len);
         utree(std::string const& str);
         utree(boost::reference_wrapper<utree> ref);
+        utree(any_ptr const& p);
 
         template <typename Iter>
         utree(boost::iterator_range<Iter> r);
         utree(range r, shallow_tag);
         utree(const_range r, shallow_tag);
+        utree(utf8_string_range const& str, shallow_tag);
 
         template <typename F>
         utree(stored_function<F> const& pf);
 
         template <typename Base, utree_type::info type_>
-        utree(basic_string<Base, type_> const& bin);
+        utree(basic_string<Base, type_> const& str);
 
         utree(utree const& other);
         ~utree();
@@ -317,7 +377,7 @@ namespace scheme
         short tag() const;
         void tag(short tag);
 
-        utree eval(args_type args) const;
+        utree eval(scope const& env) const;
 
     private:
 
@@ -341,12 +401,38 @@ namespace scheme
             detail::fast_string s;
             detail::list l;
             detail::range r;
+            detail::string_range sr;
+            detail::void_ptr v;
             bool b;
             int i;
             double d;
             utree* p;
             function_base* pf;
         };
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The scope
+    ///////////////////////////////////////////////////////////////////////////
+    class scope : public boost::iterator_range<utree*>
+    {
+    public:
+
+        scope(utree* first = 0,
+            utree* last = 0,
+            scope const* parent = 0)
+          : boost::iterator_range<utree*>(first, last),
+            parent(parent),
+            depth(parent? parent->depth + 1 : 0)
+        {}
+
+        scope const* outer() const { return parent; }
+        int level() const { return depth; }
+
+    private:
+
+        scope const* parent;
+        int depth;
     };
 }
 

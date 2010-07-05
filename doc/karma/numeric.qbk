@@ -65,7 +65,7 @@ Also, see __include_structure__.
     [[`boost::spirit::ulong_long    // alias: boost::spirit::karma::ulong_long`]]
 ]
 
-[important The generators `ulong_long` and `ulong_long(num)` are only available on 
+[note The generators `ulong_long` and `ulong_long(num)` are only available on 
         platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
         defined (i.e. on platforms having native support for `unsigned long long` 
         (64 bit) unsigned integer types).]
@@ -340,7 +340,7 @@ Also, see __include_structure__.
     [[`boost::spirit::long_long     // alias: boost::spirit::karma::long_long`]]
 ]
 
-[important The generators `long_long` and `long_long(num)` are only available on 
+[note The generators `long_long` and `long_long(num)` are only available on 
         platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
         defined (i.e. on platforms having native support for `long long` 
         (64 bit) integer types).]

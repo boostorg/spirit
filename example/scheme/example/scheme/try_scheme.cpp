@@ -12,14 +12,8 @@
 #include <utree/io.hpp>
 #include <fstream>
 
-///////////////////////////////////////////////////////////////////////////////
-//  Main program
-///////////////////////////////////////////////////////////////////////////////
-int main(int argc, char **argv)
+int check_file(std::ifstream& in, char const* filename)
 {
-    char const* filename = filename = argv[1];
-    std::ifstream in(filename, std::ios_base::in);
-
     if (!in)
     {
         std::cerr << filename << " not found" << std::endl;
@@ -35,14 +29,28 @@ int main(int argc, char **argv)
         s[3] = '\0';
         if (s != std::string("\xef\xbb\xbf"))
         {
-            std::cerr << "unexpected characters in file" << std::endl;
+            std::cerr << "Error: Unexpected characters from input file: "
+                << filename << std::endl;
             return -1;
         }
     }
+    return 0;
+}
 
-    scheme::interpreter f(in, filename);
-    if (!f.empty())
-        f();
+///////////////////////////////////////////////////////////////////////////////
+//  Main program
+///////////////////////////////////////////////////////////////////////////////
+int main(int argc, char **argv)
+{
+    char const* filename = filename = argv[1];
+    std::ifstream in(filename, std::ios_base::in);
+    if (check_file(in, filename) != 0)
+		return -1;
+
+    scheme::interpreter program(in, filename);
+    scheme::function main_ = program["main"];
+    if (!main_.empty())
+        main_(); // call main
     return 0;
 }
 

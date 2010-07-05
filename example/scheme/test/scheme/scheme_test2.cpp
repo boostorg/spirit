@@ -45,10 +45,19 @@ int main()
     using scheme::interpreter;
     using scheme::_1;
 
-    scheme::interpreter factorial(in);
-    std::cout << factorial(10) << std::endl;
+    scheme::interpreter program(in);
 
-    return 0;
+    for (int i = 2; i < argc; ++i)
+    {
+        bool r = program[argv[i]]() == true;
+        if (r)
+            std::cout << "Success: " << argv[i] << std::endl;
+        else
+            std::cout << "Fail: " << argv[i] << std::endl;
+        BOOST_TEST(r);
+    }
+
+    return boost::report_errors();
 }
 
 

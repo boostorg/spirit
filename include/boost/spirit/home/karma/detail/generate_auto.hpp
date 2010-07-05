@@ -13,13 +13,19 @@
 #include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/auto/create_generator.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/mpl/and.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
     struct generate_impl<Expr
-      , typename enable_if<traits::meta_create_exists<karma::domain, Expr> >::type>
+      , typename enable_if<
+            mpl::and_<
+                traits::meta_create_exists<karma::domain, Expr>
+              , mpl::not_<traits::matches<karma::domain, Expr> > >
+        >::type>
     {
         template <typename OutputIterator>
         static bool call(
@@ -33,7 +39,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr>
     struct generate_delimited_impl<Expr
-      , typename enable_if<traits::meta_create_exists<karma::domain, Expr> >::type>
+      , typename enable_if<
+            mpl::and_<
+                traits::meta_create_exists<karma::domain, Expr>
+              , mpl::not_<traits::matches<karma::domain, Expr> > >
+        >::type>
     {
         template <typename OutputIterator, typename Delimiter>
         static bool call(

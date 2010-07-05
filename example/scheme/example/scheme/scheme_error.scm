@@ -1,4 +1,4 @@
-blah ; blah not found
+(define what blah) ; blah not found
 
 (define
   (foo x)
@@ -8,14 +8,13 @@ blah ; blah not found
   (bar x)
     (+ x y)) ; y not found
 
-(foo 123)
-(foo z) ; z not found
+(define (f1) (foo 123))
+(define (f2) (foo z)) ; z not found
 
 (define foo 123) ; redefinition
 
-(foo 123 456) ; incorrect arity
+(define (f3) (foo 123 456)) ; incorrect arity
 
-(bar 999) ; bar should not be found
+(define (f4) (bar 999)) ; bar should not be found
 
-
-
+(define (main) ) ; no body

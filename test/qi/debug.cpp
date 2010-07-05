@@ -39,7 +39,6 @@ main()
     using boost::spirit::qi::fail;
     using boost::spirit::qi::on_error;
     using boost::spirit::qi::debug;
-    using boost::spirit::qi::int_;
     using boost::spirit::qi::alpha;
 
     namespace phx = boost::phoenix;

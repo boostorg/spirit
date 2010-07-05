@@ -180,7 +180,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 remove(p->gt, first, last, alloc);
             }
 
-            if (p->lt == 0 && p->eq == 0 && p->gt == 0)
+            if (p->data == 0 && p->lt == 0 && p->eq == 0 && p->gt == 0)
             {
                 alloc->delete_node(p);
                 p = 0;

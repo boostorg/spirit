@@ -16,7 +16,7 @@ namespace scheme { namespace output
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename String>
-    bool generate_qiexpr(utree& u, String& str)
+    bool generate_qi_expr(utree& u, String& str)
     {
         using boost::spirit::karma::space;
 
@@ -24,6 +24,18 @@ namespace scheme { namespace output
 
         scheme::qi::qiexpr_generator<output_iterator_type> g;
         return generate_delimited(output_iterator_type(str), g, space, u);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename String>
+    bool generate_qi_expr_list(utree& u, String& str)
+    {
+        using boost::spirit::karma::space;
+
+        typedef std::back_insert_iterator<String> output_iterator_type;
+
+        scheme::qi::qiexpr_generator<output_iterator_type> g;
+        return generate_delimited(output_iterator_type(str), g.grammar_, space, u);
     }
 }}
 

@@ -11,7 +11,10 @@
 namespace scheme { namespace output
 {
     template <typename String>
-    bool generate_qiexpr(utree& result, String& str);
+    bool generate_qi_expr(utree& result, String& str);
+
+    template <typename String>
+    bool generate_qi_expr_list(utree& result, String& str);
 }}
 
 #endif

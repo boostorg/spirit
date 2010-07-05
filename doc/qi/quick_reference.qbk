@@ -322,7 +322,7 @@ a: Unused --> +a: Unused``]]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[`repeat(...,...)[p]`]
+    [[`repeat(...,...)[a]`]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 

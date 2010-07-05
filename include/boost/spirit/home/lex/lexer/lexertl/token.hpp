@@ -161,6 +161,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
 
 #if defined(BOOST_SPIRIT_DEBUG)
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1600)
+        // workaround for MSVC10 which has problems copying a default 
+        // constructed iterator_range
+        token& operator= (token const& rhs)
+        {
+            return *this;
+        }
+#endif
         std::pair<Iterator, Iterator> matched_;
 #endif
 
@@ -352,7 +360,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             if (this != &rhs) 
             {
-                this->base_type::operator=(rhs);
+                this->base_type::operator=(static_cast<base_type const&>(rhs));
                 if (this->id_ != boost::lexer::npos && this->id_ != 0) 
                     value_ = rhs.value_;
             }

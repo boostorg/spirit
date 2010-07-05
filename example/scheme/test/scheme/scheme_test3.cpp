@@ -19,11 +19,31 @@ int main()
     using scheme::interpreter;
     using scheme::utree;
 
-    utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";
-    scheme::interpreter factorial(src);
-    std::cout << factorial(10) << std::endl;
+    {
+        utree src = "(define n 123)";
+        scheme::interpreter program(src);
+        BOOST_TEST(program["n"]() == 123);
+    }
 
-    return 0;
+    {
+        utree src = "(define (factorial n) (if (<= n 0) 1 (* n (factorial (- n 1)))))";
+        scheme::interpreter program(src);
+        BOOST_TEST(program["factorial"](10) == 3628800);
+    }
+
+    {
+        // test forward declaration (a scheme extension)
+        utree src =
+            "(define (dbl n))" // multiple forward declarations allowed
+            "(define (dbl n))"
+            "(define foo (dbl 10))"
+            "(define (dbl n) (* n 2))"
+            ;
+        scheme::interpreter program(src);
+        BOOST_TEST(program["foo"](10) == 20);
+    }
+
+    return boost::report_errors();
 }
 
 

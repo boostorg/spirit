@@ -20,6 +20,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/add_const.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 namespace boost { namespace spirit
 {
@@ -45,10 +46,7 @@ namespace boost { namespace spirit { namespace qi
     struct attr_parser : primitive_parser<attr_parser<Value> >
     {
         template <typename Context, typename Iterator>
-        struct attribute
-        {
-            typedef Value type;
-        };
+        struct attribute : remove_const<Value> {};
 
         attr_parser(typename add_reference<Value>::type value)
           : value_(value) {}
@@ -93,7 +91,6 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-
 }}}
 
 #endif

@@ -9,6 +9,7 @@
 
 #include <scheme/interpreter.hpp>
 #include <utree/operators.hpp>
+#include <iostream>
 
 namespace scheme
 {
@@ -30,9 +31,9 @@ namespace scheme
         }
 
         typedef utree result_type;
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
-            return cond(args).get<bool>() ? then(args) : else_(args);
+            return cond(env).get<bool>() ? then(env) : else_(env);
         }
     };
 
@@ -65,12 +66,12 @@ namespace scheme
             }
         }
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
             utree result;
             BOOST_FOREACH(function const& element, elements)
             {
-                result.push_back(element(args));
+                result.push_back(element(env));
             }
             return result;
         }
@@ -101,7 +102,7 @@ namespace scheme
             }
         }
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
             BOOST_ASSERT(!elements.empty());
             actor_list::const_iterator end = elements.end(); --end;
@@ -109,9 +110,9 @@ namespace scheme
                 head_elements(elements.begin(), end);
             BOOST_FOREACH(function const& element, head_elements)
             {
-                element(args);
+                element(env);
             }
-            return (*end)(args);
+            return (*end)(env);
         }
     };
 
@@ -198,6 +199,9 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // binary intrinsics
     ///////////////////////////////////////////////////////////////////////////
+    SCHEME_BINARY_INTRINSIC(equal, a == b);
+    equal_composite const eq = equal; // synonym
+
     SCHEME_BINARY_INTRINSIC(less_than, a < b);
     less_than_composite const lt = less_than; // synonym
 

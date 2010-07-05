@@ -584,7 +584,7 @@ See here for more information about __karma_nonterminal__.
     [[`rule<OutputIterator, A1, A2, A3> r(name);`]    [Rule declaration. `OutputIterator` is required.
                                                 `A1, A2, A3` are optional and can be specified in any order.
                                                 `name` is an optional string that gives the rule
-                                                its name, useful for debugging and error handling.]]
+                                                its name, useful for debugging.]]
     [[`rule<OutputIterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
     [[`r.alias()`]                              [Return an alias of `r`. The alias is a generator that
@@ -592,6 +592,7 @@ See here for more information about __karma_nonterminal__.
     [[`r.copy()`]                               [Get a copy of `r`.]]
     [[`r.name(name)`]                           [Set the name of a rule]]
     [[`r.name()`]                               [Get the name of a rule]]
+    [[debug(r)]                                 [Debug rule `r`]]
     [[`r = g;`]                                 [Rule definition]]
     [[`r %= g;`]                                [Auto-rule definition. The attribute of `g` should be
                                                 compatible with the synthesized attribute of `r`. When `g`

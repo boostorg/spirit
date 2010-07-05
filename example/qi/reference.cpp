@@ -668,7 +668,7 @@ main()
         
         //[reference_eps_while
         /*`This example simulates the "classic" `while_p` parser. Here, the kleene loop
-            will exit once the condition, c, becomes true. Notice that the condition, `c,
+            will exit once the condition, `c`, becomes true. Notice that the condition, `c`,
             is turned to `false` when we get to parse `4`.
          */
         test_phrase_parser("1 2 3 4", 

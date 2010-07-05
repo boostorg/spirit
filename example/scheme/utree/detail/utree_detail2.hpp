@@ -13,6 +13,10 @@
 # pragma warning(disable: 4800)
 #endif
 
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/is_pointer.hpp>
+#include <boost/utility/enable_if.hpp>
+
 namespace scheme { namespace detail
 {
     inline char& fast_string::info()
@@ -468,6 +472,9 @@ namespace scheme { namespace detail
                 case type::string_type:
                     return f(utf8_string_range(x.s.str(), x.s.size()));
 
+                case type::string_range_type:
+                    return f(utf8_string_range(x.sr.first, x.sr.last));
+
                 case type::symbol_type:
                     return f(utf8_symbol_range(x.s.str(), x.s.size()));
 
@@ -476,6 +483,9 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, f);
+
+                case type::any_type:
+                    return f(any_ptr(x.v.p, x.v.i));
 
                 case type::function_type:
                     return f(*x.pf);
@@ -527,6 +537,10 @@ namespace scheme { namespace detail
                     return visit_impl::apply(y, detail::bind(
                         f, utf8_string_range(x.s.str(), x.s.size())));
 
+                case type::string_range_type:
+                    return visit_impl::apply(y, detail::bind(
+                        f, utf8_string_range(x.sr.first, x.sr.last)));
+
                 case type::symbol_type:
                     return visit_impl::apply(y, detail::bind(
                         f, utf8_symbol_range(x.s.str(), x.s.size())));
@@ -537,6 +551,10 @@ namespace scheme { namespace detail
 
                 case type::reference_type:
                     return apply(*x.p, y, f);
+
+                case type::any_type:
+                    return visit_impl::apply(
+                        y, detail::bind(f, any_ptr(x.v.p, x.v.i)));
 
                 case type::function_type:
                     return visit_impl::apply(y, detail::bind(f, *x.pf));
@@ -577,9 +595,9 @@ namespace scheme
     };
 
     template <typename F>
-    utree stored_function<F>::operator()(args_type args) const
+    utree stored_function<F>::operator()(scope const& env) const
     {
-        return f(args);
+        return f(env);
     }
 
     template <typename F>
@@ -597,6 +615,13 @@ namespace scheme
     inline utree::utree(bool b) : b(b)
     {
         set_type(type::bool_type);
+    }
+
+    inline utree::utree(char c)
+    {
+        // char constructs a single element string
+        s.construct(&c, &c+1);
+        set_type(type::string_type);
     }
 
     inline utree::utree(unsigned int i) : i(i)
@@ -645,6 +670,13 @@ namespace scheme
         set_type(type::reference_type);
     }
 
+    inline utree::utree(any_ptr const& p)
+    {
+        v.p = p.p;
+        v.i = p.i;
+        set_type(type::any_type);
+    }
+
     template <typename F>
     inline utree::utree(stored_function<F> const& pf)
       : pf(new stored_function<F>(pf))
@@ -671,6 +703,13 @@ namespace scheme
         this->r.first = r.begin().node;
         this->r.last = r.end().prev;
         set_type(type::range_type);
+    }
+
+    inline utree::utree(utf8_string_range const& str, shallow_tag)
+    {
+        this->sr.first = str.begin();
+        this->sr.last = str.end();
+        set_type(type::string_range_type);
     }
 
     inline utree::utree(utree const& other)
@@ -904,7 +943,10 @@ namespace scheme
         ensure_list_type();
         clear();
         while (first != last)
-            push_back(*first++);
+        {
+            push_back(*first);
+            ++first;
+        }
     }
 
     inline void utree::clear()
@@ -1030,8 +1072,7 @@ namespace scheme
             return r.first == 0;
         else if (get_type() == type::list_type)
             return l.size == 0;
-        BOOST_ASSERT(get_type() == type::nil_type);
-        return true;
+        return get_type() == type::nil_type;
     }
 
     inline std::size_t utree::size() const
@@ -1201,8 +1242,14 @@ namespace scheme
             case type::reference_type:
                 p = other.p;
                 break;
+            case type::any_type:
+                v = other.v;
+                break;
             case type::range_type:
                 r = other.r;
+                break;
+            case type::string_range_type:
+                sr = other.sr;
                 break;
             case type::function_type:
                 pf = other.pf->clone();
@@ -1244,7 +1291,7 @@ namespace scheme
         To dispatch(From const& val, boost::mpl::false_) const
         {
             // From is NOT convertible to To !!!
-            BOOST_ASSERT(false);
+            throw std::bad_cast();
             return To();
         }
 
@@ -1258,6 +1305,25 @@ namespace scheme
               , boost::is_same<From, To>, boost::is_convertible<From, To>
             >::type is_convertible;
             return dispatch(val, is_convertible());
+        }
+    };
+
+    template <typename T>
+    struct utree_cast<T*>
+    {
+        typedef T* result_type;
+
+        template <typename From>
+        T* operator()(From const& val) const
+        {
+            // From is NOT convertible to T !!!
+            throw std::bad_cast();
+            return 0;
+        }
+
+        T* operator()(any_ptr const& p) const
+        {
+            return p.get<T*>();
         }
     };
 
@@ -1289,10 +1355,10 @@ namespace scheme
         s.tag(tag);
     }
 
-    inline utree utree::eval(args_type args) const
+    inline utree utree::eval(scope const& env) const
     {
         BOOST_ASSERT(get_type() == type::function_type);
-        return (*pf)(args);
+        return (*pf)(env);
     }
 }
 

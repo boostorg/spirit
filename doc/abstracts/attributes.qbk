@@ -16,9 +16,9 @@ Parsers and generators in __spirit__ are fully attributed. __qi__ parsers always
 attribute/ as it is returned from a successful match representing the matched 
 input sequence. For instance, numeric parsers, such as `int_` or `double_`, 
 return the `int` or `double` value converted from the matched input sequence.
-Other primitive parser components have other intuitive attribute types, such as for instance `int_` which has `int`, or `ascii::char_` which has `char`. Forprimitive parsers apply the normal C++ convertibility rules: you can use any Other primitive parser components have other intuitive attribute types, e.g. 
-the parser `ascii::char_` has `char` as attribute type. For
-primitive parsers the normal C++ convertibility rules apply: you can use any 
+Other primitive parser components have other intuitive attribute types, such as 
+for instance `int_` which has `int`, or `ascii::char_` which has `char`. For 
+primitive parsers apply the normal C++ convertibility rules: you can use any 
 C++ type to receive the parsed value as long as the attribute type of the 
 parser is convertible to the type provided. The following example shows how a 
 synthesized parser attribute (the `int` value) is extracted by calling the 

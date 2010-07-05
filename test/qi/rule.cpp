@@ -39,6 +39,7 @@ main()
     using boost::spirit::qi::locals;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::int_;
+    using boost::spirit::qi::uint_;
     using boost::spirit::qi::fail;
     using boost::spirit::qi::on_error;
     using boost::spirit::qi::debug;
@@ -471,6 +472,15 @@ main()
         rule<const char*, vector<int>()> r = int_;
 
         vector<int> v = 0;
+        BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
+    }
+
+    {
+        using boost::fusion::vector;
+        using boost::fusion::at_c;
+        rule<const char*, vector<unsigned int>()> r = uint_;
+
+        vector<unsigned int> v = 0;
         BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
     }
 

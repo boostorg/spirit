@@ -11,7 +11,6 @@
 #include <string>
 
 #include <boost/cstdint.hpp>
-#include <boost/mpl/bool.hpp>
 #include <boost/spirit/include/karma.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,6 +33,16 @@ namespace boost { namespace spirit { namespace traits
     struct not_is_variant<scheme::utree, karma::domain>
       : mpl::false_ {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization tells Spirit how to extract the type of the value 
+    // stored in the given utree node
+    template <>
+    struct variant_which<scheme::utree>
+    {
+        static int call(scheme::utree const& u) { return u.which(); }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // The specializations below tell Spirit to verify whether an attribute
     // type is compatible with a given variant type
     template <>
@@ -42,9 +51,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef iterator_range<scheme::utree::iterator> compatible_type;
-        typedef mpl::int_<scheme::utree_type::list_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::list_type; 
+        }
     };
 
     template <>
@@ -53,9 +64,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef iterator_range<scheme::utree::const_iterator> compatible_type;
-        typedef mpl::int_<scheme::utree_type::list_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::list_type; 
+        }
     };
 
     template <>
@@ -63,9 +76,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::nil compatible_type;
-        typedef mpl::int_<scheme::utree_type::nil_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::nil_type; 
+        }
     };
 
     template <>
@@ -73,9 +88,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef bool compatible_type;
-        typedef mpl::int_<scheme::utree_type::bool_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::bool_type; 
+        }
     };
 
     template <>
@@ -83,9 +100,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef int compatible_type;
-        typedef mpl::int_<scheme::utree_type::int_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::int_type; 
+        }
     };
 
     template <>
@@ -93,9 +112,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef double compatible_type;
-        typedef mpl::int_<scheme::utree_type::double_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::double_type; 
+        }
     };
 
     template <>
@@ -104,9 +125,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::utf8_string_range compatible_type;
-        typedef mpl::int_<scheme::utree_type::string_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::string_type; 
+        }
     };
 
     template <>
@@ -115,9 +138,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::utf8_string compatible_type;
-        typedef mpl::int_<scheme::utree_type::string_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::string_type; 
+        }
     };
 
     template <>
@@ -126,9 +151,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::utf8_symbol_range compatible_type;
-        typedef mpl::int_<scheme::utree_type::symbol_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::symbol_type; 
+        }
     };
 
     template <>
@@ -137,9 +164,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::utf8_symbol compatible_type;
-        typedef mpl::int_<scheme::utree_type::symbol_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::symbol_type; 
+        }
     };
 
     template <>
@@ -148,9 +177,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::binary_range compatible_type;
-        typedef mpl::int_<scheme::utree_type::binary_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::binary_type; 
+        }
     };
 
     template <>
@@ -159,9 +190,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::binary_string compatible_type;
-        typedef mpl::int_<scheme::utree_type::binary_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::binary_type; 
+        }
     };
 
     template <>
@@ -169,7 +202,20 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef scheme::utree compatible_type;
-        typedef mpl::int_<scheme::utree_type::reference_type> distance;
+
+        static bool is_compatible(int d) 
+        { 
+            return d >= scheme::utree_type::nil_type &&
+                   d <= scheme::utree_type::reference_type; 
+        }
+    };
+
+    template <>
+    struct compute_compatible_component_variant<
+            scheme::utree, std::vector<scheme::utree> >
+      : mpl::true_
+    {
+        typedef scheme::utree compatible_type;
 
         static bool is_compatible(int d) 
         { 
@@ -185,9 +231,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_
     {
         typedef iterator_range<scheme::utree::const_iterator> compatible_type;
-        typedef mpl::int_<scheme::utree_type::list_type> distance;
 
-        static bool is_compatible(int d) { return d == distance::value; }
+        static bool is_compatible(int d) 
+        { 
+            return d == scheme::utree_type::list_type; 
+        }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -200,6 +248,17 @@ namespace boost { namespace spirit { namespace traits
         {
             scheme::utf8_symbol_range r = boost::get<scheme::utf8_symbol_range>(t);
             return std::string(r.begin(), r.end());
+        }
+    };
+
+    template <>
+    struct symbols_lookup<scheme::utf8_symbol, scheme::utf8_symbol>
+    {
+        typedef std::string type;
+
+        static type call(scheme::utf8_symbol const& t)
+        {
+            return t;
         }
     };
 

@@ -64,6 +64,10 @@ on the documentation.
 [*Ray Burkholder] and [*Dainis Polis] for last minute feedback on the 
 documentation.
 
+[*Steve Brandt] for his his effort trying to put Qi and Karma to some use while
+writing a source to source language transformation tool. He made many incredible
+suggestions helping to improve the usability of both libraries.
+
 Special thanks to spirit-devel and spirit-general mailing lists for
 participating in the discussions, being early adopters of pre-release
 versions of Spirit2 from the very start and helping out in various tasks

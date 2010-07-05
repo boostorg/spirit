@@ -17,6 +17,11 @@
 
 #define SCHEME_COMPOSITE_LIMIT 10
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4018)
+#endif
+
 namespace scheme
 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,14 +43,14 @@ namespace scheme
         typedef utree result_type;
         typedef actor<Derived> base_type;
 
-        utree operator()(args_type args) const
+        utree operator()(scope const& env) const
         {
-            return derived().eval(args);
+            return derived().eval(env);
         }
 
         utree operator()() const
         {
-            return derived().eval(args_type());
+            return derived().eval(scope());
         }
 
         template <typename A0>
@@ -69,10 +74,10 @@ namespace scheme
         #include <scheme/detail/function_call.hpp>
 
         template <std::size_t n>
-        static args_type
-        get_range(boost::array<utree, n> const& array)
+        static scope
+        get_range(boost::array<utree, n>& array)
         {
-            return args_type(array.begin(), array.end());
+            return scope(array.begin(), array.end());
         }
 
         Derived const& derived() const
@@ -91,10 +96,7 @@ namespace scheme
           : f() {}
 
         function(utree const& f)
-          : f(f)
-        {
-            BOOST_ASSERT(!empty());
-        }
+          : f(f) {}
 
         template <typename F>
         function(F const& f)
@@ -107,9 +109,9 @@ namespace scheme
             return f.which() != utree_type::function_type;
         }
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
-            return f.eval(args);
+            return f.eval(env);
         }
     };
 
@@ -121,7 +123,7 @@ namespace scheme
         utree val;
         value_function(utree const& val) : val(val) {}
 
-        utree eval(args_type /*args*/) const
+        utree eval(scope const& /*env*/) const
         {
             return utree(boost::ref(val));
         }
@@ -146,79 +148,161 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     // arguments
     ///////////////////////////////////////////////////////////////////////////
-    struct argument_function : actor<argument_function>
+    template <bool scoped = true>
+    struct argument_function : actor<argument_function<scoped> >
     {
         std::size_t n;
-        argument_function(std::size_t n) : n(n) {}
+        std::size_t level;
+        argument_function(std::size_t n, std::size_t level = 0)
+          : n(n),
+            level(level)
+        {}
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
-            if (args[n].which() != utree_type::function_type)
-                return utree(boost::ref(args[n]));
+            scope const* eptr = &env;
+            while (level != eptr->level())
+                eptr = eptr->outer();
+
+            utree const& arg = (*eptr)[n];
+            if (arg.which() != utree_type::function_type)
+                return utree(boost::ref(arg));
             else
-                return args[n].eval(args);
+                return arg.eval(*eptr);
         }
     };
 
+    template <> // scoped = false
+    struct argument_function<false> : actor<argument_function<false> >
+    {
+        std::size_t n;
+        argument_function(std::size_t n, std::size_t level = 0)
+          : n(n)
+        {}
+
+        utree eval(scope const& env) const
+        {
+            scope const* eptr = &env;
+            utree const& arg = (*eptr)[n];
+            if (arg.which() != utree_type::function_type)
+                return utree(boost::ref(arg));
+            else
+                return arg.eval(*eptr);
+        }
+    };
+
+    template <bool scoped = true>
     struct argument
     {
         typedef function result_type;
-        function operator()(std::size_t n) const
+        function operator()(std::size_t n, std::size_t level = 0) const
         {
-            return function(argument_function(n));
+            return function(argument_function<scoped>(n, level));
         }
     };
 
-    argument const arg = {};
-    function const _1 = arg(0);
-    function const _2 = arg(1);
-    function const _3 = arg(2);
-    function const _4 = arg(3);
-    function const _5 = arg(4);
-    function const _6 = arg(5);
-    function const _7 = arg(6);
-    function const _8 = arg(7);
-    function const _9 = arg(8);
-    function const _10 = arg(10);
+    // scoped arg
+    argument<true> const arg = {};
+
+    // unscoped arg
+    argument<false> const unscoped_arg = {};
+
+    // unscoped args
+    function const _1 = unscoped_arg(0);
+    function const _2 = unscoped_arg(1);
+    function const _3 = unscoped_arg(2);
+    function const _4 = unscoped_arg(3);
+    function const _5 = unscoped_arg(4);
+    function const _6 = unscoped_arg(5);
+    function const _7 = unscoped_arg(6);
+    function const _8 = unscoped_arg(7);
+    function const _9 = unscoped_arg(8);
+    function const _10 = unscoped_arg(10);
 
     ///////////////////////////////////////////////////////////////////////////
     // variable arguments.
     // Collects the arguments from n to last in a utree list.
     ///////////////////////////////////////////////////////////////////////////
-    struct vararg_function : actor<vararg_function>
+    template <bool scoped = true>
+    struct vararg_function : actor<vararg_function<scoped> >
     {
+        std::size_t level;
         std::size_t n;
-        vararg_function(std::size_t n) : n(n) {}
+        vararg_function(std::size_t n, std::size_t level = 0)
+          : n(n),
+            level(level)
+        {}
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
+            scope const* eptr = &env;
+            while (level != eptr->level())
+                eptr = eptr->outer();
+
             utree result;
-            for (std::size_t i = n; i < args.size(); ++i)
-                result.push_back(boost::ref(args[i]));
+            for (std::size_t i = n; i < eptr->size(); ++i)
+            {
+                utree const& arg = (*eptr)[i];
+                if (arg.which() != utree_type::function_type)
+                    result.push_back(utree(boost::ref(arg)));
+                else
+                    result.push_back(arg.eval(*eptr));
+            }
             return result;
         }
     };
 
-    struct vararg
+    template <> // scoped = false
+    struct vararg_function<false> : actor<vararg_function<false> >
     {
-        typedef function result_type;
-        function operator()(std::size_t n) const
+        std::size_t n;
+        vararg_function(std::size_t n, std::size_t level = 0)
+          : n(n)
+        {}
+
+        utree eval(scope const& env) const
         {
-            return function(vararg_function(n));
+            scope const* eptr = &env;
+            utree result;
+            for (std::size_t i = n; i < eptr->size(); ++i)
+            {
+                utree const& arg = (*eptr)[i];
+                if (arg.which() != utree_type::function_type)
+                    result.push_back(utree(boost::ref(arg)));
+                else
+                    result.push_back(arg.eval(*eptr));
+            }
+            return result;
         }
     };
 
-    vararg const varg = {};
-    function const _1_ = varg(0);
-    function const _2_ = varg(1);
-    function const _3_ = varg(2);
-    function const _4_ = varg(3);
-    function const _5_ = varg(4);
-    function const _6_ = varg(5);
-    function const _7_ = varg(6);
-    function const _8_ = varg(7);
-    function const _9_ = varg(8);
-    function const _10_ = varg(10);
+    template <bool scoped = true>
+    struct vararg
+    {
+        typedef function result_type;
+        function operator()(std::size_t n, std::size_t level = 0) const
+        {
+            return function(vararg_function<scoped>(n, level));
+        }
+    };
+
+    // scoped varg
+    vararg<true> const varg = {};
+
+    // unscoped varg
+    vararg<false> const unscoped_varg = {};
+
+    // unscoped vargs
+    function const _1_ = unscoped_varg(0);
+    function const _2_ = unscoped_varg(1);
+    function const _3_ = unscoped_varg(2);
+    function const _4_ = unscoped_varg(3);
+    function const _5_ = unscoped_varg(4);
+    function const _6_ = unscoped_varg(5);
+    function const _7_ = unscoped_varg(6);
+    function const _8_ = unscoped_varg(7);
+    function const _9_ = unscoped_varg(8);
+    function const _10_ = unscoped_varg(10);
 
     ///////////////////////////////////////////////////////////////////////////
     // composite
@@ -286,9 +370,9 @@ namespace scheme
             BOOST_ASSERT(!a.empty());
         }
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
-            return derived().eval(a(args));
+            return derived().eval(a(env));
         }
 
         Derived const& derived() const
@@ -323,9 +407,9 @@ namespace scheme
             BOOST_ASSERT(!b.empty());
         }
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
-            return derived().eval(a(args), b(args));
+            return derived().eval(a(env), b(env));
         }
 
         Derived const& derived() const
@@ -364,16 +448,16 @@ namespace scheme
             }
         }
 
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
             BOOST_ASSERT(!elements.empty());
             actor_list::const_iterator i = elements.begin();
-            utree result = (*i++)(args);
+            utree result = (*i++)(env);
             boost::iterator_range<actor_list::const_iterator>
                 rest(i++, elements.end());
             BOOST_FOREACH(function const& element, rest)
             {
-                if (!derived().eval(result, element(args)))
+                if (!derived().eval(result, element(env)))
                     break; // allow short-circuit evaluation
             }
             return result;
@@ -399,16 +483,22 @@ namespace scheme
     ///////////////////////////////////////////////////////////////////////////
     struct lambda_function : actor<lambda_function>
     {
+        int level;
         actor_list elements;
         // we must hold f by reference because functions can be recursive
         boost::reference_wrapper<function const> f;
 
-        lambda_function(function const& f, actor_list const& elements)
-          : elements(elements), f(f) {}
+        lambda_function(function const& f, actor_list const& elements, int level = 0)
+          : elements(elements), f(f), level(level) {}
 
         typedef utree result_type;
-        utree eval(args_type args) const
+        utree eval(scope const& env) const
         {
+            // Get the parent scope
+            scope const* outer = &env;
+            while (level != outer->level())
+                outer = outer->outer();
+
             if (!elements.empty())
             {
                 boost::scoped_array<utree>
@@ -416,14 +506,14 @@ namespace scheme
                 std::size_t i = 0;
                 BOOST_FOREACH(function const& element, elements)
                 {
-                    fargs[i++] = element(args);
+                    fargs[i++] = element(env);
                 }
-                utree const* fi = fargs.get();
-                return f.get()(args_type(fi, fi+elements.size()));
+                utree* fi = fargs.get();
+                return f.get()(scope(fi, fi+elements.size(), outer));
             }
             else
             {
-                return f.get()();
+                return f.get()(scope(0, 0, outer));
             }
         }
     };
@@ -453,5 +543,9 @@ namespace scheme
         }
     };
 }
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif

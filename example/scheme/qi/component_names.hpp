@@ -15,7 +15,8 @@ namespace scheme { namespace qi
     {
       // character parsers
         "char_"
-      , "alnum", "alpha", "blank", "cntrl", "digit", "graph", "print", "punct"
+      , "alnum", "alpha", "blank", "cntrl", "digit", "graph"
+      , "print", "punct"
       , "space", "xdigit"
       , "lower", "upper"
 
@@ -64,7 +65,10 @@ namespace scheme { namespace qi
       , "omit", "raw"
 
         // encoding
-      , "ascii", "standard", "standard_wide", "iso8859_1", "unicode"
+      , "ascii", "standard", "standard_wide", "iso8859_1"
+#if defined BOOST_SPIRIT_UNICODE
+      , "unicode"
+#endif
       , 0
     };
 

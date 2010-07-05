@@ -549,7 +549,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Attr>
-        value_type find(Attr const& attr)
+        value_type const* find(Attr const& attr)
         {
             typename Lookup::iterator it = lookup->find(attr);
             return (it != lookup->end()) ? &unused : 0;
@@ -561,7 +561,7 @@ namespace boost { namespace spirit { namespace karma
             typename Lookup::iterator it = lookup->find(attr);
             if (it == lookup->end()) 
                 add(attr);
-            return &unused;
+            return unused;
         }
 
         ///////////////////////////////////////////////////////////////////////

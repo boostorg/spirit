@@ -16,6 +16,10 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/proto/proto_fwd.hpp>
+#if defined(__GNUC__) && (__GNUC__ < 4)
+#include <boost/type_traits/add_const.hpp>
+#endif
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -40,28 +44,28 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct is_string<wchar_t*> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<char[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<wchar_t[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<char const[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<wchar_t const[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<char(&)[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<wchar_t(&)[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<char const(&)[N]> : mpl::true_ {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct is_string<wchar_t const(&)[N]> : mpl::true_ {};
 
     template <typename T, typename Traits, typename Allocator>
@@ -88,28 +92,28 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct char_type_of<wchar_t*> : mpl::identity<wchar_t> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<char[N]> : mpl::identity<char> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<wchar_t[N]> : mpl::identity<wchar_t> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<char const[N]> : mpl::identity<char const> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<wchar_t const[N]> : mpl::identity<wchar_t const> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<char(&)[N]> : mpl::identity<char> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<wchar_t(&)[N]> : mpl::identity<wchar_t> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<char const(&)[N]> : mpl::identity<char const> {};
 
-    template <size_t N>
+    template <std::size_t N>
     struct char_type_of<wchar_t const(&)[N]> : mpl::identity<wchar_t const> {};
 
     template <typename T, typename Traits, typename Allocator>
@@ -138,6 +142,21 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
 
     // Implementation for C-style strings.
+
+// gcc 3.x.x has problems resolving ambiguities here
+#if defined(__GNUC__) && (__GNUC__ < 4)
+    template <typename T>
+    inline typename add_const<T>::type * get_begin(T* str) { return str; }
+
+    template <typename T>
+    inline typename add_const<T>::type* get_end(T* str)
+    {
+        T* last = str;
+        while (*last)
+            last++;
+        return last;
+    }
+#else
     template <typename T>
     inline T const* get_begin(T const* str) { return str; }
 
@@ -161,6 +180,7 @@ namespace boost { namespace spirit { namespace traits
             last++;
         return last;
     }
+#endif
 
     // Implementation for containers (includes basic_string).
     template <typename T, typename Str>
@@ -168,7 +188,8 @@ namespace boost { namespace spirit { namespace traits
     { return str.begin(); }
 
     template <typename T, typename Str>
-    inline typename Str::iterator get_begin(Str& str)
+    inline typename Str::iterator 
+    get_begin(Str& str BOOST_PROTO_DISABLE_IF_IS_CONST(Str))
     { return str.begin(); }
 
     template <typename T, typename Str>
@@ -176,7 +197,8 @@ namespace boost { namespace spirit { namespace traits
     { return str.end(); }
 
     template <typename T, typename Str>
-    inline typename Str::iterator get_end(Str& str)
+    inline typename Str::iterator 
+    get_end(Str& str BOOST_PROTO_DISABLE_IF_IS_CONST(Str))
     { return str.end(); }
 
     // Default implementation for other types: try a C-style string

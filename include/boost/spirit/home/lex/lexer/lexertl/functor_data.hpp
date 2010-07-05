@@ -39,7 +39,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         public:
             typedef Iterator base_iterator_type;
-            typedef unused_type token_value_type;
+            typedef iterator_range<Iterator> token_value_type;
+            typedef token_value_type get_value_type;
             typedef std::size_t state_type;
             typedef char_type const* state_name_type;
             typedef unused_type semantic_actions_type;
@@ -194,7 +195,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         public:
             typedef Iterator base_iterator_type;
-            typedef unused_type token_value_type;
+            typedef iterator_range<Iterator> token_value_type;
+            typedef token_value_type get_value_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::state_name_type state_name_type;
             typedef typename base_type::semantic_actions_type 
@@ -271,6 +273,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         public:
             typedef Iterator base_iterator_type;
             typedef TokenValue token_value_type;
+            typedef TokenValue const& get_value_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::state_name_type state_name_type;
 
@@ -324,7 +327,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 Iterator end = this->get_first();
                 std::size_t unique_id = boost::lexer::npos;
-                return id == next(end, unique_id);
+                return id == this->next(end, unique_id);
             }
 
             // The adjust_start() and revert_adjust_start() are helper 
@@ -348,6 +351,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             TokenValue const& get_value() const 
             {
+                if (!has_value_) {
+                    value_ = iterator_range<Iterator>(this->get_first(), end_);
+                    has_value_ = true;
+                }
                 return value_;
             }
             template <typename Value>
@@ -356,15 +363,20 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 value_ = val;
                 has_value_ = true;
             }
+            void set_end(Iterator const& it)
+            {
+                end_ = it;
+            }
             bool has_value() const { return has_value_; }
             void reset_value() { has_value_ = false; }
 
         protected:
             semantic_actions_type const& actions_;
             Iterator hold_;     // iterator needed to support lex::more()
+            Iterator end_;      // iterator pointing to end of matched token
             mutable TokenValue value_;  // token value to use
+            mutable bool has_value_;    // 'true' if value_ is valid
             bool has_hold_;     // 'true' if hold_ is valid
-            bool has_value_;    // 'true' if value_ is valid
 
         private:
             // silence MSVC warning C4512: assignment operator could not be generated

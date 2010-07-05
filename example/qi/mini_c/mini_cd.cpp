@@ -6,11 +6,5 @@
 =============================================================================*/
 #include "mini_cd.hpp"
 
-// This is not really called. Its only purpose is to
-// instantiate the constructor of the grammar.
-void instantiate_program()
-{
-    typedef std::string::const_iterator iterator_type;
-    std::vector<int> code;
-    program<iterator_type> g(code);
-}
+typedef std::string::const_iterator iterator_type;
+template struct program<iterator_type>;

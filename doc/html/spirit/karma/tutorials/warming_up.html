@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="quick_start.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="semantic_actions.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Warming up">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit.karma.tutorials.warming_up"></a><a class="link" href="warming_up.html" title="Warming up">Warming up</a>
 </h4></div></div></div>
@@ -31,7 +31,7 @@
           We will start from trivial examples, ramping up as we go.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__1_generating_a_number"></a><h6>
-<a name="id791293"></a>
+<a name="id995102"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__1_generating_a_number">Trivial
           Example #1 Generating a number</a>
         </h6>
@@ -51,7 +51,7 @@
           to a floating point generator or parser: <code class="computeroutput"><span class="identifier">double_</span></code>.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__2_generating_two_numbers"></a><h6>
-<a name="id791336"></a>
+<a name="id995146"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__2_generating_two_numbers">Trivial
           Example #2 Generating two numbers</a>
         </h6>
@@ -76,7 +76,7 @@
           of smaller generators. Whitespace between numbers can implicitly be inserted
           depending on how the generator is invoked (see below).
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
@@ -89,7 +89,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__3_generating_one_or_more_numbers"></a><h6>
-<a name="id791421"></a>
+<a name="id995231"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__3_generating_one_or_more_numbers">Trivial
           Example #3 Generating one or more numbers</a>
         </h6>
@@ -114,7 +114,7 @@
           numbers, if needed.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__4_generating_a_comma_delimited_list_of_numbers"></a><h6>
-<a name="id791469"></a>
+<a name="id995279"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__4_generating_a_comma_delimited_list_of_numbers">Trivial
           Example #4 Generating a comma-delimited list of numbers</a>
         </h6>
@@ -137,7 +137,7 @@
           in the generated output zero or more times.
         </p>
 <a name="spirit.karma.tutorials.warming_up.let_s_generate_"></a><h6>
-<a name="id791604"></a>
+<a name="id995413"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.let_s_generate_">Let's
           Generate!</a>
         </h6>
@@ -169,8 +169,8 @@
           given parser expression allowing to verify whether the input is parsable.
           For generators this mode doesn't make any sense. What is output generation
           without generating any output? So we always will have to supply the data
-          the output should be generated from. In our example we supply a vector
-          of <code class="computeroutput"><span class="keyword">double</span></code> numbers as the last
+          the output should be generated from. In our example we supply a list of
+          <code class="computeroutput"><span class="keyword">double</span></code> numbers as the last
           parameter to the function <code class="computeroutput"><span class="identifier">generate_delimited</span></code>
           (see code below).
         </p>
@@ -216,7 +216,7 @@
           </p>
 <p>
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
@@ -244,7 +244,7 @@
           or disk full, etc.). Another reason might be that the data doesn't match
           the requirements of a particular generator.
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>

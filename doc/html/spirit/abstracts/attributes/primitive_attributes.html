@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../attributes.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../attributes.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="compound_attributes.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Attributes of Primitive Components">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit.abstracts.attributes.primitive_attributes"></a><a class="link" href="primitive_attributes.html" title="Attributes of Primitive Components">
         Attributes of Primitive Components</a>
@@ -37,11 +37,7 @@
           input sequence. Other primitive parser components have other intuitive
           attribute types, such as for instance <code class="computeroutput"><span class="identifier">int_</span></code>
           which has <code class="computeroutput"><span class="keyword">int</span></code>, or <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code> which has <code class="computeroutput"><span class="keyword">char</span></code>.
-          Forprimitive parsers apply the normal C++ convertibility rules: you can
-          use any Other primitive parser components have other intuitive attribute
-          types, e.g. the parser <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code>
-          has <code class="computeroutput"><span class="keyword">char</span></code> as attribute type.
-          For primitive parsers the normal C++ convertibility rules apply: you can
+          For primitive parsers apply the normal C++ convertibility rules: you can
           use any C++ type to receive the parsed value as long as the attribute type
           of the parser is convertible to the type provided. The following example
           shows how a synthesized parser attribute (the <code class="computeroutput"><span class="keyword">int</span></code>
