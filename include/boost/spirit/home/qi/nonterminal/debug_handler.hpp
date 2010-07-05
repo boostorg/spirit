@@ -90,16 +90,18 @@ namespace boost { namespace spirit { namespace qi
 
     struct simple_trace;
 
-    namespace detail {
-      // This class provides an extra level of indirection through a
-      // template to produce the simple_trace type. This way, the use
-      // of simple_trace below is hidden behind a dependent type, so
-      // that compilers eagerly type-checking template definitions
-      // won't complain that simple_trace is incomplete.
-      template<typename T>
-      struct get_simple_trace {
-        typedef simple_trace type;
-      };
+    namespace detail 
+    {
+        // This class provides an extra level of indirection through a
+        // template to produce the simple_trace type. This way, the use
+        // of simple_trace below is hidden behind a dependent type, so
+        // that compilers eagerly type-checking template definitions
+        // won't complain that simple_trace is incomplete.
+        template<typename T>
+        struct get_simple_trace 
+        {
+            typedef simple_trace type;
+        };
     }
 
     template <typename Iterator
