@@ -265,6 +265,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename F>
         void add_action(id_type unique_id, std::size_t state, F act)
         {
+            // If you see an error here stating add_action is not a member of
+            // fusion::unused_type the you are probably having semantic actions 
+            // attached to at least one token in the lexer definition without
+            // using the lex::lexertl::actor_lexer<> as its base class.
             typedef typename Functor::wrap_action_type wrapper_type;
             actions_.add_action(unique_id, state, wrapper_type::call(act));
         }
