@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace karma
 
             bool result = true;
             while (result && count-- != 0)
-                result = detail::generate_to(sink, 0);
+                result = detail::generate_to(sink, '\0');
 
             if (result)
                 result = karma::delimit_out(sink, d);  // always do post-delimiting

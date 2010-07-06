@@ -187,9 +187,6 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // return the type currently stored in the given variant
-    template <typename T, typename Enable = void>
-    struct variant_which;
-
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct variant_which<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     {
