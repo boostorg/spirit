@@ -36,9 +36,11 @@ statement<Iterator>::statement(
         ;
 
     var_decl =
-            "int"
-        >>  !(alnum | '_')  // make sure we have whole words
-        >   !var_ref        // make sure the variable isn't redeclared
+            lexeme[
+                "int"
+                >>  !(alnum | '_')  // make sure we have whole words
+            ]
+        >   !var_ref            // make sure the variable isn't redeclared
         >   identifier      [add_var(_1)]
         >   (';' | '=' > assignment_rhs(ref(nvars)-1))
         ;
