@@ -39,7 +39,7 @@ namespace client
 namespace boost { namespace spirit { namespace traits 
 {
     template <typename A, typename B>
-    struct transform_attribute<client::data<A, B>, fusion::vector<A&, B&> >
+    struct transform_attribute<client::data<A, B>, fusion::vector<A&, B&>, qi::domain>
     {
         typedef fusion::vector<A&, B&> type;
 

@@ -43,8 +43,11 @@ statement<Iterator>::statement(std::vector<int>& code)
         ;
 
     var_decl =
-            "var"
-        >   !var_ref        // make sure the variable isn't redeclared
+		lexeme[
+			"var"
+			>>  !(alnum | '_')	// make sure we have whole words
+		]        
+        >   !var_ref            // make sure the variable isn't redeclared
         >   identifier      [add_var(_1, ref(nvars))]
         >   (';' | '=' > assignment_rhs(ref(nvars)-1))
         ;
