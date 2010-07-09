@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace traits
     // a fusion sequence consisting out of three integers as its attribute.
     template<>
     struct transform_attribute<
-        boost::gregorian::date, fusion::vector<int, int, int> >
+        boost::gregorian::date, fusion::vector<int, int, int>, qi::domain>
     {
         typedef fusion::vector<int, int, int> date_parts;
 

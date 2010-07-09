@@ -40,62 +40,11 @@ namespace boost { namespace spirit { namespace qi
 {
     namespace detail
     {
-        struct token_printer_aux_for_chars
-        {
-            template<typename Char>
-            static void print(std::ostream& o, Char c)
-            {
-                using namespace std;    // allow for ADL to find the proper iscntrl
-
-                if (c == static_cast<Char>('\a'))
-                    o << "\\a";
-                else if (c == static_cast<Char>('\b'))
-                    o << "\\b";
-                else if (c == static_cast<Char>('\f'))
-                    o << "\\f";
-                else if (c == static_cast<Char>('\n'))
-                    o << "\\n";
-                else if (c == static_cast<Char>('\r'))
-                    o << "\\r";
-                else if (c == static_cast<Char>('\t'))
-                    o << "\\t";
-                else if (c == static_cast<Char>('\v'))
-                    o << "\\v";
-                else if (c < 127 && iscntrl(c))
-                    o << "\\" << std::oct << static_cast<int>(c);
-                else
-                    o << static_cast<char>(c);
-            }
-        };
-
-        // for token types where the comparison with char constants wouldn't work
-        struct token_printer_aux_for_other_types
-        {
-            template<typename Char>
-            static void print(std::ostream& o, Char c)
-            {
-                o << c;
-            }
-        };
-
-        template <typename Char>
-        struct token_printer_aux
-          : mpl::if_<
-                mpl::and_<
-                    is_convertible<Char, char>, is_convertible<char, Char> >
-              , token_printer_aux_for_chars
-              , token_printer_aux_for_other_types>::type
-        {};
-
         template<typename Char>
         inline void token_printer(std::ostream& o, Char c)
         {
             // allow to customize the token printer routine
-#if !defined(BOOST_SPIRIT_DEBUG_TOKEN_PRINTER)
-            token_printer_aux<Char>::print(o, c);
-#else
-            BOOST_SPIRIT_DEBUG_TOKEN_PRINTER(o, c);
-#endif
+            spirit::traits::print_token(o, c);
         }
     }
 

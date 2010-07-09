@@ -614,7 +614,7 @@ following specializations:
     }}
 
 (for more details see the section describing the compilation process of the 
-__boost_proto__ expression into the corresponding parser expressions).
+__boost_proto__ expression into the corresponding generator expressions).
 
 [table
     [[Expression]       [Semantics]]

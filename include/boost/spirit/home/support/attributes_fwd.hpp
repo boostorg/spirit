@@ -107,6 +107,18 @@ namespace boost { namespace spirit { namespace traits
     extract_from(Attribute const& attr, Context& ctx);
 
     ///////////////////////////////////////////////////////////////////////////
+    // return the type currently stored in the given variant
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable = void>
+    struct variant_which;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Determine, whether T is a variant like type
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Domain>
+    struct not_is_variant;
+
+    ///////////////////////////////////////////////////////////////////////////
     // Clear data efficiently
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable = void>
@@ -150,6 +162,22 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Iterator, typename Enable = void>
     struct compare_iterators;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Print the given attribute of type T to the stream given as Out
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Out, typename T, typename Enable = void>
+    struct print_attribute_debug;
+
+    template <typename Out, typename T>
+    void print_attribute(Out& out, T const& val);
+
+    template <typename Char, typename Enable = void>
+    struct token_printer_debug;
+
+    template<typename Out, typename T>
+    void print_token(Out& out, T const& val);
+
 }}}
 
 #endif

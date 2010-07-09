@@ -117,7 +117,7 @@ namespace custom_generator
 namespace boost { namespace spirit { namespace karma
 {
     // This is the factory function object invoked in order to create 
-    // an instance of our iter_pos_parser.
+    // an instance of our simple_columns_generator.
     template <typename Subject, typename Modifiers>
     struct make_directive<custom_generator::tag::columns, Subject, Modifiers>
     {

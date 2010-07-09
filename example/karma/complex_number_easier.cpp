@@ -70,7 +70,7 @@ namespace client
             //  Begin grammar
             (
                !double_(0.0) << '(' << double_ << ", " << double_ << ')'
-            |   omit[double_] << double_ << omit[double_]
+            |   omit[double_] << double_
             ),
             //  End grammar
 

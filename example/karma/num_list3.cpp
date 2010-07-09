@@ -112,8 +112,10 @@ main()
                 double real(*it);
                 if (++it != end)
                     vc.push_back(client::complex(real, *it));
-                else
+                else {
                     vc.push_back(client::complex(real));
+                    break;
+                }
             }
 
             std::cout << "-------------------------\n";

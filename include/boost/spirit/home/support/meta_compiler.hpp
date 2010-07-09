@@ -21,6 +21,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/remove_reference.hpp>
 
 namespace boost { namespace spirit
 {
@@ -217,7 +218,8 @@ namespace boost { namespace spirit
         template <typename Domain, typename Expr>
         struct matches :
             proto::matches<
-                typename proto::result_of::as_expr<Expr>::type,
+                typename proto::result_of::as_expr<
+                    typename remove_reference<Expr>::type>::type,
                 typename meta_compiler<Domain>::meta_grammar
             >
         {

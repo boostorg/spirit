@@ -159,7 +159,7 @@ namespace scheme { namespace qi
         delimiting_rule_type start, alternative, permutation, sequence, term;
         delimiting_rule_type grammar_, rule_;
         delimiting_rule_type rule_name, primitive0_rule, alternative_rule;
-        rule<OutputIterator, nil()> nil;
+        rule<OutputIterator, scheme::nil()> nil;
         rule<OutputIterator, scheme::utf8_string()> literal;
         rule<OutputIterator, scheme::utf8_symbol(std::string)> symbol;
         rule<OutputIterator, scheme::utf8_symbol()> any_symbol;

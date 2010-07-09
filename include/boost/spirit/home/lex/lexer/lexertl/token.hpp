@@ -543,6 +543,23 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Overload debug output for a single token, this integrates lexer tokens 
+    // with Qi's simple_trace debug facilities
+    template <typename Iterator, typename Attribute, typename HasState>
+    struct token_printer_debug<lex::lexertl::token<Iterator, Attribute, HasState> >
+    {
+        typedef lex::lexertl::token<Iterator, Attribute, HasState> token_type;
+
+        template <typename Out>
+        static void print(Out& out, token_type const& val) 
+        {
+            out << '<';
+            spirit::traits::print_token(out, val.value());
+            out << '>';
+        }
+    };
+
 }}}
 
 #endif

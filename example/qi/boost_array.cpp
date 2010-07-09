@@ -32,14 +32,15 @@ namespace client
               : arr_(arr), current_(0) {}
 
             // expose a push_back function compatible with std containers
-            void push_back(typename array_type::value_type const& val)
+            bool push_back(typename array_type::value_type const& val)
             {
                 // if the array is full, we need to bail out
-                // there is currently no other way of making the parsing fail
+                // returning false will fail the parse
                 if (current_ >= N) 
-                    boost::throw_exception(std::runtime_error("too bad..."));
-                else
-                    arr_[current_++] = val;
+                    return false;
+
+                arr_[current_++] = val;
+                return true;
             }
 
             array_type& arr_;
@@ -86,10 +87,10 @@ namespace boost { namespace spirit { namespace traits
     struct push_back_container<
       client::detail::adapt_array<boost::array<T, N> >, T>
     {
-        static void call(client::detail::adapt_array<boost::array<T, N> >& c
+        static bool call(client::detail::adapt_array<boost::array<T, N> >& c
           , T const& val)
         {
-            c.push_back(val);
+            return c.push_back(val);
         }
     };
 }}}
@@ -108,8 +109,8 @@ int main()
 
     qi::rule<iterator_type, adapted_type(), ascii::space_type> r = *qi::int_;
 
-    bool result = qi::phrase_parse(iter, end, r, ascii::space
-      , client::adapt_array(arr));
+    adapted_type attr = client::adapt_array(arr);
+    bool result = qi::phrase_parse(iter, end, r, ascii::space, attr);
 
     if (result) 
         std::cout << "Parsed: " << arr[0] << ", " << arr[1] << std::endl;

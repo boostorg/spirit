@@ -122,12 +122,12 @@ namespace scheme { namespace input
             byte_str = lexeme['#' > +hex2 > '#'];
 
             start.name("sexpr");
-            start.name("sexpr");
             list.name("list");
             atom.name("atom");
             symbol.name("symbol");
             integer.name("integer");
             byte_str.name("byte_str");
+
             on_error<fail>(start, error_handler(_1, _2, _3, _4));
         }
 

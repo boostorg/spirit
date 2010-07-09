@@ -29,6 +29,8 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/bitor.hpp>
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/mpl/accumulate.hpp>
 
@@ -98,7 +100,10 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Attribute>
         inline typename enable_if<
-            fusion::traits::is_sequence<Attribute>, std::size_t
+            mpl::and_<
+                fusion::traits::is_sequence<Attribute>
+              , mpl::not_<traits::is_container<Attribute> > >
+          , std::size_t
         >::type
         attr_size(Attribute const& attr)
         {

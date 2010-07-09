@@ -11,7 +11,7 @@
 #include <iostream>
 #include <fstream>
 
-void ignore_bom(std::ifstream& in)
+bool ignore_bom(std::ifstream& in, char const* filename)
 {
     // Ignore the BOM marking the beginning of a UTF-8 file in Windows
     char c = in.peek();
@@ -24,9 +24,10 @@ void ignore_bom(std::ifstream& in)
         {
             std::cerr << "Error: Unexpected characters from input file: "
                 << filename << std::endl;
-            return 1;
+            return false;
         }
     }
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,7 +44,8 @@ int main()
             << filename << std::endl;
         return -1;
     }
-    ignore_bom(in);
+    if (!ignore_bom(in, filename))
+        return -1;
 
     using scheme::interpreter;
     using scheme::function;

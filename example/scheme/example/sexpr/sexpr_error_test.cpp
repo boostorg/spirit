@@ -45,7 +45,7 @@ int main()
     test("(abc \n(\"a string 456) \ndef)", "missing double quote.sexpr");
     test("(abc \n(\"a string\" 0xggg) \ndef)", "erronoeus hex.sexpr");
     test("(abc \n(\"a \\zstring\" 999) \ndef)", "erronoeus escape.sexpr");
-    test("(abc \n(\"a \uzstring\" 999) \ndef)", "erronoeus escape.sexpr");
+    test("(abc \n(\"a \\uzstring\" 999) \ndef)", "erronoeus escape.sexpr");
     return 0;
 }
 

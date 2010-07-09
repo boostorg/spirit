@@ -72,7 +72,7 @@ namespace scheme { namespace output
         rule<OutputIterator, utf8_symbol_range()> symbol;
         rule<OutputIterator, utf8_string_range()> string_;
         rule<OutputIterator, binary_range()> byte_str;
-        rule<OutputIterator, nil()> nil;
+        rule<OutputIterator, scheme::nil()> nil;
         rule<OutputIterator, space_type, utree()> ref_;
     };
 }}

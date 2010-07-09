@@ -50,9 +50,6 @@ namespace scheme { namespace qi
         int new_rule()
         {
             rules[index];
-            std::stringstream str;
-            str << qi::what(expr);
-            rules[index].name(str.str());
             return index++;
         }
 
@@ -60,6 +57,9 @@ namespace scheme { namespace qi
         void define_rule(int id, Expr const& expr)
         {
             rules[id] = expr;
+            std::stringstream str;
+            str << qi::what(expr);
+            rules[id].name(str.str());
         }
 
         Rule const& operator[](int id) const

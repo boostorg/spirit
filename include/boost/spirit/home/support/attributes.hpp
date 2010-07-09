@@ -187,9 +187,6 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // return the type currently stored in the given variant
-    template <typename T, typename Enable = void>
-    struct variant_which;
-
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct variant_which<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     {
@@ -797,31 +794,6 @@ namespace boost { namespace spirit { namespace traits
 
     namespace detail
     {
-        // for stl container data types
-        template <typename Out, typename T>
-        void print_attribute_impl(Out& out, T const& val, mpl::true_)
-        {
-            out << '[';
-            if (!val.empty())
-            {
-                for (typename T::const_iterator i = val.begin(); i != val.end(); ++i)
-                {
-                    if (i != val.begin())
-                        out << ", ";
-                    print_attribute(out, *i);
-                }
-
-            }
-            out << ']';
-        }
-
-        // for non-fusion data types
-        template <typename Out, typename T>
-        void print_attribute_impl2(Out& out, T const& val, mpl::false_)
-        {
-            out << val;
-        }
-
         template <typename Out>
         struct print_fusion_sequence
         {
@@ -843,29 +815,64 @@ namespace boost { namespace spirit { namespace traits
             Out& out;
             mutable bool is_first;
         };
+    }
 
-        // for fusion data types
-        template <typename Out, typename T>
-        void print_attribute_impl2(Out& out, T const& val, mpl::true_)
+    template <typename Out, typename T, typename Enable>
+    struct print_attribute_debug
+    {
+        // for stl container data types
+        template <typename T_>
+        static void call_impl(Out& out, T_ const& val, mpl::true_)
         {
             out << '[';
-            fusion::for_each(val, print_fusion_sequence<Out>(out));
+            if (!val.empty())
+            {
+                for (typename T_::const_iterator i = val.begin(); i != val.end(); ++i)
+                {
+                    if (i != val.begin())
+                        out << ", ";
+                    print_attribute(out, *i);
+                }
+
+            }
+            out << ']';
+        }
+
+        // for non-fusion data types
+        template <typename T_>
+        static void call_impl2(Out& out, T_ const& val, mpl::false_)
+        {
+            out << val;
+        }
+
+        // for fusion data types
+        template <typename T_>
+        static void call_impl2(Out& out, T_ const& val, mpl::true_)
+        {
+            out << '[';
+            fusion::for_each(val, detail::print_fusion_sequence<Out>(out));
             out << ']';
         }
 
         // for non-stl container data types
-        template <typename Out, typename T>
-        void print_attribute_impl(Out& out, T const& val, mpl::false_)
+        template <typename T_>
+        static void call_impl(Out& out, T_ const& val, mpl::false_)
         {
-            print_attribute_impl2(out, val, fusion::traits::is_sequence<T>());
+            call_impl2(out, val, fusion::traits::is_sequence<T_>());
         }
-    }
+
+        // main entry point
+        static void call(Out& out, T const& val)
+        {
+            call_impl(out, val
+              , mpl::and_<is_container<T>, not_is_variant<T, void> >());
+        }
+    };
 
     template <typename Out, typename T>
     inline void print_attribute(Out& out, T const& val)
     {
-        detail::print_attribute_impl(out, val, 
-            mpl::and_<is_container<T>, not_is_variant<T, void> >());
+        print_attribute_debug<Out, T>::call(out, val);
     }
 
     template <typename Out, typename T>
@@ -875,6 +882,65 @@ namespace boost { namespace spirit { namespace traits
             print_attribute(out, val);
         else
             out << "<empty>";
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // generate debug output for lookahead token (character) stream
+    namespace detail
+    {
+        struct token_printer_debug_for_chars
+        {
+            template<typename Out, typename Char>
+            static void print(Out& o, Char c)
+            {
+                using namespace std;    // allow for ADL to find the proper iscntrl
+
+                if (c == static_cast<Char>('\a'))
+                    o << "\\a";
+                else if (c == static_cast<Char>('\b'))
+                    o << "\\b";
+                else if (c == static_cast<Char>('\f'))
+                    o << "\\f";
+                else if (c == static_cast<Char>('\n'))
+                    o << "\\n";
+                else if (c == static_cast<Char>('\r'))
+                    o << "\\r";
+                else if (c == static_cast<Char>('\t'))
+                    o << "\\t";
+                else if (c == static_cast<Char>('\v'))
+                    o << "\\v";
+                else if (c < 127 && iscntrl(c))
+                    o << "\\" << std::oct << static_cast<int>(c);
+                else
+                    o << static_cast<char>(c);
+            }
+        };
+
+        // for token types where the comparison with char constants wouldn't work
+        struct token_printer_debug
+        {
+            template<typename Out, typename T>
+            static void print(Out& o, T const& val)
+            {
+                o << val;
+            }
+        };
+    }
+
+    template <typename T, typename Enable>
+    struct token_printer_debug
+      : mpl::if_<
+            mpl::and_<
+                is_convertible<T, char>, is_convertible<char, T> >
+          , detail::token_printer_debug_for_chars
+          , detail::token_printer_debug>::type
+    {};
+
+    template <typename Out, typename T>
+    inline void print_token(Out& out, T const& val)
+    {
+        // allow to customize the token printer routine
+        token_printer_debug<T>::print(out, val);
     }
 }}}
 

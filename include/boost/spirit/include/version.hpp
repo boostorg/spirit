@@ -15,6 +15,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #define SPIRIT_VERSION 0x2040
-#define SPIRIT_PIZZA_VERSION CATFISH_WITH_RASPBERRY_JELLY  // :-)
+#define SPIRIT_PIZZA_VERSION IANS_MEATZA  // :-)
 
 #endif

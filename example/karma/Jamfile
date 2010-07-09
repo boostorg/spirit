@@ -6,7 +6,11 @@
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 project spirit-karma-example 
-    : requirements <toolset>gcc:<c++-template-depth>300 : : 
+    : requirements 
+        <toolset>gcc:<c++-template-depth>300
+        <toolset>darwin:<cxxflags>-ftemplate-depth-300
+    :
+    :
     ;
 
 exe actions_example : actions.cpp ;
