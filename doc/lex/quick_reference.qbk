@@ -99,7 +99,7 @@ information from the `Context` that are otherwise difficult to extract.
 [variablelist Spirit.Lex specific Phoenix placeholders
     [[`_start, _end`]          [Iterators pointing to the begin and the end of the
                                 matched input sequence.]]
-    [[`_pass`]                 [Assign `false` to `_pass` to force the current match to fail.]]
+    [[`_pass`]                 [Assign `lex::pass_flags::pass_fail` to `_pass` to force the current match to fail.]]
     [[`_tokenid`]              [The token id of the matched token.]]
     [[`_val`]                  [The token value of the matched token.]]
     [[`_state`]                [The lexer state the token has been matched in.]]
