@@ -181,6 +181,7 @@
 [template karma_align[str]          [link spirit.karma.reference.directive.alignment [str]]]
 [def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit`]]
 [def __karma_skip__                 [link spirit.karma.reference.directive.omit `skip`]]
+[def __karma_duplicate__            [link spirit.karma.reference.directive.duplicate `duplicate`]]
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer`]]
 [template karma_repeat[str]         [link spirit.karma.reference.directive.repeat [str]]]
 [def __karma_verbatim__             [link spirit.karma.reference.directive.delimit `verbatim`]]

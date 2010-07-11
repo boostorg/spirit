@@ -38,6 +38,8 @@
 * Added strict mode to __karma__, leaving the current behavior (unchanged) as 
   relaxed mode. Added __karma__ compile time directives `strict[]` and 
   `relaxed[]` allowing to switch between the two.
+* Added __karma__ __karma_duplicate__ directive which duplicates the supplied
+  attribute to all elements of an embedded generator sequence.
 
 [heading Bug Fixes]
 
