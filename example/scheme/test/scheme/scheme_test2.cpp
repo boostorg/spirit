@@ -4,6 +4,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/config/warning_disable.hpp>
 
 #include <input/parse_sexpr_impl.hpp>
@@ -15,17 +16,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int main()
+int main(int argc, char **argv)
 {
-    char const* filename = "factorial.scm";
+    using scheme::utree;
+
+    BOOST_TEST(argc > 1);
+    char const* filename = filename = argv[1];
     std::ifstream in(filename, std::ios_base::in);
 
-    if (!in)
-    {
-        std::cerr << "Error: Could not open input file: "
-            << filename << std::endl;
-        return 1;
-    }
+    BOOST_TEST(in);
 
     // Ignore the BOM marking the beginning of a UTF-8 file in Windows
     char c = in.peek();
@@ -34,12 +33,7 @@ int main()
         char s[3];
         in >> s[0] >> s[1] >> s[2];
         s[3] = '\0';
-        if (s != std::string("\xef\xbb\xbf"))
-        {
-            std::cerr << "Error: Unexpected characters from input file: "
-                << filename << std::endl;
-            return 1;
-        }
+        BOOST_TEST(s != std::string("\xef\xbb\xbf"));
     }
 
     using scheme::interpreter;

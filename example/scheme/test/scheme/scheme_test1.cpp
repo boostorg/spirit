@@ -4,6 +4,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/config/warning_disable.hpp>
 
 #include <input/parse_sexpr_impl.hpp>
@@ -17,6 +18,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
+    using scheme::utree;
+
     { // testing the c++ side
 
         using scheme::if_;
@@ -28,18 +31,19 @@ int main()
         using scheme::_2;
         using scheme::lambda;
 
-        std::cout << "result: " << plus(11, 22, 33)         () << std::endl;
-        std::cout << "result: " << plus(11, 22, _1)         (33) << std::endl;
-        std::cout << "result: " << plus(11, _1, _2)         (22, 33) << std::endl;
-        std::cout << "result: " << plus(11, plus(_1, _2))   (22, 33) << std::endl;
+        BOOST_TEST(plus(11, 22, 33)         ()          == utree(66));
+        BOOST_TEST(plus(11, 22, _1)         (33)        == utree(66));
+        BOOST_TEST(plus(11, _1, _2)         (22, 33)    == utree(66));
+        BOOST_TEST(plus(11, plus(_1, _2))   (22, 33)    == utree(66));
 
         lambda factorial;
         factorial = if_(lte(_1, 0), 1, times(_1, factorial(minus(_1, 1))));
 
-        std::cout << "result: " << factorial(_1)            (10) << std::endl;
+        BOOST_TEST(factorial(_1)            (10)        == utree(3628800));
     }
 
     return boost::report_errors();
 }
+
 
 
