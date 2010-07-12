@@ -120,7 +120,8 @@ namespace boost { namespace spirit { namespace traits
     template <typename Exposed, typename Attribute, typename Context>
     typename spirit::result_of::extract_from<Exposed, Attribute>::type
     extract_from(Attribute const& attr, Context& ctx
-#if defined(__GNUC__) && (__GNUC__ < 4)
+#if (defined(__GNUC__) && (__GNUC__ < 4)) || \
+    (defined(__APPLE__) && defined(__INTEL_COMPILER))
       , typename enable_if<traits::not_is_unused<Attribute> >::type*
 #endif
     )
