@@ -89,6 +89,7 @@ import testing ;
     [ run karma/columns.cpp                 : : : : ]
     [ run karma/debug.cpp                   : : : : karma_debug ]
     [ run karma/delimiter.cpp               : : : : ]
+    [ run karma/duplicate.cpp               : : : : ]
     [ run karma/encoding.cpp                : : : : karma_encoding ]
     [ run karma/eol.cpp                     : : : : karma_eol ]
     [ run karma/eps.cpp                     : : : : karma_eps ]

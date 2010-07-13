@@ -81,6 +81,7 @@ namespace boost { namespace spirit
         ( hold )
         ( strict )
         ( relaxed )
+        ( duplicate )
     )
 
     // Here we are reusing proto::lit

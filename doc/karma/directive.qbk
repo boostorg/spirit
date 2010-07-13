@@ -13,7 +13,8 @@ directives (`left_align[]`, `center[]`, and `right_align[]`), repetition
 (`repeat[]`), directives controlling automatic delimiting (`verbatim[]`, 
 `no_delimit[]`, and `delimit[]`), controlling case sensitivity (`upper[]` and 
 `lower[]`), field width (`maxwidth[]`), buffering (`buffer[]`), splitting into 
-columns (`columns[]`) and attribute handling (`omit[]` and `skip[]`).
+columns (`columns[]`) and attribute handling (`duplicate[]`, `omit[]`, and 
+`skip[]`).
 
 [heading Module Header]
 
@@ -890,7 +891,7 @@ The directives `omit[]` and `skip[]` consumes the attribute type of the
 embedded generator without generating any output. The `omit[]` directive
 will still execute the embedded generator while discarding the generated output
 afterwards. The `skip[]` directive will not execute the embedded generator, but 
-will use it onlz to extract the exposed attribute type.
+will use it only to extract the exposed attribute type.
 
 [heading Header]
 
@@ -1007,6 +1008,92 @@ is very useful whenever the embedded generator produces side effects (has
 semantic actions which need to be executed).
 
 [endsect] [/ omit]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:duplicate Duplicate Attribute (`duplicate[]`)]
+
+[heading Description]
+
+The directive `duplicate[]` duplicates its attribute to all elements of the 
+embedded generator if this is a sequence generator. Otherwise it does nothing.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/directive/duplicate.hpp>
+    #include <boost/spirit/include/karma_duplicate.hpp>
+
+Also, see __include_structure__.
+
+[table
+    [[Name]]
+    [[`boost::spirit::duplicate // alias: boost::spirit::karma::duplicate` ]]
+]
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`a`]     [A generator object]]
+    [[`A`]     [Attribute type of generator `a`]]]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`duplicate[a]`]   [The `duplicate` directive duplicates the supplied 
+                         attribute for all elements of a embedded sequence 
+                         generator. For all other types of embedded generators
+                         it has no effect. It succeeds as long as its embedded
+                         generator does not fail.]]
+]
+
+[heading Attributes]
+
+See __karma_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`duplicate[a]`]
+[``a: A --> duplicate[a]: A
+a: tuple<A, A, ...> --> duplicate[a]: A
+a: Unused --> duplicate[a]: Unused``]]
+]
+
+If the embedded generator of the `duplicate[]` directive is a sequence it is
+expected that all elements of this sequence expose either the same attribute 
+type, an compatible attribute type, or `unused`. In this case, the 
+`duplicate[]` directive exposes the attribute type of its first element. The 
+behavior of the `duplicate[]` directive is undefined if the elements of an 
+embedded sequence do not expose the same attributes. Most likely, the 
+corresponding expression will not compile.
+
+[heading Complexity]
+
+[:The overall complexity of the `duplicate[]` directive depends on the complexity
+  of the embedded generator.]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
+Some includes:
+
+[reference_karma_includes]
+
+Some using declarations:
+
+[reference_karma_using_declarations_duplicate]
+
+Basic usage of the `duplicate` generators:
+
+[reference_karma_duplicate]
+
+[endsect] [/ duplicate]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:columns Separate Output Into Columns (`columns[]`)]

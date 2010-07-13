@@ -466,6 +466,19 @@ int main()
     }
 
     {
+        //[reference_karma_using_declarations_duplicate
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::duplicate;
+        using boost::spirit::karma::space;
+        //]
+
+        //[reference_karma_duplicate
+        test_generator_attr("2.02.0", duplicate[double_ << double_], 2.0);
+        test_generator_attr_delim("2.0 2.0 ", duplicate[double_ << double_], space, 2.0);
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_columns
         using boost::spirit::karma::double_;
         using boost::spirit::karma::columns;

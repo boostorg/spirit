@@ -12,6 +12,12 @@
 #pragma once
 #endif
 
+#include <boost/config.hpp>
+#if (defined(__GNUC__) && (__GNUC__ < 4)) || \
+    (defined(__APPLE__) && defined(__INTEL_COMPILER))
+#include <boost/utility/enable_if.hpp>
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace result_of
 {
@@ -104,7 +110,12 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Exposed, typename Attribute, typename Context>
     typename spirit::result_of::extract_from<Exposed, Attribute>::type
-    extract_from(Attribute const& attr, Context& ctx);
+    extract_from(Attribute const& attr, Context& ctx
+#if (defined(__GNUC__) && (__GNUC__ < 4)) || \
+    (defined(__APPLE__) && defined(__INTEL_COMPILER))
+      , typename enable_if<traits::not_is_unused<Attribute> >::type* = NULL
+#endif
+    );
 
     ///////////////////////////////////////////////////////////////////////////
     // return the type currently stored in the given variant

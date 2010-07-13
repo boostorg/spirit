@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 
@@ -41,11 +42,6 @@ namespace boost { namespace spirit { namespace traits
           : add_const_ref<typename fusion::result_of::value_at_c<T, N>::type> 
         {};
     }
-
-    // forward declaration only
-    template <typename Exposed, typename Attribute, typename Context>
-    typename spirit::result_of::extract_from<Exposed, Attribute>::type
-    extract_from(Attribute const& attr, Context& ctx);
 
     // This is the default case: the plain attribute values
     template <typename Attribute, typename Exposed, typename Enable/*= void*/>
@@ -123,7 +119,12 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Attribute, typename Context>
     typename spirit::result_of::extract_from<Exposed, Attribute>::type
-    extract_from(Attribute const& attr, Context& ctx)
+    extract_from(Attribute const& attr, Context& ctx
+#if (defined(__GNUC__) && (__GNUC__ < 4)) || \
+    (defined(__APPLE__) && defined(__INTEL_COMPILER))
+      , typename enable_if<traits::not_is_unused<Attribute> >::type*
+#endif
+    )
     {
         return extract_from_attribute<Attribute, Exposed>::call(attr, ctx);
     }
