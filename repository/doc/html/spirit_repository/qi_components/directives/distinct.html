@@ -2,8 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Qi Distinct Parser Directive</title>
-<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit Repository 0.1">
 <link rel="up" href="../directives.html" title="Qi Parser Directives">
 <link rel="prev" href="confix.html" title="Qi Confix Parser Directive">
@@ -13,22 +13,22 @@
 <table cellpadding="2" width="100%"><tr>
 <td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
 <td align="center"><a href="../../../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="../../../../../../../../libs/libraries.htm">Libraries</a></td>
 <td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
 <td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
 <td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="confix.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="confix.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Qi Distinct Parser Directive">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit_repository.qi_components.directives.distinct"></a><a class="link" href="distinct.html" title="Qi Distinct Parser Directive">
         Qi Distinct Parser Directive</a>
 </h4></div></div></div>
 <a name="spirit_repository.qi_components.directives.distinct.description"></a><h6>
-<a name="id627341"></a>
+<a name="id764582"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.description">Description</a>
         </h6>
 <p>
@@ -73,9 +73,7 @@
           see <a href="../../../../../test/qi/distinct.cpp" target="_top">distinct.cpp</a>):
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">spirit</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">namespace</span> <span class="identifier">ascii</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">;</span>
@@ -128,8 +126,6 @@
 <span class="identifier">keyword_tag_type</span> <span class="keyword">const</span> <span class="identifier">keyword</span> <span class="special">=</span> <span class="identifier">distinct_spec</span><span class="special">(</span><span class="identifier">char_spec</span><span class="special">(</span><span class="identifier">keyword_spec</span><span class="special">));</span> 
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           These definitions define a new Qi parser recognizing keywords! This allows
@@ -144,20 +140,20 @@
           above.
         </p>
 <a name="spirit_repository.qi_components.directives.distinct.header"></a><h6>
-<a name="id628578"></a>
+<a name="id765952"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/qi/directive/distinct.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_distinct</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.qi_components.directives.distinct.synopsis"></a><h6>
-<a name="id628656"></a>
+<a name="id766039"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="identifier">distinct</span><span class="special">(</span><span class="identifier">tail</span><span class="special">)[</span><span class="identifier">subject</span><span class="special">]</span>
 </pre>
 <a name="spirit_repository.qi_components.directives.distinct.parameters"></a><h6>
-<a name="id628700"></a>
+<a name="id766087"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.parameters">Parameters</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -167,41 +163,41 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Parameter
-                </p>
+                  <p>
+                    Parameter
+                  </p>
                 </th>
 <th>
-                <p>
-                  Description
-                </p>
+                  <p>
+                    Description
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">tail</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">tail</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  The parser construct specifying what whould not follow the subject
-                  in order to match the overall expression.
-                </p>
+                  <p>
+                    The parser construct specifying what whould not follow the subject
+                    in order to match the overall expression.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">subject</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">subject</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  The parser construct to use to match the current input. The distinct
-                  directive makes sure that no unexpected partial matches occur.
-                </p>
+                  <p>
+                    The parser construct to use to match the current input. The distinct
+                    directive makes sure that no unexpected partial matches occur.
+                  </p>
                 </td>
 </tr>
 </tbody>
@@ -210,7 +206,7 @@
           All two parameters can be arbitrary complex parsers themselves.
         </p>
 <a name="spirit_repository.qi_components.directives.distinct.attribute"></a><h6>
-<a name="id628804"></a>
+<a name="id766199"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.attribute">Attribute</a>
         </h6>
 <p>
@@ -224,7 +220,7 @@
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="identifier">distinct</span><span class="special">(</span><span class="identifier">b</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 </pre>
 <a name="spirit_repository.qi_components.directives.distinct.example"></a><h6>
-<a name="id629198"></a>
+<a name="id766328"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.example">Example</a>
         </h6>
 <p>
@@ -232,7 +228,7 @@
           parser. <a href="../../../../../example/qi/distinct.cpp" target="_top">distinct.cpp</a>)
         </p>
 <a name="spirit_repository.qi_components.directives.distinct.prerequisites"></a><h6>
-<a name="id629230"></a>
+<a name="id766365"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -241,35 +237,27 @@
           for the new <code class="computeroutput"><span class="identifier">distinct</span></code> generator.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_distinct</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
           To make all the code below more readable we introduce the following namespaces.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repository</span><span class="special">::</span><span class="identifier">distinct</span><span class="special">;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit_repository.qi_components.directives.distinct.using_the_distinct_directive_to_match_keywords"></a><h6>
-<a name="id629474"></a>
+<a name="id766632"></a>
           <a class="link" href="distinct.html#spirit_repository.qi_components.directives.distinct.using_the_distinct_directive_to_match_keywords">Using
           The Distinct Directive to Match keywords</a>
         </h6>
@@ -281,9 +269,7 @@
           followed by an optional <code class="computeroutput"><span class="string">"--"</span></code>):
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span><span class="string">"description ident"</span><span class="special">);</span>
@@ -295,11 +281,9 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span><span class="string">"description--ident"</span><span class="special">);</span>
@@ -311,17 +295,13 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The last example shows that the <code class="computeroutput"><span class="identifier">distinct</span><span class="special">[]</span></code> parser component correctly refuses to
           match "description-ident":
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">(</span><span class="string">"description-ident"</span><span class="special">);</span>
@@ -332,8 +312,6 @@
     <span class="identifier">BOOST_ASSERT</span><span class="special">(!</span><span class="identifier">r</span> <span class="special">&amp;&amp;</span> <span class="identifier">first</span> <span class="special">==</span> <span class="identifier">str</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 </div>
@@ -347,7 +325,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="confix.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="confix.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
