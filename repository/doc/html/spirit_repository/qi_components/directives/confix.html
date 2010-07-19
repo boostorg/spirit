@@ -2,8 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Qi Confix Parser Directive</title>
-<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit Repository 0.1">
 <link rel="up" href="../directives.html" title="Qi Parser Directives">
 <link rel="prev" href="../directives.html" title="Qi Parser Directives">
@@ -13,22 +13,22 @@
 <table cellpadding="2" width="100%"><tr>
 <td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
 <td align="center"><a href="../../../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="../../../../../../../../libs/libraries.htm">Libraries</a></td>
 <td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
 <td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
 <td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../directives.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="distinct.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../directives.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="distinct.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Qi Confix Parser Directive">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit_repository.qi_components.directives.confix"></a><a class="link" href="confix.html" title="Qi Confix Parser Directive">
         Qi Confix Parser Directive</a>
 </h4></div></div></div>
 <a name="spirit_repository.qi_components.directives.confix.description"></a><h6>
-<a name="id623313"></a>
+<a name="id761680"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.description">Description</a>
         </h6>
 <p>
@@ -78,7 +78,7 @@
 <pre class="programlisting"><span class="identifier">c_comment</span><span class="special">[*(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="string">"*/"</span><span class="special">)]</span>    <span class="comment">// C style comment
 </span><span class="identifier">cpp_comment</span><span class="special">[*(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="identifier">eol</span><span class="special">)]</span>   <span class="comment">// C++ style comment
 </span></pre>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
@@ -88,27 +88,27 @@
             <span class="identifier">suffix</span><span class="special">)</span></code>
             parser in <span class="emphasis"><em>Spirit.Classic</em></span> was equivalent to the sequence
             <code class="computeroutput"><span class="identifier">prefix</span> <span class="special">&gt;&gt;</span>
-            <span class="special">(</span><span class="identifier">subject</span>
+            <span class="special">*(</span><span class="identifier">subject</span>
             <span class="special">-</span> <span class="identifier">suffix</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">suffix</span><span class="special">,</span> <span class="identifier">the</span> <span class="emphasis"><em>Spirit.Qi</em></span> </code>confix`
             directive will not perform this refactoring any more. This simplifies
             the code and makes things more explicit.
           </p></td></tr>
 </table></div>
 <a name="spirit_repository.qi_components.directives.confix.header"></a><h6>
-<a name="id624081"></a>
+<a name="id762520"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/qi/directive/confix.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_confix</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.qi_components.directives.confix.synopsis"></a><h6>
-<a name="id624159"></a>
+<a name="id762608"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="identifier">confix</span><span class="special">(</span><span class="identifier">prefix</span><span class="special">,</span> <span class="identifier">suffix</span><span class="special">)[</span><span class="identifier">subject</span><span class="special">]</span>
 </pre>
 <a name="spirit_repository.qi_components.directives.confix.parameters"></a><h6>
-<a name="id624212"></a>
+<a name="id762664"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.parameters">Parameters</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -118,52 +118,52 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Parameter
-                </p>
+                  <p>
+                    Parameter
+                  </p>
                 </th>
 <th>
-                <p>
-                  Description
-                </p>
+                  <p>
+                    Description
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">prefix</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">prefix</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  The parser for the opening (the prefix).
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">suffix</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The parser for the ending (the suffix).
-                </p>
+                  <p>
+                    The parser for the opening (the prefix).
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">subject</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">suffix</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  The parser for the input sequence between the <code class="computeroutput"><span class="identifier">prefix</span></code>
-                  and <code class="computeroutput"><span class="identifier">suffix</span></code> parts.
-                </p>
+                  <p>
+                    The parser for the ending (the suffix).
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">subject</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The parser for the input sequence between the <code class="computeroutput"><span class="identifier">prefix</span></code>
+                    and <code class="computeroutput"><span class="identifier">suffix</span></code> parts.
+                  </p>
                 </td>
 </tr>
 </tbody>
@@ -172,7 +172,7 @@
           All three parameters can be arbitrarily complex parsers themselves.
         </p>
 <a name="spirit_repository.qi_components.directives.confix.attribute"></a><h6>
-<a name="id624354"></a>
+<a name="id762814"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.attribute">Attribute</a>
         </h6>
 <p>
@@ -184,7 +184,7 @@
         </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">p</span><span class="special">:</span> <span class="identifier">P</span><span class="special">,</span> <span class="identifier">s</span><span class="special">:</span> <span class="identifier">S</span><span class="special">:</span> <span class="special">--&gt;</span> <span class="identifier">confix</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span> <span class="identifier">s</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 </pre>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
@@ -198,7 +198,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit_repository.qi_components.directives.confix.example"></a><h6>
-<a name="id624591"></a>
+<a name="id763077"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.example">Example</a>
         </h6>
 <p>
@@ -208,7 +208,7 @@
           see <a href="../../../../../example/qi/confix.cpp" target="_top">confix.cpp</a>)
         </p>
 <a name="spirit_repository.qi_components.directives.confix.prerequisites"></a><h6>
-<a name="id624626"></a>
+<a name="id763116"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -217,15 +217,11 @@
           for the new <code class="computeroutput"><span class="identifier">confix</span></code> directive.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_confix</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -233,9 +229,7 @@
           elements into the current namespace:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">eol</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lexeme</span><span class="special">;</span>
@@ -247,11 +241,9 @@
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repository</span><span class="special">::</span><span class="identifier">confix</span><span class="special">;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit_repository.qi_components.directives.confix.parsing_different_comment_styles"></a><h6>
-<a name="id625044"></a>
+<a name="id763572"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.parsing_different_comment_styles">Parsing
           Different Comment Styles</a>
         </h6>
@@ -260,9 +252,7 @@
           a C++ comment:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">parse_cpp_comment</span><span class="special">(</span><span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
@@ -277,8 +267,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           This function will obviously parse input such as "<code class="computeroutput"><span class="comment">//
@@ -286,9 +274,7 @@
           comment proves to be straightforward:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">parse_c_comment</span><span class="special">(</span><span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
@@ -303,15 +289,13 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           which again will be able to parse e.g. "<code class="computeroutput"><span class="comment">/*
           This is a comment */</span> </code>".
         </p>
 <a name="spirit_repository.qi_components.directives.confix.parsing_tagged_data"></a><h6>
-<a name="id626988"></a>
+<a name="id764198"></a>
           <a class="link" href="confix.html#spirit_repository.qi_components.directives.confix.parsing_tagged_data">Parsing
           Tagged Data</a>
         </h6>
@@ -320,9 +304,7 @@
           is not very hard, either:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">parse_tagged</span><span class="special">(</span><span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
@@ -338,8 +320,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -352,7 +332,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../directives.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="distinct.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../directives.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directives.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="distinct.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

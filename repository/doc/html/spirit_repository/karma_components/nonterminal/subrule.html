@@ -2,8 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Karma subrules</title>
-<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit Repository 0.1">
 <link rel="up" href="../nonterminal.html" title="Karma Generator Non-terminals">
 <link rel="prev" href="../nonterminal.html" title="Karma Generator Non-terminals">
@@ -12,22 +12,22 @@
 <table cellpadding="2" width="100%"><tr>
 <td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
 <td align="center"><a href="../../../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="../../../../../../../../libs/libraries.htm">Libraries</a></td>
 <td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
 <td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
 <td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a>
+<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a>
 </div>
-<div class="section" title="Karma subrules">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit_repository.karma_components.nonterminal.subrule"></a><a class="link" href="subrule.html" title="Karma subrules">
         Karma subrules</a>
 </h4></div></div></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.description"></a><h6>
-<a name="id639090"></a>
+<a name="id774685"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.description">Description</a>
         </h6>
 <p>
@@ -49,20 +49,18 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            subrules can only be defined and used within the same generator expression.
-            A subrule cannot be defined at one location, and then used in another
-            location.
-          </li>
+              subrules can only be defined and used within the same generator expression.
+              A subrule cannot be defined at one location, and then used in another
+              location.
+            </li>
 <li class="listitem">
-            subrules put a massive strain on the C++ compiler. They increase compile
-            times and memory usage during compilation, and also increase the risk
-            of hitting compiler limits and/or bugs.
-          </li>
+              subrules put a massive strain on the C++ compiler. They increase compile
+              times and memory usage during compilation, and also increase the risk
+              of hitting compiler limits and/or bugs.
+            </li>
 </ul></div>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">entry</span> <span class="special">%=</span> <span class="special">(</span>
     <span class="identifier">ast_node</span> <span class="special">%=</span> <span class="identifier">int_</span> <span class="special">|</span> <span class="identifier">binary_node</span> <span class="special">|</span> <span class="identifier">unary_node</span>
@@ -72,8 +70,6 @@
   <span class="special">,</span> <span class="identifier">unary_node</span> <span class="special">%=</span> <span class="char">'('</span> <span class="special">&lt;&lt;</span> <span class="identifier">char_</span> <span class="special">&lt;&lt;</span> <span class="identifier">ast_node</span> <span class="special">&lt;&lt;</span> <span class="char">')'</span>
 <span class="special">);</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -89,21 +85,21 @@
           parts), whereas the rest can use rules and grammars.
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.header"></a><h6>
-<a name="id639352"></a>
+<a name="id775027"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/karma/nonterminal/subrule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_subrule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.synopsis__declaration_"></a><h6>
-<a name="id639428"></a>
+<a name="id775127"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.synopsis__declaration_">Synopsis
           (declaration)</a>
         </h6>
 <pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.parameters__declaration_"></a><h6>
-<a name="id639493"></a>
+<a name="id775212"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.parameters__declaration_">Parameters
           (declaration)</a>
         </h6>
@@ -114,66 +110,66 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Parameter
-                </p>
+                  <p>
+                    Parameter
+                  </p>
                 </th>
 <th>
-                <p>
-                  Description
-                </p>
+                  <p>
+                    Description
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">ID</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ID</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Required numeric argument. Gives the subrule a unique 'identification
-                  tag'.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Optional types, can be specified in any order. Can be one of 1.
-                  signature, 2. locals (see rules reference for more information
-                  on those parameters).
-                </p>
-                <p>
-                  Note that the delimiter type need not be specified in the parameters,
-                  unlike with grammars and rules. Subrules will automatically use
-                  the delimiter type which is in effect when they are invoked.
-                </p>
+                  <p>
+                    Required numeric argument. Gives the subrule a unique 'identification
+                    tag'.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">name</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Optional string. Gives the subrule a name, useful for debugging
-                  and error handling.
-                </p>
+                  <p>
+                    Optional types, can be specified in any order. Can be one of
+                    1. signature, 2. locals (see rules reference for more information
+                    on those parameters).
+                  </p>
+                  <p>
+                    Note that the delimiter type need not be specified in the parameters,
+                    unlike with grammars and rules. Subrules will automatically use
+                    the delimiter type which is in effect when they are invoked.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">name</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Optional string. Gives the subrule a name, useful for debugging
+                    and error handling.
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.synopsis__usage_"></a><h6>
-<a name="id639622"></a>
+<a name="id775374"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.synopsis__usage_">Synopsis
           (usage)</a>
         </h6>
@@ -202,7 +198,7 @@
 <span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="special">...)</span>         <span class="comment">// Arguments to group, i.e. to start subrule srA
 </span></pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.parameters__usage_"></a><h6>
-<a name="id639858"></a>
+<a name="id775661"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.parameters__usage_">Parameters
           (usage)</a>
         </h6>
@@ -213,120 +209,120 @@
 </colgroup>
 <thead><tr>
 <th>
-                <p>
-                  Parameter
-                </p>
+                  <p>
+                    Parameter
+                  </p>
                 </th>
 <th>
-                <p>
-                  Description
-                </p>
+                  <p>
+                    Description
+                  </p>
                 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">sr1</span></code>, <code class="computeroutput"><span class="identifier">sr2</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sr1</span></code>, <code class="computeroutput"><span class="identifier">sr2</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Subrules with different IDs.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">expr1</span></code>, <code class="computeroutput"><span class="identifier">expr2</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generator expressions. Can include <code class="computeroutput"><span class="identifier">sr1</span></code>
-                  and <code class="computeroutput"><span class="identifier">sr2</span></code>, as well
-                  as any other valid generator expressions.
-                </p>
+                  <p>
+                    Subrules with different IDs.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">srA</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">expr1</span></code>, <code class="computeroutput"><span class="identifier">expr2</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Subrule with a synthesized attribute and inherited attributes.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">srB</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Subrule with a synthesized attribute.
-                </p>
+                  <p>
+                    Generator expressions. Can include <code class="computeroutput"><span class="identifier">sr1</span></code>
+                    and <code class="computeroutput"><span class="identifier">sr2</span></code>, as well
+                    as any other valid generator expressions.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">srC</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">srA</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Subrule with inherited attributes.
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">exprA</span></code>, <code class="computeroutput"><span class="identifier">exprB</span></code>, <code class="computeroutput"><span class="identifier">exprC</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generator expressions.
-                </p>
+                  <p>
+                    Subrule with a synthesized attribute and inherited attributes.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a1</span></code>, <code class="computeroutput"><span class="identifier">a2</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">srB</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Arguments passed to the subrule group. They are passed as inherited
-                  attributes to the group's start subrule, <code class="computeroutput"><span class="identifier">srA</span></code>.
-                </p>
+                  <p>
+                    Subrule with a synthesized attribute.
+                  </p>
                 </td>
 </tr>
 <tr>
 <td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">c1</span></code>, <code class="computeroutput"><span class="identifier">c2</span></code>
-                </p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">srC</span></code>
+                  </p>
                 </td>
 <td>
-                <p>
-                  Arguments passed as inherited attributes to subrule <code class="computeroutput"><span class="identifier">srC</span></code>.
-                </p>
+                  <p>
+                    Subrule with inherited attributes.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">exprA</span></code>, <code class="computeroutput"><span class="identifier">exprB</span></code>, <code class="computeroutput"><span class="identifier">exprC</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Generator expressions.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a1</span></code>, <code class="computeroutput"><span class="identifier">a2</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Arguments passed to the subrule group. They are passed as inherited
+                    attributes to the group's start subrule, <code class="computeroutput"><span class="identifier">srA</span></code>.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">c1</span></code>, <code class="computeroutput"><span class="identifier">c2</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Arguments passed as inherited attributes to subrule <code class="computeroutput"><span class="identifier">srC</span></code>.
+                  </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.groups"></a><h6>
-<a name="id640172"></a>
+<a name="id776039"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.groups">Groups</a>
         </h6>
 <p>
@@ -371,7 +367,7 @@
 </span><span class="special">;</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.attributes"></a><h6>
-<a name="id640566"></a>
+<a name="id776523"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.attributes">Attributes</a>
         </h6>
 <p>
@@ -380,27 +376,27 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            the type of its synthesized attribute is the one specified in the subrule's
-            signature, if any. Otherwise it is <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-          </li>
+              the type of its synthesized attribute is the one specified in the subrule's
+              signature, if any. Otherwise it is <code class="computeroutput"><span class="identifier">unused_type</span></code>.
+            </li>
 <li class="listitem">
-            the types of its inherited attributes are the ones specified in the subrule's
-            signature, if any. Otherwise the subrule has no inherited attributes.
-          </li>
+              the types of its inherited attributes are the ones specified in the
+              subrule's signature, if any. Otherwise the subrule has no inherited
+              attributes.
+            </li>
 <li class="listitem">
-            an auto-subrule can be defined by assigning it with the <code class="computeroutput"><span class="special">%=</span></code> syntax. In this case, the subrule's
-            synthesized attribute is automatically propagated to the RHS generator's
-            attribute.
-          </li>
+              an auto-subrule can be defined by assigning it with the <code class="computeroutput"><span class="special">%=</span></code> syntax. In this case, the subrule's
+              synthesized attribute is automatically propagated to the RHS generator's
+              attribute.
+            </li>
 <li class="listitem">
-            the Phoenix placeholders <code class="computeroutput"><span class="identifier">_val</span></code>,
-            <code class="computeroutput"><span class="identifier">_r1</span></code>, <code class="computeroutput"><span class="identifier">_r2</span></code>,
-            ... are available to refer to the subrule's synthesized and inherited
-            attributes, if present.
-          </li>
+              the Phoenix placeholders <code class="computeroutput"><span class="identifier">_val</span></code>,
+              <code class="computeroutput"><span class="identifier">_r1</span></code>, <code class="computeroutput"><span class="identifier">_r2</span></code>, ... are available to refer to
+              the subrule's synthesized and inherited attributes, if present.
+            </li>
 </ul></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.locals"></a><h6>
-<a name="id640639"></a>
+<a name="id776641"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.locals">Locals</a>
         </h6>
 <p>
@@ -410,16 +406,14 @@
           refer to the subrule's locals, if present.
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.example"></a><h6>
-<a name="id640675"></a>
+<a name="id776689"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.example">Example</a>
         </h6>
 <p>
           Some includes:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_subrule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -428,32 +422,24 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_fusion</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           Some using declarations:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">;</span>
 <span class="keyword">namespace</span> <span class="identifier">repo</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repository</span><span class="special">;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           A grammar containing only one rule, defined with a group of 2 subrules:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">mini_xml_generator</span>
@@ -478,8 +464,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The definitions of the <code class="computeroutput"><span class="identifier">mini_xml</span></code>
@@ -488,7 +472,7 @@
           <a href="../../../../../example/karma/mini_xml_karma_sr.cpp" target="_top">../../example/karma/mini_xml_karma_sr.cpp</a>
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.performance"></a><h6>
-<a name="id642253"></a>
+<a name="id777754"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.performance">Performance</a>
         </h6>
 <p>
@@ -499,7 +483,7 @@
           subrules is very similar, so performance is very similar too).
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.notes"></a><h6>
-<a name="id642290"></a>
+<a name="id777801"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.notes">Notes</a>
         </h6>
 <p>
@@ -523,7 +507,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a>
+<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a>
 </div>
 </body>
 </html>

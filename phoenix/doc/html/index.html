@@ -1,37 +1,37 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Chapter 1. Phoenix 2.0</title>
-<link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.66.1">
-<link rel="start" href="index.html" title="Chapter 1. Phoenix 2.0">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Chapter&#160;1.&#160;Phoenix 2.0</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Phoenix 2.0">
 <link rel="next" href="phoenix/introduction.html" title="Introduction">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
 <td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
 <td align="center"><a href="../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
 <td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
 <td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
 <td align="center"><a href="../../../../../more/index.htm">More</a></td>
 </tr></table>
 <hr>
-<div class="spirit-nav"><a accesskey="n" href="phoenix/introduction.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a></div>
-<div class="chapter" lang="en">
+<div class="spirit-nav"><a accesskey="n" href="phoenix/introduction.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a></div>
+<div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="phoenix"></a>Chapter 1. Phoenix 2.0</h2></div>
+<a name="phoenix"></a>Chapter&#160;1.&#160;Phoenix 2.0</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Joel</span> <span class="surname">de Guzman</span>
 </h3></div></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Dan</span> <span class="surname">Marsden</span>
 </h3></div></div>
-<div><p class="copyright">Copyright © 2002-2005 Joel
+<div><p class="copyright">Copyright &#169; 2002-2005 Joel
       de Guzman, Dan Marsden</p></div>
 <div><div class="legalnotice">
-<a name="id385274"></a><p>
+<a name="id759708"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -91,40 +91,29 @@
 <dt><span class="section"><a href="phoenix/references.html">References</a></span></dt>
 </dl>
 </div>
-<div class="section" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="phoenix.preface"></a><a href="index.html#phoenix.preface" title="Preface">Preface</a></h2></div></div></div>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-        </p>
-<p>
-          <span class="emphasis"><em>Functional programming is so called because a program consists
-          entirely of functions. The main program itself is written as a function
-          which receives the program's input as its argument and delivers the program's
-          output as its result. Typically the main function is defined in terms of
-          other functions, which in turn are defined in terms of still more functions
-          until at the bottom level the functions are language primitives.</em></span>
-        </p>
-<p>
-      </p>
-</blockquote></div>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-        </p>
-<p>
-          <span class="bold"><b>John Hughes</b></span>-- <span class="emphasis"><em>Why Functional
-          Programming Matters</em></span>
-        </p>
-<p>
-      </p>
-</blockquote></div>
+<a name="phoenix.preface"></a><a class="link" href="index.html#phoenix.preface" title="Preface">Preface</a>
+</h2></div></div></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+        <span class="emphasis"><em>Functional programming is so called because a program consists
+        entirely of functions. The main program itself is written as a function which
+        receives the program's input as its argument and delivers the program's output
+        as its result. Typically the main function is defined in terms of other functions,
+        which in turn are defined in terms of still more functions until at the bottom
+        level the functions are language primitives.</em></span>
+      </p></blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+        <span class="bold"><strong>John Hughes</strong></span>-- <span class="emphasis"><em>Why Functional Programming
+        Matters</em></span>
+      </p></blockquote></div>
 <p>
       <span class="inlinemediaobject"><img src="images/lambda_cpp.png" alt="lambda_cpp"></span>
     </p>
-<a name="phoenix.preface.description"></a><h2>
-<a name="id385804"></a>
-      <a href="index.html#phoenix.preface.description">Description</a>
-    </h2>
+<a name="phoenix.preface.description"></a><h3>
+<a name="id759789"></a>
+      <a class="link" href="index.html#phoenix.preface.description">Description</a>
+    </h3>
 <p>
       Phoenix enables Functional Programming (FP) in C++. The design and implementation
       of Phoenix is highly influenced by <a href="http://www.cc.gatech.edu/~yannis/fc++/" target="_top">FC++</a>
@@ -141,10 +130,10 @@
       the library into small pieces, without fear that the pieces won't work anymore.
       The library is organized in highly independent modules and layers.
     </p>
-<a name="phoenix.preface.how_to_use_this_manual"></a><h2>
-<a name="id455895"></a>
-      <a href="index.html#phoenix.preface.how_to_use_this_manual">How to use this manual</a>
-    </h2>
+<a name="phoenix.preface.how_to_use_this_manual"></a><h3>
+<a name="id759849"></a>
+      <a class="link" href="index.html#phoenix.preface.how_to_use_this_manual">How to use this manual</a>
+    </h3>
 <p>
       The Phoenix library is organized in logical modules. This documentation provides
       a user's guide and reference for each module in the library. A simple and clear
@@ -165,8 +154,8 @@
       icons precede some text to indicate:
     </p>
 <div class="table">
-<a name="id455925"></a><p class="title"><b>Table 1.1. Icons</b></p>
-<table class="table" summary="Icons">
+<a name="id759887"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
+<div class="table-contents"><table class="table" summary="Icons">
 <colgroup>
 <col>
 <col>
@@ -174,86 +163,86 @@
 </colgroup>
 <thead><tr>
 <th>
-          <p>
-            Icon
-          </p>
-          </th>
+              <p>
+                Icon
+              </p>
+            </th>
 <th>
-          <p>
-            Name
-          </p>
-          </th>
+              <p>
+                Name
+              </p>
+            </th>
 <th>
-          <p>
-            Meaning
-          </p>
-          </th>
+              <p>
+                Meaning
+              </p>
+            </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-          <p>
-            <span class="inlinemediaobject"><img src="images/note.png" alt="note"></span>
-          </p>
-          </td>
+              <p>
+                <span class="inlinemediaobject"><img src="images/note.png" alt="note"></span>
+              </p>
+            </td>
 <td>
-          <p>
-            Note
-          </p>
-          </td>
+              <p>
+                Note
+              </p>
+            </td>
 <td>
-          <p>
-            Information provided is auxiliary but will give the reader a deeper insight
-            into a specific topic. May be skipped.
-          </p>
-          </td>
+              <p>
+                Information provided is auxiliary but will give the reader a deeper
+                insight into a specific topic. May be skipped.
+              </p>
+            </td>
 </tr>
 <tr>
 <td>
-          <p>
-            <span class="inlinemediaobject"><img src="images/alert.png" alt="alert"></span>
-          </p>
-          </td>
+              <p>
+                <span class="inlinemediaobject"><img src="images/alert.png" alt="alert"></span>
+              </p>
+            </td>
 <td>
-          <p>
-            Alert
-          </p>
-          </td>
+              <p>
+                Alert
+              </p>
+            </td>
 <td>
-          <p>
-            Information provided is of utmost importance.
-          </p>
-          </td>
+              <p>
+                Information provided is of utmost importance.
+              </p>
+            </td>
 </tr>
 <tr>
 <td>
-          <p>
-            <span class="inlinemediaobject"><img src="images/tip.png" alt="tip"></span>
-          </p>
-          </td>
+              <p>
+                <span class="inlinemediaobject"><img src="images/tip.png" alt="tip"></span>
+              </p>
+            </td>
 <td>
-          <p>
-            Tip
-          </p>
-          </td>
+              <p>
+                Tip
+              </p>
+            </td>
 <td>
-          <p>
-            A potentially useful and helpful piece of information.
-          </p>
-          </td>
+              <p>
+                A potentially useful and helpful piece of information.
+              </p>
+            </td>
 </tr>
 </tbody>
-</table>
+</table></div>
 </div>
-<p>
+<br class="table-break"><p>
       This documentation is automatically generated by Spirit QuickBook documentation
       tool. QuickBook can be found in the <a href="http://spirit.sourceforge.net/repository/applications/show_contents.php" target="_top">Spirit
       Repository</a>.
     </p>
-<a name="phoenix.preface.support"></a><h2>
-<a name="id387296"></a>
-      <a href="index.html#phoenix.preface.support">Support</a>
-    </h2>
+<a name="phoenix.preface.support"></a><h3>
+<a name="id760065"></a>
+      <a class="link" href="index.html#phoenix.preface.support">Support</a>
+    </h3>
 <p>
       Please direct all questions to Spirit's mailing list. You can subscribe to
       the <a href="https://lists.sourceforge.net/lists/listinfo/spirit-general" target="_top">Spirit
@@ -264,17 +253,17 @@
       NNTP news portal</a> (thanks to <a href="http://www.gmane.org" target="_top">Gmane</a>).
       The news group mirrors the mailing list. Here is a link to the archives: <a href="http://news.gmane.org/gmane.comp.parsers.spirit.general" target="_top">http://news.gmane.org/gmane.comp.parsers.spirit.general</a>.
     </p>
-<a name="phoenix.preface._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"></a><h2>
-<a name="id387363"></a>
-      <a href="index.html#phoenix.preface._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"><span class="bold"><b><span class="emphasis"><em>...To my dear daughter, Phoenix</em></span></b></span></a>
-    </h2>
+<a name="phoenix.preface._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"></a><h3>
+<a name="id760124"></a>
+      <a class="link" href="index.html#phoenix.preface._emphasis_role__bold___emphasis____to_my_dear_daughter__phoenix__emphasis___emphasis_"><span class="bold"><strong><span class="emphasis"><em>...To my dear daughter, Phoenix</em></span></strong></span></a>
+    </h3>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: July 23, 2008 at 17:24:10 GMT</small></p></td>
+<td align="left"><p><small>Last revised: July 19, 2010 at 19:06:12 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
-<div class="spirit-nav"><a accesskey="n" href="phoenix/introduction.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a></div>
+<div class="spirit-nav"><a accesskey="n" href="phoenix/introduction.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a></div>
 </body>
 </html>
