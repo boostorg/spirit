@@ -18,7 +18,7 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     //  We need our own implementation of an ostream_iterator just to be able
     //  to access the wrapped ostream, which is necessary for the 
-    //  stream_director, where we must generate the output using the original
+    //  stream_generator, where we must generate the output using the original
     //  ostream to retain possibly registered facets.
     ///////////////////////////////////////////////////////////////////////////
     template <
