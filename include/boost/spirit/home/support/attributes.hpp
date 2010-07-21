@@ -789,9 +789,6 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Out, typename T>
-    void print_attribute(Out& out, T const& val);
-
     namespace detail
     {
         template <typename Out>
@@ -910,7 +907,7 @@ namespace boost { namespace spirit { namespace traits
     inline void print_attribute(Out& out, boost::optional<T> const& val)
     {
         if (val)
-            print_attribute(out, val);
+            print_attribute(out, *val);
         else
             out << "<empty>";
     }
