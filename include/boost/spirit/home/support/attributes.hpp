@@ -815,57 +815,88 @@ namespace boost { namespace spirit { namespace traits
             Out& out;
             mutable bool is_first;
         };
+
+        // print elements in a variant
+        template <typename Out>
+        struct print_visitor : static_visitor<>
+        {
+            print_visitor(Out& out) : out(out) {}
+
+            template <typename T>
+            void operator()(T const& val) const
+            {
+                print_attribute(out, val);
+            }
+
+            Out& out;
+        };
     }
 
     template <typename Out, typename T, typename Enable>
     struct print_attribute_debug
     {
-        // for stl container data types
+        // for plain data types
         template <typename T_>
-        static void call_impl(Out& out, T_ const& val, mpl::true_)
-        {
-            out << '[';
-            if (!val.empty())
-            {
-                for (typename T_::const_iterator i = val.begin(); i != val.end(); ++i)
-                {
-                    if (i != val.begin())
-                        out << ", ";
-                    print_attribute(out, *i);
-                }
-
-            }
-            out << ']';
-        }
-
-        // for non-fusion data types
-        template <typename T_>
-        static void call_impl2(Out& out, T_ const& val, mpl::false_)
+        static void call_impl3(Out& out, T_ const& val, mpl::false_)
         {
             out << val;
         }
 
         // for fusion data types
         template <typename T_>
-        static void call_impl2(Out& out, T_ const& val, mpl::true_)
+        static void call_impl3(Out& out, T_ const& val, mpl::true_)
         {
             out << '[';
             fusion::for_each(val, detail::print_fusion_sequence<Out>(out));
             out << ']';
         }
 
-        // for non-stl container data types
+        // non-stl container
+        template <typename T_>
+        static void call_impl2(Out& out, T_ const& val, mpl::false_)
+        {
+            call_impl3(out, val, fusion::traits::is_sequence<T_>());
+        }
+
+        // stl container
+        template <typename T_>
+        static void call_impl2(Out& out, T_ const& val, mpl::true_)
+        {
+            out << '[';
+            if (!traits::is_empty(val))
+            {
+                bool first = true;
+                typename container_iterator<T_ const>::type iend = traits::end(val);
+                for (typename container_iterator<T_ const>::type i = traits::begin(val); 
+                     !traits::compare(i, iend); traits::next(i))
+                {
+                    if (!first)
+                        out << ", ";
+                    first = false;
+                    print_attribute(out, *i);
+                }
+            }
+            out << ']';
+        }
+
+        // for variant types
         template <typename T_>
         static void call_impl(Out& out, T_ const& val, mpl::false_)
         {
-            call_impl2(out, val, fusion::traits::is_sequence<T_>());
+            apply_visitor(detail::print_visitor<Out>(out), val);
+        }
+
+        // for non-variant types
+        template <typename T_>
+        static void call_impl(Out& out, T_ const& val, mpl::true_)
+        {
+            call_impl2(out, val, is_container<T_>());
         }
 
         // main entry point
         static void call(Out& out, T const& val)
         {
-            call_impl(out, val
-              , mpl::and_<is_container<T>, not_is_variant<T, void> >());
+            call_impl(out, val, not_is_variant<T>());
         }
     };
 
@@ -882,6 +913,11 @@ namespace boost { namespace spirit { namespace traits
             print_attribute(out, val);
         else
             out << "<empty>";
+    }
+
+    template <typename Out>
+    inline void print_attribute(Out& out, unused_type)
+    {
     }
 
     ///////////////////////////////////////////////////////////////////////////
