@@ -870,7 +870,7 @@ namespace boost { namespace spirit { namespace traits
                     if (!first)
                         out << ", ";
                     first = false;
-                    print_attribute(out, *i);
+                    print_attribute(out, traits::deref(i));
                 }
             }
             out << ']';
