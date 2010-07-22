@@ -898,18 +898,22 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Out, typename T>
+    struct print_attribute_debug<Out, boost::optional<T> >
+    {
+        static void call(Out& out, T const& val)
+        {
+            if (val)
+                print_attribute(out, *val);
+            else
+                out << "<empty>";
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Out, typename T>
     inline void print_attribute(Out& out, T const& val)
     {
         print_attribute_debug<Out, T>::call(out, val);
-    }
-
-    template <typename Out, typename T>
-    inline void print_attribute(Out& out, boost::optional<T> const& val)
-    {
-        if (val)
-            print_attribute(out, *val);
-        else
-            out << "<empty>";
     }
 
     template <typename Out>
