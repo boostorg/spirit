@@ -28,7 +28,7 @@
           Succeeded (<code class="computeroutput"><span class="identifier">matches</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.matches.description"></a><h6>
-<a name="id954791"></a>
+<a name="id938266"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             matching.
           </p>
 <a name="spirit.qi.reference.directive.matches.header"></a><h6>
-<a name="id954818"></a>
+<a name="id938293"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/matches.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.matches.namespace"></a><h6>
-<a name="id954893"></a>
+<a name="id938368"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -65,19 +65,13 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.matches.model_of"></a><h6>
-<a name="id954972"></a>
+<a name="id938447"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -88,7 +82,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.matches.expression_semantics"></a><h6>
-<a name="id955044"></a>
+<a name="id938515"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -129,7 +123,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.matches.attributes"></a><h6>
-<a name="id955151"></a>
+<a name="id938622"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -163,21 +157,15 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.matches.complexity"></a><h6>
-<a name="id955242"></a>
+<a name="id938713"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The complexity is defined by the complexity of the subject parser,
-                <code class="computeroutput"><span class="identifier">a</span></code>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The complexity is defined by the complexity of the subject parser,
+              <code class="computeroutput"><span class="identifier">a</span></code>
+            </p></blockquote></div>
 <a name="spirit.qi.reference.directive.matches.example"></a><h6>
-<a name="id955273"></a>
+<a name="id938741"></a>
             <a class="link" href="matches.html#spirit.qi.reference.directive.matches.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -194,52 +182,38 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">matches</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
-            </p>
+            This parser tries to match an <code class="computeroutput"><span class="keyword">int</span></code>
+            and returns <code class="computeroutput"><span class="keyword">true</span></code> a its attribute
+            as it succeeded matching:
+          </p>
 <p>
-              This parser tries to match an <code class="computeroutput"><span class="keyword">int</span></code>
-              and returns <code class="computeroutput"><span class="keyword">true</span></code> a its
-              attribute as it succeeded matching:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">result</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"345"</span><span class="special">,</span> <span class="identifier">matches</span><span class="special">[</span><span class="identifier">int_</span><span class="special">],</span> <span class="identifier">result</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">boolalpha</span> <span class="special">&lt;&lt;</span> <span class="identifier">result</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// should print: true</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            This parser tries to match an <code class="computeroutput"><span class="keyword">int</span></code>
+            as well and returns <code class="computeroutput"><span class="keyword">false</span></code>
+            as its attribute as it fails matching:
+          </p>
 <p>
-              This parser tries to match an <code class="computeroutput"><span class="keyword">int</span></code>
-              as well and returns <code class="computeroutput"><span class="keyword">false</span></code>
-              as its attribute as it fails matching:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">result</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"abc"</span><span class="special">,</span> <span class="identifier">matches</span><span class="special">[</span><span class="identifier">int_</span><span class="special">],</span> <span class="identifier">result</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">boolalpha</span> <span class="special">&lt;&lt;</span> <span class="identifier">result</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// should print: false
 </span></pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

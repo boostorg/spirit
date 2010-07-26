@@ -128,6 +128,16 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename Attribute>
+    struct assign_to_attribute_from_value<Attribute, Attribute>
+    {
+        static void 
+        call(Attribute const& val, Attribute& attr)
+        {
+            attr = val;
+        }
+    };
+
     template <typename Attribute, typename T>
     struct assign_to_attribute_from_value<reference_wrapper<Attribute>, T>
     {
@@ -147,6 +157,7 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Attribute>
     inline void
     assign_to(T const& val, Attribute& attr)

@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.parser_concepts.parser"></a><a class="link" href="parser.html" title="Parser">Parser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.parser.description"></a><h6>
-<a name="id898309"></a>
+<a name="id882346"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.description">Description</a>
           </h6>
 <p>
@@ -80,7 +80,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.parser.valid_expressions"></a><h6>
-<a name="id898588"></a>
+<a name="id882626"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -160,7 +160,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.type_expressions"></a><h6>
-<a name="id898863"></a>
+<a name="id882900"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -213,7 +213,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.postcondition"></a><h6>
-<a name="id899065"></a>
+<a name="id883102"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.postcondition">Postcondition</a>
           </h6>
 <p>
@@ -222,32 +222,32 @@
           </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-              On a successful match, <code class="computeroutput"><span class="identifier">f</span></code>
-              is positioned one past the last matching character/token.
-            </li>
+                On a successful match, <code class="computeroutput"><span class="identifier">f</span></code>
+                is positioned one past the last matching character/token.
+              </li>
 <li class="listitem">
-              On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
-              parser is <code class="computeroutput"><span class="identifier">unused</span></code>,
-              <code class="computeroutput"><span class="identifier">f</span></code> is restored to its
-              original position prior to entry.
-            </li>
+                On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
+                parser is <code class="computeroutput"><span class="identifier">unused</span></code>,
+                <code class="computeroutput"><span class="identifier">f</span></code> is restored to
+                its original position prior to entry.
+              </li>
 <li class="listitem">
-              On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
-              parser is not <code class="computeroutput"><span class="identifier">unused</span></code>,
-              <code class="computeroutput"><span class="identifier">f</span></code> is positioned one
-              past the last character/token matching <code class="computeroutput"><span class="identifier">skip</span></code>.
-            </li>
+                On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
+                parser is not <code class="computeroutput"><span class="identifier">unused</span></code>,
+                <code class="computeroutput"><span class="identifier">f</span></code> is positioned one
+                past the last character/token matching <code class="computeroutput"><span class="identifier">skip</span></code>.
+              </li>
 <li class="listitem">
-              On a failed match, <code class="computeroutput"><span class="identifier">attrib</span></code>
-              is left untouched.
-            </li>
+                On a failed match, <code class="computeroutput"><span class="identifier">attrib</span></code>
+                is left untouched.
+              </li>
 <li class="listitem">
-              No post-skips: trailing <code class="computeroutput"><span class="identifier">skip</span></code>
-              characters/tokens will not be skipped.
-            </li>
+                No post-skips: trailing <code class="computeroutput"><span class="identifier">skip</span></code>
+                characters/tokens will not be skipped.
+              </li>
 </ul></div>
 <a name="spirit.qi.reference.parser_concepts.parser.models"></a><h6>
-<a name="id899192"></a>
+<a name="id883247"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.models">Models</a>
           </h6>
 <p>

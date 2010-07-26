@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.string.symbols"></a><a class="link" href="symbols.html" title="Symbols (symbols)"> Symbols (<code class="computeroutput"><span class="identifier">symbols</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.string.symbols.description"></a><h6>
-<a name="id1009312"></a>
+<a name="id991801"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.description">Description</a>
           </h6>
 <p>
@@ -47,7 +47,7 @@
             added, thus, dynamically altering its behavior.
           </p>
 <a name="spirit.qi.reference.string.symbols.header"></a><h6>
-<a name="id1009354"></a>
+<a name="id991843"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/symbols.hpp&gt;
@@ -57,7 +57,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.string.symbols.namespace"></a><h6>
-<a name="id1009429"></a>
+<a name="id991917"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -86,14 +86,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.synopsis"></a><h6>
-<a name="id1009588"></a>
+<a name="id993177"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lookup</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">symbols</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.template_parameters"></a><h6>
-<a name="id1009666"></a>
+<a name="id993255"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.template_parameters">Template
             parameters</a>
           </h6>
@@ -176,18 +176,12 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.model_of"></a><h6>
-<a name="id1009860"></a>
+<a name="id993448"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.model_of">Model of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -238,7 +232,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.string.symbols.expression_semantics"></a><h6>
-<a name="id1010180"></a>
+<a name="id993765"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -500,28 +494,22 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.attributes"></a><h6>
-<a name="id1013594"></a>
+<a name="id994994"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.attributes">Attributes</a>
           </h6>
 <p>
             The attribute of <code class="computeroutput"><span class="identifier">symbol</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> is <code class="computeroutput"><span class="identifier">T</span></code>.
           </p>
 <a name="spirit.qi.reference.string.symbols.complexity"></a><h6>
-<a name="id1013644"></a>
+<a name="id995044"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.complexity">Complexity</a>
           </h6>
 <p>
             The default implementation uses a Ternary Search Tree (TST) with complexity:
           </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                O(log n+k)
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              O(log n+k)
+            </p></blockquote></div>
 <p>
             Where k is the length of the string to be searched in a TST with n strings.
           </p>
@@ -537,15 +525,9 @@
             first character) plus a TST: <code class="computeroutput"><span class="identifier">tst_map</span></code>.
             This gives us a complexity of
           </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                O(1 + log n+k-1)
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              O(1 + log n+k-1)
+            </p></blockquote></div>
 <p>
             This is found to be significantly faster than plain TST, albeit with
             a bit more memory usage requirements (each slot in the hash-map is a
@@ -556,7 +538,7 @@
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">tst_map</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.example"></a><h6>
-<a name="id1013783"></a>
+<a name="id995176"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -573,23 +555,17 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>
             Symbols with data:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 
@@ -604,8 +580,6 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             When <code class="computeroutput"><span class="identifier">symbols</span></code> is used
@@ -615,9 +589,7 @@
             a <code class="computeroutput"><span class="identifier">no_case</span></code> directive.
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 
@@ -634,8 +606,6 @@
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"ORANGE"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span> <span class="identifier">sym</span> <span class="special">],</span> <span class="identifier">i</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

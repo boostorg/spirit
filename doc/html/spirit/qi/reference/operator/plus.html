@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.operator.plus"></a><a class="link" href="plus.html" title="Plus (+a)"> Plus (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.plus.description"></a><h6>
-<a name="id998666"></a>
+<a name="id981363"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.description">Description</a>
           </h6>
 <p>
@@ -35,7 +35,7 @@
             is a unary operator that matches its operand one or more times.
           </p>
 <a name="spirit.qi.reference.operator.plus.header"></a><h6>
-<a name="id998693"></a>
+<a name="id981391"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/plus.hpp&gt;
@@ -45,18 +45,12 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.plus.model_of"></a><h6>
-<a name="id998768"></a>
+<a name="id981465"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.model_of">Model of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -67,7 +61,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.plus.expression_semantics"></a><h6>
-<a name="id998837"></a>
+<a name="id981531"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -107,7 +101,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.plus.attributes"></a><h6>
-<a name="id998936"></a>
+<a name="id981629"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.attributes">Attributes</a>
           </h6>
 <p>
@@ -149,23 +143,17 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.plus.complexity"></a><h6>
-<a name="id999106"></a>
+<a name="id981800"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the Plus is defined by the complexity of
-                its subject, <code class="computeroutput"><span class="identifier">a</span></code>, multiplied
-                by the number of repetitions. The complexity of the Plus itself is
-                O(N), where N is the number successful repetitions.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the Plus is defined by the complexity of
+              its subject, <code class="computeroutput"><span class="identifier">a</span></code>, multiplied
+              by the number of repetitions. The complexity of the Plus itself is
+              O(N), where N is the number successful repetitions.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.plus.example"></a><h6>
-<a name="id999137"></a>
+<a name="id981827"></a>
             <a class="link" href="plus.html#spirit.qi.reference.operator.plus.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -179,36 +167,26 @@
             </p></td></tr>
 </table></div>
 <p>
-            </p>
+            Some using declarations:
+          </p>
 <p>
-              Some using declarations:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">alpha</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lexeme</span><span class="special">;</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Parse one or more strings containing one or more alphabetic characters
+            and put them in a vector:
+          </p>
 <p>
-              Parse one or more strings containing one or more alphabetic characters
-              and put them in a vector:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">attr</span><span class="special">;</span>
 <span class="identifier">test_phrase_parser_attr</span><span class="special">(</span><span class="string">"yaba daba doo"</span><span class="special">,</span> <span class="special">+</span><span class="identifier">lexeme</span><span class="special">[+</span><span class="identifier">alpha</span><span class="special">],</span> <span class="identifier">attr</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">attr</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="identifier">attr</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="identifier">attr</span><span class="special">[</span><span class="number">2</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

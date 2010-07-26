@@ -216,24 +216,16 @@
 <p>
           which reads as:
         </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-            </p>
-<p>
-              Given <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code> are parsers (generators), and
-              <code class="computeroutput"><span class="identifier">A</span></code> is the attribute
-              type of <code class="computeroutput"><span class="identifier">a</span></code>, and <code class="computeroutput"><span class="identifier">unused_type</span></code> is the attribute type
-              of <code class="computeroutput"><span class="identifier">b</span></code>, then the attribute
-              type of <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
-              <span class="identifier">b</span></code> (<code class="computeroutput"><span class="identifier">a</span>
-              <span class="special">&lt;&lt;</span> <span class="identifier">b</span></code>)
-              will be <code class="computeroutput"><span class="identifier">A</span></code> as well.
-              This rule applies regardless of the position the element exposing the
-              <code class="computeroutput"><span class="identifier">unused_type</span></code> is at.
-            </p>
-<p>
-          </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+            Given <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code> are parsers (generators), and <code class="computeroutput"><span class="identifier">A</span></code> is the attribute type of <code class="computeroutput"><span class="identifier">a</span></code>, and <code class="computeroutput"><span class="identifier">unused_type</span></code>
+            is the attribute type of <code class="computeroutput"><span class="identifier">b</span></code>,
+            then the attribute type of <code class="computeroutput"><span class="identifier">a</span>
+            <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>
+            (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+            <span class="identifier">b</span></code>) will be <code class="computeroutput"><span class="identifier">A</span></code>
+            as well. This rule applies regardless of the position the element exposing
+            the <code class="computeroutput"><span class="identifier">unused_type</span></code> is at.
+          </p></blockquote></div>
 <p>
           This rule is the key to the understanding of the attribute handling in
           sequences as soon as literals are involved. It is as if elements with

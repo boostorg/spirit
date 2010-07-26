@@ -40,9 +40,7 @@
           class for all parsers.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Derived</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">parser</span>
@@ -76,8 +74,6 @@
     <span class="special">}</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -132,22 +128,22 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            The parser returns <code class="computeroutput"><span class="keyword">true</span></code>
-            if successful, <code class="computeroutput"><span class="keyword">false</span></code> otherwise.
-          </li>
+              The parser returns <code class="computeroutput"><span class="keyword">true</span></code>
+              if successful, <code class="computeroutput"><span class="keyword">false</span></code> otherwise.
+            </li>
 <li class="listitem">
-            If successful, <code class="computeroutput"><span class="identifier">first</span></code>
-            is incremented N number of times, where N is the number of characters
-            parsed. N can be zero --an empty (epsilon) match.
-          </li>
+              If successful, <code class="computeroutput"><span class="identifier">first</span></code>
+              is incremented N number of times, where N is the number of characters
+              parsed. N can be zero --an empty (epsilon) match.
+            </li>
 <li class="listitem">
-            If successful, the parsed attribute is assigned to <span class="emphasis"><em>attr</em></span>
-</li>
+              If successful, the parsed attribute is assigned to <span class="emphasis"><em>attr</em></span>
+            </li>
 <li class="listitem">
-            If unsuccessful, <code class="computeroutput"><span class="identifier">first</span></code>
-            is reset to its position before entering the parser function. <span class="emphasis"><em>attr</em></span>
-            is untouched.
-          </li>
+              If unsuccessful, <code class="computeroutput"><span class="identifier">first</span></code>
+              is reset to its position before entering the parser function. <span class="emphasis"><em>attr</em></span>
+              is untouched.
+            </li>
 </ul></div>
 <div class="variablelist">
 <p class="title"><b>void what(context)</b></p>
@@ -197,7 +193,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id1213305"></a>
+<a name="id1196708"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
@@ -207,9 +203,7 @@
           in the boost::spirit::qi namespace.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">T</span>
@@ -249,8 +243,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The <code class="computeroutput"><span class="identifier">int_parser</span></code> is derived
@@ -260,15 +252,15 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            The <code class="computeroutput"><span class="identifier">parse</span></code> member function
-          </li>
+              The <code class="computeroutput"><span class="identifier">parse</span></code> member function
+            </li>
 <li class="listitem">
-            The <code class="computeroutput"><span class="identifier">what</span></code> member function
-          </li>
+              The <code class="computeroutput"><span class="identifier">what</span></code> member function
+            </li>
 <li class="listitem">
-            The nested <code class="computeroutput"><span class="identifier">attribute</span></code>
-            metafunction
-          </li>
+              The nested <code class="computeroutput"><span class="identifier">attribute</span></code>
+              metafunction
+            </li>
 </ul></div>
 <p>
           <span class="emphasis"><em>parse</em></span> is the main entry point. For primitive parsers,
@@ -304,49 +296,39 @@
           first, we enable these placeholders in namespace boost::spirit:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">short_</span><span class="special">&gt;</span> <span class="comment">// enables short_
 </span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&gt;</span> <span class="comment">// enables int_
 </span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_</span><span class="special">&gt;</span> <span class="comment">// enables long_
 </span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">&gt;</span> <span class="comment">// enables long_long
 </span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -365,9 +347,7 @@
           The make_xxx stuff (in boost::spirit::qi namespace):
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_int</span>
@@ -380,8 +360,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           This one above is our main generator. It's a simple function object with
@@ -389,59 +367,51 @@
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            The actual terminal value obtained by proto. In this case, either a short<span class="underline">, int</span>, long_ or long_long. We don't care
-            about this.
-          </li>
+              The actual terminal value obtained by proto. In this case, either a
+              short<span class="underline">, int</span>, long_ or long_long.
+              We don't care about this.
+            </li>
 <li class="listitem">
-            Modifiers. We also don't care about this. This allows directives such
-            as <code class="computeroutput"><span class="identifier">no_case</span><span class="special">[</span><span class="identifier">p</span><span class="special">]</span></code>
-            to pass information to inner parser nodes. We'll see how that works later.
-          </li>
+              Modifiers. We also don't care about this. This allows directives such
+              as <code class="computeroutput"><span class="identifier">no_case</span><span class="special">[</span><span class="identifier">p</span><span class="special">]</span></code>
+              to pass information to inner parser nodes. We'll see how that works
+              later.
+            </li>
 </ol></div>
 <p>
           Now:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">short_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">short</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">int_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">long</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> 
   <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">long_long_type</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -450,7 +420,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id1215474"></a>
+<a name="id1198813"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -458,9 +428,7 @@
           Let me present the kleene star (also in namespace spirit::qi):
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Subject</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">kleene</span> <span class="special">:</span> <span class="identifier">unary_parser</span><span class="special">&lt;</span><span class="identifier">kleene</span><span class="special">&lt;</span><span class="identifier">Subject</span><span class="special">&gt;</span> <span class="special">&gt;</span>
@@ -516,8 +484,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           Looks similar in form to its primitive cousin, the <code class="computeroutput"><span class="identifier">int_parser</span></code>.
@@ -525,14 +491,14 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            The nested attribute metafunction
-          </li>
+              The nested attribute metafunction
+            </li>
 <li class="listitem">
-            The parse member function
-          </li>
+              The parse member function
+            </li>
 <li class="listitem">
-            The what member function
-          </li>
+              The what member function
+            </li>
 </ul></div>
 <p>
           kleene is a composite parser. It is a parser that composes another parser,
@@ -545,12 +511,12 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            p.subject -&gt; subject parser ( <span class="emphasis"><em>p</em></span> is a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> parser.)
-          </li>
+              p.subject -&gt; subject parser ( <span class="emphasis"><em>p</em></span> is a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> parser.)
+            </li>
 <li class="listitem">
-            P::subject_type -&gt; subject parser type ( <span class="emphasis"><em>P</em></span> is
-            a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> type.)
-          </li>
+              P::subject_type -&gt; subject parser type ( <span class="emphasis"><em>P</em></span>
+              is a <a class="link" href="../../qi/reference/parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a> type.)
+            </li>
 </ul></div>
 <p>
           <span class="emphasis"><em>parse</em></span> is the main parser entry point. Since this is
@@ -650,16 +616,12 @@
           First, we enable the prefix star operator. In proto, it's called the "dereference":
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">use_operator</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">dereference</span><span class="special">&gt;</span> <span class="comment">// enables *p
 </span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -673,17 +635,13 @@
           Then, we need to write our generator (in namespace qi):
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Elements</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_composite</span><span class="special">&lt;</span><span class="identifier">proto</span><span class="special">::</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">dereference</span><span class="special">,</span> <span class="identifier">Elements</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
   <span class="special">:</span> <span class="identifier">make_unary_composite</span><span class="special">&lt;</span><span class="identifier">Elements</span><span class="special">,</span> <span class="identifier">kleene</span><span class="special">&gt;</span>
 <span class="special">{};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>

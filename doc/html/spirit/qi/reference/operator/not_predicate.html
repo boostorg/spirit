@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.not_predicate.description"></a><h6>
-<a name="id994341"></a>
+<a name="id976762"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.description">Description</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             if its predicate fails to match.
           </p>
 <a name="spirit.qi.reference.operator.not_predicate.header"></a><h6>
-<a name="id994382"></a>
+<a name="id976803"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/not_predicate.hpp&gt;
@@ -51,19 +51,13 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.not_predicate.model_of"></a><h6>
-<a name="id994457"></a>
+<a name="id976877"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -74,7 +68,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.not_predicate.expression_semantics"></a><h6>
-<a name="id994529"></a>
+<a name="id976946"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -114,7 +108,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.not_predicate.attributes"></a><h6>
-<a name="id994629"></a>
+<a name="id977045"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.attributes">Attributes</a>
           </h6>
 <p>
@@ -152,20 +146,14 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.not_predicate.complexity"></a><h6>
-<a name="id994723"></a>
+<a name="id977140"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The complexity is defined by the complexity of the predicate, <code class="computeroutput"><span class="identifier">a</span></code>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The complexity is defined by the complexity of the predicate, <code class="computeroutput"><span class="identifier">a</span></code>
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.not_predicate.example"></a><h6>
-<a name="id994755"></a>
+<a name="id977168"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -179,47 +167,35 @@
             </p></td></tr>
 </table></div>
 <p>
-            </p>
+            Some using declarations:
+          </p>
 <p>
-              Some using declarations:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">alpha</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">;</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Here's an alternative to the <code class="computeroutput"><span class="special">*(</span><span class="identifier">r</span> <span class="special">-</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">x</span></code>
+            idiom using the not-predicate instead. This parses a list of characters
+            terminated by a ';':
+          </p>
 <p>
-              Here's an alternative to the <code class="computeroutput"><span class="special">*(</span><span class="identifier">r</span> <span class="special">-</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">x</span></code>
-              idiom using the not-predicate instead. This parses a list of characters
-              terminated by a ';':
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"abcdef;"</span><span class="special">,</span> <span class="special">*(!</span><span class="identifier">lit</span><span class="special">(</span><span class="char">';'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">char_</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">';'</span><span class="special">);</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            The following parser ensures that we match distinct keywords (stored
+            in a symbol table). To do this, we make sure that the keyword does not
+            follow an alpha or an underscore:
+          </p>
 <p>
-              The following parser ensures that we match distinct keywords (stored
-              in a symbol table). To do this, we make sure that the keyword does
-              not follow an alpha or an underscore:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">keywords</span><span class="special">;</span>
 <span class="identifier">keywords</span> <span class="special">=</span> <span class="string">"begin"</span><span class="special">,</span> <span class="string">"end"</span><span class="special">,</span> <span class="string">"for"</span><span class="special">;</span>
@@ -233,8 +209,6 @@
 <span class="comment">// This is ok:
 </span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"for()"</span><span class="special">,</span> <span class="identifier">keywords</span> <span class="special">&gt;&gt;</span> <span class="special">!(</span><span class="identifier">alpha</span> <span class="special">|</span> <span class="char">'_'</span><span class="special">),</span> <span class="keyword">false</span><span class="special">);</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

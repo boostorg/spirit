@@ -28,7 +28,7 @@
           Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.alignment.description"></a><h6>
-<a name="id1094503"></a>
+<a name="id1077203"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             an arbitrary generator to create the padding.
           </p>
 <a name="spirit.karma.reference.directive.alignment.header"></a><h6>
-<a name="id1094520"></a>
+<a name="id1077220"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.header">Header</a>
           </h6>
 <p>
@@ -65,7 +65,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.alignment.namespace"></a><h6>
-<a name="id1094743"></a>
+<a name="id1077443"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -97,19 +97,13 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.model_of"></a><h6>
-<a name="id1094897"></a>
+<a name="id1077597"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -135,7 +129,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.alignment.expression_semantics"></a><h6>
-<a name="id1095052"></a>
+<a name="id1077748"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -417,7 +411,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.attributes"></a><h6>
-<a name="id1096107"></a>
+<a name="id1078803"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.attributes">Attributes</a>
           </h6>
 <p>
@@ -638,25 +632,19 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.complexity"></a><h6>
-<a name="id1097933"></a>
+<a name="id1081858"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the alignment generator directives is defined
-                by the complexity of its embedded and padding generator. The complexity
-                of the left alignment directive generator itself is O(1). The complexity
-                of the center and right alignment directive generators itself is
-                O(N). where <code class="computeroutput"><span class="identifier">N</span></code> is
-                the number of characters emitted by the embedded and padding generators.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the alignment generator directives is defined
+              by the complexity of its embedded and padding generator. The complexity
+              of the left alignment directive generator itself is O(1). The complexity
+              of the center and right alignment directive generators itself is O(N).
+              where <code class="computeroutput"><span class="identifier">N</span></code> is the number
+              of characters emitted by the embedded and padding generators.
+            </p></blockquote></div>
 <a name="spirit.karma.reference.directive.alignment.example"></a><h6>
-<a name="id1097964"></a>
+<a name="id1081886"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -673,9 +661,7 @@
             Some includes:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -685,16 +671,12 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">left_align</span><span class="special">;</span>
@@ -702,24 +684,18 @@
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">right_align</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Basic usage of the alignment generators:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">p</span> <span class="special">(</span><span class="number">1.0</span><span class="special">,</span> <span class="number">2.0</span><span class="special">);</span>
 <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0     |2.0"</span><span class="special">,</span> <span class="identifier">left_align</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">'|'</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">,</span> <span class="identifier">p</span><span class="special">);</span>
 <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"   1.0  |2.0"</span><span class="special">,</span> <span class="identifier">center</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">'|'</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">,</span> <span class="identifier">p</span><span class="special">);</span>
 <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"     1.0|2.0"</span><span class="special">,</span> <span class="identifier">right_align</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">'|'</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">,</span> <span class="identifier">p</span><span class="special">);</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

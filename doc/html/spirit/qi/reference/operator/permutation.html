@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.permutation.description"></a><h6>
-<a name="id996519"></a>
+<a name="id980011"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.description">Description</a>
           </h6>
 <p>
@@ -57,7 +57,7 @@
 <pre class="programlisting"><span class="string">"a"</span><span class="special">,</span> <span class="string">"ab"</span><span class="special">,</span> <span class="string">"abc"</span><span class="special">,</span> <span class="string">"cba"</span><span class="special">,</span> <span class="string">"bca"</span> <span class="special">...</span> <span class="identifier">etc</span><span class="special">.</span>
 </pre>
 <a name="spirit.qi.reference.operator.permutation.header"></a><h6>
-<a name="id997797"></a>
+<a name="id980191"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/permutation.hpp&gt;
@@ -67,19 +67,13 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.permutation.model_of"></a><h6>
-<a name="id997871"></a>
+<a name="id980266"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -90,7 +84,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.permutation.expression_semantics"></a><h6>
-<a name="id997951"></a>
+<a name="id980341"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -133,7 +127,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.permutation.attributes"></a><h6>
-<a name="id998063"></a>
+<a name="id980454"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.attributes">Attributes</a>
           </h6>
 <p>
@@ -178,23 +172,17 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.permutation.complexity"></a><h6>
-<a name="id998464"></a>
+<a name="id981172"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the permutation parser is defined by the
-                sum of the complexities of its elements, s, multiplied by log s.
-                The complexity of the permutation parser itself is O(N log N), where
-                N is the number of elements.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the permutation parser is defined by the
+              sum of the complexities of its elements, s, multiplied by log s. The
+              complexity of the permutation parser itself is O(N log N), where N
+              is the number of elements.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.permutation.example"></a><h6>
-<a name="id998488"></a>
+<a name="id981193"></a>
             <a class="link" href="permutation.html#spirit.qi.reference.operator.permutation.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -211,30 +199,20 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
-            </p>
+            Parse a string containing DNA codes (ACTG)
+          </p>
 <p>
-              Parse a string containing DNA codes (ACTG)
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"ACTGGCTAGACT"</span><span class="special">,</span> <span class="special">*(</span><span class="identifier">char_</span><span class="special">(</span><span class="char">'A'</span><span class="special">)</span> <span class="special">^</span> <span class="char">'C'</span> <span class="special">^</span> <span class="char">'T'</span> <span class="special">^</span> <span class="char">'G'</span><span class="special">));</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

@@ -27,125 +27,126 @@
 <a name="spirit.what_s_new.spirit_2_3"></a><a class="link" href="spirit_2_3.html" title="Spirit V2.3"> Spirit V2.3</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_v2_3__boost_v1_43_0_"></a><h5>
-<a name="id844108"></a>
+<a name="id826560"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_2__boost_v1_42_0__to_v2_3__boost_v1_43_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.2 (Boost V1.42.0) to V2.3 (Boost V1.43.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_3.new_features"></a><h5>
-<a name="id844130"></a>
+<a name="id826582"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          The customization point <code class="computeroutput"><span class="identifier">transform_attribute</span></code>
-          now has to implement a third function: <code class="computeroutput"><span class="keyword">void</span>
-          <span class="identifier">fail</span><span class="special">(</span><span class="identifier">Exposed</span><span class="special">&amp;)</span></code>,
-          which normally will do nothing. This function will be called whenever the
-          right hand side of the <code class="computeroutput"><span class="identifier">rule</span></code>
-          (or the embedded parser of <code class="computeroutput"><span class="identifier">attr_cast</span></code>)
-          fail parsing. This change affects <span class="emphasis"><em>Qi</em></span> only. See the
-          desciption of the <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> for more details.
-        </li>
+            The customization point <code class="computeroutput"><span class="identifier">transform_attribute</span></code>
+            now has to implement a third function: <code class="computeroutput"><span class="keyword">void</span>
+            <span class="identifier">fail</span><span class="special">(</span><span class="identifier">Exposed</span><span class="special">&amp;)</span></code>,
+            which normally will do nothing. This function will be called whenever
+            the right hand side of the <code class="computeroutput"><span class="identifier">rule</span></code>
+            (or the embedded parser of <code class="computeroutput"><span class="identifier">attr_cast</span></code>)
+            fail parsing. This change affects <span class="emphasis"><em>Qi</em></span> only. See the
+            desciption of the <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> for more
+            details.
+          </li>
 <li class="listitem">
-          Added support for attribute sequences created with <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS</span></code>
-          and <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS_NAMED</span></code>.
-          This support requires to include the new header file: <code class="computeroutput"><span class="preprocessor">#include</span>
-          <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">inlcude</span><span class="special">/</span><span class="identifier">support_adapt_class_attributes</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>.
-        </li>
+            Added support for attribute sequences created with <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS</span></code>
+            and <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS_NAMED</span></code>.
+            This support requires to include the new header file: <code class="computeroutput"><span class="preprocessor">#include</span>
+            <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">inlcude</span><span class="special">/</span><span class="identifier">support_adapt_class_attributes</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>.
+          </li>
 <li class="listitem">
-          Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">ostream_iterator</span></code> as a counterpart to
-          <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">istream_iterator</span></code> (see new header file:
-          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">iterators</span><span class="special">/</span><span class="identifier">ostream_iterator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>).
-        </li>
+            Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">ostream_iterator</span></code> as a counterpart to
+            <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">istream_iterator</span></code> (see new header file:
+            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">iterators</span><span class="special">/</span><span class="identifier">ostream_iterator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>).
+          </li>
 <li class="listitem">
-          Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">hold</span></code> allowing to make sure the embedded
-          parser does not touch the passed attribute in case it fails parsing.
-        </li>
+            Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">hold</span></code> allowing to make sure the embedded
+            parser does not touch the passed attribute in case it fails parsing.
+          </li>
 <li class="listitem">
-          Added <a class="link" href="../qi/reference/directive/no_skip.html" title="Inhibiting Skipping Without Pre-skip (no_skip[])"><code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">no_skip</span></code></a> directive, which is equivalent
-          to <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span></code><a class="link" href="../qi/reference/directive/lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>,
-          except that it does not pre-skip.
-        </li>
+            Added <a class="link" href="../qi/reference/directive/no_skip.html" title="Inhibiting Skipping Without Pre-skip (no_skip[])"><code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">no_skip</span></code></a> directive, which is
+            equivalent to <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span></code><a class="link" href="../qi/reference/directive/lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>,
+            except that it does not pre-skip.
+          </li>
 <li class="listitem">
-          Added <a class="link" href="../karma/reference/directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], no_delimit[], delimit[])"><code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">no_delimit</span></code></a> directive, which is
-          equivalent to <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span></code><a class="link" href="../karma/reference/directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], no_delimit[], delimit[])"><code class="computeroutput"><span class="identifier">verbatim</span></code></a>,
-          except that it does not perform a post-delimiting step.
-        </li>
+            Added <a class="link" href="../karma/reference/directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], no_delimit[], delimit[])"><code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">no_delimit</span></code></a> directive, which
+            is equivalent to <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span></code><a class="link" href="../karma/reference/directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], no_delimit[], delimit[])"><code class="computeroutput"><span class="identifier">verbatim</span></code></a>, except that it does
+            not perform a post-delimiting step.
+          </li>
 <li class="listitem">
-          Added a new input_iterator policy for the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-          iterator framework (named <code class="computeroutput"><span class="identifier">buffering_input_iterator</span></code>)
-          allowing to wrap underlying input iterators which do not store the last
-          character read from the input (such as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>).
-          This is now used as the default input policy.
-        </li>
+            Added a new input_iterator policy for the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+            iterator framework (named <code class="computeroutput"><span class="identifier">buffering_input_iterator</span></code>)
+            allowing to wrap underlying input iterators which do not store the last
+            character read from the input (such as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>).
+            This is now used as the default input policy.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_3.bug_fixes"></a><h5>
-<a name="id844500"></a>
+<a name="id826976"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          Sequences (in <span class="emphasis"><em>Qi</em></span> and <span class="emphasis"><em>Karma</em></span>) may
-          now have a component having no attribute even as their last element.
-        </li>
+            Sequences (in <span class="emphasis"><em>Qi</em></span> and <span class="emphasis"><em>Karma</em></span>)
+            may now have a component having no attribute even as their last element.
+          </li>
 <li class="listitem">
-          Sequences (in <span class="emphasis"><em>Qi</em></span> and <span class="emphasis"><em>Karma</em></span>) can
-          now take one element attribute sequences as their attribute.
-        </li>
+            Sequences (in <span class="emphasis"><em>Qi</em></span> and <span class="emphasis"><em>Karma</em></span>)
+            can now take one element attribute sequences as their attribute.
+          </li>
 <li class="listitem">
-          Constructs like <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[...]]</span></code>
-          don't result in performing double buffering anymore. The same is true if
-          an alternative is wrapped into a <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code> directive (as for instance: <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span> <span class="special">|</span>
-          <span class="identifier">b</span></code>).
-        </li>
+            Constructs like <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[...]]</span></code> don't result in performing double
+            buffering anymore. The same is true if an alternative is wrapped into
+            a <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code>
+            directive (as for instance: <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span> <span class="special">|</span> <span class="identifier">b</span></code>).
+          </li>
 <li class="listitem">
-          The <span class="emphasis"><em>Spirit.Karma</em></span> output iterator (which is used internally,
-          but also is exposed when using the stream based API) is now properly copyable
-          (thanks to Jonas Persson for reporting this issue).
-        </li>
+            The <span class="emphasis"><em>Spirit.Karma</em></span> output iterator (which is used
+            internally, but also is exposed when using the stream based API) is now
+            properly copyable (thanks to Jonas Persson for reporting this issue).
+          </li>
 <li class="listitem">
-          The default <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-          iterator is now usable with underlying input iterators which do not store
-          the last character read from the input (such as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>).
-          Thanks to Larry Evans and Peter Schueller for independently reporting this
-          problem.
-        </li>
+            The default <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+            iterator is now usable with underlying input iterators which do not store
+            the last character read from the input (such as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span></code>).
+            Thanks to Larry Evans and Peter Schueller for independently reporting
+            this problem.
+          </li>
 <li class="listitem">
-          The directive <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code>
-          now does not accept an arbitrary attribute type anymore.
-        </li>
+            The directive <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code>
+            now does not accept an arbitrary attribute type anymore.
+          </li>
 <li class="listitem">
-          The <span class="emphasis"><em>Spirit.Karma</em></span> predicates (the and-predicate and
-          the not-predicate) and the directive <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code> now disable output alltogether instead
-          of intercepting the output into a buffer which got discarded as before.
-        </li>
+            The <span class="emphasis"><em>Spirit.Karma</em></span> predicates (the and-predicate and
+            the not-predicate) and the directive <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code> now disable output alltogether instead
+            of intercepting the output into a buffer which got discarded as before.
+          </li>
 <li class="listitem">
-          Fixed <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span></code> to properly handles optional attributes.
-        </li>
+            Fixed <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span></code> to properly handles optional attributes.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_2__boost_v1_42_0__to_v2_3__boost_v1_43_0_"></a><h5>
-<a name="id844717"></a>
+<a name="id827222"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_2__boost_v1_42_0__to_v2_3__boost_v1_43_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.2 (Boost V1.42.0) to V2.3
         (Boost V1.43.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_3.new_lexer_features"></a><h5>
-<a name="id844735"></a>
+<a name="id827240"></a>
         <a class="link" href="spirit_2_3.html#spirit.what_s_new.spirit_2_3.new_lexer_features">New Lexer
         Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          The library does not minimize the generated lexer tables for dynamic lexers
-          by default anymore. The generated tables will now be minimized for static
-          lexers only.
-        </li>
+            The library does not minimize the generated lexer tables for dynamic
+            lexers by default anymore. The generated tables will now be minimized
+            for static lexers only.
+          </li>
 <li class="listitem">
-          The function <code class="computeroutput"><span class="identifier">lexer</span><span class="special">&lt;&gt;::</span><span class="identifier">init_dfa</span><span class="special">()</span></code>
-          now takes a single boolean parameter (which defaults to <code class="computeroutput"><span class="keyword">false</span></code>)
-          allowing to force minimization of the generated lexer tables.
-        </li>
+            The function <code class="computeroutput"><span class="identifier">lexer</span><span class="special">&lt;&gt;::</span><span class="identifier">init_dfa</span><span class="special">()</span></code>
+            now takes a single boolean parameter (which defaults to <code class="computeroutput"><span class="keyword">false</span></code>) allowing to force minimization
+            of the generated lexer tables.
+          </li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

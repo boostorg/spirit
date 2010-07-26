@@ -34,7 +34,7 @@
           heavily uses operator overloading to accomplish its magic.
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__1_parsing_a_number"></a><h6>
-<a name="id857942"></a>
+<a name="id840988"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__1_parsing_a_number">Trivial
           Example #1 Parsing a number</a>
         </h6>
@@ -49,7 +49,7 @@
           parsers and consistent naming conventions help you keep from going insane!
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__2_parsing_two_numbers"></a><h6>
-<a name="id857971"></a>
+<a name="id841016"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__2_parsing_two_numbers">Trivial
           Example #2 Parsing two numbers</a>
         </h6>
@@ -82,7 +82,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__3_parsing_zero_or_more_numbers"></a><h6>
-<a name="id858032"></a>
+<a name="id841078"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__3_parsing_zero_or_more_numbers">Trivial
           Example #3 Parsing zero or more numbers</a>
         </h6>
@@ -105,7 +105,7 @@
           also known as a Kleene Closure, but we call it the Star in most places.
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__4_parsing_a_comma_delimited_list_of_numbers"></a><h6>
-<a name="id858077"></a>
+<a name="id841122"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__4_parsing_a_comma_delimited_list_of_numbers">Trivial
           Example #4 Parsing a comma-delimited list of numbers</a>
         </h6>
@@ -128,7 +128,7 @@
           star encloses the complete expression above.
         </p>
 <a name="spirit.qi.tutorials.warming_up.let_s_parse_"></a><h6>
-<a name="id858207"></a>
+<a name="id841253"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.let_s_parse_">Let's Parse!</a>
         </h6>
 <p>
@@ -139,17 +139,17 @@
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            An iterator pointing to the start of the input
-          </li>
+              An iterator pointing to the start of the input
+            </li>
 <li class="listitem">
-            An iterator pointing to one past the end of the input
-          </li>
+              An iterator pointing to one past the end of the input
+            </li>
 <li class="listitem">
-            The parser object
-          </li>
+              The parser object
+            </li>
 <li class="listitem">
-            Another parser called the skip parser
-          </li>
+              Another parser called the skip parser
+            </li>
 </ol></div>
 <p>
           In our example, we wish to skip spaces and tabs. Another parser named
@@ -164,9 +164,7 @@
           Ok, so now let's parse!
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">parse_numbers</span><span class="special">(</span><span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">)</span>
@@ -176,10 +174,10 @@
     <span class="keyword">using</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
 
     <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">phrase_parse</span><span class="special">(</span>
-        <span class="identifier">first</span><span class="special">,</span>                          <span class="callout_bug"><a class="co" name="spirit0co" href="warming_up.html#spirit0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a></span>
-        <span class="identifier">last</span><span class="special">,</span>                           <span class="callout_bug"><a class="co" name="spirit1co" href="warming_up.html#spirit1"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a></span>
-        <span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">double_</span><span class="special">),</span>   <span class="callout_bug"><a class="co" name="spirit2co" href="warming_up.html#spirit2"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a></span>
-        <span class="identifier">space</span>                           <span class="callout_bug"><a class="co" name="spirit3co" href="warming_up.html#spirit3"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a></span>
+        <span class="identifier">first</span><span class="special">,</span>                          <a class="co" name="spirit0co" href="warming_up.html#spirit0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
+        <span class="identifier">last</span><span class="special">,</span>                           <a class="co" name="spirit1co" href="warming_up.html#spirit1"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+        <span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">double_</span><span class="special">),</span>   <a class="co" name="spirit2co" href="warming_up.html#spirit2"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+        <span class="identifier">space</span>                           <a class="co" name="spirit3co" href="warming_up.html#spirit3"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
     <span class="special">);</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">first</span> <span class="special">!=</span> <span class="identifier">last</span><span class="special">)</span> <span class="comment">// fail if we did not get a full match
 </span>        <span class="keyword">return</span> <span class="keyword">false</span><span class="special">;</span>
@@ -187,11 +185,9 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
           </p>
-<p>
-            </p>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit0"></a><a href="#spirit0co"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
@@ -210,8 +206,6 @@
 <td valign="top" align="left"><p> the skip-parser </p></td>
 </tr>
 </table></div>
-<p>
-          </p>
 <p>
         </p>
 <p>

@@ -28,7 +28,7 @@
           Case Sensitivity (<code class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.no_case.description"></a><h6>
-<a name="id945998"></a>
+<a name="id930006"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.description">Description</a>
           </h6>
 <p>
@@ -38,7 +38,7 @@
             parser (and all its children) to be case insensitive.
           </p>
 <a name="spirit.qi.reference.directive.no_case.header"></a><h6>
-<a name="id946026"></a>
+<a name="id930033"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/no_case.hpp&gt;
@@ -48,7 +48,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.no_case.namespace"></a><h6>
-<a name="id946100"></a>
+<a name="id930108"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -70,7 +70,7 @@
             Encoding Namespace</a>.
           </p>
 <a name="spirit.qi.reference.directive.no_case.model_of"></a><h6>
-<a name="id946182"></a>
+<a name="id930189"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.model_of">Model
             of</a>
           </h6>
@@ -93,7 +93,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.no_case.expression_semantics"></a><h6>
-<a name="id946270"></a>
+<a name="id930277"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -133,7 +133,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.no_case.attributes"></a><h6>
-<a name="id946375"></a>
+<a name="id930382"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.attributes">Attributes</a>
           </h6>
 <p>
@@ -175,21 +175,15 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.no_case.complexity"></a><h6>
-<a name="id948892"></a>
+<a name="id930578"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The complexity is defined by the complexity of the subject parser,
-                <code class="computeroutput"><span class="identifier">a</span></code>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The complexity is defined by the complexity of the subject parser,
+              <code class="computeroutput"><span class="identifier">a</span></code>
+            </p></blockquote></div>
 <a name="spirit.qi.reference.directive.no_case.example"></a><h6>
-<a name="id948924"></a>
+<a name="id931289"></a>
             <a class="link" href="no_case.html#spirit.qi.reference.directive.no_case.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -206,9 +200,7 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">no_case</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
@@ -216,22 +208,16 @@
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Simple usage of <code class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></code>:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"X"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span><span class="identifier">char_</span><span class="special">(</span><span class="char">'x'</span><span class="special">)]);</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"6"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span><span class="identifier">alnum</span><span class="special">]);</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>
@@ -240,9 +226,7 @@
             for more details):
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 
@@ -259,8 +243,6 @@
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"ORANGE"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span> <span class="identifier">sym</span> <span class="special">],</span> <span class="identifier">i</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

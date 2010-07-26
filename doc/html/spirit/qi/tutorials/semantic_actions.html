@@ -65,7 +65,7 @@
           simply ignored.
         </p>
 <a name="spirit.qi.tutorials.semantic_actions.examples_of_semantic_actions"></a><h6>
-<a name="id859043"></a>
+<a name="id842088"></a>
           <a class="link" href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.examples_of_semantic_actions">Examples
           of Semantic Actions</a>
         </h6>
@@ -74,30 +74,28 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Using plain function pointer
-          </li>
+              Using plain function pointer
+            </li>
 <li class="listitem">
-            Using simple function object
-          </li>
+              Using simple function object
+            </li>
 <li class="listitem">
-            Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
-            a plain function
-          </li>
+              Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
+              a plain function
+            </li>
 <li class="listitem">
-            Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
-            a member function
-          </li>
+              Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
+              a member function
+            </li>
 <li class="listitem">
-            Using <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
-</li>
+              Using <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
+            </li>
 </ul></div>
 <p>
           Given:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">client</span>
 <span class="special">{</span>
@@ -129,8 +127,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           Take note that with function objects, we need to have an <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>
@@ -152,14 +148,10 @@
           The first example shows how to attach a plain function:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="char">'{'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[&amp;</span><span class="identifier">print</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="char">'}'</span><span class="special">);</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -171,14 +163,10 @@
           The next example shows how to attach a simple function object:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="char">'{'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[</span><span class="identifier">print_action</span><span class="special">()]</span> <span class="special">&gt;&gt;</span> <span class="char">'}'</span><span class="special">);</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -186,15 +174,11 @@
           to 'bind' member functions:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">writer</span> <span class="identifier">w</span><span class="special">;</span>
 <span class="identifier">parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="char">'{'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">writer</span><span class="special">::</span><span class="identifier">print</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">w</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">)]</span> <span class="special">&gt;&gt;</span> <span class="char">'}'</span><span class="special">);</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -202,28 +186,20 @@
           to 'bind' plain functions:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="char">'{'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">print</span><span class="special">,</span> <span class="identifier">_1</span><span class="special">)]</span> <span class="special">&gt;&gt;</span> <span class="char">'}'</span><span class="special">);</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
           Yep, we can also use <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="char">'{'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">_1</span> <span class="special">&lt;&lt;</span> <span class="char">'\n'</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="char">'}'</span><span class="special">);</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -237,7 +213,7 @@
           The examples above can be found here: <a href="../../../../../example/qi/actions.cpp" target="_top">../../example/qi/actions.cpp</a>
         </p>
 <a name="spirit.qi.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id861439"></a>
+<a name="id844794"></a>
           <a class="link" href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>

@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.optional.description"></a><h6>
-<a name="id995304"></a>
+<a name="id978806"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             its operand zero or one time.
           </p>
 <a name="spirit.qi.reference.operator.optional.header"></a><h6>
-<a name="id995332"></a>
+<a name="id978834"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/optional.hpp&gt;
@@ -46,19 +46,13 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.optional.model_of"></a><h6>
-<a name="id995406"></a>
+<a name="id978908"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -69,7 +63,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.optional.expression_semantics"></a><h6>
-<a name="id995478"></a>
+<a name="id978977"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -109,7 +103,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.optional.attributes"></a><h6>
-<a name="id995579"></a>
+<a name="id979078"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.attributes">Attributes</a>
           </h6>
 <p>
@@ -151,20 +145,14 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.optional.complexity"></a><h6>
-<a name="id995749"></a>
+<a name="id979248"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The complexity is defined by the complexity of the operand, <code class="computeroutput"><span class="identifier">a</span></code>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The complexity is defined by the complexity of the operand, <code class="computeroutput"><span class="identifier">a</span></code>
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.optional.example"></a><h6>
-<a name="id995781"></a>
+<a name="id979276"></a>
             <a class="link" href="optional.html#spirit.qi.reference.operator.optional.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -178,14 +166,10 @@
             </p></td></tr>
 </table></div>
 <p>
-            </p>
+            Some using declarations:
+          </p>
 <p>
-              Some using declarations:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lexeme</span><span class="special">;</span>
@@ -194,18 +178,12 @@
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">at_c</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">;</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Parse a person info with name (in quotes) optional age <sup>[<a name="id979489" href="#ftn.id979489" class="footnote">9</a>]</sup> and optional sex, all separated by comma.
+          </p>
 <p>
-              Parse a person info with name (in quotes) optional age
-              <sup>[<a name="id995997" href="#ftn.id995997" class="footnote">9</a>]</sup>
-              and optional sex, all separated by comma.
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">attr</span><span class="special">;</span>
 
@@ -225,14 +203,12 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>        
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id995997" href="#id995997" class="para">9</a>] </sup>
-                  James Bond is shy about his age :-)
-                </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id979489" href="#id979489" class="para">9</a>] </sup>
+              James Bond is shy about his age :-)
+            </p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

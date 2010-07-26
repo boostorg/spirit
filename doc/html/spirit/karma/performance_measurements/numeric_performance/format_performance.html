@@ -45,9 +45,7 @@
             Code used to measure the performance for sprintf:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -55,16 +53,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Code used to measure the performance for standard iostreams:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stringstream</span> <span class="identifier">strm</span><span class="special">;</span>
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -81,16 +75,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Code used to measure the performance for <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">generated</span><span class="special">;</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span> <span class="identifier">outformat</span><span class="special">(</span><span class="string">"[%-14.3f%-14.3f]"</span><span class="special">);</span>
@@ -98,17 +88,13 @@
     <span class="identifier">generated</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">str</span><span class="special">(</span><span class="identifier">outformat</span> <span class="special">%</span> <span class="number">12345.12345</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">);</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             The following code shows the common definitions used by all <span class="emphasis"><em>Spirit.Karma</em></span>
             performance measurements as listed below:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">double3_policy</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>   
@@ -122,17 +108,13 @@
 <span class="identifier">double3_type</span> <span class="keyword">const</span> <span class="identifier">double3</span> <span class="special">=</span> <span class="identifier">double3_type</span><span class="special">();</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Code used to measure the performance for <span class="emphasis"><em>Spirit.Karma</em></span>
             using a plain character buffer:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -144,8 +126,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             The following table shows the overall performance results collected while
@@ -154,7 +134,7 @@
             of the results see this <a class="link" href="format_performance.html#spirit.karma.format_performance" title="Figure&#160;5.&#160;Performance comparison for a sequence of several items">figure</a>.
           </p>
 <div class="table">
-<a name="id1175836"></a><p class="title"><b>Table&#160;7.&#160;Performance comparison for a sequence of several items (all times
+<a name="id1158803"></a><p class="title"><b>Table&#160;7.&#160;Performance comparison for a sequence of several items (all times
             in [s], `1e6` iterations)</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a sequence of several items (all times
             in [s], `1e6` iterations)">

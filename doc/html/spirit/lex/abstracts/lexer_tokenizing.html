@@ -28,7 +28,7 @@
         Input Data</a>
 </h4></div></div></div>
 <a name="spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function"></a><h6>
-<a name="id1189103"></a>
+<a name="id1172933"></a>
           <a class="link" href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function">The
           tokenize function</a>
         </h6>
@@ -42,9 +42,7 @@
           Quickstart 2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
@@ -71,8 +69,6 @@
     <span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span> <span class="identifier">word</span><span class="special">,</span> <span class="identifier">eol</span><span class="special">,</span> <span class="identifier">any</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -140,17 +136,13 @@
           a look at <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_functor.cpp</a>:
         </p>
 <p>
-          </p>
+          The main function simply loads the given file into memory (as a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>), instantiates an instance of
+          the token definition template using the correct iterator type (<code class="computeroutput"><span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;</span></code>), and finally calls <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span></code>, passing an instance of the
+          counter function object. The return value of <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span><span class="special">()</span></code> will be <code class="computeroutput"><span class="keyword">true</span></code>
+          if the whole input sequence has been successfully tokenized, and <code class="computeroutput"><span class="keyword">false</span></code> otherwise.
+        </p>
 <p>
-            The main function simply loads the given file into memory (as a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>), instantiates an instance of
-            the token definition template using the correct iterator type (<code class="computeroutput"><span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;</span></code>), and finally calls <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span></code>, passing an instance of the
-            counter function object. The return value of <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span><span class="special">()</span></code> will be <code class="computeroutput"><span class="keyword">true</span></code>
-            if the whole input sequence has been successfully tokenized, and <code class="computeroutput"><span class="keyword">false</span></code> otherwise.
-          </p>
-<p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
@@ -183,8 +175,6 @@
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>

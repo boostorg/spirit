@@ -43,25 +43,25 @@
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            Alternates: e.g. <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-            <span class="identifier">b</span></code>. Try <code class="computeroutput"><span class="identifier">a</span></code>
-            first. If it succeeds, good. If not, try the next alternative, <code class="computeroutput"><span class="identifier">b</span></code>.
-          </li>
+              Alternates: e.g. <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span></code>.
+              Try <code class="computeroutput"><span class="identifier">a</span></code> first. If it
+              succeeds, good. If not, try the next alternative, <code class="computeroutput"><span class="identifier">b</span></code>.
+            </li>
 <li class="listitem">
-            Optionals: e.g. -p. Match the parser p zero or one time.
-          </li>
+              Optionals: e.g. -p. Match the parser p zero or one time.
+            </li>
 </ol></div>
 <p>
           The complex parser presented above reads as:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            One or two real numbers in parantheses, separated by comma (the second
-            number is optional)
-          </li>
+              One or two real numbers in parantheses, separated by comma (the second
+              number is optional)
+            </li>
 <li class="listitem">
-<span class="bold"><strong>OR</strong></span> a single real number.
-          </li>
+              <span class="bold"><strong>OR</strong></span> a single real number.
+            </li>
 </ul></div>
 <p>
           This parser can parse complex numbers of the form:
@@ -74,9 +74,7 @@
           Here goes, this time with actions:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">client</span>
 <span class="special">{</span>
@@ -110,8 +108,6 @@
     <span class="special">}</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>

@@ -29,18 +29,17 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.difference.description"></a><h6>
-<a name="id983934"></a>
+<a name="id966266"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.description">Description</a>
           </h6>
 <p>
             The difference operator, <code class="computeroutput"><span class="identifier">a</span>
             <span class="special">-</span> <span class="identifier">b</span></code>,
             is a binary operator that matches the first (LHS) operand but not the
-            second (RHS).
-            <sup>[<a name="id983962" href="#ftn.id983962" class="footnote">8</a>]</sup>
+            second (RHS). <sup>[<a name="id966295" href="#ftn.id966295" class="footnote">8</a>]</sup>
           </p>
 <a name="spirit.qi.reference.operator.difference.header"></a><h6>
-<a name="id984002"></a>
+<a name="id966334"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/difference.hpp&gt;
@@ -50,19 +49,13 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.difference.model_of"></a><h6>
-<a name="id984623"></a>
+<a name="id966409"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/binaryparser.html" title="BinaryParser"><code class="computeroutput"><span class="identifier">BinaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/binaryparser.html" title="BinaryParser"><code class="computeroutput"><span class="identifier">BinaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -73,7 +66,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.difference.expression_semantics"></a><h6>
-<a name="id984702"></a>
+<a name="id966484"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -114,7 +107,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.attributes"></a><h6>
-<a name="id984815"></a>
+<a name="id966597"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.attributes">Attributes</a>
           </h6>
 <p>
@@ -157,21 +150,15 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.complexity"></a><h6>
-<a name="id985034"></a>
+<a name="id972722"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The complexity of the difference parser is defined by the sum of
-                the complexities of both operands.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The complexity of the difference parser is defined by the sum of the
+              complexities of both operands.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.difference.example"></a><h6>
-<a name="id985058"></a>
+<a name="id972742"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -185,44 +172,34 @@
             </p></td></tr>
 </table></div>
 <p>
-            </p>
+            Some using declarations:
+          </p>
 <p>
-              Some using declarations:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Parse a C/C++ style comment:
+          </p>
 <p>
-              Parse a C/C++ style comment:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"/*A Comment*/"</span><span class="special">,</span> <span class="string">"/*"</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="string">"*/"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="string">"*/"</span><span class="special">);</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id983962" href="#id983962" class="para">8</a>] </sup>
-                Unlike classic Spirit, with Spirit2, the expression will always fail
-                if the RHS is a successful match regardless if the RHS matches less
-                characters. For example, the rule <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"policeman"</span><span class="special">)</span> <span class="special">-</span> <span class="string">"police"</span></code> will always fail
-                to match. Spirit2 does not count the matching chars while parsing
-                and there is no reliable and fast way to check if the LHS matches
-                more than the RHS.
-              </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id966295" href="#id966295" class="para">8</a>] </sup>
+              Unlike classic Spirit, with Spirit2, the expression will always fail
+              if the RHS is a successful match regardless if the RHS matches less
+              characters. For example, the rule <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"policeman"</span><span class="special">)</span> <span class="special">-</span> <span class="string">"police"</span></code> will always fail to
+              match. Spirit2 does not count the matching chars while parsing and
+              there is no reliable and fast way to check if the LHS matches more
+              than the RHS.
+            </p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

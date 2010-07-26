@@ -196,6 +196,7 @@ points might need to be implemented as well.
     [[__customize_deref_iterator__]       [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
     [[__customize_next_iterator__]        [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
     [[__customize_compare_iterators__]    [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+    [[__customize_clear_value__]          [Qi: __qi_list__, __qi_kleene__, __qi_plus__, [qi_repeat Repeat].]]
 ]
 
 [heading Example]

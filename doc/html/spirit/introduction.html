@@ -29,11 +29,9 @@
 <p>
       Boost Spirit is an object-oriented, recursive-descent parser and output generation
       library for C++. It allows you to write grammars and format descriptions using
-      a format similar to Extended Backus Naur Form (EBNF)
-      <sup>[<a name="id847329" href="#ftn.id847329" class="footnote">2</a>]</sup>
-      directly in C++. These inline grammar specifications can mix freely with other
-      C++ code and, thanks to the generative power of C++ templates, are immediately
-      executable. In retrospect, conventional compiler-compilers or parser-generators
+      a format similar to Extended Backus Naur Form (EBNF)<sup>[<a name="id831165" href="#ftn.id831165" class="footnote">2</a>]</sup> directly in C++. These inline grammar specifications can mix freely
+      with other C++ code and, thanks to the generative power of C++ templates, are
+      immediately executable. In retrospect, conventional compiler-compilers or parser-generators
       have to perform an additional translation step from the source EBNF code to
       C or C++ code.
     </p>
@@ -44,14 +42,14 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-        one for creating parser grammars,
-      </li>
+          one for creating parser grammars,
+        </li>
 <li class="listitem">
-        one for the specification of the required tokens to be used for parsing,
-      </li>
+          one for the specification of the required tokens to be used for parsing,
+        </li>
 <li class="listitem">
-        and one for the description of the required output formats.
-      </li>
+          and one for the description of the required output formats.
+        </li>
 </ul></div>
 <p>
       Since the target input grammars and output formats are written entirely in
@@ -73,33 +71,34 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-<a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
-        This is the almost-unchanged code base taken from the former Boost Spirit
-        V1.8 distribution. It has been moved into the namespace boost::spirit::classic.
-        A special compatibility layer has been added to ensure complete compatibility
-        with existing code using Spirit V1.8.
-      </li>
+          <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
+          This is the almost-unchanged code base taken from the former Boost Spirit
+          V1.8 distribution. It has been moved into the namespace boost::spirit::classic.
+          A special compatibility layer has been added to ensure complete compatibility
+          with existing code using Spirit V1.8.
+        </li>
 <li class="listitem">
-<span class="emphasis"><em>Spirit.Qi</em></span>: This is the parser library allowing you to
-        build recursive descent parsers. The exposed domain-specific language can
-        be used to describe the grammars to implement, and the rules for storing
-        the parsed information.
-      </li>
+          <span class="emphasis"><em>Spirit.Qi</em></span>: This is the parser library allowing you
+          to build recursive descent parsers. The exposed domain-specific language
+          can be used to describe the grammars to implement, and the rules for storing
+          the parsed information.
+        </li>
 <li class="listitem">
-<span class="emphasis"><em>Spirit.Lex</em></span>: This is the library usable to create tokenizers
-        (lexers). The domain-specific language exposed by <span class="emphasis"><em>Spirit.Lex</em></span>
-        allows you to define regular expressions used to match tokens (create token
-        definitions), associate these regular expressions with code to be executed
-        whenever they are matched, and to add the token definitions to the lexical
-        analyzer.
-      </li>
+          <span class="emphasis"><em>Spirit.Lex</em></span>: This is the library usable to create tokenizers
+          (lexers). The domain-specific language exposed by <span class="emphasis"><em>Spirit.Lex</em></span>
+          allows you to define regular expressions used to match tokens (create token
+          definitions), associate these regular expressions with code to be executed
+          whenever they are matched, and to add the token definitions to the lexical
+          analyzer.
+        </li>
 <li class="listitem">
-<span class="emphasis"><em>Spirit.Karma</em></span>: This is the generator library allowing
-        you to create code for recursive descent, data type-driven output formatting.
-        The exposed domain-specific language is almost equivalent to the parser description
-        language used in <span class="emphasis"><em>Spirit.Qi</em></span>, except that it is used to
-        describe the required output format to generate from a given data structure.
-      </li>
+          <span class="emphasis"><em>Spirit.Karma</em></span>: This is the generator library allowing
+          you to create code for recursive descent, data type-driven output formatting.
+          The exposed domain-specific language is almost equivalent to the parser
+          description language used in <span class="emphasis"><em>Spirit.Qi</em></span>, except that
+          it is used to describe the required output format to generate from a given
+          data structure.
+        </li>
 </ul></div>
 <p>
       </p>
@@ -136,7 +135,7 @@
 <p><br class="figure-break">
     </p>
 <a name="spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_"></a><h4>
-<a name="id847546"></a>
+<a name="id831408"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_">A
       Quick Overview of Parsing with <span class="emphasis"><em>Spirit.Qi</em></span></a>
     </h4>
@@ -227,7 +226,7 @@
       <code class="computeroutput"><span class="special">;</span></code>.
     </p>
 <a name="spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_"></a><h4>
-<a name="id850346"></a>
+<a name="id833457"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_">A
       Quick Overview of Output Generation with <span class="emphasis"><em>Spirit.Karma</em></span></a>
     </h4>
@@ -260,7 +259,7 @@
       of the same <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code>:
     </p>
 <div class="table">
-<a name="id850687"></a><p class="title"><b>Table&#160;2.&#160;Different output formats for `std::vector&lt;int&gt;`</b></p>
+<a name="id833798"></a><p class="title"><b>Table&#160;2.&#160;Different output formats for `std::vector&lt;int&gt;`</b></p>
 <div class="table-contents"><table class="table" summary="Different output formats for `std::vector&lt;int&gt;`">
 <colgroup>
 <col>
@@ -380,7 +379,7 @@
       next table gives some related examples.
     </p>
 <div class="table">
-<a name="id851082"></a><p class="title"><b>Table&#160;3.&#160;Different data types usable with the output format `*(int_ &lt;&lt;
+<a name="id834192"></a><p class="title"><b>Table&#160;3.&#160;Different data types usable with the output format `*(int_ &lt;&lt;
       eol)`</b></p>
 <div class="table-contents"><table class="table" summary="Different data types usable with the output format `*(int_ &lt;&lt;
       eol)`">
@@ -454,9 +453,9 @@
 </div>
 <br class="table-break"><div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id847329" href="#id847329" class="para">2</a>] </sup>
-          <a href="http://www.cl.cam.ac.uk/%7Emgk25/iso-14977.pdf" target="_top">ISO-EBNF</a>
-        </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id831165" href="#id831165" class="para">2</a>] </sup>
+        <a href="http://www.cl.cam.ac.uk/%7Emgk25/iso-14977.pdf" target="_top">ISO-EBNF</a>
+      </p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

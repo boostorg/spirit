@@ -28,7 +28,7 @@
           Native Endian</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.binary.binary_native.description"></a><h6>
-<a name="id929015"></a>
+<a name="id912647"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             of the target architecture.
           </p>
 <a name="spirit.qi.reference.binary.binary_native.header"></a><h6>
-<a name="id929037"></a>
+<a name="id912668"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/binary.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.binary.binary_native.namespace"></a><h6>
-<a name="id929111"></a>
+<a name="id912743"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -97,19 +97,13 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.binary.binary_native.model_of"></a><h6>
-<a name="id929343"></a>
+<a name="id912974"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -140,7 +134,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.binary.binary_native.expression_semantics"></a><h6>
-<a name="id929483"></a>
+<a name="id913111"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -265,7 +259,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.binary.binary_native.attributes"></a><h6>
-<a name="id933075"></a>
+<a name="id914512"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -385,20 +379,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.binary.binary_native.complexity"></a><h6>
-<a name="id933454"></a>
+<a name="id914891"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                O(N), where N is the number of bytes parsed
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              O(N), where N is the number of bytes parsed
+            </p></blockquote></div>
 <a name="spirit.qi.reference.binary.binary_native.example"></a><h6>
-<a name="id933478"></a>
+<a name="id914912"></a>
             <a class="link" href="binary_native.html#spirit.qi.reference.binary.binary_native.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -412,14 +400,10 @@
             </p></td></tr>
 </table></div>
 <p>
-            </p>
+            Using declarations and variables:
+          </p>
 <p>
-              Using declarations and variables:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">byte_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">word</span><span class="special">;</span>
@@ -432,16 +416,12 @@
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">ul</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Basic usage of the native binary parsers for little endian platforms:
+          </p>
 <p>
-              Basic usage of the native binary parsers for little endian platforms:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01"</span><span class="special">,</span> <span class="identifier">byte_</span><span class="special">,</span> <span class="identifier">uc</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">uc</span> <span class="special">==</span> <span class="number">0x01</span><span class="special">);</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02"</span><span class="special">,</span> <span class="identifier">word</span><span class="special">,</span> <span class="identifier">us</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">us</span> <span class="special">==</span> <span class="number">0x0201</span><span class="special">);</span>
@@ -456,16 +436,12 @@
     <span class="identifier">qword</span><span class="special">(</span><span class="number">0</span><span class="identifier">x0807060504030201LL</span><span class="special">));</span>
 </pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Basic usage of the native binary parsers for big endian platforms:
+          </p>
 <p>
-              Basic usage of the native binary parsers for big endian platforms:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01"</span><span class="special">,</span> <span class="identifier">byte_</span><span class="special">,</span> <span class="identifier">uc</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">uc</span> <span class="special">==</span> <span class="number">0x01</span><span class="special">);</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02"</span><span class="special">,</span> <span class="identifier">word</span><span class="special">,</span> <span class="identifier">us</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">us</span> <span class="special">==</span>  <span class="number">0x0102</span><span class="special">);</span>
@@ -479,8 +455,6 @@
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04\x05\x06\x07\x08"</span><span class="special">,</span>
     <span class="identifier">qword</span><span class="special">(</span><span class="number">0</span><span class="identifier">x0102030405060708LL</span><span class="special">));</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

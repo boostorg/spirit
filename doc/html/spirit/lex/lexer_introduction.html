@@ -39,24 +39,24 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          A token is a sequence of consecutive characters having a collective meaning.
-          Tokens may have attributes specific to the token type, carrying additional
-          information about the matched character sequence.
-        </li>
+            A token is a sequence of consecutive characters having a collective meaning.
+            Tokens may have attributes specific to the token type, carrying additional
+            information about the matched character sequence.
+          </li>
 <li class="listitem">
-          A pattern is a rule expressed as a regular expression and describing how
-          a particular token can be formed. For example, <code class="literal">[A-Za-z][A-Za-z_0-9]*</code>
-          is a pattern for a rule matching C++ identifiers.
-        </li>
+            A pattern is a rule expressed as a regular expression and describing
+            how a particular token can be formed. For example, <code class="literal">[A-Za-z][A-Za-z_0-9]*</code>
+            is a pattern for a rule matching C++ identifiers.
+          </li>
 <li class="listitem">
-          Characters between tokens are called whitespace; these include spaces,
-          tabs, newlines, and formfeeds. Many people also count comments as whitespace,
-          though since some tools such as lint look at comments, this method is not
-          perfect.
-        </li>
+            Characters between tokens are called whitespace; these include spaces,
+            tabs, newlines, and formfeeds. Many people also count comments as whitespace,
+            though since some tools such as lint look at comments, this method is
+            not perfect.
+          </li>
 </ul></div>
 <a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h5>
-<a name="id1176231"></a>
+<a name="id1159209"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
         Use a Separate Lexer?</a>
       </h5>
@@ -77,17 +77,17 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          Type 0: Unrestricted grammars (e.g., natural languages)
-        </li>
+            Type 0: Unrestricted grammars (e.g., natural languages)
+          </li>
 <li class="listitem">
-          Type 1: Context-Sensitive grammars
-        </li>
+            Type 1: Context-Sensitive grammars
+          </li>
 <li class="listitem">
-          Type 2: Context-Free grammars
-        </li>
+            Type 2: Context-Free grammars
+          </li>
 <li class="listitem">
-          Type 3: Regular grammars
-        </li>
+            Type 3: Regular grammars
+          </li>
 </ul></div>
 <p>
         The complexity of these grammars increases from regular grammars being the
@@ -154,7 +154,7 @@
         to use the provided functionality to build more complex grammar recognizers.
       </p>
 <a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id1176440"></a>
+<a name="id1159591"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
         of using <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>
@@ -172,19 +172,19 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          The definition of tokens is done using regular expressions (patterns)
-        </li>
+            The definition of tokens is done using regular expressions (patterns)
+          </li>
 <li class="listitem">
-          The token definitions can refer to special substitution strings (pattern
-          macros) simplifying pattern definitions
-        </li>
+            The token definitions can refer to special substitution strings (pattern
+            macros) simplifying pattern definitions
+          </li>
 <li class="listitem">
-          The generated lexical scanner may have multiple start states
-        </li>
+            The generated lexical scanner may have multiple start states
+          </li>
 <li class="listitem">
-          It is possible to attach code to any of the token definitions; this code
-          gets executed whenever the corresponding token pattern has been matched
-        </li>
+            It is possible to attach code to any of the token definitions; this code
+            gets executed whenever the corresponding token pattern has been matched
+          </li>
 </ul></div>
 <p>
         Even if it is possible to use <span class="emphasis"><em>Spirit.Lex</em></span> to generate
@@ -201,7 +201,7 @@
         This dynamic flexibility allows you to speed up the development of your application.
       </p>
 <a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id1176543"></a>
+<a name="id1159708"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
         Library Structure of <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>

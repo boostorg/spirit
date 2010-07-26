@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.basics"></a><a class="link" href="basics.html" title="Basics">Basics</a>
 </h4></div></div></div>
 <a name="spirit.qi.reference.basics.lazy_argument"></a><h6>
-<a name="id905198"></a>
+<a name="id888328"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
         </h6>
 <p>
@@ -51,7 +51,7 @@
           second argument. This is done for uniformity with Semantic Actions).
         </p>
 <a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h6>
-<a name="id905335"></a>
+<a name="id888464"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h6>
@@ -81,17 +81,17 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            boost::spirit::ascii
-          </li>
+              boost::spirit::ascii
+            </li>
 <li class="listitem">
-            boost::spirit::iso8859_1
-          </li>
+              boost::spirit::iso8859_1
+            </li>
 <li class="listitem">
-            boost::spirit::standard
-          </li>
+              boost::spirit::standard
+            </li>
 <li class="listitem">
-            boost::spirit::standard_wide
-          </li>
+              boost::spirit::standard_wide
+            </li>
 </ul></div>
 <p>
           For ease of use, the components in this namespaces are also brought into
@@ -99,20 +99,20 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            boost::spirit::qi::ascii
-          </li>
+              boost::spirit::qi::ascii
+            </li>
 <li class="listitem">
-            boost::spirit::qi::iso8859_1
-          </li>
+              boost::spirit::qi::iso8859_1
+            </li>
 <li class="listitem">
-            boost::spirit::qi::standard
-          </li>
+              boost::spirit::qi::standard
+            </li>
 <li class="listitem">
-            boost::spirit::qi::standard_wide
-          </li>
+              boost::spirit::qi::standard_wide
+            </li>
 </ul></div>
 <a name="spirit.qi.reference.basics.examples"></a><h6>
-<a name="id905518"></a>
+<a name="id888679"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
         </h6>
 <p>
@@ -124,9 +124,7 @@
           Some includes:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -137,8 +135,6 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstdlib</span><span class="special">&gt;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           Our test functions:
@@ -147,9 +143,7 @@
           These functions test the parsers without attributes.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_parser</span><span class="special">(</span>
@@ -181,16 +175,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           These functions test the parsers with user supplied attributes.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_parser_attr</span><span class="special">(</span>
@@ -222,8 +212,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The <code class="computeroutput"><span class="identifier">print_info</span></code> utility
@@ -231,9 +219,7 @@
           class.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">printer</span>
 <span class="special">{</span>
@@ -261,15 +247,13 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.qi.reference.basics.string"></a><h6>
-<a name="id908134"></a>
+<a name="id892372"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.string">String</a>
         </h6>
 <a name="spirit.qi.reference.basics.header"></a><h6>
-<a name="id908147"></a>
+<a name="id892386"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;
@@ -370,7 +354,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.basics.models"></a><h6>
-<a name="id908627"></a>
+<a name="id892866"></a>
           <a class="link" href="basics.html#spirit.qi.reference.basics.models">Models</a>
         </h6>
 <p>
@@ -378,14 +362,14 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            any literal string, e.g. "Hello, World",
-          </li>
+              any literal string, e.g. "Hello, World",
+            </li>
 <li class="listitem">
-            a pointer/reference to a null-terminated array of characters
-          </li>
+              a pointer/reference to a null-terminated array of characters
+            </li>
 <li class="listitem">
-            a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
-</li>
+              a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
+            </li>
 </ul></div>
 <p>
           The namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code> is open for users to provide their

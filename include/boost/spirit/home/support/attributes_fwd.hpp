@@ -126,7 +126,7 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // Determine, whether T is a variant like type
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Domain>
+    template <typename T, typename Domain = void>
     struct not_is_variant;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -181,13 +181,17 @@ namespace boost { namespace spirit { namespace traits
     struct print_attribute_debug;
 
     template <typename Out, typename T>
-    void print_attribute(Out& out, T const& val);
+    void print_attribute(Out&, T const&);
 
+    template <typename Out>
+    void print_attribute(Out&, unused_type);
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename Enable = void>
     struct token_printer_debug;
 
     template<typename Out, typename T>
-    void print_token(Out& out, T const& val);
+    void print_token(Out&, T const&);
 
 }}}
 

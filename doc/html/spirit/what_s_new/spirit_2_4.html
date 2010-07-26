@@ -27,20 +27,20 @@
 <a name="spirit.what_s_new.spirit_2_4"></a><a class="link" href="spirit_2_4.html" title="Spirit V2.4"> Spirit V2.4</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_"></a><h5>
-<a name="id843541"></a>
+<a name="id821020"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.3 (Boost V1.43.0) to V2.4 (Boost V1.44.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4.new_features"></a><h5>
-<a name="id843562"></a>
+<a name="id821042"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-          The customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> now takes
-          an additional template parameter <code class="computeroutput"><span class="identifier">Domain</span></code>
-          allowing to better specialize the customization point for either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span></code> or <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span></code>.
-        </li></ul></div>
+            The customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> now takes
+            an additional template parameter <code class="computeroutput"><span class="identifier">Domain</span></code>
+            allowing to better specialize the customization point for either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span></code> or <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span></code>.
+          </li></ul></div>
 <div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../images/important.png"></td>
@@ -55,104 +55,108 @@
 </table></div>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          Semantic actions in <span class="emphasis"><em>Spirit.Qi</em></span> now implicitly invoke
-          the function <code class="computeroutput"><span class="identifier">pre</span></code> of the
-          customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> to convert
-          the supplied attribute to the exposed attribute type, as needed. The functions
-          <code class="computeroutput"><span class="identifier">post</span></code> and <code class="computeroutput"><span class="identifier">fail</span></code> of this customization point are
-          not invoked by this component (as this would not make any sense).
-        </li>
+            Semantic actions in <span class="emphasis"><em>Spirit.Qi</em></span> now implicitly invoke
+            the function <code class="computeroutput"><span class="identifier">pre</span></code> of the
+            customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> to convert
+            the supplied attribute to the exposed attribute type, as needed. The
+            functions <code class="computeroutput"><span class="identifier">post</span></code> and <code class="computeroutput"><span class="identifier">fail</span></code> of this customization point are
+            not invoked by this component (as this would not make any sense).
+          </li>
 <li class="listitem">
-          Semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> now implicitly invoke
-          the function <code class="computeroutput"><span class="identifier">pre</span></code> of the
-          customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> to convert
-          the supplied attribute to the consumend attribute type, as needed.
-        </li>
+            Semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> now implicitly
+            invoke the function <code class="computeroutput"><span class="identifier">pre</span></code>
+            of the customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> to convert
+            the supplied attribute to the consumend attribute type, as needed.
+          </li>
 <li class="listitem">
-          Added the <span class="emphasis"><em>Spirit.Karma</em></span><a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a> directive which is semantically
-          equivalent to the <span class="emphasis"><em>Spirit.Karma</em></span><a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive except that it
-          will not execute the embedded generator.
-        </li>
+            Added the <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a> directive which is semantically
+            equivalent to the <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive except that it
+            will not execute the embedded generator.
+          </li>
 <li class="listitem">
-          Added debug support to <span class="emphasis"><em>Spirit.Karma</em></span> rules.
-        </li>
+            Added debug support to <span class="emphasis"><em>Spirit.Karma</em></span> rules.
+          </li>
 <li class="listitem">
-          Added strict mode to <span class="emphasis"><em>Spirit.Karma</em></span>, leaving the current
-          behavior (unchanged) as relaxed mode. Added <span class="emphasis"><em>Spirit.Karma</em></span>
-          compile time directives <code class="computeroutput"><span class="identifier">strict</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">relaxed</span><span class="special">[]</span></code> allowing to switch between the two.
-        </li>
+            Added strict mode to <span class="emphasis"><em>Spirit.Karma</em></span>, leaving the current
+            behavior (unchanged) as relaxed mode. Added <span class="emphasis"><em>Spirit.Karma</em></span>
+            compile time directives <code class="computeroutput"><span class="identifier">strict</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">relaxed</span><span class="special">[]</span></code> allowing to switch between the two.
+          </li>
 <li class="listitem">
-          Added <span class="emphasis"><em>Spirit.Karma</em></span><a class="link" href="../karma/reference/directive/duplicate.html" title="Duplicate Attribute (duplicate[])"><code class="computeroutput"><span class="identifier">duplicate</span></code></a> directive which duplicates
-          the supplied attribute to all elements of an embedded generator sequence.
-        </li>
+            Added <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/duplicate.html" title="Duplicate Attribute (duplicate[])"><code class="computeroutput"><span class="identifier">duplicate</span></code></a> directive which duplicates
+            the supplied attribute to all elements of an embedded generator sequence.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4.bug_fixes"></a><h5>
-<a name="id843818"></a>
+<a name="id821324"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          Components in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
-          now accept one element Fusion sequences as their attributes as long as
-          the element in the Fusion sequence is compatible with the component's attribute
-          type.
-        </li>
+            Components in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+            now accept one element Fusion sequences as their attributes as long as
+            the element in the Fusion sequence is compatible with the component's
+            attribute type.
+          </li>
 <li class="listitem">
-          The character range parser and generator components can now additionally
-          be written as <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a"</span><span class="special">,</span>
-          <span class="string">"z"</span><span class="special">)</span></code>
-          instead of <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">,</span> <span class="char">'z'</span><span class="special">)</span></code> making it consistent with the syntax of
-          the <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">)</span></code> component
-          (which can be written as <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a"</span><span class="special">)</span></code> as well). Please note that the mixed syntax
-          forms, i.e. <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">,</span> <span class="string">"z"</span><span class="special">)</span></code> and <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a"</span><span class="special">,</span> <span class="char">'z'</span><span class="special">)</span></code>,
-          are not supported.
-        </li>
+            The character range parser and generator components can now additionally
+            be written as <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a"</span><span class="special">,</span>
+            <span class="string">"z"</span><span class="special">)</span></code>
+            instead of <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">,</span> <span class="char">'z'</span><span class="special">)</span></code> making it consistent with the syntax
+            of the <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">)</span></code> component
+            (which can be written as <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a"</span><span class="special">)</span></code> as well). Please note that the mixed
+            syntax forms, i.e. <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">,</span>
+            <span class="string">"z"</span><span class="special">)</span></code>
+            and <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a"</span><span class="special">,</span>
+            <span class="char">'z'</span><span class="special">)</span></code>,
+            are not supported.
+          </li>
 <li class="listitem">
-          Fixed attribute handling in <span class="emphasis"><em>Spirit.Karma</em></span> sequences
-          when all elements of that sequence consume either the same attribute type
-          or containers of that attribute type and the passed in attribute is a container
-          of that attribute type as well. In this case using a repetitive container
-          was supported only when it was the last element of the sequence. Now it
-          is possible to have a <a class="link" href="../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code> generator
-          at any position (well, actually you can have any repetitive container at
-          any position now, but this doesn't always make sense as it normally would
-          eat up all supplied attribute values).
-        </li>
+            Fixed attribute handling in <span class="emphasis"><em>Spirit.Karma</em></span> sequences
+            when all elements of that sequence consume either the same attribute
+            type or containers of that attribute type and the passed in attribute
+            is a container of that attribute type as well. In this case using a repetitive
+            container was supported only when it was the last element of the sequence.
+            Now it is possible to have a <a class="link" href="../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+            generator at any position (well, actually you can have any repetitive
+            container at any position now, but this doesn't always make sense as
+            it normally would eat up all supplied attribute values).
+          </li>
 <li class="listitem">
-          Fixed debug output for variants where a variant element is an STL sequence.
-        </li>
+            Fixed debug output for variants where a variant element is an STL sequence.
+          </li>
 <li class="listitem">
-          Fixed a problem in multi_pass, avoiding to loose a character at end of
-          input when switching iterators.
-        </li>
+            Fixed a problem in multi_pass, avoiding to loose a character at end of
+            input when switching iterators.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_"></a><h5>
-<a name="id844035"></a>
+<a name="id826476"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.3 (Boost V1.43.0) to V2.4
         (Boost V1.44.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4.new_lexer_features"></a><h5>
-<a name="id844053"></a>
+<a name="id826494"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.new_lexer_features">New Lexer
         Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-          The lexer is now well integrated with the debug output generated by Qi's
-          simple_trace utility. Tokens are printed as: '&lt;' matched sequence '&gt;'.
-        </li></ul></div>
+            The lexer is now well integrated with the debug output generated by Qi's
+            simple_trace utility. Tokens are printed as: '&lt;' matched sequence
+            '&gt;'.
+          </li></ul></div>
 <a name="spirit.what_s_new.spirit_2_4.lexer_bug_fixes"></a><h5>
-<a name="id844074"></a>
+<a name="id826518"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.lexer_bug_fixes">Lexer Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          Fixed a problem with using lex::_val as a rvalue in lexer semantic expressions.
-        </li>
+            Fixed a problem with using lex::_val as a rvalue in lexer semantic expressions.
+          </li>
 <li class="listitem">
-          Token values are now available for introspection (as an iterator_range)
-          inside lexer semantic expressions as well.
-        </li>
+            Token values are now available for introspection (as an iterator_range)
+            inside lexer semantic expressions as well.
+          </li>
 </ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

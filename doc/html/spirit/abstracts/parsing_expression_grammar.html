@@ -28,12 +28,9 @@
       Expression Grammar</a>
 </h3></div></div></div>
 <p>
-        Parsing Expression Grammars (PEG)
-        <sup>[<a name="id852406" href="#ftn.id852406" class="footnote">6</a>]</sup>
-        are a derivative of Extended Backus-Naur Form (EBNF)
-        <sup>[<a name="id852418" href="#ftn.id852418" class="footnote">7</a>]</sup>
-        with a different interpretation, designed to represent a recursive descent
-        parser. A PEG can be directly represented as a recursive-descent parser.
+        Parsing Expression Grammars (PEG) <sup>[<a name="id835571" href="#ftn.id835571" class="footnote">6</a>]</sup> are a derivative of Extended Backus-Naur Form (EBNF) <sup>[<a name="id835583" href="#ftn.id835583" class="footnote">7</a>]</sup> with a different interpretation, designed to represent a recursive
+        descent parser. A PEG can be directly represented as a recursive-descent
+        parser.
       </p>
 <p>
         Like EBNF, PEG is a formal grammar for describing a formal language in terms
@@ -42,7 +39,7 @@
         Abstract Syntax Tree) for each PEG grammar.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.sequences"></a><h5>
-<a name="id852438"></a>
+<a name="id835603"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
       </h5>
 <p>
@@ -54,15 +51,9 @@
         The PEG expression above states that, in order for this to succeed, <code class="computeroutput"><span class="identifier">b</span></code> must follow <code class="computeroutput"><span class="identifier">a</span></code>.
         Here's the syntax diagram:
       </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-          </p>
-<p>
-            <span class="inlinemediaobject"><img src="../.././images/sequence.png" alt="sequence"></span>
-          </p>
-<p>
-        </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+          <span class="inlinemediaobject"><img src="../.././images/sequence.png" alt="sequence"></span>
+        </p></blockquote></div>
 <p>
         Here's a trivial example:
       </p>
@@ -84,7 +75,7 @@
         </p></td></tr>
 </table></div>
 <a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a><h5>
-<a name="id852570"></a>
+<a name="id835731"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
       </h5>
 <p>
@@ -111,15 +102,9 @@
         simply match <code class="computeroutput"><span class="identifier">a</span></code> <span class="bold"><strong>or</strong></span> <code class="computeroutput"><span class="identifier">b</span></code>.
         Here's the syntax diagram:
       </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-          </p>
-<p>
-            <span class="inlinemediaobject"><img src="../.././images/alternative.png" alt="alternative"></span>
-          </p>
-<p>
-        </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+          <span class="inlinemediaobject"><img src="../.././images/alternative.png" alt="alternative"></span>
+        </p></blockquote></div>
 <p>
         PEGs allow for ambiguity in the alternatives. In the expression above, both
         <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code>
@@ -127,7 +112,7 @@
         is valid. As noted, there can only be one valid parse tree.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.loops"></a><h5>
-<a name="id852716"></a>
+<a name="id835874"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
       </h5>
 <p>
@@ -150,24 +135,12 @@
 <p>
         Here are the syntax diagrams:
       </p>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-          </p>
-<p>
-            <span class="inlinemediaobject"><img src="../.././images/kleene.png" alt="kleene"></span>
-          </p>
-<p>
-        </p>
-</blockquote></div>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-          </p>
-<p>
-            <span class="inlinemediaobject"><img src="../.././images/plus.png" alt="plus"></span>
-          </p>
-<p>
-        </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+          <span class="inlinemediaobject"><img src="../.././images/kleene.png" alt="kleene"></span>
+        </p></blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+          <span class="inlinemediaobject"><img src="../.././images/plus.png" alt="plus"></span>
+        </p></blockquote></div>
 <p>
         The first, called the Kleene star, matches zero or more of its subject <code class="computeroutput"><span class="identifier">a</span></code>. The second, plus, matches one ore more
         of its subject <code class="computeroutput"><span class="identifier">a</span></code>.
@@ -190,7 +163,7 @@
         We will see more of these other mechanisms shortly.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.difference"></a><h5>
-<a name="id852864"></a>
+<a name="id836015"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
       </h5>
 <p>
@@ -216,13 +189,13 @@
 </table></div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id852406" href="#id852406" class="para">6</a>] </sup>
-            Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
-            Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
-          </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id852418" href="#id852418" class="para">7</a>] </sup>
-            Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
-          </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id835571" href="#id835571" class="para">6</a>] </sup>
+          Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
+          Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
+        </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id835583" href="#id835583" class="para">7</a>] </sup>
+          Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
+        </p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
