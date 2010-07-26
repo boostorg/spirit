@@ -52,12 +52,12 @@
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            generating the C++ code for the static analyzer (including the tokenization
-            function and corresponding tables), and
-          </li>
+              generating the C++ code for the static analyzer (including the tokenization
+              function and corresponding tables), and
+            </li>
 <li class="listitem">
-            modifying the dynamic lexical anlyzer to use the generated code.
-          </li>
+              modifying the dynamic lexical anlyzer to use the generated code.
+            </li>
 </ol></div>
 <p>
           Both steps are described in more detail in the two sections below (for
@@ -75,17 +75,13 @@
           analyzer.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">tokenids</span> 
 <span class="special">{</span>
     <span class="identifier">IDANY</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">min_token_id</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -96,9 +92,7 @@
           definition syntax.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="comment">// This token definition class can be used without any change for all three
 </span><span class="comment">// possible use cases: a dynamic lexical analyzer, a code generator, and a
@@ -119,8 +113,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The only thing changing between the three different use cases is the template
@@ -138,9 +130,7 @@
           using a dynamic lexical analyzer as described before.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="comment">//  This is an ordinary grammar definition following the rules defined by 
 </span><span class="comment">//  Spirit.Qi. There is nothing specific about it, except it gets the token
@@ -171,11 +161,9 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id1197656"></a>
+<a name="id1179582"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -192,9 +180,7 @@
           just a couple lines of code.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
@@ -214,8 +200,6 @@
 </span>    <span class="keyword">return</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static_dfa</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="string">"wc"</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -238,7 +222,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id1198014"></a>
+<a name="id1181346"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -252,14 +236,10 @@
           related to the first one and involves correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code> statement to:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_static_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -272,9 +252,7 @@
           changed.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
@@ -326,8 +304,6 @@
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <div class="important"><table border="0" summary="Important">

@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.auxiliary.lazy"></a><a class="link" href="lazy.html" title="Lazy (lazy)"> Lazy (<code class="computeroutput"><span class="identifier">lazy</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.auxiliary.lazy.description"></a><h6>
-<a name="id928049"></a>
+<a name="id911691"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             once it is created to continue the parse.
           </p>
 <a name="spirit.qi.reference.auxiliary.lazy.header"></a><h6>
-<a name="id928079"></a>
+<a name="id911721"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/lazy.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.auxiliary.lazy.namespace"></a><h6>
-<a name="id928154"></a>
+<a name="id911796"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -65,18 +65,12 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.lazy.model_of"></a><h6>
-<a name="id928232"></a>
+<a name="id911874"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.model_of">Model of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -88,7 +82,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.lazy.expression_semantics"></a><h6>
-<a name="id928306"></a>
+<a name="id911945"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -151,7 +145,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.lazy.attributes"></a><h6>
-<a name="id928501"></a>
+<a name="id912139"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -199,7 +193,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.lazy.complexity"></a><h6>
-<a name="id928624"></a>
+<a name="id912263"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.complexity">Complexity</a>
           </h6>
 <p>
@@ -207,7 +201,7 @@
             parser is determined by the complexity of the parser returned from <code class="computeroutput"><span class="identifier">fp</span></code>.
           </p>
 <a name="spirit.qi.reference.auxiliary.lazy.example"></a><h6>
-<a name="id928655"></a>
+<a name="id912294"></a>
             <a class="link" href="lazy.html#spirit.qi.reference.auxiliary.lazy.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -224,51 +218,37 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lazy</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">string</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Using <code class="computeroutput"><span class="identifier">lazy</span></code>:
           </p>
 <p>
-            </p>
+            Here, the phoenix::val expression creates a function that returns its
+            argument when invoked. The lazy expression defers the invocation of this
+            function at parse time. Then, this parser (string parser) is called into
+            action. All this takes place at parse time.
+          </p>
 <p>
-              Here, the phoenix::val expression creates a function that returns its
-              argument when invoked. The lazy expression defers the invocation of
-              this function at parse time. Then, this parser (string parser) is called
-              into action. All this takes place at parse time.
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">,</span> <span class="identifier">lazy</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">))));</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            The above is equivalent to:
+          </p>
 <p>
-              The above is equivalent to:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">,</span> <span class="identifier">val</span><span class="special">(</span><span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)));</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

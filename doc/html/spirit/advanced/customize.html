@@ -46,7 +46,7 @@
         from Attributes</a></span></dt>
 </dl></div>
 <a name="spirit.advanced.customize.why_do_we_need_attribute_customization_points"></a><h5>
-<a name="id1218506"></a>
+<a name="id1200758"></a>
         <a class="link" href="customize.html#spirit.advanced.customize.why_do_we_need_attribute_customization_points">Why
         do we need Attribute Customization Points</a>
       </h5>
@@ -86,17 +86,13 @@
         the attribute type to be stored in a supplied STL container:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="comment">/* = void*/</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">container_value</span>
   <span class="special">:</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">remove_value_const</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span>
 <span class="special">{};</span>
 </pre>
-<p>
-        </p>
 <p>
       </p>
 <p>
@@ -109,9 +105,7 @@
         The following example shows the predefined specialization for <code class="computeroutput"><span class="identifier">unused_type</span></code>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">container_value</span><span class="special">&lt;</span><span class="identifier">unused_type</span><span class="special">&gt;</span>
@@ -119,8 +113,6 @@
     <span class="keyword">typedef</span> <span class="identifier">unused_type</span> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-        </p>
 <p>
       </p>
 <p>
@@ -139,7 +131,7 @@
         a description which needs to be specialized for what purpose.
       </p>
 <a name="spirit.advanced.customize.the_usage_of_customization_points"></a><h5>
-<a name="id1218827"></a>
+<a name="id1201087"></a>
         <a class="link" href="customize.html#spirit.advanced.customize.the_usage_of_customization_points">The
         Usage of Customization Points</a>
       </h5>

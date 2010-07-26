@@ -65,7 +65,7 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h6>
-<a name="id1184017"></a>
+<a name="id1167002"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -83,9 +83,7 @@
           anyway).
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -94,26 +92,20 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           To make all the code below more readable we introduce the following namespaces.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h6>
-<a name="id1184383"></a>
+<a name="id1167361"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h6>
@@ -130,9 +122,7 @@
           or in conjunction with a parser.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
@@ -162,11 +152,9 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h6>
-<a name="id1184734"></a>
+<a name="id1167709"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h6>
@@ -178,19 +166,19 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Using an instance of a <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>, which is handy whenever you
-            need to specify a token attribute (for more information about lexer related
-            attributes please look here: Lexer Attributes).
-          </li>
+              Using an instance of a <code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code>, which is handy whenever you
+              need to specify a token attribute (for more information about lexer
+              related attributes please look here: Lexer Attributes).
+            </li>
 <li class="listitem">
-            Using a single character as the token, in this case the character represents
-            itself as a token, where the token id is the ASCII character value.
-          </li>
+              Using a single character as the token, in this case the character represents
+              itself as a token, where the token id is the ASCII character value.
+            </li>
 <li class="listitem">
-            Using a regular expression represented as a string, where the token id
-            needs to be specified explicitly to make the token accessible from the
-            grammar level.
-          </li>
+              Using a regular expression represented as a string, where the token
+              id needs to be specified explicitly to make the token accessible from
+              the grammar level.
+            </li>
 </ul></div>
 <p>
           All three token definition methods require a different method of grammar
@@ -269,9 +257,7 @@
           their usage.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_grammar</span> <span class="special">:</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span>
@@ -296,8 +282,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           As already described (see: <a class="link" href="../../abstracts/attributes.html" title="Attributes">Attributes</a>),
@@ -319,7 +303,7 @@
           <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h6>
-<a name="id1185614"></a>
+<a name="id1168620"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>
@@ -333,19 +317,17 @@
           to initialize the lexical analysis and parsing processes.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
-<span class="callout_bug"><a class="co" name="spirit10co" href="lexer_quickstart3.html#spirit10"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a></span>  <span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;</span>
+<a class="co" name="spirit10co" href="lexer_quickstart3.html#spirit10"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>  <span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;</span>
         <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span>
     <span class="special">&gt;</span> <span class="identifier">token_type</span><span class="special">;</span>
 
-<span class="callout_bug"><a class="co" name="spirit11co" href="lexer_quickstart3.html#spirit11"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a></span>  <span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">token_type</span><span class="special">&gt;</span> <span class="identifier">lexer_type</span><span class="special">;</span>
+<a class="co" name="spirit11co" href="lexer_quickstart3.html#spirit11"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>  <span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">token_type</span><span class="special">&gt;</span> <span class="identifier">lexer_type</span><span class="special">;</span>
 
-<span class="callout_bug"><a class="co" name="spirit12co" href="lexer_quickstart3.html#spirit12"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a></span>  <span class="keyword">typedef</span> <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lexer_type</span><span class="special">&gt;::</span><span class="identifier">iterator_type</span> <span class="identifier">iterator_type</span><span class="special">;</span>
+<a class="co" name="spirit12co" href="lexer_quickstart3.html#spirit12"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>  <span class="keyword">typedef</span> <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lexer_type</span><span class="special">&gt;::</span><span class="identifier">iterator_type</span> <span class="identifier">iterator_type</span><span class="special">;</span>
 
     <span class="comment">// now we use the types defined above to create the lexer and grammar
 </span>    <span class="comment">// object instances needed to invoke the parsing process
@@ -357,7 +339,7 @@
     <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">first</span> <span class="special">=</span> <span class="identifier">str</span><span class="special">.</span><span class="identifier">c_str</span><span class="special">();</span>
     <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">last</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">first</span><span class="special">[</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">size</span><span class="special">()];</span>
 
-<span class="callout_bug"><a class="co" name="spirit13co" href="lexer_quickstart3.html#spirit13"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a></span>  <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">g</span><span class="special">);</span>
+<a class="co" name="spirit13co" href="lexer_quickstart3.html#spirit13"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>  <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">g</span><span class="special">);</span>
 
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">r</span><span class="special">)</span> <span class="special">{</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"lines: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">g</span><span class="special">.</span><span class="identifier">l</span> <span class="special">&lt;&lt;</span> <span class="string">", words: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">g</span><span class="special">.</span><span class="identifier">w</span> 
@@ -372,54 +354,50 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
           </p>
-<p>
-            </p>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit10"></a><a href="#spirit10co"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
 <td valign="top" align="left">
 <p>  Define the token type to be used: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>
-            is available as the type of the token attribute
-          </p>
+          is available as the type of the token attribute
+        </p>
 <p>
-            </p>
+          </p>
 </td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit11"></a><a href="#spirit11co"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
 <td valign="top" align="left">
 <p>  Define the lexer type to use implementing the state machine
-          </p>
+        </p>
 <p>
-            </p>
+          </p>
 </td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit12"></a><a href="#spirit12co"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
 <td valign="top" align="left">
 <p>  Define the iterator type exposed by the lexer type
-          </p>
+        </p>
 <p>
-            </p>
+          </p>
 </td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit13"></a><a href="#spirit13co"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
 <td valign="top" align="left">
 <p>  Parsing is done based on the the token stream, not the character stream
-            read from the input. The function <code class="computeroutput"><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code> wraps the passed iterator range <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> by the lexical analyzer and uses its
-            exposed iterators to parse the toke stream.
-          </p>
+          read from the input. The function <code class="computeroutput"><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code> wraps the passed iterator range <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> by the lexical analyzer and uses its exposed
+          iterators to parse the toke stream.
+        </p>
 <p>
-            </p>
+          </p>
 </td>
 </tr>
 </table></div>
-<p>
-          </p>
 <p>
         </p>
 </div>

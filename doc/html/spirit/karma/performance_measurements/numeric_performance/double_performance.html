@@ -43,9 +43,7 @@
             Code used to measure the performance for <code class="computeroutput"><span class="identifier">sprintf</span></code>:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -53,16 +51,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Code used to measure the performance for standard C++ iostreams:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stringstream</span> <span class="identifier">strm</span><span class="special">;</span>
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -71,16 +65,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Code used to measure the performance for <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">generated</span><span class="special">;</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span> <span class="identifier">double_format</span><span class="special">(</span><span class="string">"%f"</span><span class="special">);</span>
@@ -88,22 +78,16 @@
     <span class="identifier">generated</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">str</span><span class="special">(</span><span class="identifier">double_format</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">);</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             The following code shows the common definitions used by all <span class="emphasis"><em>Spirit.Karma</em></span>
             performance measurements as listed below:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>
@@ -111,9 +95,7 @@
             using a plain character buffer:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
@@ -123,8 +105,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             The following table shows the overall performance results collected while
@@ -133,7 +113,7 @@
             of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure&#160;4.&#160;Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id1174255"></a><p class="title"><b>Table&#160;6.&#160;Performance comparison for a single double (all times in [s],
+<a name="id1157241"></a><p class="title"><b>Table&#160;6.&#160;Performance comparison for a single double (all times in [s],
             `1e6` iterations)</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a single double (all times in [s],
             `1e6` iterations)">

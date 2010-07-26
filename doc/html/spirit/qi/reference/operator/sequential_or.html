@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.sequential_or.description"></a><h6>
-<a name="id1001814"></a>
+<a name="id985578"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.description">Description</a>
           </h6>
 <p>
@@ -45,7 +45,7 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span> <span class="special">||</span> <span class="special">...</span>
 </pre>
 <a name="spirit.qi.reference.operator.sequential_or.header"></a><h6>
-<a name="id1001948"></a>
+<a name="id985713"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/sequential_or.hpp&gt;
@@ -55,19 +55,13 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.sequential_or.model_of"></a><h6>
-<a name="id1002023"></a>
+<a name="id985787"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -78,7 +72,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.sequential_or.expression_semantics"></a><h6>
-<a name="id1002102"></a>
+<a name="id985863"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -121,7 +115,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.sequential_or.attributes"></a><h6>
-<a name="id1002245"></a>
+<a name="id986006"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.attributes">Attributes</a>
           </h6>
 <p>
@@ -192,23 +186,16 @@
 </td></tr>
 </table></div>
 <a name="spirit.qi.reference.operator.sequential_or.complexity"></a><h6>
-<a name="id1003758"></a>
+<a name="id986634"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the sequential-or parser is defined by
-                the sum of the complexities of its elements. The complexity of the
-                sequential-or itself is O(N), where N is the number of elements in
-                the sequence.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the sequential-or parser is defined by the
+              sum of the complexities of its elements. The complexity of the sequential-or
+              itself is O(N), where N is the number of elements in the sequence.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.sequential_or.example"></a><h6>
-<a name="id1003782"></a>
+<a name="id986655"></a>
             <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -225,46 +212,30 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
-            </p>
+            Correctly parsing a number with optional fractional digits:
+          </p>
 <p>
-              Correctly parsing a number with optional fractional digits:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123.456"</span><span class="special">,</span> <span class="identifier">int_</span> <span class="special">||</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">));</span>  <span class="comment">// full
 </span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">int_</span> <span class="special">||</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">));</span>      <span class="comment">// just the whole number
 </span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">".456"</span><span class="special">,</span> <span class="identifier">int_</span> <span class="special">||</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">));</span>     <span class="comment">// just the fraction</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
-<p>
-              A naive but incorrect solution would try to do this using optionals
-              (e.g.):
-            </p>
-<p>
-            
-</p>
+            A naive but incorrect solution would try to do this using optionals (e.g.):
+          </p>
 <pre class="programlisting"><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span>  <span class="comment">// will not match ".456"
 </span><span class="special">-</span><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span>  <span class="comment">// will not match "123"
 </span><span class="special">-</span><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span> <span class="comment">// will match empty strings! Ooops.
 </span></pre>
-<p>
-          </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

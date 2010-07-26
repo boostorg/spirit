@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.operator.list"></a><a class="link" href="list.html" title="List (a % b)"> List (<code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.list.description"></a><h6>
-<a name="id993351"></a>
+<a name="id975783"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.description">Description</a>
           </h6>
 <p>
@@ -40,7 +40,7 @@
             <span class="special">&gt;&gt;</span> <span class="identifier">a</span><span class="special">)</span></code>.
           </p>
 <a name="spirit.qi.reference.operator.list.header"></a><h6>
-<a name="id993433"></a>
+<a name="id975864"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/list.hpp&gt;
@@ -50,18 +50,12 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.list.model_of"></a><h6>
-<a name="id993507"></a>
+<a name="id975939"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.model_of">Model of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/binaryparser.html" title="BinaryParser"><code class="computeroutput"><span class="identifier">BinaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/binaryparser.html" title="BinaryParser"><code class="computeroutput"><span class="identifier">BinaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -72,7 +66,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.list.expression_semantics"></a><h6>
-<a name="id993584"></a>
+<a name="id976012"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -116,7 +110,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.list.attributes"></a><h6>
-<a name="id993728"></a>
+<a name="id976156"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.attributes">Attributes</a>
           </h6>
 <p>
@@ -159,23 +153,17 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.list.complexity"></a><h6>
-<a name="id993957"></a>
+<a name="id976385"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the List is defined by the complexity of
-                its subject, <code class="computeroutput"><span class="identifier">a</span></code>, multiplied
-                by the number of repetitions. The complexity of the List itself is
-                O(N), where N is the number successful repetitions.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the List is defined by the complexity of
+              its subject, <code class="computeroutput"><span class="identifier">a</span></code>, multiplied
+              by the number of repetitions. The complexity of the List itself is
+              O(N), where N is the number successful repetitions.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.list.example"></a><h6>
-<a name="id993988"></a>
+<a name="id976413"></a>
             <a class="link" href="list.html#spirit.qi.reference.operator.list.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -189,27 +177,19 @@
             </p></td></tr>
 </table></div>
 <p>
-            </p>
+            Some using declarations:
+          </p>
 <p>
-              Some using declarations:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Parse a comma separated list of numbers and put them in a vector:
+          </p>
 <p>
-              Parse a comma separated list of numbers and put them in a vector:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">attr</span><span class="special">;</span>
 <span class="identifier">test_phrase_parser_attr</span><span class="special">(</span>
@@ -219,8 +199,6 @@
     <span class="special">&lt;&lt;</span> <span class="identifier">attr</span><span class="special">[</span><span class="number">3</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="identifier">attr</span><span class="special">[</span><span class="number">4</span><span class="special">]</span> 
     <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

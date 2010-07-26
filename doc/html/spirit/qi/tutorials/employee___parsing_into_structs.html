@@ -37,25 +37,23 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            More about attributes
-          </li>
+              More about attributes
+            </li>
 <li class="listitem">
-            Auto rules
-          </li>
+              Auto rules
+            </li>
 <li class="listitem">
-            Some more built-in parsers
-          </li>
+              Some more built-in parsers
+            </li>
 <li class="listitem">
-            Directives
-          </li>
+              Directives
+            </li>
 </ul></div>
 <p>
           First, let's create a struct representing an employee:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">employee</span>
 <span class="special">{</span>
@@ -65,8 +63,6 @@
     <span class="keyword">double</span> <span class="identifier">salary</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -81,9 +77,7 @@
           struct to be a fully conforming fusion tuple:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_STRUCT</span><span class="special">(</span>
     <span class="identifier">client</span><span class="special">::</span><span class="identifier">employee</span><span class="special">,</span>
@@ -93,8 +87,6 @@
     <span class="special">(</span><span class="keyword">double</span><span class="special">,</span> <span class="identifier">salary</span><span class="special">)</span>
 <span class="special">)</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -106,9 +98,7 @@
           Here goes:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">employee_parser</span> <span class="special">:</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">employee</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span>
@@ -138,8 +128,6 @@
     <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">employee</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -179,7 +167,7 @@
           has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> attribute.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h6>
-<a name="id871576"></a>
+<a name="id854319"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
         </h6>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
@@ -196,7 +184,7 @@
           a double quote.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h6>
-<a name="id871689"></a>
+<a name="id854432"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
         </h6>
 <p>
@@ -215,7 +203,7 @@
           is just <code class="computeroutput"><span class="keyword">char</span></code>.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h6>
-<a name="id871797"></a>
+<a name="id854540"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
         </h6>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
@@ -236,7 +224,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h6>
-<a name="id871934"></a>
+<a name="id854677"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
         </h6>
@@ -277,7 +265,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h6>
-<a name="id873248"></a>
+<a name="id854899"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
         </h6>
@@ -309,7 +297,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h6>
-<a name="id873487"></a>
+<a name="id856312"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
         </h6>
@@ -359,7 +347,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h6>
-<a name="id873854"></a>
+<a name="id856679"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
         </h6>
 <p>
@@ -384,10 +372,18 @@
           These nodes do not have an attribute:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem"><code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></code></li>
-<li class="listitem"><code class="computeroutput"><span class="char">'{'</span></code></li>
-<li class="listitem"><code class="computeroutput"><span class="char">','</span></code></li>
-<li class="listitem"><code class="computeroutput"><span class="char">'}'</span></code></li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="char">'{'</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="char">','</span></code>
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="char">'}'</span></code>
+            </li>
 </ul></div>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -408,9 +404,7 @@
           is the <code class="computeroutput"><span class="identifier">employee</span></code> struct:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">employee</span>
 <span class="special">{</span>
@@ -420,8 +414,6 @@
     <span class="keyword">double</span> <span class="identifier">salary</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>

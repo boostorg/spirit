@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.expect.description"></a><h6>
-<a name="id985230"></a>
+<a name="id972910"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
           </h6>
 <p>
@@ -49,7 +49,7 @@
             (all operands except the first) fail to match.
           </p>
 <a name="spirit.qi.reference.operator.expect.header"></a><h6>
-<a name="id985358"></a>
+<a name="id973037"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/expect.hpp&gt;
@@ -59,18 +59,12 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.expect.model_of"></a><h6>
-<a name="id985432"></a>
+<a name="id973112"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.model_of">Model of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -85,7 +79,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.expect.expectation_failure"></a><h6>
-<a name="id985538"></a>
+<a name="id973214"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure">Expectation
             Failure</a>
           </h6>
@@ -101,7 +95,7 @@
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.operator.expect.expression_semantics"></a><h6>
-<a name="id985691"></a>
+<a name="id973367"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -142,7 +136,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.attributes"></a><h6>
-<a name="id985836"></a>
+<a name="id973512"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.attributes">Attributes</a>
           </h6>
 <p>
@@ -192,23 +186,16 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.complexity"></a><h6>
-<a name="id986520"></a>
+<a name="id974196"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the expectation parser is defined by the
-                sum of the complexities of its elements. The complexity of the expectation
-                operator itself is O(N), where N is the number of elements in the
-                sequence.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the expectation parser is defined by the
+              sum of the complexities of its elements. The complexity of the expectation
+              operator itself is O(N), where N is the number of elements in the sequence.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.expect.example"></a><h6>
-<a name="id986544"></a>
+<a name="id974217"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -225,32 +212,24 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">expectation_failure</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
-            </p>
+            The code below uses an expectation operator to throw an <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure"><code class="computeroutput"><span class="identifier">expectation_failure</span></code></a> with a deliberate
+            parsing error when <code class="computeroutput"><span class="string">"o"</span></code>
+            is expected and <code class="computeroutput"><span class="string">"i"</span></code>
+            is what is found in the input. The <code class="computeroutput"><span class="keyword">catch</span></code>
+            block prints the information related to the error. Note: This is low
+            level code that demonstrates the <span class="emphasis"><em>bare-metal</em></span>. Typically,
+            you use an Error Handler to deal with the error.
+          </p>
 <p>
-              The code below uses an expectation operator to throw an <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure"><code class="computeroutput"><span class="identifier">expectation_failure</span></code></a> with a
-              deliberate parsing error when <code class="computeroutput"><span class="string">"o"</span></code>
-              is expected and <code class="computeroutput"><span class="string">"i"</span></code>
-              is what is found in the input. The <code class="computeroutput"><span class="keyword">catch</span></code>
-              block prints the information related to the error. Note: This is low
-              level code that demonstrates the <span class="emphasis"><em>bare-metal</em></span>. Typically,
-              you use an Error Handler to deal with the error.
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">try</span>
 <span class="special">{</span>
@@ -262,20 +241,13 @@
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"got: \""</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">last</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="char">'"'</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 <span class="special">}</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
-<p>
-              The code above will print:
-            </p>
-<p>
-            
-</p>
+            The code above will print:
+          </p>
 <pre class="programlisting">expected: tag: literal-char, value: o
 got: "i"
 </pre>
-<p>
-          </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.alternative.description"></a><h6>
-<a name="id978880"></a>
+<a name="id962335"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.description">Description</a>
           </h6>
 <p>
@@ -60,7 +60,7 @@
             to put the (expected) most common choice first for maximum efficiency.
           </p>
 <a name="spirit.qi.reference.operator.alternative.header"></a><h6>
-<a name="id979045"></a>
+<a name="id962500"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/alternative.hpp&gt;
@@ -70,19 +70,13 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.alternative.model_of"></a><h6>
-<a name="id981862"></a>
+<a name="id962574"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -93,7 +87,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.alternative.expression_semantics"></a><h6>
-<a name="id981942"></a>
+<a name="id962650"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -134,7 +128,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.attributes"></a><h6>
-<a name="id982054"></a>
+<a name="id962763"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.attributes">Attributes</a>
           </h6>
 <p>
@@ -181,22 +175,16 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.complexity"></a><h6>
-<a name="id982616"></a>
+<a name="id964970"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the alternative parser is defined by the
-                sum of the complexities of its elements. The complexity of the alternative
-                parser itself is O(N), where N is the number of alternatives.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the alternative parser is defined by the
+              sum of the complexities of its elements. The complexity of the alternative
+              parser itself is O(N), where N is the number of alternatives.
+            </p></blockquote></div>
 <a name="spirit.qi.reference.operator.alternative.example"></a><h6>
-<a name="id982640"></a>
+<a name="id964990"></a>
             <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -213,9 +201,7 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">string</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
@@ -223,71 +209,51 @@
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
-            </p>
+            Simple usage:
+          </p>
 <p>
-              Simple usage:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">,</span> <span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span> <span class="special">|</span> <span class="identifier">int_</span><span class="special">);</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span> <span class="special">|</span> <span class="identifier">int_</span><span class="special">);</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Extracting the attribute variant (using <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>):
+          </p>
 <p>
-              Extracting the attribute variant (using <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>):
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">attr</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">,</span> <span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span> <span class="special">|</span> <span class="identifier">int_</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">);</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            This should print <code class="computeroutput"><span class="string">"Hello"</span></code>.
+            Note: There are better ways to extract the value from the variant. See
+            <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
+            visitation. This code is solely for demonstration.
+          </p>
 <p>
-              This should print <code class="computeroutput"><span class="string">"Hello"</span></code>.
-              Note: There are better ways to extract the value from the variant.
-              See <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
-              visitation. This code is solely for demonstration.
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(&amp;</span><span class="identifier">attr</span><span class="special">))</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 <span class="keyword">else</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span></pre>
 <p>
-            </p>
+          </p>
 <p>
-            </p>
+            Extracting the attributes using Semantic Actions with <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            (this should print <code class="computeroutput"><span class="number">123</span></code>):
+          </p>
 <p>
-              Extracting the attributes using Semantic Actions with <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-              (this should print <code class="computeroutput"><span class="number">123</span></code>):
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="special">(</span><span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span> <span class="special">|</span> <span class="identifier">int_</span><span class="special">)[</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">_1</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">]);</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

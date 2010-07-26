@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.sequence.description"></a><h6>
-<a name="id1146342"></a>
+<a name="id1128456"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
@@ -38,7 +38,7 @@
             to right as long as they succeed.
           </p>
 <a name="spirit.karma.reference.operator.sequence.header"></a><h6>
-<a name="id1146359"></a>
+<a name="id1128473"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/sequence.hpp&gt;
@@ -48,21 +48,15 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.sequence.model_of"></a><h6>
-<a name="id1146434"></a>
+<a name="id1128547"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../generator_concepts/narygenerator.html" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../generator_concepts/narygenerator.html" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>
+            </p></blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id1146470"></a>
+<a name="id1128579"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -134,7 +128,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.sequence.attributes"></a><h6>
-<a name="id1146654"></a>
+<a name="id1128764"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <p>
@@ -212,22 +206,16 @@
             the attribute supplied.
           </p>
 <a name="spirit.karma.reference.operator.sequence.complexity"></a><h6>
-<a name="id1148848"></a>
+<a name="id1129585"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the sequence generator is defined by the
-                sum of the complexities of its elements. The complexity of the sequence
-                itself is O(N), where N is the number of elements in the sequence.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the sequence generator is defined by the
+              sum of the complexities of its elements. The complexity of the sequence
+              itself is O(N), where N is the number of elements in the sequence.
+            </p></blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.example"></a><h6>
-<a name="id1148872"></a>
+<a name="id1129605"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -244,9 +232,7 @@
             Some includes:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -256,35 +242,25 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>
             Basic usage of a sequence:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0,2.0"</span><span class="special">,</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_pair</span><span class="special">(</span><span class="number">1.0</span><span class="special">,</span> <span class="number">2.0</span><span class="special">));</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

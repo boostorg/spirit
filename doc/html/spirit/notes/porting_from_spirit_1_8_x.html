@@ -41,7 +41,7 @@
         <a href="http://boost-spirit.com" target="_top">Spirit</a>.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.include_files"></a><h5>
-<a name="id1272486"></a>
+<a name="id1253797"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.include_files">Include
         Files</a>
       </h5>
@@ -223,7 +223,7 @@
 </tbody>
 </table></div>
 <a name="spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions"></a><h5>
-<a name="id1273137"></a>
+<a name="id1254447"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions">The
         Free Parse Functions</a>
       </h5>
@@ -249,9 +249,7 @@
         and using directives to be inserted. For <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">classic</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix1</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -259,25 +257,19 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 </pre>
 <p>
-        </p>
+      </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">classic</span><span class="special">;</span>
 </pre>
-<p>
-        </p>
 <p>
       </p>
 <p>
         and for <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -286,16 +278,12 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">algorithm</span><span class="special">&gt;</span>
 </pre>
 <p>
-        </p>
+      </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 </pre>
-<p>
-        </p>
 <p>
       </p>
 <p>
@@ -303,9 +291,7 @@
         base example in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"1,1"</span><span class="special">);</span>
 <span class="identifier">parse_info</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">&gt;</span> <span class="identifier">pi</span> <span class="special">=</span> <span class="identifier">parse</span><span class="special">(</span><span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">int_p</span><span class="special">);</span>
@@ -321,16 +307,12 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"matched length: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">pi</span><span class="special">.</span><span class="identifier">length</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>
 <p>
-        </p>
-<p>
       </p>
 <p>
         And here is the equivalent piece of code using <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"1,1"</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
@@ -348,17 +330,13 @@
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"matched length: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">distance</span><span class="special">(</span><span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">it</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>
 <p>
-        </p>
-<p>
       </p>
 <p>
         The changes required for phrase parsing (i.e. parsing using a skipper) are
         similar. Here is how phrase parsing works in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">" 1, 1"</span><span class="special">);</span>
 <span class="identifier">parse_info</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">&gt;</span> <span class="identifier">pi</span> <span class="special">=</span> <span class="identifier">parse</span><span class="special">(</span><span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">int_p</span><span class="special">,</span> <span class="identifier">space_p</span><span class="special">);</span>
@@ -374,16 +352,12 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"matched length: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">pi</span><span class="special">.</span><span class="identifier">length</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>
 <p>
-        </p>
-<p>
       </p>
 <p>
         And here the equivalent example in <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">" 1, 1"</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
@@ -401,8 +375,6 @@
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"matched length: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">distance</span><span class="special">(</span><span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">it</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>
 <p>
-        </p>
-<p>
       </p>
 <p>
         Note, how character parsers are in a separate namespace (here <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span></code>) as <span class="emphasis"><em>Spirit.Qi</em></span>
@@ -410,7 +382,7 @@
         Encoding Namespace</a> for more information.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.naming_conventions"></a><h5>
-<a name="id1276448"></a>
+<a name="id1259217"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.naming_conventions">Naming
         Conventions</a>
       </h5>
@@ -430,7 +402,7 @@
         parser primitives, directives and operators.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.parser_attributes"></a><h5>
-<a name="id1276520"></a>
+<a name="id1259289"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.parser_attributes">Parser
         Attributes</a>
       </h5>
@@ -448,7 +420,7 @@
         underlying matched input sequence.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules"></a><h5>
-<a name="id1276588"></a>
+<a name="id1259358"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules">Grammars
         and Rules</a>
       </h5>
@@ -464,9 +436,7 @@
         Here is a simple grammar and its usage in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">roman</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">roman</span><span class="special">&gt;</span>
 <span class="special">{</span>
@@ -508,11 +478,9 @@
 <span class="special">};</span>
 </pre>
 <p>
-        </p>
+      </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"MMIX"</span><span class="special">);</span>        <span class="comment">// MMIX == 2009
 </span><span class="keyword">unsigned</span> <span class="identifier">value</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
@@ -522,16 +490,12 @@
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"successfully matched: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">value</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>
 <p>
-        </p>
-<p>
       </p>
 <p>
         And here is a similar grammar and its usage in <span class="emphasis"><em>Spirit.Qi</em></span>:
       </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">roman</span> <span class="special">:</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">unsigned</span><span class="special">()&gt;</span>
@@ -566,11 +530,9 @@
 <span class="special">};</span>
 </pre>
 <p>
-        </p>
+      </p>
 <p>
-        </p>
-<p>
-          
+        
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"MMIX"</span><span class="special">);</span>        <span class="comment">// MMIX == 2009
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
@@ -580,8 +542,6 @@
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"successfully matched: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">value</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>
 <p>
-        </p>
-<p>
       </p>
 <p>
         Both versions look similarily enough, but we see several differences (we
@@ -589,22 +549,22 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-          Neither the grammars nor the rules depend on a scanner type anymore, both
-          depend only on the underlying iterator type. That means the dreaded scanner
-          business is no issue anymore!
-        </li>
+            Neither the grammars nor the rules depend on a scanner type anymore,
+            both depend only on the underlying iterator type. That means the dreaded
+            scanner business is no issue anymore!
+          </li>
 <li class="listitem">
-          Grammars have no embedded class <code class="computeroutput"><span class="identifier">definition</span></code>
-          anymore
-        </li>
+            Grammars have no embedded class <code class="computeroutput"><span class="identifier">definition</span></code>
+            anymore
+          </li>
 <li class="listitem">
-          Grammars and rules may have an explicit attribute type specified in their
-          definition
-        </li>
+            Grammars and rules may have an explicit attribute type specified in their
+            definition
+          </li>
 <li class="listitem">
-          Grammars do not have any explicit start rules anymore. Instead one of the
-          contained rules is used as a start rule by default.
-        </li>
+            Grammars do not have any explicit start rules anymore. Instead one of
+            the contained rules is used as a start rule by default.
+          </li>
 </ul></div>
 <p>
         The first two points are tightly interrelated. The scanner business (see

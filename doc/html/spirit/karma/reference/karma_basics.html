@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.karma_basics"></a><a class="link" href="karma_basics.html" title="Basics"> Basics</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.karma_basics.lazy_argument"></a><h6>
-<a name="id1051222"></a>
+<a name="id1035020"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
           Argument</a>
         </h6>
@@ -53,7 +53,7 @@
           Actions</a>).
         </p>
 <a name="spirit.karma.reference.karma_basics.character_encoding_namespace"></a><h6>
-<a name="id1051362"></a>
+<a name="id1035161"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h6>
@@ -83,17 +83,17 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            boost::spirit::ascii
-          </li>
+              boost::spirit::ascii
+            </li>
 <li class="listitem">
-            boost::spirit::iso8859_1
-          </li>
+              boost::spirit::iso8859_1
+            </li>
 <li class="listitem">
-            boost::spirit::standard
-          </li>
+              boost::spirit::standard
+            </li>
 <li class="listitem">
-            boost::spirit::standard_wide
-          </li>
+              boost::spirit::standard_wide
+            </li>
 </ul></div>
 <p>
           For ease of use, the components in this namespaces are also brought into
@@ -101,20 +101,20 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            boost::spirit::karma::ascii
-          </li>
+              boost::spirit::karma::ascii
+            </li>
 <li class="listitem">
-            boost::spirit::karma::iso8859_1
-          </li>
+              boost::spirit::karma::iso8859_1
+            </li>
 <li class="listitem">
-            boost::spirit::karma::standard
-          </li>
+              boost::spirit::karma::standard
+            </li>
 <li class="listitem">
-            boost::spirit::karma::standard_wide
-          </li>
+              boost::spirit::karma::standard_wide
+            </li>
 </ul></div>
 <a name="spirit.karma.reference.karma_basics.examples"></a><h6>
-<a name="id1051546"></a>
+<a name="id1035377"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Examples</a>
         </h6>
 <p>
@@ -126,9 +126,7 @@
           Some includes:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -138,21 +136,15 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The used output iterator:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">output_iterator_type</span><span class="special">;</span>
 </pre>
-<p>
-          </p>
 <p>
         </p>
 <p>
@@ -162,9 +154,7 @@
           This one tests the generators without attributes.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_generator</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">)</span>
@@ -178,16 +168,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           These test the generators with one or more user supplied attributes.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
@@ -201,11 +187,9 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr1</span><span class="special">,</span> 
@@ -220,17 +204,13 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           This tests the generators with one attribute and while using delimited
           output.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Delimiter</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_generator_attr_delim</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">Delimiter</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">d</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
@@ -244,17 +224,13 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           The examples of the binary generators use one or more of the following
           tests.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_binary_generator</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">)</span>
@@ -268,11 +244,9 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
+        </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_binary_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
@@ -286,11 +260,9 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.karma.reference.karma_basics.models"></a><h6>
-<a name="id1054200"></a>
+<a name="id1038145"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.models">Models</a>
         </h6>
 <p>
@@ -298,14 +270,14 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            any literal string, e.g. "Hello, World",
-          </li>
+              any literal string, e.g. "Hello, World",
+            </li>
 <li class="listitem">
-            a pointer/reference to a null-terminated array of characters
-          </li>
+              a pointer/reference to a null-terminated array of characters
+            </li>
 <li class="listitem">
-            a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
-</li>
+              a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
+            </li>
 </ul></div>
 <p>
           The namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code> is open for users to provide their

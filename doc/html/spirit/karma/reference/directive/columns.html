@@ -28,7 +28,7 @@
           Output Into Columns (<code class="computeroutput"><span class="identifier">columns</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.columns.description"></a><h6>
-<a name="id1114622"></a>
+<a name="id1098031"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             special column separators.
           </p>
 <a name="spirit.karma.reference.directive.columns.header"></a><h6>
-<a name="id1114649"></a>
+<a name="id1098059"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/columns.hpp&gt;
@@ -61,19 +61,13 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.columns.model_of"></a><h6>
-<a name="id1114790"></a>
+<a name="id1098199"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -104,7 +98,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.columns.expression_semantics"></a><h6>
-<a name="id1114931"></a>
+<a name="id1098337"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -198,7 +192,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.columns.attributes"></a><h6>
-<a name="id1115277"></a>
+<a name="id1098683"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.attributes">Attributes</a>
           </h6>
 <p>
@@ -291,24 +285,18 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.columns.complexity"></a><h6>
-<a name="id1116985"></a>
+<a name="id1099292"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The overall complexity of the <code class="computeroutput"><span class="identifier">columns</span></code>
-                generator directive depends on the complexity of the embeddded generator.
-                The complexitz of the <code class="computeroutput"><span class="identifier">columns</span></code>
-                generator directive itself is O(N), where <code class="computeroutput"><span class="identifier">N</span></code>
-                is the number of inserted column separators.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The overall complexity of the <code class="computeroutput"><span class="identifier">columns</span></code>
+              generator directive depends on the complexity of the embeddded generator.
+              The complexitz of the <code class="computeroutput"><span class="identifier">columns</span></code>
+              generator directive itself is O(N), where <code class="computeroutput"><span class="identifier">N</span></code>
+              is the number of inserted column separators.
+            </p></blockquote></div>
 <a name="spirit.karma.reference.directive.columns.example"></a><h6>
-<a name="id1117032"></a>
+<a name="id1099335"></a>
             <a class="link" href="columns.html#spirit.karma.reference.directive.columns.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -325,9 +313,7 @@
             Some includes:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -337,23 +323,17 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">columns</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>
@@ -361,9 +341,7 @@
             generators:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
 <span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1.0</span><span class="special">);</span>
@@ -372,8 +350,6 @@
 <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0\n2.0\n3.0\n"</span><span class="special">,</span> <span class="identifier">columns</span><span class="special">(</span><span class="number">1</span><span class="special">)[*</span><span class="identifier">double_</span><span class="special">],</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="identifier">test_generator_attr_delim</span><span class="special">(</span><span class="string">"1.0 2.0 \n3.0 \n"</span><span class="special">,</span> <span class="identifier">columns</span><span class="special">(</span><span class="number">2</span><span class="special">)[*</span><span class="identifier">double_</span><span class="special">],</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

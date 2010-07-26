@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.omit.description"></a><h6>
-<a name="id949573"></a>
+<a name="id931927"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             ignores the attribute of its subject parser replacing it with <code class="computeroutput"><span class="identifier">unused</span></code>.
           </p>
 <a name="spirit.qi.reference.directive.omit.header"></a><h6>
-<a name="id949608"></a>
+<a name="id931962"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/omit.hpp&gt;
@@ -46,7 +46,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.omit.namespace"></a><h6>
-<a name="id949682"></a>
+<a name="id932036"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -64,18 +64,12 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.omit.model_of"></a><h6>
-<a name="id949760"></a>
+<a name="id932114"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.model_of">Model of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+            </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -86,7 +80,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.omit.expression_semantics"></a><h6>
-<a name="id949830"></a>
+<a name="id932180"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -125,7 +119,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.omit.attributes"></a><h6>
-<a name="id949934"></a>
+<a name="id932285"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -159,21 +153,15 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.omit.complexity"></a><h6>
-<a name="id950025"></a>
+<a name="id932376"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.complexity">Complexity</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                The complexity is defined by the complexity of the subject parser,
-                <code class="computeroutput"><span class="identifier">a</span></code>
-              </p>
-<p>
-            </p>
-</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote"><p>
+              The complexity is defined by the complexity of the subject parser,
+              <code class="computeroutput"><span class="identifier">a</span></code>
+            </p></blockquote></div>
 <a name="spirit.qi.reference.directive.omit.example"></a><h6>
-<a name="id950056"></a>
+<a name="id932404"></a>
             <a class="link" href="omit.html#spirit.qi.reference.directive.omit.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -190,35 +178,25 @@
             Some using declarations:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">omit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 </pre>
 <p>
-            </p>
-<p>
           </p>
 <p>
-            </p>
+            This parser ignores the first two characters and extracts the succeeding
+            <code class="computeroutput"><span class="keyword">int</span></code>:
+          </p>
 <p>
-              This parser ignores the first two characters and extracts the succeeding
-              <code class="computeroutput"><span class="keyword">int</span></code>:
-            </p>
-<p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"xx345"</span><span class="special">,</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">char_</span> <span class="special">&gt;&gt;</span> <span class="identifier">char_</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">,</span> <span class="identifier">i</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// should print 345
 </span></pre>
-<p>
-            </p>
 <p>
           </p>
 </div>

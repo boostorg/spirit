@@ -28,7 +28,7 @@
           Determine the Type to be Stored in a Container (Qi)</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.store_value.container_value.container_value"></a><h6>
-<a name="id1231698"></a>
+<a name="id1214741"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.container_value">container_value</a>
           </h6>
 <p>
@@ -39,7 +39,7 @@
             the type to store in a container.
           </p>
 <a name="spirit.advanced.customize.store_value.container_value.module_headers"></a><h6>
-<a name="id1231745"></a>
+<a name="id1214788"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.module_headers">Module
             Headers</a>
           </h6>
@@ -60,7 +60,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.namespace"></a><h6>
-<a name="id1231832"></a>
+<a name="id1214875"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -77,7 +77,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.synopsis"></a><h6>
-<a name="id1231910"></a>
+<a name="id1214953"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -87,7 +87,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.store_value.container_value.template_parameters"></a><h6>
-<a name="id1232009"></a>
+<a name="id1215052"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.template_parameters">Template
             parameters</a>
           </h6>
@@ -156,7 +156,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.notation"></a><h6>
-<a name="id1232182"></a>
+<a name="id1215224"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -173,7 +173,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.store_value.container_value.expression_semantics"></a><h6>
-<a name="id1232250"></a>
+<a name="id1215293"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -209,7 +209,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.predefined_specializations"></a><h6>
-<a name="id1232345"></a>
+<a name="id1215388"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.predefined_specializations">Predefined
             Specializations</a>
           </h6>
@@ -296,7 +296,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.when_to_implement"></a><h6>
-<a name="id1232682"></a>
+<a name="id1215725"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.when_to_implement">When
             to implement</a>
           </h6>
@@ -318,7 +318,7 @@
             stands for any meaningful operation on the component <code class="computeroutput"><span class="identifier">a</span></code>.
           </p>
 <a name="spirit.advanced.customize.store_value.container_value.related_attribute_customization_points"></a><h6>
-<a name="id1232936"></a>
+<a name="id1215841"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
@@ -377,7 +377,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.store_value.container_value.example"></a><h6>
-<a name="id1233084"></a>
+<a name="id1215990"></a>
             <a class="link" href="container_value.html#spirit.advanced.customize.store_value.container_value.example">Example</a>
           </h6>
 <p>
@@ -385,17 +385,13 @@
             point provided by the library:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="comment">/* = void*/</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">container_value</span>
   <span class="special">:</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">remove_value_const</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span>
 <span class="special">{};</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>
@@ -409,9 +405,7 @@
             The following example shows the predefined specialization for <code class="computeroutput"><span class="identifier">unused_type</span></code>:
           </p>
 <p>
-            </p>
-<p>
-              
+            
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">container_value</span><span class="special">&lt;</span><span class="identifier">unused_type</span><span class="special">&gt;</span>
@@ -419,8 +413,6 @@
     <span class="keyword">typedef</span> <span class="identifier">unused_type</span> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-            </p>
 <p>
           </p>
 <p>

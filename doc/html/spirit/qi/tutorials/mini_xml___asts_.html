@@ -45,20 +45,20 @@
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Inherited attributes
-          </li>
+              Inherited attributes
+            </li>
 <li class="listitem">
-            Variant attributes
-          </li>
+              Variant attributes
+            </li>
 <li class="listitem">
-            Local Variables
-          </li>
+              Local Variables
+            </li>
 <li class="listitem">
-            Not Predicate
-          </li>
+              Not Predicate
+            </li>
 <li class="listitem">
-            Lazy Lit
-          </li>
+              Lazy Lit
+            </li>
 </ul></div>
 <p>
           The full cpp files for these examples can be found here: <a href="../../../../../example/qi/mini_xml1.cpp" target="_top">../../example/qi/mini_xml1.cpp</a>
@@ -73,16 +73,14 @@
           has an error in it.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.first_cut"></a><h6>
-<a name="id874526"></a>
+<a name="id857380"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.first_cut">First Cut</a>
         </h6>
 <p>
           Without further delay, here's the first version of the XML grammar:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">mini_xml_grammar</span> <span class="special">:</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span>
@@ -130,8 +128,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           Going bottom up, let's examine the <code class="computeroutput"><span class="identifier">text</span></code>
@@ -150,7 +146,7 @@
           by the placeholder <code class="computeroutput"><span class="identifier">_val</span></code>).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.alternates"></a><h6>
-<a name="id876253"></a>
+<a name="id860195"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.alternates">Alternates</a>
         </h6>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
@@ -180,7 +176,7 @@
 <span class="special">;</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___asts_.not_predicate"></a><h6>
-<a name="id876580"></a>
+<a name="id860523"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.not_predicate">Not
           Predicate</a>
         </h6>
@@ -207,7 +203,7 @@
           at this point.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.inherited_attribute"></a><h6>
-<a name="id876735"></a>
+<a name="id860678"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.inherited_attribute">Inherited
           Attribute</a>
         </h6>
@@ -233,7 +229,7 @@
           <code class="computeroutput"><span class="identifier">_r3</span></code>, etc. if you have more).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit"></a><h6>
-<a name="id876929"></a>
+<a name="id860872"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit">A Lazy
           Lit</a>
         </h6>
@@ -267,7 +263,7 @@
           accessors, provided by <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.how_it_all_works"></a><h6>
-<a name="id877261"></a>
+<a name="id861203"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.how_it_all_works">How
           it all works</a>
         </h6>
@@ -276,23 +272,23 @@
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            Upon parsing <code class="computeroutput"><span class="identifier">start_tag</span></code>,
-            the parsed start-tag string is placed in <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)</span></code>.
-          </li>
+              Upon parsing <code class="computeroutput"><span class="identifier">start_tag</span></code>,
+              the parsed start-tag string is placed in <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)</span></code>.
+            </li>
 <li class="listitem">
-            Then we parse zero or more <code class="computeroutput"><span class="identifier">node</span></code>s.
-            At each step, we <code class="computeroutput"><span class="identifier">push_back</span></code>
-            the result into <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)</span></code>.
-          </li>
+              Then we parse zero or more <code class="computeroutput"><span class="identifier">node</span></code>s.
+              At each step, we <code class="computeroutput"><span class="identifier">push_back</span></code>
+              the result into <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)</span></code>.
+            </li>
 <li class="listitem">
-            Finally, we parse the <code class="computeroutput"><span class="identifier">end_tag</span></code>
-            giving it an inherited attribute: <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)</span></code>.
-            This is the string we obtained from the <code class="computeroutput"><span class="identifier">start_tag</span></code>.
-            Investigate <code class="computeroutput"><span class="identifier">end_tag</span></code> above.
-            It will fail to parse if it gets something different from what we got
-            from the <code class="computeroutput"><span class="identifier">start_tag</span></code>. This
-            ensures that our tags are balanced.
-          </li>
+              Finally, we parse the <code class="computeroutput"><span class="identifier">end_tag</span></code>
+              giving it an inherited attribute: <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)</span></code>. This is the string we obtained from
+              the <code class="computeroutput"><span class="identifier">start_tag</span></code>. Investigate
+              <code class="computeroutput"><span class="identifier">end_tag</span></code> above. It will
+              fail to parse if it gets something different from what we got from
+              the <code class="computeroutput"><span class="identifier">start_tag</span></code>. This
+              ensures that our tags are balanced.
+            </li>
 </ol></div>
 <p>
           To give the last item some more light, what happens is this:
@@ -314,7 +310,7 @@
           as <code class="computeroutput"><span class="identifier">_r1</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.the_structures"></a><h6>
-<a name="id877557"></a>
+<a name="id861513"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.the_structures">The
           Structures</a>
         </h6>
@@ -323,9 +319,7 @@
           It will also be recursive: xml is recursive.
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">mini_xml</span><span class="special">;</span>
 
@@ -343,11 +337,9 @@
 </span><span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants"></a><h6>
-<a name="id877753"></a>
+<a name="id861705"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants">Of
           Alternates and Variants</a>
         </h6>
@@ -374,7 +366,7 @@
           of <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">B</span></code> is the attribute of <code class="computeroutput"><span class="identifier">b</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again"></a><h6>
-<a name="id877917"></a>
+<a name="id861869"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again">Adapting
           structs again</a>
         </h6>
@@ -385,9 +377,7 @@
           sequence:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_STRUCT</span><span class="special">(</span>
     <span class="identifier">client</span><span class="special">::</span><span class="identifier">mini_xml</span><span class="special">,</span>
@@ -396,11 +386,9 @@
 <span class="special">)</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.one_more_take"></a><h6>
-<a name="id878057"></a>
+<a name="id862006"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.one_more_take">One
           More Take</a>
         </h6>
@@ -410,9 +398,7 @@
           Here it is:
         </p>
 <p>
-          </p>
-<p>
-            
+          
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">mini_xml_grammar</span>
@@ -458,8 +444,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-          </p>
-<p>
         </p>
 <p>
           This one shouldn't be any more difficult to understand after going through
@@ -468,7 +452,7 @@
           if you missed that). There is some new stuff though. It's all in the <code class="computeroutput"><span class="identifier">xml</span></code> rule:
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.local_variables"></a><h6>
-<a name="id880066"></a>
+<a name="id862987"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.local_variables">Local
           Variables</a>
         </h6>
@@ -488,20 +472,21 @@
 </pre>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-            Upon parsing <code class="computeroutput"><span class="identifier">start_tag</span></code>,
-            the parsed start-tag string is placed in the local variable specified
-            by (yet another) <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-            placeholder: <code class="computeroutput"><span class="identifier">_a</span></code>. We have
-            only one local variable. If we had more, these are designated by <code class="computeroutput"><span class="identifier">_b</span></code>..<code class="computeroutput"><span class="identifier">_z</span></code>.
-          </li>
+              Upon parsing <code class="computeroutput"><span class="identifier">start_tag</span></code>,
+              the parsed start-tag string is placed in the local variable specified
+              by (yet another) <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+              placeholder: <code class="computeroutput"><span class="identifier">_a</span></code>. We
+              have only one local variable. If we had more, these are designated
+              by <code class="computeroutput"><span class="identifier">_b</span></code>..<code class="computeroutput"><span class="identifier">_z</span></code>.
+            </li>
 <li class="listitem">
-            Then we parse zero or more <code class="computeroutput"><span class="identifier">node</span></code>s.
-          </li>
+              Then we parse zero or more <code class="computeroutput"><span class="identifier">node</span></code>s.
+            </li>
 <li class="listitem">
-            Finally, we parse the <code class="computeroutput"><span class="identifier">end_tag</span></code>
-            giving it an inherited attribute: <code class="computeroutput"><span class="identifier">_a</span></code>,
-            our local variable.
-          </li>
+              Finally, we parse the <code class="computeroutput"><span class="identifier">end_tag</span></code>
+              giving it an inherited attribute: <code class="computeroutput"><span class="identifier">_a</span></code>,
+              our local variable.
+            </li>
 </ol></div>
 <p>
           There are no actions involved in stuffing data into our <code class="computeroutput"><span class="identifier">xml</span></code>
