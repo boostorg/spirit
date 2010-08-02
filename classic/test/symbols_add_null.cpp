@@ -7,6 +7,12 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+// This test requires NDEBUG to be undefined,  because it depends on 
+// BOOST_SPIRIT_ASSERT throwing an exception.
+#ifdef NDEBUG  
+#  undef NDEBUG  
+#endif  
+
 #include <stdexcept>
 
 #define BOOST_SPIRIT_ASSERT_EXCEPTION ::spirit_exception
