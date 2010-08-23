@@ -901,7 +901,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Out, typename T>
     struct print_attribute_debug<Out, boost::optional<T> >
     {
-        static void call(Out& out, T const& val)
+        static void call(Out& out, boost::optional<T> const& val)
         {
             if (val)
                 print_attribute(out, *val);
