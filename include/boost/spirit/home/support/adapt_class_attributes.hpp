@@ -16,52 +16,45 @@
 #include <boost/utility/enable_if.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// forward declaration only
-namespace boost { namespace fusion { namespace extension 
-{ 
-    template <typename T, int N> struct class_member_proxy;
-}}}
-
-///////////////////////////////////////////////////////////////////////////////
 // customization points allowing to use adapted classes with spirit
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N>
-    struct is_container<fusion::extension::class_member_proxy<T, N> >
-      : is_container<typename fusion::extension::class_member_proxy<T, N>::type>
+    struct is_container<fusion::extension::access::class_member_proxy<T, N> >
+      : is_container<typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
     {};
 
     template <typename T, int N>
-    struct container_value<fusion::extension::class_member_proxy<T, N> >
-      : container_value<typename fusion::extension::class_member_proxy<T, N>::type>
+    struct container_value<fusion::extension::access::class_member_proxy<T, N> >
+      : container_value<typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
     {};
 
     template <typename T, int N, typename Val>
-    struct push_back_container<fusion::extension::class_member_proxy<T, N>, Val
+    struct push_back_container<fusion::extension::access::class_member_proxy<T, N>, Val
       , typename enable_if<
-            is_reference<typename fusion::extension::class_member_proxy<T, N>::type> 
+            is_reference<typename fusion::extension::access::class_member_proxy<T, N>::lvalue> 
         >::type>
     {
-        static bool call(fusion::extension::class_member_proxy<T, N>& p, Val const& val)
+        static bool call(fusion::extension::access::class_member_proxy<T, N>& p, Val const& val)
         {
-            typedef typename fusion::extension::class_member_proxy<T, N>::type type;
+            typedef typename fusion::extension::access::class_member_proxy<T, N>::lvalue type;
             return push_back((type)p, val);
         }
     };
 
     template <typename T, int N>
-    struct container_iterator<fusion::extension::class_member_proxy<T, N> >
-      : container_iterator<typename fusion::extension::class_member_proxy<T, N>::type>
+    struct container_iterator<fusion::extension::access::class_member_proxy<T, N> >
+      : container_iterator<typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, typename Val>
     struct assign_to_attribute_from_value<
-        fusion::extension::class_member_proxy<T, N>, Val>
+        fusion::extension::access::class_member_proxy<T, N>, Val>
     {
         static void 
-        call(Val const& val, fusion::extension::class_member_proxy<T, N>& attr)
+        call(Val const& val, fusion::extension::access::class_member_proxy<T, N>& attr)
         {
             attr = val;
         }
@@ -69,58 +62,68 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N>
-    struct attribute_type<fusion::extension::class_member_proxy<T, N> > 
-      : fusion::extension::class_member_proxy<T, N> 
+    struct attribute_type<fusion::extension::access::class_member_proxy<T, N> > 
+      : fusion::extension::access::class_member_proxy<T, N> 
     {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, typename Attribute, typename Domain>
     struct transform_attribute<
-        fusion::extension::class_member_proxy<T, N>, Attribute, Domain
+        fusion::extension::access::class_member_proxy<T, N>, Attribute, Domain
       , typename disable_if<
-            is_reference<typename fusion::extension::class_member_proxy<T, N>::lvalue> 
+            is_reference<typename fusion::extension::access::class_member_proxy<T, N>::lvalue> 
         >::type>
     {
         typedef Attribute type;
 
         static Attribute 
-        pre(fusion::extension::class_member_proxy<T, N>& val) 
+        pre(fusion::extension::access::class_member_proxy<T, N>& val) 
         { 
             return val; 
         }
         static void 
-        post(fusion::extension::class_member_proxy<T, N>& val
+        post(fusion::extension::access::class_member_proxy<T, N>& val
           , Attribute const& attr) 
         {
             val = attr;
         }
         static void 
-        fail(fusion::extension::class_member_proxy<T, N>&) 
+        fail(fusion::extension::access::class_member_proxy<T, N>&) 
         {
         }
     };
 
     template <typename T, int N, typename Attribute, typename Domain>
     struct transform_attribute<
-        fusion::extension::class_member_proxy<T, N>, Attribute, Domain
+        fusion::extension::access::class_member_proxy<T, N>, Attribute, Domain
       , typename enable_if<
-            is_reference<typename fusion::extension::class_member_proxy<T, N>::lvalue> 
+            is_reference<typename fusion::extension::access::class_member_proxy<T, N>::lvalue> 
         >::type>
     {
         typedef Attribute& type;
 
         static Attribute& 
-        pre(fusion::extension::class_member_proxy<T, N>& val) 
+        pre(fusion::extension::access::class_member_proxy<T, N>& val) 
         { 
             return val; 
         }
         static void 
-        post(fusion::extension::class_member_proxy<T, N>&, Attribute const&) 
+        post(fusion::extension::access::class_member_proxy<T, N>&, Attribute const&) 
         {
         }
         static void 
-        fail(fusion::extension::class_member_proxy<T, N>&) 
+        fail(fusion::extension::access::class_member_proxy<T, N>&) 
         {
+        }
+    };
+
+    template <typename T, int N>
+    struct clear_value<fusion::extension::access::class_member_proxy<T, N> >
+    {
+        static void call(fusion::extension::access::class_member_proxy<T, N>& val)
+        {
+            typedef fusion::extension::access::class_member_proxy<T, N>::lvalue lvalue;
+            clear(lvalue(val));
         }
     };
 }}}
