@@ -22,30 +22,36 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N>
     struct is_container<fusion::extension::access::class_member_proxy<T, N> >
-      : is_container<typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
+      : is_container<
+          typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
     {};
 
     template <typename T, int N>
     struct container_value<fusion::extension::access::class_member_proxy<T, N> >
-      : container_value<typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
+      : container_value<
+          typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
     {};
 
     template <typename T, int N, typename Val>
     struct push_back_container<fusion::extension::access::class_member_proxy<T, N>, Val
-      , typename enable_if<
-            is_reference<typename fusion::extension::access::class_member_proxy<T, N>::lvalue> 
-        >::type>
+      , typename enable_if<is_reference<
+            typename fusion::extension::access::class_member_proxy<T, N>::lvalue
+        > >::type>
     {
-        static bool call(fusion::extension::access::class_member_proxy<T, N>& p, Val const& val)
+        static bool call(fusion::extension::access::class_member_proxy<T, N>& p
+          , Val const& val)
         {
-            typedef typename fusion::extension::access::class_member_proxy<T, N>::lvalue type;
-            return push_back((type)p, val);
+            typedef typename 
+                fusion::extension::access::class_member_proxy<T, N>::lvalue 
+            type;
+            return push_back(type(p), val);
         }
     };
 
     template <typename T, int N>
     struct container_iterator<fusion::extension::access::class_member_proxy<T, N> >
-      : container_iterator<typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
+      : container_iterator<
+            typename fusion::extension::access::class_member_proxy<T, N>::lvalue>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +60,8 @@ namespace boost { namespace spirit { namespace traits
         fusion::extension::access::class_member_proxy<T, N>, Val>
     {
         static void 
-        call(Val const& val, fusion::extension::access::class_member_proxy<T, N>& attr)
+        call(Val const& val
+          , fusion::extension::access::class_member_proxy<T, N>& attr)
         {
             attr = val;
         }
@@ -70,9 +77,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, int N, typename Attribute, typename Domain>
     struct transform_attribute<
         fusion::extension::access::class_member_proxy<T, N>, Attribute, Domain
-      , typename disable_if<
-            is_reference<typename fusion::extension::access::class_member_proxy<T, N>::lvalue> 
-        >::type>
+      , typename disable_if<is_reference<
+            typename fusion::extension::access::class_member_proxy<T, N>::lvalue
+        > >::type>
     {
         typedef Attribute type;
 
@@ -96,9 +103,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, int N, typename Attribute, typename Domain>
     struct transform_attribute<
         fusion::extension::access::class_member_proxy<T, N>, Attribute, Domain
-      , typename enable_if<
-            is_reference<typename fusion::extension::access::class_member_proxy<T, N>::lvalue> 
-        >::type>
+      , typename enable_if<is_reference<
+            typename fusion::extension::access::class_member_proxy<T, N>::lvalue
+        > >::type>
     {
         typedef Attribute& type;
 
@@ -122,8 +129,10 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(fusion::extension::access::class_member_proxy<T, N>& val)
         {
-            typedef fusion::extension::access::class_member_proxy<T, N>::lvalue lvalue;
-            clear(lvalue(val));
+            typedef typename 
+                fusion::extension::access::class_member_proxy<T, N>::lvalue 
+            type;
+            clear(type(val));
         }
     };
 }}}
