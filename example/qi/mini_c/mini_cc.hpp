@@ -23,6 +23,8 @@ statement<Iterator>::statement(
   , add_var(var_adder(vars, nvars))
   , op(code)
 {
+    namespace phx = boost::phoenix;
+
     identifier %=
         raw[lexeme[alpha >> *(alnum | '_')]]
         ;
@@ -42,7 +44,7 @@ statement<Iterator>::statement(
             ]
         >   !var_ref                // make sure the variable isn't redeclared
         >   identifier      [add_var(_1)]
-        >   (';' | '=' > assignment_rhs(ref(nvars)-1))
+        >   (';' | '=' > assignment_rhs(phx::ref(nvars)-1))
         ;
 
     assignment =
@@ -61,12 +63,12 @@ statement<Iterator>::statement(
         >>  '('
         >   expr            [
                                 op(op_jump_if, 0), // we shall fill this (0) in later
-                                _a = size(ref(code))-1 // mark its position
+                                _a = size(phx::ref(code))-1 // mark its position
                             ]
         >   ')'
         >   statement_      [
                                 // now we know where to jump to (after the if branch)
-                                ref(code)[_a] = size(ref(code))
+                                phx::ref(code)[_a] = size(phx::ref(code))
                             ]
         >>
            -(
@@ -74,31 +76,31 @@ statement<Iterator>::statement(
                     "else"
                     >> !(alnum | '_') // make sure we have whole words
                 ]                                [
-                                ref(code)[_a] += 2, // adjust for the "else" jump
+                                phx::ref(code)[_a] += 2, // adjust for the "else" jump
                                 op(op_jump, 0), // we shall fill this (0) in later
-                                _a = size(ref(code))-1 // mark its position
+                                _a = size(phx::ref(code))-1 // mark its position
                             ]
             >   statement_  [
                                 // now we know where to jump to (after the else branch)
-                                ref(code)[_a] = size(ref(code))
+                                phx::ref(code)[_a] = size(phx::ref(code))
                             ]
             )
         ;
 
     while_statement =
             lit("while")    [
-                                _a = size(ref(code)) // mark our position
+                                _a = size(phx::ref(code)) // mark our position
                             ]
         >>  '('
         >   expr            [
                                 op(op_jump_if, 0), // we shall fill this (0) in later
-                                _b = size(ref(code))-1 // mark its position
+                                _b = size(phx::ref(code))-1 // mark its position
                             ]
         >   ')'
         >   statement_      [
                                 op(op_jump, _a), // loop back
                                 // now we know where to jump to (to exit the loop)
-                                ref(code)[_b] = size(ref(code))
+                                phx::ref(code)[_b] = size(phx::ref(code))
                             ]
         ;
 
@@ -112,7 +114,7 @@ statement<Iterator>::statement(
                 >> !(alnum | '_') // make sure we have whole words
             ]
         >> -(
-                eps(ref(has_return)) > expr     [op(op_return)]
+                eps(phx::ref(has_return)) > expr     [op(op_return)]
             )
         >   ';'
         ;

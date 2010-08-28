@@ -28,25 +28,25 @@ expression<Iterator>::expression(
         ;
 
     equality_expr =
-        relational_expr
-        >> *(   ("==" > relational_expr     [op(op_eq)])
-            |   ("!=" > relational_expr     [op(op_neq)])
-            )
-        ;
-
-    relational_expr =
         logical_expr
-        >> *(   ("<=" > logical_expr        [op(op_lte)])
-            |   ('<' > logical_expr         [op(op_lt)])
-            |   (">=" > logical_expr        [op(op_gte)])
-            |   ('>' > logical_expr         [op(op_gt)])
+        >> *(   ("==" > logical_expr        [op(op_eq)])
+            |   ("!=" > logical_expr        [op(op_neq)])
             )
         ;
 
     logical_expr =
+        relational_expr
+        >> *(   ("&&" > relational_expr     [op(op_and)])
+            |   ("||" > relational_expr     [op(op_or)])
+            )
+        ;
+
+    relational_expr =
         additive_expr
-        >> *(   ("&&" > additive_expr       [op(op_and)])
-            |   ("||" > additive_expr       [op(op_or)])
+        >> *(   ("<=" > additive_expr       [op(op_lte)])
+            |   ('<' > additive_expr        [op(op_lt)])
+            |   (">=" > additive_expr       [op(op_gte)])
+            |   ('>' > additive_expr        [op(op_gt)])
             )
         ;
 
