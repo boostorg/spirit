@@ -704,7 +704,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename T>
             void operator()(T& val) const
             {
-                clear(val);
+                spirit::traits::clear(val);
             }
         };
 
@@ -807,7 +807,7 @@ namespace boost { namespace spirit { namespace traits
                     is_first = false;
                 else
                     out << ", ";
-                print_attribute(out, val);
+                spirit::traits::print_attribute(out, val);
             }
 
             Out& out;
@@ -823,7 +823,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename T>
             void operator()(T const& val) const
             {
-                print_attribute(out, val);
+                spirit::traits::print_attribute(out, val);
             }
 
             Out& out;
@@ -871,7 +871,7 @@ namespace boost { namespace spirit { namespace traits
                     if (!first)
                         out << ", ";
                     first = false;
-                    print_attribute(out, traits::deref(i));
+                    spirit::traits::print_attribute(out, traits::deref(i));
                 }
             }
             out << ']';
@@ -904,7 +904,7 @@ namespace boost { namespace spirit { namespace traits
         static void call(Out& out, boost::optional<T> const& val)
         {
             if (val)
-                print_attribute(out, *val);
+                spirit::traits::print_attribute(out, *val);
             else
                 out << "<empty>";
         }
