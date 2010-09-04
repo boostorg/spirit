@@ -523,12 +523,12 @@ struct cond_actor {
 };
 
 template <typename ActorT>
-struct make_cond_functor<phoenix::actor<ActorT> > {
+struct make_cond_functor<::phoenix::actor<ActorT> > {
 
-    static cond_actor<phoenix::actor<ActorT> >
-    do_(phoenix::actor<ActorT> const &actor)
+    static cond_actor<::phoenix::actor<ActorT> >
+    do_(::phoenix::actor<ActorT> const &actor)
     {
-        return cond_actor<phoenix::actor<ActorT> >(actor);
+        return cond_actor<::phoenix::actor<ActorT> >(actor);
     }
 };
 
