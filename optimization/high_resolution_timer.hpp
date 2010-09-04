@@ -14,11 +14,11 @@
 #include <unistd.h>
 #endif
 #include <time.h>
+#include <stdexcept>
+#include <limits>
 
 #if defined(BOOST_WINDOWS)
 
-#include <stdexcept>
-#include <limits>
 #include <windows.h>
 
 namespace util 
@@ -304,8 +304,6 @@ namespace util
 
 // For platforms that do not support _POSIX_TIMERS but do have
 // GETTIMEOFDAY, which is still preferable to std::clock()
-#include <stdexcept>
-#include <limits>
 #include <sys/time.h>
 
 namespace util
