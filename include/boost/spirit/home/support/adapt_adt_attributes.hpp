@@ -76,11 +76,11 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, bool Const, typename Val>
     struct assign_to_attribute_from_value<
-        fusion::extension::access::adt_attribute_proxy<T, N, Const>, Val>
+        fusion::extension::access::adt_attribute_proxy<T, N, false>, Val>
     {
         static void 
         call(Val const& val
-          , fusion::extension::access::adt_attribute_proxy<T, N, Const>& attr)
+          , fusion::extension::access::adt_attribute_proxy<T, N, false>& attr)
         {
             attr = val;
         }
@@ -94,33 +94,33 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, int N, bool Const, typename Attribute, typename Domain>
+    template <typename T, int N, typename Attribute, typename Domain>
     struct transform_attribute<
-        fusion::extension::access::adt_attribute_proxy<T, N, Const>
+        fusion::extension::access::adt_attribute_proxy<T, N, false>
       , Attribute
       , Domain
       , typename disable_if<is_reference<
             typename fusion::extension::access::adt_attribute_proxy<
-                T, N, Const
+                T, N, false
             >::type
         > >::type>
     {
         typedef Attribute type;
 
         static Attribute 
-        pre(fusion::extension::access::adt_attribute_proxy<T, N, Const>& val)
+        pre(fusion::extension::access::adt_attribute_proxy<T, N, false>& val)
         { 
             return val; 
         }
         static void 
-        post(fusion::extension::access::adt_attribute_proxy<T, N, Const>& val
+        post(
+            fusion::extension::access::adt_attribute_proxy<T, N, false>& val
           , Attribute const& attr) 
         {
             val = attr;
         }
         static void 
-        fail(fusion::extension::access::adt_attribute_proxy<T, N, Const>&)
+        fail(fusion::extension::access::adt_attribute_proxy<T, N, false>&)
         {
         }
     };
