@@ -906,7 +906,7 @@ namespace boost { namespace spirit { namespace traits
             if (val)
                 spirit::traits::print_attribute(out, *val);
             else
-                out << "<empty>";
+                out << "[empty]";
         }
     };
 
