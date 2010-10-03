@@ -246,7 +246,7 @@ namespace boost { namespace spirit { namespace traits
     // Retrieve the attribute type to use from the given type
     //
     // This is needed to extract the correct attribute type from proxy classes
-    // as utilized in FUSION_ADAPT_CLASS
+    // as utilized in FUSION_ADAPT_ADT et. al.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename Enable/* = void*/>
     struct attribute_type : mpl::identity<Attribute> {};

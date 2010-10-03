@@ -21,7 +21,7 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
-#include <boost/fusion/include/adapt_class.hpp>
+#include <boost/fusion/include/adapt_adt.hpp>
 
 #include <iostream>
 #include <string>
@@ -32,7 +32,7 @@
 // sequence. 
 //[tutorial_karma_complex_number_adapt_class
 // We can leave off the setters as Karma does not need them.
-BOOST_FUSION_ADAPT_CLASS(
+BOOST_FUSION_ADAPT_ADT(
     std::complex<double>,
     (bool, bool, obj.imag() != 0, /**/)
     (double, double, obj.real(), /**/)
