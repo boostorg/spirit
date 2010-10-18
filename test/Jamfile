@@ -160,6 +160,7 @@ import testing ;
     [ run karma/karma_optional_double.cpp     : : : : ]
     [ run karma/semantic_action_attribute.cpp : : : : ]
     [ compile qi/single_element_sequence_attribute.cpp : : qi_single_element_sequence_attribute ]
+    [ compile qi/debug_optional.cpp           : : qi_debug_optional ]
 
     ;
 

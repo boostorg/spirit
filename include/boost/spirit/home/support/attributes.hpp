@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/attributes_fwd.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/as_variant.hpp>
 #include <boost/optional/optional.hpp>
@@ -703,7 +704,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename T>
             void operator()(T& val) const
             {
-                clear(val);
+                spirit::traits::clear(val);
             }
         };
 
@@ -806,7 +807,7 @@ namespace boost { namespace spirit { namespace traits
                     is_first = false;
                 else
                     out << ", ";
-                print_attribute(out, val);
+                spirit::traits::print_attribute(out, val);
             }
 
             Out& out;
@@ -822,7 +823,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename T>
             void operator()(T const& val) const
             {
-                print_attribute(out, val);
+                spirit::traits::print_attribute(out, val);
             }
 
             Out& out;
@@ -870,7 +871,7 @@ namespace boost { namespace spirit { namespace traits
                     if (!first)
                         out << ", ";
                     first = false;
-                    print_attribute(out, traits::deref(i));
+                    spirit::traits::print_attribute(out, traits::deref(i));
                 }
             }
             out << ']';
@@ -900,12 +901,12 @@ namespace boost { namespace spirit { namespace traits
     template <typename Out, typename T>
     struct print_attribute_debug<Out, boost::optional<T> >
     {
-        static void call(Out& out, T const& val)
+        static void call(Out& out, boost::optional<T> const& val)
         {
             if (val)
-                print_attribute(out, *val);
+                spirit::traits::print_attribute(out, *val);
             else
-                out << "<empty>";
+                out << "[empty]";
         }
     };
 

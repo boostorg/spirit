@@ -10,7 +10,6 @@
 #include <map>
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>

@@ -21,6 +21,8 @@ program<Iterator>::program(std::vector<int>& code)
   , state_reset(function_state_reset(code, statement_.vars, statement_.nvars))
   , op(code)
 {
+    namespace phx = boost::phoenix;
+
     bool& has_return = statement_.has_return;
     int& nvars = statement_.nvars;
     boost::phoenix::function<var_adder>& add_var = statement_.add_var;
@@ -31,8 +33,8 @@ program<Iterator>::program(std::vector<int>& code)
 
     function =
             (
-                lit("void")                     [ref(has_return) = false]
-            |   lit("int")                      [ref(has_return) = true]
+                lit("void")                     [phx::ref(has_return) = false]
+            |   lit("int")                      [phx::ref(has_return) = true]
             )
         >>  !functions                          // no duplicate functions!
         >>  identifier                          [_a = _1]
@@ -43,11 +45,11 @@ program<Iterator>::program(std::vector<int>& code)
             )
         >   ')'
         >   lit('{')                            [
-                                                    _b = size(ref(code)),
+                                                    _b = size(phx::ref(code)),
                                                     add_function(
                                                         _a     // function name
-                                                      , ref(nvars)      // arity
-                                                      , size(ref(code)) // address
+                                                      , phx::ref(nvars)      // arity
+                                                      , size(phx::ref(code)) // address
                                                     ),
                                                     op(op_stk_adj, 0)   // adjust this later
                                                 ]
