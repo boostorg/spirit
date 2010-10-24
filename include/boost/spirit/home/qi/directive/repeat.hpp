@@ -217,23 +217,27 @@ namespace boost { namespace spirit { namespace qi
             typename LoopIter::type i = iter.start();
 
             // parse the minimum required
+            Iterator save = first;
             if (!iter.got_min(i) &&
-                !parse_minimal(first, last, context, skipper, attr, val, i))
+                !parse_minimal(save, last, context, skipper, attr, val, i))
             {
                 return false;
             }
 
             // parse some more up to the maximum specified
-            Iterator save = first;
-            for (; !iter.got_max(i); ++i)
-            {
-                if (!subject.parse(save, last, context, skipper, val) ||
-                    !traits::push_back(attr, val))
-                {
-                    break;
-                }
+            if (!iter.got_max(i)) {
+                do {
+                    if (!subject.parse(save, last, context, skipper, val) ||
+                        !traits::push_back(attr, val))
+                    {
+                        break;
+                    }
+                    first = save;
+                    traits::clear(val);
+                } while (!iter.got_max(++i));
+            }
+            else {
                 first = save;
-                traits::clear(val);
             }
             return true;
         }
