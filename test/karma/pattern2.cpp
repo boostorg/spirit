@@ -105,7 +105,7 @@ int main()
         using boost::fusion::vector;
         karma::rule<outiter_type, vector<int>()> r = int_;
 
-        vector<int> v = 1;
+        vector<int> v(1);
         BOOST_TEST(test("1", r, v));
     }
 
@@ -113,7 +113,7 @@ int main()
         using boost::fusion::vector;
         karma::rule<outiter_type, space_type, vector<int>()> r = int_;
 
-        vector<int> v = 1;
+        vector<int> v(1);
         BOOST_TEST(test_delimited("1 ", r, v, space));
     }
 

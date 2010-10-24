@@ -80,7 +80,7 @@ int main()
 
         {
             // a single element fusion sequence
-            fusion::vector<char> attr = 'a';
+            fusion::vector<char> attr('a');
             BOOST_TEST((test("ab", char_ << 'b', attr)));
         }
 

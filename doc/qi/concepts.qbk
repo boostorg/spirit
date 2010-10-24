@@ -22,8 +22,8 @@ The following sections provide details on these concepts.
 [heading Description]
 
 The /Parser/ is the most fundamental concept. A Parser has a member
-function, `parse`, that accepts a first-last __fwditer__ pair andreturns bool as its result. The iterators delimit the data being parsed.function `parse`, that accepts a first-last __fwditer__ pair and
-returns `bool` as its result. The iterators delimit the data being parsed.
+function, `parse`, that accepts a first-last __fwditer__ pair and returns
+bool as its result. The iterators delimit the data being parsed.
 The Parser's `parse` member function returns `true` if the parse
 succeeds, in which case the first iterator is advanced accordingly. Each
 Parser can represent a specific pattern or algorithm, or it can be a

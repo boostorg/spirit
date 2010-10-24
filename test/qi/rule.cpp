@@ -471,7 +471,7 @@ main()
         using boost::fusion::at_c;
         rule<const char*, vector<int>()> r = int_;
 
-        vector<int> v = 0;
+        vector<int> v(0);
         BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
     }
 
@@ -480,7 +480,7 @@ main()
         using boost::fusion::at_c;
         rule<const char*, vector<unsigned int>()> r = uint_;
 
-        vector<unsigned int> v = 0;
+        vector<unsigned int> v(0);
         BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
     }
 
