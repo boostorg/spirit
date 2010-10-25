@@ -162,6 +162,7 @@ import testing ;
     [ compile qi/single_element_sequence_attribute.cpp : : qi_single_element_sequence_attribute ]
     [ compile qi/debug_optional.cpp           : : qi_debug_optional ]
     [ run karma/real_scientific.cpp           : : : : ]
+    [ run qi/repeat_regression.cpp            : : : : ]
 
     ;
 
