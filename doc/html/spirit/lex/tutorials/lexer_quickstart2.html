@@ -4,7 +4,7 @@
 <title>Quickstart 2 - A better word counter using Spirit.Lex</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
 <link rel="up" href="../tutorials.html" title="Spirit.Lex Tutorials">
 <link rel="prev" href="lexer_quickstart1.html" title="Quickstart 1 - A word counter using Spirit.Lex">
 <link rel="next" href="lexer_quickstart3.html" title="Quickstart 3 - Counting Words Using a Parser">
@@ -24,7 +24,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.lex.tutorials.lexer_quickstart2"></a><a class="link" href="lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex"> Quickstart
+<a name="spirit.lex.tutorials.lexer_quickstart2"></a><a class="link" href="lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Quickstart
         2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>
 </h4></div></div></div>
 <p>
@@ -40,7 +40,7 @@
           options along the lines (for the full example code see here: <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.prerequisites"></a><h6>
-<a name="id1162747"></a>
+<a name="id1164816"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -101,7 +101,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.semantic_actions_in__emphasis_spirit_lex__emphasis_"></a><h6>
-<a name="id1163365"></a>
+<a name="id1168785"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.semantic_actions_in__emphasis_spirit_lex__emphasis_">Semantic
           Actions in <span class="emphasis"><em>Spirit.Lex</em></span></a>
         </h6>
@@ -156,7 +156,7 @@
           Semantic Actions</a>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.associating_token_definitions_with_the_lexer"></a><h6>
-<a name="id1165707"></a>
+<a name="id1169414"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.associating_token_definitions_with_the_lexer">Associating
           Token Definitions with the Lexer</a>
         </h6>
@@ -193,7 +193,7 @@
           with the constant defined by <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">min_token_id</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.pulling_everything_together"></a><h6>
-<a name="id1166002"></a>
+<a name="id1169709"></a>
           <a class="link" href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.pulling_everything_together">Pulling
           everything together</a>
         </h6>
@@ -243,76 +243,53 @@
 </pre>
 <p>
         </p>
-<p>
-          </p>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit4"></a><a href="#spirit4co"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Specifying <code class="computeroutput"><span class="identifier">omit</span></code> as the
-          token attribute type generates a token class not holding any token attribute
-          at all (not even the iterator range of the matched input sequence), therefore
-          optimizing the token, the lexer, and possibly the parser implementation
-          as much as possible. Specifying <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-          as the 3rd template parameter generates a token type and an iterator, both
-          holding no lexer state, allowing for even more aggressive optimizations.
-          As a result the token instances contain the token ids as the only data
-          member.
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Specifying <code class="computeroutput"><span class="identifier">omit</span></code> as
+              the token attribute type generates a token class not holding any token
+              attribute at all (not even the iterator range of the matched input
+              sequence), therefore optimizing the token, the lexer, and possibly
+              the parser implementation as much as possible. Specifying <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code> as the 3rd template parameter
+              generates a token type and an iterator, both holding no lexer state,
+              allowing for even more aggressive optimizations. As a result the token
+              instances contain the token ids as the only data member.
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit5"></a><a href="#spirit5co"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  This defines the lexer type to use
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              This defines the lexer type to use
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit6"></a><a href="#spirit6co"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Create the lexer object instance needed to invoke the lexical analysis
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Create the lexer object instance needed to invoke the lexical analysis
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit7"></a><a href="#spirit7co"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Read input from the given file, tokenize all the input, while discarding
-          all generated tokens
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Read input from the given file, tokenize all the input, while discarding
+              all generated tokens
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit8"></a><a href="#spirit8co"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Create a pair of iterators returning the sequence of generated tokens
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Create a pair of iterators returning the sequence of generated tokens
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit9"></a><a href="#spirit9co"><img src="../../../../../../../doc/src/images/callouts/6.png" alt="6" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Here we simply iterate over all tokens, making sure to break the loop if
-          an invalid token gets returned from the lexer
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Here we simply iterate over all tokens, making sure to break the loop
+              if an invalid token gets returned from the lexer
+            </p></td>
 </tr>
 </table></div>
-<p>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

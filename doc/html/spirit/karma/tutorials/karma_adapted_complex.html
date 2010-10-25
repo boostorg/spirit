@@ -4,7 +4,7 @@
 <title>Complex - Fully Integrated</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="karma_easier_complex.html" title="Complex - Made easier">
 <link rel="next" href="num_list.html" title="Number List - Printing Numbers From a std::vector">
@@ -24,7 +24,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.tutorials.karma_adapted_complex"></a><a class="link" href="karma_adapted_complex.html" title="Complex - Fully Integrated"> Complex
+<a name="spirit.karma.tutorials.karma_adapted_complex"></a><a class="link" href="karma_adapted_complex.html" title="Complex - Fully Integrated">Complex
         - Fully Integrated</a>
 </h4></div></div></div>
 <p>
@@ -38,7 +38,7 @@
           macros.
         </p>
 <a name="spirit.karma.tutorials.karma_adapted_complex.adapting_a_class_as_a_fusion_sequence"></a><h6>
-<a name="id1003157"></a>
+<a name="id1006324"></a>
           <a class="link" href="karma_adapted_complex.html#spirit.karma.tutorials.karma_adapted_complex.adapting_a_class_as_a_fusion_sequence">Adapting
           a Class As a Fusion Sequence</a>
         </h6>
@@ -84,7 +84,7 @@
           
 </p>
 <pre class="programlisting"><span class="comment">// We can leave off the setters as Karma does not need them.
-</span><span class="identifier">BOOST_FUSION_ADAPT_CLASS</span><span class="special">(</span>
+</span><span class="identifier">BOOST_FUSION_ADAPT_ADT</span><span class="special">(</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;,</span>
     <span class="special">(</span><span class="keyword">bool</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">,</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">imag</span><span class="special">()</span> <span class="special">!=</span> <span class="number">0</span><span class="special">,</span> <span class="comment">/**/</span><span class="special">)</span>
     <span class="special">(</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">real</span><span class="special">(),</span> <span class="comment">/**/</span><span class="special">)</span>

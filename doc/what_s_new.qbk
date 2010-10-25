@@ -9,6 +9,25 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_4_1 Spirit V2.4.1] 
+
+[heading What's changed in __qi__ and __karma__ from V2.4 (Boost V1.44.0) to V2.4.1 (Boost V1.45.0)]
+
+[heading Bug Fixes]
+
+* Fixed broken __qi__ debugging facilities for optional attributes.
+* The __qi__ auto parsers and __karma__ auto generators will now properly work 
+  with `signed char` and `unsigned char` as well.
+* Fixed a problem in the multi_pass fixed_queue policy.
+* Enabled proper modifier handling for the __qi_skip__ directive.
+* Fixed a floating point formating problem in Karma (Trac ticket #4742).
+* Fixed a problem in [qi_repeat `repeat`]`[]`, which caused the `first` 
+  iterator not to be reset on certain parsing failures (see 
+  [@http://stackoverflow.com/questions/4009752/boost-spirit-bug-when-mixing-alternates-with-optionals Stack Overflow]).
+
+[endsect] [/ spirit_2_4_1]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_4 Spirit V2.4] 
 
 [heading What's changed in __qi__ and __karma__ from V2.3 (Boost V1.43.0) to V2.4 (Boost V1.44.0)]

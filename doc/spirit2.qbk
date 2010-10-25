@@ -8,7 +8,7 @@
 
 [article Spirit
     [quickbook 1.4]
-    [version 2.4]
+    [version 2.4.1]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser and Generator Library]

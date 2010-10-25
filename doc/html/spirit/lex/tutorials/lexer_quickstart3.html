@@ -4,7 +4,7 @@
 <title>Quickstart 3 - Counting Words Using a Parser</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
 <link rel="up" href="../tutorials.html" title="Spirit.Lex Tutorials">
 <link rel="prev" href="lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">
 <link rel="next" href="../abstracts.html" title="Abstracts">
@@ -24,7 +24,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.lex.tutorials.lexer_quickstart3"></a><a class="link" href="lexer_quickstart3.html" title="Quickstart 3 - Counting Words Using a Parser"> Quickstart
+<a name="spirit.lex.tutorials.lexer_quickstart3"></a><a class="link" href="lexer_quickstart3.html" title="Quickstart 3 - Counting Words Using a Parser">Quickstart
         3 - Counting Words Using a Parser</a>
 </h4></div></div></div>
 <p>
@@ -65,7 +65,7 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h6>
-<a name="id1167002"></a>
+<a name="id1170708"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -105,7 +105,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h6>
-<a name="id1167361"></a>
+<a name="id1171102"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h6>
@@ -154,7 +154,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h6>
-<a name="id1167709"></a>
+<a name="id1171450"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h6>
@@ -303,7 +303,7 @@
           <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span></code>.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h6>
-<a name="id1168620"></a>
+<a name="id1172336"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>
@@ -355,51 +355,36 @@
 </pre>
 <p>
         </p>
-<p>
-          </p>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit10"></a><a href="#spirit10co"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Define the token type to be used: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>
-          is available as the type of the token attribute
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Define the token type to be used: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>
+              is available as the type of the token attribute
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit11"></a><a href="#spirit11co"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Define the lexer type to use implementing the state machine
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Define the lexer type to use implementing the state machine
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit12"></a><a href="#spirit12co"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Define the iterator type exposed by the lexer type
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Define the iterator type exposed by the lexer type
+            </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit13"></a><a href="#spirit13co"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
-<td valign="top" align="left">
-<p>  Parsing is done based on the the token stream, not the character stream
-          read from the input. The function <code class="computeroutput"><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code> wraps the passed iterator range <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> by the lexical analyzer and uses its exposed
-          iterators to parse the toke stream.
-        </p>
-<p>
-          </p>
-</td>
+<td valign="top" align="left"><p>
+              Parsing is done based on the the token stream, not the character stream
+              read from the input. The function <code class="computeroutput"><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code> wraps the passed iterator range
+              <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> by the lexical analyzer and uses its
+              exposed iterators to parse the toke stream.
+            </p></td>
 </tr>
 </table></div>
-<p>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
