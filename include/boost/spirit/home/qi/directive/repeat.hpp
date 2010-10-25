@@ -225,20 +225,17 @@ namespace boost { namespace spirit { namespace qi
             }
 
             // parse some more up to the maximum specified
-            if (!iter.got_max(i)) {
-                do {
-                    if (!subject.parse(save, last, context, skipper, val) ||
-                        !traits::push_back(attr, val))
-                    {
-                        break;
-                    }
-                    first = save;
-                    traits::clear(val);
-                } while (!iter.got_max(++i));
-            }
-            else {
+            for (/**/; !iter.got_max(i); ++i) {
+                if (!subject.parse(save, last, context, skipper, val) ||
+                    !traits::push_back(attr, val))
+                {
+                    break;
+                }
                 first = save;
+                traits::clear(val);
             }
+
+            first = save;
             return true;
         }
 
