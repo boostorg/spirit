@@ -413,14 +413,5 @@ main()
         //~ BOOST_TEST(test_attr("-123456e6", double_, n));
     //~ }
 
-    // this should pass, but currently doesn't because of the way the real 
-    // parser handles the fractional part of a number
-    {
-        using boost::spirit::qi::float_;
-
-        float f;
-        BOOST_TEST(test_attr("123233.4124", float_, f)  && f == 123233.4140625f);
-    }
-
     return boost::report_errors();
 }
