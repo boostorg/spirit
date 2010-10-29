@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Primitives</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 2.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Phoenix 2.0">
 <link rel="prev" href="actors.html" title="Actors">
@@ -55,7 +55,7 @@
         an imaginary data-bin where a function argument will be placed.
       </p>
 <a name="phoenix.primitives.arguments.predefined_arguments"></a><h3>
-<a name="id766693"></a>
+<a name="id799096"></a>
         <a class="link" href="primitives.html#phoenix.primitives.arguments.predefined_arguments">Predefined
         Arguments</a>
       </h3>
@@ -93,7 +93,7 @@
         </p></td></tr>
 </table></div>
 <a name="phoenix.primitives.arguments.user_defined_arguments"></a><h3>
-<a name="id767253"></a>
+<a name="id799604"></a>
         <a class="link" href="primitives.html#phoenix.primitives.arguments.user_defined_arguments">User
         Defined Arguments</a>
       </h3>
@@ -115,7 +115,7 @@
 <pre class="programlisting"><span class="identifier">add</span><span class="special">(</span><span class="identifier">arg1</span><span class="special">,</span> <span class="number">6</span><span class="special">)</span>
 </pre>
 <a name="phoenix.primitives.arguments.evaluating_an_argument"></a><h3>
-<a name="id767420"></a>
+<a name="id799751"></a>
         <a class="link" href="primitives.html#phoenix.primitives.arguments.evaluating_an_argument">Evaluating
         an Argument</a>
       </h3>
@@ -142,7 +142,7 @@
 <span class="identifier">Hello</span> <span class="identifier">World</span>
 </pre>
 <a name="phoenix.primitives.arguments.extra_arguments"></a><h3>
-<a name="id767715"></a>
+<a name="id800021"></a>
         <a class="link" href="primitives.html#phoenix.primitives.arguments.extra_arguments">Extra Arguments</a>
       </h3>
 <p>
@@ -180,7 +180,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          There are a few reasons why enforcing strict arity is not desireable. A
+          There are a few reasons why enforcing strict arity is not desirable. A
           case in point is the callback function. Typical callback functions provide
           more information than is actually needed. Lambda functions are often used
           as callbacks.
@@ -219,7 +219,7 @@
         but, as we'll see later on, there are situations where this is unavoidable.
       </p>
 <a name="phoenix.primitives.values.evaluating_a_value"></a><h3>
-<a name="id768309"></a>
+<a name="id800546"></a>
         <a class="link" href="primitives.html#phoenix.primitives.values.evaluating_a_value">Evaluating a
         Value</a>
       </h3>
@@ -275,13 +275,13 @@
 <pre class="programlisting"><span class="identifier">add_assign</span><span class="special">(</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">i</span><span class="special">),</span> <span class="number">2</span><span class="special">)</span>
 </pre>
 <a name="phoenix.primitives.references.evaluating_a_reference"></a><h3>
-<a name="id769065"></a>
+<a name="id800975"></a>
         <a class="link" href="primitives.html#phoenix.primitives.references.evaluating_a_reference">Evaluating
         a Reference</a>
       </h3>
 <p>
         References are actors. Hence, references can be evaluated. Such invocation
-        gives the references's identity. Example:
+        gives the reference's identity. Example:
       </p>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">3</span><span class="special">;</span>
 <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">s</span> <span class="special">=</span> <span class="string">"Hello World"</span><span class="special">;</span>
