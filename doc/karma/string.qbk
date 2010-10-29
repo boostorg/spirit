@@ -71,7 +71,7 @@ corresponding string generator.
     [[`s`]        [Character-class specific string (See __char_class_types__),
                    or a __karma_lazy_argument__ that evaluates to a 
                    character-class specific string value]]
-    [[`S`]        [The type of a character-clas specific string `s`.]]
+    [[`S`]        [The type of a character-class specific string `s`.]]
     [[`ns`]       [A __karma_char_encoding_namespace__.]]]
 
 [heading Expression Semantics]

@@ -28,7 +28,7 @@ First, let's create a struct representing an employee:
 
 Then, we need to tell __fusion__ about our employee struct to make it a first-class 
 fusion citizen that the grammar can utilize. If you don't know fusion yet, 
-it is a __boost__ library for working with heterogenous collections of data, 
+it is a __boost__ library for working with heterogeneous collections of data, 
 commonly referred to as tuples. Spirit uses fusion extensively as part of its 
 infrastructure.
 
@@ -162,7 +162,7 @@ It is typical to see rules like:
     r = p[_val = _1];
 
 If you have a rule definition such as the above, where the attribute of the RHS 
-(right hand side) of the rule is compatibe with the attribute of the LHS (left 
+(right hand side) of the rule is compatible with the attribute of the LHS (left 
 hand side), then you can rewrite it as:
 
     r %= p;

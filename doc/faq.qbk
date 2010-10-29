@@ -15,8 +15,8 @@ Do you see strange multiple symbol definition linker errors mentioning
 be for you.
 
 __mpl__ implements a macro `BOOST_MPL_ASSERT_MSG()` which essentially is a 
-more powerfull version of static_assert. Unfortunately under certain 
-circumstances using this macro may lead to the aformentioned linker errors. 
+more powerful version of static_assert. Unfortunately under certain 
+circumstances using this macro may lead to the aforementioned linker errors. 
 
 __spirit__ allows you to define a preprocessor constant disabling the usage
 of `BOOST_MPL_ASSERT_MSG()`, while switching to `BOOST_STATIC_ASSERT()` instead.
@@ -102,7 +102,7 @@ sequence of bytes, most of the time - strings). __karma__ is the Yang to
 __qi__'s Yin, it's almost like a mirrored picture.
 
 __lex__ is (as the name implies) a library allowing to write lexical analyzers. 
-These are either usable standalone or can be used as a frontend for __qi__ 
+These are either usable stand alone or can be used as a front end for __qi__ 
 parsers. If you know flex you shouldn't have problems understanding __lex__. 
 This library actually doesn't implement the lexer itself. All it does is to 
 provide an interface to pre-existing lexical analyzers. Currently it's using 

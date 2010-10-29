@@ -1152,7 +1152,7 @@ not defined in __primitive_generator_concept__.
                          generated as `"false"`, and `true` is generated as 
                          `"true"`). This generator never fails (unless the 
                          underlying output stream reports an error).]]
-    [[`bool_(b)`]       [Generate the booelan value provided by the 
+    [[`bool_(b)`]       [Generate the boolean value provided by the 
                          immediate literal value the generator is initialized 
                          from using the default formatting (`false` is 
                          generated as `"false"`, and `true` is generated as 
@@ -1269,7 +1269,7 @@ overloaded policy type. At the same time `B` will be used as the attribute
 type of the created real number generator. The default for `B` is `bool`.
 
 
-[heading Booelan Formatting Policy Expression Semantics]
+[heading Boolean Formatting Policy Expression Semantics]
 
 A boolean formatting policy should expose the following:
 

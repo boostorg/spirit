@@ -287,7 +287,7 @@ Using `eol`:
 
 [heading Description]
 
-The `eoi` parser matches the end of input (returns a sucessful match
+The `eoi` parser matches the end of input (returns a successful match
 with 0 length when the input is exhausted)
 
 [heading Header]

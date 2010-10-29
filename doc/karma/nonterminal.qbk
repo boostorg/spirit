@@ -195,7 +195,7 @@ Here is more information about the template parameters:
                                                             to `unused_type()`]]
     [[`Delimiter`]          [Specifies the grammar's delimiter 
                             generator. Specify this if you
-                            want the grammer to delimit the 
+                            want the grammar to delimit the 
                             generated output.]              [__unused_type__]]
     [[`Locals`]             [Specifies the grammar's local
                             variables. See __karma_nonterminal_concept__.]

@@ -139,7 +139,7 @@ by the preprocessor constant `PHOENIX_LIMIT` (which in turn defaults to `10`).
 
 The `phrase_parse` functions not taking an explicit `skip_flag` as one of their 
 arguments invoke the passed skipper after a successful match of the parser 
-expression. This can be inhbited by using the other versions of that function 
+expression. This can be inhibited by using the other versions of that function 
 while passing `skip_flag::dont_postskip` to the corresponding argument.
 
 [table
@@ -262,7 +262,7 @@ parser type:
 All functions above return a standard IO stream manipulator instance (see 
 __iomanip__), which when streamed from an input stream will result in parsing
 the input using the embedded __qi__ parser expression. Any error (or failed 
-parse) occuring during the invocation of the __qi__ parsers will be reflected
+parse) occurring during the invocation of the __qi__ parsers will be reflected
 in the streams status flag (`std::ios_base::failbit` will be set).
 
 The maximum number of supported arguments is limited by the preprocessor 
@@ -276,7 +276,7 @@ by the preprocessor constant `PHOENIX_LIMIT` (which in turn defaults to `10`).
 
 The `phrase_match` manipulators not taking an explicit `skip_flag` as one of their 
 arguments invoke the passed skipper after a successful match of the parser 
-expression. This can be inhbited by using the other versions of that manipulator 
+expression. This can be inhibited by using the other versions of that manipulator 
 while passing `skip_flag::dont_postskip` to the corresponding argument.
 
 [heading Template parameters]

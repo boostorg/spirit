@@ -338,7 +338,7 @@ Also, see __include_structure__.
                                    stored in the passed optional (the argument of type `optional<Exposed>`), 
                                    the optional instance is initialized, if needed.
                                    `post()` does nothing, `fail()` resets the
-                                   optional (its parameter) instance to the non-initialzed state.]]
+                                   optional (its parameter) instance to the non-initialized state.]]
     [[`Exposed&`, `Transformed`]  [`type` evaluates to `Transformed`, 
                                    `pre()` returns a new instance of `Transformed`
                                    constructed from the argument of type `Exposed`, 
@@ -387,7 +387,7 @@ TBD
 [/////////////////////////////////////////////////////////////////////////////]
 [section:assign_to Store a Parsed Attribute Value (Qi)]
 
-After parsing input and generting an attribute value this value needs to 
+After parsing input and generating an attribute value this value needs to 
 assigned to the attribute instance provided by the user. The customization
 points `assign_to_attribute_from_iterators` and `assign_to_attribute_from_value`
 are utilized to adapt this assignment to the concrete type to be assigned.
@@ -1236,7 +1236,7 @@ generator:
 [customize_karma_embedded_container]
 
 As you can see, the specializations for the customization points as defined 
-above enable the seemless integration of the custom data structure without 
+above enable the seamless integration of the custom data structure without 
 having to modify the output format or the generator itself.
 
 For other examples of how to use the customization point `container_iterator` 
@@ -1607,7 +1607,7 @@ uses the data structure
 
 as a direct attribute to the __karma_list__ generator. This type does not 
 expose any of the interfaces of an STL container. It does not even expose the 
-usual semantics of a container. The purpose of this artifical example is to 
+usual semantics of a container. The purpose of this artificial example is to 
 demonstrate how the customization points can be used to expose independent data
 elements as a single container. The example shows how to enable its use as an 
 attribute to /Karma's/ repetitive generators.
@@ -1628,7 +1628,7 @@ The last code snippet shows an example using an instance of the data structure
 [customize_karma_use_as_container]
 
 As you can see, the specializations for the customization points as defined 
-above enable the seemless integration of the custom data structure without 
+above enable the seamless integration of the custom data structure without 
 having to modify the output format or the generator itself.
 
 [endsect] [/ next_iterator]
@@ -1698,7 +1698,7 @@ Also, see __include_structure__.
     [[`deref_iterator<Iterator>::type`]       [Metafunction result evaluating to the 
                                       type returned by dereferencing the iterator.]]
     [[`deref_iterator<Iterator>::call(it)`]   [Return the element in the container
-                                      the itertor is referring to. The type of the
+                                      the iterator is referring to. The type of the
                                       returned value is the same as returned by the 
                                       metafunction result `type`.]]
 ]
@@ -1760,7 +1760,7 @@ uses the data structure
 as a direct attribute to the __karma_list__ generator. This type does not 
 expose any of the interfaces of an STL container. It does not even expose the 
 usual semantics of a container. The presented customization points build a 
-counter instance which is incrememnted each time it is accessed. The examples 
+counter instance which is incremented each time it is accessed. The examples 
 shows how to enable its use as an attribute to /Karma's/ repetitive generators.
 
 In order to make this data structure compatible we need to specialize a couple 
@@ -1778,7 +1778,7 @@ The last code snippet shows an example using an instance of the data structure
 [customize_karma_counter]
 
 As you can see, the specializations for the customization points as defined 
-above enable the seemless integration of the custom data structure without 
+above enable the seamless integration of the custom data structure without 
 having to modify the output format or the generator itself.
 
 For other examples of how to use the customization point `deref_iterator` 
@@ -1797,7 +1797,7 @@ point. It is invoked by the /Karma/ repetitive generators (such as __karma_list_
 in order to compare the current iterator (returned either from 
 __customize_begin_container__ or from __customize_next_iterator__) with the end 
 iterator (returned from __customize_end_container__) in order to find the end 
-of the element sequence to gerenate output for.
+of the element sequence to generate output for.
 
 [heading Module Headers]
 
@@ -1851,7 +1851,7 @@ Also, see __include_structure__.
     [[Expression]                             [Semantics]]
     [[`compare_iterators<Iterator>::call(it1, it2)`]   
                                               [Returns whether the iterators `it1`
-                                               `it2` are to be treated as beeing 
+                                               `it2` are to be treated as being 
                                                equal.]]
 ]
 
@@ -1989,7 +1989,7 @@ __spirit__ predefines specializations of this customization point for
 several types. All predefined mappings are listed here: __auto_parser_requirements__.
 
 [note It is possible to overload the predefined mappings for the listed types 
-      by providing your own specialization of the `create_parser` cutomization
+      by providing your own specialization of the `create_parser` customization
       point for the type to modify.]
 
 [heading When to implement]
@@ -2075,7 +2075,7 @@ __spirit__ predefines specializations of this customization point for
 several types. All predefined mappings are listed here: __auto_generator_requirements__.
 
 [note It is possible to overload the predefined mappings for the listed types 
-      by providing your own specialization of the `create_generator` cutomization
+      by providing your own specialization of the `create_generator` customization
       point for the type to modify.]
 
 [heading When to implement]

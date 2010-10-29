@@ -34,7 +34,7 @@ Currently, the directory contains:
     [iterator]  [meta]          [phoenix]   [repository]
     [symbols]   [tree]          [utility]
 
-These include some old v1.8 directories that are now depracated. These
+These include some old v1.8 directories that are now deprecated. These
 are: actor, attribute, core, debug, dynamic, error_handling, iterator,
 meta, phoenix, symbols, tree and utility. There is no guarantee that these
 directories will still be present in future versions of Spirit. We only
@@ -64,7 +64,7 @@ The include directory at:
     BOOST_ROOT/boost/spirit/include
 
 is a special flat directory that contains all the Spirit headers. To
-accomodate the flat structure, the headers are prefixed with the
+accommodate the flat structure, the headers are prefixed with the
 sub-library name:
 
 * classic_

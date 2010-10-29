@@ -70,7 +70,7 @@ ISO-8859-1) to the `char_` generator to eliminate such ambiguities.
 
 [note *Sparse bit vectors*
 
-To accomodate 16/32 and 64 bit characters, the char-set statically
+To accommodate 16/32 and 64 bit characters, the char-set statically
 switches from a `std::bitset` implementation when the character type is
 not greater than 8 bits, to a sparse bit/boolean set which uses a sorted
 vector of disjoint ranges (`range_run`). The set is constructed from
@@ -439,7 +439,7 @@ Possible values for `ns` are described in the section __karma_char_encoding_name
 
 [note   The generators `alpha` and `alnum` might seem to behave unexpected if 
         used inside a `lower[]` or `upper[]` directive. Both directives 
-        additionally apply the semanitics of `std::islower` or `std::isupper`
+        additionally apply the semantics of `std::islower` or `std::isupper`
         to the respective character class. Some examples:
 ``
     std::string s;

@@ -193,12 +193,12 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id1200560"></a>
+<a name="id1171606"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
 <p>
-          For our disection study, we will use a <a href="http://boost-spirit.com" target="_top">Spirit</a>
+          For our dissection study, we will use a <a href="http://boost-spirit.com" target="_top">Spirit</a>
           primitive, the <code class="computeroutput"><span class="identifier">int_parser</span></code>
           in the boost::spirit::qi namespace.
         </p>
@@ -420,7 +420,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id1202665"></a>
+<a name="id1173712"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -526,7 +526,7 @@
           which will do the pre-skip. This makes it a lot more efficient than <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
           <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
           puts the skipping business into the so-called "scanner" which
-          blindly attempts a pre-skip everytime we increment the iterator.
+          blindly attempts a pre-skip every time we increment the iterator.
         </p>
 <p>
           What is the <span class="emphasis"><em>attribute</em></span> of the kleene? In general, it
@@ -562,7 +562,7 @@
 <p>
           The kleene repeats indefinitely while the subject parser is successful.
           On each successful parse, we <code class="computeroutput"><span class="identifier">push_back</span></code>
-          the parsed attribute to the kleen's attribute, which is expected to be,
+          the parsed attribute to the kleene's attribute, which is expected to be,
           at the very least, compatible with a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>.
           In other words, although we say that we want our attribute to be a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>, we try to be more lenient than
           that. The caller of kleene's parse may pass a different attribute type.

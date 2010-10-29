@@ -61,7 +61,7 @@
         iterator was created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h5>
-<a name="id1247676"></a>
+<a name="id1219288"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h5>
@@ -81,10 +81,10 @@
       </p>
 <p>
         Sequences of the form <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>
-        will buffer data as well. This is different from the behaviour of <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        will buffer data as well. This is different from the behavior of <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
         but for a good reason. Sequences need to reset the current iterator to its
-        initial state if one of the components of a seqeunce fails to match. To compensate
-        for this behaviour we added functionality to the <code class="computeroutput"><span class="identifier">expect</span></code>
+        initial state if one of the components of a sequence fails to match. To compensate
+        for this behavior we added functionality to the <code class="computeroutput"><span class="identifier">expect</span></code>
         parsers (i.e. constructs like <code class="computeroutput"><span class="identifier">a</span>
         <span class="special">&gt;</span> <span class="identifier">b</span></code>).
         Expectation points introduce deterministic points into the grammar ensuring
@@ -205,7 +205,7 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h5>
-<a name="id1248944"></a>
+<a name="id1221648"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h5>
@@ -227,7 +227,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h5>
-<a name="id1249037"></a>
+<a name="id1221741"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h5>
@@ -259,7 +259,7 @@
 </dl>
 </div>
 <p>
-        It is possible to implement all of the required functionality of the combinded
+        It is possible to implement all of the required functionality of the combined
         policy in a single class. But it has shown to be more convenient to split
         this into four different groups of functions, i.e. four separate, but well
         coordinated policies. For this reason the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
@@ -268,7 +268,7 @@
         the functionality groups:
       </p>
 <div class="table">
-<a name="id1250792"></a><p class="title"><b>Table&#160;12.&#160;Policies needed for default_policy template</b></p>
+<a name="id1221849"></a><p class="title"><b>Table&#160;12.&#160;Policies needed for default_policy template</b></p>
 <div class="table-contents"><table class="table" summary="Policies needed for default_policy template">
 <colgroup>
 <col>
@@ -350,7 +350,7 @@
         we will give some guidelines how you can write your own policy implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h5>
-<a name="id1250989"></a>
+<a name="id1222046"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h5>
@@ -359,7 +359,7 @@
         policies are defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">iterator_policies</span></code>.
       </p>
 <div class="table">
-<a name="id1251031"></a><p class="title"><b>Table&#160;13.&#160;Predefined policy classes</b></p>
+<a name="id1222088"></a><p class="title"><b>Table&#160;13.&#160;Predefined policy classes</b></p>
 <div class="table-contents"><table class="table" summary="Predefined policy classes">
 <colgroup>
 <col>
@@ -409,7 +409,7 @@
                 <p>
                   This policy directs <code class="computeroutput"><span class="identifier">multi_pass</span></code>
                   to read from an input iterator of type <code class="computeroutput"><span class="identifier">Input</span></code>.
-                  Aditionally it buffers the last character received from the underlying
+                  Additionally it buffers the last character received from the underlying
                   iterator. This allows to wrap iterators not buffering the last
                   character on their own (as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istreambuf_iterator</span></code>).
                 </p>
@@ -472,10 +472,11 @@
 <td>
                 <p>
                   This is essentially the same as the <code class="computeroutput"><span class="identifier">functor_input</span></code>
-                  policy except that the (user supplied) funtion object exposes separate
-                  <code class="computeroutput"><span class="identifier">unique</span></code> and <code class="computeroutput"><span class="identifier">shared</span></code> sub classes, allowing
-                  to integrate the functors <span class="emphasis"><em>unique</em></span> data members
-                  with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+                  policy except that the (user supplied) function object exposes
+                  separate <code class="computeroutput"><span class="identifier">unique</span></code>
+                  and <code class="computeroutput"><span class="identifier">shared</span></code> sub
+                  classes, allowing to integrate the functors <span class="emphasis"><em>unique</em></span>
+                  data members with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
                   data items held by each instance and its <span class="emphasis"><em>shared</em></span>
                   data members will be integrated with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
                   members shared by all copies.
@@ -630,7 +631,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h5>
-<a name="id1251822"></a>
+<a name="id1222879"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h5>
@@ -677,7 +678,7 @@
         behaviors while wrapping an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h5>
-<a name="id1252259"></a>
+<a name="id1223332"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h5>
@@ -688,7 +689,7 @@
         type. It has two template parameters: <code class="computeroutput"><span class="identifier">Input</span></code>,
         the type of the input iterator to wrap, and a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">N</span></code>, which specifies the size of the buffer
         to the <code class="computeroutput"><span class="identifier">fixed_size_queue</span></code> policy.
-        While the default multi_pass configuration is designed for safey, <code class="computeroutput"><span class="identifier">look_ahead</span></code> is designed for speed. <code class="computeroutput"><span class="identifier">look_ahead</span></code> is derived from a multi_pass
+        While the default multi_pass configuration is designed for safety, <code class="computeroutput"><span class="identifier">look_ahead</span></code> is designed for speed. <code class="computeroutput"><span class="identifier">look_ahead</span></code> is derived from a multi_pass
         with the following policies: <code class="computeroutput"><span class="identifier">input_iterator</span></code>
         InputPolicy, <code class="computeroutput"><span class="identifier">first_owner</span></code>
         OwnershipPolicy, <code class="computeroutput"><span class="identifier">no_check</span></code>
@@ -705,7 +706,7 @@
         Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
       </p>
 <a name="spirit.support.multi_pass.reading_from_standard_input_streams"></a><h5>
-<a name="id1252458"></a>
+<a name="id1223531"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.reading_from_standard_input_streams">Reading
         from standard input streams</a>
       </h5>
@@ -737,7 +738,7 @@
         Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h5>
-<a name="id1252736"></a>
+<a name="id1223810"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <code class="computeroutput"><span class="identifier">functor_input</span></code>
         InputPolicy</a>
@@ -796,7 +797,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h5>
-<a name="id1253468"></a>
+<a name="id1224397"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h5>
@@ -813,7 +814,7 @@
         copies of a particular <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h5>
-<a name="id1253543"></a>
+<a name="id1224471"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h5>
 <p>
@@ -853,7 +854,7 @@
 </span>        <span class="comment">//
 </span>        <span class="comment">//   mp:    is a reference to the whole multi_pass instance
 </span>        <span class="comment">//
-</span>        <span class="comment">// This method is expected to return a refernce to the next 
+</span>        <span class="comment">// This method is expected to return a reference to the next 
 </span>        <span class="comment">// character/token
 </span>        <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">MultiPass</span><span class="special">&gt;</span>
         <span class="keyword">static</span> <span class="keyword">typename</span> <span class="identifier">MultiPass</span><span class="special">::</span><span class="identifier">reference</span> <span class="identifier">get_input</span><span class="special">(</span><span class="identifier">MultiPass</span><span class="special">&amp;</span> <span class="identifier">mp</span><span class="special">);</span>
@@ -915,7 +916,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h5>
-<a name="id1254464"></a>
+<a name="id1226622"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h5>
 <p>
@@ -982,7 +983,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h5>
-<a name="id1254998"></a>
+<a name="id1227156"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h5>
 <p>
@@ -1041,7 +1042,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h5>
-<a name="id1255996"></a>
+<a name="id1227607"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h5>
 <p>
@@ -1101,7 +1102,7 @@
 </span>        <span class="comment">//          to
 </span>        <span class="comment">//
 </span>        <span class="comment">// This function is expected to return true if the current instance
-</span>        <span class="comment">// is eual to the right hand side multi_pass instance
+</span>        <span class="comment">// is equal to the right hand side multi_pass instance
 </span>        <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">MultiPass</span><span class="special">&gt;</span>
         <span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">equal_to</span><span class="special">(</span><span class="identifier">MultiPass</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">mp</span><span class="special">,</span> <span class="identifier">MultiPass</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">);</span>
 

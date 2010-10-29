@@ -179,7 +179,7 @@ defined in __unary_generator_concept__.
         the specified (or implied) column width, the generated output overruns
         the column to the right.
 
-        If the output needs to be limitted to a specified column width, use the
+        If the output needs to be limited to a specified column width, use the
         `maxwidth[]` directive, for instance:
         ``
             maxwidth(8)[right_align(12)["1234567890"]]
@@ -349,7 +349,7 @@ defined in __unary_generator_concept__.
 [note All failing iterations of the embedded generator will consume one element
       from the supplied attribute. The overall `repeat[a]` will succeed as long 
       as the iteration criteria (number of successful invocations of the 
-      embedded generator) is fullfilled (unless the underlying output stream 
+      embedded generator) is fulfilled (unless the underlying output stream 
       reports an error).]
 
 [heading Attributes]
@@ -594,7 +594,7 @@ In the table above, `ns` represents a __karma_char_encoding_namespace__.
 The `lower[]` and `upper[]` directives have no special generator semantics. 
 They are pure modifier directives. They indirectly influence the way all 
 subject generators work. They add information (the `tag::upper` or `tag::lower`) 
-to the `Modifier` template parameter used while tranforming the `proto::expr`
+to the `Modifier` template parameter used while transforming the `proto::expr`
 into the corresponding generator expression. This is achieved by the
 following specializations: 
 
@@ -1002,7 +1002,7 @@ use semantic actions.
 
 The semantics of using the `skip[]` directive are identical to the `omit[]`
 directive, except that it does not actually execute the embedded generator. 
-For this reason it is usually preferrable to utilize the `skip[]` directive 
+For this reason it is usually preferable to utilize the `skip[]` directive 
 instead of the `omit[]` directive. On the other hand, the `omit[]` directive
 is very useful whenever the embedded generator produces side effects (has
 semantic actions which need to be executed).
@@ -1182,7 +1182,7 @@ a: Unused --> columns(num, g)[a]: Unused``]]
 [heading Complexity]
 
 [:The overall complexity of the `columns` generator directive depends on the 
-complexity of the embeddded generator. The complexitz of the `columns` generator 
+complexity of the embedded generator. The complexity of the `columns` generator 
 directive itself is O(N), where `N` is the number of inserted column 
 separators.]
 

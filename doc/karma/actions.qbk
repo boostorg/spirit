@@ -13,7 +13,7 @@ and generators. While parsers may be used without 'producing' any data,
 generators always need data to generate the output from. We mentioned one way 
 of passing data to the generator by supplying it as a parameter to one of the
 main API functions (for instance `generate()` or `generate_delimited()`). 
-But sometimes this is not possible or not desireable. 
+But sometimes this is not possible or not desirable. 
 
 Very much like for __qi__ we have semantic actions in __karma__ as well.
 Semantic actions may be attached to any point in the grammar specification. 
@@ -95,7 +95,7 @@ The first example shows how to attach a plain function:
 
 [karma_tutorial_attach_actions1]
 
-What's new? Well `int_` is the sibbling of `double_`. I'm sure you can guess
+What's new? Well `int_` is the sibling of `double_`. I'm sure you can guess
 what this generator does and what type of attribute it expects.
 
 The next example shows how to attach a simple function object:
@@ -141,7 +141,7 @@ library exclusively.
            use different libraries while writing a semantic action.
 
            Generally, for __boost_bind__, use `::_1`, `::_2`, etc. (yes, these
-           placeholders are defined in the globl namespace). 
+           placeholders are defined in the global namespace). 
 
            For __boost_lambda__ use the placeholders defined in the namespace 
            `boost::lambda`. 

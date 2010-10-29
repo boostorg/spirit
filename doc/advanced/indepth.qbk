@@ -84,7 +84,7 @@ In this section, we will dissect two parser types:
 [/------------------------------------------------------------------------------]
 [heading Primitive Parsers]
 
-For our disection study, we will use a __spirit__ primitive, the `int_parser`
+For our dissection study, we will use a __spirit__ primitive, the `int_parser`
 in the boost::spirit::qi namespace.
 
 [import ../../../../boost/spirit/home/qi/numeric/int.hpp]
@@ -190,7 +190,7 @@ another composite parser, it will eventually call a primitive parser
 somewhere down the line which will do the pre-skip. This makes it a
 lot more efficient than __classic__. __classic__ puts the skipping business
 into the so-called "scanner" which blindly attempts a pre-skip
-everytime we increment the iterator.
+every time we increment the iterator.
 
 What is the /attribute/ of the kleene? In general, it is a `std::vector<T>`
 where `T` is the attribute of the subject. There is a special case though.
@@ -212,7 +212,7 @@ pass to the subject's parse function.
 
 The kleene repeats indefinitely while the subject parser is
 successful. On each successful parse, we `push_back` the parsed
-attribute to the kleen's attribute, which is expected to be,
+attribute to the kleene's attribute, which is expected to be,
 at the very least, compatible with a `std::vector`. In other words,
 although we say that we want our attribute to be a `std::vector`,
 we try to be more lenient than that. The caller of kleene's

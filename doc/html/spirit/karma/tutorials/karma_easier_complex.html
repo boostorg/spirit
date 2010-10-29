@@ -63,7 +63,7 @@
           Let's cover some basic library features first.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h6>
-<a name="id1005192"></a>
+<a name="id977333"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
           Numeric Generators Fail</a>
         </h6>
@@ -113,7 +113,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h6>
-<a name="id1005480"></a>
+<a name="id977621"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
           - The Conditionals for Output Generators</a>
         </h6>
@@ -125,10 +125,10 @@
           and the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
           predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>.
           The main property of both predicates is to discard all output emitted by
-          the generator they are attached to. This is equivalent to the behaviour
+          the generator they are attached to. This is equivalent to the behavior
           of predicates used for parsing. There the predicates do not consume any
           input allowing to look ahead in the input stream. In Karma, the and predicate
-          succeeds as long as its associated generator suceeds, while the not predicate
+          succeeds as long as its associated generator succeeds, while the not predicate
           succeeds only if its associated generator fails.
         </p>
 <div class="note"><table border="0" summary="Note">
@@ -164,7 +164,7 @@
           emitted by the generators they are applied to.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h6>
-<a name="id1005729"></a>
+<a name="id979017"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
           Supplied Attributes</a>
         </h6>
@@ -191,13 +191,13 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h6>
-<a name="id1005807"></a>
+<a name="id979095"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
           everything together</a>
         </h6>
 <p>
-          Very similar to our first example ealier we use two alternatives to allow
-          for the two different output formats depending on whether the imaginery
+          Very similar to our first example earlier we use two alternatives to allow
+          for the two different output formats depending on whether the imaginary
           part of the complex number is equal to zero or not. The first alternative
           is executed if the imaginary part is not zero, the second alternative otherwise.
           This time we make the decision during runtime using the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
@@ -222,7 +222,7 @@
           <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>.
         </p>
 <p>
-          As we pass the imaginery part of the complex number as the attribute value
+          As we pass the imaginary part of the complex number as the attribute value
           for the <code class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>,
           the overall first alternative will be chosen only if it is not equal to
           zero (the <code class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
@@ -252,7 +252,7 @@
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            Generally, it is preferrable to use generator constructs not requiring
+            Generally, it is preferable to use generator constructs not requiring
             semantic actions. The reason is that semantic actions often use constructs
             like: <code class="computeroutput"><span class="identifier">double_</span><span class="special">[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">real</span><span class="special">()]</span></code>.
             But this assignment is a real one! The data is in fact <span class="emphasis"><em>copied</em></span>

@@ -126,7 +126,7 @@ overloaded if at least one of its parameters is a user-defined type. In this
 case, the `double_` is the 2nd argument to `operator>>`, and so the proper
 overload of `>>` is used, converting `','` into a character literal parser.
 
-The problem with omiting the `char_` should be obvious: `'a' >> 'b'` is not a
+The problem with omitting the `char_` should be obvious: `'a' >> 'b'` is not a
 spirit parser, it is a numeric expression, right-shifting the ASCII (or another
 encoding) value of `'a'` by the ASCII value of `'b'`. However, both
 `char_('a') >> 'b'` and `'a' >> char_('b')` are Spirit sequence parsers

@@ -213,7 +213,7 @@ This behavior should be familiar as it conforms to the way other input and
 output formatting libraries such as `scanf`, `printf` or `boost::format` are 
 handling their variable parts. In this context you can think about __qi__'s 
 and __karma__'s primitive components (such as the `double_` above) as of being 
-typesafe placeholders for the attribute values.
+type safe placeholders for the attribute values.
 
 [tip  Similarly to the tip provided above, this example could be rewritten 
       using /Spirit's/ multi-attribute API function:
@@ -247,7 +247,7 @@ This rule is the key to the understanding of the attribute handling in
 sequences as soon as literals are involved. It is as if elements with 
 `unused_type` attributes 'disappeared' during attribute propagation. Notably, 
 this is not only true for sequences but for any compound components. For 
-instance, for alternative componets the corresponding rule is:
+instance, for alternative components the corresponding rule is:
 
     a: A, b: Unused --> (a | b): A
 
@@ -268,7 +268,7 @@ recognized. Parser nonterminals in __qi__ may accept /parameters/ (inherited
 attributes) and usually return a value (the synthesized attribute). 
 
 Both, the types of the inherited and the synthesized attributes have to be 
-explicitely specified while defining the particular `grammar` or the `rule`
+explicitly specified while defining the particular `grammar` or the `rule`
 (the Spirit __repo__ additionally has `subrules` which conform to a similar
 interface). As an example, the following code declares a __qi__ `rule` 
 exposing an `int` as its synthesized attribute, while expecting a single 

@@ -33,7 +33,7 @@ There are various forms of `char_`.
 
 [heading char_]
 
-The no argument form of `char_` matches any character in the assocaiated
+The no argument form of `char_` matches any character in the associated
 __char_encoding_namespace__.
 
     char_               // matches any character
@@ -66,7 +66,7 @@ ISO-8859-1) to the `char_` parser to eliminate such ambiguities.
 
 [note *Sparse bit vectors*
 
-To accomodate 16/32 and 64 bit characters, the char-set statically
+To accommodate 16/32 and 64 bit characters, the char-set statically
 switches from a `std::bitset` implementation when the character type is
 not greater than 8 bits, to a sparse bit/boolean set which uses a sorted
 vector of disjoint ranges (`range_run`). The set is constructed from

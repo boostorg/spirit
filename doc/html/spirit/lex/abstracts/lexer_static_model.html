@@ -56,7 +56,7 @@
               function and corresponding tables), and
             </li>
 <li class="listitem">
-              modifying the dynamic lexical anlyzer to use the generated code.
+              modifying the dynamic lexical analyzer to use the generated code.
             </li>
 </ol></div>
 <p>
@@ -116,7 +116,7 @@
         </p>
 <p>
           The only thing changing between the three different use cases is the template
-          parameter used to instantiate a concrete token definition. Fot the dynamic
+          parameter used to instantiate a concrete token definition. For the dynamic
           model and the code generator you probably will use the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span></code> template, where for the static
           model you will use the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;&gt;</span></code> type as the template parameter.
         </p>
@@ -163,13 +163,13 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id1184682"></a>
+<a name="id1156256"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
 <p>
           The first additional step to perform in order to create a static lexical
-          analyzer is to create a small standalone program for creating the lexer
+          analyzer is to create a small stand alone program for creating the lexer
           tables and the corresponding tokenization function. For this purpose the
           <span class="emphasis"><em>Spirit.Lex</em></span> library exposes a special API - the function
           <code class="computeroutput"><span class="identifier">generate_static_dfa</span><span class="special">()</span></code>
@@ -204,7 +204,7 @@
         </p>
 <p>
           The shown code generator will generate output, which should be stored in
-          a file for later inclusion into the static lexical analzyer as shown in
+          a file for later inclusion into the static lexical analyzer as shown in
           the next topic (the full generated code can be viewed <a href="../../../../../example/lex/static_lexer/word_count_static.hpp" target="_top">here</a>).
         </p>
 <div class="note"><table border="0" summary="Note">
@@ -222,7 +222,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id1185037"></a>
+<a name="id1156611"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -313,13 +313,13 @@
 </tr>
 <tr><td align="left" valign="top"><p>
             The generated code for the static lexer contains the token ids as they
-            have been assigned, either explicitly by the programmer or implicitely
+            have been assigned, either explicitly by the programmer or implicitly
             during lexer construction. It is your responsibility to make sure that
             all instances of a particular static lexer type use exactly the same
             token ids. The constructor of the lexer object has a second (default)
             parameter allowing it to designate a starting token id to be used while
             assigning the ids to the token definitions. The requirement above is
-            fullfilled by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
+            fulfilled by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
             is specified during construction of the static lexer instances.
           </p></td></tr>
 </table></div>

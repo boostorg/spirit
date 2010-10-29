@@ -21,7 +21,7 @@ immediate value, or a function, `f`, with signature:
     T f(Unused, Context)
 
 where `T`, the function's return value, is compatible with the argument
-type expected and `Context` is the generators's __karma_context__ type (The 
+type expected and `Context` is the generator's __karma_context__ type (The 
 first argument is __unused__ to make the `Context` the second argument. This
 is done for uniformity with __karma_actions__).
 

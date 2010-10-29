@@ -8,7 +8,7 @@
 
 [section Number List - stuffing numbers into a std::vector]
 
-This sample demontrates a parser for a comma separated list of numbers. The
+This sample demonstrates a parser for a comma separated list of numbers. The
 numbers are inserted in a vector using phoenix.
 
 [import ../../example/qi/num_list2.cpp]

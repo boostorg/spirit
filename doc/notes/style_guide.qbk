@@ -11,7 +11,7 @@
 At some point, especially when there are lots of semantic actions attached to
 various points, the grammar tends to be quite difficult to follow. In order to
 keep an easy-to-read, consistent and aesthetically pleasing look to the Spirit
-code, the following coding styleguide is advised.
+code, the following coding style guide is advised.
 
 This coding style is adapted and extended from the ANTLR\/PCCTS style and 
 [@http://www.boost.org/development/requirements.html Boost Library Requirements 

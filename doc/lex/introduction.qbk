@@ -13,7 +13,7 @@ separating it into strings called tokens, separated by whitespace.
 Most compiler texts start here, and devote several chapters to discussing 
 various ways to build scanners. __lex__ is a library built to take care of the 
 complexities of creating a lexer for your grammar (in this documentation we 
-will use the terms 'lexical analyzer', 'lexer' and 'scanner' interchangably). 
+will use the terms 'lexical analyzer', 'lexer' and 'scanner' interchangeably). 
 All that is needed to create a lexer is to know the set of patterns describing 
 the different tokens you want to recognize in the input. To make this a bit more 
 formal, here are some definitions:
@@ -101,7 +101,7 @@ keywords, storing identifiers in tables, etc.
 
 Now, __spirit__ follows this structure, where __lex__ can be used to implement 
 state machine based recognizers, while __qi__ can be used to build recognizers 
-for context free grammars. Since both modules are seemlessly integrated with 
+for context free grammars. Since both modules are seamlessly integrated with 
 each other and with the C++ target language it is even possible to use the 
 provided functionality to build more complex grammar recognizers.
 

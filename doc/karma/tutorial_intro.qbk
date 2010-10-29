@@ -11,7 +11,7 @@
 [heading Spirit.Karma - what's that?]
 
 Throughout the description of __karma__ we will try to align ourselves very 
-much with the documentation for __qi__. The reasons are manyfold:
+much with the documentation for __qi__. The reasons are many fold:
 
 * __karma__ is the counterpart to __qi__. Some people say it's the Yin to 
   __qi__'s Yang. __karma__ is generating byte sequences from internal data 
@@ -27,8 +27,8 @@ generation? Programmers have been using `printf`, `std::stream` formatting, or
 `boost::format` for quite some time. The answer is - yes, for simple output 
 formatting tasks those familiar tools might be a quick solution. But experience 
 shows: as soon as the formatting requirements are becoming more complex output
-generation is getting more and more challanging in terms of readability, 
-maintainabilty, and flexibility of the code. Last, but not least, it turns out
+generation is getting more and more challenging in terms of readability, 
+maintainability, and flexibility of the code. Last, but not least, it turns out
 that code using __karma__ runs much faster than equivalent code using either
 of the 'straight' methods mentioned above (see here for some numbers: 
 __sec_karma_numeric_performance__)

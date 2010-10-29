@@ -68,7 +68,7 @@ rules) it will start to look very familiar in a matter of a very short time.
 Any expression that evaluates to a generator may be used with the Kleene Star.
 Keep in mind, though, that due to C++ operator precedence rules you may need
 to put the expression in parentheses for complex expressions. As above, 
-whitespace can be inserted implicitely in between the generated numbers, if 
+whitespace can be inserted implicitly in between the generated numbers, if 
 needed.
 
 
@@ -156,7 +156,7 @@ particular generator.
     `operator<<`, and so the proper overload of `<<` is used, converting `','` 
     into a character literal generator.
 
-    The problem with omiting the `lit` should be obvious: `'a' << 'b'` is not a
+    The problem with omitting the `lit` should be obvious: `'a' << 'b'` is not a
     spirit generator, it is a numeric expression, left-shifting the ASCII (or 
     another encoding) value of `'a'` by the ASCII value of `'b'`. However, both
     `lit('a') << 'b'` and `'a' << lit('b')` are Spirit sequence generators

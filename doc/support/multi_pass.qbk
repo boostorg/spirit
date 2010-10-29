@@ -47,9 +47,9 @@ will cause data to be buffered. The rules that are optimal to use are
 repetition constructs (as kleene and plus). 
 
 Sequences of the form `a >> b` will buffer data as well. This is different from 
-the behaviour of __classic__ but for a good reason. Sequences need to reset the 
-current iterator to its initial state if one of the components of a seqeunce 
-fails to match. To compensate for this behaviour we added functionality to 
+the behavior of __classic__ but for a good reason. Sequences need to reset the 
+current iterator to its initial state if one of the components of a sequence 
+fails to match. To compensate for this behavior we added functionality to 
 the `expect` parsers (i.e. constructs like `a > b`). Expectation points introduce
 deterministic points into the grammar ensuring no backtracking can occur if
 they match. For this reason we clear the buffers of any multi_pass iterator
@@ -150,7 +150,7 @@ The multi_pass class has two template parameters:
                  below]]
 ]
 
-It is possible to implement all of the required functionality of the combinded 
+It is possible to implement all of the required functionality of the combined 
 policy in a single class. But it has shown to be more convenient to split this 
 into four different groups of functions, i.e. four separate, but well 
 coordinated policies. For this reason the `multi_pass` library
@@ -186,7 +186,7 @@ All predefined `multi_pass` policies are defined in the namespace
     [[`input_iterator`]   [This policy directs `multi_pass` to read from an 
                            input iterator of type `Input`.]]
     [[`buffering_input_iterator`]   [This policy directs `multi_pass` to read from an 
-                           input iterator of type `Input`. Aditionally it buffers
+                           input iterator of type `Input`. Additionally it buffers
                            the last character received from the underlying iterator.
                            This allows to wrap iterators not buffering the last 
                            character on their own (as `std::istreambuf_iterator`).]]
@@ -207,7 +207,7 @@ All predefined `multi_pass` policies are defined in the namespace
                            named `eof` which is comparable to a variable of 
                            `result_type`.]]
     [[`split_functor_input`][This is essentially the same as the `functor_input`
-                           policy except that the (user supplied) funtion 
+                           policy except that the (user supplied) function 
                            object exposes separate `unique` and `shared` sub 
                            classes, allowing to integrate the functors /unique/
                            data members with the `multi_pass` data items held
@@ -309,7 +309,7 @@ There is one other pre-defined class called `look_ahead`. The class
 template parameters: `Input`, the type of the input iterator to wrap, and a 
 `std::size_t N`, which specifies the size of the buffer to the 
 `fixed_size_queue` policy. While the default multi_pass configuration is 
-designed for safey, `look_ahead` is designed for speed. `look_ahead` is derived 
+designed for safety, `look_ahead` is designed for speed. `look_ahead` is derived 
 from a multi_pass with the following policies: `input_iterator` InputPolicy, 
 `first_owner` OwnershipPolicy, `no_check` CheckingPolicy, and 
 `fixed_size_queue<N>` StoragePolicy. 
@@ -442,7 +442,7 @@ An `InputPolicy` must have the following interface:
             //
             //   mp:    is a reference to the whole multi_pass instance
             //
-            // This method is expected to return a refernce to the next 
+            // This method is expected to return a reference to the next 
             // character/token
             template <typename MultiPass>
             static typename MultiPass::reference get_input(MultiPass& mp);
@@ -666,7 +666,7 @@ A `StoragePolicy` must have the following interface:
             //          to
             //
             // This function is expected to return true if the current instance
-            // is eual to the right hand side multi_pass instance
+            // is equal to the right hand side multi_pass instance
             template <typename MultiPass>
             static bool equal_to(MultiPass const& mp, MultiPass const& rhs);
 
