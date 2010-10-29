@@ -1258,7 +1258,7 @@ We have seen the `if_` statement. The syntax is:
     ]
 
 [endsect]
-[section if_else_ statement]
+[section if\_else\_ statement]
 
     #include <boost/spirit/home/phoenix/statement/if.hpp>
 
@@ -1353,7 +1353,7 @@ the number at each step. A newline terminates the printout of each value.
     );
 
 [endsect]
-[section do_while_ Statement]
+[section do\_while\_ Statement]
 
     #include <boost/spirit/home/phoenix/statement/do_while.hpp>
 
@@ -1395,7 +1395,7 @@ The syntax is:
     ]
 
 It is again very similar to the C++ for statement. Take note that the
-init_statement, conditional_expression and step_statement are separated by the
+init\_statement, conditional\_expression and step\_statement are separated by the
 comma instead of the semi-colon and each must be present (i.e. `for_(,,)` is
 invalid). This is a case where the [link phoenix.primitives.nothing nothing]
 actor can be useful.

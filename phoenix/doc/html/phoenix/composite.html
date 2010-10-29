@@ -283,19 +283,19 @@
 </span><span class="identifier">val</span><span class="special">(</span><span class="number">1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="number">3</span><span class="special">;</span> <span class="comment">// Lazily evaluated
 </span></pre>
 <a name="phoenix.composite.operator.supported_operators"></a><h3>
-<a name="id802994"></a>
+<a name="id841223"></a>
         <a class="link" href="composite.html#phoenix.composite.operator.supported_operators">Supported
         operators</a>
       </h3>
 <a name="phoenix.composite.operator.unary_operators"></a><h4>
-<a name="id803007"></a>
+<a name="id841237"></a>
         <a class="link" href="composite.html#phoenix.composite.operator.unary_operators">Unary operators</a>
       </h4>
 <pre class="programlisting"><span class="identifier">prefix</span><span class="special">:</span>   <span class="special">~,</span> <span class="special">!,</span> <span class="special">-,</span> <span class="special">+,</span> <span class="special">++,</span> <span class="special">--,</span> <span class="special">&amp;</span> <span class="special">(</span><span class="identifier">reference</span><span class="special">),</span> <span class="special">*</span> <span class="special">(</span><span class="identifier">dereference</span><span class="special">)</span>
 <span class="identifier">postfix</span><span class="special">:</span>  <span class="special">++,</span> <span class="special">--</span>
 </pre>
 <a name="phoenix.composite.operator.binary_operators"></a><h4>
-<a name="id803113"></a>
+<a name="id841342"></a>
         <a class="link" href="composite.html#phoenix.composite.operator.binary_operators">Binary operators</a>
       </h4>
 <pre class="programlisting"><span class="special">=,</span> <span class="special">[],</span> <span class="special">+=,</span> <span class="special">-=,</span> <span class="special">*=,</span> <span class="special">/=,</span> <span class="special">%=,</span> <span class="special">&amp;=,</span> <span class="special">|=,</span> <span class="special">^=,</span> <span class="special">&lt;&lt;=,</span> <span class="special">&gt;&gt;=</span>
@@ -304,7 +304,7 @@
 <span class="special">&amp;&amp;,</span> <span class="special">||,</span> <span class="special">-&gt;*</span>
 </pre>
 <a name="phoenix.composite.operator.ternary_operator"></a><h4>
-<a name="id803278"></a>
+<a name="id841508"></a>
         <a class="link" href="composite.html#phoenix.composite.operator.ternary_operator">Ternary operator</a>
       </h4>
 <pre class="programlisting"><span class="identifier">if_else</span><span class="special">(</span><span class="identifier">c</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span>
@@ -317,7 +317,7 @@
         albeit in a lazy manner.
       </p>
 <a name="phoenix.composite.operator.member_pointer_operator"></a><h4>
-<a name="id804450"></a>
+<a name="id842680"></a>
         <a class="link" href="composite.html#phoenix.composite.operator.member_pointer_operator">Member
         pointer operator</a>
       </h4>
@@ -358,7 +358,7 @@
 <span class="special">(</span><span class="identifier">arg1</span><span class="special">-&gt;*&amp;</span><span class="identifier">A</span><span class="special">::</span><span class="identifier">func</span><span class="special">)(</span><span class="identifier">arg2</span><span class="special">)(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">i</span><span class="special">);</span> <span class="comment">// returns a-&gt;func(i)
 </span></pre>
 <div class="table">
-<a name="id804758"></a><p class="title"><b>Table&#160;1.4.&#160;Include Files</b></p>
+<a name="id842987"></a><p class="title"><b>Table&#160;1.4.&#160;Include Files</b></p>
 <div class="table-contents"><table class="table" summary="Include Files">
 <colgroup>
 <col>
@@ -498,12 +498,14 @@
 <dt><span class="section"><a href="composite.html#phoenix.composite.statement.block_statement">Block
         Statement</a></span></dt>
 <dt><span class="section"><a href="composite.html#phoenix.composite.statement.if__statement">if_ Statement</a></span></dt>
-<dt><span class="section"><a href="composite.html#phoenix.composite.statement.if_else__statement">if<span class="underline">else</span> statement</a></span></dt>
+<dt><span class="section"><a href="composite.html#phoenix.composite.statement.if__else___statement">if_else_
+        statement</a></span></dt>
 <dt><span class="section"><a href="composite.html#phoenix.composite.statement.switch__statement">switch_
         statement</a></span></dt>
 <dt><span class="section"><a href="composite.html#phoenix.composite.statement.while__statement">while_
         Statement</a></span></dt>
-<dt><span class="section"><a href="composite.html#phoenix.composite.statement.do_while__statement">do<span class="underline">while</span> Statement</a></span></dt>
+<dt><span class="section"><a href="composite.html#phoenix.composite.statement.do__while___statement">do_while_
+        Statement</a></span></dt>
 <dt><span class="section"><a href="composite.html#phoenix.composite.statement.for__statement">for_ Statement</a></span></dt>
 <dt><span class="section"><a href="composite.html#phoenix.composite.statement.try__catch__statement">try_
         catch_ Statement</a></span></dt>
@@ -630,7 +632,8 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="phoenix.composite.statement.if_else__statement"></a><a class="link" href="composite.html#phoenix.composite.statement.if_else__statement" title="ifelse statement">if<span class="underline">else</span> statement</a>
+<a name="phoenix.composite.statement.if__else___statement"></a><a class="link" href="composite.html#phoenix.composite.statement.if__else___statement" title="if_else_ statement">if_else_
+        statement</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">statement</span><span class="special">/</span><span class="keyword">if</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -747,7 +750,8 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="phoenix.composite.statement.do_while__statement"></a><a class="link" href="composite.html#phoenix.composite.statement.do_while__statement" title="dowhile Statement">do<span class="underline">while</span> Statement</a>
+<a name="phoenix.composite.statement.do__while___statement"></a><a class="link" href="composite.html#phoenix.composite.statement.do__while___statement" title="do_while_ Statement">do_while_
+        Statement</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">statement</span><span class="special">/</span><span class="identifier">do_while</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -796,9 +800,10 @@
 </pre>
 <p>
           It is again very similar to the C++ for statement. Take note that the init_statement,
-          conditional_expression and step<span class="underline">statement are
-          separated by the comma instead of the semi-colon and each must be present
-          (i.e. `for</span>(,,)` is invalid). This is a case where the <a class="link" href="primitives.html#phoenix.primitives.nothing" title="Nothing">nothing</a> actor can be useful.
+          conditional_expression and step_statement are separated by the comma instead
+          of the semi-colon and each must be present (i.e. <code class="computeroutput"><span class="identifier">for_</span><span class="special">(,,)</span></code> is invalid). This is a case where the
+          <a class="link" href="primitives.html#phoenix.primitives.nothing" title="Nothing">nothing</a> actor can be
+          useful.
         </p>
 <p>
           Example: This code prints each element N times where N is the element's
@@ -941,7 +946,7 @@
         <code class="computeroutput"><span class="keyword">dynamic_cast</span></code>, <code class="computeroutput"><span class="keyword">const_cast</span></code> and <code class="computeroutput"><span class="keyword">reinterpret_cast</span></code>.
       </p>
 <a name="phoenix.composite.object.construction"></a><h3>
-<a name="id810520"></a>
+<a name="id848746"></a>
         <a class="link" href="composite.html#phoenix.composite.object.construction">Construction</a>
       </h3>
 <p>
@@ -982,7 +987,7 @@
         </p></td></tr>
 </table></div>
 <a name="phoenix.composite.object.new"></a><h3>
-<a name="id810766"></a>
+<a name="id848992"></a>
         <a class="link" href="composite.html#phoenix.composite.object.new">New</a>
       </h3>
 <p>
@@ -1020,7 +1025,7 @@
         </p></td></tr>
 </table></div>
 <a name="phoenix.composite.object.delete"></a><h3>
-<a name="id810998"></a>
+<a name="id849224"></a>
         <a class="link" href="composite.html#phoenix.composite.object.delete">Delete</a>
       </h3>
 <p>
@@ -1042,7 +1047,7 @@
 <pre class="programlisting"><span class="identifier">delete_</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;(</span><span class="identifier">arg1</span><span class="special">)</span> <span class="comment">// note the spelling of delete_ (with trailing underscore)
 </span></pre>
 <a name="phoenix.composite.object.casts"></a><h3>
-<a name="id811153"></a>
+<a name="id849378"></a>
         <a class="link" href="composite.html#phoenix.composite.object.casts">Casts</a>
       </h3>
 <p>
@@ -1097,7 +1102,7 @@
         This section deals with local variables and nested lambda scopes.
       </p>
 <a name="phoenix.composite.scope.local_variables"></a><h3>
-<a name="id811596"></a>
+<a name="id849821"></a>
         <a class="link" href="composite.html#phoenix.composite.scope.local_variables">Local Variables</a>
       </h3>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">scope</span><span class="special">/</span><span class="identifier">local_variable</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -1116,7 +1121,7 @@
 <span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">local_variable</span><span class="special">&lt;</span><span class="identifier">size_key</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">size</span><span class="special">;</span>
 </pre>
 <a name="phoenix.composite.scope.predefined_local_variables"></a><h3>
-<a name="id811771"></a>
+<a name="id849996"></a>
         <a class="link" href="composite.html#phoenix.composite.scope.predefined_local_variables">Predefined
         Local Variables</a>
       </h3>
@@ -1128,7 +1133,7 @@
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">local_names</span><span class="special">;</span>
 </pre>
 <a name="phoenix.composite.scope.let"></a><h3>
-<a name="id811894"></a>
+<a name="id850120"></a>
         <a class="link" href="composite.html#phoenix.composite.scope.let">let</a>
       </h3>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">scope</span><span class="special">/</span><span class="identifier">let</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -1169,7 +1174,7 @@
 <span class="special">]</span>
 </pre>
 <a name="phoenix.composite.scope.reference_preservation"></a><h3>
-<a name="id812179"></a>
+<a name="id850404"></a>
         <a class="link" href="composite.html#phoenix.composite.scope.reference_preservation">Reference
         Preservation</a>
       </h3>
@@ -1221,7 +1226,7 @@
         and <code class="computeroutput"><span class="identifier">ref</span></code>s are L-values. <code class="computeroutput"><span class="identifier">val</span></code>s are R-values.
       </p>
 <a name="phoenix.composite.scope.visibility"></a><h3>
-<a name="id814217"></a>
+<a name="id850804"></a>
         <a class="link" href="composite.html#phoenix.composite.scope.visibility">Visibility</a>
       </h3>
 <p>
@@ -1271,7 +1276,7 @@
 <span class="special">]</span>
 </pre>
 <a name="phoenix.composite.scope.lambda"></a><h3>
-<a name="id814556"></a>
+<a name="id852781"></a>
         <a class="link" href="composite.html#phoenix.composite.scope.lambda">lambda</a>
       </h3>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">scope</span><span class="special">/</span><span class="identifier">lambda</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -1457,7 +1462,7 @@
         function generates a suitable binder object, a <a class="link" href="composite.html" title="Composite">composite</a>.
       </p>
 <a name="phoenix.composite.bind.binding_functions"></a><h3>
-<a name="id815865"></a>
+<a name="id854091"></a>
         <a class="link" href="composite.html#phoenix.composite.bind.binding_functions">Binding Functions</a>
       </h3>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">phoenix</span><span class="special">/</span><span class="identifier">bind</span><span class="special">/</span><span class="identifier">bind_function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -1489,7 +1494,7 @@
         will print out "4".
       </p>
 <a name="phoenix.composite.bind.binding_member_functions"></a><h3>
-<a name="id816148"></a>
+<a name="id854374"></a>
         <a class="link" href="composite.html#phoenix.composite.bind.binding_member_functions">Binding Member
         Functions</a>
       </h3>
@@ -1522,7 +1527,7 @@
 </span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">xyz</span><span class="special">::</span><span class="identifier">foo</span><span class="special">,</span> <span class="identifier">obj</span><span class="special">,</span> <span class="number">100</span><span class="special">)</span>       <span class="comment">// obj.foo(100)
 </span></pre>
 <a name="phoenix.composite.bind.binding_member_variables"></a><h3>
-<a name="id816495"></a>
+<a name="id854721"></a>
         <a class="link" href="composite.html#phoenix.composite.bind.binding_member_variables">Binding Member
         Variables</a>
       </h3>
