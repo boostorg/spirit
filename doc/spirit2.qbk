@@ -53,7 +53,7 @@
 [def __ragel__                  [@http://www.cs.queensu.ca/~thurston/ragel/ Ragel]]
 
 [def __boost_variant__          [@http://www.boost.org/doc/html/variant.html Boost.Variant]]
-[def __boost_iterator_range__   [@boost:/libs/range/doc/html/range/utilities/iterator_range.html `boost::iterator_range`]]
+[def __boost_iterator_range__   [@boost:/libs/range/doc/html/range/reference/utilities/iterator_range.html `boost::iterator_range`]]
 [def __boost_bind__             [@boost:/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@boost:/libs/lambda/index.html Boost.Lambda]]
 [def __boost_tuples__           [@boost:/libs/tuple/index.html Boost.Tuples]]
