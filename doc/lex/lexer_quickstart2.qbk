@@ -47,7 +47,7 @@ inside the actions associated with each of the token definitions.
 [heading Semantic Actions in __lex__]
 
 __lex__ uses a very similar way of associating actions with the token 
-definitions (which should look familiar to anybody knowlegdeable with 
+definitions (which should look familiar to anybody knowledgeable with 
 __spirit__ as well): specifying the operations to execute inside of a pair of
 `[]` brackets. In order to be able to attach semantic actions to token 
 definitions for each of them there is defined an instance of a `token_def<>`.
@@ -79,7 +79,7 @@ operator. Here is the code snippet again:
         ;
 
 This way we have a very powerful and natural way of building the lexical 
-analyzer. If translated into English this may be read as: The lexical analyer 
+analyzer. If translated into English this may be read as: The lexical analyzer 
 will recognize ('`=`') tokens as defined by any of ('`|`') the token 
 definitions `word`, `eol`, and `any`. 
 

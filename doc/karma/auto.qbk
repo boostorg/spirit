@@ -89,7 +89,7 @@ type which can be used to generate output from the given attribute type.
 
 It is possible to add support for any custom data type by implementing a 
 specialization of the customization point __customize_create_generator__. This
-customiyation can be used also to redefined anz of the predefined mappings.
+customization can be used also to redefined any of the predefined mappings.
 
 [heading Attributes]
 

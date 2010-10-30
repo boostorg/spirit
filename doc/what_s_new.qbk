@@ -38,7 +38,7 @@
   parameter `Domain` allowing to better specialize the customization point
   for either `qi::domain` or `karma::domain`. 
 
-[important This is a interface breaking change requiring to modify exising 
+[important This is a interface breaking change requiring to modify existing 
            code. If you have a specialization of this customization point in 
            your code you need to add the specialization for the new template 
            parameter, i.e. either `qi::domain` or `karma::domain`.]
@@ -49,7 +49,7 @@
   component (as this would not make any sense).
 * Semantic actions in __karma__ now implicitly invoke the function `pre` of the
   customization point __customize_transform_attribute__ to convert the supplied 
-  attribute to the consumend attribute type, as needed. 
+  attribute to the consumed attribute type, as needed. 
 * Added the __karma__ __karma_skip__ directive which is semantically equivalent
   to the __karma__ __karma_omit__ directive except that it will not execute the 
   embedded generator.
@@ -110,7 +110,7 @@
   function: `void fail(Exposed&)`, which normally will do nothing. This function
   will be called whenever the right hand side of the `rule` (or the embedded
   parser of `attr_cast`) fail parsing. This change affects /Qi/ only. See
-  the desciption of the __customize_transform_attribute__ for more details.
+  the description of the __customize_transform_attribute__ for more details.
 * Added support for attribute sequences created with `BOOST_FUSION_ADAPT_CLASS` 
   and `BOOST_FUSION_ADAPT_CLASS_NAMED`. This support requires to include the 
   new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
@@ -147,7 +147,7 @@
 * The directive `karma::omit[]` now does not accept an arbitrary attribute 
   type anymore.
 * The __karma__ predicates (the and-predicate and the not-predicate) and the 
-  directive `karma::omit[]` now disable output alltogether instead of 
+  directive `karma::omit[]` now disable output altogether instead of 
   intercepting the output into a buffer which got discarded as before.
 * Fixed `karma::rule` to properly handles optional attributes.
 
@@ -226,7 +226,7 @@
 * Changed parameter sequence of `qi::phrase_parse`, `qi::phrase_match`, 
   `karma::generate_delimited`, and `match_delimited`. The attribute is now 
   always the last parameter.
-* Added new overloads of those functions allowing to explicitely specify the
+* Added new overloads of those functions allowing to explicitly specify the
   post-skipping and pre-delimiting behavior.
 * Added multi attribute API functions
 * Removed `grammar_def<>`
@@ -290,7 +290,7 @@
 
 Here is a list of changes in __lex__ since version 2.0. __lex__ 2.1 is a 
 complete rewrite of the __lex__ distributed with Boost V1.37. As with all
-code portions of the __spirit__ library, __lex__ is usable as standalone piece.
+code portions of the __spirit__ library, __lex__ is usable as stand alone piece.
 __lex__ now uses the infrastructure provided by __spirit__ version 2.1.
 
 * The lex::lexer_def class has been renamed to lex::lexer, while the original

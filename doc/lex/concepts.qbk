@@ -33,7 +33,7 @@ is `void`).
 [variablelist Notation
     [[`l`]              [A `Lexer`.]]
     [[`L`]              [A `Lexer` type.]]
-    [[`Def`]            [A token definition conatiner type.]]
+    [[`Def`]            [A token definition container type.]]
     [[`State`]          [A type used to represent lexer state names.]]
 ]
 
@@ -74,9 +74,9 @@ Upon return from `l.collect` the following post conditions should hold:
 
 Upon return from `l.add_actions` the following post conditions should hold:
 
-* On return, `def` holds all semantic actions correctly asociated with the 
+* On return, `def` holds all semantic actions correctly associated with the 
   corresponding token definitions as defined in the Lexer, `l`. This 
-  includes all semantic actiosn defined by the Lexer's contained inside `l`.
+  includes all semantic actions defined by the Lexer's contained inside `l`.
 
 [heading Models]
 

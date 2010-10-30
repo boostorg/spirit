@@ -11,7 +11,7 @@
 
 The library provides a couple of free functions to make using the lexer a snap.
 These functions have three forms. The first form, `tokenize`, simplifies the
-usage of a standalone lexer (without parsing). The second form, 
+usage of a stand alone lexer (without parsing). The second form, 
 `tokenize_and_parse`, combines a lexer step with parsing on
 the token level (without a skipper). The third, `tokenize_and_phrase_parse`, 
 works on the token level as well, but additionally employs a skip parser. The 
@@ -171,7 +171,7 @@ by the preprocessor constant `PHOENIX_LIMIT` (which in turn defaults to `10`).
 
 The `tokenize_and_phrase_parse` functions not taking an explicit `skip_flag` 
 as one of their arguments invoke the passed skipper after a successful match 
-of the parser expression. This can be inhbited by using the other versions of 
+of the parser expression. This can be inhibited by using the other versions of 
 that function while passing `skip_flag::dont_postskip` to the corresponding 
 argument.
 

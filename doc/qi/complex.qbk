@@ -24,7 +24,7 @@ What's new? Well, we have:
 
 The complex parser presented above reads as:
 
-* One or two real numbers in parantheses, separated by comma (the second number is optional)
+* One or two real numbers in parentheses, separated by comma (the second number is optional)
 * *OR* a single real number.
 
 This parser can parse complex numbers of the form:

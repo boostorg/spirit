@@ -81,7 +81,7 @@ not defined in __primitive_generator_concept__.
 [table
     [[Expression]           [Description]]
     [[`stream`]             [Call the streaming `operator<<()` for the type
-                             of the mandory attribute. The output emitted 
+                             of the mandatory attribute. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
                              (unless the underlying output stream reports an 
@@ -95,7 +95,7 @@ not defined in __primitive_generator_concept__.
                              error). The character type of the I/O ostream
                              is assumed to be `char`.]]
     [[`wstream`]            [Call the streaming `operator<<()` for the type
-                             of the mandory attribute. The output emitted 
+                             of the mandatory attribute. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
                              (unless the underlying output stream reports an 
@@ -121,7 +121,7 @@ arbitrary underlying character type.
 [``stream_generator<
     Char
 >()``]                      [Call the streaming `operator<<()` for the type
-                             of the mandory attribute. The output emitted 
+                             of the mandatory attribute. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
                              (unless the underlying output stream reports an 

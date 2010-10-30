@@ -11,7 +11,7 @@
 [heading The tokenize function]
 
 The `tokenize()` function is a helper function simplifying the usage of a lexer
-in a standalone fashion. For instance, you may have a standalone lexer where all 
+in a stand alone fashion. For instance, you may have a stand alone lexer where all 
 that functional requirements are implemented inside lexer semantic actions. 
 A good example for this is the [@../../example/lex/word_count_lexer.cpp word_count_lexer]
 described in more detail in the section __sec_lex_quickstart_2__. 

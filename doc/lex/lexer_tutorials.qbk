@@ -14,7 +14,7 @@ dereferenced, return a stream of tokens generated from the underlying character
 stream. The generated tokens are based on the token definitions supplied by the 
 user.
 
-Currently, __lex__ is built on top of Ben Hansons excellent __lexertl__ 
+Currently, __lex__ is built on top of Ben Hanson's excellent __lexertl__ 
 library (which is a proposed Boost library). __lexertl__ provides the necessary 
 functionality to build state machines based on a set of supplied regular 
 expressions. But __lex__ is not restricted to be used with __lexertl__. We 
@@ -48,7 +48,7 @@ selected.
 The series of tutorial examples of this section will guide you through some
 common use cases helping to understand the big picture. The first two quick 
 start examples (__sec_lex_quickstart_1__ and __sec_lex_quickstart_2__) 
-introduce the __lex__ library while building two standalone applications, not
+introduce the __lex__ library while building two stand alone applications, not
 being connected to or depending on any other part of __spirit__. The section
 __sec_lex_quickstart_3__ demonstrates how to use a lexer in conjunction with a 
 parser (where obviously the parser is built using __qi__). 

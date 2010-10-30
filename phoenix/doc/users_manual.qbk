@@ -121,7 +121,7 @@ FP is a programming discipline that is not at all tied to a specific language.
 FP as a programming discipline can, in fact, be applied to many programming
 languages. In the realm of C++ for instance, we are seeing more FP techniques
 being applied. C++ is sufficiently rich to support at least some of the most
-important facets of FP. C++ is a multiparadigm programming language. It is not
+important facets of FP. C++ is a multi-paradigm programming language. It is not
 only procedural. It is not only object oriented. Beneath the core of the
 standard C++ library, a closer look into STL gives us a glimpse of FP already in
 place. It is obvious that the authors of STL know and practice FP. In the near
@@ -220,7 +220,7 @@ it clear. Example:
 [endsect]
 [section References]
 
-References are functions. They hold a reference to a value stored somehere.
+References are functions. They hold a reference to a value stored somewhere.
 For example, given:
 
     int i = 3;
@@ -333,7 +333,7 @@ Using Phoenix, the same can be achieved directly with a one-liner:
 
     find_if(c.begin(), c.end(), arg1 % 2 == 1)
 
-The expression `arg1 % 2 == 1` automagically creates a functor with the expected
+The expression `arg1 % 2 == 1` auto-magically creates a functor with the expected
 behavior. In FP, this unnamed function is called a lambda function. Unlike the
 function pointer version, which is monomorphic (expects and works only with a
 fixed type int argument), the Phoenix version is fully polymorphic and works
@@ -618,7 +618,7 @@ The modules are orthogonal, with no cyclic dependencies.
 Lower layers do not depend on higher layers. Modules in a layer do not depend on other modules in the same layer.
 This means, for example, that Bind can be completely discarded if it is
 not required; or one could perhaps take out Operator and Statement and just use Function,
-which may be desireable in a pure FP application.
+which may be desirable in a pure FP application.
 
 The library has grown from the original Phoenix but still comprises only
 header files. There are no object files to link against.
@@ -815,7 +815,7 @@ Here, arguments b, c, and d are ignored. The function `add` takes in the first
 argument (`arg1`) and the fifth argument (`arg5`).
 
 [note There are a few reasons why enforcing strict arity is not
-desireable. A case in point is the callback function. Typical callback functions
+desirable. A case in point is the callback function. Typical callback functions
 provide more information than is actually needed. Lambda functions are often
 used as callbacks.]
 
@@ -887,7 +887,7 @@ use `ref`. For example (where `i` is an `int` variable):
 [h2 Evaluating a Reference]
 
 References are actors. Hence, references can be evaluated. Such invocation gives
-the references's identity. Example:
+the reference's identity. Example:
 
     int i = 3;
     char const* s = "Hello World";
@@ -1060,8 +1060,8 @@ Operator expressions are lazily evaluated following four simple rules:
 # A binary operator, except `->*` will be lazily evaluated when
   /at least/ one of its operands is an actor object
   (see [link phoenix.actors actors]).
-# Unary operators are lazily evaluted if their argument is an actor object.
-# Operator `->*` is lazily evaluted if the left hand argument is an actor object.
+# Unary operators are lazily evaluated if their argument is an actor object.
+# Operator `->*` is lazily evaluated if the left hand argument is an actor object.
 # The result of a lazy operator is an actor object that can in turn allow the
   applications of rules 1 and 2.
 
@@ -1258,7 +1258,7 @@ We have seen the `if_` statement. The syntax is:
     ]
 
 [endsect]
-[section if_else_ statement]
+[section if\_else\_ statement]
 
     #include <boost/spirit/home/phoenix/statement/if.hpp>
 
@@ -1353,7 +1353,7 @@ the number at each step. A newline terminates the printout of each value.
     );
 
 [endsect]
-[section do_while_ Statement]
+[section do\_while\_ Statement]
 
     #include <boost/spirit/home/phoenix/statement/do_while.hpp>
 
@@ -1395,7 +1395,7 @@ The syntax is:
     ]
 
 It is again very similar to the C++ for statement. Take note that the
-init_statement, conditional_expression and step_statement are separated by the
+init\_statement, conditional\_expression and step\_statement are separated by the
 comma instead of the semi-colon and each must be present (i.e. `for_(,,)` is
 invalid). This is a case where the [link phoenix.primitives.nothing nothing]
 actor can be useful.
@@ -1523,7 +1523,7 @@ Lazily construct an object from an arbitrary set of arguments:
 
     construct<T>(ctor_arg1, ctor_arg2, ..., ctor_argN);
 
-where the given parameters are the parameters to the contructor of the object of
+where the given parameters are the parameters to the constructor of the object of
 type T (This implies, that type T is expected to have a constructor with a
 corresponding set of parameter types.).
 
@@ -1548,7 +1548,7 @@ Lazily construct an object, on the heap, from an arbitrary set of arguments:
 
     new_<T>(ctor_arg1, ctor_arg2, ..., ctor_argN);
 
-where the given parameters are the parameters to the contructor of the object of
+where the given parameters are the parameters to the constructor of the object of
 type T (This implies, that type T is expected to have a constructor with a
 corresponding set of parameter types.).
 
@@ -1882,14 +1882,14 @@ lambda scope.
 ['Binding] is the act of tying together a function to some arguments for
 deferred (lazy) evaluation. Named [link phoenix.composite.function Lazy functions]
 require a bit of typing. Unlike (unnamed) lambda expressions, we need to write a
-functor somewhere offline, detached from the call site. If you wish to transform a
+functor somewhere off-line, detached from the call site. If you wish to transform a
 plain function, member function or member variable to a lambda expression, `bind`
 is your friend.
 
 [note Take note that binders are monomorphic. Rather than binding
 functions, the preferred way is to write true generic and polymorphic [link
 phoenix.composite.function lazy-functions]. However, since most of the time we
-are dealing with adaptation of exisiting code, binders get the job done faster.]
+are dealing with adaptation of existing code, binders get the job done faster.]
 
 There is a set of overloaded `bind` template functions. Each `bind(x)`
 function generates a suitable binder object, a [link phoenix.composite
@@ -2430,7 +2430,7 @@ template function does this for us:
 
 The `reference` template class conforms to the __eval__ concept. It has a nested
 `result` metafunction that reflects the return type of its `eval` member
-function, which peforms the actual function. `reference<T>` stores a reference to
+function, which performs the actual function. `reference<T>` stores a reference to
 a `T`. Its `eval` member function simply returns the reference. It does not make
 use of the environment `Env`.
 
@@ -2533,7 +2533,7 @@ composite:
 
 Composites are never instantiated directly. Front end expression templates are
 used to generate the composites. Using expression templates, we implement a DSEL
-(Domain Specific Embedded Language) that mimicks native C++. You've seen this
+(Domain Specific Embedded Language) that mimics native C++. You've seen this
 DSEL in action in the preceding sections. It is most evident in the
 [link phoenix.composite.statement Statement] section.
 
@@ -2685,12 +2685,12 @@ recognized by all modules and components in the library.
 [section Wrap Up]
 
 Sooner or later more FP techniques become standard practice as people find the
-true value of this programming discipline outside the academe and into the
+true value of this programming discipline outside the academy and into the
 mainstream. In as much as structured programming of the 70s and object oriented
 programming in the 80s and generic programming in the 90s shaped our thoughts
 towards a more robust sense of software engineering, FP will certainly be a
 paradigm that will catapult us towards more powerful software design and
-engineering onward into the new millenium.
+engineering onward into the new millennium.
 
 Let me quote Doug Gregor of Boost.org. About functional style programming
 libraries:
@@ -2727,7 +2727,7 @@ So there you have it. Have fun! See you in the FP world.
 # Jaakko Jarvi. DA Lambda MAN!
 # Dave Abrahams, for his constant presence, wherever, whenever.
 # Aleksey Gurtovoy, DA MPL MAN!
-# Doug Gregor, always a source of inpiration.
+# Doug Gregor, always a source of inspiration.
 # Dan Marsden, did almost all the work in bringing Phoenix-2 out the door.
 # Eric Niebler did a 2.0 pre-release review and wrote some range related code
   that Phoenix stole and used in the algorithms.

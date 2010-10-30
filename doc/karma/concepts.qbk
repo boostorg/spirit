@@ -44,7 +44,7 @@ can be a more complex generator formed as a composition of other Generators.
 In the expressions below, the behavior of the generator, `g`, as well as how 
 `delimit` and `attrib` are handled by `g`, are left unspecified in the base 
 `Generator` concept. These are specified in subsequent, more refined concepts 
-and by the actual models therof.
+and by the actual models thereof.
 
 For any Generator the following expressions must be valid:
 

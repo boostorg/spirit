@@ -83,7 +83,7 @@ when creating them in wide character mode.]
           quote2         = "\\\"";         // match single '"'
           literal_quote1 = "\\'";          // match backslash followed by single "'"
           literal_quote2 = "\\\\\\\"";     // match backslash followed by single '"'
-          literal_backslash = "\\\\\\\\";  // match two backslashs
+          literal_backslash = "\\\\\\\\";  // match two backslashes
       ``
 ]
 

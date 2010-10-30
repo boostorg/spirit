@@ -12,7 +12,7 @@ The whole purpose of integrating __lex__ as part of the __spirit__ library was
 to add a library allowing the merger of lexical analysis with the parsing 
 process as defined by a __spirit__ grammar. __spirit__ parsers read their input 
 from an input sequence accessed by iterators. So naturally, we chose iterators 
-to be used as the interface beween the lexer and the parser. A second goal of 
+to be used as the interface between the lexer and the parser. A second goal of 
 the lexer/parser integration was to enable the usage of different 
 lexical analyzer libraries. The utilization of iterators seemed to be the 
 right choice from this standpoint as well, mainly because these can be used as
@@ -62,7 +62,7 @@ and __sec_lex_quickstart_2__) the token definition class for this example does
 not reveal any surprises. However, it uses lexer token definition macros to 
 simplify the composition of the regular expressions, which will be described in 
 more detail in the section __fixme__. Generally, any token definition is usable
-without modification from either a standalone lexical analyzer or in conjunction
+without modification from either a stand alone lexical analyzer or in conjunction
 with a parser.
 
 [wcp_token_definition]

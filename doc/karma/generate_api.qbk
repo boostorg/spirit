@@ -264,7 +264,7 @@ matching generator type:
 All functions above return a standard IO stream manipulator instance (see 
 __iomanip__), which when streamed to an output stream will result in generating
 the output as emitted by the embedded __karma__ generator expression. Any error
-occuring during the invocation of the __karma__ generators will be reflected
+occurring during the invocation of the __karma__ generators will be reflected
 in the streams status flag (`std::ios_base::failbit` will be set).
 
 The maximum number of supported arguments is limited by the preprocessor 

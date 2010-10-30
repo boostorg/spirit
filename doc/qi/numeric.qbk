@@ -478,7 +478,7 @@ corresponds to the following grammar:
         =   (lit('e') | 'E') >> -sign >> +digit
         ;
 
-There are four `RealPolicies` pre-defined for immediate use:
+There are four `RealPolicies` predefined for immediate use:
 
 [table Predefined Policies
 
@@ -551,7 +551,7 @@ The optional sign will be automatically applied afterwards.
 The easiest way to implement a proper real parsing policy is to derive a
 new type from the the type `real_policies` while overriding the aspects
 of the parsing which need to be changed. For example, here's the
-implementation of the pre-defined `strict_real_policies`:
+implementation of the predefined `strict_real_policies`:
 
     template <typename T>
     struct strict_real_policies : real_policies<T>
@@ -656,7 +656,7 @@ not defined in __primitive_parser_concept__.
 
 [heading Attributes]
 
-[:`B`, The boolean type of the booelan parser.]
+[:`B`, The boolean type of the boolean parser.]
 
 [heading Complexity]
 

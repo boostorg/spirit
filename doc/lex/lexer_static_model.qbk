@@ -28,7 +28,7 @@ steps needed to create a static lexical analyzer using __lex__:
 
 # generating the C++ code for the static analyzer (including the tokenization 
   function and corresponding tables), and 
-# modifying the dynamic lexical anlyzer to use the generated code.
+# modifying the dynamic lexical analyzer to use the generated code.
 
 Both steps are described in more detail in the two sections below (for the full
 source code used in this example see the code here:
@@ -57,7 +57,7 @@ syntax.
 [wc_static_tokendef]
 
 The only thing changing between the three different use cases is the template
-parameter used to instantiate a concrete token definition. Fot the dynamic 
+parameter used to instantiate a concrete token definition. For the dynamic 
 model and the code generator you probably will use the __class_lexertl_lexer__
 template, where for the static model you will use the 
 __class_lexertl_static_lexer__ type as the template parameter.
@@ -76,7 +76,7 @@ before.
 [heading Generating the Static Analyzer]
 
 The first additional step to perform in order to create a static lexical 
-analyzer is to create a small standalone program for creating the lexer tables
+analyzer is to create a small stand alone program for creating the lexer tables
 and the corresponding tokenization function. For this purpose the __lex__ 
 library exposes a special API - the function __api_generate_static__. It 
 implements the whole code generator, no further code is needed. All what it 
@@ -88,7 +88,7 @@ lines of code.
 [wc_static_generate_main]
 
 The shown code generator will generate output, which should be stored in a file
-for later inclusion into the static lexical analzyer as shown in the next 
+for later inclusion into the static lexical analyzer as shown in the next 
 topic (the full generated code can be viewed 
 [@../../example/lex/static_lexer/word_count_static.hpp here]).
 
@@ -123,12 +123,12 @@ provides the overall main function, highlighting the code to be changed.
 
 [important The generated code for the static lexer contains the token ids as 
            they have been assigned, either explicitly by the programmer or 
-           implicitely during lexer construction. It is your responsibility
+           implicitly during lexer construction. It is your responsibility
            to make sure that all instances of a particular static lexer  
            type use exactly the same token ids. The constructor of the lexer 
            object has a second (default) parameter allowing it to designate a 
            starting token id to be used while assigning the ids to the token 
-           definitions. The requirement above is fullfilled by default
+           definitions. The requirement above is fulfilled by default
            as long as no `first_id` is specified during construction of the
            static lexer instances. 
 ]

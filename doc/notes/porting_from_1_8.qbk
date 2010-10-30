@@ -53,7 +53,7 @@ refer to the corresponding reference documentation of this component.
     [[`classic_actor.hpp`]              [none, use __boost_phoenix__ for writing semantic actions]]
     [[`classic_attribute.hpp`]          [none, use local variables for rules instead of closures, 
                                          the primitives parsers now directly support lazy
-                                         parametrization]]
+                                         parameterization]]
     [[`classic_core.hpp`]               [`qi_core.hpp`]]
     [[`classic_debug.hpp`]              [`qi_debug.hpp`]]
     [[`classic_dynamic.hpp`]            [none, use __qi__ predicates instead of if_p, while_p, for_p
@@ -90,7 +90,7 @@ and for __qi__:
 [porting_guide_qi_includes]
 [porting_guide_qi_namespace]
 
-The following similar examples should clearify the differences. First the 
+The following similar examples should clarify the differences. First the 
 base example in __classic__:
 
 [porting_guide_classic_parse]
@@ -152,7 +152,7 @@ And here is a similar grammar and its usage in __qi__:
 [porting_guide_qi_grammar]
 [porting_guide_qi_use_grammar]
 
-Both versions look similarily enough, but we see several differences (we will 
+Both versions look similar enough, but we see several differences (we will 
 cover each of those differences in more detail below):
 
 * Neither the grammars nor the rules depend on a scanner type anymore, both 

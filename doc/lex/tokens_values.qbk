@@ -12,7 +12,7 @@ As already discussed, lexical scanning is the process of analyzing the stream
 of input characters and separating it into strings called tokens, most of the 
 time separated by whitespace. The different token types recognized by a lexical 
 analyzer often get assigned unique integer token identifiers (token ids). These 
-token ids are normally used by the parser to identifiy the current token without 
+token ids are normally used by the parser to identify the current token without 
 having to look at the matched string again. The __lex__ library is not 
 different with respect to this, as it uses the token ids as the main means of 
 identification of the different token types defined for a particular lexical 
@@ -47,7 +47,7 @@ token type, especially:
 The token itself is a data structure returned by the lexer iterators. 
 Dereferencing a lexer iterator returns a reference to the last matched token 
 instance. It encapsulates the part of the underlying input sequence matched by
-the regular expression used during the definiton of this token type. 
+the regular expression used during the definition of this token type. 
 Incrementing the lexer iterator invokes the lexical analyzer to
 match the next token by advancing the underlying input stream. The token data 
 structure contains at least the token id of the matched token type, 
@@ -65,7 +65,7 @@ appropriate template parameters for the
 __class_lexertl_token__ template while defining the token type. 
 
 The lexer iterator returns the same token type for each of the different 
-matched token definitions. To accomodate for the possible different token 
+matched token definitions. To accommodate for the possible different token 
 /value/ types exposed by the various token types (token definitions), the 
 general type of the token value is a __boost_variant__. At a minimum (for the 
 default configuration) this token value variant will be configured to always 

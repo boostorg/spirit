@@ -14,7 +14,7 @@ who already managed to help significantly during this rewrite. We would like to
 express our special acknowledgement to:
 
 [*Eric Niebler] for writing Boost.Proto, without which this rewrite wouldn't 
-have been possible, and helping with examples, advices, and suggestions on
+have been possible, and helping with examples, advice, and suggestions on
 how to use Boost.Proto in the best possible way.
 
 [*Ben Hanson] for providing us with an early version of his __lexertl__ library, 
@@ -180,10 +180,10 @@ user support, participating in the discussions and so on.
 
 [*Peder Holt] for his porting work on Phoenix, Fusion and Spirit to VC6. 
 
-To Joels wife Mariel who did the graphics in this document.
+To Joel's wife Mariel who did the graphics in this document.
 
 My, there's a lot in this list! And it's a continuing list. We add people to 
-this list everytime. We hope we did not forget anyone. If we missed
+this list every time. We hope we did not forget anyone. If we missed
 someone you know who has helped in any way, please inform us.
 
 Special thanks also to people who gave feedback and valuable comments, 

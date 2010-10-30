@@ -32,7 +32,7 @@
             stream of input characters and separating it into strings called tokens,
             most of the time separated by whitespace. The different token types recognized
             by a lexical analyzer often get assigned unique integer token identifiers
-            (token ids). These token ids are normally used by the parser to identifiy
+            (token ids). These token ids are normally used by the parser to identify
             the current token without having to look at the matched string again.
             The <span class="emphasis"><em>Spirit.Lex</em></span> library is not different with respect
             to this, as it uses the token ids as the main means of identification
@@ -50,7 +50,7 @@
             library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id1173342"></a>
+<a name="id1146157"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -86,12 +86,12 @@
             The token itself is a data structure returned by the lexer iterators.
             Dereferencing a lexer iterator returns a reference to the last matched
             token instance. It encapsulates the part of the underlying input sequence
-            matched by the regular expression used during the definiton of this token
-            type. Incrementing the lexer iterator invokes the lexical analyzer to
-            match the next token by advancing the underlying input stream. The token
-            data structure contains at least the token id of the matched token type,
-            allowing to identify the matched character sequence. Optionally, the
-            token instance may contain a token value and/or the lexer state this
+            matched by the regular expression used during the definition of this
+            token type. Incrementing the lexer iterator invokes the lexical analyzer
+            to match the next token by advancing the underlying input stream. The
+            token data structure contains at least the token id of the matched token
+            type, allowing to identify the matched character sequence. Optionally,
+            the token instance may contain a token value and/or the lexer state this
             token instance was matched in. The following <a class="link" href="lexer_token_values.html#spirit.lex.tokenstructure" title="Figure&#160;8.&#160;The structure of a token">figure</a>
             shows the schematic structure of a token.
           </p>
@@ -112,9 +112,9 @@
           </p>
 <p>
             The lexer iterator returns the same token type for each of the different
-            matched token definitions. To accomodate for the possible different token
-            <span class="emphasis"><em>value</em></span> types exposed by the various token types (token
-            definitions), the general type of the token value is a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
+            matched token definitions. To accommodate for the possible different
+            token <span class="emphasis"><em>value</em></span> types exposed by the various token types
+            (token definitions), the general type of the token value is a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
             At a minimum (for the default configuration) this token value variant
             will be configured to always hold a <a href="../../../../../../../../libs/range/doc/html/range/utilities/iterator_range.html" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a> containing the
             pair of iterators pointing to the matched input sequence for this token
@@ -185,7 +185,7 @@
             time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id1173893"></a>
+<a name="id1146708"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -257,7 +257,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lex__phrase__phrase_role__special______phrase__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_"></a><h6>
-<a name="id1174153"></a>
+<a name="id1147411"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__code__phrase_role__identifier__lex__phrase__phrase_role__special______phrase__phrase_role__identifier__lexertl__phrase__phrase_role__special______phrase__phrase_role__identifier__token__phrase__phrase_role__special___lt__gt___phrase___code_">Examples
             of using <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code></a>
           </h6>

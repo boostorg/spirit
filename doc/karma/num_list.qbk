@@ -37,7 +37,7 @@ is semantically equivalent to the generator expression
 simplifying the overall code. The list operator's attribute is compatible with 
 any STL container as well. For a change we use a `std::vector<double>`
 instead of the `std::list<double>` we used before. Additionally, the routine
-`generate_numbers` takes the container as a template paramter, so it will now 
+`generate_numbers` takes the container as a template parameter, so it will now 
 work with any STL container holding `double` numbers.
 
 [tutorial_karma_numlist2]

@@ -133,7 +133,7 @@ tightly connected to a formal notation, or a grammar. The grammar
 describes both input and output, and therefore, a parser library should
 have a grammar driven output. This duality is expressed in Spirit by the
 parser library __qi__ and the generator library __karma__ using the same
-component infastructure. 
+component infrastructure. 
 
 The idea of creating a lexer library well integrated with the Spirit
 parsers is not new. This has been discussed almost since Classic-Spirit
