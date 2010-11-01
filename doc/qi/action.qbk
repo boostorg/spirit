@@ -12,7 +12,7 @@
 
 Semantic actions may be attached to any point in the grammar specification. 
 They allow to call a function or function object in order to provide the value 
-to be output by the parser the semantic action is attached to. Semantic 
+to be output by the parser attached to the semantic action.  Semantic 
 actions are associated with a parser using the syntax `p[]`, where `p` is an
 arbitrary parser expression.
 
@@ -65,7 +65,7 @@ The possible signatures for functions to be used as semantic actions are:
 
 The function or function object is expected to return the value to generate 
 output from by assigning it to the first parameter, `attr`. Here `Attrib` is 
-the attribute type of the parser the semantic action is attached to. 
+the attribute type of the parser attached to the semantic action. 
 
 The type `Context` is the type of the parser execution context. This type is 
 unspecified and depends on the context the parser is invoked in. The value, 

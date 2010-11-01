@@ -1542,8 +1542,8 @@ Also, see __include_structure__.
 
 [variablelist 
     [[`Iterator`]       [An iterator type.]]
-    [[`it`]             [An instance of an iterator, `Iterator`.]]
-    [[`C`]              [A container type a iterator type, `Iterator` belongs to.]]
+    [[`it`]             [An instance of an iterator of type `Iterator`.]]
+    [[`C`]              [A container type whose iterator type is `Iterator`.]]
 ]
 
 [heading Expression Semantics]
@@ -1687,8 +1687,8 @@ Also, see __include_structure__.
 
 [variablelist 
     [[`Iterator`]       [An iterator type.]]
-    [[`it`]             [An instance of an iterator, `Iterator`.]]
-    [[`C`]              [A container type a iterator type, `Iterator` belongs to.]]
+    [[`it`]             [An instance of an iterator of type `Iterator`.]]
+    [[`C`]              [A container type whose iterator type is `Iterator`.]]
 ]
 
 [heading Expression Semantics]
@@ -1698,7 +1698,7 @@ Also, see __include_structure__.
     [[`deref_iterator<Iterator>::type`]       [Metafunction result evaluating to the 
                                       type returned by dereferencing the iterator.]]
     [[`deref_iterator<Iterator>::call(it)`]   [Return the element in the container
-                                      the iterator is referring to. The type of the
+                                      referred to by the iterator. The type of the
                                       returned value is the same as returned by the 
                                       metafunction result `type`.]]
 ]
@@ -1841,8 +1841,8 @@ Also, see __include_structure__.
 
 [variablelist 
     [[`Iterator`]       [An iterator type.]]
-    [[`it1`, `it2`]     [Instance of iterators of type, `Iterator`.]]
-    [[`C`]              [A container type a iterator type, `Iterator` belongs to.]]
+    [[`it1`, `it2`]     [Instances of an iterator of type `Iterator`.]]
+    [[`C`]              [A container type whose iterator type is `Iterator`.]]
 ]
 
 [heading Expression Semantics]

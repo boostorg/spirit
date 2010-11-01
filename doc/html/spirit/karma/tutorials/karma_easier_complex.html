@@ -63,7 +63,7 @@
           Let's cover some basic library features first.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h6>
-<a name="id977333"></a>
+<a name="id959849"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
           Numeric Generators Fail</a>
         </h6>
@@ -113,7 +113,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h6>
-<a name="id977621"></a>
+<a name="id960137"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
           - The Conditionals for Output Generators</a>
         </h6>
@@ -125,11 +125,11 @@
           and the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
           predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>.
           The main property of both predicates is to discard all output emitted by
-          the generator they are attached to. This is equivalent to the behavior
-          of predicates used for parsing. There the predicates do not consume any
-          input allowing to look ahead in the input stream. In Karma, the and predicate
-          succeeds as long as its associated generator succeeds, while the not predicate
-          succeeds only if its associated generator fails.
+          the attached generator. This is equivalent to the behavior of predicates
+          used for parsing. There the predicates do not consume any input allowing
+          to look ahead in the input stream. In Karma, the and predicate succeeds
+          as long as its associated generator succeeds, while the not predicate succeeds
+          only if its associated generator fails.
         </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -161,10 +161,10 @@
 </span></pre>
 <p>
           Neither of these will emit any output. The predicates discard everything
-          emitted by the generators they are applied to.
+          emitted by the generators to which they are applied.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h6>
-<a name="id979017"></a>
+<a name="id961534"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
           Supplied Attributes</a>
         </h6>
@@ -191,7 +191,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h6>
-<a name="id979095"></a>
+<a name="id961612"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
           everything together</a>
         </h6>
@@ -256,8 +256,8 @@
             semantic actions. The reason is that semantic actions often use constructs
             like: <code class="computeroutput"><span class="identifier">double_</span><span class="special">[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">real</span><span class="special">()]</span></code>.
             But this assignment is a real one! The data is in fact <span class="emphasis"><em>copied</em></span>
-            to the attribute value of the generator the action is attached to. On
-            the other hand, grammars without any semantic actions usually don't have
+            to the attribute value of the generator attached to the action. On the
+            other hand, grammars without any semantic actions usually don't have
             to copy the attributes, making them more efficient.
           </p></td></tr>
 </table></div>

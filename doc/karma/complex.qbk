@@ -66,14 +66,15 @@ The `double_` generators have this semantic action attached:
 
     _1 = n
 
-which passes `n` to the first element of the generator the semantic action is
-attached to. Remember, semantic actions in __karma__ are called before the 
-corresponding generator is invoked and they are expected to provide the 
-generator with the data to be used. The semantic action above assigns the value 
-to be generated (`n`) to the generator (actually, the attribute of `double_`). 
-`_1` is a Phoenix placeholder referring to the attribute of the generator the 
-semantic action is attached to. If you need more information about semantic 
-actions, you may want to read about them in this section: __karma_actions__.
+which passes `n` to the first element of the s generator's attached
+semantic action. Remember, semantic actions in __karma__ are called
+before the corresponding generator is invoked and they are expected
+to provide the generator with the data to be used. The semantic action
+above assigns the value to be generated (`n`) to the generator (actually,
+the attribute of `double_`).  `_1` is a Phoenix placeholder referring to
+the attribute of the semantic action's attached generator.  If you need
+more information about semantic actions, you may want to read about them
+in this section: __karma_actions__.
 
 These semantic actions are easy to understand but have the unexpected side 
 effect of being slightly less efficient than it could be. In addition they tend
@@ -138,8 +139,8 @@ the way output is generated.
 In addition to the __karma_eps__ generator mentioned earlier __karma__ provides 
 two special operators enabling dynamic flow control: the 
 __karma_and_predicate__ and the __karma_not_predicate__. The main property of 
-both predicates is to discard all output emitted by the generator they are 
-attached to. This is equivalent to the behavior of predicates used for 
+both predicates is to discard all output emitted by the attached generator.
+This is equivalent to the behavior of predicates used for 
 parsing. There the predicates do not consume any input allowing to look ahead
 in the input stream. In Karma, the and predicate succeeds as long as its 
 associated generator succeeds, while the not predicate succeeds only if its 
@@ -164,7 +165,7 @@ while this one will fail:
     BOOST_ASSERT(!generate(out, !double_(1.0), d));   // fails as d == 1.0
 
 Neither of these will emit any output. The predicates discard everything 
-emitted by the generators they are applied to.
+emitted by the generators to which they are applied.
 
 [heading Ignoring Supplied Attributes]
 
@@ -224,7 +225,7 @@ element of the tuple, i.e. the real part of our complex number.
             requiring semantic actions. The reason is that semantic actions 
             often use constructs like: `double_[_1 = c.real()]`. But this
             assignment is a real one! The data is in fact /copied/ to the 
-            attribute value of the generator the action is attached to. On the
+            attribute value of the generator attached to the action.  On the
             other hand, grammars without any semantic actions usually don't 
             have to copy the attributes, making them more efficient.]
 
