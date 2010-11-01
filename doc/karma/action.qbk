@@ -12,7 +12,7 @@
 
 Semantic actions may be attached to any point in the grammar specification. 
 They allow to call a function or function object in order to provide the value 
-to be output by the generator the semantic action is attached to. Semantic 
+output by the generator attached to the semantic action.  Semantic 
 actions are associated with a generator using the syntax `g[]`, where `g` is an
 arbitrary generator expression.
 
@@ -64,7 +64,7 @@ The possible signatures for functions to be used as semantic actions are:
 
 The function or function object is expected to return the value to generate 
 output from by assigning it to the first parameter, `attr`. Here `Attrib` is 
-the attribute type of the generator the semantic action is attached to. 
+the attribute type of the generator attached to the semantic action. 
 
 The type `Context` is the type of the generator execution context. This type is 
 unspecified and depends on the context the generator is invoked in. The value 

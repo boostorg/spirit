@@ -71,7 +71,7 @@ no_match (false). It can be one of:
 ]
 
 
-`rule` is the rule we attach the handler to. In our case, we are attaching to the
+`rule` is the rule to which the handler is attached. In our case, we are attaching to the
 `xml` rule.
 
 `handler` is the actual error handling function. It expects 4 arguments:
