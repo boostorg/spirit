@@ -5,6 +5,11 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+
+// this code is not supposed to be executed, so the asserts are for 
+// demonstration purposes only
+// boostinspect:naassert_macro
+
 //[reference_includes
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>

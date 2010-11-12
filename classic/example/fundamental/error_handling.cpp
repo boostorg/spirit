@@ -15,7 +15,7 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_exceptions.hpp>
 #include <iostream>
-#include <cassert>
+#include <boost/assert.hpp>
 
 using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
@@ -49,7 +49,7 @@ main()
 
     bool r = parse("abcx", start).full;
 
-    assert(!r);
+    BOOST_ASSERT(!r);
     return 0;
 }
 

@@ -15,7 +15,7 @@
 //
 //-----------------------------------------------------------------------------
 
-#include <cassert>
+#include <boost/assert.hpp>
 #include <iostream>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/include/classic_core.hpp>
@@ -46,9 +46,9 @@ int main()
         ]
     );
 
-    assert(info.full);
+    BOOST_ASSERT(info.full);
     // Check, that the action hasn't been invoked
-    assert(i == 0);
+    BOOST_ASSERT(i == 0);
 
     return exit_success;
 }

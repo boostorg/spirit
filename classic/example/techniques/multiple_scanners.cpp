@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <boost/spirit/include/classic_core.hpp>
+#include <boost/assert.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
@@ -46,7 +47,7 @@ main()
 {
     my_grammar g;
     bool success = parse("abcdef aBc d e f aBc d E f", g, space_p).full;
-    assert(success);
+    BOOST_ASSERT(success);
     std::cout << "SUCCESS!!!\n";
     return 0;
 }

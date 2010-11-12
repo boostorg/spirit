@@ -6,7 +6,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <cassert>
+#include <boost/assert.hpp>
 #include <iostream>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/include/classic_core.hpp>
@@ -52,13 +52,13 @@ int main()
     parse_info<> info;
 
     info = parse("asn-declare ident", gram, space_p);
-    assert(info.full); // valid input
+    BOOST_ASSERT(info.full); // valid input
 
     info = parse("asn-declare--ident", gram, space_p);
-    assert(info.full); // valid input
+    BOOST_ASSERT(info.full); // valid input
 
     info = parse("asn-declare-ident", gram, space_p);
-    assert(!info.hit); // invalid input
+    BOOST_ASSERT(!info.hit); // invalid input
 
     return exit_success;
 }

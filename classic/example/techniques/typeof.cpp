@@ -14,6 +14,7 @@
 #include <iostream>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/typeof/typeof.hpp>
+#include <boost/assert.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
@@ -33,7 +34,7 @@ main()
     bool success = parse(
         "/*this is a comment*/\n//this is a c++ comment\n\n",
         *skipper).full;
-    assert(success);
+    BOOST_ASSERT(success);
     std::cout << "SUCCESS!!!\n";
     return 0;
 }

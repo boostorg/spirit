@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 #define BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT 2
 
-#include <cassert>
+#include <boost/assert.hpp>
 #include <iostream>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/include/classic_core.hpp>
@@ -58,9 +58,9 @@ int main()
         space_p
     );
 
-    assert(info.full);
+    BOOST_ASSERT(info.full);
     // Check, that the semantic action was invoked only once
-    assert(i == 1);
+    BOOST_ASSERT(i == 1);
 
     return exit_success;
 }
