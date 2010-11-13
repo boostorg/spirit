@@ -37,6 +37,8 @@ exe boost_array : boost_array.cpp ;
 exe display_attribute_type : display_attribute_type.cpp ;
 exe adapt_template_struct : adapt_template_struct.cpp ;
 
+exe unescaped_string : unescaped_string.cpp ;
+
 exe calculator1 : calc1.cpp ;
 exe calculator2 : calc2.cpp ;
 exe calculator2_ast : calc2_ast.cpp ;
