@@ -89,6 +89,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // create an end iterator usable for end of range checking
         iterator() {}
 
+        // (wash): < mgaunard> T it; T it2 = ++it; doesn't ocmpile
+        //         < mgaunard> this gets fixed by adding
+        iterator(const base_type& base)
+          : base_type(base) { }
+
         // set the new required state for the underlying lexer object
         std::size_t set_state(std::size_t state)
         {
