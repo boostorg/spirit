@@ -100,17 +100,6 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Iterator>
-    struct assign_to_attribute_from_iterators<unsigned short, Iterator>
-    {
-        static void 
-        call(Iterator const& first, Iterator const& last, unsigned short& attr)
-        {
-            Iterator first_ = first;
-            qi::parse(first_, last, ushort_, attr);
-        }
-    };
-
-    template <typename Iterator>
     struct assign_to_attribute_from_iterators<int, Iterator>
     {
         static void 
