@@ -148,6 +148,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         struct dummy { void true_() {}; };
         typedef void (dummy::*safe_bool)();
 
+        static std::size_t const all_states_id = static_cast<std::size_t>(-2);
+
     public:
         operator safe_bool() const
             { return initialized_dfa_ ? &dummy::true_ : 0; }
@@ -226,6 +228,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             add_state(state);
             initialized_dfa_ = false;
+            if (state == all_states())
+                return rules_.add(state, tokendef, token_id, rules_.dot());
             return rules_.add(state, tokendef, token_id, state);
         }
 
@@ -249,6 +253,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
         std::size_t add_state(char_type const* state)
         {
+            if (state == all_states()) 
+                return all_states_id;
+
             std::size_t stateid = rules_.state(state);
             if (boost::lexer::npos == stateid) {
                 stateid = rules_.add_state(state);
@@ -259,6 +266,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         string_type initial_state() const 
         { 
             return string_type(rules_.initial());
+        }
+        string_type all_states() const 
+        { 
+            return string_type(rules_.all_states());
         }
 
         //  Register a semantic action with the given id

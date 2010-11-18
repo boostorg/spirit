@@ -58,6 +58,8 @@ namespace boost { namespace spirit { namespace lex
         typedef typename proto::terminal<reference_>::type terminal_type;
         typedef proto::extends<terminal_type, token_def> proto_base_type;
 
+        static std::size_t const all_states_id = static_cast<std::size_t>(-2);
+
     public:
         // Qi interface: metafunction calculating parser return type
         template <typename Context, typename Iterator>
@@ -97,7 +99,9 @@ namespace boost { namespace spirit { namespace lex
                 BOOST_ASSERT(std::size_t(~0) != token_state_);
 
                 token_type const& t = *first;
-                if (token_id_ == t.id() && token_state_ == t.state()) {
+                if (token_id_ == t.id() && 
+                    (all_states_id == token_state_ || token_state_ == t.state())) 
+                {
                     spirit::traits::assign_to(t, attr);
                     ++first;
                     return true;
