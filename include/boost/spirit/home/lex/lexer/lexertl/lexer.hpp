@@ -221,6 +221,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             add_state(state);
             initialized_dfa_ = false;
+            if (state == all_states())
+                return rules_.add(state, detail::escape(tokendef), token_id, rules_.dot());
             return rules_.add(state, detail::escape(tokendef), token_id, state);
         }
         std::size_t add_token(char_type const* state, string_type const& tokendef, 
