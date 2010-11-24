@@ -25,6 +25,8 @@
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
 
+#include <boost/foreach.hpp>
+
 namespace boost { namespace spirit { namespace lex { namespace lexertl
 { 
     ///////////////////////////////////////////////////////////////////////////
@@ -158,6 +160,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             char_type;
         typedef std::basic_string<char_type> string_type;
 
+        typedef boost::lexer::basic_rules<char_type> basic_rules_type;
+
         //  Every lexer type to be used as a lexer for Spirit has to conform to 
         //  a public interface .
         typedef Token token_type;
@@ -279,11 +283,21 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         void add_action(id_type unique_id, std::size_t state, F act)
         {
             // If you see an error here stating add_action is not a member of
-            // fusion::unused_type the you are probably having semantic actions 
+            // fusion::unused_type then you are probably having semantic actions 
             // attached to at least one token in the lexer definition without
             // using the lex::lexertl::actor_lexer<> as its base class.
             typedef typename Functor::wrap_action_type wrapper_type;
-            actions_.add_action(unique_id, state, wrapper_type::call(act));
+            if (state == all_states_id) {
+                // add the action to all known states
+                typedef typename 
+                    basic_rules_type::string_size_t_map::value_type 
+                state_type;
+                BOOST_FOREACH(state_type const& s, rules_.statemap())
+                    actions_.add_action(unique_id, s.second, wrapper_type::call(act));
+            }
+            else {
+                actions_.add_action(unique_id, state, wrapper_type::call(act));
+            }
         }
 //         template <typename F>
 //         void add_action(id_type unique_id, char_type const* state, F act)
@@ -317,7 +331,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // lexertl specific data
         mutable boost::lexer::basic_state_machine<char_type> state_machine_;
         boost::lexer::regex_flags flags_;
-        boost::lexer::basic_rules<char_type> rules_;
+        basic_rules_type rules_;
 
         typename Functor::semantic_actions_type actions_;
         mutable bool initialized_dfa_;
