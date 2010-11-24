@@ -25,14 +25,12 @@ typedef spirit::classic::position_iterator2<
     spirit::multi_pass<std::istreambuf_iterator<char> >
 > file_iterator;
 
-typedef boost::iterator_range<file_iterator> file_range;
-
 inline file_iterator make_file_iterator(std::istream& input, const std::string& filename)
 {
     return file_iterator(
         spirit::make_default_multi_pass(
             std::istreambuf_iterator<char>(input)),
-        spirit::multi_pass<std::istreambuf_iterator<char>>(),
+        spirit::multi_pass<std::istreambuf_iterator<char> >(),
         filename
     );
 }
@@ -62,13 +60,22 @@ struct lexer
       : id("[a-zA-Z0-9]+", 1)
       , st("'[^'\\n]*'", 2)
     {
-        self("ST") = 
-                st [ lex::_state = "INITIAL" ] 
+        self =  id [ 
+                    lex::_state = "ST"
+                ]
+            |   lex::token_def<>(".", 3) [ 
+                    lex::_state = "ST" 
+                ]
             ;
         
-        self("*") =  
-                id                       [ lex::_state = "ST" ]
-            |   lex::token_def<>(".", 3) [ lex::_state = "ST" ]
+        self("ST") =
+                st [ 
+                    lex::_state = "INITIAL" 
+                ]
+            |   lex::token_def<>(".", 4) [ 
+                    lex::_state = "INITIAL"
+                  , lex::_pass = lex::pass_flags::pass_fail 
+                ]
             ;
     }
     
@@ -94,7 +101,7 @@ int main()
     std::size_t const test_data_size = sizeof(test_data)/sizeof(test_data[0]);
 
     int i = 0;
-    for (token_iterator it = begin2; it != end2 && i < test_data_size; ++it, ++i)
+    for (token_iterator it = begin2; it != end2; ++it, ++i)
     {
         BOOST_TEST(it->id() == test_data[i]);
     }
