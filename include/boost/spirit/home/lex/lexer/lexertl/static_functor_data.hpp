@@ -146,7 +146,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             //
             // This function does nothing as long as no semantic actions are 
             // used.
-            bool lookahead(std::size_t id) 
+            bool lookahead(std::size_t id, std::size_t state = std::size_t(~0)) 
             { 
                 // The following assertion fires most likely because you are 
                 // using lexer semantic actions without using the actor_lexer
@@ -345,11 +345,15 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             // support function lex::lookahead. It can be used to implement 
             // lookahead for lexer engines not supporting constructs like flex'
             // a/b  (match a, but only when followed by b)
-            bool lookahead(std::size_t id)
+            bool lookahead(std::size_t id, std::size_t state = std::size_t(~0))
             {
-                Iterator end = this->first_;
+                Iterator end = end_;
                 std::size_t unique_id = boost::lexer::npos;
-                return id == this->next(end, unique_id);
+                if (std::size_t(~0) == state)
+                    state = this->state_;
+
+                return id == this->next_token_(
+                    state, this->bol_, end, this->last_, unique_id);
             }
 
             // The adjust_start() and revert_adjust_start() are helper 
