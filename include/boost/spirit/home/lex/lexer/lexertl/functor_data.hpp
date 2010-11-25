@@ -141,8 +141,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // The function next() tries to match the next token from the 
             // underlying input sequence. 
-            std::size_t next(Iterator& end, std::size_t& unique_id)
+            std::size_t next(Iterator& end, std::size_t& unique_id, bool& prev_bol)
             {
+                prev_bol = bol_;
+
                 typedef basic_iterator_tokeniser<Iterator> tokenizer;
                 return tokenizer::next(state_machine_, bol_, end, last_
                   , unique_id);
@@ -168,6 +170,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
             bool has_value() const { return false; }
             void reset_value() {}
+
+            void reset_bol(bool bol) { bol_ = bol; }
 
         protected:
             Iterator& first_;
@@ -236,8 +240,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // The function next() tries to match the next token from the 
             // underlying input sequence. 
-            std::size_t next(Iterator& end, std::size_t& unique_id)
+            std::size_t next(Iterator& end, std::size_t& unique_id, bool& prev_bol)
             {
+                prev_bol = this->bol_;
+
                 typedef basic_iterator_tokeniser<Iterator> tokenizer;
                 return tokenizer::next(this->state_machine_, state_, 
                     this->bol_, end, this->get_eoi(), unique_id);
@@ -327,12 +333,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 Iterator end = end_;
                 std::size_t unique_id = boost::lexer::npos;
+                bool bol = this->bol_;
+
                 if (std::size_t(~0) == state)
                     state = this->state_;
 
                 typedef basic_iterator_tokeniser<Iterator> tokenizer;
                 return id == tokenizer::next(this->state_machine_, state, 
-                    this->bol_, end, this->get_eoi(), unique_id);
+                    bol, end, this->get_eoi(), unique_id);
             }
 
             // The adjust_start() and revert_adjust_start() are helper 

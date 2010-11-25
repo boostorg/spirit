@@ -147,7 +147,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 data.reset_value();
                 Iterator end = data.get_first();
                 std::size_t unique_id = boost::lexer::npos;
-                std::size_t id = data.next(end, unique_id);
+                bool prev_bol = false;
+                std::size_t id = data.next(end, unique_id, prev_bol);
 
                 if (boost::lexer::npos == id) {   // no match
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
@@ -212,7 +213,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                         data.revert_adjust_start();
 
                     // one of the semantic actions signaled no-match
-                    return result = result_type(0); 
+                    data.reset_bol(prev_bol);
+                    continue;       // retry matching
+//                     return result = result_type(0); 
                 }
 
             // if this token needs to be ignored, just repeat the matching,

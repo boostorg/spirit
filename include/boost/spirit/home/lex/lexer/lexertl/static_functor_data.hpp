@@ -160,9 +160,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // The function next() tries to match the next token from the 
             // underlying input sequence. 
-            std::size_t next(Iterator& end, std::size_t& unique_id)
+            std::size_t next(Iterator& end, std::size_t& unique_id, bool& prev_bol)
             {
-                std::size_t state;
+                prev_bol = bol_;
+
+                std::size_t state = 0;
                 return next_token_(state, bol_, end, last_, unique_id);
             }
 
@@ -186,6 +188,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
             bool has_value() const { return false; }
             void reset_value() {}
+
+            void reset_bol(bool bol) { bol_ = bol; }
 
         protected:
             Iterator& first_;
@@ -257,8 +261,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // The function next() tries to match the next token from the 
             // underlying input sequence. 
-            std::size_t next(Iterator& end, std::size_t& unique_id)
+            std::size_t next(Iterator& end, std::size_t& unique_id, bool& prev_bol)
             {
+                prev_bol = this->bol_;
                 return this->next_token_(state_, this->bol_, end, this->last_
                   , unique_id);
             }
@@ -349,11 +354,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 Iterator end = end_;
                 std::size_t unique_id = boost::lexer::npos;
+                bool bol = this->bol_;
+
                 if (std::size_t(~0) == state)
                     state = this->state_;
 
                 return id == this->next_token_(
-                    state, this->bol_, end, this->last_, unique_id);
+                    state, bol, end, this->last_, unique_id);
             }
 
             // The adjust_start() and revert_adjust_start() are helper 
