@@ -9,6 +9,40 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_4_2 Spirit V2.4.2] 
+
+[heading What's changed in __qi__ and __karma__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
+
+[heading Bug Fixes]
+
+ * Fixed a problem in the Lexer giving problems to assign tokens to all lexer 
+   states at once. This is now possible by simply using "*" as the state name.
+   For instance this will add the token int_ to all lexer states:
+``
+    template <typename Lexer>
+    struct lexer : lex::lexer<Lexer>
+    {
+        lexer()
+        {
+            int_ = "[1-9][0-9]*";
+            this->self("*") = int_;
+        }
+        lex::token_def<int> int_;
+    };
+``
+   Note: the `self("*") = ...` must be executed after all lexer states have 
+   been introduced to the lexer object.
+ * Fixed lexer lookahead. The lookahead operation is now evaluated using the 
+   lexer state the `token_def` instance used as its argument is associated 
+   with. 
+ * Fixed a problem in the `multi_pass` iterator causing wrong tokens to be
+   returned to the user. This could happen in conjunction with a lexer which 
+   performed lexer state changes and was using `pass_fail` in semantic actions
+   to make a token match fail.
+
+[endsect] [/ spirit_2_4_2]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_4_1 Spirit V2.4.1] 
 
 [heading What's changed in __qi__ and __karma__ from V2.4 (Boost V1.44.0) to V2.4.1 (Boost V1.45.0)]
