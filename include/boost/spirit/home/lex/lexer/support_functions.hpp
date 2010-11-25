@@ -164,7 +164,7 @@ namespace boost { namespace spirit { namespace lex
           , typename phoenix::as_actor<std::size_t>::type> >
     lookahead(T const& id)
     {
-        typedef typename phoenix::as_actor<Idtype>::type id_actor_type;
+        typedef typename phoenix::as_actor<T>::type id_actor_type;
         typedef typename phoenix::as_actor<std::size_t>::type state_actor_type;
 
         return lookahead_type<id_actor_type, state_actor_type>(
