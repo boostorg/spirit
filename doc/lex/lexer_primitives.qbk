@@ -11,6 +11,6 @@
 [/ Describe the primitive lexer constructs, such as token_def, lexer ]
 
 [/ Describe the primitive lexer constructs usable in parsers, such as 
-   in_state[], set_state(), token(), etc. ]
+   in_state[], set_state(), token(), tokenid(), etc. ]
 
 [endsect]
