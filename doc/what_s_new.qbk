@@ -39,6 +39,12 @@
    returned to the user. This could happen in conjunction with a lexer which 
    performed lexer state changes and was using `pass_fail` in semantic actions
    to make a token match fail.
+ * Added `qi::tokenid()` primitive parser allowing to match arbitrary lexer 
+   tokens based on a given token id. The difference to `qi::token()` is, that it 
+   exposes as its attribute the token id of the matched token (instead of the 
+   iterator_range of the matched input, as qi::token() does).
+ * Added additional template parameter to the default `lexertl::token<>`
+   definition: the type of the token id. This type defaults to `std::size_t`.
 
 [endsect] [/ spirit_2_4_2]
 
