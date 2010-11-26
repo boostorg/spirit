@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     class static_lexer 
     {
     private:
-        struct dummy { void true_() {}; };
+        struct dummy { void true_() {} };
         typedef void (dummy::*safe_bool)();
 
     public:

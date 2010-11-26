@@ -175,7 +175,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 // works only starting MSVC V8
 #if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
     private:
-        struct dummy { void true_() {}; };
+        struct dummy { void true_() {} };
         typedef void (dummy::*safe_bool)();
 
     public:
@@ -554,9 +554,9 @@ namespace boost { namespace spirit { namespace traits
         template <typename Out>
         static void print(Out& out, token_type const& val) 
         {
-            out << '<';
+            out << '[';
             spirit::traits::print_token(out, val.value());
-            out << '>';
+            out << ']';
         }
     };
 

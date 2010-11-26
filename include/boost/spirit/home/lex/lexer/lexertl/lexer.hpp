@@ -147,7 +147,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     class lexer 
     {
     private:
-        struct dummy { void true_() {}; };
+        struct dummy { void true_() {} };
         typedef void (dummy::*safe_bool)();
 
         static std::size_t const all_states_id = static_cast<std::size_t>(-2);
