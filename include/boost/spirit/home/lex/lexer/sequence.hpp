@@ -40,9 +40,12 @@ namespace boost { namespace spirit { namespace lex
           : elements(elements) {}
 
         template <typename LexerDef, typename String>
-        void collect(LexerDef& lexdef, String const& state) const
+        void collect(LexerDef& lexdef, String const& state
+          , String const& targetstate) const
         {
-            detail::sequence_collect_function<LexerDef, String> f (lexdef, state);
+            typedef detail::sequence_collect_function<LexerDef, String>
+                collect_function_type;
+            collect_function_type f (lexdef, state, targetstate);
             fusion::any(elements, f);
         }
 

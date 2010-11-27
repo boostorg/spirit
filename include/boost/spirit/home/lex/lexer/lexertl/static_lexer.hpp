@@ -195,12 +195,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
     public:
         // interface for token definition management
-        std::size_t add_token (char_type const*, char_type, std::size_t) 
+        std::size_t add_token (char_type const*, char_type, std::size_t
+          , char_type const*) 
         {
             return unique_id_++;
         }
         std::size_t add_token (char_type const*, string_type const&
-          , std::size_t) 
+          , std::size_t, char_type const*) 
         {
             return unique_id_++;
         }

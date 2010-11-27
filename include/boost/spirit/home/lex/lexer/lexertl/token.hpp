@@ -110,7 +110,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     template <typename Iterator = char const*
       , typename AttributeTypes = mpl::vector0<>
       , typename HasState = mpl::true_
-      , typename Idtyep = std::size_t> 
+      , typename Idtype = std::size_t> 
     struct token;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -170,6 +170,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // constructed iterator_range
         token& operator= (token const& rhs)
         {
+            if (this != &rhs) 
+            {
+                id_ = rhs.id_;
+                matched_ = rhs.matched_;
+            }
             return *this;
         }
 #endif
@@ -245,6 +250,20 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
           , state_(state) {}
 
         std::size_t state() const { return state_; }
+
+#if defined(BOOST_SPIRIT_DEBUG) && BOOST_WORKAROUND(BOOST_MSVC, == 1600)
+        // workaround for MSVC10 which has problems copying a default 
+        // constructed iterator_range
+        token& operator= (token const& rhs)
+        {
+            if (this != &rhs) 
+            {
+                this->base_type::operator=(static_cast<base_type const&>(rhs));
+                state_ = rhs.state_;
+            }
+            return *this;
+        }
+#endif
 
     protected:
         std::size_t state_;      // lexer state this token was matched in

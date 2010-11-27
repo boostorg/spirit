@@ -121,7 +121,8 @@ namespace boost { namespace spirit { namespace lex
                 {
                     if (id_type() == token_id)
                         token_id = static_cast<id_type>(c);
-                    def.def.add_token (def.state.c_str(), c, token_id);
+                    def.def.add_token (def.state.c_str(), c, token_id
+                        , def.targetstate.empty() ? 0 : def.targetstate.c_str());
                     return *this;
                 }
 
@@ -135,7 +136,8 @@ namespace boost { namespace spirit { namespace lex
                 {
                     if (id_type() == token_id)
                         token_id = def.def.get_next_id();
-                    def.def.add_token (def.state.c_str(), s, token_id);
+                    def.def.add_token (def.state.c_str(), s, token_id
+                        , def.targetstate.empty() ? 0 : def.targetstate.c_str());
                     return *this;
                 }
 
@@ -213,7 +215,7 @@ namespace boost { namespace spirit { namespace lex
             template <typename TokenExpr>
             void compile2pass(TokenExpr const& expr) 
             {
-                expr.collect(def, state);
+                expr.collect(def, state, targetstate);
                 expr.add_actions(def);
             }
 
@@ -225,9 +227,11 @@ namespace boost { namespace spirit { namespace lex
                 compile2pass(compile<lex::domain>(expr));
             }
 
-            lexer_def_(LexerDef& def_, string_type const& state_)
+            lexer_def_(LexerDef& def_, string_type const& state_
+                  , string_type const& targetstate_ = string_type())
               : proto_base_type(terminal_type::make(alias()))
-              , add(this_()), add_pattern(this_()), def(def_), state(state_)
+              , add(this_()), add_pattern(this_()), def(def_)
+              , state(state_), targetstate(targetstate_)
             {}
 
             // allow to switch states
@@ -235,9 +239,15 @@ namespace boost { namespace spirit { namespace lex
             {
                 return lexer_def_(def, state);
             }
-            lexer_def_ operator()(string_type const& state) const
+            lexer_def_ operator()(char_type const* state
+              , char_type const* targetstate) const
             {
-                return lexer_def_(def, state);
+                return lexer_def_(def, state, targetstate);
+            }
+            lexer_def_ operator()(string_type const& state
+              , string_type const& targetstate = string_type()) const
+            {
+                return lexer_def_(def, state, targetstate);
             }
 
             // allow to assign a token definition expression
@@ -261,6 +271,7 @@ namespace boost { namespace spirit { namespace lex
         private:
             LexerDef& def;
             string_type state;
+            string_type targetstate;
 
         private:
             // silence MSVC warning C4512: assignment operator could not be generated

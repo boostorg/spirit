@@ -80,7 +80,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             {
                 value_type& curtok = mp.shared()->curtok;
                 using namespace split_functor_input_is_valid_test_;
-                while (!token_is_valid(curtok))
+                if (!token_is_valid(curtok))
                     functor_type::get_next(mp, curtok);
                 return curtok;
             }
@@ -143,7 +143,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             {
                 value_type& curtok = mp.shared()->curtok;
                 using namespace split_functor_input_is_valid_test_;
-                while (!token_is_valid(curtok))
+                if (!token_is_valid(curtok))
                     functor_type::get_next(mp, curtok);
                 return curtok;
             }

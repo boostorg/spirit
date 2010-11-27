@@ -221,22 +221,32 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     public:
         // interface for token definition management
         std::size_t add_token(char_type const* state, char_type tokendef, 
-            std::size_t token_id)
+            std::size_t token_id, char_type const* targetstate)
         {
             add_state(state);
             initialized_dfa_ = false;
             if (state == all_states())
                 return rules_.add(state, detail::escape(tokendef), token_id, rules_.dot());
-            return rules_.add(state, detail::escape(tokendef), token_id, state);
+
+            if (0 == targetstate)
+                targetstate = state;
+            else
+                add_state(targetstate);
+            return rules_.add(state, detail::escape(tokendef), token_id, targetstate);
         }
         std::size_t add_token(char_type const* state, string_type const& tokendef, 
-            std::size_t token_id)
+            std::size_t token_id, char_type const* targetstate)
         {
             add_state(state);
             initialized_dfa_ = false;
             if (state == all_states())
                 return rules_.add(state, tokendef, token_id, rules_.dot());
-            return rules_.add(state, tokendef, token_id, state);
+
+            if (0 == targetstate)
+                targetstate = state;
+            else
+                add_state(targetstate);
+            return rules_.add(state, tokendef, token_id, targetstate);
         }
 
         // interface for pattern definition management
