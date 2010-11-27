@@ -285,7 +285,7 @@ namespace boost { namespace spirit { namespace traits
             bool push_back_impl(T_&, mpl::false_) const
             {
                 // this variant doesn't hold a container
-                BOOST_ASSERT(false);
+                BOOST_ASSERT(false && "This variant doesn't hold a container");
                 return false;
             }
 

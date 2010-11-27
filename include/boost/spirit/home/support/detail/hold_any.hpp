@@ -193,7 +193,9 @@ namespace boost { namespace spirit
             // value of the required type to the hold_any instance you want to
             // stream to. This assignment has to be executed before the actual
             // call to the operator>>().
-            BOOST_ASSERT(false);
+            BOOST_ASSERT(false && 
+                "Tried to insert from a std istream into an empty "
+                "hold_any instance");
             return i;
         }
 
