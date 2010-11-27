@@ -173,7 +173,7 @@ namespace boost { namespace spirit { namespace qi
             // from an uninitialized one. Did you mean to refer to the right
             // hand side rule instead of assigning from it? In this case you
             // should write lhs = rhs.alias();
-            BOOST_ASSERT(rhs.f);
+            BOOST_ASSERT(rhs.f && "Did you mean rhs.alias() instead of rhs?");
 
             f = rhs.f;
             name_ = rhs.name_;
