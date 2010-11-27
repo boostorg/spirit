@@ -46,14 +46,17 @@ more refined concepts and by the actual models thereof.
 For any Lexer the following expressions must be valid:
 
 [table
-    [[Expression]              [Semantics]                       [Return type]]
-    [[`l.collect(def, state)`] [Add all token definitions provided 
+    [[Expression]              [Semantics]                        [Return type]]
+    [[`l.collect(def, state, targetstate)`] 
+                               [Add all token definitions provided 
                                 by this Lexer instance to the lexer
                                 state `state` of the token definition 
-                                container `def`.]                [`void`]]
+                                container `def`. After matching this token, the 
+                                lexer should be switched into the state 
+                                `targetstate` (optional)]         [`void`]]
     [[`l.add_actions(def)`]    [Add all semantic actions provided
                                 by this Lexer instance to the token
-                                definition container `def`.]     [`void`]]
+                                definition container `def`.]      [`void`]]
 ]
 
 [heading Type Expressions]
