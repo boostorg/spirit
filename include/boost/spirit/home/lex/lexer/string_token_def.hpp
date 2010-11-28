@@ -66,9 +66,9 @@ namespace boost { namespace spirit { namespace lex
           , token_state_(std::size_t(~0)) 
         {}
 
-        template <typename LexerDef, typename String>
-        void collect(LexerDef& lexdef, String const& state
-          , String const& targetstate) const
+        template <typename LexerDef, typename String_>
+        void collect(LexerDef& lexdef, String_ const& state
+          , String_ const& targetstate) const
         {
             std::size_t state_id = lexdef.add_state(state.c_str());
 
