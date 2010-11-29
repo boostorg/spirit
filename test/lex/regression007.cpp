@@ -35,7 +35,7 @@ make_file_iterator(std::istream& input, const std::string& filename)
     return file_iterator(
         spirit::make_default_multi_pass(
             std::istreambuf_iterator<char>(input)),
-        spirit::multi_pass<std::istreambuf_iterator<char>>(),
+        spirit::multi_pass<std::istreambuf_iterator<char> >(),
         filename);
 }
 
@@ -92,11 +92,11 @@ int main()
     token_iterator begin2 = l.begin(begin, end, "ST");
     token_iterator end2 = l.end();
     
-    int test_data[] = { 1, 3, 2 };
+    std::size_t test_data[] = { 1, 3, 2 };
     std::size_t const test_data_size = sizeof(test_data)/sizeof(test_data[0]);
 
     token_iterator it = begin2;
-    int i = 0;
+    std::size_t i = 0;
     for (/**/; it != end2 && i < test_data_size; ++it, ++i)
     {
         BOOST_TEST(it->id() == test_data[i]);
