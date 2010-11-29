@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         };
 
         ///////////////////////////////////////////////////////////////////////
-        //  doesn't support lexer semantic actions
+        //  doesn't support lexer semantic actions, but supports state
         template <typename Iterator, typename TokenValue>
         struct data<Iterator, mpl::false_, mpl::true_, TokenValue>
           : data<Iterator, mpl::false_, mpl::false_, TokenValue>

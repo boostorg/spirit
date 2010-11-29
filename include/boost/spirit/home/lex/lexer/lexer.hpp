@@ -340,7 +340,7 @@ namespace boost { namespace spirit { namespace lex
         // avoid warnings about using 'this' in constructor
         lexer& this_() { return *this; }
 
-        typename Lexer::id_type next_token_id;
+        std::size_t next_token_id;   // has to be an integral type
 
     public:
         typedef Lexer lexer_type;
@@ -353,7 +353,7 @@ namespace boost { namespace spirit { namespace lex
         typedef std::basic_string<char_type> string_type;
 
         lexer(unsigned int flags = match_flags::match_default
-            , id_type first_id = min_token_id) 
+            , id_type first_id = id_type(min_token_id)) 
           : lexer_type(flags)
           , next_token_id(first_id)
           , self(this_(), lexer_type::initial_state()) 
@@ -371,7 +371,7 @@ namespace boost { namespace spirit { namespace lex
             { return this->lexer_type::add_state(state); }
 
         //  create a unique token id
-        id_type get_next_id() { return next_token_id++; }
+        id_type get_next_id() { return id_type(next_token_id++); }
 
         lexer_def self;  // allow for easy token definition
     };

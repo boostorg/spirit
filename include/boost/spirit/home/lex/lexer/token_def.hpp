@@ -177,7 +177,7 @@ namespace boost { namespace spirit { namespace lex
         explicit token_def(char_type def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(reference_(*this)))
           , def_(def_)
-          , token_id_(std::size_t(Idtype() == id_ ? def_ : id_))
+          , token_id_(Idtype() == id_ ? Idtype(def_) : id_)
           , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
 
         explicit token_def(string_type const& def_, Idtype id_ = Idtype())

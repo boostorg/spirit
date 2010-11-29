@@ -126,10 +126,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef unused_type token_value_type;
 
         //  default constructed tokens correspond to EOI tokens
-        token() : id_(boost::lexer::npos) {}
+        token() : id_(id_type(boost::lexer::npos)) {}
 
         //  construct an invalid token
-        explicit token(int) : id_(0) {}
+        explicit token(int) : id_(id_type(0)) {}
 
         token(id_type id, std::size_t) : id_(id) {}
 

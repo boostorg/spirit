@@ -212,7 +212,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         };
 
         ///////////////////////////////////////////////////////////////////////
-        //  doesn't support no actors
+        //  doesn't support no actors, but does support states
         template <typename Iterator, typename TokenValue>
         struct static_data<Iterator, mpl::false_, mpl::true_, TokenValue>
           : static_data<Iterator, mpl::false_, mpl::false_, TokenValue>

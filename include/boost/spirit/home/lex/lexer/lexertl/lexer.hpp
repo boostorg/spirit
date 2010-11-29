@@ -290,7 +290,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         //  Register a semantic action with the given id
         template <typename F>
-        void add_action(id_type unique_id, std::size_t state, F act)
+        void add_action(std::size_t unique_id, std::size_t state, F act)
         {
             // If you see an error here stating add_action is not a member of
             // fusion::unused_type then you are probably having semantic actions 
@@ -310,7 +310,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
         }
 //         template <typename F>
-//         void add_action(id_type unique_id, char_type const* state, F act)
+//         void add_action(std::size_t unique_id, char_type const* state, F act)
 //         {
 //             typedef typename Functor::wrap_action_type wrapper_type;
 //             actions_.add_action(unique_id, add_state(state), wrapper_type::call(act));

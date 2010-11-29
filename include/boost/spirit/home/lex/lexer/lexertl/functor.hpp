@@ -134,6 +134,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename MultiPass>
         static result_type& get_next(MultiPass& mp, result_type& result)
         {
+            typedef typename result_type::id_type id_type;
+
             shared& data = mp.shared()->ftor;
             for(;;) 
             {
@@ -204,13 +206,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     // using data.set_value(), advancing 'data.first_' past the 
                     // matched sequence
                     assign_on_exit<Iterator> on_exit(data.get_first(), end);
-                    return result = result_type(id, state, data.get_value());
+                    return result = result_type(id_type(id), state, data.get_value());
                 }
                 else if (pass_flags::pass_normal == pass) {
                     // return matched token, advancing 'data.first_' past the 
                     // matched sequence
                     assign_on_exit<Iterator> on_exit(data.get_first(), end);
-                    return result = result_type(id, state, data.get_first(), end);
+                    return result = result_type(id_type(id), state, data.get_first(), end);
                 }
                 else if (pass_flags::pass_fail == pass) {
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
