@@ -21,7 +21,6 @@
 #include <boost/spirit/home/phoenix/operator.hpp>
 #include <boost/spirit/home/phoenix/statement.hpp>
 #include <boost/spirit/home/phoenix/object.hpp>
-#include <boost/spirit/home/phoenix/stl.hpp>
 
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;

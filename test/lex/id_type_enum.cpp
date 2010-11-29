@@ -4,9 +4,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_SPIRIT_DEBUG 1    // required for token streaming
-#define BOOST_SPIRIT_LEXERTL_DEBUG 1
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -19,8 +16,6 @@
 #include <boost/spirit/home/phoenix/statement.hpp>
 #include <boost/spirit/home/phoenix/object.hpp>
 
-#include <sstream>
-
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;
 namespace phoenix = boost::phoenix;
@@ -28,8 +23,6 @@ namespace phoenix = boost::phoenix;
 typedef spirit::classic::position_iterator2<
     spirit::multi_pass<std::istreambuf_iterator<char> >
 > file_iterator;
-
-typedef boost::iterator_range<file_iterator> file_range;
 
 inline file_iterator 
 make_file_iterator(std::istream& input, const std::string& filename)
@@ -41,34 +34,39 @@ make_file_iterator(std::istream& input, const std::string& filename)
         filename);
 }
 
-struct string_literal
+enum token_id
 {
-    string_literal(file_iterator begin, file_iterator end)
-    {
-    }
+    ID_WORD = lex::min_token_id + 1,
+    ID_EOL
 };
 
 typedef lex::lexertl::token<
-    file_iterator, boost::mpl::vector<string_literal>
+    file_iterator, boost::mpl::vector<>, boost::mpl::true_, token_id
 > token_type;
 
 struct lexer
   : lex::lexer<lex::lexertl::actor_lexer<token_type> >
 {
-    lexer() : st("'[^'\\n]*'", 1)
+    lexer() : word("^[a-zA-Z0-9]+$", ID_WORD)
     {
-        lex::token_def<> string_lookahead('\'');
-        self("LA") = string_lookahead;
-            
-        // make sure lookahead is implicitly evaluated using the lexer state
-        // the token_def has been associated with
-        self = st [
-                phoenix::if_(lex::lookahead(string_lookahead)) [ lex::more() ]
-            ]
+        typedef lex::token_def<lex::unused_type, char, token_id> toked_def;
+
+        self("INITIAL", "O") = 
+                word 
+            |   toked_def("!.*$") [ 
+                    lex::_pass = lex::pass_flags::pass_ignore 
+                ]
+            |   toked_def('\n', ID_EOL) 
+            ;
+        
+        self("O", "INITIAL") = 
+                toked_def(".") [ 
+                    lex::_pass = lex::pass_flags::pass_fail 
+                ]
             ;
     }
     
-    lex::token_def<string_literal> st;
+    lex::token_def<lex::unused_type, char, token_id> word;
 };
 
 typedef lexer::iterator_type token_iterator;
@@ -76,7 +74,7 @@ typedef lexer::iterator_type token_iterator;
 int main()
 {
     std::stringstream ss;
-    ss << "'foo''bar'";
+    ss << "!foo\nbar\n!baz";
     
     file_iterator begin = make_file_iterator(ss, "SS");
     file_iterator end;
@@ -85,16 +83,14 @@ int main()
     token_iterator begin2 = l.begin(begin, end);
     token_iterator end2 = l.end();
     
-    char const* test_data[] = { "1,'foo'", "1,'foo''bar'" };
+    int test_data[] = { ID_EOL, ID_WORD, ID_EOL };
     std::size_t const test_data_size = sizeof(test_data)/sizeof(test_data[0]);
 
     token_iterator it = begin2;
     int i = 0;
     for (/**/; it != end2 && i < test_data_size; ++it, ++i)
     {
-        std::stringstream ss;
-        ss << it->id() << "," << *it;
-        BOOST_TEST(ss.str() == test_data[i]);
+        BOOST_TEST(it->id() == test_data[i]);
     }
     BOOST_TEST(it == end2);
     BOOST_TEST(i == test_data_size);

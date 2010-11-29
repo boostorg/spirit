@@ -45,6 +45,8 @@
    iterator_range of the matched input, as qi::token() does).
  * Added additional template parameter to the default `lexertl::token<>`
    definition: the type of the token id. This type defaults to `std::size_t`.
+   Any type used as the id type needs to be (explicitly) convertible from 
+   `std::size_t`.
  * It's now possible to attach lexer semantic actions to token definitions 
    based on `lex::char()` and `lex::string()`.
  * It's now possible to specify a lexer state the lexer should automatically be

@@ -136,6 +136,7 @@ import testing ;
     [ run lex/set_token_value_phoenix.cpp   : : : : ]
     [ run lex/semantic_actions.cpp          : : : : ]
     [ run lex/auto_switch_lexerstate.cpp    : : : : ]
+    [ run lex/id_type_enum.cpp              : : : : ]
 
     # run Lex regression tests
     [ run lex/regression001.cpp             : : : : lex_regression001 ]
