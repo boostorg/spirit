@@ -212,7 +212,7 @@ namespace boost { namespace spirit
     public:
         // constructors
         template <typename T>
-        hold_any(T const& x)
+        explicit hold_any(T const& x)
           : table(spirit::detail::get_table<T>::get()), object(0)
         {
             if (spirit::detail::get_table<T>::is_small::value)
