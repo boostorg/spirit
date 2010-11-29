@@ -297,7 +297,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
               : base_type(data_, first, last)
               , actions_(data_.actions_), hold_()
               , value_(iterator_range<Iterator>(first, last))
-              , has_hold_(false), has_value_(false) {}
+              , has_value_(false), has_hold_(false) {}
 
             // invoke attached semantic actions, if defined
             BOOST_SCOPED_ENUM(pass_flags) invoke_actions(std::size_t state
