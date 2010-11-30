@@ -144,7 +144,7 @@ namespace boost { namespace spirit { namespace detail
       : public boost::iterator_facade<
             node_iterator<Value>
           , Value
-          , boost::random_access_traversal_tag
+          , boost::bidirectional_traversal_tag
         >
     {
     public:
@@ -194,8 +194,9 @@ namespace boost { namespace spirit { namespace detail
         }
 
         template<typename Iterator>
-        typename node_iterator::difference_type distance_to(Iterator const& other)
-        const {
+        typename node_iterator::difference_type 
+        distance_to(Iterator const& other) const 
+        {
             return std::distance(*this, node_iterator(other));
         }
 
