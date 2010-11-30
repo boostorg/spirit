@@ -15,17 +15,25 @@
 #include <sstream>
 #include <cstdlib>
 
-using boost::spirit::utree;
-
-inline bool check(utree const& val, std::string expected)
+inline bool check(boost::spirit::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
     return (s.str() == expected + " ") ? true : false;
 }
 
+struct one_two_three
+{
+    boost::spirit::utree operator()(boost::spirit::scope) const
+    {
+        return boost::spirit::utree(123);
+    }
+};
+
 int main()
 {
+    using boost::spirit::utree;
+
     {
         // test the size
         std::cout << "size of utree is: "
@@ -276,6 +284,15 @@ int main()
         utree x;
         x.tag(123);
         BOOST_TEST(x.tag() == 123);
+    }
+
+    {
+        // test functions
+        using boost::spirit::stored_function;
+        using boost::spirit::scope;
+
+        utree f = stored_function<one_two_three>();
+        f.eval(scope());
     }
 
     {
