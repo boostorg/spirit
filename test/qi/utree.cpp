@@ -67,6 +67,15 @@ int main()
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) && 
             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+
+        rule<char const*, utree()> r = double_;
+
+        ut.clear();
+        BOOST_TEST(test_attr("1.2ab", r >> *char_, ut) && 
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
+        ut.clear();
+        BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) && 
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
     }
 
     // kleene star
@@ -108,6 +117,11 @@ int main()
         ut.clear();
         BOOST_TEST(test_attr("1.23,4.56", r3, ut) && 
             ut.which() == utree_type::list_type && check(ut, "( 1.23 4.56 )"));
+
+        rule<char const*, utree()> r4 = double_ % ',';
+        ut.clear();
+        BOOST_TEST(test_attr("1.23,4.56", r4, ut) && 
+            ut.which() == utree_type::list_type && check(ut, "( 1.23 4.56 )"));
     }
 
     // alternatives
@@ -126,13 +140,22 @@ int main()
         BOOST_TEST(test_attr("10.2", strict_double | int_, ut) && 
             ut.which() == utree_type::double_type && check(ut, "10.2"));
 
-        rule<char const*, boost::variant<int, double>()> r = strict_double | int_;
+        rule<char const*, boost::variant<int, double>()> r1 = strict_double | int_;
 
         ut.clear();
-        BOOST_TEST(test_attr("10", r, ut) && 
+        BOOST_TEST(test_attr("10", r1, ut) && 
             ut.which() == utree_type::int_type && check(ut, "10"));
         ut.clear();
-        BOOST_TEST(test_attr("10.2", r, ut) && 
+        BOOST_TEST(test_attr("10.2", r1, ut) && 
+            ut.which() == utree_type::double_type && check(ut, "10.2"));
+
+        rule<char const*, utree()> r2 = strict_double | int_;
+
+        ut.clear();
+        BOOST_TEST(test_attr("10", r2, ut) && 
+            ut.which() == utree_type::int_type && check(ut, "10"));
+        ut.clear();
+        BOOST_TEST(test_attr("10.2", r2, ut) && 
             ut.which() == utree_type::double_type && check(ut, "10.2"));
     }
 
