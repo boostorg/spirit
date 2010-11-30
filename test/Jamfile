@@ -158,6 +158,7 @@ import testing ;
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
     [ compile support/multi_pass_regression002.cpp : : support_multi_pass_regression002 ]
     [ compile support/multi_pass_regression003.cpp : : support_multi_pass_regression003 ]
+    [ run support/utree_test.cpp            : : : : support_utree_test ]
 
 
     # regression tests
