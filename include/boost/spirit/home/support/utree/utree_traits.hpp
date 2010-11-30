@@ -64,14 +64,25 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // this specialization tells Spirit.Qi to allow assignment to an utree from 
     // a STL container
-    template <typename Container>
-    struct assign_to_attribute_from_value<utree, Container
-      , typename enable_if<is_container<Container> >::type>
+    template <typename Attribute>
+    struct assign_to_attribute_from_value<utree, Attribute>
     {
-        static void 
-        call(Container const& val, utree& attr)
+        static void call(Attribute const& val, utree& attr, mpl::false_)
+        {
+          if (attr.empty())
+              attr = val;
+          else
+              attr.push_back(val);    // implicitly converts utree to a list
+        }
+
+        static void call(Attribute const& val, utree& attr, mpl::true_)
         {
             attr = make_iterator_range(traits::begin(val), traits::end(val));
+        }
+
+        static void call(Attribute const& val, utree& attr)
+        {
+            call(val, attr, is_container<Attribute>());
         }
     };
 

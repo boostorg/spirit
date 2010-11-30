@@ -764,6 +764,15 @@ namespace boost { namespace spirit
         return *this;
     }
 
+    inline utree& utree::operator=(char c)
+    {
+        // char constructs a single element string
+        free();
+        s.construct(&c, &c+1);
+        set_type(type::string_type);
+        return *this;
+    }
+
     inline utree& utree::operator=(unsigned int i_)
     {
         free();

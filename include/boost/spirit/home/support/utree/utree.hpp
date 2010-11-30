@@ -297,6 +297,7 @@ namespace boost { namespace spirit
 
         utree& operator=(utree const& other);
         utree& operator=(bool b);
+        utree& operator=(char c);
         utree& operator=(unsigned int i);
         utree& operator=(int i);
         utree& operator=(double d);
