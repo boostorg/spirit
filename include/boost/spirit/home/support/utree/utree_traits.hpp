@@ -76,6 +76,29 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // this specialization is required to disambiguate the specialization 
+    template <>
+    struct assign_to_attribute_from_value<utree, utree>
+    {
+        static void 
+        call(utree const& val, utree& attr)
+        {
+            attr = val;
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // debug support for utree
+    template <typename Out>
+    struct print_attribute_debug<Out, utree>
+    {
+        static void call(Out& out, utree const& val)
+        {
+            out << val;
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // the specialization below tells Spirit to handle utree as if it
     // where a 'real' variant (in the context of karma)
     template <>

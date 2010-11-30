@@ -1245,7 +1245,11 @@ namespace boost { namespace spirit
         }
         else if (get_type() != type::list_type)
         {
-            boost::throw_exception(bad_type_exception());
+            // convert this instance into a list by transforming the current
+            // content into the first node in a list
+            utree ut;
+            ut.push_back(*this);
+            ut.swap(*this);
         }
     }
 
