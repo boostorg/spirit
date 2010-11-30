@@ -9,6 +9,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
@@ -31,7 +32,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T, typename Attribute, typename Enable = void>
+    template <typename T, typename Attribute, typename Enable>
     struct symbols_lookup
     {
         typedef 
@@ -84,7 +85,7 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    template <typename Attribute, typename T, typename Enable = void>
+    template <typename Attribute, typename T, typename Enable>
     struct symbols_value
     {
         typedef 
