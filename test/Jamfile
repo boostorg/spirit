@@ -72,6 +72,7 @@ import testing ;
     [ run qi/terminal_ex.cpp                : : : : ]
     [ run qi/tst.cpp                        : : : : ]
     [ run qi/uint.cpp                       : : : : ]
+    [ run qi/utree.cpp                      : : : : ]
 
     # run Karma tests
     [ run karma/actions.cpp                 : : : : karma_actions ]
