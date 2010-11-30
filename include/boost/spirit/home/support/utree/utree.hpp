@@ -35,6 +35,22 @@
 namespace boost { namespace spirit 
 {
     ///////////////////////////////////////////////////////////////////////////
+    // all exceptions throw by utree are derived from utree_exception
+    struct utree_exception : std::exception {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // bad_type_exception is thrown whenever somebody calls a member function 
+    // which applies to certain stored utree_type's only, but this precondition
+    // is violated as the utree instance holds some other type.
+    struct bad_type_exception : utree_exception 
+    {
+        virtual const char* what() const throw()
+        {
+            return "utree: Illegal operation for currently stored data.";
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // Our utree can store these types. This enum tells us what type
     // of data is stored in utree's discriminated union.
     ///////////////////////////////////////////////////////////////////////////

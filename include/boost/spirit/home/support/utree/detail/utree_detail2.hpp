@@ -16,6 +16,7 @@
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/throw_exception.hpp>
 
 namespace boost { namespace spirit { namespace detail
 {
@@ -887,7 +888,9 @@ namespace boost { namespace spirit
             return detail::index_impl::apply(r.first, i);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && size() > i);
+        if (get_type() != type::list_type || size() <= i)
+            boost::throw_exception(bad_type_exception());
+
         return detail::index_impl::apply(l.first, i);
     }
 
@@ -899,7 +902,9 @@ namespace boost { namespace spirit
             return detail::index_impl::apply(r.first, i);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && size() > i);
+        if (get_type() != type::list_type || size() <= i)
+            boost::throw_exception(bad_type_exception());
+
         return detail::index_impl::apply(l.first, i);
     }
 
@@ -985,7 +990,8 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->pop_front();
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         l.pop_front();
     }
 
@@ -993,7 +999,8 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->pop_back();
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         l.pop_back();
     }
 
@@ -1001,7 +1008,8 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->erase(pos);
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         detail::list::node* np = l.erase(pos.node);
         return iterator(np, np?np->prev:l.last);
     }
@@ -1071,7 +1079,9 @@ namespace boost { namespace spirit
             return const_iterator(r.first, 0);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
+
         return const_iterator(l.first, 0);
     }
 
@@ -1083,7 +1093,9 @@ namespace boost { namespace spirit
             return const_iterator(0, r.first);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
+
         return const_iterator(0, l.last);
     }
 
@@ -1119,7 +1131,10 @@ namespace boost { namespace spirit
         {
             return l.size;
         }
-        BOOST_ASSERT(get_type() == type::nil_type);
+
+        if (get_type() != type::nil_type)
+            boost::throw_exception(bad_type_exception());
+
         return 0;
     }
 
@@ -1141,7 +1156,9 @@ namespace boost { namespace spirit
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
+        if (get_type() != type::list_type || l.first == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.first->val;
     }
 
@@ -1158,7 +1175,9 @@ namespace boost { namespace spirit
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
+        if (get_type() != type::list_type || l.last == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.last->val;
     }
 
@@ -1175,7 +1194,9 @@ namespace boost { namespace spirit
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
+        if (get_type() != type::list_type || l.first == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.first->val;
     }
 
@@ -1192,7 +1213,9 @@ namespace boost { namespace spirit
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
+        if (get_type() != type::list_type || l.last == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.last->val;
     }
 
@@ -1220,9 +1243,9 @@ namespace boost { namespace spirit
             set_type(type::list_type);
             l.default_construct();
         }
-        else
+        else if (get_type() != type::list_type)
         {
-            BOOST_ASSERT(get_type() == type::list_type);
+            boost::throw_exception(bad_type_exception());
         }
     }
 
@@ -1368,7 +1391,8 @@ namespace boost { namespace spirit
 
     inline short utree::tag() const
     {
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         return s.tag();
     }
 
@@ -1380,7 +1404,8 @@ namespace boost { namespace spirit
 
     inline utree utree::eval(scope const& env) const
     {
-        BOOST_ASSERT(get_type() == type::function_type);
+        if (get_type() != type::function_type)
+            boost::throw_exception(bad_type_exception());
         return (*pf)(env);
     }
 }}

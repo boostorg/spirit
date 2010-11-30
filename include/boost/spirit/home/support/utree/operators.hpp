@@ -17,13 +17,12 @@
 #include <exception>
 #include <boost/spirit/home/support/utree/utree.hpp>
 #include <boost/preprocessor/cat.hpp>
+#include <boost/throw_exception.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/is_integral.hpp>
 
 namespace boost { namespace spirit 
 {
-    struct utree_exception : std::exception {};
-
     struct illegal_arithmetic_operation : utree_exception
     {
         virtual const char* what() const throw()
@@ -367,7 +366,7 @@ namespace boost { namespace spirit
         template <typename A, typename B>
         utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
-            throw illegal_integral_operation();
+            boost::throw_exception(illegal_integral_operation());
             return utree(); // cannot apply to non-integral types
         }
 
