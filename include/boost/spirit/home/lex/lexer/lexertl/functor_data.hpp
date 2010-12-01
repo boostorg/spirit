@@ -25,12 +25,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         template <typename Iterator, typename HasActors, typename HasState
           , typename TokenValue>
-        struct data;    // no default specialization
+        class data;    // no default specialization
 
         ///////////////////////////////////////////////////////////////////////
         //  neither supports state, nor actors
         template <typename Iterator, typename TokenValue>
-        struct data<Iterator, mpl::false_, mpl::false_, TokenValue>
+        class data<Iterator, mpl::false_, mpl::false_, TokenValue>
         {
         protected:
             typedef typename 
@@ -196,8 +196,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support lexer semantic actions, but supports state
         template <typename Iterator, typename TokenValue>
-        struct data<Iterator, mpl::false_, mpl::true_, TokenValue>
-          : data<Iterator, mpl::false_, mpl::false_, TokenValue>
+        class data<Iterator, mpl::false_, mpl::true_, TokenValue>
+          : public data<Iterator, mpl::false_, mpl::false_, TokenValue>
         {
         protected:
             typedef data<Iterator, mpl::false_, mpl::false_, TokenValue> base_type;
@@ -269,8 +269,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  does support lexer semantic actions, may support state
         template <typename Iterator, typename HasState, typename TokenValue>
-        struct data<Iterator, mpl::true_, HasState, TokenValue> 
-          : data<Iterator, mpl::false_, HasState, TokenValue>
+        class data<Iterator, mpl::true_, HasState, TokenValue> 
+          : public data<Iterator, mpl::false_, HasState, TokenValue>
         {
         public:
             typedef semantic_actions<Iterator, HasState, data> 
@@ -402,7 +402,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             data& operator= (data const&);
         };
     }
-
 }}}}
 
 #endif

@@ -39,12 +39,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         template <typename Iterator, typename HasActors, typename HasState
           , typename TokenValue>
-        struct static_data;    // no default specialization
+        class static_data;    // no default specialization
 
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support no state and no actors
         template <typename Iterator, typename TokenValue>
-        struct static_data<Iterator, mpl::false_, mpl::false_, TokenValue>
+        class static_data<Iterator, mpl::false_, mpl::false_, TokenValue>
         {
         protected:
             typedef typename 
@@ -214,8 +214,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support no actors, but does support states
         template <typename Iterator, typename TokenValue>
-        struct static_data<Iterator, mpl::false_, mpl::true_, TokenValue>
-          : static_data<Iterator, mpl::false_, mpl::false_, TokenValue>
+        class static_data<Iterator, mpl::false_, mpl::true_, TokenValue>
+          : public static_data<Iterator, mpl::false_, mpl::false_, TokenValue>
         {
         protected:
             typedef static_data<Iterator, mpl::false_, mpl::false_, TokenValue> base_type;
@@ -289,8 +289,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  does support actors, but may have no state
         template <typename Iterator, typename HasState, typename TokenValue>
-        struct static_data<Iterator, mpl::true_, HasState, TokenValue> 
-          : static_data<Iterator, mpl::false_, HasState, TokenValue>
+        class static_data<Iterator, mpl::true_, HasState, TokenValue> 
+          : public static_data<Iterator, mpl::false_, HasState, TokenValue>
         {
         public:
             typedef semantic_actions<Iterator, HasState, static_data>
@@ -422,7 +422,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             static_data& operator= (static_data const&);
         };
     }
-
 }}}}
 
 #endif

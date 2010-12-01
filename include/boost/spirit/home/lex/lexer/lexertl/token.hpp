@@ -139,8 +139,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #if defined(BOOST_SPIRIT_DEBUG)
         token(id_type id, std::size_t, Iterator const& first
               , Iterator const& last)
-          : id_(id) 
-          , matched_(first, last)
+          : matched_(first, last)
+          , id_(id) 
         {}
 #else
         token(id_type id, std::size_t, Iterator const&, Iterator const&)
@@ -181,16 +181,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         std::pair<Iterator, Iterator> matched_;
 #endif
 
-// works only starting MSVC V8
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
-    private:
-        struct dummy { void true_() {} };
-        typedef void (dummy::*safe_bool)();
-
-    public:
-        operator safe_bool() const { return is_valid() ? &dummy::true_ : 0; }
-#endif
-
     protected:
         id_type id_;            // token id, 0 if nothing has been matched
     };
@@ -202,7 +192,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     operator<< (std::basic_ostream<Char, Traits>& os
       , token<Iterator, AttributeTypes, HasState, Idtype> const& t)
     {
-        if (t) {
+        if (t.is_valid()) {
             Iterator end = t.matched_.second;
             for (Iterator it = t.matched_.first; it != end; ++it)
                 os << *it;
