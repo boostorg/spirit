@@ -5,7 +5,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_SPIRIT_DEBUG 1    // required for token streaming
-#define BOOST_SPIRIT_LEXERTL_DEBUG 1
+// #define BOOST_SPIRIT_LEXERTL_DEBUG 1
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
