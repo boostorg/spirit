@@ -1,8 +1,10 @@
-//  Copyright (c) 2001-2010 Hartmut Kaiser
-//
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+/*=============================================================================
+    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+=============================================================================*/
 #if !defined(BOOST_SPIRIT_OUTPUT_UTREE_TRAITS_APR_16_2010_0655AM)
 #define BOOST_SPIRIT_OUTPUT_UTREE_TRAITS_APR_16_2010_0655AM
 
@@ -33,7 +35,7 @@ namespace boost
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization tells Spirit.Qi to allow assignment to an utree from 
+    // this specialization tells Spirit.Qi to allow assignment to an utree from
     // a variant
     namespace detail
     {
@@ -54,7 +56,7 @@ namespace boost { namespace spirit { namespace traits
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct assign_to_attribute_from_value<utree, variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     {
-        static void 
+        static void
         call(variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& val, utree& attr)
         {
             apply_visitor(detail::assign_to_utree_visitor(attr), val);
@@ -62,7 +64,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization tells Spirit.Qi to allow assignment to an utree from 
+    // this specialization tells Spirit.Qi to allow assignment to an utree from
     // a STL container
     template <typename Attribute>
     struct assign_to_attribute_from_value<utree, Attribute>
@@ -87,14 +89,102 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization is required to disambiguate the specialization 
+    // this specialization is required to disambiguate the specialization
     template <>
     struct assign_to_attribute_from_value<utree, utree>
     {
-        static void 
+        static void
         call(utree const& val, utree& attr)
         {
             attr = val;
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // push_back support for utree allows concatenation of strings
+    // (utree strings are immutable)
+    template <typename T>
+    struct push_back_container<utree, T>
+    {
+        template <typename T2>
+        static void push_to_nil(utree& c, T2 const& val)
+        {
+            c.push_back(val);
+        }
+
+        static void push_to_nil(utree& c, utree const& val)
+        {
+            c = val;
+        }
+
+        static void push_to_nil(utree& c, char val)
+        {
+            c = utree(val);
+        }
+
+        static void push_to_nil(utree& c, std::string const& val)
+        {
+            c = utree(val);
+        }
+
+        template <typename T2>
+        static void push_to_string(utree& c, T2 const& val)
+        {
+            c.push_back(val);
+        }
+
+        static void push_to_string(utree& c, utree const& val)
+        {
+            if (val.which() != utree_type::string_type)
+            {
+                utree ut;
+                ut.push_back(c);
+                ut.push_back(val);
+                c.swap(ut);
+            }
+            else
+            {
+                utf8_string_range a = c.get<utf8_string_range>();
+                utf8_string_range b = val.get<utf8_string_range>();
+                c = (std::string(a.begin(), a.end())
+                    + std::string(b.begin(), b.end()));
+            }
+        }
+
+        static void push_to_string(utree& c, std::string const& val)
+        {
+            utf8_string_range rng = c.get<utf8_string_range>();
+            c = (std::string(rng.begin(), rng.end()) + val);
+        }
+
+        static bool call(utree& c, T const& val)
+        {
+            switch (c.which())
+            {
+                case utree_type::nil_type:
+                    {
+                        push_to_nil(c, val);
+                        break;
+                    }
+                case utree_type::list_type:
+                    {
+                        c.push_back(val);
+                        break;
+                    }
+                case utree_type::string_type:
+                    {
+                        push_to_string(c, val);
+                        break;
+                    }
+                default:
+                    {
+                        utree ut;
+                        ut.push_back(c);
+                        ut.push_back(val);
+                        c.swap(ut);
+                    }
+            }
+            return true;
         }
     };
 
@@ -117,7 +207,7 @@ namespace boost { namespace spirit { namespace traits
       : mpl::false_ {};
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization tells Spirit how to extract the type of the value 
+    // this specialization tells Spirit how to extract the type of the value
     // stored in the given utree node
     template <>
     struct variant_which<utree>
@@ -135,9 +225,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef iterator_range<utree::iterator> compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::list_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::list_type;
         }
     };
 
@@ -148,9 +238,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef iterator_range<utree::const_iterator> compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::list_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::list_type;
         }
     };
 
@@ -160,9 +250,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef nil compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::nil_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::nil_type;
         }
     };
 
@@ -172,9 +262,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef bool compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::bool_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::bool_type;
         }
     };
 
@@ -184,9 +274,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef int compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::int_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::int_type;
         }
     };
 
@@ -196,9 +286,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef double compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::double_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::double_type;
         }
     };
 
@@ -209,9 +299,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utf8_string_range compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::string_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::string_type;
         }
     };
 
@@ -222,9 +312,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utf8_string_type compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::string_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::string_type;
         }
     };
 
@@ -235,9 +325,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utf8_symbol_range compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::symbol_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::symbol_type;
         }
     };
 
@@ -248,9 +338,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utf8_symbol compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::symbol_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::symbol_type;
         }
     };
 
@@ -261,9 +351,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef binary_range compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::binary_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::binary_type;
         }
     };
 
@@ -274,9 +364,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef binary_string compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::binary_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::binary_type;
         }
     };
 
@@ -286,10 +376,10 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utree compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
+        static bool is_compatible(int d)
+        {
             return d >= utree_type::nil_type &&
-                   d <= utree_type::reference_type; 
+                   d <= utree_type::reference_type;
         }
     };
 
@@ -300,10 +390,10 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utree compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
+        static bool is_compatible(int d)
+        {
             return d >= utree_type::nil_type &&
-                   d <= utree_type::reference_type; 
+                   d <= utree_type::reference_type;
         }
     };
 
@@ -315,9 +405,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef iterator_range<utree::const_iterator> compatible_type;
 
-        static bool is_compatible(int d) 
-        { 
-            return d == utree_type::list_type; 
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::list_type;
         }
     };
 
@@ -378,8 +468,8 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef std::string type;
 
-        static type pre(utree const& t) 
-        { 
+        static type pre(utree const& t)
+        {
             utf8_string_range r = boost::get<utf8_string_range>(t);
             return std::string(r.begin(), r.end());
         }
@@ -390,8 +480,8 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef std::string type;
 
-        static type pre(utree const& t) 
-        { 
+        static type pre(utree const& t)
+        {
             utf8_symbol_range r = boost::get<utf8_symbol_range>(t);
             return std::string(r.begin(), r.end());
         }
