@@ -170,6 +170,45 @@ namespace boost { namespace spirit { namespace traits
         }
 
         ///////////////////////////////////////////////////////////////////////
+        template <typename T2>
+        static void push_to_string_list(utree& c, T2 const& val)
+        {
+            c.push_back(val);
+        }
+
+        static void push_to_string_list(utree& c, utree const& val)
+        {
+            utree& b = c.back();
+            if (b.which() == utree_type::string_type && 
+                val.which() == utree_type::string_type)
+            {
+                push_to_string(b, val);
+            }
+            else
+            {
+                c.push_back(val);
+            }
+        }
+
+        static void push_to_string_list(utree& c, std::string const& val)
+        {
+            utree& b = c.back();
+            if (b.which() == utree_type::string_type)
+                push_to_string(b, val);
+            else
+                c.push_back(val);
+        }
+
+        static void push_to_string_list(utree& c, char val)
+        {
+            utree& b = c.back();
+            if (b.which() == utree_type::string_type)
+                push_to_string(b, val);
+            else
+                c.push_back(val);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
         static bool call(utree& c, T const& val)
         {
             switch (c.which())
@@ -181,7 +220,7 @@ namespace boost { namespace spirit { namespace traits
                     }
                 case utree_type::list_type:
                     {
-                        c.push_back(val);
+                        push_to_string_list(c, val);
                         break;
                     }
                 case utree_type::string_type:
