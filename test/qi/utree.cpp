@@ -66,7 +66,7 @@ int main()
             ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
 
         rule<char const*, utree()> r = double_;
 
@@ -75,7 +75,7 @@ int main()
             ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
     }
 
     // kleene star
