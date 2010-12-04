@@ -63,7 +63,7 @@ int main()
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", double_ >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"ab\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
@@ -72,7 +72,7 @@ int main()
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", r >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"ab\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
