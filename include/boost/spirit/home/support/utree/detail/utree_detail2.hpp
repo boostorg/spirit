@@ -1252,13 +1252,9 @@ namespace boost { namespace spirit
             set_type(type::list_type);
             l.default_construct();
         }
-        else if (get_type() != type::list_type)
+        else if (get_type() != type::nil_type)
         {
-            // convert this instance into a list by transforming the current
-            // content into the first node in a list
-            utree ut;
-            ut.push_back(*this);
-            ut.swap(*this);
+            boost::throw_exception(bad_type_exception());
         }
     }
 
