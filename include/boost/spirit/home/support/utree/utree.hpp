@@ -383,7 +383,7 @@ namespace boost { namespace spirit
         bool empty() const;
         std::size_t size() const;
 
-        utree_type::info which() const;
+        type::info which() const;
 
         template <typename T>
         T get() const;

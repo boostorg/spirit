@@ -1252,7 +1252,7 @@ namespace boost { namespace spirit
             set_type(type::list_type);
             l.default_construct();
         }
-        else if (get_type() != type::nil_type)
+        else if (get_type() != type::list_type)
         {
             boost::throw_exception(bad_type_exception());
         }

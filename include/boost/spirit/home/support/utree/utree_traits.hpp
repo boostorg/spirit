@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace traits
           if (attr.empty())
               attr = val;
           else
-              attr.push_back(val);    // implicitly converts utree to a list
+              push_back(attr, val);
         }
 
         static void call(Attribute const& val, utree& attr, mpl::true_)
@@ -89,7 +89,8 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization is required to disambiguate the specialization
+    // this specialization is required to disambiguate the specializations
+    // related to utree 
     template <>
     struct assign_to_attribute_from_value<utree, utree>
     {
@@ -106,6 +107,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     struct push_back_container<utree, T>
     {
+        ///////////////////////////////////////////////////////////////////////
         template <typename T2>
         static void push_to_nil(utree& c, T2 const& val)
         {
@@ -127,10 +129,14 @@ namespace boost { namespace spirit { namespace traits
             c = utree(val);
         }
 
+        ///////////////////////////////////////////////////////////////////////
         template <typename T2>
         static void push_to_string(utree& c, T2 const& val)
         {
-            c.push_back(val);
+            utree ut;
+            ut.push_back(c);
+            ut.push_back(val);
+            c.swap(ut);
         }
 
         static void push_to_string(utree& c, utree const& val)
@@ -157,6 +163,13 @@ namespace boost { namespace spirit { namespace traits
             c = (std::string(rng.begin(), rng.end()) + val);
         }
 
+        static void push_to_string(utree& c, char val)
+        {
+            utf8_string_range rng = c.get<utf8_string_range>();
+            c = (std::string(rng.begin(), rng.end()) + val);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
         static bool call(utree& c, T const& val)
         {
             switch (c.which())
