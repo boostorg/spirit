@@ -463,7 +463,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, utf8_string>
+    struct extract_from_attribute<utree, utf8_string_type>
     {
         typedef std::string type;
 
@@ -477,7 +477,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct transform_attribute<utree const, utf8_string, karma::domain>
+    struct transform_attribute<utree const, utf8_string_type, karma::domain>
     {
         typedef std::string type;
 
