@@ -32,17 +32,17 @@
 # pragma warning(disable: 4244)
 #endif
 
-namespace boost { namespace spirit 
+namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
     // all exceptions throw by utree are derived from utree_exception
     struct utree_exception : std::exception {};
 
     ///////////////////////////////////////////////////////////////////////////
-    // bad_type_exception is thrown whenever somebody calls a member function 
+    // bad_type_exception is thrown whenever somebody calls a member function
     // which applies to certain stored utree_type's only, but this precondition
     // is violated as the utree instance holds some other type.
-    struct bad_type_exception : utree_exception 
+    struct bad_type_exception : utree_exception
     {
         virtual const char* what() const throw()
         {

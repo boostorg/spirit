@@ -195,8 +195,8 @@ namespace boost { namespace spirit { namespace detail
         }
 
         template<typename Iterator>
-        typename node_iterator::difference_type 
-        distance_to(Iterator const& other) const 
+        typename node_iterator::difference_type
+        distance_to(Iterator const& other) const
         {
             return std::distance(*this, node_iterator(other));
         }
@@ -605,7 +605,7 @@ namespace boost { namespace spirit { namespace detail
     };
 }}}
 
-namespace boost { namespace spirit 
+namespace boost { namespace spirit
 {
     template <typename F>
     stored_function<F>::stored_function(F f)

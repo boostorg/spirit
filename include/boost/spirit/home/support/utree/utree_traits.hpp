@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // this specialization is required to disambiguate the specializations
-    // related to utree 
+    // related to utree
     template <>
     struct assign_to_attribute_from_value<utree, utree>
     {
@@ -102,130 +102,91 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // this specialization tells Spirit.Qi to allow assignment to an utree from
+    // generic iterators
+    template <typename Iterator>
+    struct assign_to_attribute_from_iterators<utree, Iterator>
+    {
+        static void
+        call(Iterator const& first, Iterator const& last, utree& attr)
+        {
+            attr.assign(first, last);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization tells Spirit.Qi to allow assignment to a utree from
+    // string iterators
+    template <typename Iterator>
+    struct assign_to_attribute_from_string_iterators
+    {
+        typedef basic_string<
+            boost::iterator_range<Iterator>,
+            utree_type::string_type>
+        range;
+
+        static void
+        call(Iterator first, Iterator last, utree& attr)
+        {
+            utree rng(range(first, last));
+            attr.swap(rng);
+        }
+    };
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, std::basic_string<char>::iterator>
+        : assign_to_attribute_from_string_iterators<std::basic_string<char>::iterator>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, std::basic_string<wchar_t>::iterator>
+        : assign_to_attribute_from_string_iterators<std::basic_string<wchar_t>::iterator>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, std::basic_string<char>::const_iterator>
+        : assign_to_attribute_from_string_iterators<std::basic_string<char>::const_iterator>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, std::basic_string<wchar_t>::const_iterator>
+        : assign_to_attribute_from_string_iterators<std::basic_string<wchar_t>::const_iterator>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, char const*>
+        : assign_to_attribute_from_string_iterators<char const*>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, char*>
+        : assign_to_attribute_from_string_iterators<char*>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, wchar_t const*>
+        : assign_to_attribute_from_string_iterators<wchar_t const*>
+    {};
+
+    template <>
+    struct assign_to_attribute_from_iterators<utree, wchar_t*>
+        : assign_to_attribute_from_string_iterators<wchar_t*>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // push_back support for utree allows concatenation of strings
     // (utree strings are immutable)
     template <typename T>
     struct push_back_container<utree, T>
     {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename T2>
-        static void push_to_nil(utree& c, T2 const& val)
-        {
-            c.push_back(val);
-        }
-
-        static void push_to_nil(utree& c, utree const& val)
-        {
-            c = val;
-        }
-
-        static void push_to_nil(utree& c, char val)
-        {
-            c = utree(val);
-        }
-
-        static void push_to_nil(utree& c, std::string const& val)
-        {
-            c = utree(val);
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        template <typename T2>
-        static void push_to_string(utree& c, T2 const& val)
-        {
-            utree ut;
-            ut.push_back(c);
-            ut.push_back(val);
-            c.swap(ut);
-        }
-
-        static void push_to_string(utree& c, utree const& val)
-        {
-            if (val.which() != utree_type::string_type)
-            {
-                utree ut;
-                ut.push_back(c);
-                ut.push_back(val);
-                c.swap(ut);
-            }
-            else
-            {
-                utf8_string_range a = c.get<utf8_string_range>();
-                utf8_string_range b = val.get<utf8_string_range>();
-                c = (std::string(a.begin(), a.end())
-                    + std::string(b.begin(), b.end()));
-            }
-        }
-
-        static void push_to_string(utree& c, std::string const& val)
-        {
-            utf8_string_range rng = c.get<utf8_string_range>();
-            c = (std::string(rng.begin(), rng.end()) + val);
-        }
-
-        static void push_to_string(utree& c, char val)
-        {
-            utf8_string_range rng = c.get<utf8_string_range>();
-            c = (std::string(rng.begin(), rng.end()) + val);
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        template <typename T2>
-        static void push_to_string_list(utree& c, T2 const& val)
-        {
-            c.push_back(val);
-        }
-
-        static void push_to_string_list(utree& c, utree const& val)
-        {
-            utree& b = c.back();
-            if (b.which() == utree_type::string_type && 
-                val.which() == utree_type::string_type)
-            {
-                push_to_string(b, val);
-            }
-            else
-            {
-                c.push_back(val);
-            }
-        }
-
-        static void push_to_string_list(utree& c, std::string const& val)
-        {
-            utree& b = c.back();
-            if (b.which() == utree_type::string_type)
-                push_to_string(b, val);
-            else
-                c.push_back(val);
-        }
-
-        static void push_to_string_list(utree& c, char val)
-        {
-            utree& b = c.back();
-            if (b.which() == utree_type::string_type)
-                push_to_string(b, val);
-            else
-                c.push_back(val);
-        }
-
-        ///////////////////////////////////////////////////////////////////////
         static bool call(utree& c, T const& val)
         {
             switch (c.which())
             {
                 case utree_type::nil_type:
-                    {
-                        push_to_nil(c, val);
-                        break;
-                    }
                 case utree_type::list_type:
                     {
-                        push_to_string_list(c, val);
-                        break;
-                    }
-                case utree_type::string_type:
-                    {
-                        push_to_string(c, val);
+                        c.push_back(val);
                         break;
                     }
                 default:
