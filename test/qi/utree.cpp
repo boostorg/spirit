@@ -34,6 +34,7 @@ int main()
     using boost::spirit::qi::space;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::as_string;
+    using boost::spirit::qi::lexeme;
 
     // primitive data types
     {
@@ -64,19 +65,19 @@ int main()
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", double_ >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));   // FIXME?: "( 1.2 ( \"a\" \"b\" ) )"
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
 
         rule<char const*, utree()> r = double_;
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", r >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));   // FIXME?: "( 1.2 ( \"a\" \"b\" ) )"
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
     }
 
     // kleene star
@@ -145,19 +146,19 @@ int main()
 
         ut.clear();
         BOOST_TEST(test_attr("10", r1, ut) &&
-            ut.which() == utree_type::int_type && check(ut, "10"));
+            ut.which() == utree_type::int_type && check(ut, "10"));       // FIXME?: "( 10 )"
         ut.clear();
         BOOST_TEST(test_attr("10.2", r1, ut) &&
-            ut.which() == utree_type::double_type && check(ut, "10.2"));
+            ut.which() == utree_type::double_type && check(ut, "10.2"));  // FIXME?: "( 10.2 )"
 
         rule<char const*, utree()> r2 = strict_double | int_;
 
         ut.clear();
         BOOST_TEST(test_attr("10", r2, ut) &&
-            ut.which() == utree_type::int_type && check(ut, "10"));
+            ut.which() == utree_type::int_type && check(ut, "10"));       // FIXME?: "( 10 )"
         ut.clear();
         BOOST_TEST(test_attr("10.2", r2, ut) &&
-            ut.which() == utree_type::double_type && check(ut, "10.2"));
+            ut.which() == utree_type::double_type && check(ut, "10.2"));  // FIXME?: "( 10.2 )"
     }
 
     // optionals
@@ -185,6 +186,40 @@ int main()
 
         BOOST_TEST(test_attr("xy", as_string[*char_], ut) &&
             ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x,y", as_string[char_ >> ',' >> char_], ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x,y", char_ >> ',' >> char_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a,b1.2", as_string[~digit % ','] >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a,b1.2", ~digit % ',' >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
+        ut.clear();
+    }
+
+    {
+        using boost::spirit::qi::digit;
+        using boost::spirit::qi::space;
+
+        utree ut;
+        BOOST_TEST(test_attr("xy c", lexeme[char_ >> char_] >> char_, ut, space) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"xy\" \"c\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("ab 1.2", lexeme[*~digit] >> double_, ut, space) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a xy", char_ >> lexeme[*char_], ut, space) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"xy\" )"));
         ut.clear();
     }
 
