@@ -33,6 +33,7 @@ int main()
     using boost::spirit::qi::double_;
     using boost::spirit::qi::space;
     using boost::spirit::qi::rule;
+    using boost::spirit::qi::as_string;
 
     // primitive data types
     {
@@ -53,7 +54,7 @@ int main()
 
         utree ut;
         BOOST_TEST(test_attr("xy", char_ >> char_, ut) &&
-            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+            ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));
         ut.clear();
         BOOST_TEST(test_attr("123 456", int_ >> int_, ut, space) &&
             ut.which() == utree_type::list_type && check(ut, "( 123 456 )"));
@@ -63,26 +64,26 @@ int main()
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", double_ >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"ab\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
 
         rule<char const*, utree()> r = double_;
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", r >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"ab\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
     }
 
     // kleene star
     {
         utree ut;
         BOOST_TEST(test_attr("xy", *char_, ut) &&
-            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+            ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));
         ut.clear();
         BOOST_TEST(test_attr("123 456", *int_, ut, space) &&
             ut.which() == utree_type::list_type && check(ut, "( 123 456 )"));
@@ -95,7 +96,7 @@ int main()
     {
         utree ut;
         BOOST_TEST(test_attr("x,y", char_ % ',', ut) &&
-            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+            ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));
         ut.clear();
         BOOST_TEST(test_attr("123,456", int_ % ',', ut) &&
             ut.which() == utree_type::list_type && check(ut, "( 123 456 )"));
@@ -167,6 +168,24 @@ int main()
         ut.clear();
         BOOST_TEST(test_attr("", -char_, ut) &&
             ut.which() == utree_type::nil_type && check(ut, "<nil>"));
+    }
+
+    // as_string
+    {
+        using boost::spirit::qi::digit;
+
+        utree ut;
+        BOOST_TEST(test_attr("xy", as_string[char_ >> char_], ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
+
+        BOOST_TEST(test_attr("ab1.2", as_string[*~digit] >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("xy", as_string[*char_], ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
     }
 
     return boost::report_errors();
