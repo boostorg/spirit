@@ -205,23 +205,5 @@ int main()
         ut.clear();
     }
 
-    {
-        using boost::spirit::qi::digit;
-        using boost::spirit::qi::space;
-
-        utree ut;
-        BOOST_TEST(test_attr("xy c", lexeme[char_ >> char_] >> char_, ut, space) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"xy\" \"c\" )"));
-        ut.clear();
-
-        BOOST_TEST(test_attr("ab 1.2", lexeme[*~digit] >> double_, ut, space) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
-        ut.clear();
-
-        BOOST_TEST(test_attr("a xy", char_ >> lexeme[*char_], ut, space) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"xy\" )"));
-        ut.clear();
-    }
-
     return boost::report_errors();
 }
