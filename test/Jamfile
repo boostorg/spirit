@@ -120,6 +120,7 @@ import testing ;
     [ run karma/stream.cpp                  : : : : karma_stream ]
     [ run karma/symbols.cpp                 : : : : karma_symbols ]
     [ run karma/tricky_alignment.cpp        : : : : ]
+    [ run karma/utree.cpp                   : : : : karma_utree ]
 
     [ compile-fail karma/grammar_fail.cpp   : : karma_grammar_fail ]
     [ compile-fail karma/rule_fail.cpp      : : karma_rule_fail ]
