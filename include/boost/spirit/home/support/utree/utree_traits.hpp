@@ -115,65 +115,6 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization tells Spirit.Qi to allow assignment to a utree from
-    // string iterators
-    template <typename Iterator>
-    struct assign_to_attribute_from_string_iterators
-    {
-        typedef basic_string<
-            boost::iterator_range<Iterator>,
-            utree_type::string_type>
-        range;
-
-        static void
-        call(Iterator first, Iterator last, utree& attr)
-        {
-            utree rng(range(first, last));
-            attr.swap(rng);
-        }
-    };
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, std::basic_string<char>::iterator>
-        : assign_to_attribute_from_string_iterators<std::basic_string<char>::iterator>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, std::basic_string<wchar_t>::iterator>
-        : assign_to_attribute_from_string_iterators<std::basic_string<wchar_t>::iterator>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, std::basic_string<char>::const_iterator>
-        : assign_to_attribute_from_string_iterators<std::basic_string<char>::const_iterator>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, std::basic_string<wchar_t>::const_iterator>
-        : assign_to_attribute_from_string_iterators<std::basic_string<wchar_t>::const_iterator>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, char const*>
-        : assign_to_attribute_from_string_iterators<char const*>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, char*>
-        : assign_to_attribute_from_string_iterators<char*>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, wchar_t const*>
-        : assign_to_attribute_from_string_iterators<wchar_t const*>
-    {};
-
-    template <>
-    struct assign_to_attribute_from_iterators<utree, wchar_t*>
-        : assign_to_attribute_from_string_iterators<wchar_t*>
-    {};
-
-    ///////////////////////////////////////////////////////////////////////////
     // push_back support for utree allows concatenation of strings
     // (utree strings are immutable)
     template <typename T>
@@ -595,7 +536,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization is used whenever a utree is passed to a rule as part 
+    // this specialization is used whenever a utree is passed to a rule as part
     // of a sequence
     template <typename Iterator>
     struct transform_attribute<

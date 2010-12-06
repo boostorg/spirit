@@ -403,6 +403,7 @@ namespace boost { namespace spirit
         template <typename UTreeX, typename UTreeY>
         friend struct detail::visit_impl;
         friend struct detail::index_impl;
+        friend struct detail::assign_impl;
 
         template <typename T>
         friend struct detail::get_impl;

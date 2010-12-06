@@ -30,18 +30,12 @@ namespace boost { namespace spirit
     template <>
     struct use_directive<qi::domain, tag::raw> // enables raw
       : mpl::true_ {};
-
-    template <>
-    struct use_directive<qi::domain, tag::as_string> // enables as_string
-      : mpl::true_ {};
 }}
 
 namespace boost { namespace spirit { namespace qi
 {
     using spirit::raw;
     using spirit::raw_type;
-    using spirit::as_string;
-    using spirit::as_string_type;
 
     template <typename Subject>
     struct raw_directive : unary_parser<raw_directive<Subject> >
@@ -87,16 +81,6 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Modifiers>
     struct make_directive<tag::raw, Subject, Modifiers>
-    {
-        typedef raw_directive<Subject> result_type;
-        result_type operator()(unused_type, Subject const& subject, unused_type) const
-        {
-            return result_type(subject);
-        }
-    };
-
-    template <typename Subject, typename Modifiers>
-    struct make_directive<tag::as_string, Subject, Modifiers>
     {
         typedef raw_directive<Subject> result_type;
         result_type operator()(unused_type, Subject const& subject, unused_type) const

@@ -16,6 +16,7 @@ namespace boost { namespace spirit { namespace detail
     struct visit_impl;
 
     struct index_impl;
+    struct assign_impl;
 
     template <typename T>
     struct get_impl;

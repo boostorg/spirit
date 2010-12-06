@@ -17,6 +17,7 @@
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/iterator/iterator_traits.hpp>
 
 namespace boost { namespace spirit { namespace detail
 {
@@ -972,18 +973,63 @@ namespace boost { namespace spirit
             insert(pos, *first++);
     }
 
+    namespace detail
+    {
+        struct assign_impl
+        {
+            template <typename Iter>
+            static void dispatch(utree& ut, Iter first, Iter last)
+            {
+                ut.ensure_list_type();
+                ut.clear();
+                while (first != last)
+                {
+                    ut.push_back(*first);
+                    ++first;
+                }
+            }
+
+            template <typename Iter>
+            static void dispatch_string(utree& ut, Iter first, Iter last)
+            {
+                ut.free();
+                ut.s.construct(first, last);
+                ut.set_type(utree_type::string_type);
+            }
+
+            static void dispatch(utree& ut,
+                std::basic_string<char>::iterator first,
+                std::basic_string<char>::iterator last)
+            {
+                dispatch_string(ut, first, last);
+            }
+
+            static void dispatch(utree& ut,
+                std::basic_string<char>::const_iterator first,
+                std::basic_string<char>::const_iterator last)
+            {
+                dispatch_string(ut, first, last);
+            }
+
+            static void dispatch(utree& ut, char const* first, char const* last)
+            {
+                dispatch_string(ut, first, last);
+            }
+
+            template <typename Iter>
+            static void call(utree& ut, Iter first, Iter last)
+            {
+                dispatch(ut, first, last);
+            }
+        };
+    }
+
     template <typename Iter>
     inline void utree::assign(Iter first, Iter last)
     {
         if (get_type() == type::reference_type)
             return p->assign(first, last);
-        ensure_list_type();
-        clear();
-        while (first != last)
-        {
-            push_back(*first);
-            ++first;
-        }
+        detail::assign_impl::call(*this, first, last);
     }
 
     inline void utree::clear()
