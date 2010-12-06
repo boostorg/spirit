@@ -219,7 +219,6 @@ namespace boost { namespace spirit { namespace traits
     struct not_is_variant<utree, karma::domain>
       : mpl::false_ {};
 
-    ///////////////////////////////////////////////////////////////////////////
     // this specialization tells Spirit how to extract the type of the value
     // stored in the given utree node
     template <>
@@ -228,7 +227,6 @@ namespace boost { namespace spirit { namespace traits
         static int call(utree const& u) { return u.which(); }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
     // The specializations below tell Spirit to verify whether an attribute
     // type is compatible with a given variant type
     template <>
@@ -450,6 +448,68 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
+    struct extract_from_attribute<utree, char>
+    {
+        typedef char type;
+
+        template <typename Context>
+        static type call(utree const& t, Context&)
+        {
+            utf8_symbol_range r = boost::get<utf8_symbol_range>(t);
+            return r.front();
+        }
+    };
+
+    template <>
+    struct extract_from_attribute<utree, bool>
+    {
+        typedef bool type;
+
+        template <typename Context>
+        static type call(utree const& t, Context&)
+        {
+            return boost::get<bool>(t);
+        }
+    };
+
+    template <>
+    struct extract_from_attribute<utree, int>
+    {
+        typedef int type;
+
+        template <typename Context>
+        static type call(utree const& t, Context&)
+        {
+            return boost::get<int>(t);
+        }
+    };
+
+    template <>
+    struct extract_from_attribute<utree, double>
+    {
+        typedef double type;
+
+        template <typename Context>
+        static type call(utree const& t, Context&)
+        {
+            return boost::get<double>(t);
+        }
+    };
+
+    template <typename Traits, typename Alloc>
+    struct extract_from_attribute<utree, std::basic_string<char, Traits, Alloc> >
+    {
+        typedef std::basic_string<char, Traits, Alloc> type;
+
+        template <typename Context>
+        static type call(utree const& t, Context&)
+        {
+            utf8_symbol_range r = boost::get<utf8_string_range>(t);
+            return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
+        }
+    };
+
+    template <>
     struct extract_from_attribute<utree, utf8_symbol>
     {
         typedef std::string type;
@@ -472,6 +532,80 @@ namespace boost { namespace spirit { namespace traits
         {
             utf8_string_range r = boost::get<utf8_string_range>(t);
             return std::string(r.begin(), r.end());
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct transform_attribute<utree const, char, karma::domain>
+    {
+        typedef char type;
+
+        static type pre(utree const& t)
+        {
+            utf8_string_range r = boost::get<utf8_string_range>(t);
+            return r.front();
+        }
+    };
+
+    template <>
+    struct transform_attribute<utree const, bool, karma::domain>
+    {
+        typedef bool type;
+
+        static type pre(utree const& t)
+        {
+            return boost::get<bool>(t);
+        }
+    };
+
+    template <>
+    struct transform_attribute<utree const, int, karma::domain>
+    {
+        typedef int type;
+
+        static type pre(utree const& t)
+        {
+            return boost::get<int>(t);
+        }
+    };
+
+    template <>
+    struct transform_attribute<utree const, double, karma::domain>
+    {
+        typedef double type;
+
+        static type pre(utree const& t)
+        {
+            return boost::get<double>(t);
+        }
+    };
+
+    template <typename Traits, typename Alloc>
+    struct transform_attribute<
+        utree const, std::basic_string<char, Traits, Alloc>, karma::domain>
+    {
+        typedef std::basic_string<char, Traits, Alloc> type;
+
+        static type pre(utree const& t)
+        {
+            utf8_symbol_range r = boost::get<utf8_string_range>(t);
+            return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization is used whenever a utree is passed to a rule as part 
+    // of a sequence
+    template <typename Iterator>
+    struct transform_attribute<
+        iterator_range<Iterator> const, utree, karma::domain>
+    {
+        typedef utree type;
+
+        static type pre(iterator_range<Iterator> const& t)
+        {
+          return utree(boost::ref(t.front()));   // return utree the begin iterator points to
         }
     };
 
