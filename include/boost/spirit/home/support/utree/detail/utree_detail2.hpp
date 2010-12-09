@@ -146,13 +146,12 @@ namespace boost { namespace spirit { namespace detail
       : public boost::iterator_facade<
             node_iterator<Value>
           , Value
-          , boost::bidirectional_traversal_tag
-        >
+          , boost::bidirectional_traversal_tag>
     {
     public:
 
         node_iterator()
-          : node(0) {}
+          : node(0), prev(0) {}
 
         node_iterator(list::node* node, list::node* prev)
           : node(node), prev(prev) {}
@@ -190,18 +189,6 @@ namespace boost { namespace spirit { namespace detail
             return node->val;
         }
 
-        void advance (typename node_iterator::difference_type n)
-        {
-            std::advance(*this, n);
-        }
-
-        template<typename Iterator>
-        typename node_iterator::difference_type
-        distance_to(Iterator const& other) const
-        {
-            return std::distance(*this, node_iterator(other));
-        }
-
         list::node* node;
         list::node* prev;
     };
@@ -211,8 +198,7 @@ namespace boost { namespace spirit { namespace detail
       : public boost::iterator_facade<
             node_iterator<boost::reference_wrapper<Value> >
           , boost::reference_wrapper<Value>
-          , boost::random_access_traversal_tag
-        >
+          , boost::random_access_traversal_tag>
     {
     public:
 
@@ -255,17 +241,6 @@ namespace boost { namespace spirit { namespace detail
         typename node_iterator::reference dereference() const
         {
             return curr;
-        }
-
-        void advance (typename node_iterator::difference_type n)
-        {
-            std::advance(*this, n);
-        }
-
-        template<typename Iterator>
-        typename node_iterator::difference_type distance_to(Iterator const& other)
-        const {
-            return std::distance(*this, node_iterator(other));
         }
 
         list::node* node;
