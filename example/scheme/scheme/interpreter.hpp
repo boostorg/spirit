@@ -13,7 +13,7 @@
 #include <boost/array.hpp>
 #include <boost/scoped_array.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
-#include <utree/utree.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 
 #define SCHEME_COMPOSITE_LIMIT 10
 
@@ -27,6 +27,20 @@ namespace scheme
 ///////////////////////////////////////////////////////////////////////////////
 //  The runtime interpreter
 ///////////////////////////////////////////////////////////////////////////////
+    
+    using boost::spirit::utree;
+    using boost::spirit::utree_type;
+    using boost::spirit::scope;
+    using boost::spirit::shallow;
+    using boost::spirit::stored_function;
+    using boost::spirit::function_base;
+    using boost::spirit::binary_string;
+    using boost::spirit::utf8_symbol;
+    using boost::spirit::utf8_string;
+    using boost::spirit::binary_range;
+    using boost::spirit::utf8_symbol_range;
+    using boost::spirit::utf8_string_range;
+    using boost::spirit::nil;
 
     ///////////////////////////////////////////////////////////////////////////
     // typedefs
@@ -226,8 +240,8 @@ namespace scheme
     template <bool scoped = true>
     struct vararg_function : actor<vararg_function<scoped> >
     {
-        std::size_t level;
         std::size_t n;
+        std::size_t level;
         vararg_function(std::size_t n, std::size_t level = 0)
           : n(n),
             level(level)
@@ -489,7 +503,7 @@ namespace scheme
         boost::reference_wrapper<function const> f;
 
         lambda_function(function const& f, actor_list const& elements, int level = 0)
-          : elements(elements), f(f), level(level) {}
+          : level(level), elements(elements), f(f) {}
 
         typedef utree result_type;
         utree eval(scope const& env) const

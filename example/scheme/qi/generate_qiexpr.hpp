@@ -6,7 +6,7 @@
 #if !defined(BOOST_SPIRIT_GENERATE_QIEXPR)
 #define BOOST_SPIRIT_GENERATE_QIEXPR
 
-#include <utree/utree.hpp>
+#include <output/sexpr.hpp>
 
 namespace scheme { namespace output
 {

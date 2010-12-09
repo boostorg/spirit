@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Joel de Guzman, Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,11 +8,26 @@
 #define BOOST_SPIRIT_SCHEME_INTRINSICS
 
 #include <scheme/interpreter.hpp>
-#include <utree/operators.hpp>
 #include <iostream>
 
 namespace scheme
 {
+    namespace detail {
+
+      inline utree rest(utree& x)
+      {
+        utree::iterator i = x.begin(); ++i;
+        return utree(utree::range(i, x.end()), shallow);
+      }
+
+      inline utree rest(utree const& x)
+      {
+        utree::const_iterator i = x.begin(); ++i;
+        return utree(utree::const_range(i, x.end()), shallow);
+      }
+
+    } 
+
     ///////////////////////////////////////////////////////////////////////////
     // if
     ///////////////////////////////////////////////////////////////////////////
@@ -194,7 +209,7 @@ namespace scheme
     SCHEME_UNARY_INTRINSIC(display, (std::cout << element, utree()));
     SCHEME_UNARY_INTRINSIC(front, element.front());
     SCHEME_UNARY_INTRINSIC(back, element.back());
-    SCHEME_UNARY_INTRINSIC(rest, utree_functions::rest(element));
+    SCHEME_UNARY_INTRINSIC(rest, detail::rest(element));
 
     ///////////////////////////////////////////////////////////////////////////
     // binary intrinsics

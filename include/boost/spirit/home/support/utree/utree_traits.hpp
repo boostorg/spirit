@@ -83,11 +83,27 @@ namespace boost { namespace spirit { namespace traits
         {
             attr = make_iterator_range(traits::begin(val), traits::end(val));
         }
-
+        
         static void call(Attribute const& val, utree& attr)
         {
             call(val, attr, is_container<Attribute>());
         }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization keeps symbols from being transformed into strings  
+    template<>
+    struct assign_to_attribute_from_value<utree, utf8_symbol> {
+      static void call (utf8_symbol const& val, utree& attr) {
+        attr = val;
+      }
+    };
+    
+    template<>
+    struct assign_to_attribute_from_value<utree, utf8_symbol_range> {
+      static void call (utf8_symbol_range const& val, utree& attr) {
+        attr = val;
+      }
     };
 
     ///////////////////////////////////////////////////////////////////////////

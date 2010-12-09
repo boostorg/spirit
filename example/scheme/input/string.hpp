@@ -17,9 +17,6 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
-#include <utree/utree.hpp>
-#include <utree/operators.hpp>
-
 namespace scheme { namespace input
 {
     using boost::spirit::standard::char_;
@@ -88,25 +85,17 @@ namespace scheme { namespace input
                   )
                 ;
 
-            char_lit
-                = '\''
-                > (char_esc(_val) | (~char_('\''))  [_val += _1])
-                > '\''
-                ;
-
             start
-                =  '"'
+                = '"'
                 > *(char_esc(_val) | (~char_('"'))  [_val += _1])
                 > '"'
                 ;
 
             char_esc.name("char_esc");
-            char_lit.name("char_lit");
             start.name("string");
         }
 
         rule<Iterator, void(std::string&)> char_esc;
-        rule<Iterator, std::string()> char_lit;
         rule<Iterator, std::string()> start;
     };
 }}

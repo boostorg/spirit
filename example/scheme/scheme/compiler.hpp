@@ -559,8 +559,7 @@ namespace scheme
                     int progline = (program.which() == utree_type::list_type)
                         ? program.tag() : line;
 
-                    if (progline != -1)
-                        std::cerr << '(' << progline << ')';
+                    std::cerr << '(' << progline << ')';
 
                     std::cerr << " : Error! scheme: Function definition expected." << std::endl;
                     continue; // try the next expression
@@ -604,7 +603,7 @@ namespace scheme
         template <typename Source>
         interpreter(
             Source& in,
-            std::string const& source_file = "",
+            std::string const& source_file = "<string>",
             environment* envp = 0)
         {
             if (envp == 0)
