@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
     Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -54,7 +55,8 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct assign_to_attribute_from_value<utree, variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    struct assign_to_attribute_from_value<
+        utree, variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     {
         static void
         call(variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& val, utree& attr)
@@ -94,8 +96,7 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct assign_to_attribute_from_value<utree, utree>
     {
-        static void
-        call(utree const& val, utree& attr)
+        static void call(utree const& val, utree& attr)
         {
             attr = val;
         }
@@ -111,6 +112,26 @@ namespace boost { namespace spirit { namespace traits
         call(Iterator const& first, Iterator const& last, utree& attr)
         {
             attr.assign(first, last);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization keeps symbols from being transformed into strings  
+    template<>
+    struct assign_to_attribute_from_value<utree, utf8_symbol> 
+    {
+        static void call (utf8_symbol const& val, utree& attr) 
+        {
+            attr = val;
+        }
+    };
+
+    template<>
+    struct assign_to_attribute_from_value<utree, utf8_symbol_range> 
+    {
+        static void call (utf8_symbol_range const& val, utree& attr) 
+        {
+            attr = val;
         }
     };
 
@@ -450,6 +471,7 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
     template <>
     struct extract_from_attribute<utree, utf8_symbol>
     {
@@ -535,7 +557,6 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
     // this specialization is used whenever a utree is passed to a rule as part
     // of a sequence
     template <typename Iterator>
@@ -546,7 +567,8 @@ namespace boost { namespace spirit { namespace traits
 
         static type pre(iterator_range<Iterator> const& t)
         {
-          return utree(boost::ref(t.front()));   // return utree the begin iterator points to
+            // return utree the begin iterator points to
+            return utree(boost::ref(t.front()));
         }
     };
 
