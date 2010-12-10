@@ -5,8 +5,6 @@
 
 // #define BOOST_SPIRIT_KARMA_DEBUG
 
-#include <utree/operators.hpp>
-
 #include <qi/generate_qiexpr.hpp>
 #include <qi/generate_qiexpr_impl.hpp>
 
@@ -19,5 +17,6 @@ namespace scheme { namespace output
 
 namespace scheme
 {
-    std::ostream& operator<<(std::ostream& out, nil const& x);
+    std::ostream& operator<<(std::ostream& out, boost::spirit::nil const& x);
 }
+

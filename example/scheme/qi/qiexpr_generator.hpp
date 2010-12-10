@@ -10,7 +10,7 @@
 
 #include <boost/cstdint.hpp>
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/support_sexpr.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
 #include <qi/component_names.hpp>

@@ -9,7 +9,6 @@
 #include <input/sexpr.hpp>
 #include <input/parse_sexpr_impl.hpp>
 #include <scheme/compiler.hpp>
-#include <utree/io.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -18,7 +17,7 @@ int main()
 {
     using scheme::interpreter;
     using scheme::function;
-    using scheme::utree;
+    using boost::spirit::utree;
 
     utree src =
         "(define (factorial n) "

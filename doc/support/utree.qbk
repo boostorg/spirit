@@ -20,7 +20,6 @@ syntax trees. utree can store the following:
 16 bytes on a 32-bit platform. Being a container of itself, it can
 represent tree structures.]
 
-
 [heading Class Reference]
 
 [utree]
@@ -30,6 +29,9 @@ represent tree structures.]
 [utree_strings]
 
 [heading Function Object Interface]
+
+The stored_function template class can to store a unary function objects with
+a signature of utree(scope const&) as a utree node.
 
 [utree_function_object_interface]
 

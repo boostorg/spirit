@@ -24,6 +24,7 @@ exe parse_qi_test
 
 exe generate_qi_test
    : parse_qiexpr/parse_qiexpr.cpp
+     generate_qiexpr/generate_sexpr_to_ostream.cpp
      generate_qiexpr/generate_qi_test.cpp
      generate_qiexpr/generate_qiexpr.cpp
    ;
@@ -31,6 +32,4 @@ exe generate_qi_test
 exe factorial1 : scheme/factorial1.cpp ;
 exe factorial2 : scheme/factorial2.cpp ;
 exe try_scheme : scheme/try_scheme.cpp ;
-
-
 

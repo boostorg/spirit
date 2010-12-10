@@ -84,6 +84,12 @@ namespace scheme { namespace input
                   |   char_("btnfr\\\"'")           [push_esc(_r1, _1)]
                   )
                 ;
+            
+            char_lit
+                = '\''
+                > (char_esc(_val) | (~char_('\''))  [_val += _1])
+                > '\''
+                ;
 
             start
                 = '"'
@@ -92,10 +98,12 @@ namespace scheme { namespace input
                 ;
 
             char_esc.name("char_esc");
+            char_esc.name("char_lit");
             start.name("string");
         }
 
         rule<Iterator, void(std::string&)> char_esc;
+        rule<Iterator, std::string()> char_lit;
         rule<Iterator, std::string()> start;
     };
 }}

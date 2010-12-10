@@ -11,7 +11,7 @@
 #include <boost/cstdint.hpp>
 #include <boost/detail/iterator.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/support_sexpr.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>

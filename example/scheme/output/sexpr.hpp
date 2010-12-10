@@ -10,8 +10,8 @@
 
 #include <boost/cstdint.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/spirit/home/support/utree/utree_traits.hpp>
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/support_utree.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace scheme { namespace output
