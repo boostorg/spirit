@@ -498,6 +498,19 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+//     template <typename Iterator>
+//     struct extract_from_attribute<utree, iterator_range<Iterator> >
+//     {
+//         typedef utree type;
+// 
+//         template <typename Context>
+//         static type call(utree const& t, Context&)
+//         {
+//             // return utree the begin iterator points to
+//             return utree(boost::ref(t.front()));
+//         }
+//     };
+
     ///////////////////////////////////////////////////////////////////////////
     template <>
     struct transform_attribute<utree const, char, karma::domain>
@@ -596,6 +609,111 @@ namespace boost { namespace spirit { namespace traits
             return std::string(r.begin(), r.end());
         }
     };
+
+//     ///////////////////////////////////////////////////////////////////////////
+//     // generic iterator for arbitrary utree node types 
+//     template <typename Value>
+//     class utree_node_iterator
+//       : public boost::iterator_facade<
+//             utree_node_iterator<Value>
+//           , Value
+//           , boost::bidirectional_traversal_tag>
+//     {
+//     public:
+// //         utree_node_iterator() : node(0), prev(0), node_iter() {}
+//         utree_node_iterator(Value& val) 
+//           : node(&val), prev(0) 
+//         {
+//             if (node->which() == utree_type::list_type)
+//                 node_iter = node->begin(); 
+//         }
+//         utree_node_iterator(Value& val, int) 
+//           : node(0), prev(0) 
+//         {
+//             if (val.which() == utree_type::list_type)
+//                 node_iter = val.end(); 
+//         }
+// 
+//     private:
+//         friend class boost::iterator_core_access;
+//         friend class boost::spirit::utree;
+// 
+//         void increment()
+//         {
+//             if (node->which() == utree_type::list_type)
+//             {
+//                 ++node_iter;
+//             }
+//             else
+//             {
+//                 prev = node;
+//                 node = 0;
+//             }
+//         }
+// 
+//         void decrement()
+//         {
+//             if (node->which() == utree_type::list_type)
+//             {
+//                 --node_iter;
+//             }
+//             else
+//             {
+//                 node = prev;
+//                 prev = 0;
+//             }
+//         }
+// 
+//         bool equal(utree_node_iterator const& other) const
+//         {
+//             if (0 != node && node->which() == utree_type::list_type) 
+//             {
+//                 return node_iter == other.node_iter;
+//             }
+//             return node == other.node;
+//         }
+// 
+//         typename utree_node_iterator::reference dereference() const
+//         {
+//             if (node->which() == utree_type::list_type)
+//             {
+//                 return *node_iter;
+//             }
+//             return *node;
+//         }
+// 
+//         Value* node;
+//         Value* prev;
+//         spirit::detail::list::node_iterator<Value> node_iter;
+//     };
+// 
+//     template <>
+//     struct container_iterator<utree const>
+//     {
+//         typedef utree_node_iterator<utree const> type;
+//     };
+// 
+//     template <>
+//     struct begin_container<utree const>
+//     {
+//         typedef container_iterator<utree const>::type iterator_type;
+// 
+//         static iterator_type call(utree const& c)
+//         {
+//             return iterator_type(c);
+//         }
+//     };
+// 
+//     template <>
+//     struct end_container<utree const>
+//     {
+//         typedef container_iterator<utree const>::type iterator_type;
+// 
+//         static iterator_type call(utree const& c)
+//         {
+//             return iterator_type(c, 0);
+//         }
+//     };
 }}}
 
 #endif
