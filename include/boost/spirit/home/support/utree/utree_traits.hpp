@@ -91,22 +91,6 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization keeps symbols from being transformed into strings  
-    template<>
-    struct assign_to_attribute_from_value<utree, utf8_symbol> {
-      static void call (utf8_symbol const& val, utree& attr) {
-        attr = val;
-      }
-    };
-    
-    template<>
-    struct assign_to_attribute_from_value<utree, utf8_symbol_range> {
-      static void call (utf8_symbol_range const& val, utree& attr) {
-        attr = val;
-      }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     // this specialization is required to disambiguate the specializations
     // related to utree
     template <>

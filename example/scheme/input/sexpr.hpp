@@ -88,7 +88,7 @@ namespace scheme { namespace input
         template <typename Range>
         void operator()(utree& ast, Range const& rng) const
         {
-            int n = get_line(rng.begin());
+            int n = boost::spirit::get_line(rng.begin());
             BOOST_ASSERT(n <= (std::numeric_limits<short>::max)());
             ast.tag(n);
         }

@@ -10,11 +10,11 @@
 #include <iostream>
 #include <string>
 #include <boost/spirit/include/support_istream_iterator.hpp>
+#include <boost/spirit/include/support_line_pos_iterator.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
 #include <input/sexpr.hpp>
 #include <input/parse_sexpr.hpp>
-#include <support/line_pos_iterator.hpp>
 
 namespace scheme { namespace input
 {
@@ -34,7 +34,8 @@ namespace scheme { namespace input
         stream_iterator_type sfirst(is);
         stream_iterator_type slast;
 
-        typedef line_pos_iterator<stream_iterator_type> iterator_type;
+        typedef boost::spirit::line_pos_iterator<stream_iterator_type>
+          iterator_type;
         iterator_type first(sfirst);
         iterator_type last(slast);
 
@@ -61,7 +62,8 @@ namespace scheme { namespace input
         stream_iterator_type sfirst(is);
         stream_iterator_type slast;
 
-        typedef line_pos_iterator<stream_iterator_type> iterator_type;
+        typedef boost::spirit::line_pos_iterator<stream_iterator_type>
+          iterator_type;
         iterator_type first(sfirst);
         iterator_type last(slast);
 
@@ -82,9 +84,8 @@ namespace scheme { namespace input
         utree& result,
         std::string const& source_file)
     {
-        typedef
-            line_pos_iterator<typename Range::const_iterator>
-        iterator_type;
+        typedef boost::spirit::line_pos_iterator<typename Range::const_iterator>
+          iterator_type;
 
         scheme::input::sexpr<iterator_type> p(source_file);
         scheme::input::sexpr_white_space<iterator_type> ws;
@@ -103,9 +104,8 @@ namespace scheme { namespace input
         utree& result,
         std::string const& source_file)
     {
-        typedef
-            line_pos_iterator<typename Range::const_iterator>
-        iterator_type;
+        typedef boost::spirit::line_pos_iterator<typename Range::const_iterator>
+          iterator_type;
 
         scheme::input::sexpr<iterator_type> p(source_file);
         scheme::input::sexpr_white_space<iterator_type> ws;
@@ -138,5 +138,4 @@ namespace scheme { namespace input
 }}
 
 #endif
-
 

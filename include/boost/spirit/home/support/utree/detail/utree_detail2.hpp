@@ -805,6 +805,15 @@ namespace boost { namespace spirit
         set_type(type::reference_type);
         return *this;
     }
+    
+    inline utree& utree::operator=(any_ptr const& p)
+    {
+        free();
+        v.p = p.p;
+        v.i = p.i;
+        set_type(type::any_type);
+        return *this;
+    }
 
     template <typename F>
     utree& utree::operator=(stored_function<F> const& pf)
@@ -824,42 +833,42 @@ namespace boost { namespace spirit
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree const&)>::type
     inline utree::visit(utree const& x, F f)
     {
         return detail::visit_impl<utree const>::apply(x, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree&)>::type
     inline utree::visit(utree& x, F f)
     {
         return detail::visit_impl<utree>::apply(x, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree const&, utree const&)>::type
     inline utree::visit(utree const& x, utree const& y, F f)
     {
         return detail::visit_impl<utree const, utree const>::apply(x, y, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree const&, utree&)>::type
     inline utree::visit(utree const& x, utree& y, F f)
     {
         return detail::visit_impl<utree const, utree>::apply(x, y, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree&, utree const&)>::type
     inline utree::visit(utree& x, utree const& y, F f)
     {
         return detail::visit_impl<utree, utree const>::apply(x, y, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree&, utree&)>::type
     inline utree::visit(utree& x, utree& y, F f)
     {
         return detail::visit_impl<utree, utree>::apply(x, y, f);

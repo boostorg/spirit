@@ -9,7 +9,7 @@
 
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
-#include <support/line_pos_iterator.hpp>
+#include <boost/spirit/include/support_line_pos_iterator.hpp>
 #include <string>
 #include <iostream>
 
@@ -30,7 +30,7 @@ namespace scheme { namespace input
             Iterator err_pos, boost::spirit::info const& what) const
         {
             Iterator eol = err_pos;
-            int line = get_line(err_pos);
+            int line = boost::spirit::get_line(err_pos);
 
             if (source_file != "")
                 std::cerr << source_file;
