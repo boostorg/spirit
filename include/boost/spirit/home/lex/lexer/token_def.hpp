@@ -58,8 +58,10 @@ namespace boost { namespace spirit { namespace lex
         typedef typename proto::terminal<reference_>::type terminal_type;
         typedef proto::extends<terminal_type, token_def> proto_base_type;
 
+        static std::size_t const all_states_id = static_cast<std::size_t>(-2);
+
     public:
-        // Qi interface: metafunction calculating parser return type
+        // Qi interface: meta-function calculating parser return type
         template <typename Context, typename Iterator>
         struct attribute
         {
@@ -97,7 +99,9 @@ namespace boost { namespace spirit { namespace lex
                 BOOST_ASSERT(std::size_t(~0) != token_state_);
 
                 token_type const& t = *first;
-                if (token_id_ == t.id() && token_state_ == t.state()) {
+                if (token_id_ == t.id() && 
+                    (all_states_id == token_state_ || token_state_ == t.state())) 
+                {
                     spirit::traits::assign_to(t, attr);
                     ++first;
                     return true;
@@ -119,7 +123,8 @@ namespace boost { namespace spirit { namespace lex
         // Lex interface: collect token definitions and put it into the 
         // provided lexer def
         template <typename LexerDef, typename String>
-        void collect(LexerDef& lexdef, String const& state) const
+        void collect(LexerDef& lexdef, String const& state
+          , String const& targetstate) const
         {
             std::size_t state_id = lexdef.add_state(state.c_str());
 
@@ -128,7 +133,13 @@ namespace boost { namespace spirit { namespace lex
             // is not possible. Please create a separate token_def instance 
             // from the same regular expression for each lexer state it needs 
             // to be associated with.
-            BOOST_ASSERT(std::size_t(~0) == token_state_ || state_id == token_state_);
+            BOOST_ASSERT(
+                (std::size_t(~0) == token_state_ || state_id == token_state_) &&
+                "Can't use single token_def with more than one lexer state");
+
+            char_type const* target = targetstate.empty() ? 0 : targetstate.c_str();
+            if (target)
+                lexdef.add_state(target);
 
             token_state_ = state_id;
             if (0 == token_id_)
@@ -136,11 +147,11 @@ namespace boost { namespace spirit { namespace lex
 
             if (0 == def_.which()) {
                 unique_id_ = lexdef.add_token(state.c_str()
-                  , get<string_type>(def_), token_id_);
+                  , get<string_type>(def_), token_id_, target);
             }
             else {
                 unique_id_ = lexdef.add_token(state.c_str()
-                  , get<char_type>(def_), token_id_);
+                  , get<char_type>(def_), token_id_, target);
             }
         }
 
@@ -166,7 +177,7 @@ namespace boost { namespace spirit { namespace lex
         explicit token_def(char_type def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(reference_(*this)))
           , def_(def_)
-          , token_id_(std::size_t(Idtype() == id_ ? def_ : id_))
+          , token_id_(Idtype() == id_ ? Idtype(def_) : id_)
           , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
 
         explicit token_def(string_type const& def_, Idtype id_ = Idtype())

@@ -128,6 +128,7 @@ namespace boost { namespace spirit
         ( set_state )
         ( in_state )
         ( token )
+        ( tokenid )
         ( attr )
         ( columns )
         ( auto_ )

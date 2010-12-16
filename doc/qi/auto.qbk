@@ -60,7 +60,6 @@ type which can be used to match input for the given attribute type.
     [[`unsigned short`, `unsigned int`, `unsigned long`] 
                               [`ushort_`, `uint_`, `ulong_`]]
     [[`float`, `double`, `long double`] [`float_`, `double_`, `long_double`]]
-    [[`short`, `int`, `long`] [`short_`, `int_`, `long_`]]
     [[`long long`, `unsigned long long`]
                               [`long_long`, `ulong_long`]]
     [[`bool`]                 [`bool_`]]

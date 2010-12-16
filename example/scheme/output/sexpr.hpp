@@ -37,7 +37,7 @@ namespace scheme { namespace output
         {
             uint_generator<unsigned char, 16> hex2;
 
-            start     = double_
+            start    %= double_
                       | int_
                       | bool_
                       | string_

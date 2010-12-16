@@ -17,13 +17,13 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_ast.hpp>
 #include <boost/spirit/include/classic_tree_to_xml.hpp>
+#include <boost/assert.hpp>
 #include "tree_calc_grammar.hpp"
 
 #include <iostream>
 #include <stack>
 #include <functional>
 #include <string>
-#include <cassert>
 
 #if defined(BOOST_SPIRIT_DUMP_PARSETREE_AS_XML)
 #include <map>
@@ -55,7 +55,7 @@ long eval_expression(iter_t const& i)
 
     if (i->value.id() == calculator::integerID)
     {
-        assert(i->children.size() == 0);
+        BOOST_ASSERT(i->children.size() == 0);
 
         // extract integer (not always delimited by '\0')
         string integer(i->value.begin(), i->value.end());
@@ -65,46 +65,46 @@ long eval_expression(iter_t const& i)
     else if (i->value.id() == calculator::factorID)
     {
         // factor can only be unary minus
-        assert(*i->value.begin() == '-');
+        BOOST_ASSERT(*i->value.begin() == '-');
         return - eval_expression(i->children.begin());
     }
     else if (i->value.id() == calculator::termID)
     {
         if (*i->value.begin() == '*')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) *
                 eval_expression(i->children.begin()+1);
         }
         else if (*i->value.begin() == '/')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) /
                 eval_expression(i->children.begin()+1);
         }
         else
-            assert(0);
+            BOOST_ASSERT(0);
     }
     else if (i->value.id() == calculator::expressionID)
     {
         if (*i->value.begin() == '+')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) +
                 eval_expression(i->children.begin()+1);
         }
         else if (*i->value.begin() == '-')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) -
                 eval_expression(i->children.begin()+1);
         }
         else
-            assert(0);
+            BOOST_ASSERT(0);
     }
     else
     {
-        assert(0); // error
+        BOOST_ASSERT(0); // error
     }
 
     return 0;

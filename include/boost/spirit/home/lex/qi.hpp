@@ -13,5 +13,6 @@
 #include <boost/spirit/home/lex/qi/state_switcher.hpp>
 #include <boost/spirit/home/lex/qi/in_state.hpp>
 #include <boost/spirit/home/lex/qi/plain_token.hpp>
+#include <boost/spirit/home/lex/qi/plain_tokenid.hpp>
 
 #endif

@@ -30,7 +30,7 @@
 //  parser to invoke the parser stored in the block.int_rule pointer.
 //
 //-----------------------------------------------------------------------------
-#include <cassert>
+#include <boost/assert.hpp>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/include/phoenix1.hpp>
 #include <boost/spirit/include/classic_core.hpp>
@@ -117,8 +117,8 @@ int main()
 
     int result;
     info = parse("bin{1 dec{1 2 3} 10}", gram[var(result) = arg1], space_p);
-    assert(info.full);
-    assert(result == 9);
+    BOOST_ASSERT(info.full);
+    BOOST_ASSERT(result == 9);
 
     return exit_success;
 }

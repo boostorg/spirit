@@ -35,9 +35,10 @@ namespace boost { namespace spirit { namespace lex
           : qi::reference<Subject>(subject) {}
 
         template <typename LexerDef, typename String>
-        void collect(LexerDef& lexdef, String const& state) const
+        void collect(LexerDef& lexdef, String const& state
+          , String const& targetstate) const
         {
-            this->ref.get().collect(lexdef, state);
+            this->ref.get().collect(lexdef, state, targetstate);
         }
 
         template <typename LexerDef>

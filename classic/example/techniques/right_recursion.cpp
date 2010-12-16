@@ -10,6 +10,7 @@
 
 #define BOOST_SPIRIT_DEBUG
 #include <boost/spirit/include/classic_core.hpp>
+#include <boost/assert.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
@@ -63,25 +64,25 @@ main()
     {
         non_greedy_kleene k;
         success = parse("3", k).full;
-        assert(success);
+        BOOST_ASSERT(success);
         success = parse("abcdef3", k).full;
-        assert(success);
+        BOOST_ASSERT(success);
         success = parse("abc2def3", k).full;
-        assert(success);
+        BOOST_ASSERT(success);
         success = parse("abc", k).full;
-        assert(!success);
+        BOOST_ASSERT(!success);
     }
     
     {
         non_greedy_plus p;
         success = parse("3", p).full;
-        assert(!success);
+        BOOST_ASSERT(!success);
         success = parse("abcdef3", p).full;
-        assert(success);
+        BOOST_ASSERT(success);
         success = parse("abc2def3", p).full;
-        assert(success);
+        BOOST_ASSERT(success);
         success = parse("abc", p).full;
-        assert(!success);
+        BOOST_ASSERT(!success);
     }
 
     std::cout << "SUCCESS!!!\n";

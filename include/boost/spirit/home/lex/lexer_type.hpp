@@ -23,11 +23,13 @@ namespace boost { namespace spirit { namespace lex
         typedef Derived derived_type;
         typedef lex::domain domain;
 
-        // Requirement: l.collect(def, state) -> void
+        // Requirement: l.collect(def, state, targetstate) -> void
         //
-        //  l:          a lexer component
-        //  def:        token definition container
-        //  state:      lexer state this token definition needs to be added to
+        //  l:           a lexer component
+        //  def:         token definition container
+        //  state:       lexer state this token definition needs to be added to
+        //  targetstate: an optional lexer state the lexer should be switched 
+        //               into after matching this token 
 
         Derived const& derived() const
         {

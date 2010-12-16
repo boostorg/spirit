@@ -18,18 +18,20 @@ namespace boost { namespace spirit { namespace lex { namespace detail
     template <typename LexerDef, typename String>
     struct sequence_collect_function
     {
-        sequence_collect_function(LexerDef& def_, String const& state_)
-          : def(def_), state(state_) {}
+        sequence_collect_function(LexerDef& def_, String const& state_
+              , String const& targetstate_)
+          : def(def_), state(state_), targetstate(targetstate_) {}
 
         template <typename Component>
         bool operator()(Component const& component) const
         {
-            component.collect(def, state);
+            component.collect(def, state, targetstate);
             return false;     // execute for all sequence elements
         }
 
         LexerDef& def;
         String const& state;
+        String const& targetstate;
 
     private:
         // silence MSVC warning C4512: assignment operator could not be generated

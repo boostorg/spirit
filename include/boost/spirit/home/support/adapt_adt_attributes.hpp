@@ -30,7 +30,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, int N, bool Const>
     struct container_value<fusion::extension::adt_attribute_proxy<T, N, Const> >
       : container_value<
-            typename fusion::extension::access::adt_attribute_proxy<
+            typename fusion::extension::adt_attribute_proxy<
                 T, N, Const
             >::type
         >
@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, int N, bool Const, typename Val>
+    template <typename T, int N, typename Val>
     struct assign_to_attribute_from_value<
         fusion::extension::adt_attribute_proxy<T, N, false>
       , Val>
@@ -108,7 +108,7 @@ namespace boost { namespace spirit { namespace traits
             val = attr;
         }
         static void 
-        fail(fusion::extension::access::adt_attribute_proxy<T, N, Const>&)
+        fail(fusion::extension::adt_attribute_proxy<T, N, false>&)
         {
         }
     };

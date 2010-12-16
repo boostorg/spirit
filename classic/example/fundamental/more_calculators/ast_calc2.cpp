@@ -8,6 +8,7 @@
 =============================================================================*/
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_ast.hpp>
+#include <boost/assert.hpp>
 
 #include <iostream>
 #include <stack>
@@ -56,51 +57,51 @@ long eval_expression(iter_t const& i)
 
     if (i->value.id() == integer.id())
     {
-        assert(i->children.size() == 0);
+        BOOST_ASSERT(i->children.size() == 0);
         return strtol(i->value.begin(), 0, 10);
     }
     else if (i->value.id() == factor.id())
     {
         // factor can only be unary minus
-        assert(*i->value.begin() == '-');
+        BOOST_ASSERT(*i->value.begin() == '-');
         return - eval_expression(i->children.begin());
     }
     else if (i->value.id() == term.id())
     {
         if (*i->value.begin() == '*')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) *
                 eval_expression(i->children.begin()+1);
         }
         else if (*i->value.begin() == '/')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) /
                 eval_expression(i->children.begin()+1);
         }
         else
-            assert(0);
+            BOOST_ASSERT(0);
     }
     else if (i->value.id() == expression.id())
     {
         if (*i->value.begin() == '+')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) +
                 eval_expression(i->children.begin()+1);
         }
         else if (*i->value.begin() == '-')
         {
-            assert(i->children.size() == 2);
+            BOOST_ASSERT(i->children.size() == 2);
             return eval_expression(i->children.begin()) -
                 eval_expression(i->children.begin()+1);
         }
         else
-            assert(0);
+            BOOST_ASSERT(0);
     }
     else
-        assert(0); // error
+        BOOST_ASSERT(0); // error
 
    return 0;
 }

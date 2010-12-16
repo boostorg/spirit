@@ -21,6 +21,7 @@ exe example4                : example4.cpp ;
 exe example5                : example5.cpp ;
 exe example6                : example6.cpp ;
 exe print_numbers           : print_numbers.cpp ;
+exe print_number_tokenids   : print_number_tokenids.cpp ;
 exe word_count              : word_count.cpp ;
 exe word_count_functor      : word_count_functor.cpp ;
 exe word_count_lexer        : word_count_lexer.cpp ;
@@ -29,3 +30,4 @@ exe strip_comments          : strip_comments.cpp ;
 exe strip_comments_lexer    : strip_comments_lexer.cpp ;
 exe custom_token_attribute  : custom_token_attribute.cpp ;
 
+exe lexer_debug_support     : lexer_debug_support.cpp ;

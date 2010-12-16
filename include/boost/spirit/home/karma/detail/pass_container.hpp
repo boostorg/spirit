@@ -88,9 +88,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return true;
         }
 
+        // This is for the case when the current element expects an attribute
         // this is for the case when the current element expects an attribute
         // which is a container itself, this element will get the rest of the 
-        // attribute container
+        // attribute container.
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {

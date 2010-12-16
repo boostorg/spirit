@@ -19,6 +19,7 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/variant.hpp>
+#include <boost/assert.hpp>
 
 #include <string>
 #include <iostream>
@@ -169,11 +170,11 @@ main()
 
         std::vector<boost::optional<char> > v;
         BOOST_TEST( (test("x,y,z", (*(',' | char_))[phx::ref(v) = _1])) );
-        assert(v[0] == 'x');
-        assert(!v[1]);       
-        assert(v[2] == 'y');
-        assert(!v[3]);        
-        assert(v[4] == 'z');        
+        BOOST_ASSERT(v[0] == 'x');
+        BOOST_ASSERT(!v[1]);       
+        BOOST_ASSERT(v[2] == 'y');
+        BOOST_ASSERT(!v[3]);        
+        BOOST_ASSERT(v[4] == 'z');        
     }
 
     {

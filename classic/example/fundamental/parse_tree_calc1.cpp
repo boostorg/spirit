@@ -16,6 +16,7 @@
 
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_parse_tree.hpp>
+#include <boost/assert.hpp>
 
 #include <iostream>
 #include <stack>
@@ -63,7 +64,7 @@ long evaluate(const tree_parse_info<>& info)
 long eval_expression(iter_t const& i)
 {
     parser_id id = i->value.id();
-    assert(id == expression.id()); // check the id
+    BOOST_ASSERT(id == expression.id()); // check the id
 
     // first child points to a term, so call eval_term on it
     iter_t chi = i->children.begin();
@@ -80,7 +81,7 @@ long eval_expression(iter_t const& i)
         else if (op == '-')
             lhs -= rhs;
         else
-            assert(0);
+            BOOST_ASSERT(0);
     }
     return lhs;
 }
@@ -88,7 +89,7 @@ long eval_expression(iter_t const& i)
 long eval_term(iter_t const& i)
 {
     parser_id id = i->value.id();
-    assert(id == term.id());
+    BOOST_ASSERT(id == term.id());
 
     iter_t chi = i->children.begin();
     long lhs = eval_factor(chi);
@@ -102,7 +103,7 @@ long eval_term(iter_t const& i)
         else if (op == '/')
             lhs /= rhs;
         else
-            assert(0);
+            BOOST_ASSERT(0);
     }
     return lhs;
 }
@@ -110,7 +111,7 @@ long eval_term(iter_t const& i)
 long eval_factor(iter_t const& i)
 {
     parser_id id = i->value.id();
-    assert(id == factor.id());
+    BOOST_ASSERT(id == factor.id());
 
     iter_t chi = i->children.begin();
     id = chi->value.id();
@@ -128,7 +129,7 @@ long eval_factor(iter_t const& i)
     }
     else
     {
-        assert(0);
+        BOOST_ASSERT(0);
         return 0;
     }
 }

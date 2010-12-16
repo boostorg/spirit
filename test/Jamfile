@@ -135,6 +135,8 @@ import testing ;
     [ run lex/dedent_handling_phoenix.cpp   : : : : ]
     [ run lex/set_token_value_phoenix.cpp   : : : : ]
     [ run lex/semantic_actions.cpp          : : : : ]
+    [ run lex/auto_switch_lexerstate.cpp    : : : : ]
+    [ run lex/id_type_enum.cpp              : : : : ]
 
     # run Lex regression tests
     [ run lex/regression001.cpp             : : : : lex_regression001 ]
@@ -146,6 +148,10 @@ import testing ;
     [ run lex/regression004.cpp             : : : : lex_regression004 ]
     [ run lex/regression005.cpp             : : : : lex_regression005 ]
     [ run lex/regression006.cpp             : : : : lex_regression006 ]
+    [ run lex/regression007.cpp             : : : : lex_regression007 ]
+    [ run lex/regression008.cpp             : : : : lex_regression008 ]
+    [ run lex/regression009.cpp             : : : : lex_regression009 ]
+    [ run lex/regression010.cpp             : : : : lex_regression010 ]
 
     # support tests
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]

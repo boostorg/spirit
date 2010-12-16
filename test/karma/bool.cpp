@@ -47,7 +47,7 @@ struct test_bool_data
 
     // we need to provide (safe) convertibility to bool
 private:
-    struct dummy { void true_() {}; };
+    struct dummy { void true_() {} };
     typedef void (dummy::*safe_bool)();
 
 public:
