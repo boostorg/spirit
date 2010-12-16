@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Numeric]
+[section:numeric Numeric Parsers]
 
 The library includes a couple of predefined objects for parsing signed
 and unsigned integers and real numbers. These parsers are fully
@@ -32,7 +32,7 @@ rivals, if not surpasses C.
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:uint Unsigned Integers (`uint_`, etc.)]
+[section:uint Unsigned Integer Parsers (`uint_`, etc.)]
 
 [heading Description]
 
@@ -174,7 +174,7 @@ Basic unsigned integers:
 [endsect] [/ Unsigned Integers]
 
 [/------------------------------------------------------------------------------]
-[section:int Signed Integers (`int_`, etc.)]
+[section:int Signed Integer Parsers (`int_`, etc.)]
 
 [heading Description]
 
@@ -310,7 +310,7 @@ Basic signed integers:
 [endsect] [/ Signed Integers]
 
 [/------------------------------------------------------------------------------]
-[section:real Real Numbers (`float_`, `double_`, etc.)]
+[section:real Real Number Parsers (`float_`, `double_`, etc.)]
 
 [heading Description]
 

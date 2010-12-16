@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Porting from Spirit 1.8.x</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../notes.html" title="Notes">
 <link rel="prev" href="../notes.html" title="Notes">
@@ -41,7 +41,7 @@
         <a href="http://boost-spirit.com" target="_top">Spirit</a>.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.include_files"></a><h5>
-<a name="id1043204"></a>
+<a name="id1270902"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.include_files">Include
         Files</a>
       </h5>
@@ -223,7 +223,7 @@
 </tbody>
 </table></div>
 <a name="spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions"></a><h5>
-<a name="id1043971"></a>
+<a name="id1271553"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions">The
         Free Parse Functions</a>
       </h5>
@@ -382,7 +382,7 @@
         Encoding Namespace</a> for more information.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.naming_conventions"></a><h5>
-<a name="id1046644"></a>
+<a name="id1273737"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.naming_conventions">Naming
         Conventions</a>
       </h5>
@@ -402,7 +402,7 @@
         parser primitives, directives and operators.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.parser_attributes"></a><h5>
-<a name="id1046744"></a>
+<a name="id1273809"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.parser_attributes">Parser
         Attributes</a>
       </h5>
@@ -411,16 +411,16 @@
         most of the parser primitives don't expose a specific attribute type. Most
         parsers expose the pair of iterators pointing to the matched input sequence.
         As in <span class="emphasis"><em>Spirit.Qi</em></span> all parsers expose a parser specific
-        attribute type it introduces a special directive <a class="link" href="../qi/reference/directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a><code class="computeroutput"><span class="special">[]</span></code>
+        attribute type it introduces a special directive <a class="link" href="../qi/reference/directive/raw.html" title="Directive for Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a><code class="computeroutput"><span class="special">[]</span></code>
         allowing to achieve a similar effect as in <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
-        The <a class="link" href="../qi/reference/directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a><code class="computeroutput"><span class="special">[]</span></code> directive exposes the pair of iterators
+        The <a class="link" href="../qi/reference/directive/raw.html" title="Directive for Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a><code class="computeroutput"><span class="special">[]</span></code> directive exposes the pair of iterators
         pointing to the matching sequence of its embedded parser. Even if we very
         much encourage you to rewrite your parsers to take advantage of the generated
         parser specific attributes, sometimes it is helpful to get access to the
         underlying matched input sequence.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules"></a><h5>
-<a name="id1046838"></a>
+<a name="id1273878"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules">Grammars
         and Rules</a>
       </h5>

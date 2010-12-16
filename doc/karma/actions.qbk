@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Semantic Actions]
+[section:semantic_actions Generator Semantic Actions]
 
 In the previous section we mentioned a very important difference between parsers
 and generators. While parsers may be used without 'producing' any data, 

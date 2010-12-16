@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Expectation (a &gt; b)</title>
+<title>Expectation Parser (a &gt; b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
-<link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="difference.html" title="Difference (a - b)">
-<link rel="next" href="kleene.html" title="Kleene (*a)">
+<link rel="up" href="../operator.html" title="Parser Operators">
+<link rel="prev" href="difference.html" title="Difference Parser (a - b)">
+<link rel="next" href="kleene.html" title="Kleene Parser (*a)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,16 +24,16 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.expect"></a><a class="link" href="expect.html" title="Expectation (a &gt; b)">Expectation
-          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
+<a name="spirit.qi.reference.operator.expect"></a><a class="link" href="expect.html" title="Expectation Parser (a &gt; b)">Expectation
+          Parser (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.expect.description"></a><h6>
-<a name="id790334"></a>
+<a name="id979781"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
           </h6>
 <p>
-            Like the <a class="link" href="sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>,
+            Like the <a class="link" href="sequence.html" title="Sequence Parser (a &gt;&gt; b)">Sequence</a>,
             the expectation operator, <code class="computeroutput"><span class="identifier">a</span>
             <span class="special">&gt;</span> <span class="identifier">b</span></code>,
             parses two or more operands (<code class="computeroutput"><span class="identifier">a</span></code>,
@@ -42,14 +42,14 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span> <span class="special">&gt;</span> <span class="special">...</span>
 </pre>
 <p>
-            However, while the plain <a class="link" href="sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>
+            However, while the plain <a class="link" href="sequence.html" title="Sequence Parser (a &gt;&gt; b)">Sequence</a>
             simply returns a no-match (returns <code class="computeroutput"><span class="keyword">false</span></code>)
             when one of the elements fail, the expectation: <code class="computeroutput"><span class="special">&gt;</span></code>
             operator throws an <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure"><code class="computeroutput"><span class="identifier">expectation_failure</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iter</span><span class="special">&gt;</span></code> when the second or succeeding operands
             (all operands except the first) fail to match.
           </p>
 <a name="spirit.qi.reference.operator.expect.header"></a><h6>
-<a name="id790508"></a>
+<a name="id979909"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/expect.hpp&gt;
@@ -59,7 +59,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.expect.model_of"></a><h6>
-<a name="id790607"></a>
+<a name="id979983"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -79,7 +79,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.expect.expectation_failure"></a><h6>
-<a name="id790736"></a>
+<a name="id980085"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expectation_failure">Expectation
             Failure</a>
           </h6>
@@ -95,7 +95,7 @@
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.operator.expect.expression_semantics"></a><h6>
-<a name="id790927"></a>
+<a name="id980239"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -136,7 +136,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.attributes"></a><h6>
-<a name="id791104"></a>
+<a name="id980384"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.attributes">Attributes</a>
           </h6>
 <p>
@@ -186,7 +186,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.complexity"></a><h6>
-<a name="id791913"></a>
+<a name="id982297"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -195,7 +195,7 @@
               operator itself is O(N), where N is the number of elements in the sequence.
             </p></blockquote></div>
 <a name="spirit.qi.reference.operator.expect.example"></a><h6>
-<a name="id791942"></a>
+<a name="id982318"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">

@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:directive Directive]
+[section:directive Generator Directives]
 
 This module includes different generator directives. It includes alignment 
 directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
@@ -24,7 +24,7 @@ columns (`columns[]`) and attribute handling (`duplicate[]`, `omit[]`, and
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:alignment Alignment Directives (`left_align[]`, `center[]`, `right_align[]`)]
+[section:alignment Alignment Generator Directives (`left_align[]`, `center[]`, `right_align[]`)]
 
 [heading Description]
 
@@ -261,7 +261,7 @@ Basic usage of the alignment generators:
 [endsect] [/ alignment]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:repeat Repetition Directive (`repeat[]`)]
+[section:repeat Repetition Generator Directive (`repeat[]`)]
 
 [heading Description]
 
@@ -424,7 +424,7 @@ Basic usage of `repeat` generator directive:
 [endsect] [/ repeat]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:delimit Directives Controlling Automatic Delimiting (`verbatim[]`, `no_delimit[]`, `delimit[]`)]
+[section:delimit Generator Directives Controlling Automatic Delimiting (`verbatim[]`, `no_delimit[]`, `delimit[]`)]
 
 [heading Description]
 
@@ -554,7 +554,7 @@ Basic usage of `delimit` generator directive:
 [endsect] [/ verbatim/delimit/no_delimit]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:upperlower Directives Controlling Case Sensitivity (`upper[]`, `lower[]`)]
+[section:upperlower Generator Directives Controlling Case Sensitivity (`upper[]`, `lower[]`)]
 
 [heading Description]
 
@@ -682,7 +682,7 @@ Basic usage of the `upper` and `lower` generator directives:
 [endsect] [/ upper/lower]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:maxwidth Controlling the Maximum Field Width (`maxwidth[]`)]
+[section:maxwidth Generator Directives Controlling the Maximum Field Width (`maxwidth[]`)]
 
 [heading Description]
 
@@ -791,7 +791,7 @@ Basic usage of `maxwidth` generator directive:
 [endsect] [/ maxwidth]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:buffer Temporary Output Buffering (`buffer[]`)]
+[section:buffer Generator Directive for Temporary Output Buffering (`buffer[]`)]
 
 [heading Description]
 
@@ -883,7 +883,7 @@ as the plus generator fails (no data is available, see __karma_plus__).
 [endsect] [/ buffer]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:omit Consume Attribute (`omit[]` and `skip[]`)]
+[section:omit Generator Directives Consuming Attributes (`omit[]` and `skip[]`)]
 
 [heading Description]
 
@@ -1010,7 +1010,7 @@ semantic actions which need to be executed).
 [endsect] [/ omit]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:duplicate Duplicate Attribute (`duplicate[]`)]
+[section:duplicate Generator Directive Duplicating Attributes (`duplicate[]`)]
 
 [heading Description]
 
@@ -1096,7 +1096,7 @@ Basic usage of the `duplicate` generators:
 [endsect] [/ duplicate]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:columns Separate Output Into Columns (`columns[]`)]
+[section:columns Generator Directive Separating Output Into Columns (`columns[]`)]
 
 [heading Description]
 

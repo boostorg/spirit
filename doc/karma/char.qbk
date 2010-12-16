@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:char Char]
+[section:char Char Generators]
 
 This module includes different character oriented generators allowing to output
 single characters. Currently, it includes literal chars (e.g. `'x'`, `L'x'`), 
@@ -305,7 +305,7 @@ Basic usage of `char_` generators:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:char_class Character Classification (`alnum`, `digit`, etc.)]
+[section:char_class Character Classification Generators (`alnum`, `digit`, etc.)]
 
 [heading Description]
 

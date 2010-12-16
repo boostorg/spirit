@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Repetition (repeat[])</title>
+<title>Repetition Parser Directive (repeat[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
-<link rel="up" href="../directive.html" title="Directive">
-<link rel="prev" href="raw.html" title="Transduction Parsing (raw[])">
-<link rel="next" href="matches.html" title="Test if Parser Succeeded (matches[])">
+<link rel="up" href="../directive.html" title="Parser Directive">
+<link rel="prev" href="raw.html" title="Directive for Transduction Parsing (raw[])">
+<link rel="next" href="matches.html" title="Directive Testing if Parser Succeeded (matches[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,19 +24,19 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.directive.repeat"></a><a class="link" href="repeat.html" title="Repetition (repeat[])">Repetition
-          (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
+<a name="spirit.qi.reference.directive.repeat"></a><a class="link" href="repeat.html" title="Repetition Parser Directive (repeat[])">Repetition
+          Parser Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.repeat.description"></a><h6>
-<a name="id760944"></a>
+<a name="id942244"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>
             provides a more powerful and flexible mechanism for repeating a parser.
             There are grammars that are impractical and cumbersome, if not impossible,
-            for the basic EBNF iteration syntax (<a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>
-            and the <a class="link" href="../operator/plus.html" title="Plus (+a)">Plus</a>)
+            for the basic EBNF iteration syntax (<a class="link" href="../operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>
+            and the <a class="link" href="../operator/plus.html" title="Plus Parser (+a)">Plus</a>)
             to specify. Examples:
           </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -51,7 +51,7 @@
               </li>
 </ul></div>
 <a name="spirit.qi.reference.directive.repeat.header"></a><h6>
-<a name="id761023"></a>
+<a name="id942307"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/repeat.hpp&gt;
@@ -61,7 +61,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.repeat.namespace"></a><h6>
-<a name="id761122"></a>
+<a name="id942381"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -87,7 +87,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.model_of"></a><h6>
-<a name="id761257"></a>
+<a name="id942498"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -111,7 +111,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id761424"></a>
+<a name="id942627"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -146,7 +146,7 @@
 <td>
                     <p>
                       Repeat <code class="computeroutput"><span class="identifier">a</span></code> zero
-                      or more times. Same as <a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>.
+                      or more times. Same as <a class="link" href="../operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>.
                     </p>
                   </td>
 </tr>
@@ -198,7 +198,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.attributes"></a><h6>
-<a name="id761804"></a>
+<a name="id944172"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <p>
@@ -292,7 +292,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.complexity"></a><h6>
-<a name="id762607"></a>
+<a name="id944850"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -301,7 +301,7 @@
               itself is O(N), where N is the number of repetitions to execute.
             </p></blockquote></div>
 <a name="spirit.qi.reference.directive.repeat.example"></a><h6>
-<a name="id762645"></a>
+<a name="id944878"></a>
             <a class="link" href="repeat.html#spirit.qi.reference.directive.repeat.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">

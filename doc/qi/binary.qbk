@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:binary Binary]
+[section:binary Binary Parsers]
 
 This module includes different parsers for parsing binary data in
 various __endianness__. It includes parsers for default (native),
@@ -20,7 +20,7 @@ little, and big endian binary input.
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:binary_native Binary Native Endian]
+[section:binary_native Binary Native Endianness Parsers]
 
 [heading Description]
 
@@ -113,7 +113,7 @@ __qi_basics_examples__ section.]
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:binary_little Binary Little Endian]
+[section:binary_little Binary Little Endianness Parser]
 
 [heading Description]
 
@@ -198,7 +198,7 @@ __qi_basics_examples__ section.]
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:binary_big Binary Big Endian]
+[section:binary_big Binary Big Endianness Parsers]
 
 [heading Description]
 

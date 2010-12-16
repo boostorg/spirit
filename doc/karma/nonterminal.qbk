@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Nonterminal]
+[section:nonterminal Nonterminal Generators]
 
 [heading Module Headers]
 
@@ -16,7 +16,7 @@
 Also, see __include_structure__.
 
 [//////////////////////////////////////////////////////////////////////////////]
-[section Rule]
+[section:rule Generator Rule]
 
 [heading Description]
 
@@ -139,7 +139,7 @@ rule. See __karma_nonterminal_attribute__]
 [endsect] [/ Rule]
 
 [////////////////////////////////////////////////////////////////////////////////]
-[section Grammar]
+[section:grammar Generator Grammar]
 
 [heading Description]
 

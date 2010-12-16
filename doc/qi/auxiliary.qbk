@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Auxiliary]
+[section:auxiliary Auxiliary Parsers]
 
 This module includes different auxiliary parsers not fitting into any of the 
 other categories. This module includes the `attr`, `attr_cast`, `eoi`, `eol`, 
@@ -20,7 +20,7 @@ other categories. This module includes the `attr`, `attr_cast`, `eoi`, `eol`,
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:attr Attribute (`attr`)]
+[section:attr Attribute Parser (`attr`)]
 
 [heading Description]
 
@@ -100,7 +100,7 @@ Using `attr` with __phoenix__ function objects:
 [endsect] [/ attr]
 
 [/------------------------------------------------------------------------------]
-[section:attr_cast Attribute Transformation Pseudo Generator (`attr_cast`)]
+[section:attr_cast Attribute Transformation Pseudo Parser (`attr_cast`)]
 
 [heading Description]
 
@@ -221,7 +221,7 @@ transformation:
 
 
 [/------------------------------------------------------------------------------]
-[section:eol End of Line (`eol`)]
+[section:eol End of Line Parser (`eol`)]
 
 [heading Description]
 
@@ -283,7 +283,7 @@ Using `eol`:
 [endsect] [/ End of Line]
 
 [/------------------------------------------------------------------------------]
-[section:eoi End of Input (`eoi`)]
+[section:eoi End of Input Parser (`eoi`)]
 
 [heading Description]
 
@@ -345,7 +345,7 @@ Using `eoi`:
 [endsect] [/ End of Input]
 
 [/------------------------------------------------------------------------------]
-[section:eps Epsilon (`eps`)]
+[section:eps Epsilon Parser (`eps`)]
 
 [heading Description]
 
@@ -444,7 +444,7 @@ Some using declarations:
 [endsect] [/Epsilon]
 
 [/------------------------------------------------------------------------------]
-[section:lazy Lazy (`lazy`)]
+[section:lazy Lazy Parser (`lazy`)]
 
 [heading Description]
 

@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boolean Generators (bool_)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
-<link rel="up" href="../numeric.html" title="Numeric">
+<link rel="up" href="../numeric.html" title="Numeric Generators">
 <link rel="prev" href="real_number.html" title="Real Number Generators (float_, double_, etc.)">
-<link rel="next" href="../operator.html" title="Operator">
+<link rel="next" href="../operator.html" title="Generator Operators">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">bool_</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.boolean.description"></a><h6>
-<a name="id924961"></a>
+<a name="id1131322"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.description">Description</a>
           </h6>
 <p>
@@ -42,7 +42,7 @@
             a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.header"></a><h6>
-<a name="id925023"></a>
+<a name="id1131376"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/bool.hpp&gt;
@@ -52,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.namespace"></a><h6>
-<a name="id925107"></a>
+<a name="id1131450"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -96,8 +96,8 @@
 </tr>
 <tr><td align="left" valign="top"><p>
               <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
-              <a class="link" href="../string.html" title="String">String Generators</a>,
-              the <a class="link" href="../char.html" title="Char">Character Generators</a>,
+              <a class="link" href="../string.html" title="String Generators">String Generators</a>,
+              the <a class="link" href="../char.html" title="Char Generators">Character Generators</a>,
               and the Numeric Generators. In general, a char generator is created
               when you pass in a character, a string generator is created when you
               pass in a string, and a numeric generator is created when you use a
@@ -105,7 +105,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.synopsis"></a><h6>
-<a name="id925336"></a>
+<a name="id1131669"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -114,7 +114,7 @@
 <span class="keyword">struct</span> <span class="identifier">bool_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.boolean.template_parameters"></a><h6>
-<a name="id925412"></a>
+<a name="id1131738"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.template_parameters">Template
             parameters</a>
           </h6>
@@ -179,7 +179,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.model_of"></a><h6>
-<a name="id925559"></a>
+<a name="id1131886"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.model_of">Model
             of</a>
           </h6>
@@ -191,19 +191,19 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                  Boolean literal, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                  Boolean literal, or a <a class="link" href="../basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                   Argument</a> that evaluates to a boolean value of type <code class="computeroutput"><span class="identifier">B</span></code>
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">B</span></code></span></dt>
 <dd><p>
                   Type of <code class="computeroutput"><span class="identifier">b</span></code>: any
-                  type usable as a boolean, or in case of a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                  type usable as a boolean, or in case of a <a class="link" href="../basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                   Argument</a>, its return value
                 </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.boolean.expression_semantics"></a><h6>
-<a name="id925666"></a>
+<a name="id1131990"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -393,11 +393,11 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              All boolean generators properly respect the <a class="link" href="../directive/upperlower.html" title="Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">upper</span></code></a> and <a class="link" href="../directive/upperlower.html" title="Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">lower</span></code></a> directives.
+              All boolean generators properly respect the <a class="link" href="../directive/upperlower.html" title="Generator Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">upper</span></code></a> and <a class="link" href="../directive/upperlower.html" title="Generator Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">lower</span></code></a> directives.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.additional_requirements"></a><h6>
-<a name="id926296"></a>
+<a name="id1132570"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -413,7 +413,7 @@
                 must be (safely) convertible to <code class="computeroutput"><span class="keyword">bool</span></code>
               </li></ul></div>
 <a name="spirit.karma.reference.numeric.boolean.attributes"></a><h6>
-<a name="id926384"></a>
+<a name="id1132652"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -528,7 +528,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.boolean_formatting_policies"></a><h6>
-<a name="id926795"></a>
+<a name="id1133033"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.boolean_formatting_policies">Boolean
             Formatting Policies</a>
           </h6>
@@ -562,7 +562,7 @@
             default for <code class="computeroutput"><span class="identifier">B</span></code> is <code class="computeroutput"><span class="keyword">bool</span></code>.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.boolean_formatting_policy_expression_semantics"></a><h6>
-<a name="id927272"></a>
+<a name="id1134765"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.boolean_formatting_policy_expression_semantics">Boolean
             Formatting Policy Expression Semantics</a>
           </h6>
@@ -713,7 +713,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.complexity"></a><h6>
-<a name="id928157"></a>
+<a name="id1135569"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -721,7 +721,7 @@
               number of characters needed to represent the generated boolean.
             </p></blockquote></div>
 <a name="spirit.karma.reference.numeric.boolean.example"></a><h6>
-<a name="id928187"></a>
+<a name="id1135597"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -730,7 +730,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.karma.reference.basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>

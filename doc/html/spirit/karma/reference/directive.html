@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Directive</title>
+<title>Generator Directives</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="prev" href="char/char_class.html" title="Character Classification (alnum, digit, etc.)">
-<link rel="next" href="directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])">
+<link rel="prev" href="char/char_class.html" title="Character Classification Generators (alnum, digit, etc.)">
+<link rel="next" href="directive/alignment.html" title="Alignment Generator Directives (left_align[], center[], right_align[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,28 +24,27 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.reference.directive"></a><a class="link" href="directive.html" title="Directive">Directive</a>
+<a name="spirit.karma.reference.directive"></a><a class="link" href="directive.html" title="Generator Directives">Generator Directives</a>
 </h4></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="directive/alignment.html">Alignment
-          Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a></span></dt>
+          Generator Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive/repeat.html">Repetition
-          Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/delimit.html">Directives
-          Controlling Automatic Delimiting (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">no_delimit</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/upperlower.html">Directives
-          Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/maxwidth.html">Controlling
-          the Maximum Field Width (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/buffer.html">Temporary
-          Output Buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/omit.html">Consume Attribute
-          (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>
-          and <code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/duplicate.html">Duplicate
-          Attribute (<code class="computeroutput"><span class="identifier">duplicate</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/columns.html">Separate
-          Output Into Columns (<code class="computeroutput"><span class="identifier">columns</span><span class="special">[]</span></code>)</a></span></dt>
+          Generator Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/delimit.html">Generator
+          Directives Controlling Automatic Delimiting (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">no_delimit</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/upperlower.html">Generator
+          Directives Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/maxwidth.html">Generator
+          Directives Controlling the Maximum Field Width (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/buffer.html">Generator
+          Directive for Temporary Output Buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/omit.html">Generator
+          Directives Consuming Attributes (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/duplicate.html">Generator
+          Directive Duplicating Attributes (<code class="computeroutput"><span class="identifier">duplicate</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/columns.html">Generator
+          Directive Separating Output Into Columns (<code class="computeroutput"><span class="identifier">columns</span><span class="special">[]</span></code>)</a></span></dt>
 </dl></div>
 <p>
           This module includes different generator directives. It includes alignment
@@ -57,7 +56,7 @@
           and attribute handling (<code class="computeroutput"><span class="identifier">duplicate</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>, and <code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>).
         </p>
 <a name="spirit.karma.reference.directive.module_header"></a><h6>
-<a name="id881296"></a>
+<a name="id1083471"></a>
           <a class="link" href="directive.html#spirit.karma.reference.directive.module_header">Module Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive.hpp&gt;

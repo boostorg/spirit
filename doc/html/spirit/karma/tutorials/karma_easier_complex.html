@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Complex - Made easier</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="karma_complex.html" title="Complex - A first more complex generator">
@@ -63,12 +63,12 @@
           Let's cover some basic library features first.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h6>
-<a name="id817110"></a>
+<a name="id1010252"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
           Numeric Generators Fail</a>
         </h6>
 <p>
-          All <a class="link" href="../reference/numeric.html" title="Numeric">Numeric Generators</a>
+          All <a class="link" href="../reference/numeric.html" title="Numeric Generators">Numeric Generators</a>
           (such as <code class="computeroutput"><span class="identifier">double_</span></code>, et.al.)
           take the value to emit from an attached attribute.
         </p>
@@ -105,24 +105,24 @@
 </tr>
 <tr><td align="left" valign="top"><p>
             Quite a few generators will fail if their immediate value is not equal
-            to the supplied attribute. Among those are all <a class="link" href="../reference/char.html" title="Char">Character
-            Generators</a> and all <a class="link" href="../reference/string.html" title="String">String
+            to the supplied attribute. Among those are all <a class="link" href="../reference/char.html" title="Char Generators">Character
+            Generators</a> and all <a class="link" href="../reference/string.html" title="String Generators">String
             Generators</a>. Generally, all generators having a sibling created
             by a variant of <code class="computeroutput"><span class="identifier">lit</span><span class="special">()</span></code>
             belong into this category.
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h6>
-<a name="id817487"></a>
+<a name="id1010540"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
           - The Conditionals for Output Generators</a>
         </h6>
 <p>
-          In addition to the <a class="link" href="../reference/auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a> generator mentioned earlier
+          In addition to the <a class="link" href="../reference/auxiliary/eps.html" title="Epsilon Generator (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a> generator mentioned earlier
           <span class="emphasis"><em>Spirit.Karma</em></span> provides two special operators enabling
-          dynamic flow control: the <a class="link" href="../reference/operator/and_predicate.html" title="And-Predicate (&amp;a)">And
+          dynamic flow control: the <a class="link" href="../reference/operator/and_predicate.html" title="And-Predicate Generator (&amp;a)">And
           predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a>
-          and the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
+          and the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate Generator (!a)">Not
           predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>.
           The main property of both predicates is to discard all output emitted by
           the attached generator. This is equivalent to the behavior of predicates
@@ -164,7 +164,7 @@
           emitted by the generators to which they are applied.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h6>
-<a name="id817809"></a>
+<a name="id1010789"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
           Supplied Attributes</a>
         </h6>
@@ -173,7 +173,7 @@
           This happens for instance in alternative generators, where some of the
           alternatives need to extract only part of the overall attribute passed
           to the alternative generator. <span class="emphasis"><em>Spirit.Karma</em></span> has a special
-          pseudo generator for that: the directive <a class="link" href="../reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a><code class="computeroutput"><span class="special">[]</span></code>.
+          pseudo generator for that: the directive <a class="link" href="../reference/directive/omit.html" title="Generator Directives Consuming Attributes (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a><code class="computeroutput"><span class="special">[]</span></code>.
           This directive consumes an attribute of the type defined by its embedded
           generator but it does not emit any output.
         </p>
@@ -183,15 +183,15 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive does the 'opposite'
+            The <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../reference/directive/omit.html" title="Generator Directives Consuming Attributes (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive does the 'opposite'
             of the directive of the same name in <span class="emphasis"><em>Spirit.Qi</em></span>.
-            While the <a class="link" href="../../qi/reference/directive/omit.html" title="Ignoring Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> in <span class="emphasis"><em>Spirit.Qi</em></span>
+            While the <a class="link" href="../../qi/reference/directive/omit.html" title="Parser Directive Ignoring Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> in <span class="emphasis"><em>Spirit.Qi</em></span>
             consumes input without exposing an attribute, its <span class="emphasis"><em>Spirit.Karma</em></span>
             counterpart consumes an attribute without emitting any output.
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h6>
-<a name="id817918"></a>
+<a name="id1010867"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
           everything together</a>
         </h6>
@@ -200,7 +200,7 @@
           for the two different output formats depending on whether the imaginary
           part of the complex number is equal to zero or not. The first alternative
           is executed if the imaginary part is not zero, the second alternative otherwise.
-          This time we make the decision during runtime using the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
+          This time we make the decision during runtime using the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate Generator (!a)">Not
           predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>
           combined with the feature of many Karma primitive generators to <span class="emphasis"><em>fail</em></span>
           under certain conditions. Here is the first alternative again for your
@@ -210,7 +210,7 @@
 </pre>
 <p>
           The generator <code class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
-          does several things. First, because of the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate (!a)">Not
+          does several things. First, because of the <a class="link" href="../reference/operator/not_predicate.html" title="Not-Predicate Generator (!a)">Not
           predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>,
           it succeeds only if the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
           generator <span class="emphasis"><em>fails</em></span>, making the whole first alternative

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Determine if a Type Should be Treated as a Container (Qi and Karma)</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
 <link rel="prev" href="../customize.html" title="Customization of Spirit's Attribute Handling">
@@ -28,19 +28,19 @@
         a Type Should be Treated as a Container (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.is_container.is_container"></a><h6>
-<a name="id992780"></a>
+<a name="id1211408"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.is_container">is_container</a>
         </h6>
 <p>
           The template <code class="computeroutput"><span class="identifier">is_container</span></code>
           is a template meta-function used as an attribute customization point. It
-          is invoked by the <span class="emphasis"><em>Qi</em></span> <a class="link" href="../../qi/reference/operator/sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>
+          is invoked by the <span class="emphasis"><em>Qi</em></span> <a class="link" href="../../qi/reference/operator/sequence.html" title="Sequence Parser (a &gt;&gt; b)">Sequence</a>
           (<code class="computeroutput"><span class="special">&gt;&gt;</span></code>) and <span class="emphasis"><em>Karma</em></span>
-          <a class="link" href="../../karma/reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)">Sequence (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)</a> operators in order to determine
+          <a class="link" href="../../karma/reference/operator/sequence.html" title="Sequence Generator (a &lt;&lt; b)">Sequence (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)</a> operators in order to determine
           whether a supplied attribute can potentially be treated as a container.
         </p>
 <a name="spirit.advanced.customize.is_container.header"></a><h6>
-<a name="id992859"></a>
+<a name="id1211463"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -60,7 +60,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.is_container.namespace"></a><h6>
-<a name="id992969"></a>
+<a name="id1211548"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -77,7 +77,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.synopsis"></a><h6>
-<a name="id993054"></a>
+<a name="id1211621"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -87,7 +87,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.is_container.template_parameters"></a><h6>
-<a name="id993173"></a>
+<a name="id1211720"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.template_parameters">Template
           parameters</a>
         </h6>
@@ -156,7 +156,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.notation"></a><h6>
-<a name="id993374"></a>
+<a name="id1211893"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.notation">Notation</a>
         </h6>
 <div class="variablelist">
@@ -173,7 +173,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.is_container.expression_semantics"></a><h6>
-<a name="id993453"></a>
+<a name="id1211961"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -212,7 +212,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.predefined_specializations"></a><h6>
-<a name="id993608"></a>
+<a name="id1214021"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -301,7 +301,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.when_to_implement"></a><h6>
-<a name="id994124"></a>
+<a name="id1214439"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.when_to_implement">When
           to implement</a>
         </h6>
@@ -323,7 +323,7 @@
           for any meaningful operation on the component <code class="computeroutput"><span class="identifier">a</span></code>.
         </p>
 <a name="spirit.advanced.customize.is_container.related_attribute_customization_points"></a><h6>
-<a name="id994331"></a>
+<a name="id1214598"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.related_attribute_customization_points">Related
           Attribute Customization Points</a>
         </h6>
@@ -370,10 +370,10 @@
                 </td>
 <td>
                   <p>
-                    Qi: <a class="link" href="../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
-                    <a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
-                    <a class="link" href="../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
-                    <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
+                    Qi: <a class="link" href="../../qi/reference/operator/list.html" title="List Parser (a % b)">List</a>,
+                    <a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>,
+                    <a class="link" href="../../qi/reference/operator/plus.html" title="Plus Parser (+a)">Plus</a>,
+                    <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition Parser Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -385,9 +385,9 @@
                 </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="List Generator (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star Generator (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus Generator (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -399,9 +399,9 @@
                 </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="List Generator (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star Generator (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus Generator (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -413,9 +413,9 @@
                 </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="List Generator (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star Generator (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus Generator (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -427,9 +427,9 @@
                 </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="List Generator (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star Generator (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus Generator (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -441,9 +441,9 @@
                 </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="List Generator (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star Generator (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus Generator (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -455,9 +455,9 @@
                 </td>
 <td>
                   <p>
-                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="Lists (a % b)">List
-                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
-                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                    Karma: <a class="link" href="../../karma/reference/operator/list.html" title="List Generator (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../karma/reference/operator/kleene.html" title="Kleene Star Generator (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../karma/reference/operator/plus.html" title="Plus Generator (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
@@ -469,17 +469,17 @@
                 </td>
 <td>
                   <p>
-                    Qi: <a class="link" href="../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
-                    <a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
-                    <a class="link" href="../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>,
-                    <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>.
+                    Qi: <a class="link" href="../../qi/reference/operator/list.html" title="List Parser (a % b)">List</a>,
+                    <a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>,
+                    <a class="link" href="../../qi/reference/operator/plus.html" title="Plus Parser (+a)">Plus</a>,
+                    <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition Parser Directive (repeat[])">Repeat</a>.
                   </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.example"></a><h6>
-<a name="id995100"></a>
+<a name="id1215189"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.example">Example</a>
         </h6>
 <p>

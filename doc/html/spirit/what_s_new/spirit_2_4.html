@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit V2.4</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="spirit_2_4_1.html" title="Spirit V2.4.1">
@@ -27,13 +27,13 @@
 <a name="spirit.what_s_new.spirit_2_4"></a><a class="link" href="spirit_2_4.html" title="Spirit V2.4">Spirit V2.4</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_"></a><h5>
-<a name="id664671"></a>
+<a name="id834657"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.3 (Boost V1.43.0) to V2.4 (Boost V1.44.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4.new_features"></a><h5>
-<a name="id664696"></a>
+<a name="id834679"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -69,8 +69,8 @@
             the supplied attribute to the consumed attribute type, as needed.
           </li>
 <li class="listitem">
-            Added the <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a> directive which is semantically
-            equivalent to the <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/omit.html" title="Consume Attribute (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive except that it
+            Added the <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/omit.html" title="Generator Directives Consuming Attributes (omit[] and skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a> directive which is semantically
+            equivalent to the <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/omit.html" title="Generator Directives Consuming Attributes (omit[] and skip[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive except that it
             will not execute the embedded generator.
           </li>
 <li class="listitem">
@@ -82,12 +82,12 @@
             compile time directives <code class="computeroutput"><span class="identifier">strict</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">relaxed</span><span class="special">[]</span></code> allowing to switch between the two.
           </li>
 <li class="listitem">
-            Added <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/duplicate.html" title="Duplicate Attribute (duplicate[])"><code class="computeroutput"><span class="identifier">duplicate</span></code></a> directive which duplicates
+            Added <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../karma/reference/directive/duplicate.html" title="Generator Directive Duplicating Attributes (duplicate[])"><code class="computeroutput"><span class="identifier">duplicate</span></code></a> directive which duplicates
             the supplied attribute to all elements of an embedded generator sequence.
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4.bug_fixes"></a><h5>
-<a name="id665005"></a>
+<a name="id834961"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -116,7 +116,7 @@
             type or containers of that attribute type and the passed in attribute
             is a container of that attribute type as well. In this case using a repetitive
             container was supported only when it was the last element of the sequence.
-            Now it is possible to have a <a class="link" href="../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+            Now it is possible to have a <a class="link" href="../karma/reference/directive/repeat.html" title="Repetition Generator Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a><code class="computeroutput"><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
             generator at any position (well, actually you can have any repetitive
             container at any position now, but this doesn't always make sense as
             it normally would eat up all supplied attribute values).
@@ -130,13 +130,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_"></a><h5>
-<a name="id665275"></a>
+<a name="id835197"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.3 (Boost V1.43.0) to V2.4
         (Boost V1.44.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4.new_lexer_features"></a><h5>
-<a name="id665296"></a>
+<a name="id835215"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.new_lexer_features">New Lexer
         Features</a>
       </h5>
@@ -146,7 +146,7 @@
             '&gt;'.
           </li></ul></div>
 <a name="spirit.what_s_new.spirit_2_4.lexer_bug_fixes"></a><h5>
-<a name="id665323"></a>
+<a name="id835239"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.lexer_bug_fixes">Lexer Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">

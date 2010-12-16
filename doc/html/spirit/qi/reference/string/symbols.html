@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Symbols (symbols)</title>
+<title>Symbols Parser (symbols)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
-<link rel="up" href="../string.html" title="String">
-<link rel="prev" href="string.html" title="String (string, lit)">
+<link rel="up" href="../string.html" title="String Parsers">
+<link rel="prev" href="string.html" title="String Parsers (string, lit)">
 <link rel="next" href="../../../karma.html" title="Karma - Writing Generators">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,10 +24,11 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.string.symbols"></a><a class="link" href="symbols.html" title="Symbols (symbols)">Symbols (<code class="computeroutput"><span class="identifier">symbols</span></code>)</a>
+<a name="spirit.qi.reference.string.symbols"></a><a class="link" href="symbols.html" title="Symbols Parser (symbols)">Symbols Parser
+          (<code class="computeroutput"><span class="identifier">symbols</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.string.symbols.description"></a><h6>
-<a name="id808504"></a>
+<a name="id1001258"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.description">Description</a>
           </h6>
 <p>
@@ -47,7 +48,7 @@
             added, thus, dynamically altering its behavior.
           </p>
 <a name="spirit.qi.reference.string.symbols.header"></a><h6>
-<a name="id808568"></a>
+<a name="id1001300"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/symbols.hpp&gt;
@@ -57,7 +58,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.string.symbols.namespace"></a><h6>
-<a name="id808668"></a>
+<a name="id1001375"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -86,14 +87,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.synopsis"></a><h6>
-<a name="id808855"></a>
+<a name="id1001534"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lookup</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">symbols</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.template_parameters"></a><h6>
-<a name="id808954"></a>
+<a name="id1001612"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.template_parameters">Template
             parameters</a>
           </h6>
@@ -176,7 +177,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.model_of"></a><h6>
-<a name="id809169"></a>
+<a name="id1001805"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -232,7 +233,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.string.symbols.expression_semantics"></a><h6>
-<a name="id809553"></a>
+<a name="id1002122"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -494,14 +495,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.attributes"></a><h6>
-<a name="id811055"></a>
+<a name="id1003898"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.attributes">Attributes</a>
           </h6>
 <p>
             The attribute of <code class="computeroutput"><span class="identifier">symbol</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> is <code class="computeroutput"><span class="identifier">T</span></code>.
           </p>
 <a name="spirit.qi.reference.string.symbols.complexity"></a><h6>
-<a name="id811124"></a>
+<a name="id1003948"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.complexity">Complexity</a>
           </h6>
 <p>
@@ -538,7 +539,7 @@
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">tst_map</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.example"></a><h6>
-<a name="id811296"></a>
+<a name="id1004080"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -583,7 +584,7 @@
           </p>
 <p>
             When <code class="computeroutput"><span class="identifier">symbols</span></code> is used
-            for case-insensitive parsing (in a <a class="link" href="../directive/no_case.html" title="Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a> directive), added symbol
+            for case-insensitive parsing (in a <a class="link" href="../directive/no_case.html" title="Parser Directive Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a> directive), added symbol
             strings should be in lowercase. Symbol strings containing one or more
             uppercase characters will not match any input when symbols is used in
             a <code class="computeroutput"><span class="identifier">no_case</span></code> directive.
