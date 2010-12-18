@@ -953,9 +953,12 @@ namespace boost { namespace spirit
         if (get_type() == type::reference_type)
             return p->insert(pos, val);
         ensure_list_type();
-        l.insert(val, pos);
-        if (!pos.node)
+        if (!pos.node) 
+        {
+            push_back(val);
             return begin();
+        }
+        l.insert(val, pos);
         return utree::iterator(pos.node->prev, pos.node->prev->prev);
     }
 
