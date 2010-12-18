@@ -119,6 +119,7 @@ namespace boost { namespace spirit { namespace detail
         union
         {
             char buff[buff_size];
+            long lbuff[buff_size / (sizeof(long)/sizeof(char))];   // for initialize 
             heap_store heap;
         };
 
@@ -135,6 +136,7 @@ namespace boost { namespace spirit { namespace detail
         void swap(fast_string& other);
         void free();
         void copy(fast_string const& other);
+        void initialize();
 
         char& info();
         char info() const;

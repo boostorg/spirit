@@ -123,6 +123,12 @@ namespace boost { namespace spirit { namespace detail
         construct(other.str(), other.str() + other.size());
     }
 
+    inline void fast_string::initialize() 
+    {
+        for (std::size_t i = 0; i != buff_size / (sizeof(long)/sizeof(char)); ++i) 
+            lbuff[i] = 0;
+    }
+
     struct list::node : boost::noncopyable
     {
         template <typename T>
@@ -159,6 +165,7 @@ namespace boost { namespace spirit { namespace detail
 
         friend class boost::iterator_core_access;
         friend class boost::spirit::utree;
+        friend struct boost::spirit::detail::list;
 
         void increment()
         {
@@ -197,7 +204,7 @@ namespace boost { namespace spirit { namespace detail
       : public boost::iterator_facade<
             node_iterator<boost::reference_wrapper<Value> >
           , boost::reference_wrapper<Value>
-          , boost::random_access_traversal_tag>
+          , boost::bidirectional_traversal_tag>
     {
     public:
 
@@ -211,6 +218,7 @@ namespace boost { namespace spirit { namespace detail
 
         friend class boost::iterator_core_access;
         friend class boost::spirit::utree;
+        friend struct boost::spirit::detail::list;
 
         void increment()
         {
@@ -282,22 +290,22 @@ namespace boost { namespace spirit { namespace detail
     template <typename T, typename Iterator>
     inline void list::insert(T const& val, Iterator pos)
     {
-      if (!pos.node)
-      {
-        push_back(val);
-        return;
-      }
+        if (!pos.node)
+        {
+            push_back(val);
+            return;
+        }
 
-      detail::list::node* new_node
-        = new detail::list::node(val, pos.node, pos.node->prev);
+        detail::list::node* new_node = 
+            new detail::list::node(val, pos.node, pos.node->prev);
 
-      if (pos.node->prev)
-        pos.node->prev->next = new_node;
-      else
-        first = new_node;
+        if (pos.node->prev)
+            pos.node->prev->next = new_node;
+        else
+            first = new_node;
 
-      pos.node->prev = new_node;
-      ++size;
+        pos.node->prev = new_node;
+        ++size;
     }
 
     template <typename T>
@@ -608,26 +616,19 @@ namespace boost { namespace spirit
 
     inline utree::utree()
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
         set_type(type::nil_type);
     }
 
     inline utree::utree(bool b_) 
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         b = b_;
         set_type(type::bool_type);
     }
 
     inline utree::utree(char c)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         // char constructs a single element string
         s.construct(&c, &c+1);
         set_type(type::string_type);
@@ -635,54 +636,42 @@ namespace boost { namespace spirit
 
     inline utree::utree(unsigned int i_) 
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         i = i_;
         set_type(type::int_type);
     }
 
     inline utree::utree(int i_) 
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         i = i_;
         set_type(type::int_type);
     }
 
     inline utree::utree(double d_) 
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         d = d_;
         set_type(type::double_type);
     }
 
     inline utree::utree(char const* str)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         s.construct(str, str + strlen(str));
         set_type(type::string_type);
     }
 
     inline utree::utree(char const* str, std::size_t len)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         s.construct(str, str + len);
         set_type(type::string_type);
     }
 
     inline utree::utree(std::string const& str)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         s.construct(str.begin(), str.end());
         set_type(type::string_type);
     }
@@ -690,27 +679,21 @@ namespace boost { namespace spirit
     template <typename Base, utree_type::info type_>
     inline utree::utree(basic_string<Base, type_> const& bin)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         s.construct(bin.begin(), bin.end());
         set_type(type_);
     }
 
     inline utree::utree(boost::reference_wrapper<utree> ref)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         p = ref.get_pointer();
         set_type(type::reference_type);
     }
 
     inline utree::utree(any_ptr const& p)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         v.p = p.p;
         v.i = p.i;
         set_type(type::any_type);
@@ -719,9 +702,7 @@ namespace boost { namespace spirit
     template <typename F>
     inline utree::utree(stored_function<F> const& pf_)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         pf = new stored_function<F>(pf_);
         set_type(type::function_type);
     }
@@ -729,18 +710,14 @@ namespace boost { namespace spirit
     template <typename Iter>
     inline utree::utree(boost::iterator_range<Iter> r)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         set_type(type::nil_type);
         assign(r.begin(), r.end());
     }
 
     inline utree::utree(range r, shallow_tag)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         this->r.first = r.begin().node;
         this->r.last = r.end().prev;
         set_type(type::range_type);
@@ -748,9 +725,7 @@ namespace boost { namespace spirit
 
     inline utree::utree(const_range r, shallow_tag)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         this->r.first = r.begin().node;
         this->r.last = r.end().prev;
         set_type(type::range_type);
@@ -758,9 +733,7 @@ namespace boost { namespace spirit
 
     inline utree::utree(utf8_string_range const& str, shallow_tag)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         this->sr.first = str.begin();
         this->sr.last = str.end();
         set_type(type::string_range_type);
@@ -768,15 +741,12 @@ namespace boost { namespace spirit
 
     inline utree::utree(utree const& other)
     {
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
         copy(other);
     }
 
     inline utree::~utree()
     {
-        free();
     }
 
     inline utree& utree::operator=(utree const& other)
@@ -984,6 +954,8 @@ namespace boost { namespace spirit
             return p->insert(pos, val);
         ensure_list_type();
         l.insert(val, pos);
+        if (!pos.node)
+            return begin();
         return utree::iterator(pos.node->prev, pos.node->prev->prev);
     }
 
@@ -1355,10 +1327,7 @@ namespace boost { namespace spirit
             default:
                 break;
         };
-
-        for (std::size_t i = 0; i != detail::fast_string::buff_size; ++i) {
-          s.buff[i] = 0;
-        }
+        s.initialize();
     }
 
     inline void utree::copy(utree const& other)
