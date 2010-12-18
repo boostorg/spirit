@@ -616,6 +616,7 @@ namespace boost { namespace spirit
 
     inline utree::utree()
     {
+        s.initialize();
         set_type(type::nil_type);
     }
 
@@ -747,6 +748,7 @@ namespace boost { namespace spirit
 
     inline utree::~utree()
     {
+        free();
     }
 
     inline utree& utree::operator=(utree const& other)
