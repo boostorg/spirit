@@ -98,7 +98,7 @@ namespace scheme { namespace input
                 ;
 
             char_esc.name("char_esc");
-            char_esc.name("char_lit");
+            char_lit.name("char_lit");
             start.name("string");
         }
 

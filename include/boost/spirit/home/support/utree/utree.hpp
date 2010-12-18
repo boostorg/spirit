@@ -37,19 +37,13 @@
 namespace boost { namespace spirit
 {
     //[utree_exceptions
-    struct utree_exception : std::exception {}; /*< All exceptions thrown by
-                                                    utree are derived from
-                                                    utree_exception. >*/
-      
+    // All exceptions thrown by utree are derived from utree_exception.
+    struct utree_exception : std::exception {};       
   
-    struct bad_type_exception : utree_exception /*< bad_type_exception is thrown
-                                                    whenever somebody calls a
-                                                    member function which
-                                                    applies to certain stored
-                                                    utree_type's only, but this
-                                                    precondition is violated as
-                                                    the utree instance holds
-                                                    some other type. >*/
+    // bad_type_exception is thrown whenever somebody calls a member function
+    // which applies to certain stored utree_type's only, but this precondition
+    // is violated as the utree instance holds some other type.
+    struct bad_type_exception : utree_exception
     {
         virtual const char* what() const throw()
         {
@@ -63,28 +57,26 @@ namespace boost { namespace spirit
     {
         enum info
         {
-            nil_type, /*< nil is the sentinel utree type. >*/
-            list_type, /*< A doubly linked list of utrees. >*/
-            range_type, /*< A range of list::iterators. >*/
-            reference_type, /*< A reference to another utree. >*/
-            any_type, /*< A pointer or reference to any C++ type. RTTI is used
-                          to retrieve the type dynamically. >*/
-            function_type, /*< A utree holding a stored_function<F> object,
-                               where F is an unary function object taking a 
-                               scope as it's parameter and returning a
-                               utree. >*/ 
+            nil_type,       // nil is the sentinel utree type.
+            list_type,      // A doubly linked list of utrees.
+            range_type,     // A range of list::iterators. 
+            reference_type, // A reference to another utree.
+            any_type,       // A pointer or reference to any C++ type. 
+            function_type,  // A utree holding a stored_function<F> object,
+                            // where F is an unary function object taking a 
+                            // scope as it's parameter and returning a
+                            // utree.
             
             // numeric atoms
             bool_type,
             int_type,
             double_type,
   
-            // text atoms
-            string_type, /*< utree strings store utf8 data. >*/
+            // text atoms (utf8)
+            string_type, 
             string_range_type,
-            symbol_type, /*< utree symbols also use utf8 encoding. >*/
-            binary_type /*< This utree type can store binary data. >*/
-  
+            symbol_type,
+            binary_type 
         };
     };
     //]
@@ -173,10 +165,10 @@ namespace boost { namespace spirit
     {
         virtual ~function_base() {};
         virtual utree operator()(scope const& env) const = 0;
-        virtual function_base* clone() const = 0; /*< Calling f.clone() must
-                                                      return a newly allocated
-                                                      function_base instance ff
-                                                      that is equal to f. >*/
+        virtual function_base* clone() const = 0; // Calling f.clone() must
+                                                  // return a newly allocated
+                                                  // function_base instance
+                                                  // that is equal to f.
     };
   
     template <typename F>
@@ -444,7 +436,8 @@ namespace boost { namespace spirit
         void ensure_list_type();
         void free();
         void copy(const_reference);
-  
+          
+
         union {
             detail::fast_string s;
             detail::list l;

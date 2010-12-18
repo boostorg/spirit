@@ -38,11 +38,8 @@ namespace boost { namespace spirit { namespace detail
         void copy(list const& other);
         void default_construct();
 
-        template <typename T>
-        void insert_before(T const& val, node* node);
-
-        template <typename T>
-        void insert_after(T const& val, node* node);
+        template <typename T, typename Iterator>
+        void insert(T const& val, Iterator pos);
 
         template <typename T>
         void push_front(T const& val);
