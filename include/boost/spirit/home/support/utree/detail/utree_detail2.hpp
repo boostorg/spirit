@@ -955,8 +955,8 @@ namespace boost { namespace spirit
         ensure_list_type();
         if (!pos.node) 
         {
-            push_back(val);
-            return begin();
+            l.push_back(val);
+            return utree::iterator(l.first, 0); // begin();
         }
         l.insert(val, pos);
         return utree::iterator(pos.node->prev, pos.node->prev->prev);
