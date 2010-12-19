@@ -43,7 +43,7 @@
 * Added `qi::tokenid()` primitive parser allowing to match arbitrary lexer 
   tokens based on a given token id. The difference to `qi::token()` is, that it 
   exposes as its attribute the token id of the matched token (instead of the 
-  iterator_range of the matched input, as qi::token() does).
+  iterator_range of the matched input, as `qi::token()` does).
 * Added additional template parameter to the default `lexertl::token<>`
   definition: the type of the token id. This type defaults to `std::size_t`.
   Any type used as the id type needs to be (explicitly) convertible from 
@@ -68,6 +68,8 @@
   This example lexer will match a `int_` token and will switch the lexer to 
   the state `"TARGETSTATE"` afterwards. If the second argument is not 
   specified the lexer remains in the previous state (as before).
+* The parser primitives `qi::token` and `qi::tokenid` can now be used without
+  any argument. In this case they will match any token.
 
 [endsect] [/ spirit_2_4_2]
 
