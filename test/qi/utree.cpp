@@ -7,8 +7,8 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/support_utree.hpp>
+#include <boost/spirit/include/qi.hpp>
 
 #include <sstream>
 
