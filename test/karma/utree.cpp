@@ -7,6 +7,8 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#include <boost/mpl/print.hpp>
+
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/support_utree.hpp>
 
@@ -53,6 +55,7 @@ int main()
     // sequences
     {
         using boost::spirit::karma::digit;
+        using boost::spirit::karma::repeat;
 
         utree ut;
         ut.push_back('x');
@@ -80,20 +83,19 @@ int main()
         rule<output_iterator, utree()> r2 = double_;
 
         ut.push_back(1.23);
-        utree ut1;
-        ut1.push_back('a');
-        ut1.push_back('b');
-        ut.push_back(ut1);
+        ut.push_back('a');
+        ut.push_back('b');
         BOOST_TEST(test("1.23ab", double_ << *char_, ut));
         BOOST_TEST(test("1.23ab", r1 << *char_, ut)); 
         BOOST_TEST(test("1.23ab", r2 << *char_, ut)); 
 
         ut.clear();
-        ut.push_back(ut1);
+        ut.push_back('a');
+        ut.push_back('b');
         ut.push_back(1.23);
-        BOOST_TEST(test("ab1.23", *~digit << double_, ut));
-        BOOST_TEST(test("ab1.23", *~digit << r1, ut));
-        BOOST_TEST(test("ab1.23", *~digit << r2, ut));
+        BOOST_TEST(test("ab1.23", repeat(2)[~digit] << double_, ut));
+        BOOST_TEST(test("ab1.23", repeat(2)[~digit] << r1, ut));
+        BOOST_TEST(test("ab1.23", repeat(2)[~digit] << r2, ut));
     }
 
     // kleene star
@@ -116,137 +118,85 @@ int main()
 
     // lists
     {
+        rule<output_iterator, utree()> r1 = char_ % ',';
         utree ut;
         ut.push_back('a');
         ut.push_back('b');
         BOOST_TEST(test("a,b", char_ % ',', ut));
+        BOOST_TEST(test("a,b", r1, ut));
 
+        rule<output_iterator, utree()> r2 = int_ % ',';
         ut.clear();
         ut.push_back(123);
         ut.push_back(456);
         BOOST_TEST(test("123,456", int_ % ',', ut));
+        BOOST_TEST(test("123,456", r2, ut));
 
         ut.clear();
 
-        rule<output_iterator, utree()> r4 = double_ % ',';
+        rule<output_iterator, utree()> r3 = double_ % ',';
         ut.push_back(1.23);
         ut.push_back(4.56);
         BOOST_TEST(test("1.23,4.56", double_ % ',', ut));
-        BOOST_TEST(test("1.23,4.56", r4, ut));
-
-//         rule<output_iterator, std::vector<char>()> r1 = char_ % ',';
-//         ut.clear();
-//         ut.push_back('a');
-//         ut.push_back('b');
-//         BOOST_TEST(test("a,b", r1, ut));
-
-//         rule<char const*, std::vector<int>()> r2 = int_ % ',';
-//         ut.clear();
-//         BOOST_TEST(test("123,456", r2, ut) &&
-//             ut.which() == utree_type::list_type && check(ut, "( 123 456 )"));
-// 
-//         rule<char const*, std::vector<double>()> r3 = double_ % ',';
-//         ut.clear();
-//         BOOST_TEST(test("1.23,4.56", r3, ut) &&
-//             ut.which() == utree_type::list_type && check(ut, "( 1.23 4.56 )"));
+        BOOST_TEST(test("1.23,4.56", r3, ut));
     }
 
-//     // alternatives
-//     {
-//         using boost::spirit::qi::real_parser;
-//         using boost::spirit::qi::strict_real_policies;
-// 
-//         typedef real_parser<double, strict_real_policies<double> >
-//             strict_double_type;
-//         strict_double_type const strict_double = strict_double_type();
-// 
-//         utree ut;
-//         BOOST_TEST(test("10", strict_double | int_, ut) &&
-//             ut.which() == utree_type::int_type && check(ut, "10"));
-//         ut.clear();
-//         BOOST_TEST(test("10.2", strict_double | int_, ut) &&
-//             ut.which() == utree_type::double_type && check(ut, "10.2"));
-// 
-//         rule<char const*, boost::variant<int, double>()> r1 = strict_double | int_;
-// 
-//         ut.clear();
-//         BOOST_TEST(test("10", r1, ut) &&
-//             ut.which() == utree_type::int_type && check(ut, "10"));       // FIXME?: "( 10 )"
-//         ut.clear();
-//         BOOST_TEST(test("10.2", r1, ut) &&
-//             ut.which() == utree_type::double_type && check(ut, "10.2"));  // FIXME?: "( 10.2 )"
-// 
-//         rule<char const*, utree()> r2 = strict_double | int_;
-// 
-//         ut.clear();
-//         BOOST_TEST(test("10", r2, ut) &&
-//             ut.which() == utree_type::int_type && check(ut, "10"));       // FIXME?: "( 10 )"
-//         ut.clear();
-//         BOOST_TEST(test("10.2", r2, ut) &&
-//             ut.which() == utree_type::double_type && check(ut, "10.2"));  // FIXME?: "( 10.2 )"
-//     }
-// 
-//     // optionals
-//     {
-//         utree ut;
-//         BOOST_TEST(test("x", -char_, ut) &&
-//             ut.which() == utree_type::string_type && check(ut, "\"x\""));
-//         ut.clear();
-//         BOOST_TEST(test("", -char_, ut) &&
-//             ut.which() == utree_type::nil_type && check(ut, "<nil>"));
-//     }
-// 
-//     // as_string
-//     {
-//         using boost::spirit::qi::digit;
-// 
-//         utree ut;
-//         BOOST_TEST(test("xy", as_string[char_ >> char_], ut) &&
-//             ut.which() == utree_type::string_type && check(ut, "\"xy\""));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("ab1.2", as_string[*~digit] >> double_, ut) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("xy", as_string[*char_], ut) &&
-//             ut.which() == utree_type::string_type && check(ut, "\"xy\""));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("x,y", as_string[char_ >> ',' >> char_], ut) &&
-//             ut.which() == utree_type::string_type && check(ut, "\"xy\""));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("x,y", char_ >> ',' >> char_, ut) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("a,b1.2", as_string[~digit % ','] >> double_, ut) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("a,b1.2", ~digit % ',' >> double_, ut) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
-//         ut.clear();
-//     }
-// 
-//     {
-//         using boost::spirit::qi::digit;
-//         using boost::spirit::qi::space;
-// 
-//         utree ut;
-//         BOOST_TEST(test("xy c", lexeme[char_ >> char_] >> char_, ut, space) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"xy\" \"c\" )"));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("ab 1.2", lexeme[*~digit] >> double_, ut, space) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
-//         ut.clear();
-// 
-//         BOOST_TEST(test("a xy", char_ >> lexeme[*char_], ut, space) &&
-//             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"xy\" )"));
-//         ut.clear();
-//     }
+    // alternatives
+    {
+        rule<output_iterator, utree()> r1 = int_ | double_;
+        utree ut(10);
+        BOOST_TEST(test("10", int_ | double_, ut));
+        BOOST_TEST(test("10", r1, ut));
+
+        ut = 10.2;
+        BOOST_TEST(test("10.2", int_ | double_, ut));
+        BOOST_TEST(test("10.2", r1, ut));
+    }
+
+    // optionals
+    {
+        utree ut('x');
+        BOOST_TEST(test("x", -char_, ut));
+
+        ut.clear();
+        BOOST_TEST(test("", -char_, ut));
+    }
+
+    {
+        using boost::spirit::karma::digit;
+        using boost::spirit::karma::as_string;
+
+        utree ut("xy");
+        BOOST_TEST(test("xy", string, ut));
+        BOOST_TEST(test("xy", as_string[*char_], ut));
+        BOOST_TEST(test("x,y", as_string[char_ << ',' << char_], ut));
+
+        ut.clear();
+        ut.push_back("ab");
+        ut.push_back(1.2);
+        BOOST_TEST(test("ab1.2", as_string[*~digit] << double_, ut));
+        BOOST_TEST(test("a,b1.2", as_string[~digit % ','] << double_, ut));
+    }
+
+    {
+        using boost::spirit::karma::verbatim;
+        using boost::spirit::karma::repeat;
+        using boost::spirit::karma::space;
+        using boost::spirit::karma::digit;
+
+        utree ut;
+        ut.push_back('x');
+        ut.push_back('y');
+        ut.push_back('c');
+        BOOST_TEST(test_delimited("xy c ", verbatim[repeat(2)[char_]] << char_, ut, space));
+        BOOST_TEST(test_delimited("x yc ", char_ << verbatim[*char_], ut, space));
+
+        ut.clear();
+        ut.push_back('a');
+        ut.push_back('b');
+        ut.push_back(1.2);
+        BOOST_TEST(test_delimited("ab 1.2 ", verbatim[repeat(2)[~digit]] << double_, ut, space));
+    }
 
     return boost::report_errors();
 }
