@@ -13,6 +13,7 @@
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/utree.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/nonterminal/nonterminal_fwd.hpp>
 
 #include <string>
 
@@ -73,10 +74,10 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(Attribute const& val, utree& attr, mpl::false_)
         {
-          if (attr.empty())
-              attr = val;
-          else
-              push_back(attr, val);
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
         }
 
         static void call(Attribute const& val, utree& attr, mpl::true_)
@@ -136,6 +137,19 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // Karma only: convert utree node to string
+    template <>
+    struct attribute_as_string<utree>
+    {
+        typedef utf8_string_range type; 
+
+        static type call(utree const& attr)
+        {
+            return boost::get<utf8_string_range>(attr);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // push_back support for utree allows concatenation of strings
     // (utree strings are immutable)
     template <typename T>
@@ -171,6 +185,44 @@ namespace boost { namespace spirit { namespace traits
         static void call(Out& out, utree const& val)
         {
             out << val;
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // force utree list attribute in a sequence to be dereferenced if a rule
+    // or a grammar takes an utree
+    template <
+        typename OutputIterator, typename T1, typename T2, typename T3
+      , typename T4>
+    struct handles_container<
+            karma::rule<OutputIterator, T1, T2, T3, T4>, utree>
+      : mpl::false_
+    {};
+
+    template <
+        typename OutputIterator, typename T1, typename T2, typename T3
+      , typename T4>
+    struct handles_container<
+            karma::grammar<OutputIterator, T1, T2, T3, T4>, utree>
+      : mpl::false_
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // the specialization below tells Spirit how to handle utree if it is used
+    // with an optional component
+    template <>
+    struct optional_attribute<utree>
+    {
+        typedef utree const& type;
+
+        static type call(utree const& val)
+        {
+            return val;
+        }
+
+        static bool is_valid(utree const& val)
+        {
+            return val.which() != utree_type::nil_type;
         }
     };
 
@@ -609,111 +661,6 @@ namespace boost { namespace spirit { namespace traits
             return std::string(r.begin(), r.end());
         }
     };
-
-//     ///////////////////////////////////////////////////////////////////////////
-//     // generic iterator for arbitrary utree node types 
-//     template <typename Value>
-//     class utree_node_iterator
-//       : public boost::iterator_facade<
-//             utree_node_iterator<Value>
-//           , Value
-//           , boost::bidirectional_traversal_tag>
-//     {
-//     public:
-// //         utree_node_iterator() : node(0), prev(0), node_iter() {}
-//         utree_node_iterator(Value& val) 
-//           : node(&val), prev(0) 
-//         {
-//             if (node->which() == utree_type::list_type)
-//                 node_iter = node->begin(); 
-//         }
-//         utree_node_iterator(Value& val, int) 
-//           : node(0), prev(0) 
-//         {
-//             if (val.which() == utree_type::list_type)
-//                 node_iter = val.end(); 
-//         }
-// 
-//     private:
-//         friend class boost::iterator_core_access;
-//         friend class boost::spirit::utree;
-// 
-//         void increment()
-//         {
-//             if (node->which() == utree_type::list_type)
-//             {
-//                 ++node_iter;
-//             }
-//             else
-//             {
-//                 prev = node;
-//                 node = 0;
-//             }
-//         }
-// 
-//         void decrement()
-//         {
-//             if (node->which() == utree_type::list_type)
-//             {
-//                 --node_iter;
-//             }
-//             else
-//             {
-//                 node = prev;
-//                 prev = 0;
-//             }
-//         }
-// 
-//         bool equal(utree_node_iterator const& other) const
-//         {
-//             if (0 != node && node->which() == utree_type::list_type) 
-//             {
-//                 return node_iter == other.node_iter;
-//             }
-//             return node == other.node;
-//         }
-// 
-//         typename utree_node_iterator::reference dereference() const
-//         {
-//             if (node->which() == utree_type::list_type)
-//             {
-//                 return *node_iter;
-//             }
-//             return *node;
-//         }
-// 
-//         Value* node;
-//         Value* prev;
-//         spirit::detail::list::node_iterator<Value> node_iter;
-//     };
-// 
-//     template <>
-//     struct container_iterator<utree const>
-//     {
-//         typedef utree_node_iterator<utree const> type;
-//     };
-// 
-//     template <>
-//     struct begin_container<utree const>
-//     {
-//         typedef container_iterator<utree const>::type iterator_type;
-// 
-//         static iterator_type call(utree const& c)
-//         {
-//             return iterator_type(c);
-//         }
-//     };
-// 
-//     template <>
-//     struct end_container<utree const>
-//     {
-//         typedef container_iterator<utree const>::type iterator_type;
-// 
-//         static iterator_type call(utree const& c)
-//         {
-//             return iterator_type(c, 0);
-//         }
-//     };
 }}}
 
 #endif

@@ -127,31 +127,31 @@ namespace boost { namespace spirit
     typedef basic_string<
         boost::iterator_range<char const*>,
         utree_type::binary_type>
-      binary_range;
+    binary_range;
     typedef basic_string<
         std::string,
         utree_type::binary_type>
-     binary_string;
+    binary_string;
 
     // UTF-8 string
     typedef basic_string<
         boost::iterator_range<char const*>,
         utree_type::string_type>
-      utf8_string_range;
+    utf8_string_range;
     typedef basic_string<
         std::string,
         utree_type::string_type>
-      utf8_string_type;
+    utf8_string_type;
 
     // UTF-8 symbol
     typedef basic_string<
         boost::iterator_range<char const*>,
         utree_type::symbol_type>
-      utf8_symbol_range;
+    utf8_symbol_range;
     typedef basic_string<
         std::string,
         utree_type::symbol_type>
-      utf8_symbol;
+    utf8_symbol;
     //]
 
     ///////////////////////////////////////////////////////////////////////////
@@ -454,7 +454,7 @@ namespace boost { namespace spirit
     //]
 
     //[utree_scope
-    class scope: public boost::iterator_range<utree*> {
+    class scope : public boost::iterator_range<utree*> {
       public:
         scope(utree* first = 0,
               utree* last = 0,

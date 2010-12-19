@@ -3,8 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(SPIRIT_KARMA_OMIT_JUL_20_2009_1008AM)
-#define SPIRIT_KARMA_OMIT_JUL_20_2009_1008AM
+#if !defined(SPIRIT_KARMA_AS_STRING_DEC_18_0510PM)
+#define SPIRIT_KARMA_AS_STRING_DEC_18_0510PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -13,6 +13,8 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
+#include <boost/spirit/home/karma/detail/as_string.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
@@ -26,38 +28,36 @@ namespace boost { namespace spirit
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct use_directive<karma::domain, tag::omit> // enables omit
+    struct use_directive<karma::domain, tag::as_string> // enables as_string
       : mpl::true_ {};
 
     template <>
-    struct use_directive<karma::domain, tag::skip> // enables skip
+    struct use_directive<karma::domain, tag::as_wstring> // enables as_wstring
       : mpl::true_ {};
 }}
 
 namespace boost { namespace spirit { namespace karma
 {
-    using spirit::omit;
-    using spirit::omit_type;
-    using spirit::skip;
-    using spirit::skip_type;
+    using spirit::as_string;
+    using spirit::as_string_type;
+    using spirit::as_wstring;
+    using spirit::as_wstring_type;
 
     ///////////////////////////////////////////////////////////////////////////
-    // omit_directive consumes the attribute of subject generator without
-    // generating anything
+    // as_string_directive allows to hook custom conversions to string into the
+    // output generation process
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, bool Execute>
-    struct omit_directive : unary_generator<omit_directive<Subject, Execute> >
+    template <typename Subject, typename Char>
+    struct as_string_directive 
+      : unary_generator<as_string_directive<Subject, Char> >
     {
         typedef Subject subject_type;
+        typedef typename subject_type::properties properties;
 
-        typedef mpl::int_<
-            generator_properties::disabling | subject_type::properties::value
-        > properties;
-
-        omit_directive(Subject const& subject)
+        as_string_directive(Subject const& subject)
           : subject(subject) {}
 
-        template <typename Context, typename Iterator = unused_type>
+        template <typename Context, typename Iterator>
         struct attribute
           : traits::attribute_of<subject_type, Context, Iterator>
         {};
@@ -67,23 +67,14 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            // We need to actually compile the output operation as we don't 
-            // have any other means to verify, whether the passed attribute is 
-            // compatible with the subject. 
-
-            // omit[] will execute the code, while skip[] doesn't execute it
-            if (Execute) {
-                // wrap the given output iterator to avoid output
-                detail::disable_output<OutputIterator> disable(sink);
-                subject.generate(sink, ctx, d, attr);
-            }
-            return true;
+            return subject.generate(sink, ctx, d, traits::as_string(attr)) &&
+                   karma::delimit_out(sink, d);     // always do post-delimiting 
         }
 
         template <typename Context>
         info what(Context& context) const
         {
-            return info(Execute ? "omit" : "skip", subject.what(context));
+            return info("as_string", subject.what(context));
         }
 
         Subject subject;
@@ -93,9 +84,10 @@ namespace boost { namespace spirit { namespace karma
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Modifiers>
-    struct make_directive<tag::omit, Subject, Modifiers>
+    struct make_directive<tag::as_string, Subject, Modifiers>
     {
-        typedef omit_directive<Subject, true> result_type;
+        typedef as_string_directive<Subject, char> result_type;
+
         result_type operator()(unused_type, Subject const& subject
           , unused_type) const
         {
@@ -104,9 +96,10 @@ namespace boost { namespace spirit { namespace karma
     };
 
     template <typename Subject, typename Modifiers>
-    struct make_directive<tag::skip, Subject, Modifiers>
+    struct make_directive<tag::as_wstring, Subject, Modifiers>
     {
-        typedef omit_directive<Subject, false> result_type;
+        typedef as_string_directive<Subject, wchar_t> result_type;
+
         result_type operator()(unused_type, Subject const& subject
           , unused_type) const
         {
@@ -118,14 +111,15 @@ namespace boost { namespace spirit { namespace karma
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, bool Execute>
-    struct has_semantic_action<karma::omit_directive<Subject, Execute> >
+    template <typename Subject, typename Char>
+    struct has_semantic_action<karma::as_string_directive<Subject, Char> >
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, bool Execute, typename Attribute>
-    struct handles_container<karma::omit_directive<Subject, Execute>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, typename Attribute, typename Char>
+    struct handles_container<
+            karma::as_string_directive<Subject, Char>, Attribute>
+      : mpl::false_ {};   // always dereference attribute if used in sequences
 }}}
 
 #endif

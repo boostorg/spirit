@@ -19,6 +19,8 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 
 #include <boost/type_traits/add_const.hpp>
@@ -169,6 +171,7 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject>
     struct has_semantic_action<karma::plus<Subject> >
       : unary_has_semantic_action<Subject> {};
@@ -176,6 +179,15 @@ namespace boost { namespace spirit { namespace traits
     template <typename Subject>
     struct has_semantic_action<karma::strict_plus<Subject> >
       : unary_has_semantic_action<Subject> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Attribute>
+    struct handles_container<karma::plus<Subject>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
+
+    template <typename Subject, typename Attribute>
+    struct handles_container<karma::strict_plus<Subject>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
 }}}
 
 #endif

@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
@@ -62,7 +63,6 @@ namespace boost { namespace spirit
       , tag::char_code<tag::string, CharEncoding>
       , 1 /*arity*/
     > : mpl::true_ {};
-
 }} 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ namespace boost { namespace spirit { namespace karma
             return 
                 karma::detail::string_generate(sink
                   , traits::extract_from<attribute_type>(attr, context)
-                      , char_encoding(), Tag()) &&
+                  , char_encoding(), Tag()) &&
                 karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -271,7 +271,21 @@ namespace boost { namespace spirit { namespace karma
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-
 }}}   // namespace boost::spirit::karma
+
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename CharEncoding, typename Tag, typename Attribute>
+    struct handles_container<karma::any_string<CharEncoding, Tag>, Attribute>
+      : mpl::false_ {};
+
+    template <typename String, typename CharEncoding, typename Tag
+      , bool no_attribute, typename Attribute>
+    struct handles_container<
+            karma::literal_string<String, CharEncoding, Tag, no_attribute>
+          , Attribute>
+      : mpl::false_ {};
+}}}
 
 #endif

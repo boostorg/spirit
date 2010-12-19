@@ -23,6 +23,8 @@
 #include <boost/spirit/home/support/algorithm/any_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/sequence_base_id.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/for_each.hpp>
@@ -363,6 +365,7 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Elements>
     struct has_semantic_action<karma::sequence<Elements> >
       : nary_has_semantic_action<Elements> {};
@@ -370,6 +373,17 @@ namespace boost { namespace spirit { namespace traits
     template <typename Elements>
     struct has_semantic_action<karma::strict_sequence<Elements> >
       : nary_has_semantic_action<Elements> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Attribute>
+    struct handles_container<karma::sequence<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute>
+    {};
+
+    template <typename Elements, typename Attribute>
+    struct handles_container<karma::strict_sequence<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute>
+    {};
 }}}
 
 #endif

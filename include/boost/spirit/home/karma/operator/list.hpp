@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 
 namespace boost { namespace spirit
@@ -189,6 +190,7 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Left, typename Right>
     struct has_semantic_action<karma::list<Left, Right> >
       : binary_has_semantic_action<Left, Right> {};
@@ -196,6 +198,15 @@ namespace boost { namespace spirit { namespace traits
     template <typename Left, typename Right>
     struct has_semantic_action<karma::strict_list<Left, Right> >
       : binary_has_semantic_action<Left, Right> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Left, typename Right, typename Attribute>
+    struct handles_container<karma::list<Left, Right>, Attribute> 
+      : mpl::true_ {};
+
+    template <typename Left, typename Right, typename Attribute>
+    struct handles_container<karma::strict_list<Left, Right>, Attribute> 
+      : mpl::true_ {};
 }}}
 
 #endif

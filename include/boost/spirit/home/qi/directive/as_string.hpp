@@ -78,7 +78,6 @@ namespace boost { namespace spirit { namespace qi
         info what(Context& context) const
         {
             return info("as_string", subject.what(context));
-
         }
 
         Subject subject;

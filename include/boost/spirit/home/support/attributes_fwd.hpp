@@ -25,6 +25,9 @@ namespace boost { namespace spirit { namespace result_of
     template <typename Exposed, typename Attribute>
     struct extract_from;
 
+    template <typename Attribute>
+    struct attribute_as_string;
+
     template <typename Exposed, typename Transformed, typename Domain>
     struct pre_transform;
 
@@ -118,6 +121,15 @@ namespace boost { namespace spirit { namespace traits
     );
 
     ///////////////////////////////////////////////////////////////////////////
+    // Karma only
+    template <typename Attribute, typename Enable = void>
+    struct attribute_as_string;
+
+    template <typename Attribute>
+    typename spirit::result_of::attribute_as_string<Attribute>::type
+    as_string(Attribute const& attr);
+
+    ///////////////////////////////////////////////////////////////////////////
     // return the type currently stored in the given variant
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable = void>
@@ -146,6 +158,11 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T, typename Enable = void>
     struct is_container;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Karma only
+    template <typename T, typename Attribute, typename Enable = void>
+    struct handles_container;
 
     ///////////////////////////////////////////////////////////////////////////
     // Qi only
