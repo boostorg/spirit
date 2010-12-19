@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>utree</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../support.html" title="Supporting Libraries">
 <link rel="prev" href="multi_pass.html" title="The multi pass iterator">
@@ -46,7 +46,7 @@
 </span>                        <span class="comment">// where F is an unary function object taking a 
 </span>                        <span class="comment">// scope as it's parameter and returning a
 </span>                        <span class="comment">// utree.
-</span>        
+</span>
         <span class="comment">// numeric atoms
 </span>        <span class="identifier">bool_type</span><span class="special">,</span>
         <span class="identifier">int_type</span><span class="special">,</span>
@@ -74,7 +74,7 @@
         </p></td></tr>
 </table></div>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1009073"></a>
+<a name="id1299691"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -97,7 +97,7 @@
 
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">iterator</span><span class="special">&gt;</span> <span class="identifier">range</span><span class="special">;</span>
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">const_iterator</span><span class="special">&gt;</span> <span class="identifier">const_range</span><span class="special">;</span>
-  
+
     <span class="comment">// dtor
 </span>    <span class="special">~</span><span class="identifier">utree</span><span class="special">();</span>
 
@@ -160,11 +160,11 @@
     <span class="comment">// copy 
 </span>    <span class="identifier">utree</span><span class="special">(</span><span class="identifier">const_reference</span><span class="special">);</span>
     <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">const_reference</span><span class="special">);</span>
-  
+
     <span class="comment">// range
 </span>    <span class="identifier">utree</span><span class="special">(</span><span class="identifier">range</span><span class="special">,</span> <span class="identifier">shallow_tag</span><span class="special">);</span>
     <span class="identifier">utree</span><span class="special">(</span><span class="identifier">const_range</span><span class="special">,</span> <span class="identifier">shallow_tag</span><span class="special">);</span>
-  
+
     <span class="comment">// assign dispatch
 </span>    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Iter</span><span class="special">&gt;</span>
       <span class="keyword">void</span> <span class="identifier">assign</span><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">);</span>
@@ -240,7 +240,7 @@
     <span class="comment">// random access
 </span>    <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">[](</span><span class="identifier">size_type</span><span class="special">);</span>
     <span class="identifier">const_reference</span> <span class="keyword">operator</span><span class="special">[](</span><span class="identifier">size_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  
+
     <span class="keyword">void</span> <span class="identifier">clear</span><span class="special">();</span>
 
     <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">utree</span><span class="special">&amp;);</span>
@@ -268,7 +268,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1012774"></a>
+<a name="id1302713"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -278,36 +278,36 @@
 </span><span class="keyword">typedef</span> <span class="identifier">basic_string</span><span class="special">&lt;</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;,</span>
     <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">binary_type</span><span class="special">&gt;</span>
-  <span class="identifier">binary_range</span><span class="special">;</span>
+<span class="identifier">binary_range</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">basic_string</span><span class="special">&lt;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span>
     <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">binary_type</span><span class="special">&gt;</span>
- <span class="identifier">binary_string</span><span class="special">;</span>
+<span class="identifier">binary_string</span><span class="special">;</span>
 
 <span class="comment">// UTF-8 string
 </span><span class="keyword">typedef</span> <span class="identifier">basic_string</span><span class="special">&lt;</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;,</span>
     <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">string_type</span><span class="special">&gt;</span>
-  <span class="identifier">utf8_string_range</span><span class="special">;</span>
+<span class="identifier">utf8_string_range</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">basic_string</span><span class="special">&lt;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span>
     <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">string_type</span><span class="special">&gt;</span>
-  <span class="identifier">utf8_string_type</span><span class="special">;</span>
+<span class="identifier">utf8_string_type</span><span class="special">;</span>
 
 <span class="comment">// UTF-8 symbol
 </span><span class="keyword">typedef</span> <span class="identifier">basic_string</span><span class="special">&lt;</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;,</span>
     <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">symbol_type</span><span class="special">&gt;</span>
-  <span class="identifier">utf8_symbol_range</span><span class="special">;</span>
+<span class="identifier">utf8_symbol_range</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">basic_string</span><span class="special">&lt;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span>
     <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">symbol_type</span><span class="special">&gt;</span>
-  <span class="identifier">utf8_symbol</span><span class="special">;</span>
+<span class="identifier">utf8_symbol</span><span class="special">;</span>
 </pre>
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1013253"></a>
+<a name="id1303097"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -341,14 +341,14 @@
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1013696"></a>
+<a name="id1303464"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
         
 </p>
 <pre class="programlisting"><span class="comment">// All exceptions thrown by utree are derived from utree_exception.
-</span><span class="keyword">struct</span> <span class="identifier">utree_exception</span> <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span> <span class="special">{};</span>       
+</span><span class="keyword">struct</span> <span class="identifier">utree_exception</span> <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span> <span class="special">{};</span>
 
 <span class="comment">// bad_type_exception is thrown whenever somebody calls a member function
 </span><span class="comment">// which applies to certain stored utree_type's only, but this precondition
@@ -364,13 +364,13 @@
 <p>
       </p>
 <a name="spirit.support.utree.scope"></a><h5>
-<a name="id1013888"></a>
+<a name="id1303622"></a>
         <a class="link" href="utree.html#spirit.support.utree.scope">Scope</a>
       </h5>
 <p>
         
 </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">scope</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">utree</span><span class="special">*&gt;</span> <span class="special">{</span>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">scope</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">utree</span><span class="special">*&gt;</span> <span class="special">{</span>
   <span class="keyword">public</span><span class="special">:</span>
     <span class="identifier">scope</span><span class="special">(</span><span class="identifier">utree</span><span class="special">*</span> <span class="identifier">first</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
           <span class="identifier">utree</span><span class="special">*</span> <span class="identifier">last</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>

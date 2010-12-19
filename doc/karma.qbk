@@ -43,5 +43,9 @@
 [include        karma/numeric_performance.qbk]
 [endsect]
 
+[? __use_auto_index__
+    [index Karma Index..karma_index]
+]
+
 [endsect]
 

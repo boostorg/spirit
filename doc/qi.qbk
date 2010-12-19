@@ -45,5 +45,9 @@
 [include        qi/string.qbk]
 [endsect]
 
+[? __use_auto_index__
+    [index Qi Index..qi_index]
+]
+
 [endsect]
 
