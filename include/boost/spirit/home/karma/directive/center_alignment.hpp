@@ -315,7 +315,7 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Width, typename Attribute>
     struct handles_container<
-            karma::simple_center_alignment<Subject, Width>, typename Attribute>
+            karma::simple_center_alignment<Subject, Width>, Attribute>
       : unary_handles_container<Subject, Attribute> {};
 
     template <typename Subject, typename Padding, typename Width, typename Attribute>
