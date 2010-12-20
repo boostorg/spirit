@@ -89,8 +89,9 @@ namespace boost { namespace spirit { namespace qi
       : meta_create_container<T> {};
 
     template <typename T>
-    struct meta_create_impl<T
-          , typename enable_if<fusion::traits::is_sequence<T> >::type>
+    struct meta_create_impl<T, typename enable_if<
+                spirit::detail::is_fusion_sequence_but_not_proto_expr<T> 
+            >::type>
       : meta_create_sequence<T> {};
 
     template <typename T, typename Enable = void>
