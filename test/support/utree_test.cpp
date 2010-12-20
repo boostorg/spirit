@@ -318,15 +318,15 @@ int main()
 
     {
         // shallow string ranges
-        using boost::spirit::utf8_string_range;
+        using boost::spirit::utf8_string_range_type;
         using boost::spirit::shallow;
 
         char const* s = "Hello, World";
-        utree val(utf8_string_range(s, s + strlen(s)), shallow);
+        utree val(utf8_string_range_type(s, s + strlen(s)), shallow);
         BOOST_TEST(check(val, "\"Hello, World\""));
 
-        utf8_string_range r = val.get<utf8_string_range>();
-        utf8_string_range pf(r.begin()+1, r.end()-1);
+        utf8_string_range_type r = val.get<utf8_string_range_type>();
+        utf8_string_range_type pf(r.begin()+1, r.end()-1);
         val = utree(pf, shallow);
         BOOST_TEST(check(val, "\"ello, Worl\""));
     }

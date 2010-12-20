@@ -27,49 +27,42 @@
 <a name="spirit.what_s_new.spirit_2_4_2"></a><a class="link" href="spirit_2_4_2.html" title="Spirit V2.4.2">Spirit V2.4.2</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id850114"></a>
+<a name="id851206"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)</a>
       </h5>
-<a name="spirit.what_s_new.spirit_2_4_2.bug_fixes"></a><h5>
-<a name="id850136"></a>
-        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes">Bug Fixes</a>
+<a name="spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma"></a><h5>
+<a name="id851230"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma">New
+        Features in Qi or Karma</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Fixed a problem in the Lexer giving problems to assign tokens to all
-            lexer states at once. This is now possible by simply using "*"
-            as the state name. For instance this will add the token int_ to all lexer
-            states: 
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">lexer</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
-<span class="special">{</span>
-    <span class="identifier">lexer</span><span class="special">()</span>
-    <span class="special">{</span>
-        <span class="identifier">int_</span> <span class="special">=</span> <span class="string">"[1-9][0-9]*"</span><span class="special">;</span>
-        <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">self</span><span class="special">(</span><span class="string">"*"</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
-    <span class="special">}</span>
-    <span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">int_</span><span class="special">;</span>
-<span class="special">};</span>
-</pre>
-            Note: the <code class="computeroutput"><span class="identifier">self</span><span class="special">(</span><span class="string">"*"</span><span class="special">)</span>
-            <span class="special">=</span> <span class="special">...</span></code>
-            must be executed after all lexer states have been introduced to the lexer
-            object.
+            Added keyword indexes for <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+            to the docs.
           </li>
 <li class="listitem">
-            Fixed lexer lookahead. The lookahead operation is now evaluated using
-            the lexer state the <code class="computeroutput"><span class="identifier">token_def</span></code>
-            instance used as its argument is associated with.
+            Added <a class="link" href="../support/utree.html" title="The utree data structure"><code class="computeroutput"><span class="identifier">utree</span></code></a>,
+            a generic, hierarchical, and dynamic data structure that can represent
+            abstract syntax trees. It's well integrated with <span class="emphasis"><em>Spirit.Qi</em></span>
+            and <span class="emphasis"><em>Spirit.Karma</em></span>. It can be passed as an attribute
+            while parsing almost any grammars. At the same time, it can be used as
+            an attribute to generate output from.
           </li>
-<li class="listitem">
-            Fixed a problem in the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
-            iterator causing wrong tokens to be returned to the user. This could
-            happen in conjunction with a lexer which performed lexer state changes
-            and was using <code class="computeroutput"><span class="identifier">pass_fail</span></code>
-            in semantic actions to make a token match fail.
-          </li>
+</ul></div>
+<a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
+<a name="id851288"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
+        changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.4.1 (Boost V1.45.0) to
+        V2.4.2 (Boost V1.46.0)</a>
+      </h5>
+<a name="spirit.what_s_new.spirit_2_4_2.new_features_in_lex"></a><h5>
+<a name="id851305"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_lex">New Features
+        in Lex</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tokenid</span><span class="special">()</span></code>
             primitive parser allowing to match arbitrary lexer tokens based on a
@@ -112,6 +105,45 @@
             The parser primitives <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span></code>
             and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tokenid</span></code> can now be used without any
             argument. In this case they will match any token.
+          </li>
+</ul></div>
+<a name="spirit.what_s_new.spirit_2_4_2.bug_fixes"></a><h5>
+<a name="id851722"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes">Bug Fixes</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            Fixed a problem in the Lexer giving problems to assign tokens to all
+            lexer states at once. This is now possible by simply using "*"
+            as the state name. For instance this will add the token int_ to all lexer
+            states: 
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">lexer</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="identifier">lexer</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="identifier">int_</span> <span class="special">=</span> <span class="string">"[1-9][0-9]*"</span><span class="special">;</span>
+        <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">self</span><span class="special">(</span><span class="string">"*"</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
+    <span class="special">}</span>
+    <span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">int_</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+            Note: the <code class="computeroutput"><span class="identifier">self</span><span class="special">(</span><span class="string">"*"</span><span class="special">)</span>
+            <span class="special">=</span> <span class="special">...</span></code>
+            must be executed after all lexer states have been introduced to the lexer
+            object.
+          </li>
+<li class="listitem">
+            Fixed lexer lookahead. The lookahead operation is now evaluated using
+            the lexer state the <code class="computeroutput"><span class="identifier">token_def</span></code>
+            instance used as its argument is associated with.
+          </li>
+<li class="listitem">
+            Fixed a problem in the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+            iterator causing wrong tokens to be returned to the user. This could
+            happen in conjunction with a lexer which performed lexer state changes
+            and was using <code class="computeroutput"><span class="identifier">pass_fail</span></code>
+            in semantic actions to make a token match fail.
           </li>
 </ul></div>
 </div>

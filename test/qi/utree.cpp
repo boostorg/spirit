@@ -26,7 +26,7 @@ int main()
     using spirit_test::test_attr;
     using boost::spirit::utree;
     using boost::spirit::utree_type;
-    using boost::spirit::utf8_string_range;
+    using boost::spirit::utf8_string_range_type;
 
     using boost::spirit::qi::char_;
     using boost::spirit::qi::int_;

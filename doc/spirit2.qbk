@@ -124,6 +124,8 @@
 
 [/ References to classes ]
 
+[def __utree__                  [link spirit.support.utree `utree`]]
+
 [def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `lex::token_def<>`]
 
 [def __class_lexertl_token__    [/ link spirit.lex.reference.token `lexertl_token<>`] `lex::lexertl::token<>`]

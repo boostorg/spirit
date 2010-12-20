@@ -13,33 +13,19 @@
 
 [heading What's changed in __qi__ and __karma__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
 
-[heading Bug Fixes]
+[heading New Features in Qi or Karma]
 
-* Fixed a problem in the Lexer giving problems to assign tokens to all lexer 
-  states at once. This is now possible by simply using "*" as the state name.
-  For instance this will add the token int_ to all lexer states:
-``
-    template <typename Lexer>
-    struct lexer : lex::lexer<Lexer>
-    {
-        lexer()
-        {
-            int_ = "[1-9][0-9]*";
-            this->self("*") = int_;
-        }
-        lex::token_def<int> int_;
-    };
-``
-   Note: the `self("*") = ...` must be executed after all lexer states have 
-   been introduced to the lexer object.
+* Added keyword indexes for __qi__ and __karma__ to the docs.
+* Added __utree__, a generic, hierarchical, and dynamic data structure that can 
+  represent abstract syntax trees. It's well integrated with __qi__ and 
+  __karma__. It can be passed as an attribute while parsing almost any
+  grammars. At the same time, it can be used as an attribute to generate output 
+  from.
 
-* Fixed lexer lookahead. The lookahead operation is now evaluated using the 
-  lexer state the `token_def` instance used as its argument is associated 
-  with. 
-* Fixed a problem in the `multi_pass` iterator causing wrong tokens to be
-  returned to the user. This could happen in conjunction with a lexer which 
-  performed lexer state changes and was using `pass_fail` in semantic actions
-  to make a token match fail.
+[heading What's changed in __lex__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
+
+[heading New Features in Lex]
+
 * Added `qi::tokenid()` primitive parser allowing to match arbitrary lexer 
   tokens based on a given token id. The difference to `qi::token()` is, that it 
   exposes as its attribute the token id of the matched token (instead of the 
@@ -70,6 +56,34 @@
   specified the lexer remains in the previous state (as before).
 * The parser primitives `qi::token` and `qi::tokenid` can now be used without
   any argument. In this case they will match any token.
+
+[heading Bug Fixes]
+
+* Fixed a problem in the Lexer giving problems to assign tokens to all lexer 
+  states at once. This is now possible by simply using "*" as the state name.
+  For instance this will add the token int_ to all lexer states:
+``
+    template <typename Lexer>
+    struct lexer : lex::lexer<Lexer>
+    {
+        lexer()
+        {
+            int_ = "[1-9][0-9]*";
+            this->self("*") = int_;
+        }
+        lex::token_def<int> int_;
+    };
+``
+   Note: the `self("*") = ...` must be executed after all lexer states have 
+   been introduced to the lexer object.
+
+* Fixed lexer lookahead. The lookahead operation is now evaluated using the 
+  lexer state the `token_def` instance used as its argument is associated 
+  with. 
+* Fixed a problem in the `multi_pass` iterator causing wrong tokens to be
+  returned to the user. This could happen in conjunction with a lexer which 
+  performed lexer state changes and was using `pass_fail` in semantic actions
+  to make a token match fail.
 
 [endsect] [/ spirit_2_4_2]
 
