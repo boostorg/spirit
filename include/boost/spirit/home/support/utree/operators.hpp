@@ -208,21 +208,21 @@ namespace boost { namespace spirit
             out << (b ? "true" : "false") << ' ';
         }
 
-        void operator()(binary_range const& b) const
+        void operator()(binary_range_type const& b) const
         {
             out << "#";
             out.width(2);
             out.fill('0');
 
-            typedef binary_range::const_iterator iterator;
+            typedef binary_range_type::const_iterator iterator;
             for (iterator i = b.begin(); i != b.end(); ++i)
                 out << std::hex << int((unsigned char)*i);
             out << std::dec << "# ";
         }
 
-        void operator()(utf8_string_range const& str) const
+        void operator()(utf8_string_range_type const& str) const
         {
-            typedef utf8_string_range::const_iterator iterator;
+            typedef utf8_string_range_type::const_iterator iterator;
             iterator i = str.begin();
             out << '"';
             for (; i != str.end(); ++i)
@@ -230,9 +230,9 @@ namespace boost { namespace spirit
             out << "\" ";
         }
 
-        void operator()(utf8_symbol_range const& str) const
+        void operator()(utf8_symbol_range_type const& str) const
         {
-            typedef utf8_symbol_range::const_iterator iterator;
+            typedef utf8_symbol_range_type::const_iterator iterator;
             iterator i = str.begin();
             for (; i != str.end(); ++i)
                 out << *i;

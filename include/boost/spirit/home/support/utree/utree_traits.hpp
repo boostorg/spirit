@@ -119,18 +119,18 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // this specialization keeps symbols from being transformed into strings  
     template<>
-    struct assign_to_attribute_from_value<utree, utf8_symbol> 
+    struct assign_to_attribute_from_value<utree, utf8_symbol_type> 
     {
-        static void call (utf8_symbol const& val, utree& attr) 
+        static void call (utf8_symbol_type const& val, utree& attr) 
         {
             attr = val;
         }
     };
 
     template<>
-    struct assign_to_attribute_from_value<utree, utf8_symbol_range> 
+    struct assign_to_attribute_from_value<utree, utf8_symbol_range_type> 
     {
-        static void call (utf8_symbol_range const& val, utree& attr) 
+        static void call (utf8_symbol_range_type const& val, utree& attr) 
         {
             attr = val;
         }
@@ -141,11 +141,11 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct attribute_as_string<utree>
     {
-        typedef utf8_string_range type; 
+        typedef utf8_string_range_type type; 
 
         static type call(utree const& attr)
         {
-            return boost::get<utf8_string_range>(attr);
+            return boost::get<utf8_string_range_type>(attr);
         }
     };
 
@@ -319,10 +319,10 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            utree, utf8_string_range>
+            utree, utf8_string_range_type>
       : mpl::true_
     {
-        typedef utf8_string_range compatible_type;
+        typedef utf8_string_range_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -345,10 +345,10 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            utree, utf8_symbol_range>
+            utree, utf8_symbol_range_type>
       : mpl::true_
     {
-        typedef utf8_symbol_range compatible_type;
+        typedef utf8_symbol_range_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -358,10 +358,10 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            utree, utf8_symbol>
+            utree, utf8_symbol_type>
       : mpl::true_
     {
-        typedef utf8_symbol compatible_type;
+        typedef utf8_symbol_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -371,10 +371,10 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            utree, binary_range>
+            utree, binary_range_type>
       : mpl::true_
     {
-        typedef binary_range compatible_type;
+        typedef binary_range_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -384,10 +384,10 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct compute_compatible_component_variant<
-            utree, binary_string>
+            utree, binary_string_type>
       : mpl::true_
     {
-        typedef binary_string compatible_type;
+        typedef binary_string_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -438,23 +438,23 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct symbols_lookup<utree, utf8_symbol>
+    struct symbols_lookup<utree, utf8_symbol_type>
     {
         typedef std::string type;
 
         static type call(utree const& t)
         {
-            utf8_symbol_range r = boost::get<utf8_symbol_range>(t);
+            utf8_symbol_range_type r = boost::get<utf8_symbol_range_type>(t);
             return std::string(r.begin(), r.end());
         }
     };
 
     template <>
-    struct symbols_lookup<utf8_symbol, utf8_symbol>
+    struct symbols_lookup<utf8_symbol_type, utf8_symbol_type>
     {
         typedef std::string type;
 
-        static type call(utf8_symbol const& t)
+        static type call(utf8_symbol_type const& t)
         {
             return t;
         }
@@ -469,7 +469,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename Context>
         static type call(utree const& t, Context&)
         {
-            utf8_symbol_range r = boost::get<utf8_symbol_range>(t);
+            utf8_symbol_range_type r = boost::get<utf8_symbol_range_type>(t);
             return r.front();
         }
     };
@@ -518,21 +518,21 @@ namespace boost { namespace spirit { namespace traits
         template <typename Context>
         static type call(utree const& t, Context&)
         {
-            utf8_symbol_range r = boost::get<utf8_string_range>(t);
+            utf8_symbol_range_type r = boost::get<utf8_string_range_type>(t);
             return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct extract_from_attribute<utree, utf8_symbol>
+    struct extract_from_attribute<utree, utf8_symbol_type>
     {
         typedef std::string type;
 
         template <typename Context>
         static type call(utree const& t, Context&)
         {
-            utf8_symbol_range r = boost::get<utf8_symbol_range>(t);
+            utf8_symbol_range_type r = boost::get<utf8_symbol_range_type>(t);
             return std::string(r.begin(), r.end());
         }
     };
@@ -545,7 +545,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename Context>
         static type call(utree const& t, Context&)
         {
-            utf8_string_range r = boost::get<utf8_string_range>(t);
+            utf8_string_range_type r = boost::get<utf8_string_range_type>(t);
             return std::string(r.begin(), r.end());
         }
     };
@@ -571,7 +571,7 @@ namespace boost { namespace spirit { namespace traits
 
         static type pre(utree const& t)
         {
-            utf8_string_range r = boost::get<utf8_string_range>(t);
+            utf8_string_range_type r = boost::get<utf8_string_range_type>(t);
             return r.front();
         }
     };
@@ -617,7 +617,7 @@ namespace boost { namespace spirit { namespace traits
 
         static type pre(utree const& t)
         {
-            utf8_symbol_range r = boost::get<utf8_string_range>(t);
+            utf8_symbol_range_type r = boost::get<utf8_string_range_type>(t);
             return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
         }
     };
@@ -645,19 +645,19 @@ namespace boost { namespace spirit { namespace traits
 
         static type pre(utree const& t)
         {
-            utf8_string_range r = boost::get<utf8_string_range>(t);
+            utf8_string_range_type r = boost::get<utf8_string_range_type>(t);
             return std::string(r.begin(), r.end());
         }
     };
 
     template <>
-    struct transform_attribute<utree const, utf8_symbol, karma::domain>
+    struct transform_attribute<utree const, utf8_symbol_type, karma::domain>
     {
         typedef std::string type;
 
         static type pre(utree const& t)
         {
-            utf8_symbol_range r = boost::get<utf8_symbol_range>(t);
+            utf8_symbol_range_type r = boost::get<utf8_symbol_range_type>(t);
             return std::string(r.begin(), r.end());
         }
     };

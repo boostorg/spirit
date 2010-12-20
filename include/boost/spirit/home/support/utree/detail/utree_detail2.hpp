@@ -477,16 +477,16 @@ namespace boost { namespace spirit { namespace detail
                     return f(list_range(iterator(x.r.first, 0), iterator(0, x.r.last)));
 
                 case type::string_type:
-                    return f(utf8_string_range(x.s.str(), x.s.size()));
+                    return f(utf8_string_range_type(x.s.str(), x.s.size()));
 
                 case type::string_range_type:
-                    return f(utf8_string_range(x.sr.first, x.sr.last));
+                    return f(utf8_string_range_type(x.sr.first, x.sr.last));
 
                 case type::symbol_type:
-                    return f(utf8_symbol_range(x.s.str(), x.s.size()));
+                    return f(utf8_symbol_range_type(x.s.str(), x.s.size()));
 
                 case type::binary_type:
-                    return f(binary_range(x.s.str(), x.s.size()));
+                    return f(binary_range_type(x.s.str(), x.s.size()));
 
                 case type::reference_type:
                     return apply(*x.p, f);
@@ -542,19 +542,19 @@ namespace boost { namespace spirit { namespace detail
 
                 case type::string_type:
                     return visit_impl::apply(y, detail::bind(
-                        f, utf8_string_range(x.s.str(), x.s.size())));
+                        f, utf8_string_range_type(x.s.str(), x.s.size())));
 
                 case type::string_range_type:
                     return visit_impl::apply(y, detail::bind(
-                        f, utf8_string_range(x.sr.first, x.sr.last)));
+                        f, utf8_string_range_type(x.sr.first, x.sr.last)));
 
                 case type::symbol_type:
                     return visit_impl::apply(y, detail::bind(
-                        f, utf8_symbol_range(x.s.str(), x.s.size())));
+                        f, utf8_symbol_range_type(x.s.str(), x.s.size())));
 
                 case type::binary_type:
                     return visit_impl::apply(y, detail::bind(
-                        f, binary_range(x.s.str(), x.s.size())));
+                        f, binary_range_type(x.s.str(), x.s.size())));
 
                 case type::reference_type:
                     return apply(*x.p, y, f);
@@ -732,7 +732,7 @@ namespace boost { namespace spirit
         set_type(type::range_type);
     }
 
-    inline utree::utree(utf8_string_range const& str, shallow_tag)
+    inline utree::utree(utf8_string_range_type const& str, shallow_tag)
     {
         s.initialize();
         this->sr.first = str.begin();
@@ -1403,7 +1403,7 @@ namespace boost { namespace spirit
         To dispatch(From const& val, boost::mpl::false_) const
         {
             // From is NOT convertible to To !!!
-            throw std::bad_cast();
+            boost::throw_exception(std::bad_cast());
             return To();
         }
 
@@ -1429,7 +1429,7 @@ namespace boost { namespace spirit
         T* operator()(From const& val) const
         {
             // From is NOT convertible to T !!!
-            throw std::bad_cast();
+            boost::throw_exception(std::bad_cast());
             return 0;
         }
 
