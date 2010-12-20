@@ -19,59 +19,57 @@
 // #define BOOST_SPIRIT_DEBUG
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/support_utree.hpp>
+#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 
 #include <iostream>
 #include <string>
 
-#if BOOST_PHOENIX_VERSION == 0x2000
-namespace boost { namespace phoenix 
-{
-    // There's a bug in the Phoenix V2 type deduction mechanism that prevents 
-    // correct return type deduction for for the math operations below. Newer
-    // versions of Phoenix will be switching to BOOST_TYPEOF. In the meantime, 
-    // we will use the specializations helping with return type deduction 
-    // below:
-    template <>
-    struct result_of_plus<spirit::utree&, spirit::utree&> 
-    { 
-        typedef spirit::utree type; 
-    };
-
-    template <>
-    struct result_of_minus<spirit::utree&, spirit::utree&> 
-    { 
-        typedef spirit::utree type; 
-    };
-
-    template <>
-    struct result_of_multiplies<spirit::utree&, spirit::utree&> 
-    { 
-        typedef spirit::utree type; 
-    };
-
-    template <>
-    struct result_of_divides<spirit::utree&, spirit::utree&> 
-    { 
-        typedef spirit::utree type; 
-    };
-
-    template <>
-    struct result_of_negate<spirit::utree&> 
-    { 
-        typedef spirit::utree type; 
-    };
-}}
-#endif
-
 namespace client
 {
     namespace qi = boost::spirit::qi;
     namespace ascii = boost::spirit::ascii;
     namespace spirit = boost::spirit;
+
+    struct expr
+    {
+        template <typename T1, typename T2>
+        struct result { typedef void type; };
+
+        expr(char op) : op(op) {}
+
+        void operator()(spirit::utree& expr, spirit::utree const& rhs) const
+        {
+            spirit::utree lhs;
+            lhs.swap(expr);
+            expr.push_back(spirit::utf8_symbol_range_type(&op, &op+1));
+            expr.push_back(lhs);
+            expr.push_back(rhs);
+        }
+
+        char const op;
+    };
+    boost::phoenix::function<expr> const plus = expr('+');
+    boost::phoenix::function<expr> const minus = expr('-');
+    boost::phoenix::function<expr> const times = expr('*');
+    boost::phoenix::function<expr> const divide = expr('/');
+
+    struct negate_expr
+    {
+        template <typename T1, typename T2>
+        struct result { typedef void type; };
+
+        void operator()(spirit::utree& expr, spirit::utree const& rhs) const
+        {
+            char const op = '-';
+            expr.clear();
+            expr.push_back(spirit::utf8_symbol_range_type(&op, &op+1));
+            expr.push_back(rhs);
+        }
+    };
+    boost::phoenix::function<negate_expr> neg;
 
     ///////////////////////////////////////////////////////////////////////////////
     //  Our calculator grammar
@@ -87,22 +85,22 @@ namespace client
 
             expression =
                 term                            [_val = _1]
-                >> *(   ('+' >> term            [_val = _val + _1])
-                    |   ('-' >> term            [_val = _val - _1])
+                >> *(   ('+' >> term            [plus(_val, _1)])
+                    |   ('-' >> term            [minus(_val, _1)])
                     )
                 ;
 
             term =
                 factor                          [_val = _1]
-                >> *(   ('*' >> factor          [_val = _val * _1])
-                    |   ('/' >> factor          [_val = _val / _1])
+                >> *(   ('*' >> factor          [times(_val, _1)])
+                    |   ('/' >> factor          [divide(_val, _1)])
                     )
                 ;
 
             factor =
                 uint_                           [_val = _1]
                 |   '(' >> expression           [_val = _1] >> ')'
-                |   ('-' >> factor              [_val = -_1])
+                |   ('-' >> factor              [neg(_val, _1)])
                 |   ('+' >> factor              [_val = _1])
                 ;
 
