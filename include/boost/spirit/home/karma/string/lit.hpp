@@ -1,4 +1,5 @@
 //  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c)      2010 Bryce Lelbach
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -160,10 +161,13 @@ namespace boost { namespace spirit { namespace karma
             // fail if attribute isn't matched by immediate literal
             typedef typename attribute<Context>::type attribute_type;
 
+            typedef typename spirit::result_of::extract_from<attribute_type, Attribute>::type
+                extracted_string_type;
+
             using spirit::traits::get_c_string;
             if (!detail::string_compare(
-                    get_c_string(traits::extract_from<attribute_type>(attr, context))
-                  , get_c_string(str_), char_encoding(), Tag()))
+                    get_c_string<extracted_string_type>::call(traits::extract_from<attribute_type>(attr, context))
+                  , get_c_string<string_type>::call(str_), char_encoding(), Tag()))
             {
                 return false;
             }

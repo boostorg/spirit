@@ -15,6 +15,7 @@
 #include <ostream>
 #include <typeinfo>
 
+#include <boost/throw_exception.hpp>
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iterator/iterator_facade.hpp>

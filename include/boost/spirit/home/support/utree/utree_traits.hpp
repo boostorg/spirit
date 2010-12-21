@@ -21,6 +21,7 @@
 #include <boost/variant.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/identity.hpp>
 #include <boost/utility/enable_if.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,6 +37,65 @@ namespace boost
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization lets Spirit.Karma know that typed basic_strings
+    // are strings
+    template <typename Base, utree_type::info I>
+    struct is_string<spirit::basic_string<Base, I> > : mpl::true_ { };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // these specializations extract the character type of a utree typed string 
+    template <typename T, utree_type::info I>
+    struct char_type_of<spirit::basic_string<iterator_range<T>, I> >
+      : char_type_of<T> {};
+
+    template <typename T, typename Traits, typename Allocator,
+              utree_type::info I>
+    struct char_type_of<
+      spirit::basic_string<std::basic_string<T, Traits, Allocator>, I>
+    > : mpl::identity<T> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // these specializations extract a c string from a utree typed string
+    template <typename String>
+    struct get_c_string;
+
+    template <typename T, utree_type::info I>
+    struct get_c_string<spirit::basic_string<iterator_range<T const*>, I> >
+    {
+        typedef T char_type;
+
+        typedef spirit::basic_string<iterator_range<T const*>, I> string;
+
+        static T const* call (string& s)
+        {
+            return s.begin();
+        }
+
+        static T const* call (string const& s)
+        {
+            return s.begin();
+        }
+    };
+    
+    template <typename T, typename Traits, typename Allocator, utree_type::info I>
+    struct get_c_string<spirit::basic_string<std::basic_string<T, Traits, Allocator>, I> >
+    {
+        typedef T char_type;
+
+        typedef spirit::basic_string<std::basic_string<T, Traits, Allocator>, I> string;
+
+        static T const* call (string& s)
+        {
+            return s.c_str();
+        }
+
+        static T const* call (string const& s)
+        {
+            return s.c_str();
+        }
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     // this specialization tells Spirit.Qi to allow assignment to an utree from
     // a variant
@@ -531,7 +591,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename Context>
         static type call(utree const& t, Context&)
         {
-            utf8_symbol_range_type r = boost::get<utf8_string_range_type>(t);
+            utf8_string_range_type r = boost::get<utf8_string_range_type>(t);
             return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
         }
     };
@@ -630,7 +690,7 @@ namespace boost { namespace spirit { namespace traits
 
         static type pre(utree const& t)
         {
-            utf8_symbol_range_type r = boost::get<utf8_string_range_type>(t);
+            utf8_string_range_type r = boost::get<utf8_string_range_type>(t);
             return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
         }
     };

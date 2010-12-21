@@ -23,6 +23,8 @@ int main()
     using boost::spirit::utree;
     using boost::spirit::utree_type;
     using boost::spirit::utf8_string_range_type;
+    using boost::spirit::utf8_string_type;
+    using boost::spirit::utf8_symbol_type;
 
     using boost::spirit::karma::char_;
     using boost::spirit::karma::bool_;
@@ -50,6 +52,9 @@ int main()
 
         ut = "abc";
         BOOST_TEST(test("abc", string, ut));
+
+        ut = utf8_symbol_type("xyz");
+        BOOST_TEST(test("xyz", string, ut));
     }
 
     // sequences
@@ -176,6 +181,28 @@ int main()
         ut.push_back(1.2);
         BOOST_TEST(test("ab1.2", as_string[*~digit] << double_, ut));
         BOOST_TEST(test("a,b1.2", as_string[~digit % ','] << double_, ut));
+    }
+    
+    // typed basic_string rules
+    {
+        utree ut("buzz");
+
+        rule<output_iterator, utf8_string_type()> r1 = string;
+        rule<output_iterator, utf8_symbol_type()> r2 = string;
+
+        BOOST_TEST(test("buzz", r1, ut));
+
+        ut = utf8_symbol_type("bar");
+        BOOST_TEST(test("bar", r2, ut));
+    }
+
+    // parameterized karma::string
+    {
+        utree ut("foo");
+
+        rule<output_iterator, utf8_string_type()> r1 = string("foo");
+        BOOST_TEST(test("foo", string("foo"), ut));
+        BOOST_TEST(test("foo", r1, ut));
     }
 
     {

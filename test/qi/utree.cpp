@@ -27,6 +27,8 @@ int main()
     using boost::spirit::utree;
     using boost::spirit::utree_type;
     using boost::spirit::utf8_string_range_type;
+    using boost::spirit::utf8_symbol_type;
+    using boost::spirit::utf8_string_type;
 
     using boost::spirit::qi::char_;
     using boost::spirit::qi::int_;
@@ -47,6 +49,18 @@ int main()
         ut.clear();
         BOOST_TEST(test_attr("123.45", double_, ut) &&
             ut.which() == utree_type::double_type && check(ut, "123.45"));
+        ut.clear();
+
+        rule<char const*, utf8_string_type()> r1 = lexeme[*char_];
+
+        BOOST_TEST(test_attr("foo", r1, ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"foo\""));
+        ut.clear();
+        
+        rule<char const*, utf8_symbol_type()> r2 = lexeme[*char_];
+        
+        BOOST_TEST(test_attr("xyz", r2, ut) &&
+            ut.which() == utree_type::symbol_type && check(ut, "xyz"));
     }
 
     // sequences

@@ -23,7 +23,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
 import testing ;
 
 {
-    test-suite spirit_v2 :
+    test-suite spirit_v2/qi :
 
     # run Qi tests
     [ run qi/actions.cpp                    : : : : ]
@@ -73,6 +73,10 @@ import testing ;
     [ run qi/tst.cpp                        : : : : ]
     [ run qi/uint.cpp                       : : : : ]
     [ run qi/utree.cpp                      : : : : ]
+    
+    ;
+
+    test-suite spirit_v2/karma :
 
     # run Karma tests
     [ run karma/actions.cpp                 : : : : karma_actions ]
@@ -125,6 +129,10 @@ import testing ;
     [ compile-fail karma/grammar_fail.cpp   : : karma_grammar_fail ]
     [ compile-fail karma/rule_fail.cpp      : : karma_rule_fail ]
 
+    ;
+
+    test-suite spirit_v2/lex :
+
     # run Lex tests
     [ run lex/lexertl1.cpp                  : : : : ]
     [ run lex/lexertl2.cpp                  : : : : ]
@@ -139,6 +147,10 @@ import testing ;
     [ run lex/semantic_actions.cpp          : : : : ]
     [ run lex/auto_switch_lexerstate.cpp    : : : : ]
     [ run lex/id_type_enum.cpp              : : : : ]
+    
+    ;
+
+    test-suite spirit_v2/lex_regressions :
 
     # run Lex regression tests
     [ run lex/regression001.cpp             : : : : lex_regression001 ]
@@ -154,6 +166,10 @@ import testing ;
     [ run lex/regression008.cpp             : : : : lex_regression008 ]
     [ run lex/regression009.cpp             : : : : lex_regression009 ]
     [ run lex/regression010.cpp             : : : : lex_regression010 ]
+    
+    ;
+
+    test-suite spirit_v2/support :
 
     # support tests
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
@@ -161,6 +177,9 @@ import testing ;
     [ compile support/multi_pass_regression003.cpp : : support_multi_pass_regression003 ]
     [ run support/utree_test.cpp            : : : : support_utree_test ]
 
+    ;
+
+    test-suite spirit_v2/regressions :
 
     # regression tests
     [ compile qi/attr_with_action.cpp         : : qi_attr_with_action ]
