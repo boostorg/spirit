@@ -168,7 +168,8 @@ int main()
             ut.which() == utree_type::string_type && check(ut, "\"x\""));
         ut.clear();
         BOOST_TEST(test_attr("", -char_, ut) &&
-            ut.which() == utree_type::nil_type && check(ut, "<nil>"));
+            ut.which() == utree_type::uninitialized_type && 
+            check(ut, "<uninitialized>"));
     }
 
     // as_string

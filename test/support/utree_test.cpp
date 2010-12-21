@@ -33,6 +33,8 @@ struct one_two_three
 int main()
 {
     using boost::spirit::utree;
+    using boost::spirit::nil;
+    using boost::spirit::uninitialized;
 
     {
         // test the size
@@ -42,7 +44,7 @@ int main()
     }
 
     {
-        utree val;
+        utree val(nil);
         BOOST_TEST(check(val, "<nil>"));
     }
 
@@ -98,7 +100,7 @@ int main()
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(check(val.front(), "123"));
 
-        utree val3;
+        utree val3(nil);
         val3.swap(val);
         BOOST_TEST(val3.size() == 3);
         BOOST_TEST(check(val, "<nil>"));
@@ -138,7 +140,7 @@ int main()
     }
 
     {
-        utree a, b;
+        utree a(nil), b(nil);
         BOOST_TEST(a == b);
         a = 123;
         BOOST_TEST(a != b);
@@ -147,7 +149,7 @@ int main()
         a = 100.00;
         BOOST_TEST(a < b);
 
-        b = a = utree();
+        b = a = utree(uninitialized);
         BOOST_TEST(a == b);
         a.push_back(1);
         a.push_back("two");
@@ -162,7 +164,7 @@ int main()
     }
 
     {
-        utree a;
+        utree a(nil);
         a.push_back(1);
         a.push_back(2);
         a.push_back(3);
