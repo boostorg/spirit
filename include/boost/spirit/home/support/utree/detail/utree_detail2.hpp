@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -1200,11 +1200,6 @@ namespace boost { namespace spirit
     inline bool utree::empty() const
     {
         type::info t = get_type();
-        if (t == type::uninitialized_type)
-        {
-            boost::throw_exception(bad_type_exception());
-            return false;
-        }
         if (t == type::reference_type)
             return ((utree const*)p)->empty();
 
@@ -1213,7 +1208,7 @@ namespace boost { namespace spirit
         if (t == type::list_type)
             return l.size == 0;
 
-        return t == type::nil_type;
+        return t == type::nil_type || t == type::uninitialized_type;
     }
 
     inline std::size_t utree::size() const
