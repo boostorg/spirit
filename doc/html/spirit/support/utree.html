@@ -45,7 +45,9 @@
 <span class="special">{</span>
     <span class="keyword">enum</span> <span class="identifier">info</span>
     <span class="special">{</span>
-        <span class="identifier">nil_type</span><span class="special">,</span>           <span class="comment">// nil is the sentinel (empty) utree type.
+        <span class="identifier">uninitialized_type</span><span class="special">,</span> <span class="comment">// the utree has not been initialized (it's 
+</span>                            <span class="comment">// default constructed)
+</span>        <span class="identifier">nil_type</span><span class="special">,</span>           <span class="comment">// nil is the sentinel (empty) utree type.
 </span>        <span class="identifier">list_type</span><span class="special">,</span>          <span class="comment">// A doubly linked list of utrees.
 </span>        <span class="identifier">range_type</span><span class="special">,</span>         <span class="comment">// A range of list::iterators. 
 </span>        <span class="identifier">reference_type</span><span class="special">,</span>     <span class="comment">// A reference to another utree.
@@ -92,7 +94,7 @@
         for. It is 14 bytes for a 32-bit platform and 30 bytes for a 64-bit platform.
       </p>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1300891"></a>
+<a name="id1279808"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -170,30 +172,44 @@
         A <code class="computeroutput"><span class="identifier">utree</span></code> can be constructed
         or initialized from a wide range of data types, allowing to create <code class="computeroutput"><span class="identifier">utree</span></code> instances for every possible node
         type (see the description of <code class="computeroutput"><span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">info</span></code>
-        above). For this reason it exposes a constructor and a assignment operator
-        for each of the allowed node types as shown below:
+        above). For this reason it exposes a constructor and an assignment operator
+        for each of the allowed node types as shown below. All constructors are non-explicit
+        on purpose, allowing to use an utree instance as the attribute to almost
+        any Qi parser.
       </p>
 <p>
         
 </p>
-<pre class="programlisting"><span class="comment">// constructs `nil_type` node
-</span><span class="identifier">utree</span><span class="special">();</span>
+<pre class="programlisting"><span class="comment">// This constructs an `uninitialized_type` node. When used in places
+</span><span class="comment">// where a boost::optional is expected (i.e. as an attribute for the 
+</span><span class="comment">// optional component), this represents the 'empty' state.
+</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">uninitialized_type</span> <span class="special">=</span> <span class="identifier">uninitialized</span><span class="special">);</span>
 
-<span class="comment">// initializes a `boolean_type` node
+<span class="comment">// This initializes a `nil_type` node, which represents a valid,
+</span><span class="comment">// 'initialized empty' utree (different from uninitialized_type!).
+</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">nil_type</span><span class="special">);</span>
+<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">nil_type</span><span class="special">);</span>
+
+<span class="comment">// This initializes a `boolean_type` node, which can hold 'true' or
+</span><span class="comment">// 'false' only.
 </span><span class="identifier">utree</span><span class="special">(</span><span class="keyword">bool</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">bool</span><span class="special">);</span>
 
-<span class="comment">// initializes a `integer_type` node
+<span class="comment">// This initializes an `integer_type` node, which can hold arbitrary 
+</span><span class="comment">// integers. For convenience these functions are overloaded for signed
+</span><span class="comment">// and unsigned integer types.
 </span><span class="identifier">utree</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">);</span>
 <span class="identifier">utree</span><span class="special">(</span><span class="keyword">int</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">int</span><span class="special">);</span>
 
-<span class="comment">// initializes a `double_type` node
+<span class="comment">// This initializes a `double_type` node, which can hold arbitrary 
+</span><span class="comment">// floating point (double) values.
 </span><span class="identifier">utree</span><span class="special">(</span><span class="keyword">double</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">double</span><span class="special">);</span>
 
-<span class="comment">// initializes a `string_type` node
+<span class="comment">// This initializes a `string_type` node, which can hold a narrow 
+</span><span class="comment">// character sequence (usually an UTF-8 string).
 </span><span class="identifier">utree</span><span class="special">(</span><span class="keyword">char</span><span class="special">);</span>
 <span class="identifier">utree</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*);</span>
 <span class="identifier">utree</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">);</span>
@@ -202,32 +218,43 @@
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 
-<span class="comment">// constructs a `string_range_type` node, does not copy the data
-</span><span class="comment">// but stores the iterator range
+<span class="comment">// This constructs a `string_range_type` node, which does not copy the 
+</span><span class="comment">// data but stores the iterator range to the character sequence the 
+</span><span class="comment">// range has been initialized from.
 </span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">utf8_string_range_type</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">shallow_tag</span><span class="special">);</span>
 
-<span class="comment">// initializes a `reference_type` node
+<span class="comment">// This initializes a `reference_type` node, which holds a reference to 
+</span><span class="comment">// another utree node. All operations on such a node are automatically
+</span><span class="comment">// forwarded to the referenced utree instance.
 </span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">reference_wrapper</span><span class="special">&lt;</span><span class="identifier">utree</span><span class="special">&gt;);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">reference_wrapper</span><span class="special">&lt;</span><span class="identifier">utree</span><span class="special">&gt;);</span>
 
-<span class="comment">// initializes an `any_type` node
+<span class="comment">// This initializes an `any_type` node, which can hold a pointer to an
+</span><span class="comment">// instance of any type together with the typeid of that type. When 
+</span><span class="comment">// accessing that pointer the typeid will be checked, causing a 
+</span><span class="comment">// std::bad_cast to be thrown if the typeids do not match.
 </span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">any_ptr</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">any_ptr</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 
-<span class="comment">// initialize a `range_type` node
+<span class="comment">// This initializes a `range_type` node, which holds an utree list node
+</span><span class="comment">// the elements of which are copy constructed (assigned) from the 
+</span><span class="comment">// elements referenced by the given range of iterators.
 </span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="identifier">utree</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;);</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;);</span>
 
-<span class="comment">// initialize a `function_type` node
+<span class="comment">// This initializes a `function_type` node, which can store an 
+</span><span class="comment">// arbitrary function or function object.
 </span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="identifier">utree</span><span class="special">(</span><span class="identifier">stored_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">stored_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 
-<span class="comment">// initialize either a `string_type`, a `symbol_type`, or a `binary_type`
-</span><span class="comment">// node (depending on the template parameter `type_`)
+<span class="comment">// This initializes either a `string_type`, a `symbol_type`, or a 
+</span><span class="comment">// `binary_type` node (depending on the template parameter `type_`), 
+</span><span class="comment">// which will hold the corresponding narrow character sequence (usually 
+</span><span class="comment">// an UTF-8 string).
 </span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Base</span><span class="special">,</span> <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">info</span> <span class="identifier">type_</span><span class="special">&gt;</span>
 <span class="identifier">utree</span><span class="special">(</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">,</span> <span class="identifier">type_</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Base</span><span class="special">,</span> <span class="identifier">utree_type</span><span class="special">::</span><span class="identifier">info</span> <span class="identifier">type_</span><span class="special">&gt;</span>
@@ -263,7 +290,7 @@
         attribute type.
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1302957"></a>
+<a name="id1282681"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -328,7 +355,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1303450"></a>
+<a name="id1283175"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -343,11 +370,11 @@
 <span class="special">{</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">function_base</span><span class="special">()</span> <span class="special">{};</span>
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-    <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="comment">// Calling f.clone() must
-</span>                                              <span class="comment">// return a newly allocated
-</span>                                              <span class="comment">// function_base instance
-</span>                                              <span class="comment">// that is equal to f.
-</span><span class="special">};</span>
+
+    <span class="comment">// Calling f.clone() must return a newly allocated function_base 
+</span>    <span class="comment">// instance that is equal to f.
+</span>    <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> 
+<span class="special">};</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">stored_function</span> <span class="special">:</span> <span class="identifier">function_base</span>
@@ -362,7 +389,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1303817"></a>
+<a name="id1283532"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
@@ -393,7 +420,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.scope"></a><h5>
-<a name="id1303988"></a>
+<a name="id1283703"></a>
         <a class="link" href="utree.html#spirit.support.utree.scope">Scope</a>
       </h5>
 <p>

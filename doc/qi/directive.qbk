@@ -10,7 +10,7 @@
 
 This module includes different directives usable to augment and parameterize
 other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`,
-`matches`, `no_skip`, and `skip` directives.
+`matches`, `no_skip`, `skip`, and `hold` directives.
 
 
 [heading Module Header]
@@ -661,6 +661,82 @@ Some using declarations:
 Simple usage of `skip[]`:
 
 [reference_skip]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:hold Parser Directive for Attribute Commit/Rollback (`hold[]`)]
+
+[heading Description]
+
+The `hold[]` directive helps managing attributes, mainly for alternative 
+parsers. It instantiates a new attribute instance for the embedded parser. The
+value of that attribute instance is copied to the outer attribute if the 
+embedded parser succeeds and it is discarded otherwise. Alternative parsers 
+normally do not rollback changes made to the outer attribute by an failed 
+alternative. Wrapping those alternatives into a `hold[]` directive ensures that 
+only the succeeding alternative gets to modify the attribute.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/hold.hpp>
+    #include <boost/spirit/include/qi_hold.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::hold // alias: boost::spirit::qi::hold` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+
+    [[`hold[a]`]        [Create a new attribute instance while parsing `a`, 
+                         copying the result to the outer attribute only after
+                         `a` succeeds.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`hold[a]`]
+[``a: A --> hold[a]: A
+a: Unused --> hold[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_using_declarations_hold]
+
+[reference_hold]
 
 [endsect]
 

@@ -120,6 +120,7 @@ skip "" ".*qi.reference.directive\..*" qi_index
 repeat "" ".*qi.reference.directive\..*" qi_index
 inf "" ".*qi.reference.directive\..*" qi_index
 omit "" ".*qi.reference.directive\..*" qi_index
+hold "" ".*qi.reference.directive\..*" qi_index
 
 left_align "" ".*karma.reference.directive.alignment.*" karma_index
 center "" ".*karma.reference.directive.alignment.*" karma_index
