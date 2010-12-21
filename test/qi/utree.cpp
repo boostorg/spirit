@@ -63,6 +63,21 @@ int main()
             ut.which() == utree_type::symbol_type && check(ut, "xyz"));
     }
 
+    // char set tests
+    {
+        utree ut;
+        rule<char const*, utf8_string_type()> r1 = char_("abc");
+
+        BOOST_TEST(test_attr("a", r1, ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"a\""));
+        ut.clear();
+        
+        rule<char const*, utf8_symbol_type()> r2 = char_("+-/*");
+        
+        BOOST_TEST(test_attr("+", r2, ut) &&
+            ut.which() == utree_type::symbol_type && check(ut, "+"));
+    }
+
     // sequences
     {
         using boost::spirit::qi::digit;

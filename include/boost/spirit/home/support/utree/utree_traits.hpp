@@ -197,6 +197,19 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // this specialization allows the use of char("+-/*")
+    template<typename T, typename Traits, typename Allocator, utree_type::info I>
+    struct assign_to_attribute_from_value<spirit::basic_string<std::basic_string<T, Traits, Allocator>, I>, char>
+    {
+        typedef spirit::basic_string<std::basic_string<T, Traits, Allocator>, I> attribute;
+
+        static void call (char val, attribute& attr)
+        {
+            attr.assign(1, val);
+        }
+    }; 
+
+    ///////////////////////////////////////////////////////////////////////////
     // Karma only: convert utree node to string
     template <>
     struct attribute_as_string<utree>
