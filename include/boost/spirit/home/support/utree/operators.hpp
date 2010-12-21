@@ -51,7 +51,8 @@ namespace boost { namespace spirit
     std::ostream& operator<<(std::ostream& out, utree const& x);
     std::istream& operator>>(std::istream& in, utree& x);
 
-    std::ostream& operator<<(std::ostream& out, nil const& x);
+    std::ostream& operator<<(std::ostream& out, uninitialized_type const& x);
+    std::ostream& operator<<(std::ostream& out, nil_type const& x);
 
     // Logical operators
     utree operator&&(utree const& a, utree const& b);
@@ -115,7 +116,12 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) == static_cast<Base const&>(b);
         }
 
-        bool operator()(nil, nil) const
+        bool operator()(uninitialized_type, uninitialized_type) const
+        {
+            return true;
+        }
+
+        bool operator()(nil_type, nil_type) const
         {
             return true;
         }
@@ -166,21 +172,27 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) < static_cast<Base const&>(b);
         }
 
-        bool operator()(nil, nil) const
+        bool operator()(uninitialized_type, uninitialized_type) const
         {
-            BOOST_ASSERT(false);
+            boost::throw_exception(bad_type_exception());
+            return false; // no less than comparison for nil
+        }
+
+        bool operator()(nil_type, nil_type) const
+        {
+            boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for nil
         }
 
         bool operator()(any_ptr const& a, any_ptr const& b) const
         {
-            BOOST_ASSERT(false);
+            boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for any_ptr
         }
 
         bool operator()(function_base const& a, function_base const& b) const
         {
-            BOOST_ASSERT(false);
+            boost::throw_exception(bad_type_exception());
             return false; // no less than comparison of functions
         }
     };
@@ -192,7 +204,12 @@ namespace boost { namespace spirit
         std::ostream& out;
         utree_print(std::ostream& out) : out(out) {}
 
-        void operator()(boost::spirit::nil) const
+        void operator()(boost::spirit::uninitialized_type) const
+        {
+            out << "uninitialized ";
+        }
+
+        void operator()(boost::spirit::nil_type) const
         {
             out << "<nil> ";
         }
@@ -236,6 +253,7 @@ namespace boost { namespace spirit
             iterator i = str.begin();
             for (; i != str.end(); ++i)
                 out << *i;
+            out << ' ';
         }
 
         template <typename Iterator>
@@ -317,7 +335,7 @@ namespace boost { namespace spirit
         template <typename A, typename B>
         utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
-            throw illegal_arithmetic_operation();
+            boost::throw_exception(illegal_arithmetic_operation());
             return utree(); // cannot apply to non-arithmetic types
         }
 
@@ -340,7 +358,7 @@ namespace boost { namespace spirit
         template <typename A>
         utree dispatch(A const&, boost::mpl::false_) const
         {
-            throw illegal_arithmetic_operation();
+            boost::throw_exception(illegal_arithmetic_operation());
             return utree(); // cannot apply to non-arithmetic types
         }
 
@@ -389,7 +407,7 @@ namespace boost { namespace spirit
         template <typename A>
         utree dispatch(A const&, boost::mpl::false_) const
         {
-            throw illegal_integral_operation();
+            boost::throw_exception(illegal_integral_operation());
             return utree(); // cannot apply to non-integral types
         }
 
@@ -475,7 +493,12 @@ namespace boost { namespace spirit
         return out;
     }
 
-    inline std::ostream& operator<<(std::ostream& out, nil const& x)
+    inline std::ostream& operator<<(std::ostream& out, uninitialized_type const& x)
+    {
+        return out;
+    }
+
+    inline std::ostream& operator<<(std::ostream& out, nil_type const& x)
     {
         return out;
     }

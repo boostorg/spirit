@@ -403,8 +403,10 @@ namespace boost { namespace spirit { namespace detail
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // simple binder for binary visitation (we don't want to bring in the big guns)
     template <typename F, typename X>
-    struct bind_impl // simple binder for binary visitation (we don't want to bring in the big guns)
+    struct bind_impl 
     {
         typedef typename F::result_type result_type;
         X& x; // always by reference
@@ -455,11 +457,14 @@ namespace boost { namespace spirit { namespace detail
             switch (x.get_type())
             {
                 default:
-                    BOOST_ASSERT(false); // can't happen
+                    boost::throw_exception(bad_type_exception());
+                    break;
+
+                case type::uninitialized_type:
+                    return f(uninitialized);
 
                 case type::nil_type:
-                    nil arg;
-                    return f(arg);
+                    return f(nil);
 
                 case type::bool_type:
                     return f(x.b);
@@ -515,11 +520,14 @@ namespace boost { namespace spirit { namespace detail
             switch (x.get_type())
             {
                 default:
-                    BOOST_ASSERT(false); // can't happen
+                    boost::throw_exception(bad_type_exception());
+                    break;
+
+                case type::uninitialized_type:
+                    return visit_impl::apply(y, detail::bind(f, uninitialized));
 
                 case type::nil_type:
-                    nil x_;
-                    return visit_impl::apply(y, detail::bind(f, x_));
+                    return visit_impl::apply(y, detail::bind(f, nil));
 
                 case type::bool_type:
                     return visit_impl::apply(y, detail::bind(f, x.b));
@@ -565,7 +573,6 @@ namespace boost { namespace spirit { namespace detail
 
                 case type::function_type:
                     return visit_impl::apply(y, detail::bind(f, *x.pf));
-
             }
         }
     };
@@ -614,7 +621,13 @@ namespace boost { namespace spirit
         return new stored_function<F>(*this);
     }
 
-    inline utree::utree()
+    inline utree::utree(uninitialized_type)
+    {
+        s.initialize();
+        set_type(type::uninitialized_type);
+    }
+
+    inline utree::utree(nil_type)
     {
         s.initialize();
         set_type(type::nil_type);
@@ -712,7 +725,7 @@ namespace boost { namespace spirit
     inline utree::utree(boost::iterator_range<Iter> r)
     {
         s.initialize();
-        set_type(type::nil_type);
+        set_type(type::uninitialized_type);
         assign(r.begin(), r.end());
     }
 
@@ -758,6 +771,13 @@ namespace boost { namespace spirit
             free();
             copy(other);
         }
+        return *this;
+    }
+
+    inline utree& utree::operator=(nil_type)
+    {
+        free();
+        set_type(type::nil_type);
         return *this;
     }
 
@@ -936,6 +956,7 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->push_front(val);
+
         ensure_list_type();
         l.push_front(val);
     }
@@ -945,6 +966,7 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->push_back(val);
+
         ensure_list_type();
         l.push_back(val);
     }
@@ -954,6 +976,7 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->insert(pos, val);
+
         ensure_list_type();
         if (!pos.node) 
         {
@@ -969,15 +992,18 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->insert(pos, n, val);
+
+        ensure_list_type();
         for (std::size_t i = 0; i != n; ++i)
             insert(pos, val);
     }
 
-    template <typename Iter>
-    inline void utree::insert(iterator pos, Iter first, Iter last)
+    template <typename Iterator>
+    inline void utree::insert(iterator pos, Iterator first, Iterator last)
     {
         if (get_type() == type::reference_type)
             return p->insert(pos, first, last);
+
         ensure_list_type();
         while (first != last)
             insert(pos, *first++);
@@ -987,8 +1013,8 @@ namespace boost { namespace spirit
     {
         struct assign_impl
         {
-            template <typename Iter>
-            static void dispatch(utree& ut, Iter first, Iter last)
+            template <typename Iterator>
+            static void dispatch(utree& ut, Iterator first, Iterator last)
             {
                 ut.ensure_list_type();
                 ut.clear();
@@ -999,8 +1025,8 @@ namespace boost { namespace spirit
                 }
             }
 
-            template <typename Iter>
-            static void dispatch_string(utree& ut, Iter first, Iter last)
+            template <typename Iterator>
+            static void dispatch_string(utree& ut, Iterator first, Iterator last)
             {
                 ut.free();
                 ut.s.construct(first, last);
@@ -1026,16 +1052,16 @@ namespace boost { namespace spirit
                 dispatch_string(ut, first, last);
             }
 
-            template <typename Iter>
-            static void call(utree& ut, Iter first, Iter last)
+            template <typename Iterator>
+            static void call(utree& ut, Iterator first, Iterator last)
             {
                 dispatch(ut, first, last);
             }
         };
     }
 
-    template <typename Iter>
-    inline void utree::assign(Iter first, Iter last)
+    template <typename Iterator>
+    inline void utree::assign(Iterator first, Iterator last)
     {
         if (get_type() == type::reference_type)
             return p->assign(first, last);
@@ -1046,9 +1072,10 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->clear();
-        // clear will always make this a nil type
+
+        // clear will always make this an uninitialized type
         free();
-        set_type(type::nil_type);
+        set_type(type::uninitialized_type);
     }
 
     inline void utree::pop_front()
@@ -1057,6 +1084,7 @@ namespace boost { namespace spirit
             return p->pop_front();
         if (get_type() != type::list_type)
             boost::throw_exception(bad_type_exception());
+
         l.pop_front();
     }
 
@@ -1066,6 +1094,7 @@ namespace boost { namespace spirit
             return p->pop_back();
         if (get_type() != type::list_type)
             boost::throw_exception(bad_type_exception());
+
         l.pop_back();
     }
 
@@ -1075,6 +1104,7 @@ namespace boost { namespace spirit
             return p->erase(pos);
         if (get_type() != type::list_type)
             boost::throw_exception(bad_type_exception());
+
         detail::list::node* np = l.erase(pos.node);
         return iterator(np, np?np->prev:l.last);
     }
@@ -1083,6 +1113,9 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return p->erase(first, last);
+
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         while (first != last)
             erase(first++);
         return last;
@@ -1140,7 +1173,7 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return ((utree const*)p)->begin();
-        else if (get_type() == type::range_type)
+        if (get_type() == type::range_type)
             return const_iterator(r.first, 0);
 
         // otherwise...
@@ -1154,7 +1187,7 @@ namespace boost { namespace spirit
     {
         if (get_type() == type::reference_type)
             return ((utree const*)p)->end();
-        else if (get_type() == type::range_type)
+        if (get_type() == type::range_type)
             return const_iterator(0, r.first);
 
         // otherwise...
@@ -1166,22 +1199,30 @@ namespace boost { namespace spirit
 
     inline bool utree::empty() const
     {
-        if (get_type() == type::reference_type)
+        type::info t = get_type();
+        if (t == type::uninitialized_type)
+        {
+            boost::throw_exception(bad_type_exception());
+            return false;
+        }
+        if (t == type::reference_type)
             return ((utree const*)p)->empty();
-        else if (get_type() == type::range_type)
+
+        if (t == type::range_type)
             return r.first == 0;
-        else if (get_type() == type::list_type)
+        if (t == type::list_type)
             return l.size == 0;
-        return get_type() == type::nil_type;
+
+        return t == type::nil_type;
     }
 
     inline std::size_t utree::size() const
     {
-        if (get_type() == type::reference_type)
-        {
+        type::info t = get_type();
+        if (t == type::reference_type)
             return ((utree const*)p)->size();
-        }
-        else if (get_type() == type::range_type)
+
+        if (t == type::range_type)
         {
             std::size_t size = 0;
             detail::list::node* n = r.first;
@@ -1192,12 +1233,10 @@ namespace boost { namespace spirit
             }
             return size;
         }
-        else if (get_type() == type::list_type)
-        {
+        if (t == type::list_type)
             return l.size;
-        }
 
-        if (get_type() != type::nil_type)
+        if (t != type::nil_type)
             boost::throw_exception(bad_type_exception());
 
         return 0;
@@ -1211,10 +1250,8 @@ namespace boost { namespace spirit
     inline utree& utree::front()
     {
         if (get_type() == type::reference_type)
-        {
             return p->front();
-        }
-        else if (get_type() == type::range_type)
+        if (get_type() == type::range_type)
         {
             BOOST_ASSERT(r.first != 0);
             return r.first->val;
@@ -1230,10 +1267,8 @@ namespace boost { namespace spirit
     inline utree& utree::back()
     {
         if (get_type() == type::reference_type)
-        {
             return p->back();
-        }
-        else if (get_type() == type::range_type)
+        if (get_type() == type::range_type)
         {
             BOOST_ASSERT(r.last != 0);
             return r.last->val;
@@ -1249,10 +1284,8 @@ namespace boost { namespace spirit
     inline utree const& utree::front() const
     {
         if (get_type() == type::reference_type)
-        {
             return ((utree const*)p)->front();
-        }
-        else if (get_type() == type::range_type)
+        if (get_type() == type::range_type)
         {
             BOOST_ASSERT(r.first != 0);
             return r.first->val;
@@ -1268,10 +1301,8 @@ namespace boost { namespace spirit
     inline utree const& utree::back() const
     {
         if (get_type() == type::reference_type)
-        {
             return ((utree const*)p)->back();
-        }
-        else if (get_type() == type::range_type)
+        if (get_type() == type::range_type)
         {
             BOOST_ASSERT(r.last != 0);
             return r.last->val;
@@ -1303,7 +1334,8 @@ namespace boost { namespace spirit
 
     inline void utree::ensure_list_type()
     {
-        if (get_type() == type::nil_type)
+        type::info t = get_type();
+        if (t == type::uninitialized_type || t == type::nil_type)
         {
             set_type(type::list_type);
             l.default_construct();
@@ -1340,6 +1372,10 @@ namespace boost { namespace spirit
         set_type(other.get_type());
         switch (other.get_type())
         {
+            default:
+                boost::throw_exception(bad_type_exception());
+                break;
+            case type::uninitialized_type:
             case type::nil_type:
                 break;
             case type::bool_type:

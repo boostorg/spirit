@@ -61,6 +61,8 @@ namespace boost { namespace spirit
     {
         enum info
         {
+            uninitialized_type, // the utree has not been initialized (it's 
+                                // default constructed)
             nil_type,           // nil is the sentinel (empty) utree type.
             list_type,          // A doubly linked list of utrees.
             range_type,         // A range of list::iterators. 
@@ -87,9 +89,16 @@ namespace boost { namespace spirit
     //]
 
     ///////////////////////////////////////////////////////////////////////////
+    // The uninitialized type
+    ///////////////////////////////////////////////////////////////////////////
+    struct uninitialized_type {};
+    uninitialized_type const uninitialized = uninitialized_type();
+
+    ///////////////////////////////////////////////////////////////////////////
     // The nil type
     ///////////////////////////////////////////////////////////////////////////
-    struct nil {};
+    struct nil_type {};
+    nil_type const nil = nil_type();
 
     ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
@@ -179,10 +188,10 @@ namespace boost { namespace spirit
     {
         virtual ~function_base() {};
         virtual utree operator()(scope const& env) const = 0;
-        virtual function_base* clone() const = 0; // Calling f.clone() must
-                                                  // return a newly allocated
-                                                  // function_base instance
-                                                  // that is equal to f.
+
+        // Calling f.clone() must return a newly allocated function_base 
+        // instance that is equal to f.
+        virtual function_base* clone() const = 0; 
     };
 
     template <typename F>
@@ -220,7 +229,7 @@ namespace boost { namespace spirit
             {
                 return static_cast<Ptr>(p);
             }
-            throw std::bad_cast();
+            boost::throw_exception(std::bad_cast());
         }
 
         template <typename T>
@@ -275,27 +284,41 @@ namespace boost { namespace spirit
         /*`A `utree` can be constructed or initialized from a wide range of 
            data types, allowing to create `utree` instances for every 
            possible node type (see the description of `utree_type::info` above). 
-           For this reason it exposes a constructor and a assignment operator 
-           for each of the allowed node types as shown below:
+           For this reason it exposes a constructor and an assignment operator 
+           for each of the allowed node types as shown below. All constructors
+           are non-explicit on purpose, allowing to use an utree instance as
+           the attribute to almost any Qi parser.
         */
-        // constructs `nil_type` node
-        utree();
+        // This constructs an `uninitialized_type` node. When used in places
+        // where a boost::optional is expected (i.e. as an attribute for the 
+        // optional component), this represents the 'empty' state.
+        utree(uninitialized_type = uninitialized);
 
-        // initializes a `boolean_type` node
+        // This initializes a `nil_type` node, which represents a valid,
+        // 'initialized empty' utree (different from uninitialized_type!).
+        utree(nil_type);
+        reference operator=(nil_type);
+
+        // This initializes a `boolean_type` node, which can hold 'true' or
+        // 'false' only.
         utree(bool);
         reference operator=(bool);
 
-        // initializes a `integer_type` node
+        // This initializes an `integer_type` node, which can hold arbitrary 
+        // integers. For convenience these functions are overloaded for signed
+        // and unsigned integer types.
         utree(unsigned int);
         utree(int);
         reference operator=(unsigned int);
         reference operator=(int);
 
-        // initializes a `double_type` node
+        // This initializes a `double_type` node, which can hold arbitrary 
+        // floating point (double) values.
         utree(double);
         reference operator=(double);
 
-        // initializes a `string_type` node
+        // This initializes a `string_type` node, which can hold a narrow 
+        // character sequence (usually an UTF-8 string).
         utree(char);
         utree(char const*);
         utree(char const*, std::size_t);
@@ -304,32 +327,43 @@ namespace boost { namespace spirit
         reference operator=(char const*);
         reference operator=(std::string const&);
 
-        // constructs a `string_range_type` node, does not copy the data
-        // but stores the iterator range
+        // This constructs a `string_range_type` node, which does not copy the 
+        // data but stores the iterator range to the character sequence the 
+        // range has been initialized from.
         utree(utf8_string_range_type const&, shallow_tag);
 
-        // initializes a `reference_type` node
+        // This initializes a `reference_type` node, which holds a reference to 
+        // another utree node. All operations on such a node are automatically
+        // forwarded to the referenced utree instance.
         utree(boost::reference_wrapper<utree>);
         reference operator=(boost::reference_wrapper<utree>);
 
-        // initializes an `any_type` node
+        // This initializes an `any_type` node, which can hold a pointer to an
+        // instance of any type together with the typeid of that type. When 
+        // accessing that pointer the typeid will be checked, causing a 
+        // std::bad_cast to be thrown if the typeids do not match.
         utree(any_ptr const&);
         reference operator=(any_ptr const&);
 
-        // initialize a `range_type` node
+        // This initializes a `range_type` node, which holds an utree list node
+        // the elements of which are copy constructed (assigned) from the 
+        // elements referenced by the given range of iterators.
         template <class Iterator>
         utree(boost::iterator_range<Iterator>);
         template <class Iterator>
         reference operator=(boost::iterator_range<Iterator>);
 
-        // initialize a `function_type` node
+        // This initializes a `function_type` node, which can store an 
+        // arbitrary function or function object.
         template <class F>
         utree(stored_function<F> const&);
         template <class F>
         reference operator=(stored_function<F> const&);
 
-        // initialize either a `string_type`, a `symbol_type`, or a `binary_type`
-        // node (depending on the template parameter `type_`)
+        // This initializes either a `string_type`, a `symbol_type`, or a 
+        // `binary_type` node (depending on the template parameter `type_`), 
+        // which will hold the corresponding narrow character sequence (usually 
+        // an UTF-8 string).
         template <class Base, utree_type::info type_>
         utree(basic_string<Base, type_> const&);
         template <class Base, utree_type::info type_>
@@ -345,8 +379,8 @@ namespace boost { namespace spirit
         utree(const_range, shallow_tag);
 
         // assign dispatch
-        template <class Iter>
-        void assign(Iter, Iter);
+        template <class Iterator>
+        void assign(Iterator, Iterator);
 
         ////////////////////////////////////////////////////////////////////////
 

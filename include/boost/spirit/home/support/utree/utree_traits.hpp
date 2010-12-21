@@ -159,6 +159,7 @@ namespace boost { namespace spirit { namespace traits
         {
             switch (c.which())
             {
+                case utree_type::uninitialized_type:
                 case utree_type::nil_type:
                 case utree_type::list_type:
                     {
@@ -222,7 +223,7 @@ namespace boost { namespace spirit { namespace traits
 
         static bool is_valid(utree const& val)
         {
-            return val.which() != utree_type::nil_type;
+            return val.which() != utree_type::uninitialized_type;
         }
     };
 
@@ -270,10 +271,22 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<utree, nil>
+    struct compute_compatible_component_variant<utree, uninitialized_type>
       : mpl::true_
     {
-        typedef nil compatible_type;
+        typedef uninitialized_type compatible_type;
+
+        static bool is_compatible(int d)
+        {
+            return d == utree_type::uninitialized_type;
+        }
+    };
+
+    template <>
+    struct compute_compatible_component_variant<utree, nil_type>
+      : mpl::true_
+    {
+        typedef nil_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -403,7 +416,7 @@ namespace boost { namespace spirit { namespace traits
 
         static bool is_compatible(int d)
         {
-            return d >= utree_type::nil_type &&
+            return d >= utree_type::uninitialized_type &&
                    d <= utree_type::reference_type;
         }
     };
@@ -417,7 +430,7 @@ namespace boost { namespace spirit { namespace traits
 
         static bool is_compatible(int d)
         {
-            return d >= utree_type::nil_type &&
+            return d >= utree_type::uninitialized_type &&
                    d <= utree_type::reference_type;
         }
     };
