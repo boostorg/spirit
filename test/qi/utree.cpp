@@ -31,13 +31,13 @@ int main()
     using boost::spirit::utf8_string_type;
 
     using boost::spirit::qi::char_;
+    using boost::spirit::qi::string;
     using boost::spirit::qi::int_;
     using boost::spirit::qi::double_;
     using boost::spirit::qi::space;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::as_string;
     using boost::spirit::qi::lexeme;
-    using boost::spirit::qi::as_string;
 
     // primitive data types
     {
@@ -64,20 +64,13 @@ int main()
             ut.which() == utree_type::symbol_type && check(ut, "xyz"));
     }
 
-    // single character parsers, FIXME: should we leave that in?
+    // single character parsers
     {
         utree ut;
-        rule<char const*, utf8_string_type()> r1 = char_("abc");
+        rule<char const*, utree()> r = char_("abc");
 
-        BOOST_TEST(test_attr("a", r1, ut) &&
+        BOOST_TEST(test_attr("a", r, ut) &&
             ut.which() == utree_type::string_type && check(ut, "\"a\""));
-        ut.clear();
-        
-        rule<char const*, utf8_symbol_type()> r2 = char_("+-/*");
-        
-        BOOST_TEST(test_attr("+", r2, ut) &&
-            ut.which() == utree_type::symbol_type && check(ut, "+"));
-        ut.clear();
     }
 
     // sequences
@@ -101,14 +94,28 @@ int main()
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
 
-        rule<char const*, utree()> r = double_;
+        rule<char const*, utree()> r1 = double_;
 
         ut.clear();
-        BOOST_TEST(test_attr("1.2ab", r >> *char_, ut) &&
+        BOOST_TEST(test_attr("1.2ab", r1 >> *char_, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
-        BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) &&
+        BOOST_TEST(test_attr("ab1.2", *~digit >> r1, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+        ut.clear();
+        
+        rule<char const*, utree()> r2 = int_ >> char_("!") >> double_;
+        
+        BOOST_TEST(test_attr("17!3.14", r2, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 17 \"!\" 3.14 )"));
+        ut.clear();
+        
+        rule<char const*, utree()> r3 = double_ >> as_string[string("foo")] >> int_;
+
+        BOOST_TEST(test_attr("0.5foo5", r3, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 0.5 \"foo\" 5 )"));
+
+        ut.clear();
     }
 
     // kleene star

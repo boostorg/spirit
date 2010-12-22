@@ -220,22 +220,6 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization allows the use of utree as the attribute for single 
-    // character parsers
-    // FIXME: should we leave that in?
-    template<utree_type::info I>
-    struct assign_to_attribute_from_value<
-        spirit::basic_string<std::string, I>, char>
-    {
-        typedef spirit::basic_string<std::string, I> attribute_type;
-
-        static void call (char val, attribute_type& attr)
-        {
-            attr.assign(1, val);
-        }
-    }; 
-
-    ///////////////////////////////////////////////////////////////////////////
     // this specialization tells Spirit.Qi to allow assignment to an utree from
     // generic iterators
     template <typename Iterator>
@@ -244,7 +228,13 @@ namespace boost { namespace spirit { namespace traits
         static void
         call(Iterator const& first, Iterator const& last, utree& attr)
         {
-            attr.assign(first, last);
+            if (attr.empty())
+                attr.assign(first, last);
+            else
+                for (Iterator it = first; it != last; ++it)
+                {
+                    push_back(attr, *it);
+                }
         }
     };
 
