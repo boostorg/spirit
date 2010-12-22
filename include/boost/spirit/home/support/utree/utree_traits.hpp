@@ -38,22 +38,24 @@ namespace boost
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    // this specialization lets Spirit.Karma know that typed basic_strings
+    // this specialization lets Spirit know that typed basic_strings
     // are strings
     template <typename Base, utree_type::info I>
-    struct is_string<spirit::basic_string<Base, I> > : mpl::true_ { };
+    struct is_string<spirit::basic_string<Base, I> > 
+      : mpl::true_ 
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // these specializations extract the character type of a utree typed string 
     template <typename T, utree_type::info I>
     struct char_type_of<spirit::basic_string<iterator_range<T>, I> >
-      : char_type_of<T> {};
+      : char_type_of<T> 
+    {};
 
-    template <typename T, typename Traits, typename Allocator,
-              utree_type::info I>
-    struct char_type_of<
-      spirit::basic_string<std::basic_string<T, Traits, Allocator>, I>
-    > : mpl::identity<T> {};
+    template <utree_type::info I>
+    struct char_type_of<spirit::basic_string<std::string, I> > 
+      : mpl::identity<char>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // these specializations extract a c string from a utree typed string
@@ -78,19 +80,19 @@ namespace boost { namespace spirit { namespace traits
         }
     };
     
-    template <typename T, typename Traits, typename Allocator, utree_type::info I>
-    struct get_c_string<spirit::basic_string<std::basic_string<T, Traits, Allocator>, I> >
+    template <utree_type::info I>
+    struct get_c_string<spirit::basic_string<std::string, I> >
     {
-        typedef T char_type;
+        typedef char char_type;
 
-        typedef spirit::basic_string<std::basic_string<T, Traits, Allocator>, I> string;
+        typedef spirit::basic_string<std::string, I> string;
 
-        static T const* call (string& s)
+        static char const* call (string& s)
         {
             return s.c_str();
         }
 
-        static T const* call (string const& s)
+        static char const* call (string const& s)
         {
             return s.c_str();
         }
@@ -132,6 +134,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute>
     struct assign_to_attribute_from_value<utree, Attribute>
     {
+        // any non-container type will be either directly assigned or appended
         static void call(Attribute const& val, utree& attr, mpl::false_)
         {
             if (attr.empty())
@@ -140,6 +143,7 @@ namespace boost { namespace spirit { namespace traits
                 push_back(attr, val);
         }
 
+        // any container type will be converted into a list_type utree
         static void call(Attribute const& val, utree& attr, mpl::true_)
         {
             attr = make_iterator_range(traits::begin(val), traits::end(val));
@@ -164,6 +168,74 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // this specialization makes sure strings get assigned as a whole and are 
+    // not converted into a utree list
+    template <>
+    struct assign_to_attribute_from_value<utree, utf8_string_type>
+    {
+        static void call(utf8_string_type const& val, utree& attr)
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
+
+    // this specialization keeps symbols from being transformed into strings  
+    template<>
+    struct assign_to_attribute_from_value<utree, utf8_symbol_type> 
+    {
+        static void call (utf8_symbol_type const& val, utree& attr) 
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
+
+    template<>
+    struct assign_to_attribute_from_value<utree, utf8_symbol_range_type> 
+    {
+        static void call (utf8_symbol_range_type const& val, utree& attr) 
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
+
+    template <>
+    struct assign_to_attribute_from_value<utree, std::string>
+    {
+        static void call(std::string const& val, utree& attr)
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // this specialization allows the use of utree as the attribute for single 
+    // character parsers
+    // FIXME: should we leave that in?
+    template<utree_type::info I>
+    struct assign_to_attribute_from_value<
+        spirit::basic_string<std::string, I>, char>
+    {
+        typedef spirit::basic_string<std::string, I> attribute_type;
+
+        static void call (char val, attribute_type& attr)
+        {
+            attr.assign(1, val);
+        }
+    }; 
+
+    ///////////////////////////////////////////////////////////////////////////
     // this specialization tells Spirit.Qi to allow assignment to an utree from
     // generic iterators
     template <typename Iterator>
@@ -175,39 +247,6 @@ namespace boost { namespace spirit { namespace traits
             attr.assign(first, last);
         }
     };
-
-    ///////////////////////////////////////////////////////////////////////////
-    // this specialization keeps symbols from being transformed into strings  
-    template<>
-    struct assign_to_attribute_from_value<utree, utf8_symbol_type> 
-    {
-        static void call (utf8_symbol_type const& val, utree& attr) 
-        {
-            attr = val;
-        }
-    };
-
-    template<>
-    struct assign_to_attribute_from_value<utree, utf8_symbol_range_type> 
-    {
-        static void call (utf8_symbol_range_type const& val, utree& attr) 
-        {
-            attr = val;
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    // this specialization allows the use of char("+-/*")
-    template<typename T, typename Traits, typename Allocator, utree_type::info I>
-    struct assign_to_attribute_from_value<spirit::basic_string<std::basic_string<T, Traits, Allocator>, I>, char>
-    {
-        typedef spirit::basic_string<std::basic_string<T, Traits, Allocator>, I> attribute;
-
-        static void call (char val, attribute& attr)
-        {
-            attr.assign(1, val);
-        }
-    }; 
 
     ///////////////////////////////////////////////////////////////////////////
     // Karma only: convert utree node to string
@@ -223,8 +262,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // push_back support for utree allows concatenation of strings
-    // (utree strings are immutable)
+    // push_back support for utree 
     template <typename T>
     struct push_back_container<utree, T>
     {
@@ -294,6 +332,7 @@ namespace boost { namespace spirit { namespace traits
             return val;
         }
 
+        // only 'uninitialized_type' utree nodes are not valid
         static bool is_valid(utree const& val)
         {
             return val.which() != utree_type::uninitialized_type;
@@ -305,7 +344,8 @@ namespace boost { namespace spirit { namespace traits
     // where a 'real' variant (in the context of karma)
     template <>
     struct not_is_variant<utree, karma::domain>
-      : mpl::false_ {};
+      : mpl::false_ 
+    {};
 
     // this specialization tells Spirit how to extract the type of the value
     // stored in the given utree node
@@ -548,6 +588,18 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
+    struct extract_from_attribute<utree, spirit::nil_type>
+    {
+        typedef spirit::nil_type type;
+
+        template <typename Context>
+        static type call(utree const&, Context&)
+        {
+            return spirit::nil;
+        }
+    };
+
+    template <>
     struct extract_from_attribute<utree, char>
     {
         typedef char type;
@@ -609,7 +661,6 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
     template <>
     struct extract_from_attribute<utree, utf8_symbol_type>
     {
@@ -636,20 +687,18 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-//     template <typename Iterator>
-//     struct extract_from_attribute<utree, iterator_range<Iterator> >
-//     {
-//         typedef utree type;
-// 
-//         template <typename Context>
-//         static type call(utree const& t, Context&)
-//         {
-//             // return utree the begin iterator points to
-//             return utree(boost::ref(t.front()));
-//         }
-//     };
-
     ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct transform_attribute<utree const, spirit::nil_type, karma::domain>
+    {
+        typedef spirit::nil_type type;
+
+        static type pre(utree const& t)
+        {
+            return spirit::nil;
+        }
+    };
+
     template <>
     struct transform_attribute<utree const, char, karma::domain>
     {

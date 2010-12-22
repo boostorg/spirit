@@ -1009,63 +1009,18 @@ namespace boost { namespace spirit
             insert(pos, *first++);
     }
 
-    namespace detail
-    {
-        struct assign_impl
-        {
-            template <typename Iterator>
-            static void dispatch(utree& ut, Iterator first, Iterator last)
-            {
-                ut.ensure_list_type();
-                ut.clear();
-                while (first != last)
-                {
-                    ut.push_back(*first);
-                    ++first;
-                }
-            }
-
-            template <typename Iterator>
-            static void dispatch_string(utree& ut, Iterator first, Iterator last)
-            {
-                ut.free();
-                ut.s.construct(first, last);
-                ut.set_type(utree_type::string_type);
-            }
-
-            static void dispatch(utree& ut,
-                std::basic_string<char>::iterator first,
-                std::basic_string<char>::iterator last)
-            {
-                dispatch_string(ut, first, last);
-            }
-
-            static void dispatch(utree& ut,
-                std::basic_string<char>::const_iterator first,
-                std::basic_string<char>::const_iterator last)
-            {
-                dispatch_string(ut, first, last);
-            }
-
-            static void dispatch(utree& ut, char const* first, char const* last)
-            {
-                dispatch_string(ut, first, last);
-            }
-
-            template <typename Iterator>
-            static void call(utree& ut, Iterator first, Iterator last)
-            {
-                dispatch(ut, first, last);
-            }
-        };
-    }
-
     template <typename Iterator>
     inline void utree::assign(Iterator first, Iterator last)
     {
         if (get_type() == type::reference_type)
             return p->assign(first, last);
-        detail::assign_impl::call(*this, first, last);
+
+        clear();
+        while (first != last)
+        {
+            push_back(*first);
+            ++first;
+        }
     }
 
     inline void utree::clear()
