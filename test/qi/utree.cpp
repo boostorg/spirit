@@ -37,6 +37,7 @@ int main()
     using boost::spirit::qi::rule;
     using boost::spirit::qi::as_string;
     using boost::spirit::qi::lexeme;
+    using boost::spirit::qi::as_string;
 
     // primitive data types
     {
@@ -63,7 +64,7 @@ int main()
             ut.which() == utree_type::symbol_type && check(ut, "xyz"));
     }
 
-    // char set tests
+    // single character parsers, FIXME: should we leave that in?
     {
         utree ut;
         rule<char const*, utf8_string_type()> r1 = char_("abc");
@@ -76,6 +77,7 @@ int main()
         
         BOOST_TEST(test_attr("+", r2, ut) &&
             ut.which() == utree_type::symbol_type && check(ut, "+"));
+        ut.clear();
     }
 
     // sequences
@@ -94,19 +96,19 @@ int main()
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", double_ >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));   // FIXME?: "( 1.2 ( \"a\" \"b\" ) )"
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> double_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
 
         rule<char const*, utree()> r = double_;
 
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", r >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));   // FIXME?: "( 1.2 ( \"a\" \"b\" ) )"
+            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> r, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
     }
 
     // kleene star
