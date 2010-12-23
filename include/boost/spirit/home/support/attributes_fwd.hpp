@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Hartmut Kaiser
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c)      2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -25,8 +26,8 @@ namespace boost { namespace spirit { namespace result_of
     template <typename Exposed, typename Attribute>
     struct extract_from;
 
-    template <typename Attribute>
-    struct attribute_as_string;
+    template <typename T, typename Attribute>
+    struct attribute_as_xxx;
 
     template <typename Exposed, typename Transformed, typename Domain>
     struct pre_transform;
@@ -122,12 +123,15 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // Karma only
-    template <typename Attribute, typename Enable = void>
-    struct attribute_as_string;
+    template <typename T, typename Attribute, typename Enable = void>
+    struct attribute_as_xxx;
 
-    template <typename Attribute>
-    typename spirit::result_of::attribute_as_string<Attribute>::type
-    as_string(Attribute const& attr);
+    template <typename T, typename Attribute>
+    typename spirit::result_of::attribute_as_xxx<T, Attribute>::type
+    as(Attribute const& attr);
+    
+    template <typename T, typename Attribute>
+    bool valid_as(Attribute const& attr);
 
     ///////////////////////////////////////////////////////////////////////////
     // return the type currently stored in the given variant

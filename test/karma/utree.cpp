@@ -1,5 +1,6 @@
 // Copyright (c) 2001-2010 Hartmut Kaiser
 // Copyright (c) 2001-2010 Joel de Guzman
+// Copyright (c)      2010 Bryce Lelbach
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -167,7 +168,8 @@ int main()
         BOOST_TEST(test("", -char_, ut));
     }
 
-    {
+    // as_string
+    {   
         using boost::spirit::karma::digit;
         using boost::spirit::karma::as_string;
 
@@ -181,6 +183,40 @@ int main()
         ut.push_back(1.2);
         BOOST_TEST(test("ab1.2", as_string[*~digit] << double_, ut));
         BOOST_TEST(test("a,b1.2", as_string[~digit % ','] << double_, ut));
+    }
+    
+    // as
+    {
+        using boost::spirit::karma::digit;
+        using boost::spirit::karma::as;
+        
+        typedef as<std::string> as_string_type;
+        as_string_type const as_string = as_string_type();
+
+        typedef as<utf8_symbol_type> as_symbol_type;
+        as_symbol_type const as_symbol = as_symbol_type();
+
+        utree ut("xy");
+        BOOST_TEST(test("xy", string, ut));
+        BOOST_TEST(test("xy", as_string[*char_], ut));
+        BOOST_TEST(test("x,y", as_string[char_ << ',' << char_], ut));
+
+        ut.clear();
+        ut.push_back("ab");
+        ut.push_back(1.2);
+        BOOST_TEST(test("ab1.2", as_string[*~digit] << double_, ut));
+        BOOST_TEST(test("a,b1.2", as_string[~digit % ','] << double_, ut));
+        
+        ut = utf8_symbol_type("xy");
+        BOOST_TEST(test("xy", string, ut));
+        BOOST_TEST(test("xy", as_symbol[*char_], ut));
+        BOOST_TEST(test("x,y", as_symbol[char_ << ',' << char_], ut));
+
+        ut.clear();
+        ut.push_back(utf8_symbol_type("ab"));
+        ut.push_back(1.2);
+        BOOST_TEST(test("ab1.2", as_symbol[*~digit] << double_, ut));
+        BOOST_TEST(test("a,b1.2", as_symbol[~digit % ','] << double_, ut));
     }
     
     // typed basic_string rules

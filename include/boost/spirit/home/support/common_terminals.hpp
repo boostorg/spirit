@@ -140,6 +140,7 @@ namespace boost { namespace spirit
     namespace tag
     {
         struct attr_cast {};
+        struct as {};
     }
 
 }}

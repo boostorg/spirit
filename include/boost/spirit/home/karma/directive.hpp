@@ -70,6 +70,6 @@
 //  as_string and as_wstring directives
 //  as_string[...], as_wstring[...]
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/home/karma/directive/as_string.hpp>
+#include <boost/spirit/home/karma/directive/as.hpp>
 
 #endif

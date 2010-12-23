@@ -1,5 +1,6 @@
 // Copyright (c) 2001-2010 Hartmut Kaiser
 // Copyright (c) 2001-2010 Joel de Guzman
+// Copyright (c)      2010 Bryce Lelbach
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,7 +19,12 @@ inline bool check(boost::spirit::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    return s.str() == expected + " ";
+    if (s.str() == expected + " ")
+        return true;
+
+    std::cerr << "got result: " << s.str() 
+              << ", expected: " << expected << std::endl;
+    return false;
 }
 
 int main()
@@ -30,13 +36,16 @@ int main()
     using boost::spirit::utf8_symbol_type;
     using boost::spirit::utf8_string_type;
 
+    using boost::spirit::qi::real_parser;
+    using boost::spirit::qi::strict_real_policies;
+    using boost::spirit::qi::digit;
     using boost::spirit::qi::char_;
     using boost::spirit::qi::string;
     using boost::spirit::qi::int_;
     using boost::spirit::qi::double_;
     using boost::spirit::qi::space;
     using boost::spirit::qi::rule;
-    using boost::spirit::qi::as_string;
+    using boost::spirit::qi::as;
     using boost::spirit::qi::lexeme;
 
     // primitive data types
@@ -75,7 +84,7 @@ int main()
 
     // sequences
     {
-        using boost::spirit::qi::digit;
+        using boost::spirit::qi::as_string;
 
         utree ut;
         BOOST_TEST(test_attr("xy", char_ >> char_, ut) &&
@@ -166,9 +175,6 @@ int main()
 
     // alternatives
     {
-        using boost::spirit::qi::real_parser;
-        using boost::spirit::qi::strict_real_policies;
-
         typedef real_parser<double, strict_real_policies<double> >
             strict_double_type;
         strict_double_type const strict_double = strict_double_type();
@@ -212,7 +218,7 @@ int main()
 
     // as_string
     {
-        using boost::spirit::qi::digit;
+        using boost::spirit::qi::as_string;
 
         utree ut;
         BOOST_TEST(test_attr("xy", as_string[char_ >> char_], ut) &&
@@ -241,6 +247,63 @@ int main()
 
         BOOST_TEST(test_attr("a,b1.2", ~digit % ',' >> double_, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
+        ut.clear();
+    }
+
+    // as
+    {
+        typedef as<std::string> as_string_type;
+        as_string_type const as_string = as_string_type();
+
+        typedef as<utf8_symbol_type> as_symbol_type;
+        as_symbol_type const as_symbol = as_symbol_type();
+
+        utree ut;
+        BOOST_TEST(test_attr("xy", as_string[char_ >> char_], ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
+
+        BOOST_TEST(test_attr("ab1.2", as_string[*~digit] >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("xy", as_string[*char_], ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x,y", as_string[char_ >> ',' >> char_], ut) &&
+            ut.which() == utree_type::string_type && check(ut, "\"xy\""));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x,y", char_ >> ',' >> char_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a,b1.2", as_string[~digit % ','] >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"ab\" 1.2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a,b1.2", ~digit % ',' >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+        ut.clear();
+        
+        BOOST_TEST(test_attr("xy", as_symbol[char_ >> char_], ut) &&
+            ut.which() == utree_type::symbol_type && check(ut, "xy"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("ab1.2", as_symbol[*~digit] >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( ab 1.2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("xy", as_symbol[*char_], ut) &&
+            ut.which() == utree_type::symbol_type && check(ut, "xy"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x,y", as_symbol[char_ >> ',' >> char_], ut) &&
+            ut.which() == utree_type::symbol_type && check(ut, "xy"));
+        ut.clear();
+        BOOST_TEST(test_attr("a,b1.2", as_symbol[~digit % ','] >> double_, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( ab 1.2 )"));
         ut.clear();
     }
 

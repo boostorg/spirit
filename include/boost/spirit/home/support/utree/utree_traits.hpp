@@ -22,6 +22,8 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -240,14 +242,107 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // Karma only: convert utree node to string
-    template <>
-    struct attribute_as_string<utree>
-    {
+    template <typename T>
+    struct attribute_as_xxx<T, utree,
+        typename enable_if<mpl::or_<
+            boost::is_same<T, std::string>
+          , boost::is_same<T, utf8_string_type>
+          , boost::is_same<T, utf8_string_range_type>
+        > >::type
+    > {
         typedef utf8_string_range_type type; 
 
         static type call(utree const& attr)
         {
             return boost::get<utf8_string_range_type>(attr);
+        }
+        
+        static bool is_valid(utree const& attr)
+        {
+            switch (attr.which())
+            {
+                case utree_type::reference_type:
+                    {
+                        return is_valid(attr.deref());
+                    }
+                case utree_type::string_range_type:
+                case utree_type::string_type:
+                    {
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+        }
+    };
+    
+    template <typename T>
+    struct attribute_as_xxx<T, utree,
+        typename enable_if<mpl::or_<
+            boost::is_same<T, utf8_symbol_type>
+          , boost::is_same<T, utf8_symbol_range_type>
+        > >::type
+    > {
+        typedef utf8_symbol_range_type type; 
+
+        static type call(utree const& attr)
+        {
+            return boost::get<utf8_symbol_range_type>(attr);
+        }
+        
+        static bool is_valid(utree const& attr)
+        {
+            switch (attr.which())
+            {
+                case utree_type::reference_type:
+                    {
+                        return is_valid(attr.deref());
+                    }
+                case utree_type::symbol_type:
+                    {
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+        }
+    };
+
+    template <typename T>
+    struct attribute_as_xxx<T, utree,
+        typename enable_if<mpl::or_<
+            boost::is_same<T, binary_string_type>
+          , boost::is_same<T, binary_range_type>
+        > >::type
+    > {
+        typedef binary_range_type type; 
+
+        static type call(utree const& attr)
+        {
+            return boost::get<binary_range_type>(attr);
+        }
+
+        static bool is_valid(utree const& attr)
+        {
+            switch (attr.which())
+            {
+                case utree_type::reference_type:
+                    {
+                        return is_valid(attr.deref());
+                    }
+                case utree_type::binary_type:
+                    {
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
         }
     };
 

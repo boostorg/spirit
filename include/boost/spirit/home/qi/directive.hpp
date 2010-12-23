@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/directive/as_string.hpp>
+#include <boost/spirit/home/qi/directive/as.hpp>
 #include <boost/spirit/home/qi/directive/encoding.hpp>
 #include <boost/spirit/home/qi/directive/hold.hpp>
 #include <boost/spirit/home/qi/directive/lexeme.hpp>

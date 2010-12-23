@@ -23,8 +23,8 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
 
     // This is the default case: the plain attribute values
-    template <typename Attribute, typename Enable/*= void*/>
-    struct attribute_as_string
+    template <typename T, typename Attribute, typename Enable/*= void*/>
+    struct attribute_as_xxx
     {
         typedef Attribute const& type; 
 
@@ -32,38 +32,57 @@ namespace boost { namespace spirit { namespace traits
         {
             return attr;
         }
+
+        static bool is_valid(Attribute const& attr)
+        {
+            return true;
+        }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute>
-    typename spirit::result_of::attribute_as_string<Attribute>::type
-    as_string(Attribute const& attr)
+    template <typename T, typename Attribute>
+    inline typename spirit::result_of::attribute_as_xxx<T, Attribute>::type
+    as(Attribute const& attr)
     {
-        return attribute_as_string<Attribute>::call(attr);
+        return attribute_as_xxx<T, Attribute>::call(attr);
     }
 
-    inline unused_type as_string(unused_type)
+    template <typename T>
+    inline unused_type as(unused_type)
     {
         return unused;
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Attribute>
+    inline bool valid_as(Attribute const& attr)
+    {
+        return attribute_as_xxx<T, Attribute>::is_valid(attr);
+    }
+
+    template <typename T>
+    inline bool valid_as(unused_type)
+    {
+        return true;
     }
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace result_of
 {
-    template <typename Attribute>
-    struct attribute_as_string
-      : traits::attribute_as_string<Attribute>
+    template <typename T, typename Attribute>
+    struct attribute_as_xxx
+      : traits::attribute_as_xxx<T, Attribute>
     {};
 
-    template <>
-    struct attribute_as_string<unused_type>
+    template <typename T>
+    struct attribute_as_xxx<T, unused_type>
     {
         typedef unused_type type;
     };
 
-    template <>
-    struct attribute_as_string<unused_type const>
+    template <typename T>
+    struct attribute_as_xxx<T, unused_type const>
     {
         typedef unused_type type;
     };
