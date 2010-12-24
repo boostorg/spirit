@@ -21,6 +21,17 @@
   __karma__. It can be passed as an attribute while parsing almost any
   grammars. At the same time, it can be used as an attribute to generate output 
   from.
+* Introduced a new customization point __customize_assign_to_container_from_value__
+  which is invoked for container attributes whenever a attribute value needs to 
+  be added to that container.
+
+[heading Bug Fixes in Qi or Karma]
+
+* Fixed a problem in handling container attributes for __qi__ sequences, which 
+  caused the properly parsed attributes of the first elements being overwritten 
+  by later elements of the sequence. 
+* Fixed the __karma__ generator [karma_string `string(s)`]. It succeeded even 
+  if `s` matched only a prefix of its attribute. 
 
 [heading What's changed in __lex__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
 
@@ -57,7 +68,7 @@
 * The parser primitives `qi::token` and `qi::tokenid` can now be used without
   any argument. In this case they will match any token.
 
-[heading Bug Fixes]
+[heading Bug Fixes in Lex]
 
 * Fixed a problem in the Lexer giving problems to assign tokens to all lexer 
   states at once. This is now possible by simply using "*" as the state name.

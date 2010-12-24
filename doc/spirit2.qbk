@@ -262,6 +262,8 @@
 [def __customize_transform_attribute__ [link spirit.advanced.customize.transform `transform_attribute`]]
 [def __customize_optional_attribute__ [link spirit.advanced.customize.optional `optional_attribute`]]
 [def __customize_assign_to__        [link spirit.advanced.customize.assign_to `assign_to`]]
+[def __customize_assign_to_attribute_from_value__ [link spirit.advanced.customize.assign_to.assign_to_attribute_from_value `assign_to_attribute_from_value`]]
+[def __customize_assign_to_container_from_value__ [link spirit.advanced.customize.assign_to.assign_to_container_from_value `assign_to_container_from_value`]]
 [def __customize_push_back_container__ [link spirit.advanced.customize.store_value.push_back `push_back_container`]]
 [def __customize_container_value__  [link spirit.advanced.customize.store_value.container_value `container_value`]]
 [def __customize_clear_value__      [link spirit.advanced.customize.clear_value `clear_value`]]

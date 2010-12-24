@@ -723,6 +723,12 @@ See __qi_comp_attr_notation__.
 a: Unused --> hold[a]: Unused``]]
 ]
 
+[note The `hold[]` directive uses `swap()` to implement the rollback/commit 
+      semantics for the attribute. For this reason the attribute type needs to
+      to be usable with `boost::swap` (needs to either define a proper overload
+      for `swap(attribute_type&, attribute_type&)` or expose a member function
+      `attribute_type::swap(attribute_type&)`.]
+
 [heading Complexity]
 
 [:The complexity is defined by the complexity of the subject parser, `a`]

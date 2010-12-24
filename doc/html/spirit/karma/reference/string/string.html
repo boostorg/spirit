@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">string</span></code>, <code class="computeroutput"><span class="identifier">lit</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.string.string.description"></a><h6>
-<a name="id1165791"></a>
+<a name="id1191571"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.description">Description</a>
           </h6>
 <p>
@@ -59,7 +59,7 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span>            <span class="comment">// s is a std::string
 </span></pre>
 <a name="spirit.karma.reference.string.string.header"></a><h6>
-<a name="id1166021"></a>
+<a name="id1191801"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/string/lit.hpp&gt;
@@ -69,7 +69,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.string.string.namespace"></a><h6>
-<a name="id1166096"></a>
+<a name="id1191876"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -99,7 +99,7 @@
             Encoding Namespace</a> used by the corresponding string generator.
           </p>
 <a name="spirit.karma.reference.string.string.model_of"></a><h6>
-<a name="id1166217"></a>
+<a name="id1191997"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -127,7 +127,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.string.string.expression_semantics"></a><h6>
-<a name="id1166337"></a>
+<a name="id1192117"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -228,8 +228,21 @@
               of the underlying character sequence.
             </p></td></tr>
 </table></div>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The generator <code class="computeroutput"><span class="identifier">string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code> up to version 2.4.1 of Spirit has
+              an undocumented feature. Given argument <code class="computeroutput"><span class="identifier">s</span></code>
+              generator succeds as long as <code class="computeroutput"><span class="identifier">s</span></code>
+              is a prefix of given attribute. This problem has been fixed in Spirit
+              V2.4.2.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.string.string.attributes"></a><h6>
-<a name="id1166657"></a>
+<a name="id1192477"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -318,14 +331,14 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.string.string.complexity"></a><h6>
-<a name="id1166963"></a>
+<a name="id1194027"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               O(N), where N is the number of characters emitted by the string generator
             </p></blockquote></div>
 <a name="spirit.karma.reference.string.string.example"></a><h6>
-<a name="id1166984"></a>
+<a name="id1194047"></a>
             <a class="link" href="string.html#spirit.karma.reference.string.string.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">

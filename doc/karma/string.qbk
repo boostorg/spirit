@@ -105,6 +105,11 @@ not defined in __primitive_generator_concept__.
         `std::basic_string<char_type, ...>`, where `char_type` is the required
         value type of the underlying character sequence.]
 
+[caution The generator `string(s)` up to version 2.4.1 of Spirit has an 
+         undocumented feature. Given argument `s` generator succeds as long as 
+         `s` is a prefix of given attribute. This problem has been fixed in 
+         Spirit V2.4.2.]
+
 [heading Attributes]
 
 [table

@@ -28,7 +28,7 @@
           for Attribute Commit/Rollback (<code class="computeroutput"><span class="identifier">hold</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.hold.description"></a><h6>
-<a name="id951948"></a>
+<a name="id977396"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.description">Description</a>
           </h6>
 <p>
@@ -43,7 +43,7 @@
             the attribute.
           </p>
 <a name="spirit.qi.reference.directive.hold.header"></a><h6>
-<a name="id951986"></a>
+<a name="id977434"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/hold.hpp&gt;
@@ -53,7 +53,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.hold.namespace"></a><h6>
-<a name="id952060"></a>
+<a name="id977509"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -71,7 +71,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.hold.model_of"></a><h6>
-<a name="id952138"></a>
+<a name="id977587"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -87,7 +87,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.hold.expression_semantics"></a><h6>
-<a name="id952204"></a>
+<a name="id977653"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -128,7 +128,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.hold.attributes"></a><h6>
-<a name="id952316"></a>
+<a name="id977764"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.attributes">Attributes</a>
           </h6>
 <p>
@@ -169,8 +169,22 @@
                   </td>
 </tr></tbody>
 </table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The <code class="computeroutput"><span class="identifier">hold</span><span class="special">[]</span></code>
+              directive uses <code class="computeroutput"><span class="identifier">swap</span><span class="special">()</span></code> to implement the rollback/commit
+              semantics for the attribute. For this reason the attribute type needs
+              to to be usable with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">swap</span></code>
+              (needs to either define a proper overload for <code class="computeroutput"><span class="identifier">swap</span><span class="special">(</span><span class="identifier">attribute_type</span><span class="special">&amp;,</span> <span class="identifier">attribute_type</span><span class="special">&amp;)</span></code> or expose a member function
+              <code class="computeroutput"><span class="identifier">attribute_type</span><span class="special">::</span><span class="identifier">swap</span><span class="special">(</span><span class="identifier">attribute_type</span><span class="special">&amp;)</span></code>.
+            </p></td></tr>
+</table></div>
 <a name="spirit.qi.reference.directive.hold.complexity"></a><h6>
-<a name="id952490"></a>
+<a name="id978034"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -178,7 +192,7 @@
               <code class="computeroutput"><span class="identifier">a</span></code>
             </p></blockquote></div>
 <a name="spirit.qi.reference.directive.hold.example"></a><h6>
-<a name="id952518"></a>
+<a name="id978062"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
