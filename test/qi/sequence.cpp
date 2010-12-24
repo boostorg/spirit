@@ -164,6 +164,28 @@ main()
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
 
+        std::vector<char> v;
+        BOOST_TEST(test_attr("abc", char_ >> *char_, v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+    }
+
+    { // alternative forms of attributes. Allow sequences to take in
+      // stl containers.
+
+        std::vector<char> v;
+        BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+    }
+
+    { // alternative forms of attributes. Allow sequences to take in
+      // stl containers.
+
         std::string s;
         BOOST_TEST(test_attr("foobar", string("foo") >> string("bar"), s));
         BOOST_TEST(s == "foobar");

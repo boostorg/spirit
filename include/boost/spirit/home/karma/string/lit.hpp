@@ -166,7 +166,8 @@ namespace boost { namespace spirit { namespace karma
 
             using spirit::traits::get_c_string;
             if (!detail::string_compare(
-                    get_c_string<extracted_string_type>::call(traits::extract_from<attribute_type>(attr, context))
+                    get_c_string<extracted_string_type>::call(
+                        traits::extract_from<attribute_type>(attr, context))
                   , get_c_string<string_type>::call(str_), char_encoding(), Tag()))
             {
                 return false;

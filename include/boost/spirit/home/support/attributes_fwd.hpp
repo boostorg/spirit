@@ -101,6 +101,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename T, typename Enable = void>
     struct assign_to_attribute_from_value;
 
+    template <typename Attribute, typename T, typename Enable = void>
+    struct assign_to_container_from_value;
+
     template <typename T, typename Attribute>
     void assign_to(T const& val, Attribute& attr);
 
