@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             ch_lit = *++lit;
         }
 
-        return true;
+        return !ch_lit && !ch_attr;
     }
 
     template <typename Char>
@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             ch_lit = spirit::char_class::convert<CharEncoding>::to(Tag(), *++lit);
         }
 
-        return true;
+        return !ch_lit && !ch_attr;
     }
 
     template <typename Char, typename CharEncoding, typename Tag>
