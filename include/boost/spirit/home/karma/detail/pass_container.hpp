@@ -168,7 +168,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
             // false means everything went ok
             return dispatch_main(component, predicate());
-//              , has_same_elements<rhs, lhs_attribute>());
         }
 
         F f;

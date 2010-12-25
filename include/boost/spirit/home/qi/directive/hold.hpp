@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 
 namespace boost { namespace spirit
 {
@@ -90,9 +91,15 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject>
     struct has_semantic_action<qi::hold_directive<Subject> >
       : unary_has_semantic_action<Subject> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Attribute>
+    struct handles_container<qi::hold_directive<Subject>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
 }}}
 
 #endif

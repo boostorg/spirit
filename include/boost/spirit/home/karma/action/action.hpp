@@ -128,7 +128,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Action, typename Attribute>
-    struct has_semantic_action<karma::action<Subject, Action>, Attribute>
+    struct handles_container<karma::action<Subject, Action>, Attribute>
       : unary_handles_container<Subject, Attribute> {};
 }}}
 

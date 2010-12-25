@@ -25,6 +25,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
 #include <boost/type_traits/add_reference.hpp>
@@ -237,7 +238,20 @@ namespace boost { namespace spirit { namespace qi
             return result_type(traits::get_c_string<String>::call(str), encoding());
         }
     };
+}}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename String, bool no_attribute, typename Attribute>
+    struct handles_container<
+            qi::literal_string<String, no_attribute>, Attribute>
+      : mpl::true_ {};
+
+    template <typename String, bool no_attribute, typename Attribute>
+    struct handles_container<
+            qi::no_case_literal_string<String, no_attribute>, Attribute>
+      : mpl::true_ {};
 }}}
 
 #endif

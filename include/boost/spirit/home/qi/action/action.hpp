@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/action_dispatch.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
@@ -126,10 +127,15 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Action>
     struct has_semantic_action<qi::action<Subject, Action> >
       : mpl::true_ {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Action, typename Attribute>
+    struct handles_container<qi::action<Subject, Action>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
 }}}
 
 #endif

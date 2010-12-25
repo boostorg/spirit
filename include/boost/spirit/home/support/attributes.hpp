@@ -570,24 +570,25 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute
     {
+        typedef typename remove_const<Attribute>::type attribute_type;
         typedef typename
             mpl::if_<
                 is_same<typename remove_const<ActualAttribute>::type, unused_type>
-              , typename remove_const<Attribute>::type
+              , attribute_type
               , ActualAttribute&>::type
         type;
 
         typedef typename
             mpl::if_<
                 is_same<typename remove_const<ActualAttribute>::type, unused_type>
-              , typename remove_const<Attribute>::type
+              , attribute_type
               , ActualAttribute>::type
         value_type;
 
         static Attribute call(unused_type)
         {
              // synthesize the attribute/parameter
-            return boost::get(value_initialized<Attribute>());
+            return boost::get(value_initialized<attribute_type>());
         }
 
         template <typename T>
@@ -604,7 +605,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute<Attribute const&, ActualAttribute>
-      : make_attribute<Attribute, ActualAttribute>
+      : make_attribute<Attribute const, ActualAttribute>
     {};
 
     template <typename ActualAttribute>

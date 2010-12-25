@@ -15,6 +15,8 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/info.hpp>
 
 namespace boost { namespace spirit
@@ -102,9 +104,15 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject>
     struct has_semantic_action<qi::plus<Subject> >
       : unary_has_semantic_action<Subject> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Attribute>
+    struct handles_container<qi::plus<Subject>, Attribute> 
+      : mpl::true_ {};
 }}}
 
 #endif

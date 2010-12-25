@@ -19,6 +19,8 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/foreach.hpp>
 #include <vector>
@@ -320,9 +322,15 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename LoopIter>
     struct has_semantic_action<qi::repeat_parser<Subject, LoopIter> >
       : unary_has_semantic_action<Subject> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename LoopIter, typename Attribute>
+    struct handles_container<qi::repeat_parser<Subject, LoopIter>, Attribute>
+      : mpl::true_ {};
 }}}
 
 #endif

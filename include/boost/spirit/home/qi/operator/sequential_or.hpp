@@ -101,6 +101,7 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     // We specialize this for sequential_or (see support/attributes.hpp).
     // For sequential_or, we only wrap the attribute in a tuple IFF
     // it is not already a fusion tuple.
@@ -108,9 +109,15 @@ namespace boost { namespace spirit { namespace traits
     struct pass_attribute<qi::sequential_or<Elements>, Attribute>
       : wrap_if_not_tuple<Attribute> {};
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Elements>
     struct has_semantic_action<qi::sequential_or<Elements> >
       : nary_has_semantic_action<Elements> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Attribute>
+    struct handles_container<qi::sequential_or<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute> {};
 }}}
 
 #endif

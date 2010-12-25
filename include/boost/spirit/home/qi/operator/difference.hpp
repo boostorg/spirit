@@ -16,6 +16,8 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/at.hpp>
 
 namespace boost { namespace spirit
@@ -94,9 +96,15 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Left, typename Right>
     struct has_semantic_action<qi::difference<Left, Right> >
       : binary_has_semantic_action<Left, Right> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Left, typename Right, typename Attribute>
+    struct handles_container<qi::difference<Left, Right>, Attribute>
+      : binary_handles_container<Left, Right, Attribute> {};
 }}}
 
 #endif

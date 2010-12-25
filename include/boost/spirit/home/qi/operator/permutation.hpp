@@ -16,6 +16,8 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/algorithm/any_if_ns.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/optional.hpp>
@@ -119,6 +121,7 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     // We specialize this for permutation (see support/attributes.hpp).
     // For permutation, we only wrap the attribute in a tuple IFF
     // it is not already a fusion tuple.
@@ -126,9 +129,15 @@ namespace boost { namespace spirit { namespace traits
     struct pass_attribute<qi::permutation<Elements>, Attribute>
       : wrap_if_not_tuple<Attribute> {};
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Elements>
     struct has_semantic_action<qi::permutation<Elements> >
       : nary_has_semantic_action<Elements> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Attribute>
+    struct handles_container<qi::permutation<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute> {};
 }}}
 
 #endif

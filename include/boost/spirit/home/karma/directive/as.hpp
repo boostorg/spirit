@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Attribute, typename T>
+    template <typename Subject, typename T, typename Attribute>
     struct handles_container<karma::as_directive<Subject, T>, Attribute>
       : mpl::false_ {};   // always dereference attribute if used in sequences
 }}}

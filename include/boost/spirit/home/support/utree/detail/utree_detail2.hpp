@@ -330,12 +330,11 @@ namespace boost { namespace spirit { namespace detail
     template <typename T>
     inline void list::push_back(T const& val)
     {
-
         if (last == 0)
             push_front(val);
         else {
-            detail::list::node* new_node
-              = new detail::list::node(val, last->next, last);
+            detail::list::node* new_node = 
+                new detail::list::node(val, last->next, last);
             last->next = new_node;
             last = new_node;
             ++size;

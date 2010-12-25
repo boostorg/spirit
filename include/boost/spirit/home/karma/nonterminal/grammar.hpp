@@ -23,7 +23,8 @@
 
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename OutputIterator, typename T1, typename T2, typename T3
+    template <
+        typename OutputIterator, typename T1, typename T2, typename T3
       , typename T4>
     struct grammar
       : proto::extends<

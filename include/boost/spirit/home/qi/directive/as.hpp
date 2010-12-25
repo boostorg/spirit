@@ -22,6 +22,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <string>
 
@@ -140,9 +141,15 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename T>
     struct has_semantic_action<qi::as_directive<Subject, T> >
       : unary_has_semantic_action<Subject> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename T, typename Attribute>
+    struct handles_container<qi::as_directive<Subject, T>, Attribute>
+      : mpl::false_ {};   // always dereference attribute if used in sequences
 }}}
 
 #endif

@@ -10,6 +10,7 @@
 
 #include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/qi.hpp>
+#include <boost/mpl/print.hpp>
 
 #include <sstream>
 
@@ -79,7 +80,7 @@ int main()
         rule<char const*, utree()> r = char_("abc");
 
         BOOST_TEST(test_attr("a", r, ut) &&
-            ut.which() == utree_type::string_type && check(ut, "\"a\""));
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" )"));
     }
 
     // sequences
@@ -104,13 +105,12 @@ int main()
             ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
 
         rule<char const*, utree()> r1 = double_;
-
         ut.clear();
         BOOST_TEST(test_attr("1.2ab", r1 >> *char_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( 1.2 \"a\" \"b\" )"));
+            ut.which() == utree_type::list_type && check(ut, "( ( 1.2 ) \"a\" \"b\" )")); 
         ut.clear();
         BOOST_TEST(test_attr("ab1.2", *~digit >> r1, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" ( 1.2 ) )")); 
         ut.clear();
         
         rule<char const*, utree()> r2 = int_ >> char_("!") >> double_;
@@ -187,22 +187,20 @@ int main()
             ut.which() == utree_type::double_type && check(ut, "10.2"));
 
         rule<char const*, boost::variant<int, double>()> r1 = strict_double | int_;
-
         ut.clear();
         BOOST_TEST(test_attr("10", r1, ut) &&
-            ut.which() == utree_type::int_type && check(ut, "10"));       // FIXME?: "( 10 )"
+            ut.which() == utree_type::int_type && check(ut, "10"));
         ut.clear();
         BOOST_TEST(test_attr("10.2", r1, ut) &&
-            ut.which() == utree_type::double_type && check(ut, "10.2"));  // FIXME?: "( 10.2 )"
+            ut.which() == utree_type::double_type && check(ut, "10.2"));
 
         rule<char const*, utree()> r2 = strict_double | int_;
-
         ut.clear();
         BOOST_TEST(test_attr("10", r2, ut) &&
-            ut.which() == utree_type::int_type && check(ut, "10"));       // FIXME?: "( 10 )"
+            ut.which() == utree_type::list_type && check(ut, "( 10 )"));
         ut.clear();
         BOOST_TEST(test_attr("10.2", r2, ut) &&
-            ut.which() == utree_type::double_type && check(ut, "10.2"));  // FIXME?: "( 10.2 )"
+            ut.which() == utree_type::list_type && check(ut, "( 10.2 )"));
     }
 
     // optionals
@@ -246,7 +244,7 @@ int main()
         ut.clear();
 
         BOOST_TEST(test_attr("a,b1.2", ~digit % ',' >> double_, ut) &&
-            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));   // FIXME?: "( ( \"a\" \"b\" ) 1.2 )"
+            ut.which() == utree_type::list_type && check(ut, "( \"a\" \"b\" 1.2 )"));
         ut.clear();
     }
 
@@ -304,6 +302,37 @@ int main()
         ut.clear();
         BOOST_TEST(test_attr("a,b1.2", as_symbol[~digit % ','] >> double_, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( ab 1.2 )"));
+        ut.clear();
+    }
+
+    // subtrees
+    {
+        // -(+int_) is forcing a subtree
+        utree ut;
+        BOOST_TEST(test_attr("1 2", int_ >> ' ' >> -(+int_), ut) && 
+            ut.which() == utree_type::list_type && check(ut, "( 1 2 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1 2", int_ >> ' ' >> *int_, ut) && 
+            ut.which() == utree_type::list_type && check(ut, "( 1 2 )"));
+        ut.clear();
+
+        rule<char const*, std::vector<int>()> r1 = int_ % ',';
+        BOOST_TEST(test_attr("1 2,3", int_ >> ' ' >> r1, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 2 3 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1,2 2,3", r1 >> ' ' >> r1, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 2 2 3 )")); 
+        ut.clear();
+
+        rule<char const*, utree()> r2 = int_ % ',';
+        BOOST_TEST(test_attr("1 2,3", int_ >> ' ' >> r2, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 ( 2 3 ) )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1,2 2,3", r2 >> ' ' >> r2, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( ( 1 2 ) ( 2 3 ) )"));
         ut.clear();
     }
 
