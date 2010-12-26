@@ -12,12 +12,12 @@
 #endif
 
 #include <boost/proto/proto.hpp>
-#include <boost/fusion/include/unused.hpp>
 #include <boost/fusion/include/void.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/home/support/meta_compiler.hpp>
 #include <boost/spirit/home/support/detail/make_vector.hpp>
+#include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit
 {
