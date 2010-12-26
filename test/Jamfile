@@ -191,6 +191,7 @@ import testing ;
     [ compile qi/debug_optional.cpp           : : qi_debug_optional ]
     [ run karma/real_scientific.cpp           : : : : ]
     [ run qi/repeat_regression.cpp            : : : : ]
+    [ compile qi/one_element_fusion_sequence.cpp  : : qi_one_element_fusion_sequence ]
 
     ;
 
