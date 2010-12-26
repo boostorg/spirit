@@ -18,6 +18,7 @@
     (defined(__APPLE__) && defined(__INTEL_COMPILER))
 #include <boost/utility/enable_if.hpp>
 #endif
+#include <boost/spirit/home/support/unused.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace result_of
@@ -225,7 +226,6 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute, typename T, typename Enable = void>
     struct symbols_value;
-
 }}}
 
 #endif
