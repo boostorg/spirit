@@ -153,6 +153,10 @@ namespace boost { namespace spirit { namespace traits
             typedef typename traits::container_iterator<Attribute const>::type 
                 iterator_type;
 
+            // make sure the attribute is a list, at least an empty one
+            if (attr.which() != utree_type::list_type)
+                attr = utree::list;
+
             iterator_type end = traits::end(val);
             for (iterator_type i = traits::begin(val); i != end; traits::next(i))
                 push_back(attr, traits::deref(i));
@@ -176,6 +180,11 @@ namespace boost { namespace spirit { namespace traits
                 attr = val;
             else {
                 typedef utree::const_iterator iterator_type;
+
+                // make sure the attribute is a list, at least an empty one
+                if (attr.which() != utree_type::list_type)
+                    attr = utree::list;
+
                 iterator_type end = val.end();
                 for (iterator_type i = val.begin(); i != end; ++i)
                     attr.push_back(*i);
@@ -198,7 +207,7 @@ namespace boost { namespace spirit { namespace traits
         static void post(utree& attr, utree const& val)
         {
             if (val.which() != utree_type::list_type) {
-                utree ut;
+                utree ut (utree::list);
                 ut.push_back(val);
                 attr.swap(ut);
             }
@@ -587,10 +596,10 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<utree, uninitialized_type>
+    struct compute_compatible_component_variant<utree, utree::uninitialized_type>
       : mpl::true_
     {
-        typedef uninitialized_type compatible_type;
+        typedef utree::uninitialized_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -599,10 +608,10 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<utree, nil_type>
+    struct compute_compatible_component_variant<utree, utree::nil_type>
       : mpl::true_
     {
-        typedef nil_type compatible_type;
+        typedef utree::nil_type compatible_type;
 
         static bool is_compatible(int d)
         {
@@ -802,14 +811,14 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <>
-    struct extract_from_attribute<utree, spirit::nil_type>
+    struct extract_from_attribute<utree, utree::nil_type>
     {
-        typedef spirit::nil_type type;
+        typedef utree::nil_type type;
 
         template <typename Context>
         static type call(utree const&, Context&)
         {
-            return spirit::nil;
+            return utree::nil;
         }
     };
 
@@ -903,13 +912,13 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct transform_attribute<utree const, spirit::nil_type, karma::domain>
+    struct transform_attribute<utree const, utree::nil_type, karma::domain>
     {
-        typedef spirit::nil_type type;
+        typedef utree::nil_type type;
 
         static type pre(utree const& t)
         {
-            return spirit::nil;
+            return utree::nil;
         }
     };
 

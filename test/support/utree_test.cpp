@@ -39,8 +39,6 @@ struct one_two_three
 int main()
 {
     using boost::spirit::utree;
-    using boost::spirit::nil;
-    using boost::spirit::uninitialized;
     using boost::spirit::utf8_symbol_type;
     using boost::spirit::binary_string_type;
 
@@ -52,8 +50,13 @@ int main()
     }
 
     {
-        utree val(nil);
+        utree val(utree::nil);
         BOOST_TEST(check(val, "<nil>"));
+    }
+
+    {
+        utree val(utree::list);
+        BOOST_TEST(check(val, "( )"));
     }
 
     {
@@ -148,7 +151,7 @@ int main()
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(check(val.front(), "123"));
 
-        utree val3(nil);
+        utree val3(utree::nil);
         val3.swap(val);
         BOOST_TEST(val3.size() == 3);
         BOOST_TEST(check(val, "<nil>"));
@@ -188,7 +191,7 @@ int main()
     }
 
     {
-        utree a(nil), b(nil);
+        utree a(utree::nil), b(utree::nil);
         BOOST_TEST(a == b);
         a = 123;
         BOOST_TEST(a != b);
@@ -197,7 +200,7 @@ int main()
         a = 100.00;
         BOOST_TEST(a < b);
 
-        b = a = utree(uninitialized);
+        b = a = utree(utree::uninitialized);
         BOOST_TEST(a == b);
         a.push_back(1);
         a.push_back("two");
@@ -212,7 +215,7 @@ int main()
     }
 
     {
-        utree a(nil);
+        utree a(utree::nil);
         a.push_back(1);
         a.push_back(2);
         a.push_back(3);

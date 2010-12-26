@@ -51,8 +51,8 @@ namespace boost { namespace spirit
     std::ostream& operator<<(std::ostream& out, utree const& x);
     std::istream& operator>>(std::istream& in, utree& x);
 
-    std::ostream& operator<<(std::ostream& out, uninitialized_type const& x);
-    std::ostream& operator<<(std::ostream& out, nil_type const& x);
+    std::ostream& operator<<(std::ostream& out, utree::uninitialized_type const& x);
+    std::ostream& operator<<(std::ostream& out, utree::nil_type const& x);
 
     // Logical operators
     utree operator&&(utree const& a, utree const& b);
@@ -116,12 +116,12 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) == static_cast<Base const&>(b);
         }
 
-        bool operator()(uninitialized_type, uninitialized_type) const
+        bool operator()(utree::uninitialized_type, utree::uninitialized_type) const
         {
             return true;
         }
 
-        bool operator()(nil_type, nil_type) const
+        bool operator()(utree::nil_type, utree::nil_type) const
         {
             return true;
         }
@@ -172,13 +172,13 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) < static_cast<Base const&>(b);
         }
 
-        bool operator()(uninitialized_type, uninitialized_type) const
+        bool operator()(utree::uninitialized_type, utree::uninitialized_type) const
         {
             boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for nil
         }
 
-        bool operator()(nil_type, nil_type) const
+        bool operator()(utree::nil_type, utree::nil_type) const
         {
             boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for nil
@@ -204,12 +204,12 @@ namespace boost { namespace spirit
         std::ostream& out;
         utree_print(std::ostream& out) : out(out) {}
 
-        void operator()(boost::spirit::uninitialized_type) const
+        void operator()(utree::uninitialized_type) const
         {
             out << "<uninitialized> ";
         }
 
-        void operator()(boost::spirit::nil_type) const
+        void operator()(utree::nil_type) const
         {
             out << "<nil> ";
         }
@@ -493,12 +493,12 @@ namespace boost { namespace spirit
         return out;
     }
 
-    inline std::ostream& operator<<(std::ostream& out, uninitialized_type const& x)
+    inline std::ostream& operator<<(std::ostream& out, utree::uninitialized_type const& x)
     {
         return out;
     }
 
-    inline std::ostream& operator<<(std::ostream& out, nil_type const& x)
+    inline std::ostream& operator<<(std::ostream& out, utree::nil_type const& x)
     {
         return out;
     }

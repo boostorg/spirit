@@ -460,10 +460,10 @@ namespace boost { namespace spirit { namespace detail
                     break;
 
                 case type::uninitialized_type:
-                    return f(uninitialized);
+                    return f(utree::uninitialized);
 
                 case type::nil_type:
-                    return f(nil);
+                    return f(utree::nil);
 
                 case type::bool_type:
                     return f(x.b);
@@ -523,10 +523,10 @@ namespace boost { namespace spirit { namespace detail
                     break;
 
                 case type::uninitialized_type:
-                    return visit_impl::apply(y, detail::bind(f, uninitialized));
+                    return visit_impl::apply(y, detail::bind(f, utree::uninitialized));
 
                 case type::nil_type:
-                    return visit_impl::apply(y, detail::bind(f, nil));
+                    return visit_impl::apply(y, detail::bind(f, utree::nil));
 
                 case type::bool_type:
                     return visit_impl::apply(y, detail::bind(f, x.b));
@@ -620,16 +620,22 @@ namespace boost { namespace spirit
         return new stored_function<F>(*this);
     }
 
-    inline utree::utree(uninitialized_type)
+    inline utree::utree(utree::uninitialized_type)
     {
         s.initialize();
         set_type(type::uninitialized_type);
     }
 
-    inline utree::utree(nil_type)
+    inline utree::utree(utree::nil_type)
     {
         s.initialize();
         set_type(type::nil_type);
+    }
+
+    inline utree::utree(utree::list_type)
+    {
+        s.initialize();
+        ensure_list_type();
     }
 
     inline utree::utree(bool b_) 
@@ -777,6 +783,13 @@ namespace boost { namespace spirit
     {
         free();
         set_type(type::nil_type);
+        return *this;
+    }
+
+    inline utree& utree::operator=(list_type)
+    {
+        free();
+        ensure_list_type();
         return *this;
     }
 

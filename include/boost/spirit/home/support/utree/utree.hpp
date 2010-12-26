@@ -90,18 +90,6 @@ namespace boost { namespace spirit
     //]
 
     ///////////////////////////////////////////////////////////////////////////
-    // The uninitialized type
-    ///////////////////////////////////////////////////////////////////////////
-    struct uninitialized_type {};
-    uninitialized_type const uninitialized = uninitialized_type();
-
-    ///////////////////////////////////////////////////////////////////////////
-    // The nil type
-    ///////////////////////////////////////////////////////////////////////////
-    struct nil_type {};
-    nil_type const nil = nil_type();
-
-    ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
     // range or (stl container) of chars.
     ///////////////////////////////////////////////////////////////////////////
@@ -260,6 +248,22 @@ namespace boost { namespace spirit
     //[utree
     class utree {
     public:
+        ///////////////////////////////////////////////////////////////////////
+        // The uninitialized type
+        struct uninitialized_type {};
+        static uninitialized_type const uninitialized;
+
+        ///////////////////////////////////////////////////////////////////////
+        // The nil type
+        struct nil_type {};
+        static nil_type const nil;
+
+        ///////////////////////////////////////////////////////////////////////
+        // The list type, this can be used to initialize an utree to hold an 
+        // empty list
+        struct list_type {};
+        static list_type const list;
+
         //[utree_container_types
         typedef utree value_type;
         typedef utree& reference;
@@ -299,6 +303,11 @@ namespace boost { namespace spirit
         // 'initialized empty' utree (different from uninitialized_type!).
         utree(nil_type);
         reference operator=(nil_type);
+
+        // This initializes a `list_type` node, which represents an empty
+        // but valid utree list.
+        utree(list_type);
+        reference operator=(list_type);
 
         // This initializes a `boolean_type` node, which can hold 'true' or
         // 'false' only.
@@ -520,6 +529,13 @@ namespace boost { namespace spirit
     };
     //]
 
+    ///////////////////////////////////////////////////////////////////////////
+    // predefined instances for singular types
+    utree::uninitialized_type const utree::uninitialized = {};
+    utree::nil_type const utree::nil = {};
+    utree::list_type const utree::list = {};
+
+    ///////////////////////////////////////////////////////////////////////////
     //[utree_scope
     class scope : public boost::iterator_range<utree*> {
       public:
