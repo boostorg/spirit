@@ -679,13 +679,15 @@ namespace boost { namespace spirit { namespace traits
     // meta function to return whether the argument is a one element fusion
     // sequence
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, bool IsSeq = fusion::traits::is_sequence<T>::value>
+    template <typename T
+      , bool IsFusionSeq = fusion::traits::is_sequence<T>::value
+      , bool IsProtoExpr = proto::is_expr<T>::value>
     struct one_element_sequence
       : mpl::false_
     {};
 
     template <typename T>
-    struct one_element_sequence<T, true>
+    struct one_element_sequence<T, true, false>
       : mpl::bool_<mpl::size<T>::value == 1>
     {};
 
