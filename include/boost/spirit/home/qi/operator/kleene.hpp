@@ -68,6 +68,9 @@ namespace boost { namespace spirit { namespace qi
                 value_type;
             value_type val = value_type();
 
+            // ensure the attribute is actually a container type
+            traits::make_container(attr);
+
             // Repeat while subject parses ok
             Iterator save = first;
             while (subject.parse(save, last, context, skipper, val) &&

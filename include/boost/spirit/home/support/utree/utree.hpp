@@ -62,7 +62,7 @@ namespace boost { namespace spirit
     {
         enum info
         {
-            uninitialized_type, // the utree has not been initialized (it's 
+            invalid_type,       // the utree has not been initialized (it's 
                                 // default constructed)
             nil_type,           // nil is the sentinel (empty) utree type.
             list_type,          // A doubly linked list of utrees.
@@ -249,9 +249,9 @@ namespace boost { namespace spirit
     class utree {
     public:
         ///////////////////////////////////////////////////////////////////////
-        // The uninitialized type
-        struct uninitialized_type {};
-        static uninitialized_type const uninitialized;
+        // The invalid type
+        struct invalid_type {};
+        static invalid_type const invalid;
 
         ///////////////////////////////////////////////////////////////////////
         // The nil type
@@ -261,7 +261,7 @@ namespace boost { namespace spirit
         ///////////////////////////////////////////////////////////////////////
         // The list type, this can be used to initialize an utree to hold an 
         // empty list
-        struct list_type {};
+        struct list_type;
         static list_type const list;
 
         //[utree_container_types
@@ -294,20 +294,15 @@ namespace boost { namespace spirit
            are non-explicit on purpose, allowing to use an utree instance as
            the attribute to almost any Qi parser.
         */
-        // This constructs an `uninitialized_type` node. When used in places
+        // This constructs an `invalid_type` node. When used in places
         // where a boost::optional is expected (i.e. as an attribute for the 
         // optional component), this represents the 'empty' state.
-        utree(uninitialized_type = uninitialized);
+        utree(invalid_type = invalid);
 
         // This initializes a `nil_type` node, which represents a valid,
-        // 'initialized empty' utree (different from uninitialized_type!).
+        // 'initialized empty' utree (different from invalid_type!).
         utree(nil_type);
         reference operator=(nil_type);
-
-        // This initializes a `list_type` node, which represents an empty
-        // but valid utree list.
-        utree(list_type);
-        reference operator=(list_type);
 
         // This initializes a `boolean_type` node, which can hold 'true' or
         // 'false' only.
@@ -466,6 +461,7 @@ namespace boost { namespace spirit
         reference operator[](size_type);
         const_reference operator[](size_type) const;
 
+        // This clears the utree instance and resets its type to 'invalid_type'
         void clear();
 
         void swap(utree&);
@@ -496,6 +492,9 @@ namespace boost { namespace spirit
         utree eval(scope const&) const;
 
     //<-
+    protected:
+        void ensure_list_type();
+
     private:
         typedef utree_type type;
 
@@ -509,7 +508,6 @@ namespace boost { namespace spirit
 
         type::info get_type() const;
         void set_type(type::info);
-        void ensure_list_type();
         void free();
         void copy(const_reference);
 
@@ -529,11 +527,24 @@ namespace boost { namespace spirit
     };
     //]
 
+    struct utree::list_type : utree
+    {
+        using utree::operator=;
+
+        list_type() : utree() { ensure_list_type(); }
+
+        template <typename T0>
+        list_type(T0 t0) : utree(t0) {}
+      
+        template <typename T0, typename T1>
+        list_type(T0 t0, T1 t1) : utree(t0, t1) {}
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     // predefined instances for singular types
-    utree::uninitialized_type const utree::uninitialized = {};
+    utree::invalid_type const utree::invalid = {};
     utree::nil_type const utree::nil = {};
-    utree::list_type const utree::list = {};
+    utree::list_type const utree::list = utree::list_type();
 
     ///////////////////////////////////////////////////////////////////////////
     //[utree_scope

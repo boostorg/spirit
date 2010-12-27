@@ -200,7 +200,7 @@ int main()
         a = 100.00;
         BOOST_TEST(a < b);
 
-        b = a = utree(utree::uninitialized);
+        b = a = utree(utree::invalid);
         BOOST_TEST(a == b);
         a.push_back(1);
         a.push_back("two");
@@ -215,7 +215,7 @@ int main()
     }
 
     {
-        utree a(utree::nil);
+        utree a(utree::list);
         a.push_back(1);
         a.push_back(2);
         a.push_back(3);

@@ -97,6 +97,9 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr_, mpl::true_) const
         {
+            // ensure the attribute is actually a container type
+            traits::make_container(attr_);
+
             Iterator iter = first;
             // return false if *any* of the parsers fail
             if (fusion::any(elements

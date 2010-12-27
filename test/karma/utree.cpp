@@ -144,39 +144,49 @@ int main()
 
     // lists
     {
-        // ( "a" "b" )
-        rule<output_iterator, utree()> r1 = char_ % ',';
-        utree ut;
-        ut.push_back('a');
-        ut.push_back('b');
-        BOOST_TEST(test("a,b", char_ % ',', ut));
-        BOOST_TEST(test("a,b", r1, ut));
+        rule<output_iterator, utree()> r1, r1ref;
+        rule<output_iterator, utf8_string_range_type()> r1str;
+        rule<output_iterator, utree::const_range()> r1list;
 
-        // ( ( "a" "b" ) )
+        r1 = double_ | int_ | r1str | r1list | r1ref;
+  
+        r1ref = r1;
+
+        r1str = string;
+
+        r1list = '(' << -(r1 % ',') << ')';
+
+        // ( "abc" "def" )
+        utree ut;
+        ut.push_back("abc");
+        ut.push_back("def");
+        BOOST_TEST(test("abc,def", string % ',', ut));
+        BOOST_TEST(test("(abc,def)", r1, ut));
+
+        // ( ( "abc" "def" ) )
         utree ut1;
         ut1.push_back(ut);
-        BOOST_TEST(test("a,b", r1, ut1));
+        BOOST_TEST(test("((abc,def))", r1, ut1));
 
 //         rule<output_iterator, std::vector<char>()> r2 = char_ % ',';
-//         BOOST_TEST(test("a,b", r2, ut));
-//         BOOST_TEST(test("a,b", r2, ut1));
+//         BOOST_TEST(test("abc,def", r2, ut));
+//         BOOST_TEST(test("abc,def", r2, ut1));
 
-        // ( ( "a" "b" ) ( "a" "b" ) )
+        // ( ( "abc" "def" ) ( "abc" "def" ) )
         ut1.push_back(ut);
-        BOOST_TEST(test("a,b a,b", r1 << ' ' << r1, ut1));
+        BOOST_TEST(test("(abc,def) (abc,def)", r1 << ' ' << r1, ut1));
 
         // ( 123 456 )
-        rule<output_iterator, utree()> r3 = int_ % ',';
         ut.clear();
         ut.push_back(123);
         ut.push_back(456);
         BOOST_TEST(test("123,456", int_ % ',', ut));
-        BOOST_TEST(test("123,456", r3, ut));
+        BOOST_TEST(test("(123,456)", r1, ut));
 
         // ( ( 123 456 ) ) 
         ut1.clear();
         ut1.push_back(ut);
-        BOOST_TEST(test("123,456", r3, ut1));
+        BOOST_TEST(test("((123,456))", r1, ut1));
 
 //         rule<output_iterator, std::vector<int>()> r4 = int_ % ',';
 //         BOOST_TEST(test("123,456", r4, ut));
@@ -184,20 +194,19 @@ int main()
 
         // ( ( 123 456 ) ( 123 456 ) ) 
         ut1.push_back(ut);
-        BOOST_TEST(test("123,456 123,456", r3 << ' ' << r3, ut1));
+        BOOST_TEST(test("(123,456) (123,456)", r1 << ' ' << r1, ut1));
 
         // ( 1.23 4.56 ) 
-        rule<output_iterator, utree()> r5 = double_ % ',';
         ut.clear();
         ut.push_back(1.23);
         ut.push_back(4.56);
         BOOST_TEST(test("1.23,4.56", double_ % ',', ut));
-        BOOST_TEST(test("1.23,4.56", r5, ut));
+        BOOST_TEST(test("(1.23,4.56)", r1, ut));
 
         // ( ( 1.23 4.56 ) )
         ut1.clear();
         ut1.push_back(ut);
-        BOOST_TEST(test("1.23,4.56", r5, ut1));
+        BOOST_TEST(test("((1.23,4.56))", r1, ut1));
 
 //         rule<output_iterator, std::vector<double>()> r6 = double_ % ',';
 //         BOOST_TEST(test("1.23,4.56", r6, ut));
@@ -205,7 +214,7 @@ int main()
 
         // ( ( 1.23 4.56 ) ( 1.23 4.56 ) )
         ut1.push_back(ut);
-        BOOST_TEST(test("1.23,4.56 1.23,4.56", r5 <<' ' << r5, ut1));
+        BOOST_TEST(test("(1.23,4.56) (1.23,4.56)", r1 <<' ' << r1, ut1));
     }
 
     // alternatives

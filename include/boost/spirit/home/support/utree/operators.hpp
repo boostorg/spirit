@@ -51,7 +51,7 @@ namespace boost { namespace spirit
     std::ostream& operator<<(std::ostream& out, utree const& x);
     std::istream& operator>>(std::istream& in, utree& x);
 
-    std::ostream& operator<<(std::ostream& out, utree::uninitialized_type const& x);
+    std::ostream& operator<<(std::ostream& out, utree::invalid_type const& x);
     std::ostream& operator<<(std::ostream& out, utree::nil_type const& x);
 
     // Logical operators
@@ -116,7 +116,7 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) == static_cast<Base const&>(b);
         }
 
-        bool operator()(utree::uninitialized_type, utree::uninitialized_type) const
+        bool operator()(utree::invalid_type, utree::invalid_type) const
         {
             return true;
         }
@@ -172,7 +172,7 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) < static_cast<Base const&>(b);
         }
 
-        bool operator()(utree::uninitialized_type, utree::uninitialized_type) const
+        bool operator()(utree::invalid_type, utree::invalid_type) const
         {
             boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for nil
@@ -204,9 +204,9 @@ namespace boost { namespace spirit
         std::ostream& out;
         utree_print(std::ostream& out) : out(out) {}
 
-        void operator()(utree::uninitialized_type) const
+        void operator()(utree::invalid_type) const
         {
-            out << "<uninitialized> ";
+            out << "<invalid> ";
         }
 
         void operator()(utree::nil_type) const
@@ -493,7 +493,7 @@ namespace boost { namespace spirit
         return out;
     }
 
-    inline std::ostream& operator<<(std::ostream& out, utree::uninitialized_type const& x)
+    inline std::ostream& operator<<(std::ostream& out, utree::invalid_type const& x)
     {
         return out;
     }

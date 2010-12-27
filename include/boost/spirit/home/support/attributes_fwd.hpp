@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace result_of
     struct extract_from;
 
     template <typename T, typename Attribute>
-    struct attribute_as_xxx;
+    struct attribute_as;
 
     template <typename Exposed, typename Transformed, typename Domain>
     struct pre_transform;
@@ -128,10 +128,10 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // Karma only
     template <typename T, typename Attribute, typename Enable = void>
-    struct attribute_as_xxx;
+    struct attribute_as;
 
     template <typename T, typename Attribute>
-    typename spirit::result_of::attribute_as_xxx<T, Attribute>::type
+    typename spirit::result_of::attribute_as<T, Attribute>::type
     as(Attribute const& attr);
     
     template <typename T, typename Attribute>
@@ -142,6 +142,9 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable = void>
     struct variant_which;
+
+    template <typename T>
+    int which(T const& v);
 
     ///////////////////////////////////////////////////////////////////////////
     // Determine, whether T is a variant like type
@@ -179,6 +182,9 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Container, typename Enable = void>
     struct is_empty_container;
+
+    template <typename Container, typename Enable = void>
+    struct make_container_attribute;
 
     ///////////////////////////////////////////////////////////////////////
     // Determine the iterator type of the given container type

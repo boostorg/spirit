@@ -86,9 +86,9 @@ namespace boost { namespace spirit { namespace karma
         {
             if (!traits::valid_as<T>(attr))
                 return false;
-            else 
-                return subject.generate(sink, ctx, d, traits::as<T>(attr)) &&
-                       karma::delimit_out(sink, d); // always do post-delimiting
+
+            return subject.generate(sink, ctx, d, traits::as<T>(attr)) &&
+                    karma::delimit_out(sink, d); // always do post-delimiting
         }
 
         template <typename Context>

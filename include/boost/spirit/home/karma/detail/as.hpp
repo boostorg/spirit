@@ -24,7 +24,7 @@ namespace boost { namespace spirit { namespace traits
 
     // This is the default case: the plain attribute values
     template <typename T, typename Attribute, typename Enable/*= void*/>
-    struct attribute_as_xxx
+    struct attribute_as
     {
         typedef Attribute const& type; 
 
@@ -41,10 +41,10 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Attribute>
-    inline typename spirit::result_of::attribute_as_xxx<T, Attribute>::type
+    inline typename spirit::result_of::attribute_as<T, Attribute>::type
     as(Attribute const& attr)
     {
-        return attribute_as_xxx<T, Attribute>::call(attr);
+        return attribute_as<T, Attribute>::call(attr);
     }
 
     template <typename T>
@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, typename Attribute>
     inline bool valid_as(Attribute const& attr)
     {
-        return attribute_as_xxx<T, Attribute>::is_valid(attr);
+        return attribute_as<T, Attribute>::is_valid(attr);
     }
 
     template <typename T>
@@ -71,18 +71,18 @@ namespace boost { namespace spirit { namespace traits
 namespace boost { namespace spirit { namespace result_of
 {
     template <typename T, typename Attribute>
-    struct attribute_as_xxx
-      : traits::attribute_as_xxx<T, Attribute>
+    struct attribute_as
+      : traits::attribute_as<T, Attribute>
     {};
 
     template <typename T>
-    struct attribute_as_xxx<T, unused_type>
+    struct attribute_as<T, unused_type>
     {
         typedef unused_type type;
     };
 
     template <typename T>
-    struct attribute_as_xxx<T, unused_type const>
+    struct attribute_as<T, unused_type const>
     {
         typedef unused_type type;
     };

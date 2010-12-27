@@ -218,6 +218,9 @@ namespace boost { namespace spirit { namespace qi
             value_type val = value_type();
             typename LoopIter::type i = iter.start();
 
+            // ensure the attribute is actually a container type
+            traits::make_container(attr);
+
             // parse the minimum required
             Iterator save = first;
             if (!iter.got_min(i) &&

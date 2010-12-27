@@ -149,6 +149,9 @@ namespace boost { namespace spirit { namespace karma
             indirect_iterator(Iterator& iter)
               : iter_(&iter)
             {}
+            indirect_iterator(indirect_iterator const& iter)
+              : iter_(iter.iter_)
+            {}
 
         private:
             friend class boost::iterator_core_access;
@@ -174,6 +177,12 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Iterator>
         struct make_indirect_iterator
+        {
+            typedef indirect_iterator<Iterator> type;
+        };
+
+        template <typename Iterator>
+        struct make_indirect_iterator<indirect_iterator<Iterator> >
         {
             typedef indirect_iterator<Iterator> type;
         };
@@ -361,6 +370,15 @@ namespace boost { namespace spirit { namespace karma
     struct make_composite<proto::tag::shift_left, Elements, Modifiers>
       : detail::make_sequence<Elements, detail::get_stricttag<Modifiers>::value>
     {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Helper template allowing to get the required container type for a rule
+    // attribute, which is part of a sequence.
+    template <typename Iterator>
+    struct make_sequence_iterator_range
+    {
+        typedef iterator_range<detail::indirect_iterator<Iterator> > type;
+    };
 }}} 
 
 namespace boost { namespace spirit { namespace traits
