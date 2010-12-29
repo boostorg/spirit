@@ -76,18 +76,18 @@ namespace boost { namespace spirit { namespace qi
     {};
 
     template <typename Exposed, typename Transformed>
-    struct transform_attribute<boost::optional<Exposed>, Transformed
-      , typename disable_if<is_same<boost::optional<Exposed>, Transformed> >::type>
+    struct transform_attribute<optional<Exposed>, Transformed
+      , typename disable_if<is_same<optional<Exposed>, Transformed> >::type>
     {
         typedef Transformed& type;
-        static Transformed& pre(boost::optional<Exposed>& val)
+        static Transformed& pre(optional<Exposed>& val)
         {
             if (!val)
                 val = Transformed();
             return boost::get<Transformed>(val);
         }
-        static void post(boost::optional<Exposed>&, Transformed const&) {}
-        static void fail(boost::optional<Exposed>& val)
+        static void post(optional<Exposed>&, Transformed const&) {}
+        static void fail(optional<Exposed>& val)
         {
              val = none_t();    // leave optional uninitialized if rhs failed
         }

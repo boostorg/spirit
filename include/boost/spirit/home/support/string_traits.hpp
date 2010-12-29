@@ -124,10 +124,10 @@ namespace boost { namespace spirit { namespace traits
     // Get the C string from a string
     ///////////////////////////////////////////////////////////////////////////
     template <typename String>
-    struct get_c_string;
+    struct get_c_string_impl;
 
     template <typename String>
-    struct get_c_string
+    struct get_c_string_impl
     {
         typedef typename char_type_of<String>::type char_type;
 
@@ -146,36 +146,36 @@ namespace boost { namespace spirit { namespace traits
     
     // Forwarder that strips const
     template <typename T>
-    struct get_c_string<T const>
+    struct get_c_string_impl<T const>
     {
-        static typename get_c_string<T>::char_type const* call (T const str)
+        static typename get_c_string_impl<T>::char_type const* call (T const str)
         {
-            return get_c_string<T>::call(str);
+            return get_c_string_impl<T>::call(str);
         }
     };
 
     // Forwarder that strips references
     template <typename T>
-    struct get_c_string<T&>
+    struct get_c_string_impl<T&>
     {
-        static typename get_c_string<T>::char_type const* call (T& str)
+        static typename get_c_string_impl<T>::char_type const* call (T& str)
         {
-            return get_c_string<T>::call(str);
+            return get_c_string_impl<T>::call(str);
         }
     };
 
     // Forwarder that strips const references
     template <typename T>
-    struct get_c_string<T const&>
+    struct get_c_string_impl<T const&>
     {
-        static typename get_c_string<T>::char_type const* call (T const& str)
+        static typename get_c_string_impl<T>::char_type const* call (T const& str)
         {
-            return get_c_string<T>::call(str);
+            return get_c_string_impl<T>::call(str);
         }
     };
 
     template <typename T, typename Traits, typename Allocator>
-    struct get_c_string<std::basic_string<T, Traits, Allocator> >
+    struct get_c_string_impl<std::basic_string<T, Traits, Allocator> >
     {
         typedef T char_type;
 
@@ -191,6 +191,34 @@ namespace boost { namespace spirit { namespace traits
             return str.c_str();
         }
     };
+    
+    template <typename T>
+    typename get_c_string_impl<T*>::char_type const*
+    get_c_string (T* str)
+    {
+        return get_c_string_impl<T*>::call(str);
+    }
+
+    template <typename T>
+    typename get_c_string_impl<T const*>::char_type const*
+    get_c_string (T const* str)
+    {
+        return get_c_string_impl<T const*>::call(str);
+    }
+    
+    template <typename String>
+    typename get_c_string_impl<String>::char_type const*
+    get_c_string (String& str)
+    {
+        return get_c_string_impl<String>::call(str);
+    }
+
+    template <typename String>
+    typename get_c_string_impl<String>::char_type const*
+    get_c_string (String const& str)
+    {
+        return get_c_string_impl<String>::call(str);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Get the begin/end iterators from a string

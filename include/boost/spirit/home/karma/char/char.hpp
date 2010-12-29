@@ -262,7 +262,7 @@ namespace boost { namespace spirit { namespace karma
             typedef spirit::char_class::convert<char_encoding> convert_type;
 
             char_type const* definition =
-                (char_type const*)traits::get_c_string<String>::call(str);
+                (char_type const*)traits::get_c_string(str);
             char_type ch = convert_type::to(Tag(), *definition++);
             while (ch)
             {

@@ -199,7 +199,7 @@ namespace boost { namespace spirit { namespace qi
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
-            return result_type(traits::get_c_string<String>::call(str), encoding);
+            return result_type(traits::get_c_string(str), encoding);
         }
     };
 
@@ -235,7 +235,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename String>
         result_type op(String const& str, mpl::true_) const
         {
-            return result_type(traits::get_c_string<String>::call(str), encoding());
+            return result_type(traits::get_c_string(str), encoding());
         }
     };
 }}}

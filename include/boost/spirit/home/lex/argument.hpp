@@ -101,7 +101,7 @@ namespace boost { namespace spirit { namespace lex
             typedef typename context_type::state_name_type string;
 
             fusion::at_c<4>(env.args()).set_state_name(
-                traits::get_c_string<string>::call(actor_.eval(env)));
+                traits::get_c_string(actor_.eval(env)));
         }
 
         state_setter(Actor const& actor)
