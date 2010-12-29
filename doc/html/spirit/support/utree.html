@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The utree data structure</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../support.html" title="Supporting Libraries">
 <link rel="prev" href="multi_pass.html" title="The multi pass iterator">
@@ -45,7 +45,7 @@
 <span class="special">{</span>
     <span class="keyword">enum</span> <span class="identifier">info</span>
     <span class="special">{</span>
-        <span class="identifier">uninitialized_type</span><span class="special">,</span> <span class="comment">// the utree has not been initialized (it's 
+        <span class="identifier">invalid_type</span><span class="special">,</span>       <span class="comment">// the utree has not been initialized (it's 
 </span>                            <span class="comment">// default constructed)
 </span>        <span class="identifier">nil_type</span><span class="special">,</span>           <span class="comment">// nil is the sentinel (empty) utree type.
 </span>        <span class="identifier">list_type</span><span class="special">,</span>          <span class="comment">// A doubly linked list of utrees.
@@ -94,7 +94,7 @@
         for. It is 14 bytes for a 32-bit platform and 30 bytes for a 64-bit platform.
       </p>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1307636"></a>
+<a name="id1063005"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -180,13 +180,13 @@
 <p>
         
 </p>
-<pre class="programlisting"><span class="comment">// This constructs an `uninitialized_type` node. When used in places
+<pre class="programlisting"><span class="comment">// This constructs an `invalid_type` node. When used in places
 </span><span class="comment">// where a boost::optional is expected (i.e. as an attribute for the 
 </span><span class="comment">// optional component), this represents the 'empty' state.
-</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">uninitialized_type</span> <span class="special">=</span> <span class="identifier">uninitialized</span><span class="special">);</span>
+</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">invalid_type</span> <span class="special">=</span> <span class="identifier">invalid</span><span class="special">);</span>
 
 <span class="comment">// This initializes a `nil_type` node, which represents a valid,
-</span><span class="comment">// 'initialized empty' utree (different from uninitialized_type!).
+</span><span class="comment">// 'initialized empty' utree (different from invalid_type!).
 </span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">nil_type</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">nil_type</span><span class="special">);</span>
 
@@ -290,7 +290,7 @@
         attribute type.
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1310372"></a>
+<a name="id1065554"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -355,7 +355,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1310866"></a>
+<a name="id1066186"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -389,7 +389,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1311223"></a>
+<a name="id1066618"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
@@ -420,7 +420,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.scope"></a><h5>
-<a name="id1311394"></a>
+<a name="id1066828"></a>
         <a class="link" href="utree.html#spirit.support.utree.scope">Scope</a>
       </h5>
 <p>

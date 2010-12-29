@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parsers in Depth</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../indepth.html" title="In Depth">
 <link rel="prev" href="../indepth.html" title="In Depth">
@@ -193,7 +193,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id1246658"></a>
+<a name="id1012086"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
@@ -420,7 +420,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id1249272"></a>
+<a name="id1014574"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -462,6 +462,9 @@
 </span>        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_value</span><span class="special">&lt;</span><span class="identifier">Attribute</span><span class="special">&gt;::</span><span class="identifier">type</span> 
             <span class="identifier">value_type</span><span class="special">;</span>
         <span class="identifier">value_type</span> <span class="identifier">val</span> <span class="special">=</span> <span class="identifier">value_type</span><span class="special">();</span>
+
+        <span class="comment">// ensure the attribute is actually a container type
+</span>        <span class="identifier">traits</span><span class="special">::</span><span class="identifier">make_container</span><span class="special">(</span><span class="identifier">attr</span><span class="special">);</span>
 
         <span class="comment">// Repeat while subject parses ok
 </span>        <span class="identifier">Iterator</span> <span class="identifier">save</span> <span class="special">=</span> <span class="identifier">first</span><span class="special">;</span>

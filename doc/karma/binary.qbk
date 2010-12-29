@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:binary Binary]
+[section:binary Binary Generators]
 
 This module includes different generators allowing to output binary data. 
 It includes generators for default, little, and big endian binary output and 
