@@ -748,6 +748,7 @@ main()
 
         //[reference_uint
         test_parser("12345", uint_);
+        test_parser("12345", uint_(12345));
         //]
         
         //[reference_thousand_separated
@@ -767,6 +768,8 @@ main()
         //[reference_int
         test_parser("+12345", int_);
         test_parser("-12345", int_);
+        test_parser("+12345", int_(12345));
+        test_parser("-12345", int_(-12345));
         //]
     }
 

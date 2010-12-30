@@ -120,10 +120,7 @@ The /attribute/ metafunction returns the T template parameter. We associate the
 `int_parser` to some placeholders for `short_`, `int_`, `long_` and `long_long` 
 types. But, first, we enable these placeholders in namespace boost::spirit:
 
-[primitive_parsers_enable_short_]
-[primitive_parsers_enable_int_]
-[primitive_parsers_enable_long_]
-[primitive_parsers_enable_long_long_]
+[primitive_parsers_enable_int]
 
 Notice that `int_parser` is placed in the namespace boost::spirit::qi
 while these /enablers/ are in namespace boost::spirit. The reason is
@@ -151,10 +148,7 @@ with 2 (unused) arguments. These arguments are
 
 Now:
 
-[primitive_parsers_short_]
-[primitive_parsers_int_]
-[primitive_parsers_long_]
-[primitive_parsers_long_long_]
+[primitive_parsers_make_primitives]
 
 These, specialize `qi:make_primitive` for specific tags. They all
 inherit from `make_int` which does the actual work.
