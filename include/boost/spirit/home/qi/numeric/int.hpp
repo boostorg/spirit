@@ -20,7 +20,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/mpl/assert.hpp>
-#include <boost/preprocessor/seq.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
 
 namespace boost { namespace spirit
 {
@@ -46,14 +46,20 @@ namespace boost { namespace spirit
         BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_ENABLE_INTEGER, _, names)            \
     /***/
 
+#ifdef BOOST_HAS_LONG_LONG
     BOOST_SPIRIT_ENABLE_INTEGERS(
         (short_)
         (int_)
         (long_)
-        #ifdef BOOST_HAS_LONG_LONG
         (long_long)
-        #endif
-      )
+    )
+#else
+    BOOST_SPIRIT_ENABLE_INTEGERS(
+        (short_)
+        (int_)
+        (long_)
+    )
+#endif
     //]
 }}
 
@@ -246,14 +252,20 @@ namespace boost { namespace spirit { namespace qi
         BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_MAKE_INTEGER_PRIMITIVE, _, names)    \
     /***/
 
+#ifdef BOOST_HAS_LONG_LONG
     BOOST_SPIRIT_MAKE_INTEGER_PRIMITIVES(
         ((short_)     (short))
         ((int_)       (int))
         ((long_)      (long))
-        #ifdef BOOST_HAS_LONG_LONG
         ((long_long)  (boost::long_long_type))
-        #endif
     )
+#else
+    BOOST_SPIRIT_MAKE_INTEGER_PRIMITIVES(
+        ((short_)     (short))
+        ((int_)       (int))
+        ((long_)      (long))
+    )
+#endif
     //]
 }}}
 

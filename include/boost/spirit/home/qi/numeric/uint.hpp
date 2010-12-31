@@ -45,6 +45,7 @@ namespace boost { namespace spirit
         BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_ENABLE_UINTEGER, _, names)           \
     /***/
 
+#ifdef BOOST_HAS_LONG_LONG
     BOOST_SPIRIT_ENABLE_UINTEGERS(
         (bin)
         (oct)
@@ -52,10 +53,18 @@ namespace boost { namespace spirit
         (ushort_)
         (uint_)
         (ulong_)
-        #ifdef BOOST_HAS_LONG_LONG
         (ulong_long)
-        #endif
-      )
+    )
+#else
+    BOOST_SPIRIT_ENABLE_UINTEGERS(
+        (bin)
+        (oct)
+        (hex)
+        (ushort_)
+        (uint_)
+        (ulong_)
+    )
+#endif
 }}
 
 namespace boost { namespace spirit { namespace qi
@@ -250,6 +259,7 @@ namespace boost { namespace spirit { namespace qi
         BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_MAKE_UINTEGER_PRIMITIVE, _, names)   \
     /***/
 
+#ifdef BOOST_HAS_LONG_LONG
     BOOST_SPIRIT_MAKE_UINTEGER_PRIMITIVES(
         ((bin)         (unsigned)       (2))
         ((oct)         (unsigned)       (8))
@@ -257,10 +267,18 @@ namespace boost { namespace spirit { namespace qi
         ((ushort_)     (unsigned short) (10))
         ((uint_)       (unsigned int)   (10))
         ((ulong_)      (unsigned long)  (10))
-        #ifdef BOOST_HAS_LONG_LONG
         ((ulong_long)  (boost::ulong_long_type) (10))
-        #endif
     )
+#else
+    BOOST_SPIRIT_MAKE_UINTEGER_PRIMITIVES(
+        ((bin)         (unsigned)       (2))
+        ((oct)         (unsigned)       (8))
+        ((hex)         (unsigned)       (16))
+        ((ushort_)     (unsigned short) (10))
+        ((uint_)       (unsigned int)   (10))
+        ((ulong_)      (unsigned long)  (10))
+    )
+#endif
 }}}
 
 #endif
