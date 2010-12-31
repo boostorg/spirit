@@ -208,7 +208,121 @@ __customize_use_as_container_example__, and __customize_counter_example__.
 [endsect] [/ is_container]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:handles_container Determine Whether a Component Handles Container Attributes (Karma)]
+[section:handles_container Determine Whether a Component Handles Container Attributes (Qi and Karma)]
+
+[heading handles_container]
+
+The template `handles_container` is a template meta-function used as an attribute 
+customization point. It is invoked by the /Qi/ __qi_sequence__ (`>>`) and 
+/Karma/ __karma_sequence__ operators in order to determine whether a sequence 
+element (component) handles container attributes directly. This customization
+point is invoked for container attributes only, and only if the sequence is
+compatible with the supplied container attribute.
+
+If a component, which is part of a sequence is able to handle a container 
+attribute directly, the sequence passes the attribute to the component without
+any additional action. In __qi__ the component uses the attribute to directly
+store all matched attributes. In __karma__ the generator component extracts
+the attributes needed for output generation directly from this attribute.
+
+If a component, which is part of a sequence is not able to handle container
+attributes, in __qi__ the sequence passes a new instance of the container 
+attribute's `value_type` to the parser component, inserting the result into
+the attribute on behalf of the parser component. In __karma__ the sequence 
+extracts the next container element on behalf of the generator component and 
+passing it the extracted value.
+
+[heading Header]
+
+    #include <boost/spirit/home/support/handles_container.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename Component, typename Attribute, typename Enable>
+    struct handles_container
+    {
+        typedef <unspecified> type;
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                                 [Default]]
+    [[`Component`]          [The component type `Component` which needs to 
+                             be tested whether it handles container attributes 
+                             directly.]                              [none]]
+    [[`Attribute`]          [The attribute type `Attribute` as passed to the 
+                             sequence operator.]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `is_container` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`Component`]  [A comonent type to be tested whether it directly handles 
+                     container attributes in the context of sequences.]]
+    [[`Attribute`]  [A container attribute type as passed to the sequence.]]
+    [[`T1`, `T2`, ...]  [Arbitrary types]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                   [Semantics]]
+    [[`handles_container<Component, Attribute>::type`] 
+                                    [Result of the metafunction that evaluates to 
+                                     `mpl::true_` if a given component type `Component`, 
+                                     handles container attributes directly, 
+                                     `mpl::false_` otherwise 
+                                   (See __mpl_boolean_constant__).]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. The following table lists those types together with the 
+conditions for which the corresponding specializations will evaluate to 
+`mpl::true_` (see __mpl_boolean_constant__):
+
+[table
+    [[Template Parameters]     [Value]]
+    [[`Component`, `Attribute`] [Always returns `mpl::false_` (the default).]]
+    [[`rule<Iterator, T1, T2, T3, T4>`, `Attribute`]
+                                [Returns `is_container<A>`, where `A` is the 
+                                 attribute exposed by the rule (__qi__ and 
+                                 __karma__).]]
+    [[`grammar<Iterator, T1, T2, T3, T4>`, `Attribute`]
+                                [Returns `is_container<A>`, where `A` is the 
+                                 attribute exposed by the grammar (__qi__ and 
+                                 __karma__).]]
+]
+
+[heading When to implement]
+
+The customization point `handles_container` needs to be implemented for a 
+specific type whenever this type directly handles container attributes. 
+It is applicable for parsers (__qi__) and generators (__karma__). It will have
+to be implemented under rare circumstances only.
+
+[heading Example]
+
+TBD
 
 [endsect] [/ handles_container]
 
