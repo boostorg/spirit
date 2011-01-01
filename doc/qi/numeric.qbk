@@ -55,6 +55,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::qi::lit`]]
     [[`boost::spirit::bin           // alias: boost::spirit::qi::bin`]]
     [[`boost::spirit::oct           // alias: boost::spirit::qi::oct`]]
     [[`boost::spirit::hex           // alias: boost::spirit::qi::hex`]]
@@ -83,15 +84,16 @@ types).]
 [table
     [[Parameter]    [Description]                       [Default]]
     [[`T`]          [The numeric base type of the 
-                    numeric parser.]                    [none]]
+                     numeric parser.]                   [none]]
     [[`Radix`]      [The radix base. This can be 
-                    either 2: binary, 8: octal, 
-                    10: decimal and 16: hexadecimal.]   [10]]
+                     either 2 for binary, 8 for octal, 
+                     10 for decimal and 16 for
+                     hexadecimal.]                      [10]]
     [[`MinDigits`]  [The minimum number of digits 
-                    allowable.]                         [1]]
+                     allowable.]                        [1]]
     [[`MaxDigits`]  [The maximum number of digits 
-                    allowable. If this is -1, then the 
-                    maximum limit becomes unbounded.]   [-1]]
+                     allowable. If this is -1, then the 
+                     maximum limit becomes unbounded.]  [-1]]
 ]
 
 [heading Model of]
@@ -99,8 +101,10 @@ types).]
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`NP`]         [An instance of `uint_parser` (type).]]
     [[`n`]          [An object of `T`, the numeric base type.]]
+    [[`num`]        [Numeric literal, any unsigned integer value, or a
+                     __qi_lazy_argument__ that evaluates to a unsigned integer
+                     value.]]
 ]
 
 [heading Expression Semantics]
@@ -109,26 +113,122 @@ Semantics of an expression is defined only where it differs from, or is
 not defined in __primitive_parser_concept__.
 
 [table
-    [[Expression]       [Semantics]]
-    [[`NP()`]           [Instantiate and (default) construct a `uint_parser`]]
-    [[`bin`]            [Create a `uint_parser<unsigned, 2, 1, -1>`]]
-    [[`oct`]            [Create a `uint_parser<unsigned, 8, 1, -1>`]]
-    [[`hex`]            [Create a `uint_parser<unsigned, 16, 1, -1>`]]
-    [[`ushort_`]        [Create a `uint_parser<unsigned short, 10, 1, -1>`]]
-    [[`ulong_`]         [Create a `uint_parser<unsigned long, 10, 1, -1>`]]
-    [[`uint_`]          [Create a `uint_parser<unsigned int, 10, 1, -1>`]]
-    [[`ulong_long`]     [Create a `uint_parser<unsigned long long, 10, 1, -1>`]]
+  [
+    [Expression]
+    [Semantics]
+  ][
+    [``
+        ushort_
+        uint_
+        ulong_
+        ulong_long
+     ``]
+    [Parse an unsigned integer using the default radix (10).]
+  ][
+    [``
+        num
+        lit(num)
+        ushort_(num)
+        uint_(num)
+        ulong_(num)
+        ulong_long(num)
+    ``]
+    [Match the literal `num` using the default radix (10).]
+  ][
+    [``
+        bin
+        oct
+        hex
+    ``]
+    [Parse an unsigned integer using radix 2 for `bin`, radix 8 for `oct`, and
+     radix 16 for `hex`.]
+  ][ 
+    [``
+        bin(num)
+        oct(num)
+        hex(num)
+    ``]
+    [Match the literal `num` using radix 2 for `bin`, radix 8 for `oct`, and
+     radix 16 for `hex`.]
+  ][ 
+    [``
+        uint_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()
+    ``]
+    [Parse an unsigned integer of type `T` using radix `Radix`, with
+     a minimum of `MinDigits` and a maximum of `MaxDigits`.]
+  ][
+    [``
+        uint_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()(num)
+    ``]
+    [Match the literal `num` of type `T` using radix `Radix`, with
+     a minimum of `MinDigits` and a maximum of `MaxDigits`.]
+  ] 
 ]
 
-[important All numeric parsers check for overflow conditions based on the type `T`
-      the corresponding `uint_parser<>` has been instantiated with. If the 
+[important All numeric parsers check for overflow conditions based on the type
+      `T` the corresponding `uint_parser<>` has been instantiated with. If the 
       parsed number overflows this type the parsing fails. Please be aware
       that the overflow check is not based on the type of the supplied 
       attribute but solely depends on the template parameter `T`.]
 
 [heading Attributes]
 
-[:`T`, The numeric base type of the numeric parser.]
+[table
+  [
+    [Expression]
+    [Attribute]
+  ][
+    [``
+        num
+        lit(num)
+     ``]
+    [__unused__]
+  ][
+    [``
+        ushort_
+        ushort_(num)
+    ``]
+    [`unsigned short`]
+  ][
+    [``
+        uint_
+        uint_(num)
+        bin
+        bin(num)
+        oct
+        oct(num)
+        hex
+        hex(num)
+    ``]
+    [`unsigned`]
+  ][
+    [``
+        ulong_
+        ulong_(num)
+    ``]
+    [`unsigned long`]
+  ][
+    [``
+        ulong_long
+        ulong_long(num)
+    ``]
+    [`boost::ulong_long_type`]
+  ][
+    [``
+        uint_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()
+        uint_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()(num)
+    ``]
+    [`T`]
+  ] 
+]
 
 [heading Complexity]
 
@@ -199,6 +299,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::qi::lit`]]
     [[`boost::spirit::short_        // alias: boost::spirit::qi::short_`]]
     [[`boost::spirit::int_          // alias: boost::spirit::qi::int_`]]
     [[`boost::spirit::long_         // alias: boost::spirit::qi::long_`]]
@@ -223,15 +324,16 @@ native support for `signed long long` (64 bit) unsigned integer types).]
 [table
     [[Parameter]    [Description]                       [Default]]
     [[`T`]          [The numeric base type of the 
-                    numeric parser.]                    [none]]
+                     numeric parser.]                   [none]]
     [[`Radix`]      [The radix base. This can be 
-                    either 2: binary, 8: octal, 
-                    10: decimal and 16: hexadecimal.]   [10]]
+                     either 2 for binary, 8 for octal, 
+                     10 for decimal and 16 for
+                     hexadecimal.]                      [10]]
     [[`MinDigits`]  [The minimum number of digits 
-                    allowable.]                         [1]]
+                     allowable.]                        [1]]
     [[`MaxDigits`]  [The maximum number of digits 
-                    allowable. If this is -1, then the 
-                    maximum limit becomes unbounded.]   [-1]]
+                     allowable. If this is -1, then the 
+                     maximum limit becomes unbounded.]  [-1]]
 ]
 
 [heading Model of]
@@ -239,8 +341,10 @@ native support for `signed long long` (64 bit) unsigned integer types).]
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`NP`]         [An instance of `int_parser` (type).]]
     [[`n`]          [An object of `T`, the numeric base type.]]
+    [[`num`]        [Numeric literal, any signed integer value, or a
+                     __qi_lazy_argument__ that evaluates to a signed integer
+                     value.]]
 ]
 
 [heading Expression Semantics]
@@ -249,12 +353,44 @@ Semantics of an expression is defined only where it differs from, or is
 not defined in __primitive_parser_concept__.
 
 [table
-    [[Expression]       [Semantics]]
-    [[`NP()`]           [Instantiate and (default) construct an `int_parser`]]
-    [[`short_`]         [Create an `int_parser<short, 10, 1, -1>`]]
-    [[`long_`]          [Create an `int_parser<long, 10, 1, -1>`]]
-    [[`int_`]           [Create an `int_parser<int, 10, 1, -1>`]]
-    [[`long_long`]      [Create an `int_parser<long long, 10, 1, -1>`]]
+  [
+    [Expression]
+    [Semantics]
+  ][
+    [``
+        short_
+        int_
+        long_
+        long_long
+     ``]
+    [Parse a signed integer using the default radix (10).]
+  ][
+    [``
+        num
+        lit(num)
+        short_(num)
+        int_(num)
+        long_(num)
+        long_long(num)
+    ``]
+    [Match the literal `num` using the default radix (10).]
+  ][ 
+    [``
+        int_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()
+    ``]
+    [Parse a signed integer of type `T` using radix `Radix`, with
+     a minimum of `MinDigits` and a maximum of `MaxDigits`.]
+  ][
+    [``
+        int_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()(num)
+    ``]
+    [Match the literal `num` of type `T` using radix `Radix`, with
+     a minimum of `MinDigits` and a maximum of `MaxDigits`.]
+  ] 
 ]
 
 [important All numeric parsers check for overflow conditions based on the type `T`
@@ -265,7 +401,52 @@ not defined in __primitive_parser_concept__.
 
 [heading Attributes]
 
-[:`T`, The numeric base type of the numeric parser.]
+[table
+  [
+    [Expression]
+    [Attribute]
+  ][
+    [``
+        num
+        lit(num)
+     ``]
+    [__unused__]
+  ][
+    [``
+        short_
+        short_(num)
+    ``]
+    [`short`]
+  ][
+    [``
+        int_
+        int_(num)
+    ``]
+    [`int`]
+  ][
+    [``
+        long_
+        long_(num)
+    ``]
+    [`long`]
+  ][
+    [``
+        long_long
+        long_long(num)
+    ``]
+    [`boost::long_long_type`]
+  ][
+    [``
+        int_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()
+        int_parser<
+            T, Radix, MinDigits, MaxDigits
+        >()(num)
+    ``]
+    [`T`]
+  ] 
+]
 
 [heading Complexity]
 
@@ -331,6 +512,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::qi::lit`]]
     [[`boost::spirit::float_        // alias: boost::spirit::qi::float_`]]
     [[`boost::spirit::double_       // alias: boost::spirit::qi::double_`]]
     [[`boost::spirit::long_double   // alias: boost::spirit::qi::long_double`]]
@@ -346,9 +528,9 @@ Also, see __include_structure__.
 [table
     [[Parameter]            [Description]                   [Default]]
     [[`T`]                  [The numeric base type of the 
-                            numeric parser.]                [none]]
+                             numeric parser.]               [none]]
     [[`RealPolicies`]       [Policies control the 
-                            parser's behavior.]             [`real_policies<T>`]]
+                             parser's behavior.]            [`real_policies<T>`]]
 ]
 
 [heading Model of]
@@ -356,9 +538,10 @@ Also, see __include_structure__.
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`NP`]         [An instance of `real_parser` (type).]]
-    [[`RP`]         [A `RealPolicies` (type).]]
     [[`n`]          [An object of `T`, the numeric base type.]]
+    [[`num`]        [Numeric literal, any real value, or a __qi_lazy_argument__
+                     that evaluates to a real value.]]
+    [[`RP`]         [A `RealPolicies` (type).]]
     [[`exp`]        [A `int` exponent.]]
     [[`b`]          [A `bool` flag.]]
     [[`f`, `l`]     [__fwditer__. first/last iterator pair.]]
@@ -370,16 +553,84 @@ Semantics of an expression is defined only where it differs from, or is
 not defined in __primitive_parser_concept__.
 
 [table
-    [[Expression]       [Semantics]]
-    [[`NP()`]           [Instantiate and (default) construct an `real_parser`]]
-    [[`float_`]         [Create an `real_parser<float, real_policies<T> >`]]
-    [[`double_`]        [Create an `real_parser<double, real_policies<T> >`]]
-    [[`long_double`]    [Create an `real_parser<long double, real_policies<T> >`]]
+  [
+    [Expression]
+    [Semantics]
+  ][
+    [``
+        float_
+        double_
+        long_double
+     ``]
+    [Parse a real using the default policies (`real_policies<T>`).]
+  ][
+    [``
+        num
+        lit(num)
+        float_(num)
+        double_(num)
+        long_double(num)
+    ``]
+    [Match the literal `num` using the default policies (`real_policies<T>`).]
+  ][ 
+    [``
+        real_parser<
+            T, RealPolicies
+        >()
+    ``]
+    [Parse a real of type `T` using `RealPolicies`.]
+  ][
+    [``
+        real_parser<
+            T, RealPolicies
+        >()(num)
+    ``]
+    [Match the literal `num` of type `T` using `RealPolicies`.] 
+  ] 
 ]
 
 [heading Attributes]
 
-[:`T`, The numeric base type of the numeric parser.]
+[table
+  [
+    [Expression]
+    [Attribute]
+  ][
+    [``
+        num
+        lit(num)
+     ``]
+    [__unused__]
+  ][
+    [``
+        float_
+        float_(num)
+    ``]
+    [`float`]
+  ][
+    [``
+        double_
+        double_(num)
+    ``]
+    [`double`]
+  ][
+    [``
+        long_double
+        long_double(num)
+    ``]
+    [`long double`]
+  ][
+    [``
+        real_parser<
+            T, RealPolicies
+        >()
+        real_parser<
+            T, RealPolicies
+        >()(num)
+    ``]
+    [`T`]
+  ] 
+]
 
 [heading Complexity]
 
@@ -627,9 +878,10 @@ Also, see __include_structure__.
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`BP`]         [An instance of `bool_parser` (type).]]
     [[`BP`]         [A boolean `Policies` (type).]]
     [[`b`]          [An object of `B`, the numeric base type.]]
+    [[`boolean`]    [Numeric literal, any boolean value, or a
+                     __qi_lazy_argument__ that evaluates to a boolean value.]]
     [[`f`, `l`]     [__fwditer__. first/last iterator pair.]]
     [[`attr`]       [An attribute value.]]
     [[`Context`]    [The type of the parse context of the current invocation of
@@ -643,20 +895,78 @@ Semantics of an expression is defined only where it differs from, or is
 not defined in __primitive_parser_concept__.
 
 [table
-    [[Expression]       [Semantics]]
-    [[`BP()`]           [Instantiate and (default) construct a `bool_parser`]]
-    [[`bool_`]          [Create a `bool_parser<bool, bool_policies<bool> >`]]
-    [[`true_`]          [Create a `bool_parser<bool, bool_policies<bool> >` 
-                         which is succeeding only after matching `"true"`.]]
-    [[`false_`]         [Create a `bool_parser<bool, bool_policies<bool> >` 
-                         which is succeeding only after matching `"false"`.]]
+  [
+    [Expression]
+    [Semantics]
+  ][
+    [``
+        bool_
+     ``]
+    [Parse a boolean using the default policies (`bool_policies<T>`).]
+  ][
+    [``
+        boolean
+        lit(boolean)
+        bool_(boolean)
+    ``]
+    [Match the literal `boolean` using the default policies (`bool_policies<T>`).]
+  ][ 
+    [``
+        true_
+        false_ 
+    ``]
+    [Match `"true"` and `"false"`, respectively.]
+  ][ 
+    [``
+        bool_parser<
+            T, BoolPolicies
+        >()
+    ``]
+    [Parse a real of type `T` using `BoolPolicies`.]
+  ][
+    [``
+        bool_parser<
+            T, BoolPolicies
+        >()(boolean)
+    ``]
+    [Match the literal `boolean` of type `T` using `BoolPolicies`.] 
+  ] 
 ]
 
 [note   All boolean parsers properly respect the __qi_no_case__`[]` directive.]
 
 [heading Attributes]
 
-[:`B`, The boolean type of the boolean parser.]
+[table
+  [
+    [Expression]
+    [Attribute]
+  ][
+    [``
+        boolean
+        lit(boolean)
+     ``]
+    [__unused__]
+  ][
+    [``
+        true_
+        false_
+        bool_
+        bool_(boolean)
+    ``]
+    [`bool`]
+  ][
+    [``
+        bool_parser<
+            T, BoolPolicies
+        >()
+        bool_parser<
+            T, BoolPolicies
+        >()(num)
+    ``]
+    [`T`]
+  ] 
+]
 
 [heading Complexity]
 

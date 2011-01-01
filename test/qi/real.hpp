@@ -115,6 +115,10 @@ struct custom_real
     double n;
     custom_real() : n(0) {}
     custom_real(double n_) : n(n_) {}
+    friend bool operator==(custom_real a, custom_real b) 
+        { return a.n == b.n; }
+    friend bool operator==(custom_real a, double b) 
+        { return a.n == b; }
     friend custom_real operator*(custom_real a, custom_real b) 
         { return custom_real(a.n * b.n); }
     friend custom_real operator+(custom_real a, custom_real b) 

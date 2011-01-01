@@ -121,17 +121,17 @@ not defined in __primitive_generator_concept__.
                          fails (unless the underlying output stream reports
                          an error).]]
     [
-[``ushort
-uint
-ulong
+[``ushort_
+uint_
+ulong_
 ulong_long``]           [Generate the unsigned integer provided by a mandatory 
                          attribute using the default formatting (radix is 10). 
                          This generator never fails (unless the underlying 
                          output stream reports an error).]]
     [
-[``ushort(num)
-uint(num)
-ulong(num)
+[``ushort_(num)
+uint_(num)
+ulong_(num)
 ulong_long(num)``]      [Generate the unsigned integer provided by the 
                          immediate literal value the generator is initialized 
                          from using the default formatting (radix is 10). If 
@@ -222,23 +222,23 @@ If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
 [table
     [[Expression]       [Attribute]]
     [[`lit(num)`]       [__unused__]]
-    [[`ushort`]         [`unsigned short`, attribute is mandatory (otherwise 
+    [[`ushort_`]         [`unsigned short`, attribute is mandatory (otherwise 
                          compilation will fail)]]
-    [[`ushort(num)`]    [`unsigned short`, attribute is optional, if it is 
+    [[`ushort_(num)`]    [`unsigned short`, attribute is optional, if it is 
                          supplied, the generator compares the attribute with 
                          `num` and succeeds only if both are equal, failing 
                          otherwise.]]
 
-    [[`uint`]           [`unsigned int`, attribute is mandatory (otherwise 
+    [[`uint_`]           [`unsigned int`, attribute is mandatory (otherwise 
                          compilation will fail)]]
-    [[`uint(num)`]      [`unsigned int`, attribute is optional, if it is 
+    [[`uint_(num)`]      [`unsigned int`, attribute is optional, if it is 
                          supplied, the generator compares the attribute with 
                          `num` and succeeds only if both are equal, failing 
                          otherwise.]]
 
-    [[`ulong`]          [`unsigned long`, attribute is mandatory (otherwise 
+    [[`ulong_`]          [`unsigned long`, attribute is mandatory (otherwise 
                          compilation will fail)]]
-    [[`ulong(num)`]     [`unsigned long`, attribute is optional, if it is 
+    [[`ulong_(num)`]     [`unsigned long`, attribute is optional, if it is 
                          supplied, the generator compares the attribute with 
                          `num` and succeeds only if both are equal, failing 
                          otherwise.]]

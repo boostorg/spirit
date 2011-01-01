@@ -171,8 +171,8 @@ namespace boost { namespace spirit { namespace traits
     struct is_container;
 
     ///////////////////////////////////////////////////////////////////////////
-    // Karma only
-    template <typename T, typename Attribute, typename Enable = void>
+    template <typename T, typename Attribute, typename Context = unused_type
+            , typename Iterator = unused_type, typename Enable = void>
     struct handles_container;
 
     ///////////////////////////////////////////////////////////////////////////

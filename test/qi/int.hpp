@@ -71,6 +71,7 @@ struct custom_int
     explicit custom_int(int n_) : n(n_) {}
     custom_int& operator=(int n_) { n = n_; return *this; }
     friend bool operator==(custom_int a, custom_int b) { return a.n == b.n; }
+    friend bool operator==(custom_int a, int b) { return a.n == b; }
     friend custom_int operator*(custom_int a, custom_int b) { return custom_int(a.n * b.n); }
     friend custom_int operator+(custom_int a, custom_int b) { return custom_int(a.n + b.n); }
     friend custom_int operator-(custom_int a, custom_int b) { return custom_int(a.n - b.n); }

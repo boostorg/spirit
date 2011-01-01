@@ -117,11 +117,14 @@ namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename Iterator, typename T1, typename T2, typename T3
-      , typename T4, typename Attribute>
-    struct handles_container<qi::grammar<Iterator, T1, T2, T3, T4>, Attribute>
+        typename IteratorA, typename IteratorB, typename Attribute
+      , typename Context, typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<
+        qi::grammar<IteratorA, T1, T2, T3, T4>, Attribute, Context, IteratorB>
       : traits::is_container<
-            typename attribute_of<qi::grammar<Iterator, T1, T2, T3, T4> >::type
+          typename attribute_of<
+              qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
+          >::type
         >
     {};
 }}}

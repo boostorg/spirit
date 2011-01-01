@@ -84,15 +84,15 @@ In this section, we will dissect two parser types:
 [/------------------------------------------------------------------------------]
 [heading Primitive Parsers]
 
-For our dissection study, we will use a __spirit__ primitive, the `int_parser`
+For our dissection study, we will use a __spirit__ primitive, the `any_int_parser`
 in the boost::spirit::qi namespace.
 
 [import ../../../../boost/spirit/home/qi/numeric/int.hpp]
-[primitive_parsers_int]
+[primitive_parsers_any_int_parser]
 
-The `int_parser` is derived from a `__primitive_parser_concept__<Derived>`, which
-in turn derives from `parser<Derived>`. Therefore, it supports the following 
-requirements:
+The `any_int_parser` is derived from a `__primitive_parser_concept__<Derived>`,
+which in turn derives from `parser<Derived>`. Therefore, it supports the
+following requirements:
 
 * The `parse` member function
 * The `what` member function
@@ -117,12 +117,16 @@ is a joy to work with. There are no scanners and all that crap.
 The /what/ function just tells us that it is an integer parser. Simple.
 
 The /attribute/ metafunction returns the T template parameter. We associate the 
-`int_parser` to some placeholders for `short_`, `int_`, `long_` and `long_long` 
-types. But, first, we enable these placeholders in namespace boost::spirit:
+`any_int_parser` to some placeholders for `short_`, `int_`, `long_` and
+`long_long` types. But, first, we enable these placeholders in namespace
+boost::spirit:
 
+[primitive_parsers_enable_short]
 [primitive_parsers_enable_int]
+[primitive_parsers_enable_long]
+[primitive_parsers_enable_long_long]
 
-Notice that `int_parser` is placed in the namespace boost::spirit::qi
+Notice that `any_int_parser` is placed in the namespace boost::spirit::qi
 while these /enablers/ are in namespace boost::spirit. The reason is
 that these placeholders are shared by other __spirit__ /domains/. __qi__,
 the parser is one domain. __karma__, the generator is another domain.
@@ -148,7 +152,10 @@ with 2 (unused) arguments. These arguments are
 
 Now:
 
-[primitive_parsers_make_primitives]
+[primitive_parsers_short_primitive]
+[primitive_parsers_int_primitive]
+[primitive_parsers_long_primitive]
+[primitive_parsers_long_long_primitive]
 
 These, specialize `qi:make_primitive` for specific tags. They all
 inherit from `make_int` which does the actual work.

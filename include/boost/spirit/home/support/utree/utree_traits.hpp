@@ -494,40 +494,42 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <
-        typename Iterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<qi::rule<Iterator, T1, T2, T3, T4>, utree>
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<qi::rule<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
       : detail::attribute_is_not_utree_list<typename attribute_of<
-            qi::rule<Iterator, T1, T2, T3, T4> 
+            qi::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
-
+    
     template <
-        typename Iterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<qi::grammar<Iterator, T1, T2, T3, T4>, utree>
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<qi::grammar<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
       : detail::attribute_is_not_utree_list<typename attribute_of<
-            qi::grammar<Iterator, T1, T2, T3, T4> 
+            qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
+        >::type>
+    {};
+    
+    template <
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<karma::rule<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
+      : detail::attribute_is_not_utree<typename attribute_of<
+            karma::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
 
     template <
-        typename OutputIterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<
-            karma::rule<OutputIterator, T1, T2, T3, T4>, utree>
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<karma::grammar<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
       : detail::attribute_is_not_utree<typename attribute_of<
-            karma::rule<OutputIterator, T1, T2, T3, T4> 
-        >::type>
-    {};
-
-    template <
-        typename OutputIterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<
-            karma::grammar<OutputIterator, T1, T2, T3, T4>, utree>
-      : detail::attribute_is_not_utree<typename attribute_of<
-            karma::grammar<OutputIterator, T1, T2, T3, T4> 
+            karma::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
    

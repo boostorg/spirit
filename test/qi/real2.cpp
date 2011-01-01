@@ -1,6 +1,7 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2011      Bryce Lelbach
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,9 +15,9 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-///////////////////////////////////////////////////////////////////////////////
-//  signed real number tests
-///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    //  signed real number tests
+    ///////////////////////////////////////////////////////////////////////////
     {
         using boost::spirit::qi::double_;
         using boost::spirit::qi::parse;

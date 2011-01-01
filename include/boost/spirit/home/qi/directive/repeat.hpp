@@ -331,8 +331,10 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename LoopIter, typename Attribute>
-    struct handles_container<qi::repeat_parser<Subject, LoopIter>, Attribute>
+    template <typename Subject, typename LoopIter, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<qi::repeat_parser<Subject, LoopIter>
+      , Attribute, Context, Iterator>
       : mpl::true_ {};
 }}}
 

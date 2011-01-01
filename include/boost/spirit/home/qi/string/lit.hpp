@@ -243,14 +243,16 @@ namespace boost { namespace spirit { namespace qi
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename String, bool no_attribute, typename Attribute>
-    struct handles_container<
-            qi::literal_string<String, no_attribute>, Attribute>
+    template <typename String, bool no_attribute, typename Attribute
+      ,typename Context, typename Iterator>
+    struct handles_container<qi::literal_string<String, no_attribute>
+      , Attribute, Context, Iterator>
       : mpl::true_ {};
 
-    template <typename String, bool no_attribute, typename Attribute>
-    struct handles_container<
-            qi::no_case_literal_string<String, no_attribute>, Attribute>
+    template <typename String, bool no_attribute, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<qi::no_case_literal_string<String, no_attribute>
+      , Attribute, Context, Iterator>
       : mpl::true_ {};
 }}}
 

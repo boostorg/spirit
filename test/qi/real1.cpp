@@ -1,6 +1,7 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2011      Bryce Lelbach
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -15,9 +16,9 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
-    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     //  thousand separated numbers
-    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     {
         using boost::spirit::qi::uint_parser;
         using boost::spirit::qi::parse;
@@ -35,16 +36,16 @@ main()
         BOOST_TEST(!test("1,66", r));
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     //  unsigned real number tests
-    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     {
         using boost::spirit::qi::real_parser;
         using boost::spirit::qi::parse;
         using boost::spirit::qi::ureal_policies;
 
         real_parser<double, ureal_policies<double> > udouble;
-        double  d;
+        double d;
 
         BOOST_TEST(test("1234", udouble));
         BOOST_TEST(test_attr("1234", udouble, d) && compare(d, 1234));
@@ -75,20 +76,28 @@ main()
         BOOST_TEST(test("infinity", udouble));
         BOOST_TEST(test("INF", udouble));
         BOOST_TEST(test("INFINITY", udouble));
-        BOOST_TEST(test_attr("inf", udouble, d) && FP_INFINITE == fpclassify(d));
-        BOOST_TEST(test_attr("INF", udouble, d) && FP_INFINITE == fpclassify(d));
-        BOOST_TEST(test_attr("infinity", udouble, d) && FP_INFINITE == fpclassify(d));
-        BOOST_TEST(test_attr("INFINITY", udouble, d) && FP_INFINITE == fpclassify(d));
+
+        BOOST_TEST(test_attr("inf", udouble, d)
+                && FP_INFINITE == fpclassify(d));
+        BOOST_TEST(test_attr("INF", udouble, d)
+                && FP_INFINITE == fpclassify(d));
+        BOOST_TEST(test_attr("infinity", udouble, d)
+                && FP_INFINITE == fpclassify(d));
+        BOOST_TEST(test_attr("INFINITY", udouble, d)
+                && FP_INFINITE == fpclassify(d));
 
         BOOST_TEST(test("nan", udouble));
-        BOOST_TEST(test_attr("nan", udouble, d) && FP_NAN == fpclassify(d));
+        BOOST_TEST(test_attr("nan", udouble, d)
+                && FP_NAN == fpclassify(d));
         BOOST_TEST(test("NAN", udouble));
-        BOOST_TEST(test_attr("NAN", udouble, d) && FP_NAN == fpclassify(d));
-
+        BOOST_TEST(test_attr("NAN", udouble, d)
+                && FP_NAN == fpclassify(d));
         BOOST_TEST(test("nan(...)", udouble));
-        BOOST_TEST(test_attr("nan(...)", udouble, d) && FP_NAN == fpclassify(d));
+        BOOST_TEST(test_attr("nan(...)", udouble, d)
+                && FP_NAN == fpclassify(d));
         BOOST_TEST(test("NAN(...)", udouble));
-        BOOST_TEST(test_attr("NAN(...)", udouble, d) && FP_NAN == fpclassify(d));
+        BOOST_TEST(test_attr("NAN(...)", udouble, d)
+                && FP_NAN == fpclassify(d));
 
         BOOST_TEST(!test("e3", udouble));
         BOOST_TEST(!test_attr("e3", udouble, d));

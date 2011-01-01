@@ -1,6 +1,7 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2011      Bryce Lelbach
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -61,21 +62,12 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     //  custom real tests
     ///////////////////////////////////////////////////////////////////////////
-    //~ {
-        //~ using boost::spirit::qi::double_;
-        //~ custom_real n;
+    {
+        using boost::spirit::qi::double_;
+        custom_real n;
 
-        //~ BOOST_TEST(test_attr("-123456e6", double_, n));
-    //~ }
-
-    // this should pass, but currently doesn't because of the way the real 
-    // parser handles the fractional part of a number
-    //{
-        //using boost::spirit::qi::float_;
-
-        //float f;
-        //BOOST_TEST(test_attr("123233.4124", float_, f)  && f == 123233.4140625f);
-    //}
+        BOOST_TEST(test_attr("-123456e6", double_, n));
+    }
 
     return boost::report_errors();
 }

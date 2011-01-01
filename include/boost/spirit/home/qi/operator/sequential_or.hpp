@@ -115,9 +115,11 @@ namespace boost { namespace spirit { namespace traits
       : nary_has_semantic_action<Elements> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Elements, typename Attribute>
-    struct handles_container<qi::sequential_or<Elements>, Attribute>
-      : nary_handles_container<Elements, Attribute> {};
+    template <typename Elements, typename Attribute, typename Context
+      , typename Iterator>
+    struct handles_container<qi::sequential_or<Elements>, Attribute, Context
+      , Iterator>
+      : nary_handles_container<Elements, Attribute, Context, Iterator> {};
 }}}
 
 #endif

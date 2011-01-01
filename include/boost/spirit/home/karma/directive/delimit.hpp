@@ -182,14 +182,17 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Attribute>
-    struct handles_container<karma::redelimit_generator<Subject>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, typename Attribute
+            , typename Context, typename Iterator>
+    struct handles_container<karma::redelimit_generator<Subject>, Attribute
+      , Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 
-    template <typename Subject, typename Delimiter, typename Attribute>
-    struct handles_container<
-            karma::delimit_generator<Subject, Delimiter>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, typename Delimiter, typename Attribute
+            , typename Context, typename Iterator>
+    struct handles_container<karma::delimit_generator<Subject, Delimiter>
+      , Attribute, Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 }}}
 
 #endif

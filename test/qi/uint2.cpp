@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
-    Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2011      Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -14,75 +13,79 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
+
     ///////////////////////////////////////////////////////////////////////////
-    //  unsigned tests
+    //  unsigned integer literal tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::uint_;
-        unsigned u = 123456;
+        using boost::spirit::lit;
+        unsigned i = 123456;
 
-        BOOST_TEST( test("123456", uint_(123456)));
-        BOOST_TEST(!test("123456", uint_(4321)));
-        BOOST_TEST( test("123456", uint_(u)));
-        BOOST_TEST(!test("123456", uint_(u - 1)));
-
-        BOOST_TEST(test(max_unsigned, uint_(UINT_MAX)));
-
-        BOOST_TEST(!test(unsigned_overflow, uint_(345)));
+        BOOST_TEST( test("123456", lit(123456U)));
+        BOOST_TEST(!test("123456", lit(0U)));
+        BOOST_TEST( test("123456", 123456U));
+        BOOST_TEST(!test("123456", 0U));
+        
+        BOOST_TEST( test("123456", lit(i)));
+        BOOST_TEST(!test("123456", lit(unsigned(i - 1))));
+        BOOST_TEST( test("123456", i));
+        BOOST_TEST(!test("123456", unsigned(i - 1)));
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  binary tests
+    //  unsigned long long literal tests
     ///////////////////////////////////////////////////////////////////////////
+#ifdef BOOST_HAS_LONG_LONG
     {
-        using boost::spirit::qi::bin;
-        unsigned u = 0xFE;
+        using boost::spirit::lit;
+        using boost::ulong_long_type;
+        ulong_long_type ll = 1234567890123456789ULL;
 
-        BOOST_TEST( test("11111110", bin(0xFE)));
-        BOOST_TEST(!test("11111110", bin(0xEF)));
-        BOOST_TEST( test("11111110", bin(u)));
-        BOOST_TEST(!test("11111110", bin(u - 1)));
-
-        BOOST_TEST(test(max_binary, bin(UINT_MAX)));
-
-        BOOST_TEST(!test(binary_overflow, bin(9)));
+        BOOST_TEST( test("1234567890123456789", lit(1234567890123456789ULL)));
+        BOOST_TEST(!test("1234567890123456789", lit(0ULL)));
+        BOOST_TEST( test("1234567890123456789", 1234567890123456789ULL));
+        BOOST_TEST(!test("1234567890123456789", 0ULL));
+        
+        BOOST_TEST( test("1234567890123456789", lit(ll)));
+        BOOST_TEST(!test("1234567890123456789", lit(ulong_long_type(ll - 1))));
+        BOOST_TEST( test("1234567890123456789", ll));
+        BOOST_TEST(!test("1234567890123456789", ulong_long_type(ll - 1)));
     }
+#endif
 
     ///////////////////////////////////////////////////////////////////////////
-    //  octal literal tests
+    //  ushort_ and ulong_ literal tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::oct;
-        unsigned u = 012545674515;
+        using boost::spirit::lit;
+        unsigned short s = 12345;
+        unsigned long l = 1234567890L;
 
-        BOOST_TEST( test("12545674515", oct(012545674515)));
-        BOOST_TEST(!test("12545674515", oct(051554521)));
-        BOOST_TEST( test("12545674515", oct(u)));
-        BOOST_TEST(!test("12545674515", oct(u + 1)));
+        BOOST_TEST( test("12345",  lit(s)));
+        BOOST_TEST(!test("12345",  lit(s - 1)));
+        BOOST_TEST( test("12345",  s));
+        BOOST_TEST(!test("12345",  s - 1));
 
-        BOOST_TEST(test(max_octal, oct(UINT_MAX)));
-
-        BOOST_TEST(!test(octal_overflow, oct(12)));
+        BOOST_TEST( test("1234567890",  lit(1234567890UL)));
+        BOOST_TEST(!test("1234567890",  lit(98765321UL)));
+        BOOST_TEST( test("1234567890",  lit(l)));
+        BOOST_TEST(!test("1234567890",  lit(l - 1)));
+        BOOST_TEST( test("1234567890",  1234567890UL));
+        BOOST_TEST(!test("1234567890",  987654321UL));
+        BOOST_TEST( test("1234567890",  l));
+        BOOST_TEST(!test("1234567890",  l - 1));
     }
-
+    
     ///////////////////////////////////////////////////////////////////////////
-    //  hex literal tests
+    //  literal lazy tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::hex;
-        unsigned u = 0x95BC8DF;
+        using boost::phoenix::ref;
+        using boost::spirit::qi::lit;
+        unsigned n = 123, m = 321;
 
-        BOOST_TEST( test("95BC8DF", hex(0x95BC8DF)));
-        BOOST_TEST(!test("95BC8DF", hex(0xFD8C9)));
-        BOOST_TEST( test("95BC8DF", hex(u)));
-        BOOST_TEST(!test("95BC8DF", hex(u + 1)));
-
-        BOOST_TEST( test("abcdef12", hex(0xabcdef12)));
-        BOOST_TEST(!test("abcdef12", hex(0x12abcdef)));
-
-        BOOST_TEST(test(max_hex, hex(UINT_MAX)));
-
-        BOOST_TEST(!test(hex_overflow, hex(0xdd)));
+        BOOST_TEST(test("123", lit(ref(n))));
+        BOOST_TEST(!test("123", lit(ref(m))));
     }
 
     return boost::report_errors();

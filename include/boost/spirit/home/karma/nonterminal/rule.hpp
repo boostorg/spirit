@@ -400,14 +400,16 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename OutputIterator, typename T1, typename T2, typename T3
-      , typename T4, typename Attribute>
+        typename IteratorA, typename IteratorB, typename Attribute
+      , typename Context, typename T1, typename T2, typename T3, typename T4>
     struct handles_container<
-            karma::rule<OutputIterator, T1, T2, T3, T4>, Attribute>
-      : detail::nonterminal_handles_container<
+            karma::rule<IteratorA, T1, T2, T3, T4>, Attribute, Context
+          , IteratorB>
+      : detail::nonterminal_handles_container< 
             typename attribute_of<
-                karma::rule<OutputIterator, T1, T2, T3, T4> >::type
-          , Attribute>
+                karma::rule<IteratorA, T1, T2, T3, T4>
+              , Context, IteratorB
+          >::type, Attribute>
     {};
 }}}
 

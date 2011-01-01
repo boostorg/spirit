@@ -6,7 +6,7 @@
 
 //#define KARMA_FAIL_COMPILATION
 
-#include "real_numerics.hpp"
+#include "real.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()

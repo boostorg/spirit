@@ -11,10 +11,12 @@
 // boostinspect:naassert_macro
 
 //[reference_includes
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/assert.hpp>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -425,6 +427,46 @@ main()
     }
     
     {
+        //[reference_using_declarations_as
+        using boost::spirit::utree;
+        using boost::spirit::utree_type;
+        using boost::spirit::utf8_symbol_type; 
+        using boost::spirit::qi::as;
+        using boost::spirit::qi::as_string;
+        using boost::spirit::qi::char_;
+        //]
+        
+        //[reference_as
+        /*`To properly handle string concatenation in __utree__, we 
+           make use of `as_string[]`. We also use `as<T>` to explicitly create
+           a __utree__ symbol node.*/
+        utree ut;
+
+        typedef as<utf8_symbol_type> as_symbol_type;
+        as_symbol_type const as_symbol = as_symbol_type();
+        
+        test_parser_attr("foo", as_string[*char_], ut);
+        std::cout << ut << std::endl; // will output >"foo"<
+        BOOST_ASSERT(ut.which() == utree_type::string_type);
+        ut.clear();
+
+        test_parser_attr("foo", as<std::string>()[*char_], ut);
+        std::cout << ut << std::endl; // will output >"foo"<
+        BOOST_ASSERT(ut.which() == utree_type::string_type);
+        ut.clear();
+        
+        test_parser_attr("foo", as_symbol[*char_], ut);
+        std::cout << ut << std::endl; // will output >foo<
+        BOOST_ASSERT(ut.which() == utree_type::symbol_type);
+        ut.clear();
+
+        test_parser_attr("foo", as<utf8_symbol_type>()[*char_], ut);
+        std::cout << ut << std::endl; // will output >foo<
+        BOOST_ASSERT(ut.which() == utree_type::symbol_type);
+        //]
+    }
+
+    {
         //[reference_using_declarations_no_skip
         using boost::spirit::qi::no_skip;
         using boost::spirit::qi::char_;
@@ -742,13 +784,22 @@ main()
     // uint
     {
         //[reference_using_declarations_uint
+        using boost::phoenix::val;
+        using boost::spirit::qi::lit;
         using boost::spirit::qi::uint_;
         using boost::spirit::qi::uint_parser;
         //]
 
         //[reference_uint
+        // unsigned int
         test_parser("12345", uint_);
-        test_parser("12345", uint_(12345));
+        test_parser("12345", uint_(12345)); 
+        test_parser("12345", uint_(val(12345)));
+
+        // literals
+        test_parser("12345", 12345);
+        test_parser("12345", lit(12345)); 
+        test_parser("12345", lit(val(12345))); 
         //]
         
         //[reference_thousand_separated
@@ -762,50 +813,97 @@ main()
     // int
     {
         //[reference_using_declarations_int
+        using boost::phoenix::val;
+        using boost::spirit::qi::lit;
         using boost::spirit::qi::int_;
         //]
 
         //[reference_int
-        test_parser("+12345", int_);
+        // signed int
+        test_parser("+12345", int_); 
         test_parser("-12345", int_);
-        test_parser("+12345", int_(12345));
+        test_parser("+12345", int_(12345)); 
         test_parser("-12345", int_(-12345));
+        test_parser("+12345", int_(val(12345))); 
+        test_parser("-12345", int_(val(-12345))); 
+
+        // literals
+        test_parser("+12345", 12345); 
+        test_parser("-12345", -12345); 
+        test_parser("+12345", lit(12345)); 
+        test_parser("-12345", lit(-12345));
+        test_parser("+12345", lit(val(12345))); 
+        test_parser("-12345", lit(val(-12345))); 
         //]
     }
 
     // real
     {
         //[reference_using_declarations_real
+        using boost::phoenix::val;
+        using boost::spirit::qi::lit;
         using boost::spirit::qi::double_;
         using boost::spirit::qi::real_parser;
         //]
 
         //[reference_real
+        // double
         test_parser("+12345e6", double_);
+        test_parser("-12345e6", double_);
+        test_parser("+12345e6", double_(12345e6));
+        test_parser("-12345e6", double_(-123456e6));
+        test_parser("+12345e6", double_(val(12345e6)));
+        test_parser("-12345e6", double_(val(-123456e6)));
+
+        // literals
+        test_parser("+12345e6", 12345e6);
+        test_parser("-12345e6", -12345e6);
+        test_parser("+12345e6", lit(12345e6));
+        test_parser("-12345e6", lit(-123456e6));
+        test_parser("+12345e6", lit(val(12345e6)));
+        test_parser("-12345e6", lit(val(-123456e6)));
         //]
         
         //[reference_custom_real
         real_parser<double, ts_real_policies<double> > ts_real;
         test_parser("123,456,789.01", ts_real);
+        test_parser("123,456,789.01", ts_real(123456789.01));
         //]
     }
 
     // bool_
     {
         //[reference_using_declarations_bool
+        using boost::phoenix::val;
+        using boost::spirit::qi::lit;
         using boost::spirit::qi::bool_;
         using boost::spirit::qi::bool_parser;
         //]
 
         //[reference_bool
+        // bool
         test_parser("true", bool_);
         test_parser("false", bool_);
+        test_parser("true", bool_(true));
+        test_parser("false", bool_(false));
+        test_parser("true", bool_(val(true)));
+        test_parser("false", bool_(val(false)));
+
+        // literals
+        test_parser("true", true);
+        test_parser("false", false);
+        test_parser("true", lit(true));
+        test_parser("false", lit(false));
+        test_parser("true", lit(val(true)));
+        test_parser("false", lit(val(false)));
         //]
 
         //[reference_custom_bool
         bool_parser<bool, backwards_bool_policies> backwards_bool;
         test_parser("true", backwards_bool);
         test_parser("eurt", backwards_bool);
+        test_parser("true", backwards_bool(true));
+        test_parser("eurt", backwards_bool(false));
         //]
     }
 

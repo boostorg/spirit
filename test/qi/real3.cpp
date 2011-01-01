@@ -15,9 +15,9 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
     
-    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     //  strict real number tests
-    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     {
         using boost::spirit::qi::real_parser;
         using boost::spirit::qi::parse;
@@ -60,13 +60,16 @@ main()
         double  d;
 
         BOOST_TEST(test("123,456,789.01", ts_real));
-        BOOST_TEST(test_attr("123,456,789.01", ts_real, d) && compare(d, 123456789.01));
+        BOOST_TEST(test_attr("123,456,789.01", ts_real, d)
+                && compare(d, 123456789.01));
 
         BOOST_TEST(test("12,345,678.90", ts_real));
-        BOOST_TEST(test_attr("12,345,678.90", ts_real, d) && compare(d, 12345678.90));
+        BOOST_TEST(test_attr("12,345,678.90", ts_real, d)
+                && compare(d, 12345678.90));
 
         BOOST_TEST(test("1,234,567.89", ts_real));
-        BOOST_TEST(test_attr("1,234,567.89", ts_real, d) && compare(d, 1234567.89));
+        BOOST_TEST(test_attr("1,234,567.89", ts_real, d)
+                && compare(d, 1234567.89));
 
         BOOST_TEST(!test("1234,567,890", ts_real));
         BOOST_TEST(!test("1,234,5678,9", ts_real));

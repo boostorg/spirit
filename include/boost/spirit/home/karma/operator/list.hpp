@@ -200,12 +200,16 @@ namespace boost { namespace spirit { namespace traits
       : binary_has_semantic_action<Left, Right> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Left, typename Right, typename Attribute>
-    struct handles_container<karma::list<Left, Right>, Attribute> 
+    template <typename Left, typename Right, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<karma::list<Left, Right>, Attribute
+      , Context, Iterator> 
       : mpl::true_ {};
 
-    template <typename Left, typename Right, typename Attribute>
-    struct handles_container<karma::strict_list<Left, Right>, Attribute> 
+    template <typename Left, typename Right, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<karma::strict_list<Left, Right>, Attribute
+      , Context, Iterator> 
       : mpl::true_ {};
 }}}
 

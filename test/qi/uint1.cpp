@@ -128,18 +128,6 @@ main()
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  uint_parser<unused_type> tests
-    ///////////////////////////////////////////////////////////////////////////
-    {
-        using boost::spirit::qi::uint_parser;
-        using boost::spirit::qi::unused_type;
-        uint_parser<unused_type> any_int;
-
-        BOOST_TEST(test("123456", any_int));
-        BOOST_TEST(test("1234567890123456789", any_int));
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     //  action tests
     ///////////////////////////////////////////////////////////////////////////
     {
@@ -171,11 +159,10 @@ main()
     {
         using boost::spirit::qi::uint_;
         using boost::spirit::qi::uint_parser;
-        custom_int u;
+        custom_uint u;
 
         BOOST_TEST(test_attr("123456", uint_, u));
-
-        uint_parser<custom_int, 10, 1, 2> uint2;
+        uint_parser<custom_uint, 10, 1, 2> uint2;
         BOOST_TEST(test_attr("12", uint2, u));
     }
 

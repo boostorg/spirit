@@ -105,7 +105,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
             typedef mpl::and_<
                 traits::is_container<attribute_type>
-              , traits::handles_container<Component, Attr> 
+              , traits::handles_container<Component, Attr, context_type
+                                        , iterator_type> 
             > predicate;
 
             return dispatch_attribute_element(component, predicate());
@@ -158,7 +159,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
             typedef mpl::and_<
                 has_same_elements<lhs, rhs_attribute>
-              , traits::handles_container<Component, Attr> 
+              , traits::handles_container<Component, Attr, context_type
+                                        , iterator_type> 
             > predicate;
 
             return dispatch_main(component, predicate());
@@ -182,3 +184,4 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 }}}}
 
 #endif
+

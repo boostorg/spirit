@@ -81,7 +81,6 @@ namespace boost { namespace spirit { namespace qi
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper, Attribute& attr) const
         {
-            qi::skip_over(first, last, skipper);
             Iterator i = first;
             T as_attr;
             if (subject.parse(i, last, context, skipper, as_attr))
@@ -147,9 +146,11 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename T, typename Attribute>
-    struct handles_container<qi::as_directive<Subject, T>, Attribute>
-      : mpl::false_ {};   // always dereference attribute if used in sequences
+    template <typename Subject, typename T, typename Attribute
+        , typename Context, typename Iterator>
+    struct handles_container<qi::as_directive<Subject, T>, Attribute
+        , Context, Iterator>
+      : mpl::false_ {}; 
 }}}
 
 #endif

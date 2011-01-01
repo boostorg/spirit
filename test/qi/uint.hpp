@@ -44,18 +44,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // A custom int type
-struct custom_int
+struct custom_uint
 {
-    int n;
-    custom_int() : n(0) {}
-    explicit custom_int(int n_) : n(n_) {}
-    custom_int& operator=(int n_) { n = n_; return *this; }
-    friend bool operator==(custom_int a, custom_int b)
+    unsigned n;
+    custom_uint() : n(0) {}
+    explicit custom_uint(unsigned n_) : n(n_) {}
+    custom_uint& operator=(unsigned n_) { n = n_; return *this; }
+    friend bool operator==(custom_uint a, custom_uint b)
         { return a.n == b.n; }
-    friend custom_int operator*(custom_int a, custom_int b)
-        { return custom_int(a.n * b.n); }
-    friend custom_int operator+(custom_int a, custom_int b)
-        { return custom_int(a.n + b.n); }
+    friend bool operator==(custom_uint a, unsigned b)
+        { return a.n == b; }
+    friend custom_uint operator*(custom_uint a, custom_uint b)
+        { return custom_uint(a.n * b.n); }
+    friend custom_uint operator+(custom_uint a, custom_uint b)
+        { return custom_uint(a.n + b.n); }
 };
 
 #endif

@@ -281,15 +281,17 @@ namespace boost { namespace spirit { namespace karma
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename CharEncoding, typename Tag, typename Attribute>
-    struct handles_container<karma::any_string<CharEncoding, Tag>, Attribute>
+    template <typename CharEncoding, typename Tag, typename Attribute
+            , typename Context, typename Iterator>
+    struct handles_container<karma::any_string<CharEncoding, Tag>, Attribute
+      , Context, Iterator>
       : mpl::false_ {};
 
     template <typename String, typename CharEncoding, typename Tag
-      , bool no_attribute, typename Attribute>
-    struct handles_container<
-            karma::literal_string<String, CharEncoding, Tag, no_attribute>
-          , Attribute>
+            , bool no_attribute, typename Attribute, typename Context
+            , typename Iterator>
+    struct handles_container<karma::literal_string<String, CharEncoding, Tag
+      , no_attribute>, Attribute, Context, Iterator>
       : mpl::false_ {};
 }}}
 

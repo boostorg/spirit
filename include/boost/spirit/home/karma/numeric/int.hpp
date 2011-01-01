@@ -35,7 +35,7 @@ namespace boost { namespace spirit
     namespace tag
     {
         template <typename T, unsigned Radix, bool force_sign>
-        struct int_tag {};
+        struct int_generator {};
     }
 
     namespace karma
@@ -45,7 +45,7 @@ namespace boost { namespace spirit
         // order to create a customized int generator
         template <typename T = int, unsigned Radix = 10, bool force_sign = false>
         struct int_generator
-          : spirit::terminal<tag::int_tag<T, Radix, force_sign> > 
+          : spirit::terminal<tag::int_generator<T, Radix, force_sign> > 
         {};
     }
 
@@ -134,20 +134,21 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom int_generator
     template <typename T, unsigned Radix, bool force_sign>
-    struct use_terminal<karma::domain, tag::int_tag<T, Radix, force_sign> >
+    struct use_terminal<karma::domain, tag::int_generator<T, Radix, force_sign> >
       : mpl::true_ {};
 
     // enables any custom int_generator(...)
     template <typename T, unsigned Radix, bool force_sign, typename A0>
     struct use_terminal<karma::domain
-      , terminal_ex<tag::int_tag<T, Radix, force_sign>, fusion::vector1<A0> >
+      , terminal_ex<tag::int_generator<T, Radix, force_sign>
+                  , fusion::vector1<A0> >
     > : mpl::true_ {};
 
     // enables *lazy* custom int_generator
     template <typename T, unsigned Radix, bool force_sign>
     struct use_lazy_terminal<
         karma::domain
-      , tag::int_tag<T, Radix, force_sign>
+      , tag::int_generator<T, Radix, force_sign>
       , 1 // arity
     > : mpl::true_ {};
 
@@ -364,7 +365,7 @@ namespace boost { namespace spirit { namespace karma
 #endif
 
     template <typename T, unsigned Radix, bool force_sign, typename Modifiers>
-    struct make_primitive<tag::int_tag<T, Radix, force_sign>, Modifiers>
+    struct make_primitive<tag::int_generator<T, Radix, force_sign>, Modifiers>
       : detail::make_int<T, Modifiers, Radix, force_sign> {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -421,8 +422,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename T, unsigned Radix, bool force_sign, typename A0
       , typename Modifiers>
     struct make_primitive<
-        terminal_ex<tag::int_tag<T, Radix, force_sign>, fusion::vector1<A0> >
-          , Modifiers>
+        terminal_ex<tag::int_generator<T, Radix, force_sign>
+          , fusion::vector1<A0> >, Modifiers>
       : detail::make_int_direct<T, Modifiers, Radix, force_sign> {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -454,7 +455,7 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename Modifiers>
     struct make_primitive<short, Modifiers> 
-      : detail::basic_int_literal<int, Modifiers> {};
+      : detail::basic_int_literal<short, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<int, Modifiers> 
