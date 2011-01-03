@@ -79,7 +79,7 @@ big_qword "" ".*karma.reference.binary.binary_big.*" karma_index
 
 # char parsers/generators
 char_ "" ".*qi.reference.char\..*" qi_index
-lit "" "((.*qi.reference.(char|string))|(.*karma.reference.numeric)).*" qi_index
+lit "" "((.*qi.reference.(char|string))|(.*qi.reference.numeric)).*" qi_index
 alnum "" ".*qi.reference.char.char_.*" qi_index
 alpha "" ".*qi.reference.char.char_.*" qi_index
 blank "" ".*qi.reference.char.char_.*" qi_index
