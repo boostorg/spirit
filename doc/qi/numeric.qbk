@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2010 Joel de Guzman
-    Copyright (C) 2001-2010 Hartmut Kaiser
+    Copyright (C) 2001-2011 Joel de Guzman
+    Copyright (C) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -70,6 +70,11 @@ constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `unsigned long long` (64 bit) unsigned integer
 types).]
 
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+      Parsers. In general, a char parser is created when you pass in a
+      character, and a numeric parser is created when you use a numeric 
+      literal.] 
+
 [heading Synopsis]
 
     template <
@@ -133,7 +138,8 @@ not defined in __primitive_parser_concept__.
         ulong_(num)
         ulong_long(num)
     ``]
-    [Match the literal `num` using the default radix (10).]
+    [Match the literal `num` using the default radix (10). The parser will fail
+     if the parsed value is not equal to the specified value.]
   ][
     [``
         bin
@@ -149,7 +155,8 @@ not defined in __primitive_parser_concept__.
         hex(num)
     ``]
     [Match the literal `num` using radix 2 for `bin`, radix 8 for `oct`, and
-     radix 16 for `hex`.]
+     radix 16 for `hex`. The parser will fail
+     if the parsed value is not equal to the specified value.]
   ][ 
     [``
         uint_parser<
@@ -165,7 +172,8 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [Match the literal `num` of type `T` using radix `Radix`, with
-     a minimum of `MinDigits` and a maximum of `MaxDigits`.]
+     a minimum of `MinDigits` and a maximum of `MaxDigits`. The parser will fail
+     if the parsed value is not equal to the specified value.]
   ] 
 ]
 
@@ -310,6 +318,11 @@ Also, see __include_structure__.
 constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `signed long long` (64 bit) unsigned integer types).]
 
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+      Parsers. In general, a char parser is created when you pass in a
+      character, and a numeric parser is created when you use a numeric 
+      literal.] 
+
 [heading Synopsis]
 
     template <
@@ -373,7 +386,8 @@ not defined in __primitive_parser_concept__.
         long_(num)
         long_long(num)
     ``]
-    [Match the literal `num` using the default radix (10).]
+    [Match the literal `num` using the default radix (10). The parser will fail
+     if the parsed value is not equal to the specified value.]
   ][ 
     [``
         int_parser<
@@ -389,7 +403,8 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [Match the literal `num` of type `T` using radix `Radix`, with
-     a minimum of `MinDigits` and a maximum of `MaxDigits`.]
+     a minimum of `MinDigits` and a maximum of `MaxDigits`. The parser will fail
+     if the parsed value is not equal to the specified value.]
   ] 
 ]
 
@@ -518,6 +533,11 @@ Also, see __include_structure__.
     [[`boost::spirit::long_double   // alias: boost::spirit::qi::long_double`]]
 ]
 
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+      Parsers. In general, a char parser is created when you pass in a
+      character, and a numeric parser is created when you use a numeric 
+      literal.] 
+
 [heading Synopsis]
 
     template <typename T, typename RealPolicies>
@@ -571,7 +591,9 @@ not defined in __primitive_parser_concept__.
         double_(num)
         long_double(num)
     ``]
-    [Match the literal `num` using the default policies (`real_policies<T>`).]
+    [Match the literal `num` using the default policies (`real_policies<T>`). 
+     The parser will fail if the parsed value is not equal to the specified 
+     value.]
   ][ 
     [``
         real_parser<
@@ -585,7 +607,8 @@ not defined in __primitive_parser_concept__.
             T, RealPolicies
         >()(num)
     ``]
-    [Match the literal `num` of type `T` using `RealPolicies`.] 
+    [Match the literal `num` of type `T` using `RealPolicies`. The parser will fail
+     if the parsed value is not equal to the specified value.] 
   ] 
 ]
 
@@ -909,7 +932,9 @@ not defined in __primitive_parser_concept__.
         lit(boolean)
         bool_(boolean)
     ``]
-    [Match the literal `boolean` using the default policies (`bool_policies<T>`).]
+    [Match the literal `boolean` using the default policies (`bool_policies<T>`). 
+     The parser will fail if the parsed value is not equal to the specified 
+     value.]
   ][ 
     [``
         true_
@@ -929,7 +954,8 @@ not defined in __primitive_parser_concept__.
             T, BoolPolicies
         >()(boolean)
     ``]
-    [Match the literal `boolean` of type `T` using `BoolPolicies`.] 
+    [Match the literal `boolean` of type `T` using `BoolPolicies`. The parser will fail
+     if the parsed value is not equal to the specified value.] 
   ] 
 ]
 
