@@ -16,7 +16,9 @@
 #include <string>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/proto/proto_fwd.hpp>
+#include <boost/type_traits/is_const.hpp>
 #if defined(__GNUC__) && (__GNUC__ < 4)
 #include <boost/type_traits/add_const.hpp>
 #endif
@@ -124,10 +126,10 @@ namespace boost { namespace spirit { namespace traits
     // Get the C string from a string
     ///////////////////////////////////////////////////////////////////////////
     template <typename String>
-    struct get_c_string_impl;
+    struct extract_c_string;
 
     template <typename String>
-    struct get_c_string_impl
+    struct extract_c_string
     {
         typedef typename char_type_of<String>::type char_type;
 
@@ -146,36 +148,36 @@ namespace boost { namespace spirit { namespace traits
     
     // Forwarder that strips const
     template <typename T>
-    struct get_c_string_impl<T const>
+    struct extract_c_string<T const>
     {
-        static typename get_c_string_impl<T>::char_type const* call (T const str)
+        static typename extract_c_string<T>::char_type const* call (T const str)
         {
-            return get_c_string_impl<T>::call(str);
+            return extract_c_string<T>::call(str);
         }
     };
 
     // Forwarder that strips references
     template <typename T>
-    struct get_c_string_impl<T&>
+    struct extract_c_string<T&>
     {
-        static typename get_c_string_impl<T>::char_type const* call (T& str)
+        static typename extract_c_string<T>::char_type const* call (T& str)
         {
-            return get_c_string_impl<T>::call(str);
+            return extract_c_string<T>::call(str);
         }
     };
 
     // Forwarder that strips const references
     template <typename T>
-    struct get_c_string_impl<T const&>
+    struct extract_c_string<T const&>
     {
-        static typename get_c_string_impl<T>::char_type const* call (T const& str)
+        static typename extract_c_string<T>::char_type const* call (T const& str)
         {
-            return get_c_string_impl<T>::call(str);
+            return extract_c_string<T>::call(str);
         }
     };
 
     template <typename T, typename Traits, typename Allocator>
-    struct get_c_string_impl<std::basic_string<T, Traits, Allocator> >
+    struct extract_c_string<std::basic_string<T, Traits, Allocator> >
     {
         typedef T char_type;
 
@@ -193,31 +195,31 @@ namespace boost { namespace spirit { namespace traits
     };
     
     template <typename T>
-    typename get_c_string_impl<T*>::char_type const*
+    typename extract_c_string<T*>::char_type const*
     get_c_string (T* str)
     {
-        return get_c_string_impl<T*>::call(str);
+        return extract_c_string<T*>::call(str);
     }
 
     template <typename T>
-    typename get_c_string_impl<T const*>::char_type const*
+    typename extract_c_string<T const*>::char_type const*
     get_c_string (T const* str)
     {
-        return get_c_string_impl<T const*>::call(str);
+        return extract_c_string<T const*>::call(str);
     }
     
     template <typename String>
-    typename get_c_string_impl<String>::char_type const*
+    typename extract_c_string<String>::char_type const*
     get_c_string (String& str)
     {
-        return get_c_string_impl<String>::call(str);
+        return extract_c_string<String>::call(str);
     }
 
     template <typename String>
-    typename get_c_string_impl<String>::char_type const*
+    typename extract_c_string<String>::char_type const*
     get_c_string (String const& str)
     {
-        return get_c_string_impl<String>::call(str);
+        return extract_c_string<String>::call(str);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -297,6 +299,37 @@ namespace boost { namespace spirit { namespace traits
     inline typename disable_if<is_container<Str>
       , T const*>::type get_end(Str const& str)
     { return get_end(get_begin<T>(str)); }
-}}}
+}
+
+namespace result_of
+{
+    template <typename Char, typename T, typename Enable = void>
+    struct get_begin
+    {
+        typedef typename traits::char_type_of<T>::type char_type;
+
+        typedef typename mpl::if_<
+            is_const<char_type>
+          , char_type const 
+          , char_type
+        >::type* type;
+    };
+
+    template <typename Char, typename Str>
+    struct get_begin<Char, Str
+      , typename enable_if<traits::is_container<Str> >::type>
+    {
+        typedef typename mpl::if_<
+            is_const<Str>
+          , typename Str::const_iterator
+          , typename Str::iterator
+        >::type type;
+    };
+
+    template <typename Char, typename T>
+    struct get_end : get_begin<Char, T> {};
+}
+
+}}
 
 #endif

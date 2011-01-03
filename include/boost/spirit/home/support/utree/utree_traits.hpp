@@ -78,11 +78,12 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // these specializations extract a c string from a utree typed string
     template <typename String>
-    struct get_c_string_impl;
+    struct extract_c_string;
 
     template <typename T, utree_type::info I>
-    struct get_c_string_impl<spirit::basic_string<iterator_range<T const*>, I> >
-    {
+    struct extract_c_string<
+        spirit::basic_string<iterator_range<T const*>, I>
+    > {
         typedef T char_type;
 
         typedef spirit::basic_string<iterator_range<T const*>, I> string;
@@ -99,7 +100,7 @@ namespace boost { namespace spirit { namespace traits
     };
     
     template <utree_type::info I>
-    struct get_c_string_impl<spirit::basic_string<std::string, I> >
+    struct extract_c_string<spirit::basic_string<std::string, I> >
     {
         typedef char char_type;
 

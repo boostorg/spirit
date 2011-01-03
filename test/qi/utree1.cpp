@@ -134,8 +134,55 @@ int main()
 
         BOOST_TEST(test_attr("0.5foo5", r3, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( 0.5 \"foo\" 5 )"));
+    }
+
+    {
+        utree ut;
+ 
+        rule<char const*, utree()> r1 = char_;
+        rule<char const*, utree::list_type()> r2 = double_;
+        rule<char const*, utree::list_type()> r3 = char_;
+
+        BOOST_TEST(test_attr("a25.5b", r1 >> r2 >> r3, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( \"a\" ( 25.5 ) ( \"b\" ) )"));
         ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", r3 >> r2 >> r1, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( ( \"a\" ) ( 25.5 ) \"b\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", char_ >> r2 >> r3, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( \"a\" ( 25.5 ) ( \"b\" ) )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", r3 >> r2 >> char_, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( ( \"a\" ) ( 25.5 ) \"b\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", r1 > r2 >> r3, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( \"a\" ( ( 25.5 ) ( \"b\" ) ) )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", r3 >> r2 > r1, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( ( ( \"a\" ) ( 25.5 ) ) \"b\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", char_ > r2 >> r3, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( \"a\" ( ( 25.5 ) ( \"b\" ) ) )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("a25.5b", r3 >> r2 > char_, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( ( ( \"a\" ) ( 25.5 ) ) \"b\" )"));
     }
 
     return boost::report_errors();
 }
+
