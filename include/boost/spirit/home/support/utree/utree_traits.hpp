@@ -872,7 +872,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename Context>
         static type call(utree const&, Context&)
         {
-            return utree::nil;
+            return nil;
         }
     };
 
