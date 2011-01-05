@@ -209,36 +209,28 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct assign_to_container_from_value<utree, utree::list_type>
-    {
-        static void call(utree const& val, utree& attr)
-        {
-            if (attr.empty())
-                attr = val;
-            else
-                push_back(attr, val);
-        }
-    };
+      : assign_to_container_from_value<utree, utree>
+    {};
 
+    // If the destination is a utree_list, we need to force the right hand side
+    // value into a new sub-node, always, no questions asked.
     template <>
     struct assign_to_container_from_value<utree::list_type, utree>
-    {
-        static void call(utree const& val, utree& attr)
-        {
-            if (attr.empty())
-                attr = val;
-            else
-                push_back(attr, val);
-        }
-    };
-
-    template <>
-    struct assign_to_container_from_value<utree::list_type, utree::list_type>
     {
         static void call(utree const& val, utree& attr)
         {
             push_back(attr, val);
         }
     };
+
+    // If both, the right hand side and the left hand side are utree_lists
+    // we have a lhs rule which has a single rule exposing a utree_list as its
+    // rhs (optionally wrapped into a directive or other unary parser). In this
+    // case we do not create a new sub-node.
+    template <>
+    struct assign_to_container_from_value<utree::list_type, utree::list_type>
+      : assign_to_container_from_value<utree, utree>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // this specialization makes sure strings get assigned as a whole and are 
@@ -322,7 +314,7 @@ namespace boost { namespace spirit { namespace traits
             {
                 return boost::get<utf8_string_range_type>(attr);
             }
-        
+
             static bool is_valid(utree const& attr)
             {
                 switch (traits::which(attr))
@@ -341,17 +333,17 @@ namespace boost { namespace spirit { namespace traits
         };
     }
 
-    template <>    
+    template <>
     struct attribute_as<std::string, utree>
       : detail::attribute_as_string_type 
     {};
 
-    template <>    
+    template <>
     struct attribute_as<utf8_string_type, utree>
       : detail::attribute_as_string_type 
     {};
 
-    template <>    
+    template <>
     struct attribute_as<utf8_string_range_type, utree>
       : detail::attribute_as_string_type 
     {};
@@ -367,7 +359,7 @@ namespace boost { namespace spirit { namespace traits
             {
                 return boost::get<utf8_symbol_range_type>(attr);
             }
-        
+
             static bool is_valid(utree const& attr)
             {
                 switch (traits::which(attr))
@@ -528,7 +520,7 @@ namespace boost { namespace spirit { namespace traits
             qi::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
-    
+
     template <
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
@@ -538,7 +530,7 @@ namespace boost { namespace spirit { namespace traits
             qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
-    
+
     template <
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
@@ -558,7 +550,7 @@ namespace boost { namespace spirit { namespace traits
             karma::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
-   
+
     ///////////////////////////////////////////////////////////////////////////
     // the specialization below tells Spirit how to handle utree if it is used
     // with an optional component
@@ -1057,7 +1049,7 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    #if 0
+#if 0
     // If a rule takes an utree attribute and that utree instance holds nothing
     // more than a list, we dereference this to simplify attribute handling 
     // down the stream, i.e. ( ( 1 2 3 ) ) --> ( 1 2 3 ).
@@ -1077,7 +1069,7 @@ namespace boost { namespace spirit { namespace traits
     struct transform_attribute<utree const&, utree, karma::domain>
       : transform_attribute<utree const, utree, karma::domain>
     {};
-    #endif
+#endif
 }}}
 
 #endif
