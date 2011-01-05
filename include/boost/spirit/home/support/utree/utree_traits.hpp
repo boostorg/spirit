@@ -176,7 +176,7 @@ namespace boost { namespace spirit { namespace traits
             for (iterator_type i = traits::begin(val); i != end; traits::next(i))
                 push_back(attr, traits::deref(i));
         }
-        
+
         static void call(Attribute const& val, utree& attr)
         {
             call(val, attr, is_container<Attribute>());
@@ -191,18 +191,22 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(utree const& val, utree& attr)
         {
-            if (attr.empty())
+            if (attr.empty()) {
                 attr = val;
-            else {
+            }
+            else if (val.which() == utree_type::list_type) {
                 typedef utree::const_iterator iterator_type;
 
                 iterator_type end = traits::end(val);
                 for (iterator_type i = traits::begin(val); i != end; traits::next(i))
                     push_back(attr, traits::deref(i));
             }
+            else {
+                push_back(attr, val);
+            }
         }
     };
-    
+
     template <>
     struct assign_to_container_from_value<utree, utree::list_type>
     {
@@ -210,8 +214,29 @@ namespace boost { namespace spirit { namespace traits
         {
             if (attr.empty())
                 attr = val;
-            else 
+            else
                 push_back(attr, val);
+        }
+    };
+
+    template <>
+    struct assign_to_container_from_value<utree::list_type, utree>
+    {
+        static void call(utree const& val, utree& attr)
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
+
+    template <>
+    struct assign_to_container_from_value<utree::list_type, utree::list_type>
+    {
+        static void call(utree const& val, utree& attr)
+        {
+            push_back(attr, val);
         }
     };
 
