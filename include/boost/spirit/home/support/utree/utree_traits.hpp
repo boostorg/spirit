@@ -170,7 +170,7 @@ namespace boost { namespace spirit { namespace traits
 
             // make sure the attribute is a list, at least an empty one
             if (attr.empty())
-                attr = utree::list;
+                attr = empty_list;
 
             iterator_type end = traits::end(val);
             for (iterator_type i = traits::begin(val); i != end; traits::next(i))
@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace traits
             if (attr.empty()) {
                 attr = val;
             }
-            else if (val.which() == utree_type::list_type) {
+            else if (traits::which(val) == utree_type::list_type) {
                 typedef utree::const_iterator iterator_type;
 
                 iterator_type end = traits::end(val);
@@ -462,7 +462,7 @@ namespace boost { namespace spirit { namespace traits
         static void call(utree& ut)
         {
             if (traits::which(ut) != utree_type::list_type)
-                ut = utree::list;
+                ut = empty_list;
         }
     };
 
@@ -502,13 +502,6 @@ namespace boost { namespace spirit { namespace traits
                 mpl::not_<is_same<utree::list_type, Attribute> >,
                 traits::is_container<Attribute> >
         {};
-
-        template <typename Attribute>
-        struct attribute_is_not_utree
-          : mpl::and_<
-                mpl::not_<is_same<utree, Attribute> >,
-                traits::is_container<Attribute> >
-        {};
     }
 
     template <
@@ -530,6 +523,38 @@ namespace boost { namespace spirit { namespace traits
             qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
+
+    template <
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<qi::rule<IteratorA, T1, T2, T3, T4>
+      , utree::list_type, Context, IteratorB>
+      : detail::attribute_is_not_utree_list<typename attribute_of<
+            qi::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
+        >::type>
+    {};
+
+    template <
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<qi::grammar<IteratorA, T1, T2, T3, T4>
+      , utree::list_type, Context, IteratorB>
+      : detail::attribute_is_not_utree_list<typename attribute_of<
+            qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
+        >::type>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        // checks if the attr is utree
+        template <typename Attribute>
+        struct attribute_is_not_utree
+          : mpl::and_<
+                mpl::not_<is_same<utree, Attribute> >,
+                traits::is_container<Attribute> >
+        {};
+    }
 
     template <
         typename IteratorA, typename IteratorB, typename Context
@@ -947,7 +972,7 @@ namespace boost { namespace spirit { namespace traits
 
         static type pre(utree const& t)
         {
-            return utree::nil;
+            return nil;
         }
     };
 
@@ -1059,7 +1084,7 @@ namespace boost { namespace spirit { namespace traits
         typedef utree const& type;
         static utree const& pre(utree const& val) 
         { 
-            if (val.which() == utree_type::list_type && 1 == val.size())
+            if (traits::which(val) == utree_type::list_type && 1 == val.size())
                 return val.front();
             return val; 
         }

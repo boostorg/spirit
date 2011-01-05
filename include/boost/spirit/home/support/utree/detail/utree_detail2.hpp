@@ -460,10 +460,10 @@ namespace boost { namespace spirit { namespace detail
                     break;
 
                 case type::invalid_type:
-                    return f(utree::invalid);
+                    return f(invalid);
 
                 case type::nil_type:
-                    return f(utree::nil);
+                    return f(nil);
 
                 case type::bool_type:
                     return f(x.b);
@@ -523,10 +523,10 @@ namespace boost { namespace spirit { namespace detail
                     break;
 
                 case type::invalid_type:
-                    return visit_impl::apply(y, detail::bind(f, utree::invalid));
+                    return visit_impl::apply(y, detail::bind(f, invalid));
 
                 case type::nil_type:
-                    return visit_impl::apply(y, detail::bind(f, utree::nil));
+                    return visit_impl::apply(y, detail::bind(f, nil));
 
                 case type::bool_type:
                     return visit_impl::apply(y, detail::bind(f, x.b));
