@@ -145,6 +145,30 @@ int main()
         BOOST_TEST(test_attr("1,2 2,3", r3 >> ' ' >> r3, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( ( 1 2 ) ( 2 3 ) )"));
         ut.clear();
+
+        rule<char const*, utree()> r4 = int_;
+        BOOST_TEST(test_attr("1 1", int_ >> ' ' >> -r4, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 1 )"));
+        ut.clear();
+
+        rule<char const*, utree::list_type()> r5 = -r4;
+        BOOST_TEST(test_attr("1", r5, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("", r5, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1 1", r5 >> ' ' >> r5, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( ( 1 ) ( 1 ) )"));
+        ut.clear();
+
+        rule<char const*, utree::list_type()> r6 = int_;
+        rule<char const*, utree()> r7 = -r6;
+        BOOST_TEST(test_attr("1", r7, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 )"));
+        ut.clear();
     }
 
     return boost::report_errors();
