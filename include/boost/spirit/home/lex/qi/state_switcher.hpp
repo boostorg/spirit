@@ -15,6 +15,8 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
@@ -244,7 +246,21 @@ namespace boost { namespace spirit { namespace qi
             return result_type(subject, fusion::at_c<0>(term.args));
         }
     };
+}}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename State>
+    struct has_semantic_action<qi::state_switcher_context<Subject, State> >
+      : unary_has_semantic_action<Subject> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename State, typename Attribute
+        , typename Context, typename Iterator>
+    struct handles_container<qi::state_switcher_context<Subject, State>
+          , Attribute, Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {}; 
 }}}
 
 #endif

@@ -15,6 +15,7 @@
 #include <boost/spirit/home/lex/lexer_type.hpp>
 #include <boost/spirit/home/qi/reference.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/ref.hpp>
 
 namespace boost { namespace spirit { namespace lex
@@ -67,7 +68,18 @@ namespace boost { namespace spirit { namespace lex
             return this->ref.get().state(); 
         }
     };
+}}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename IdType
+      , typename Attribute, typename Context, typename Iterator>
+    struct handles_container<lex::reference<Subject, IdType>
+          , Attribute, Context, Iterator>
+      : handles_container<
+            typename remove_const<Subject>::type, Attribute, Context, Iterator> 
+    {};
 }}}
 
 #endif
