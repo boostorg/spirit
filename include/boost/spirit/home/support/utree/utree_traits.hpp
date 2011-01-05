@@ -41,6 +41,26 @@ namespace boost
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
+    namespace detail
+    {
+        bool is_list(utree const& ut)
+        {
+            switch (traits::which(ut))
+            {
+            case utree_type::reference_type:
+                return is_list(ut.deref());
+
+            case utree_type::list_type:
+            case utree_type::range_type:
+                return true;
+
+            default:
+                break;
+            }
+            return false;
+        }
+    }
+
     // this specialization tells Spirit how to extract the type of the value
     // stored in the given utree node
     template <>
@@ -194,7 +214,7 @@ namespace boost { namespace spirit { namespace traits
             if (attr.empty()) {
                 attr = val;
             }
-            else if (traits::which(val) == utree_type::list_type) {
+            else if (detail::is_list(val)) {
                 typedef utree::const_iterator iterator_type;
 
                 iterator_type end = traits::end(val);
@@ -461,7 +481,7 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(utree& ut)
         {
-            if (traits::which(ut) != utree_type::list_type)
+            if (!detail::is_list(ut))
                 ut = empty_list;
         }
     };
@@ -858,7 +878,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename T>
         inline T get_or_deref(utree const& t)
         {
-            if (traits::which(t) == utree_type::list_type)
+            if (detail::is_list(t))
                 return boost::get<T>(t.front());
             return boost::get<T>(t);
         }
@@ -1084,7 +1104,7 @@ namespace boost { namespace spirit { namespace traits
         typedef utree const& type;
         static utree const& pre(utree const& val) 
         { 
-            if (traits::which(val) == utree_type::list_type && 1 == val.size())
+            if (detail::is_list(val) && 1 == val.size())
                 return val.front();
             return val; 
         }
