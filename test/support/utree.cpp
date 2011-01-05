@@ -50,12 +50,12 @@ int main()
     }
 
     {
-        utree val(utree::nil);
+        utree val = utree::nil_type();
         BOOST_TEST(check(val, "<nil>"));
     }
 
     {
-        utree val(utree::list);
+        utree val = utree::list_type();
         BOOST_TEST(check(val, "( )"));
     }
 
@@ -151,7 +151,7 @@ int main()
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(check(val.front(), "123"));
 
-        utree val3(utree::nil);
+        utree val3 = utree::nil_type();
         val3.swap(val);
         BOOST_TEST(val3.size() == 3);
         BOOST_TEST(check(val, "<nil>"));
@@ -191,7 +191,7 @@ int main()
     }
 
     {
-        utree a(utree::nil), b(utree::nil);
+        utree a = utree::nil_type(), b = utree::nil_type();
         BOOST_TEST(a == b);
         a = 123;
         BOOST_TEST(a != b);
@@ -200,7 +200,7 @@ int main()
         a = 100.00;
         BOOST_TEST(a < b);
 
-        b = a = utree(utree::invalid);
+        b = a = utree::invalid_type();
         BOOST_TEST(a == b);
         a.push_back(1);
         a.push_back("two");
@@ -215,7 +215,7 @@ int main()
     }
 
     {
-        utree a(utree::list);
+        utree a = utree::list_type();
         a.push_back(1);
         a.push_back(2);
         a.push_back(3);

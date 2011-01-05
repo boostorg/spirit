@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">bool_</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.numeric.boolean.description"></a><h6>
-<a name="id840257"></a>
+<a name="id880486"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.description">Description</a>
           </h6>
 <p>
@@ -39,7 +39,7 @@
             expression requirements (documented below).
           </p>
 <a name="spirit.qi.reference.numeric.boolean.header"></a><h6>
-<a name="id840314"></a>
+<a name="id880543"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric/bool.hpp&gt;
@@ -49,7 +49,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.numeric.boolean.namespace"></a><h6>
-<a name="id840413"></a>
+<a name="id880642"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -81,14 +81,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.synopsis"></a><h6>
-<a name="id840592"></a>
+<a name="id880821"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">BooleanPolicies</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">bool_parser</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.numeric.boolean.template_parameters"></a><h6>
-<a name="id840676"></a>
+<a name="id880905"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.template_parameters">Template
             parameters</a>
           </h6>
@@ -153,7 +153,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.model_of"></a><h6>
-<a name="id840838"></a>
+<a name="id881067"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -198,7 +198,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.numeric.boolean.expression_semantics"></a><h6>
-<a name="id841111"></a>
+<a name="id881340"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -255,7 +255,8 @@
 <td>
                     <p>
                       Match the literal <code class="computeroutput"><span class="identifier">boolean</span></code>
-                      using the default policies (<code class="computeroutput"><span class="identifier">bool_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>).
+                      using the default policies (<code class="computeroutput"><span class="identifier">bool_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>). The parser will fail
+                      if the parsed value is not equal to the specified value.
                     </p>
                   </td>
 </tr>
@@ -314,6 +315,8 @@
                       Match the literal <code class="computeroutput"><span class="identifier">boolean</span></code>
                       of type <code class="computeroutput"><span class="identifier">T</span></code> using
                       <code class="computeroutput"><span class="identifier">BoolPolicies</span></code>.
+                      The parser will fail if the parsed value is not equal to the
+                      specified value.
                     </p>
                   </td>
 </tr>
@@ -330,7 +333,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.attributes"></a><h6>
-<a name="id841593"></a>
+<a name="id881824"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -411,14 +414,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.complexity"></a><h6>
-<a name="id841875"></a>
+<a name="id882106"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               O(N), where N is the number of characters being parsed.
             </p></blockquote></div>
 <a name="spirit.qi.reference.numeric.boolean.minimum_expression_requirements_for__code__phrase_role__identifier__b__phrase___code_"></a><h6>
-<a name="id841903"></a>
+<a name="id882133"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.minimum_expression_requirements_for__code__phrase_role__identifier__b__phrase___code_">Minimum
             Expression Requirements for <code class="computeroutput"><span class="identifier">B</span></code></a>
           </h6>
@@ -458,7 +461,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code_"></a><h6>
-<a name="id842036"></a>
+<a name="id882267"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code_">Boolean
             <code class="computeroutput"><span class="identifier">Policies</span></code></a>
           </h6>
@@ -476,7 +479,7 @@
             and <code class="computeroutput"><span class="string">"false"</span></code>.
           </p>
 <a name="spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__expression_requirements"></a><h6>
-<a name="id842134"></a>
+<a name="id882365"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__expression_requirements">Boolean
             <code class="computeroutput"><span class="identifier">Policies</span></code> Expression Requirements</a>
           </h6>
@@ -543,7 +546,7 @@
             or <code class="computeroutput"><span class="keyword">false</span></code>).
           </p>
 <a name="spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__specializations"></a><h6>
-<a name="id842451"></a>
+<a name="id882682"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.boolean__code__phrase_role__identifier__policies__phrase___code__specializations">Boolean
             <code class="computeroutput"><span class="identifier">Policies</span></code> Specializations</a>
           </h6>
@@ -573,7 +576,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.numeric.boolean.example"></a><h6>
-<a name="id843013"></a>
+<a name="id883243"></a>
             <a class="link" href="boolean.html#spirit.qi.reference.numeric.boolean.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -670,7 +673,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

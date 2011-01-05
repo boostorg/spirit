@@ -28,7 +28,7 @@
           Parsers (<code class="computeroutput"><span class="identifier">uint_</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.numeric.uint.description"></a><h6>
-<a name="id825795"></a>
+<a name="id865939"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.description">Description</a>
           </h6>
 <p>
@@ -42,7 +42,7 @@
             is a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.qi.reference.numeric.uint.header"></a><h6>
-<a name="id825864"></a>
+<a name="id866008"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric/uint.hpp&gt;
@@ -52,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.numeric.uint.namespace"></a><h6>
-<a name="id825963"></a>
+<a name="id866107"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -126,8 +126,21 @@
               (64 bit) unsigned integer types).
             </p></td></tr>
 </table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
+              <a class="link" href="../../../../">Character Parsers</a>,
+              and the Numeric Parsers. In general, a char parser is created when
+              you pass in a character, and a numeric parser is created when you use
+              a numeric literal.
+            </p></td></tr>
+</table></div>
 <a name="spirit.qi.reference.numeric.uint.synopsis"></a><h6>
-<a name="id826412"></a>
+<a name="id866583"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -138,7 +151,7 @@
 <span class="keyword">struct</span> <span class="identifier">uint_parser</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.numeric.uint.template_parameters"></a><h6>
-<a name="id826532"></a>
+<a name="id866703"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.template_parameters">Template
             parameters</a>
           </h6>
@@ -239,7 +252,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.model_of"></a><h6>
-<a name="id826730"></a>
+<a name="id866901"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -261,7 +274,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.numeric.uint.expression_semantics"></a><h6>
-<a name="id826840"></a>
+<a name="id867010"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -324,7 +337,8 @@
 <td>
                     <p>
                       Match the literal <code class="computeroutput"><span class="identifier">num</span></code>
-                      using the default radix (10).
+                      using the default radix (10). The parser will fail if the parsed
+                      value is not equal to the specified value.
                     </p>
                   </td>
 </tr>
@@ -366,6 +380,8 @@
                       using radix 2 for <code class="computeroutput"><span class="identifier">bin</span></code>,
                       radix 8 for <code class="computeroutput"><span class="identifier">oct</span></code>,
                       and radix 16 for <code class="computeroutput"><span class="identifier">hex</span></code>.
+                      The parser will fail if the parsed value is not equal to the
+                      specified value.
                     </p>
                   </td>
 </tr>
@@ -409,6 +425,8 @@
                       radix <code class="computeroutput"><span class="identifier">Radix</span></code>,
                       with a minimum of <code class="computeroutput"><span class="identifier">MinDigits</span></code>
                       and a maximum of <code class="computeroutput"><span class="identifier">MaxDigits</span></code>.
+                      The parser will fail if the parsed value is not equal to the
+                      specified value.
                     </p>
                   </td>
 </tr>
@@ -430,7 +448,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.attributes"></a><h6>
-<a name="id827580"></a>
+<a name="id867754"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -566,14 +584,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.complexity"></a><h6>
-<a name="id828152"></a>
+<a name="id868326"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               O(N), where N is the number of digits being parsed.
             </p></blockquote></div>
 <a name="spirit.qi.reference.numeric.uint.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_"></a><h6>
-<a name="id828179"></a>
+<a name="id868353"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_">Minimum
             Expression Requirements for <code class="computeroutput"><span class="identifier">T</span></code></a>
           </h6>
@@ -721,7 +739,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.uint.example"></a><h6>
-<a name="id828809"></a>
+<a name="id868983"></a>
             <a class="link" href="uint.html#spirit.qi.reference.numeric.uint.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -780,7 +798,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
