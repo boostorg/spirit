@@ -47,8 +47,10 @@ namespace boost { namespace spirit
     template <> // enables ushort_
     struct use_terminal<qi::domain, tag::ushort_> : mpl::true_ {};
 
+#if 0
     template <> // enables lit(unsigned short(n))
     struct use_terminal<qi::domain, unsigned short> : mpl::true_ {};
+#endif
 
     template <typename A0> // enables ushort_(n)
     struct use_terminal<qi::domain
@@ -62,8 +64,10 @@ namespace boost { namespace spirit
     template <> // enables uint_
     struct use_terminal<qi::domain, tag::uint_> : mpl::true_ {};
 
+#if 0
     template <> // enables lit(unsigned(n))
     struct use_terminal<qi::domain, unsigned> : mpl::true_ {};
+#endif
 
     template <typename A0> // enables uint_(n)
     struct use_terminal<qi::domain
@@ -76,10 +80,12 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables ulong_
     struct use_terminal<qi::domain, tag::ulong_> : mpl::true_ {};
-    
+
+#if 0    
     template <> // enables lit(unsigned long(n))
     struct use_terminal<qi::domain, unsigned long> : mpl::true_ {};
-
+#endif
+ 
     template <typename A0> // enables ulong_(n)
     struct use_terminal<qi::domain
         , terminal_ex<tag::ulong_, fusion::vector1<A0> > >
@@ -93,8 +99,10 @@ namespace boost { namespace spirit
     template <> // enables ulong_long
     struct use_terminal<qi::domain, tag::ulong_long> : mpl::true_ {};
 
+#if 0
     template <> // enables lit(boost::ulong_long_type(n))
     struct use_terminal<qi::domain, boost::ulong_long_type> : mpl::true_ {};
+#endif
 
     template <typename A0> // enables ulong_long(n)
     struct use_terminal<qi::domain
@@ -309,6 +317,7 @@ namespace boost { namespace spirit { namespace qi
     };
     
     ///////////////////////////////////////////////////////////////////////////
+#if 0
     template <typename Modifiers>
     struct make_primitive<unsigned short, Modifiers> 
       : make_literal_uint<unsigned short> {};
@@ -325,6 +334,7 @@ namespace boost { namespace spirit { namespace qi
     template <typename Modifiers>
     struct make_primitive<boost::ulong_long_type, Modifiers> 
       : make_literal_uint<boost::ulong_long_type> {};
+#endif
 #endif
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits

@@ -60,10 +60,11 @@ namespace boost { namespace spirit
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
+#if 0
     template <> // enables lit(true)
     struct use_terminal<qi::domain, bool>
       : mpl::true_ {};
-
+#endif
     ///////////////////////////////////////////////////////////////////////////
     template <typename A0> // enables bool_(...)
     struct use_terminal<qi::domain
@@ -289,10 +290,11 @@ namespace boost { namespace spirit { namespace qi
     };
     
     ///////////////////////////////////////////////////////////////////////////
+#if 0
     template <typename Modifiers>
     struct make_primitive<bool, Modifiers>
       : make_literal_bool<bool, Modifiers> {};
-
+#endif
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
     struct make_primitive<tag::false_, Modifiers>
