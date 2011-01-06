@@ -76,6 +76,22 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // Make sure all components of an alternative expose utree, even if they
+    // actually expose a utree::list_type
+    template <typename Domain> 
+    struct alternative_attribute_transform<utree::list_type, Domain>
+      : mpl::identity<utree>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Make sure all components of a sequence expose utree, even if they
+    // actually expose a utree::list_type
+    template <typename Domain> 
+    struct sequence_attribute_transform<utree::list_type, Domain>
+      : mpl::identity<utree>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // this specialization lets Spirit know that typed basic_strings
     // are strings
     template <typename Base, utree_type::info I>
@@ -407,6 +423,11 @@ namespace boost { namespace spirit { namespace traits
       : detail::attribute_as_symbol_type 
     {};
 
+    template <typename Attribute>
+    struct attribute_as<Attribute, utree::list_type>
+      : attribute_as<Attribute, utree>
+    {};
+
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
@@ -474,6 +495,11 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename T>
+    struct push_back_container<utree::list_type, T>
+      : push_back_container<utree, T>
+    {};
+
     ///////////////////////////////////////////////////////////////////////////
     // ensure the utree attribute is an empty list
     template <>
@@ -497,6 +523,12 @@ namespace boost { namespace spirit { namespace traits
     struct build_std_vector<utree>
     {
         typedef utree type;
+    };
+
+    template <>
+    struct build_std_vector<utree::list_type>
+    {
+        typedef utree::list_type type;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -622,9 +654,20 @@ namespace boost { namespace spirit { namespace traits
         typedef utree type;
     };
 
+    template <>
+    struct build_optional<utree::list_type>
+    {
+        typedef utree::list_type type;
+    };
+
     // an utree is an optional (in any domain)
     template <>
     struct not_is_optional<utree, qi::domain>
+      : mpl::false_
+    {};
+
+    template <>
+    struct not_is_optional<utree::list_type, qi::domain>
       : mpl::false_
     {};
 
@@ -633,11 +676,21 @@ namespace boost { namespace spirit { namespace traits
       : mpl::false_
     {};
 
+    template <>
+    struct not_is_optional<utree::list_type, karma::domain>
+      : mpl::false_
+    {};
+
     ///////////////////////////////////////////////////////////////////////////
     // the specialization below tells Spirit to handle utree as if it
     // where a 'real' variant (in the context of karma)
     template <>
     struct not_is_variant<utree, karma::domain>
+      : mpl::false_ 
+    {};
+
+    template <>
+    struct not_is_variant<utree::list_type, karma::domain>
       : mpl::false_ 
     {};
 
@@ -847,6 +900,11 @@ namespace boost { namespace spirit { namespace traits
             return d == utree_type::list_type;
         }
     };
+
+    template <typename Attribute>
+    struct compute_compatible_component_variant<utree::list_type, Attribute>
+      : compute_compatible_component_variant<utree, Attribute>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
@@ -1093,6 +1151,11 @@ namespace boost { namespace spirit { namespace traits
             return std::string(traits::begin(r), traits::end(r));
         }
     };
+
+    template <typename Attribute>
+    struct transform_attribute<utree::list_type const, Attribute, karma::domain>
+      : transform_attribute<utree const, Attribute, karma::domain>
+    {};
 
 #if 0
     // If a rule takes an utree attribute and that utree instance holds nothing

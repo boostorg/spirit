@@ -210,8 +210,9 @@ namespace boost { namespace spirit { namespace karma
         {
             // Put all the element attributes in a tuple
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, mpl::identity, Iterator>::type
-            all_attributes;
+                Elements, Context, traits::sequence_attribute_transform
+              , Iterator, karma::domain
+            >::type all_attributes;
 
             // Now, build a fusion vector over the attributes. Note
             // that build_fusion_vector 1) removes all unused attributes

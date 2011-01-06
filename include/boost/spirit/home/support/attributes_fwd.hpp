@@ -232,6 +232,21 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute, typename T, typename Enable = void>
     struct symbols_value;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // transform attribute types exposed from compound operator components
+    /////////////////////////////////////////////////////////////////////////// 
+    template <typename Attribute, typename Domain>
+    struct alternative_attribute_transform;
+
+    template <typename Attribute, typename Domain>
+    struct sequence_attribute_transform;
+
+    template <typename Attribute, typename Domain>
+    struct permutation_attribute_transform;
+
+    template <typename Attribute, typename Domain>
+    struct sequential_or_attribute_transform;
 }}}
 
 #endif

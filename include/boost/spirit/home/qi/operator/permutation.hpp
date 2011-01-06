@@ -49,8 +49,9 @@ namespace boost { namespace spirit { namespace qi
             // Put all the element attributes in a tuple,
             // wrapping each element in a boost::optional
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, traits::build_optional, Iterator>::type
-            all_attributes;
+                Elements, Context, traits::permutation_attribute_transform
+              , Iterator, qi::domain
+            >::type all_attributes;
 
             // Now, build a fusion vector over the attributes. Note
             // that build_fusion_vector 1) removes all unused attributes

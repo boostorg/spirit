@@ -49,8 +49,9 @@ namespace boost { namespace spirit { namespace qi
         {
             // Put all the element attributes in a tuple
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, mpl::identity, Iterator>::type
-            all_attributes;
+                Elements, Context, traits::alternative_attribute_transform
+              , Iterator, qi::domain
+            >::type all_attributes;
 
             // Ok, now make a variant over the attribute sequence. Note that
             // build_variant makes sure that 1) all attributes in the variant

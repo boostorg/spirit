@@ -89,7 +89,8 @@ namespace boost { namespace spirit { namespace karma
         {
             // Put all the element attributes in a tuple
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, mpl::identity, Iterator
+                Elements, Context, traits::alternative_attribute_transform
+              , Iterator, karma::domain
             >::type all_attributes;
 
             // Ok, now make a variant over the attribute sequence. Note that
