@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace traits
 {
     namespace detail
     {
-        bool is_list(utree const& ut)
+        inline bool is_list(utree const& ut)
         {
             switch (traits::which(ut))
             {
