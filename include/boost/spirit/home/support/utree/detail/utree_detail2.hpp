@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace detail
     {
         // warning the tag is not allowed for fast_string!!! it's only
         // placed here to avoid excess padding.
-        return (int(buff[small_string_size-2]) << 8) + buff[small_string_size-1];
+        return (int(buff[small_string_size-2]) << 8) + (unsigned char)buff[small_string_size-1];
     }
 
     inline void fast_string::tag(short tag)
@@ -1328,30 +1328,39 @@ namespace boost { namespace spirit
                 break;
             case type::invalid_type:
             case type::nil_type:
+                s.tag(other.s.tag());
                 break;
             case type::bool_type:
                 b = other.b;
+                s.tag(other.s.tag());
                 break;
             case type::int_type:
                 i = other.i;
+                s.tag(other.s.tag());
                 break;
             case type::double_type:
                 d = other.d;
+                s.tag(other.s.tag());
                 break;
             case type::reference_type:
                 p = other.p;
+                s.tag(other.s.tag());
                 break;
             case type::any_type:
                 v = other.v;
+                s.tag(other.s.tag());
                 break;
             case type::range_type:
                 r = other.r;
+                s.tag(other.s.tag());
                 break;
             case type::string_range_type:
                 sr = other.sr;
+                s.tag(other.s.tag());
                 break;
             case type::function_type:
                 pf = other.pf->clone();
+                s.tag(other.s.tag());
                 break;
             case type::string_type:
             case type::symbol_type:
@@ -1444,14 +1453,29 @@ namespace boost { namespace spirit
 
     inline short utree::tag() const
     {
-        if (get_type() != type::list_type)
-            boost::throw_exception(bad_type_exception());
+        switch (get_type())
+        {
+            case type::string_type:
+            case type::binary_type:
+            case type::symbol_type:
+              boost::throw_exception(bad_type_exception());
+            default:
+              break;
+        }
         return s.tag();
     }
 
     inline void utree::tag(short tag)
     {
-        ensure_list_type();
+        switch (get_type())
+        {
+            case type::string_type:
+            case type::binary_type:
+            case type::symbol_type:
+              boost::throw_exception(bad_type_exception());
+            default:
+              break;
+        }
         s.tag(tag);
     }
 

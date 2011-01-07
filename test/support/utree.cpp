@@ -404,5 +404,24 @@ int main()
         BOOST_TEST(*up.get<int*>() == 123);
     }
 
+    // tags
+    {
+        short min = std::numeric_limits<short>::min();
+        short max = std::numeric_limits<short>::max();
+
+        utree::list_type u;
+        utree u2;
+        bool ok = true;
+
+        for (int t = min ; ok && t <= max ; ++t) {
+            u.tag(t);
+            u2 = u;
+            BOOST_TEST_EQ(t, u.tag());
+            BOOST_TEST_EQ(t, u2.tag());
+            ok = t == u.tag() && t == u2.tag();
+            u2 = utree("12");
+        }
+    }
+
     return boost::report_errors();
 }
