@@ -73,6 +73,7 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain, long double>
       : mpl::true_ {};
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename A0> // enables float_(...)
     struct use_terminal<qi::domain
@@ -276,6 +277,7 @@ namespace boost { namespace spirit { namespace qi
     struct make_primitive<long double, Modifiers>
       : make_literal_real<long double> {};
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policies, typename Modifiers>
     struct make_primitive<
@@ -292,29 +294,29 @@ namespace boost { namespace spirit { namespace qi
     template <typename Modifiers>
     struct make_primitive<tag::float_, Modifiers>
       : make_real<float> {};
-    
+
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::float_
       , fusion::vector1<A0> >, Modifiers>
       : make_direct_real<float> {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
     struct make_primitive<tag::double_, Modifiers>
       : make_real<double> {};
-    
+
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::double_
       , fusion::vector1<A0> >, Modifiers>
       : make_direct_real<double> {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
     struct make_primitive<tag::long_double, Modifiers>
       : make_real<long double> {};
-    
+
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::long_double

@@ -54,22 +54,6 @@ main()
 
     {
         using namespace boost::spirit::ascii;
-        using boost::spirit::qi::lit;
-
-        BOOST_TEST(test("x", lit('x')));
-        BOOST_TEST(!test("x", lit('y')));
-
-        BOOST_TEST(!test("x", ~lit('x')));
-        BOOST_TEST(test(" ", ~lit('x')));
-        BOOST_TEST(test("X", ~lit('x')));
-
-        BOOST_TEST(test("x", ~~lit('x')));
-        BOOST_TEST(!test(" ", ~~lit('x')));
-        BOOST_TEST(!test("X", ~~lit('x')));
-    }
-
-    {
-        using namespace boost::spirit::ascii;
 
         BOOST_TEST(test("   x", 'x', space));
         BOOST_TEST(test(L"   x", L'x', space));

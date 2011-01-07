@@ -81,11 +81,11 @@ namespace boost { namespace spirit
     template <> // enables ulong_
     struct use_terminal<qi::domain, tag::ulong_> : mpl::true_ {};
 
-#if 0    
+#if 0
     template <> // enables lit(unsigned long(n))
     struct use_terminal<qi::domain, unsigned long> : mpl::true_ {};
 #endif
- 
+
     template <typename A0> // enables ulong_(n)
     struct use_terminal<qi::domain
         , terminal_ex<tag::ulong_, fusion::vector1<A0> > >
@@ -93,7 +93,7 @@ namespace boost { namespace spirit
 
     template <> // enables *lazy* ulong_(n)
     struct use_lazy_terminal<qi::domain, tag::ulong_, 1> : mpl::true_ {};
- 
+
     ///////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HAS_LONG_LONG
     template <> // enables ulong_long
@@ -112,6 +112,7 @@ namespace boost { namespace spirit
     template <> // enables *lazy* ulong_long(n)
     struct use_lazy_terminal<qi::domain, tag::ulong_long, 1> : mpl::true_ {};
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables bin
     struct use_terminal<qi::domain, tag::bin> : mpl::true_ {};
@@ -120,10 +121,10 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
         , terminal_ex<tag::bin, fusion::vector1<A0> > >
       : is_arithmetic<A0> {};
-    
+
     template <> // enables *lazy* bin(n)
     struct use_lazy_terminal<qi::domain, tag::bin, 1> : mpl::true_ {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables oct
     struct use_terminal<qi::domain, tag::oct> : mpl::true_ {};
@@ -132,10 +133,10 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
         , terminal_ex<tag::oct, fusion::vector1<A0> > >
       : is_arithmetic<A0> {};
-    
+
     template <> // enables *lazy* oct(n)
     struct use_lazy_terminal<qi::domain, tag::oct, 1> : mpl::true_ {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables hex
     struct use_terminal<qi::domain, tag::hex> : mpl::true_ {};
@@ -144,10 +145,10 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
         , terminal_ex<tag::hex, fusion::vector1<A0> > >
       : is_arithmetic<A0> {};
-    
+
     template <> // enables *lazy* hex(n)
     struct use_lazy_terminal<qi::domain, tag::hex, 1> : mpl::true_ {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom uint_parser
     template <typename T, unsigned Radix, unsigned MinDigits
@@ -290,7 +291,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type();
         }
     };
-    
+
     template <typename T, unsigned Radix = 10, unsigned MinDigits = 1
             , int MaxDigits = -1>
     struct make_direct_uint
@@ -303,7 +304,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     template <typename T, unsigned Radix = 10, unsigned MinDigits = 1
             , int MaxDigits = -1>
     struct make_literal_uint
@@ -315,7 +316,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type(i);
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
 #if 0
     template <typename Modifiers>
@@ -336,6 +337,7 @@ namespace boost { namespace spirit { namespace qi
       : make_literal_uint<boost::ulong_long_type> {};
 #endif
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
             , typename Modifiers>

@@ -50,7 +50,6 @@ int main()
         BOOST_TEST(test("-123420000000000000000.0", fixed, -1.23420e20));
     }
 
-
 // support for using real_concept with a Karma generator has been implemented 
 // in Boost versions > 1.36 only, additionally real_concept is available only
 // if BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS  is not defined

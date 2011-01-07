@@ -120,7 +120,7 @@ namespace boost { namespace spirit
     template <> // enables *lazy* long_long(n)
     struct use_lazy_terminal<qi::domain, tag::long_long, 1> : mpl::true_ {};
 #endif
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom int_parser
     template <typename T, unsigned Radix, unsigned MinDigits
@@ -296,7 +296,6 @@ namespace boost { namespace spirit { namespace qi
     
     ///////////////////////////////////////////////////////////////////////////
 #if 0
-
     template <typename Modifiers>
     struct make_primitive<short, Modifiers> 
       : make_literal_int<short> {};
@@ -315,6 +314,7 @@ namespace boost { namespace spirit { namespace qi
       : make_literal_int<boost::long_long_type> {};
 #endif
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
             , typename Modifiers>
@@ -322,7 +322,7 @@ namespace boost { namespace spirit { namespace qi
         tag::int_parser<T, Radix, MinDigits, MaxDigits>
       , Modifiers>
       : make_int<T, Radix, MinDigits, MaxDigits> {};
-    
+
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
             , typename A0, typename Modifiers>
     struct make_primitive<

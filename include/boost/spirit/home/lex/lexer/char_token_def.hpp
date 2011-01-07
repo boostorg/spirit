@@ -44,13 +44,10 @@ namespace boost { namespace spirit
           , fusion::vector1<A0>
         >
     > : mpl::true_ {};
-
 }}
 
 namespace boost { namespace spirit { namespace lex
 { 
-    using spirit::lit;                    // lit('x') is equivalent to 'x'
-
     // use char_ from standard character set by default
     using spirit::standard::char_type;
     using spirit::standard::char_;
@@ -184,7 +181,6 @@ namespace boost { namespace spirit { namespace lex
             return result_type(fusion::at_c<0>(term.args)[0]);
         }
     };
-
 }}}  // namespace boost::spirit::lex
 
 #endif 

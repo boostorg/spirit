@@ -43,7 +43,6 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::lit // alias: boost::spirit::lex::lit` ]]
     [[`lex::char_`]]
 ]
 
@@ -64,8 +63,6 @@ defined in __primitive_lexer_concept__.
 [table
     [[Expression]           [Description]]
     [[`ch`]                 [Create a token definition matching the character 
-                             literal `ch`. ]]
-    [[`lit(ch)`]            [Create a token definition matching the character 
                              literal `ch`. ]]
     [[`lex::char_(ch)`]     [Create a token definition matching the character 
                              `ch`.]]

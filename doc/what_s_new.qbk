@@ -24,6 +24,9 @@
 * Introduced a new customization point __customize_assign_to_container_from_value__
   which is invoked for container attributes whenever a attribute value needs to 
   be added to that container.
+* Replaced `proto::lit` (which was used to implement `spirit::lit`) with a 
+  separate version allowing to distinguish 'lit(foo)' from 'foo'. This should 
+  not change any semantics nor should it break exiting code.
 
 [heading Bug Fixes in Qi or Karma]
 
@@ -32,6 +35,10 @@
   by later elements of the sequence. 
 * Fixed the __karma__ generator [karma_string `string(s)`]. It succeeded even 
   if `s` matched only a prefix of its attribute. 
+
+[heading New Features in Lex]
+
+* `lex::lit()` has been removed.
 
 [heading What's changed in __lex__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
 

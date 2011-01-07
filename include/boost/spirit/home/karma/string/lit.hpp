@@ -26,6 +26,7 @@
 #include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/detail/string_generate.hpp>
 #include <boost/spirit/home/karma/detail/string_compare.hpp>
+#include <boost/spirit/home/karma/detail/enable_lit.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/cons.hpp>
@@ -33,6 +34,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/utility/enable_if.hpp>
 #include <string>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,11 +66,21 @@ namespace boost { namespace spirit
       , tag::char_code<tag::string, CharEncoding>
       , 1 /*arity*/
     > : mpl::true_ {};
+
+    // enables lit(str)
+    template <typename A0>
+    struct use_terminal<karma::domain
+          , terminal_ex<tag::lit, fusion::vector1<A0> >
+          , typename enable_if<traits::is_string<A0> >::type>
+      : mpl::true_ {};
 }} 
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
+    using spirit::lit;
+    using spirit::lit_type;
+
     ///////////////////////////////////////////////////////////////////////////
     // generate literal strings from a given parameter
     ///////////////////////////////////////////////////////////////////////////
@@ -249,33 +261,55 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename CharEncoding, typename Modifiers, typename A0
+          , bool no_attribute>
+        struct make_string_direct
+        {
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef typename add_const<A0>::type const_string;
+            typedef literal_string<
+                const_string
+              , typename spirit::detail::get_encoding_with_case<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , no_attribute
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                return result_type(fusion::at_c<0>(term.args));
+            }
+        };
+    }
+
+    // string("..."), lit("...")
     template <typename CharEncoding, typename Modifiers, typename A0>
     struct make_primitive<
-        terminal_ex<
-            tag::char_code<tag::string, CharEncoding>
-          , fusion::vector1<A0> >
-      , Modifiers>
-    {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+            terminal_ex<
+                tag::char_code<tag::string, CharEncoding>
+              , fusion::vector1<A0> >
+          , Modifiers>
+      : detail::make_string_direct<CharEncoding, Modifiers, A0, false>
+    {};
 
-        typedef typename add_const<A0>::type const_string;
-        typedef literal_string<
-            const_string
-          , typename spirit::detail::get_encoding_with_case<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , false
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
-        {
-            return result_type(fusion::at_c<0>(term.args));
-        }
-    };
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+            terminal_ex<tag::lit, fusion::vector1<A0> >
+          , Modifiers
+          , typename enable_if<traits::is_string<A0> >::type>
+      : detail::make_string_direct<
+            typename traits::char_encoding_from_char<
+                typename traits::char_type_of<A0>::type>::type
+          , Modifiers, A0, true>
+    {};
 }}}   // namespace boost::spirit::karma
 
 namespace boost { namespace spirit { namespace traits

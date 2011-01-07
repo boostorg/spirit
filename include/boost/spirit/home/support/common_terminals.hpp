@@ -60,8 +60,7 @@ namespace boost { namespace spirit
     template <typename Encoding>
     struct encoding
         : proto::terminal<tag::char_code<tag::encoding, Encoding> >::type
-    {
-    };
+    {};
 
     // Our basic terminals
     BOOST_SPIRIT_DEFINE_TERMINALS(
@@ -86,11 +85,9 @@ namespace boost { namespace spirit
         ( duplicate )
     )
 
-    // Here we are reusing proto::lit
-    using proto::lit;
-
     // Our extended terminals
     BOOST_SPIRIT_DEFINE_TERMINALS_EX(
+        ( lit )
         ( bin )
         ( oct )
         ( hex )
@@ -142,7 +139,6 @@ namespace boost { namespace spirit
         struct attr_cast {};
         struct as {};
     }
-
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -208,6 +204,27 @@ BOOST_SPIRIT_DEFINE_CHAR_CODES(ascii)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(iso8859_1)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(standard)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(standard_wide)
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Char>
+    struct char_encoding_from_char;
+
+    template <>
+    struct char_encoding_from_char<char>
+      : mpl::identity<spirit::char_encoding::standard>
+    {};
+
+    template <>
+    struct char_encoding_from_char<wchar_t>
+      : mpl::identity<spirit::char_encoding::standard_wide>
+    {};
+
+    template <typename T>
+    struct char_encoding_from_char<T const>
+      : char_encoding_from_char<T>
+    {};
+}}}
 
 #if defined(BOOST_SPIRIT_UNICODE)
 BOOST_SPIRIT_DEFINE_CHAR_CODES(unicode)
