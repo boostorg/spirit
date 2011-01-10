@@ -16,6 +16,7 @@
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
+#include <boost/spirit/home/support/common_terminals.hpp>
 
 namespace boost { namespace spirit
 {

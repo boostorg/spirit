@@ -13,12 +13,14 @@
 #endif
 
 #include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/detail/enable_lit.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/numeric/real_policies.hpp>
 #include <boost/spirit/home/qi/numeric/numeric_utils.hpp>
 #include <boost/spirit/home/qi/numeric/detail/real_impl.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit
 {
@@ -60,19 +62,23 @@ namespace boost { namespace spirit
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
-#if 0
-    template <> // enables lit(0.f)
-    struct use_terminal<qi::domain, float>
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, float> >::type>
       : mpl::true_ {};
-
-    template <> // enables lit(0.)
-    struct use_terminal<qi::domain, double>
+    
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, double> >::type>
       : mpl::true_ {};
-
-    template <> // enables lit(0.l)
-    struct use_terminal<qi::domain, long double>
+    
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, long double> >::type>
       : mpl::true_ {};
-#endif
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename A0> // enables float_(...)
@@ -256,27 +262,31 @@ namespace boost { namespace spirit { namespace qi
     {
         typedef literal_real_parser<T, Policies> result_type;
 
-        template <typename T_>
-        result_type operator()(T_ i, unused_type) const
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
         {
-            return result_type(T(i));
+            return result_type(fusion::at_c<0>(term.args));
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-#if 0
-    template <typename Modifiers>
-    struct make_primitive<float, Modifiers>
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, float> >::type>
       : make_literal_real<float> {};
     
-    template <typename Modifiers>
-    struct make_primitive<double, Modifiers>
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, double> >::type>
       : make_literal_real<double> {};
 
-    template <typename Modifiers>
-    struct make_primitive<long double, Modifiers>
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, long double> >::type>
       : make_literal_real<long double> {};
-#endif
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policies, typename Modifiers>

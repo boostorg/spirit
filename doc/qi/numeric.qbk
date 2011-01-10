@@ -55,6 +55,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::qi::lit`]]
     [[`boost::spirit::bin           // alias: boost::spirit::qi::bin`]]
     [[`boost::spirit::oct           // alias: boost::spirit::qi::oct`]]
     [[`boost::spirit::hex           // alias: boost::spirit::qi::hex`]]
@@ -68,6 +69,11 @@ Also, see __include_structure__.
 constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `unsigned long long` (64 bit) unsigned integer
 types).]
+
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+      Parsers. In general, a char parser is created when you pass in a
+      character, and a numeric parser is created when you use a numeric 
+      literal.] 
 
 [heading Synopsis]
 
@@ -125,6 +131,7 @@ not defined in __primitive_parser_concept__.
     [Parse an unsigned integer using the default radix (10).]
   ][
     [``
+        lit(num)
         ushort_(num)
         uint_(num)
         ulong_(num)
@@ -181,6 +188,11 @@ not defined in __primitive_parser_concept__.
   [
     [Expression]
     [Attribute]
+  ][
+    [``
+        lit(num)
+     ``]
+    [__unused__]
   ][
     [``
         ushort_
@@ -293,6 +305,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::qi::lit`]]
     [[`boost::spirit::short_        // alias: boost::spirit::qi::short_`]]
     [[`boost::spirit::int_          // alias: boost::spirit::qi::int_`]]
     [[`boost::spirit::long_         // alias: boost::spirit::qi::long_`]]
@@ -302,6 +315,11 @@ Also, see __include_structure__.
 [note `long_long` is only available on platforms where the preprocessor
 constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `signed long long` (64 bit) unsigned integer types).]
+
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+      Parsers. In general, a char parser is created when you pass in a
+      character, and a numeric parser is created when you use a numeric 
+      literal.] 
 
 [heading Synopsis]
 
@@ -359,6 +377,7 @@ not defined in __primitive_parser_concept__.
     [Parse a signed integer using the default radix (10).]
   ][
     [``
+        lit(num)
         short_(num)
         int_(num)
         long_(num)
@@ -398,6 +417,11 @@ not defined in __primitive_parser_concept__.
   [
     [Expression]
     [Attribute]
+  ][
+    [``
+        lit(num)
+     ``]
+    [__unused__]
   ][
     [``
         short_
@@ -499,10 +523,16 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::qi::lit`]]
     [[`boost::spirit::float_        // alias: boost::spirit::qi::float_`]]
     [[`boost::spirit::double_       // alias: boost::spirit::qi::double_`]]
     [[`boost::spirit::long_double   // alias: boost::spirit::qi::long_double`]]
 ]
+
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+      Parsers. In general, a char parser is created when you pass in a
+      character, and a numeric parser is created when you use a numeric 
+      literal.] 
 
 [heading Synopsis]
 
@@ -551,6 +581,7 @@ not defined in __primitive_parser_concept__.
     [Parse a real using the default policies (`real_policies<T>`).]
   ][
     [``
+        lit(num)
         float_(num)
         double_(num)
         long_double(num)
@@ -582,6 +613,11 @@ not defined in __primitive_parser_concept__.
   [
     [Expression]
     [Attribute]
+  ][
+    [``
+        lit(num)
+     ``]
+    [__unused__]
   ][
     [``
         float_
@@ -886,6 +922,7 @@ not defined in __primitive_parser_concept__.
     [Parse a boolean using the default policies (`bool_policies<T>`).]
   ][
     [``
+        lit(boolean)
         bool_(boolean)
     ``]
     [Match the literal `boolean` using the default policies (`bool_policies<T>`). 
@@ -923,6 +960,11 @@ not defined in __primitive_parser_concept__.
   [
     [Expression]
     [Attribute]
+  ][
+    [``
+        lit(boolean)
+     ``]
+    [__unused__]
   ][
     [``
         true_

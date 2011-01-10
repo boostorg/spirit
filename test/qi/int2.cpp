@@ -22,25 +22,14 @@ main()
         using boost::spirit::lit;
         int i = 123456;
 
-        BOOST_TEST(true); // avoid warnings
-    }
-#if 0
         BOOST_TEST( test("123456", lit(123456)));
         BOOST_TEST(!test("123456", lit(0)));
-        BOOST_TEST( test("123456", 123456));
-        BOOST_TEST(!test("123456", 0));
         BOOST_TEST( test("123456", lit(i)));
         BOOST_TEST(!test("123456", lit(-i)));
-        BOOST_TEST( test("123456", i));
-        BOOST_TEST(!test("123456", -i));
         BOOST_TEST( test("+425", lit(425)));
         BOOST_TEST(!test("+425", lit(17)));
-        BOOST_TEST( test("+425", 425));
-        BOOST_TEST(!test("+425", 17));
         BOOST_TEST( test("-2000", lit(-2000)));
         BOOST_TEST(!test("-2000", lit(2000)));
-        BOOST_TEST( test("-2000", -2000));
-        BOOST_TEST(!test("-2000", 2000));
         BOOST_TEST( test(max_int, lit(INT_MAX)));
         BOOST_TEST(!test(max_int, lit(INT_MIN)));
 
@@ -64,16 +53,10 @@ main()
 
         BOOST_TEST( test("1234567890123456789", lit(1234567890123456789LL)));
         BOOST_TEST(!test("1234567890123456789", lit(-19LL)));
-        BOOST_TEST( test("1234567890123456789", 1234567890123456789LL));
-        BOOST_TEST(!test("1234567890123456789", -19LL));
         BOOST_TEST( test("1234567890123456789", lit(ll)));
         BOOST_TEST(!test("1234567890123456789", lit(-ll)));
-        BOOST_TEST( test("1234567890123456789", ll));
-        BOOST_TEST(!test("1234567890123456789", -ll));
         BOOST_TEST( test("-100000000000000", lit(-100000000000000LL)));
         BOOST_TEST(!test("-100000000000000", lit(3243515525263LL)));
-        BOOST_TEST( test("-100000000000000", -100000000000000LL));
-        BOOST_TEST(!test("-100000000000000", 3243515525263LL));
         BOOST_TEST( test(max_long_long, lit(LONG_LONG_MAX)));
         BOOST_TEST(!test(max_long_long, lit(LONG_LONG_MIN)));
 
@@ -94,35 +77,19 @@ main()
         BOOST_TEST(!test("12345",  lit(-12345)));
         BOOST_TEST( test("12345",  lit(s)));
         BOOST_TEST(!test("12345",  lit(-s)));
-        BOOST_TEST( test("12345",  12345));
-        BOOST_TEST(!test("12345",  -12345));
-        BOOST_TEST( test("12345",  s));
-        BOOST_TEST(!test("12345",  -s));
         BOOST_TEST( test("-12345", lit(-12345)));
         BOOST_TEST(!test("-12345", lit(12345)));
         BOOST_TEST( test("-12345", lit(-s)));
         BOOST_TEST(!test("-12345", lit(s)));
-        BOOST_TEST( test("-12345", -12345));
-        BOOST_TEST(!test("-12345", 12345));
-        BOOST_TEST( test("-12345", -s));
-        BOOST_TEST(!test("-12345", s));
 
         BOOST_TEST( test("1234567890",  lit(1234567890)));
         BOOST_TEST(!test("1234567890",  lit(-1234567890)));
         BOOST_TEST( test("1234567890",  lit(l)));
         BOOST_TEST(!test("1234567890",  lit(-l)));
-        BOOST_TEST( test("1234567890",  1234567890));
-        BOOST_TEST(!test("1234567890",  -1234567890));
-        BOOST_TEST( test("1234567890",  l));
-        BOOST_TEST(!test("1234567890",  -l));
         BOOST_TEST( test("-1234567890", lit(-1234567890)));
         BOOST_TEST(!test("-1234567890", lit(1234567890)));
         BOOST_TEST( test("-1234567890", lit(-l)));
         BOOST_TEST(!test("-1234567890", lit(l)));
-        BOOST_TEST( test("-1234567890", -1234567890));
-        BOOST_TEST(!test("-1234567890", 1234567890));
-        BOOST_TEST( test("-1234567890", -l));
-        BOOST_TEST(!test("-1234567890", l));
     }
     
     ///////////////////////////////////////////////////////////////////////////
@@ -136,6 +103,6 @@ main()
         BOOST_TEST(test("123", lit(ref(n))));
         BOOST_TEST(!test("123", lit(ref(m))));
     }
-#endif
+
     return boost::report_errors();
 }

@@ -107,7 +107,6 @@ main()
         BOOST_TEST(!test("1.2e3", double_(ref(m))));
     }
    
-#if 0 
     ///////////////////////////////////////////////////////////////////////////
     //  literal real number tests
     ///////////////////////////////////////////////////////////////////////////
@@ -116,16 +115,10 @@ main()
 
         BOOST_TEST(test("+1.2e3", lit(1.2e3)));
         BOOST_TEST(!test("+1.2e3", lit(-1.2e3)));
-        BOOST_TEST(test("+1.2e3", 1.2e3));
-        BOOST_TEST(!test("+1.2e3", -1.2e3));
         BOOST_TEST(test("-1.2e3", lit(-1.2e3)));
         BOOST_TEST(!test("-1.2e3", lit(1.2e3)));
-        BOOST_TEST(test("-1.2e3", -1.2e3));
-        BOOST_TEST(!test("-1.2e3", 1.2e3));
         BOOST_TEST(test("1.2e3", lit(1.2e3)));
         BOOST_TEST(!test("1.2e3", lit(3.2e1)));
-        BOOST_TEST(test("1.2e3", 1.2e3));
-        BOOST_TEST(!test("1.2e3", 3.2e1));
     }
     
     ///////////////////////////////////////////////////////////////////////////
@@ -139,6 +132,6 @@ main()
         BOOST_TEST(test("1.2e3", lit(ref(n))));
         BOOST_TEST(!test("1.2e3", lit(ref(m))));
     }
-#endif
+
     return boost::report_errors();
 }
