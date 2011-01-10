@@ -11,6 +11,8 @@
 //
 //  [ Sam Nabialek; Somewhere, sometime in 2003... ]    spirit1
 //  [ JDG November 17, 2009 ]                           spirit2
+//  [ JDG January 10, 2010 ]                            Updated to use rule pointers
+//                                                      for efficiency.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
