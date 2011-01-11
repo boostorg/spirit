@@ -13,7 +13,6 @@
 #pragma once
 #endif
 
-#include <iostream>
 #include <cmath>
 #include <limits>
 #include <boost/type_traits/is_same.hpp>
@@ -42,33 +41,17 @@ namespace boost { namespace spirit { namespace traits
             // $$$ Why is this failing for boost.math.concepts ? $$$
             //~ int nn = std::numeric_limits<T>::max_exponent10;
             //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
-            std::cerr << "n *= pow10<T>(exp) -> "
-                      << n << " *= pow10<T>(" << exp << ") -> "
-                      << n << " *= " << pow10<T>(exp) << " -> "
-                      << (n * pow10<T>(exp)) << std::endl;
             n *= pow10<T>(exp);
         }
         else
         {
             if (exp < std::numeric_limits<T>::min_exponent10)
             {
-                std::cerr << "n /= pow10<T>(-std::numeric_limits<T>::min_exponent10) -> "
-                          << n << " /= pow10<T>(" << -std::numeric_limits<T>::min_exponent10 << ") -> "
-                          << n << " /= " << pow10<T>(-std::numeric_limits<T>::min_exponent10) << " -> "
-                          << (n / pow10<T>(-std::numeric_limits<T>::min_exponent10)) << std::endl;
                 n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
-                std::cerr << "n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10) -> "
-                          << n << " /= pow10<T>(" << -exp << " + " << std::numeric_limits<T>::min_exponent10 << ") -> "
-                          << n << " /= " << pow10<T>(-exp + std::numeric_limits<T>::min_exponent10) << " -> "
-                          << (n / pow10<T>(-exp + std::numeric_limits<T>::min_exponent10)) << std::endl;
                 n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
             }
             else
             {
-                std::cerr << "n /= pow10<T>(-exp) -> "
-                          << n << " /= pow10<T>(" << -exp << ") -> "
-                          << n << " /= " << pow10<T>(-exp) << " -> "
-                          << (n / pow10<T>(-exp)) << std::endl;
                 n /= pow10<T>(-exp);
             }
         }
