@@ -108,6 +108,7 @@ import testing ;
      [ run qi/regression_lazy_repeat.cpp                       : : : : qi_regression_lazy_repeat ]
      [ run qi/regression_reorder.cpp                           : : : : qi_regression_reorder ]
      [ run qi/regression_repeat.cpp                            : : : : qi_regression_repeat ]
+     [ run qi/regression_transform_assignment.cpp              : : : : qi_regression_transform_assignment ]
 
     ;
 

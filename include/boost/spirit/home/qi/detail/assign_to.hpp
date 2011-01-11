@@ -234,7 +234,8 @@ namespace boost { namespace spirit { namespace traits
             assign_to_attribute_from_value<Attribute, T>::call(val, attr);
         }
 
-        // overload for containers (but not for variants holding containers)
+        // overload for containers (but not for variants or optionals 
+        // holding containers)
         template <typename T, typename Attribute>
         inline void
         assign_to(T const& val, Attribute& attr, mpl::true_, mpl::true_)
@@ -248,9 +249,12 @@ namespace boost { namespace spirit { namespace traits
     assign_to(T const& val, Attribute& attr)
     {
         typedef typename traits::is_container<Attribute>::type is_container;
-        typedef typename traits::not_is_variant<Attribute>::type not_is_variant;
+        typedef typename mpl::and_<
+            traits::not_is_variant<Attribute>
+          , traits::not_is_optional<Attribute> 
+        >::type is_not_wrapped_container;
 
-        detail::assign_to(val, attr, is_container(), not_is_variant());
+        detail::assign_to(val, attr, is_container(), is_not_wrapped_container());
     }
 
     template <typename T>

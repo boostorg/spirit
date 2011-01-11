@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace traits
         >::type>
       : mpl::true_ {};
 
-    template <typename T, typename Domain>
+    template <typename T, typename Domain, typename Enable/* = void*/>
     struct not_is_variant
       : mpl::true_
     {};
@@ -203,7 +203,7 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Domain>
+    template <typename T, typename Domain, typename Enable/* = void*/>
     struct not_is_optional
       : mpl::true_
     {};
