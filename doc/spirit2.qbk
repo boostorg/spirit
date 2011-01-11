@@ -146,7 +146,7 @@
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
 [template qi_lit_string[str]        [link spirit.qi.reference.string.string [str]]]
-[template qi_lit_char[char]         [link spirit.qi.reference.string.lit_char [char]]]
+[template qi_lit_char[char]         [link spirit.qi.reference.char.char [char]]]
 
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
 [def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
