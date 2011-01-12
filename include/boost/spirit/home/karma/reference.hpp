@@ -79,9 +79,12 @@ namespace boost { namespace spirit { namespace karma
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Attribute>
-    struct handles_container<karma::reference<Subject>, Attribute>
-      : handles_container<typename remove_const<Subject>::type, Attribute> 
+    template <typename Subject, typename Attribute, typename Context
+      , typename Iterator>
+    struct handles_container<karma::reference<Subject>, Attribute
+      , Context, Iterator>
+      : handles_container<typename remove_const<Subject>::type, Attribute
+        , Context, Iterator> 
     {};
 }}}
 

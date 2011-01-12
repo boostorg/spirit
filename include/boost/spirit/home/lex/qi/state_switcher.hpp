@@ -136,7 +136,7 @@ namespace boost { namespace spirit { namespace qi
             template <typename State>
             reset_state_on_exit(Iterator& it_, State state_)
               : it(it_)
-              , state(detail::set_lexer_state(it_, traits::get_c_string<State>::call(state_))) 
+              , state(detail::set_lexer_state(it_, traits::get_c_string(state_))) 
             {}
 
             ~reset_state_on_exit()
@@ -184,7 +184,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename String>
         state_switcher_context(
                 state_switcher_context<Subject, String> const& rhs)
-          : subject(rhs.subject), state(traits::get_c_string<String>::call(rhs.state)) {}
+          : subject(rhs.subject), state(traits::get_c_string(rhs.state)) {}
 
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
@@ -226,7 +226,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
         {
-            return result_type(traits::get_c_string<const_string>::call(fusion::at_c<0>(term.args)));
+            return result_type(traits::get_c_string(fusion::at_c<0>(term.args)));
         }
     };
 

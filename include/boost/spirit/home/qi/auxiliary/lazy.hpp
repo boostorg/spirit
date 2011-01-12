@@ -220,4 +220,29 @@ namespace boost { namespace spirit { namespace qi
     };
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Actor, typename Modifiers, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<
+        qi::lazy_parser<Actor, Modifiers>, Attribute, Context, Iterator>
+      : handles_container<
+          typename qi::lazy_parser<Actor, Modifiers>::template
+              attribute<Context, Iterator>::parser_type
+        , Attribute, Context, Iterator> 
+    {};
+
+    template <typename Subject, typename Actor, typename Modifiers
+      , typename Attribute, typename Context, typename Iterator>
+    struct handles_container<
+        qi::lazy_directive<Actor, Subject, Modifiers>, Attribute
+      , Context, Iterator>
+      : handles_container<
+          typename qi::lazy_directive<Actor, Subject, Modifiers>::template
+              attribute<Context, Iterator>::parser_type
+        , Attribute, Context, Iterator> 
+    {};
+}}}
+
 #endif

@@ -20,7 +20,6 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/sequence_base_id.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
-#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/vector.hpp>
@@ -97,6 +96,9 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr_, mpl::true_) const
         {
+            // ensure the attribute is actually a container type
+            traits::make_container(attr_);
+
             Iterator iter = first;
             // return false if *any* of the parsers fail
             if (fusion::any(elements

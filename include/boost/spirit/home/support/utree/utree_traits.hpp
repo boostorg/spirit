@@ -41,6 +41,20 @@ namespace boost
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
+    // this specialization tells Spirit how to extract the type of the value
+    // stored in the given utree node
+    template <>
+    struct variant_which<utree>
+    {
+        static int call(utree const& u) { return u.which(); }
+    };
+    
+    template <>
+    struct variant_which<utree::list_type>
+    {
+        static int call(utree::list_type const& u) { return u.which(); }
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     // this specialization lets Spirit know that typed basic_strings
     // are strings
@@ -64,11 +78,12 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // these specializations extract a c string from a utree typed string
     template <typename String>
-    struct get_c_string;
+    struct extract_c_string;
 
     template <typename T, utree_type::info I>
-    struct get_c_string<spirit::basic_string<iterator_range<T const*>, I> >
-    {
+    struct extract_c_string<
+        spirit::basic_string<iterator_range<T const*>, I>
+    > {
         typedef T char_type;
 
         typedef spirit::basic_string<iterator_range<T const*>, I> string;
@@ -85,7 +100,7 @@ namespace boost { namespace spirit { namespace traits
     };
     
     template <utree_type::info I>
-    struct get_c_string<spirit::basic_string<std::string, I> >
+    struct extract_c_string<spirit::basic_string<std::string, I> >
     {
         typedef char char_type;
 
@@ -154,7 +169,7 @@ namespace boost { namespace spirit { namespace traits
                 iterator_type;
 
             // make sure the attribute is a list, at least an empty one
-            if (attr.which() != utree_type::list_type)
+            if (attr.empty())
                 attr = utree::list;
 
             iterator_type end = traits::end(val);
@@ -176,51 +191,29 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(utree const& val, utree& attr)
         {
-            if (val.which() != utree_type::list_type)
+            if (attr.empty())
                 attr = val;
             else {
                 typedef utree::const_iterator iterator_type;
 
-                // make sure the attribute is a list, at least an empty one
-                if (attr.which() != utree_type::list_type)
-                    attr = utree::list;
-
-                iterator_type end = val.end();
-                for (iterator_type i = val.begin(); i != end; ++i)
-                    attr.push_back(*i);
+                iterator_type end = traits::end(val);
+                for (iterator_type i = traits::begin(val); i != end; traits::next(i))
+                    push_back(attr, traits::deref(i));
             }
         }
     };
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
+    
     template <>
-    struct transform_attribute<utree, utree, qi::domain>
+    struct assign_to_container_from_value<utree, utree::list_type>
     {
-        typedef utree& type;
-
-        static utree& pre(utree& val) { return val; }
-
-        // If the rhs' attribute is already a list, push it back into the 
-        // rule's attribute, otherwise wrap it into a list and push that back.
-        // This ensures that the rule always exposes an utree list node.
-        static void post(utree& attr, utree const& val)
+        static void call(utree const& val, utree& attr)
         {
-            if (val.which() != utree_type::list_type) {
-                utree ut (utree::list);
-                ut.push_back(val);
-                attr.swap(ut);
-            }
+            if (attr.empty())
+                attr = val;
+            else 
+                push_back(attr, val);
         }
-
-        // fail() will be called by Qi rule's if the rhs failed parsing
-        static void fail(utree&) {}
     };
-
-    template <>
-    struct transform_attribute<utree&, utree, qi::domain>
-      : transform_attribute<utree, utree, qi::domain>
-    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // this specialization makes sure strings get assigned as a whole and are 
@@ -287,7 +280,7 @@ namespace boost { namespace spirit { namespace traits
                 attr.assign(first, last);
             else {
                 for (Iterator i = first; i != last; ++i)
-                    push_back(attr, *i);
+                    push_back(attr, traits::deref(i));
             }
         }
     };
@@ -307,7 +300,7 @@ namespace boost { namespace spirit { namespace traits
         
             static bool is_valid(utree const& attr)
             {
-                switch (attr.which())
+                switch (traits::which(attr))
                 {
                 case utree_type::reference_type:
                     return is_valid(attr.deref());
@@ -322,19 +315,19 @@ namespace boost { namespace spirit { namespace traits
             }
         };
     }
-    
+
     template <>    
-    struct attribute_as_xxx<std::string, utree>
+    struct attribute_as<std::string, utree>
       : detail::attribute_as_string_type 
     {};
 
     template <>    
-    struct attribute_as_xxx<utf8_string_type, utree>
+    struct attribute_as<utf8_string_type, utree>
       : detail::attribute_as_string_type 
     {};
 
     template <>    
-    struct attribute_as_xxx<utf8_string_range_type, utree>
+    struct attribute_as<utf8_string_range_type, utree>
       : detail::attribute_as_string_type 
     {};
 
@@ -352,7 +345,7 @@ namespace boost { namespace spirit { namespace traits
         
             static bool is_valid(utree const& attr)
             {
-                switch (attr.which())
+                switch (traits::which(attr))
                 {
                 case utree_type::reference_type:
                     return is_valid(attr.deref());
@@ -368,12 +361,12 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <>
-    struct attribute_as_xxx<utf8_symbol_type, utree>
+    struct attribute_as<utf8_symbol_type, utree>
       : detail::attribute_as_symbol_type 
     {};
 
     template <>
-    struct attribute_as_xxx<utf8_symbol_range_type, utree>
+    struct attribute_as<utf8_symbol_range_type, utree>
       : detail::attribute_as_symbol_type 
     {};
 
@@ -391,7 +384,7 @@ namespace boost { namespace spirit { namespace traits
 
             static bool is_valid(utree const& attr)
             {
-                switch (attr.which())
+                switch (traits::which(attr))
                 {
                 case utree_type::reference_type:
                     return is_valid(attr.deref());
@@ -407,12 +400,12 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <>
-    struct attribute_as_xxx<binary_string_type, utree>
+    struct attribute_as<binary_string_type, utree>
       : detail::attribute_as_binary_string_type 
     {};
 
     template <>
-    struct attribute_as_xxx<binary_range_type, utree>
+    struct attribute_as<binary_range_type, utree>
       : detail::attribute_as_binary_string_type 
     {};
 
@@ -423,9 +416,9 @@ namespace boost { namespace spirit { namespace traits
     {
         static bool call(utree& c, T const& val)
         {
-            switch (c.which())
+            switch (traits::which(c))
             {
-                case utree_type::uninitialized_type:
+                case utree_type::invalid_type:
                 case utree_type::nil_type:
                 case utree_type::list_type:
                     c.push_back(val);
@@ -443,6 +436,23 @@ namespace boost { namespace spirit { namespace traits
             return true;
         }
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // ensure the utree attribute is an empty list
+    template <>
+    struct make_container_attribute<utree>
+    {
+        static void call(utree& ut)
+        {
+            if (traits::which(ut) != utree_type::list_type)
+                ut = utree::list;
+        }
+    };
+
+    template <>
+    struct make_container_attribute<utree::list_type>
+      : make_container_attribute<utree>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // an utree is a container on its own
@@ -468,6 +478,14 @@ namespace boost { namespace spirit { namespace traits
     // or a grammar exposes an utree as it's attribute
     namespace detail
     {
+        // checks if the attr is the explicit utree list type, utree::list_type
+        template <typename Attribute>
+        struct attribute_is_not_utree_list
+          : mpl::and_<
+                mpl::not_<is_same<utree::list_type, Attribute> >,
+                traits::is_container<Attribute> >
+        {};
+
         template <typename Attribute>
         struct attribute_is_not_utree
           : mpl::and_<
@@ -477,43 +495,45 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <
-        typename Iterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<qi::rule<Iterator, T1, T2, T3, T4>, utree>
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<qi::rule<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
+      : detail::attribute_is_not_utree_list<typename attribute_of<
+            qi::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
+        >::type>
+    {};
+    
+    template <
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<qi::grammar<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
+      : detail::attribute_is_not_utree_list<typename attribute_of<
+            qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
+        >::type>
+    {};
+    
+    template <
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<karma::rule<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
       : detail::attribute_is_not_utree<typename attribute_of<
-            qi::rule<Iterator, T1, T2, T3, T4> 
+            karma::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
 
     template <
-        typename Iterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<qi::grammar<Iterator, T1, T2, T3, T4>, utree>
+        typename IteratorA, typename IteratorB, typename Context
+      , typename T1, typename T2, typename T3, typename T4>
+    struct handles_container<karma::grammar<IteratorA, T1, T2, T3, T4>
+      , utree, Context, IteratorB>
       : detail::attribute_is_not_utree<typename attribute_of<
-            qi::grammar<Iterator, T1, T2, T3, T4> 
+            karma::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
-
-    template <
-        typename OutputIterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<
-            karma::rule<OutputIterator, T1, T2, T3, T4>, utree>
-      : detail::attribute_is_not_utree<typename attribute_of<
-            karma::rule<OutputIterator, T1, T2, T3, T4> 
-        >::type>
-    {};
-
-    template <
-        typename OutputIterator, typename T1, typename T2, typename T3
-      , typename T4>
-    struct handles_container<
-            karma::grammar<OutputIterator, T1, T2, T3, T4>, utree>
-      : detail::attribute_is_not_utree<typename attribute_of<
-            karma::grammar<OutputIterator, T1, T2, T3, T4> 
-        >::type>
-    {};
-
+   
     ///////////////////////////////////////////////////////////////////////////
     // the specialization below tells Spirit how to handle utree if it is used
     // with an optional component
@@ -527,10 +547,10 @@ namespace boost { namespace spirit { namespace traits
             return val;
         }
 
-        // only 'uninitialized_type' utree nodes are not valid
+        // only 'invalid_type' utree nodes are not valid
         static bool is_valid(utree const& val)
         {
-            return val.which() != utree_type::uninitialized_type;
+            return traits::which(val) != utree_type::invalid_type;
         }
     };
 
@@ -558,14 +578,6 @@ namespace boost { namespace spirit { namespace traits
     struct not_is_variant<utree, karma::domain>
       : mpl::false_ 
     {};
-
-    // this specialization tells Spirit how to extract the type of the value
-    // stored in the given utree node
-    template <>
-    struct variant_which<utree>
-    {
-        static int call(utree const& u) { return u.which(); }
-    };
 
     // The specializations below tell Spirit to verify whether an attribute
     // type is compatible with a given variant type
@@ -596,14 +608,14 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct compute_compatible_component_variant<utree, utree::uninitialized_type>
+    struct compute_compatible_component_variant<utree, utree::invalid_type>
       : mpl::true_
     {
-        typedef utree::uninitialized_type compatible_type;
+        typedef utree::invalid_type compatible_type;
 
         static bool is_compatible(int d)
         {
-            return d == utree_type::uninitialized_type;
+            return d == utree_type::invalid_type;
         }
     };
 
@@ -741,7 +753,7 @@ namespace boost { namespace spirit { namespace traits
 
         static bool is_compatible(int d)
         {
-            return d >= utree_type::uninitialized_type &&
+            return d >= utree_type::invalid_type &&
                    d <= utree_type::reference_type;
         }
     };
@@ -755,7 +767,7 @@ namespace boost { namespace spirit { namespace traits
 
         static bool is_compatible(int d)
         {
-            return d >= utree_type::uninitialized_type &&
+            return d >= utree_type::invalid_type &&
                    d <= utree_type::reference_type;
         }
     };
@@ -783,7 +795,7 @@ namespace boost { namespace spirit { namespace traits
         static type call(utree const& t)
         {
             utf8_symbol_range_type r = boost::get<utf8_symbol_range_type>(t);
-            return std::string(r.begin(), r.end());
+            return std::string(traits::begin(r), traits::end(r));
         }
     };
 
@@ -804,7 +816,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename T>
         inline T get_or_deref(utree const& t)
         {
-            if (t.which() == utree_type::list_type)
+            if (traits::which(t) == utree_type::list_type)
                 return boost::get<T>(t.front());
             return boost::get<T>(t);
         }
@@ -880,7 +892,7 @@ namespace boost { namespace spirit { namespace traits
         static type call(utree const& t, Context&)
         {
             utf8_string_range_type r = detail::get_or_deref<utf8_string_range_type>(t);
-            return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
+            return type(traits::begin(r), traits::end(r));
         }
     };
 
@@ -893,7 +905,7 @@ namespace boost { namespace spirit { namespace traits
         static type call(utree const& t, Context&)
         {
             utf8_symbol_range_type r = detail::get_or_deref<utf8_symbol_range_type>(t);
-            return std::string(r.begin(), r.end());
+            return std::string(traits::begin(r), traits::end(r));
         }
     };
 
@@ -906,7 +918,7 @@ namespace boost { namespace spirit { namespace traits
         static type call(utree const& t, Context&)
         {
             utf8_string_range_type r = detail::get_or_deref<utf8_string_range_type>(t);
-            return std::string(r.begin(), r.end());
+            return std::string(traits::begin(r), traits::end(r));
         }
     };
 
@@ -976,7 +988,7 @@ namespace boost { namespace spirit { namespace traits
         static type pre(utree const& t)
         {
             utf8_string_range_type r = detail::get_or_deref<utf8_string_range_type>(t);
-            return std::basic_string<char, Traits, Alloc>(r.begin(), r.end());
+            return type(traits::begin(r), traits::end(r));
         }
     };
 
@@ -1004,7 +1016,7 @@ namespace boost { namespace spirit { namespace traits
         static type pre(utree const& t)
         {
             utf8_string_range_type r = detail::get_or_deref<utf8_string_range_type>(t);
-            return std::string(r.begin(), r.end());
+            return std::string(traits::begin(r), traits::end(r));
         }
     };
 
@@ -1016,10 +1028,11 @@ namespace boost { namespace spirit { namespace traits
         static type pre(utree const& t)
         {
             utf8_symbol_range_type r = detail::get_or_deref<utf8_symbol_range_type>(t);
-            return std::string(r.begin(), r.end());
+            return std::string(traits::begin(r), traits::end(r));
         }
     };
 
+    #if 0
     // If a rule takes an utree attribute and that utree instance holds nothing
     // more than a list, we dereference this to simplify attribute handling 
     // down the stream, i.e. ( ( 1 2 3 ) ) --> ( 1 2 3 ).
@@ -1039,6 +1052,7 @@ namespace boost { namespace spirit { namespace traits
     struct transform_attribute<utree const&, utree, karma::domain>
       : transform_attribute<utree const, utree, karma::domain>
     {};
+    #endif
 }}}
 
 #endif

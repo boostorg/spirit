@@ -117,7 +117,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
             typedef mpl::and_<
                 traits::is_container<attribute_type>
-              , traits::handles_container<Component, Attr> > predicate;
+              , traits::handles_container<Component, Attr, context_type>
+            > predicate;
 
             return dispatch_attribute_element(component, predicate());
         }
@@ -175,7 +176,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
             typedef mpl::and_<
                 has_same_elements<rhs, lhs_attribute>
-              , traits::handles_container<Component, Attr> > predicate;
+              , traits::handles_container<Component, Attr, context_type>
+            > predicate;
 
             // false means everything went ok
             return dispatch_main(component, predicate());

@@ -36,8 +36,8 @@ namespace boost { namespace spirit
         struct bool_policies;
 
         ///////////////////////////////////////////////////////////////////////
-        // This one is the class that the user can instantiate directly in 
-        // order to create a customized int generator
+        // This is the class that the user can instantiate directly in 
+        // order to create a customized bool generator
         template <typename T = bool, typename Policies = bool_policies<T> >
         struct bool_generator
           : spirit::terminal<tag::stateful_tag<Policies, tag::bool_, T> >

@@ -127,9 +127,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Action, typename Attribute>
-    struct handles_container<karma::action<Subject, Action>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, typename Action, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<karma::action<Subject, Action>, Attribute
+      , Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 }}}
 
 #endif

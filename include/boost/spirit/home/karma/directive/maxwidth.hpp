@@ -232,9 +232,11 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Width, typename Rest, typename Attribute>
-    struct handles_container<karma::maxwidth_width<Subject, Width, Rest>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, typename Attribute, typename Context
+        , typename Iterator>
+    struct handles_container<karma::maxwidth_width<Subject>, Attribute
+        , Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 }}}
 
 #endif

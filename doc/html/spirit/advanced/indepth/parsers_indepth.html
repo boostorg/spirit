@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parsers in Depth</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../indepth.html" title="In Depth">
 <link rel="prev" href="../indepth.html" title="In Depth">
@@ -193,59 +193,20 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id1246658"></a>
+<a name="id1050268"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
 <p>
           For our dissection study, we will use a <a href="http://boost-spirit.com" target="_top">Spirit</a>
-          primitive, the <code class="computeroutput"><span class="identifier">int_parser</span></code>
+          primitive, the <code class="computeroutput"><span class="identifier">any_int_parser</span></code>
           in the boost::spirit::qi namespace.
         </p>
 <p>
-          
-</p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
-    <span class="keyword">typename</span> <span class="identifier">T</span>
-  <span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">Radix</span> <span class="special">=</span> <span class="number">10</span>
-  <span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">MinDigits</span> <span class="special">=</span> <span class="number">1</span>
-  <span class="special">,</span> <span class="keyword">int</span> <span class="identifier">MaxDigits</span> <span class="special">=</span> <span class="special">-</span><span class="number">1</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">int_parser_impl</span>
-  <span class="special">:</span> <span class="identifier">primitive_parser</span><span class="special">&lt;</span><span class="identifier">int_parser_impl</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">MinDigits</span><span class="special">,</span> <span class="identifier">MaxDigits</span><span class="special">&gt;</span> <span class="special">&gt;</span>
-<span class="special">{</span>
-    <span class="comment">// check template parameter 'Radix' for validity
-</span>    <span class="identifier">BOOST_SPIRIT_ASSERT_MSG</span><span class="special">(</span>
-        <span class="identifier">Radix</span> <span class="special">==</span> <span class="number">2</span> <span class="special">||</span> <span class="identifier">Radix</span> <span class="special">==</span> <span class="number">8</span> <span class="special">||</span> <span class="identifier">Radix</span> <span class="special">==</span> <span class="number">10</span> <span class="special">||</span> <span class="identifier">Radix</span> <span class="special">==</span> <span class="number">16</span><span class="special">,</span>
-        <span class="identifier">not_supported_radix</span><span class="special">,</span> <span class="special">());</span>
-
-    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-    <span class="keyword">struct</span> <span class="identifier">attribute</span>
-    <span class="special">{</span>
-        <span class="keyword">typedef</span> <span class="identifier">T</span> <span class="identifier">type</span><span class="special">;</span>
-    <span class="special">};</span>
-
-    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Context</span>
-      <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Skipper</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attribute</span><span class="special">&gt;</span>
-    <span class="keyword">bool</span> <span class="identifier">parse</span><span class="special">(</span><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">last</span>
-      <span class="special">,</span> <span class="identifier">Context</span><span class="special">&amp;</span> <span class="comment">/*context*/</span><span class="special">,</span> <span class="identifier">Skipper</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">skipper</span>
-      <span class="special">,</span> <span class="identifier">Attribute</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span> <span class="keyword">const</span>
-    <span class="special">{</span>
-        <span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip_over</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">skipper</span><span class="special">);</span>
-        <span class="keyword">return</span> <span class="identifier">extract_int</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">MinDigits</span><span class="special">,</span> <span class="identifier">MaxDigits</span><span class="special">&gt;</span>
-            <span class="special">::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">);</span>
-    <span class="special">}</span>
-
-    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Context</span><span class="special">&gt;</span>
-    <span class="identifier">info</span> <span class="identifier">what</span><span class="special">(</span><span class="identifier">Context</span><span class="special">&amp;</span> <span class="comment">/*context*/</span><span class="special">)</span> <span class="keyword">const</span>
-    <span class="special">{</span>
-        <span class="keyword">return</span> <span class="identifier">info</span><span class="special">(</span><span class="string">"integer"</span><span class="special">);</span>
-    <span class="special">}</span>
-<span class="special">};</span>
-</pre>
-<p>
+          [primitive_parsers_any_int_parser]
         </p>
 <p>
-          The <code class="computeroutput"><span class="identifier">int_parser</span></code> is derived
+          The <code class="computeroutput"><span class="identifier">any_int_parser</span></code> is derived
           from a <code class="computeroutput"><a class="link" href="../../qi/reference/parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>,
           which in turn derives from <code class="computeroutput"><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Derived</span><span class="special">&gt;</span></code>. Therefore, it supports the following
           requirements:
@@ -289,7 +250,7 @@
         </p>
 <p>
           The <span class="emphasis"><em>attribute</em></span> metafunction returns the T template
-          parameter. We associate the <code class="computeroutput"><span class="identifier">int_parser</span></code>
+          parameter. We associate the <code class="computeroutput"><span class="identifier">any_int_parser</span></code>
           to some placeholders for <code class="computeroutput"><span class="identifier">short_</span></code>,
           <code class="computeroutput"><span class="identifier">int_</span></code>, <code class="computeroutput"><span class="identifier">long_</span></code>
           and <code class="computeroutput"><span class="identifier">long_long</span></code> types. But,
@@ -298,41 +259,37 @@
 <p>
           
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">short_</span><span class="special">&gt;</span> <span class="comment">// enables short_
-</span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="comment">// enables short_
+</span><span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">short_</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
 <p>
           
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&gt;</span> <span class="comment">// enables int_
-</span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="comment">// enables int_
+</span><span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
 <p>
           
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_</span><span class="special">&gt;</span> <span class="comment">// enables long_
-</span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="comment">// enables long_
+</span><span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
 <p>
           
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">&gt;</span> <span class="comment">// enables long_long
-</span>  <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="comment">// enables long_long
+</span><span class="keyword">struct</span> <span class="identifier">use_terminal</span><span class="special">&lt;</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
 <p>
-          Notice that <code class="computeroutput"><span class="identifier">int_parser</span></code>
+          Notice that <code class="computeroutput"><span class="identifier">any_int_parser</span></code>
           is placed in the namespace boost::spirit::qi while these <span class="emphasis"><em>enablers</em></span>
           are in namespace boost::spirit. The reason is that these placeholders are
           shared by other <a href="http://boost-spirit.com" target="_top">Spirit</a> <span class="emphasis"><em>domains</em></span>.
@@ -349,10 +306,14 @@
 <p>
           
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
+    <span class="keyword">typename</span> <span class="identifier">T</span>
+  <span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">Radix</span> <span class="special">=</span> <span class="number">10</span>
+  <span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">MinDigits</span> <span class="special">=</span> <span class="number">1</span>
+  <span class="special">,</span> <span class="keyword">int</span> <span class="identifier">MaxDigits</span> <span class="special">=</span> <span class="special">-</span><span class="number">1</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">make_int</span>
 <span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">int_parser_impl</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">result_type</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">any_int_parser</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">MinDigits</span><span class="special">,</span> <span class="identifier">MaxDigits</span><span class="special">&gt;</span> <span class="identifier">result_type</span><span class="special">;</span>
     <span class="identifier">result_type</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">unused_type</span><span class="special">,</span> <span class="identifier">unused_type</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
         <span class="keyword">return</span> <span class="identifier">result_type</span><span class="special">();</span>
@@ -385,7 +346,8 @@
           
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">short_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">short</span><span class="special">&gt;</span> <span class="special">{};</span>
+<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">short_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
+  <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">short</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
@@ -393,7 +355,8 @@
           
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">int_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">{};</span>
+<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">int_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
+  <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
@@ -401,7 +364,8 @@
           
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">long</span><span class="special">&gt;</span> <span class="special">{};</span>
+<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
+  <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="keyword">long</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
         </p>
@@ -409,7 +373,7 @@
           
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span> 
+<span class="keyword">struct</span> <span class="identifier">make_primitive</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">,</span> <span class="identifier">Modifiers</span><span class="special">&gt;</span>
   <span class="special">:</span> <span class="identifier">make_int</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">long_long_type</span><span class="special">&gt;</span> <span class="special">{};</span>
 </pre>
 <p>
@@ -420,7 +384,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id1249272"></a>
+<a name="id1051978"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -462,6 +426,9 @@
 </span>        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_value</span><span class="special">&lt;</span><span class="identifier">Attribute</span><span class="special">&gt;::</span><span class="identifier">type</span> 
             <span class="identifier">value_type</span><span class="special">;</span>
         <span class="identifier">value_type</span> <span class="identifier">val</span> <span class="special">=</span> <span class="identifier">value_type</span><span class="special">();</span>
+
+        <span class="comment">// ensure the attribute is actually a container type
+</span>        <span class="identifier">traits</span><span class="special">::</span><span class="identifier">make_container</span><span class="special">(</span><span class="identifier">attr</span><span class="special">);</span>
 
         <span class="comment">// Repeat while subject parses ok
 </span>        <span class="identifier">Iterator</span> <span class="identifier">save</span> <span class="special">=</span> <span class="identifier">first</span><span class="special">;</span>

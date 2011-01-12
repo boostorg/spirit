@@ -123,9 +123,11 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, bool Execute, typename Attribute>
-    struct handles_container<karma::omit_directive<Subject, Execute>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, bool Execute, typename Attribute
+        , typename Context, typename Iterator>
+    struct handles_container<karma::omit_directive<Subject, Execute>, Attribute
+        , Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 }}}
 
 #endif

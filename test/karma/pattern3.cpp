@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -16,7 +13,6 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
@@ -35,122 +31,91 @@ int main()
 
     typedef spirit_test::output_iterator<char>::type outiter_type;
 
+    // basic tests
     {
-        karma::rule<outiter_type, void(char, int, double)> start;
-        fusion::vector<char, int, double> vec('a', 10, 12.4);
+        karma::rule<outiter_type> start;
 
-        start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
+        start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
+        BOOST_TEST(test("a1012.4", start));
 
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
+        start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
+        BOOST_TEST(test("a1012.4", start));
 
-        karma::rule<outiter_type, void(char)> a;
-        karma::rule<outiter_type, void(int)> b;
-        karma::rule<outiter_type, void(double)> c;
+        karma::rule<outiter_type> a, b, c;
+        a = char_[_1 = 'a'];
+        b = int_[_1 = 10];
+        c = double_[_1 = 12.4];
 
-        a = char_[_1 = _r1];
-        b = int_[_1 = _r1];
-        c = double_[_1 = _r1];
-        start = a(_r1) << b(_r2) << c(_r3);
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
-    }
-
-    {
-        karma::rule<outiter_type, space_type, void(char, int, double)> start;
-        fusion::vector<char, int, double> vec('a', 10, 12.4);
-
-        start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
-        BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
-
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
-        BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
-
-        karma::rule<outiter_type, space_type, void(char)> a;
-        karma::rule<outiter_type, space_type, void(int)> b;
-        karma::rule<outiter_type, space_type, void(double)> c;
-
-        a = char_[_1 = _r1];
-        b = int_[_1 = _r1];
-        c = double_[_1 = _r1];
-        start = a(_r1) << b(_r2) << c(_r3);
-        BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
-    }
-
-    // copy tests
-    {
-        typedef variant<char, int, double> var_type;
-
-        karma::rule<outiter_type> a, b, c, start;
-
-        a = 'a';
-        b = int_(10);
-        c = double_(12.4);
-
-        // The FF is the dynamic equivalent of start = a << b << c;
-        start = a;
-        start = start.copy() << b;
-        start = start.copy() << c;
-        start = start.copy();
-
+        start = a << b << c;
         BOOST_TEST(test("a1012.4", start));
     }
 
+    // basic tests with delimiter
     {
-        typedef variant<char, int, double> var_type;
+        karma::rule<outiter_type, space_type> start;
 
-        karma::rule<outiter_type, space_type> a, b, c, start;
+        start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
+        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
 
-        a = 'a';
-        b = int_(10);
-        c = double_(12.4);
+        start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
+        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
 
-        // The FF is the dynamic equivalent of start = a << b << c;
-        start = a;
-        start = start.copy() << b;
-        start = start.copy() << c;
-        start = start.copy();
+        karma::rule<outiter_type, space_type> a, b, c;
+        a = char_[_1 = 'a'];
+        b = int_[_1 = 10];
+        c = double_[_1 = 12.4];
 
+        start = a << b << c;
         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
-    { // specifying the encoding
-        using karma::lower;
-        using karma::upper;
-        using karma::string;
+    // basic tests involving a direct parameter
+    {
+        typedef variant<char, int, double> var_type;
 
-        typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
-        karma::rule<outiter_type, iso8859_1> r;
+        karma::rule<outiter_type, var_type()> start;
 
-        r = lower['·'];
-        BOOST_TEST(test("·", r));
-        r = lower[char_('¡')];
-        BOOST_TEST(test("·", r));
-        r = upper['·'];
-        BOOST_TEST(test("¡", r));
-        r = upper[char_('¡')];
-        BOOST_TEST(test("¡", r));
+        start = (char_ | int_ | double_)[_1 = _r0];
 
-        r = lower["·¡"];
-        BOOST_TEST(test("··", r));
-        r = lower[lit("·¡")];
-        BOOST_TEST(test("··", r));
-        r = lower[string("·¡")];
-        BOOST_TEST(test("··", r));
-        r = upper["·¡"];
-        BOOST_TEST(test("¡¡", r));
-        r = upper[lit("·¡")];
-        BOOST_TEST(test("¡¡", r));
-        r = upper[string("·¡")];
-        BOOST_TEST(test("¡¡", r));
+        var_type v ('a');
+        BOOST_TEST(test("a", start, v));
+        v = 10;
+        BOOST_TEST(test("10", start, v));
+        v = 12.4;
+        BOOST_TEST(test("12.4", start, v));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
+    {
+        typedef variant<char, int, double> var_type;
+
+        karma::rule<outiter_type, space_type, var_type()> start;
+
+        start = (char_ | int_ | double_)[_1 = _r0];
+
+        var_type v ('a');
+        BOOST_TEST(test_delimited("a ", start, v, space));
+        v = 10;
+        BOOST_TEST(test_delimited("10 ", start, v, space));
+        v = 12.4;
+        BOOST_TEST(test_delimited("12.4 ", start, v, space));
+    }
+
+    // test handling of single element fusion sequences
+    {
+        using boost::fusion::vector;
+        karma::rule<outiter_type, vector<int>()> r = int_;
+
+        vector<int> v(1);
+        BOOST_TEST(test("1", r, v));
+    }
+
+    {
+        using boost::fusion::vector;
+        karma::rule<outiter_type, space_type, vector<int>()> r = int_;
+
+        vector<int> v(1);
+        BOOST_TEST(test_delimited("1 ", r, v, space));
+    }
 
     return boost::report_errors();
 }

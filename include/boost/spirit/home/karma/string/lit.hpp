@@ -166,9 +166,9 @@ namespace boost { namespace spirit { namespace karma
 
             using spirit::traits::get_c_string;
             if (!detail::string_compare(
-                    get_c_string<extracted_string_type>::call(
+                    get_c_string(
                         traits::extract_from<attribute_type>(attr, context))
-                  , get_c_string<string_type>::call(str_), char_encoding(), Tag()))
+                  , get_c_string(str_), char_encoding(), Tag()))
             {
                 return false;
             }
@@ -281,15 +281,17 @@ namespace boost { namespace spirit { namespace karma
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename CharEncoding, typename Tag, typename Attribute>
-    struct handles_container<karma::any_string<CharEncoding, Tag>, Attribute>
+    template <typename CharEncoding, typename Tag, typename Attribute
+            , typename Context, typename Iterator>
+    struct handles_container<karma::any_string<CharEncoding, Tag>, Attribute
+      , Context, Iterator>
       : mpl::false_ {};
 
     template <typename String, typename CharEncoding, typename Tag
-      , bool no_attribute, typename Attribute>
-    struct handles_container<
-            karma::literal_string<String, CharEncoding, Tag, no_attribute>
-          , Attribute>
+            , bool no_attribute, typename Attribute, typename Context
+            , typename Iterator>
+    struct handles_container<karma::literal_string<String, CharEncoding, Tag
+      , no_attribute>, Attribute, Context, Iterator>
       : mpl::false_ {};
 }}}
 

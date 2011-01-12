@@ -86,9 +86,9 @@ namespace boost { namespace spirit { namespace karma
         {
             if (!traits::valid_as<T>(attr))
                 return false;
-            else 
-                return subject.generate(sink, ctx, d, traits::as<T>(attr)) &&
-                       karma::delimit_out(sink, d); // always do post-delimiting
+
+            return subject.generate(sink, ctx, d, traits::as<T>(attr)) &&
+                    karma::delimit_out(sink, d); // always do post-delimiting
         }
 
         template <typename Context>
@@ -145,8 +145,10 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename T, typename Attribute>
-    struct handles_container<karma::as_directive<Subject, T>, Attribute>
+    template <typename Subject, typename T, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<karma::as_directive<Subject, T>, Attribute
+      , Context, Iterator>
       : mpl::false_ {};   // always dereference attribute if used in sequences
 }}}
 

@@ -167,12 +167,16 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Attribute>
-    struct handles_container<karma::kleene<Subject>, Attribute> 
+    template <typename Subject, typename Attribute, typename Context
+      , typename Iterator>
+    struct handles_container<karma::kleene<Subject>, Attribute
+      , Context, Iterator> 
       : mpl::true_ {};
 
-    template <typename Subject, typename Attribute>
-    struct handles_container<karma::strict_kleene<Subject>, Attribute> 
+    template <typename Subject, typename Attribute, typename Context
+      , typename Iterator>
+    struct handles_container<karma::strict_kleene<Subject>, Attribute
+      , Context, Iterator> 
       : mpl::true_ {};
 }}}
 

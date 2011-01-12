@@ -31,90 +31,106 @@ int main()
 
     typedef spirit_test::output_iterator<char>::type outiter_type;
 
-    // basic tests
+    // locals test
     {
-        karma::rule<outiter_type> start;
+        karma::rule<outiter_type, locals<std::string> > start;
 
-        start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
-        BOOST_TEST(test("a1012.4", start));
-
-        start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
-        BOOST_TEST(test("a1012.4", start));
-
-        karma::rule<outiter_type> a, b, c;
-        a = char_[_1 = 'a'];
-        b = int_[_1 = 10];
-        c = double_[_1 = 12.4];
-
-        start = a << b << c;
-        BOOST_TEST(test("a1012.4", start));
+        start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
+        BOOST_TEST(test("abc10abc", start));
     }
 
-    // basic tests with delimiter
     {
-        karma::rule<outiter_type, space_type> start;
+        karma::rule<outiter_type, space_type, locals<std::string> > start;
 
-        start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
-        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
-
-        start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
-        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
-
-        karma::rule<outiter_type, space_type> a, b, c;
-        a = char_[_1 = 'a'];
-        b = int_[_1 = 10];
-        c = double_[_1 = 12.4];
-
-        start = a << b << c;
-        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
+        start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
+        BOOST_TEST(test_delimited("abc 10 abc ", start, space));
     }
 
-    // basic tests involving a direct parameter
-    {
+    // alias tests
+    { 
         typedef variant<char, int, double> var_type;
 
-        karma::rule<outiter_type, var_type()> start;
+        karma::rule<outiter_type, var_type()> d, start;
 
-        start = (char_ | int_ | double_)[_1 = _r0];
+        d = start.alias();   // d will always track start
+
+        start = (char_ | int_ | double_)[_1 = _val];
 
         var_type v ('a');
-        BOOST_TEST(test("a", start, v));
+        BOOST_TEST(test("a", d, v));
         v = 10;
-        BOOST_TEST(test("10", start, v));
+        BOOST_TEST(test("10", d, v));
         v = 12.4;
-        BOOST_TEST(test("12.4", start, v));
+        BOOST_TEST(test("12.4", d, v));
+    }
+
+    { 
+        typedef variant<char, int, double> var_type;
+
+        karma::rule<outiter_type, space_type, var_type()> d, start;
+
+        d = start.alias();   // d will always track start
+
+        start = (char_ | int_ | double_)[_1 = _val];
+
+        var_type v ('a');
+        BOOST_TEST(test_delimited("a ", d, v, space));
+        v = 10;
+        BOOST_TEST(test_delimited("10 ", d, v, space));
+        v = 12.4;
+        BOOST_TEST(test_delimited("12.4 ", d, v, space));
     }
 
     {
         typedef variant<char, int, double> var_type;
 
-        karma::rule<outiter_type, space_type, var_type()> start;
+        karma::rule<outiter_type, var_type()> d, start;
 
-        start = (char_ | int_ | double_)[_1 = _r0];
+        d = start.alias();   // d will always track start
+
+        start %= char_ | int_ | double_;
 
         var_type v ('a');
-        BOOST_TEST(test_delimited("a ", start, v, space));
+        BOOST_TEST(test("a", d, v));
         v = 10;
-        BOOST_TEST(test_delimited("10 ", start, v, space));
+        BOOST_TEST(test("10", d, v));
         v = 12.4;
-        BOOST_TEST(test_delimited("12.4 ", start, v, space));
+        BOOST_TEST(test("12.4", d, v));
+
+        start = char_ | int_ | double_;
+
+        v = 'a';
+        BOOST_TEST(test("a", d, v));
+        v = 10;
+        BOOST_TEST(test("10", d, v));
+        v = 12.4;
+        BOOST_TEST(test("12.4", d, v));
     }
 
-    // test handling of single element fusion sequences
     {
-        using boost::fusion::vector;
-        karma::rule<outiter_type, vector<int>()> r = int_;
+        typedef variant<char, int, double> var_type;
 
-        vector<int> v(1);
-        BOOST_TEST(test("1", r, v));
-    }
+        karma::rule<outiter_type, space_type, var_type()> d, start;
 
-    {
-        using boost::fusion::vector;
-        karma::rule<outiter_type, space_type, vector<int>()> r = int_;
+        d = start.alias();   // d will always track start
 
-        vector<int> v(1);
-        BOOST_TEST(test_delimited("1 ", r, v, space));
+        start %= char_ | int_ | double_;
+
+        var_type v ('a');
+        BOOST_TEST(test_delimited("a ", d, v, space));
+        v = 10;
+        BOOST_TEST(test_delimited("10 ", d, v, space));
+        v = 12.4;
+        BOOST_TEST(test_delimited("12.4 ", d, v, space));
+
+        start = char_ | int_ | double_;
+
+        v = 'a';
+        BOOST_TEST(test_delimited("a ", d, v, space));
+        v = 10;
+        BOOST_TEST(test_delimited("10 ", d, v, space));
+        v = 12.4;
+        BOOST_TEST(test_delimited("12.4 ", d, v, space));
     }
 
     return boost::report_errors();

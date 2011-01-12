@@ -102,9 +102,11 @@ namespace boost { namespace spirit { namespace traits
       : binary_has_semantic_action<Left, Right> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Left, typename Right, typename Attribute>
-    struct handles_container<qi::difference<Left, Right>, Attribute>
-      : binary_handles_container<Left, Right, Attribute> {};
+    template <typename Left, typename Right, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<qi::difference<Left, Right>, Attribute, Context
+      , Iterator>
+      : binary_handles_container<Left, Right, Attribute, Context, Iterator> {};
 }}}
 
 #endif

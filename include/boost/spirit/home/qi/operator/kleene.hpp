@@ -68,6 +68,9 @@ namespace boost { namespace spirit { namespace qi
                 value_type;
             value_type val = value_type();
 
+            // ensure the attribute is actually a container type
+            traits::make_container(attr);
+
             // Repeat while subject parses ok
             Iterator save = first;
             while (subject.parse(save, last, context, skipper, val) &&
@@ -116,9 +119,11 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Attribute>
-    struct handles_container<qi::kleene<Subject>, Attribute> 
-      : mpl::true_ {};
+    template <typename Subject, typename Attribute, typename Context
+        , typename Iterator>
+    struct handles_container<qi::kleene<Subject>, Attribute
+        , Context, Iterator>
+      : mpl::true_ {}; 
 }}}
 
 #endif

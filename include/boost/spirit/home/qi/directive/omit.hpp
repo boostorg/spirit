@@ -95,9 +95,11 @@ namespace boost { namespace spirit { namespace traits
       : mpl::false_ {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Attribute>
-    struct handles_container<qi::omit_directive<Subject>, Attribute>
-      : unary_handles_container<Subject, Attribute> {};
+    template <typename Subject, typename Attribute, typename Context
+        , typename Iterator>
+    struct handles_container<qi::omit_directive<Subject>, Attribute
+        , Context, Iterator>
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 }}}
 
 #endif

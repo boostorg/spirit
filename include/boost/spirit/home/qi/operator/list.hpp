@@ -66,6 +66,9 @@ namespace boost { namespace spirit { namespace qi
                 value_type;
             value_type val = value_type();
 
+            // ensure the attribute is actually a container type
+            traits::make_container(attr);
+
             Iterator save = first;
             if (!left.parse(save, last, context, skipper, val) ||
                 !traits::push_back(attr, val))
@@ -113,8 +116,10 @@ namespace boost { namespace spirit { namespace traits
       : binary_has_semantic_action<Left, Right> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Left, typename Right, typename Attribute>
-    struct handles_container<qi::list<Left, Right>, Attribute> 
+    template <typename Left, typename Right, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<qi::list<Left, Right>, Attribute, Context
+      , Iterator> 
       : mpl::true_ {};
 }}}
 

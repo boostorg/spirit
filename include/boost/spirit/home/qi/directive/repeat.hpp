@@ -218,6 +218,9 @@ namespace boost { namespace spirit { namespace qi
             value_type val = value_type();
             typename LoopIter::type i = iter.start();
 
+            // ensure the attribute is actually a container type
+            traits::make_container(attr);
+
             // parse the minimum required
             Iterator save = first;
             if (!iter.got_min(i) &&
@@ -328,8 +331,10 @@ namespace boost { namespace spirit { namespace traits
       : unary_has_semantic_action<Subject> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename LoopIter, typename Attribute>
-    struct handles_container<qi::repeat_parser<Subject, LoopIter>, Attribute>
+    template <typename Subject, typename LoopIter, typename Attribute
+      , typename Context, typename Iterator>
+    struct handles_container<qi::repeat_parser<Subject, LoopIter>
+      , Attribute, Context, Iterator>
       : mpl::true_ {};
 }}}
 

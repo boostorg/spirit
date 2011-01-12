@@ -277,7 +277,7 @@ namespace boost { namespace spirit { namespace qi
             ), cannot_convert_string, (String));
 
             in_type const* definition =
-                (in_type const*)traits::get_c_string<String>::call(str);
+                (in_type const*)traits::get_c_string(str);
             in_type ch = *definition++;
             while (ch)
             {
@@ -337,7 +337,7 @@ namespace boost { namespace spirit { namespace qi
             ), cannot_convert_string, (String));
 
             char_type const* definition =
-                (char_type const*)traits::get_c_string<String>::call(str);
+                (char_type const*)traits::get_c_string(str);
             char_type ch = *definition++;
             while (ch)
             {

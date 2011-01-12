@@ -37,7 +37,7 @@ namespace boost { namespace spirit
     namespace tag
     {
         template <typename T, unsigned Radix>
-        struct uint_tag {};
+        struct uint_generator {};
     }
 
     namespace karma
@@ -47,7 +47,7 @@ namespace boost { namespace spirit
         // order to create a customized int generator
         template <typename T = unsigned int, unsigned Radix = 10>
         struct uint_generator
-          : spirit::terminal<tag::uint_tag<T, Radix> > 
+          : spirit::terminal<tag::uint_generator<T, Radix> > 
         {};
     }
 
@@ -177,20 +177,20 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom uint_generator
     template <typename T, unsigned Radix>
-    struct use_terminal<karma::domain, tag::uint_tag<T, Radix> >
+    struct use_terminal<karma::domain, tag::uint_generator<T, Radix> >
       : mpl::true_ {};
 
     // enables any custom uint_generator(...)
     template <typename T, unsigned Radix, typename A0>
     struct use_terminal<karma::domain
-      , terminal_ex<tag::uint_tag<T, Radix>, fusion::vector1<A0> >
+      , terminal_ex<tag::uint_generator<T, Radix>, fusion::vector1<A0> >
     > : mpl::true_ {};
 
     // enables *lazy* custom uint_generator
     template <typename T, unsigned Radix>
     struct use_lazy_terminal<
         karma::domain
-      , tag::uint_tag<T, Radix>
+      , tag::uint_generator<T, Radix>
       , 1 // arity
     > : mpl::true_ {};
 
@@ -407,7 +407,7 @@ namespace boost { namespace spirit { namespace karma
 #endif
 
     template <typename T, unsigned Radix, typename Modifiers>
-    struct make_primitive<tag::uint_tag<T, Radix>, Modifiers>
+    struct make_primitive<tag::uint_generator<T, Radix>, Modifiers>
       : detail::make_uint<T, Modifiers, Radix> {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -476,7 +476,7 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename T, unsigned Radix, typename A0, typename Modifiers>
     struct make_primitive<
-        terminal_ex<tag::uint_tag<T, Radix>, fusion::vector1<A0> >
+        terminal_ex<tag::uint_generator<T, Radix>, fusion::vector1<A0> >
           , Modifiers>
       : detail::make_uint_direct<T, Modifiers, Radix> {};
 

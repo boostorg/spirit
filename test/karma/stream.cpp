@@ -3,6 +3,9 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <stdint.h>
+#include <cwchar>
+#include <streambuf>
 #include <iostream>
 
 #include <boost/config/warning_disable.hpp>
@@ -51,13 +54,6 @@ main()
         BOOST_TEST(test("1", stream, 1));
         BOOST_TEST(test("1.1", stream, 1.1));
         BOOST_TEST(test("{1.2,2.4}", stream, complex(1.2, 2.4)));
-
-        BOOST_TEST(test(L"x", wstream, L'x'));
-        BOOST_TEST(test(L"xyz", wstream, L"xyz"));
-        BOOST_TEST(test(L"xyz", wstream, std::basic_string<wchar_t>(L"xyz")));
-        BOOST_TEST(test(L"1", wstream, 1));
-        BOOST_TEST(test(L"1.1", wstream, 1.1));
-        BOOST_TEST(test(L"{1.2,2.4}", wstream, complex(1.2, 2.4)));
     }
 
     {
@@ -67,13 +63,6 @@ main()
         BOOST_TEST(test("1", stream(1)));
         BOOST_TEST(test("1.1", stream(1.1)));
         BOOST_TEST(test("{1.2,2.4}", stream(complex(1.2, 2.4))));
-
-        BOOST_TEST(test(L"x", wstream(L'x')));
-        BOOST_TEST(test(L"xyz", wstream(L"xyz")));
-        BOOST_TEST(test(L"xyz", wstream(std::basic_string<wchar_t>(L"xyz"))));
-        BOOST_TEST(test(L"1", wstream(1)));
-        BOOST_TEST(test(L"1.1", wstream(1.1)));
-        BOOST_TEST(test(L"{1.2,2.4}", wstream(complex(1.2, 2.4))));
     }
 
     {
@@ -85,13 +74,6 @@ main()
         BOOST_TEST(test("X", upper[stream], 'x'));
         BOOST_TEST(test("XYZ", upper[stream], "xyz"));
         BOOST_TEST(test("XYZ", upper[stream], std::string("xyz")));
-
-        BOOST_TEST(test(L"x", lower[wstream], L'X'));
-        BOOST_TEST(test(L"xyz", lower[wstream], L"XYZ"));
-        BOOST_TEST(test(L"xyz", lower[wstream], std::basic_string<wchar_t>(L"XYZ")));
-        BOOST_TEST(test(L"X", upper[wstream], L'x'));
-        BOOST_TEST(test(L"XYZ", upper[wstream], L"xyz"));
-        BOOST_TEST(test(L"XYZ", upper[wstream], std::basic_string<wchar_t>(L"xyz")));
     }
 
     {
@@ -101,13 +83,6 @@ main()
         BOOST_TEST(test_delimited("1 ", stream, 1, ' '));
         BOOST_TEST(test_delimited("1.1 ", stream, 1.1, ' '));
         BOOST_TEST(test_delimited("{1.2,2.4} ", stream, complex(1.2, 2.4), ' '));
-
-        BOOST_TEST(test_delimited(L"x ", wstream, L'x', L' '));
-        BOOST_TEST(test_delimited(L"xyz ", wstream, L"xyz", L' '));
-        BOOST_TEST(test_delimited(L"xyz ", wstream, std::basic_string<wchar_t>(L"xyz"), L' '));
-        BOOST_TEST(test_delimited(L"1 ", wstream, 1, ' '));
-        BOOST_TEST(test_delimited(L"1.1 ", wstream, 1.1, ' '));
-        BOOST_TEST(test_delimited(L"{1.2,2.4} ", wstream, complex(1.2, 2.4), ' '));
     }
 
     {
@@ -138,13 +113,6 @@ main()
         BOOST_TEST(test_delimited("X ", upper[stream], 'x', ' '));
         BOOST_TEST(test_delimited("XYZ ", upper[stream], "xyz", ' '));
         BOOST_TEST(test_delimited("XYZ ", upper[stream], std::string("xyz"), ' '));
-
-        BOOST_TEST(test_delimited(L"x ", lower[wstream], L'X', L' '));
-        BOOST_TEST(test_delimited(L"xyz ", lower[wstream], L"XYZ", L' '));
-        BOOST_TEST(test_delimited(L"xyz ", lower[wstream], std::basic_string<wchar_t>(L"XYZ"), L' '));
-        BOOST_TEST(test_delimited(L"X ", upper[wstream], L'x', L' '));
-        BOOST_TEST(test_delimited(L"XYZ ", upper[wstream], L"xyz", ' '));
-        BOOST_TEST(test_delimited(L"XYZ ", upper[wstream], std::basic_string<wchar_t>(L"xyz"), L' '));
     }
 
     {   // lazy streams
@@ -153,10 +121,6 @@ main()
         std::basic_string<char> s("abc");
         BOOST_TEST((test("abc", stream(phx::val(s)))));
         BOOST_TEST((test("abc", stream(phx::ref(s)))));
-
-        std::basic_string<wchar_t> ws(L"abc");
-        BOOST_TEST((test(L"abc", wstream(phx::val(ws)))));
-        BOOST_TEST((test(L"abc", wstream(phx::ref(ws)))));
     }
 
     {
