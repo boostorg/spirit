@@ -14,7 +14,7 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x2041
-#define SPIRIT_PIZZA_VERSION IANS_MEATZA  // :-)
+#define SPIRIT_VERSION 0x2042
+#define SPIRIT_PIZZA_VERSION WASHS_CHEESE  // :-O
 
 #endif
