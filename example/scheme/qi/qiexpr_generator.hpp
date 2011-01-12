@@ -10,18 +10,16 @@
 
 #include <boost/cstdint.hpp>
 #include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
-#include <utree/utree.hpp>
-#include <utree/operators.hpp>
-#include <output/utree_traits.hpp>
 #include <qi/component_names.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
     template <typename Out>
-    void print_attribute(Out& out, scheme::utree const& val);
+    void print_attribute(Out& out, utree const& val);
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,6 +29,20 @@ namespace scheme { namespace qi
     using boost::spirit::karma::rule;
     using boost::spirit::karma::space_type;
     using boost::spirit::karma::symbols;
+    
+    using boost::spirit::utree;
+    using boost::spirit::utree_type;
+    using boost::spirit::scope;
+    using boost::spirit::shallow;
+    using boost::spirit::stored_function;
+    using boost::spirit::function_base;
+    using boost::spirit::binary_string;
+    using boost::spirit::utf8_symbol;
+    using boost::spirit::utf8_string;
+    using boost::spirit::binary_range;
+    using boost::spirit::utf8_symbol_range;
+    using boost::spirit::utf8_string_range;
+    using boost::spirit::nil;
 
     ///////////////////////////////////////////////////////////////////////////
     namespace traits
@@ -69,12 +81,12 @@ namespace scheme { namespace qi
             using boost::phoenix::ref;
 
             start = 
-                    nil 
+                    nil_ 
                 |   rule_
                 ;
 
             grammar_ =
-                    nil 
+                    nil_ 
                 |   rule_ % eol
                 ;
 
@@ -119,7 +131,7 @@ namespace scheme { namespace qi
             any_symbol = string;
             symbol = string(_r1);
             literal = '"' << string << '"';
-            nil = eps;
+            nil_ = eps;
 
             // fill the symbol tables with all known primitive parser names
             std::string name("qi:");
@@ -146,7 +158,7 @@ namespace scheme { namespace qi
             BOOST_SPIRIT_DEBUG_NODE(permutation);
             BOOST_SPIRIT_DEBUG_NODE(sequence);
             BOOST_SPIRIT_DEBUG_NODE(term);
-            BOOST_SPIRIT_DEBUG_NODE(nil);
+            BOOST_SPIRIT_DEBUG_NODE(nil_);
             BOOST_SPIRIT_DEBUG_NODE(literal);
             BOOST_SPIRIT_DEBUG_NODE(symbol);
             BOOST_SPIRIT_DEBUG_NODE(any_symbol);
@@ -159,13 +171,13 @@ namespace scheme { namespace qi
         delimiting_rule_type start, alternative, permutation, sequence, term;
         delimiting_rule_type grammar_, rule_;
         delimiting_rule_type rule_name, primitive0_rule, alternative_rule;
-        rule<OutputIterator, scheme::nil()> nil;
-        rule<OutputIterator, scheme::utf8_string()> literal;
-        rule<OutputIterator, scheme::utf8_symbol(std::string)> symbol;
-        rule<OutputIterator, scheme::utf8_symbol()> any_symbol;
+        rule<OutputIterator, nil()> nil_;
+        rule<OutputIterator, utf8_string()> literal;
+        rule<OutputIterator, utf8_symbol(std::string)> symbol;
+        rule<OutputIterator, utf8_symbol()> any_symbol;
 
-        symbols<scheme::utf8_symbol> unary, directive0;
-        symbols<scheme::utf8_symbol> primitive0, primitive1, primitive2;
+        symbols<utf8_symbol> unary, directive0;
+        symbols<utf8_symbol> primitive0, primitive1, primitive2;
     };
 }}
 

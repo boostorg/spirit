@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Operator]
+[section:operator Generator Operators]
 
 Operators are used as a means for object composition and embedding.
 Simple generators may be composed to form composites through operator
@@ -32,7 +32,7 @@ plus (unary `+`), optional (unary `-`), lists (`a % b`), and the two predicates,
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:sequence Sequences (`a << b`)]
+[section:sequence Sequence Generator (`a << b`)]
 
 [heading Description]
 
@@ -134,7 +134,7 @@ Basic usage of a sequence:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:alternative Alternative (`a | b`)]
+[section:alternative Alternative Generator (`a | b`)]
 
 [heading Description]
 
@@ -234,7 +234,7 @@ generated output.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:kleene Kleene Star (`*a`)]
+[section:kleene Kleene Star Generator (`*a`)]
 
 [heading Description]
 
@@ -342,7 +342,7 @@ Basic usage of a Kleene star generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:plus Plus (`+a`)]
+[section:plus Plus Generator (`+a`)]
 
 [heading Description]
 
@@ -458,7 +458,7 @@ failing for empty containers passed as its attribute:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:list Lists (`a % b`)]
+[section:list List Generator (`a % b`)]
 
 [heading Description]
 
@@ -565,7 +565,7 @@ Basic usage of a list generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:optional Optional (`-a`)]
+[section:optional Optional Generator (`-a`)]
 
 [heading Description]
 
@@ -660,7 +660,7 @@ Usage and result of an empty optional generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:and_predicate And-Predicate (`&a`)]
+[section:and_predicate And-Predicate Generator (`&a`)]
 
 [heading Description]
 
@@ -737,7 +737,7 @@ Basic usage of an and predicate generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:not_predicate Not-Predicate (`!a`)]
+[section:not_predicate Not-Predicate Generator (`!a`)]
 
 [heading Description]
 

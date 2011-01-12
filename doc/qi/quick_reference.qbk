@@ -418,7 +418,7 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 ]
 
 [endsect]
-[section Semantic Actions]
+[section:semantic_actions Parser Semantic Actions]
 
 Has the form:
 

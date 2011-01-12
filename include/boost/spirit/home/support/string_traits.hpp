@@ -187,7 +187,7 @@ namespace boost { namespace spirit { namespace traits
     { return str.begin(); }
 
     template <typename T, typename Str>
-    inline typename Str::iterator 
+    inline typename Str::iterator
     get_begin(Str& str BOOST_PROTO_DISABLE_IF_IS_CONST(Str))
     { return str.begin(); }
 
@@ -196,7 +196,7 @@ namespace boost { namespace spirit { namespace traits
     { return str.end(); }
 
     template <typename T, typename Str>
-    inline typename Str::iterator 
+    inline typename Str::iterator
     get_end(Str& str BOOST_PROTO_DISABLE_IF_IS_CONST(Str))
     { return str.end(); }
 

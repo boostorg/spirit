@@ -193,6 +193,15 @@ namespace boost { namespace spirit { namespace traits
     template<typename Out, typename T>
     void print_token(Out&, T const&);
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Access attributes from a karma symbol table
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Attribute, typename Enable = void>
+    struct symbols_lookup;
+
+    template <typename Attribute, typename T, typename Enable = void>
+    struct symbols_value;
+
 }}}
 
 #endif

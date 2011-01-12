@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section String]
+[section:string String Parsers]
 
 This module includes parsers for strings. Currently, this module
 includes the literal and string parsers and the symbol table.
@@ -19,7 +19,7 @@ includes the literal and string parsers and the symbol table.
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:string String (`string`, `lit`)]
+[section:string String Parsers (`string`, `lit`)]
 
 [heading Description]
 
@@ -123,7 +123,7 @@ Lazy strings using __phoenix__
 
 
 [/------------------------------------------------------------------------------]
-[section:symbols Symbols (`symbols`)]
+[section:symbols Symbols Parser (`symbols`)]
 
 [heading Description]
 

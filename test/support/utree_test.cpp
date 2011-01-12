@@ -1,79 +1,81 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/config/warning_disable.hpp>
 
-#include <utree/utree.hpp>
-#include <utree/operators.hpp>
-#include <utree/io.hpp>
+#include <boost/config/warning_disable.hpp>
+#include <boost/detail/lightweight_test.hpp>
+
+#include <boost/spirit/include/support_utree.hpp>
+
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
 
-inline void check(scheme::utree const& val, std::string expected)
+inline bool check(boost::spirit::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    BOOST_ASSERT(s.str() == expected + " ");
+    return (s.str() == expected + " ") ? true : false;
 }
 
 struct one_two_three
 {
-    scheme::utree operator()(scheme::scope) const
+    boost::spirit::utree operator()(boost::spirit::scope) const
     {
-        return scheme::utree(123);
+        return boost::spirit::utree(123);
     }
 };
 
 int main()
 {
-    using scheme::utree;
+    using boost::spirit::utree;
 
     {
         // test the size
         std::cout << "size of utree is: "
-            << sizeof(scheme::utree) << " bytes" << std::endl;
+            << sizeof(utree) << " bytes" << std::endl;
+        BOOST_TEST(sizeof(utree) == sizeof(void*[4]));
     }
 
     {
         utree val;
-        check(val, "<nil>");
+        BOOST_TEST(check(val, "<nil>"));
     }
 
     {
         utree val(true);
-        check(val, "true");
+        BOOST_TEST(check(val, "true"));
     }
 
     {
         utree val(123);
-        check(val, "123");
+        BOOST_TEST(check(val, "123"));
     }
 
     {
         // single element string
         utree val('x');
-        check(val, "\"x\"");
+        BOOST_TEST(check(val, "\"x\""));
     }
 
     {
         utree val(123.456);
-        check(val, "123.456");
+        BOOST_TEST(check(val, "123.456"));
     }
 
     {
         utree val("Hello, World");
-        check(val, "\"Hello, World\"");
+        BOOST_TEST(check(val, "\"Hello, World\""));
         utree val2;
         val2 = val;
-        check(val2, "\"Hello, World\"");
+        BOOST_TEST(check(val2, "\"Hello, World\""));
         utree val3("Hello, World. Chuckie is back!!!");
         val = val3;
-        check(val, "\"Hello, World. Chuckie is back!!!\"");
+        BOOST_TEST(check(val, "\"Hello, World. Chuckie is back!!!\""));
 
         utree val4("Apple");
         utree val5("Apple");
@@ -93,35 +95,35 @@ int main()
         val2.push_back("Mah Doggie");
         val.push_back(val2);
         BOOST_TEST(val.size() == 3);
-        check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
-        check(val.front(), "123");
+        BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
+        BOOST_TEST(check(val.front(), "123"));
 
         utree val3;
         val3.swap(val);
         BOOST_TEST(val3.size() == 3);
-        check(val, "<nil>");
+        BOOST_TEST(check(val, "<nil>"));
         val3.swap(val);
-        check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
+        BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         val.push_back("another string");
         BOOST_TEST(val.size() == 4);
-        check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )");
+        BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )"));
         val.pop_front();
-        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )");
+        BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )"));
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
         BOOST_TEST(val.size() == 4);
-        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" \"another string\" )");
+        BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" \"another string\" )"));
         val.pop_back();
-        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" )");
+        BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" )"));
         BOOST_TEST(val.size() == 3);
         utree::iterator it = val.end(); --it;
         val.erase(it);
-        check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
+        BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(val.size() == 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
-        check(val, "( 123.456 \"Mah Doggie\" \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )");
+        BOOST_TEST(check(val, "( 123.456 \"Mah Doggie\" \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(val.size() == 4);
     }
 
@@ -132,7 +134,7 @@ int main()
         val.insert(val.end(), "Chuckie");
         val.insert(val.end(), "Poly");
         val.insert(val.end(), "Mochi");
-        check(val, "( 123 \"Mia\" \"Chuckie\" \"Poly\" \"Mochi\" )");
+        BOOST_TEST(check(val, "( 123 \"Mia\" \"Chuckie\" \"Poly\" \"Mochi\" )"));
     }
 
     {
@@ -193,19 +195,19 @@ int main()
         utree a;
         a.push_back(1);
         a.pop_front();
-        check(a, "( )");
+        BOOST_TEST(check(a, "( )"));
 
         // the other way around
         utree b;
         b.push_front(1);
         b.pop_back();
-        check(b, "( )");
+        BOOST_TEST(check(b, "( )"));
     }
 
     { // test references
         utree val(123);
         utree ref(boost::ref(val));
-        check(ref, "123");
+        BOOST_TEST(check(ref, "123"));
         BOOST_TEST(ref == utree(123));
 
         val.clear();
@@ -213,7 +215,7 @@ int main()
         val.push_back(2);
         val.push_back(3);
         val.push_back(4);
-        check(ref, "( 1 2 3 4 )");
+        BOOST_TEST(check(ref, "( 1 2 3 4 )"));
         BOOST_TEST(ref[0] == utree(1));
         BOOST_TEST(ref[1] == utree(2));
         BOOST_TEST(ref[2] == utree(3));
@@ -228,9 +230,9 @@ int main()
             utree(123.456)
         };
 
-        check(vals[0], "123");
-        check(vals[1], "\"Hello, World\"");
-        check(vals[2], "123.456");
+        BOOST_TEST(check(vals[0], "123"));
+        BOOST_TEST(check(vals[1], "\"Hello, World\""));
+        BOOST_TEST(check(vals[2], "123.456"));
     }
 
     { // operators
@@ -264,7 +266,7 @@ int main()
         val.push_back(2);
         val.push_back(3);
         val.push_back(4);
-        check(val, "( 1 2 3 4 )");
+        BOOST_TEST(check(val, "( 1 2 3 4 )"));
 
         utree::ref_iterator b = val.ref_begin();
         utree::ref_iterator e = val.ref_end();
@@ -274,7 +276,7 @@ int main()
         BOOST_TEST(ref[1] == utree(2));
         BOOST_TEST(ref[2] == utree(3));
         BOOST_TEST(ref[3] == utree(4));
-        check(ref, "( 1 2 3 4 )");
+        BOOST_TEST(check(ref, "( 1 2 3 4 )"));
     }
 
     {
@@ -286,12 +288,17 @@ int main()
 
     {
         // test functions
-        utree f = scheme::stored_function<one_two_three>();
-        f.eval(scheme::scope());
+        using boost::spirit::stored_function;
+        using boost::spirit::scope;
+
+        utree f = stored_function<one_two_three>();
+        f.eval(scope());
     }
 
     {
         // shallow ranges
+        using boost::spirit::shallow;
+
         utree val;
         val.push_back(1);
         val.push_back(2);
@@ -299,9 +306,9 @@ int main()
         val.push_back(4);
 
         utree::iterator i = val.begin(); ++i;
-        utree alias(utree::range(i, val.end()), scheme::shallow);
+        utree alias(utree::range(i, val.end()), shallow);
 
-        check(alias, "( 2 3 4 )");
+        BOOST_TEST(check(alias, "( 2 3 4 )"));
         BOOST_TEST(alias.size() == 3);
         BOOST_TEST(alias.front() == 2);
         BOOST_TEST(alias.back() == 4);
@@ -311,24 +318,22 @@ int main()
 
     {
         // shallow string ranges
-
-        using scheme::utf8_string_range;
-        using scheme::shallow;
+        using boost::spirit::utf8_string_range;
+        using boost::spirit::shallow;
 
         char const* s = "Hello, World";
         utree val(utf8_string_range(s, s + strlen(s)), shallow);
-        check(val, "\"Hello, World\"");
+        BOOST_TEST(check(val, "\"Hello, World\""));
 
         utf8_string_range r = val.get<utf8_string_range>();
         utf8_string_range pf(r.begin()+1, r.end()-1);
         val = utree(pf, shallow);
-        check(val, "\"ello, Worl\"");
+        BOOST_TEST(check(val, "\"ello, Worl\""));
     }
 
     {
         // any pointer
-
-        using scheme::any_ptr;
+        using boost::spirit::any_ptr;
 
         int n = 123;
         utree up = any_ptr(&n);

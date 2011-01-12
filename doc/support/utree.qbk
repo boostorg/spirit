@@ -1,0 +1,47 @@
+[/==============================================================================
+    Copyright (C) 2001-2010 Hartmut Kaiser
+    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2010      Bryce Lelbach
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================/]
+
+[import ../../../../boost/spirit/home/support/utree/utree.hpp]
+
+[section:utree utree]
+
+utree is a hierarchical, dynamic data structure that can represent abstract
+syntax trees. utree can store the following: 
+
+[utree_types]
+
+[note utree has minimal memory footprint. The data structure size is
+16 bytes on a 32-bit platform. Being a container of itself, it can
+represent tree structures.]
+
+[heading Class Reference]
+
+[utree]
+
+[heading String Types]
+
+[utree_strings]
+
+[heading Function Object Interface]
+
+The stored_function template class can to store a unary function objects with
+a signature of utree(scope const&) as a utree node.
+
+[utree_function_object_interface]
+
+[heading Exceptions]
+
+[utree_exceptions]
+
+[heading Scope]
+
+[utree_scope]
+
+[endsect]
+

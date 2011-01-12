@@ -11,14 +11,13 @@
 
 #include <boost/cstdint.hpp>
 #include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_container.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
-#include <utree/utree.hpp>
-#include <utree/operators.hpp>
 #include <input/string.hpp>
 #include <input/error_handler.hpp>
 
@@ -50,6 +49,20 @@ namespace scheme { namespace input
     using boost::spirit::qi::eps;
     using boost::spirit::qi::omit;
     using boost::spirit::info;
+    
+    using boost::spirit::utree;
+    using boost::spirit::utree_type;
+    using boost::spirit::scope;
+    using boost::spirit::shallow;
+    using boost::spirit::stored_function;
+    using boost::spirit::function_base;
+    using boost::spirit::binary_string;
+    using boost::spirit::utf8_symbol;
+    using boost::spirit::utf8_string;
+    using boost::spirit::binary_range;
+    using boost::spirit::utf8_symbol_range;
+    using boost::spirit::utf8_string_range;
+    using boost::spirit::nil;
 
     typedef boost::uint32_t uchar; // a unicode code point
 
@@ -75,7 +88,7 @@ namespace scheme { namespace input
         template <typename Range>
         void operator()(utree& ast, Range const& rng) const
         {
-            int n = get_line(rng.begin());
+            int n = boost::spirit::get_line(rng.begin());
             BOOST_ASSERT(n <= (std::numeric_limits<short>::max)());
             ast.tag(n);
         }

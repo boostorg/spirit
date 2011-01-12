@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>UnaryParser</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../parser_concepts.html" title="Parser Concepts">
 <link rel="prev" href="primitiveparser.html" title="PrimitiveParser">
 <link rel="next" href="binaryparser.html" title="BinaryParser">
@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.parser_concepts.unaryparser"></a><a class="link" href="unaryparser.html" title="UnaryParser">UnaryParser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.description"></a><h6>
-<a name="id900481"></a>
+<a name="id689022"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             the Delegate Design Pattern.
           </p>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.refinement_of"></a><h6>
-<a name="id901075"></a>
+<a name="id689050"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.refinement_of">Refinement
             of</a>
           </h6>
@@ -57,7 +57,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.valid_expressions"></a><h6>
-<a name="id901153"></a>
+<a name="id689141"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -107,7 +107,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.type_expressions"></a><h6>
-<a name="id901273"></a>
+<a name="id689279"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -160,7 +160,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.invariants"></a><h6>
-<a name="id901444"></a>
+<a name="id689479"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.invariants">Invariants</a>
           </h6>
 <p>
@@ -171,36 +171,36 @@
                 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_parser</span><span class="special">&lt;</span><span class="identifier">P</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
               </li></ul></div>
 <a name="spirit.qi.reference.parser_concepts.unaryparser.models"></a><h6>
-<a name="id901533"></a>
+<a name="id689589"></a>
             <a class="link" href="unaryparser.html#spirit.qi.reference.parser_concepts.unaryparser.models">Models</a>
           </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-                <a class="link" href="../operator/and_predicate.html" title="And-Predicate (&amp;a)">And Predicate</a>
+                <a class="link" href="../operator/and_predicate.html" title="And-Predicate Parser (&amp;a)">And Predicate</a>
               </li>
 <li class="listitem">
-                <a class="link" href="../operator/kleene.html" title="Kleene (*a)">Kleene</a>
+                <a class="link" href="../operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>
               </li>
 <li class="listitem">
-                <a class="link" href="../directive/lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>
+                <a class="link" href="../directive/lexeme.html" title="Parser Directive Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>
               </li>
 <li class="listitem">
-                <a class="link" href="../operator/not_predicate.html" title="Not-Predicate (!a)">Not Predicate</a>
+                <a class="link" href="../operator/not_predicate.html" title="Not-Predicate Parser (!a)">Not Predicate</a>
               </li>
 <li class="listitem">
-                <a class="link" href="../directive/omit.html" title="Ignoring Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a>
+                <a class="link" href="../directive/omit.html" title="Parser Directive Ignoring Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a>
               </li>
 <li class="listitem">
-                <a class="link" href="../operator/plus.html" title="Plus (+a)">Plus</a>
+                <a class="link" href="../operator/plus.html" title="Plus Parser (+a)">Plus</a>
               </li>
 <li class="listitem">
-                <a class="link" href="../directive/raw.html" title="Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a>
+                <a class="link" href="../directive/raw.html" title="Directive for Transduction Parsing (raw[])"><code class="computeroutput"><span class="identifier">raw</span></code></a>
               </li>
 <li class="listitem">
-                <a class="link" href="../directive/repeat.html" title="Repetition (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a>
+                <a class="link" href="../directive/repeat.html" title="Repetition Parser Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a>
               </li>
 <li class="listitem">
-                <a class="link" href="../directive/skip.html" title="Re-Establish Skipping (skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a>
+                <a class="link" href="../directive/skip.html" title="Parser Directive Re-Establishing Skipping (skip[])"><code class="computeroutput"><span class="identifier">skip</span></code></a>
               </li>
 </ul></div>
 </div>

@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Character Classification (alnum, digit, etc.)</title>
+<title>Character Classification Generators (alnum, digit, etc.)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.1">
-<link rel="up" href="../char.html" title="Char">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
+<link rel="up" href="../char.html" title="Char Generators">
 <link rel="prev" href="char_generator.html" title="Character Generators (char_, lit)">
-<link rel="next" href="../directive.html" title="Directive">
+<link rel="next" href="../directive.html" title="Generator Directives">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,24 +24,24 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.char.char_class"></a><a class="link" href="char_class.html" title="Character Classification (alnum, digit, etc.)">Character
-          Classification (<code class="computeroutput"><span class="identifier">alnum</span></code>,
+<a name="spirit.karma.reference.char.char_class"></a><a class="link" href="char_class.html" title="Character Classification Generators (alnum, digit, etc.)">Character
+          Classification Generators (<code class="computeroutput"><span class="identifier">alnum</span></code>,
           <code class="computeroutput"><span class="identifier">digit</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.char.char_class.description"></a><h6>
-<a name="id1089447"></a>
+<a name="id850233"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.description">Description</a>
           </h6>
 <p>
             The library has the full repertoire of single character generators for
             character classification. This includes the usual <code class="computeroutput"><span class="identifier">alnum</span></code>,
             <code class="computeroutput"><span class="identifier">alpha</span></code>, <code class="computeroutput"><span class="identifier">digit</span></code>, <code class="computeroutput"><span class="identifier">xdigit</span></code>,
-            etc. generators. These generators have an associated <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+            etc. generators. These generators have an associated <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>. This is needed when doing basic operations
             such as forcing lower or upper case.
           </p>
 <a name="spirit.karma.reference.char.char_class.header"></a><h6>
-<a name="id1089497"></a>
+<a name="id850310"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char_class.hpp&gt;
@@ -51,7 +51,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.char.char_class.namespace"></a><h6>
-<a name="id1089572"></a>
+<a name="id850409"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -126,13 +126,13 @@
 </table></div>
 <p>
             In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
-            represents a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+            represents a <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a> used by the corresponding character class generator.
             All listed generators have a mandatory attribute <code class="computeroutput"><span class="identifier">Ch</span></code>
             and will not compile if no attribute is associated.
           </p>
 <a name="spirit.karma.reference.char.char_class.model_of"></a><h6>
-<a name="id1089938"></a>
+<a name="id850833"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.model_of">Model
             of</a>
           </h6>
@@ -144,13 +144,13 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                  A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                  A <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                   Encoding Namespace</a>.
                 </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_class.expression_semantics"></a><h6>
-<a name="id1090004"></a>
+<a name="id850911"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -184,7 +184,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isalnum</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isalnum</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -200,7 +200,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isalpha</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isalpha</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -216,7 +216,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isblank</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isblank</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -232,7 +232,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iscntrl</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iscntrl</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -248,7 +248,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isdigit</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isdigit</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -264,7 +264,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isgraph</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isgraph</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -280,7 +280,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isprint</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isprint</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -296,7 +296,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ispunct</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ispunct</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -312,7 +312,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isxdigit</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isxdigit</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -328,7 +328,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">islower</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">islower</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -344,7 +344,7 @@
                   </td>
 <td>
                     <p>
-                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isupper</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the mandatory attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isupper</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -360,7 +360,7 @@
                   </td>
 <td>
                     <p>
-                      If the optional attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isspace</span></code> in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+                      If the optional attribute satisfies the concept of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">isspace</span></code> in the <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
                       Encoding Namespace</a> the generator succeeds after emitting
                       its attribute (unless the underlying output stream reports
                       an error). This generator fails otherwise while not generating
@@ -373,7 +373,7 @@
 </table></div>
 <p>
             Possible values for <code class="computeroutput"><span class="identifier">ns</span></code>
-            are described in the section <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+            are described in the section <a class="link" href="../basics.html#spirit.karma.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>.
           </p>
 <div class="note"><table border="0" summary="Note">
@@ -401,7 +401,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_class.attributes"></a><h6>
-<a name="id1090951"></a>
+<a name="id852105"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -423,7 +423,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_class.complexity"></a><h6>
-<a name="id1091071"></a>
+<a name="id852266"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -434,7 +434,7 @@
             per invocation.
           </p>
 <a name="spirit.karma.reference.char.char_class.example"></a><h6>
-<a name="id1091095"></a>
+<a name="id852298"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -443,7 +443,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.karma.reference.basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>

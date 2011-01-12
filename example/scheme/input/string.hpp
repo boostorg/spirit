@@ -17,9 +17,6 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>
 
-#include <utree/utree.hpp>
-#include <utree/operators.hpp>
-
 namespace scheme { namespace input
 {
     using boost::spirit::standard::char_;
@@ -87,7 +84,7 @@ namespace scheme { namespace input
                   |   char_("btnfr\\\"'")           [push_esc(_r1, _1)]
                   )
                 ;
-
+            
             char_lit
                 = '\''
                 > (char_esc(_val) | (~char_('\''))  [_val += _1])
@@ -95,7 +92,7 @@ namespace scheme { namespace input
                 ;
 
             start
-                =  '"'
+                = '"'
                 > *(char_esc(_val) | (~char_('"'))  [_val += _1])
                 > '"'
                 ;

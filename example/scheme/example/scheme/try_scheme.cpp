@@ -9,7 +9,6 @@
 #include <input/sexpr.hpp>
 #include <input/parse_sexpr_impl.hpp>
 #include <scheme/compiler.hpp>
-#include <utree/io.hpp>
 #include <fstream>
 
 int check_file(std::ifstream& in, char const* filename)

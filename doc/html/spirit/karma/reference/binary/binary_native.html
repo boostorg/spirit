@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Binary Native Endianness Generators</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../binary.html" title="Binary">
 <link rel="prev" href="../binary.html" title="Binary">
 <link rel="next" href="binary_little.html" title="Binary Little Endianness Generators">
@@ -28,7 +28,7 @@
           Native Endianness Generators</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.binary.binary_native.description"></a><h6>
-<a name="id1075626"></a>
+<a name="id838937"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             (byte order) of the target architecture.
           </p>
 <a name="spirit.karma.reference.binary.binary_native.header"></a><h6>
-<a name="id1075643"></a>
+<a name="id838963"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/binary.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.binary.binary_native.namespace"></a><h6>
-<a name="id1075718"></a>
+<a name="id839062"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -99,7 +99,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_native.model_of"></a><h6>
-<a name="id1075968"></a>
+<a name="id839360"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.model_of">Model
             of</a>
           </h6>
@@ -111,31 +111,31 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
-                  A single byte (8 bit binary value) or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                  A single byte (8 bit binary value) or a <a class="link" href="../basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                   Argument</a> that evaluates to a single byte
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">w</span></code></span></dt>
 <dd><p>
-                  A 16 bit binary value or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                  A 16 bit binary value or a <a class="link" href="../basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                   Argument</a> that evaluates to a 16 bit binary value. This value
                   is always interpreted using native endianness.
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">dw</span></code></span></dt>
 <dd><p>
-                  A 32 bit binary value or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                  A 32 bit binary value or a <a class="link" href="../basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                   Argument</a> that evaluates to a 32 bit binary value. This value
                   is always interpreted using native endianness.
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">qw</span></code></span></dt>
 <dd><p>
-                  A 64 bit binary value or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                  A 64 bit binary value or a <a class="link" href="../basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                   Argument</a> that evaluates to a 64 bit binary value. This value
                   is always interpreted using native endianness.
                 </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.binary.binary_native.expression_semantics"></a><h6>
-<a name="id1076105"></a>
+<a name="id839528"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -282,7 +282,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_native.attributes"></a><h6>
-<a name="id1076414"></a>
+<a name="id839886"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -419,14 +419,14 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_native.complexity"></a><h6>
-<a name="id1076878"></a>
+<a name="id840438"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               O(N), where N is the number of bytes emitted by the binary generator
             </p></blockquote></div>
 <a name="spirit.karma.reference.binary.binary_native.example"></a><h6>
-<a name="id1076898"></a>
+<a name="id840466"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -435,7 +435,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.karma.reference.basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>

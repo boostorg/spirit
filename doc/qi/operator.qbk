@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
-[section Operator]
+[section:operator Parser Operators]
 
 Operators are used as a means for object composition and embedding.
 Simple parsers may be composed to form composites through operator
@@ -32,7 +32,7 @@ Optional (unary `-`), Permutation (`^`), Plus (unary
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:alternative Alternative (`a | b`)]
+[section:alternative Alternative Parser (`a | b`)]
 
 [heading Description]
 
@@ -116,7 +116,7 @@ Some using declarations:
 [endsect] [/ Alternative]
 
 [/------------------------------------------------------------------------------]
-[section:and_predicate And-Predicate (`&a`)]
+[section:and_predicate And-Predicate Parser (`&a`)]
 
 [heading Description]
 
@@ -175,7 +175,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ And Predicate]
 
 [/------------------------------------------------------------------------------]
-[section:difference Difference (`a - b`)]
+[section:difference Difference Parser (`a - b`)]
 
 [heading Description]
 
@@ -239,7 +239,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Difference]
 
 [/------------------------------------------------------------------------------]
-[section:expect Expectation (`a > b`)]
+[section:expect Expectation Parser (`a > b`)]
 
 [heading Description]
 
@@ -332,7 +332,7 @@ Some using declarations:
 [endsect] [/ Expectation]
 
 [/------------------------------------------------------------------------------]
-[section:kleene Kleene (`*a`)]
+[section:kleene Kleene Parser (`*a`)]
 
 [heading Description]
 
@@ -392,7 +392,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Kleene]
 
 [/------------------------------------------------------------------------------]
-[section:list List (`a % b`)]
+[section:list List Parser (`a % b`)]
 
 [heading Description]
 
@@ -454,7 +454,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ List]
 
 [/------------------------------------------------------------------------------]
-[section:not_predicate Not-Predicate (`!a`)]
+[section:not_predicate Not-Predicate Parser (`!a`)]
 
 [heading Description]
 
@@ -513,7 +513,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Not Predicate]
 
 [/------------------------------------------------------------------------------]
-[section:optional Optional (`-a`)]
+[section:optional Optional Parser (`-a`)]
 
 [heading Description]
 
@@ -570,7 +570,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Optional]
 
 [/------------------------------------------------------------------------------]
-[section:permutation Permutation (`a ^ b`)]
+[section:permutation Permutation Parser (`a ^ b`)]
 
 [heading Description]
 
@@ -653,7 +653,7 @@ Some using declarations:
 [endsect] [/ Permutation]
 
 [/------------------------------------------------------------------------------]
-[section:plus Plus (`+a`)]
+[section:plus Plus Parser (`+a`)]
 
 [heading Description]
 
@@ -712,7 +712,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Plus]
 
 [/------------------------------------------------------------------------------]
-[section:sequence Sequence (`a >> b`)]
+[section:sequence Sequence Parser (`a >> b`)]
 
 [heading Description]
 
@@ -784,7 +784,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Sequence]
 
 [/------------------------------------------------------------------------------]
-[section:sequential_or Sequential Or (`a || b`)]
+[section:sequential_or Sequential Or Parser (`a || b`)]
 
 [heading Description]
 

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Re-Initialize an Attribute Value before Parsing (Qi)</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
 <link rel="prev" href="store_value/push_back.html" title="Store a Parsed Attribute Value into a Container (Qi)">
 <link rel="next" href="extract_from.html" title="Extract an Attribute Value to Generate Output (Karma)">
@@ -28,22 +28,22 @@
         an Attribute Value before Parsing (Qi)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.clear_value.clear_value"></a><h6>
-<a name="id1233705"></a>
+<a name="id977467"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.clear_value">clear_value</a>
         </h6>
 <p>
           The template <code class="computeroutput"><span class="identifier">clear_value</span></code>
           is a type used as an attribute customization point. It is invoked by the
-          <span class="emphasis"><em>Qi</em></span> repetitive parsers (<a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
-          <a class="link" href="../../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>, <a class="link" href="../../qi/reference/operator/list.html" title="List (a % b)">List</a>,
-          and <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition (repeat[])">Repeat</a>)
+          <span class="emphasis"><em>Qi</em></span> repetitive parsers (<a class="link" href="../../qi/reference/operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>,
+          <a class="link" href="../../qi/reference/operator/plus.html" title="Plus Parser (+a)">Plus</a>, <a class="link" href="../../qi/reference/operator/list.html" title="List Parser (a % b)">List</a>,
+          and <a class="link" href="../../qi/reference/directive/repeat.html" title="Repetition Parser Directive (repeat[])">Repeat</a>)
           in order to re-initialize the attribute instance passed to the embedded
           parser after it has been stored in the provided container. This re-initialized
           attribute instance is reused during the next iteration of the repetitive
           parser.
         </p>
 <a name="spirit.advanced.customize.clear_value.module_headers"></a><h6>
-<a name="id1233752"></a>
+<a name="id977536"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.module_headers">Module
           Headers</a>
         </h6>
@@ -64,7 +64,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.clear_value.namespace"></a><h6>
-<a name="id1234042"></a>
+<a name="id977645"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -81,7 +81,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.clear_value.synopsis"></a><h6>
-<a name="id1234116"></a>
+<a name="id977729"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -91,7 +91,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.clear_value.template_parameters"></a><h6>
-<a name="id1234222"></a>
+<a name="id977862"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.template_parameters">Template
           parameters</a>
         </h6>
@@ -160,7 +160,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.clear_value.notation"></a><h6>
-<a name="id1234395"></a>
+<a name="id978062"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.notation">Notation</a>
         </h6>
 <div class="variablelist">
@@ -181,7 +181,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.clear_value.expression_semantics"></a><h6>
-<a name="id1234491"></a>
+<a name="id978175"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -220,7 +220,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.clear_value.predefined_specializations"></a><h6>
-<a name="id1234609"></a>
+<a name="id978310"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -331,7 +331,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.clear_value.when_to_implement"></a><h6>
-<a name="id1234966"></a>
+<a name="id978731"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.when_to_implement">When
           to Implement</a>
         </h6>
@@ -344,7 +344,7 @@
           types not exposing a member function <code class="computeroutput"><span class="identifier">clear</span><span class="special">()</span></code>.
         </p>
 <a name="spirit.advanced.customize.clear_value.example"></a><h6>
-<a name="id1235001"></a>
+<a name="id978783"></a>
           <a class="link" href="clear_value.html#spirit.advanced.customize.clear_value.example">Example</a>
         </h6>
 <p>

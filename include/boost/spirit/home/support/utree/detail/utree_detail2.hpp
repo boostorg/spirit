@@ -16,8 +16,10 @@
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/throw_exception.hpp>
+#include <boost/iterator/iterator_traits.hpp>
 
-namespace scheme { namespace detail
+namespace boost { namespace spirit { namespace detail
 {
     inline char& fast_string::info()
     {
@@ -113,13 +115,18 @@ namespace scheme { namespace detail
         if (is_heap_allocated())
         {
             delete [] heap.str;
-            heap.str = 0;
         }
     }
 
     inline void fast_string::copy(fast_string const& other)
     {
         construct(other.str(), other.str() + other.size());
+    }
+
+    inline void fast_string::initialize() 
+    {
+        for (std::size_t i = 0; i != buff_size / (sizeof(long)/sizeof(char)); ++i) 
+            lbuff[i] = 0;
     }
 
     struct list::node : boost::noncopyable
@@ -144,13 +151,12 @@ namespace scheme { namespace detail
       : public boost::iterator_facade<
             node_iterator<Value>
           , Value
-          , boost::random_access_traversal_tag
-        >
+          , boost::bidirectional_traversal_tag>
     {
     public:
 
         node_iterator()
-          : node(0) {}
+          : node(0), prev(0) {}
 
         node_iterator(list::node* node, list::node* prev)
           : node(node), prev(prev) {}
@@ -158,7 +164,8 @@ namespace scheme { namespace detail
     private:
 
         friend class boost::iterator_core_access;
-        friend class scheme::utree;
+        friend class boost::spirit::utree;
+        friend struct boost::spirit::detail::list;
 
         void increment()
         {
@@ -188,17 +195,6 @@ namespace scheme { namespace detail
             return node->val;
         }
 
-        void advance (typename node_iterator::difference_type n)
-        {
-            std::advance(*this, n);
-        }
-
-        template<typename Iterator>
-        typename node_iterator::difference_type distance_to(Iterator const& other)
-        const {
-            return std::distance(*this, node_iterator(other));
-        }
-
         list::node* node;
         list::node* prev;
     };
@@ -208,8 +204,7 @@ namespace scheme { namespace detail
       : public boost::iterator_facade<
             node_iterator<boost::reference_wrapper<Value> >
           , boost::reference_wrapper<Value>
-          , boost::random_access_traversal_tag
-        >
+          , boost::bidirectional_traversal_tag>
     {
     public:
 
@@ -222,7 +217,8 @@ namespace scheme { namespace detail
     private:
 
         friend class boost::iterator_core_access;
-        friend class scheme::utree;
+        friend class boost::spirit::utree;
+        friend struct boost::spirit::detail::list;
 
         void increment()
         {
@@ -254,17 +250,6 @@ namespace scheme { namespace detail
             return curr;
         }
 
-        void advance (typename node_iterator::difference_type n)
-        {
-            std::advance(*this, n);
-        }
-
-        template<typename Iterator>
-        typename node_iterator::difference_type distance_to(Iterator const& other)
-        const {
-            return std::distance(*this, node_iterator(other));
-        }
-
         list::node* node;
         list::node* prev;
 
@@ -278,20 +263,16 @@ namespace scheme { namespace detail
     inline void list::free()
     {
         node* p = first;
-        while (p != last)
+        while (p != 0)
         {
             node* next = p->next;
             delete p;
             p = next;
         }
-        first = last = 0;
-        size = 0;
     }
 
     inline void list::copy(list const& other)
     {
-        first = last = 0;
-        size = 0;
         node* p = other.first;
         while (p != 0)
         {
@@ -306,29 +287,24 @@ namespace scheme { namespace detail
         size = 0;
     }
 
-    template <typename T>
-    inline void list::insert_before(T const& val, node* np)
+    template <typename T, typename Iterator>
+    inline void list::insert(T const& val, Iterator pos)
     {
-        BOOST_ASSERT(np != 0);
-        node* new_node = new node(val, np, np->prev);
-        if (np->prev)
-            np->prev->next = new_node;
+        if (!pos.node)
+        {
+            push_back(val);
+            return;
+        }
+
+        detail::list::node* new_node = 
+            new detail::list::node(val, pos.node, pos.node->prev);
+
+        if (pos.node->prev)
+            pos.node->prev->next = new_node;
         else
             first = new_node;
-        np->prev = new_node;
-        ++size;
-    }
 
-    template <typename T>
-    inline void list::insert_after(T const& val, node* np)
-    {
-        BOOST_ASSERT(np != 0);
-        node* new_node = new node(val, np->next, np);
-        if (np->next)
-            np->next->prev = new_node;
-        else
-            last = new_node;
-        np->next = new_node;
+        pos.node->prev = new_node;
         ++size;
     }
 
@@ -344,17 +320,26 @@ namespace scheme { namespace detail
         }
         else
         {
-             insert_before(val, first);
+            new_node = new detail::list::node(val, first, first->prev);
+            first->prev = new_node;
+            first = new_node;
+            ++size;
         }
     }
 
     template <typename T>
     inline void list::push_back(T const& val)
     {
+
         if (last == 0)
             push_front(val);
-        else
-            insert_after(val, last);
+        else {
+            detail::list::node* new_node
+              = new detail::list::node(val, last->next, last);
+            last->next = new_node;
+            last = new_node;
+            ++size;
+        }
     }
 
     inline void list::pop_front()
@@ -601,9 +586,9 @@ namespace scheme { namespace detail
             return node->val;
         }
     };
-}}
+}}}
 
-namespace scheme
+namespace boost { namespace spirit
 {
     template <typename F>
     stored_function<F>::stored_function(F f)
@@ -631,50 +616,63 @@ namespace scheme
 
     inline utree::utree()
     {
+        s.initialize();
         set_type(type::nil_type);
     }
 
-    inline utree::utree(bool b) : b(b)
+    inline utree::utree(bool b_) 
     {
+        s.initialize();
+        b = b_;
         set_type(type::bool_type);
     }
 
     inline utree::utree(char c)
     {
+        s.initialize();
         // char constructs a single element string
         s.construct(&c, &c+1);
         set_type(type::string_type);
     }
 
-    inline utree::utree(unsigned int i) : i(i)
+    inline utree::utree(unsigned int i_) 
     {
+        s.initialize();
+        i = i_;
         set_type(type::int_type);
     }
 
-    inline utree::utree(int i) : i(i)
+    inline utree::utree(int i_) 
     {
+        s.initialize();
+        i = i_;
         set_type(type::int_type);
     }
 
-    inline utree::utree(double d) : d(d)
+    inline utree::utree(double d_) 
     {
+        s.initialize();
+        d = d_;
         set_type(type::double_type);
     }
 
     inline utree::utree(char const* str)
     {
+        s.initialize();
         s.construct(str, str + strlen(str));
         set_type(type::string_type);
     }
 
     inline utree::utree(char const* str, std::size_t len)
     {
+        s.initialize();
         s.construct(str, str + len);
         set_type(type::string_type);
     }
 
     inline utree::utree(std::string const& str)
     {
+        s.initialize();
         s.construct(str.begin(), str.end());
         set_type(type::string_type);
     }
@@ -682,39 +680,45 @@ namespace scheme
     template <typename Base, utree_type::info type_>
     inline utree::utree(basic_string<Base, type_> const& bin)
     {
+        s.initialize();
         s.construct(bin.begin(), bin.end());
         set_type(type_);
     }
 
     inline utree::utree(boost::reference_wrapper<utree> ref)
-      : p(ref.get_pointer())
     {
+        s.initialize();
+        p = ref.get_pointer();
         set_type(type::reference_type);
     }
 
     inline utree::utree(any_ptr const& p)
     {
+        s.initialize();
         v.p = p.p;
         v.i = p.i;
         set_type(type::any_type);
     }
 
     template <typename F>
-    inline utree::utree(stored_function<F> const& pf)
-      : pf(new stored_function<F>(pf))
+    inline utree::utree(stored_function<F> const& pf_)
     {
+        s.initialize();
+        pf = new stored_function<F>(pf_);
         set_type(type::function_type);
     }
 
     template <typename Iter>
     inline utree::utree(boost::iterator_range<Iter> r)
     {
+        s.initialize();
         set_type(type::nil_type);
         assign(r.begin(), r.end());
     }
 
     inline utree::utree(range r, shallow_tag)
     {
+        s.initialize();
         this->r.first = r.begin().node;
         this->r.last = r.end().prev;
         set_type(type::range_type);
@@ -722,6 +726,7 @@ namespace scheme
 
     inline utree::utree(const_range r, shallow_tag)
     {
+        s.initialize();
         this->r.first = r.begin().node;
         this->r.last = r.end().prev;
         set_type(type::range_type);
@@ -729,6 +734,7 @@ namespace scheme
 
     inline utree::utree(utf8_string_range const& str, shallow_tag)
     {
+        s.initialize();
         this->sr.first = str.begin();
         this->sr.last = str.end();
         set_type(type::string_range_type);
@@ -736,6 +742,7 @@ namespace scheme
 
     inline utree::utree(utree const& other)
     {
+        s.initialize();
         copy(other);
     }
 
@@ -759,6 +766,15 @@ namespace scheme
         free();
         b = b_;
         set_type(type::bool_type);
+        return *this;
+    }
+
+    inline utree& utree::operator=(char c)
+    {
+        // char constructs a single element string
+        free();
+        s.construct(&c, &c+1);
+        set_type(type::string_type);
         return *this;
     }
 
@@ -818,6 +834,15 @@ namespace scheme
         set_type(type::reference_type);
         return *this;
     }
+    
+    inline utree& utree::operator=(any_ptr const& p)
+    {
+        free();
+        v.p = p.p;
+        v.i = p.i;
+        set_type(type::any_type);
+        return *this;
+    }
 
     template <typename F>
     utree& utree::operator=(stored_function<F> const& pf)
@@ -837,42 +862,42 @@ namespace scheme
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree const&)>::type
     inline utree::visit(utree const& x, F f)
     {
         return detail::visit_impl<utree const>::apply(x, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree&)>::type
     inline utree::visit(utree& x, F f)
     {
         return detail::visit_impl<utree>::apply(x, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree const&, utree const&)>::type
     inline utree::visit(utree const& x, utree const& y, F f)
     {
         return detail::visit_impl<utree const, utree const>::apply(x, y, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree const&, utree&)>::type
     inline utree::visit(utree const& x, utree& y, F f)
     {
         return detail::visit_impl<utree const, utree>::apply(x, y, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree&, utree const&)>::type
     inline utree::visit(utree& x, utree const& y, F f)
     {
         return detail::visit_impl<utree, utree const>::apply(x, y, f);
     }
 
     template <typename F>
-    typename F::result_type
+    typename boost::result_of<F(utree&, utree&)>::type
     inline utree::visit(utree& x, utree& y, F f)
     {
         return detail::visit_impl<utree, utree>::apply(x, y, f);
@@ -886,7 +911,9 @@ namespace scheme
             return detail::index_impl::apply(r.first, i);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && size() > i);
+        if (get_type() != type::list_type || size() <= i)
+            boost::throw_exception(bad_type_exception());
+
         return detail::index_impl::apply(l.first, i);
     }
 
@@ -898,7 +925,9 @@ namespace scheme
             return detail::index_impl::apply(r.first, i);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && size() > i);
+        if (get_type() != type::list_type || size() <= i)
+            boost::throw_exception(bad_type_exception());
+
         return detail::index_impl::apply(l.first, i);
     }
 
@@ -926,16 +955,13 @@ namespace scheme
         if (get_type() == type::reference_type)
             return p->insert(pos, val);
         ensure_list_type();
-        if (pos == end())
+        if (!pos.node) 
         {
-            push_back(val);
-            return begin();
+            l.push_back(val);
+            return utree::iterator(l.first, 0); // begin();
         }
-        else
-        {
-            l.insert_before(val, pos.node);
-            return utree::iterator(pos.node->prev, pos.node->prev->prev);
-        }
+        l.insert(val, pos);
+        return utree::iterator(pos.node->prev, pos.node->prev->prev);
     }
 
     template <typename T>
@@ -957,18 +983,63 @@ namespace scheme
             insert(pos, *first++);
     }
 
+    namespace detail
+    {
+        struct assign_impl
+        {
+            template <typename Iter>
+            static void dispatch(utree& ut, Iter first, Iter last)
+            {
+                ut.ensure_list_type();
+                ut.clear();
+                while (first != last)
+                {
+                    ut.push_back(*first);
+                    ++first;
+                }
+            }
+
+            template <typename Iter>
+            static void dispatch_string(utree& ut, Iter first, Iter last)
+            {
+                ut.free();
+                ut.s.construct(first, last);
+                ut.set_type(utree_type::string_type);
+            }
+
+            static void dispatch(utree& ut,
+                std::basic_string<char>::iterator first,
+                std::basic_string<char>::iterator last)
+            {
+                dispatch_string(ut, first, last);
+            }
+
+            static void dispatch(utree& ut,
+                std::basic_string<char>::const_iterator first,
+                std::basic_string<char>::const_iterator last)
+            {
+                dispatch_string(ut, first, last);
+            }
+
+            static void dispatch(utree& ut, char const* first, char const* last)
+            {
+                dispatch_string(ut, first, last);
+            }
+
+            template <typename Iter>
+            static void call(utree& ut, Iter first, Iter last)
+            {
+                dispatch(ut, first, last);
+            }
+        };
+    }
+
     template <typename Iter>
     inline void utree::assign(Iter first, Iter last)
     {
         if (get_type() == type::reference_type)
             return p->assign(first, last);
-        ensure_list_type();
-        clear();
-        while (first != last)
-        {
-            push_back(*first);
-            ++first;
-        }
+        detail::assign_impl::call(*this, first, last);
     }
 
     inline void utree::clear()
@@ -984,7 +1055,8 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->pop_front();
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         l.pop_front();
     }
 
@@ -992,7 +1064,8 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->pop_back();
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         l.pop_back();
     }
 
@@ -1000,7 +1073,8 @@ namespace scheme
     {
         if (get_type() == type::reference_type)
             return p->erase(pos);
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         detail::list::node* np = l.erase(pos.node);
         return iterator(np, np?np->prev:l.last);
     }
@@ -1070,7 +1144,9 @@ namespace scheme
             return const_iterator(r.first, 0);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
+
         return const_iterator(l.first, 0);
     }
 
@@ -1082,7 +1158,9 @@ namespace scheme
             return const_iterator(0, r.first);
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
+
         return const_iterator(0, l.last);
     }
 
@@ -1118,7 +1196,10 @@ namespace scheme
         {
             return l.size;
         }
-        BOOST_ASSERT(get_type() == type::nil_type);
+
+        if (get_type() != type::nil_type)
+            boost::throw_exception(bad_type_exception());
+
         return 0;
     }
 
@@ -1140,7 +1221,9 @@ namespace scheme
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
+        if (get_type() != type::list_type || l.first == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.first->val;
     }
 
@@ -1157,7 +1240,9 @@ namespace scheme
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
+        if (get_type() != type::list_type || l.last == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.last->val;
     }
 
@@ -1174,7 +1259,9 @@ namespace scheme
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.first != 0);
+        if (get_type() != type::list_type || l.first == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.first->val;
     }
 
@@ -1191,7 +1278,9 @@ namespace scheme
         }
 
         // otherwise...
-        BOOST_ASSERT(get_type() == type::list_type && l.last != 0);
+        if (get_type() != type::list_type || l.last == 0)
+            boost::throw_exception(bad_type_exception());
+
         return l.last->val;
     }
 
@@ -1219,9 +1308,9 @@ namespace scheme
             set_type(type::list_type);
             l.default_construct();
         }
-        else
+        else if (get_type() != type::list_type)
         {
-            BOOST_ASSERT(get_type() == type::list_type);
+            boost::throw_exception(bad_type_exception());
         }
     }
 
@@ -1243,6 +1332,7 @@ namespace scheme
             default:
                 break;
         };
+        s.initialize();
     }
 
     inline void utree::copy(utree const& other)
@@ -1367,7 +1457,8 @@ namespace scheme
 
     inline short utree::tag() const
     {
-        BOOST_ASSERT(get_type() == type::list_type);
+        if (get_type() != type::list_type)
+            boost::throw_exception(bad_type_exception());
         return s.tag();
     }
 
@@ -1379,10 +1470,11 @@ namespace scheme
 
     inline utree utree::eval(scope const& env) const
     {
-        BOOST_ASSERT(get_type() == type::function_type);
+        if (get_type() != type::function_type)
+            boost::throw_exception(bad_type_exception());
         return (*pf)(env);
     }
-}
+}}
 
 #if defined(BOOST_MSVC)
 # pragma warning(pop)

@@ -1,16 +1,12 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #if !defined(BOOST_SPIRIT_UTREE_OPERATORS)
 #define BOOST_SPIRIT_UTREE_OPERATORS
-
-#include <utree/utree.hpp>
-#include <boost/preprocessor/cat.hpp>
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/type_traits/is_integral.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -19,15 +15,14 @@
 #endif
 
 #include <exception>
-#include <utree/utree.hpp>
+#include <boost/spirit/home/support/utree/utree.hpp>
 #include <boost/preprocessor/cat.hpp>
+#include <boost/throw_exception.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/is_integral.hpp>
 
-namespace scheme
+namespace boost { namespace spirit 
 {
-    struct utree_exception : std::exception {};
-
     struct illegal_arithmetic_operation : utree_exception
     {
         virtual const char* what() const throw()
@@ -190,8 +185,6 @@ namespace scheme
         }
     };
 
-#if !defined(SCHEME_USE_SPIRIT_IO)
-
     struct utree_print
     {
         typedef void result_type;
@@ -199,7 +192,7 @@ namespace scheme
         std::ostream& out;
         utree_print(std::ostream& out) : out(out) {}
 
-        void operator()(scheme::nil) const
+        void operator()(boost::spirit::nil) const
         {
             out << "<nil> ";
         }
@@ -252,7 +245,7 @@ namespace scheme
             (*this)('(');
             for (iterator i = range.begin(); i != range.end(); ++i)
             {
-                scheme::utree::visit(*i, *this);
+                boost::spirit::utree::visit(*i, *this);
             }
             (*this)(')');
         }
@@ -267,14 +260,13 @@ namespace scheme
             return (*this)("<function>");
         }
     };
-#endif
 
     template <typename Base>
     struct logical_function
     {
         typedef utree result_type;
 
-        // In scheme, anything except false is true
+        // We assume anything except false is true
 
         // binary
         utree operator()(bool a, bool b) const
@@ -374,7 +366,7 @@ namespace scheme
         template <typename A, typename B>
         utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
-            throw illegal_integral_operation();
+            boost::throw_exception(illegal_integral_operation());
             return utree(); // cannot apply to non-integral types
         }
 
@@ -415,36 +407,36 @@ namespace scheme
         }
     };
 
-#define SCHEME_CREATE_FUNCTION(name, expr, base)                                \
-    struct BOOST_PP_CAT(function_impl_, name)                                   \
-    {                                                                           \
-        template <typename A, typename B>                                       \
-        static utree eval(A const& a, B const& b)                               \
-        {                                                                       \
-            return utree(expr);                                                 \
-        }                                                                       \
-        template <typename A>                                                   \
-        static utree eval(A const& a)                                           \
-        {                                                                       \
-            static int b;                                                       \
-            (void) b;                                                           \
-            return utree(expr);                                                 \
-        }                                                                       \
-    };                                                                          \
-    base<BOOST_PP_CAT(function_impl_, name)> const                              \
-        BOOST_PP_CAT(base, BOOST_PP_CAT(_, name)) = {};                         \
+#define BOOST_SPIRIT_UTREE_CREATE_FUNCTION(name, expr, base)                  \
+    struct BOOST_PP_CAT(function_impl_, name)                                 \
+    {                                                                         \
+        template <typename A, typename B>                                     \
+        static utree eval(A const& a, B const& b)                             \
+        {                                                                     \
+            return utree(expr);                                               \
+        }                                                                     \
+        template <typename A>                                                 \
+        static utree eval(A const& a)                                         \
+        {                                                                     \
+            static int b;                                                     \
+            (void) b;                                                         \
+            return utree(expr);                                               \
+        }                                                                     \
+    };                                                                        \
+    base<BOOST_PP_CAT(function_impl_, name)> const                            \
+        BOOST_PP_CAT(base, BOOST_PP_CAT(_, name)) = {};                       \
     /***/
 
-#define SCHEME_CREATE_ARITHMETIC_FUNCTION(name, expr)                           \
-    SCHEME_CREATE_FUNCTION(name, expr, arithmetic_function)                     \
+#define BOOST_SPIRIT_UTREE_CREATE_ARITHMETIC_FUNCTION(name, expr)             \
+    BOOST_SPIRIT_UTREE_CREATE_FUNCTION(name, expr, arithmetic_function)       \
     /***/
 
-#define SCHEME_CREATE_INTEGRAL_FUNCTION(name, expr)                             \
-    SCHEME_CREATE_FUNCTION(name, expr, integral_function)                       \
+#define BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(name, expr)               \
+    BOOST_SPIRIT_UTREE_CREATE_FUNCTION(name, expr, integral_function)         \
     /***/
 
-#define SCHEME_CREATE_LOGICAL_FUNCTION(name, expr)                              \
-    SCHEME_CREATE_FUNCTION(name, expr, logical_function)                        \
+#define BOOST_SPIRIT_UTREE_CREATE_LOGICAL_FUNCTION(name, expr)                \
+    BOOST_SPIRIT_UTREE_CREATE_FUNCTION(name, expr, logical_function)          \
     /***/
 
     inline bool operator==(utree const& a, utree const& b)
@@ -477,36 +469,34 @@ namespace scheme
         return !(a < b);
     }
 
-#if !defined(SCHEME_USE_SPIRIT_IO)
     inline std::ostream& operator<<(std::ostream& out, utree const& x)
     {
         utree::visit(x, utree_print(out));
         return out;
     }
-#endif
 
     inline std::ostream& operator<<(std::ostream& out, nil const& x)
     {
         return out;
     }
 
-    SCHEME_CREATE_LOGICAL_FUNCTION(and_, a&&b);
-    SCHEME_CREATE_LOGICAL_FUNCTION(or_, a||b);
-    SCHEME_CREATE_LOGICAL_FUNCTION(not_, !a);
+    BOOST_SPIRIT_UTREE_CREATE_LOGICAL_FUNCTION(and_, a&&b);
+    BOOST_SPIRIT_UTREE_CREATE_LOGICAL_FUNCTION(or_, a||b);
+    BOOST_SPIRIT_UTREE_CREATE_LOGICAL_FUNCTION(not_, !a);
 
-    SCHEME_CREATE_ARITHMETIC_FUNCTION(plus, a+b);
-    SCHEME_CREATE_ARITHMETIC_FUNCTION(minus, a-b);
-    SCHEME_CREATE_ARITHMETIC_FUNCTION(times, a*b);
-    SCHEME_CREATE_ARITHMETIC_FUNCTION(divides, a/b);
-    SCHEME_CREATE_INTEGRAL_FUNCTION(modulus, a%b);
-    SCHEME_CREATE_ARITHMETIC_FUNCTION(negate, -a);
+    BOOST_SPIRIT_UTREE_CREATE_ARITHMETIC_FUNCTION(plus, a+b);
+    BOOST_SPIRIT_UTREE_CREATE_ARITHMETIC_FUNCTION(minus, a-b);
+    BOOST_SPIRIT_UTREE_CREATE_ARITHMETIC_FUNCTION(times, a*b);
+    BOOST_SPIRIT_UTREE_CREATE_ARITHMETIC_FUNCTION(divides, a/b);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(modulus, a%b);
+    BOOST_SPIRIT_UTREE_CREATE_ARITHMETIC_FUNCTION(negate, -a);
 
-    SCHEME_CREATE_INTEGRAL_FUNCTION(bitand_, a&b);
-    SCHEME_CREATE_INTEGRAL_FUNCTION(bitor_, a|b);
-    SCHEME_CREATE_INTEGRAL_FUNCTION(bitxor_, a^b);
-    SCHEME_CREATE_INTEGRAL_FUNCTION(shift_left, a<<b);
-    SCHEME_CREATE_INTEGRAL_FUNCTION(shift_right, a>>b);
-    SCHEME_CREATE_INTEGRAL_FUNCTION(invert, ~a);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(bitand_, a&b);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(bitor_, a|b);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(bitxor_, a^b);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(shift_left, a<<b);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(shift_right, a>>b);
+    BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(invert, ~a);
 
     inline utree operator&&(utree const& a, utree const& b)
     {
@@ -582,7 +572,7 @@ namespace scheme
     {
         return utree::visit(a, integral_function_invert);
     }
-}
+}}
 
 #if defined(BOOST_MSVC)
 # pragma warning(pop)

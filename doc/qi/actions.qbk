@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Semantic Actions]
+[section:semantic_actions Parser Semantic Actions]
 
 The example in the previous section was very simplistic. It only recognized
 data, but did nothing with it. It answered the question: "Did the input match?".

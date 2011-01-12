@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:numeric Numeric]
+[section:numeric Numeric Generators]
 
 The library includes a couple of predefined objects for generating booleans, 
 signed and unsigned integers, and real numbers. These generators are fully

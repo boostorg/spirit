@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Auto</title>
+<title>Auto Generator</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="prev" href="action.html" title="Action">
-<link rel="next" href="auxiliary.html" title="Auxiliary">
+<link rel="prev" href="action.html" title="Semantic Actions with Generators">
+<link rel="next" href="auxiliary.html" title="Auxiliary Generators">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,10 +24,10 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.reference.auto"></a><a class="link" href="auto.html" title="Auto">Auto</a>
+<a name="spirit.karma.reference.auto"></a><a class="link" href="auto.html" title="Auto Generator">Auto Generator</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.auto.description"></a><h6>
-<a name="id1065330"></a>
+<a name="id828642"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.description">Description</a>
         </h6>
 <p>
@@ -36,7 +36,7 @@
           based on the supplied attribute type.
         </p>
 <a name="spirit.karma.reference.auto.header"></a><h6>
-<a name="id1065354"></a>
+<a name="id828677"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auto.hpp&gt;
@@ -46,7 +46,7 @@
           Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 <a name="spirit.karma.reference.auto.namespace"></a><h6>
-<a name="id1065429"></a>
+<a name="id828776"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -64,7 +64,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auto.model_of"></a><h6>
-<a name="id1065508"></a>
+<a name="id828866"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.model_of">Model of</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -77,7 +77,7 @@
 <dd><p>
                 A variable instance of any type for which a mapping to a generator
                 type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
-                returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>) or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>) or a <a class="link" href="basics.html#spirit.karma.reference.basics.lazy_argument">Lazy
                 Argument</a> that evaluates to any type for which a mapping to
                 a generator type is defined (the meta function <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">create_generator_exists</span></code>
                 returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>).
@@ -85,7 +85,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.auto.expression_semantics"></a><h6>
-<a name="id1065629"></a>
+<a name="id829023"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -142,7 +142,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auto.additional_requirements"></a><h6>
-<a name="id1065754"></a>
+<a name="id829167"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.additional_requirements">Additional
           Requirements</a>
         </h6>
@@ -331,7 +331,7 @@
           can be used also to redefined any of the predefined mappings.
         </p>
 <a name="spirit.karma.reference.auto.attributes"></a><h6>
-<a name="id1066468"></a>
+<a name="id830041"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.attributes">Attributes</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -407,7 +407,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.auto.complexity"></a><h6>
-<a name="id1066713"></a>
+<a name="id830340"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.complexity">Complexity</a>
         </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -417,7 +417,7 @@
             complexity.
           </p></blockquote></div>
 <a name="spirit.karma.reference.auto.example"></a><h6>
-<a name="id1066740"></a>
+<a name="id830378"></a>
           <a class="link" href="auto.html#spirit.karma.reference.auto.example">Example</a>
         </h6>
 <div class="note"><table border="0" summary="Note">
@@ -426,7 +426,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The test harness for the example(s) below is presented in the <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics
+            The test harness for the example(s) below is presented in the <a class="link" href="basics.html#spirit.karma.reference.basics.examples">Basics
             Examples</a> section.
           </p></td></tr>
 </table></div>

@@ -16,7 +16,7 @@
 
 namespace client
 {
-    bool parse_sexpr_from_file(char const* filename, scheme::utree& result)
+    bool parse_sexpr_from_file(char const* filename, boost::spirit::utree& result)
     {
         std::ifstream in(filename, std::ios_base::in);
 
@@ -45,7 +45,7 @@ namespace client
         return scheme::input::parse_sexpr(in, result);
     }
 
-    bool generate_sexpr_to_file(scheme::utree const& tree, char const* filename)
+    bool generate_sexpr_to_file(boost::spirit::utree const& tree, char const* filename)
     {
         std::ofstream out(filename);
 
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    scheme::utree result;
+    boost::spirit::utree result;
     if (client::parse_sexpr_from_file(filename_in, result))
     {
         if (client::generate_sexpr_to_file(result, filename_out))

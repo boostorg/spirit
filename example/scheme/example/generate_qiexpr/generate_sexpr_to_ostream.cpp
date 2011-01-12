@@ -13,26 +13,16 @@
 namespace scheme { namespace output
 {
     template bool generate_sexpr(BOOST_TYPEOF(std::cout)&, utree const& result);
+    template bool generate_sexpr_list(BOOST_TYPEOF(std::cout)&, utree const& result);
     template bool generate_sexpr(std::string& str, utree const& result);
     template bool generate_sexpr_list(std::string& str, utree const& result);
 }}
-
-#if defined(SCHEME_USE_SPIRIT_IO)
-namespace scheme
-{
-    std::ostream& operator<<(std::ostream& out, utree const& x)
-    {
-        output::generate_sexpr(out, x);
-        return out;
-    }
-}
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // this is needed if grammar debugging is on
 namespace boost { namespace spirit { namespace traits
 {
-    void print_attribute(std::ostream& out, scheme::utree const& val)
+    void print_attribute(std::ostream& out, boost::spirit::utree const& val)
     {
         scheme::output::generate_sexpr(out, val);
     }

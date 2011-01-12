@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:directive Directive]
+[section:directive Parser Directive]
 
 This module includes different directives usable to augment and parameterize
 other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`,
@@ -21,7 +21,7 @@ other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`,
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:lexeme Inhibiting Skipping (`lexeme[]`)]
+[section:lexeme Parser Directive Inhibiting Skipping (`lexeme[]`)]
 
 [heading Description]
 
@@ -113,7 +113,7 @@ Simple usage of `lexeme[]`:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:no_skip Inhibiting Skipping Without Pre-skip (`no_skip[]`)]
+[section:no_skip Parser Directive Inhibiting Skipping Without Pre-skip (`no_skip[]`)]
 
 [heading Description]
 
@@ -186,7 +186,7 @@ Simple usage of `no_skip[]`:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:no_case Inhibiting Case Sensitivity (`no_case[]`)]
+[section:no_case Parser Directive Inhibiting Case Sensitivity (`no_case[]`)]
 
 [heading Description]
 
@@ -267,7 +267,7 @@ table (see __qi_symbols__ for more details):
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:omit Ignoring Attribute (`omit[]`)]
+[section:omit Parser Directive Ignoring Attribute (`omit[]`)]
 
 [heading Description]
 
@@ -331,7 +331,7 @@ Some using declarations:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:raw Transduction Parsing (`raw[]`)]
+[section:raw Directive for Transduction Parsing (`raw[]`)]
 
 [heading Description]
 
@@ -407,7 +407,7 @@ Some using declarations:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:repeat Repetition (`repeat[]`)]
+[section:repeat Repetition Parser Directive (`repeat[]`)]
 
 [heading Description]
 
@@ -510,7 +510,7 @@ the length of the incoming string. Here's a sample input:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:matches Test if Parser Succeeded (`matches[]`)]
+[section:matches Directive Testing if Parser Succeeded (`matches[]`)]
 
 [heading Description]
 
@@ -576,7 +576,7 @@ Some using declarations:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:skip Re-Establish Skipping (`skip[]`)]
+[section:skip Parser Directive Re-Establishing Skipping (`skip[]`)]
 
 [heading Description]
 

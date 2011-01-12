@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Not-Predicate (!a)</title>
+<title>Not-Predicate Parser (!a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.1">
-<link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="list.html" title="List (a % b)">
-<link rel="next" href="optional.html" title="Optional (-a)">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
+<link rel="up" href="../operator.html" title="Parser Operators">
+<link rel="prev" href="list.html" title="List Parser (a % b)">
+<link rel="next" href="optional.html" title="Optional Parser (-a)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,24 +24,24 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.not_predicate"></a><a class="link" href="not_predicate.html" title="Not-Predicate (!a)">Not-Predicate
-          (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a>
+<a name="spirit.qi.reference.operator.not_predicate"></a><a class="link" href="not_predicate.html" title="Not-Predicate Parser (!a)">Not-Predicate
+          Parser (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.not_predicate.description"></a><h6>
-<a name="id994498"></a>
+<a name="id766645"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.description">Description</a>
           </h6>
 <p>
             Syntactic predicates assert a certain conditional syntax to be satisfied
             before evaluating another production. Similar to semantic predicates,
-            <a class="link" href="../auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a>,
+            <a class="link" href="../auxiliary/eps.html" title="Epsilon Parser (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a>,
             syntactic predicates do not consume any input. The <span class="emphasis"><em>not-predicate</em></span>,
             <code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>,
             is a negative syntactic predicate that returns a zero length match only
             if its predicate fails to match.
           </p>
 <a name="spirit.qi.reference.operator.not_predicate.header"></a><h6>
-<a name="id994539"></a>
+<a name="id766704"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/not_predicate.hpp&gt;
@@ -51,7 +51,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.not_predicate.model_of"></a><h6>
-<a name="id994614"></a>
+<a name="id766804"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.model_of">Model
             of</a>
           </h6>
@@ -68,7 +68,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.not_predicate.expression_semantics"></a><h6>
-<a name="id994682"></a>
+<a name="id766888"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -108,7 +108,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.not_predicate.attributes"></a><h6>
-<a name="id994782"></a>
+<a name="id767005"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.attributes">Attributes</a>
           </h6>
 <p>
@@ -146,14 +146,14 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.not_predicate.complexity"></a><h6>
-<a name="id994876"></a>
+<a name="id767111"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               The complexity is defined by the complexity of the predicate, <code class="computeroutput"><span class="identifier">a</span></code>
             </p></blockquote></div>
 <a name="spirit.qi.reference.operator.not_predicate.example"></a><h6>
-<a name="id994904"></a>
+<a name="id767148"></a>
             <a class="link" href="not_predicate.html#spirit.qi.reference.operator.not_predicate.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">

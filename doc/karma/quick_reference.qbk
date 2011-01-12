@@ -627,7 +627,7 @@ See here for more information about __karma_nonterminal__.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section Semantic Actions]
+[section:semantic_actions Generator Semantic Actions]
 
 Semantic Actions may be attached to any generator as follows:
 

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Number List - Printing Numbers From a std::vector</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="karma_adapted_complex.html" title="Complex - Fully Integrated">
 <link rel="next" href="num_matrix.html" title="Matrix of Numbers - Printing Numbers From a Matrix">
@@ -28,7 +28,7 @@
         Numbers From a std::vector</a>
 </h4></div></div></div>
 <a name="spirit.karma.tutorials.num_list.using_the_list_operator"></a><h6>
-<a name="id1020519"></a>
+<a name="id791529"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.using_the_list_operator">Using
           the List Operator</a>
         </h6>
@@ -47,7 +47,7 @@
           here: <a href="../../../../../example/karma/num_list2.cpp" target="_top">num_list2.cpp</a>.
         </p>
 <p>
-          This time we take advantage of Karma's <a class="link" href="../reference/operator/list.html" title="Lists (a % b)">List
+          This time we take advantage of Karma's <a class="link" href="../reference/operator/list.html" title="List Generator (a % b)">List
           (<code class="computeroutput"><span class="special">%</span></code>)</a> operator. The semantics
           of the list operator are fully equivalent to the semantics of the sequence
           we used before. The generator expression
@@ -102,7 +102,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data"></a><h6>
-<a name="id1021034"></a>
+<a name="id792180"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data">Generate
           Output from Arbitrary Data</a>
         </h6>
@@ -113,18 +113,18 @@
           convertible to a <code class="computeroutput"><span class="keyword">double</span></code>. Fortunately
           <span class="emphasis"><em>Spirit.Karma</em></span> is capable to output arbitrary data types
           while using the same format description expression. It implements the
-          <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
+          <a class="link" href="../reference/stream.html" title="Stream Generators"><code class="computeroutput"><span class="identifier">stream</span></code></a>
           generators which are able to consume any attribute type as long as a matching
           standard streaming operator is defined. I.e. for any attribute type <code class="computeroutput"><span class="identifier">Attrib</span></code> a function:
         </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;,</span> <span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 </pre>
 <p>
-          needs to be available. The <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a> generator will use the
+          needs to be available. The <a class="link" href="../reference/stream.html" title="Stream Generators"><code class="computeroutput"><span class="identifier">stream</span></code></a> generator will use the
           standard streaming operator to generate the output.
         </p>
 <p>
-          The following example modifies the code shown above to utilize the <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
+          The following example modifies the code shown above to utilize the <a class="link" href="../reference/stream.html" title="Stream Generators"><code class="computeroutput"><span class="identifier">stream</span></code></a>
           operator, which makes it compatible with almost any data type. We implement
           a custom data type <code class="computeroutput"><span class="identifier">complex</span></code>
           to demonstrate this. The example shows how it is possible to integrate
@@ -160,7 +160,7 @@
 <p>
           And this is the actual call to generate the output from a vector of those.
           This time we interleave the generated output with newline breaks (see
-          <a class="link" href="../reference/auxiliary/eol.html" title="End of Line (eol)"><code class="computeroutput"><span class="identifier">eol</span></code></a>),
+          <a class="link" href="../reference/auxiliary/eol.html" title="End of Line Generator (eol)"><code class="computeroutput"><span class="identifier">eol</span></code></a>),
           putting each complex number onto a separate line:
         </p>
 <p>

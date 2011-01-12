@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Auxiliary]
+[section:auxiliary Auxiliary Generators]
 
 This module includes different auxiliary generators not fitting into any of the 
 other categories. It includes the `attr_cast`, `eol`, `eps`, and `lazy` 
@@ -148,7 +148,7 @@ transformation:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:eol End of Line (`eol`)]
+[section:eol End of Line Generator (`eol`)]
 
 [heading Description]
 
@@ -220,7 +220,7 @@ Basic usage of the `eol` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:eps Epsilon (`eps`)]
+[section:eps Epsilon Generator (`eps`)]
 
 The family of `eps` components allows to create pseudo generators generating
 an empty string. This feature is sometimes useful either to force a generator
@@ -340,7 +340,7 @@ Basic usage of the `eps` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:lazy Lazy (`lazy`)]
+[section:lazy Lazy Generator (`lazy`)]
 
 [heading Description]
 

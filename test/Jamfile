@@ -72,6 +72,7 @@ import testing ;
     [ run qi/terminal_ex.cpp                : : : : ]
     [ run qi/tst.cpp                        : : : : ]
     [ run qi/uint.cpp                       : : : : ]
+    [ run qi/utree.cpp                      : : : : ]
 
     # run Karma tests
     [ run karma/actions.cpp                 : : : : karma_actions ]
@@ -119,6 +120,7 @@ import testing ;
     [ run karma/stream.cpp                  : : : : karma_stream ]
     [ run karma/symbols.cpp                 : : : : karma_symbols ]
     [ run karma/tricky_alignment.cpp        : : : : ]
+    [ run karma/utree.cpp                   : : : : karma_utree ]
 
     [ compile-fail karma/grammar_fail.cpp   : : karma_grammar_fail ]
     [ compile-fail karma/rule_fail.cpp      : : karma_rule_fail ]
@@ -157,6 +159,7 @@ import testing ;
     [ compile support/multi_pass_regression001.cpp : : support_multi_pass_regression001 ]
     [ compile support/multi_pass_regression002.cpp : : support_multi_pass_regression002 ]
     [ compile support/multi_pass_regression003.cpp : : support_multi_pass_regression003 ]
+    [ run support/utree_test.cpp            : : : : support_utree_test ]
 
 
     # regression tests

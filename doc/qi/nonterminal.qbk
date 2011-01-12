@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Nonterminal]
+[section:nonterminal Nonterminal Parsers]
 
 [heading Module Headers]
 
@@ -16,7 +16,7 @@
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section Rule]
+[section:rule Parser Rule]
 
 [heading Description]
 
@@ -148,7 +148,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Rule]
 
 [/------------------------------------------------------------------------------]
-[section Grammar]
+[section:grammar Parser Grammar]
 
 [heading Description]
 

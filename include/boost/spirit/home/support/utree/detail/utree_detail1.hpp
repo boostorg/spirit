@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,12 +10,13 @@
 
 #include <boost/type_traits/alignment_of.hpp>
 
-namespace scheme { namespace detail
+namespace boost { namespace spirit { namespace detail
 {
     template <typename UTreeX, typename UTreeY>
     struct visit_impl;
 
     struct index_impl;
+    struct assign_impl;
 
     template <typename T>
     struct get_impl;
@@ -36,11 +38,8 @@ namespace scheme { namespace detail
         void copy(list const& other);
         void default_construct();
 
-        template <typename T>
-        void insert_before(T const& val, node* node);
-
-        template <typename T>
-        void insert_after(T const& val, node* node);
+        template <typename T, typename Iterator>
+        void insert(T const& val, Iterator pos);
 
         template <typename T>
         void push_front(T const& val);
@@ -120,6 +119,7 @@ namespace scheme { namespace detail
         union
         {
             char buff[buff_size];
+            long lbuff[buff_size / (sizeof(long)/sizeof(char))];   // for initialize 
             heap_store heap;
         };
 
@@ -136,6 +136,7 @@ namespace scheme { namespace detail
         void swap(fast_string& other);
         void free();
         void copy(fast_string const& other);
+        void initialize();
 
         char& info();
         char info() const;
@@ -143,6 +144,6 @@ namespace scheme { namespace detail
         short tag() const;
         void tag(short tag);
     };
-}}
+}}}
 
 #endif

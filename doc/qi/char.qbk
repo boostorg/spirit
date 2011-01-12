@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
-[section Char]
+[section:char Character Parsers]
 
 This module includes parsers for single characters. Currently, this
 module includes literal chars (e.g. `'x'`, `L'x'`), `char_` (single
@@ -20,7 +20,7 @@ character classifiers (`alnum`, `alpha`, `digit`, `xdigit`, etc.).
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:char Char (`char_`, `lit`)]
+[section:char Character Parser (`char_`, `lit`)]
 
 [heading Description]
 
@@ -213,7 +213,7 @@ Lazy char_ using __phoenix__
 [endsect] [/ Char]
 
 [/------------------------------------------------------------------------------]
-[section:char_class Char Classification (`alnum`, `digit`, etc.)]
+[section:char_class Character Classification Parsers (`alnum`, `digit`, etc.)]
 
 [heading Description]
 

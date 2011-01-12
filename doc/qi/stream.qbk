@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Stream]
+[section:stream Stream Parsers]
 
 This module includes the description of the different variants of the `stream` 
 parser. It can be used to utilize existing streaming operators 
@@ -19,7 +19,7 @@ parser. It can be used to utilize existing streaming operators
 
 Also, see __include_structure__.
 
-[section:stream Stream (`stream`, `wstream`, etc.)]
+[section:stream Stream Parsers (`stream`, `wstream`, etc.)]
 
 [heading Description]
 

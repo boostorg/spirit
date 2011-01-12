@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Directive</title>
+<title>Parser Directive</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="prev" href="char/char_class.html" title="Char Classification (alnum, digit, etc.)">
-<link rel="next" href="directive/lexeme.html" title="Inhibiting Skipping (lexeme[])">
+<link rel="prev" href="char/char_class.html" title="Character Classification Parsers (alnum, digit, etc.)">
+<link rel="next" href="directive/lexeme.html" title="Parser Directive Inhibiting Skipping (lexeme[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,25 +24,25 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.qi.reference.directive"></a><a class="link" href="directive.html" title="Directive">Directive</a>
+<a name="spirit.qi.reference.directive"></a><a class="link" href="directive.html" title="Parser Directive">Parser Directive</a>
 </h4></div></div></div>
 <div class="toc"><dl>
-<dt><span class="section"><a href="directive/lexeme.html">Inhibiting
-          Skipping (<code class="computeroutput"><span class="identifier">lexeme</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/no_skip.html">Inhibiting
-          Skipping Without Pre-skip (<code class="computeroutput"><span class="identifier">no_skip</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/no_case.html">Inhibiting
-          Case Sensitivity (<code class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/omit.html">Ignoring Attribute
-          (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/raw.html">Transduction Parsing
-          (<code class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/lexeme.html">Parser Directive
+          Inhibiting Skipping (<code class="computeroutput"><span class="identifier">lexeme</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/no_skip.html">Parser Directive
+          Inhibiting Skipping Without Pre-skip (<code class="computeroutput"><span class="identifier">no_skip</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/no_case.html">Parser Directive
+          Inhibiting Case Sensitivity (<code class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/omit.html">Parser Directive
+          Ignoring Attribute (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/raw.html">Directive for
+          Transduction Parsing (<code class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive/repeat.html">Repetition
-          (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/matches.html">Test if Parser
-          Succeeded (<code class="computeroutput"><span class="identifier">matches</span><span class="special">[]</span></code>)</a></span></dt>
-<dt><span class="section"><a href="directive/skip.html">Re-Establish
-          Skipping (<code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>)</a></span></dt>
+          Parser Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/matches.html">Directive
+          Testing if Parser Succeeded (<code class="computeroutput"><span class="identifier">matches</span><span class="special">[]</span></code>)</a></span></dt>
+<dt><span class="section"><a href="directive/skip.html">Parser Directive
+          Re-Establishing Skipping (<code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>)</a></span></dt>
 </dl></div>
 <p>
           This module includes different directives usable to augment and parameterize
@@ -53,7 +53,7 @@
           directives.
         </p>
 <a name="spirit.qi.reference.directive.module_header"></a><h6>
-<a name="id942570"></a>
+<a name="id726836"></a>
           <a class="link" href="directive.html#spirit.qi.reference.directive.module_header">Module Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive.hpp&gt;

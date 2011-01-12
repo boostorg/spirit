@@ -6,6 +6,7 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 
 #define BOOST_SPIRIT_UNICODE
 
@@ -13,12 +14,11 @@
 #include <fstream>
 #include <iterator>
 
-#include <utree/utree.hpp>
 #include <qi/parse_qiexpr.hpp>
 #include <output/generate_sexpr.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-bool parse_rhs(std::string const& str, scheme::utree& result) 
+bool parse_rhs(std::string const& str, boost::spirit::utree& result) 
 {
     if (scheme::input::parse_qi_expr(str, result))
     {
@@ -46,7 +46,7 @@ bool parse_rule(std::string str)
     str = "name = " + str;
 
     // parse it
-    scheme::utree result;
+    boost::spirit::utree result;
     if (scheme::input::parse_qi_rule(str, result))
     {
         if (scheme::output::generate_sexpr(std::cout, result))
@@ -62,7 +62,7 @@ bool parse_rule(std::string str)
 bool parse_grammar(std::string str) 
 {
     // parse it
-    scheme::utree result;
+    boost::spirit::utree result;
     if (scheme::input::parse_qi_grammar(str, result))
     {
         if (scheme::output::generate_sexpr_list(std::cout, result))
@@ -90,9 +90,9 @@ int main(int argc, char **argv)
         str += '\n';
 
         bool r = false;
-        scheme::utree result;
+        boost::spirit::utree result;
         BOOST_TEST(r = parse_rhs(str, result));
-        if (r && result.which() != scheme::utree_type::nil_type)
+        if (r && result.which() != boost::spirit::utree_type::nil_type)
         {
             BOOST_TEST(r = parse_rule(str));
             if (r) 

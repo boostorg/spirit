@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Difference (a - b)</title>
+<title>Difference Parser (a - b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.1">
-<link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="and_predicate.html" title="And-Predicate (&amp;a)">
-<link rel="next" href="expect.html" title="Expectation (a &gt; b)">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
+<link rel="up" href="../operator.html" title="Parser Operators">
+<link rel="prev" href="and_predicate.html" title="And-Predicate Parser (&amp;a)">
+<link rel="next" href="expect.html" title="Expectation Parser (a &gt; b)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,22 +24,22 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.difference"></a><a class="link" href="difference.html" title="Difference (a - b)">Difference
-          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">-</span>
+<a name="spirit.qi.reference.operator.difference"></a><a class="link" href="difference.html" title="Difference Parser (a - b)">Difference
+          Parser (<code class="computeroutput"><span class="identifier">a</span> <span class="special">-</span>
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.difference.description"></a><h6>
-<a name="id983046"></a>
+<a name="id761330"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.description">Description</a>
           </h6>
 <p>
             The difference operator, <code class="computeroutput"><span class="identifier">a</span>
             <span class="special">-</span> <span class="identifier">b</span></code>,
             is a binary operator that matches the first (LHS) operand but not the
-            second (RHS). <sup>[<a name="id983075" href="#ftn.id983075" class="footnote">8</a>]</sup>
+            second (RHS). <sup>[<a name="id761367" href="#ftn.id761367" class="footnote">8</a>]</sup>
           </p>
 <a name="spirit.qi.reference.operator.difference.header"></a><h6>
-<a name="id983115"></a>
+<a name="id761420"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/difference.hpp&gt;
@@ -49,7 +49,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.difference.model_of"></a><h6>
-<a name="id983189"></a>
+<a name="id761519"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.model_of">Model
             of</a>
           </h6>
@@ -66,7 +66,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.difference.expression_semantics"></a><h6>
-<a name="id983265"></a>
+<a name="id761613"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -107,7 +107,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.attributes"></a><h6>
-<a name="id983378"></a>
+<a name="id761746"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.attributes">Attributes</a>
           </h6>
 <p>
@@ -150,7 +150,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.complexity"></a><h6>
-<a name="id983596"></a>
+<a name="id761995"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -158,7 +158,7 @@
               complexities of both operands.
             </p></blockquote></div>
 <a name="spirit.qi.reference.operator.difference.example"></a><h6>
-<a name="id983616"></a>
+<a name="id762022"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -192,7 +192,7 @@
           </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id983075" href="#id983075" class="para">8</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id761367" href="#id761367" class="para">8</a>] </sup>
               Unlike classic Spirit, with Spirit2, the expression will always fail
               if the RHS is a successful match regardless if the RHS matches less
               characters. For example, the rule <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"policeman"</span><span class="special">)</span> <span class="special">-</span> <span class="string">"police"</span></code> will always fail to

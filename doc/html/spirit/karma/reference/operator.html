@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Operator</title>
+<title>Generator Operators</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.4.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="numeric/boolean.html" title="Boolean Generators (bool_)">
-<link rel="next" href="operator/sequence.html" title="Sequences (a &lt;&lt; b)">
+<link rel="next" href="operator/sequence.html" title="Sequence Generator (a &lt;&lt; b)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,25 +24,28 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.reference.operator"></a><a class="link" href="operator.html" title="Operator">Operator</a>
+<a name="spirit.karma.reference.operator"></a><a class="link" href="operator.html" title="Generator Operators">Generator Operators</a>
 </h4></div></div></div>
 <div class="toc"><dl>
-<dt><span class="section"><a href="operator/sequence.html">Sequences
-          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+<dt><span class="section"><a href="operator/sequence.html">Sequence
+          Generator (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
           <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/alternative.html">Alternative
-          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+          Generator (<code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
           <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/kleene.html">Kleene Star
-          (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>)</a></span></dt>
-<dt><span class="section"><a href="operator/plus.html">Plus (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a></span></dt>
-<dt><span class="section"><a href="operator/list.html">Lists (<code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></code>)</a></span></dt>
+          Generator (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>)</a></span></dt>
+<dt><span class="section"><a href="operator/plus.html">Plus Generator
+          (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a></span></dt>
+<dt><span class="section"><a href="operator/list.html">List Generator
+          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/optional.html">Optional
-          (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a></span></dt>
+          Generator (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/and_predicate.html">And-Predicate
-          (<code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>)</a></span></dt>
+          Generator (<code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/not_predicate.html">Not-Predicate
-          (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a></span></dt>
+          Generator (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a></span></dt>
 </dl></div>
 <p>
           Operators are used as a means for object composition and embedding. Simple
@@ -68,7 +71,7 @@
           and the <span class="emphasis"><em>not</em></span> predicate (unary <code class="computeroutput"><span class="special">!</span></code>).
         </p>
 <a name="spirit.karma.reference.operator.module_header"></a><h6>
-<a name="id1145160"></a>
+<a name="id900870"></a>
           <a class="link" href="operator.html#spirit.karma.reference.operator.module_header">Module Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator.hpp&gt;

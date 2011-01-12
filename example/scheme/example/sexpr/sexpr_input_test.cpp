@@ -8,11 +8,10 @@
 
 #include <input/sexpr.hpp>
 #include <input/parse_sexpr_impl.hpp>
-#include <utree/io.hpp>
 #include <iostream>
 #include <fstream>
 
-inline std::ostream& println(std::ostream& out, scheme::utree const& val)
+inline std::ostream& println(std::ostream& out, boost::spirit::utree const& val)
 {
     out << val << std::endl;
     return out;
@@ -58,7 +57,7 @@ int main(int argc, char **argv)
         }
     }
 
-    scheme::utree result;
+    boost::spirit::utree result;
     if (scheme::input::parse_sexpr(in, result))
     {
         std::cout << "success: ";

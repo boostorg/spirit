@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section String]
+[section:string String Generators]
 
 This module includes different string oriented generators allowing to output
 character sequences. It includes the `symbols` generator and variants of the 
@@ -19,7 +19,7 @@ character sequences. It includes the `symbols` generator and variants of the
 
 Also, see __include_structure__.
 
-[section:string String (`string`, `lit`)]
+[section:string String Generators (`string`, `lit`)]
 
 [heading Description]
 
@@ -148,7 +148,7 @@ Basic usage of `string` generators:
 [endsect]
 
 [/------------------------------------------------------------------------------]
-[section:symbols Symbols (`symbols`)]
+[section:symbols Symbols Generator (`symbols`)]
 
 [heading Description]
 
@@ -266,7 +266,51 @@ while not emitting anything.
 
 [heading Attributes]
 
-The attribute of `symbol<Attrib, T>` is `Attrib`.
+The attribute of `symbol<Attrib, T>` is `Attrib`. 
+
+If the supplied attribute is a __fusion__ sequence, then the symbol table 
+generator will use the first element of that __fusion__ sequence as the key 
+to be used for lookup. The type of that first element needs to be convertible 
+to `Attrib`. In this case the second element of the __fusion__ sequence is used
+as the attribute while calling a generator derived from the value stored in the 
+symbol table for the found entry.
+
+If the supplied attribute is a container type (__customize_is_container__ 
+resolves to `mpl::true_`), then the symbol table generator will use the first 
+element stored in that container as the key to be used for lookup. The 
+`value_type` (returned by __customize_container_value__) has to be convertible 
+to `Attrib`. In this case the second element stored in that container is used
+as the attribute while calling a generator derived from the value stored in the 
+symbol table for the found entry.
+
+If the supplied attribute is not a __fusion__ sequence and not a container
+type, the supplied attribute is directly used as the key for item lookup. The
+attribute is used as the attribute while calling a generator derived from the 
+value stored in the symbol table for the found entry.
+
+In any case, because the supplied key (i.e. either the first element of the 
+__fusion__ sequence, the first container element, or the attribute otherwise)
+is passed as the attribute to a generator derived from the value
+stored in the symbol table for the found entry, the symbol table may store 
+generators, which will produce output based on that value. For instance:
+
+    // The symbol table maps a single character key to a rule<>
+    // The rule<> exposes an attribute of char as well
+    rule<output_iterator_type, char()> r1 = char_;
+        
+    symbols<char, rule<output_iterator_type, char()> > sym;
+    sym.add
+        ('j', r1.alias())
+        ('h', r1.alias())
+        ('t', r1.alias())
+        ('k', r1.alias())
+    ;
+
+    // Supplying a fusion vector as the attribute will use the first element
+    // (the 'j') as the key to be looked up, while the second element (the 'J') 
+    // is passed on as the attribute to the rule<> stored in the symbol table. 
+    // Consequently, the example generates a single 'J'.
+    BOOST_ASSERT(test("J", sym, make_vector('j', 'J')));
 
 [heading Complexity]
 

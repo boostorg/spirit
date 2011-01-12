@@ -7,7 +7,6 @@
 #include <boost/config/warning_disable.hpp>
 #include <input/parse_sexpr_impl.hpp>
 #include <scheme/compiler.hpp>
-#include <utree/io.hpp>
 #include <iostream>
 #include <fstream>
 

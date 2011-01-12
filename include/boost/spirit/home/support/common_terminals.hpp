@@ -71,6 +71,8 @@ namespace boost { namespace spirit
         ( no_skip )
         ( omit )
         ( raw )
+        ( as_string )
+        ( as_wstring )
         ( inf )
         ( eol )
         ( eoi )

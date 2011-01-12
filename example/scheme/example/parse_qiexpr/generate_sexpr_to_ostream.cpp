@@ -20,7 +20,7 @@ namespace scheme { namespace output
 // this is needed if grammar debugging is on
 namespace boost { namespace spirit { namespace traits
 {
-    void print_attribute(std::ostream& out, scheme::utree const& val)
+    void print_attribute(std::ostream& out, boost::spirit::utree const& val)
     {
         scheme::output::generate_sexpr(out, val);
     }
