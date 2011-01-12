@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Hartmut Kaiser
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,9 +21,51 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/support_utree.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_function.hpp>
 
 #include <iostream>
 #include <string>
+
+#if BOOST_PHOENIX_VERSION == 0x2000
+namespace boost { namespace phoenix 
+{
+    // There's a bug in the Phoenix V2 type deduction mechanism that prevents 
+    // correct return type deduction for for the math operations below. Newer
+    // versions of Phoenix will be switching to BOOST_TYPEOF. In the meantime, 
+    // we will use the specializations helping with return type deduction 
+    // below:
+    template <>
+    struct result_of_plus<spirit::utree&, spirit::utree&> 
+    { 
+        typedef spirit::utree type; 
+    };
+
+    template <>
+    struct result_of_minus<spirit::utree&, spirit::utree&> 
+    { 
+        typedef spirit::utree type; 
+    };
+
+    template <>
+    struct result_of_multiplies<spirit::utree&, spirit::utree&> 
+    { 
+        typedef spirit::utree type; 
+    };
+
+    template <>
+    struct result_of_divides<spirit::utree&, spirit::utree&> 
+    { 
+        typedef spirit::utree type; 
+    };
+
+    template <>
+    struct result_of_negate<spirit::utree&> 
+    { 
+        typedef spirit::utree type; 
+    };
+}}
+#endif
 
 namespace client
 {
@@ -40,27 +82,28 @@ namespace client
         calculator() : calculator::base_type(expression)
         {
             using qi::uint_;
-            using qi::char_;
+            using qi::_val;
+            using qi::_1;
 
             expression =
-                term
-                >> *(   (char_('+') >> term)
-                    |   (char_('-') >> term)
+                term                            [_val = _1]
+                >> *(   ('+' >> term            [_val = _val + _1])
+                    |   ('-' >> term            [_val = _val - _1])
                     )
                 ;
 
             term =
-                factor
-                >> *(   (char_('*') >> factor)
-                    |   (char_('/') >> factor)
+                factor                          [_val = _1]
+                >> *(   ('*' >> factor          [_val = _val * _1])
+                    |   ('/' >> factor          [_val = _val / _1])
                     )
                 ;
 
             factor =
-                uint_
-                |   char_('(') >> expression >> char_(')')
-                |   (char_('-') >> factor)
-                |   (char_('+') >> factor)
+                uint_                           [_val = _1]
+                |   '(' >> expression           [_val = _1] >> ')'
+                |   ('-' >> factor              [_val = -_1])
+                |   ('+' >> factor              [_val = _1])
                 ;
 
             BOOST_SPIRIT_DEBUG_NODE(expression);
@@ -75,8 +118,7 @@ namespace client
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
+int main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Expression parser...\n\n";

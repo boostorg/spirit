@@ -22,6 +22,8 @@
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/lexical_cast.hpp>
@@ -283,6 +285,7 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Width>
     struct has_semantic_action<karma::simple_left_alignment<Subject, Width> >
       : unary_has_semantic_action<Subject> {};
@@ -292,6 +295,18 @@ namespace boost { namespace spirit { namespace traits
             karma::padding_left_alignment<Subject, Padding, Width> >
       : unary_has_semantic_action<Subject> {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Width, typename Attribute>
+    struct handles_container<
+            karma::simple_left_alignment<Subject, Width>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
+
+    template <typename Subject, typename Padding, typename Width
+      , typename Attribute>
+    struct handles_container<
+            karma::padding_left_alignment<Subject, Padding, Width>
+          , Attribute>
+      : unary_handles_container<Subject, Attribute> {};
 }}}
 
 #endif

@@ -14,6 +14,8 @@
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
+#include <boost/type_traits/remove_const.hpp>
 #include <boost/ref.hpp>
 
 namespace boost { namespace spirit { namespace qi
@@ -50,6 +52,15 @@ namespace boost { namespace spirit { namespace qi
 
         boost::reference_wrapper<Subject> ref;
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Attribute>
+    struct handles_container<qi::reference<Subject>, Attribute>
+      : handles_container<typename remove_const<Subject>::type, Attribute> 
+    {};
 }}}
 
 #endif

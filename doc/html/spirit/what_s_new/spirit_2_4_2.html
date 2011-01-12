@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit V2.4.2</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="../what_s_new.html" title="What's New">
@@ -27,14 +27,112 @@
 <a name="spirit.what_s_new.spirit_2_4_2"></a><a class="link" href="spirit_2_4_2.html" title="Spirit V2.4.2">Spirit V2.4.2</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id635793"></a>
+<a name="id855410"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)</a>
       </h5>
-<a name="spirit.what_s_new.spirit_2_4_2.bug_fixes"></a><h5>
-<a name="id635818"></a>
-        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes">Bug Fixes</a>
+<a name="spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma"></a><h5>
+<a name="id855434"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma">New
+        Features in Qi or Karma</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            Added keyword indexes for <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+            to the docs.
+          </li>
+<li class="listitem">
+            Added <a class="link" href="../support/utree.html" title="The utree data structure"><code class="computeroutput"><span class="identifier">utree</span></code></a>,
+            a generic, hierarchical, and dynamic data structure that can represent
+            abstract syntax trees. It's well integrated with <span class="emphasis"><em>Spirit.Qi</em></span>
+            and <span class="emphasis"><em>Spirit.Karma</em></span>. It can be passed as an attribute
+            while parsing almost any grammars. At the same time, it can be used as
+            an attribute to generate output from.
+          </li>
+<li class="listitem">
+            Introduced a new customization point <a class="link" href="../advanced/customize/assign_to/assign_to_container_from_value.html" title="Store an Attribute Value into a Container after a Parser Produced a Value (Qi)"><code class="computeroutput"><span class="identifier">assign_to_container_from_value</span></code></a>
+            which is invoked for container attributes whenever a attribute value
+            needs to be added to that container.
+          </li>
+</ul></div>
+<a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma"></a><h5>
+<a name="id855509"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma">Bug
+        Fixes in Qi or Karma</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            Fixed a problem in handling container attributes for <span class="emphasis"><em>Spirit.Qi</em></span>
+            sequences, which caused the properly parsed attributes of the first elements
+            being overwritten by later elements of the sequence.
+          </li>
+<li class="listitem">
+            Fixed the <span class="emphasis"><em>Spirit.Karma</em></span> generator <a class="link" href="../karma/reference/string.html" title="String Generators"><code class="computeroutput"><span class="identifier">string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code></a>.
+            It succeeded even if <code class="computeroutput"><span class="identifier">s</span></code>
+            matched only a prefix of its attribute.
+          </li>
+</ul></div>
+<a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
+<a name="id855575"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
+        changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.4.1 (Boost V1.45.0) to
+        V2.4.2 (Boost V1.46.0)</a>
+      </h5>
+<a name="spirit.what_s_new.spirit_2_4_2.new_features_in_lex"></a><h5>
+<a name="id855592"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_lex">New Features
+        in Lex</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tokenid</span><span class="special">()</span></code>
+            primitive parser allowing to match arbitrary lexer tokens based on a
+            given token id. The difference to <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span><span class="special">()</span></code> is, that it exposes as its attribute
+            the token id of the matched token (instead of the iterator_range of the
+            matched input, as <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span><span class="special">()</span></code> does).
+          </li>
+<li class="listitem">
+            Added additional template parameter to the default <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> definition: the type of the token
+            id. This type defaults to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
+            Any type used as the id type needs to be (explicitly) convertible from
+            <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
+          </li>
+<li class="listitem">
+            It's now possible to attach lexer semantic actions to token definitions
+            based on <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="keyword">char</span><span class="special">()</span></code>
+            and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">string</span><span class="special">()</span></code>.
+          </li>
+<li class="listitem">
+            It's now possible to specify a lexer state the lexer should automatically
+            be switched to after matching certain tokens. For this reason the token
+            definition syntax has been extended: 
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">lexer</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="identifier">lexer</span><span class="special">()</span>
+    <span class="special">{</span>
+        <span class="identifier">int_</span> <span class="special">=</span> <span class="string">"[1-9][0-9]*"</span><span class="special">;</span>
+        <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">self</span><span class="special">(</span><span class="string">"INITIAL"</span><span class="special">,</span> <span class="string">"TARGETSTATE"</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
+    <span class="special">}</span>
+    <span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">int_</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+            This example lexer will match a <code class="computeroutput"><span class="identifier">int_</span></code>
+            token and will switch the lexer to the state <code class="computeroutput"><span class="string">"TARGETSTATE"</span></code>
+            afterwards. If the second argument is not specified the lexer remains
+            in the previous state (as before).
+          </li>
+<li class="listitem">
+            The parser primitives <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span></code>
+            and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tokenid</span></code> can now be used without any
+            argument. In this case they will match any token.
+          </li>
+</ul></div>
+<a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex"></a><h5>
+<a name="id856009"></a>
+        <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex">Bug Fixes
+        in Lex</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -69,44 +167,6 @@
             happen in conjunction with a lexer which performed lexer state changes
             and was using <code class="computeroutput"><span class="identifier">pass_fail</span></code>
             in semantic actions to make a token match fail.
-          </li>
-<li class="listitem">
-            Added <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tokenid</span><span class="special">()</span></code>
-            primitive parser allowing to match arbitrary lexer tokens based on a
-            given token id. The difference to <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span><span class="special">()</span></code> is, that it exposes as its attribute
-            the token id of the matched token (instead of the iterator_range of the
-            matched input, as qi::token() does).
-          </li>
-<li class="listitem">
-            Added additional template parameter to the default <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> definition: the type of the token
-            id. This type defaults to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
-            Any type used as the id type needs to be (explicitly) convertible from
-            <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
-          </li>
-<li class="listitem">
-            It's now possible to attach lexer semantic actions to token definitions
-            based on <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="keyword">char</span><span class="special">()</span></code>
-            and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">string</span><span class="special">()</span></code>.
-          </li>
-<li class="listitem">
-            It's now possible to specify a lexer state the lexer should automatically
-            be switched to after matching certain tokens. For this reason the token
-            definition syntax has been extended: 
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">lexer</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
-<span class="special">{</span>
-    <span class="identifier">lexer</span><span class="special">()</span>
-    <span class="special">{</span>
-        <span class="identifier">int_</span> <span class="special">=</span> <span class="string">"[1-9][0-9]*"</span><span class="special">;</span>
-        <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">self</span><span class="special">(</span><span class="string">"INITIAL"</span><span class="special">,</span> <span class="string">"TARGETSTATE"</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
-    <span class="special">}</span>
-    <span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">int_</span><span class="special">;</span>
-<span class="special">};</span>
-</pre>
-            This example lexer will match a <code class="computeroutput"><span class="identifier">int_</span></code>
-            token and will switch the lexer to the state <code class="computeroutput"><span class="string">"TARGETSTATE"</span></code>
-            afterwards. If the second argument is not specified the lexer remains
-            in the previous state (as before).
           </li>
 </ul></div>
 </div>

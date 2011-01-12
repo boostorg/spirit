@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         find(tst_node* start, Iterator& first, Iterator last, Filter filter)
         {
             if (first == last)
-                return false;
+                return 0;
 
             Iterator i = first;
             Iterator latest = first;

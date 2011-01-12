@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
     Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c)      2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,7 +20,12 @@ inline bool check(boost::spirit::utree const& val, std::string expected)
 {
     std::stringstream s;
     s << val;
-    return (s.str() == expected + " ") ? true : false;
+    if (s.str() == expected + " ")
+        return true;
+
+    std::cerr << "got result: " << s.str() 
+              << ", expected: " << expected << std::endl;
+    return false;
 }
 
 struct one_two_three
@@ -33,6 +39,8 @@ struct one_two_three
 int main()
 {
     using boost::spirit::utree;
+    using boost::spirit::utf8_symbol_type;
+    using boost::spirit::binary_string_type;
 
     {
         // test the size
@@ -42,8 +50,13 @@ int main()
     }
 
     {
-        utree val;
+        utree val(utree::nil);
         BOOST_TEST(check(val, "<nil>"));
+    }
+
+    {
+        utree val(utree::list);
+        BOOST_TEST(check(val, "( )"));
     }
 
     {
@@ -60,6 +73,10 @@ int main()
         // single element string
         utree val('x');
         BOOST_TEST(check(val, "\"x\""));
+        
+        // empty string 
+        utree val1("");
+        BOOST_TEST(check(val1, "\"\""));
     }
 
     {
@@ -67,7 +84,7 @@ int main()
         BOOST_TEST(check(val, "123.456"));
     }
 
-    {
+    { // strings
         utree val("Hello, World");
         BOOST_TEST(check(val, "\"Hello, World\""));
         utree val2;
@@ -85,6 +102,42 @@ int main()
         BOOST_TEST(val4 < val6);
     }
 
+    { // symbols
+        utree val(utf8_symbol_type("Hello, World"));
+        BOOST_TEST(check(val, "Hello, World"));
+        utree val2;
+        val2 = val;
+        BOOST_TEST(check(val2, "Hello, World"));
+        utree val3(utf8_symbol_type("Hello, World. Chuckie is back!!!"));
+        val = val3;
+        BOOST_TEST(check(val, "Hello, World. Chuckie is back!!!"));
+
+        utree val4(utf8_symbol_type("Apple"));
+        utree val5(utf8_symbol_type("Apple"));
+        BOOST_TEST(val4 == val5);
+
+        utree val6(utf8_symbol_type("ApplePie"));
+        BOOST_TEST(val4 < val6);
+    }
+
+    { // binary_strings
+        utree val(binary_string_type("\xDE#\xAD"));
+        BOOST_TEST(check(val, "#de23ad#" /* FIXME?: "#\xDE#\xAD#" */));
+        utree val2;
+        val2 = val;
+        BOOST_TEST(check(val2, "#de23ad#" /* FIXME?: "#\xDE#\xAD#" */));
+        utree val3(binary_string_type("\xDE\xAD\xBE\xEF"));
+        val = val3;
+        BOOST_TEST(check(val, "#deadbeef#" /* FIXME?: "#\xDE\xAD\xBE\xEF#" */));
+
+        utree val4(binary_string_type("\x01"));
+        utree val5(binary_string_type("\x01"));
+        BOOST_TEST(val4 == val5);
+
+        utree val6(binary_string_type("\x01\x02"));
+        BOOST_TEST(val4 < val6);
+    }
+
     {
         utree val;
         val.push_back(123);
@@ -98,7 +151,7 @@ int main()
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(check(val.front(), "123"));
 
-        utree val3;
+        utree val3(utree::nil);
         val3.swap(val);
         BOOST_TEST(val3.size() == 3);
         BOOST_TEST(check(val, "<nil>"));
@@ -138,7 +191,7 @@ int main()
     }
 
     {
-        utree a, b;
+        utree a(utree::nil), b(utree::nil);
         BOOST_TEST(a == b);
         a = 123;
         BOOST_TEST(a != b);
@@ -147,7 +200,7 @@ int main()
         a = 100.00;
         BOOST_TEST(a < b);
 
-        b = a = utree();
+        b = a = utree(utree::uninitialized);
         BOOST_TEST(a == b);
         a.push_back(1);
         a.push_back("two");
@@ -162,7 +215,7 @@ int main()
     }
 
     {
-        utree a;
+        utree a(utree::nil);
         a.push_back(1);
         a.push_back(2);
         a.push_back(3);
@@ -318,15 +371,15 @@ int main()
 
     {
         // shallow string ranges
-        using boost::spirit::utf8_string_range;
+        using boost::spirit::utf8_string_range_type;
         using boost::spirit::shallow;
 
         char const* s = "Hello, World";
-        utree val(utf8_string_range(s, s + strlen(s)), shallow);
+        utree val(utf8_string_range_type(s, s + strlen(s)), shallow);
         BOOST_TEST(check(val, "\"Hello, World\""));
 
-        utf8_string_range r = val.get<utf8_string_range>();
-        utf8_string_range pf(r.begin()+1, r.end()-1);
+        utf8_string_range_type r = val.get<utf8_string_range_type>();
+        utf8_string_range_type pf(r.begin()+1, r.end()-1);
         val = utree(pf, shallow);
         BOOST_TEST(check(val, "\"ello, Worl\""));
     }

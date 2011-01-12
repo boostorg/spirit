@@ -80,7 +80,6 @@ namespace boost { namespace spirit
                 tag::char_code<tag::lower, CharEncoding> const&)
           : Current(current) {}
     };
-
 }}
 
 #endif

@@ -13,7 +13,62 @@
 
 [heading What's changed in __qi__ and __karma__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
 
-[heading Bug Fixes]
+[heading New Features in Qi or Karma]
+
+* Added keyword indexes for __qi__ and __karma__ to the docs.
+* Added __utree__, a generic, hierarchical, and dynamic data structure that can 
+  represent abstract syntax trees. It's well integrated with __qi__ and 
+  __karma__. It can be passed as an attribute while parsing almost any
+  grammars. At the same time, it can be used as an attribute to generate output 
+  from.
+* Introduced a new customization point __customize_assign_to_container_from_value__
+  which is invoked for container attributes whenever a attribute value needs to 
+  be added to that container.
+
+[heading Bug Fixes in Qi or Karma]
+
+* Fixed a problem in handling container attributes for __qi__ sequences, which 
+  caused the properly parsed attributes of the first elements being overwritten 
+  by later elements of the sequence. 
+* Fixed the __karma__ generator [karma_string `string(s)`]. It succeeded even 
+  if `s` matched only a prefix of its attribute. 
+
+[heading What's changed in __lex__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]
+
+[heading New Features in Lex]
+
+* Added `qi::tokenid()` primitive parser allowing to match arbitrary lexer 
+  tokens based on a given token id. The difference to `qi::token()` is, that it 
+  exposes as its attribute the token id of the matched token (instead of the 
+  iterator_range of the matched input, as `qi::token()` does).
+* Added additional template parameter to the default `lexertl::token<>`
+  definition: the type of the token id. This type defaults to `std::size_t`.
+  Any type used as the id type needs to be (explicitly) convertible from 
+  `std::size_t`.
+* It's now possible to attach lexer semantic actions to token definitions 
+  based on `lex::char()` and `lex::string()`.
+* It's now possible to specify a lexer state the lexer should automatically be
+  switched to after matching certain tokens. For this reason the token 
+  definition syntax has been extended:
+``
+    template <typename Lexer>
+    struct lexer : lex::lexer<Lexer>
+    {
+        lexer()
+        {
+            int_ = "[1-9][0-9]*";
+            this->self("INITIAL", "TARGETSTATE") = int_;
+        }
+        lex::token_def<int> int_;
+    };
+``
+  This example lexer will match a `int_` token and will switch the lexer to 
+  the state `"TARGETSTATE"` afterwards. If the second argument is not 
+  specified the lexer remains in the previous state (as before).
+* The parser primitives `qi::token` and `qi::tokenid` can now be used without
+  any argument. In this case they will match any token.
+
+[heading Bug Fixes in Lex]
 
 * Fixed a problem in the Lexer giving problems to assign tokens to all lexer 
   states at once. This is now possible by simply using "*" as the state name.
@@ -40,34 +95,6 @@
   returned to the user. This could happen in conjunction with a lexer which 
   performed lexer state changes and was using `pass_fail` in semantic actions
   to make a token match fail.
-* Added `qi::tokenid()` primitive parser allowing to match arbitrary lexer 
-  tokens based on a given token id. The difference to `qi::token()` is, that it 
-  exposes as its attribute the token id of the matched token (instead of the 
-  iterator_range of the matched input, as qi::token() does).
-* Added additional template parameter to the default `lexertl::token<>`
-  definition: the type of the token id. This type defaults to `std::size_t`.
-  Any type used as the id type needs to be (explicitly) convertible from 
-  `std::size_t`.
-* It's now possible to attach lexer semantic actions to token definitions 
-  based on `lex::char()` and `lex::string()`.
-* It's now possible to specify a lexer state the lexer should automatically be
-  switched to after matching certain tokens. For this reason the token 
-  definition syntax has been extended:
-``
-    template <typename Lexer>
-    struct lexer : lex::lexer<Lexer>
-    {
-        lexer()
-        {
-            int_ = "[1-9][0-9]*";
-            this->self("INITIAL", "TARGETSTATE") = int_;
-        }
-        lex::token_def<int> int_;
-    };
-``
-  This example lexer will match a `int_` token and will switch the lexer to 
-  the state `"TARGETSTATE"` afterwards. If the second argument is not 
-  specified the lexer remains in the previous state (as before).
 
 [endsect] [/ spirit_2_4_2]
 

@@ -14,6 +14,7 @@
 
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/is_convertible.hpp>
@@ -110,9 +111,13 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             typedef typename traits::attribute_of<
                 Component, context_type>::type attribute_type;
 
+//             typedef mpl::and_<
+//                 traits::is_container<attribute_type>
+//               , is_convertible<Attr, attribute_type> > predicate;
+
             typedef mpl::and_<
                 traits::is_container<attribute_type>
-              , is_convertible<Attr, attribute_type> > predicate;
+              , traits::handles_container<Component, Attr> > predicate;
 
             return dispatch_attribute_element(component, predicate());
         }
@@ -168,9 +173,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             typedef typename traits::attribute_of<
                 Component, context_type>::type lhs_attribute;
 
+            typedef mpl::and_<
+                has_same_elements<rhs, lhs_attribute>
+              , traits::handles_container<Component, Attr> > predicate;
+
             // false means everything went ok
-            return dispatch_main(component
-              , has_same_elements<rhs, lhs_attribute>());
+            return dispatch_main(component, predicate());
         }
 
         F f;

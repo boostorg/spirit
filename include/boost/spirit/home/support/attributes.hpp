@@ -27,7 +27,6 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/is_view.hpp>
-#include <boost/fusion/include/is_sequence.hpp>
 #include <boost/foreach.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -570,24 +569,25 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute
     {
+        typedef typename remove_const<Attribute>::type attribute_type;
         typedef typename
             mpl::if_<
                 is_same<typename remove_const<ActualAttribute>::type, unused_type>
-              , typename remove_const<Attribute>::type
+              , attribute_type
               , ActualAttribute&>::type
         type;
 
         typedef typename
             mpl::if_<
                 is_same<typename remove_const<ActualAttribute>::type, unused_type>
-              , typename remove_const<Attribute>::type
+              , attribute_type
               , ActualAttribute>::type
         value_type;
 
         static Attribute call(unused_type)
         {
              // synthesize the attribute/parameter
-            return boost::get(value_initialized<Attribute>());
+            return boost::get(value_initialized<attribute_type>());
         }
 
         template <typename T>
@@ -604,7 +604,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute<Attribute const&, ActualAttribute>
-      : make_attribute<Attribute, ActualAttribute>
+      : make_attribute<Attribute const, ActualAttribute>
     {};
 
     template <typename ActualAttribute>
@@ -678,13 +678,15 @@ namespace boost { namespace spirit { namespace traits
     // meta function to return whether the argument is a one element fusion
     // sequence
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, bool IsSeq = fusion::traits::is_sequence<T>::value>
+    template <typename T
+      , bool IsFusionSeq = fusion::traits::is_sequence<T>::value
+      , bool IsProtoExpr = proto::is_expr<T>::value>
     struct one_element_sequence
       : mpl::false_
     {};
 
     template <typename T>
-    struct one_element_sequence<T, true>
+    struct one_element_sequence<T, true, false>
       : mpl::bool_<mpl::size<T>::value == 1>
     {};
 

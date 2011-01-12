@@ -56,13 +56,13 @@ namespace scheme { namespace input
     using boost::spirit::shallow;
     using boost::spirit::stored_function;
     using boost::spirit::function_base;
-    using boost::spirit::binary_string;
-    using boost::spirit::utf8_symbol;
-    using boost::spirit::utf8_string;
-    using boost::spirit::binary_range;
-    using boost::spirit::utf8_symbol_range;
-    using boost::spirit::utf8_string_range;
-    using boost::spirit::nil;
+    using boost::spirit::binary_string_type;
+    using boost::spirit::utf8_symbol_type;
+    using boost::spirit::utf8_string_type;
+    using boost::spirit::binary_range_type;
+    using boost::spirit::utf8_symbol_range_type;
+    using boost::spirit::utf8_string_range_type;
+    using boost::spirit::nil_type;
 
     typedef boost::uint32_t uchar; // a unicode code point
 
@@ -148,8 +148,8 @@ namespace scheme { namespace input
             start, element, list;
         rule<Iterator, int()> integer;
         rule<Iterator, utree()> atom;
-        rule<Iterator, utf8_symbol()> symbol;
-        rule<Iterator, binary_string()> byte_str;
+        rule<Iterator, utf8_symbol_type()> symbol;
+        rule<Iterator, binary_string_type()> byte_str;
         scheme::input::string<Iterator> string;
 
         function<ErrorHandler> const error_handler;

@@ -35,6 +35,7 @@
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
 #include <boost/spirit/home/karma/detail/output_iterator.hpp>
+#include <boost/spirit/home/karma/nonterminal/nonterminal_fwd.hpp>
 #include <boost/spirit/home/karma/nonterminal/detail/generator_binder.hpp>
 #include <boost/spirit/home/karma/nonterminal/detail/parameterized.hpp>
 
@@ -64,12 +65,8 @@ namespace boost { namespace spirit { namespace karma
     using spirit::locals;
 
     template <
-        typename OutputIterator
-      , typename T1 = unused_type
-      , typename T2 = unused_type
-      , typename T3 = unused_type
-      , typename T4 = unused_type
-    >
+        typename OutputIterator, typename T1, typename T2, typename T3
+      , typename T4>
     struct rule
       : proto::extends<
             typename proto::terminal<
@@ -387,6 +384,31 @@ namespace boost { namespace spirit { namespace karma
         return r %= static_cast<Expr const&>(expr);
     }
 #endif
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    namespace detail
+    {
+        template <typename RuleAttribute, typename Attribute>
+        struct nonterminal_handles_container
+          : mpl::and_<
+                traits::is_container<RuleAttribute>
+              , is_convertible<Attribute, RuleAttribute> >
+        {};
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        typename OutputIterator, typename T1, typename T2, typename T3
+      , typename T4, typename Attribute>
+    struct handles_container<
+            karma::rule<OutputIterator, T1, T2, T3, T4>, Attribute>
+      : detail::nonterminal_handles_container<
+            typename attribute_of<
+                karma::rule<OutputIterator, T1, T2, T3, T4> >::type
+          , Attribute>
+    {};
 }}}
 
 #if defined(BOOST_MSVC)

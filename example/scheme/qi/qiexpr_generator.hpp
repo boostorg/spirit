@@ -42,7 +42,7 @@ namespace scheme { namespace qi
     using boost::spirit::binary_range;
     using boost::spirit::utf8_symbol_range;
     using boost::spirit::utf8_string_range;
-    using boost::spirit::nil;
+    using boost::spirit::nil_type;
 
     ///////////////////////////////////////////////////////////////////////////
     namespace traits
@@ -171,7 +171,7 @@ namespace scheme { namespace qi
         delimiting_rule_type start, alternative, permutation, sequence, term;
         delimiting_rule_type grammar_, rule_;
         delimiting_rule_type rule_name, primitive0_rule, alternative_rule;
-        rule<OutputIterator, nil()> nil_;
+        rule<OutputIterator, nil_type()> nil_;
         rule<OutputIterator, utf8_string()> literal;
         rule<OutputIterator, utf8_symbol(std::string)> symbol;
         rule<OutputIterator, utf8_symbol()> any_symbol;

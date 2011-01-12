@@ -208,6 +208,11 @@ __customize_use_as_container_example__, and __customize_counter_example__.
 [endsect] [/ is_container]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:handles_container Determine Whether a Component Handles Container Attributes (Karma)]
+
+[endsect] [/ handles_container]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:transform Transform an Attribute to a Different Type (Qi and Karma)]
 
 [heading transform_attribute]
@@ -490,9 +495,10 @@ TBD
 [heading assign_to_attribute_from_value]
 
 The template `assign_to_attribute_from_value` is a type used as an attribute 
-customization point. It is invoked by the all primitive /Qi/ parsers in order 
+customization point. It is invoked by all primitive /Qi/ parsers in order 
 to store a parsed attribute value into the attribute instance provided by the 
-user.
+user, if this attribute is not a container type (`is_container<T>::type` 
+evaluates to `mpl::false_`, where `T` is the attribute type).
 
 [heading Module Headers]
 
@@ -524,7 +530,9 @@ Also, see __include_structure__.
 [table
     [[Parameter]            [Description]               [Default]]
     [[`Attrib`]             [The type, `Attrib` is the type of the attribute as
-                             passed in by the user.]                 [none]]
+                             passed in by the user. This type is not a container
+                             type (`is_container<Attrib>::type` evaluates to 
+                             `mpl::false_`).]                 [none]]
     [[`T`]                  [The type, `T` is the type of the attribute instance
                              as produced by the parser.]             [none]]
     [[`Enable`]             [Helper template parameter usable to selectively
@@ -536,7 +544,10 @@ Also, see __include_structure__.
 [heading Notation]
 
 [variablelist Notation
-    [[`Attrib`]     [A type to be used as the target to store the attribute value in.]]
+    [[`Attrib`]     [A type to be used as the target to store the attribute 
+                     value in. This type is guaranteed not to be a container 
+                     type (`is_container<Attrib>::type` evaluates to 
+                     `mpl::false_`).]]
     [[`attr`]       [A attribute instance of type `Attrib`.]]
     [[`T`]          [A type as produced by the parser. The parser temporarily stores 
                      its parsed values using this type.]]
@@ -549,7 +560,7 @@ Also, see __include_structure__.
     [[Expression]       [Semantics]]
     [[
 ``assign_to_attribute_from_value<Attrib, T>::call(t, attr)``] 
-                        [Copy (assign) the value, `t` to the attribute `attr`.]]
+                        [Copy (assign) the value `t` to the attribute `attr`.]]
 ]
 
 [heading Predefined Specializations]
@@ -572,6 +583,100 @@ not copy constructible.
 TBD
 
 [endsect] [/ assign_to_attribute_from_value]
+
+[section:assign_to_container_from_value Store an Attribute Value into a Container after a Parser Produced a Value (Qi)]
+
+[heading assign_to_container_from_value]
+
+The template `assign_to_container_from_value` is a type used as an attribute 
+customization point. It is invoked by all primitive /Qi/ parsers in order 
+to store a parsed attribute value into the attribute instance provided by the 
+user, if this attribute is a container type (`is_container<T>::type` evaluates 
+to `mpl::true_`, where `T` is the attribute type).
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/qi/detail/assign_to.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename Attrib, typename T, typename Enable>
+    struct assign_to_container_from_value
+    {
+        static void call(T const& val, Attrib& attr);
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Attrib`]             [The type, `Attrib` is the type of the attribute as
+                             passed in by the user. This type is a container
+                             type (`is_container<Attrib>::type` evaluates to 
+                             `mpl::true_`).]                 [none]]
+    [[`T`]                  [The type, `T` is the type of the attribute instance
+                             as produced by the parser.]             [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `assign_to_container_from_value` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist Notation
+    [[`Attrib`]     [A type to be used as the target to store the attribute 
+                     value in. This type is guaranteed to be a container 
+                     type (`is_container<Attrib>::type` evaluates to 
+                     `mpl::true_`).]]
+    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`T`]          [A type as produced by the parser. The parser temporarily stores 
+                     its parsed values using this type.]]
+    [[`t`]          [A attribute instance of type `T`.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]       [Semantics]]
+    [[
+``assign_to_container_from_value<Attrib, T>::call(t, attr)``] 
+                        [Add the value `t` to the container attribute `attr`.]]
+]
+
+[heading Predefined Specializations]
+
+[table
+    [[Template Parameters]    [Semantics]]
+    [[`Attrib`, `T`]          [Add the argument `t` to `attr`.]]
+    [[__unused_type__, `T`]   [Do nothing.]]
+]
+
+[heading When to implement]
+
+The customization point `assign_to_container_from_value` needs to be 
+implemented for a specific type whenever the default implementation as shown
+above is not applicable. Examples for this could be that the type `Attrib` is
+not copy constructible.
+
+[heading Example]
+
+TBD
+
+[endsect] [/ assign_to_container_from_value]
 
 [endsect] [/ assign_to]
 

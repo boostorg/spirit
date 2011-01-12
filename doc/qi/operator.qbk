@@ -96,6 +96,11 @@ a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 ]
 
+[note Alternative parsers do not roll back changes made to the outer attribute 
+      because of a failed alternative. If you need to enforce that only the 
+      succeeded alternative changes the outer attribute please utilize the 
+      directive __qi_hold__`[]`.]
+
 [heading Complexity]
 
 [:The overall complexity of the alternative parser is defined by the sum

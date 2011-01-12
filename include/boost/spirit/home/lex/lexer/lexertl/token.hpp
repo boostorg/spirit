@@ -487,6 +487,25 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename Attribute, typename Iterator, typename AttributeTypes
+      , typename HasState, typename Idtype>
+    struct assign_to_container_from_value<Attribute
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+      : assign_to_attribute_from_value<Attribute
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+    {};
+
+    template <typename Iterator>
+    struct assign_to_container_from_value<
+        iterator_range<Iterator>, iterator_range<Iterator> >
+    {
+        static void 
+        call(iterator_range<Iterator> const& val, iterator_range<Iterator>& attr)
+        {
+            attr = val;
+        }
+    };
+
     //  These are called from the parse function of token_def if the token type
     //  has no special attribute type assigned 
     template <typename Attribute, typename Iterator, typename HasState
@@ -505,6 +524,14 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename Attribute, typename Iterator, typename HasState
+      , typename Idtype>
+    struct assign_to_container_from_value<Attribute
+          , lex::lexertl::token<Iterator, mpl::vector0<>, HasState, Idtype> >
+      : assign_to_attribute_from_value<Attribute
+          , lex::lexertl::token<Iterator, mpl::vector0<>, HasState, Idtype> >
+    {};
+
     // same as above but using mpl::vector<> instead of mpl::vector0<>
     template <typename Attribute, typename Iterator, typename HasState
       , typename Idtype>
@@ -522,6 +549,14 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename Attribute, typename Iterator, typename HasState
+      , typename Idtype>
+    struct assign_to_container_from_value<Attribute
+          , lex::lexertl::token<Iterator, mpl::vector<>, HasState, Idtype> >
+      : assign_to_attribute_from_value<Attribute
+          , lex::lexertl::token<Iterator, mpl::vector<>, HasState, Idtype> >
+    {};
+
     //  This is called from the parse function of token_def if the token type
     //  has been explicitly omitted (i.e. no attribute value is used), which
     //  essentially means that every attribute gets initialized using default 
@@ -538,6 +573,14 @@ namespace boost { namespace spirit { namespace traits
             // do nothing
         }
     };
+
+    template <typename Attribute, typename Iterator, typename HasState
+      , typename Idtype>
+    struct assign_to_container_from_value<Attribute
+          , lex::lexertl::token<Iterator, lex::omit, HasState, Idtype> >
+      : assign_to_attribute_from_value<Attribute
+          , lex::lexertl::token<Iterator, lex::omit, HasState, Idtype> >
+    {};
 
     //  This is called from the parse function of lexer_def_
     template <typename Iterator, typename AttributeTypes, typename HasState
@@ -561,6 +604,16 @@ namespace boost { namespace spirit { namespace traits
             attr = attribute_type(t.id(), get<iterpair_type>(t.value()));
         }
     };
+
+    template <typename Iterator, typename AttributeTypes, typename HasState
+      , typename Idtype_, typename Idtype>
+    struct assign_to_container_from_value<
+            fusion::vector2<Idtype_, iterator_range<Iterator> >
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+      : assign_to_attribute_from_value<
+            fusion::vector2<Idtype_, iterator_range<Iterator> >
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // Overload debug output for a single token, this integrates lexer tokens 

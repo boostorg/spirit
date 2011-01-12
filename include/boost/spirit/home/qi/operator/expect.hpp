@@ -14,6 +14,8 @@
 #include <boost/spirit/home/qi/operator/sequence_base.hpp>
 #include <boost/spirit/home/qi/detail/expect_function.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <stdexcept>
 
@@ -84,9 +86,15 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Elements>
     struct has_semantic_action<qi::expect<Elements> >
       : nary_has_semantic_action<Elements> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Attribute>
+    struct handles_container<qi::expect<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute> {};
 }}}
 
 #endif

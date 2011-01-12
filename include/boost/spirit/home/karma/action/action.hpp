@@ -16,6 +16,8 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/action_dispatch.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
@@ -119,9 +121,15 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Action>
     struct has_semantic_action<karma::action<Subject, Action> >
       : mpl::true_ {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Action, typename Attribute>
+    struct handles_container<karma::action<Subject, Action>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
 }}}
 
 #endif

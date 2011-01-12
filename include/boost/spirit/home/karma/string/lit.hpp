@@ -1,4 +1,5 @@
 //  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c)      2010 Bryce Lelbach
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +16,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
@@ -62,7 +64,6 @@ namespace boost { namespace spirit
       , tag::char_code<tag::string, CharEncoding>
       , 1 /*arity*/
     > : mpl::true_ {};
-
 }} 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -98,7 +99,7 @@ namespace boost { namespace spirit { namespace karma
             return 
                 karma::detail::string_generate(sink
                   , traits::extract_from<attribute_type>(attr, context)
-                      , char_encoding(), Tag()) &&
+                  , char_encoding(), Tag()) &&
                 karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -160,10 +161,14 @@ namespace boost { namespace spirit { namespace karma
             // fail if attribute isn't matched by immediate literal
             typedef typename attribute<Context>::type attribute_type;
 
+            typedef typename spirit::result_of::extract_from<attribute_type, Attribute>::type
+                extracted_string_type;
+
             using spirit::traits::get_c_string;
             if (!detail::string_compare(
-                    get_c_string(traits::extract_from<attribute_type>(attr, context))
-                  , get_c_string(str_), char_encoding(), Tag()))
+                    get_c_string<extracted_string_type>::call(
+                        traits::extract_from<attribute_type>(attr, context))
+                  , get_c_string<string_type>::call(str_), char_encoding(), Tag()))
             {
                 return false;
             }
@@ -271,7 +276,21 @@ namespace boost { namespace spirit { namespace karma
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-
 }}}   // namespace boost::spirit::karma
+
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename CharEncoding, typename Tag, typename Attribute>
+    struct handles_container<karma::any_string<CharEncoding, Tag>, Attribute>
+      : mpl::false_ {};
+
+    template <typename String, typename CharEncoding, typename Tag
+      , bool no_attribute, typename Attribute>
+    struct handles_container<
+            karma::literal_string<String, CharEncoding, Tag, no_attribute>
+          , Attribute>
+      : mpl::false_ {};
+}}}
 
 #endif

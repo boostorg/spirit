@@ -35,6 +35,7 @@
 #include <boost/spirit/home/qi/reference.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/parameterized.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/parser_binder.hpp>
+#include <boost/spirit/home/qi/nonterminal/nonterminal_fwd.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 
 #if defined(BOOST_MSVC)
@@ -63,12 +64,8 @@ namespace boost { namespace spirit { namespace qi
     using spirit::locals;
 
     template <
-        typename Iterator
-      , typename T1 = unused_type
-      , typename T2 = unused_type
-      , typename T3 = unused_type
-      , typename T4 = unused_type
-    >
+        typename Iterator, typename T1, typename T2, typename T3
+      , typename T4>
     struct rule
       : proto::extends<
             typename proto::terminal<
@@ -391,6 +388,18 @@ namespace boost { namespace spirit { namespace qi
         return r %= static_cast<Expr const&>(expr);
     }
 #endif
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        typename Iterator, typename T1, typename T2, typename T3
+      , typename T4, typename Attribute>
+    struct handles_container<qi::rule<Iterator, T1, T2, T3, T4>, Attribute>
+      : traits::is_container<
+            typename attribute_of<qi::rule<Iterator, T1, T2, T3, T4> >::type>
+    {};
 }}}
 
 #if defined(BOOST_MSVC)

@@ -18,6 +18,8 @@
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -170,6 +172,7 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Subject>
     struct has_semantic_action<karma::redelimit_generator<Subject> >
       : unary_has_semantic_action<Subject> {};
@@ -178,6 +181,15 @@ namespace boost { namespace spirit { namespace traits
     struct has_semantic_action<karma::delimit_generator<Subject, Delimiter> >
       : unary_has_semantic_action<Subject> {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Attribute>
+    struct handles_container<karma::redelimit_generator<Subject>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
+
+    template <typename Subject, typename Delimiter, typename Attribute>
+    struct handles_container<
+            karma::delimit_generator<Subject, Delimiter>, Attribute>
+      : unary_handles_container<Subject, Attribute> {};
 }}}
 
 #endif

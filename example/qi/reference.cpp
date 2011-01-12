@@ -442,6 +442,25 @@ main()
     }
     
     {
+        //[reference_using_declarations_hold
+        using boost::spirit::qi::hold;
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::attr;
+        //]
+        
+        //[reference_hold
+        /*`The use of `hold[]` here will make sure the changes to the attribute 
+           caused by the (failing) first alternative will not be visible after
+           the whole parsing succeeded. */
+        
+        std::vector<int> v;
+        test_phrase_parser_attr("123", 
+              hold[int_ >> ':' >> int_] | int_ >> attr(0), v); 
+        std::cout << v[0] << "," << v[1] << std::endl;    // will output: >123,0<
+        //]
+    }
+    
+    {
         //[reference_using_declarations_no_case
         using boost::spirit::ascii::no_case;
         using boost::spirit::ascii::char_;

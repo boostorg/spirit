@@ -10,7 +10,7 @@
 
 #include <boost/cstdint.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/spirit/home/support/utree/utree_traits.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/karma.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,13 +34,13 @@ namespace scheme { namespace output
     using boost::spirit::shallow;
     using boost::spirit::stored_function;
     using boost::spirit::function_base;
-    using boost::spirit::binary_string;
-    using boost::spirit::utf8_symbol;
-    using boost::spirit::utf8_string;
-    using boost::spirit::binary_range;
-    using boost::spirit::utf8_symbol_range;
-    using boost::spirit::utf8_string_range;
-    using boost::spirit::nil;
+    using boost::spirit::binary_string_type;
+    using boost::spirit::utf8_symbol_type;
+    using boost::spirit::utf8_string_type;
+    using boost::spirit::binary_range_type;
+    using boost::spirit::utf8_symbol_range_type;
+    using boost::spirit::utf8_string_range_type;
+    using boost::spirit::nil_type;
 
     template <typename OutputIterator>
     struct sexpr : grammar<OutputIterator, space_type, utree()>
@@ -81,10 +81,10 @@ namespace scheme { namespace output
 
         rule<OutputIterator, space_type, utree()> start;
         rule<OutputIterator, space_type, utree_list()> list;
-        rule<OutputIterator, utf8_symbol_range()> symbol;
-        rule<OutputIterator, utf8_string_range()> string_;
-        rule<OutputIterator, binary_range()> byte_str;
-        rule<OutputIterator, nil()> nil_;
+        rule<OutputIterator, utf8_symbol_range_type()> symbol;
+        rule<OutputIterator, utf8_string_range_type()> string_;
+        rule<OutputIterator, binary_range_type()> byte_str;
+        rule<OutputIterator, nil_type()> nil_;
         rule<OutputIterator, space_type, utree()> ref_;
     };
 }}

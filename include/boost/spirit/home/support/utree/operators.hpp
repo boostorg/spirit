@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -51,7 +51,8 @@ namespace boost { namespace spirit
     std::ostream& operator<<(std::ostream& out, utree const& x);
     std::istream& operator>>(std::istream& in, utree& x);
 
-    std::ostream& operator<<(std::ostream& out, nil const& x);
+    std::ostream& operator<<(std::ostream& out, utree::uninitialized_type const& x);
+    std::ostream& operator<<(std::ostream& out, utree::nil_type const& x);
 
     // Logical operators
     utree operator&&(utree const& a, utree const& b);
@@ -115,7 +116,12 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) == static_cast<Base const&>(b);
         }
 
-        bool operator()(nil, nil) const
+        bool operator()(utree::uninitialized_type, utree::uninitialized_type) const
+        {
+            return true;
+        }
+
+        bool operator()(utree::nil_type, utree::nil_type) const
         {
             return true;
         }
@@ -166,21 +172,27 @@ namespace boost { namespace spirit
             return static_cast<Base const&>(a) < static_cast<Base const&>(b);
         }
 
-        bool operator()(nil, nil) const
+        bool operator()(utree::uninitialized_type, utree::uninitialized_type) const
         {
-            BOOST_ASSERT(false);
+            boost::throw_exception(bad_type_exception());
+            return false; // no less than comparison for nil
+        }
+
+        bool operator()(utree::nil_type, utree::nil_type) const
+        {
+            boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for nil
         }
 
         bool operator()(any_ptr const& a, any_ptr const& b) const
         {
-            BOOST_ASSERT(false);
+            boost::throw_exception(bad_type_exception());
             return false; // no less than comparison for any_ptr
         }
 
         bool operator()(function_base const& a, function_base const& b) const
         {
-            BOOST_ASSERT(false);
+            boost::throw_exception(bad_type_exception());
             return false; // no less than comparison of functions
         }
     };
@@ -192,7 +204,12 @@ namespace boost { namespace spirit
         std::ostream& out;
         utree_print(std::ostream& out) : out(out) {}
 
-        void operator()(boost::spirit::nil) const
+        void operator()(utree::uninitialized_type) const
+        {
+            out << "<uninitialized> ";
+        }
+
+        void operator()(utree::nil_type) const
         {
             out << "<nil> ";
         }
@@ -208,21 +225,21 @@ namespace boost { namespace spirit
             out << (b ? "true" : "false") << ' ';
         }
 
-        void operator()(binary_range const& b) const
+        void operator()(binary_range_type const& b) const
         {
             out << "#";
             out.width(2);
             out.fill('0');
 
-            typedef binary_range::const_iterator iterator;
+            typedef binary_range_type::const_iterator iterator;
             for (iterator i = b.begin(); i != b.end(); ++i)
                 out << std::hex << int((unsigned char)*i);
             out << std::dec << "# ";
         }
 
-        void operator()(utf8_string_range const& str) const
+        void operator()(utf8_string_range_type const& str) const
         {
-            typedef utf8_string_range::const_iterator iterator;
+            typedef utf8_string_range_type::const_iterator iterator;
             iterator i = str.begin();
             out << '"';
             for (; i != str.end(); ++i)
@@ -230,12 +247,13 @@ namespace boost { namespace spirit
             out << "\" ";
         }
 
-        void operator()(utf8_symbol_range const& str) const
+        void operator()(utf8_symbol_range_type const& str) const
         {
-            typedef utf8_symbol_range::const_iterator iterator;
+            typedef utf8_symbol_range_type::const_iterator iterator;
             iterator i = str.begin();
             for (; i != str.end(); ++i)
                 out << *i;
+            out << ' ';
         }
 
         template <typename Iterator>
@@ -317,7 +335,7 @@ namespace boost { namespace spirit
         template <typename A, typename B>
         utree dispatch(A const&, B const&, boost::mpl::false_) const
         {
-            throw illegal_arithmetic_operation();
+            boost::throw_exception(illegal_arithmetic_operation());
             return utree(); // cannot apply to non-arithmetic types
         }
 
@@ -340,7 +358,7 @@ namespace boost { namespace spirit
         template <typename A>
         utree dispatch(A const&, boost::mpl::false_) const
         {
-            throw illegal_arithmetic_operation();
+            boost::throw_exception(illegal_arithmetic_operation());
             return utree(); // cannot apply to non-arithmetic types
         }
 
@@ -389,7 +407,7 @@ namespace boost { namespace spirit
         template <typename A>
         utree dispatch(A const&, boost::mpl::false_) const
         {
-            throw illegal_integral_operation();
+            boost::throw_exception(illegal_integral_operation());
             return utree(); // cannot apply to non-integral types
         }
 
@@ -475,7 +493,12 @@ namespace boost { namespace spirit
         return out;
     }
 
-    inline std::ostream& operator<<(std::ostream& out, nil const& x)
+    inline std::ostream& operator<<(std::ostream& out, utree::uninitialized_type const& x)
+    {
+        return out;
+    }
+
+    inline std::ostream& operator<<(std::ostream& out, utree::nil_type const& x)
     {
         return out;
     }

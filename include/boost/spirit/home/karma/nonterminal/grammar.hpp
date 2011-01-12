@@ -16,6 +16,7 @@
 #include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
+#include <boost/spirit/home/karma/nonterminal/nonterminal_fwd.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -23,12 +24,8 @@
 namespace boost { namespace spirit { namespace karma
 {
     template <
-        typename OutputIterator
-      , typename T1 = unused_type
-      , typename T2 = unused_type
-      , typename T3 = unused_type
-      , typename T4 = unused_type
-    >
+        typename OutputIterator, typename T1, typename T2, typename T3
+      , typename T4>
     struct grammar
       : proto::extends<
             typename proto::terminal<
@@ -115,7 +112,21 @@ namespace boost { namespace spirit { namespace karma
 
         std::string name_;
     };
+}}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        typename OutputIterator, typename T1, typename T2, typename T3
+      , typename T4, typename Attribute>
+    struct handles_container<
+            karma::grammar<OutputIterator, T1, T2, T3, T4>, Attribute>
+      : detail::nonterminal_handles_container<
+            typename attribute_of<
+                karma::grammar<OutputIterator, T1, T2, T3, T4> >::type
+          , Attribute>
+    {};
 }}}
 
 #endif

@@ -84,8 +84,8 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    boost::spirit::utree result;
-    if (client::parse_sexpr_from_file(filename_in, result))
+    boost::spirit::utree result(boost::spirit::nil);
+//     if (client::parse_sexpr_from_file(filename_in, result))
     {
         if (client::generate_sexpr_to_file(result, filename_out))
         {
@@ -96,10 +96,10 @@ int main(int argc, char **argv)
             std::cout << "generate error" << std::endl;
         }
     }
-    else
-    {
-        std::cout << "parse error" << std::endl;
-    }
+//     else
+//     {
+//         std::cout << "parse error" << std::endl;
+//     }
 
     return 0;
 }

@@ -31,6 +31,11 @@ namespace boost { namespace spirit
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
 
+    // enables tokenid
+    template <>
+    struct use_terminal<qi::domain, tag::tokenid>
+      : mpl::true_ {};
+
     // enables tokenid(id)
     template <typename A0>
     struct use_terminal<qi::domain
@@ -83,7 +88,7 @@ namespace boost { namespace spirit { namespace qi
                 typedef typename token_type::id_type id_type;
 
                 token_type const& t = *first;
-                if (id_type(id) == t.id()) {
+                if (std::size_t(~0) == t.id() || id_type(id) == t.id()) {
                     spirit::traits::assign_to(id, attr);
                     ++first;
                     return true;
@@ -104,6 +109,17 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     // Parser generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Modifiers>
+    struct make_primitive<tag::tokenid, Modifiers> 
+    {
+        typedef plain_token<std::size_t> result_type;
+
+        result_type operator()(unused_type, unused_type) const
+        {
+            return result_type(std::size_t(~0));
+        }
+    };
+
     template <typename Modifiers, typename TokenId>
     struct make_primitive<terminal_ex<tag::tokenid, fusion::vector1<TokenId> >
       , Modifiers>

@@ -42,7 +42,6 @@ namespace boost { namespace spirit { namespace traits
               , typename mpl::end<Elements>::type
             > 
         > {};
-
 }}}
 
 #endif

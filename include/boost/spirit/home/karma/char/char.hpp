@@ -1,4 +1,5 @@
 //  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c)      2010 Bryce Lelbach
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -261,7 +262,7 @@ namespace boost { namespace spirit { namespace karma
             typedef spirit::char_class::convert<char_encoding> convert_type;
 
             char_type const* definition =
-                (char_type const*)traits::get_c_string(str);
+                (char_type const*)traits::get_c_string<String>::call(str);
             char_type ch = convert_type::to(Tag(), *definition++);
             while (ch)
             {

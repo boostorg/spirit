@@ -125,7 +125,7 @@ namespace scheme { namespace input
         utree& result,
         std::string const& source_file)
     {
-        return parse_sexpr(in.get<utf8_string_range>(), result, source_file);
+        return parse_sexpr(in.get<utf8_string_range_type>(), result, source_file);
     }
 
     bool parse_sexpr_list(
@@ -133,7 +133,7 @@ namespace scheme { namespace input
         utree& result,
         std::string const& source_file)
     {
-        return parse_sexpr_list(in.get<utf8_string_range>(), result, source_file);
+        return parse_sexpr_list(in.get<utf8_string_range_type>(), result, source_file);
     }
 }}
 

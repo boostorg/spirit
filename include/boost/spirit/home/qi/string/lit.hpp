@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c)      2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,6 +25,7 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
 #include <boost/type_traits/add_reference.hpp>
@@ -197,7 +199,7 @@ namespace boost { namespace spirit { namespace qi
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
-            return result_type(traits::get_c_string(str), encoding);
+            return result_type(traits::get_c_string<String>::call(str), encoding);
         }
     };
 
@@ -233,10 +235,23 @@ namespace boost { namespace spirit { namespace qi
         template <typename String>
         result_type op(String const& str, mpl::true_) const
         {
-            return result_type(traits::get_c_string(str), encoding());
+            return result_type(traits::get_c_string<String>::call(str), encoding());
         }
     };
+}}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename String, bool no_attribute, typename Attribute>
+    struct handles_container<
+            qi::literal_string<String, no_attribute>, Attribute>
+      : mpl::true_ {};
+
+    template <typename String, bool no_attribute, typename Attribute>
+    struct handles_container<
+            qi::no_case_literal_string<String, no_attribute>, Attribute>
+      : mpl::true_ {};
 }}}
 
 #endif

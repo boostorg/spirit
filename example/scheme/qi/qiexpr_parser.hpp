@@ -54,7 +54,7 @@ namespace scheme { namespace qi
     using boost::spirit::binary_range;
     using boost::spirit::utf8_symbol_range;
     using boost::spirit::utf8_string_range;
-    using boost::spirit::nil;
+    using boost::spirit::nil_type;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
@@ -98,7 +98,7 @@ namespace scheme { namespace qi
         // element is the symbol this function object has been constructed from
         struct make_list_node
         {
-            template <typename T1, typename T2 = nil>
+            template <typename T1, typename T2 = nil_type>
             struct result { typedef void type; };
 
             explicit make_list_node(char const* symbol_)

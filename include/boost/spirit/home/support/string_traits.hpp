@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c)      2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -122,19 +123,74 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // Get the C string from a string
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    inline T* get_c_string(T* str) { return str; }
+    template <typename String>
+    struct get_c_string;
 
+    template <typename String>
+    struct get_c_string
+    {
+        typedef typename char_type_of<String>::type char_type;
+
+        template <typename T>
+        static T const* call (T* str)
+        {
+            return (T const*)str; 
+        }
+
+        template <typename T>
+        static T const* call (T const* str)
+        {
+            return str; 
+        }
+    }; 
+    
+    // Forwarder that strips const
     template <typename T>
-    inline T const* get_c_string(T const* str) { return str; }
+    struct get_c_string<T const>
+    {
+        static typename get_c_string<T>::char_type const* call (T const str)
+        {
+            return get_c_string<T>::call(str);
+        }
+    };
+
+    // Forwarder that strips references
+    template <typename T>
+    struct get_c_string<T&>
+    {
+        static typename get_c_string<T>::char_type const* call (T& str)
+        {
+            return get_c_string<T>::call(str);
+        }
+    };
+
+    // Forwarder that strips const references
+    template <typename T>
+    struct get_c_string<T const&>
+    {
+        static typename get_c_string<T>::char_type const* call (T const& str)
+        {
+            return get_c_string<T>::call(str);
+        }
+    };
 
     template <typename T, typename Traits, typename Allocator>
-    inline T const* get_c_string(std::basic_string<T, Traits, Allocator>& str)
-    { return str.c_str(); }
+    struct get_c_string<std::basic_string<T, Traits, Allocator> >
+    {
+        typedef T char_type;
 
-    template <typename T, typename Traits, typename Allocator>
-    inline T const* get_c_string(std::basic_string<T, Traits, Allocator> const& str)
-    { return str.c_str(); }
+        typedef std::basic_string<T, Traits, Allocator> string;
+
+        static T const* call (string& str)
+        {
+            return str.c_str();
+        }
+
+        static T const* call (string const& str)
+        {
+            return str.c_str();
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     // Get the begin/end iterators from a string

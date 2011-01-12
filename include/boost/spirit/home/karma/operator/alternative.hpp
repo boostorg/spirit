@@ -18,6 +18,8 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/fusion/include/any.hpp>
 #include <boost/fusion/include/mpl.hpp>
@@ -176,6 +178,7 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Elements>
     struct has_semantic_action<karma::alternative<Elements> >
       : nary_has_semantic_action<Elements> {};
@@ -183,6 +186,15 @@ namespace boost { namespace spirit { namespace traits
     template <typename Elements>
     struct has_semantic_action<karma::strict_alternative<Elements> >
       : nary_has_semantic_action<Elements> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Attribute>
+    struct handles_container<karma::alternative<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute> {};
+
+    template <typename Elements, typename Attribute>
+    struct handles_container<karma::strict_alternative<Elements>, Attribute>
+      : nary_handles_container<Elements, Attribute> {};
 }}}
 
 #endif
