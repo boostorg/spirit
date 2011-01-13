@@ -83,8 +83,7 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, int N, bool Const, typename Attribute, typename Domain>
+    template <typename T, int N, typename Attribute, typename Domain>
     struct transform_attribute<
         fusion::extension::adt_attribute_proxy<T, N, false>
       , Attribute

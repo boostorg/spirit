@@ -95,10 +95,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {
-            bool result = f(component, make_iterator_range(iter, end));
-            if (iter != end)
-                ++iter;
-            return result;
+            return f(component, make_iterator_range(iter, end));
         }
 
         // This handles the distinction between elements in a sequence expecting
@@ -151,18 +148,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // This handles the case where the attribute of the component is
         // an STL container *and* its value_type is convertible to the
         // target attribute's (Attr) value_type.
-        // 
-        // For some attributes (like utree) we assume, that the generator ate 
-        // at least one element of the sequence. This isn't pretty, but 
-        // generators are either assumed to consume all remaining attributes or 
-        // to consume exactly one.
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
-            bool result = f(component, make_iterator_range(iter, end));
-            if (iter != end)
-                ++iter;
-            return result;
+            return f(component, make_iterator_range(iter, end));
         }
 
         // Dispatches to dispatch_main depending on the attribute type
