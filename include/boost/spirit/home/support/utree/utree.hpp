@@ -251,18 +251,15 @@ namespace boost { namespace spirit
         ///////////////////////////////////////////////////////////////////////
         // The invalid type
         struct invalid_type {};
-        static invalid_type const invalid;
 
         ///////////////////////////////////////////////////////////////////////
         // The nil type
         struct nil_type {};
-        static nil_type const nil;
 
         ///////////////////////////////////////////////////////////////////////
         // The list type, this can be used to initialize an utree to hold an 
         // empty list
         struct list_type;
-        static list_type const list;
 
         //[utree_container_types
         typedef utree value_type;
@@ -297,7 +294,7 @@ namespace boost { namespace spirit
         // This constructs an `invalid_type` node. When used in places
         // where a boost::optional is expected (i.e. as an attribute for the 
         // optional component), this represents the 'empty' state.
-        utree(invalid_type = invalid);
+        utree(invalid_type = invalid_type());
 
         // This initializes a `nil_type` node, which represents a valid,
         // 'initialized empty' utree (different from invalid_type!).
@@ -542,14 +539,15 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     // predefined instances for singular types
-    utree::invalid_type const utree::invalid = {};
-    utree::nil_type const utree::nil = {};
-    utree::list_type const utree::list = utree::list_type();
+    utree::invalid_type const invalid = {};
+    utree::nil_type const nil = {};
+    utree::list_type const empty_list = utree::list_type();
 
     ///////////////////////////////////////////////////////////////////////////
     //[utree_scope
-    class scope : public boost::iterator_range<utree*> {
-      public:
+    class scope : public boost::iterator_range<utree*> 
+    {
+    public:
         scope(utree* first = 0,
               utree* last = 0,
               scope const* parent = 0) 

@@ -1,9 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Real Number Parsers (float_, double_, etc.)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../numeric.html" title="Numeric Parsers">
 <link rel="prev" href="int.html" title="Signed Integer Parsers (int_, etc.)">
@@ -28,7 +29,7 @@
           (<code class="computeroutput"><span class="identifier">float_</span></code>, <code class="computeroutput"><span class="identifier">double_</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.numeric.real.description"></a><h6>
-<a name="id832856"></a>
+<a name="id979978"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.description">Description</a>
           </h6>
 <p>
@@ -41,7 +42,7 @@
             (documented below).
           </p>
 <a name="spirit.qi.reference.numeric.real.header"></a><h6>
-<a name="id832913"></a>
+<a name="id980017"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric/real.hpp&gt;
@@ -51,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.numeric.real.namespace"></a><h6>
-<a name="id833012"></a>
+<a name="id980091"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -88,15 +89,28 @@
                   </td></tr>
 </tbody>
 </table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
+              <a class="link" href="../char/char.html" title="Character Parser (char_, lit)">Character Parsers</a>,
+              and the Numeric Parsers. In general, a char parser is created when
+              you pass in a character, and a numeric parser is created when you use
+              a numeric literal.
+            </p></td></tr>
+</table></div>
 <a name="spirit.qi.reference.numeric.real.synopsis"></a><h6>
-<a name="id833235"></a>
+<a name="id981947"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">RealPolicies</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">real_parser</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.numeric.real.template_parameters"></a><h6>
-<a name="id833319"></a>
+<a name="id982012"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.template_parameters">Template
             parameters</a>
           </h6>
@@ -161,7 +175,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.real.model_of"></a><h6>
-<a name="id833471"></a>
+<a name="id982151"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -201,7 +215,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.numeric.real.expression_semantics"></a><h6>
-<a name="id833720"></a>
+<a name="id982357"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -250,8 +264,7 @@
                     <p>
                       
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">num</span>
-<span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
 <span class="identifier">float_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
 <span class="identifier">double_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
 <span class="identifier">long_double</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
@@ -262,7 +275,8 @@
 <td>
                     <p>
                       Match the literal <code class="computeroutput"><span class="identifier">num</span></code>
-                      using the default policies (<code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>).
+                      using the default policies (<code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>). The parser will fail
+                      if the parsed value is not equal to the specified value.
                     </p>
                   </td>
 </tr>
@@ -302,13 +316,15 @@
                       Match the literal <code class="computeroutput"><span class="identifier">num</span></code>
                       of type <code class="computeroutput"><span class="identifier">T</span></code> using
                       <code class="computeroutput"><span class="identifier">RealPolicies</span></code>.
+                      The parser will fail if the parsed value is not equal to the
+                      specified value.
                     </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.real.attributes"></a><h6>
-<a name="id834164"></a>
+<a name="id982721"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -334,8 +350,7 @@
                     <p>
                       
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">num</span>
-<span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
 </pre>
 <p>
                     </p>
@@ -421,7 +436,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.real.complexity"></a><h6>
-<a name="id834553"></a>
+<a name="id983055"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -429,7 +444,7 @@
               sign, etc.) being parsed.
             </p></blockquote></div>
 <a name="spirit.qi.reference.numeric.real.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_"></a><h6>
-<a name="id834582"></a>
+<a name="id983075"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_">Minimum
             Expression Requirements for <code class="computeroutput"><span class="identifier">T</span></code></a>
           </h6>
@@ -651,7 +666,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code_"></a><h6>
-<a name="id835685"></a>
+<a name="id983978"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code_"><code class="computeroutput"><span class="identifier">RealPolicies</span></code></a>
           </h6>
 <p>
@@ -799,7 +814,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__expression_requirements"></a><h6>
-<a name="id836710"></a>
+<a name="id986001"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__expression_requirements"><code class="computeroutput"><span class="identifier">RealPolicies</span></code> Expression Requirements</a>
           </h6>
 <p>
@@ -1013,7 +1028,7 @@
             be automatically applied afterwards.
           </p>
 <a name="spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__specializations"></a><h6>
-<a name="id837736"></a>
+<a name="id986842"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__specializations"><code class="computeroutput"><span class="identifier">RealPolicies</span></code> Specializations</a>
           </h6>
 <p>
@@ -1029,7 +1044,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.numeric.real.example"></a><h6>
-<a name="id837912"></a>
+<a name="id986977"></a>
             <a class="link" href="real.html#spirit.qi.reference.numeric.real.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -1049,7 +1064,6 @@
             
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">real_parser</span><span class="special">;</span>
 </pre>
@@ -1070,9 +1084,7 @@
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345e6"</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">(</span><span class="identifier">val</span><span class="special">(-</span><span class="number">123456e6</span><span class="special">)));</span>
 
 <span class="comment">// literals
-</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345e6"</span><span class="special">,</span> <span class="number">12345e6</span><span class="special">);</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345e6"</span><span class="special">,</span> <span class="special">-</span><span class="number">12345e6</span><span class="special">);</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345e6"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="number">12345e6</span><span class="special">));</span>
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345e6"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="number">12345e6</span><span class="special">));</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345e6"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(-</span><span class="number">123456e6</span><span class="special">));</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345e6"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345e6</span><span class="special">)));</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345e6"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(-</span><span class="number">123456e6</span><span class="special">)));</span>
@@ -1169,7 +1181,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -13,12 +13,14 @@
 #endif
 
 #include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/detail/enable_lit.hpp>
 #include <boost/spirit/home/qi/numeric/numeric_utils.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/mpl/assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit
 {
@@ -47,8 +49,11 @@ namespace boost { namespace spirit
     template <> // enables ushort_
     struct use_terminal<qi::domain, tag::ushort_> : mpl::true_ {};
 
-    template <> // enables lit(unsigned short(n))
-    struct use_terminal<qi::domain, unsigned short> : mpl::true_ {};
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, unsigned short> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables ushort_(n)
     struct use_terminal<qi::domain
@@ -62,8 +67,11 @@ namespace boost { namespace spirit
     template <> // enables uint_
     struct use_terminal<qi::domain, tag::uint_> : mpl::true_ {};
 
-    template <> // enables lit(unsigned(n))
-    struct use_terminal<qi::domain, unsigned> : mpl::true_ {};
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, unsigned> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables uint_(n)
     struct use_terminal<qi::domain
@@ -76,9 +84,12 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables ulong_
     struct use_terminal<qi::domain, tag::ulong_> : mpl::true_ {};
-    
-    template <> // enables lit(unsigned long(n))
-    struct use_terminal<qi::domain, unsigned long> : mpl::true_ {};
+
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, unsigned long> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables ulong_(n)
     struct use_terminal<qi::domain
@@ -87,14 +98,17 @@ namespace boost { namespace spirit
 
     template <> // enables *lazy* ulong_(n)
     struct use_lazy_terminal<qi::domain, tag::ulong_, 1> : mpl::true_ {};
- 
+
     ///////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HAS_LONG_LONG
     template <> // enables ulong_long
     struct use_terminal<qi::domain, tag::ulong_long> : mpl::true_ {};
 
-    template <> // enables lit(boost::ulong_long_type(n))
-    struct use_terminal<qi::domain, boost::ulong_long_type> : mpl::true_ {};
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, boost::ulong_long_type> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables ulong_long(n)
     struct use_terminal<qi::domain
@@ -104,6 +118,7 @@ namespace boost { namespace spirit
     template <> // enables *lazy* ulong_long(n)
     struct use_lazy_terminal<qi::domain, tag::ulong_long, 1> : mpl::true_ {};
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables bin
     struct use_terminal<qi::domain, tag::bin> : mpl::true_ {};
@@ -112,10 +127,10 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
         , terminal_ex<tag::bin, fusion::vector1<A0> > >
       : is_arithmetic<A0> {};
-    
+
     template <> // enables *lazy* bin(n)
     struct use_lazy_terminal<qi::domain, tag::bin, 1> : mpl::true_ {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables oct
     struct use_terminal<qi::domain, tag::oct> : mpl::true_ {};
@@ -124,10 +139,10 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
         , terminal_ex<tag::oct, fusion::vector1<A0> > >
       : is_arithmetic<A0> {};
-    
+
     template <> // enables *lazy* oct(n)
     struct use_lazy_terminal<qi::domain, tag::oct, 1> : mpl::true_ {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <> // enables hex
     struct use_terminal<qi::domain, tag::hex> : mpl::true_ {};
@@ -136,10 +151,10 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
         , terminal_ex<tag::hex, fusion::vector1<A0> > >
       : is_arithmetic<A0> {};
-    
+
     template <> // enables *lazy* hex(n)
     struct use_lazy_terminal<qi::domain, tag::hex, 1> : mpl::true_ {};
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom uint_parser
     template <typename T, unsigned Radix, unsigned MinDigits
@@ -282,7 +297,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type();
         }
     };
-    
+
     template <typename T, unsigned Radix = 10, unsigned MinDigits = 1
             , int MaxDigits = -1>
     struct make_direct_uint
@@ -295,37 +310,46 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     template <typename T, unsigned Radix = 10, unsigned MinDigits = 1
             , int MaxDigits = -1>
     struct make_literal_uint
     {
         typedef literal_uint_parser<T, Radix, MinDigits, MaxDigits> result_type;
-        template <typename T_>
-        result_type operator()(T_ i, unused_type) const
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
         {
-            return result_type(i);
+            return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Modifiers>
-    struct make_primitive<unsigned short, Modifiers> 
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, unsigned short> >::type>
       : make_literal_uint<unsigned short> {};
 
-    template <typename Modifiers>
-    struct make_primitive<unsigned, Modifiers> 
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, unsigned> >::type>
       : make_literal_uint<unsigned> {};
 
-    template <typename Modifiers>
-    struct make_primitive<unsigned long, Modifiers> 
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, unsigned long> >::type>
       : make_literal_uint<unsigned long> {};
 
 #ifdef BOOST_HAS_LONG_LONG
-    template <typename Modifiers>
-    struct make_primitive<boost::ulong_long_type, Modifiers> 
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, boost::ulong_long_type> >::type>
       : make_literal_uint<boost::ulong_long_type> {};
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
             , typename Modifiers>

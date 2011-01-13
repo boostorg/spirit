@@ -1,5 +1,5 @@
-// Copyright (c) 2001-2010 Hartmut Kaiser
-// Copyright (c) 2001-2010 Joel de Guzman
+// Copyright (c) 2001-2011 Hartmut Kaiser
+// Copyright (c) 2001-2011 Joel de Guzman
 // Copyright (c)      2010 Bryce Lelbach
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -166,21 +166,25 @@ int main()
         BOOST_TEST(test_attr("a25.5b", r1 > r2 >> r3, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
         BOOST_TEST(check(ut, "( \"a\" ( ( 25.5 ) ( \"b\" ) ) )"));
+                  // FIXME:  "( \"a\" ( 25.5 ) ( \"b\" ) )" 
         ut.clear();
 
         BOOST_TEST(test_attr("a25.5b", r3 >> r2 > r1, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
         BOOST_TEST(check(ut, "( ( ( \"a\" ) ( 25.5 ) ) \"b\" )"));
+                  // FIXME:  "( ( \"a\" ) ( 25.5 ) \"b\" )" 
         ut.clear();
 
         BOOST_TEST(test_attr("a25.5b", char_ > r2 >> r3, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
         BOOST_TEST(check(ut, "( \"a\" ( ( 25.5 ) ( \"b\" ) ) )"));
+                  // FIXME:  "( \"a\" ( 25.5 ) ( \"b\" ) )" 
         ut.clear();
 
         BOOST_TEST(test_attr("a25.5b", r3 >> r2 > char_, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
         BOOST_TEST(check(ut, "( ( ( \"a\" ) ( 25.5 ) ) \"b\" )"));
+                  // FIXME:  "( ( \"a\" ) ( 25.5 ) \"b\" )" 
     }
 
     return boost::report_errors();

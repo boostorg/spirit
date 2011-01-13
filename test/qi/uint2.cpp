@@ -23,13 +23,8 @@ main()
 
         BOOST_TEST( test("123456", lit(123456U)));
         BOOST_TEST(!test("123456", lit(0U)));
-        BOOST_TEST( test("123456", 123456U));
-        BOOST_TEST(!test("123456", 0U));
-        
         BOOST_TEST( test("123456", lit(i)));
         BOOST_TEST(!test("123456", lit(unsigned(i - 1))));
-        BOOST_TEST( test("123456", i));
-        BOOST_TEST(!test("123456", unsigned(i - 1)));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -43,13 +38,8 @@ main()
 
         BOOST_TEST( test("1234567890123456789", lit(1234567890123456789ULL)));
         BOOST_TEST(!test("1234567890123456789", lit(0ULL)));
-        BOOST_TEST( test("1234567890123456789", 1234567890123456789ULL));
-        BOOST_TEST(!test("1234567890123456789", 0ULL));
-        
         BOOST_TEST( test("1234567890123456789", lit(ll)));
         BOOST_TEST(!test("1234567890123456789", lit(ulong_long_type(ll - 1))));
-        BOOST_TEST( test("1234567890123456789", ll));
-        BOOST_TEST(!test("1234567890123456789", ulong_long_type(ll - 1)));
     }
 #endif
 
@@ -63,17 +53,10 @@ main()
 
         BOOST_TEST( test("12345",  lit(s)));
         BOOST_TEST(!test("12345",  lit(s - 1)));
-        BOOST_TEST( test("12345",  s));
-        BOOST_TEST(!test("12345",  s - 1));
-
         BOOST_TEST( test("1234567890",  lit(1234567890UL)));
         BOOST_TEST(!test("1234567890",  lit(98765321UL)));
         BOOST_TEST( test("1234567890",  lit(l)));
         BOOST_TEST(!test("1234567890",  lit(l - 1)));
-        BOOST_TEST( test("1234567890",  1234567890UL));
-        BOOST_TEST(!test("1234567890",  987654321UL));
-        BOOST_TEST( test("1234567890",  l));
-        BOOST_TEST(!test("1234567890",  l - 1));
     }
     
     ///////////////////////////////////////////////////////////////////////////

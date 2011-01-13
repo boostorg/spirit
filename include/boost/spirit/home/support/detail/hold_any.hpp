@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2007-2010 Hartmut Kaiser
+    Copyright (c) 2007-2011 Hartmut Kaiser
     Copyright (c) Christopher Diggins 2005
     Copyright (c) Pablo Aguilar 2005
     Copyright (c) Kevlin Henney 2001

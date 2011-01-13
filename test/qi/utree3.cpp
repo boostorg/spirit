@@ -1,5 +1,5 @@
-// Copyright (c) 2001-2010 Hartmut Kaiser
-// Copyright (c) 2001-2010 Joel de Guzman
+// Copyright (c) 2001-2011 Hartmut Kaiser
+// Copyright (c) 2001-2011 Joel de Guzman
 // Copyright (c)      2010 Bryce Lelbach
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -91,12 +91,72 @@ int main()
     // optionals
     {
         utree ut;
-        BOOST_TEST(test_attr("x", -char_, ut) &&
-            ut.which() == utree_type::string_type && check(ut, "\"x\""));
+
+        BOOST_TEST(test_attr("x", -char_, ut));
+        BOOST_TEST(ut.which() == utree_type::string_type);
+        BOOST_TEST(check(ut, "\"x\""));
         ut.clear();
-        BOOST_TEST(test_attr("", -char_, ut) &&
-            ut.which() == utree_type::invalid_type && 
-            check(ut, "<invalid>"));
+
+        BOOST_TEST(test_attr("", -char_, ut));
+        BOOST_TEST(ut.which() == utree_type::invalid_type); 
+        BOOST_TEST(check(ut, "<invalid>"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1x", int_ >> -char_, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( 1 \"x\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1", int_ >> -char_, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type); 
+        BOOST_TEST(check(ut, "( 1 <invalid> )"));
+        ut.clear();
+        
+        BOOST_TEST(test_attr("1x", -int_ >> char_, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( 1 \"x\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x", -int_ >> char_, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type); 
+        BOOST_TEST(check(ut, "( <invalid> \"x\" )"));
+        ut.clear();
+
+        rule<char const*, utree::list_type()> r1 = int_ >> -char_;
+        
+        BOOST_TEST(test_attr("1x", r1, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( 1 \"x\" )"));
+        ut.clear();
+        
+        BOOST_TEST(test_attr("1", r1, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type); 
+        BOOST_TEST(check(ut, "( 1 <invalid> )"));
+        ut.clear();
+        
+        rule<char const*, utree::list_type()> r2 = -int_ >> char_;
+        
+        BOOST_TEST(test_attr("1x", r2, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type);
+        BOOST_TEST(check(ut, "( 1 \"x\" )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("x", r2, ut));
+        BOOST_TEST(ut.which() == utree_type::list_type); 
+        BOOST_TEST(check(ut, "( <invalid> \"x\" )"));
+        ut.clear();
+        
+        rule<char const*, utree()> r3 = int_;
+        
+        BOOST_TEST(test_attr("1", -r3, ut));
+        BOOST_TEST(ut.which() == utree_type::int_type);
+        BOOST_TEST(check(ut, "1"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("", -r3, ut));
+        BOOST_TEST(ut.which() == utree_type::invalid_type); 
+        BOOST_TEST(check(ut, "<invalid>"));
+        ut.clear();
     }
 
     // as_string

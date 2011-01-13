@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -45,7 +46,7 @@
 <span class="special">{</span>
     <span class="keyword">enum</span> <span class="identifier">info</span>
     <span class="special">{</span>
-        <span class="identifier">uninitialized_type</span><span class="special">,</span> <span class="comment">// the utree has not been initialized (it's 
+        <span class="identifier">invalid_type</span><span class="special">,</span>       <span class="comment">// the utree has not been initialized (it's 
 </span>                            <span class="comment">// default constructed)
 </span>        <span class="identifier">nil_type</span><span class="special">,</span>           <span class="comment">// nil is the sentinel (empty) utree type.
 </span>        <span class="identifier">list_type</span><span class="special">,</span>          <span class="comment">// A doubly linked list of utrees.
@@ -94,7 +95,7 @@
         for. It is 14 bytes for a 32-bit platform and 30 bytes for a 64-bit platform.
       </p>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1101852"></a>
+<a name="id1300137"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -180,13 +181,13 @@
 <p>
         
 </p>
-<pre class="programlisting"><span class="comment">// This constructs an `uninitialized_type` node. When used in places
+<pre class="programlisting"><span class="comment">// This constructs an `invalid_type` node. When used in places
 </span><span class="comment">// where a boost::optional is expected (i.e. as an attribute for the 
 </span><span class="comment">// optional component), this represents the 'empty' state.
-</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">uninitialized_type</span> <span class="special">=</span> <span class="identifier">uninitialized</span><span class="special">);</span>
+</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">invalid_type</span> <span class="special">=</span> <span class="identifier">invalid_type</span><span class="special">());</span>
 
 <span class="comment">// This initializes a `nil_type` node, which represents a valid,
-</span><span class="comment">// 'initialized empty' utree (different from uninitialized_type!).
+</span><span class="comment">// 'initialized empty' utree (different from invalid_type!).
 </span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">nil_type</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">nil_type</span><span class="special">);</span>
 
@@ -290,7 +291,7 @@
         attribute type.
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1104402"></a>
+<a name="id1303420"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -355,7 +356,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1105033"></a>
+<a name="id1303913"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -389,7 +390,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1105465"></a>
+<a name="id1304270"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
@@ -419,31 +420,123 @@
 </pre>
 <p>
       </p>
-<a name="spirit.support.utree.scope"></a><h5>
-<a name="id1105676"></a>
-        <a class="link" href="utree.html#spirit.support.utree.scope">Scope</a>
+<a name="spirit.support.utree.example__sexpr_parser"></a><h5>
+<a name="id1304441"></a>
+        <a class="link" href="utree.html#spirit.support.utree.example__sexpr_parser">Example: Sexpr
+        Parser</a>
       </h5>
+<p>
+        The source for this example can be found here: <a href="../../../../example/support/utree" target="_top">../../example/support/utree</a>.
+      </p>
 <p>
         
 </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">scope</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">utree</span><span class="special">*&gt;</span> <span class="special">{</span>
-  <span class="keyword">public</span><span class="special">:</span>
-    <span class="identifier">scope</span><span class="special">(</span><span class="identifier">utree</span><span class="special">*</span> <span class="identifier">first</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
-          <span class="identifier">utree</span><span class="special">*</span> <span class="identifier">last</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
-          <span class="identifier">scope</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">parent</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span> 
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">sexpr</span>
+<span class="special">{</span>
 
-    <span class="identifier">scope</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">outer</span><span class="special">()</span> <span class="keyword">const</span> 
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">ErrorHandler</span> <span class="special">=</span> <span class="identifier">error_handler</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">parser</span> <span class="special">:</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">utree</span><span class="special">(),</span> <span class="identifier">whitespace</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">utree</span><span class="special">(),</span> <span class="identifier">whitespace</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+        <span class="identifier">start</span><span class="special">,</span> <span class="identifier">element</span><span class="special">,</span> <span class="identifier">list</span><span class="special">;</span>
 
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">level</span><span class="special">()</span> <span class="keyword">const</span> 
+    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">utree</span><span class="special">()&gt;</span>
+        <span class="identifier">atom</span><span class="special">;</span>
 
+    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">int</span><span class="special">()&gt;</span>
+        <span class="identifier">integer</span><span class="special">;</span>
+
+    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">utf8_symbol_type</span><span class="special">()&gt;</span>
+        <span class="identifier">symbol</span><span class="special">;</span>
+ 
+    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">utree</span><span class="special">::</span><span class="identifier">nil_type</span><span class="special">()&gt;</span>
+        <span class="identifier">nil_</span><span class="special">;</span>
+
+    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">binary_string_type</span><span class="special">()&gt;</span>
+        <span class="identifier">binary</span><span class="special">;</span>
+
+    <span class="identifier">utf8</span><span class="special">::</span><span class="identifier">parser</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span>
+        <span class="identifier">string</span><span class="special">;</span>
+
+    <span class="identifier">px</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="identifier">ErrorHandler</span><span class="special">&gt;</span> <span class="keyword">const</span>
+        <span class="identifier">error</span><span class="special">;</span>
+  
+    <span class="identifier">tagger</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">save_line_pos</span><span class="special">&gt;</span>
+        <span class="identifier">pos</span><span class="special">;</span>
+
+    <span class="identifier">parser</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">source_file</span> <span class="special">=</span> <span class="string">"&lt;string&gt;"</span><span class="special">):</span>
+        <span class="identifier">parser</span><span class="special">::</span><span class="identifier">base_type</span><span class="special">(</span><span class="identifier">start</span><span class="special">),</span> <span class="identifier">error</span><span class="special">(</span><span class="identifier">ErrorHandler</span><span class="special">(</span><span class="identifier">source_file</span><span class="special">))</span>
+    <span class="special">{</span>
+        <span class="keyword">using</span> <span class="identifier">standard</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">unused_type</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">lexeme</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">hex</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">oct</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">no_case</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">real_parser</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">strict_real_policies</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">uint_parser</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">bool_parser</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">on_error</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">fail</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">_val</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">_1</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">_2</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">_3</span><span class="special">;</span>
+        <span class="keyword">using</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">_4</span><span class="special">;</span>
+
+        <span class="identifier">real_parser</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="identifier">strict_real_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">strict_double</span><span class="special">;</span>
+        <span class="identifier">uint_parser</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">,</span> <span class="number">16</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">2</span><span class="special">&gt;</span> <span class="identifier">hex2</span><span class="special">;</span>
+        <span class="identifier">bool_parser</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="identifier">sexpr</span><span class="special">::</span><span class="identifier">bool_input_policies</span><span class="special">&gt;</span> <span class="identifier">boolean</span><span class="special">;</span>
+ 
+        <span class="identifier">start</span> <span class="special">=</span> <span class="identifier">element</span><span class="special">.</span><span class="identifier">alias</span><span class="special">();</span>
+
+        <span class="identifier">element</span> <span class="special">=</span> <span class="identifier">atom</span> <span class="special">|</span> <span class="identifier">list</span><span class="special">;</span>
+
+        <span class="identifier">list</span> <span class="special">=</span> <span class="identifier">pos</span><span class="special">(</span><span class="identifier">_val</span><span class="special">,</span> <span class="char">'('</span><span class="special">)</span> <span class="special">&gt;</span> <span class="special">*</span><span class="identifier">element</span> <span class="special">&gt;</span> <span class="char">')'</span><span class="special">;</span>
+
+        <span class="identifier">atom</span> <span class="special">=</span> <span class="identifier">nil_</span> 
+             <span class="special">|</span> <span class="identifier">strict_double</span>
+             <span class="special">|</span> <span class="identifier">integer</span>
+             <span class="special">|</span> <span class="identifier">boolean</span>
+             <span class="special">|</span> <span class="identifier">string</span>
+             <span class="special">|</span> <span class="identifier">symbol</span>
+             <span class="special">|</span> <span class="identifier">binary</span><span class="special">;</span>
+
+        <span class="identifier">nil_</span> <span class="special">=</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">attr_cast</span><span class="special">(</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"nil"</span><span class="special">));</span> 
+
+        <span class="identifier">integer</span> <span class="special">=</span> <span class="identifier">lexeme</span><span class="special">[</span> <span class="identifier">no_case</span><span class="special">[</span><span class="string">"#x"</span><span class="special">]</span> <span class="special">&gt;</span>  <span class="identifier">hex</span><span class="special">]</span>
+                <span class="special">|</span> <span class="identifier">lexeme</span><span class="special">[</span> <span class="identifier">no_case</span><span class="special">[</span><span class="string">"#o"</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="identifier">oct</span><span class="special">]</span>
+                <span class="special">|</span> <span class="identifier">lexeme</span><span class="special">[-</span><span class="identifier">no_case</span><span class="special">[</span><span class="string">"#d"</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">];</span>
+
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">exclude</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="string">" ();\"\x01-\x1f\x7f"</span><span class="special">)</span> <span class="special">+</span> <span class="char">'\0'</span><span class="special">;</span>
+        <span class="identifier">symbol</span> <span class="special">=</span> <span class="identifier">lexeme</span><span class="special">[+(~</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">exclude</span><span class="special">))];</span>
+
+        <span class="identifier">binary</span> <span class="special">=</span> <span class="identifier">lexeme</span><span class="special">[</span><span class="char">'#'</span> <span class="special">&gt;</span> <span class="special">*</span><span class="identifier">hex2</span> <span class="special">&gt;</span> <span class="char">'#'</span><span class="special">];</span>
+
+        <span class="identifier">start</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"sexpr"</span><span class="special">);</span>
+        <span class="identifier">element</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"element"</span><span class="special">);</span>
+        <span class="identifier">list</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"list"</span><span class="special">);</span>
+        <span class="identifier">atom</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"atom"</span><span class="special">);</span>
+        <span class="identifier">nil_</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"nil"</span><span class="special">);</span>
+        <span class="identifier">integer</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"integer"</span><span class="special">);</span>
+        <span class="identifier">symbol</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"symbol"</span><span class="special">);</span>
+        <span class="identifier">binary</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"binary"</span><span class="special">);</span>
+ 
+        <span class="identifier">on_error</span><span class="special">&lt;</span><span class="identifier">fail</span><span class="special">&gt;(</span><span class="identifier">start</span><span class="special">,</span> <span class="identifier">error</span><span class="special">(</span><span class="identifier">_1</span><span class="special">,</span> <span class="identifier">_2</span><span class="special">,</span> <span class="identifier">_3</span><span class="special">,</span> <span class="identifier">_4</span><span class="special">));</span>
+    <span class="special">}</span>
 <span class="special">};</span>
-</pre>
+
+<span class="special">}</span> <span class="comment">// sexpr
+</span></pre>
 <p>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

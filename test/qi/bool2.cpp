@@ -65,12 +65,6 @@ int main()
         BOOST_TEST(!test("fasle", lit(false)));
         BOOST_TEST(!test("false", lit(true)));
         BOOST_TEST(!test("true", lit(false)));
-        
-        BOOST_TEST(test("true", true));
-        BOOST_TEST(test("false", false));
-        BOOST_TEST(!test("fasle", false));
-        BOOST_TEST(!test("false", true));
-        BOOST_TEST(!test("true", false));
     }
 
     {
@@ -80,13 +74,6 @@ int main()
         BOOST_TEST(test("FALSE", no_case[lit(false)]));
         BOOST_TEST(!test("True", no_case[lit(false)]));
         BOOST_TEST(!test("False", no_case[lit(true)]));
-        
-        BOOST_TEST(test("True", no_case[true]));
-        BOOST_TEST(test("False", no_case[false]));
-        BOOST_TEST(test("TRUE", no_case[true]));
-        BOOST_TEST(test("FALSE", no_case[false]));
-        BOOST_TEST(!test("True", no_case[false]));
-        BOOST_TEST(!test("False", no_case[true]));
     }
 
     {

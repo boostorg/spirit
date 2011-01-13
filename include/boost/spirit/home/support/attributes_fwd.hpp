@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Hartmut Kaiser
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c)      2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -149,8 +149,14 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // Determine, whether T is a variant like type
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Domain = void>
+    template <typename T, typename Domain = unused_type, typename Enable = void>
     struct not_is_variant;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Determine, whether T is a variant like type
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Domain = unused_type, typename Enable = void>
+    struct not_is_optional;
 
     ///////////////////////////////////////////////////////////////////////////
     // Clear data efficiently
@@ -232,6 +238,21 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute, typename T, typename Enable = void>
     struct symbols_value;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // transform attribute types exposed from compound operator components
+    /////////////////////////////////////////////////////////////////////////// 
+    template <typename Attribute, typename Domain>
+    struct alternative_attribute_transform;
+
+    template <typename Attribute, typename Domain>
+    struct sequence_attribute_transform;
+
+    template <typename Attribute, typename Domain>
+    struct permutation_attribute_transform;
+
+    template <typename Attribute, typename Domain>
+    struct sequential_or_attribute_transform;
 }}}
 
 #endif

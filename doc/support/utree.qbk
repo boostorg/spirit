@@ -8,6 +8,7 @@
 ==============================================================================/]
 
 [import ../../../../boost/spirit/home/support/utree/utree.hpp]
+[import ../../example/support/utree/sexpr_parser.hpp]
 
 [section:utree The utree data structure]
 
@@ -61,10 +62,6 @@ The exposed variant-like interface makes the `utree` usable with all __qi__
 parser and __karma__ generator components, which are compatible with an 
 __boost_variant__ attribute type.
 
-
-
-[/ utree]
-
 [heading String Types]
 
 [utree_strings]
@@ -80,9 +77,17 @@ a signature of utree(scope const&) as a utree node.
 
 [utree_exceptions]
 
-[heading Scope]
+[/
+  [heading Scope]
 
-[utree_scope]
+  [utree_scope]
+]
+
+[heading Example: Sexpr Parser]
+
+The source for this example can be found here: [@../../example/support/utree].
+
+[utree_sexpr_parser]
 
 [endsect]
 

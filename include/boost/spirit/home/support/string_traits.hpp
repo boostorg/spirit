@@ -1,5 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c)      2010 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -25,6 +26,21 @@
 
 namespace boost { namespace spirit { namespace traits
 {
+    ///////////////////////////////////////////////////////////////////////////
+    // Determine if T is a character type
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct is_char : mpl::false_ {};
+
+    template <typename T>
+    struct is_char<T const> : is_char<T> {};
+
+    template <>
+    struct is_char<char> : mpl::true_ {};
+
+    template <>
+    struct is_char<wchar_t> : mpl::true_ {};
+
     ///////////////////////////////////////////////////////////////////////////
     // Determine if T is a string
     ///////////////////////////////////////////////////////////////////////////
@@ -81,6 +97,12 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T>
     struct char_type_of<T const> : char_type_of<T> {};
+
+    template <>
+    struct char_type_of<char> : mpl::identity<char> {};
+
+    template <>
+    struct char_type_of<wchar_t> : mpl::identity<wchar_t> {};
 
     template <>
     struct char_type_of<char const*> : mpl::identity<char const> {};

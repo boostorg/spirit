@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -40,8 +40,9 @@ namespace boost { namespace spirit { namespace qi
         {
             // Put all the element attributes in a tuple
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, mpl::identity, Iterator>::type
-            all_attributes;
+                Elements, Context, traits::sequence_attribute_transform
+              , Iterator, qi::domain
+            >::type all_attributes;
 
             // Now, build a fusion vector over the attributes. Note
             // that build_fusion_vector 1) removes all unused attributes

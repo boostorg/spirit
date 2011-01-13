@@ -1,5 +1,5 @@
-//  Copyright (c) 2001-2010 Hartmut Kaiser
-//  Copyright (c) 2001-2010 Joel de Guzman
+//  Copyright (c) 2001-2011 Hartmut Kaiser
+//  Copyright (c) 2001-2011 Joel de Guzman
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -41,25 +41,19 @@ main()
         BOOST_TEST(test("Á", iso8859_1[upper['á']]));
         BOOST_TEST(test("á", iso8859_1[lower[char_('á')]]));
         BOOST_TEST(test("Á", iso8859_1[upper[char_('á')]]));
+        BOOST_TEST(test("á", iso8859_1[lower[lit('á')]]));
+        BOOST_TEST(test("Á", iso8859_1[upper[lit('á')]]));
         BOOST_TEST(test("á", iso8859_1[lower[char_]], 'á'));
         BOOST_TEST(test("Á", iso8859_1[upper[char_]], 'á'));
         BOOST_TEST(test("á", iso8859_1[lower['Á']]));
         BOOST_TEST(test("Á", iso8859_1[upper['Á']]));
         BOOST_TEST(test("á", iso8859_1[lower[char_('Á')]]));
         BOOST_TEST(test("Á", iso8859_1[upper[char_('Á')]]));
+        BOOST_TEST(test("á", iso8859_1[lower[lit('Á')]]));
+        BOOST_TEST(test("Á", iso8859_1[upper[lit('Á')]]));
         BOOST_TEST(test("á", iso8859_1[lower[char_]], 'Á'));
         BOOST_TEST(test("Á", iso8859_1[upper[char_]], 'Á'));
     }
-
-//     {
-//         BOOST_TEST(test("É", iso8859_1[no_case[char_("å-ï")]]));
-//         BOOST_TEST(!test("ÿ", iso8859_1[no_case[char_("å-ï")]]));
-//     }
-// 
-//     {
-//         BOOST_TEST(test("Áá", iso8859_1[no_case["áÁ"]]));
-//         BOOST_TEST(test("Áá", iso8859_1[no_case[lit("áÁ")]]));
-//     }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
 #pragma setlocale("")
@@ -71,10 +65,10 @@ main()
 #endif
     {
         BOOST_TEST(test("ää", iso8859_1[lower["Ää"]]));
-        BOOST_TEST(test("ää", iso8859_1[lower["Ää"]]));
+        BOOST_TEST(test("ää", iso8859_1[lower[lit("Ää")]]));
 
         BOOST_TEST(test("ÄÄ", iso8859_1[upper["Ää"]]));
-        BOOST_TEST(test("ÄÄ", iso8859_1[upper["Ää"]]));
+        BOOST_TEST(test("ÄÄ", iso8859_1[upper[lit("Ää")]]));
     }
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
 #pragma setlocale("")

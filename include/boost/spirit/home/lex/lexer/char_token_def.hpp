@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c) 2001-2011 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -44,13 +44,10 @@ namespace boost { namespace spirit
           , fusion::vector1<A0>
         >
     > : mpl::true_ {};
-
 }}
 
 namespace boost { namespace spirit { namespace lex
 { 
-    using spirit::lit;                    // lit('x') is equivalent to 'x'
-
     // use char_ from standard character set by default
     using spirit::standard::char_type;
     using spirit::standard::char_;
@@ -184,7 +181,6 @@ namespace boost { namespace spirit { namespace lex
             return result_type(fusion::at_c<0>(term.args)[0]);
         }
     };
-
 }}}  // namespace boost::spirit::lex
 
 #endif 

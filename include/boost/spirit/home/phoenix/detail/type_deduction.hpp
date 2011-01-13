@@ -258,6 +258,12 @@ namespace boost { namespace type_deduction_detail
         typedef T& type;
     };
 
+    template <typename T>
+    struct reference_type<T* const>
+    {
+        typedef T const& type;
+    };
+
     template <typename C>
     struct const_reference_type
     {

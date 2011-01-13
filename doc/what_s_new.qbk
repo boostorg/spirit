@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2010 Joel de Guzman
-    Copyright (C) 2001-2010 Hartmut Kaiser
+    Copyright (C) 2001-2011 Joel de Guzman
+    Copyright (C) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,6 +24,9 @@
 * Introduced a new customization point __customize_assign_to_container_from_value__
   which is invoked for container attributes whenever a attribute value needs to 
   be added to that container.
+* Replaced `proto::lit` (which was used to implement `spirit::lit`) with a 
+  separate version allowing to distinguish 'lit(foo)' from 'foo'. This should 
+  not change any semantics nor should it break exiting code.
 
 [heading Bug Fixes in Qi or Karma]
 
@@ -67,6 +70,7 @@
   specified the lexer remains in the previous state (as before).
 * The parser primitives `qi::token` and `qi::tokenid` can now be used without
   any argument. In this case they will match any token.
+* `lex::lit()` has been removed.
 
 [heading Bug Fixes in Lex]
 

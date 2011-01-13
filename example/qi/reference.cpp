@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -797,11 +797,10 @@ main()
         test_parser("12345", uint_(val(12345)));
 
         // literals
-        test_parser("12345", 12345);
         test_parser("12345", lit(12345)); 
         test_parser("12345", lit(val(12345))); 
         //]
-        
+
         //[reference_thousand_separated
         //`Thousand separated number parser:
         uint_parser<unsigned, 10, 1, 3> uint3_p;        //  1..3 digits
@@ -826,10 +825,8 @@ main()
         test_parser("-12345", int_(-12345));
         test_parser("+12345", int_(val(12345))); 
         test_parser("-12345", int_(val(-12345))); 
-
+        
         // literals
-        test_parser("+12345", 12345); 
-        test_parser("-12345", -12345); 
         test_parser("+12345", lit(12345)); 
         test_parser("-12345", lit(-12345));
         test_parser("+12345", lit(val(12345))); 
@@ -841,7 +838,6 @@ main()
     {
         //[reference_using_declarations_real
         using boost::phoenix::val;
-        using boost::spirit::qi::lit;
         using boost::spirit::qi::double_;
         using boost::spirit::qi::real_parser;
         //]
@@ -856,14 +852,12 @@ main()
         test_parser("-12345e6", double_(val(-123456e6)));
 
         // literals
-        test_parser("+12345e6", 12345e6);
-        test_parser("-12345e6", -12345e6);
         test_parser("+12345e6", lit(12345e6));
         test_parser("-12345e6", lit(-123456e6));
         test_parser("+12345e6", lit(val(12345e6)));
         test_parser("-12345e6", lit(val(-123456e6)));
         //]
-        
+
         //[reference_custom_real
         real_parser<double, ts_real_policies<double> > ts_real;
         test_parser("123,456,789.01", ts_real);
@@ -875,7 +869,6 @@ main()
     {
         //[reference_using_declarations_bool
         using boost::phoenix::val;
-        using boost::spirit::qi::lit;
         using boost::spirit::qi::bool_;
         using boost::spirit::qi::bool_parser;
         //]
@@ -890,8 +883,6 @@ main()
         test_parser("false", bool_(val(false)));
 
         // literals
-        test_parser("true", true);
-        test_parser("false", false);
         test_parser("true", lit(true));
         test_parser("false", lit(false));
         test_parser("true", lit(val(true)));

@@ -1,9 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit V2.4.2</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="../what_s_new.html" title="What's New">
@@ -27,13 +28,13 @@
 <a name="spirit.what_s_new.spirit_2_4_2"></a><a class="link" href="spirit_2_4_2.html" title="Spirit V2.4.2">Spirit V2.4.2</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id713817"></a>
+<a name="id843896"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma"></a><h5>
-<a name="id713841"></a>
+<a name="id843920"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma">New
         Features in Qi or Karma</a>
       </h5>
@@ -55,9 +56,14 @@
             which is invoked for container attributes whenever a attribute value
             needs to be added to that container.
           </li>
+<li class="listitem">
+            Replaced <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">lit</span></code> (which was used to implement <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span></code>) with a separate version allowing
+            to distinguish 'lit(foo)' from 'foo'. This should not change any semantics
+            nor should it break exiting code.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma"></a><h5>
-<a name="id713921"></a>
+<a name="id844030"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma">Bug
         Fixes in Qi or Karma</a>
       </h5>
@@ -74,13 +80,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id713995"></a>
+<a name="id844096"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.4.1 (Boost V1.45.0) to
         V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_lex"></a><h5>
-<a name="id714016"></a>
+<a name="id844113"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_lex">New Features
         in Lex</a>
       </h5>
@@ -128,9 +134,13 @@
             and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">tokenid</span></code> can now be used without any
             argument. In this case they will match any token.
           </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lit</span><span class="special">()</span></code>
+            has been removed.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex"></a><h5>
-<a name="id714488"></a>
+<a name="id844556"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex">Bug Fixes
         in Lex</a>
       </h5>
@@ -172,7 +182,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

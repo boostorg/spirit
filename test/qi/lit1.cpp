@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -21,62 +21,50 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using boost::spirit::qi::lit;
+    using boost::spirit::qi::string;
     using boost::spirit::qi::_1;
 
     {
         BOOST_TEST((test("kimpo", "kimpo")));
-        BOOST_TEST((test("kimpo", lit("kimpo"))));
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
-        BOOST_TEST((test("x", lit("x"))));
-        BOOST_TEST((test(L"x", lit(L"x"))));
-#endif
+        BOOST_TEST((test("kimpo", string("kimpo"))));
+
+        BOOST_TEST((test("x", string("x"))));
+        BOOST_TEST((test(L"x", string(L"x"))));
+
         std::basic_string<char> s("kimpo");
         std::basic_string<wchar_t> ws(L"kimpo");
         BOOST_TEST((test("kimpo", s)));
         BOOST_TEST((test(L"kimpo", ws)));
-        BOOST_TEST((test("kimpo", lit(s))));
-        BOOST_TEST((test(L"kimpo", lit(ws))));
+        BOOST_TEST((test("kimpo", string(s))));
+        BOOST_TEST((test(L"kimpo", string(ws))));
     }
 
     {
         BOOST_TEST((test(L"kimpo", L"kimpo")));
-        BOOST_TEST((test(L"kimpo", lit(L"kimpo"))));
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
-        BOOST_TEST((test(L"x", lit(L"x"))));
-#endif
-        BOOST_TEST((test(L"x", lit(L'x'))));
-        BOOST_TEST((test(L"x", lit(L'x'))));
+        BOOST_TEST((test(L"kimpo", string(L"kimpo"))));
+        BOOST_TEST((test(L"x", string(L"x"))));
     }
 
     {
         std::basic_string<char> s("kimpo");
-        BOOST_TEST((test("kimpo", lit(s))));
+        BOOST_TEST((test("kimpo", string(s))));
 
         std::basic_string<wchar_t> ws(L"kimpo");
-        BOOST_TEST((test(L"kimpo", lit(ws))));
+        BOOST_TEST((test(L"kimpo", string(ws))));
     }
 
     {
         using namespace boost::spirit::ascii;
-        BOOST_TEST((test("    kimpo", lit("kimpo"), space)));
-        BOOST_TEST((test(L"    kimpo", lit(L"kimpo"), space)));
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
-        BOOST_TEST((test("    x", lit("x"), space)));
-#endif
-        BOOST_TEST((test("    x", lit('x'), space)));
-        BOOST_TEST((test(L"    x", lit(L'x'), space)));
+        BOOST_TEST((test("    kimpo", string("kimpo"), space)));
+        BOOST_TEST((test(L"    kimpo", string(L"kimpo"), space)));
+        BOOST_TEST((test("    x", string("x"), space)));
     }
 
     {
         using namespace boost::spirit::ascii;
-        BOOST_TEST((test("    kimpo", lit("kimpo"), space)));
-        BOOST_TEST((test(L"    kimpo", lit(L"kimpo"), space)));
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
-        BOOST_TEST((test("    x", lit("x"), space)));
-#endif
-        BOOST_TEST((test("    x", lit('x'), space)));
-        BOOST_TEST((test(L"    x", lit(L'x'), space)));
+        BOOST_TEST((test("    kimpo", string("kimpo"), space)));
+        BOOST_TEST((test(L"    kimpo", string(L"kimpo"), space)));
+        BOOST_TEST((test("    x", string("x"), space)));
     }
 
     {

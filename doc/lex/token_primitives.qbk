@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2010 Hartmut Kaiser
-    Copyright (C) 2001-2010 Joel de Guzman
+    Copyright (C) 2001-2011 Hartmut Kaiser
+    Copyright (C) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -43,7 +43,6 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::lit // alias: boost::spirit::lex::lit` ]]
     [[`lex::char_`]]
 ]
 
@@ -64,8 +63,6 @@ defined in __primitive_lexer_concept__.
 [table
     [[Expression]           [Description]]
     [[`ch`]                 [Create a token definition matching the character 
-                             literal `ch`. ]]
-    [[`lit(ch)`]            [Create a token definition matching the character 
                              literal `ch`. ]]
     [[`lex::char_(ch)`]     [Create a token definition matching the character 
                              `ch`.]]

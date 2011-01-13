@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace traits
         >::type>
       : mpl::true_ {};
 
-    template <typename T, typename Domain>
+    template <typename T, typename Domain, typename Enable/* = void*/>
     struct not_is_variant
       : mpl::true_
     {};
@@ -203,7 +203,7 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Domain>
+    template <typename T, typename Domain, typename Enable/* = void*/>
     struct not_is_optional
       : mpl::true_
     {};
@@ -343,6 +343,44 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
+    // sequence_attribute_transform
+    // 
+    // This transform is invoked for every attribute in a sequence allowing
+    // to modify the attribute type exposed by a component to the enclosing 
+    // sequence component. By default no transformation is performed.
+    /////////////////////////////////////////////////////////////////////////// 
+    template <typename Attribute, typename Domain> 
+    struct sequence_attribute_transform
+      : mpl::identity<Attribute>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // permutation_attribute_transform
+    // 
+    // This transform is invoked for every attribute in a sequence allowing
+    // to modify the attribute type exposed by a component to the enclosing 
+    // permutation component. By default a build_optional transformation is 
+    // performed.
+    /////////////////////////////////////////////////////////////////////////// 
+    template <typename Attribute, typename Domain> 
+    struct permutation_attribute_transform
+      : traits::build_optional<Attribute>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // sequential_or_attribute_transform
+    // 
+    // This transform is invoked for every attribute in a sequential_or allowing
+    // to modify the attribute type exposed by a component to the enclosing 
+    // sequential_or component. By default a build_optional transformation is 
+    // performed.
+    /////////////////////////////////////////////////////////////////////////// 
+    template <typename Attribute, typename Domain> 
+    struct sequential_or_attribute_transform
+      : traits::build_optional<Attribute>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // build_fusion_vector
     //
     // Build a fusion vector from a fusion sequence. All unused attributes
@@ -384,7 +422,8 @@ namespace boost { namespace spirit { namespace traits
     // components. Transform<T>::type is called on each element.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Sequence, typename Context
-      , template <typename T> class Transform, typename Iterator = unused_type>
+      , template <typename T, typename D> class Transform
+      , typename Iterator = unused_type, typename Domain = unused_type>
     struct build_attribute_sequence
     {
         struct element_attribute
@@ -398,6 +437,7 @@ namespace boost { namespace spirit { namespace traits
                 typedef typename
                     Transform<
                         typename attribute_of<Element, Context, Iterator>::type
+                      , Domain
                     >::type
                 type;
             };
@@ -477,6 +517,18 @@ namespace boost { namespace spirit { namespace traits
             type;
         };
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // alternative_attribute_transform
+    // 
+    // This transform is invoked for every attribute in an alternative allowing
+    // to modify the attribute type exposed by a component to the enclosing 
+    // alternative component. By default no transformation is performed.
+    /////////////////////////////////////////////////////////////////////////// 
+    template <typename Attribute, typename Domain> 
+    struct alternative_attribute_transform
+      : mpl::identity<Attribute>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // build_variant

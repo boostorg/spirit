@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c) 2001-2011 Hartmut Kaiser
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,9 +11,13 @@
 #endif
 
 #include <limits>
+#include <boost/config.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/utility/enable_if.hpp>
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
+#include <boost/spirit/home/support/numeric_traits.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/container.hpp>
@@ -23,6 +27,7 @@
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/detail/extract_from.hpp>
+#include <boost/spirit/home/karma/detail/enable_lit.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -72,7 +77,7 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct use_terminal<karma::domain, short>      // enables lit(short(0))
+    struct use_terminal<karma::domain, short>    // enables lit(short(0))
       : mpl::true_ {};
 
     template <>
@@ -152,6 +157,12 @@ namespace boost { namespace spirit
       , 1 // arity
     > : mpl::true_ {};
 
+    // enables lit(int)
+    template <typename A0>
+    struct use_terminal<karma::domain
+          , terminal_ex<tag::lit, fusion::vector1<A0> >
+          , typename enable_if<traits::is_int<A0> >::type>
+      : mpl::true_ {};
 }} 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -169,6 +180,7 @@ namespace boost { namespace spirit { namespace karma
 #endif
 
     using spirit::lit;    // lit(1) is equivalent to 1
+    using spirit::lit_type;
 
     ///////////////////////////////////////////////////////////////////////////
     //  This specialization is used for int generators not having a direct
@@ -471,6 +483,33 @@ namespace boost { namespace spirit { namespace karma
       : detail::basic_int_literal<boost::long_long_type, Modifiers> {};
 #endif
 
+    // lit(int)
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+            terminal_ex<tag::lit, fusion::vector1<A0> >
+          , Modifiers
+          , typename enable_if<traits::is_int<A0> >::type>
+      : detail::basic_int_literal<A0, Modifiers> 
+    {
+        static bool const lower =
+            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+        static bool const upper =
+            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+        typedef literal_int_generator<
+            A0
+          , typename spirit::detail::get_encoding_with_case<
+                Modifiers, unused_type, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+          , 10, false, true
+        > result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
+        {
+            return result_type(fusion::at_c<0>(term.args));
+        }
+    };
 }}}
 
 #endif

@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c) 2001-2011 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,6 +13,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/detail/construct.hpp>
@@ -221,7 +222,20 @@ namespace boost { namespace spirit { namespace lex
         mutable std::size_t unique_id_;
         mutable std::size_t token_state_;
     };
+}}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template<typename Attribute, typename Char, typename Idtype
+      , typename Attr, typename Context, typename Iterator>
+    struct handles_container<
+            lex::token_def<Attribute, Char, Idtype>, Attr, Context, Iterator>
+      : traits::is_container<
+            typename attribute_of<
+                lex::token_def<Attribute, Char, Idtype>, Context, Iterator
+            >::type>
+    {};
 }}}
 
 #if defined(BOOST_MSVC)

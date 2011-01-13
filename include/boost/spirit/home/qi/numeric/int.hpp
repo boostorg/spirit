@@ -13,12 +13,14 @@
 #endif
 
 #include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/detail/enable_lit.hpp>
 #include <boost/spirit/home/qi/numeric/numeric_utils.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/mpl/assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit
 {
@@ -49,9 +51,12 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain, tag::short_> : mpl::true_ {};
     //]
 
-    template <> // enables lit(short(n))
-    struct use_terminal<qi::domain, short> : mpl::true_ {};
-
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, signed short> >::type>
+      : mpl::true_ {};
+  
     template <typename A0> // enables short_(n)
     struct use_terminal<qi::domain
         , terminal_ex<tag::short_, fusion::vector1<A0> > >
@@ -66,8 +71,11 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain, tag::int_> : mpl::true_ {};
     //]   
 
-    template <> // enables lit(int(n))
-    struct use_terminal<qi::domain, int> : mpl::true_ {};
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, signed> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables int_(n)
     struct use_terminal<qi::domain
@@ -82,9 +90,12 @@ namespace boost { namespace spirit
     template <> // enables long_
     struct use_terminal<qi::domain, tag::long_> : mpl::true_ {};
     //]   
-    
-    template <> // enables lit(long(n))
-    struct use_terminal<qi::domain, long> : mpl::true_ {};
+   
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, signed long> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables long_(n)
     struct use_terminal<qi::domain
@@ -101,8 +112,11 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain, tag::long_long> : mpl::true_ {};
     //]
 
-    template <> // enables lit(boost::long_long_type(n))
-    struct use_terminal<qi::domain, boost::long_long_type> : mpl::true_ {};
+    template <typename A0> // enables lit(n)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, boost::long_long_type> >::type>
+      : mpl::true_ {};
 
     template <typename A0> // enables long_long(n)
     struct use_terminal<qi::domain
@@ -112,7 +126,7 @@ namespace boost { namespace spirit
     template <> // enables *lazy* long_long(n)
     struct use_lazy_terminal<qi::domain, tag::long_long, 1> : mpl::true_ {};
 #endif
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom int_parser
     template <typename T, unsigned Radix, unsigned MinDigits
@@ -151,6 +165,7 @@ namespace boost { namespace spirit { namespace qi
 #endif
 
     using spirit::lit;    // lit(1) is equivalent to 1
+    using spirit::lit_type;
 
     ///////////////////////////////////////////////////////////////////////////
     // This is the actual int parser
@@ -279,31 +294,40 @@ namespace boost { namespace spirit { namespace qi
     struct make_literal_int
     {
         typedef literal_int_parser<T, Radix, MinDigits, MaxDigits> result_type;
-        template <typename T_>
-        result_type operator()(T_ i, unused_type) const
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
         {
-            return result_type(i);
+            return result_type(fusion::at_c<0>(term.args));
         }
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Modifiers>
-    struct make_primitive<short, Modifiers> 
-      : make_literal_int<short> {};
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, signed short> >::type>
+      : make_literal_int<signed short> {};
 
-    template <typename Modifiers>
-    struct make_primitive<int, Modifiers> 
-      : make_literal_int<int> {};
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, signed> >::type>
+      : make_literal_int<signed> {};
 
-    template <typename Modifiers>
-    struct make_primitive<long, Modifiers> 
-      : make_literal_int<long> {};
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, signed long> >::type>
+      : make_literal_int<signed long> {};
 
 #ifdef BOOST_HAS_LONG_LONG
-    template <typename Modifiers>
-    struct make_primitive<boost::long_long_type, Modifiers> 
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, boost::long_long_type> >::type>
       : make_literal_int<boost::long_long_type> {};
 #endif
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
             , typename Modifiers>
@@ -311,7 +335,7 @@ namespace boost { namespace spirit { namespace qi
         tag::int_parser<T, Radix, MinDigits, MaxDigits>
       , Modifiers>
       : make_int<T, Radix, MinDigits, MaxDigits> {};
-    
+
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
             , typename A0, typename Modifiers>
     struct make_primitive<

@@ -13,12 +13,14 @@
 #endif
 
 #include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/detail/enable_lit.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/numeric/bool_policies.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit
 {
@@ -60,8 +62,10 @@ namespace boost { namespace spirit
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <> // enables lit(true)
-    struct use_terminal<qi::domain, bool>
+    template <typename A0> // enables lit(...)
+    struct use_terminal<qi::domain
+        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , typename enable_if<is_same<A0, bool> >::type>
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -105,8 +109,9 @@ namespace boost { namespace spirit { namespace qi
     using spirit::true__type;
     using spirit::false_;
     using spirit::false__type;
-    
-    using spirit::lit; // lit(true) is equivalent to true
+
+    using spirit::lit;    // lit(true) is equivalent to true
+    using spirit::lit_type;
 
     namespace detail
     {
@@ -218,7 +223,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type();
         }
     };
-    
+
     template <typename T, typename Modifiers
             , typename Policies = bool_policies<T> >
     struct make_direct_bool
@@ -241,7 +246,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     template <typename T, typename Modifiers, bool b 
             , typename Policies = bool_policies<T> >
     struct make_predefined_direct_bool
@@ -264,7 +269,6 @@ namespace boost { namespace spirit { namespace qi
         }
     };
 
-
     template <typename T, typename Modifiers
             , typename Policies = bool_policies<T> >
     struct make_literal_bool
@@ -281,16 +285,18 @@ namespace boost { namespace spirit { namespace qi
           , literal_bool_parser<T, Policies> >::type
         result_type;
 
-        template <typename T_>
-        result_type operator()(T_ i, unused_type) const
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
         {
-            return result_type(i);
+            return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Modifiers>
-    struct make_primitive<bool, Modifiers>
+    template <typename Modifiers, typename A0>
+    struct make_primitive<
+          terminal_ex<tag::lit, fusion::vector1<A0> >
+        , Modifiers, typename enable_if<is_same<A0, bool> >::type>
       : make_literal_bool<bool, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -320,7 +326,7 @@ namespace boost { namespace spirit { namespace qi
     template <typename Modifiers>
     struct make_primitive<tag::bool_, Modifiers>
       : make_bool<bool, Modifiers> {};
-    
+
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::bool_

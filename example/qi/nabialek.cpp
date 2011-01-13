@@ -11,6 +11,8 @@
 //
 //  [ Sam Nabialek; Somewhere, sometime in 2003... ]    spirit1
 //  [ JDG November 17, 2009 ]                           spirit2
+//  [ JDG January 10, 2010 ]                            Updated to use rule pointers
+//                                                      for efficiency.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -30,7 +32,7 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
     struct nabialek_trick : qi::grammar<
-        Iterator, ascii::space_type, qi::locals<qi::rule<Iterator, ascii::space_type> > >
+        Iterator, ascii::space_type, qi::locals<qi::rule<Iterator, ascii::space_type>*> >
     {
         nabialek_trick() : nabialek_trick::base_type(start)
         {
@@ -45,16 +47,16 @@ namespace client
             two = id >> ',' >> id;
 
             keyword.add
-                ("one", one)
-                ("two", two)
+                ("one", &one)
+                ("two", &two)
                 ;
-            
-            start = *(keyword[_a = _1] >> lazy(_a));
+
+            start = *(keyword[_a = _1] >> lazy(*_a));
         }
 
         qi::rule<Iterator, ascii::space_type> id, one, two;
-        qi::rule<Iterator, ascii::space_type, qi::locals<qi::rule<Iterator, ascii::space_type> > > start;
-        qi::symbols<char, qi::rule<Iterator, ascii::space_type> > keyword;
+        qi::rule<Iterator, ascii::space_type, qi::locals<qi::rule<Iterator, ascii::space_type>*> > start;
+        qi::symbols<char, qi::rule<Iterator, ascii::space_type>*> keyword;
     };
 }
 

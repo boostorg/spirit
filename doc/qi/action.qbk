@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2010 Joel de Guzman
-    Copyright (C) 2001-2010 Hartmut Kaiser
+    Copyright (C) 2001-2011 Joel de Guzman
+    Copyright (C) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -93,12 +93,7 @@ or function object used as the semantic action.
 
 [heading Example]
 
-[note The test harness for the example(s) below is presented in the
-      __qi_basics_examples__ section.]
-
-[reference_qi_action]
-
-More examples for semantic actions can be found here: 
+Examples for semantic actions can be found here: 
 [link spirit.qi.tutorials.semantic_actions.examples_of_semantic_actions Examples of Semantic Actions].
 
 [endsect] [/ Action]

@@ -1,5 +1,5 @@
-// Copyright (c) 2001-2010 Hartmut Kaiser
-// Copyright (c) 2001-2010 Joel de Guzman
+// Copyright (c) 2001-2011 Hartmut Kaiser
+// Copyright (c) 2001-2011 Joel de Guzman
 // Copyright (c)      2010 Bryce Lelbach
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -144,6 +144,39 @@ int main()
 
         BOOST_TEST(test_attr("1,2 2,3", r3 >> ' ' >> r3, ut) &&
             ut.which() == utree_type::list_type && check(ut, "( ( 1 2 ) ( 2 3 ) )"));
+        ut.clear();
+
+        rule<char const*, utree()> r4 = int_;
+        BOOST_TEST(test_attr("1 1", int_ >> ' ' >> -r4, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 1 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1 ", int_ >> ' ' >> -r4, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 )"));
+        ut.clear();
+
+        rule<char const*, utree::list_type()> r5 = -r4;
+        BOOST_TEST(test_attr("1", r5, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("", r5, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( )"));
+        ut.clear();
+
+        BOOST_TEST(test_attr("1 1", r5 >> ' ' >> r5, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( ( 1 ) ( 1 ) )"));
+        ut.clear();
+
+        rule<char const*, utree::list_type()> r6 = int_;
+        rule<char const*, utree()> r7 = -r6;
+        BOOST_TEST(test_attr("1", r7, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( 1 )"));
+        ut.clear();
+
+        rule<char const*, utree::list_type()> r8 = r6 >> ' ' >> r6;
+        BOOST_TEST(test_attr("1 1", r8, ut) &&
+            ut.which() == utree_type::list_type && check(ut, "( ( 1 ) ( 1 ) )"));
         ut.clear();
     }
 

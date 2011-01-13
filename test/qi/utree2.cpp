@@ -1,5 +1,5 @@
-// Copyright (c) 2001-2010 Hartmut Kaiser
-// Copyright (c) 2001-2010 Joel de Guzman
+// Copyright (c) 2001-2011 Hartmut Kaiser
+// Copyright (c) 2001-2011 Joel de Guzman
 // Copyright (c)      2010 Bryce Lelbach
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -10,11 +10,30 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/support_utree.hpp>
-#include <boost/mpl/print.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 #include <sstream>
 
 #include "test.hpp"
+
+template <typename Expr, typename Iterator = boost::spirit::unused_type>
+struct attribute_of_parser
+{
+    typedef typename boost::spirit::result_of::compile<
+        boost::spirit::qi::domain, Expr
+    >::type parser_expression_type;
+
+    typedef typename boost::spirit::traits::attribute_of<
+        parser_expression_type, boost::spirit::unused_type, Iterator
+    >::type type;
+};
+
+template <typename Expected, typename Expr>
+inline bool compare_attribute_type(Expr const&)
+{
+    typedef typename attribute_of_parser<Expr>::type type;
+    return boost::is_same<type, Expected>::value;
+}
 
 inline bool check(boost::spirit::utree const& val, std::string expected)
 {
@@ -96,6 +115,15 @@ int main()
             ut.which() == utree_type::list_type && 
             check(ut, "( ( ( ) ) )")); 
         ut.clear();
+    }
+
+    // special attribute transformation for utree in alternatives
+    {
+        rule<char const*, utree()> r1;
+        rule<char const*, utree::list_type()> r2;
+
+        BOOST_TEST(compare_attribute_type<utree>(
+            r1 | -r1 | *r1 | r2 | -r2 | *r2));
     }
 
     // lists
