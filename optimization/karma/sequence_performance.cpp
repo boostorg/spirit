@@ -38,7 +38,7 @@ static char const* const literal_sequences[] = {
         }                                                                     \
                                                                               \
         std::cout << "karma::sequence(" << BOOST_PP_INC(N) << "):\t"          \
-            << std::setw(9) << t.elapsed() << "\t"                            \
+            << boost::detail::setw(9) << t.elapsed() << "\t"                            \
             << std::flush << std::endl;                                       \
                                                                               \
         BOOST_ASSERT(std::string(buffer) == literal_sequences[N]);            \
@@ -54,7 +54,7 @@ static char const* const literal_sequences[] = {
 //                                                                               \
 //         t.restart();                                                          \
 //                                                                               \
-//             << std::setw(9) << elapsed << " [s]"                              \
+//             << boost::detail::setw(9) << elapsed << " [s]"                              \
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()

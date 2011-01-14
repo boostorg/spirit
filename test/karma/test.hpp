@@ -10,7 +10,7 @@
 #include <string>
 #include <iterator>
 #include <iostream>
-#include <iomanip>
+#include <boost/detail/iomanip.hpp>
 #include <typeinfo>
 
 #include <boost/foreach.hpp>
@@ -70,7 +70,7 @@ namespace spirit_test
         {
             std::cerr << "in " << func << ": generated \"";
             BOOST_FOREACH(int c, generated)
-                std::cerr << "\\x" << std::hex << std::setfill('0') << std::setw(2) << c;
+                std::cerr << "\\x" << std::hex << boost::detail::setfill('0') << boost::detail::setw(2) << c;
             std::cerr << "\"" << std::endl;
         }
     }
