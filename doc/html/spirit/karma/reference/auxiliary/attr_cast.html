@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Attribute Transformation Pseudo Generator (attr_cast)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../auxiliary.html" title="Auxiliary Generators">
 <link rel="prev" href="../auxiliary.html" title="Auxiliary Generators">
@@ -29,7 +29,7 @@
           Transformation Pseudo Generator (<code class="computeroutput"><span class="identifier">attr_cast</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.auxiliary.attr_cast.description"></a><h6>
-<a name="id1085752"></a>
+<a name="id917075"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.description">Description</a>
           </h6>
 <p>
@@ -39,10 +39,10 @@
             of type <code class="computeroutput"><span class="identifier">Transformed</span></code>.
             The supplied attribute gets created from the original attribute (of type
             <code class="computeroutput"><span class="identifier">Exposed</span></code>) passed to this
-            component using the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>.
+            component using the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a>.
           </p>
 <a name="spirit.karma.reference.auxiliary.attr_cast.header"></a><h6>
-<a name="id1085819"></a>
+<a name="id917181"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/attr_cast.hpp&gt;
@@ -52,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.auxiliary.attr_cast.namespace"></a><h6>
-<a name="id1085893"></a>
+<a name="id917280"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -70,14 +70,14 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.attr_cast.synopsis"></a><h6>
-<a name="id1085971"></a>
+<a name="id917371"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">Exposed</span><span class="special">,</span> <span class="identifier">Transformed</span><span class="special">&gt;</span>
 <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">attr_cast</span><span class="special">(&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;);</span>
 </pre>
 <a name="spirit.karma.reference.auxiliary.attr_cast.template_parameters"></a><h6>
-<a name="id1086043"></a>
+<a name="id917463"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.template_parameters">Template
             parameters</a>
           </h6>
@@ -155,7 +155,7 @@
             not explicitly specified.
           </p>
 <a name="spirit.karma.reference.auxiliary.attr_cast.model_of"></a><h6>
-<a name="id1086283"></a>
+<a name="id917744"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.model_of">Model
             of</a>
           </h6>
@@ -172,7 +172,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.auxiliary.attr_cast.expression_semantics"></a><h6>
-<a name="id1086345"></a>
+<a name="id917814"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -212,7 +212,7 @@
                       of the supplied attribute will be transformed to the type
                       <code class="computeroutput"><span class="identifier">g</span></code> exposes as
                       its attribute type (by using the attribute customization point
-                      <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>).
+                      <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a>).
                       This generator does not fail unless <code class="computeroutput"><span class="identifier">g</span></code>
                       fails.
                     </p>
@@ -232,7 +232,7 @@
                       attribute is expected to be of the type <code class="computeroutput"><span class="identifier">Exposed</span></code>,
                       it will be transformed to the type <code class="computeroutput"><span class="identifier">g</span></code>
                       exposes as its attribute type (using the attribute customization
-                      point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>).
+                      point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a>).
                       This generator does not fail unless <code class="computeroutput"><span class="identifier">g</span></code>
                       fails.
                     </p>
@@ -251,7 +251,7 @@
                       while passing an attribute of type <code class="computeroutput"><span class="identifier">Transformed</span></code>.
                       The supplied attribute is expected to be of the type <code class="computeroutput"><span class="identifier">Exposed</span></code>, it will be transformed
                       to the type <code class="computeroutput"><span class="identifier">Transformed</span></code>
-                      (using the attribute customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>).
+                      (using the attribute customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a>).
                       This generator does not fail unless <code class="computeroutput"><span class="identifier">g</span></code>
                       fails.
                     </p>
@@ -260,7 +260,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.attr_cast.attributes"></a><h6>
-<a name="id1086672"></a>
+<a name="id918264"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -331,7 +331,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.attr_cast.complexity"></a><h6>
-<a name="id1086996"></a>
+<a name="id918646"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -339,7 +339,7 @@
               of the embedded generator <code class="computeroutput"><span class="identifier">g</span></code>.
             </p></blockquote></div>
 <a name="spirit.karma.reference.auxiliary.attr_cast.example"></a><h6>
-<a name="id1089298"></a>
+<a name="id918684"></a>
             <a class="link" href="attr_cast.html#spirit.karma.reference.auxiliary.attr_cast.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -359,6 +359,7 @@
             
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">support_utree</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">std_pair</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -379,7 +380,7 @@
           </p>
 <p>
             The example references data structure <code class="computeroutput"><span class="identifier">int_data</span></code>
-            which needs a specialization of the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a>:
+            which needs a specialization of the customization point <a class="link" href="../../../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a>:
           </p>
 <p>
             

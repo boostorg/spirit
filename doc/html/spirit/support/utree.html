@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The utree data structure</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../support.html" title="Supporting Libraries">
 <link rel="prev" href="multi_pass.html" title="The multi pass iterator">
@@ -95,7 +95,7 @@
         for. It is 14 bytes for a 32-bit platform and 30 bytes for a 64-bit platform.
       </p>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1300137"></a>
+<a name="id1104686"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -291,7 +291,7 @@
         attribute type.
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1303420"></a>
+<a name="id1107236"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -356,7 +356,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1303913"></a>
+<a name="id1107867"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -390,7 +390,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1304270"></a>
+<a name="id1108300"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
@@ -421,10 +421,20 @@
 <p>
       </p>
 <a name="spirit.support.utree.example__sexpr_parser"></a><h5>
-<a name="id1304441"></a>
+<a name="id1108510"></a>
         <a class="link" href="utree.html#spirit.support.utree.example__sexpr_parser">Example: Sexpr
         Parser</a>
       </h5>
+<p>
+        Our first example demonstrates how to use <code class="computeroutput"><span class="identifier">utree</span></code>
+        to write a parser for <a href="http://http://en.wikipedia.org/wiki/S-expression" target="_top">symbolic
+        expressions</a>. While <code class="computeroutput"><span class="identifier">utree</span></code>
+        is capable of representing just about any AST, <code class="computeroutput"><span class="identifier">utree</span></code>'s
+        design is based on the simple yet powerful nature of symbolic expressions.
+        This example introduces a number of basic and intermediate <code class="computeroutput"><span class="identifier">utree</span></code> development techniques: using <span class="emphasis"><em>Spirit.Qi</em></span>
+        and <span class="emphasis"><em>Spirit.Karma</em></span> integration, tracking source code locations
+        and taking advantage of UTF8 support.
+      </p>
 <p>
         The source for this example can be found here: <a href="../../../../example/support/utree" target="_top">../../example/support/utree</a>.
       </p>

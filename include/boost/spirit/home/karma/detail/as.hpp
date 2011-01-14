@@ -22,23 +22,6 @@ namespace boost { namespace spirit { namespace traits
     //  optimization will easily strip these away.
     ///////////////////////////////////////////////////////////////////////////
 
-    // This is the default case: the plain attribute values
-    template <typename T, typename Attribute, typename Enable/*= void*/>
-    struct attribute_as
-    {
-        typedef Attribute const& type; 
-
-        static type call(Attribute const& attr)
-        {
-            return attr;
-        }
-
-        static bool is_valid(Attribute const& attr)
-        {
-            return true;
-        }
-    };
-
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Attribute>
     inline typename spirit::result_of::attribute_as<T, Attribute>::type

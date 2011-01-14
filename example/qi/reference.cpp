@@ -425,7 +425,8 @@ main()
         test_phrase_parser("12345", lexeme[ -(lit('+') | '-') >> +digit ]);
         //]
     }
-    
+   
+    // as 
     {
         //[reference_using_declarations_as
         using boost::spirit::utree;
@@ -437,7 +438,7 @@ main()
         //]
         
         //[reference_as
-        /*`To properly handle string concatenation in __utree__, we 
+        /*`To properly handle string concatenation with __utree__, we 
            make use of `as_string[]`. We also use `as<T>` to explicitly create
            a __utree__ symbol node.*/
         utree ut;

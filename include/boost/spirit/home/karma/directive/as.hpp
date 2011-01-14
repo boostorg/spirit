@@ -76,8 +76,9 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Context, typename Iterator>
         struct attribute
-          : traits::attribute_of<subject_type, Context, Iterator>
-        {};
+        {
+            typedef T type;
+        };
 
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>

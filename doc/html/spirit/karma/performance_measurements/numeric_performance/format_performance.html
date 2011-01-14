@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Comparing the performance of a sequence of several generators</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../numeric_performance.html" title="Performance of Numeric Generators">
 <link rel="prev" href="double_performance.html" title="Comparing the performance of a single double_ generator">
@@ -65,12 +65,12 @@
 <span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
     <span class="identifier">strm</span><span class="special">.</span><span class="identifier">str</span><span class="special">(</span><span class="string">""</span><span class="special">);</span>
     <span class="identifier">strm</span> <span class="special">&lt;&lt;</span> <span class="char">'['</span> 
-      <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setiosflags</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios</span><span class="special">::</span><span class="identifier">fixed</span><span class="special">)</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">setiosflags</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios</span><span class="special">::</span><span class="identifier">fixed</span><span class="special">)</span>
       <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">left</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setprecision</span><span class="special">(</span><span class="number">3</span><span class="special">)</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setw</span><span class="special">(</span><span class="number">14</span><span class="special">)</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">setprecision</span><span class="special">(</span><span class="number">3</span><span class="special">)</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">setw</span><span class="special">(</span><span class="number">14</span><span class="special">)</span>
       <span class="special">&lt;&lt;</span> <span class="number">12345.12345</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setw</span><span class="special">(</span><span class="number">14</span><span class="special">)</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">setw</span><span class="special">(</span><span class="number">14</span><span class="special">)</span>
       <span class="special">&lt;&lt;</span> <span class="number">12345.12345</span>
       <span class="special">&lt;&lt;</span> <span class="char">']'</span><span class="special">;</span>
 <span class="special">}</span>

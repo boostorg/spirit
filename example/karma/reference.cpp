@@ -9,6 +9,7 @@
 
 //[reference_karma_includes
 #include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
@@ -866,6 +867,43 @@ int main()
         ;
 
         test_generator_attr("Banana", sym, 'b');
+        //]
+    }
+
+    // as
+    {
+        //[reference_karma_using_declarations_as
+        using boost::spirit::utree;
+        using boost::spirit::utree_type;
+        using boost::spirit::utf8_symbol_type; 
+        using boost::spirit::karma::as;
+        using boost::spirit::karma::as_string;
+        using boost::spirit::karma::char_;
+        using boost::spirit::karma::double_;
+        //]
+        
+        //[reference_karma_as
+        /*`To properly handle string concatenation with __utree__, we 
+           make use of `as_string[]`. We also use `as<T>` to explicitly extract
+           a __utree__ symbol node.*/
+        
+        typedef as<utf8_symbol_type> as_symbol_type;
+        as_symbol_type const as_symbol = as_symbol_type();
+
+        utree ut;
+        ut.push_back("xyz");
+        ut.push_back(1.23);
+
+        test_generator_attr("xyz1.23", as_string[*char_] << double_, ut);
+        test_generator_attr("xyz1.23", as<std::string>()[*char_] << double_, ut);
+        
+        ut.clear();
+
+        ut.push_back(utf8_symbol_type("xyz"));
+        ut.push_back(1.23);
+
+        test_generator_attr("xyz1.23", as_symbol[*char_] << double_, ut);
+        test_generator_attr("xyz1.23", as<utf8_symbol_type>()[*char_] << double_, ut);
         //]
     }
 

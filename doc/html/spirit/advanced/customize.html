@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Customization of Spirit's Attribute Handling</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../advanced.html" title="Advanced">
 <link rel="prev" href="indepth/parsers_indepth.html" title="Parsers in Depth">
@@ -45,11 +45,13 @@
         Attribute Value to Generate Output (Karma)</a></span></dt>
 <dt><span class="section"><a href="customize/iterate.html">Extract Attribute
         Values to Generate Output from a Container (Karma)</a></span></dt>
+<dt><span class="section"><a href="customize/attribute_as.html">Atomically
+        Extract an Attribute Value from a Container (Karma)</a></span></dt>
 <dt><span class="section"><a href="customize/auto.html">Create Components from
-        Attributes</a></span></dt>
+        Attributes (Qi and Karma)</a></span></dt>
 </dl></div>
 <a name="spirit.advanced.customize.why_do_we_need_attribute_customization_points"></a><h5>
-<a name="id1244439"></a>
+<a name="id1055221"></a>
         <a class="link" href="customize.html#spirit.advanced.customize.why_do_we_need_attribute_customization_points">Why
         do we need Attribute Customization Points</a>
       </h5>
@@ -83,7 +85,7 @@
         attribute type.
       </p>
 <p>
-        Here is an example showing the <a class="link" href="customize/store_value/container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> customization point
+        Here is an example showing the <a class="link" href="customize/store_value/container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_value</span></code></a> customization point
         used by different parsers (such as <a class="link" href="../qi/reference/operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>,
         <a class="link" href="../qi/reference/operator/plus.html" title="Plus Parser (+a)">Plus</a>, etc.) to find
         the attribute type to be stored in a supplied STL container:
@@ -134,7 +136,7 @@
         a description which needs to be specialized for what purpose.
       </p>
 <a name="spirit.advanced.customize.the_usage_of_customization_points"></a><h5>
-<a name="id1245188"></a>
+<a name="id1055636"></a>
         <a class="link" href="customize.html#spirit.advanced.customize.the_usage_of_customization_points">The
         Usage of Customization Points</a>
       </h5>

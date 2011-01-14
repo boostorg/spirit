@@ -766,7 +766,7 @@ subject parser fails, the directive's attribute is not mutated.
 [note The `as<T>` implicitly causes commit/rollback semantics
 similar in nature to the __qi_hold__ directive.]
 
-[caution The __customize_assign_to__ customization point will may end up
+[caution The __customize_assign_to__ customization point may end up
 using __customize_push_back_container__ to assign the temporary object to the
 supplied attribute by default, depending on the types involved. Use the
 interface described in __sec_customization_points__ to manipulate the semantics

@@ -121,6 +121,9 @@ repeat "" ".*qi.reference.directive\..*" qi_index
 inf "" ".*qi.reference.directive\..*" qi_index
 omit "" ".*qi.reference.directive\..*" qi_index
 hold "" ".*qi.reference.directive\..*" qi_index
+as "" ".*qi.reference.directive\..*" qi_index
+as_string "" ".*qi.reference.directive.as.*" qi_index
+as_wstring "" ".*qi.reference.directive.as.*" qi_index
 
 left_align "" ".*karma.reference.directive.alignment.*" karma_index
 center "" ".*karma.reference.directive.alignment.*" karma_index
@@ -135,6 +138,9 @@ columns "" ".*karma.reference.directive\..*" karma_index
 repeat "" ".*karma.reference.directive\..*" karma_index
 inf "" ".*karma.reference.directive\..*" karma_index
 omit "" ".*karma.reference.directive\..*" karma_index
+as "" ".*karma.reference.directive\..*" karma_index
+as_string "" ".*qi.reference.directive.as.*" qi_index
+as_wstring "" ".*qi.reference.directive.as.*" qi_index
 
 # nonterminal parsers/generators
 rule "" ".*qi.reference.nonterminal.rule.*" qi_index

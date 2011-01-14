@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit V2.4</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="spirit_2_4_1.html" title="Spirit V2.4.1">
@@ -28,17 +28,17 @@
 <a name="spirit.what_s_new.spirit_2_4"></a><a class="link" href="spirit_2_4.html" title="Spirit V2.4">Spirit V2.4</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_"></a><h5>
-<a name="id844996"></a>
+<a name="id711512"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.3 (Boost V1.43.0) to V2.4 (Boost V1.44.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4.new_features"></a><h5>
-<a name="id845018"></a>
+<a name="id711537"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.new_features">New Features</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            The customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> now takes
+            The customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a> now takes
             an additional template parameter <code class="computeroutput"><span class="identifier">Domain</span></code>
             allowing to better specialize the customization point for either <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">domain</span></code> or <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span></code>.
           </li></ul></div>
@@ -58,7 +58,7 @@
 <li class="listitem">
             Semantic actions in <span class="emphasis"><em>Spirit.Qi</em></span> now implicitly invoke
             the function <code class="computeroutput"><span class="identifier">pre</span></code> of the
-            customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> to convert
+            customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a> to convert
             the supplied attribute to the exposed attribute type, as needed. The
             functions <code class="computeroutput"><span class="identifier">post</span></code> and <code class="computeroutput"><span class="identifier">fail</span></code> of this customization point are
             not invoked by this component (as this would not make any sense).
@@ -66,7 +66,7 @@
 <li class="listitem">
             Semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> now implicitly
             invoke the function <code class="computeroutput"><span class="identifier">pre</span></code>
-            of the customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">transform_attribute</span></code></a> to convert
+            of the customization point <a class="link" href="../advanced/customize/transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">transform_attribute</span></code></a> to convert
             the supplied attribute to the consumed attribute type, as needed.
           </li>
 <li class="listitem">
@@ -88,7 +88,7 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4.bug_fixes"></a><h5>
-<a name="id845297"></a>
+<a name="id711870"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.bug_fixes">Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
@@ -131,13 +131,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_"></a><h5>
-<a name="id845532"></a>
+<a name="id712140"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_3__boost_v1_43_0__to_v2_4__boost_v1_44_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.3 (Boost V1.43.0) to V2.4
         (Boost V1.44.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4.new_lexer_features"></a><h5>
-<a name="id845549"></a>
+<a name="id712161"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.new_lexer_features">New Lexer
         Features</a>
       </h5>
@@ -147,7 +147,7 @@
             '&gt;'.
           </li></ul></div>
 <a name="spirit.what_s_new.spirit_2_4.lexer_bug_fixes"></a><h5>
-<a name="id845573"></a>
+<a name="id712187"></a>
         <a class="link" href="spirit_2_4.html#spirit.what_s_new.spirit_2_4.lexer_bug_fixes">Lexer Bug Fixes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">

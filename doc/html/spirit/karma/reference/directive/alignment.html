@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Alignment Generator Directives (left_align[], center[], right_align[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../directive.html" title="Generator Directives">
 <link rel="prev" href="../directive.html" title="Generator Directives">
@@ -29,7 +29,7 @@
           Generator Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.alignment.description"></a><h6>
-<a name="id1111198"></a>
+<a name="id938975"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.description">Description</a>
           </h6>
 <p>
@@ -38,7 +38,7 @@
             an arbitrary generator to create the padding.
           </p>
 <a name="spirit.karma.reference.directive.alignment.header"></a><h6>
-<a name="id1111215"></a>
+<a name="id939000"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.header">Header</a>
           </h6>
 <p>
@@ -66,7 +66,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.alignment.namespace"></a><h6>
-<a name="id1111438"></a>
+<a name="id939292"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -98,7 +98,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.model_of"></a><h6>
-<a name="id1111591"></a>
+<a name="id939472"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.model_of">Model
             of</a>
           </h6>
@@ -130,7 +130,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.alignment.expression_semantics"></a><h6>
-<a name="id1111743"></a>
+<a name="id939653"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -412,7 +412,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.attributes"></a><h6>
-<a name="id1114436"></a>
+<a name="id941002"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.attributes">Attributes</a>
           </h6>
 <p>
@@ -633,19 +633,19 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.complexity"></a><h6>
-<a name="id1116262"></a>
+<a name="id943155"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
-              The overall complexity of the alignment generator directives is defined
+              The overall complexity of an alignment generator directive is defined
               by the complexity of its embedded and padding generator. The complexity
               of the left alignment directive generator itself is O(1). The complexity
-              of the center and right alignment directive generators itself is O(N).
-              where <code class="computeroutput"><span class="identifier">N</span></code> is the number
-              of characters emitted by the embedded and padding generators.
+              of the center and right alignment directive generators is O(N), where
+              <code class="computeroutput"><span class="identifier">N</span></code> is the number of
+              characters emitted by the embedded and padding generators.
             </p></blockquote></div>
 <a name="spirit.karma.reference.directive.alignment.example"></a><h6>
-<a name="id1116290"></a>
+<a name="id943196"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -665,6 +665,7 @@
             
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">support_utree</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">std_pair</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
