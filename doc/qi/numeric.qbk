@@ -210,7 +210,7 @@ not defined in __primitive_parser_concept__.
         hex
         hex(num)
     ``]
-    [`unsigned`]
+    [`unsigned int`]
   ][
     [``
         ulong_

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit V2.4.2</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="../what_s_new.html" title="What's New">
@@ -28,13 +28,13 @@
 <a name="spirit.what_s_new.spirit_2_4_2"></a><a class="link" href="spirit_2_4_2.html" title="Spirit V2.4.2">Spirit V2.4.2</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id710271"></a>
+<a name="id798421"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma"></a><h5>
-<a name="id710297"></a>
+<a name="id798445"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma">New
         Features in Qi or Karma</a>
       </h5>
@@ -61,9 +61,37 @@
             to distinguish 'lit(foo)' from 'foo'. This should not change any semantics
             nor should it break exiting code.
           </li>
+<li class="listitem">
+            Added the <span class="emphasis"><em>Spirit.Qi</em></span> directive <a class="link" href="../qi/reference/directive/as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;[]</span></code></a>
+            (and its string specializations <a class="link" href="../qi/reference/directive/as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_string</span><span class="special">[]</span></code></a>
+            and <a class="link" href="../qi/reference/directive/as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_wstring</span><span class="special">[]</span></code></a>) enabling asignment of container
+            attribute types as a whole.
+          </li>
+<li class="listitem">
+            Added the <span class="emphasis"><em>Spirit.Karma</em></span> directive <a class="link" href="../karma/reference/directive/as.html" title="Generator Directives Forcing Atomic Extraction (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;[]</span></code></a>
+            (and its string specializations <a class="link" href="../karma/reference/directive/as.html" title="Generator Directives Forcing Atomic Extraction (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_string</span><span class="special">[]</span></code></a>
+            and <a class="link" href="../karma/reference/directive/as.html" title="Generator Directives Forcing Atomic Extraction (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_wstring</span><span class="special">[]</span></code></a>)
+            enabling handling of container attribute types during output generation
+            as a whole.
+          </li>
+<li class="listitem">
+            In <span class="emphasis"><em>Spirit.Qi</em></span>, <code class="computeroutput"><span class="identifier">lit</span><span class="special">()</span></code> can now be used for numeric literals
+            as well.
+          </li>
+<li class="listitem">
+            The <a class="link" href="../qi/reference/string/symbols.html" title="Symbols Parser (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code></a>
+            parser component now has an explicit name used for error handling and
+            debugging, which can be set using the new member functions <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">(...)</span></code>.
+            Thanks to teajay for contributing a patch.
+          </li>
+<li class="listitem">
+            The <a class="link" href="../karma/reference/string/symbols.html" title="Symbols Generator (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code></a>
+            generator component now has an explicit name used for error handling
+            and debugging, which can be set using the new member functions <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">(...)</span></code>.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma"></a><h5>
-<a name="id710427"></a>
+<a name="id798807"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma">Bug
         Fixes in Qi or Karma</a>
       </h5>
@@ -80,13 +108,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id710500"></a>
+<a name="id798873"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.4.1 (Boost V1.45.0) to
         V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_lex"></a><h5>
-<a name="id710521"></a>
+<a name="id798890"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_lex">New Features
         in Lex</a>
       </h5>
@@ -140,7 +168,7 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex"></a><h5>
-<a name="id711020"></a>
+<a name="id799333"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex">Bug Fixes
         in Lex</a>
       </h5>

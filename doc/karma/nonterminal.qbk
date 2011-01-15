@@ -118,6 +118,8 @@ not defined in __karma_nonterminal_concept__.
     [[`r = g;`]                                 [Rule definition]]
     [[`r %= g;`]                                [Auto-rule definition. The attribute of `g` should be
                                                  compatible with the consumed attribute of `r`.]]
+    [[`r.name()`]                               [Retrieve the current name of the rule object.]]
+    [[`r.name(name)`]                           [Set the current name of the rule object to be `name`.]]
 ]
 
 [heading Attributes]

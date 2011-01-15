@@ -27,6 +27,19 @@
 * Replaced `proto::lit` (which was used to implement `spirit::lit`) with a 
   separate version allowing to distinguish 'lit(foo)' from 'foo'. This should 
   not change any semantics nor should it break exiting code.
+* Added the __qi__ directive __qi_as__ (and its string specializations 
+  __qi_as_string__ and __qi_as_wstring__) enabling asignment of container 
+  attribute types as a whole.
+* Added the __karma__ directive __karma_as__ (and its string specializations 
+  __karma_as_string__ and __karma_as_wstring__) enabling handling of container 
+  attribute types during output generation as a whole.
+* In __qi__, `lit()` can now be used for numeric literals as well.
+* The __qi_symbols__ parser component now has an explicit name used for 
+  error handling and debugging, which can be set using the new member functions
+  `sym.name(...)`. Thanks to teajay for contributing a patch.
+* The [karma_symbols `symbols<Attrib, T>`] generator component now has an 
+  explicit name used for error handling and debugging, which can be set using 
+  the new member functions `sym.name(...)`. 
 
 [heading Bug Fixes in Qi or Karma]
 
@@ -271,7 +284,7 @@
   [link spirit.qi.reference.parse_api /Qi/ API] and 
   [link spirit.karma.reference.generate_api /Karma/ API]).
 * Added [karma_columns `karma::columns`] directive.
-* Added `karma::`__karma_symbols__ generator.
+* Added [karma_symbols `karma::symbols<Attr, T>`] generator.
 * The __qi__ customization point __customize_push_back_container__ now returns 
   a `bool` to report whether the item has been added to the container.
 * Added an overload for [karma_maxwidth `karma::maxwidth`] directive allowing 

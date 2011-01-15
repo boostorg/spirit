@@ -158,6 +158,17 @@ main()
         first = str2; last = str2 + 4;
         BOOST_TEST(!sym.prefix_find(first, last) && first == str2);
     }
+
+    { // name
+        symbols <char, int> sym,sym2;
+        sym.name("test");
+        BOOST_TEST(sym.name()=="test");
+        sym2 = sym;
+        BOOST_TEST(sym2.name()=="test");
+
+        symbols <char,int> sym3(sym);
+        BOOST_TEST(sym3.name()=="test");
+    }
     
     { // Substrings
     

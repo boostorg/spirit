@@ -7,7 +7,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:directive Parser Directive]
+[section:directive Parser Directives]
 
 This module includes different directives usable to augment and parameterize
 other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`,
@@ -783,6 +783,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::as         // alias: boost::spirit::qi::as` ]]
     [[`boost::spirit::as_string  // alias: boost::spirit::qi::as_string` ]]
     [[`boost::spirit::as_wstring // alias: boost::spirit::qi::as_wstring` ]]
 ]

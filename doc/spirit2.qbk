@@ -194,8 +194,8 @@
 [template karma_maxwidth[str]       [link spirit.karma.reference.directive.maxwidth [str]]]
 [template karma_columns[str]        [link spirit.karma.reference.directive.columns [str]]]
 [def __karma_as__                   [link spirit.karma.reference.directive.as `as<T>[]`]]
-[def __karma_as_string__            [link spirit.karma.reference.directive.delimit `as_string[]`]]
-[def __karma_as_wstring__           [link spirit.karma.reference.directive.delimit `as_wstring[]`]]
+[def __karma_as_string__            [link spirit.karma.reference.directive.as `as_string[]`]]
+[def __karma_as_wstring__           [link spirit.karma.reference.directive.as `as_wstring[]`]]
 
 [def __karma_numeric__              [link spirit.karma.reference.numeric Numeric Generators]]
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
@@ -208,7 +208,7 @@
 [template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
 
 [template karma_string[str]         [link spirit.karma.reference.string [str]]]
-[def __karma_symbols__              [link spirit.karma.reference.string.symbols `symbols`]]
+[template karma_symbols[str]        [link spirit.karma.reference.string.symbols [str]]]
 
 [template karma_stream[str]         [link spirit.karma.reference.stream [str]]]
 
@@ -391,8 +391,8 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [template qi_no_skip[str]           [link spirit.qi.reference.directive.no_skip [str]]]
 [def __qi_hold__                    [link spirit.qi.reference.directive.hold `hold`]]
 [def __qi_as__                      [link spirit.qi.reference.directive.as `as<T>[]`]]
-[def __qi_as_string__               [link spirit.qi.reference.directive.delimit `as_string[]`]]
-[def __qi_as_wstring__              [link spirit.qi.reference.directive.delimit `as_wstring[]`]]
+[def __qi_as_string__               [link spirit.qi.reference.directive.as `as_string[]`]]
+[def __qi_as_wstring__              [link spirit.qi.reference.directive.as `as_wstring[]`]]
 
 [/ operator]
 [def __qi_alternative__             [link spirit.qi.reference.operator.alternative Alternative]]
