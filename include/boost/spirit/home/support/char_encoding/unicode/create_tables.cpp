@@ -425,7 +425,7 @@ void print_table(Out& out, C const& c, bool trailing_comma, int width = 4, int g
     C::size_type size = c.size();
     BOOST_ASSERT(size > 1);
     print_tab(out, tab);
-    out << boost::detail::setw(width) << int(c[0]);
+    out << std::setw(width) << int(c[0]);
     for (C::size_type i = 1; i < size; ++i)
     {
         out << ", ";
@@ -434,7 +434,7 @@ void print_table(Out& out, C const& c, bool trailing_comma, int width = 4, int g
             out << std::endl;
             print_tab(out, tab);
         }
-        out << boost::detail::setw(width) << int(c[i]);
+        out << std::setw(width) << int(c[i]);
     }
     
     if (trailing_comma)

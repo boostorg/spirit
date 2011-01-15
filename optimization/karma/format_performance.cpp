@@ -143,12 +143,12 @@ void format_performance_iostreams()
     for (int i = 0; i < NUMITERATIONS; ++i) {
         strm.str("");
         strm << '[' 
-          << boost::detail::setiosflags(std::ios::fixed)
+          << std::setiosflags(std::ios::fixed)
           << std::left
-          << boost::detail::setprecision(3)
-          << boost::detail::setw(14)
+          << std::setprecision(3)
+          << std::setw(14)
           << 12345.12345
-          << boost::detail::setw(14)
+          << std::setw(14)
           << 12345.12345
           << ']';
     }
