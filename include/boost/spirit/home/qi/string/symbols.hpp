@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace qi
           , add(*this)
           , remove(*this)
           , lookup(new Lookup())
-          , name(name_)
+          , name_(name)
         {
         }
 
