@@ -21,6 +21,8 @@
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/handles_container.hpp>
+#include <boost/spirit/home/support/assert_msg.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 
 namespace boost { namespace spirit { namespace karma
@@ -28,7 +30,12 @@ namespace boost { namespace spirit { namespace karma
     template <typename T>
     struct as
       : stateful_tag_type<T, tag::as>
-    {};
+    {
+        BOOST_SPIRIT_ASSERT_MSG(
+            (traits::is_container<T>::type::value),
+            error_type_must_be_a_container,
+            (T));
+    };
 }}}
 
 namespace boost { namespace spirit

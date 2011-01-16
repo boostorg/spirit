@@ -25,6 +25,7 @@
 #include <boost/spirit/home/support/sequence_base_id.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/handles_container.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/for_each.hpp>
@@ -90,41 +91,6 @@ namespace boost { namespace spirit { namespace karma
 {
     namespace detail
     {
-        template <typename T>
-        struct attribute_size
-          : fusion::result_of::size<T>
-        {};
-
-        template <>
-        struct attribute_size<unused_type>
-          : mpl::int_<0>
-        {};
-
-        template <typename Attribute>
-        inline typename enable_if<
-            mpl::and_<
-                fusion::traits::is_sequence<Attribute>
-              , mpl::not_<traits::is_container<Attribute> > >
-          , std::size_t
-        >::type
-        attr_size(Attribute const& attr)
-        {
-            return fusion::size(attr);
-        }
-
-        template <typename Attribute>
-        inline typename enable_if<
-            traits::is_container<Attribute>, std::size_t
-        >::type
-        attr_size(Attribute const& attr)
-        {
-            return attr.size();
-        }
-
-        inline std::size_t attr_size(unused_type)
-        {
-            return 0;
-        }
 
         ///////////////////////////////////////////////////////////////////////
         // This is a wrapper for any iterator allowing to pass a reference of it
@@ -254,6 +220,8 @@ namespace boost { namespace spirit { namespace karma
             bool r = spirit::any_if(elements, attr
                           , fail_function(sink, ctx, d), predicate());
 
+            typedef typename traits::attribute_size<Attribute>::type size_type;
+
             // fail generating if sequences have not the same (logical) length
             return !r && (!Strict::value || 
                 // This ignores container element count (which is not good), 
@@ -264,7 +232,7 @@ namespace boost { namespace spirit { namespace karma
                 // is not optimal but much better than letting _all_ repetitive
                 // components fail.
                 Pred1::value ||
-                std::size_t(detail::attribute_size<attr_type_>::value) == detail::attr_size(attr_));
+                size_type(traits::sequence_size<attr_type_>::value) == traits::size(attr_));
         }
 
         // Special case when Attribute is an stl container and the sequence's

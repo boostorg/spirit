@@ -63,6 +63,22 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename Enable = void>
     struct attribute_type;
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // Retrieve the size of a fusion sequence (compile time)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct sequence_size;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Retrieve the size of an attribute (runtime)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Enable = void>
+    struct attribute_size;
+
+    template <typename Attribute>
+    typename attribute_size<Attribute>::type
+    size(Attribute const& attr);
 
     ///////////////////////////////////////////////////////////////////////////
     // Determines how we pass attributes to semantic actions. This
@@ -175,6 +191,9 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T, typename Enable = void>
     struct is_container;
+    
+    template <typename T, typename Enable = void>
+    struct is_iterator_range;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Attribute, typename Context = unused_type

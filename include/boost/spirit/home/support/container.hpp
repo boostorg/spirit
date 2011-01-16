@@ -70,6 +70,16 @@ namespace boost { namespace spirit { namespace traits
     {};
 
 #undef BOOST_SPIRIT_IS_CONTAINER
+    
+    template <typename T, typename Enable/* = void*/>
+    struct is_iterator_range
+      : mpl::false_
+    {};
+
+    template <typename T>
+    struct is_iterator_range<iterator_range<T> >
+      : mpl::true_
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail

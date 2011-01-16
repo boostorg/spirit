@@ -251,6 +251,98 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename Enable/* = void*/>
     struct attribute_type : mpl::identity<Attribute> {};
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Retrieve the size of a fusion sequence (compile time)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct sequence_size
+      : fusion::result_of::size<T>
+    {};
+
+    template <>
+    struct sequence_size<unused_type>
+      : mpl::int_<0>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Retrieve the size of an attribute (runtime)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Enable/* = void*/>
+    struct attribute_size
+    {
+        typedef std::size_t type;
+
+        static type call(Attribute const&)
+        {
+            return 1;
+        }
+    };
+
+    template <typename Attribute>
+    struct attribute_size<Attribute
+      , typename enable_if<
+            mpl::and_<
+                fusion::traits::is_sequence<Attribute>
+              , mpl::not_<traits::is_container<Attribute> >
+            >
+        >::type
+    > {
+        typedef typename fusion::result_of::size<Attribute>::value_type type;
+
+        static type call(Attribute const& attr)
+        {
+            return fusion::size(attr);
+        }
+    };
+
+    template <typename Attribute>
+    struct attribute_size<Attribute
+      , typename enable_if<
+            mpl::and_<
+                traits::is_container<Attribute>
+              , mpl::not_<traits::is_iterator_range<Attribute> >
+            >
+        >::type
+    > {
+        typedef typename Attribute::size_type type;
+
+        static type call(Attribute const& attr)
+        {
+            return attr.size();
+        }
+    };
+
+    template <typename Iterator>
+    struct attribute_size<iterator_range<Iterator> >
+    {
+        typedef typename boost::detail::iterator_traits<Iterator>::
+            difference_type type;
+
+        static type call(iterator_range<Iterator> const& r)
+        {
+            return boost::detail::distance(r.begin(), r.end());
+        }
+    };
+
+    template <>
+    struct attribute_size<unused_type>
+    {
+        typedef std::size_t type;
+
+        static type call(unused_type)
+        {
+            return 0;
+        }
+    };
+
+    template <typename Attribute>
+    typename attribute_size<Attribute>::type
+    size(Attribute const& attr)
+    {
+        return attribute_size<Attribute>::call(attr);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // pass_attribute
     //
