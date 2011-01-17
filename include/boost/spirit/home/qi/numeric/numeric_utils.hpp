@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace qi
             not_supported_radix, ());
 
         template <typename Iterator>
-        static bool call(Iterator& first, Iterator const& last, T& attr)
+        inline static bool call(Iterator& first, Iterator const& last, T& attr)
         {
             if (first == last)
                 return false;
@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Iterator, typename Attribute>
-        static bool call(Iterator& first, Iterator const& last, Attribute& attr_)
+        inline static bool call(Iterator& first, Iterator const& last, Attribute& attr_)
         {
             // this case is called when Attribute is not T
             T attr;
@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace qi
             not_supported_radix, ());
 
         template <typename Iterator>
-        static bool call(Iterator& first, Iterator const& last, T& attr)
+        inline static bool call(Iterator& first, Iterator const& last, T& attr)
         {
             if (first == last)
                 return false;
@@ -131,7 +131,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Iterator, typename Attribute>
-        static bool call(Iterator& first, Iterator const& last, Attribute& attr_)
+        inline static bool call(Iterator& first, Iterator const& last, Attribute& attr_)
         {
             // this case is called when Attribute is not T
             T attr;
