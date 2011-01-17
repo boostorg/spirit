@@ -11,7 +11,7 @@
 This version of Spirit is a complete rewrite of the /classic/ Spirit many 
 people have been contributing to (see below). But there are a couple of people 
 who already managed to help significantly during this rewrite. We would like to 
-express our special acknowledgement to:
+express our special acknowledgement to (in no particular order):
 
 [*Eric Niebler] for writing Boost.Proto, without which this rewrite wouldn't 
 have been possible, and helping with examples, advice, and suggestions on
@@ -34,8 +34,10 @@ the documentation.
 version of this documentation together with Andreas Haberstroh. Chris
 did a lot especially at the last minute when we are about to release.
 
-[*Michael Caisse] also for last minute editing work on the 2.1 release
-documentation.
+[*Michael Caisse] (a.k.a mjcaisse) for being Spirit's evangelist on freenode's 
+#boost IRC . No Spirit question asked there stays without an answer because of 
+his active involvment. Also, we would like to thank him for last minute editing 
+work on the 2.1 release documentation. 
 
 [*Tobias Schwinger] for proposing expectation points and GCC port of an
 early version.
@@ -67,6 +69,19 @@ documentation.
 [*Steve Brandt] for his his effort trying to put Qi and Karma to some use while
 writing a source to source language transformation tool. He made many incredible
 suggestions helping to improve the usability of both libraries.
+
+[*Bryce Leylbach] (a.k.a. wash) for contributing the components `qi::`__qi_as__ 
+and `karma::`__karma_as__, for working on __utree__ and its integration with 
+Qi and Karma, for adding numeric parser literals, for contributing the related 
+documentation, and for being a big help in the everyday maintenance of the 
+library's (and our) sanity.
+
+[*Mathias Gaunard] for his bug reports, suggestions and regression test 
+contributions to the Lexer helping to find subtle bugs and to improve its 
+overall usability.
+
+[*Thomas Bernard] (a.k.a. teajay) for working on the keyword parser and for 
+adding explicit names to the `qi::`__qi_symbols__ component.
 
 Special thanks to spirit-devel and spirit-general mailing lists for
 participating in the discussions, being early adopters of pre-release
