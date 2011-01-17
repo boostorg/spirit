@@ -230,13 +230,21 @@ defined in __primitive_generator_concept__.
 
 [table
     [[Expression]                   [Semantics]]
-    [[`Sym()`]                      [Construct an empty symbols object instance.]]
+    [[`Sym()`]                      [Construct an empty symbols object instance named `"symbols"`.]]
+    [[`Sym(name)`]                  [Construct an empty symbols object instance named `name`.]]
     [[`Sym(sym2)`]                  [Copy construct a symbols from `sym2` (Another `symbols` object).]]
     [[`Sym(sseq)`]                  [Construct symbols from `sseq` (An __stl__ container of 
-                                    symbols of type `Attrib`).]]
+                                    symbols of type `Attrib`) named `"symbols"`.]]
+    [[`Sym(sseq, name)`]            [Construct symbols from `sseq` (an __stl__ container of 
+                                    symbols of type `Attrib`) named `name`.]]
     [[`Sym(sseq, dseq)`]            [Construct symbols from `sseq` and `dseq`
                                     (An __stl__ container of symbols of type `Attrib` and an 
-                                    __stl__ container of data with `value_type` `T`).]]
+                                    __stl__ container of data with `value_type` `T`)
+                                    which is named `"symbols"`.]]
+    [[`Sym(sseq, dseq, name)`]      [Construct symbols from `sseq` and `dseq`
+                                    (An __stl__ container of symbols of type `Attrib` and an 
+                                    __stl__ container of data with `value_type` `T`)
+                                    which is named `name`.]]
     [[`sym = sym2`]                 [Assign `sym2` to `sym`.]]
     [[`sym = s1, s2, ..., sN`]      [Assign one or more symbols (`s1`...`sN`) to `sym`. The 
                                      associated data values of type `T` are default constructed.]]
@@ -260,6 +268,8 @@ defined in __primitive_generator_concept__.
                                     pointer.]]
     [[`sym.for_each(f)`]            [For each symbol in `sym` `s` invoke 
                                     `f(typename Lookup::value_type)`.]]
+    [[`sym.name()`]                 [Retrieve the current name of the symbols object.]]
+    [[`sym.name(name)`]             [Set the current name of the symbols object to be `name`.]]
 ]
 
 The symbols generator uses the supplied attribute as the key to be looked up 

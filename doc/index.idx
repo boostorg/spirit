@@ -120,7 +120,11 @@ skip "" ".*qi.reference.directive\..*" qi_index
 repeat "" ".*qi.reference.directive\..*" qi_index
 inf "" ".*qi.reference.directive\..*" qi_index
 omit "" ".*qi.reference.directive\..*" qi_index
-hold "" ".*qi.reference.directive\..*" qi_index
+"as&lt;T&gt;" "as" ".*qi.reference.directive.as" qi_index
+as_string "" ".*qi.reference.directive.as" qi_index
+as_wstring "" ".*qi.reference.directive.as" qi_index
+hold "" ".*qi.reference.directive.hold" qi_index
+
 
 left_align "" ".*karma.reference.directive.alignment.*" karma_index
 center "" ".*karma.reference.directive.alignment.*" karma_index
@@ -135,6 +139,9 @@ columns "" ".*karma.reference.directive\..*" karma_index
 repeat "" ".*karma.reference.directive\..*" karma_index
 inf "" ".*karma.reference.directive\..*" karma_index
 omit "" ".*karma.reference.directive\..*" karma_index
+"as&lt;T&gt;" "as" ".*karma.reference.directive.as" karma_index
+as_string "" ".*karma.reference.directive.as" karma_index
+as_wstring "" ".*karma.reference.directive.as" karma_index
 
 # nonterminal parsers/generators
 rule "" ".*qi.reference.nonterminal.rule.*" qi_index
@@ -256,4 +263,3 @@ placeholders "_\d|_r\d|_val|_[a-j]|_pass" ".*karma.quick_reference.phoenix.*" ka
 #!exclude type iterator Auto call where: f info derived_type subject_type
 #!exclude if floatfield precision trailing_zeros force_sign in pointer
 #!exclude result_type value_type difference_type assign clear
-

@@ -130,5 +130,18 @@ int main()
         BOOST_TEST((!test("", sym, "Hartmut")));
     }
 
+    { // name
+        symbols <std::string> sym("test1"), sym2;
+        BOOST_TEST(sym.name() == "test1");
+
+        sym.name("test");
+        BOOST_TEST(sym.name() == "test");
+        sym2 = sym;
+        BOOST_TEST(sym2.name() == "test");
+
+        symbols <std::string> sym3(sym);
+        BOOST_TEST(sym3.name() == "test");
+    }
+
     return boost::report_errors();
 }

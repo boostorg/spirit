@@ -194,6 +194,10 @@ See here for more information about [qi_auto Auto Parsers].
     [[__qi_omit__`[a]`]             [`Unused`]                      [Ignores the attribute type of `a`]]
     [[__qi_matches__`[a]`]          [`bool`]                        [Return if the embedded parser `a` matched its input]]
 
+    [[__qi_as__`()[a]`]             [`A`]                           [Force atomic assignment for arbitrary attribute types]]
+    [[__qi_as_string__`[a]`]        [`A`]                           [Force atomic assignment for string attributes]]
+    [[__qi_as_wstring__`[a]`]       [`A`]                           [Force atomic assignment for wide character string attributes]]
+
     [[__qi_raw__`[a]`]              [__boost_iterator_range__`<I>`] [Presents the transduction of `a` as an iterator range]]
 
     [[[qi_repeat `repeat[a]`]]      [`vector<A>`]                   [Repeat `a` zero or more times]]

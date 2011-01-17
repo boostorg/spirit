@@ -127,6 +127,8 @@ not defined in __qi_nonterminal__.
                                                 compatible with the synthesized attribute of `r`. When `p`
                                                 is successful, its attribute is automatically propagated
                                                 to `r`'s synthesized attribute.]]
+    [[`r.name()`]                               [Retrieve the current name of the rule object.]]
+    [[`r.name(name)`]                           [Set the current name of the rule object to be `name`.]]
 ]
 
 [heading Attributes]

@@ -7,7 +7,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:directive Parser Directive]
+[section:directive Parser Directives]
 
 This module includes different directives usable to augment and parameterize
 other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`,
@@ -766,7 +766,7 @@ subject parser fails, the directive's attribute is not mutated.
 [note The `as<T>` implicitly causes commit/rollback semantics
 similar in nature to the __qi_hold__ directive.]
 
-[caution The __customize_assign_to__ customization point will may end up
+[caution The __customize_assign_to__ customization point may end up
 using __customize_push_back_container__ to assign the temporary object to the
 supplied attribute by default, depending on the types involved. Use the
 interface described in __sec_customization_points__ to manipulate the semantics
@@ -783,6 +783,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::as         // alias: boost::spirit::qi::as` ]]
     [[`boost::spirit::as_string  // alias: boost::spirit::qi::as_string` ]]
     [[`boost::spirit::as_wstring // alias: boost::spirit::qi::as_wstring` ]]
 ]

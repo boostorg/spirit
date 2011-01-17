@@ -123,7 +123,7 @@ See here for more information about [karma_string String Generators].
     [[[karma_string `string(str)`]] [`Str`]     [Generate `str`, 
                                                  if an attribute is supplied it must match]]
 
-    [[__karma_symbols__`<Attr, T>`] [`Attr`]    [Declare a symbol table, `sym`. `Attr` is the
+    [[[karma_symbols `symbols<Attr, T>`]][`Attr`] [Declare a symbol table, `sym`. `Attr` is the
                                                  The type of the original attribute to be used 
                                                  as the key into the symbol generator.
                                                  `T` is the data type associated with each key.]]
@@ -437,6 +437,10 @@ See here for more information about __karma_directive__.
     [[[karma_delimit `delimit`]`[a]`]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
     [[[karma_delimit `delimit`]`(d)[a]`]  [`A`]   [Use `d` as a delimiter for generating `a`]]
     [[[karma_no_delimit `no_delimit`]`[a]`] [`A`] [Disable delimited generation for `a`. No post-delimiting step performed.]]
+
+    [[__karma_as__`()[a]`]             [`A`]      [Force atomic output from arbitrary attribute types]]
+    [[__karma_as_string__`[a]`]        [`A`]      [Force atomic output from string attributes]]
+    [[__karma_as_wstring__`[a]`]       [`A`]      [Force atomic output from wide character string attributes]]
 
     [[__karma_omit__`[a]`]  [`A`]               [Consume the attribute type of `a` without generating anything. 
                                                  The embedded generator will be always executed.]]

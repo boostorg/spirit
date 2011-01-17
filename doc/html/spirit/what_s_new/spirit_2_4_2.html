@@ -28,13 +28,13 @@
 <a name="spirit.what_s_new.spirit_2_4_2"></a><a class="link" href="spirit_2_4_2.html" title="Spirit V2.4.2">Spirit V2.4.2</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id843896"></a>
+<a name="id812620"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma"></a><h5>
-<a name="id843920"></a>
+<a name="id812644"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma">New
         Features in Qi or Karma</a>
       </h5>
@@ -52,7 +52,7 @@
             an attribute to generate output from.
           </li>
 <li class="listitem">
-            Introduced a new customization point <a class="link" href="../advanced/customize/assign_to/assign_to_container_from_value.html" title="Store an Attribute Value into a Container after a Parser Produced a Value (Qi)"><code class="computeroutput"><span class="identifier">assign_to_container_from_value</span></code></a>
+            Introduced a new customization point <a class="link" href="../advanced/customize/assign_to/assign_to_container_from_value.html" title="Store an Attribute Value into a Container after a Parser Produced a Value (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">assign_to_container_from_value</span></code></a>
             which is invoked for container attributes whenever a attribute value
             needs to be added to that container.
           </li>
@@ -61,9 +61,37 @@
             to distinguish 'lit(foo)' from 'foo'. This should not change any semantics
             nor should it break exiting code.
           </li>
+<li class="listitem">
+            Added the <span class="emphasis"><em>Spirit.Qi</em></span> directive <a class="link" href="../qi/reference/directive/as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;[]</span></code></a>
+            (and its string specializations <a class="link" href="../qi/reference/directive/as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_string</span><span class="special">[]</span></code></a>
+            and <a class="link" href="../qi/reference/directive/as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_wstring</span><span class="special">[]</span></code></a>) enabling asignment of container
+            attribute types as a whole.
+          </li>
+<li class="listitem">
+            Added the <span class="emphasis"><em>Spirit.Karma</em></span> directive <a class="link" href="../karma/reference/directive/as.html" title="Generator Directives Forcing Atomic Extraction (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;[]</span></code></a>
+            (and its string specializations <a class="link" href="../karma/reference/directive/as.html" title="Generator Directives Forcing Atomic Extraction (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_string</span><span class="special">[]</span></code></a>
+            and <a class="link" href="../karma/reference/directive/as.html" title="Generator Directives Forcing Atomic Extraction (as&lt;T&gt;, as_string[], as_wstring[])"><code class="computeroutput"><span class="identifier">as_wstring</span><span class="special">[]</span></code></a>)
+            enabling handling of container attribute types during output generation
+            as a whole.
+          </li>
+<li class="listitem">
+            In <span class="emphasis"><em>Spirit.Qi</em></span>, <code class="computeroutput"><span class="identifier">lit</span><span class="special">()</span></code> can now be used for numeric literals
+            as well.
+          </li>
+<li class="listitem">
+            The <a class="link" href="../qi/reference/string/symbols.html" title="Symbols Parser (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code></a>
+            parser component now has an explicit name used for error handling and
+            debugging, which can be set using the new member functions <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">(...)</span></code>.
+            Thanks to teajay for contributing a patch.
+          </li>
+<li class="listitem">
+            The <a class="link" href="../karma/reference/string/symbols.html" title="Symbols Generator (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code></a>
+            generator component now has an explicit name used for error handling
+            and debugging, which can be set using the new member functions <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">(...)</span></code>.
+          </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma"></a><h5>
-<a name="id844030"></a>
+<a name="id813007"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma">Bug
         Fixes in Qi or Karma</a>
       </h5>
@@ -80,13 +108,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id844096"></a>
+<a name="id813073"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.4.1 (Boost V1.45.0) to
         V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_lex"></a><h5>
-<a name="id844113"></a>
+<a name="id813089"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_lex">New Features
         in Lex</a>
       </h5>
@@ -140,7 +168,7 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex"></a><h5>
-<a name="id844556"></a>
+<a name="id813532"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex">Bug Fixes
         in Lex</a>
       </h5>

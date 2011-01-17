@@ -235,11 +235,11 @@ a: Unused, pad: Pad --> right_align(pad, width)[a]: Unused``]]
 
 [heading Complexity]
 
-[:The overall complexity of the alignment generator directives is defined by 
+[:The overall complexity of an alignment generator directive is defined by 
   the complexity of its embedded and padding generator. The complexity of the 
   left alignment directive generator itself is O(1). The complexity of the 
-  center and right alignment directive generators itself is O(N). where `N`
-  is the number of characters emitted by the embedded and padding generators.]
+  center and right alignment directive generators is O(N), where `N` is the
+  number of characters emitted by the embedded and padding generators.]
 
 [heading Example]
 
@@ -1204,5 +1204,101 @@ Basic usage of the `columns` generators:
 [reference_karma_columns]
 
 [endsect] [/ columns]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:as Generator Directives Forcing Atomic Extraction (`as<T>, as_string[], as_wstring[]`)]
+
+[heading Description]
+
+The `as<T>` class forces the atomic extraction of an object of type T from it's
+consumed attribute. Usually, repetitive generators (such as __karma_kleene__,
+etc) or sequences exposing a `vector<A>` will extract elements from the
+container supplied as their consumed attribute by looping through the
+containers iterators.  In some cases, this may be undesirable. The `as<T>`
+class creates a directive that will pass an unnamed temporary object of type
+`T` to it's subject, if extracting `T` from it's consumed attribute determined
+at generation-time to be valid. __customize_valid_as__ is called by `as<T>` to
+determine validity; if it returns false, the generator fails. Subsequent
+extraction is performed by calling __customize_as__.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/directive/as.hpp>
+    #include <boost/spirit/include/karma_as.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::as_string  // alias: boost::spirit::karma::as_string` ]]
+    [[`boost::spirit::as_wstring // alias: boost::spirit::karma::as_wstring` ]]
+]
+
+[heading Synopsis]
+
+    template <typename T>
+    struct as;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`T`]          [Attribute type.]                   [none]]
+]
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __generator_concept__.]]
+    [[`attr`]   [The attribute supplied to the directive.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_generator_concept__.
+
+[table
+    [[Expression]      [Semantics]]
+    [[`as<T>()[a]`]    [Extract an instance of `T` from `attr`, and
+                        invoke the subject generator `a`, supplying 
+                        the unnamed temporary as it's attribute.]]
+    [[`as_string[a]`]  [Equivalent to `as<std::string>()[a]`]]
+    [[`as_wstring[a]`] [Equivalent to `as<std::wstring>()[a]`]] 
+]
+
+[heading Attributes]
+
+See __karma_comp_attr_notation__.
+
+[table
+    [[Expression]   [Attribute]]
+    [[`as<T>()[a]`] [`a: A --> as<T>()[a]: T`]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject generator, `a`, and
+the complexity of the extraction unnamed temporary object of type `T` from the 
+attribute `attr`]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+__karma_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_karma_using_declarations_as]
+
+Simple usage of `as<T>`, `as_string` and `as_wstring`:
+
+[reference_karma_as]
+
+[endsect] [/ as]
 
 [endsect] [/ directives]

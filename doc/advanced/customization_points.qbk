@@ -227,7 +227,7 @@ the attributes needed for output generation directly from this attribute.
 
 If a component, which is part of a sequence is not able to handle container
 attributes, in __qi__ the sequence passes a new instance of the container 
-attribute's `value_type` to the parser component, inserting the result into
+attributes' `value_type` to the parser component, inserting the result into
 the attribute on behalf of the parser component. In __karma__ the sequence 
 extracts the next container element on behalf of the generator component and 
 passing it the extracted value.
@@ -275,7 +275,7 @@ Also, see __include_structure__.
 [heading Notation]
 
 [variablelist 
-    [[`Component`]  [A comonent type to be tested whether it directly handles 
+    [[`Component`]  [A component type to be tested whether it directly handles 
                      container attributes in the context of sequences.]]
     [[`Attribute`]  [A container attribute type as passed to the sequence.]]
     [[`T1`, `T2`, ...]  [Arbitrary types]]
@@ -566,7 +566,7 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`Attrib`]     [A type to be used as the target to store the attribute value in.]]
-    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
     [[`Iterator`]   [The iterator type used by the parser. This type usually
                      corresponds to the iterators as passed in by the user.]]
     [[`begin`, `end`] [Iterator instances of type `Iterator` pointing to the 
@@ -662,10 +662,10 @@ Also, see __include_structure__.
                      value in. This type is guaranteed not to be a container 
                      type (`is_container<Attrib>::type` evaluates to 
                      `mpl::false_`).]]
-    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
     [[`T`]          [A type as produced by the parser. The parser temporarily stores 
                      its parsed values using this type.]]
-    [[`t`]          [A attribute instance of type `T`.]]
+    [[`t`]          [An attribute instance of type `T`.]]
 ]
 
 [heading Expression Semantics]
@@ -756,10 +756,10 @@ Also, see __include_structure__.
                      value in. This type is guaranteed to be a container 
                      type (`is_container<Attrib>::type` evaluates to 
                      `mpl::true_`).]]
-    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
     [[`T`]          [A type as produced by the parser. The parser temporarily stores 
                      its parsed values using this type.]]
-    [[`t`]          [A attribute instance of type `T`.]]
+    [[`t`]          [An attribute instance of type `T`.]]
 ]
 
 [heading Expression Semantics]
@@ -990,7 +990,7 @@ Also, see __include_structure__.
     [[`C`]          [A type to be used as a container to store attribute values in.]]
     [[`c`]          [A container instance of type `C`.]
     [[`Attrib`]     [A type to be used as a container to store attribute values in.]]
-    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
     [[`T1`, `T2`, ...]  [Arbitrary types]]
 ]
 
@@ -1141,7 +1141,7 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`Attrib`]     [A type to be used as a container to store attribute values in.]]
-    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
     [[`T1`, `T2`, ...]  [Arbitrary types]]
 ]
 
@@ -1255,7 +1255,7 @@ Also, see __include_structure__.
 [variablelist Notation
     [[`Exposed`]    [A type exposed as the native attribute of a component.]]
     [[`Attrib`]     [A type to be used to generate output from.]]
-    [[`attr`]       [A attribute instance of type `Attrib`.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
 ]
 
 [heading Expression Semantics]
@@ -2123,7 +2123,94 @@ please see here: __customize_use_as_container_example__.
 [endsect] [/ iterate]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:auto Create Components from Attributes]
+[section:attribute_as Atomically Extract an Attribute Value from a Container (Karma)]
+
+[heading attribute_as]
+
+`attribute_as` atomically extracts an instance of a type from another type.
+This customization point is used by the __karma_as__ directive. 
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/attributes_fwd.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T, typename Attribute, typename Enable = void>
+    struct attribute_as;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`T`]                  [The type of the attribute natively
+                             exposed by the component the `extract_from` is
+                             invoked from.]                         [none]]
+    [[`Attribute`]          [The type of the attribute to be used to
+                             generate output from.]                 [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `attribute_as` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist Notation
+    [[`attr`]       [An instance of type `Attrib`.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                               [Semantics]]
+    [[`attribute_as<T, Attribute>::type`]       [The result type of the extraction.]]
+    [[`attribute_as<T, Attribute>::call(attr)`] [Extract and return an instance
+                                                 of `type`.]]
+    [[`attribute_as<T, Attribute>::valid_as(attr)`] [Determine, at runtime, if the extraction of
+                                                     an instance of `type` from `attr`
+                                                     would cause an error.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. The following table lists those types together with the types
+exposed and the corresponding semantics:
+
+[table
+    [[Template Parameters]     [Value]]
+    [[__unused_type__]         [The exposed typedef `type` is defined to 
+                                __unused_type__. The function `call()` returns
+                                an instance of __unused_type__.]]
+]
+
+[heading When to implement]
+
+This customization point may need to be implemented when using the __karma_as__
+directive.
+
+[heading Example]
+
+TBD
+
+[endsect] [/ attribute_as]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:auto Create Components from Attributes (Qi and Karma)]
 
 [def __auto_parser_requirements__ [link spirit.qi.reference.auto.additional_requirements Additional Attribute Requirements for Parsers]]
 [def __auto_generator_requirements__ [link spirit.karma.reference.auto.additional_requirements Additional Attribute Requirements for Generators]]

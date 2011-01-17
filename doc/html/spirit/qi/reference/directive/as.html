@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
-<link rel="up" href="../directive.html" title="Parser Directive">
+<link rel="up" href="../directive.html" title="Parser Directives">
 <link rel="prev" href="hold.html" title="Parser Directive for Attribute Commit/Rollback (hold[])">
 <link rel="next" href="../nonterminal.html" title="Nonterminal Parsers">
 </head>
@@ -29,7 +29,7 @@
           Forcing Atomic Assignment (<code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;,</span> <span class="identifier">as_string</span><span class="special">[],</span> <span class="identifier">as_wstring</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.as.description"></a><h6>
-<a name="id964051"></a>
+<a name="id936429"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.description">Description</a>
           </h6>
 <p>
@@ -37,12 +37,12 @@
             class forces the atomic assignment of it's subject's synthesized attribute.
             Usually, repetitive parsers (such as <a class="link" href="../operator/kleene.html" title="Kleene Parser (*a)">Kleene</a>,
             etc) or sequences exposing a <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> will assign elements to the container
-            supplied as their synthesized attribute by calling <a class="link" href="../../../advanced/customize/store_value/push_back.html" title="Store a Parsed Attribute Value into a Container (Qi)"><code class="computeroutput"><span class="identifier">push_back_container</span></code></a> repeatedly.
+            supplied as their synthesized attribute by calling <a class="link" href="../../../advanced/customize/store_value/push_back.html" title="Store a Parsed Attribute Value into a Container (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">push_back_container</span></code></a> repeatedly.
             In some cases, this may be undesirable. The <code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code> class creates a directive that will
             pass a temporary object of type <code class="computeroutput"><span class="identifier">T</span></code>
             to it's subject. If the subject parser passes, the temporary object will
             be assigned to the directive's supplied attribute with a single call
-            to <a class="link" href="../../../advanced/customize/assign_to.html" title="Store a Parsed Attribute Value (Qi)"><code class="computeroutput"><span class="identifier">assign_to</span></code></a>. If the subject parser
+            to <a class="link" href="../../../advanced/customize/assign_to.html" title="Store a Parsed Attribute Value (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">assign_to</span></code></a>. If the subject parser
             fails, the directive's attribute is not mutated.
           </p>
 <div class="note"><table border="0" summary="Note">
@@ -63,8 +63,8 @@
 <th align="left">Caution</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The <a class="link" href="../../../advanced/customize/assign_to.html" title="Store a Parsed Attribute Value (Qi)"><code class="computeroutput"><span class="identifier">assign_to</span></code></a> customization point
-              will may end up using <a class="link" href="../../../advanced/customize/store_value/push_back.html" title="Store a Parsed Attribute Value into a Container (Qi)"><code class="computeroutput"><span class="identifier">push_back_container</span></code></a> to assign
+              The <a class="link" href="../../../advanced/customize/assign_to.html" title="Store a Parsed Attribute Value (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">assign_to</span></code></a> customization point
+              may end up using <a class="link" href="../../../advanced/customize/store_value/push_back.html" title="Store a Parsed Attribute Value into a Container (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">push_back_container</span></code></a> to assign
               the temporary object to the supplied attribute by default, depending
               on the types involved. Use the interface described in <a class="link" href="../../../advanced/customize.html" title="Customization of Spirit's Attribute Handling">Customization
               of Attribute Handling</a> to manipulate the semantics of this assignment
@@ -72,7 +72,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.directive.as.header"></a><h6>
-<a name="id964219"></a>
+<a name="id936626"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/as.hpp&gt;
@@ -82,7 +82,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.as.namespace"></a><h6>
-<a name="id964294"></a>
+<a name="id936700"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -93,6 +93,12 @@
                     </p>
                   </th></tr></thead>
 <tbody>
+<tr><td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">as</span> <span class="comment">// alias:
+                      boost::spirit::qi::as</span></code>
+                    </p>
+                  </td></tr>
 <tr><td>
                     <p>
                       <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">as_string</span> <span class="comment">//
@@ -108,14 +114,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.synopsis"></a><h6>
-<a name="id964409"></a>
+<a name="id936852"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">as</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.directive.as.template_parameters"></a><h6>
-<a name="id964460"></a>
+<a name="id936904"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.template_parameters">Template
             parameters</a>
           </h6>
@@ -161,7 +167,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.model_of"></a><h6>
-<a name="id964549"></a>
+<a name="id936993"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -185,7 +191,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.as.expression_semantics"></a><h6>
-<a name="id964661"></a>
+<a name="id937104"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -254,7 +260,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.attributes"></a><h6>
-<a name="id964945"></a>
+<a name="id937389"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.attributes">Attributes</a>
           </h6>
 <p>
@@ -295,7 +301,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.complexity"></a><h6>
-<a name="id965095"></a>
+<a name="id937539"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -305,7 +311,7 @@
               to the supplied attribute <code class="computeroutput"><span class="identifier">attr</span></code>
             </p></blockquote></div>
 <a name="spirit.qi.reference.directive.as.example"></a><h6>
-<a name="id965137"></a>
+<a name="id937581"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -338,7 +344,7 @@
             <code class="computeroutput"><span class="identifier">as_string</span></code> and <code class="computeroutput"><span class="identifier">as_wstring</span></code>:
           </p>
 <p>
-            To properly handle string concatenation in <a class="link" href="../../../support/utree.html" title="The utree data structure"><code class="computeroutput"><span class="identifier">utree</span></code></a>, we make use of <code class="computeroutput"><span class="identifier">as_string</span><span class="special">[]</span></code>.
+            To properly handle string concatenation with <a class="link" href="../../../support/utree.html" title="The utree data structure"><code class="computeroutput"><span class="identifier">utree</span></code></a>, we make use of <code class="computeroutput"><span class="identifier">as_string</span><span class="special">[]</span></code>.
             We also use <code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
             to explicitly create a <a class="link" href="../../../support/utree.html" title="The utree data structure"><code class="computeroutput"><span class="identifier">utree</span></code></a> symbol node.
           </p>

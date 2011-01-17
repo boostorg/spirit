@@ -29,7 +29,7 @@
         Whether a Component Handles Container Attributes (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.handles_container.handles_container"></a><h6>
-<a name="id1247137"></a>
+<a name="id1224859"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.handles_container">handles_container</a>
         </h6>
 <p>
@@ -53,14 +53,14 @@
 <p>
           If a component, which is part of a sequence is not able to handle container
           attributes, in <span class="emphasis"><em>Spirit.Qi</em></span> the sequence passes a new
-          instance of the container attribute's <code class="computeroutput"><span class="identifier">value_type</span></code>
+          instance of the container attributes' <code class="computeroutput"><span class="identifier">value_type</span></code>
           to the parser component, inserting the result into the attribute on behalf
           of the parser component. In <span class="emphasis"><em>Spirit.Karma</em></span> the sequence
           extracts the next container element on behalf of the generator component
           and passing it the extracted value.
         </p>
 <a name="spirit.advanced.customize.handles_container.header"></a><h6>
-<a name="id1247223"></a>
+<a name="id1224946"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">handles_container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -80,7 +80,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.namespace"></a><h6>
-<a name="id1247604"></a>
+<a name="id1225031"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -97,7 +97,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.synopsis"></a><h6>
-<a name="id1247677"></a>
+<a name="id1225104"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Component</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attribute</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -107,7 +107,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.handles_container.template_parameters"></a><h6>
-<a name="id1247789"></a>
+<a name="id1225216"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.template_parameters">Template
           parameters</a>
         </h6>
@@ -194,7 +194,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.notation"></a><h6>
-<a name="id1247992"></a>
+<a name="id1225703"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.notation">Notation</a>
         </h6>
 <div class="variablelist">
@@ -202,7 +202,7 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Component</span></code></span></dt>
 <dd><p>
-                A comonent type to be tested whether it directly handles container
+                A component type to be tested whether it directly handles container
                 attributes in the context of sequences.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Attribute</span></code></span></dt>
@@ -216,7 +216,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.handles_container.expression_semantics"></a><h6>
-<a name="id1248077"></a>
+<a name="id1225788"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -255,7 +255,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.predefined_specializations"></a><h6>
-<a name="id1248216"></a>
+<a name="id1225928"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -338,7 +338,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.when_to_implement"></a><h6>
-<a name="id1248564"></a>
+<a name="id1226276"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.when_to_implement">When
           to implement</a>
         </h6>
@@ -350,7 +350,7 @@
           implemented under rare circumstances only.
         </p>
 <a name="spirit.advanced.customize.handles_container.example"></a><h6>
-<a name="id1248599"></a>
+<a name="id1226310"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.example">Example</a>
         </h6>
 <p>

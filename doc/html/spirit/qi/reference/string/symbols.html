@@ -29,7 +29,7 @@
           (<code class="computeroutput"><span class="identifier">symbols</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.string.symbols.description"></a><h6>
-<a name="id1022969"></a>
+<a name="id996498"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.description">Description</a>
           </h6>
 <p>
@@ -49,7 +49,7 @@
             added, thus, dynamically altering its behavior.
           </p>
 <a name="spirit.qi.reference.string.symbols.header"></a><h6>
-<a name="id1023011"></a>
+<a name="id996540"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/symbols.hpp&gt;
@@ -59,7 +59,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.string.symbols.namespace"></a><h6>
-<a name="id1023085"></a>
+<a name="id996614"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -88,14 +88,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.synopsis"></a><h6>
-<a name="id1023245"></a>
+<a name="id996774"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lookup</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">symbols</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.template_parameters"></a><h6>
-<a name="id1023323"></a>
+<a name="id996852"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.template_parameters">Template
             parameters</a>
           </h6>
@@ -178,7 +178,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.model_of"></a><h6>
-<a name="id1023517"></a>
+<a name="id997046"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -234,7 +234,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.string.symbols.expression_semantics"></a><h6>
-<a name="id1023833"></a>
+<a name="id997362"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -268,7 +268,19 @@
                   </td>
 <td>
                     <p>
-                      Construct an empty symbols.
+                      Construct an empty symbols names <code class="computeroutput"><span class="string">"symbols"</span></code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Sym</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Construct an empty symbols named <code class="computeroutput"><span class="identifier">name</span></code>.
                     </p>
                   </td>
 </tr>
@@ -295,8 +307,23 @@
 <td>
                     <p>
                       Construct symbols from <code class="computeroutput"><span class="identifier">sseq</span></code>
-                      (An <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
-                      of strings).
+                      (an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
+                      of strings) named <code class="computeroutput"><span class="string">"symbols"</span></code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Sym</span><span class="special">(</span><span class="identifier">sseq</span><span class="special">,</span>
+                      <span class="identifier">name</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Construct symbols from <code class="computeroutput"><span class="identifier">sseq</span></code>
+                      (an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
+                      of strings) named <code class="computeroutput"><span class="identifier">name</span></code>.
                     </p>
                   </td>
 </tr>
@@ -314,7 +341,28 @@
                       <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
                       of strings and an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
                       container of data with <code class="computeroutput"><span class="identifier">value_type</span></code>
-                      <code class="computeroutput"><span class="identifier">T</span></code>).
+                      <code class="computeroutput"><span class="identifier">T</span></code>) which is
+                      named <code class="computeroutput"><span class="string">"symbols"</span></code>.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">Sym</span><span class="special">(</span><span class="identifier">sseq</span><span class="special">,</span>
+                      <span class="identifier">dseq</span><span class="special">,</span>
+                      <span class="identifier">name</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Construct symbols from <code class="computeroutput"><span class="identifier">sseq</span></code>
+                      and <code class="computeroutput"><span class="identifier">dseq</span></code> (An
+                      <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
+                      of strings and an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+                      container of data with <code class="computeroutput"><span class="identifier">value_type</span></code>
+                      <code class="computeroutput"><span class="identifier">T</span></code>) which is
+                      named <code class="computeroutput"><span class="identifier">name</span></code>.
                     </p>
                   </td>
 </tr>
@@ -489,21 +537,45 @@
                       with associated data, <code class="computeroutput"><span class="identifier">d</span></code>,
                       an object of type <code class="computeroutput"><span class="identifier">T</span></code>,
                       invoke <code class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span>
-                      <span class="identifier">d</span><span class="special">)</span></code>.
+                      <span class="identifier">d</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">()</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Retrieve the current name of the symbols object.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Set the current name of the symbols object to be <code class="computeroutput"><span class="identifier">name</span></code>.
                     </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.attributes"></a><h6>
-<a name="id1026222"></a>
+<a name="id999535"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.attributes">Attributes</a>
           </h6>
 <p>
             The attribute of <code class="computeroutput"><span class="identifier">symbol</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code> is <code class="computeroutput"><span class="identifier">T</span></code>.
           </p>
 <a name="spirit.qi.reference.string.symbols.complexity"></a><h6>
-<a name="id1026273"></a>
+<a name="id999586"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.complexity">Complexity</a>
           </h6>
 <p>
@@ -540,7 +612,7 @@
 <pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">tst_map</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.example"></a><h6>
-<a name="id1026405"></a>
+<a name="id999718"></a>
             <a class="link" href="symbols.html#spirit.qi.reference.string.symbols.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
