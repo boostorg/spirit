@@ -3,25 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])</title>
-<link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../directive.html" title="Parser Directives">
 <link rel="prev" href="hold.html" title="Parser Directive for Attribute Commit/Rollback (hold[])">
 <link rel="next" href="../nonterminal.html" title="Nonterminal Parsers">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr>
-<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
-<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../../../libs/libraries.htm">Libraries</a></td>
-<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
-<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
-<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
-</tr></table>
+<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="hold.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="hold.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
@@ -29,7 +22,7 @@
           Forcing Atomic Assignment (<code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;,</span> <span class="identifier">as_string</span><span class="special">[],</span> <span class="identifier">as_wstring</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.as.description"></a><h6>
-<a name="id936429"></a>
+<a name="id824796"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.description">Description</a>
           </h6>
 <p>
@@ -45,6 +38,18 @@
             to <a class="link" href="../../../advanced/customize/assign_to.html" title="Store a Parsed Attribute Value (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">assign_to</span></code></a>. If the subject parser
             fails, the directive's attribute is not mutated.
           </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">T</span></code> is required to be
+              a container type. If <a class="link" href="../../../advanced/customize/is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_container</span></code></a> does not return
+              true for <code class="computeroutput"><span class="identifier">T</span></code>, a compile-time
+              error will occur.
+            </p></td></tr>
+</table></div>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
@@ -72,7 +77,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.directive.as.header"></a><h6>
-<a name="id936626"></a>
+<a name="id825128"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/as.hpp&gt;
@@ -82,7 +87,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.as.namespace"></a><h6>
-<a name="id936700"></a>
+<a name="id825228"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -114,20 +119,19 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.synopsis"></a><h6>
-<a name="id936852"></a>
+<a name="id825407"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">as</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.directive.as.template_parameters"></a><h6>
-<a name="id936904"></a>
+<a name="id825474"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
-<col>
 <col>
 <col>
 </colgroup>
@@ -156,18 +160,13 @@
                   </td>
 <td>
                     <p>
-                      Attribute type.
-                    </p>
-                  </td>
-<td>
-                    <p>
-                      none
+                      A container type. [none
                     </p>
                   </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.model_of"></a><h6>
-<a name="id936993"></a>
+<a name="id825562"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -182,7 +181,7 @@
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">t</span></code></span></dt>
 <dd><p>
-                  A temporary object of type <code class="computeroutput"><span class="identifier">T</span></code>.
+                  A container of type <code class="computeroutput"><span class="identifier">T</span></code>.
                 </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">attr</span></code></span></dt>
 <dd><p>
@@ -191,7 +190,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.as.expression_semantics"></a><h6>
-<a name="id937104"></a>
+<a name="id825699"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -260,7 +259,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.attributes"></a><h6>
-<a name="id937389"></a>
+<a name="id826049"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.attributes">Attributes</a>
           </h6>
 <p>
@@ -301,17 +300,17 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.as.complexity"></a><h6>
-<a name="id937539"></a>
+<a name="id826221"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               The complexity is defined by the complexity of the subject parser,
               <code class="computeroutput"><span class="identifier">a</span></code>, and the complexity
-              of the assignment of the temporary object <code class="computeroutput"><span class="identifier">t</span></code>
-              to the supplied attribute <code class="computeroutput"><span class="identifier">attr</span></code>
+              of the assignment of the container <code class="computeroutput"><span class="identifier">t</span></code>
+              to the supplied attribute <code class="computeroutput"><span class="identifier">attr</span></code>.
             </p></blockquote></div>
 <a name="spirit.qi.reference.directive.as.example"></a><h6>
-<a name="id937581"></a>
+<a name="id826280"></a>
             <a class="link" href="as.html#spirit.qi.reference.directive.as.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -388,7 +387,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="hold.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="hold.html"><img src="../../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

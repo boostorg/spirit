@@ -3,25 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The multi pass iterator</title>
-<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../support.html" title="Supporting Libraries">
 <link rel="prev" href="../support.html" title="Supporting Libraries">
 <link rel="next" href="utree.html" title="The utree data structure">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr>
-<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
-<td align="center"><a href="../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
-<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
-<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
-<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
-</tr></table>
+<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../support.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="utree.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../support.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="utree.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -62,7 +55,7 @@
         iterator was created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h5>
-<a name="id1269032"></a>
+<a name="id1106934"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h5>
@@ -82,7 +75,7 @@
       </p>
 <p>
         Sequences of the form <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>
-        will buffer data as well. This is different from the behavior of <a href="../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+        will buffer data as well. This is different from the behavior of <a href="../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
         but for a good reason. Sequences need to reset the current iterator to its
         initial state if one of the components of a sequence fails to match. To compensate
         for this behavior we added functionality to the <code class="computeroutput"><span class="identifier">expect</span></code>
@@ -206,7 +199,7 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h5>
-<a name="id1272238"></a>
+<a name="id1108513"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h5>
@@ -228,7 +221,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h5>
-<a name="id1272332"></a>
+<a name="id1108642"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h5>
@@ -351,7 +344,7 @@
         we will give some guidelines how you can write your own policy implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h5>
-<a name="id1272638"></a>
+<a name="id1109017"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h5>
@@ -632,7 +625,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h5>
-<a name="id1273468"></a>
+<a name="id1110049"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h5>
@@ -679,7 +672,7 @@
         behaviors while wrapping an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h5>
-<a name="id1273904"></a>
+<a name="id1110605"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h5>
@@ -707,7 +700,7 @@
         Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
       </p>
 <a name="spirit.support.multi_pass.reading_from_standard_input_streams"></a><h5>
-<a name="id1274690"></a>
+<a name="id1110869"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.reading_from_standard_input_streams">Reading
         from standard input streams</a>
       </h5>
@@ -739,7 +732,7 @@
         Also, see <a class="link" href="../structure/include.html" title="Include">Include Structure</a>.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h5>
-<a name="id1274967"></a>
+<a name="id1111232"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <code class="computeroutput"><span class="identifier">functor_input</span></code>
         InputPolicy</a>
@@ -798,7 +791,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h5>
-<a name="id1275555"></a>
+<a name="id1111957"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h5>
@@ -815,7 +808,7 @@
         copies of a particular <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h5>
-<a name="id1275631"></a>
+<a name="id1112066"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h5>
 <p>
@@ -917,7 +910,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h5>
-<a name="id1276534"></a>
+<a name="id1113188"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h5>
 <p>
@@ -984,7 +977,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h5>
-<a name="id1278149"></a>
+<a name="id1113846"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h5>
 <p>
@@ -1043,7 +1036,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h5>
-<a name="id1278592"></a>
+<a name="id1114407"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h5>
 <p>
@@ -1157,7 +1150,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../support.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="utree.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../support.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="utree.html"><img src="../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -3,25 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Determine if a Type Should be Treated as a Container (Qi and Karma)</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
 <link rel="prev" href="../customize.html" title="Customization of Spirit's Attribute Handling">
 <link rel="next" href="handles_container.html" title="Determine Whether a Component Handles Container Attributes (Qi and Karma)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr>
-<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
-<td align="center"><a href="../../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../../libs/libraries.htm">Libraries</a></td>
-<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
-<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
-<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
-</tr></table>
+<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../customize.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="handles_container.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../customize.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="handles_container.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -29,7 +22,7 @@
         a Type Should be Treated as a Container (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.is_container.is_container"></a><h6>
-<a name="id1221617"></a>
+<a name="id1066976"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.is_container">is_container</a>
         </h6>
 <p>
@@ -41,7 +34,7 @@
           whether a supplied attribute can potentially be treated as a container.
         </p>
 <a name="spirit.advanced.customize.is_container.header"></a><h6>
-<a name="id1221672"></a>
+<a name="id1067054"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -61,7 +54,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.is_container.namespace"></a><h6>
-<a name="id1221757"></a>
+<a name="id1067165"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -78,7 +71,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.synopsis"></a><h6>
-<a name="id1221830"></a>
+<a name="id1067250"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -88,7 +81,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.is_container.template_parameters"></a><h6>
-<a name="id1223194"></a>
+<a name="id1067370"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.template_parameters">Template
           parameters</a>
         </h6>
@@ -157,7 +150,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.notation"></a><h6>
-<a name="id1223368"></a>
+<a name="id1067570"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.notation">Notation</a>
         </h6>
 <div class="variablelist">
@@ -174,7 +167,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.is_container.expression_semantics"></a><h6>
-<a name="id1223436"></a>
+<a name="id1067649"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -206,14 +199,14 @@
                     Result of the metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
                     if a given type, <code class="computeroutput"><span class="identifier">C</span></code>,
                     is to be treated as a container, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
-                    otherwise (See <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+                    otherwise (See <a href="../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
                     Boolean Constant</a>).
                   </p>
                 </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.predefined_specializations"></a><h6>
-<a name="id1223569"></a>
+<a name="id1067805"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -221,7 +214,7 @@
           <a href="http://boost-spirit.com" target="_top">Spirit</a> predefines specializations
           of this customization point for several types. The following table lists
           those types together with the conditions for which the corresponding specializations
-          will evaluate to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code> (see <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
+          will evaluate to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code> (see <a href="../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
           Boolean Constant</a>):
         </p>
 <div class="informaltable"><table class="table">
@@ -302,7 +295,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.when_to_implement"></a><h6>
-<a name="id1223988"></a>
+<a name="id1068320"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.when_to_implement">When
           to implement</a>
         </h6>
@@ -324,7 +317,7 @@
           for any meaningful operation on the component <code class="computeroutput"><span class="identifier">a</span></code>.
         </p>
 <a name="spirit.advanced.customize.is_container.related_attribute_customization_points"></a><h6>
-<a name="id1224147"></a>
+<a name="id1068527"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.related_attribute_customization_points">Related
           Attribute Customization Points</a>
         </h6>
@@ -480,7 +473,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_container.example"></a><h6>
-<a name="id1224802"></a>
+<a name="id1069377"></a>
           <a class="link" href="is_container.html#spirit.advanced.customize.is_container.example">Example</a>
         </h6>
 <p>
@@ -500,7 +493,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../customize.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="handles_container.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../customize.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="handles_container.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -3,25 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Generator Semantic Actions</title>
-<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="warming_up.html" title="Warming up">
 <link rel="next" href="karma_complex.html" title="Complex - A first more complex generator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr>
-<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
-<td align="center"><a href="../../../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../../../../libs/libraries.htm">Libraries</a></td>
-<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
-<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
-<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
-</tr></table>
+<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="warming_up.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="karma_complex.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="warming_up.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="karma_complex.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -107,7 +100,7 @@
 <span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attrib</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;);</span>
 </pre>
 <a name="spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions"></a><h6>
-<a name="id1005117"></a>
+<a name="id881459"></a>
           <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.examples_of_semantic_actions">Examples
           of Semantic Actions</a>
         </h6>
@@ -122,15 +115,15 @@
               Using a simple function object
             </li>
 <li class="listitem">
-              Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
+              Using <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
               a plain function
             </li>
 <li class="listitem">
-              Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
+              Using <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
               a member function
             </li>
 <li class="listitem">
-              Using <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
+              Using <a href="../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
             </li>
 </ul></div>
 <p>
@@ -214,7 +207,7 @@
 <p>
         </p>
 <p>
-          We can use <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
+          We can use <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
           to 'bind' member functions:
         </p>
 <p>
@@ -226,7 +219,7 @@
 <p>
         </p>
 <p>
-          Likewise, we can also use <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
+          Likewise, we can also use <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
           to 'bind' plain functions:
         </p>
 <p>
@@ -237,7 +230,7 @@
 <p>
         </p>
 <p>
-          And last but not least, we can also use <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>:
+          And last but not least, we can also use <a href="../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>:
         </p>
 <p>
           
@@ -252,20 +245,20 @@
           above are the most common. Attaching semantic actions is the first hurdle
           one has to tackle when getting started with generating with Spirit. If
           you didn't do so yet, it is probably a good idea to familiarize yourself
-          with the tools behind it such as <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
-          and <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>.
+          with the tools behind it such as <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>
+          and <a href="../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>.
         </p>
 <p>
           The examples above can be found here: <a href="../../../../../example/karma/actions.cpp" target="_top">actions.cpp</a>
         </p>
 <a name="spirit.karma.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id1006057"></a>
+<a name="id882596"></a>
           <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>
           <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>, a companion
           library bundled with Spirit, is specifically suited for binding semantic
-          actions. It is like <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
+          actions. It is like <a href="../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
           on steroids, with special custom features that make it easy to integrate
           semantic actions with Spirit. If your requirements go beyond simple to
           moderate generation, I suggest you use this library. Examples presented
@@ -279,8 +272,8 @@
 <tr><td align="left" valign="top">
 <p>
             There are different ways to write semantic actions for <span class="emphasis"><em>Spirit.Karma</em></span>:
-            using plain functions, <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
-            <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>, or
+            using plain functions, <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
+            <a href="../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>, or
             <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>. The latter
             three allow you to use special placeholders to control parameter placement
             (<code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>,
@@ -290,13 +283,13 @@
             while writing a semantic action.
           </p>
 <p>
-            Generally, for <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
+            Generally, for <a href="../../../../../libs/bind/index.html" target="_top">Boost.Bind</a>,
             use <code class="computeroutput"><span class="special">::</span><span class="identifier">_1</span></code>,
             <code class="computeroutput"><span class="special">::</span><span class="identifier">_2</span></code>,
             etc. (yes, these placeholders are defined in the global namespace).
           </p>
 <p>
-            For <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a> use
+            For <a href="../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a> use
             the placeholders defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lambda</span></code>.
           </p>
 <p>
@@ -318,7 +311,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="warming_up.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="karma_complex.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="warming_up.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="karma_complex.html"><img src="../../../images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
