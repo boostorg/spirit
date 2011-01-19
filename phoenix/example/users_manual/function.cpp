@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <vector>
@@ -14,18 +14,18 @@ using namespace boost::phoenix;
 using namespace boost::phoenix::arg_names;
 using namespace std;
 
-struct is_odd_ 
+struct is_odd_
 {
     template <typename Arg>
-    struct result 
-    { 
-        typedef bool type; 
+    struct result
+    {
+        typedef bool type;
     };
 
     template <typename Arg>
     bool operator()(Arg arg1) const
-    { 
-        return arg1 % 2 == 1; 
+    {
+        return arg1 % 2 != 0;
     }
 };
 
