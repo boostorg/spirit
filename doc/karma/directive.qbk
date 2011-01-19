@@ -1210,16 +1210,19 @@ Basic usage of the `columns` generators:
 
 [heading Description]
 
-The `as<T>` class forces the atomic extraction of an object of type T from it's
+The `as<T>` class forces the atomic extraction of a container type `T` from it's
 consumed attribute. Usually, repetitive generators (such as __karma_kleene__,
 etc) or sequences exposing a `vector<A>` will extract elements from the
 container supplied as their consumed attribute by looping through the
-containers iterators.  In some cases, this may be undesirable. The `as<T>`
+containers iterators. In some cases, this may be undesirable. The `as<T>`
 class creates a directive that will pass an unnamed temporary object of type
 `T` to it's subject, if extracting `T` from it's consumed attribute determined
 at generation-time to be valid. __customize_valid_as__ is called by `as<T>` to
 determine validity; if it returns false, the generator fails. Subsequent
 extraction is performed by calling __customize_as__.
+
+[note `T` is required to be a container type. If __customize_is_container__ 
+does not return true for `T`, a compile-time error will occur.]
 
 [heading Header]
 
@@ -1245,7 +1248,7 @@ Also, see __include_structure__.
 
 [table
     [[Parameter]    [Description]                       [Default]]
-    [[`T`]          [Attribute type.]                   [none]]
+    [[`T`]          [A container type.]                 [none]]
 ]
 
 [heading Model of]
@@ -1283,8 +1286,8 @@ See __karma_comp_attr_notation__.
 [heading Complexity]
 
 [:The complexity is defined by the complexity of the subject generator, `a`, and
-the complexity of the extraction unnamed temporary object of type `T` from the 
-attribute `attr`]
+the complexity of the extraction unnamed contianer of type `T` from the 
+attribute `attr`.]
 
 [heading Example]
 

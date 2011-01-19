@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -29,13 +28,13 @@
           Forcing Atomic Extraction (<code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;,</span> <span class="identifier">as_string</span><span class="special">[],</span> <span class="identifier">as_wstring</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.as.description"></a><h6>
-<a name="id1110042"></a>
+<a name="id1127405"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.description">Description</a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
-            class forces the atomic extraction of an object of type T from it's consumed
-            attribute. Usually, repetitive generators (such as <a class="link" href="../operator/kleene.html" title="Kleene Star Generator (*a)">Kleene
+            class forces the atomic extraction of a container type <code class="computeroutput"><span class="identifier">T</span></code> from it's consumed attribute. Usually,
+            repetitive generators (such as <a class="link" href="../operator/kleene.html" title="Kleene Star Generator (*a)">Kleene
             (<code class="computeroutput"><span class="special">*</span></code>)</a>, etc) or sequences
             exposing a <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
             will extract elements from the container supplied as their consumed attribute
@@ -49,8 +48,20 @@
             to determine validity; if it returns false, the generator fails. Subsequent
             extraction is performed by calling <a class="link" href="../../../advanced/customize/attribute_as.html" title="Atomically Extract an Attribute Value from a Container (Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">as</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;()</span></code></a>.
           </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">T</span></code> is required to be
+              a container type. If <a class="link" href="../../../advanced/customize/is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_container</span></code></a> does not return
+              true for <code class="computeroutput"><span class="identifier">T</span></code>, a compile-time
+              error will occur.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.directive.as.header"></a><h6>
-<a name="id1111441"></a>
+<a name="id1128851"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/as.hpp&gt;
@@ -60,7 +71,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.as.namespace"></a><h6>
-<a name="id1111516"></a>
+<a name="id1128925"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -86,14 +97,14 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.as.synopsis"></a><h6>
-<a name="id1111631"></a>
+<a name="id1129040"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">as</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.directive.as.template_parameters"></a><h6>
-<a name="id1111683"></a>
+<a name="id1129092"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.template_parameters">Template
             parameters</a>
           </h6>
@@ -128,7 +139,7 @@
                   </td>
 <td>
                     <p>
-                      Attribute type.
+                      A container type.
                     </p>
                   </td>
 <td>
@@ -139,7 +150,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.as.model_of"></a><h6>
-<a name="id1111771"></a>
+<a name="id1129181"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -159,7 +170,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.as.expression_semantics"></a><h6>
-<a name="id1111861"></a>
+<a name="id1129271"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -227,7 +238,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.as.attributes"></a><h6>
-<a name="id1112129"></a>
+<a name="id1129538"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.attributes">Attributes</a>
           </h6>
 <p>
@@ -268,17 +279,17 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.as.complexity"></a><h6>
-<a name="id1112279"></a>
+<a name="id1129688"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
               The complexity is defined by the complexity of the subject generator,
               <code class="computeroutput"><span class="identifier">a</span></code>, and the complexity
-              of the extraction unnamed temporary object of type <code class="computeroutput"><span class="identifier">T</span></code>
-              from the attribute <code class="computeroutput"><span class="identifier">attr</span></code>
+              of the extraction unnamed contianer of type <code class="computeroutput"><span class="identifier">T</span></code>
+              from the attribute <code class="computeroutput"><span class="identifier">attr</span></code>.
             </p></blockquote></div>
 <a name="spirit.karma.reference.directive.as.example"></a><h6>
-<a name="id1112321"></a>
+<a name="id1129730"></a>
             <a class="link" href="as.html#spirit.karma.reference.directive.as.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">

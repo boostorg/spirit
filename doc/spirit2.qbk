@@ -117,6 +117,7 @@
 [/ References to classes ]
 
 [def __utree__                  [link spirit.support.utree `utree`]]
+[def __multi_pass__             [link spirit.support.multi_pass `multi_pass`]]
 
 [def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `lex::token_def<>`]
 
@@ -309,7 +310,7 @@
 ''']
 
 [/   index[title type]
-     insert index 
+     insert index
 
      title:  section title for the index
      type:   type of the index
@@ -423,9 +424,9 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 
 [/ Here we go ]
 
-This is the documentation of the newest version of __spirit__ (currently, 
-V2.4.2). If you're looking for the documentation of Spirit's previous version 
-(formerly Spirit V1.8), see __classic__. 
+This is the documentation of the newest version of __spirit__ (currently,
+V2.4.2). If you're looking for the documentation of Spirit's previous version
+(formerly Spirit V1.8), see __classic__.
 
 [include preface.qbk]
 [include what_s_new.qbk]
@@ -439,7 +440,7 @@ V2.4.2). If you're looking for the documentation of Spirit's previous version
 [include support.qbk]
 [include faq.qbk]
 [include notes.qbk]
-[/include rationale.qbk]
+[include rationale.qbk]
 [include repository.qbk]
 [include acknowledgments.qbk]
 [include references.qbk]
