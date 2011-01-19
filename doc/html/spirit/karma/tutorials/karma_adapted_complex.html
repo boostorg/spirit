@@ -1,10 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Complex - Fully Integrated</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="karma_easier_complex.html" title="Complex - Made easier">
@@ -22,17 +21,17 @@
         - Fully Integrated</a>
 </h4></div></div></div>
 <p>
-          Until now, we have been working around the fact that <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;&gt;</span></code> is not a native <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          Until now, we have been working around the fact that <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;&gt;</span></code> is not a native <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           sequence. We have not been able to use it with the same simplicity and
-          natural grace of a <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;&gt;</span></code> or a similar <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          natural grace of a <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;&gt;</span></code> or a similar <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           data structure. Fortunately, starting with Boost V1.43 it is possible to
           adapt any data structure (not only, as before, structures with publicly
-          accessible members) as a <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          accessible members) as a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           sequence. All we have to do is to employ one of the new <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS</span></code>
           macros.
         </p>
 <a name="spirit.karma.tutorials.karma_adapted_complex.adapting_a_class_as_a_fusion_sequence"></a><h6>
-<a name="id885979"></a>
+<a name="id1092544"></a>
           <a class="link" href="karma_adapted_complex.html#spirit.karma.tutorials.karma_adapted_complex.adapting_a_class_as_a_fusion_sequence">Adapting
           a Class As a Fusion Sequence</a>
         </h6>
@@ -106,7 +105,7 @@
         </p>
 <p>
           Now it should be clear why our adapt construct above exposes a three element
-          <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           sequence: a boolean and two double values (the real and the imaginary part
           of the complex number). We want it to match the requirements of our formatting
           grammar, which expects those exact values. The <code class="computeroutput"><span class="identifier">BOOST_FUSION_ADAPT_CLASS</span></code>

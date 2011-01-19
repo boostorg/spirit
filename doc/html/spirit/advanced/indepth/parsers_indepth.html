@@ -1,10 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parsers in Depth</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../indepth.html" title="In Depth">
 <link rel="prev" href="../indepth.html" title="In Depth">
@@ -187,7 +186,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id1062348"></a>
+<a name="id1299434"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
@@ -234,7 +233,7 @@
         </p>
 <p>
           This simple no-frills protocol is one of the reasons why <a href="http://boost-spirit.com" target="_top">Spirit</a>
-          is fast. If you know the internals of <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+          is fast. If you know the internals of <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
           and perhaps even wrote some parsers with it, this simple <a href="http://boost-spirit.com" target="_top">Spirit</a>
           mechanism is a joy to work with. There are no scanners and all that crap.
         </p>
@@ -378,7 +377,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id1064058"></a>
+<a name="id1300837"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -484,8 +483,8 @@
           not a primitive parser, we do not need to call <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">skipper</span><span class="special">)</span></code>. The <span class="emphasis"><em>subject</em></span>, if
           it is a primitive, will do the pre-skip. If if it is another composite
           parser, it will eventually call a primitive parser somewhere down the line
-          which will do the pre-skip. This makes it a lot more efficient than <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
-          <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+          which will do the pre-skip. This makes it a lot more efficient than <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>.
+          <a href="../../../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
           puts the skipping business into the so-called "scanner" which
           blindly attempts a pre-skip every time we increment the iterator.
         </p>
@@ -607,7 +606,7 @@
         </p>
 <p>
           This essentially says; for all expressions of the form: <code class="computeroutput"><span class="special">*</span><span class="identifier">p</span></code>, to build a kleene parser. Elements
-          is a <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          is a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           sequence. For the kleene, which is a unary operator, expect only one element
           in the sequence. That element is the subject of the kleene.
         </p>

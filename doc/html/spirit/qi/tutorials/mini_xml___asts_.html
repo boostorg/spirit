@@ -1,10 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Mini XML - ASTs!</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="employee___parsing_into_structs.html" title="Employee - Parsing into structs">
@@ -67,7 +66,7 @@
           has an error in it.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.first_cut"></a><h6>
-<a name="id749891"></a>
+<a name="id931475"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.first_cut">First Cut</a>
         </h6>
 <p>
@@ -140,7 +139,7 @@
           by the placeholder <code class="computeroutput"><span class="identifier">_val</span></code>).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.alternates"></a><h6>
-<a name="id751330"></a>
+<a name="id932669"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.alternates">Alternates</a>
         </h6>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
@@ -170,7 +169,7 @@
 <span class="special">;</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___asts_.not_predicate"></a><h6>
-<a name="id751741"></a>
+<a name="id932997"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.not_predicate">Not
           Predicate</a>
         </h6>
@@ -197,7 +196,7 @@
           at this point.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.inherited_attribute"></a><h6>
-<a name="id751951"></a>
+<a name="id933153"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.inherited_attribute">Inherited
           Attribute</a>
         </h6>
@@ -223,7 +222,7 @@
           <code class="computeroutput"><span class="identifier">_r3</span></code>, etc. if you have more).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit"></a><h6>
-<a name="id752198"></a>
+<a name="id933348"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit">A Lazy
           Lit</a>
         </h6>
@@ -249,7 +248,7 @@
 <span class="special">;</span>
 </pre>
 <p>
-          Those who know <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          Those who know <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           now will notice <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span></code> and
           <code class="computeroutput"><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span></code>. This
           gives us a hint that <code class="computeroutput"><span class="identifier">mini_xml</span></code>
@@ -257,7 +256,7 @@
           accessors, provided by <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.how_it_all_works"></a><h6>
-<a name="id752623"></a>
+<a name="id933679"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.how_it_all_works">How
           it all works</a>
         </h6>
@@ -304,7 +303,7 @@
           as <code class="computeroutput"><span class="identifier">_r1</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.the_structures"></a><h6>
-<a name="id753023"></a>
+<a name="id933988"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.the_structures">The
           Structures</a>
         </h6>
@@ -333,7 +332,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants"></a><h6>
-<a name="id753259"></a>
+<a name="id934180"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants">Of
           Alternates and Variants</a>
         </h6>
@@ -360,14 +359,14 @@
           of <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">B</span></code> is the attribute of <code class="computeroutput"><span class="identifier">b</span></code>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again"></a><h6>
-<a name="id753471"></a>
+<a name="id934345"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again">Adapting
           structs again</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="identifier">mini_xml</span></code> is no brainier.
           It is a plain ol' struct. But as we've seen in our employee example, we
-          can adapt that to be a <a href="../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
+          can adapt that to be a <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
           sequence:
         </p>
 <p>
@@ -382,7 +381,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.one_more_take"></a><h6>
-<a name="id753642"></a>
+<a name="id934483"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.one_more_take">One
           More Take</a>
         </h6>
@@ -446,7 +445,7 @@
           if you missed that). There is some new stuff though. It's all in the <code class="computeroutput"><span class="identifier">xml</span></code> rule:
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.local_variables"></a><h6>
-<a name="id754756"></a>
+<a name="id936499"></a>
           <a class="link" href="mini_xml___asts_.html#spirit.qi.tutorials.mini_xml___asts_.local_variables">Local
           Variables</a>
         </h6>
