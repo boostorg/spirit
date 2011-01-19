@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Syntax Diagram</title>
-<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../abstracts.html" title="Abstracts">
@@ -10,10 +10,17 @@
 <link rel="next" href="parsing_expression_grammar.html" title="Parsing Expression Grammar">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../abstracts.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="parsing_expression_grammar.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="../abstracts.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="parsing_expression_grammar.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -21,9 +28,9 @@
 </h3></div></div></div>
 <p>
         In the next section, we will deal with Parsing Expression Grammars (PEG)
-        <sup>[<a name="id907365" href="#ftn.id907365" class="footnote">3</a>]</sup>, a variant of Extended Backus-Naur Form (EBNF) <sup>[<a name="id907377" href="#ftn.id907377" class="footnote">4</a>]</sup> with a different interpretation. It is easier to understand PEG
+        <sup>[<a name="id844231" href="#ftn.id844231" class="footnote">3</a>]</sup>, a variant of Extended Backus-Naur Form (EBNF) <sup>[<a name="id844243" href="#ftn.id844243" class="footnote">4</a>]</sup> with a different interpretation. It is easier to understand PEG
         using Syntax Diagrams. Syntax diagrams represent a grammar graphically. It
-        was used extensively by Niklaus Wirth <sup>[<a name="id907389" href="#ftn.id907389" class="footnote">5</a>]</sup> in the "Pascal User Manual". Syntax Diagrams are easily
+        was used extensively by Niklaus Wirth <sup>[<a name="id844255" href="#ftn.id844255" class="footnote">5</a>]</sup> in the "Pascal User Manual". Syntax Diagrams are easily
         understandable by programmers due to their similarity to flow charts. The
         isomorphism of the diagrams and functions make them ideal for representing
         Recursive Descent parsers which are essentially mutually recursive functions.
@@ -36,7 +43,7 @@
         parsers and to <span class="emphasis"><em>Spirit.Karma</em></span> generators.
       </p>
 <a name="spirit.abstracts.syntax_diagram.elements"></a><h5>
-<a name="id907416"></a>
+<a name="id844283"></a>
         <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.elements">Elements</a>
       </h5>
 <p>
@@ -62,7 +69,7 @@
           <span class="inlinemediaobject"><img src="../.././images/non-terminal.png" alt="non-terminal"></span>
         </p></blockquote></div>
 <a name="spirit.abstracts.syntax_diagram.constructs"></a><h5>
-<a name="id907505"></a>
+<a name="id844371"></a>
         <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.constructs">Constructs</a>
       </h5>
 <p>
@@ -103,7 +110,7 @@
         This behavior is quite obvious with syntax diagrams as they resemble flow-charts.
       </p>
 <a name="spirit.abstracts.syntax_diagram.predicates"></a><h5>
-<a name="id907954"></a>
+<a name="id844514"></a>
         <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.predicates">Predicates</a>
       </h5>
 <p>
@@ -140,14 +147,14 @@
       </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id907365" href="#id907365" class="para">3</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id844231" href="#id844231" class="para">3</a>] </sup>
           Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
           Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
         </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id907377" href="#id907377" class="para">4</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id844243" href="#id844243" class="para">4</a>] </sup>
           Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
         </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id907389" href="#id907389" class="para">5</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id844255" href="#id844255" class="para">5</a>] </sup>
           Niklaus Wirth: The Programming Language Pascal. (July 1973)
         </p></div>
 </div>
@@ -162,7 +169,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../abstracts.html"><img src="../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../images/home.png" alt="Home"></a><a accesskey="n" href="parsing_expression_grammar.html"><img src="../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="../abstracts.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="parsing_expression_grammar.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

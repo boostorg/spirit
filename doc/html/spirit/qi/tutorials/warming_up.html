@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Warming up</title>
-<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
@@ -10,10 +10,17 @@
 <link rel="next" href="semantic_actions.html" title="Parser Semantic Actions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%"><tr><td valign="top"></td></tr></table>
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="quick_start.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="semantic_actions.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="quick_start.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="semantic_actions.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -27,7 +34,7 @@
           heavily uses operator overloading to accomplish its magic.
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__1_parsing_a_number"></a><h6>
-<a name="id915661"></a>
+<a name="id851614"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__1_parsing_a_number">Trivial
           Example #1 Parsing a number</a>
         </h6>
@@ -42,7 +49,7 @@
           parsers and consistent naming conventions help you keep from going insane!
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__2_parsing_two_numbers"></a><h6>
-<a name="id915690"></a>
+<a name="id851643"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__2_parsing_two_numbers">Trivial
           Example #2 Parsing two numbers</a>
         </h6>
@@ -75,7 +82,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__3_parsing_zero_or_more_numbers"></a><h6>
-<a name="id915751"></a>
+<a name="id851704"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__3_parsing_zero_or_more_numbers">Trivial
           Example #3 Parsing zero or more numbers</a>
         </h6>
@@ -98,7 +105,7 @@
           also known as a Kleene Closure, but we call it the Star in most places.
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__4_parsing_a_comma_delimited_list_of_numbers"></a><h6>
-<a name="id915794"></a>
+<a name="id851747"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.trivial_example__4_parsing_a_comma_delimited_list_of_numbers">Trivial
           Example #4 Parsing a comma-delimited list of numbers</a>
         </h6>
@@ -121,7 +128,7 @@
           star encloses the complete expression above.
         </p>
 <a name="spirit.qi.tutorials.warming_up.let_s_parse_"></a><h6>
-<a name="id915925"></a>
+<a name="id851878"></a>
           <a class="link" href="warming_up.html#spirit.qi.tutorials.warming_up.let_s_parse_">Let's Parse!</a>
         </h6>
 <p>
@@ -167,10 +174,10 @@
     <span class="keyword">using</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
 
     <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">phrase_parse</span><span class="special">(</span>
-        <span class="identifier">first</span><span class="special">,</span>                          <a class="co" name="spirit0co" href="warming_up.html#spirit0"><img src="../../../images/callouts/1.png" alt="1" border="0"></a>
-        <span class="identifier">last</span><span class="special">,</span>                           <a class="co" name="spirit1co" href="warming_up.html#spirit1"><img src="../../../images/callouts/2.png" alt="2" border="0"></a>
-        <span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">double_</span><span class="special">),</span>   <a class="co" name="spirit2co" href="warming_up.html#spirit2"><img src="../../../images/callouts/3.png" alt="3" border="0"></a>
-        <span class="identifier">space</span>                           <a class="co" name="spirit3co" href="warming_up.html#spirit3"><img src="../../../images/callouts/4.png" alt="4" border="0"></a>
+        <span class="identifier">first</span><span class="special">,</span>                          <a class="co" name="spirit0co" href="warming_up.html#spirit0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
+        <span class="identifier">last</span><span class="special">,</span>                           <a class="co" name="spirit1co" href="warming_up.html#spirit1"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+        <span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">double_</span><span class="special">),</span>   <a class="co" name="spirit2co" href="warming_up.html#spirit2"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+        <span class="identifier">space</span>                           <a class="co" name="spirit3co" href="warming_up.html#spirit3"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
     <span class="special">);</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">first</span> <span class="special">!=</span> <span class="identifier">last</span><span class="special">)</span> <span class="comment">// fail if we did not get a full match
 </span>        <span class="keyword">return</span> <span class="keyword">false</span><span class="special">;</span>
@@ -181,25 +188,25 @@
         </p>
 <div class="calloutlist"><table border="0" summary="Callout list">
 <tr>
-<td width="5%" valign="top" align="left"><p><a name="spirit0"></a><a href="#spirit0co"><img src="../../../images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td width="5%" valign="top" align="left"><p><a name="spirit0"></a><a href="#spirit0co"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
               start iterator
             </p></td>
 </tr>
 <tr>
-<td width="5%" valign="top" align="left"><p><a name="spirit1"></a><a href="#spirit1co"><img src="../../../images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td width="5%" valign="top" align="left"><p><a name="spirit1"></a><a href="#spirit1co"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
               end iterator
             </p></td>
 </tr>
 <tr>
-<td width="5%" valign="top" align="left"><p><a name="spirit2"></a><a href="#spirit2co"><img src="../../../images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td width="5%" valign="top" align="left"><p><a name="spirit2"></a><a href="#spirit2co"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
               the parser
             </p></td>
 </tr>
 <tr>
-<td width="5%" valign="top" align="left"><p><a name="spirit3"></a><a href="#spirit3co"><img src="../../../images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td width="5%" valign="top" align="left"><p><a name="spirit3"></a><a href="#spirit3co"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
               the skip-parser
             </p></td>
@@ -281,7 +288,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="quick_start.html"><img src="../../../images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="semantic_actions.html"><img src="../../../images/next.png" alt="Next"></a>
+<a accesskey="p" href="quick_start.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="semantic_actions.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
