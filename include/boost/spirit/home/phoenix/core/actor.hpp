@@ -137,10 +137,6 @@ namespace boost { namespace phoenix
 
         //  Bring in the rest of the constructors and function call operators
         #include <boost/spirit/home/phoenix/core/detail/actor.hpp>
-
-    private:
-        // silence MSVC warning C4512: assignment operator could not be generated
-        actor& operator= (actor const&);
     };
 
     //  Forward declaration: The intent to overload the comma must be
