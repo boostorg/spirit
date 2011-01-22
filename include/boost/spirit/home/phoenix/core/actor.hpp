@@ -86,6 +86,18 @@ namespace boost { namespace phoenix
             >::type
         nullary_result;
 
+        actor& operator=(actor const& rhs)
+        {
+            Base::operator=(rhs);
+            return *this;
+        }
+
+        actor& operator=(actor& rhs)
+        {
+            Base::operator=(rhs);
+            return *this;
+        }
+
         nullary_result
         operator()() const
         {
