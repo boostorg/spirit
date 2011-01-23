@@ -88,13 +88,13 @@ namespace boost { namespace phoenix
 
         actor& operator=(actor const& rhs)
         {
-            Base::operator=(rhs);
+            Eval::operator=(rhs);
             return *this;
         }
 
         actor& operator=(actor& rhs)
         {
-            Base::operator=(rhs);
+            Eval::operator=(rhs);
             return *this;
         }
 
