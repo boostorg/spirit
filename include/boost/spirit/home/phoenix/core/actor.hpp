@@ -56,6 +56,11 @@ namespace boost { namespace phoenix
         typedef typename Eval::template result<Env>::type type;
     };
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4522) // multiple assignment operators specified warning
+#endif
+
     template <typename Eval>
     struct actor : Eval
     {
@@ -150,6 +155,10 @@ namespace boost { namespace phoenix
         //  Bring in the rest of the constructors and function call operators
         #include <boost/spirit/home/phoenix/core/detail/actor.hpp>
     };
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
     //  Forward declaration: The intent to overload the comma must be
     //  stated early on to avoid the subtle problem that arises when
