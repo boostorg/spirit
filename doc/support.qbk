@@ -9,6 +9,6 @@
 [section:support Supporting Libraries]
 
 [include support/multi_pass.qbk]
-[include support/utree.qbk]
+[/ include support/utree.qbk]
 
 [endsect]

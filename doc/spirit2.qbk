@@ -116,7 +116,7 @@
 
 [/ References to classes ]
 
-[def __utree__                  [link spirit.support.utree `utree`]]
+[/ def __utree__                  [link spirit.support.utree `utree`]]
 [def __multi_pass__             [link spirit.support.multi_pass `multi_pass`]]
 
 [def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `lex::token_def<>`]

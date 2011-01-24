@@ -13,4 +13,4 @@ project spirit-support-example
     ;
 
 exe multi_pass : multi_pass.cpp ;
-exe parse_sexpr : utree/parse_sexpr.cpp ;
+#exe parse_sexpr : utree/parse_sexpr.cpp ;

@@ -72,7 +72,7 @@ writing a source to source language transformation tool. He made many incredible
 suggestions helping to improve the usability of both libraries.
 
 [*Bryce Leylbach] (a.k.a. wash) for contributing the components `qi::`__qi_as__
-and `karma::`__karma_as__, for working on __utree__ and its integration with
+and `karma::`__karma_as__, for working on utree and its integration with
 Qi and Karma, for adding numeric parser literals, for contributing the related
 documentation, and for being a big help in the everyday maintenance of the
 library's (and our) sanity.

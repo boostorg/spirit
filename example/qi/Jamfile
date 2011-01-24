@@ -62,9 +62,9 @@ exe calculator7 :
     calc7/calc7c.cpp
     ;
 
-exe calc_utree_naive : calc_utree_naive.cpp ;
-exe calc_utree_ast : calc_utree_ast.cpp ;
-exe calc_utree : calc_utree.cpp ;
+#exe calc_utree_naive : calc_utree_naive.cpp ;
+#exe calc_utree_ast : calc_utree_ast.cpp ;
+#exe calc_utree : calc_utree.cpp ;
 
 exe mini_c_interp :
     mini_c/mini_c.cpp
