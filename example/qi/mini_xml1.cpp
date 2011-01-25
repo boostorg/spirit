@@ -18,7 +18,6 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/foreach.hpp>
@@ -139,7 +138,6 @@ namespace client
         {
             using qi::lit;
             using qi::lexeme;
-            using qi::raw;
             using ascii::char_;
             using ascii::string;
             using namespace qi::labels;
@@ -147,13 +145,13 @@ namespace client
             using phoenix::at_c;
             using phoenix::push_back;
 
-            text %= lexeme[+(char_ - '<')       ] ; // [_val = phoenix::construct<std::string>(begin(_1),end(_1))];
+            text = lexeme[+(char_ - '<')        [_val += _1]];
             node = (xml | text)                 [_val = _1];
 
-            start_tag %=
+            start_tag =
                     '<'
                 >>  !lit('/')
-                >>  raw[lexeme[+(char_ - '>')]]
+                >>  lexeme[+(char_ - '>')       [_val += _1]]
                 >>  '>'
             ;
 
