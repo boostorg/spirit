@@ -193,7 +193,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.indepth.parsers_indepth.primitive_parsers"></a><h6>
-<a name="id1234331"></a>
+<a name="id1269436"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.primitive_parsers">Primitive
           Parsers</a>
         </h6>
@@ -384,7 +384,7 @@
           which does the actual work.
         </p>
 <a name="spirit.advanced.indepth.parsers_indepth.composite_parsers"></a><h6>
-<a name="id1235724"></a>
+<a name="id1270829"></a>
           <a class="link" href="parsers_indepth.html#spirit.advanced.indepth.parsers_indepth.composite_parsers">Composite
           Parsers</a>
         </h6>
@@ -416,28 +416,31 @@
     <span class="identifier">kleene</span><span class="special">(</span><span class="identifier">Subject</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">subject</span><span class="special">)</span>
       <span class="special">:</span> <span class="identifier">subject</span><span class="special">(</span><span class="identifier">subject</span><span class="special">)</span> <span class="special">{}</span>
 
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
+    <span class="keyword">bool</span> <span class="identifier">parse_container</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">f</span><span class="special">)</span> <span class="keyword">const</span>
+    <span class="special">{</span>
+        <span class="keyword">while</span> <span class="special">(!</span><span class="identifier">f</span> <span class="special">(</span><span class="identifier">subject</span><span class="special">))</span>
+            <span class="special">;</span>
+        <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
+    <span class="special">}</span>
+
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Context</span>
       <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Skipper</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attribute</span><span class="special">&gt;</span>
     <span class="keyword">bool</span> <span class="identifier">parse</span><span class="special">(</span><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">last</span>
       <span class="special">,</span> <span class="identifier">Context</span><span class="special">&amp;</span> <span class="identifier">context</span><span class="special">,</span> <span class="identifier">Skipper</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">skipper</span>
       <span class="special">,</span> <span class="identifier">Attribute</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
-        <span class="comment">// create a local value if Attribute is not unused_type
-</span>        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_value</span><span class="special">&lt;</span><span class="identifier">Attribute</span><span class="special">&gt;::</span><span class="identifier">type</span> 
-            <span class="identifier">value_type</span><span class="special">;</span>
-        <span class="identifier">value_type</span> <span class="identifier">val</span> <span class="special">=</span> <span class="identifier">value_type</span><span class="special">();</span>
-
         <span class="comment">// ensure the attribute is actually a container type
 </span>        <span class="identifier">traits</span><span class="special">::</span><span class="identifier">make_container</span><span class="special">(</span><span class="identifier">attr</span><span class="special">);</span>
 
-        <span class="comment">// Repeat while subject parses ok
-</span>        <span class="identifier">Iterator</span> <span class="identifier">save</span> <span class="special">=</span> <span class="identifier">first</span><span class="special">;</span>
-        <span class="keyword">while</span> <span class="special">(</span><span class="identifier">subject</span><span class="special">.</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">save</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">context</span><span class="special">,</span> <span class="identifier">skipper</span><span class="special">,</span> <span class="identifier">val</span><span class="special">)</span> <span class="special">&amp;&amp;</span>
-               <span class="identifier">traits</span><span class="special">::</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">attr</span><span class="special">,</span> <span class="identifier">val</span><span class="special">))</span>    <span class="comment">// push the parsed value into our attribute
-</span>        <span class="special">{</span>
-            <span class="identifier">first</span> <span class="special">=</span> <span class="identifier">save</span><span class="special">;</span>
-            <span class="identifier">traits</span><span class="special">::</span><span class="identifier">clear</span><span class="special">(</span><span class="identifier">val</span><span class="special">);</span>
-        <span class="special">}</span>
+        <span class="keyword">typedef</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">fail_function</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="identifier">Skipper</span><span class="special">&gt;</span>
+            <span class="identifier">fail_function</span><span class="special">;</span>
+
+        <span class="identifier">Iterator</span> <span class="identifier">iter</span> <span class="special">=</span> <span class="identifier">first</span><span class="special">;</span>
+        <span class="identifier">fail_function</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">iter</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">context</span><span class="special">,</span> <span class="identifier">skipper</span><span class="special">);</span>
+        <span class="identifier">parse_container</span><span class="special">(</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">make_pass_container</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">));</span>
+
+        <span class="identifier">first</span> <span class="special">=</span> <span class="identifier">f</span><span class="special">.</span><span class="identifier">first</span><span class="special">;</span>
         <span class="keyword">return</span> <span class="keyword">true</span><span class="special">;</span>
     <span class="special">}</span>
 
