@@ -12,6 +12,7 @@
 
 #include <boost/config/no_tr1/cmath.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
@@ -257,7 +258,8 @@ namespace boost { namespace spirit { namespace karma
             //    generate(sink, right_align(precision, '0')[ulong], n);
             // but it's spelled out to avoid inter-modular dependencies.
 
-            T digits = (detail::is_zero(n) ? 0 : floor(log10(n))) + 1;
+            typename remove_const<T>::type digits = 
+                (detail::is_zero(n) ? 0 : floor(log10(n))) + 1;
             bool r = true;
             for (/**/; r && digits < precision_; digits = digits + 1)
                 r = char_inserter<>::call(sink, '0');
