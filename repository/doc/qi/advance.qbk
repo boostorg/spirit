@@ -23,7 +23,9 @@ operations at each step. In some cases that work is unnecessary, as in the case
 where large binary objects are being parsed. Take, for example, the following
 binary data:
 
+[pre
     00 00 00 01 77 fc b4 51 0a b3 b7 ... 1e 60 70 b6 00 00 01 00
+]
 
 If the first 4 bytes are a little-endian 32-bit integer describing the length
 of the subsequent data, but the data itself is not relevant to parsing, then the
