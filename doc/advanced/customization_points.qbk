@@ -208,6 +208,101 @@ __customize_use_as_container_example__, and __customize_counter_example__.
 [endsect] [/ is_container]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:is_string Determine if a Type Should be Treated as a String (Qi and Karma)]
+
+[heading is_string]
+
+The `is_string` customization point is a template meta-function. It is used by
+/Qi/ [qi_lit_string String Literals] (`lit(str)`), /Qi/ [qi_lit_char Character Literals]
+(`lit(c)`), /Karma/ [karma_lit_string String Literals] (`lit(str)`), /Karma/ [karma_lit_char Character Literals]
+(`lit(c)`) and other Spirit components. It determines whether a supplied type
+can be treated as a string.
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/string_traits.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T>
+    struct is_string
+    {
+        typedef <unspecified> type;
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter] [Description]                                        [Default]]
+    [[`T`]       [The type, `T` which needs to be tested as a string] [none]]
+]
+
+[variablelist Notation
+    [[`T`]              [An arbitrary type.]]
+    [[`N`]              [An arbitrary integral constant.]]
+    [[`Char`]           [A character type.]]
+    [[`Traits`]         [A character traits type.]]
+    [[`Allocator`]      [A standard allocator type.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]       [Semantics]]
+    [[`is_string<T>::type`] [Result of the metafunction that evalutes to mpl::true_
+                             if a given type, `T`, is to be treated as a string and
+                             mpl::false_ otherwise. (See __mpl_boolean_constant__).]]
+]
+
+[heading Predefined Specializations]
+
+[table
+    [[Type]                                           [Condition]]
+    [[`T`]                                            [`mpl::false_`]]
+    [[`T const`]                                      [`is_string<T>`]]
+    [[`char const*`]                                  [`mpl::true_`]]
+    [[`wchar_t const*`]                               [`mpl::true_`]]
+    [[`char[N]`]                                      [`mpl::true_`]]
+    [[`wchar_t[N]`]                                   [`mpl::true_`]]
+    [[`char const[N]`]                                [`mpl::true_`]]
+    [[`wchar_t const[N]`]                             [`mpl::true_`]]
+    [[`char(&)[N]`]                                   [`mpl::true_`]]
+    [[`wchar_t(&)[N]`]                                [`mpl::true_`]]
+    [[`char const(&)[N]`]                             [`mpl::true_`]]
+    [[`wchar_t const(&)[N]`]                          [`mpl::true_`]]
+    [[`std::basic_string<Char, Traits, Allocator>`]   [`mpl::true_`]]
+]
+
+[heading When to implement]
+
+This customization point needs to be implemented to use user-defined string classes
+that do not correspond to std::string syntax and semantics.
+
+[heading Related Attribute Customization Points]
+
+TBD
+
+[heading Example]
+
+TBD
+
+[endsect] [/ is_string]
+
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:handles_container Determine Whether a Component Handles Container Attributes (Qi and Karma)]
 
 [heading handles_container]
