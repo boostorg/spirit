@@ -236,7 +236,8 @@ namespace boost { namespace spirit { namespace qi
         {
             typedef extract_int<T, Radix, MinDigits, MaxDigits> extract;
             qi::skip_over(first, last, skipper);
-            
+           
+            Iterator save = first; 
             T attr_;
 
             if (extract::call(first, last, attr_) && (attr_ == n_))
@@ -245,6 +246,7 @@ namespace boost { namespace spirit { namespace qi
                 return true;
             }
 
+            first = save;
             return false;
         }
 

@@ -104,7 +104,7 @@ namespace boost { namespace spirit
     struct use_lazy_terminal<qi::domain, tag::double_, 1> 
       : mpl::true_ {};
 
-    template <> // enables *lazy* double_(...)
+    template <> // enables *lazy* long_double_(...)
     struct use_lazy_terminal<qi::domain, tag::long_double, 1> 
       : mpl::true_ {};
 
@@ -210,6 +210,7 @@ namespace boost { namespace spirit { namespace qi
             typedef detail::real_impl<T, RealPolicies> extract;
             qi::skip_over(first, last, skipper);
 
+            Iterator save = first;
             T attr_;
 
             if (extract::parse(first, last, attr_, RealPolicies()) &&
@@ -219,6 +220,7 @@ namespace boost { namespace spirit { namespace qi
                 return true;
             }
 
+            first = save;
             return false;
         }
 
