@@ -7,5 +7,6 @@
 ===============================================================================/]
 
 [section:primitive Qi Parser Primitives]
+[include        advance.qbk]
 [include        flush_multi_pass.qbk]
 [endsect]
