@@ -7,9 +7,9 @@
 ===============================================================================/]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section XXX]
+[section:Customization_Point XXX]
 
-[heading Customization Point]
+[heading Customization_Point]
 
 Short description here...
 
@@ -42,16 +42,11 @@ Also, see __include_structure__.
     [[`T`]                  [What is T]                 []]
 ]
 
-[heading Notation]
-
 [variablelist Notation
     [[`xxx`]     [An XXX]]
 ]
 
 [heading Expression Semantics]
-
-Semantics of an expression is defined only where it differs from, or is not
-defined in _concept-of_XXX_.
 
 [table
     [[Expression]       [Semantics]]
@@ -61,8 +56,8 @@ defined in _concept-of_XXX_.
 [heading Predefined Specializations]
 
 [table
-    [[Type]                   [Condition]]
-    [[`xxx`]                  [when does it evaluate to mpl::true_]]
+    [[Type]  [Semantics]]
+    [[`xxx`] [Summary of the specialization.]]
 ]
 
 [heading When to implement]

@@ -28,7 +28,7 @@
         Type Should be Treated as a String (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.is_string.is_string"></a><h6>
-<a name="id1164431"></a>
+<a name="id1105258"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.is_string">is_string</a>
         </h6>
 <p>
@@ -46,7 +46,7 @@
           as a string.
         </p>
 <a name="spirit.advanced.customize.is_string.module_headers"></a><h6>
-<a name="id1164603"></a>
+<a name="id1105430"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.module_headers">Module
           Headers</a>
         </h6>
@@ -67,7 +67,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.is_string.namespace"></a><h6>
-<a name="id1164714"></a>
+<a name="id1105541"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -84,7 +84,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_string.synopsis"></a><h6>
-<a name="id1164799"></a>
+<a name="id1105625"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -94,7 +94,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.is_string.template_parameters"></a><h6>
-<a name="id1164903"></a>
+<a name="id1105729"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.template_parameters">Template
           parameters</a>
         </h6>
@@ -166,7 +166,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.is_string.expression_semantics"></a><h6>
-<a name="id1165120"></a>
+<a name="id1105947"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -204,7 +204,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_string.predefined_specializations"></a><h6>
-<a name="id1165237"></a>
+<a name="id1106063"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -221,7 +221,7 @@
                 </th>
 <th>
                   <p>
-                    Condition
+                    Semantics
                   </p>
                 </th>
 </tr></thead>
@@ -234,7 +234,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -246,7 +246,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">is_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">is_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>.
                   </p>
                 </td>
 </tr>
@@ -258,7 +258,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -270,7 +270,31 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">char</span><span class="special">*</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">wchar_t</span><span class="special">*</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -282,7 +306,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -294,7 +318,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -306,7 +330,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -318,7 +342,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -330,7 +354,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -342,7 +366,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -354,7 +378,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -366,7 +390,7 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
@@ -380,14 +404,14 @@
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    Returns <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
                   </p>
                 </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.is_string.when_to_implement"></a><h6>
-<a name="id1166083"></a>
+<a name="id1107020"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.when_to_implement">When
           to implement</a>
         </h6>
@@ -396,20 +420,74 @@
           classes that do not correspond to std::string syntax and semantics.
         </p>
 <a name="spirit.advanced.customize.is_string.related_attribute_customization_points"></a><h6>
-<a name="id1166108"></a>
+<a name="id1107044"></a>
           <a class="link" href="is_string.html#spirit.advanced.customize.is_string.related_attribute_customization_points">Related
           Attribute Customization Points</a>
         </h6>
 <p>
-          TBD
+          If this customization point is implemented, the following other customization
+          points need to be implemented as well.
         </p>
-<a name="spirit.advanced.customize.is_string.example"></a><h6>
-<a name="id1166132"></a>
-          <a class="link" href="is_string.html#spirit.advanced.customize.is_string.example">Example</a>
-        </h6>
-<p>
-          TBD
-        </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Name
+                  </p>
+                </th>
+<th>
+                  <p>
+                    When to implement
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="string_traits/is_char.html" title="Determine if a Type is a Character"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_char</span></code></a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    For string types whose underlying character type is not <code class="computeroutput"><span class="keyword">char</span></code> or <code class="computeroutput"><span class="keyword">wchar_t</span></code>,
+                    <code class="computeroutput"><span class="identifier">is_char</span></code> must
+                    be implemented.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="string_traits/char_type_of.html" title="Determine the Character Type of a String"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">char_type_of</span></code></a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Whenever <code class="computeroutput"><span class="identifier">is_string</span></code>
+                    is implemented.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="string_traits/extract_c_string.html" title="Get a C-style String from a String Type"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">extract_c_string</span></code></a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Whenever <code class="computeroutput"><span class="identifier">is_string</span></code>
+                    is implemented.
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

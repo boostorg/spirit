@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
-<link rel="prev" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)">
+<link rel="prev" href="container_iterator.html" title="Determine the Type of the Iterator of a Container">
 <link rel="next" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -28,7 +28,7 @@
           the Iterator pointing to the Begin of a Container Attribute</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.iterate.begin_container.begin_container"></a><h6>
-<a name="id1185547"></a>
+<a name="id1126303"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.begin_container">begin_container</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             holding the attributes to generate output from.
           </p>
 <a name="spirit.advanced.customize.iterate.begin_container.module_headers"></a><h6>
-<a name="id1185647"></a>
+<a name="id1126402"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.module_headers">Module
             Headers</a>
           </h6>
@@ -62,7 +62,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.iterate.begin_container.namespace"></a><h6>
-<a name="id1185758"></a>
+<a name="id1126514"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -79,7 +79,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.begin_container.synopsis"></a><h6>
-<a name="id1185844"></a>
+<a name="id1126600"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -90,7 +90,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.iterate.begin_container.template_parameters"></a><h6>
-<a name="id1186000"></a>
+<a name="id1126755"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.template_parameters">Template
             parameters</a>
           </h6>
@@ -159,12 +159,8 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.advanced.customize.iterate.begin_container.notation"></a><h6>
-<a name="id1186200"></a>
-            <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.notation">Notation</a>
-          </h6>
 <div class="variablelist">
-<p class="title"><b></b></p>
+<p class="title"><b>Notation</b></p>
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">C</span></code></span></dt>
 <dd><p>
@@ -177,7 +173,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.iterate.begin_container.expression_semantics"></a><h6>
-<a name="id1186279"></a>
+<a name="id1127016"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -209,7 +205,7 @@
                       Return the iterator usable to dereference the first element
                       of the given container, <code class="computeroutput"><span class="identifier">c</span></code>.
                       The type of the returned iterator is expected to be the same
-                      as the type returned by the customization point <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_iterator</span></code></a>.
+                      as the type returned by the customization point <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_iterator</span></code></a>.
                     </p>
                   </td>
 </tr></tbody>
@@ -236,7 +232,7 @@
               </li>
 </ul></div>
 <a name="spirit.advanced.customize.iterate.begin_container.predefined_specializations"></a><h6>
-<a name="id1186543"></a>
+<a name="id1127280"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.predefined_specializations">Predefined
             Specializations</a>
           </h6>
@@ -259,7 +255,7 @@
                   </th>
 <th>
                     <p>
-                      Value
+                      Semantics
                     </p>
                   </th>
 </tr></thead>
@@ -303,7 +299,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.begin_container.when_to_implement"></a><h6>
-<a name="id1186767"></a>
+<a name="id1127504"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.when_to_implement">When
             to implement</a>
           </h6>
@@ -318,7 +314,7 @@
             would normally return <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>).
           </p>
 <a name="spirit.advanced.customize.iterate.begin_container.related_attribute_customization_points"></a><h6>
-<a name="id1186868"></a>
+<a name="id1127604"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
@@ -360,7 +356,7 @@
 <tr>
 <td>
                     <p>
-                      <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_iterator</span></code></a>
+                      <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">container_iterator</span></code></a>
                     </p>
                   </td>
 <td>
@@ -450,7 +446,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.begin_container.example"></a><h6>
-<a name="id1187564"></a>
+<a name="id1128301"></a>
             <a class="link" href="begin_container.html#spirit.advanced.customize.iterate.begin_container.example">Example</a>
           </h6>
 <p>

@@ -258,6 +258,7 @@
 [def __lex_actions__                [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
 
 [def __customize_is_container__     [link spirit.advanced.customize.is_container `traits::is_container`]]
+[def __customize_is_string__     [link spirit.advanced.customize.is_string `traits::is_string`]]
 [def __customize_transform_attribute__ [link spirit.advanced.customize.transform `traits::transform_attribute`]]
 [def __customize_optional_attribute__ [link spirit.advanced.customize.optional `traits::optional_attribute`]]
 [def __customize_assign_to__        [link spirit.advanced.customize.assign_to `traits::assign_to`]]
@@ -273,6 +274,9 @@
 [def __customize_next_iterator__    [link spirit.advanced.customize.iterate.next_iterator `traits::next_iterator`]]
 [def __customize_deref_iterator__   [link spirit.advanced.customize.iterate.deref_iterator `traits::deref_iterator`]]
 [def __customize_compare_iterators__ [link spirit.advanced.customize.iterate.compare_iterators `traits::compare_iterators`]]
+[def __customize_is_char__     [link spirit.advanced.customize.string_traits.is_char `traits::is_char`]]
+[def __customize_char_type_of__     [link spirit.advanced.customize.string_traits.char_type_of `traits::char_type_of`]]
+[def __customize_extract_c_string__     [link spirit.advanced.customize.string_traits.extract_c_string `traits::extract_c_string`]]
 [def __customize_attribute_as__     [link spirit.advanced.customize.attribute_as `traits::attribute_as`]]
 [def __customize_as__               [link spirit.advanced.customize.attribute_as `traits::as<T>()`]]
 [def __customize_valid_as__         [link spirit.advanced.customize.attribute_as `traits::valid_as<T>()`]]

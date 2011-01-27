@@ -94,7 +94,7 @@
         for. It is 14 bytes for a 32-bit platform and 30 bytes for a 64-bit platform.
       </p>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1212691"></a>
+<a name="id1158114"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -251,13 +251,6 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">stored_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 
-<span class="comment">// This initializes a `function_type` node, storing by reference
-</span><span class="comment">// instead of copying the function object. 
-</span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="identifier">utree</span><span class="special">(</span><span class="identifier">referenced_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">referenced_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
-
 <span class="comment">// This initializes either a `string_type`, a `symbol_type`, or a 
 </span><span class="comment">// `binary_type` node (depending on the template parameter `type_`), 
 </span><span class="comment">// which will hold the corresponding narrow character sequence (usually 
@@ -297,7 +290,7 @@
         attribute type.
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1215388"></a>
+<a name="id1160664"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -362,7 +355,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1216018"></a>
+<a name="id1161295"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -392,21 +385,11 @@
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
     <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
-
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">referenced_function</span> <span class="special">:</span> <span class="identifier">function_base</span>
-<span class="special">{</span>
-    <span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">;</span>
-    <span class="identifier">referenced_function</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">);</span>
-    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">referenced_function</span><span class="special">();</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-    <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-<span class="special">};</span>
 </pre>
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1216673"></a>
+<a name="id1161727"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
@@ -437,7 +420,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.example__sexpr_parser"></a><h5>
-<a name="id1216884"></a>
+<a name="id1161938"></a>
         <a class="link" href="utree.html#spirit.support.utree.example__sexpr_parser">Example: Sexpr
         Parser</a>
       </h5>
