@@ -108,7 +108,14 @@
   performed lexer state changes and was using `pass_fail` in semantic actions
   to make a token match fail.
 
-[endsect] [/ spirit_2_4_2]
+[heading Known Problems]
+
+* Integer literals (like `int_(10)`) consume input on failure, which can lead to 
+  problems with the alternative operator:
+
+[endsect]
+
+[/ spirit_2_4_2]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_4_1 Spirit V2.4.1] 

@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
-<link rel="prev" href="is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)">
+<link rel="prev" href="is_string.html" title="Determine if a Type Should be Treated as a String (Qi and Karma)">
 <link rel="next" href="transform.html" title="Transform an Attribute to a Different Type (Qi and Karma)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_container.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="transform.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="is_string.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="transform.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -28,7 +28,7 @@
         Whether a Component Handles Container Attributes (Qi and Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.handles_container.handles_container"></a><h6>
-<a name="id1237409"></a>
+<a name="id1272688"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.handles_container">handles_container</a>
         </h6>
 <p>
@@ -59,7 +59,7 @@
           and passing it the extracted value.
         </p>
 <a name="spirit.advanced.customize.handles_container.header"></a><h6>
-<a name="id1237496"></a>
+<a name="id1272775"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">handles_container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -79,7 +79,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.namespace"></a><h6>
-<a name="id1237581"></a>
+<a name="id1272860"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -96,7 +96,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.synopsis"></a><h6>
-<a name="id1237654"></a>
+<a name="id1272933"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Component</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attribute</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -106,7 +106,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.handles_container.template_parameters"></a><h6>
-<a name="id1239405"></a>
+<a name="id1273045"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.template_parameters">Template
           parameters</a>
         </h6>
@@ -192,12 +192,8 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.advanced.customize.handles_container.notation"></a><h6>
-<a name="id1239606"></a>
-          <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.notation">Notation</a>
-        </h6>
 <div class="variablelist">
-<p class="title"><b></b></p>
+<p class="title"><b>Notation</b></p>
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Component</span></code></span></dt>
 <dd><p>
@@ -215,7 +211,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.handles_container.expression_semantics"></a><h6>
-<a name="id1239692"></a>
+<a name="id1273321"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -254,7 +250,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.predefined_specializations"></a><h6>
-<a name="id1239831"></a>
+<a name="id1273460"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -278,7 +274,7 @@
                 </th>
 <th>
                   <p>
-                    Value
+                    Semantics
                   </p>
                 </th>
 </tr></thead>
@@ -337,7 +333,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.handles_container.when_to_implement"></a><h6>
-<a name="id1240179"></a>
+<a name="id1275048"></a>
           <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.when_to_implement">When
           to implement</a>
         </h6>
@@ -347,13 +343,6 @@
           handles container attributes. It is applicable for parsers (<span class="emphasis"><em>Spirit.Qi</em></span>)
           and generators (<span class="emphasis"><em>Spirit.Karma</em></span>). It will have to be
           implemented under rare circumstances only.
-        </p>
-<a name="spirit.advanced.customize.handles_container.example"></a><h6>
-<a name="id1240212"></a>
-          <a class="link" href="handles_container.html#spirit.advanced.customize.handles_container.example">Example</a>
-        </h6>
-<p>
-          TBD
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -366,7 +355,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_container.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="transform.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="is_string.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="transform.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

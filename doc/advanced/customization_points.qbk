@@ -126,9 +126,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation
     [[`C`]          [A type to be tested whether it needs to be treated
                      as a container.]]
     [[`T1`, `T2`, ...]  [Arbitrary types]]
@@ -152,7 +150,7 @@ conditions for which the corresponding specializations will evaluate to
 `mpl::true_` (see __mpl_boolean_constant__):
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`T`]                    [Returns `mpl::true_` if `T` has the following 
                                embedded types defined: `value_type`, 
                                `iterator`, `size_type`, and`reference`.
@@ -206,6 +204,111 @@ see here: __customize_embedded_container_example__,
 __customize_use_as_container_example__, and __customize_counter_example__.
 
 [endsect] [/ is_container]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:is_string Determine if a Type Should be Treated as a String (Qi and Karma)]
+
+[heading is_string]
+
+The `is_string` customization point is a template meta-function. It is used by
+/Qi/ [qi_lit_string String Literals] (`lit(str)`), /Qi/ [qi_lit_char Character Literals]
+(`lit(c)`), /Karma/ [karma_lit_string String Literals] (`lit(str)`), /Karma/ [karma_lit_char Character Literals]
+(`lit(c)`) and other Spirit components. It determines whether a supplied type
+can be treated as a string.
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/string_traits.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T>
+    struct is_string
+    {
+        typedef <unspecified> type;
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter] [Description]                                        [Default]]
+    [[`T`]       [The type, `T` which needs to be tested as a string] [none]]
+]
+
+[variablelist Notation
+    [[`T`]              [An arbitrary type.]]
+    [[`N`]              [An arbitrary integral constant.]]
+    [[`Char`]           [A character type.]]
+    [[`Traits`]         [A character traits type.]]
+    [[`Allocator`]      [A standard allocator type.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]       [Semantics]]
+    [[`is_string<T>::type`] [Result of the metafunction that evalutes to mpl::true_
+                             if a given type, `T`, is to be treated as a string and
+                             mpl::false_ otherwise. (See __mpl_boolean_constant__).]]
+]
+
+[heading Predefined Specializations]
+
+[table
+    [[Type]                                           [Semantics]]
+    [[`T`]                                            [Returns `mpl::false_`.]]
+    [[`T const`]                                      [Returns `is_string<T>`.]]
+    [[`char const*`]                                  [Returns `mpl::true_`.]]
+    [[`wchar_t const*`]                               [Returns `mpl::true_`.]]
+    [[`char*`]                                        [Returns `mpl::true_`.]]
+    [[`wchar_t*`]                                     [Returns `mpl::true_`.]]
+    [[`char[N]`]                                      [Returns `mpl::true_`.]]
+    [[`wchar_t[N]`]                                   [Returns `mpl::true_`.]]
+    [[`char const[N]`]                                [Returns `mpl::true_`.]]
+    [[`wchar_t const[N]`]                             [Returns `mpl::true_`.]]
+    [[`char(&)[N]`]                                   [Returns `mpl::true_`.]]
+    [[`wchar_t(&)[N]`]                                [Returns `mpl::true_`.]]
+    [[`char const(&)[N]`]                             [Returns `mpl::true_`.]]
+    [[`wchar_t const(&)[N]`]                          [Returns `mpl::true_`.]]
+    [[`std::basic_string<Char, Traits, Allocator>`]   [Returns `mpl::true_`.]]
+]
+
+[heading When to implement]
+
+This customization point needs to be implemented to use user-defined string classes
+that do not correspond to std::string syntax and semantics.
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_is_char__]   [For string types whose underlying character type
+                                is not `char` or `wchar_t`, `is_char` must be 
+                                implemented.]]
+    [[__customize_char_type_of__] [Whenever `is_string` is implemented.]]
+    [[__customize_extract_c_string__] [Whenever `is_string` is implemented.]]
+]
+
+[/ TODO: examples ]
+
+[endsect] [/ is_string]
+
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:handles_container Determine Whether a Component Handles Container Attributes (Qi and Karma)]
@@ -272,9 +375,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation
     [[`Component`]  [A component type to be tested whether it directly handles 
                      container attributes in the context of sequences.]]
     [[`Attribute`]  [A container attribute type as passed to the sequence.]]
@@ -301,7 +402,7 @@ conditions for which the corresponding specializations will evaluate to
 `mpl::true_` (see __mpl_boolean_constant__):
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`Component`, `Attribute`] [Always returns `mpl::false_` (the default).]]
     [[`rule<Iterator, T1, T2, T3, T4>`, `Attribute`]
                                 [Returns `is_container<A>`, where `A` is the 
@@ -320,9 +421,7 @@ specific type whenever this type directly handles container attributes.
 It is applicable for parsers (__qi__) and generators (__karma__). It will have
 to be implemented under rare circumstances only.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ handles_container]
 
@@ -387,8 +486,6 @@ Also, see __include_structure__.
                              of `transform_attribute` utilizing SFINAE (i.e.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
-
-[heading Notation]
 
 [variablelist Notation
     [[`Exposed`]          [The type, `Exposed` is the type of the attribute as
@@ -490,9 +587,7 @@ because the default implementation as shown above is not applicable. Examples
 for this could be that the type `Transformed` is not constructible from 
 the type `Exposed`.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ transform]
 
@@ -562,8 +657,6 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
 [variablelist Notation
     [[`Attrib`]     [A type to be used as the target to store the attribute value in.]]
     [[`attr`]       [An attribute instance of type `Attrib`.]]
@@ -598,9 +691,7 @@ implemented for a specific type whenever the default implementation as shown
 above is not applicable. Examples for this could be that the type `Attrib` is
 not constructible from the pair of iterators.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ assign_to_attribute_from_iterators]
 
@@ -655,8 +746,6 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
 [variablelist Notation
     [[`Attrib`]     [A type to be used as the target to store the attribute 
                      value in. This type is guaranteed not to be a container 
@@ -692,9 +781,7 @@ implemented for a specific type whenever the default implementation as shown
 above is not applicable. Examples for this could be that the type `Attrib` is
 not copy constructible.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ assign_to_attribute_from_value]
 
@@ -749,8 +836,6 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
 [variablelist Notation
     [[`Attrib`]     [A type to be used as the target to store the attribute 
                      value in. This type is guaranteed to be a container 
@@ -786,9 +871,7 @@ implemented for a specific type whenever the default implementation as shown
 above is not applicable. Examples for this could be that the type `Attrib` is
 not copy constructible.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ assign_to_container_from_value]
 
@@ -849,8 +932,6 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
 [variablelist 
     [[`C`]          [A type to be tested whether it needs to be treated
                      as a container.]]
@@ -873,7 +954,7 @@ several types. The following table lists those types together with the types
 exposed and the corresponding semantics:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`C`]                    [The non-const `value_type` of the given container
                                type, `C`. ]]
     [[`boost::optional<C>`]   [Returns `container_value<C>::type`]]
@@ -929,7 +1010,7 @@ The following example shows the predefined specialization for __unused_type__:
 which defines its embedded `type` to be __unused_type__ as well, this way
 propagating the 'don't care' attribute status to the embedded parser.
 
-More examples: TBD.
+[/ TODO: examples ]
 
 [endsect] [/ container_value]
 
@@ -984,9 +1065,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`C`]          [A type to be used as a container to store attribute values in.]]
     [[`c`]          [A container instance of type `C`.]
     [[`Attrib`]     [A type to be used as a container to store attribute values in.]]
@@ -1015,7 +1094,7 @@ several types. The following table lists those types together with the types
 exposed and the corresponding semantics:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`C`, `Attrib`]           [Store the provided attribute instance `attr` into 
                                 the given container `c` using the function call
                                 `c.insert(c.end(), attr)`.]]
@@ -1082,7 +1161,7 @@ The following example shows the predefined specialization for __unused_type__:
 
 which defines an empty member function `call()`.
 
-More examples: TBD
+[/ TODO: examples ]
 
 [endsect] [/ push_back]
 
@@ -1137,8 +1216,6 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
 [variablelist Notation
     [[`Attrib`]     [A type to be used as a container to store attribute values in.]]
     [[`attr`]       [An attribute instance of type `Attrib`.]]
@@ -1161,7 +1238,7 @@ several types. The following table lists those types together with the types
 exposed and the corresponding semantics:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`Attrib`]               [Re-initialize using assignment of  default 
                                constructed value.]]
     [[Any type `T` for which `is_container<>::type` is `mpl::true_`]
@@ -1184,9 +1261,7 @@ into a STL container and if the type cannot be re-initialized using one of the
 specializations listed above. Examples for this might be types not being default
 constructible or container types not exposing a member function `clear()`.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ clear_value]
 
@@ -1197,7 +1272,7 @@ TBD
 
 Before generating output for a value this value needs to extracted from the 
 attribute instance provided by the user. The customization point 
-`extract_from` is utilized to adapt this extraction for any data type possibly
+`extract_from_attribute` is utilized to adapt this extraction for any data type possibly
 used to store the values to output.
 
 [note The interface of this customization point has been changed with Boost 
@@ -1238,7 +1313,7 @@ Also, see __include_structure__.
 [table
     [[Parameter]            [Description]               [Default]]
     [[`Exposed`]            [The type, `Exposed` of the attribute natively
-                             exposed by the component the `extract_from` is
+                             exposed by the component the `extract_from_attribute` is
                              invoked from.]             [none]]
     [[`Attrib`]             [The type, `Attrib` of the attribute to be used to
                              generate output from.]                 [none]]
@@ -1250,12 +1325,11 @@ Also, see __include_structure__.
                              context.]]
 ]
 
-[heading Notation]
-
 [variablelist Notation
     [[`Exposed`]    [A type exposed as the native attribute of a component.]]
     [[`Attrib`]     [A type to be used to generate output from.]]
     [[`attr`]       [An attribute instance of type `Attrib`.]]
+    [[`ctx`]        [An instance of type `Context`.]]
 ]
 
 [heading Expression Semantics]
@@ -1265,7 +1339,7 @@ Also, see __include_structure__.
     [[
 ``extract_from_attribute<Exposed, Attrib>::call(attr, ctx)``] 
                         [Extract the value to generate 
-                         output from and return it to the caller.]]
+                         output from `attr` and return it to the caller.]]
 ]
 
 [heading Predefined Specializations]
@@ -1275,7 +1349,7 @@ several types. The following table lists those types together with the types
 exposed and the corresponding semantics:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`Attrib`]                [The exposed typedef `type` is defined to 
                                 `Attrib const&`. The function `call()` returns 
                                 the argument by reference without change.]] 
@@ -1309,7 +1383,7 @@ TBD
 [/////////////////////////////////////////////////////////////////////////////]
 [section:iterate Extract Attribute Values to Generate Output from a Container (Karma)]
 
-[section:container_iterator Determine the Type of the Iterator of a Container (Karma)]
+[section:container_iterator Determine the Type of the Iterator of a Container]
 
 [heading container_iterator]
 
@@ -1356,9 +1430,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`C`]              [A container type the iterator type needs to be evaluated for.]]
 ]
 
@@ -1391,7 +1463,7 @@ several types. The following table lists those types together with the
 types returned by the embedded typedef `type`:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`C`]                     [Returns `C::iterator`.]]
     [[`C const`]               [Returns `C::const_iterator`.]]
     [[__unused_type__]         [Returns __unused_type__` const*`.]]
@@ -1513,9 +1585,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`C`]              [A container type the begin iterator needs to be returned for.]]
     [[`c`]              [An instance of a container, `C`.]]
 ]
@@ -1552,7 +1622,7 @@ several types. The following table lists those types together with the
 types returned by the embedded typedef `type`:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`C`]                     [Returns `c.begin()`.]]
     [[`C const`]               [Returns `c.begin()`.]]
     [[__unused_type__]         [Returns `&unused`.]]
@@ -1641,9 +1711,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation
     [[`C`]              [A container type the end iterator needs to be returned for.]]
     [[`c`]              [An instance of a container, `C`.]]
 ]
@@ -1668,7 +1736,7 @@ several types. The following table lists those types together with the
 types returned by the embedded typedef `type`:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`C`]                     [Returns `c.end()`.]]
     [[`C const`]               [Returns `c.end()`.]]
     [[__unused_type__]         [Returns `&unused`.]]
@@ -1757,9 +1825,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`Iterator`]       [An iterator type.]]
     [[`it`]             [An instance of an iterator of type `Iterator`.]]
     [[`C`]              [A container type whose iterator type is `Iterator`.]]
@@ -1780,7 +1846,7 @@ several types. The following table lists those types together with the
 types returned by the embedded typedef `type`:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`Iterator`]              [Executes `++it`.]]
     [[__unused_type__` const*`][Does nothing.]]
 ]
@@ -1902,9 +1968,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`Iterator`]       [An iterator type.]]
     [[`it`]             [An instance of an iterator of type `Iterator`.]]
     [[`C`]              [A container type whose iterator type is `Iterator`.]]
@@ -1929,7 +1993,7 @@ several types. The following table lists those types together with the
 types returned by the embedded typedef `type`:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`Iterator`]              [The metafunction result `type` evaluates to 
               `boost::detail::iterator_traits<Iterator>::reference` and the 
               function `call()` returns `*it`.]]
@@ -2056,9 +2120,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation
     [[`Iterator`]       [An iterator type.]]
     [[`it1`, `it2`]     [Instances of an iterator of type `Iterator`.]]
     [[`C`]              [A container type whose iterator type is `Iterator`.]]
@@ -2081,7 +2143,7 @@ several types. The following table lists those types together with the
 types returned by the embedded typedef `type`:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[`Iterator`]              [The function `call()` returns it1 == it2.]]
     [[__unused_type__` const*`][The function `call()` always returns false.]]
 ]
@@ -2123,6 +2185,297 @@ please see here: __customize_use_as_container_example__.
 [endsect] [/ iterate]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:string_traits Extract a C-Style String to Generate Output from a String Type (Karma)]
+
+[section:is_char Determine if a Type is a Character]
+
+[heading is_char]
+
+`is_char` is a metafunction that detects if a given type is a character.
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/string_traits.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T>
+    struct is_char {
+      typedef <unspecified> type;
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter] [Description]         [Default]]
+    [[`T`]       [The type to detect.] [none]]
+]
+
+[variablelist Notation
+    [[`T`]     [An arbitrary type]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]         [Semantics]]
+    [[`is_char<T>::type`] [`mpl::true_` if T should be treated as a character
+                           type, and `mpl::false_` otherwise.
+                           (See __mpl_boolean_constant__).]]
+]
+
+[heading Predefined Specializations]
+
+[table
+    [[Type]      [Semantics]]
+    [[`T`]       [`mpl::false_`]]
+    [[`T const`] [`is_char<T>`]]
+    [[`char`]    [`mpl::true_`]]
+    [[`wchar_t`] [`mpl::true_`]]
+]
+
+[heading When to implement]
+
+This customization point needs to be implemented for any strings that use a
+type other than `char` or `wchar_t to store character data.
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_is_string__] [Whenever `is_char` is implemented.]]
+    [[__customize_char_type_of__] [Whenever `is_char` is implemented.]]
+]
+
+[/ TODO: examples ]
+
+[endsect] [/ is_char]
+
+[section:char_type_of Determine the Character Type of a String]
+
+[heading char_type_of]
+
+This customization point is an MPL metafunction which returns the character
+type of a given string type. `char_type_of` handles user-defined types such as
+std::string, as well as C-style strings.
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/string_traits.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename T>
+    struct char_type_of
+    {
+        typedef <unspecified> type;
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter] [Description]    [Default]]
+    [[`T`]       [A string type.] [none]]
+]
+
+[variablelist Notation
+    [[`T`]              [An arbitrary type.]]
+    [[`N`]              [An arbitrary integral constant.]]
+    [[`Char`]           [A character type.]]
+    [[`Traits`]         [A character traits type.]]
+    [[`Allocator`]      [A standard allocator type.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]               [Semantics]]
+    [[`char_type_of<T>::type`]  [The character type of the string type `T`.]]
+]
+
+[heading Predefined Specializations]
+
+[table
+    [[Type]  [Semantics]]
+    [[`T const`]                                      [Returns `char_type_of<T>`.]]
+    [[`char`]                                         [Returns `char`.]]
+    [[`wchar_t`]                                      [Returns `wchar_t`.]]
+    [[`char const*`]                                  [Returns `char const`.]]
+    [[`wchar_t const*`]                               [Returns `wchar_t const`.]]
+    [[`char*`]                                        [Returns `char`.]]
+    [[`wchar_t*`]                                     [Returns `wchar_t`.]]
+    [[`char[N]`]                                      [Returns `char`.]]
+    [[`wchar_t[N]`]                                   [Returns `wchar_t`.]]
+    [[`char const[N]`]                                [Returns `char const`.]]
+    [[`wchar_t const[N]`]                             [Returns `wchar_t const`.]]
+    [[`char(&)[N]`]                                   [Returns `char`.]]
+    [[`wchar_t(&)[N]`]                                [Returns `wchar_t`.]]
+    [[`char const(&)[N]`]                             [Returns `char const`.]]
+    [[`wchar_t const(&)[N]`]                          [Returns `wchar_t const`.]]
+    [[`std::basic_string<Char, Traits, Allocator>`]   [Returns `Char`.]]
+]
+
+[heading When to implement]
+
+This customization point needs to be implemented whenever __customize_is_string__
+is implemented.
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_is_char__]   [For string types whose underlying character type
+                                is not `char` or `wchar_t`, `is_char` must be 
+                                implemented.]]
+    [[__customize_is_string__] [Whenever `char_type_of` is implemented.]]
+    [[__customize_extract_c_string__] [Whenever `char_type_of` is implemented.]]
+]
+
+[/ TODO: examples ]
+
+[endsect] [/ char_type_of]
+
+[section:extract_c_string Get a C-style String from a String Type]
+
+[heading extract_c_string]
+
+`extract_c_string` returns a pointer to an array of elements of a const character
+type. It is invoked through a static method `call`. This customization point is
+responsible for handling it's own garbage collecting; the lifetime of the returned
+C-string must be no shorter than the lifetime of the string instance passed to
+the `call` method. 
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/string_traits.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename String>
+    struct extract_c_string
+    {
+        typedef <unspecified> char_type;
+
+        static char_type const* call (String const&);
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter] [Description]    [Default]]
+    [[`String`]  [A string type.] [none]]
+]
+
+[variablelist Notation
+    [[`T`]              [An arbitrary type.]]
+    [[`Char`]           [A character type.]]
+    [[`Traits`]         [A character traits type.]]
+    [[`Allocator`]      [A standard allocator type.]]
+    [[`str`]            [A string instance.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                       [Semantics]]
+    [[`extract_c_string<T>::char_type`] [The return type of `call`.]]
+    [[`extract_c_string<T>::call(str)`] [Extract a c-string of type `char_type`
+                                         from `str`.]]
+]
+
+[heading Predefined Specializations]
+
+[table
+    [[Type]  [Semantics]]
+    [[`T`]   [`call` takes a parameter of type `T const*`, and returns it without
+              modification. An overload of `call` takes a parameter of type `T*`
+              and casts it to `T const*`, returning the result. `char_type` is
+              `char_type_of<T>::type`.]]
+    [[`T const`]   [`call` takes a parameter `str` of type `T const` and returns
+                    `extract_c_string<T>::call(str)`. `char_type` is 
+                    `char_type_of<T>::type`.]]
+    [[`T&`]        [`call` takes a parameter `str` of type `T&` and returns
+                    `extract_c_string<T>::call(str)`. `char_type` is 
+                    `char_type_of<T>::type`.]]
+    [[`T const&`]  [`call` takes a parameter `str` of type `T const&` and returns
+                    `extract_c_string<T>::call(str)`. `char_type` is 
+                    `char_type_of<T>::type`.]]
+    [[`std::basic_string<Char, Traits, Allocator>`]
+     [`call` takes a parameter `str` and returns `str.c_str()`. `char_type` is
+      `Char`.]]
+]
+
+[heading When to implement]
+
+This customization point needs to be implemented whenever __customize_is_string__
+is implemented.
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_is_char__]   [For string types whose underlying character type
+                                is not `char` or `wchar_t`, `is_char` must be 
+                                implemented.]]
+    [[__customize_is_string__] [Whenever `extract_c_string` is implemented.]]
+    [[__customize_char_type_of__] [Whenever `extract_c_string` is implemented.]]
+]
+
+[/ TODO: examples ]
+
+[endsect] [/ string]
+
+[endsect] [/ string_traits]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:attribute_as Atomically Extract an Attribute Value from a Container (Karma)]
 
 [heading attribute_as]
@@ -2157,7 +2510,7 @@ Also, see __include_structure__.
 [table
     [[Parameter]            [Description]               [Default]]
     [[`T`]                  [The type of the attribute natively
-                             exposed by the component the `extract_from` is
+                             exposed by the component the `attribute_as` is
                              invoked from.]                         [none]]
     [[`Attribute`]          [The type of the attribute to be used to
                              generate output from.]                 [none]]
@@ -2166,8 +2519,6 @@ Also, see __include_structure__.
                              of `attribute_as` utilizing SFINAE (i.e.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
-
-[heading Notation]
 
 [variablelist Notation
     [[`attr`]       [An instance of type `Attrib`.]]
@@ -2192,7 +2543,7 @@ several types. The following table lists those types together with the types
 exposed and the corresponding semantics:
 
 [table
-    [[Template Parameters]     [Value]]
+    [[Template Parameters]     [Semantics]]
     [[__unused_type__]         [The exposed typedef `type` is defined to 
                                 __unused_type__. The function `call()` returns
                                 an instance of __unused_type__.]]
@@ -2203,9 +2554,7 @@ exposed and the corresponding semantics:
 This customization point may need to be implemented when using the __karma_as__
 directive.
 
-[heading Example]
-
-TBD
+[/ TODO: examples ]
 
 [endsect] [/ attribute_as]
 
@@ -2271,9 +2620,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`T`]              [An arbitrary type.]]
 ]
 
@@ -2357,9 +2704,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[heading Notation]
-
-[variablelist 
+[variablelist Notation 
     [[`T`]              [An arbitrary type.]]
 ]
 

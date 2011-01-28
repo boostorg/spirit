@@ -28,13 +28,14 @@
         Attribute Value to Generate Output (Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.extract_from.extract_from"></a><h6>
-<a name="id1255420"></a>
+<a name="id1289480"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.extract_from">extract_from</a>
         </h6>
 <p>
           Before generating output for a value this value needs to extracted from
-          the attribute instance provided by the user. The customization point <code class="computeroutput"><span class="identifier">extract_from</span></code> is utilized to adapt this
-          extraction for any data type possibly used to store the values to output.
+          the attribute instance provided by the user. The customization point <code class="computeroutput"><span class="identifier">extract_from_attribute</span></code> is utilized to
+          adapt this extraction for any data type possibly used to store the values
+          to output.
         </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -49,7 +50,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.module_headers"></a><h6>
-<a name="id1255462"></a>
+<a name="id1289522"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.module_headers">Module
           Headers</a>
         </h6>
@@ -70,7 +71,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.namespace"></a><h6>
-<a name="id1255555"></a>
+<a name="id1289614"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -87,7 +88,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.synopsis"></a><h6>
-<a name="id1255628"></a>
+<a name="id1289687"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Exposed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -100,7 +101,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.extract_from.template_parameters"></a><h6>
-<a name="id1255816"></a>
+<a name="id1289876"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.template_parameters">Template
           parameters</a>
         </h6>
@@ -136,7 +137,8 @@
 <td>
                   <p>
                     The type, <code class="computeroutput"><span class="identifier">Exposed</span></code>
-                    of the attribute natively exposed by the component the <code class="computeroutput"><span class="identifier">extract_from</span></code> is invoked from.
+                    of the attribute natively exposed by the component the <code class="computeroutput"><span class="identifier">extract_from_attribute</span></code> is invoked
+                    from.
                   </p>
                 </td>
 <td>
@@ -198,10 +200,6 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.advanced.customize.extract_from.notation"></a><h6>
-<a name="id1256061"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.notation">Notation</a>
-        </h6>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
@@ -217,10 +215,14 @@
 <dd><p>
                 An attribute instance of type <code class="computeroutput"><span class="identifier">Attrib</span></code>.
               </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ctx</span></code></span></dt>
+<dd><p>
+                An instance of type <code class="computeroutput"><span class="identifier">Context</span></code>.
+              </p></dd>
 </dl>
 </div>
 <a name="spirit.advanced.customize.extract_from.expression_semantics"></a><h6>
-<a name="id1256149"></a>
+<a name="id1291597"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -252,14 +254,14 @@
                 </td>
 <td>
                   <p>
-                    Extract the value to generate output from and return it to the
-                    caller.
+                    Extract the value to generate output from <code class="computeroutput"><span class="identifier">attr</span></code>
+                    and return it to the caller.
                   </p>
                 </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.predefined_specializations"></a><h6>
-<a name="id1256266"></a>
+<a name="id1291724"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -281,7 +283,7 @@
                 </th>
 <th>
                   <p>
-                    Value
+                    Semantics
                   </p>
                 </th>
 </tr></thead>
@@ -353,7 +355,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.when_to_implement"></a><h6>
-<a name="id1256618"></a>
+<a name="id1292075"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.when_to_implement">When
           to implement</a>
         </h6>
@@ -365,7 +367,7 @@
           and is not copy constructible.
         </p>
 <a name="spirit.advanced.customize.extract_from.example"></a><h6>
-<a name="id1256652"></a>
+<a name="id1292108"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.example">Example</a>
         </h6>
 <p>
