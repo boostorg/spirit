@@ -9,6 +9,40 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5 Spirit V2.5] 
+
+[heading What's changed in __qi__ and __karma__ from V2.4.2 (Boost V1.46.0) to V2.5 (Boost V1.47.0)]
+
+[heading New Features in Qi or Karma]
+
+[heading Bug Fixes in Qi or Karma]
+
+[heading Breaking Changes]
+
+* The __qi__ directive [qi_repeat `[]`] erroneously implemented commit/rollback
+  semantics for its attribute, leaving it untouched if the directive failed. 
+  This behaviour has been removed as it is inconsistent with similar components. 
+  Existing code relying on this functionality will break. Please refer to the
+  __qi__ directive __qi_hold__ to see how to fix your code.
+
+[heading Making Stuff Work]
+
+* Added the __karma__ customization point __customize_extract_from_container__,
+  which will be invoked instead of the older customization point
+  __customize_extract_from__ if the attribute is a container (__customize_is_container__
+  returns `true` for the attribute).
+* The type `hold_any` now takes a template argument: `basic_hold_any<Char>`, 
+  where `Char` is the character type used for the streaming operators 
+  (`operator>>()` and `operator<<()`). The `hold_any` is still available as a 
+  `typedef basic_hold_any<char> hold_any`;
+* Fixed a const correctness problem in `karma::real_policies<>` preventing the 
+  use of const floating point types with the generator. Thanks to Jeroen 
+  Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and 
+  a test.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_4_2 Spirit V2.4.2] 
 
 [heading What's changed in __qi__ and __karma__ from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)]

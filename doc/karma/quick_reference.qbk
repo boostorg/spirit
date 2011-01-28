@@ -278,7 +278,7 @@ See here for more information about [karma_stream Stream Generators].
     [[[karma_stream `stream(s)`]]  [`Unused`]   [Generate narrow character (`char`) based output 
                                                  from the immediate argument `s` using the matching 
                                                  streaming `operator<<()`]]
-    [[[karma_stream `wstream`]]    [`hold_any`] [Generate wide character (`wchar_t`) based output 
+    [[[karma_stream `wstream`]]    [`whold_any`] [Generate wide character (`wchar_t`) based output 
                                                  using the matching streaming `operator<<()`]]
     [[[karma_stream `wstream(s)`]] [`Unused`]   [Generate wide character (`wchar_t`) based output 
                                                  from the immediate argument `s` using the matching 
@@ -286,7 +286,7 @@ See here for more information about [karma_stream Stream Generators].
     [
 [[karma_stream ``stream_generator<
     Char
->()``]]                     [`hold_any`]    [Generate output based on the given character type 
+>()``]]                     [`basic_hold_any<Char>`]    [Generate output based on the given character type 
                                              (`Char`) using the matching streaming `operator<<()`]]
     [
 [[karma_stream ``stream_generator<

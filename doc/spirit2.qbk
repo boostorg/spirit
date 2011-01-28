@@ -268,6 +268,7 @@
 [def __customize_container_value__  [link spirit.advanced.customize.store_value.container_value `traits::container_value`]]
 [def __customize_clear_value__      [link spirit.advanced.customize.clear_value `traits::clear_value`]]
 [def __customize_extract_from__     [link spirit.advanced.customize.extract_from `traits::extract_from`]]
+[def __customize_extract_from_container__  [link spirit.advanced.customize.extract_from_container `traits::extract_from_container`]]
 [def __customize_container_iterator__ [link spirit.advanced.customize.iterate.container_iterator `traits::container_iterator`]]
 [def __customize_begin_container__  [link spirit.advanced.customize.iterate.begin_container `traits::begin_container`]]
 [def __customize_end_container__    [link spirit.advanced.customize.iterate.end_container `traits::end_container`]]
