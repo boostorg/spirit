@@ -458,7 +458,7 @@ namespace boost { namespace spirit
         reference operator[](size_type);
         const_reference operator[](size_type) const;
 
-        // This clears the utree instance and resets its type to 'invalid_type'
+        // This clears the utree instance and resets its type to `invalid_type`
         void clear();
 
         void swap(utree&);
