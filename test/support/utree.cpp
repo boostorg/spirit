@@ -10,6 +10,7 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#include <boost/functional/hash.hpp>
 #include <boost/spirit/include/support_utree.hpp>
 
 #include <iostream>
@@ -33,6 +34,14 @@ struct one_two_three
     boost::spirit::utree operator()(boost::spirit::scope) const
     {
         return boost::spirit::utree(123);
+    }
+};
+
+struct this_
+{
+    boost::spirit::utree operator()(boost::spirit::scope) const
+    {
+        return boost::spirit::utree(static_cast<int>(boost::hash_value(this)));
     }
 };
 
@@ -357,6 +366,16 @@ int main()
 
         utree f = stored_function<one_two_three>();
         f.eval(scope());
+    }
+    
+    {
+        // test referenced functions
+        using boost::spirit::referenced_function;
+        using boost::spirit::scope;
+
+        one_two_three f;
+        utree ff = referenced_function<one_two_three>(f);
+        BOOST_TEST_EQ(ff.eval(scope()), f(scope()));
     }
 
     {
