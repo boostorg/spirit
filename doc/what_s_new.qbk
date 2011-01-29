@@ -19,7 +19,7 @@
 
 [heading Breaking Changes]
 
-* The __qi__ directive [qi_repeat `[]`] erroneously implemented commit/rollback
+* The __qi__ directive __qi_repeat__ erroneously implemented commit/rollback
   semantics for its attribute, leaving it untouched if the directive failed. 
   This behaviour has been removed as it is inconsistent with similar components. 
   Existing code relying on this functionality will break. Please refer to the

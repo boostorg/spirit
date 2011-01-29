@@ -27,35 +27,36 @@
 <a name="spirit.what_s_new.spirit_2_5"></a><a class="link" href="spirit_2_5.html" title="Spirit V2.5">Spirit V2.5</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_5.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_2__boost_v1_46_0__to_v2_5__boost_v1_47_0_"></a><h5>
-<a name="id632841"></a>
+<a name="id760670"></a>
         <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_2__boost_v1_46_0__to_v2_5__boost_v1_47_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.2 (Boost V1.46.0) to V2.5 (Boost V1.47.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_5.new_features_in_qi_or_karma"></a><h5>
-<a name="id632866"></a>
+<a name="id760696"></a>
         <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.new_features_in_qi_or_karma">New
         Features in Qi or Karma</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_5.bug_fixes_in_qi_or_karma"></a><h5>
-<a name="id632882"></a>
+<a name="id760711"></a>
         <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.bug_fixes_in_qi_or_karma">Bug
         Fixes in Qi or Karma</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_5.breaking_changes"></a><h5>
-<a name="id632897"></a>
+<a name="id760726"></a>
         <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.breaking_changes">Breaking Changes</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            The <span class="emphasis"><em>Spirit.Qi</em></span> directive [qi_repeat <code class="computeroutput"><span class="special">[]</span></code>] erroneously implemented commit/rollback
-            semantics for its attribute, leaving it untouched if the directive failed.
-            This behaviour has been removed as it is inconsistent with similar components.
-            Existing code relying on this functionality will break. Please refer
-            to the <span class="emphasis"><em>Spirit.Qi</em></span> directive <a class="link" href="../qi/reference/directive/hold.html" title="Parser Directive for Attribute Commit/Rollback (hold[])"><code class="computeroutput"><span class="identifier">hold</span></code></a> to see how to fix your
-            code.
+            The <span class="emphasis"><em>Spirit.Qi</em></span> directive <a class="link" href="../qi/reference/directive/repeat.html" title="Repetition Parser Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a> erroneously implemented
+            commit/rollback semantics for its attribute, leaving it untouched if
+            the directive failed. This behaviour has been removed as it is inconsistent
+            with similar components. Existing code relying on this functionality
+            will break. Please refer to the <span class="emphasis"><em>Spirit.Qi</em></span> directive
+            <a class="link" href="../qi/reference/directive/hold.html" title="Parser Directive for Attribute Commit/Rollback (hold[])"><code class="computeroutput"><span class="identifier">hold</span></code></a>
+            to see how to fix your code.
           </li></ul></div>
 <a name="spirit.what_s_new.spirit_2_5.making_stuff_work"></a><h5>
-<a name="id632950"></a>
+<a name="id760783"></a>
         <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.making_stuff_work">Making Stuff
         Work</a>
       </h5>
