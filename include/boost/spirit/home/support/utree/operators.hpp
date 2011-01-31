@@ -287,41 +287,59 @@ namespace boost { namespace spirit
         // We assume anything except false is true
 
         // binary
-        utree operator()(bool a, bool b) const
+        template <typename A, typename B>
+        utree operator()(A const& a, B const& b) const
         {
-            return Base::eval(a, b); // for boolean types
+            return dispatch(a, b
+              , boost::is_arithmetic<A>()
+              , boost::is_arithmetic<B>());
         }
 
         // binary
-        template <typename A>
-        utree operator()(A const& a, bool b) const
+        template <typename A, typename B>
+        utree dispatch(A const& a, B const& b, mpl::true_, mpl::true_) const
+        {
+            return Base::eval(a, b); // for arithmetic types
+        }
+
+        // binary
+        template <typename A, typename B>
+        utree dispatch(A const& a, B const& b, mpl::false_, mpl::true_) const
         {
             return Base::eval(true, b);
         }
 
         // binary
-        template <typename B>
-        utree operator()(bool a, B const& b) const
+        template <typename A, typename B>
+        utree dispatch(A const& a, B const& b, mpl::true_, mpl::false_) const
         {
             return Base::eval(a, true);
         }
 
         // binary
         template <typename A, typename B>
-        utree operator()(A const& a, B const& b) const
+        utree dispatch(A const& a, B const& b, mpl::false_, mpl::false_) const
         {
             return Base::eval(true, true);
         }
+        
+        // unary
+        template <typename A>
+        utree operator()(A const& a) const
+        {
+            return dispatch(a, boost::is_arithmetic<A>());
+        }
 
         // unary
-        utree operator()(bool a) const
+        template <typename A>
+        utree dispatch(A const& a, mpl::true_) const
         {
             return Base::eval(a);
         }
 
         // unary
         template <typename A>
-        utree operator()(A const& a) const
+        utree dispatch(A const& a, mpl::false_) const
         {
             return Base::eval(true);
         }
