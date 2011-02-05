@@ -15,6 +15,7 @@
 #endif
 
 #include <exception>
+#include <ios>
 #include <boost/spirit/home/support/utree/utree.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/throw_exception.hpp>

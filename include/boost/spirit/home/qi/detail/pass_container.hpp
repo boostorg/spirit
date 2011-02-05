@@ -26,15 +26,24 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // to the LHS.
 
     template <typename LHS, typename RHSAttribute
-      , bool IsContainer = traits::is_container<RHSAttribute>::value>
+      , bool IsContainer = traits::is_container<RHSAttribute>::value
+      , bool IsSequence = fusion::traits::is_sequence<RHSAttribute>::value>
     struct has_same_elements : mpl::false_ {};
 
     template <typename LHS, typename RHSAttribute>
-    struct has_same_elements<LHS, RHSAttribute, true>
+    struct has_same_elements<LHS, RHSAttribute, true, false>
       : is_convertible<typename RHSAttribute::value_type, LHS> {};
 
     template <typename LHS, typename T>
-    struct has_same_elements<LHS, optional<T>, true>
+    struct has_same_elements<LHS, optional<T>, false, false>
+      : has_same_elements<LHS, T> {};
+
+    template <typename LHS, typename T>
+    struct has_same_elements<LHS, optional<T>, true, false>
+      : has_same_elements<LHS, T> {};
+
+    template <typename LHS, typename T>
+    struct has_same_elements<LHS, optional<T>, false, true>
       : has_same_elements<LHS, T> {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \
@@ -45,11 +54,27 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //       container (see support/container.hpp).
     template <typename LHS, BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct has_same_elements<
-            LHS, boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, true>
+            LHS, boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, true, false>
       : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
           , BOOST_SPIRIT_IS_CONVERTIBLE, _) false> {};
 
 #undef BOOST_SPIRIT_IS_CONVERTIBLE
+
+    // Specialization for fusion sequences, in this case we check whether all
+    // the types in the sequence are convertible to the lhs attribute.
+    // We return false if the lhs attribute itself is a fusion sequence.
+    template <typename LHS, typename RHSAttribute>
+    struct has_same_elements<LHS, RHSAttribute, false, true>
+    {
+        typedef typename mpl::find_if<
+            RHSAttribute, mpl::not_<is_convertible<mpl::_1, LHS> >
+        >::type iter;
+        typedef typename mpl::end<RHSAttribute>::type end;
+
+        typedef typename mpl::and_<
+            mpl::not_<fusion::traits::is_sequence<LHS> >, is_same<iter, end>
+        >::type type;
+    };
 
     // This function handles the case where the attribute (Attr) given
     // the sequence is an STL container. This is a wrapper around F.
@@ -162,6 +187,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
               , traits::handles_container<Component, Attr, context_type
                                         , iterator_type> 
             > predicate;
+
+//             // ensure the attribute is actually a container type
+//             traits::make_container(attr);
 
             return dispatch_main(component, predicate());
         }

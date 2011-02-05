@@ -165,26 +165,22 @@ int main()
 
         BOOST_TEST(test_attr("a25.5b", r1 > r2 >> r3, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
-        BOOST_TEST(check(ut, "( \"a\" ( ( 25.5 ) ( \"b\" ) ) )"));
-                  // FIXME:  "( \"a\" ( 25.5 ) ( \"b\" ) )" 
+        BOOST_TEST(check(ut, "( \"a\" ( 25.5 ) ( \"b\" ) )"));
         ut.clear();
 
         BOOST_TEST(test_attr("a25.5b", r3 >> r2 > r1, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
-        BOOST_TEST(check(ut, "( ( ( \"a\" ) ( 25.5 ) ) \"b\" )"));
-                  // FIXME:  "( ( \"a\" ) ( 25.5 ) \"b\" )" 
+        BOOST_TEST(check(ut, "( ( \"a\" ) ( 25.5 ) \"b\" )"));
         ut.clear();
 
         BOOST_TEST(test_attr("a25.5b", char_ > r2 >> r3, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
-        BOOST_TEST(check(ut, "( \"a\" ( ( 25.5 ) ( \"b\" ) ) )"));
-                  // FIXME:  "( \"a\" ( 25.5 ) ( \"b\" ) )" 
+        BOOST_TEST(check(ut, "( \"a\" ( 25.5 ) ( \"b\" ) )"));
         ut.clear();
 
         BOOST_TEST(test_attr("a25.5b", r3 >> r2 > char_, ut));
         BOOST_TEST(ut.which() == utree_type::list_type);
-        BOOST_TEST(check(ut, "( ( ( \"a\" ) ( 25.5 ) ) \"b\" )"));
-                  // FIXME:  "( ( \"a\" ) ( 25.5 ) \"b\" )" 
+        BOOST_TEST(check(ut, "( ( \"a\" ) ( 25.5 ) \"b\" )"));
     }
 
     return boost::report_errors();

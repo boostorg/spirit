@@ -62,8 +62,8 @@ int main()
         rule<output_iterator, utree::const_range()> r1list;
 
         r1 = double_ | int_ | r1str | r1list | r1ref;
-  
-        r1ref = r1;
+
+        r1ref = r1.alias();
 
         r1str = string;
 

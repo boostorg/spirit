@@ -40,7 +40,7 @@ namespace boost { namespace spirit { namespace qi
     using spirit::stream;
     using spirit::wstream;
 
-    template <typename Char = char, typename T = spirit::hold_any>
+    template <typename Char = char, typename T = spirit::basic_hold_any<char> >
     struct stream_parser
       : primitive_parser<stream_parser<Char, T> >
     {

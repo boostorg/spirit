@@ -32,12 +32,12 @@ int main()
         omit[-qi::char_(" \t")]; 
     strrule_type correct_year = repeat(4)[qi::digit]; 
  
-    test("1776", correct_year | repeat(2)[qi::digit], "1776");
+    test("1776", qi::hold[correct_year] | repeat(2)[qi::digit], "1776");
     test("76",   obsolete_year, "76");
-    test("76",   obsolete_year | correct_year, "76");
-    test(" 76",  correct_year | obsolete_year, "76");
-    test("76",   correct_year | obsolete_year, "76");
-    test("76",   correct_year | repeat(2)[qi::digit], "76");
+    test("76",   qi::hold[obsolete_year] | correct_year, "76");
+    test(" 76",  qi::hold[correct_year] | obsolete_year, "76");
+    test("76",   qi::hold[correct_year] | obsolete_year, "76");
+    test("76",   qi::hold[correct_year] | repeat(2)[qi::digit], "76");
 
     return boost::report_errors();
 } 

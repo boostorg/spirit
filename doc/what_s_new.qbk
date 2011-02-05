@@ -149,8 +149,8 @@
 
 [heading Known Problems]
 
-* Integer literals consume input on failure, which can lead to problems with
-  the alternative operator:
+* Integer literals (like `int_(10)`) consume input on failure, which can lead to 
+  problems with the alternative operator:
 
 [endsect]
 

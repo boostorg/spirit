@@ -77,6 +77,40 @@ main()
         BOOST_TEST(!test("aa", repeat(3, inf)[char_]));
     }
 
+    {
+        std::string s;
+        BOOST_TEST(test_attr("aaaaaaaa", repeat[char_ >> char_], s)); // kleene synonym
+        BOOST_TEST(s == "aaaaaaaa");
+
+        s.clear();
+        BOOST_TEST(test_attr("aaaaaaaa", repeat(4)[char_ >> char_], s));
+        BOOST_TEST(s == "aaaaaaaa");
+
+        BOOST_TEST(!test("aa", repeat(3)[char_ >> char_]));
+        BOOST_TEST(!test("a", repeat(1)[char_ >> char_]));
+
+        s.clear();
+        BOOST_TEST(test_attr("aa", repeat(1, 3)[char_ >> char_], s));
+        BOOST_TEST(s == "aa");
+
+        s.clear();
+        BOOST_TEST(test_attr("aaaaaa", repeat(1, 3)[char_ >> char_], s));
+        BOOST_TEST(s == "aaaaaa");
+
+        BOOST_TEST(!test("aaaaaaa", repeat(1, 3)[char_ >> char_]));
+        BOOST_TEST(!test("a", repeat(1, 3)[char_ >> char_]));
+
+        s.clear();
+        BOOST_TEST(test_attr("aaaa", repeat(2, inf)[char_ >> char_], s));
+        BOOST_TEST(s == "aaaa");
+
+        s.clear();
+        BOOST_TEST(test_attr("aaaaaa", repeat(2, inf)[char_ >> char_], s));
+        BOOST_TEST(s == "aaaaaa");
+
+        BOOST_TEST(!test("aa", repeat(2, inf)[char_ >> char_]));
+    }
+
     { // from classic spirit tests
         BOOST_TEST(test("", repeat(0, inf)['x']));
 
@@ -142,15 +176,9 @@ main()
         s.clear();
         BOOST_TEST(test_attr("b b b b", repeat(4)[char_], s, space) && s == "bbbb");
 
-        // The following 4 tests show that omit does not inhibit explicit attributes
-        s.clear();
-        BOOST_TEST(test_attr("bbbb", repeat(4)[omit[char_('b')]], s) && s == "bbbb");
-
+        // The following 2 tests show that omit does not inhibit explicit attributes
         s.clear();
         BOOST_TEST(test_attr("bbbb", omit[repeat(4)[char_('b')]], s) && s == "bbbb");
-
-        s.clear();
-        BOOST_TEST(test_attr("b b b b", repeat(4)[omit[char_('b')]], s, space) && s == "bbbb");
 
         s.clear();
         BOOST_TEST(test_attr("b b b b", omit[repeat(4)[char_('b')]], s, space) && s == "bbbb");
@@ -166,9 +194,7 @@ main()
         BOOST_TEST(test_attr("1 2 3", int_ >> repeat(2)[int_], v, space));
         BOOST_TEST(v.size() == 3 && v[0] == 1 && v[1] == 2 && v[2] == 3);
 
-        v.clear();
-        BOOST_TEST(!test_attr("1 2", int_ >> repeat(2)[int_], v, space));
-        BOOST_TEST(v.size() == 1 && v[0] == 1);
+        BOOST_TEST(!test("1 2", int_ >> repeat(2)[int_], space));
     }
 
     { // actions

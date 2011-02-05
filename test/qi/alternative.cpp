@@ -216,6 +216,14 @@ main()
         BOOST_TEST(s == "abc");
     }
 
+    {
+        using boost::spirit::qi::int_;
+
+        int i = 0;
+        BOOST_TEST( (test_attr("10", int_(5) | int_(10), i)) );
+        BOOST_TEST(i == 10);
+    }
+
     return boost::report_errors();
 }
 

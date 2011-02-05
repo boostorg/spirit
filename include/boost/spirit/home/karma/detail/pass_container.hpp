@@ -32,18 +32,27 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     // to the RHS.
 
     template <typename RHS, typename LHSAttribute
-      , bool IsContainer = traits::is_container<LHSAttribute>::value>
+      , bool IsContainer = traits::is_container<LHSAttribute>::value
+      , bool IsSequence = fusion::traits::is_sequence<LHSAttribute>::value>
     struct has_same_elements : mpl::false_ {};
 
     template <typename RHS, typename LHSAttribute>
-    struct has_same_elements<RHS, LHSAttribute, true>
+    struct has_same_elements<RHS, LHSAttribute, true, false>
       : mpl::or_<
             is_convertible<RHS, typename LHSAttribute::value_type>
-          , is_same<typename LHSAttribute::value_type, hold_any>
+          , traits::is_hold_any<typename LHSAttribute::value_type>
         > {};
 
     template <typename RHS, typename T>
-    struct has_same_elements<RHS, optional<T>, true>
+    struct has_same_elements<RHS, optional<T>, false, false>
+      : has_same_elements<RHS, T> {};
+
+    template <typename RHS, typename T>
+    struct has_same_elements<RHS, optional<T>, true, false>
+      : has_same_elements<RHS, T> {};
+
+    template <typename RHS, typename T>
+    struct has_same_elements<RHS, optional<T>, false, true>
       : has_same_elements<RHS, T> {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \
@@ -54,11 +63,25 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //       container (see support/container.hpp).
     template <typename RHS, BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct has_same_elements<
-            RHS, boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, true>
+            RHS, boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, true, false>
       : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
           , BOOST_SPIRIT_IS_CONVERTIBLE, _) false> {};
 
 #undef BOOST_SPIRIT_IS_CONVERTIBLE
+
+    // Specialization for fusion sequences, in this case we check whether the
+    // lhs attribute is convertible to the types in the sequence.
+    // We return false if the rhs attribute itself is a fusion sequence.
+    template <typename RHS, typename LHSAttribute>
+    struct has_same_elements<RHS, LHSAttribute, false, true>
+    {
+        typedef typename mpl::find_if<
+            LHSAttribute, mpl::not_<is_convertible<RHS, mpl::_1> >
+        >::type iter;
+        typedef typename mpl::end<LHSAttribute>::type end;
+
+        typedef typename is_same<iter, end>::type type;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
@@ -73,18 +96,34 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           : f(f), iter(begin), end(end) 
         {}
 
+        bool is_at_end() const
+        {
+            return traits::compare(iter, end);
+        }
+
+        void next()
+        {
+            traits::next(iter);
+        }
+
         // this is for the case when the current element expects an attribute
         // which is taken from the next entry in the container
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            if (!traits::compare(iter, end) && !f(component, traits::deref(iter))) 
+            if (!is_at_end() && !f(component, traits::deref(iter))) 
             {
                 // needs to return false as long as everything is ok
                 traits::next(iter);
                 return false;
             }
+
+//             // in non-strict mode increment iterator if the underlying 
+//             // generator failed
+//             if (!Strict::value && !is_at_end())
+//                 traits::next(iter);
+
             // either no elements available any more or generation failed
             return true;
         }
@@ -180,6 +219,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // silence MSVC warning C4512: assignment operator could not be generated
         pass_container& operator= (pass_container const&);
     };
+
+    // Utility function to make a pass_container
+    template <typename Strict, typename F, typename Attr, typename Iterator>
+    pass_container<F, Attr, Iterator, Strict>
+    inline make_pass_container(F const& f, Attr& attr, Iterator b, Iterator e)
+    {
+        return pass_container<F, Attr, Iterator, Strict>(f, attr, b, e);
+    }
 }}}}
 
 #endif

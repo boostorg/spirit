@@ -174,6 +174,38 @@ main()
 
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
+        using boost::spirit::qi::hold;
+
+        std::vector<char> v;
+        BOOST_TEST(test_attr("abc", char_ >> *(char_ >> char_), v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+
+        v.clear();
+        BOOST_TEST(!test_attr("abcd", char_ >> *(char_ >> char_), v));
+
+        v.clear();
+        BOOST_TEST(test_attr("abcdef", char_ >> *hold[char_ >> char_] >> char_, v));
+        BOOST_TEST(v.size() == 6);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+        BOOST_TEST(v[3] == 'd');
+        BOOST_TEST(v[4] == 'e');
+        BOOST_TEST(v[5] == 'f');
+
+        v.clear();
+        BOOST_TEST(test_attr("abc", char_ >> +(char_ >> char_), v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+    }
+
+    { // alternative forms of attributes. Allow sequences to take in
+      // stl containers.
 
         std::vector<char> v;
         BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
@@ -248,7 +280,6 @@ main()
     }
 
     {   // testing "what"
-
         print_info(what(alpha | char_('x') >> lit("hello") >> int_));
     }
 

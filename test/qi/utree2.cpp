@@ -86,8 +86,9 @@ int main()
             ut.which() == utree_type::list_type && check(ut, "( 1.23 4.56 )"));
         ut.clear();
 
-        rule<char const*, utree(), space_type> r1 = 
-            strict_double | int_ | ~char_("()") | ('(' >> *r1 >> ')');
+        rule<char const*, utree(), space_type> r1;
+        rule<char const*, utree::list_type(), space_type> r2 = '(' >> *r1 >> ')';
+        r1 = strict_double | int_ | ~char_("()") | r2;
 
         BOOST_TEST(test_attr("(x y)", r1, ut, space) &&
             ut.which() == utree_type::list_type && check(ut, "( \"x\" \"y\" )"));

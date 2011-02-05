@@ -38,6 +38,11 @@ namespace boost
     }
 }
 
+namespace boost { namespace spirit { namespace qi
+{
+    template <typename Subject> struct kleene;
+}}}
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
@@ -58,6 +63,11 @@ namespace boost { namespace spirit { namespace traits
                 break;
             }
             return false;
+        }
+
+        inline bool is_uninitialized(utree const& ut)
+        {
+            return traits::which(ut) == utree_type::invalid_type;
         }
     }
 
@@ -507,8 +517,15 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(utree& ut)
         {
-            if (!detail::is_list(ut))
-                ut = empty_list;
+            if (!detail::is_list(ut)) {
+                if (detail::is_uninitialized(ut))
+                    ut = empty_list;
+                else {
+                    utree retval (empty_list);
+                    retval.push_back(ut);
+                    ut.swap(retval);
+                }
+            }
         }
     };
 
@@ -644,7 +661,7 @@ namespace boost { namespace spirit { namespace traits
         // only 'invalid_type' utree nodes are not valid
         static bool is_valid(utree const& val)
         {
-            return traits::which(val) != utree_type::invalid_type;
+          return !detail::is_uninitialized(val);
         }
     };
 
@@ -943,7 +960,7 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <>
-    struct extract_from_attribute<utree, utree::nil_type>
+    struct extract_from_container<utree, utree::nil_type>
     {
         typedef utree::nil_type type;
 
@@ -955,7 +972,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, char>
+    struct extract_from_container<utree, char>
     {
         typedef char type;
 
@@ -968,7 +985,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, bool>
+    struct extract_from_container<utree, bool>
     {
         typedef bool type;
 
@@ -980,7 +997,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, int>
+    struct extract_from_container<utree, int>
     {
         typedef int type;
 
@@ -992,7 +1009,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, double>
+    struct extract_from_container<utree, double>
     {
         typedef double type;
 
@@ -1004,7 +1021,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Traits, typename Alloc>
-    struct extract_from_attribute<utree, std::basic_string<char, Traits, Alloc> >
+    struct extract_from_container<utree, std::basic_string<char, Traits, Alloc> >
     {
         typedef std::basic_string<char, Traits, Alloc> type;
 
@@ -1017,7 +1034,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, utf8_symbol_type>
+    struct extract_from_container<utree, utf8_symbol_type>
     {
         typedef std::string type;
 
@@ -1030,7 +1047,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct extract_from_attribute<utree, utf8_string_type>
+    struct extract_from_container<utree, utf8_string_type>
     {
         typedef std::string type;
 
@@ -1123,7 +1140,10 @@ namespace boost { namespace spirit { namespace traits
         static type pre(iterator_range<Iterator> const& t)
         {
             // return utree the begin iterator points to
-            return utree(boost::ref(t.front()));
+            Iterator it = boost::begin(t);
+            utree result(boost::ref(*it));
+            ++it;
+            return result;
         }
     };
 

@@ -132,6 +132,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename Exposed, typename Enable = void>
     struct extract_from_attribute;
 
+    template <typename Attribute, typename Exposed, typename Enable = void>
+    struct extract_from_container;
+
     template <typename Exposed, typename Attribute, typename Context>
     typename spirit::result_of::extract_from<Exposed, Attribute>::type
     extract_from(Attribute const& attr, Context& ctx

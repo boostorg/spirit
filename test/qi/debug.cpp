@@ -88,7 +88,7 @@ main()
         BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
     }
 
-    { // std::contaner attributes
+    { // std::container attributes
 
         typedef boost::fusion::vector<int, char> fs;
         rule<char const*, std::vector<fs>(), space_type> start;

@@ -194,6 +194,7 @@ import testing ;
      [ run karma/regression_optional_double.cpp            : : : :  karma_regression_optional_double ]
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
+     [ compile karma/regression_const_real_policies.cpp    : :  regression_const_real_policies ]
 
     ;
 

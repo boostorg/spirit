@@ -322,7 +322,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename T, typename Policies, typename Modifiers>
     struct make_primitive<
             tag::stateful_tag<Policies, tag::double_, T>, Modifiers> 
-      : detail::make_real<T, Modifiers, Policies> {};
+      : detail::make_real<typename remove_const<T>::type
+          , Modifiers, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -376,7 +377,8 @@ namespace boost { namespace spirit { namespace karma
         terminal_ex<tag::stateful_tag<Policies, tag::double_, T>
           , fusion::vector1<A0> >
           , Modifiers>
-      : detail::make_real_direct<T, Modifiers, Policies> {};
+      : detail::make_real_direct<typename remove_const<T>::type
+          , Modifiers, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -423,7 +425,6 @@ namespace boost { namespace spirit { namespace karma
             terminal_ex<tag::lit, fusion::vector1<A0> >
           , Modifiers
           , typename enable_if<traits::is_real<A0> >::type>
-      : detail::basic_real_literal<A0, Modifiers> 
     {
         static bool const lower =
             has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
@@ -431,7 +432,7 @@ namespace boost { namespace spirit { namespace karma
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef literal_real_generator<
-            A0, real_policies<A0>
+            typename remove_const<A0>::type, real_policies<A0>
           , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type

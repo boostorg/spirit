@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Context, typename Unused>
         struct attribute
         {
-            typedef spirit::hold_any type;
+            typedef spirit::basic_hold_any<char> type;
         };
 
         auto_generator(Modifiers const& modifiers)

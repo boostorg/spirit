@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Context, typename Unused = unused_type>
         struct attribute
         {
-            typedef spirit::hold_any type;
+            typedef spirit::basic_hold_any<Char> type;
         };
 
         // any_stream_generator has an attached attribute 

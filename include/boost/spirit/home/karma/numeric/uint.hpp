@@ -417,7 +417,7 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename T, unsigned Radix, typename Modifiers>
     struct make_primitive<tag::uint_generator<T, Radix>, Modifiers>
-      : detail::make_uint<T, Modifiers, Radix> {};
+      : detail::make_uint<typename remove_const<T>::type, Modifiers, Radix> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -487,7 +487,8 @@ namespace boost { namespace spirit { namespace karma
     struct make_primitive<
         terminal_ex<tag::uint_generator<T, Radix>, fusion::vector1<A0> >
           , Modifiers>
-      : detail::make_uint_direct<T, Modifiers, Radix> {};
+      : detail::make_uint_direct<typename remove_const<T>::type, Modifiers, Radix> 
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -542,7 +543,6 @@ namespace boost { namespace spirit { namespace karma
             terminal_ex<tag::lit, fusion::vector1<A0> >
           , Modifiers
           , typename enable_if<traits::is_uint<A0> >::type>
-      : detail::basic_uint_literal<A0, Modifiers> 
     {
         static bool const lower =
             has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
@@ -550,7 +550,7 @@ namespace boost { namespace spirit { namespace karma
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef literal_uint_generator<
-            A0
+            typename remove_const<A0>::type
           , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type

@@ -75,6 +75,13 @@ int main()
             char_ % ',', s, space));
     }
 
+    {
+        std::string s ("abcdefg");
+        BOOST_TEST(test("abc,de,fg", char_ << ((char_ << char_) % ','), s));
+        BOOST_TEST(test_delimited("a b c , d e , f g ", 
+            char_ << ((char_ << char_) % ','), s, space));
+    }
+
     { // actions
         namespace phx = boost::phoenix;
 

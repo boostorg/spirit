@@ -81,6 +81,12 @@ main()
     }
 
     {
+        std::string s;
+        BOOST_TEST((test_attr("abc", char_ >> -(char_ >> char_), s)));
+        BOOST_TEST(s == "abc");
+    }
+
+    {
         namespace phx = boost::phoenix;
 
         boost::optional<int> n = 0;

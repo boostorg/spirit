@@ -56,7 +56,7 @@ namespace boost { namespace spirit
         , terminal_ex<tag::lit, fusion::vector1<A0> > 
         , typename enable_if<is_same<A0, signed short> >::type>
       : mpl::true_ {};
-  
+
     template <typename A0> // enables short_(n)
     struct use_terminal<qi::domain
         , terminal_ex<tag::short_, fusion::vector1<A0> > >
@@ -69,7 +69,7 @@ namespace boost { namespace spirit
     //[primitive_parsers_enable_int
     template <> // enables int_
     struct use_terminal<qi::domain, tag::int_> : mpl::true_ {};
-    //]   
+    //]
 
     template <typename A0> // enables lit(n)
     struct use_terminal<qi::domain
@@ -84,13 +84,13 @@ namespace boost { namespace spirit
 
     template <> // enables *lazy* int_(n)
     struct use_lazy_terminal<qi::domain, tag::int_, 1> : mpl::true_ {};
- 
+
     ///////////////////////////////////////////////////////////////////////////
     //[primitive_parsers_enable_long
     template <> // enables long_
     struct use_terminal<qi::domain, tag::long_> : mpl::true_ {};
-    //]   
-   
+    //]
+
     template <typename A0> // enables lit(n)
     struct use_terminal<qi::domain
         , terminal_ex<tag::lit, fusion::vector1<A0> > 
@@ -104,7 +104,7 @@ namespace boost { namespace spirit
 
     template <> // enables *lazy* long_(n)
     struct use_lazy_terminal<qi::domain, tag::long_, 1> : mpl::true_ {};
- 
+
     ///////////////////////////////////////////////////////////////////////////
 #ifdef BOOST_HAS_LONG_LONG
     //[primitive_parsers_enable_long_long
@@ -236,7 +236,7 @@ namespace boost { namespace spirit { namespace qi
         {
             typedef extract_int<T, Radix, MinDigits, MaxDigits> extract;
             qi::skip_over(first, last, skipper);
-           
+
             Iterator save = first; 
             T attr_;
 
@@ -277,7 +277,7 @@ namespace boost { namespace spirit { namespace qi
         }
     };
     //]
-    
+
     template <typename T, unsigned Radix = 10, unsigned MinDigits = 1
             , int MaxDigits = -1>
     struct make_direct_int
@@ -290,7 +290,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     template <typename T, unsigned Radix = 10, unsigned MinDigits = 1
             , int MaxDigits = -1>
     struct make_literal_int
@@ -302,7 +302,7 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers, typename A0>
     struct make_primitive<

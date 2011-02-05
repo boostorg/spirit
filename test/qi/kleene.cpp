@@ -87,15 +87,9 @@ main()
         s.clear();
         BOOST_TEST(test_attr("b b b b ", *char_, s, space)  && s == "bbbb");
 
-        // The following 4 tests show that omit does not inhibit explicit attributes
-        s.clear();
-        BOOST_TEST(test_attr("bbbb", *omit[char_('b')], s) && s == "bbbb");
-
+        // The following 2 tests show that omit does not inhibit explicit attributes
         s.clear();
         BOOST_TEST(test_attr("bbbb", omit[*char_('b')], s) && s == "bbbb");
-
-        s.clear();
-        BOOST_TEST(test_attr("b b b b", *omit[char_('b')], s, space) && s == "bbbb");
 
         s.clear();
         BOOST_TEST(test_attr("b b b b", omit[*char_('b')], s, space) && s == "bbbb");

@@ -312,7 +312,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename T, typename Policies, typename Modifiers>
     struct make_primitive<
             tag::stateful_tag<Policies, tag::bool_, T>, Modifiers>
-      : detail::make_bool<Modifiers, T, Policies> {};
+      : detail::make_bool<Modifiers
+          , typename remove_const<T>::type, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -356,7 +357,8 @@ namespace boost { namespace spirit { namespace karma
         terminal_ex<tag::stateful_tag<Policies, tag::bool_, T>
           , fusion::vector1<A0> >
           , Modifiers>
-      : detail::make_bool_direct<Modifiers, T, Policies> {};
+      : detail::make_bool_direct<Modifiers
+          , typename remove_const<T>::type, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail

@@ -45,6 +45,7 @@
 #include <boost/range/iterator_range.hpp>
 #include <vector>
 #include <utility>
+#include <ios>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
@@ -115,7 +116,7 @@ namespace boost { namespace spirit { namespace traits
 
         template <typename Container>
         struct is_hold_any_container
-          : is_same<hold_any, typename traits::container_value<Container>::type>
+          : traits::is_hold_any<typename traits::container_value<Container>::type>
         {};
     }
 
@@ -124,7 +125,7 @@ namespace boost { namespace spirit { namespace traits
     struct compute_compatible_component_variant
       : mpl::or_<
             traits::detail::attribute_is_compatible<Expected, Attribute>
-          , is_same<hold_any, Expected>
+          , traits::is_hold_any<Expected>
           , mpl::eval_if<
                 is_container<Expected>
               , traits::detail::is_hold_any_container<Expected>

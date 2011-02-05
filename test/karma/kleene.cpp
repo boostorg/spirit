@@ -23,6 +23,8 @@
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
+#include <boost/assign/std/vector.hpp>
+
 #include "test.hpp"
 
 using namespace spirit_test;
@@ -60,6 +62,57 @@ int main()
         std::string s2("");
         BOOST_TEST(test("", *char_, s2));
         BOOST_TEST(test_delimited("", *char_, s2, ' '));
+    }
+
+    {
+        std::string s1("aaaaa");
+        BOOST_TEST(test("aaaaa", char_ << *(char_ << char_), s1));
+        BOOST_TEST(test_delimited("a a a a a ", 
+            char_ << *(char_ << char_), s1, ' '));
+
+        s1 = "a";
+        BOOST_TEST(test("a", char_ << *(char_ << char_), s1));
+        s1 = "aa";
+        BOOST_TEST(!test("", char_ << *(char_ << char_), s1));
+//         BOOST_TEST(test("aa", char_ << *buffer[char_ << char_] << char_, s1));
+        s1 = "aaaa";
+        BOOST_TEST(!test("", char_ << *(char_ << char_), s1));
+//         BOOST_TEST(test("aaaa", char_ << *buffer[char_ << char_] << char_, s1));
+    }
+
+    {
+        using boost::spirit::karma::strict;
+        using boost::spirit::karma::relaxed;
+        using namespace boost::assign;
+
+        typedef std::pair<char, char> data;
+        std::vector<data> v1;
+        v1 += std::make_pair('a', 'a'), 
+              std::make_pair('b', 'b'), 
+              std::make_pair('c', 'c'), 
+              std::make_pair('d', 'd'), 
+              std::make_pair('e', 'e'), 
+              std::make_pair('f', 'f'), 
+              std::make_pair('g', 'g'); 
+
+        karma::rule<spirit_test::output_iterator<char>::type, data()> r;
+        r = &char_('a') << char_;
+
+        BOOST_TEST(test("a", r << *(r << r), v1));
+        BOOST_TEST(test("a", relaxed[r << *(r << r)], v1));
+        BOOST_TEST(!test("", strict[r << *(r << r)], v1));
+
+         v1 += std::make_pair('a', 'a');
+
+        BOOST_TEST(!test("", r << *(r << r), v1));
+        BOOST_TEST(!test("", relaxed[r << *(r << r)], v1));
+        BOOST_TEST(!test("", strict[r << *(r << r)], v1));
+
+         v1 += std::make_pair('a', 'a');
+
+        BOOST_TEST(test("aaa", r << *(r << r), v1));
+        BOOST_TEST(test("aaa", relaxed[r << *(r << r)], v1));
+        BOOST_TEST(!test("", strict[r << *(r << r)], v1));
     }
 
     {

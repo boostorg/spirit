@@ -378,7 +378,8 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename T, unsigned Radix, bool force_sign, typename Modifiers>
     struct make_primitive<tag::int_generator<T, Radix, force_sign>, Modifiers>
-      : detail::make_int<T, Modifiers, Radix, force_sign> {};
+      : detail::make_int<typename remove_const<T>::type
+          , Modifiers, Radix, force_sign> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -436,7 +437,8 @@ namespace boost { namespace spirit { namespace karma
     struct make_primitive<
         terminal_ex<tag::int_generator<T, Radix, force_sign>
           , fusion::vector1<A0> >, Modifiers>
-      : detail::make_int_direct<T, Modifiers, Radix, force_sign> {};
+      : detail::make_int_direct<typename remove_const<T>::type
+          , Modifiers, Radix, force_sign> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -489,7 +491,6 @@ namespace boost { namespace spirit { namespace karma
             terminal_ex<tag::lit, fusion::vector1<A0> >
           , Modifiers
           , typename enable_if<traits::is_int<A0> >::type>
-      : detail::basic_int_literal<A0, Modifiers> 
     {
         static bool const lower =
             has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
@@ -497,7 +498,7 @@ namespace boost { namespace spirit { namespace karma
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef literal_int_generator<
-            A0
+            typename remove_const<A0>::type
           , typename spirit::detail::get_encoding_with_case<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type

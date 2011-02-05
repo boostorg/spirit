@@ -49,6 +49,21 @@ main()
         std::string s;
         BOOST_TEST(test_attr("a,b,c,d,e,f,g,h", char_ % ',', s));
         BOOST_TEST(s == "abcdefgh");
+
+        BOOST_TEST(!test("a,b,c,d,e,f,g,h,", char_ % ','));
+    }
+
+    {
+        std::string s;
+        BOOST_TEST(test_attr("ab,cd,ef,gh", (char_ >> char_) % ',', s));
+        BOOST_TEST(s == "abcdefgh");
+
+        BOOST_TEST(!test("ab,cd,ef,gh,", (char_ >> char_) % ','));
+        BOOST_TEST(!test("ab,cd,ef,g", (char_ >> char_) % ','));
+
+        s.clear();
+        BOOST_TEST(test_attr("ab,cd,efg", (char_ >> char_) % ',' >> char_, s));
+        BOOST_TEST(s == "abcdefg");
     }
 
     {
