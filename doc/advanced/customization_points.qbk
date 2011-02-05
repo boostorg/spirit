@@ -126,7 +126,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[variablelist 
+[variablelist Notation
     [[`C`]          [A type to be tested whether it needs to be treated
                      as a container.]]
     [[`T1`, `T2`, ...]  [Arbitrary types]]
@@ -375,7 +375,7 @@ Also, see __include_structure__.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
-[variablelist 
+[variablelist Notation
     [[`Component`]  [A component type to be tested whether it directly handles 
                      container attributes in the context of sequences.]]
     [[`Attribute`]  [A container attribute type as passed to the sequence.]]
