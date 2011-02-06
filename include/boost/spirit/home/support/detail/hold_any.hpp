@@ -188,8 +188,9 @@ namespace boost { namespace spirit
         ///////////////////////////////////////////////////////////////////////
         struct empty {};
 
-        inline std::istream&
-        operator>> (std::istream& i, empty&)
+        template <typename Char>
+        inline std::basic_istream<Char>&
+        operator>> (std::basic_istream<Char>& i, empty&)
         {
             // If this assertion fires you tried to insert from a std istream
             // into an empty hold_any instance. This simply can't work, because
@@ -205,8 +206,9 @@ namespace boost { namespace spirit
             return i;
         }
 
-        inline std::ostream&
-        operator<< (std::ostream& o, empty const&)
+        template <typename Char>
+        inline std::basic_ostream<Char>&
+        operator<< (std::basic_ostream<Char>& o, empty const&)
         {
             return o;
         }
