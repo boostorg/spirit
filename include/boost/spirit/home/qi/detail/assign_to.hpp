@@ -176,7 +176,7 @@ namespace boost { namespace spirit { namespace traits
                 iterator_type;
             iterator_type end = traits::end(val);
             for (iterator_type i = traits::begin(val); i != end; traits::next(i))
-                push_back(attr, traits::deref(i));
+                traits::push_back(attr, traits::deref(i));
         }
 
         // T is a string 
@@ -184,15 +184,31 @@ namespace boost { namespace spirit { namespace traits
         static void append_to_string(Attribute& attr, Iterator begin, Iterator end)
         {
             for (Iterator i = begin; i != end; ++i)
-                push_back(attr, *i);
+                traits::push_back(attr, *i);
+        }
+
+        // T is string, but not convertible to value_type of container
+        template <typename T_>
+        static void append_to_container(Attribute& attr, T_ const& val, mpl::false_)
+        {
+            typedef typename char_type_of<T_>::type char_type;
+            append_to_string(attr, traits::get_begin<char_type>(val)
+              , traits::get_end<char_type>(val));
+        }
+
+        // T is string, and convertible to value_type of container
+        template <typename T_>
+        static void append_to_container(Attribute& attr, T_ const& val, mpl::true_)
+        {
+            traits::push_back(attr, val);
         }
 
         template <typename T_, typename Pred>
         static void call(T_ const& val, Attribute& attr, Pred, mpl::true_)
         {
-            typedef typename char_type_of<T_>::type char_type;
-            append_to_string(attr, traits::get_begin<char_type>(val)
-              , traits::get_end<char_type>(val));
+            typedef typename container_value<Attribute>::type value_type;
+            typedef typename is_convertible<T, value_type>::type is_value_type;
+            append_to_container(attr, val, is_value_type());
         }
 
         static void call(T const& val, Attribute& attr)
