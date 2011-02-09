@@ -239,7 +239,8 @@ import testing ;
     ###########################################################################
     test-suite spirit_v2/support :
 
-     [ run support/utree.cpp : : : : support_utree ]
+     [ run support/utree.cpp                  : : : : support_utree ]
+     [ run support/utree_debug.cpp            : : : : support_utree_debug ]
 
     ;
 
