@@ -71,9 +71,11 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::repeat;
-    using spirit::repeat_type;
     using spirit::inf;
+#endif
+    using spirit::repeat_type;
     using spirit::inf_type;
 
     template <typename T>
@@ -158,7 +160,7 @@ namespace boost { namespace spirit { namespace qi
         bool parse_container(F f) const
         {
             typename LoopIter::type i = iter.start();
-            for (/**/; !iter.got_min(i); ++i) 
+            for (/**/; !iter.got_min(i); ++i)
             {
                 if (f (subject))
                     return false;
@@ -166,7 +168,7 @@ namespace boost { namespace spirit { namespace qi
 
             // parse some more up to the maximum specified
             typename F::iterator_type save = f.f.first;
-            for (/**/; !iter.got_max(i); ++i) 
+            for (/**/; !iter.got_max(i); ++i)
             {
                 if (f (subject))
                     break;

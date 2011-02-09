@@ -32,11 +32,11 @@ namespace boost { namespace spirit
         struct real_policies;
 
         ///////////////////////////////////////////////////////////////////////
-        // This is the class that the user can instantiate directly in 
+        // This is the class that the user can instantiate directly in
         // order to create a customized real parser
         template <typename T = double, typename Policies = real_policies<T> >
         struct real_parser
-          : spirit::terminal<tag::stateful_tag<Policies, tag::double_, T> > 
+          : spirit::terminal<tag::stateful_tag<Policies, tag::double_, T> >
         {
             typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
 
@@ -64,19 +64,19 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <typename A0> // enables lit(n)
     struct use_terminal<qi::domain
-        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , terminal_ex<tag::lit, fusion::vector1<A0> >
         , typename enable_if<is_same<A0, float> >::type>
       : mpl::true_ {};
-    
+
     template <typename A0> // enables lit(n)
     struct use_terminal<qi::domain
-        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , terminal_ex<tag::lit, fusion::vector1<A0> >
         , typename enable_if<is_same<A0, double> >::type>
       : mpl::true_ {};
-    
+
     template <typename A0> // enables lit(n)
     struct use_terminal<qi::domain
-        , terminal_ex<tag::lit, fusion::vector1<A0> > 
+        , terminal_ex<tag::lit, fusion::vector1<A0> >
         , typename enable_if<is_same<A0, long double> >::type>
       : mpl::true_ {};
 
@@ -97,15 +97,15 @@ namespace boost { namespace spirit
     > : mpl::true_ {};
 
     template <> // enables *lazy* float_(...)
-    struct use_lazy_terminal<qi::domain, tag::float_, 1> 
+    struct use_lazy_terminal<qi::domain, tag::float_, 1>
       : mpl::true_ {};
 
     template <> // enables *lazy* double_(...)
-    struct use_lazy_terminal<qi::domain, tag::double_, 1> 
+    struct use_lazy_terminal<qi::domain, tag::double_, 1>
       : mpl::true_ {};
 
     template <> // enables *lazy* long_double_(...)
-    struct use_lazy_terminal<qi::domain, tag::long_double, 1> 
+    struct use_lazy_terminal<qi::domain, tag::long_double, 1>
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -133,14 +133,17 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::float_;
-    using spirit::float__type;
     using spirit::double_;
-    using spirit::double__type;
     using spirit::long_double;
-    using spirit::long_double_type;
-
     using spirit::lit; // lit(1.0) is equivalent to 1.0
+#endif
+
+    using spirit::float_type;
+    using spirit::double_type;
+    using spirit::long_double_type;
+    using spirit::lit_type;
 
     ///////////////////////////////////////////////////////////////////////////
     // This is the actual real number parser
@@ -277,7 +280,7 @@ namespace boost { namespace spirit { namespace qi
           terminal_ex<tag::lit, fusion::vector1<A0> >
         , Modifiers, typename enable_if<is_same<A0, float> >::type>
       : make_literal_real<float> {};
-    
+
     template <typename Modifiers, typename A0>
     struct make_primitive<
           terminal_ex<tag::lit, fusion::vector1<A0> >
@@ -293,7 +296,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policies, typename Modifiers>
     struct make_primitive<
-        tag::stateful_tag<Policies, tag::double_, T>, Modifiers> 
+        tag::stateful_tag<Policies, tag::double_, T>, Modifiers>
       : make_real<T, Policies> {};
 
     template <typename T, typename Policies, typename A0, typename Modifiers>

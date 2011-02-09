@@ -29,18 +29,21 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <typename A0>       // enables attr()
     struct use_terminal<
-            qi::domain, terminal_ex<tag::attr, fusion::vector1<A0> > > 
+            qi::domain, terminal_ex<tag::attr, fusion::vector1<A0> > >
       : mpl::true_ {};
 
     template <>                  // enables *lazy* attr()
-    struct use_lazy_terminal<qi::domain, tag::attr, 1> 
+    struct use_lazy_terminal<qi::domain, tag::attr, 1>
       : mpl::true_ {};
 
 }}
 
 namespace boost { namespace spirit { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::attr;
+#endif
+    using spirit::attr_type;
 
     template <typename Value>
     struct attr_parser : primitive_parser<attr_parser<Value> >
