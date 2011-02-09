@@ -19,7 +19,7 @@
 namespace testns
 {
 
-    BOOST_SPIRIT_TERMINAL_EX( ops )
+    BOOST_SPIRIT_TERMINAL_EX( ops, ops_type )
 
 
     ///////////////////////////////////////////////////////////////////////////

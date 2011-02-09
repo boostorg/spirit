@@ -14,6 +14,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <iostream>
@@ -32,7 +34,7 @@ namespace client
     {
         calculator() : calculator::base_type(expression)
         {
-            using qi::uint_;
+            qi::uint_type uint_;
 
             expression =
                 term
@@ -71,7 +73,7 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    using boost::spirit::ascii::space;
+    boost::spirit::ascii::space_type space;
     typedef std::string::const_iterator iterator_type;
     typedef client::calculator<iterator_type> calculator;
 
