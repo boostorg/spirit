@@ -69,9 +69,11 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace karma
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::repeat;
-    using spirit::repeat_type;
     using spirit::inf;
+#endif
+    using spirit::repeat_type;
     using spirit::inf_type;
 
     ///////////////////////////////////////////////////////////////////////////

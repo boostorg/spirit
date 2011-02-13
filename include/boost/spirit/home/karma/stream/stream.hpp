@@ -102,8 +102,12 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::stream;
     using spirit::wstream;
+#endif
+    using spirit::stream_type;
+    using spirit::wstream_type;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename CharEncoding, typename Tag>

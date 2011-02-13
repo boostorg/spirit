@@ -62,7 +62,9 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace karma
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::columns;
+#endif
     using spirit::columns_type;
 
     namespace detail
