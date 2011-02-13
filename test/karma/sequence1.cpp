@@ -132,7 +132,7 @@ int main()
         BOOST_TEST(test_delimited("a b c ", 
             char_ << 'b' << char_, p, char(' ')));
     }
-    
+
     {
         // literal generators do not need an attribute, not even at the end
         fusion::vector<char, char> p('a', 'c');
@@ -140,7 +140,6 @@ int main()
         BOOST_TEST(test_delimited("a c b ", 
             char_ << char_ << 'b', p, char(' ')));
     }
-
 
     return boost::report_errors();
 }

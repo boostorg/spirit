@@ -221,40 +221,72 @@ main()
         std::string s;
         BOOST_TEST(test_attr("foobar", string("foo") >> string("bar"), s));
         BOOST_TEST(s == "foobar");
+
+        s.clear();
+
+        using boost::spirit::qi::hold;
+
+        rule<char const*, std::string()> word = +char_("abc");
+        BOOST_TEST(test_attr("ab.bc.ca", *hold[word >> string(".")] >> word, s));
+        BOOST_TEST(s == "ab.bc.ca");
     }
 
-//     // alternative forms of attributes. Allow sequences to take in
-//     // stl containers of stl containers.
-//     {
-//         // this use case still does not compile, needs some additional work
-// 
-//         std::vector<std::string> v;
-//         BOOST_TEST(test_attr("abc1,abc2,abc3", 
-//             *~char_(',') >> *(',' >> *~char_(',')), v));
-//         BOOST_TEST(v.size() == 3);
-//         BOOST_TEST(v[0] == "abc1");
-//         BOOST_TEST(v[1] == "abc2");
-//         BOOST_TEST(v[2] == "abc3");
-//     }
+    // alternative forms of attributes. Allow sequences to take in
+    // stl containers of stl containers.
+    {
+        // this use case seem1 to verify wrong behavior, but it is correct,
+        // think about it!
 
-//     {
-//         std::vector<std::string> v;
-//         rule<char const*, std::string()> e = *~char_(',');
-//         rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
-// 
-//         BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
-//         BOOST_TEST(v.size() == 3);
-//         BOOST_TEST(v[0] == "abc1");
-//         BOOST_TEST(v[1] == "abc2");
-//         BOOST_TEST(v[2] == "abc3");
-//     }
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("abc1,abc2", 
+            *~char_(',') >> *(',' >> *~char_(',')), v));
+        BOOST_TEST(v.size() == 8 &&
+            v[0] == "a" && v[1] == "b" && v[2] == "c" && v[3] == "1" &&
+            v[4] == "a" && v[5] == "b" && v[6] == "c" && v[7] == "2");
+    }
+
+    {
+        std::vector<std::string> v;
+        rule<char const*, std::string()> e = *~char_(',');
+        rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
+
+        BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == "abc1");
+        BOOST_TEST(v[1] == "abc2");
+        BOOST_TEST(v[2] == "abc3");
+    }
+
+    // do the same with a plain string object
+    {
+        std::string s;
+        BOOST_TEST(test_attr("abc1,abc2", 
+            *~char_(',') >> *(',' >> *~char_(',')), s));
+        BOOST_TEST(s == "abc1abc2");
+    }
+
+    {
+        std::string s;
+        rule<char const*, std::string()> e = *~char_(',');
+        rule<char const*, std::string()> l = e >> *(',' >> e);
+
+        BOOST_TEST(test_attr("abc1,abc2,abc3", l, s));
+        BOOST_TEST(s == "abc1abc2abc3");
+    }
 
     {
         std::vector<char> v;
         BOOST_TEST(test_attr("ab", char_ >> -char_, v));
-        BOOST_TEST(v.size() == 2);
-        BOOST_TEST(v[0] == 'a');
-        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+
+//  this is still failing
+//         v.clear();
+//         BOOST_TEST(test_attr("a", char_ >> -char_, v));
+//         BOOST_TEST(v.size() == 1 && v[0] == 'a');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
     }
 
     {   // test action

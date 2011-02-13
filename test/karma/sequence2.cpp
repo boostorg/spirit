@@ -55,7 +55,6 @@ int main()
     using namespace boost::spirit::ascii;
     namespace fusion = boost::fusion;
 
-    
     {
         std::list<int> v;
         v.push_back(1);

@@ -18,6 +18,10 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
@@ -165,7 +169,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         // This handles the case where the attribute of the component is
         // an STL container *and* its value_type is convertible to the
-        // target attribute's (Attr) value_type.
+        // target's attribute (Attr) value_type.
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
@@ -183,13 +187,15 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             rhs_attribute;
 
             typedef mpl::and_<
-                has_same_elements<lhs, rhs_attribute>
+                mpl::or_<
+                    has_same_elements<lhs, rhs_attribute>
+                  , has_same_elements<Attr, rhs_attribute> >
               , traits::handles_container<Component, Attr, context_type
                                         , iterator_type> 
             > predicate;
 
-//             // ensure the attribute is actually a container type
-//             traits::make_container(attr);
+            // ensure the attribute is actually a container type
+            traits::make_container(attr);
 
             return dispatch_main(component, predicate());
         }

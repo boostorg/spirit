@@ -19,11 +19,11 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/preprocessor/cat.hpp>
-#include <boost/preprocessor/repeat.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <boost/iterator/iterator_facade.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -203,7 +203,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 Component, context_type>::type lhs_attribute;
 
             typedef mpl::and_<
-                has_same_elements<rhs, lhs_attribute>
+                mpl::or_<
+                    has_same_elements<rhs, lhs_attribute>
+                  , has_same_elements<Attr, lhs_attribute> >
               , traits::handles_container<Component, Attr, context_type>
             > predicate;
 
