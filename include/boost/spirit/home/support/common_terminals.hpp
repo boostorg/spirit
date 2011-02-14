@@ -63,7 +63,7 @@ namespace boost { namespace spirit
     {};
 
     // Our basic terminals
-    BOOST_SPIRIT_DEFINE_TERMINALS(
+    BOOST_SPIRIT_DEFINE_TERMINALS_NAME(
         ( verbatim, verbatim_type )
         ( no_delimit, no_delimit_type )
         ( lexeme, lexeme_type )
@@ -86,7 +86,7 @@ namespace boost { namespace spirit
     )
 
     // Our extended terminals
-    BOOST_SPIRIT_DEFINE_TERMINALS_EX(
+    BOOST_SPIRIT_DEFINE_TERMINALS_NAME_EX(
         ( lit, lit_type )
         ( bin, bin_type )
         ( oct, oct_type )

@@ -504,7 +504,7 @@ namespace boost { namespace spirit
 
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#define BOOST_SPIRIT_TERMINAL(name, type_name)                                  \
+#define BOOST_SPIRIT_TERMINAL_NAME(name, type_name)                             \
     namespace tag { struct name {};  }                                          \
     typedef boost::proto::terminal<tag::name>::type type_name;                  \
     type_name const name = {{}};                                                \
@@ -513,22 +513,26 @@ namespace boost { namespace spirit
 
 #else
 
-#define BOOST_SPIRIT_TERMINAL(name, type_name)                                  \
+#define BOOST_SPIRIT_TERMINAL_NAME(name, type_name)                             \
     namespace tag { struct name {};  }                                          \
     typedef boost::proto::terminal<tag::name>::type type_name;                  \
     /***/
 
 #endif
 
-#define BOOST_SPIRIT_DEFINE_TERMINALS_A(r, _, names)                            \
-    BOOST_SPIRIT_TERMINAL(                                                      \
+#define BOOST_SPIRIT_TERMINAL(name)                                             \
+    BOOST_SPIRIT_TERMINAL_NAME(name, name ## _type)                             \
+    /***/
+
+#define BOOST_SPIRIT_DEFINE_TERMINALS_NAME_A(r, _, names)                       \
+    BOOST_SPIRIT_TERMINAL_NAME(                                                 \
         BOOST_PP_TUPLE_ELEM(2, 0, names),                                       \
         BOOST_PP_TUPLE_ELEM(2, 1, names)                                        \
     )                                                                           \
     /***/
 
-#define BOOST_SPIRIT_DEFINE_TERMINALS(seq)                                      \
-    BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_DEFINE_TERMINALS_A, _,                   \
+#define BOOST_SPIRIT_DEFINE_TERMINALS_NAME(seq)                                 \
+    BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_DEFINE_TERMINALS_NAME_A, _,              \
         BOOST_PP_CAT(BOOST_SPIRIT_TERMINAL_X seq, 0))                           \
     /***/
 
@@ -538,31 +542,35 @@ namespace boost { namespace spirit
 
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#define BOOST_SPIRIT_TERMINAL_EX(name, type_name)                               \
+#define BOOST_SPIRIT_TERMINAL_NAME_EX(name, type_name)                          \
     namespace tag { struct name {}; }                                           \
     typedef boost::spirit::terminal<tag::name> type_name;                       \
-    type_name const name = type_name();                                       \
+    type_name const name = type_name();                                         \
     inline void BOOST_PP_CAT(silence_unused_warnings_, name)() { (void) name; } \
     /***/
 
 #else
 
-#define BOOST_SPIRIT_TERMINAL_EX(name, type_name)                               \
+#define BOOST_SPIRIT_TERMINAL_NAME_EX(name, type_name)                          \
     namespace tag { struct name {}; }                                           \
     typedef boost::spirit::terminal<tag::name> type_name;                       \
     /***/
 
 #endif
 
-#define BOOST_SPIRIT_DEFINE_TERMINALS_EX_A(r, _, names)                         \
-    BOOST_SPIRIT_TERMINAL_EX(                                                   \
+#define BOOST_SPIRIT_TERMINAL_EX(name)                                          \
+    BOOST_SPIRIT_TERMINAL_NAME_EX(name, name ## _type)                          \
+    /***/
+
+#define BOOST_SPIRIT_DEFINE_TERMINALS_NAME_EX_A(r, _, names)                    \
+    BOOST_SPIRIT_TERMINAL_NAME_EX(                                              \
         BOOST_PP_TUPLE_ELEM(2, 0, names),                                       \
         BOOST_PP_TUPLE_ELEM(2, 1, names)                                        \
     )                                                                           \
     /***/
 
-#define BOOST_SPIRIT_DEFINE_TERMINALS_EX(seq)                                   \
-    BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_DEFINE_TERMINALS_EX_A, _,                \
+#define BOOST_SPIRIT_DEFINE_TERMINALS_NAME_EX(seq)                              \
+    BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_DEFINE_TERMINALS_NAME_EX_A, _,           \
         BOOST_PP_CAT(BOOST_SPIRIT_TERMINAL_X seq, 0))                           \
     /***/
 
