@@ -149,10 +149,10 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Attribute>
-    struct assign_to_attribute_from_value<optional<Attribute>, unused_type>
+    struct assign_to_attribute_from_value<boost::optional<Attribute>, unused_type>
     {
         static void 
-        call(unused_type, optional<Attribute> const&)
+        call(unused_type, boost::optional<Attribute> const&)
         {
         }
     };
@@ -231,10 +231,10 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Attribute>
-    struct assign_to_container_from_value<optional<Attribute>, unused_type>
+    struct assign_to_container_from_value<boost::optional<Attribute>, unused_type>
     {
         static void 
-        call(unused_type, optional<Attribute> const&)
+        call(unused_type, boost::optional<Attribute> const&)
         {
         }
     };

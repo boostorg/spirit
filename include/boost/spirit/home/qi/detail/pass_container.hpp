@@ -39,15 +39,15 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       : is_convertible<typename RHSAttribute::value_type, LHS> {};
 
     template <typename LHS, typename T>
-    struct has_same_elements<LHS, optional<T>, false, false>
+    struct has_same_elements<LHS, boost::optional<T>, false, false>
       : has_same_elements<LHS, T> {};
 
     template <typename LHS, typename T>
-    struct has_same_elements<LHS, optional<T>, true, false>
+    struct has_same_elements<LHS, boost::optional<T>, true, false>
       : has_same_elements<LHS, T> {};
 
     template <typename LHS, typename T>
-    struct has_same_elements<LHS, optional<T>, false, true>
+    struct has_same_elements<LHS, boost::optional<T>, false, true>
       : has_same_elements<LHS, T> {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \

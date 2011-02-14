@@ -44,15 +44,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         > {};
 
     template <typename RHS, typename T>
-    struct has_same_elements<RHS, optional<T>, false, false>
+    struct has_same_elements<RHS, boost::optional<T>, false, false>
       : has_same_elements<RHS, T> {};
 
     template <typename RHS, typename T>
-    struct has_same_elements<RHS, optional<T>, true, false>
+    struct has_same_elements<RHS, boost::optional<T>, true, false>
       : has_same_elements<RHS, T> {};
 
     template <typename RHS, typename T>
-    struct has_same_elements<RHS, optional<T>, false, true>
+    struct has_same_elements<RHS, boost::optional<T>, false, true>
       : has_same_elements<RHS, T> {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \

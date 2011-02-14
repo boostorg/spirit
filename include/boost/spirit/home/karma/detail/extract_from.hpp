@@ -80,24 +80,24 @@ namespace boost { namespace spirit { namespace traits
 
     // This handles optional attributes. 
     template <typename Attribute, typename Exposed>
-    struct extract_from_attribute<optional<Attribute>, Exposed>
+    struct extract_from_attribute<boost::optional<Attribute>, Exposed>
     {
         typedef Attribute const& type;
 
         template <typename Context>
-        static type call(optional<Attribute> const& attr, Context& ctx)
+        static type call(boost::optional<Attribute> const& attr, Context& ctx)
         {
             return extract_from<Exposed>(boost::get<Attribute>(attr), ctx);
         }
     };
 
     template <typename Attribute, typename Exposed>
-    struct extract_from_attribute<optional<Attribute const>, Exposed>
+    struct extract_from_attribute<boost::optional<Attribute const>, Exposed>
     {
         typedef Attribute const& type;
 
         template <typename Context>
-        static type call(optional<Attribute const> const& attr, Context& ctx)
+        static type call(boost::optional<Attribute const> const& attr, Context& ctx)
         {
             return extract_from<Exposed>(boost::get<Attribute const>(attr), ctx);
         }

@@ -55,7 +55,7 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     template <typename T>
-    struct is_container<optional<T> > 
+    struct is_container<boost::optional<T> > 
       : is_container<T> 
     {};
 
@@ -119,7 +119,7 @@ namespace boost { namespace spirit { namespace traits
 
     // this will be instantiated if the optional holds a container
     template <typename T>
-    struct container_value<optional<T> > 
+    struct container_value<boost::optional<T> > 
       : container_value<T> 
     {};
 
@@ -211,16 +211,16 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename T>
-    struct optional_attribute<optional<T> >
+    struct optional_attribute<boost::optional<T> >
     {
         typedef T const& type;
 
-        static type call(optional<T> const& val)
+        static type call(boost::optional<T> const& val)
         {
             return boost::get<T>(val);
         }
 
-        static bool is_valid(optional<T> const& val)
+        static bool is_valid(boost::optional<T> const& val)
         {
             return val;
         }
@@ -268,7 +268,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename T>
     struct push_back_container<optional<Container>, T>
     {
-        static bool call(optional<Container>& c, T const& val)
+        static bool call(boost::optional<Container>& c, T const& val)
         {
             if (!c)
                 c = Container();
@@ -509,13 +509,13 @@ namespace boost { namespace spirit { namespace result_of
     };
 
     template <typename T>
-    struct optional_value<optional<T> >
+    struct optional_value<boost::optional<T> >
     {
         typedef T type;
     };
 
     template <typename T>
-    struct optional_value<optional<T> const>
+    struct optional_value<boost::optional<T> const>
     {
         typedef T const type;
     };

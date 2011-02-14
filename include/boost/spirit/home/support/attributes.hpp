@@ -396,7 +396,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     struct build_optional
     {
-        typedef optional<T> type;
+        typedef boost::optional<T> type;
     };
 
     template <>
@@ -574,7 +574,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename Sequence, int size>
         struct build_collapsed_variant<Sequence, false, size>
         {
-            typedef optional<
+            typedef boost::optional<
                 typename spirit::detail::as_variant<
                     typename fusion::result_of::pop_front<Sequence>::type
                 >::type
@@ -600,7 +600,7 @@ namespace boost { namespace spirit { namespace traits
         template <typename Sequence>
         struct build_collapsed_variant<Sequence, false, 2>
         {
-            typedef optional<
+            typedef boost::optional<
                 typename mpl::deref<
                     typename mpl::next<
                         typename mpl::begin<Sequence>::type
@@ -895,9 +895,9 @@ namespace boost { namespace spirit { namespace traits
 
     // optionals
     template <typename T>
-    struct clear_value<optional<T> >
+    struct clear_value<boost::optional<T> >
     {
-        static void call(optional<T>& val)
+        static void call(boost::optional<T>& val)
         {
             if (val)
                 val = none_t();   // leave optional uninitialized
