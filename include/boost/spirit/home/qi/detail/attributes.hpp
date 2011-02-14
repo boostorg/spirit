@@ -10,6 +10,7 @@
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/support/utree/utree_traits_fwd.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace qi
