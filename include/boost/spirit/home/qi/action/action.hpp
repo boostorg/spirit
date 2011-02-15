@@ -44,6 +44,7 @@ namespace boost { namespace spirit { namespace qi
         action(Subject const& subject, Action f)
           : subject(subject), f(f) {}
 
+#ifndef BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
@@ -68,12 +69,59 @@ namespace boost { namespace spirit { namespace qi
                 if (traits::action_dispatch<Subject>()(f, attr, context))
                     return true;
 
-                // reset iterators if semantic action failed the match 
+                // reset iterators if semantic action failed the match
                 // retrospectively
                 first = save;
             }
             return false;
         }
+#else
+        template <typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr) const
+        {
+            Iterator save = first;
+            if (subject.parse(first, last, context, skipper, attr)) // Use the attribute as-is
+            {
+                // call the function, passing the attribute, the context.
+                // The client can return false to fail parsing.
+                if (traits::action_dispatch<Subject>()(f, attr, context))
+                    return true;
+
+                // reset iterators if semantic action failed the match
+                // retrospectively
+                first = save;
+            }
+            return false;
+        }
+
+        template <typename Iterator, typename Context
+          , typename Skipper>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , unused_type) const
+        {
+            // synthesize the attribute since one is not supplied
+            typedef typename attribute<Context, Iterator>::type attr_type;
+            typename attr_type attr;
+
+            Iterator save = first;
+            if (subject.parse(first, last, context, skipper, attr))
+            {
+                // call the function, passing the attribute, the context.
+                // The client can return false to fail parsing.
+                if (traits::action_dispatch<Subject>()(f, attr, context))
+                    return true;
+
+                // reset iterators if semantic action failed the match
+                // retrospectively
+                first = save;
+            }
+            return false;
+        }
+#endif
 
         template <typename Context>
         info what(Context& context) const
