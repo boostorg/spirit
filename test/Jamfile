@@ -26,6 +26,7 @@ import testing ;
     test-suite spirit_v2/qi :
 
      [ run qi/actions.cpp          : : : : qi_actions ]
+     [ run qi/actions2.cpp         : : : : qi_actions2 ]
      [ run qi/alternative.cpp      : : : : qi_alternative ]
      [ run qi/attr.cpp             : : : : qi_attr ]
      [ run qi/attribute1.cpp       : : : : qi_attribute1 ]
@@ -93,10 +94,10 @@ import testing ;
      [ run qi/utree2.cpp           : : : : qi_utree2 ]
      [ run qi/utree3.cpp           : : : : qi_utree3 ]
      [ run qi/utree4.cpp           : : : : qi_utree4 ]
-    
+
     ;
-    
-    ###########################################################################    
+
+    ###########################################################################
     test-suite spirit_v2/qi_regressions :
 
      [ compile qi/regression_attr_with_action.cpp                 : : qi_regression_attr_with_action ]
@@ -188,7 +189,7 @@ import testing ;
 
     ;
 
-    ###########################################################################    
+    ###########################################################################
     test-suite spirit_v2/karma_regressions :
 
      [ run karma/regression_optional_double.cpp            : : : :  karma_regression_optional_double ]
@@ -214,7 +215,7 @@ import testing ;
      [ run lex/semantic_actions.cpp          : : : : lex_semantic_actions ]
      [ run lex/auto_switch_lexerstate.cpp    : : : : lex_auto_switch_lexerstate ]
      [ run lex/id_type_enum.cpp              : : : : lex_id_type_enum ]
-    
+
     ;
 
     ###########################################################################
@@ -233,7 +234,7 @@ import testing ;
      [ run lex/regression_file_iterator2.cpp : : : : lex_regression_file_iterator2 ]
      [ run lex/regression_file_iterator3.cpp : : : : lex_regression_file_iterator3 ]
      [ run lex/regression_file_iterator4.cpp : : : : lex_regression_file_iterator4 ]
-    
+
     ;
 
     ###########################################################################
@@ -244,7 +245,7 @@ import testing ;
 
     ;
 
-    ###########################################################################    
+    ###########################################################################
     test-suite spirit_v2/support_regressions :
 
      [ compile support/regression_multi_pass_position_iterator.cpp : : support_regression_multi_pass_position_iterator ]
