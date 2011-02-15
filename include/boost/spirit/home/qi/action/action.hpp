@@ -103,9 +103,15 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , unused_type) const
         {
-            // synthesize the attribute since one is not supplied
             typedef typename attribute<Context, Iterator>::type attr_type;
-            typename attr_type attr;
+            typedef traits::make_attribute<attr_type, unused_type> make_attribute;
+
+            // synthesize the attribute since one is not supplied
+            typedef traits::transform_attribute<
+                typename make_attribute::type, attr_type, domain> transform;
+
+            typename make_attribute::type made_attr = make_attribute::call(unused_type());
+            typename transform::type attr = transform::pre(made_attr);
 
             Iterator save = first;
             if (subject.parse(first, last, context, skipper, attr))
