@@ -58,8 +58,8 @@ namespace boost { namespace spirit { namespace traits
     // components.
     ///////////////////////////////////////////////////////////////////////////
 
-    // Find out if T is a substitute for Expected attribute
-    template <typename T, typename Expected, typename Enable = void>
+    // Find out if T can be a substitute for Expected attribute
+    template <typename T, typename Expected, typename Enable /*= void*/>
     struct is_substitute : is_same<T, Expected> {};
 
     template <typename T, typename Expected>
@@ -73,6 +73,25 @@ namespace boost { namespace spirit { namespace traits
                 fusion::traits::is_sequence<T>,
                 fusion::traits::is_sequence<Expected>,
                 mpl::equal<T, Expected, is_substitute<mpl::_1, mpl::_2> >
+            >
+        >::type>
+      : mpl::true_ {};
+
+    namespace detail
+    {
+        template <typename T, typename Expected>
+        struct value_type_is_substitute
+          : is_substitute<typename T::value_type, typename Expected::value_type>
+        {};
+    }
+
+    template <typename T, typename Expected>
+    struct is_substitute<T, Expected,
+        typename enable_if<
+            mpl::and_<
+                is_container<T>,
+                is_container<Expected>,
+                detail::value_type_is_substitute<T, Expected>
             >
         >::type>
       : mpl::true_ {};

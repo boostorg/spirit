@@ -65,9 +65,19 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Component>
         bool call_optional_or_variant(Component const& component, mpl::true_) const
         {
-            // if Attribute is an optional, then create an attribute for
-            // the Component with its expected type.
-            typename traits::attribute_of<Component, Context, Iterator>::type val;
+            // If Attribute is an optional, then create an attribute for the Component
+            // with the type optional::value_type. If the expected attribute is unused type,
+            // use it instead.
+            typedef typename
+                traits::attribute_of<Component, Context, Iterator>::type
+            expected_type;
+
+            typename mpl::if_<
+                is_same<expected_type, unused_type>,
+                unused_type,
+                typename Attribute::value_type>::type
+            val;
+
             if (component.parse(first, last, context, skipper, val))
             {
                 traits::assign_to(val, attr);
@@ -79,18 +89,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Component>
         bool call_optional_or_variant(Component const& component, mpl::false_) const
         {
-#ifndef BOOST_SPIRIT_ALTERNATIVES_ALLOW_ATTR_COMPAT
-            // if Attribute is a variant, then create an attribute for
-            // the Component with its expected type.
-            typename traits::attribute_of<Component, Context, Iterator>::type val;
-            if (component.parse(first, last, context, skipper, val))
-            {
-                traits::assign_to(val, attr);
-                return true;
-            }
-            return false;
-#else
-            // if Attribute is a variant, then search the variant types for a
+            // If Attribute is a variant, then search the variant types for a
             // suitable substitute type.
 
             typename
@@ -105,7 +104,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 return true;
             }
             return false;
-#endif
         }
 
         template <typename Component>
