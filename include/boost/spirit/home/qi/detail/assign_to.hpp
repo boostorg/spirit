@@ -18,6 +18,7 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
+#include <boost/fusion/include/assign.hpp>
 #include <boost/ref.hpp>
 #include <boost/range/iterator_range.hpp>
 
@@ -31,7 +32,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename Iterator, typename Enable>
     struct assign_to_attribute_from_iterators
     {
-        static void 
+        static void
         call(Iterator const& first, Iterator const& last, Attribute& attr)
         {
             if (traits::is_empty(attr))
@@ -47,7 +48,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<
         reference_wrapper<Attribute>, Iterator>
     {
-        static void 
+        static void
         call(Iterator const& first, Iterator const& last
           , reference_wrapper<Attribute> attr)
         {
@@ -64,7 +65,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<
         iterator_range<Iterator>, Iterator>
     {
-        static void 
+        static void
         call(Iterator const& first, Iterator const& last
           , iterator_range<Iterator>& attr)
         {
@@ -93,7 +94,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename T, typename Enable>
     struct assign_to_attribute_from_value
     {
-        typedef typename traits::one_element_sequence<Attribute>::type 
+        typedef typename traits::one_element_sequence<Attribute>::type
             is_one_element_sequence;
 
         typedef typename mpl::eval_if<
@@ -103,25 +104,25 @@ namespace boost { namespace spirit { namespace traits
         >::type type;
 
         template <typename T_>
-        static void 
+        static void
         call(T_ const& val, Attribute& attr, mpl::false_)
         {
             attr = static_cast<Attribute>(val);
         }
 
         // This handles the case where the attribute is a single element fusion
-        // sequence. We silently assign to the only element and treat it as the 
+        // sequence. We silently assign to the only element and treat it as the
         // attribute to parse the results into.
         template <typename T_>
-        static void 
+        static void
         call(T_ const& val, Attribute& attr, mpl::true_)
         {
-            typedef typename fusion::result_of::value_at_c<Attribute, 0>::type 
+            typedef typename fusion::result_of::value_at_c<Attribute, 0>::type
                 element_type;
             fusion::at_c<0>(attr) = static_cast<element_type>(val);
         }
 
-        static void 
+        static void
         call(T const& val, Attribute& attr)
         {
             call(val, attr, is_one_element_sequence());
@@ -131,7 +132,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute>
     struct assign_to_attribute_from_value<Attribute, Attribute>
     {
-        static void 
+        static void
         call(Attribute const& val, Attribute& attr)
         {
             attr = val;
@@ -141,7 +142,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename T>
     struct assign_to_attribute_from_value<reference_wrapper<Attribute>, T>
     {
-        static void 
+        static void
         call(T const& val, reference_wrapper<Attribute> attr)
         {
             assign_to(val.get(), attr);
@@ -151,9 +152,34 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute>
     struct assign_to_attribute_from_value<boost::optional<Attribute>, unused_type>
     {
-        static void 
+        static void
         call(unused_type, boost::optional<Attribute> const&)
         {
+        }
+    };
+
+    namespace detail
+    {
+        template <typename A, typename B>
+        struct is_same_size_sequence
+          : mpl::bool_<fusion::result_of::size<A>::value
+                == fusion::result_of::size<B>::value>
+        {};
+    }
+
+    template <typename Attribute, typename T>
+    struct assign_to_attribute_from_value<Attribute, T,
+            mpl::and_<
+                fusion::traits::is_sequence<Attribute>,
+                fusion::traits::is_sequence<T>,
+                detail::is_same_size_sequence<Attribute, T>
+            >
+        >
+    {
+        static void
+        call(T const& val, Attribute& attr)
+        {
+            fusion::assign(val, attr);
         }
     };
 
@@ -172,14 +198,14 @@ namespace boost { namespace spirit { namespace traits
         template <typename T_>
         static void call(T_ const& val, Attribute& attr, mpl::true_, mpl::false_)
         {
-            typedef typename traits::container_iterator<T_ const>::type 
+            typedef typename traits::container_iterator<T_ const>::type
                 iterator_type;
             iterator_type end = traits::end(val);
             for (iterator_type i = traits::begin(val); i != end; traits::next(i))
                 traits::push_back(attr, traits::deref(i));
         }
 
-        // T is a string 
+        // T is a string
         template <typename Iterator>
         static void append_to_string(Attribute& attr, Iterator begin, Iterator end)
         {
@@ -223,7 +249,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename T>
     struct assign_to_container_from_value<reference_wrapper<Attribute>, T>
     {
-        static void 
+        static void
         call(T const& val, reference_wrapper<Attribute> attr)
         {
             assign_to(val.get(), attr);
@@ -233,7 +259,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute>
     struct assign_to_container_from_value<boost::optional<Attribute>, unused_type>
     {
-        static void 
+        static void
         call(unused_type, boost::optional<Attribute> const&)
         {
         }
@@ -250,7 +276,7 @@ namespace boost { namespace spirit { namespace traits
             assign_to_attribute_from_value<Attribute, T>::call(val, attr);
         }
 
-        // overload for containers (but not for variants or optionals 
+        // overload for containers (but not for variants or optionals
         // holding containers)
         template <typename T, typename Attribute>
         inline void
@@ -267,7 +293,7 @@ namespace boost { namespace spirit { namespace traits
         typedef typename mpl::and_<
             traits::is_container<Attribute>
           , traits::not_is_variant<Attribute>
-          , traits::not_is_optional<Attribute> 
+          , traits::not_is_optional<Attribute>
         >::type is_not_wrapped_container;
 
         detail::assign_to(val, attr, is_not_wrapped_container());

@@ -34,10 +34,10 @@ namespace boost { namespace spirit { namespace qi
     struct as
       : stateful_tag_type<T, tag::as>
     {
-        BOOST_SPIRIT_ASSERT_MSG(
-            (traits::is_container<T>::type::value),
-            error_type_must_be_a_container,
-            (T));
+        //~ BOOST_SPIRIT_ASSERT_MSG(
+            //~ (traits::is_container<T>::type::value),
+            //~ error_type_must_be_a_container,
+            //~ (T));
     };
 }}}
 
@@ -95,6 +95,19 @@ namespace boost { namespace spirit { namespace qi
             if (subject.parse(i, last, context, skipper, as_attr))
             {
                 spirit::traits::assign_to(as_attr, attr);
+                first = i;
+                return true;
+            }
+            return false;
+        }
+
+        template <typename Iterator, typename Context, typename Skipper>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper, T& attr) const
+        {
+            Iterator i = first;
+            if (subject.parse(i, last, context, skipper, attr))
+            {
                 first = i;
                 return true;
             }

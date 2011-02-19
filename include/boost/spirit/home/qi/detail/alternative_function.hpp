@@ -20,6 +20,29 @@
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
+    template <typename Variant, typename Expected>
+    struct find_substitute
+    {
+        // Get the typr from the variant that can be a substitute for Expected.
+        // If none is found, just return Expected
+
+        typedef Variant variant_type;
+        typedef typename variant_type::types types;
+        typedef typename mpl::end<types>::type end;
+
+        typedef typename
+            mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >::type
+        iter;
+
+        typedef typename
+            mpl::eval_if<
+                is_same<iter, end>,
+                mpl::identity<Expected>,
+                mpl::deref<iter>
+            >::type
+        type;
+    };
+
     template <typename Iterator, typename Context, typename Skipper,
         typename Attribute>
     struct alternative_function
@@ -40,10 +63,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool call(Component const& component, mpl::false_) const
+        bool call_optional_or_variant(Component const& component, mpl::true_) const
         {
-            // if Attribute is a variant or optional, then create an 
-            // attribute for the Component with its expected type.
+            // if Attribute is an optional, then create an attribute for
+            // the Component with its expected type.
             typename traits::attribute_of<Component, Context, Iterator>::type val;
             if (component.parse(first, last, context, skipper, val))
             {
@@ -54,13 +77,52 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
+        bool call_optional_or_variant(Component const& component, mpl::false_) const
+        {
+#ifndef BOOST_SPIRIT_ALTERNATIVES_ALLOW_ATTR_COMPAT
+            // if Attribute is a variant, then create an attribute for
+            // the Component with its expected type.
+            typename traits::attribute_of<Component, Context, Iterator>::type val;
+            if (component.parse(first, last, context, skipper, val))
+            {
+                traits::assign_to(val, attr);
+                return true;
+            }
+            return false;
+#else
+            // if Attribute is a variant, then search the variant types for a
+            // suitable substitute type.
+
+            typename
+                find_substitute<Attribute,
+                    typename traits::attribute_of<Component, Context, Iterator>::type
+                >::type
+            val;
+
+            if (component.parse(first, last, context, skipper, val))
+            {
+                traits::assign_to(val, attr);
+                return true;
+            }
+            return false;
+#endif
+        }
+
+        template <typename Component>
+        bool call(Component const& component, mpl::false_) const
+        {
+            return call_optional_or_variant(
+                component, spirit::traits::not_is_variant<Attribute, qi::domain>());
+        }
+
+        template <typename Component>
         bool operator()(Component const& component) const
         {
             // return true if the parser succeeds
-            return call(component, 
+            return call(component,
                 mpl::and_<
                     spirit::traits::not_is_variant<Attribute, qi::domain>,
-                    spirit::traits::not_is_optional<Attribute, qi::domain> 
+                    spirit::traits::not_is_optional<Attribute, qi::domain>
                 >());
         }
 

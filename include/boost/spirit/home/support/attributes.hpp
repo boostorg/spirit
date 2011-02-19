@@ -27,6 +27,7 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/is_view.hpp>
+#include <boost/fusion/include/mpl.hpp>
 #include <boost/foreach.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -39,6 +40,7 @@
 #include <boost/mpl/distance.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/has_xxx.hpp>
+#include <boost/mpl/equal.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
@@ -55,6 +57,25 @@ namespace boost { namespace spirit { namespace traits
     // including generalized attribute transformation utilities for Spirit
     // components.
     ///////////////////////////////////////////////////////////////////////////
+
+    // Find out if T is a substitute for Expected attribute
+    template <typename T, typename Expected, typename Enable = void>
+    struct is_substitute : is_same<T, Expected> {};
+
+    template <typename T, typename Expected>
+    struct is_substitute<optional<T>, optional<Expected> >
+      : is_substitute<T, Expected> {};
+
+    template <typename T, typename Expected>
+    struct is_substitute<T, Expected,
+        typename enable_if<
+            mpl::and_<
+                fusion::traits::is_sequence<T>,
+                fusion::traits::is_sequence<Expected>,
+                mpl::equal<T, Expected, is_substitute<mpl::_1, mpl::_2> >
+            >
+        >::type>
+      : mpl::true_ {};
 
     template <typename T, typename Enable/* = void*/>
     struct is_proxy : mpl::false_ {};
@@ -102,7 +123,7 @@ namespace boost { namespace spirit { namespace traits
     namespace detail
     {
         //  A component is compatible to a given Attribute type if the
-        //  Attribute is the same as the expected type of the component or if 
+        //  Attribute is the same as the expected type of the component or if
         //  it is convertible to the expected type.
         template <typename Expected, typename Attribute>
         struct attribute_is_compatible
@@ -162,7 +183,7 @@ namespace boost { namespace spirit { namespace traits
             mpl::eval_if<type, mpl::deref<iter>, mpl::identity<unused_type> >::type
         compatible_type;
 
-        // return whether the given type is compatible with the Expected type 
+        // return whether the given type is compatible with the Expected type
         static bool is_compatible(int which)
         {
             return which == distance::value;
@@ -437,38 +458,38 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // sequence_attribute_transform
-    // 
+    //
     // This transform is invoked for every attribute in a sequence allowing
-    // to modify the attribute type exposed by a component to the enclosing 
+    // to modify the attribute type exposed by a component to the enclosing
     // sequence component. By default no transformation is performed.
-    /////////////////////////////////////////////////////////////////////////// 
-    template <typename Attribute, typename Domain> 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Domain>
     struct sequence_attribute_transform
       : mpl::identity<Attribute>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
     // permutation_attribute_transform
-    // 
+    //
     // This transform is invoked for every attribute in a sequence allowing
-    // to modify the attribute type exposed by a component to the enclosing 
-    // permutation component. By default a build_optional transformation is 
+    // to modify the attribute type exposed by a component to the enclosing
+    // permutation component. By default a build_optional transformation is
     // performed.
-    /////////////////////////////////////////////////////////////////////////// 
-    template <typename Attribute, typename Domain> 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Domain>
     struct permutation_attribute_transform
       : traits::build_optional<Attribute>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
     // sequential_or_attribute_transform
-    // 
+    //
     // This transform is invoked for every attribute in a sequential_or allowing
-    // to modify the attribute type exposed by a component to the enclosing 
-    // sequential_or component. By default a build_optional transformation is 
+    // to modify the attribute type exposed by a component to the enclosing
+    // sequential_or component. By default a build_optional transformation is
     // performed.
-    /////////////////////////////////////////////////////////////////////////// 
-    template <typename Attribute, typename Domain> 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Domain>
     struct sequential_or_attribute_transform
       : traits::build_optional<Attribute>
     {};
@@ -613,12 +634,12 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // alternative_attribute_transform
-    // 
+    //
     // This transform is invoked for every attribute in an alternative allowing
-    // to modify the attribute type exposed by a component to the enclosing 
+    // to modify the attribute type exposed by a component to the enclosing
     // alternative component. By default no transformation is performed.
-    /////////////////////////////////////////////////////////////////////////// 
-    template <typename Attribute, typename Domain> 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Domain>
     struct alternative_attribute_transform
       : mpl::identity<Attribute>
     {};
@@ -709,7 +730,9 @@ namespace boost { namespace spirit { namespace traits
     // not care about the attribute. For semantic actions, however, we need to
     // have a real value to pass to the semantic action. If the client did not
     // provide one, we will have to synthesize the value. This class takes care
-    // of that.
+    // of that. *Note that this behavior has changed. From Boost 1.47, semantic
+    // actions always take in the passed attribute as-is if the PP constant:
+    // BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT is defined.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute
@@ -1012,7 +1035,7 @@ namespace boost { namespace spirit { namespace traits
             {
                 bool first = true;
                 typename container_iterator<T_ const>::type iend = traits::end(val);
-                for (typename container_iterator<T_ const>::type i = traits::begin(val); 
+                for (typename container_iterator<T_ const>::type i = traits::begin(val);
                      !traits::compare(i, iend); traits::next(i))
                 {
                     if (!first)
