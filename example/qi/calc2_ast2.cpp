@@ -8,7 +8,7 @@
 //
 //  A Calculator example demonstrating generation of AST
 //
-//  [ JDG April 28, 2008 ]
+//  [ JDG April 28, 2008 : For BoostCon 2008 ]
 //  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ namespace client { namespace ast
 {
     struct nil {};
     struct signed_;
-    struct program;
+    struct operation;
 
     typedef boost::variant<
             nil
@@ -126,15 +126,15 @@ namespace client { namespace ast
         int operator()(nil) const { BOOST_ASSERT(0); return 0; }
         int operator()(unsigned int n) const { return n; }
 
-        int operator()(operation const& x, int state) const
+        int operator()(operation const& x, int lhs) const
         {
             int rhs = boost::apply_visitor(*this, x.operand_);
             switch (x.operator_)
             {
-                case '+': return state + rhs;
-                case '-': return state - rhs;
-                case '*': return state * rhs;
-                case '/': return state / rhs;
+                case '+': return lhs + rhs;
+                case '-': return lhs - rhs;
+                case '*': return lhs * rhs;
+                case '/': return lhs / rhs;
             }
             BOOST_ASSERT(0);
             return 0;
@@ -195,7 +195,7 @@ namespace client
                 ;
 
             factor =
-                uint_
+                    uint_
                 |   '(' >> expression >> ')'
                 |   (char_('-') >> factor)
                 |   (char_('+') >> factor)
@@ -219,10 +219,9 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    boost::spirit::ascii::space_type space;
     typedef std::string::const_iterator iterator_type;
     typedef client::calculator<iterator_type> calculator;
-    typedef client::ast::program program;
+    typedef client::ast::program ast_program;
     typedef client::ast::printer ast_print;
     typedef client::ast::eval ast_eval;
 
@@ -232,21 +231,22 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        calculator calc;    // Our grammar
-        program ast;        // Our AST
-        ast_print printer;  // Prints the AST
-        ast_eval eval;      // Evaluates the AST
+        calculator calc;        // Our grammar
+        ast_program program;    // Our program (AST)
+        ast_print printer;      // Prints the program
+        ast_eval eval;          // Evaluates the program
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        bool r = phrase_parse(iter, end, calc, space, ast);
+        boost::spirit::ascii::space_type space;
+        bool r = phrase_parse(iter, end, calc, space, program);
 
         if (r && iter == end)
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
-            printer(ast);
-            std::cout << "\nResult: " << eval(ast) << std::endl;
+            printer(program);
+            std::cout << "\nResult: " << eval(program) << std::endl;
             std::cout << "-------------------------\n";
         }
         else
