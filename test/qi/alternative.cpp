@@ -35,7 +35,7 @@ struct test_action
       , boost::spirit::unused_type
       , boost::spirit::unused_type) const
     {
-        BOOST_TEST(v.size() == 4 && 
+        BOOST_TEST(v.size() == 4 &&
             v[0] == 'a' && v[1] == 'b' && v[2] == '1' && v[3] == last_);
     }
 
@@ -52,10 +52,10 @@ struct test_action_2
     {
         using boost::get;
 
-        BOOST_TEST(v.size() == 5 && 
-            v[1] == 'a' && 
-            v[2] == 'b' && 
-            v[3] == '1' && 
+        BOOST_TEST(v.size() == 5 &&
+            v[1] == 'a' &&
+            v[2] == 'b' &&
+            v[3] == '1' &&
             v[4] == '2');
     }
 };
@@ -97,18 +97,19 @@ main()
         BOOST_TEST((test_attr("x", lit("rock") | int_ | char_, v)));
         BOOST_TEST(boost::get<char>(v) == 'x');
     }
-    
-    {   // Make sure that we are using the actual supplied attribute types 
+
+    {   // Make sure that we are using the actual supplied attribute types
         // from the variant and not the expected type.
-//         boost::variant<int, std::string> v;
-//         BOOST_TEST((test_attr("12345", int_ | +char_, v)));
-//         BOOST_TEST(boost::get<int>(v) == 12345);
-// 
-//         BOOST_TEST((test_attr("abc", int_ | +char_, v)));
-//         BOOST_TEST(boost::get<std::string>(v) == "abc");
-// 
-//         BOOST_TEST((test_attr("12345", +char_ | int_, v)));
-//         BOOST_TEST(boost::get<std::string>(v) == "12345");
+        // $$$ Fixed: <2/19/2011> JDG $$$
+         boost::variant<int, std::string> v;
+         BOOST_TEST((test_attr("12345", int_ | +char_, v)));
+         BOOST_TEST(boost::get<int>(v) == 12345);
+
+         BOOST_TEST((test_attr("abc", int_ | +char_, v)));
+         BOOST_TEST(boost::get<std::string>(v) == "abc");
+
+         BOOST_TEST((test_attr("12345", +char_ | int_, v)));
+         BOOST_TEST(boost::get<std::string>(v) == "12345");
     }
 
     {   // test action
@@ -184,10 +185,10 @@ main()
         std::vector<boost::optional<char> > v;
         BOOST_TEST( (test("x,y,z", (*(',' | char_))[phx::ref(v) = _1])) );
         BOOST_ASSERT(v[0] == 'x');
-        BOOST_ASSERT(!v[1]);       
+        BOOST_ASSERT(!v[1]);
         BOOST_ASSERT(v[2] == 'y');
-        BOOST_ASSERT(!v[3]);        
-        BOOST_ASSERT(v[4] == 'z');        
+        BOOST_ASSERT(!v[3]);
+        BOOST_ASSERT(v[4] == 'z');
     }
 
     {
@@ -195,23 +196,23 @@ main()
 
         // testing a sequence taking a container as attribute
         std::string s;
-        BOOST_TEST( (test_attr("abc,a,b,c", 
+        BOOST_TEST( (test_attr("abc,a,b,c",
             char_ >> char_ >> (char_ % ','), s )) );
         BOOST_TEST(s == "abcabc");
 
         // test having an optional<container> inside a sequence
         s.erase();
-        BOOST_TEST( (test_attr("ab", 
+        BOOST_TEST( (test_attr("ab",
             char_ >> char_ >> -(char_ % ','), s )) );
         BOOST_TEST(s == "ab");
 
         // test having a variant<container, ...> inside a sequence
         s.erase();
-        BOOST_TEST( (test_attr("ab", 
+        BOOST_TEST( (test_attr("ab",
             char_ >> char_ >> ((char_ % ',') | eps), s )) );
         BOOST_TEST(s == "ab");
         s.erase();
-        BOOST_TEST( (test_attr("abc", 
+        BOOST_TEST( (test_attr("abc",
             char_ >> char_ >> ((char_ % ',') | eps), s )) );
         BOOST_TEST(s == "abc");
     }
