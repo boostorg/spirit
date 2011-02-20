@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit 
 { 
-    struct utree;
+    class utree;
 }}
 
 namespace boost
