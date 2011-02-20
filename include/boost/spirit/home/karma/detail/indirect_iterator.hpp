@@ -64,17 +64,21 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     private:
         Iterator* iter_;
     };
+}}}}
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
     template <typename Iterator>
     struct make_indirect_iterator
     {
-        typedef indirect_iterator<Iterator> type;
+        typedef karma::detail::indirect_iterator<Iterator> type;
     };
 
     template <typename Iterator>
-    struct make_indirect_iterator<indirect_iterator<Iterator> >
+    struct make_indirect_iterator<karma::detail::indirect_iterator<Iterator> >
     {
-        typedef indirect_iterator<Iterator> type;
+        typedef karma::detail::indirect_iterator<Iterator> type;
     };
 
     template <>
@@ -82,6 +86,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         typedef unused_type const* type;
     };
-}}}}
+
+    template <typename Iterator>
+    struct make_indirect_iterator<Iterator const&>
+      : make_indirect_iterator<Iterator const>
+    {};
+}}}
 
 #endif

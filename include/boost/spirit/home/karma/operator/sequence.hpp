@@ -177,10 +177,13 @@ namespace boost { namespace spirit { namespace karma
             typedef detail::fail_function<
                 OutputIterator, Context, Delimiter> fail_function;
 
-            typedef typename traits::container_iterator<Attribute const>::type 
-                iterator_type;
-            typedef typename detail::make_indirect_iterator<iterator_type>::type 
-                indirect_iterator_type;
+            typedef typename traits::container_iterator<
+                typename add_const<Attribute>::type
+            >::type iterator_type;
+
+            typedef 
+                typename traits::make_indirect_iterator<iterator_type>::type 
+            indirect_iterator_type;
             typedef detail::pass_container<
                 fail_function, Attribute, indirect_iterator_type, Strict>
             pass_container;

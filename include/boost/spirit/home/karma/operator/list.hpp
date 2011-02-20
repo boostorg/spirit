@@ -112,8 +112,9 @@ namespace boost { namespace spirit { namespace karma
             typedef typename traits::container_iterator<
                 typename add_const<Attribute>::type
             >::type iterator_type;
+
             typedef 
-                typename detail::make_indirect_iterator<iterator_type>::type 
+                typename traits::make_indirect_iterator<iterator_type>::type 
             indirect_iterator_type;
             typedef detail::pass_container<
                 fail_function, Attribute, indirect_iterator_type, Strict>
@@ -142,7 +143,7 @@ namespace boost { namespace spirit { namespace karma
                     }
                     buffering.buffer_copy();
                 }
-                return true;
+                return detail::sink_is_good(sink);
             }
             return false;
         }
