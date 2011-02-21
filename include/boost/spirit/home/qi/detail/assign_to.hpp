@@ -18,6 +18,7 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
+#include <boost/fusion/include/assign.hpp>
 #include <boost/ref.hpp>
 #include <boost/range/iterator_range.hpp>
 
