@@ -31,12 +31,28 @@ namespace boost { namespace spirit { namespace qi
     using spirit::compile;
     using spirit::info;
 
+    using spirit::_pass_type;
+    using spirit::_val_type;
+    using spirit::_a_type;
+    using spirit::_b_type;
+    using spirit::_c_type;
+    using spirit::_d_type;
+    using spirit::_e_type;
+    using spirit::_f_type;
+    using spirit::_g_type;
+    using spirit::_h_type;
+    using spirit::_i_type;
+    using spirit::_j_type;
+
     // You can bring these in with the using directive
     // without worrying about bringing in too much.
+
     namespace labels
     {
         BOOST_PP_REPEAT(SPIRIT_ARGUMENTS_LIMIT, SPIRIT_USING_ARGUMENT, _)
         BOOST_PP_REPEAT(SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_USING_ATTRIBUTE, _)
+
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
         using spirit::_pass;
         using spirit::_val;
@@ -50,7 +66,10 @@ namespace boost { namespace spirit { namespace qi
         using spirit::_h;
         using spirit::_i;
         using spirit::_j;
+
+#endif
     }
+
 }}}
 
 #endif

@@ -18,7 +18,7 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
-#include <boost/fusion/include/assign.hpp>
+#include <boost/fusion/include/copy.hpp>
 #include <boost/ref.hpp>
 #include <boost/range/iterator_range.hpp>
 
@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace traits
         static void
         call(T const& val, Attribute& attr)
         {
-            fusion::assign(val, attr);
+            fusion::copy(val, attr);
         }
     };
 

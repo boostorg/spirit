@@ -27,11 +27,30 @@
 # define SPIRIT_ATTRIBUTES_LIMIT PHOENIX_LIMIT
 #endif
 
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+
 #define SPIRIT_DECLARE_ATTRIBUTE(z, n, data)                                    \
+    typedef phoenix::actor<attribute<n> > const                                 \
+        BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                               \
     phoenix::actor<attribute<n> > const                                         \
         BOOST_PP_CAT(_r, n) = attribute<n>();
 
-#define SPIRIT_USING_ATTRIBUTE(z, n, data) using spirit::BOOST_PP_CAT(_r, n);
+#define SPIRIT_USING_ATTRIBUTE(z, n, data)                                      \
+    using spirit::BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                     \
+    using spirit::BOOST_PP_CAT(_r, n);                                          \
+    /***/
+
+#else
+
+#define SPIRIT_DECLARE_ATTRIBUTE(z, n, data)                                    \
+    typedef phoenix::actor<attribute<n> > const                                 \
+        BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                               \
+
+#define SPIRIT_USING_ATTRIBUTE(z, n, data)                                      \
+    using spirit::BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                     \
+    /***/
+
+#endif
 
 namespace boost { namespace spirit
 {
@@ -163,35 +182,60 @@ namespace boost { namespace spirit
         }
     };
 
+    typedef phoenix::actor<attribute<0> > const _val_type;
+    typedef phoenix::actor<attribute<0> > const _r0_type;
+    typedef phoenix::actor<attribute<1> > const _r1_type;
+    typedef phoenix::actor<attribute<2> > const _r2_type;
+
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+
     // _val refers to the 'return' value of a rule (same as _r0)
     // _r1, _r2, ... refer to the rule arguments
-    phoenix::actor<attribute<0> > const _val = attribute<0>();
-    phoenix::actor<attribute<0> > const _r0 = attribute<0>();
-    phoenix::actor<attribute<1> > const _r1 = attribute<1>();
-    phoenix::actor<attribute<2> > const _r2 = attribute<2>();
+    _val_type _val = attribute<0>();
+    _r0_type _r0 = attribute<0>();
+    _r1_type _r1 = attribute<1>();
+    _r2_type _r2 = attribute<2>();
+
+#endif
 
     //  Bring in the rest of the attributes (_r4 .. _rN+1), using PP
     BOOST_PP_REPEAT_FROM_TO(
         3, SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_DECLARE_ATTRIBUTE, _)
 
-    // _a, _b, ... refer to the local variables of a rule
-    phoenix::actor<local_variable<0> > const _a = local_variable<0>();
-    phoenix::actor<local_variable<1> > const _b = local_variable<1>();
-    phoenix::actor<local_variable<2> > const _c = local_variable<2>();
-    phoenix::actor<local_variable<3> > const _d = local_variable<3>();
-    phoenix::actor<local_variable<4> > const _e = local_variable<4>();
-    phoenix::actor<local_variable<5> > const _f = local_variable<5>();
-    phoenix::actor<local_variable<6> > const _g = local_variable<6>();
-    phoenix::actor<local_variable<7> > const _h = local_variable<7>();
-    phoenix::actor<local_variable<8> > const _i = local_variable<8>();
-    phoenix::actor<local_variable<9> > const _j = local_variable<9>();
+    typedef phoenix::actor<local_variable<0> > const _a_type;
+    typedef phoenix::actor<local_variable<1> > const _b_type;
+    typedef phoenix::actor<local_variable<2> > const _c_type;
+    typedef phoenix::actor<local_variable<3> > const _d_type;
+    typedef phoenix::actor<local_variable<4> > const _e_type;
+    typedef phoenix::actor<local_variable<5> > const _f_type;
+    typedef phoenix::actor<local_variable<6> > const _g_type;
+    typedef phoenix::actor<local_variable<7> > const _h_type;
+    typedef phoenix::actor<local_variable<8> > const _i_type;
+    typedef phoenix::actor<local_variable<9> > const _j_type;
 
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+
+    // _a, _b, ... refer to the local variables of a rule
+    _a_type _a = local_variable<0>();
+    _b_type _b = local_variable<1>();
+    _c_type _c = local_variable<2>();
+    _d_type _d = local_variable<3>();
+    _e_type _e = local_variable<4>();
+    _f_type _f = local_variable<5>();
+    _g_type _g = local_variable<6>();
+    _h_type _h = local_variable<7>();
+    _i_type _i = local_variable<8>();
+    _j_type _j = local_variable<9>();
+
+#endif
     // You can bring these in with the using directive
     // without worrying about bringing in too much.
     namespace labels
     {
         BOOST_PP_REPEAT(SPIRIT_ARGUMENTS_LIMIT, SPIRIT_USING_ARGUMENT, _)
         BOOST_PP_REPEAT(SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_USING_ATTRIBUTE, _)
+
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
         using spirit::_val;
         using spirit::_a;
         using spirit::_b;
@@ -203,7 +247,10 @@ namespace boost { namespace spirit
         using spirit::_h;
         using spirit::_i;
         using spirit::_j;
+#endif
     }
+
+
 }}
 
 #endif
