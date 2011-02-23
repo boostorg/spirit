@@ -34,6 +34,9 @@
 
 namespace client { namespace ast
 {
+    ///////////////////////////////////////////////////////////////////////////
+    //  The AST
+    ///////////////////////////////////////////////////////////////////////////
     struct nil {};
     struct signed_;
     struct program;
@@ -85,6 +88,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 namespace client { namespace ast
 {
+    ///////////////////////////////////////////////////////////////////////////
+    //  The AST Printer
+    ///////////////////////////////////////////////////////////////////////////
     struct printer
     {
         typedef void result_type;
@@ -125,6 +131,9 @@ namespace client { namespace ast
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    //  The AST evaluator
+    ///////////////////////////////////////////////////////////////////////////
     struct eval
     {
         typedef int result_type;
@@ -176,7 +185,7 @@ namespace client
     namespace ascii = boost::spirit::ascii;
 
     ///////////////////////////////////////////////////////////////////////////////
-    //  Our calculator grammar
+    //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
     struct calculator : qi::grammar<Iterator, ast::program(), ascii::space_type>
@@ -239,7 +248,7 @@ main()
 
         calculator calc;        // Our grammar
         ast_program program;    // Our program (AST)
-        ast_print printer;      // Prints the program
+        ast_print print;        // Prints the program
         ast_eval eval;          // Evaluates the program
 
         std::string::const_iterator iter = str.begin();
@@ -251,7 +260,7 @@ main()
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
-            printer(program);
+            print(program);
             std::cout << "\nResult: " << eval(program) << std::endl;
             std::cout << "-------------------------\n";
         }

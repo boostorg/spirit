@@ -6,8 +6,9 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Same as Calc4, this time, we'll incorporate debugging support,
-//  plus error handling and reporting.
+//  Yet another calculator example! This time, we will compile to a simple
+//  virtual machine. This is actually one of the very first Spirit example
+//  circa 2000. Now, it's ported to Spirit2.
 //
 //  [ JDG April 28, 2008 : For BoostCon 2008 ]
 //  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
@@ -93,107 +94,138 @@ BOOST_FUSION_ADAPT_STRUCT(
     (std::list<client::ast::operation>, rest)
 )
 
-namespace client { namespace ast
+namespace client
 {
     ///////////////////////////////////////////////////////////////////////////
-    //  The AST Printer
+    //  The Virtual Machine
     ///////////////////////////////////////////////////////////////////////////
-    struct printer
+    enum byte_code
+    {
+        op_neg,     //  negate the top stack entry
+        op_add,     //  add top two stack entries
+        op_sub,     //  subtract top two stack entries
+        op_mul,     //  multiply top two stack entries
+        op_div,     //  divide top two stack entries
+        op_int,     //  push constant integer into the stack
+    };
+
+    class vmachine
+    {
+    public:
+
+        vmachine(unsigned stackSize = 4096)
+          : stack(stackSize)
+          , stack_ptr(stack.begin())
+        {
+        }
+
+        int top() const { return stack_ptr[-1]; };
+        void execute(std::vector<int> const& code);
+
+    private:
+
+        std::vector<int> stack;
+        std::vector<int>::iterator stack_ptr;
+    };
+
+    void vmachine::execute(std::vector<int> const& code)
+    {
+        std::vector<int>::const_iterator pc = code.begin();
+        stack_ptr = stack.begin();
+
+        while (pc != code.end())
+        {
+            switch (*pc++)
+            {
+                case op_neg:
+                    stack_ptr[-1] = -stack_ptr[-1];
+                    break;
+
+                case op_add:
+                    --stack_ptr;
+                    stack_ptr[-1] += stack_ptr[0];
+                    break;
+
+                case op_sub:
+                    --stack_ptr;
+                    stack_ptr[-1] -= stack_ptr[0];
+                    break;
+
+                case op_mul:
+                    --stack_ptr;
+                    stack_ptr[-1] *= stack_ptr[0];
+                    break;
+
+                case op_div:
+                    --stack_ptr;
+                    stack_ptr[-1] /= stack_ptr[0];
+                    break;
+
+                case op_int:
+                    *stack_ptr++ = *pc++;
+                    break;
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  The Compiler
+    ///////////////////////////////////////////////////////////////////////////
+    struct compiler
     {
         typedef void result_type;
 
-        void operator()(nil) const {}
-        void operator()(unsigned int n) const { std::cout << n; }
+        std::vector<int>& code;
+        compiler(std::vector<int>& code)
+          : code(code) {}
 
-        void operator()(operation const& x) const
+        void operator()(ast::nil) const { BOOST_ASSERT(0); }
+        void operator()(unsigned int n) const
+        {
+            code.push_back(op_int);
+            code.push_back(n);
+        }
+
+        void operator()(ast::operation const& x) const
         {
             boost::apply_visitor(*this, x.operand_);
             switch (x.operator_)
             {
-                case '+': std::cout << " add"; break;
-                case '-': std::cout << " subt"; break;
-                case '*': std::cout << " mult"; break;
-                case '/': std::cout << " div"; break;
+                case '+': code.push_back(op_add); break;
+                case '-': code.push_back(op_sub); break;
+                case '*': code.push_back(op_mul); break;
+                case '/': code.push_back(op_div); break;
+                default: BOOST_ASSERT(0); break;
             }
         }
 
-        void operator()(signed_ const& x) const
+        void operator()(ast::signed_ const& x) const
         {
             boost::apply_visitor(*this, x.operand_);
             switch (x.sign)
             {
-                case '-': std::cout << " neg"; break;
-                case '+': std::cout << " pos"; break;
+                case '-': code.push_back(op_neg); break;
+                case '+': break;
+                default: BOOST_ASSERT(0); break;
             }
         }
 
-        void operator()(program const& x) const
+        void operator()(ast::program const& x) const
         {
             boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
+            BOOST_FOREACH(ast::operation const& oper, x.rest)
             {
-                std::cout << ' ';
                 (*this)(oper);
             }
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  The AST evaluator
-    ///////////////////////////////////////////////////////////////////////////
-    struct eval
-    {
-        typedef int result_type;
-
-        int operator()(nil) const { BOOST_ASSERT(0); return 0; }
-        int operator()(unsigned int n) const { return n; }
-
-        int operator()(operation const& x, int lhs) const
-        {
-            int rhs = boost::apply_visitor(*this, x.operand_);
-            switch (x.operator_)
-            {
-                case '+': return lhs + rhs;
-                case '-': return lhs - rhs;
-                case '*': return lhs * rhs;
-                case '/': return lhs / rhs;
-            }
-            BOOST_ASSERT(0);
-            return 0;
-        }
-
-        int operator()(signed_ const& x) const
-        {
-            int rhs = boost::apply_visitor(*this, x.operand_);
-            switch (x.sign)
-            {
-                case '-': return -rhs;
-                case '+': return +rhs;
-            }
-            BOOST_ASSERT(0);
-            return 0;
-        }
-
-        int operator()(program const& x) const
-        {
-            int state = boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
-            {
-                state = (*this)(oper, state);
-            }
-            return state;
-        }
-    };
-}}
-
-namespace client
-{
     namespace qi = boost::spirit::qi;
     namespace ascii = boost::spirit::ascii;
     using boost::phoenix::function;
 
     ///////////////////////////////////////////////////////////////////////////////
-    //  Our error handler
+    //  The error handler
     ///////////////////////////////////////////////////////////////////////////////
     struct error_handler_
     {
@@ -219,7 +251,7 @@ namespace client
     function<error_handler_> const error_handler = error_handler_();
 
     ///////////////////////////////////////////////////////////////////////////////
-    //  Our calculator grammar
+    //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
     struct calculator : qi::grammar<Iterator, ast::program(), ascii::space_type>
@@ -285,8 +317,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef client::calculator<iterator_type> calculator;
     typedef client::ast::program ast_program;
-    typedef client::ast::print ast_print;
-    typedef client::ast::eval ast_eval;
+    typedef client::compiler compiler;
 
     std::string str;
     while (std::getline(std::cin, str))
@@ -294,10 +325,11 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
+        client::vmachine mach;  // Our virtual machine
+        std::vector<int> code;  // Our VM code
         calculator calc;        // Our grammar
         ast_program program;    // Our program (AST)
-        ast_print print;        // Prints the program
-        ast_eval eval;          // Evaluates the program
+        compiler compile(code); // Compiles the program
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
@@ -308,8 +340,9 @@ main()
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
-            print(program);
-            std::cout << "\nResult: " << eval(program) << std::endl;
+            compile(program);
+            mach.execute(code);
+            std::cout << "\nResult: " << mach.top() << std::endl;
             std::cout << "-------------------------\n";
         }
         else
