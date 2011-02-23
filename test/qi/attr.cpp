@@ -55,5 +55,11 @@ main()
         BOOST_TEST(test_attr("", attr(ref(d1)), d) && d == 2.0);
     }
 
+    {
+        std::string s;
+        BOOST_TEST(test_attr("s", "s" >> qi::attr(std::string("123")), s) && 
+            s == "123");
+    }
+
     return boost::report_errors();
 }
