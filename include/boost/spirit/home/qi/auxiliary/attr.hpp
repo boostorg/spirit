@@ -18,6 +18,7 @@
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/remove_const.hpp>
@@ -94,6 +95,14 @@ namespace boost { namespace spirit { namespace qi
             return result_type(fusion::at_c<0>(term.args));
         }
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Attr, typename Context, typename Iterator>
+    struct handles_container<qi::attr_parser<T>, Attr, Context, Iterator>
+      : traits::is_container<Attr> {}; 
 }}}
 
 #endif
