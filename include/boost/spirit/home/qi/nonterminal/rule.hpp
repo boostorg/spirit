@@ -74,6 +74,7 @@ namespace boost { namespace spirit { namespace qi
     using spirit::_h;
     using spirit::_i;
     using spirit::_j;
+
 #endif
 
     using spirit::info;
