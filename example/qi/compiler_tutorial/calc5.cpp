@@ -285,7 +285,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef client::calculator<iterator_type> calculator;
     typedef client::ast::program ast_program;
-    typedef client::ast::print ast_print;
+    typedef client::ast::printer ast_print;
     typedef client::ast::eval ast_eval;
 
     std::string str;

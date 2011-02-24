@@ -10,7 +10,9 @@
 //  virtual machine. This is actually one of the very first Spirit example
 //  circa 2000. Now, it's ported to Spirit2.
 //
-//  [ JDG April 28, 2008 : For BoostCon 2008 ]
+//  [ JDG Sometime 2000 ]       pre-boost
+//  [ JDG September 18, 2002 ]  spirit1
+//  [ JDG April 8, 2007 ]       spirit2
 //  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
 //
 ///////////////////////////////////////////////////////////////////////////////
