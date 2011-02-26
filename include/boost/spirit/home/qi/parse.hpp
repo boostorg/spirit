@@ -12,6 +12,8 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/context.hpp>
+#include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/qi/detail/parse.hpp>
 #include <boost/concept_check.hpp>
 
@@ -46,6 +48,21 @@ namespace boost { namespace spirit { namespace qi
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename T>
+        struct make_context
+        {
+            typedef context<fusion::cons<T&>, locals<> > type;
+        };
+
+        template <>
+        struct make_context<unused_type>
+        {
+            typedef unused_type type;
+        };
+    }
+
     template <typename Iterator, typename Expr, typename Attr>
     inline bool
     parse(
@@ -65,7 +82,8 @@ namespace boost { namespace spirit { namespace qi
         // then the expression (expr) is not a valid spirit qi expression.
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
 
-        return compile<qi::domain>(expr).parse(first, last, unused, unused, attr);
+        typename detail::make_context<Attr>::type context(attr);
+        return compile<qi::domain>(expr).parse(first, last, context, unused, attr);
     }
 
     template <typename Iterator, typename Expr, typename Attr>
@@ -142,8 +160,9 @@ namespace boost { namespace spirit { namespace qi
         skipper_type;
         skipper_type const skipper_ = compile<qi::domain>(skipper);
 
+        typename detail::make_context<Attr>::type context(attr);
         if (!compile<qi::domain>(expr).parse(
-                first, last, unused, skipper_, attr))
+                first, last, context, skipper_, attr))
             return false;
 
         if (post_skip == skip_flag::postskip)

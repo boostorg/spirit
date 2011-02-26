@@ -14,6 +14,7 @@
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/spirit/home/support/nonterminal/expand_arg.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
+#include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/phoenix/core/argument.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -249,8 +250,6 @@ namespace boost { namespace spirit
         using spirit::_j;
 #endif
     }
-
-
 }}
 
 #endif
