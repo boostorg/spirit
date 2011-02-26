@@ -16,13 +16,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-// This rather naive example demonstrates that you can pass an instance of a 
+// This rather naive example demonstrates that you can pass an instance of a
 // utree as the attribute for almost any grammar. As the result the utree will
-// be filled with the parse tree as generated during the parsing. This is most 
+// be filled with the parse tree as generated during the parsing. This is most
 // of the time not what's desired, but is usually a good first step in order to
 // prepare your grammar to generate a customized AST. See the calc_utree_ast
 // example for a modified version of this grammar filling the attribute with a
-// AST (abstract syntax tree) representing the math expression as matched from 
+// AST (abstract syntax tree) representing the math expression as matched from
 // the input.
 
 // #define BOOST_SPIRIT_DEBUG
@@ -67,7 +67,7 @@ namespace client
 
             factor =
                 uint_
-                |   char_('(') >> expression >> char_(')')
+                |   '(' >> expression >> ')'
                 |   (char_('-') >> factor)
                 |   (char_('+') >> factor)
                 ;
@@ -77,7 +77,9 @@ namespace client
             BOOST_SPIRIT_DEBUG_NODE(factor);
         }
 
-        qi::rule<Iterator, ascii::space_type, spirit::utree()> expression, term, factor;
+        qi::rule<Iterator, ascii::space_type, spirit::utree()> expression;
+        qi::rule<Iterator, ascii::space_type, spirit::utree::list_type()> term;
+        qi::rule<Iterator, ascii::space_type, spirit::utree::list_type()> factor;
     };
 }
 

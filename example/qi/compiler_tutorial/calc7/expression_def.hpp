@@ -72,6 +72,7 @@ namespace client
         typename function<annotation_>
             annotation = annotation_(current_id, iters);
         on_success(primary_expr, annotation(_val, _3));
+        on_success(unary_expr, annotation(_val, _3));
     }
 }
 

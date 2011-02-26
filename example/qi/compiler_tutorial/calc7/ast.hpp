@@ -17,44 +17,48 @@ namespace client { namespace ast
     ///////////////////////////////////////////////////////////////////////////
     //  The AST
     ///////////////////////////////////////////////////////////////////////////
-    struct nil {};
+    struct base
+    {
+        int id; // Used to annotate the AST with the iterator position.
+                // This id is used as a key to a map<int, Iterator>
+                // (not really part of the AST.)
+    };
+
+    struct nil : base {};
+
     struct signed_;
     struct program;
-    struct tagged;
+
+    struct unsigned_ : base
+    {
+        unsigned_(unsigned int n = 0) : n(n) {}
+        unsigned int n;
+    };
 
     typedef boost::variant<
             nil
-          , unsigned int
+          , unsigned_
           , boost::recursive_wrapper<signed_>
           , boost::recursive_wrapper<program>
-          , boost::recursive_wrapper<tagged>
         >
     operand;
 
-    struct signed_
+    struct signed_ : base
     {
         char sign;
         operand operand_;
     };
 
-    struct operation
+    struct operation : base
     {
         char operator_;
         operand operand_;
     };
 
-    struct program
+    struct program : base
     {
         operand first;
         std::list<operation> rest;
-    };
-
-    struct tagged
-    {
-        operand operand_;
-        int id; // Used to annotate the iterator position. This
-                // id is used as a key to a map<int, Iterator>
-                // (not really part of the AST.)
     };
 }}
 

@@ -11,20 +11,15 @@
 
 namespace client
 {
-    void compiler::operator()(unsigned int n) const
+    void compiler::operator()(ast::unsigned_ const& x) const
     {
         op(op_int);
-        op(n);
-    }
-
-    void compiler::operator()(ast::operand const& x) const
-    {
-        boost::apply_visitor(*this, x);
+        op(x.n);
     }
 
     void compiler::operator()(ast::operation const& x) const
     {
-        (*this)(x.operand_);
+        boost::apply_visitor(*this, x.operand_);
         switch (x.operator_)
         {
             case '+': op(op_add); break;
@@ -37,7 +32,7 @@ namespace client
 
     void compiler::operator()(ast::signed_ const& x) const
     {
-        (*this)(x.operand_);
+        boost::apply_visitor(*this, x.operand_);
         switch (x.sign)
         {
             case '-': op(op_neg); break;
@@ -48,16 +43,11 @@ namespace client
 
     void compiler::operator()(ast::program const& x) const
     {
-        (*this)(x.first);
+        boost::apply_visitor(*this, x.first);
         BOOST_FOREACH(ast::operation const& oper, x.rest)
         {
             (*this)(oper);
         }
-    }
-
-    void compiler::operator()(ast::tagged const& x) const
-    {
-        (*this)(x.operand_);
     }
 }
 
