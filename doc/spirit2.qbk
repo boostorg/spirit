@@ -114,7 +114,7 @@
 
 [template karma_format[str]     [link spirit.karma.reference.generate_api.stream_api [str]]]
 
-[__generator_api__              [link spirit.karma.reference.generate_api The Generator API]]
+[def __generator_api__          [link spirit.karma.reference.generate_api The Generator API]]
 
 [/ References to classes ]
 
