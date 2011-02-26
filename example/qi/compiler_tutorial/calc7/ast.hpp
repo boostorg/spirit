@@ -20,12 +20,14 @@ namespace client { namespace ast
     struct nil {};
     struct signed_;
     struct program;
+    struct tagged;
 
     typedef boost::variant<
             nil
           , unsigned int
           , boost::recursive_wrapper<signed_>
           , boost::recursive_wrapper<program>
+          , boost::recursive_wrapper<tagged>
         >
     operand;
 
@@ -45,6 +47,14 @@ namespace client { namespace ast
     {
         operand first;
         std::list<operation> rest;
+    };
+
+    struct tagged
+    {
+        operand operand_;
+        int id; // Used to annotate the iterator position. This
+                // id is used as a key to a map<int, Iterator>
+                // (not really part of the AST.)
     };
 }}
 

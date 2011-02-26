@@ -21,7 +21,11 @@ namespace client
         op_sub,     //  subtract top two stack entries
         op_mul,     //  multiply top two stack entries
         op_div,     //  divide top two stack entries
+
+        op_load,    //  load a variable
+        op_store,   //  store a variable
         op_int,     //  push constant integer into the stack
+        op_adstk    //  adjust the stack for local variables
     };
 
     class vmachine

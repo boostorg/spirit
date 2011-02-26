@@ -291,9 +291,8 @@ namespace client
                 ;
 
             // Debugging and error handling and reporting support.
-            BOOST_SPIRIT_DEBUG_NODE(expression);
-            BOOST_SPIRIT_DEBUG_NODE(term);
-            BOOST_SPIRIT_DEBUG_NODE(factor);
+            BOOST_SPIRIT_DEBUG_NODES(
+                (expression)(term)(factor));
 
             // Error handling
             on_error<fail>(expression, error_handler(_4, _3, _2));

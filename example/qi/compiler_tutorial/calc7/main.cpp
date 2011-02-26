@@ -48,7 +48,7 @@ main()
         std::vector<int> code;  // Our VM code
         expression calc;        // Our grammar
         ast_program program;    // Our program (AST)
-        compiler compile(code); // Compiles the program
+        compiler compile(code); // Our compiler
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();

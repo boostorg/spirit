@@ -11,6 +11,7 @@ namespace client
     void vmachine::execute(std::vector<int> const& code)
     {
         std::vector<int>::const_iterator pc = code.begin();
+        std::vector<int>::iterator locals = stack.begin();
         stack_ptr = stack.begin();
 
         while (pc != code.end())
@@ -41,8 +42,21 @@ namespace client
                     stack_ptr[-1] /= stack_ptr[0];
                     break;
 
+                case op_load:
+                    *stack_ptr++ = locals[*pc++];
+                    break;
+
+                case op_store:
+                    --stack_ptr;
+                    locals[*pc++] = stack_ptr[0];
+                    break;
+
                 case op_int:
                     *stack_ptr++ = *pc++;
+                    break;
+
+                case op_adstk:
+                    stack_ptr = stack.begin() + *pc++;
                     break;
             }
         }

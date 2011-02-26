@@ -22,8 +22,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/spirit/include/qi.hpp>
-#include "error_handler.hpp"
 #include "ast.hpp"
+#include <map>
 
 namespace client
 {
@@ -43,6 +43,9 @@ namespace client
         qi::rule<Iterator, ast::program(), ascii::space_type> multiplicative_expr;
         qi::rule<Iterator, ast::operand(), ascii::space_type> unary_expr;
         qi::rule<Iterator, ast::operand(), ascii::space_type> primary_expr;
+
+        std::map<int, Iterator> iters;
+        int current_id;
     };
 }
 

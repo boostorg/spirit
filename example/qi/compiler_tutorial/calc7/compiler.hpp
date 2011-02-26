@@ -23,11 +23,15 @@ namespace client
         compiler(std::vector<int>& code)
           : code(code) {}
 
+        void op(int opcode) const { code.push_back(opcode); }
+
         void operator()(ast::nil) const { BOOST_ASSERT(0); }
         void operator()(unsigned int n) const;
+        void operator()(ast::operand const& x) const;
         void operator()(ast::operation const& x) const;
         void operator()(ast::signed_ const& x) const;
         void operator()(ast::program const& x) const;
+        void operator()(ast::tagged const& x) const;
     };
 }
 

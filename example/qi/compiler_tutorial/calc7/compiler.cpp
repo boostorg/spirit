@@ -13,29 +13,34 @@ namespace client
 {
     void compiler::operator()(unsigned int n) const
     {
-        code.push_back(op_int);
-        code.push_back(n);
+        op(op_int);
+        op(n);
+    }
+
+    void compiler::operator()(ast::operand const& x) const
+    {
+        boost::apply_visitor(*this, x);
     }
 
     void compiler::operator()(ast::operation const& x) const
     {
-        boost::apply_visitor(*this, x.operand_);
+        (*this)(x.operand_);
         switch (x.operator_)
         {
-            case '+': code.push_back(op_add); break;
-            case '-': code.push_back(op_sub); break;
-            case '*': code.push_back(op_mul); break;
-            case '/': code.push_back(op_div); break;
+            case '+': op(op_add); break;
+            case '-': op(op_sub); break;
+            case '*': op(op_mul); break;
+            case '/': op(op_div); break;
             default: BOOST_ASSERT(0); break;
         }
     }
 
     void compiler::operator()(ast::signed_ const& x) const
     {
-        boost::apply_visitor(*this, x.operand_);
+        (*this)(x.operand_);
         switch (x.sign)
         {
-            case '-': code.push_back(op_neg); break;
+            case '-': op(op_neg); break;
             case '+': break;
             default: BOOST_ASSERT(0); break;
         }
@@ -43,11 +48,16 @@ namespace client
 
     void compiler::operator()(ast::program const& x) const
     {
-        boost::apply_visitor(*this, x.first);
+        (*this)(x.first);
         BOOST_FOREACH(ast::operation const& oper, x.rest)
         {
             (*this)(oper);
         }
+    }
+
+    void compiler::operator()(ast::tagged const& x) const
+    {
+        (*this)(x.operand_);
     }
 }
 
