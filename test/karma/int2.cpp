@@ -21,6 +21,7 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_rule.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <limits>
@@ -161,6 +162,19 @@ main()
         BOOST_TEST(test_delimited("FF ", upper[lower[hex]], 0xff, char_(' ')));
         BOOST_TEST(test_delimited("ff ", lower[upper[hex]], 0xff, char_(' ')));
         BOOST_TEST(test_delimited("ff ", lower[lower[hex]], 0xff, char_(' ')));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::karma::int_;
+        using boost::spirit::karma::_1;
+        using boost::spirit::karma::_val;
+        using boost::spirit::karma::space;
+
+        int i = 123;
+        int j = 456;
+        BOOST_TEST(test("123", int_[_1 = _val], i));
+        BOOST_TEST(test_delimited("456 ", int_[_1 = _val], j, space));
     }
 
     return boost::report_errors();

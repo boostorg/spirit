@@ -15,7 +15,38 @@
 
 [heading New Features in Qi or Karma]
 
+* Added __utree__, a generic, hierarchical, and dynamic data structure that can
+  represent abstract syntax trees. It's well integrated with __qi__ and
+  __karma__. It can be passed as an attribute while parsing to almost any
+  grammar. At the same time, it can be used as an attribute to generate output
+  from.
+* Added a new macro `BOOST_SPIRIT_TERMINAL_NAME` which takes in two parameters
+  (the terminal name and its type). Before, there was only one parameter
+  (the terminal name) and the type assumed the terminal name with `_type`
+  appended. This produced invalid C++ identifiers with terminals such as
+  `int_`, which resulted in generated a type `int__type` with a bogus double 
+  underscore that is reserved for system use in C++.
+* The placeholder `_val` now can be used in top level semantic actions outside 
+  of any right hand side of a rule. Here is an example:
+``
+    int i = 0
+    BOOST_TEST(test_attr("456", int_[_val = _1], i) && i == 456);
+``
+  In this case _val refers to the attribute value, which is passed in to the 
+  `parse()` or `phrase_parse()` functions. 
+  Similar constructs are now possible in __karma__ as well:
+``
+    int i = 123;
+    BOOST_TEST(test("123", int_[_1 = _val], i));
+``
+  This change unifies the handling of the `_val` placeholder allowing to use it
+  everywhere, not only in semantic actions attached to the right hand sides of
+  a rule.
+
 [heading Bug Fixes in Qi or Karma]
+
+* __qi__ integer literals (like `int_(10)`) do not consume input on failure
+  anymore.
 
 [heading Breaking Changes]
 
@@ -24,6 +55,11 @@
   This behaviour has been removed as it is inconsistent with similar components.
   Existing code relying on this functionality will break. Please refer to the
   __qi__ directive __qi_hold__ to see how to fix your code.
+* Added a preprocessor define `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` to prevent
+  instantiations of predefined terminal objects which slows down compile time
+  a lot. When `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` is defined, the user
+  instantiates the terminals that he needs. So, instead of writing `using qi::uint_`
+  one writes instead: `qi::uint_type uint_`.
 
 [heading Making Stuff Work]
 
@@ -39,17 +75,6 @@
   use of const floating point types with the generator. Thanks to Jeroen
   Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
   a test.
-* Added a new macro `BOOST_SPIRIT_TERMINAL_NAME` which takes in two parameters
-  (the terminal name and its type). Before, there was only one parameter
-  (the terminal name) and the type assumed the terminal name with `_type`
-  appended. This produced invalid C++ identifiers with terminals such as
-  `int_` which produced a type `int__type` with a bogus double underscore
-  that is not allowed in C++.
-* Added a preprocessor define `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` to prevent
-  instantiations of predefined terminal objects which slows down compile time
-  a lot. When `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` is defined, the user
-  instantiates the terminals that he needs. So, instead of writing `using qi::uint_`
-  one writes instead: `qi::uint_type uint_`.
 
 [endsect]
 
@@ -61,13 +86,8 @@
 [heading New Features in Qi or Karma]
 
 * Added keyword indexes for __qi__ and __karma__ to the docs.
-* Added __utree__, a generic, hierarchical, and dynamic data structure that can
-  represent abstract syntax trees. It's well integrated with __qi__ and
-  __karma__. It can be passed as an attribute while parsing almost any
-  grammars. At the same time, it can be used as an attribute to generate output
-  from.
 * Introduced a new customization point __customize_assign_to_container_from_value__
-  which is invoked for container attributes whenever a attribute value needs to
+  which is invoked for container attributes whenever an attribute value needs to
   be added to that container.
 * Replaced `proto::lit` (which was used to implement `spirit::lit`) with a
   separate version allowing to distinguish 'lit(foo)' from 'foo'. This should
@@ -102,7 +122,7 @@
   tokens based on a given token id. The difference to `qi::token()` is, that it
   exposes as its attribute the token id of the matched token (instead of the
   iterator_range of the matched input, as `qi::token()` does).
-* Added additional template parameter to the default `lexertl::token<>`
+* Added an additional template parameter to the default `lexertl::token<>`
   definition: the type of the token id. This type defaults to `std::size_t`.
   Any type used as the id type needs to be (explicitly) convertible from
   `std::size_t`.
@@ -132,9 +152,9 @@
 
 [heading Bug Fixes in Lex]
 
-* Fixed a problem in the Lexer giving problems to assign tokens to all lexer
-  states at once. This is now possible by simply using "*" as the state name.
-  For instance this will add the token int_ to all lexer states:
+* Fixed an issue in the Lexer giving problems while assigning tokens to all 
+  lexer states at once. This is now possible by simply using "*" as the state 
+  name. For instance this will add the token int_ to all lexer states:
 ``
     template <typename Lexer>
     struct lexer : lex::lexer<Lexer>
@@ -160,8 +180,8 @@
 
 [heading Known Problems]
 
-* Integer literals (like `int_(10)`) consume input on failure, which can lead to
-  problems with the alternative operator:
+* __qi__ integer literals (like `int_(10)`) consume input on failure, which can 
+  lead to problems with the alternative operator.
 
 [endsect]
 

@@ -356,6 +356,10 @@ __phoenix__ placeholder refers to the Nonterminal's (consumed)
 attribute. The `_val` placeholder acts like an immutable reference to the
 Nonterminal's attribute.
 
+[note Starting with __spriti__ V2.4.2 (distributed with Boost V1.46) the 
+      placeholder `_val` can be used in semantic actions attached to top level
+      generator components as well. See __generator_api__ for more information.]
+
 [heading `_r1`...`r10`]
 
 The `boost::spirit::_r1`...`boost::spirit::r10` placeholders can be used

@@ -114,6 +114,8 @@
 
 [template karma_format[str]     [link spirit.karma.reference.generate_api.stream_api [str]]]
 
+[__generator_api__              [link spirit.karma.reference.generate_api The Generator API]]
+
 [/ References to classes ]
 
 [def __utree__                  [link spirit.support.utree `utree`]]
@@ -430,6 +432,7 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [template qi_auto[str]              [link spirit.qi.reference.auto [str]]]
 [def __create_parser__              [link spirit.qi.reference.parse_api.create_parser `create_parser`]]
 
+[__parse_api__                      [link spirit.qi.reference.parse_api The Parse API]]
 
 [/ Here we go ]
 

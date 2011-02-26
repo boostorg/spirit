@@ -133,6 +133,23 @@ int main()
         BOOST_TEST(test_delimited("12.4 ", d, v, space));
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::karma::int_;
+        using boost::spirit::karma::_1;
+        using boost::spirit::karma::_val;
+        using boost::spirit::karma::space;
+        using boost::spirit::karma::space_type;
+
+        karma::rule<outiter_type, int()> r1 = int_;
+        karma::rule<outiter_type, space_type, int()> r2 = int_;
+
+        int i = 123;
+        int j = 456;
+        BOOST_TEST(test("123", r1[_1 = _val], i));
+        BOOST_TEST(test_delimited("456 ", r2[_1 = _val], j, space));
+    }
+
     return boost::report_errors();
 }
 
