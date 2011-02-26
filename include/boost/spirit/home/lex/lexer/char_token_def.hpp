@@ -49,8 +49,10 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace lex
 { 
     // use char_ from standard character set by default
-    using spirit::standard::char_type;
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::standard::char_;
+#endif
+    using spirit::standard::char_type;
 
     ///////////////////////////////////////////////////////////////////////////
     //

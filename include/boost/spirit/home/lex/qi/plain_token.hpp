@@ -52,7 +52,10 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::token;
+#endif
+    using spirit::token_type;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename TokenId>
