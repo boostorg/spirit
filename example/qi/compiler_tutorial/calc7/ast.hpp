@@ -17,49 +17,67 @@ namespace client { namespace ast
     ///////////////////////////////////////////////////////////////////////////
     //  The AST
     ///////////////////////////////////////////////////////////////////////////
-    struct base
+    struct tagged
     {
         int id; // Used to annotate the AST with the iterator position.
                 // This id is used as a key to a map<int, Iterator>
                 // (not really part of the AST.)
     };
 
-    struct nil : base {};
-
+    struct nil {};
     struct signed_;
-    struct program;
+    struct expression;
 
-    struct unsigned_ : base
+    struct variable : tagged
     {
-        unsigned_(unsigned int n = 0) : n(n) {}
-        unsigned int n;
+        variable(std::string const& name = "") : name(name) {}
+        std::string name;
     };
 
     typedef boost::variant<
             nil
-          , unsigned_
+          , unsigned int
+          , variable
           , boost::recursive_wrapper<signed_>
-          , boost::recursive_wrapper<program>
+          , boost::recursive_wrapper<expression>
         >
     operand;
 
-    struct signed_ : base
+    struct signed_
     {
         char sign;
         operand operand_;
     };
 
-    struct operation : base
+    struct operation
     {
         char operator_;
         operand operand_;
     };
 
-    struct program : base
+    struct expression
     {
         operand first;
         std::list<operation> rest;
     };
+
+    struct assignment
+    {
+        variable lhs;
+        expression rhs;
+    };
+
+    struct variable_declaration
+    {
+        assignment assign;
+    };
+
+    typedef std::list<
+        boost::variant<
+            variable_declaration,
+            assignment>
+        >
+    statement;
 }}
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -75,9 +93,20 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::program,
+    client::ast::expression,
     (client::ast::operand, first)
     (std::list<client::ast::operation>, rest)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::variable_declaration,
+    (client::ast::assignment, assign)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::assignment,
+    (client::ast::variable, lhs)
+    (client::ast::expression, rhs)
 )
 
 #endif

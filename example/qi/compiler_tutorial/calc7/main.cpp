@@ -35,7 +35,7 @@ main()
 
     typedef std::string::const_iterator iterator_type;
     typedef client::expression<iterator_type> expression;
-    typedef client::ast::program ast_program;
+    typedef client::ast::expression ast_expression;
     typedef client::compiler compiler;
 
     std::string str;
@@ -44,22 +44,22 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        client::vmachine mach;  // Our virtual machine
-        std::vector<int> code;  // Our VM code
-        expression calc;        // Our grammar
-        ast_program program;    // Our program (AST)
-        compiler compile(code); // Our compiler
+        client::vmachine mach;      // Our virtual machine
+        std::vector<int> code;      // Our VM code
+        expression calc;            // Our grammar
+        ast_expression expression;  // Our program (AST)
+        compiler compile(code);     // Our compiler
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
         boost::spirit::ascii::space_type space;
-        bool r = phrase_parse(iter, end, calc, space, program);
+        bool r = phrase_parse(iter, end, calc, space, expression);
 
         if (r && iter == end)
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
-            compile(program);
+            compile(expression);
             mach.execute(code);
             std::cout << "\nResult: " << mach.top() << std::endl;
             std::cout << "-------------------------\n";

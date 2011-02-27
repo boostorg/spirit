@@ -23,6 +23,7 @@ exe calc7 :
     calc7/vm.cpp
     calc7/compiler.cpp
     calc7/expression.cpp
+    calc7/statement.cpp
     calc7/main.cpp
     ;
 

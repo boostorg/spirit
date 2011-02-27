@@ -49,13 +49,13 @@ namespace client { namespace ast
     ///////////////////////////////////////////////////////////////////////////
     struct nil {};
     struct signed_;
-    struct program;
+    struct expression;
 
     typedef boost::variant<
             nil
           , unsigned int
           , boost::recursive_wrapper<signed_>
-          , boost::recursive_wrapper<program>
+          , boost::recursive_wrapper<expression>
         >
     operand;
 
@@ -71,7 +71,7 @@ namespace client { namespace ast
         operand operand_;
     };
 
-    struct program
+    struct expression
     {
         operand first;
         std::list<operation> rest;
@@ -91,7 +91,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::program,
+    client::ast::expression,
     (client::ast::operand, first)
     (std::list<client::ast::operation>, rest)
 )
@@ -212,7 +212,7 @@ namespace client
             }
         }
 
-        void operator()(ast::program const& x) const
+        void operator()(ast::expression const& x) const
         {
             boost::apply_visitor(*this, x.first);
             BOOST_FOREACH(ast::operation const& oper, x.rest)
@@ -256,7 +256,7 @@ namespace client
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct calculator : qi::grammar<Iterator, ast::program(), ascii::space_type>
+    struct calculator : qi::grammar<Iterator, ast::expression(), ascii::space_type>
     {
         calculator() : calculator::base_type(expression)
         {
@@ -298,8 +298,8 @@ namespace client
             on_error<fail>(expression, error_handler(_4, _3, _2));
         }
 
-        qi::rule<Iterator, ast::program(), ascii::space_type> expression;
-        qi::rule<Iterator, ast::program(), ascii::space_type> term;
+        qi::rule<Iterator, ast::expression(), ascii::space_type> expression;
+        qi::rule<Iterator, ast::expression(), ascii::space_type> term;
         qi::rule<Iterator, ast::operand(), ascii::space_type> factor;
     };
 }
@@ -317,7 +317,7 @@ main()
 
     typedef std::string::const_iterator iterator_type;
     typedef client::calculator<iterator_type> calculator;
-    typedef client::ast::program ast_program;
+    typedef client::ast::expression ast_expression;
     typedef client::compiler compiler;
 
     std::string str;
@@ -326,22 +326,22 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        client::vmachine mach;  // Our virtual machine
-        std::vector<int> code;  // Our VM code
-        calculator calc;        // Our grammar
-        ast_program program;    // Our program (AST)
-        compiler compile(code); // Compiles the program
+        client::vmachine mach;      // Our virtual machine
+        std::vector<int> code;      // Our VM code
+        calculator calc;            // Our grammar
+        ast_expression expression;  // Our program (AST)
+        compiler compile(code);     // Compiles the program
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
         boost::spirit::ascii::space_type space;
-        bool r = phrase_parse(iter, end, calc, space, program);
+        bool r = phrase_parse(iter, end, calc, space, expression);
 
         if (r && iter == end)
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
-            compile(program);
+            compile(expression);
             mach.execute(code);
             std::cout << "\nResult: " << mach.top() << std::endl;
             std::cout << "-------------------------\n";

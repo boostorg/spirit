@@ -24,10 +24,9 @@ namespace client
         template <typename, typename>
         struct result { typedef void type; };
 
-        std::map<int, Iterator>& iters;
-        int& current_id;
-        annotation(int& current_id, std::map<int, Iterator>& iters)
-          : current_id(current_id), iters(iters) {}
+        std::vector<Iterator>& iters;
+        annotation(std::vector<Iterator>& iters)
+          : iters(iters) {}
 
         struct set_id
         {
@@ -36,18 +35,30 @@ namespace client
             int id;
             set_id(int id) : id(id) {}
 
+            void operator()(ast::tagged& x) const
+            {
+                x.id = id;
+            }
+
             template <typename T>
             void operator()(T& x) const
             {
-                x.id = id;
+                // no need for tags
             }
         };
 
         void operator()(ast::operand& ast, Iterator pos) const
         {
-            int id = current_id++;
-            iters[id] = pos;
+            int id = iters.size();
+            iters.push_back(pos);
             boost::apply_visitor(set_id(id), ast);
+        }
+
+        void operator()(ast::assignment& ast, Iterator pos) const
+        {
+            int id = iters.size();
+            iters.push_back(pos);
+            ast.lhs.id = id;
         }
     };
 }

@@ -13,7 +13,6 @@ namespace client
     template <typename Iterator>
     expression<Iterator>::expression()
       : expression::base_type(expr)
-      , current_id(0)
     {
         qi::char_type char_;
         qi::uint_type uint_;
@@ -21,6 +20,10 @@ namespace client
         qi::_2_type _2;
         qi::_3_type _3;
         qi::_4_type _4;
+        qi::raw_type raw;
+        qi::lexeme_type lexeme;
+        qi::alpha_type alpha;
+        qi::alnum_type alnum;
 
         using qi::on_error;
         using qi::on_success;
@@ -51,8 +54,13 @@ namespace client
             ;
 
         primary_expr =
-            uint_
+                uint_
+            |   identifier
             |   '(' > expr > ')'
+            ;
+
+        identifier =
+            raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
             ;
 
         // Debugging and error handling and reporting support.
@@ -62,6 +70,7 @@ namespace client
             (multiplicative_expr)
             (unary_expr)
             (primary_expr)
+            (identifier)
         );
 
         // Error handling: on error in expr, call error_handler.
@@ -70,9 +79,8 @@ namespace client
         // Annotation: on success in primary_expr, call annotation.
         typedef client::annotation<Iterator> annotation_;
         typename function<annotation_>
-            annotation = annotation_(current_id, iters);
+            annotation = annotation_(iters);
         on_success(primary_expr, annotation(_val, _3));
-        on_success(unary_expr, annotation(_val, _3));
     }
 }
 

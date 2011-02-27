@@ -11,10 +11,33 @@
 
 namespace client
 {
-    void compiler::operator()(ast::unsigned_ const& x) const
+    void compiler::op(int a) const
     {
-        op(op_int);
-        op(x.n);
+        code.push_back(a);
+    }
+
+    void compiler::op(int a, int b) const
+    {
+        code.push_back(a);
+        code.push_back(b);
+    }
+
+    void compiler::op(int a, int b, int c) const
+    {
+        code.push_back(a);
+        code.push_back(b);
+        code.push_back(c);
+    }
+
+    void compiler::operator()(unsigned int x) const
+    {
+        op(op_int, x);
+    }
+
+    void compiler::operator()(ast::variable const& x) const
+    {
+        // $$$ TODO $$$
+        op(op_int, 555); // for now
     }
 
     void compiler::operator()(ast::operation const& x) const
@@ -41,7 +64,7 @@ namespace client
         }
     }
 
-    void compiler::operator()(ast::program const& x) const
+    void compiler::operator()(ast::expression const& x) const
     {
         boost::apply_visitor(*this, x.first);
         BOOST_FOREACH(ast::operation const& oper, x.rest)

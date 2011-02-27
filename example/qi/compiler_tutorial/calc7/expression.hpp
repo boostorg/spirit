@@ -23,7 +23,7 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include "ast.hpp"
-#include <map>
+#include <vector>
 
 namespace client
 {
@@ -34,18 +34,18 @@ namespace client
     //  The expression grammar
     ///////////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct expression : qi::grammar<Iterator, ast::program(), ascii::space_type>
+    struct expression : qi::grammar<Iterator, ast::expression(), ascii::space_type>
     {
         expression();
 
-        qi::rule<Iterator, ast::program(), ascii::space_type> expr;
-        qi::rule<Iterator, ast::program(), ascii::space_type> additive_expr;
-        qi::rule<Iterator, ast::program(), ascii::space_type> multiplicative_expr;
+        qi::rule<Iterator, ast::expression(), ascii::space_type> expr;
+        qi::rule<Iterator, ast::expression(), ascii::space_type> additive_expr;
+        qi::rule<Iterator, ast::expression(), ascii::space_type> multiplicative_expr;
         qi::rule<Iterator, ast::operand(), ascii::space_type> unary_expr;
         qi::rule<Iterator, ast::operand(), ascii::space_type> primary_expr;
+        qi::rule<Iterator, std::string(), ascii::space_type> identifier;
 
-        std::map<int, Iterator> iters;
-        int current_id;
+        std::vector<Iterator> iters;
     };
 }
 
