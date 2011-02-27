@@ -10,6 +10,7 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/fusion/include/io.hpp>
 #include <list>
 
 namespace client { namespace ast
@@ -78,6 +79,10 @@ namespace client { namespace ast
             assignment>
         >
     statement;
+
+    // print functions for debugging
+    inline std::ostream& operator<<(std::ostream& out, nil) { out << "nil"; return out; }
+    inline std::ostream& operator<<(std::ostream& out, variable const& var) { out << var.name; return out; }
 }}
 
 BOOST_FUSION_ADAPT_STRUCT(

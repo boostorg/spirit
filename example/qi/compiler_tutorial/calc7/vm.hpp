@@ -38,8 +38,8 @@ namespace client
         {
         }
 
-        int top() const { return stack_ptr[-1]; };
         void execute(std::vector<int> const& code);
+        std::vector<int> const& get_stack() const { return stack; };
 
     private:
 

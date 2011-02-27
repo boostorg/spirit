@@ -18,7 +18,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "expression.hpp"
+#include "statement.hpp"
 #include "vm.hpp"
 #include "compiler.hpp"
 
@@ -29,51 +29,52 @@ int
 main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Expression parser...\n\n";
+    std::cout << "Statement parser...\n\n";
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Type an expression...or [q or Q] to quit\n\n";
-
-    typedef std::string::const_iterator iterator_type;
-    typedef client::expression<iterator_type> expression;
-    typedef client::ast::expression ast_expression;
-    typedef client::compiler compiler;
+    std::cout << "Type some statements... ";
+    std::cout << "An empty line ends input, compiles, runs and prints results\n\n";
 
     std::string str;
+    std::string source;
     while (std::getline(std::cin, str))
     {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
+        if (str.empty())
             break;
-
-        client::vmachine mach;      // Our virtual machine
-        std::vector<int> code;      // Our VM code
-        expression calc;            // Our grammar
-        ast_expression expression;  // Our program (AST)
-        compiler compile(code);     // Our compiler
-
-        std::string::const_iterator iter = str.begin();
-        std::string::const_iterator end = str.end();
-        boost::spirit::ascii::space_type space;
-        bool r = phrase_parse(iter, end, calc, space, expression);
-
-        if (r && iter == end)
-        {
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing succeeded\n";
-            compile(expression);
-            mach.execute(code);
-            std::cout << "\nResult: " << mach.top() << std::endl;
-            std::cout << "-------------------------\n";
-        }
-        else
-        {
-            std::string rest(iter, end);
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing failed\n";
-            std::cout << "-------------------------\n";
-        }
+        source += str + '\n';
     }
 
-    std::cout << "Bye... :-) \n\n";
+    typedef std::string::const_iterator iterator_type;
+    iterator_type iter = source.begin();
+    iterator_type end = source.end();
+
+    client::vmachine vm;                        // Our virtual machine
+    client::program program;                    // Our VM program
+    client::statement<iterator_type> parser;    // Our parser
+    client::ast::statement ast;                 // Our AST
+    client::compiler compile(program);          // Our compiler
+
+    boost::spirit::ascii::space_type space;
+    bool r = phrase_parse(iter, end, parser, space, ast);
+
+    if (r && iter == end)
+    {
+        std::cout << "-------------------------\n";
+        std::cout << "Parsing succeeded\n";
+        compile(ast);
+        vm.execute(program());
+
+        std::cout << "Results------------------\n\n";
+        program.print_variables(vm.get_stack());
+        std::cout << "-------------------------\n\n";
+    }
+    else
+    {
+        std::string rest(iter, end);
+        std::cout << "-------------------------\n";
+        std::cout << "Parsing failed\n";
+        std::cout << "-------------------------\n";
+    }
+
     return 0;
 }
 

@@ -36,7 +36,7 @@ namespace client
             ;
 
         variable_declaration =
-                ("var" >> !(alnum | '_'))   // make sure we have whole words
+                lexeme["var" >> !(alnum | '_')] // make sure we have whole words
             >   assignment
             ;
 
