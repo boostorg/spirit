@@ -9,8 +9,6 @@
 #include <boost/foreach.hpp>
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
-#include <iostream>
-#include <string>
 
 namespace client
 {
@@ -54,80 +52,99 @@ namespace client
         }
     }
 
-    void compiler::operator()(unsigned int x) const
+    bool compiler::operator()(unsigned int x) const
     {
         program.op(op_int, x);
+        return true;
     }
 
-    void compiler::operator()(ast::variable const& x) const
+    bool compiler::operator()(ast::variable const& x) const
     {
         int const* p = program.find_var(x.name);
         if (p == 0)
         {
-            // $$$ undefined variable throw exception
-            std::cout << "undefined variable: " << x.name << std::endl;
+            std::cout << x.id << std::endl;
+            error_handler(x.id, "Undeclared variable: " + x.name);
+            return false;
         }
         program.op(op_load, *p);
+        return true;
     }
 
-    void compiler::operator()(ast::operation const& x) const
+    bool compiler::operator()(ast::operation const& x) const
     {
-        boost::apply_visitor(*this, x.operand_);
+        if (!boost::apply_visitor(*this, x.operand_))
+            return false;
         switch (x.operator_)
         {
             case '+': program.op(op_add); break;
             case '-': program.op(op_sub); break;
             case '*': program.op(op_mul); break;
             case '/': program.op(op_div); break;
-            default: BOOST_ASSERT(0); break;
+            default: BOOST_ASSERT(0); return false;
         }
+        return true;
     }
 
-    void compiler::operator()(ast::signed_ const& x) const
+    bool compiler::operator()(ast::signed_ const& x) const
     {
-        boost::apply_visitor(*this, x.operand_);
+        if (!boost::apply_visitor(*this, x.operand_))
+            return false;
         switch (x.sign)
         {
             case '-': program.op(op_neg); break;
             case '+': break;
-            default: BOOST_ASSERT(0); break;
+            default: BOOST_ASSERT(0); return false;
         }
+        return true;
     }
 
-    void compiler::operator()(ast::expression const& x) const
+    bool compiler::operator()(ast::expression const& x) const
     {
-        boost::apply_visitor(*this, x.first);
+        if (!boost::apply_visitor(*this, x.first))
+            return false;
         BOOST_FOREACH(ast::operation const& oper, x.rest)
         {
-            (*this)(oper);
+            if (!(*this)(oper))
+                return false;
         }
+        return true;
     }
 
-    void compiler::operator()(ast::assignment const& x) const
+    bool compiler::operator()(ast::assignment const& x) const
     {
-        (*this)(x.rhs);
+        if (!(*this)(x.rhs))
+            return false;
         int const* p = program.find_var(x.lhs.name);
         if (p == 0)
         {
-            // $$$ undefined variable throw exception
-            std::cout << "undefined variable: " << x.lhs.name << std::endl;
+            std::cout << x.lhs.id << std::endl;
+            error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
+            return false;
         }
         program.op(op_store, *p);
+        return true;
     }
 
-    void compiler::operator()(ast::variable_declaration const& x) const
+    bool compiler::operator()(ast::variable_declaration const& x) const
     {
         int const* p = program.find_var(x.assign.lhs.name);
         if (p != 0)
         {
-            // $$$ duplicate variable throw exception
-            std::cout << "duplicate variable: " << x.assign.lhs.name << std::endl;
+            std::cout << x.assign.lhs.id << std::endl;
+            error_handler(x.assign.lhs.id, "Duplicate variable: " + x.assign.lhs.name);
+            return false;
         }
-        program.add_var(x.assign.lhs.name);
-        (*this)(x.assign);
+        bool r = (*this)(x.assign.rhs);
+        if (r) // don't add the variable if the RHS fails
+        {
+            program.add_var(x.assign.lhs.name);
+            program.op(op_store, *program.find_var(x.assign.lhs.name));
+        }
+        return r;
     }
 
-    void compiler::operator()(ast::statement const& x) const
+    bool compiler::operator()(ast::statement const& x) const
     {
         typedef
             boost::variant<
@@ -135,22 +152,20 @@ namespace client
                 ast::assignment>
         statement;
 
-        try
-        {
-            program.clear();
+        program.clear();
 
-            // op_adstk 0 for now. we'll know how many variables we'll have later
-            program.op(op_adstk, 0);
-            BOOST_FOREACH(statement const& s, x)
-            {
-                boost::apply_visitor(*this, s);
-            }
-            program[1] = program.nvars(); // now store the actual number of variables
-        }
-        catch(...)
+        // op_adstk 0 for now. we'll know how many variables we'll have later
+        program.op(op_adstk, 0);
+        BOOST_FOREACH(statement const& s, x)
         {
-            program.clear();
+            if (!boost::apply_visitor(*this, s))
+            {
+                program.clear();
+                return false;
+            }
         }
+        program[1] = program.nvars(); // now store the actual number of variables
+        return true;
     }
 }
 

@@ -8,8 +8,13 @@
 #define BOOST_SPIRIT_CALC7_COMPILER_HPP
 
 #include "ast.hpp"
+#include "error_handler.hpp"
 #include <vector>
 #include <map>
+#include <boost/function.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_function.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
 
 namespace client
 {
@@ -44,22 +49,33 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     struct compiler
     {
-        typedef void result_type;
+        typedef bool result_type;
 
-        compiler(client::program& program)
-          : program(program) {}
+        template <typename IterList, typename Iterator>
+        compiler(client::program& program, IterList const& iters, Iterator last)
+          : program(program)
+        {
+            using boost::phoenix::arg_names::_1;
+            using boost::phoenix::arg_names::_2;
+            using boost::phoenix::cref;
+            error_handler = client::error_handler("Error! ", _2, cref(iters)[_1], last);
+        }
 
-        void operator()(ast::nil) const { BOOST_ASSERT(0); }
-        void operator()(unsigned int x) const;
-        void operator()(ast::variable const& x) const;
-        void operator()(ast::operation const& x) const;
-        void operator()(ast::signed_ const& x) const;
-        void operator()(ast::expression const& x) const;
-        void operator()(ast::assignment const& x) const;
-        void operator()(ast::variable_declaration const& x) const;
-        void operator()(ast::statement const& x) const;
+        bool operator()(ast::nil) const { BOOST_ASSERT(0); return false; }
+        bool operator()(unsigned int x) const;
+        bool operator()(ast::variable const& x) const;
+        bool operator()(ast::operation const& x) const;
+        bool operator()(ast::signed_ const& x) const;
+        bool operator()(ast::expression const& x) const;
+        bool operator()(ast::assignment const& x) const;
+        bool operator()(ast::variable_declaration const& x) const;
+        bool operator()(ast::statement const& x) const;
 
         client::program& program;
+
+        boost::function<
+            void(int tag, std::string const& what)>
+        error_handler;
     };
 }
 

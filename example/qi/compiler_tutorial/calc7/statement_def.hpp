@@ -14,10 +14,12 @@ namespace client
     statement<Iterator>::statement()
       : statement::base_type(start)
     {
-        qi::_val_type _val;
+        qi::_1_type _1;
         qi::_2_type _2;
         qi::_3_type _3;
         qi::_4_type _4;
+
+        qi::_val_type _val;
         qi::raw_type raw;
         qi::lexeme_type lexeme;
         qi::alpha_type alpha;
@@ -56,13 +58,13 @@ namespace client
         );
 
         // Error handling: on error in start, call error_handler.
-        on_error<fail>(start, error_handler(_4, _3, _2));
+        on_error<fail>(start, error_handler("Error! Expecting ", _4, _3, _2));
 
         // Annotation: on success in variable, call annotation.
         typedef client::annotation<Iterator> annotation_;
         typename function<annotation_>
             annotation = annotation_(expr.iters);
-        on_success(assignment, annotation(_val, _3));
+        on_success(assignment, annotation(_val, _1));
     }
 }
 

@@ -40,8 +40,7 @@ namespace client
                 x.id = id;
             }
 
-            template <typename T>
-            void operator()(T& x) const
+            void operator()(...) const
             {
                 // no need for tags
             }
