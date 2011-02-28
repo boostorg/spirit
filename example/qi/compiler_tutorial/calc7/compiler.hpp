@@ -51,13 +51,16 @@ namespace client
     {
         typedef bool result_type;
 
-        template <typename IterList, typename Iterator>
-        compiler(client::program& program, IterList const& iters, Iterator last)
+        template <typename ErrorHandler>
+        compiler(client::program& program, ErrorHandler& error_handler_)
           : program(program)
         {
             using namespace boost::phoenix::arg_names;
             using boost::phoenix::cref;
-            error_handler = client::error_handler("Error! ", _2, cref(iters)[_1], last);
+            using boost::phoenix::function;
+
+            error_handler = function<ErrorHandler>(error_handler_)(
+                "Error! ", _2, cref(error_handler_.iters)[_1]);
         }
 
         bool operator()(ast::nil) const { BOOST_ASSERT(0); return false; }

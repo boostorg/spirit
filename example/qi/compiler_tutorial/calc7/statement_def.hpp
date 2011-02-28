@@ -11,8 +11,8 @@
 namespace client
 {
     template <typename Iterator>
-    statement<Iterator>::statement()
-      : statement::base_type(start)
+    statement<Iterator>::statement(error_handler<Iterator>& error_handler)
+      : statement::base_type(start), expr(error_handler)
     {
         qi::_1_type _1;
         qi::_2_type _2;
@@ -28,6 +28,10 @@ namespace client
         using qi::on_error;
         using qi::on_success;
         using qi::fail;
+        using boost::phoenix::function;
+
+        typedef function<client::error_handler<Iterator> > error_handler_function;
+        typedef function<client::annotation<Iterator> > annotation_function;
 
         start =
             +(variable_declaration | assignment)
@@ -58,13 +62,13 @@ namespace client
         );
 
         // Error handling: on error in start, call error_handler.
-        on_error<fail>(start, error_handler("Error! Expecting ", _4, _3, _2));
+        on_error<fail>(start,
+            error_handler_function(error_handler)(
+                "Error! Expecting ", _4, _3));
 
-        // Annotation: on success in variable, call annotation.
-        typedef client::annotation<Iterator> annotation_;
-        typename function<annotation_>
-            annotation = annotation_(expr.iters);
-        on_success(assignment, annotation(_val, _1));
+        // Annotation: on success in assignment, call annotation.
+        on_success(assignment,
+            annotation_function(error_handler.iters)(_val, _1));
     }
 }
 

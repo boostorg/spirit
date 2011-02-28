@@ -23,6 +23,7 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include "ast.hpp"
+#include "error_handler.hpp"
 #include <vector>
 
 namespace client
@@ -36,7 +37,7 @@ namespace client
     template <typename Iterator>
     struct expression : qi::grammar<Iterator, ast::expression(), ascii::space_type>
     {
-        expression();
+        expression(error_handler<Iterator>& error_handler);
 
         qi::rule<Iterator, ast::expression(), ascii::space_type> expr;
         qi::rule<Iterator, ast::expression(), ascii::space_type> additive_expr;
@@ -44,8 +45,6 @@ namespace client
         qi::rule<Iterator, ast::operand(), ascii::space_type> unary_expr;
         qi::rule<Iterator, ast::operand(), ascii::space_type> primary_expr;
         qi::rule<Iterator, std::string(), ascii::space_type> identifier;
-
-        std::vector<Iterator> iters;
     };
 }
 

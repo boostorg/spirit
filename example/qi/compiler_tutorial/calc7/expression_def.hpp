@@ -7,11 +7,12 @@
 #include "expression.hpp"
 #include "error_handler.hpp"
 #include "annotation.hpp"
+#include <boost/spirit/include/phoenix_function.hpp>
 
 namespace client
 {
     template <typename Iterator>
-    expression<Iterator>::expression()
+    expression<Iterator>::expression(error_handler<Iterator>& error_handler)
       : expression::base_type(expr)
     {
         qi::_1_type _1;
@@ -30,6 +31,10 @@ namespace client
         using qi::on_error;
         using qi::on_success;
         using qi::fail;
+        using boost::phoenix::function;
+
+        typedef function<client::error_handler<Iterator> > error_handler_function;
+        typedef function<client::annotation<Iterator> > annotation_function;
 
         expr =
             additive_expr.alias()
@@ -76,13 +81,13 @@ namespace client
         );
 
         // Error handling: on error in expr, call error_handler.
-        on_error<fail>(expr, error_handler("Error! Expecting ", _4, _3, _2));
+        on_error<fail>(expr,
+            error_handler_function(error_handler)(
+                "Error! Expecting ", _4, _3));
 
         // Annotation: on success in primary_expr, call annotation.
-        typedef client::annotation<Iterator> annotation_;
-        typename function<annotation_>
-            annotation = annotation_(iters);
-        on_success(primary_expr, annotation(_val, _1));
+        on_success(primary_expr,
+            annotation_function(error_handler.iters)(_val, _1));
     }
 }
 

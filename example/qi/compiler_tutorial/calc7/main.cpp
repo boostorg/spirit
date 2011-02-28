@@ -47,12 +47,14 @@ main()
     iterator_type iter = source.begin();
     iterator_type end = source.end();
 
-    client::vmachine vm;                            // Our virtual machine
-    client::program program;                        // Our VM program
-    client::statement<iterator_type> parser;        // Our parser
-    client::ast::statement ast;                     // Our AST
-    client::compiler
-        compile(program, parser.expr.iters, end);   // Our compiler
+    client::vmachine vm;                                    // Our virtual machine
+    client::program program;                                // Our VM program
+    client::ast::statement ast;                             // Our AST
+
+    client::error_handler<iterator_type>
+        error_handler(iter, end);                           // Our error handler
+    client::statement<iterator_type> parser(error_handler); // Our parser
+    client::compiler compile(program, error_handler);       // Our compiler
 
     boost::spirit::ascii::space_type space;
     bool success = phrase_parse(iter, end, parser, space, ast);
@@ -60,21 +62,23 @@ main()
     std::cout << "-------------------------\n";
 
     if (success && iter == end)
-        success = compile(ast);
-    else
-        std::cout << "Parse failure\n";
-
-    if (success)
     {
-        std::cout << "Success\n";
-        vm.execute(program());
+        if (compile(ast))
+        {
+            std::cout << "Success\n";
+            vm.execute(program());
 
-        std::cout << "Results------------------\n\n";
-        program.print_variables(vm.get_stack());
+            std::cout << "Results------------------\n\n";
+            program.print_variables(vm.get_stack());
+        }
+        else
+        {
+            std::cout << "Compile failure\n";
+        }
     }
     else
     {
-        std::cout << "Compile failure\n";
+        std::cout << "Parse failure\n";
     }
 
     std::cout << "-------------------------\n\n";

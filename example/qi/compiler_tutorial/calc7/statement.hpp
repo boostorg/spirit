@@ -17,7 +17,7 @@ namespace client
     template <typename Iterator>
     struct statement : qi::grammar<Iterator, ast::statement(), ascii::space_type>
     {
-        statement();
+        statement(error_handler<Iterator>& error_handler);
 
         expression<Iterator> expr;
         qi::rule<Iterator, ast::statement(), ascii::space_type> start;

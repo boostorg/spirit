@@ -9,36 +9,64 @@
 
 #include <iostream>
 #include <string>
-#include <boost/spirit/include/phoenix_function.hpp>
+#include <vector>
 
 namespace client
 {
-    using boost::phoenix::function;
-
     ///////////////////////////////////////////////////////////////////////////////
     //  The error handler
     ///////////////////////////////////////////////////////////////////////////////
-    struct error_handler_
+    template <typename Iterator>
+    struct error_handler
     {
-        template <typename, typename, typename, typename>
+        template <typename, typename, typename>
         struct result { typedef void type; };
 
-        template <typename Message, typename What, typename Iterator>
-        void operator()(Message const& message, What const& what
-          , Iterator err_pos, Iterator last) const
+        error_handler(Iterator first, Iterator last)
+          : first(first), last(last) {}
+
+        template <typename Message, typename What>
+        void operator()(
+            Message const& message,
+            What const& what,
+            Iterator err_pos) const
         {
-            std::cout
-                << message
-                << what
-                << " here: \""
-                << get_line(err_pos, last)
-                << "\""
-                << std::endl
-            ;
+            int line;
+            Iterator line_start = get_pos(err_pos, line);
+            std::cout << message << what << " line " << line << ':' << std::endl;
+            std::cout << get_line(line_start) << std::endl;
+            for (; line_start != err_pos; ++line_start)
+                std::cout << ' ';
+            std::cout << '^' << std::endl;
         }
 
-        template <typename Iterator>
-        std::string get_line(Iterator err_pos, Iterator last) const
+        Iterator get_pos(Iterator err_pos, int& line) const
+        {
+            line = 1;
+            Iterator i = first;
+            Iterator line_start = first;
+            while (i != err_pos)
+            {
+                bool eol = false;
+                if (i != err_pos && *i == '\r') // CR
+                {
+                    eol = true;
+                    line_start = ++i;
+                }
+                if (i != err_pos && *i == '\n') // LF
+                {
+                    eol = true;
+                    line_start = ++i;
+                }
+                if (eol)
+                    ++line;
+                else
+                    ++i;
+            }
+            return line_start;
+        }
+
+        std::string get_line(Iterator err_pos) const
         {
             Iterator i = err_pos;
             // position i to the next EOL
@@ -46,10 +74,11 @@ namespace client
                 ++i;
             return std::string(err_pos, i);
         }
-    };
 
-    boost::phoenix::function<error_handler_> const
-        error_handler = error_handler_();
+        Iterator first;
+        Iterator last;
+        std::vector<Iterator> iters;
+    };
 }
 
 #endif
