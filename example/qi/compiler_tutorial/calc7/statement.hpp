@@ -24,13 +24,6 @@ namespace client
         qi::rule<Iterator, ast::variable_declaration(), ascii::space_type> variable_declaration;
         qi::rule<Iterator, ast::assignment(), ascii::space_type> assignment;
         qi::rule<Iterator, std::string(), ascii::space_type> identifier;
-
-
-        //~ variable_declaration;
-        //~ qi::rule<Iterator, std::string(), ascii::space_type> identifier;
-        //~ qi::rule<Iterator, int(), ascii::space_type> var_ref;
-        //~ qi::rule<Iterator, qi::locals<int>, ascii::space_type> assignment;
-        //~ qi::rule<Iterator, void(int), ascii::space_type> assignment_rhs;
     };
 }
 

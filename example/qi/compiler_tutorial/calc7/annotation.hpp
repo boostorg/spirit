@@ -35,14 +35,16 @@ namespace client
             int id;
             set_id(int id) : id(id) {}
 
+            // This will catch all nodes inheriting from ast::tagged
             void operator()(ast::tagged& x) const
             {
                 x.id = id;
             }
 
+            // This will catch all nodes except those inheriting from ast::tagged
             void operator()(...) const
             {
-                // no need for tags
+                // (no-op) no need for tags
             }
         };
 

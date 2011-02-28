@@ -62,7 +62,7 @@ main()
     if (success && iter == end)
         success = compile(ast);
     else
-        std::cout << "Parsing failed\n";
+        std::cout << "Parse failure\n";
 
     if (success)
     {
@@ -74,7 +74,7 @@ main()
     }
     else
     {
-        std::cout << "Compiling failed\n";
+        std::cout << "Compile failure\n";
     }
 
     std::cout << "-------------------------\n\n";

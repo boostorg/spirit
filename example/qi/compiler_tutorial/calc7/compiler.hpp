@@ -55,8 +55,7 @@ namespace client
         compiler(client::program& program, IterList const& iters, Iterator last)
           : program(program)
         {
-            using boost::phoenix::arg_names::_1;
-            using boost::phoenix::arg_names::_2;
+            using namespace boost::phoenix::arg_names;
             using boost::phoenix::cref;
             error_handler = client::error_handler("Error! ", _2, cref(iters)[_1], last);
         }
