@@ -66,6 +66,7 @@ import testing ;
      [ run qi/not_predicate.cpp    : : : : qi_not_predicate ]
      [ run qi/optional.cpp         : : : : qi_optional ]
      [ run qi/parse_attr.cpp       : : : : qi_parse_attr ]
+     [ run qi/pass_container.cpp   : : : : qi_pass_container ]
      [ run qi/permutation.cpp      : : : : qi_permutation ]
      [ run qi/plus.cpp             : : : : qi_plus ]
      [ run qi/range_run.cpp        : : : : qi_range_run ]

@@ -234,15 +234,10 @@ main()
     // alternative forms of attributes. Allow sequences to take in
     // stl containers of stl containers.
     {
-        // this use case seem1 to verify wrong behavior, but it is correct,
-        // think about it!
-
         std::vector<std::string> v;
         BOOST_TEST(test_attr("abc1,abc2", 
             *~char_(',') >> *(',' >> *~char_(',')), v));
-        BOOST_TEST(v.size() == 8 &&
-            v[0] == "a" && v[1] == "b" && v[2] == "c" && v[3] == "1" &&
-            v[4] == "a" && v[5] == "b" && v[6] == "c" && v[7] == "2");
+        BOOST_TEST(v.size() == 2 && v[0] == "abc1" && v[1] == "abc2");
     }
 
     {
@@ -279,10 +274,23 @@ main()
         BOOST_TEST(test_attr("ab", char_ >> -char_, v));
         BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
 
-//  this is still failing
-//         v.clear();
-//         BOOST_TEST(test_attr("a", char_ >> -char_, v));
-//         BOOST_TEST(v.size() == 1 && v[0] == 'a');
+        v.clear();
+        BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
+    }
+
+    {
+        std::vector<boost::optional<char> > v;
+        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && !v[1]);
 
         v.clear();
         BOOST_TEST(test_attr("a", char_, v));

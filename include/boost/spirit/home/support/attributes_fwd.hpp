@@ -50,10 +50,16 @@ namespace boost { namespace spirit { namespace result_of
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    // Find out if T can be a substitute for Expected attribute
+    // Find out if T can be a strong substitute for Expected attribute
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Expected, typename Enable = void>
     struct is_substitute;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Find out if T can be a weak substitute for Expected attribute
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Expected, typename Enable = void>
+    struct is_weak_substitute;
 
     ///////////////////////////////////////////////////////////////////////////
     // Determine if T is a proxy

@@ -114,7 +114,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool operator()(Component const& component) const
+        bool call_unused(Component const& component, mpl::true_) const
         {
             // return true if the parser succeeds
             return call(component,
@@ -122,6 +122,23 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     spirit::traits::not_is_variant<Attribute, qi::domain>,
                     spirit::traits::not_is_optional<Attribute, qi::domain>
                 >());
+        }
+
+        template <typename Component>
+        bool call_unused(Component const& component, mpl::false_) const
+        {
+            return component.parse(first, last, context, skipper, unused);
+        }
+
+        template <typename Component>
+        bool operator()(Component const& component) const
+        {
+            // return true if the parser succeeds
+            typedef typename traits::not_is_unused<
+                typename traits::attribute_of<Component, Context, Iterator>::type
+            >::type predicate;
+
+            return call_unused(component, predicate());
         }
 
         Iterator& first;

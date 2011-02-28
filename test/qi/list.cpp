@@ -90,12 +90,14 @@ main()
     }
 
     {
-        std::vector<boost::optional<std::string> > v;
+        std::vector<boost::optional<char> > v;
         BOOST_TEST(test_attr("#a,#", ('#' >> -alpha) % ',', v)); 
         BOOST_TEST(2 == v.size() && 
-            !!v[0] && "a" == boost::get<std::string>(v[0]) && 
-            !!v[1] && boost::get<std::string>(v[1]).size() == 1 && 
-                    boost::get<std::string>(v[1])[0] == '\0');
+            !!v[0] && 'a' == boost::get<char>(v[0]) && !v[1]);
+
+        std::vector<char> v2;
+        BOOST_TEST(test_attr("#a,#", ('#' >> -alpha) % ',', v2)); 
+        BOOST_TEST(1 == v2.size() && 'a' == v2[0]);
     }
 
     {

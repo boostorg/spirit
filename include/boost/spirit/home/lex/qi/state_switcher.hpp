@@ -138,13 +138,13 @@ namespace boost { namespace spirit { namespace qi
             template <typename State>
             reset_state_on_exit(Iterator& it_, State state_)
               : it(it_)
-              , state(detail::set_lexer_state(it_, traits::get_c_string(state_))) 
+              , state(set_lexer_state(it_, traits::get_c_string(state_))) 
             {}
 
             ~reset_state_on_exit()
             {
                 // reset the state of the underlying lexer instance
-                detail::set_lexer_state(it, state);
+                set_lexer_state(it, state);
             }
 
             Iterator& it;

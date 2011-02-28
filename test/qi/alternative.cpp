@@ -50,13 +50,8 @@ struct test_action_2
       , boost::spirit::unused_type
       , boost::spirit::unused_type) const
     {
-        using boost::get;
-
         BOOST_TEST(v.size() == 5 &&
-            v[1] == 'a' &&
-            v[2] == 'b' &&
-            v[3] == '1' &&
-            v[4] == '2');
+            !v[0] && v[1] == 'a' && v[2] == 'b' && v[3] == '1' && v[4] == '2');
     }
 };
 
@@ -91,8 +86,7 @@ main()
         BOOST_TEST(boost::get<int>(v) == 12345);
 
         BOOST_TEST((test_attr("rock", lit("rock") | int_ | char_, v)));
-        BOOST_TEST(boost::get<int>(&v) == 0);
-        BOOST_TEST(boost::get<char>(&v) == 0);
+        BOOST_TEST(v.which() == 1);
 
         BOOST_TEST((test_attr("x", lit("rock") | int_ | char_, v)));
         BOOST_TEST(boost::get<char>(v) == 'x');

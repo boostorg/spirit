@@ -164,6 +164,28 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // these specializations are needed because utree::value_type == utree
+    template <> 
+    struct is_substitute<utree, utree> 
+      : mpl::true_ 
+    {};
+
+    template <> 
+    struct is_weak_substitute<utree, utree> 
+      : mpl::true_ 
+    {};
+
+    template <> 
+    struct is_substitute<utree::list_type, utree::list_type> 
+      : mpl::true_ 
+    {};
+
+    template <> 
+    struct is_weak_substitute<utree::list_type, utree::list_type> 
+      : mpl::true_ 
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // this specialization tells Spirit.Qi to allow assignment to an utree from
     // a variant
     namespace detail

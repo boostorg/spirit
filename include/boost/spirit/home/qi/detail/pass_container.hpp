@@ -25,61 +25,139 @@
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
-    // has_same_elements: utility to check if the RHS attribute
-    // is an STL container and that its value_type is convertible
-    // to the LHS.
+    // pass_through_container: utility to check decide whether a provided 
+    // container attribute needs to be passed through to the current component 
+    // or of we need to split the container by passing along instances of its
+    // value type
 
-    template <typename LHS, typename RHSAttribute
-      , bool IsContainer = traits::is_container<RHSAttribute>::value
-      , bool IsSequence = fusion::traits::is_sequence<RHSAttribute>::value>
-    struct has_same_elements : mpl::false_ {};
-
-    template <typename LHS, typename RHSAttribute>
-    struct has_same_elements<LHS, RHSAttribute, true, false>
-      : is_convertible<typename RHSAttribute::value_type, LHS> {};
-
-    template <typename LHS, typename T>
-    struct has_same_elements<LHS, boost::optional<T>, false, false>
-      : has_same_elements<LHS, T> {};
-
-    template <typename LHS, typename T>
-    struct has_same_elements<LHS, boost::optional<T>, true, false>
-      : has_same_elements<LHS, T> {};
-
-    template <typename LHS, typename T>
-    struct has_same_elements<LHS, boost::optional<T>, false, true>
-      : has_same_elements<LHS, T> {};
-
-#define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \
-        has_same_elements<LHS, BOOST_PP_CAT(T, N)>::value ||                  \
-    /***/
-
-    // Note: variants are treated as containers if one of the held types is a
-    //       container (see support/container.hpp).
-    template <typename LHS, BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct has_same_elements<
-            LHS, boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, true, false>
-      : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
-          , BOOST_SPIRIT_IS_CONVERTIBLE, _) false> {};
-
-#undef BOOST_SPIRIT_IS_CONVERTIBLE
+    // if the expected attribute of the current component is neither a Fusion 
+    // sequence nor a container, we will pass through the provided container 
+    // only if its value type is not compatible with the component
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Enable = void>
+    struct pass_through_container_base
+      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
+    {};
 
     // Specialization for fusion sequences, in this case we check whether all
     // the types in the sequence are convertible to the lhs attribute.
-    // We return false if the lhs attribute itself is a fusion sequence.
-    template <typename LHS, typename RHSAttribute>
-    struct has_same_elements<LHS, RHSAttribute, false, true>
+    // 
+    // We return false if the rhs attribute itself is a fusion sequence, which
+    // is compatible with the LHS sequence (we want to pass through this 
+    // attribute without it being split apart).
+    template <typename Container, typename ValueType, typename Attribute>
+    struct not_compatible_element
+      : mpl::and_<
+            mpl::not_<traits::is_weak_substitute<Attribute, Container> >
+          , mpl::not_<traits::is_weak_substitute<Attribute, ValueType> > >
+    {};
+
+    // If the value type of the container is not a Fusion sequence, we pass
+    // through the container if each of the elements of the Attribute 
+    // sequence is compatible with either the container or its value type.
+    template <typename Container, typename ValueType, typename Attribute
+      , bool IsSequence = fusion::traits::is_sequence<ValueType>::value>
+    struct pass_through_container_fusion_sequence
     {
         typedef typename mpl::find_if<
-            RHSAttribute, mpl::not_<is_convertible<mpl::_1, LHS> >
+            Attribute, not_compatible_element<Container, ValueType, mpl::_1>
         >::type iter;
-        typedef typename mpl::end<RHSAttribute>::type end;
+        typedef typename mpl::end<Attribute>::type end;
 
-        typedef typename mpl::and_<
-            mpl::not_<fusion::traits::is_sequence<LHS> >, is_same<iter, end>
-        >::type type;
+        typedef typename is_same<iter, end>::type type;
     };
 
+    // If both, the Attribute and the value type of the provided container
+    // are Fusion sequences, we pass the container only if the two 
+    // sequences are not compatible.
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container_fusion_sequence<
+            Container, ValueType, Attribute, true>
+      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
+    {};
+
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container_base<Container, ValueType, Attribute
+          , typename enable_if<fusion::traits::is_sequence<Attribute> >::type>
+      : detail::pass_through_container_fusion_sequence<Container, ValueType, Attribute>
+    {};
+
+    // Specialization for containers
+    //
+    // If the value type of the attribute of the current component is not
+    // a Fusion sequence, we have to pass through the provided container if 
+    // both are compatible.
+    template <typename Container, typename ValueType, typename Attribute
+      , typename AttributeValueType
+      , bool IsSequence = fusion::traits::is_sequence<AttributeValueType>::value>
+    struct pass_through_container_container
+      : mpl::or_<
+          traits::is_weak_substitute<Attribute, Container> 
+        , traits::is_weak_substitute<AttributeValueType, Container> >
+    {};
+
+    // If the value type of the exposed container attribute is a Fusion
+    // sequence, we use the already existing logic for those.
+    template <typename Container, typename ValueType
+      , typename Attribute, typename AttributeValueType>
+    struct pass_through_container_container<
+            Container, ValueType, Attribute, AttributeValueType, true>
+      : pass_through_container_fusion_sequence<
+            Container, ValueType, AttributeValueType>
+    {};
+
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container_base<Container, ValueType, Attribute
+          , typename enable_if<traits::is_container<Attribute> >::type>
+      : detail::pass_through_container_container<
+          Container, ValueType
+        , Attribute, typename traits::container_value<Attribute>::type>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container
+      : pass_through_container_base<Container, ValueType, Attribute> 
+    {};
+
+    // Specialization for exposed optional attributes
+    //
+    // If the type embedded in the exposed optional is not a Fusion 
+    // sequence we pass through the container attribute if it is compatible
+    // either to the optionals embedded type or to the containrs value 
+    // type.
+    template <typename Container, typename ValueType, typename Attribute
+      , bool IsSequence = fusion::traits::is_sequence<Attribute>::value>
+    struct pass_through_container_optional
+      : mpl::or_<
+          traits::is_weak_substitute<Attribute, Container> 
+        , traits::is_weak_substitute<Attribute, ValueType> >
+    {};
+
+    // If the embedded type of the exposed optional attribute is a Fusion
+    // sequence, we use the already existing logic for those.
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container_optional<
+            Container, ValueType, Attribute, true>
+      : pass_through_container_fusion_sequence<
+            Container, ValueType, Attribute>
+    {};
+
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container<Container, ValueType, boost::optional<Attribute> >
+      : detail::pass_through_container_optional<Container, ValueType, Attribute> 
+    {};
+
+    // If both, the containers value type and the exposed attribute type are
+    // optionals we are allowed to pass through the the container only if the
+    // embedded types of those optionals are not compatible.
+    template <typename Container, typename ValueType, typename Attribute>
+    struct pass_through_container<
+            Container, boost::optional<ValueType>, boost::optional<Attribute> >
+      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
     // the sequence is an STL container. This is a wrapper around F.
     // The function F does the actual parsing.
@@ -95,7 +173,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         // this is for the case when the current element exposes an attribute
         // which is pushed back onto the container
         template <typename Component>
-        bool dispatch_attribute_element(Component const& component, mpl::false_) const
+        bool dispatch_container(Component const& component, mpl::false_) const
         {
             // synthesized attribute needs to be default constructed
             typename traits::container_value<Attr>::type val =
@@ -113,34 +191,16 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return r;
         }
 
-        // this is for the case when the current element expects an attribute
-        // which is a container itself, this element will push its data 
-        // directly into the attribute container
+        // this is for the case when the current element is able to handle an 
+        // attribute which is a container itself, this element will push its 
+        // data directly into the attribute container
         template <typename Component>
-        bool dispatch_attribute_element(Component const& component, mpl::true_) const
+        bool dispatch_container(Component const& component, mpl::true_) const
         {
             return f(component, attr);
         }
 
-        // This handles the distinction between elements in a sequence expecting
-        // containers themselves and elements expecting non-containers as their 
-        // attribute. Note: is_container treats optional<T>, where T is a 
-        // container as a container as well.
-        template <typename Component>
-        bool dispatch_attribute(Component const& component, mpl::true_) const
-        {
-            typedef typename traits::attribute_of<
-                Component, context_type, iterator_type>::type attribute_type;
-
-            typedef mpl::and_<
-                traits::is_container<attribute_type>
-              , traits::handles_container<Component, Attr, context_type
-                                        , iterator_type> 
-            > predicate;
-
-            return dispatch_attribute_element(component, predicate());
-        }
-
+        ///////////////////////////////////////////////////////////////////////
         // this is for the case when the current element doesn't expect an 
         // attribute
         template <typename Component>
@@ -149,31 +209,25 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return f(component, unused);
         }
 
-        // This handles the case where the attribute of the component
-        // is not an STL container or its element is not convertible
-        // to the target attribute's (Attr) value_type.
+        // the current element expects an attribute
         template <typename Component>
-        bool dispatch_main(Component const& component, mpl::false_) const
+        bool dispatch_attribute(Component const& component, mpl::true_) const
         {
-            // we need to dispatch again depending on the type of the attribute
-            // of the current element (component). If this is has no attribute
-            // we shouldn't push an element into the container.
-            typedef traits::not_is_unused<
-                typename traits::attribute_of<
-                    Component, context_type, iterator_type
-                >::type
+            typedef typename traits::container_value<Attr>::type value_type;
+            typedef typename traits::attribute_of<
+                Component, context_type, iterator_type>::type
+            rhs_attribute;
+
+            // this predicate detects, whether the attribute of the current 
+            // element is a substitute for the value type of the container
+            // attribute 
+            typedef mpl::and_<
+                pass_through_container<Attr, value_type, rhs_attribute>
+              , traits::handles_container<
+                    Component, Attr, context_type, iterator_type> 
             > predicate;
 
-            return dispatch_attribute(component, predicate());
-        }
-
-        // This handles the case where the attribute of the component is
-        // an STL container *and* its value_type is convertible to the
-        // target's attribute (Attr) value_type.
-        template <typename Component>
-        bool dispatch_main(Component const& component, mpl::true_) const
-        {
-            return f(component, attr);
+            return dispatch_container(component, predicate());
         }
 
         // Dispatches to dispatch_main depending on the attribute type
@@ -181,23 +235,19 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Component>
         bool operator()(Component const& component) const
         {
-            typedef typename traits::container_value<Attr>::type lhs;
-            typedef typename traits::attribute_of<
-                Component, context_type, iterator_type>::type
-            rhs_attribute;
-
-            typedef mpl::and_<
-                mpl::or_<
-                    has_same_elements<lhs, rhs_attribute>
-                  , has_same_elements<Attr, rhs_attribute> >
-              , traits::handles_container<Component, Attr, context_type
-                                        , iterator_type> 
-            > predicate;
+            // we need to dispatch depending on the type of the attribute
+            // of the current element (component). If this is has no attribute
+            // we shouldn't pass an attribute at all.
+            typedef typename traits::not_is_unused<
+                typename traits::attribute_of<
+                    Component, context_type, iterator_type
+                >::type
+            >::type predicate;
 
             // ensure the attribute is actually a container type
             traits::make_container(attr);
 
-            return dispatch_main(component, predicate());
+            return dispatch_attribute(component, predicate());
         }
 
         F f;

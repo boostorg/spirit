@@ -58,7 +58,8 @@ namespace boost { namespace spirit { namespace traits
     // components.
     ///////////////////////////////////////////////////////////////////////////
 
-    // Find out if T can be a substitute for Expected attribute
+    ///////////////////////////////////////////////////////////////////////////
+    // Find out if T can be a (strong) substitute for Expected attribute
     template <typename T, typename Expected, typename Enable /*= void*/>
     struct is_substitute : is_same<T, Expected> {};
 
@@ -96,6 +97,46 @@ namespace boost { namespace spirit { namespace traits
         >::type>
       : mpl::true_ {};
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Find out if T can be a weak substitute for Expected attribute
+    template <typename T, typename Expected, typename Enable /*= void*/>
+    struct is_weak_substitute : is_convertible<T, Expected> {};
+
+    template <typename T, typename Expected>
+    struct is_weak_substitute<optional<T>, optional<Expected> >
+      : is_weak_substitute<T, Expected> {};
+
+    template <typename T, typename Expected>
+    struct is_weak_substitute<T, Expected,
+        typename enable_if<
+            mpl::and_<
+                fusion::traits::is_sequence<T>,
+                fusion::traits::is_sequence<Expected>,
+                mpl::equal<T, Expected, is_weak_substitute<mpl::_1, mpl::_2> >
+            >
+        >::type>
+      : mpl::true_ {};
+
+    namespace detail
+    {
+        template <typename T, typename Expected>
+        struct value_type_is_weak_substitute
+          : is_weak_substitute<typename T::value_type, typename Expected::value_type>
+        {};
+    }
+
+    template <typename T, typename Expected>
+    struct is_weak_substitute<T, Expected,
+        typename enable_if<
+            mpl::and_<
+                is_container<T>,
+                is_container<Expected>,
+                detail::value_type_is_weak_substitute<T, Expected>
+            >
+        >::type>
+      : mpl::true_ {};
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable/* = void*/>
     struct is_proxy : mpl::false_ {};
 
@@ -291,7 +332,6 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename Enable/* = void*/>
     struct attribute_type : mpl::identity<Attribute> {};
-
 
     ///////////////////////////////////////////////////////////////////////////
     // Retrieve the size of a fusion sequence (compile time)
