@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace qi
       , Expr const& expr)
     {
         Iterator first = first_;
-        return parse(first, last, expr);
+        return qi::parse(first, last, expr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace qi
       , Attr& attr)
     {
         Iterator first = first_;
-        return parse(first, last, expr, attr);
+        return qi::parse(first, last, expr, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ namespace boost { namespace spirit { namespace qi
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
     {
         Iterator first = first_;
-        return phrase_parse(first, last, expr, skipper, post_skip);
+        return qi::phrase_parse(first, last, expr, skipper, post_skip);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ namespace boost { namespace spirit { namespace qi
       , Attr& attr)
     {
         Iterator first = first_;
-        return phrase_parse(first, last, expr, skipper, post_skip, attr);
+        return qi::phrase_parse(first, last, expr, skipper, post_skip, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace qi
       , Skipper const& skipper
       , Attr& attr)
     {
-        return phrase_parse(first, last, expr, skipper, skip_flag::postskip, attr);
+        return qi::phrase_parse(first, last, expr, skipper, skip_flag::postskip, attr);
     }
 
     template <typename Iterator, typename Expr, typename Skipper, typename Attr>
@@ -207,9 +207,8 @@ namespace boost { namespace spirit { namespace qi
       , Attr& attr)
     {
         Iterator first = first_;
-        return phrase_parse(first, last, expr, skipper, skip_flag::postskip, attr);
+        return qi::phrase_parse(first, last, expr, skipper, skip_flag::postskip, attr);
     }
-
 }}}
 
 #endif

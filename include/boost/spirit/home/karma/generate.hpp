@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace karma
       , Expr const& expr)
     {
         OutputIterator sink = sink_;
-        return generate(sink, expr);
+        return karma::generate(sink, expr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -88,7 +88,7 @@ namespace boost { namespace spirit { namespace karma
         // wrap user supplied iterator into our own output iterator
         detail::output_iterator<OutputIterator
           , mpl::int_<properties::value> > sink(sink_);
-        return generate(sink, expr, attr);
+        return karma::generate(sink, expr, attr);
     }
 
     template <typename OutputIterator, typename Expr, typename Attr>
@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace karma
       , Attr const& attr)
     {
         OutputIterator sink = sink_;
-        return generate(sink, expr, attr);
+        return karma::generate(sink, expr, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ namespace boost { namespace spirit { namespace karma
             delimit_flag::dont_predelimit)
     {
         OutputIterator sink = sink_;
-        return generate_delimited(sink, expr, delimiter, pre_delimit);
+        return karma::generate_delimited(sink, expr, delimiter, pre_delimit);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -196,7 +196,7 @@ namespace boost { namespace spirit { namespace karma
       , Attribute const& attr)
     {
         OutputIterator sink = sink_;
-        return generate_delimited(sink, expr, delimiter, pre_delimit, attr);
+        return karma::generate_delimited(sink, expr, delimiter, pre_delimit, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -226,7 +226,6 @@ namespace boost { namespace spirit { namespace karma
         return karma::generate_delimited(sink, expr, delimiter
           , delimit_flag::dont_predelimit, attr);
     }
-
 }}}
 
 #endif
