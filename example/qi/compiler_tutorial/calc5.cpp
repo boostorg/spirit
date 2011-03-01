@@ -9,8 +9,8 @@
 //  Same as Calc4, this time, we'll incorporate debugging support,
 //  plus error handling and reporting.
 //
-//  [ JDG April 28, 2008 : For BoostCon 2008 ]
-//  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
+//  [ JDG April 28, 2008 ]      For BoostCon 2008
+//  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,6 +27,10 @@
 // Uncomment this if you want to enable debugging
 //#define BOOST_SPIRIT_QI_DEBUG
 ///////////////////////////////////////////////////////////////////////////////
+
+#if defined(_MSC_VER)
+# pragma warning(disable: 4345)
+#endif
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>

@@ -13,7 +13,7 @@
 //  [ JDG Sometime 2000 ]       pre-boost
 //  [ JDG September 18, 2002 ]  spirit1
 //  [ JDG April 8, 2007 ]       spirit2
-//  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
+//  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -30,6 +30,10 @@
 // Uncomment this if you want to enable debugging
 //#define BOOST_SPIRIT_QI_DEBUG
 ///////////////////////////////////////////////////////////////////////////////
+
+#if defined(_MSC_VER)
+# pragma warning(disable: 4345)
+#endif
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>

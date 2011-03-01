@@ -14,7 +14,7 @@
 //  see how expressions and statements are built as modular grammars.
 //
 //  [ JDG April 9, 2007 ]       spirit2
-//  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
+//  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
 //
 ///////////////////////////////////////////////////////////////////////////////
 

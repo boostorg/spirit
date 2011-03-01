@@ -10,8 +10,8 @@
 //  once created, is traversed, 1) To print its contents and
 //  2) To evaluate the result.
 //
-//  [ JDG April 28, 2008 : For BoostCon 2008 ]
-//  [ JDG February 18, 2011 : Pure attributes. No semantic actions. ]
+//  [ JDG April 28, 2008 ]      For BoostCon 2008
+//  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -21,6 +21,10 @@
 // responsible in creating instances of the terminals that
 // you need (e.g. see qi::uint_type uint_ below).
 #define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+
+#if defined(_MSC_VER)
+# pragma warning(disable: 4345)
+#endif
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
