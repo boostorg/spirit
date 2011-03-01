@@ -4,13 +4,14 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_CALC7_AST_HPP)
-#define BOOST_SPIRIT_CALC7_AST_HPP
+#if !defined(BOOST_SPIRIT_CALC8_AST_HPP)
+#define BOOST_SPIRIT_CALC8_AST_HPP
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
+#include <boost/optional.hpp>
 #include <list>
 
 namespace client { namespace ast
@@ -26,7 +27,7 @@ namespace client { namespace ast
     };
 
     struct nil {};
-    struct signed_;
+    struct unary;
     struct expression;
 
     struct variable : tagged
@@ -37,22 +38,42 @@ namespace client { namespace ast
 
     typedef boost::variant<
             nil
+          , bool
           , unsigned int
           , variable
-          , boost::recursive_wrapper<signed_>
+          , boost::recursive_wrapper<unary>
           , boost::recursive_wrapper<expression>
         >
     operand;
 
-    struct signed_
+    enum optoken
     {
-        char sign;
+        op_plus,
+        op_minus,
+        op_times,
+        op_divide,
+        op_positive,
+        op_negative,
+        op_not,
+        op_equal,
+        op_not_equal,
+        op_less,
+        op_less_equal,
+        op_greater,
+        op_greater_equal,
+        op_and,
+        op_or
+    };
+
+    struct unary
+    {
+        optoken operator_;
         operand operand_;
     };
 
     struct operation
     {
-        char operator_;
+        optoken operator_;
         operand operand_;
     };
 
@@ -73,12 +94,33 @@ namespace client { namespace ast
         assignment assign;
     };
 
+    struct if_statement;
+    struct while_statement;
+    struct statement_list;
+
     typedef boost::variant<
             variable_declaration
-          , assignment>
+          , assignment
+          , boost::recursive_wrapper<if_statement>
+          , boost::recursive_wrapper<while_statement>
+          , boost::recursive_wrapper<statement_list>
+        >
     statement;
 
-    typedef std::list<statement> statement_list;
+    struct statement_list : std::list<statement> {};
+
+    struct if_statement
+    {
+        expression condition;
+        statement then;
+        boost::optional<statement> else_;
+    };
+
+    struct while_statement
+    {
+        expression condition;
+        statement body;
+    };
 
     // print functions for debugging
     inline std::ostream& operator<<(std::ostream& out, nil) { out << "nil"; return out; }
@@ -86,14 +128,14 @@ namespace client { namespace ast
 }}
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::signed_,
-    (char, sign)
+    client::ast::unary,
+    (client::ast::optoken, operator_)
     (client::ast::operand, operand_)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
     client::ast::operation,
-    (char, operator_)
+    (client::ast::optoken, operator_)
     (client::ast::operand, operand_)
 )
 
@@ -112,6 +154,19 @@ BOOST_FUSION_ADAPT_STRUCT(
     client::ast::assignment,
     (client::ast::variable, lhs)
     (client::ast::expression, rhs)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::if_statement,
+    (client::ast::expression, condition)
+    (client::ast::statement, then)
+    (boost::optional<client::ast::statement>, else_)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::while_statement,
+    (client::ast::expression, condition)
+    (client::ast::statement, body)
 )
 
 #endif

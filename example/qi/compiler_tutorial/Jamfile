@@ -27,3 +27,10 @@ exe calc7 :
     calc7/main.cpp
     ;
 
+exe calc8 :
+    calc8/vm.cpp
+    calc8/compiler.cpp
+    calc8/expression.cpp
+    calc8/statement.cpp
+    calc8/main.cpp
+    ;

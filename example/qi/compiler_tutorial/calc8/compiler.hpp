@@ -4,13 +4,14 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_CALC7_COMPILER_HPP)
-#define BOOST_SPIRIT_CALC7_COMPILER_HPP
+#if !defined(BOOST_SPIRIT_CALC8_COMPILER_HPP)
+#define BOOST_SPIRIT_CALC8_COMPILER_HPP
 
 #include "ast.hpp"
 #include "error_handler.hpp"
 #include <vector>
 #include <map>
+#include <set>
 #include <boost/function.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
@@ -29,7 +30,8 @@ namespace client
 
         int& operator[](std::size_t i) { return code[i]; }
         int const& operator[](std::size_t i) const { return code[i]; }
-        void clear() { code.clear(); variables.clear(); }
+        void clear() { code.clear(); variables.clear(); jumps.clear(); }
+        std::size_t size() const { return code.size(); }
         std::vector<int> const& operator()() const { return code; }
 
         int nvars() const { return variables.size(); }
@@ -39,9 +41,12 @@ namespace client
         void print_variables(std::vector<int> const& stack) const;
         void print_assembler() const;
 
+        void add_jump(std::size_t jump) { jumps.insert(jump); }
+
     private:
 
         std::map<std::string, int> variables;
+        std::set<std::size_t> jumps;
         std::vector<int> code;
     };
 
@@ -66,13 +71,19 @@ namespace client
 
         bool operator()(ast::nil) const { BOOST_ASSERT(0); return false; }
         bool operator()(unsigned int x) const;
+        bool operator()(bool x) const;
         bool operator()(ast::variable const& x) const;
         bool operator()(ast::operation const& x) const;
-        bool operator()(ast::signed_ const& x) const;
+        bool operator()(ast::unary const& x) const;
         bool operator()(ast::expression const& x) const;
         bool operator()(ast::assignment const& x) const;
         bool operator()(ast::variable_declaration const& x) const;
         bool operator()(ast::statement_list const& x) const;
+        bool operator()(ast::statement const& x) const;
+        bool operator()(ast::if_statement const& x) const;
+        bool operator()(ast::while_statement const& x) const;
+
+        bool start(ast::statement_list const& x) const;
 
         client::program& program;
 

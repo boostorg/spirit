@@ -24,6 +24,7 @@ namespace client
         qi::lexeme_type lexeme;
         qi::alpha_type alpha;
         qi::alnum_type alnum;
+        qi::lit_type lit;
 
         using qi::on_error;
         using qi::on_success;
@@ -34,15 +35,25 @@ namespace client
         typedef function<client::annotation<Iterator> > annotation_function;
 
         statement_list =
-            +(variable_declaration | assignment)
+            +statement_
+            ;
+
+        statement_ =
+                variable_declaration
+            |   assignment
+            |   compound_statement
+            |   if_statement
+            |   while_statement
             ;
 
         identifier =
-            raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
+                !expr.keywords
+            >>  raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
             ;
 
         variable_declaration =
                 lexeme["var" >> !(alnum | '_')] // make sure we have whole words
+            >   &identifier // expect an identifier
             >   assignment
             ;
 
@@ -51,6 +62,31 @@ namespace client
             >   '='
             >   expr
             >   ';'
+            ;
+
+        if_statement =
+                lit("if")
+            >   '('
+            >   expr
+            >   ')'
+            >   statement_
+            >
+               -(
+                    lexeme["else" >> !(alnum | '_')] // make sure we have whole words
+                >   statement_
+                )
+            ;
+
+        while_statement =
+                lit("while")
+            >   '('
+            >   expr
+            >   ')'
+            >   statement_
+            ;
+
+        compound_statement =
+            '{' >> -statement_list >> '}'
             ;
 
         // Debugging and error handling and reporting support.

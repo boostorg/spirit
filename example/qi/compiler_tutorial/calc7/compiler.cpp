@@ -200,19 +200,13 @@ namespace client
         return r;
     }
 
-    bool compiler::operator()(ast::statement const& x) const
+    bool compiler::operator()(ast::statement_list const& x) const
     {
-        typedef
-            boost::variant<
-                ast::variable_declaration,
-                ast::assignment>
-        statement;
-
         program.clear();
 
         // op_adstk 0 for now. we'll know how many variables we'll have later
         program.op(op_adstk, 0);
-        BOOST_FOREACH(statement const& s, x)
+        BOOST_FOREACH(ast::statement const& s, x)
         {
             if (!boost::apply_visitor(*this, s))
             {
