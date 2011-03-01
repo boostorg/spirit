@@ -61,6 +61,7 @@
   instantiates the terminals that he needs. So, instead of writing `using qi::uint_`
   one writes instead: `qi::uint_type uint_`.
 
+
 [heading Making Stuff Work]
 
 * Added the __karma__ customization point __customize_extract_from_container__,
@@ -75,6 +76,11 @@
   use of const floating point types with the generator. Thanks to Jeroen
   Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
   a test.
+* Semantic actions now support attribute compatibility. This is a breaking
+  change but #define BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT must be defined
+  in order for the new behavior to kick in. By default, the old behavior
+  is still in place.
+* Alternatives now support attribute compatibility.
 
 [endsect]
 
