@@ -33,11 +33,19 @@ namespace client
         {
             int line;
             Iterator line_start = get_pos(err_pos, line);
-            std::cout << message << what << " line " << line << ':' << std::endl;
-            std::cout << get_line(line_start) << std::endl;
-            for (; line_start != err_pos; ++line_start)
-                std::cout << ' ';
-            std::cout << '^' << std::endl;
+            if (err_pos != last)
+            {
+                std::cout << message << what << " line " << line << ':' << std::endl;
+                std::cout << get_line(line_start) << std::endl;
+                for (; line_start != err_pos; ++line_start)
+                    std::cout << ' ';
+                std::cout << '^' << std::endl;
+            }
+            else
+            {
+                std::cout << "Unexpected end of file. ";
+                std::cout << message << what << " line " << line << std::endl;
+            }
         }
 
         Iterator get_pos(Iterator err_pos, int& line) const

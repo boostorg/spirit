@@ -33,6 +33,11 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Type some statements... ";
     std::cout << "An empty line ends input, compiles, runs and prints results\n\n";
+    std::cout << "Example:\n\n";
+    std::cout << "    var a = 123;\n";
+    std::cout << "    var b = 456;\n";
+    std::cout << "    var c = a + b * 2;\n\n";
+    std::cout << "-------------------------\n";
 
     std::string str;
     std::string source;
