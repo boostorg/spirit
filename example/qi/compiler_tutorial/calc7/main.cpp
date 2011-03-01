@@ -66,8 +66,14 @@ main()
         if (compile(ast))
         {
             std::cout << "Success\n";
+            std::cout << "-------------------------\n";
             vm.execute(program());
 
+            std::cout << "-------------------------\n";
+            std::cout << "Assembler----------------\n\n";
+            program.print_assembler();
+
+            std::cout << "-------------------------\n";
             std::cout << "Results------------------\n\n";
             program.print_variables(vm.get_stack());
         }

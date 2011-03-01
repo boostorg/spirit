@@ -52,6 +52,62 @@ namespace client
         }
     }
 
+    void program::print_assembler() const
+    {
+        std::vector<int>::const_iterator pc = code.begin();
+
+        std::vector<std::string> locals(variables.size());
+        typedef std::pair<std::string, int> pair;
+        BOOST_FOREACH(pair const& p, variables)
+        {
+            locals[p.second] = p.first;
+            std::cout << "local       "
+                << p.first << ", @" << p.second << std::endl;
+        }
+
+        while (pc != code.end())
+        {
+            switch (*pc++)
+            {
+                case op_neg:
+                    std::cout << "op_neg" << std::endl;
+                    break;
+
+                case op_add:
+                    std::cout << "op_add" << std::endl;
+                    break;
+
+                case op_sub:
+                    std::cout << "op_sub" << std::endl;
+                    break;
+
+                case op_mul:
+                    std::cout << "op_mul" << std::endl;
+                    break;
+
+                case op_div:
+                    std::cout << "op_div" << std::endl;
+                    break;
+
+                case op_load:
+                    std::cout << "op_load     " << locals[*pc++] << std::endl;
+                    break;
+
+                case op_store:
+                    std::cout << "op_store    " << locals[*pc++] << std::endl;
+                    break;
+
+                case op_int:
+                    std::cout << "op_int      " << *pc++ << std::endl;
+                    break;
+
+                case op_adstk:
+                    std::cout << "op_adstk    " << *pc++ << std::endl;
+                    break;
+            }
+        }
+    }
+
     bool compiler::operator()(unsigned int x) const
     {
         program.op(op_int, x);

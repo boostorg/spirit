@@ -37,6 +37,7 @@ namespace client
         void add_var(std::string const& name);
 
         void print_variables(std::vector<int> const& stack) const;
+        void print_assembler() const;
 
     private:
 
