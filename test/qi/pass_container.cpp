@@ -286,6 +286,40 @@ int main()
             s == "abc1abc2");
     }
 
+    {
+        using boost::spirit::qi::alpha;
+        using boost::spirit::qi::digit;
+
+        std::vector<char> v1;
+        BOOST_TEST(test_attr("ab1cd2", *(alpha >> alpha | +digit), v1) &&
+            compare(v1, "ab1cd2"));
+        v1.clear();
+        BOOST_TEST(test_attr("ab1cd2", *(alpha >> alpha | digit), v1) &&
+            compare(v1, "ab1cd2"));
+
+        std::string s1;
+        BOOST_TEST(test_attr("ab1cd2", *(alpha >> alpha | +digit), s1) &&
+            s1 == "ab1cd2");
+        s1.clear();
+        BOOST_TEST(test_attr("ab1cd2", *(alpha >> alpha | digit), s1) &&
+            s1 == "ab1cd2");
+
+        std::vector<std::vector<char> > v2;
+        BOOST_TEST(test_attr("ab1cd123", *(alpha >> alpha | +digit), v2) &&
+            v2.size() == 4 &&
+            compare(v2[0], "ab") &&
+            compare(v2[1], "1") &&
+            compare(v2[2], "cd") &&
+            compare(v2[3], "123"));
+
+        std::vector<std::string> v3;
+        BOOST_TEST(test_attr("ab1cd123", *(alpha >> alpha | +digit), v3) &&
+            v3.size() == 4 &&
+            v3[0] == "ab" &&
+            v3[1] == "1" &&
+            v3[2] == "cd" &&
+            v3[3] == "123");
+    }
     return boost::report_errors();
 }
 

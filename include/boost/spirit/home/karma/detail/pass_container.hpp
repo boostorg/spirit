@@ -24,6 +24,7 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/fusion/include/deduce_sequence.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -31,29 +32,30 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     // is an STL container and that its value_type is convertible
     // to the RHS.
 
+    template <typename LHS, typename RHSAttribute>
+    struct has_same_elements;
+
     template <typename RHS, typename LHSAttribute
       , bool IsContainer = traits::is_container<LHSAttribute>::value
       , bool IsSequence = fusion::traits::is_sequence<LHSAttribute>::value>
-    struct has_same_elements : mpl::false_ {};
+    struct has_same_elements_base 
+      : mpl::or_<
+            is_convertible<RHS, LHSAttribute>
+          , traits::is_hold_any<LHSAttribute>
+        > {};
 
     template <typename RHS, typename LHSAttribute>
-    struct has_same_elements<RHS, LHSAttribute, true, false>
+    struct has_same_elements_base<RHS, LHSAttribute, true, false>
       : mpl::or_<
             is_convertible<RHS, typename LHSAttribute::value_type>
           , traits::is_hold_any<typename LHSAttribute::value_type>
         > {};
 
-    template <typename RHS, typename T>
-    struct has_same_elements<RHS, boost::optional<T>, false, false>
-      : has_same_elements<RHS, T> {};
+    template <typename T>
+    struct has_same_elements_base<T, T, false, false> : mpl::true_ {};
 
-    template <typename RHS, typename T>
-    struct has_same_elements<RHS, boost::optional<T>, true, false>
-      : has_same_elements<RHS, T> {};
-
-    template <typename RHS, typename T>
-    struct has_same_elements<RHS, boost::optional<T>, false, true>
-      : has_same_elements<RHS, T> {};
+    template <typename T>
+    struct has_same_elements_base<T, T, false, true> : mpl::true_ {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \
         has_same_elements<RHS, BOOST_PP_CAT(T, N)>::value ||                  \
@@ -62,26 +64,58 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     // Note: variants are treated as containers if one of the held types is a
     //       container (see support/container.hpp).
     template <typename RHS, BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct has_same_elements<
+    struct has_same_elements_base<
             RHS, boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, true, false>
       : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
           , BOOST_SPIRIT_IS_CONVERTIBLE, _) false> {};
 
 #undef BOOST_SPIRIT_IS_CONVERTIBLE
 
+    template <typename RHS, typename LHSAttribute>
+    struct not_has_same_elements
+      : mpl::not_<has_same_elements<
+            RHS, typename remove_reference<LHSAttribute>::type> >
+    {};
+
     // Specialization for fusion sequences, in this case we check whether the
     // lhs attribute is convertible to the types in the sequence.
-    // We return false if the rhs attribute itself is a fusion sequence.
-    template <typename RHS, typename LHSAttribute>
-    struct has_same_elements<RHS, LHSAttribute, false, true>
+    // 
+    // We return false if the rhs attribute itself is a fusion sequence, which
+    // is compatible with the LHS sequence (we want to pass through this 
+    // attribute without it being split apart).
+    template <typename RHS, typename LHSAttribute
+      , bool IsSequence = fusion::traits::is_sequence<RHS>::value>
+    struct has_same_elements_fusion_sequences
     {
         typedef typename mpl::find_if<
-            LHSAttribute, mpl::not_<is_convertible<RHS, mpl::_1> >
+            LHSAttribute, not_has_same_elements<RHS, mpl::_1>
         >::type iter;
         typedef typename mpl::end<LHSAttribute>::type end;
 
         typedef typename is_same<iter, end>::type type;
     };
+
+    template <typename RHS, typename LHS>
+    struct has_same_elements_fusion_sequences<RHS, LHS, true>
+    {
+        typedef typename fusion::traits::deduce_sequence<RHS>::type rhs;
+        typedef typename fusion::traits::deduce_sequence<LHS>::type lhs;
+
+        typedef typename mpl::not_<is_same<rhs, lhs> >::type type;
+    };
+
+    template <typename RHS, typename LHSAttribute>
+    struct has_same_elements_base<RHS, LHSAttribute, false, true>
+      : has_same_elements_fusion_sequences<RHS, LHSAttribute> 
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename RHS, typename LHSAttribute>
+    struct has_same_elements : has_same_elements_base<RHS, LHSAttribute> {};
+
+    template <typename RHS, typename LHSAttribute>
+    struct has_same_elements<RHS, optional<LHSAttribute> >
+      : has_same_elements_base<RHS, LHSAttribute> {};
 
     ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
@@ -119,11 +153,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 return false;
             }
 
-//             // in non-strict mode increment iterator if the underlying 
-//             // generator failed
-//             if (!Strict::value && !is_at_end())
-//                 traits::next(iter);
-
             // either no elements available any more or generation failed
             return true;
         }
@@ -146,10 +175,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         {
             typedef typename traits::attribute_of<
                 Component, context_type>::type attribute_type;
-
-//             typedef mpl::and_<
-//                 traits::is_container<attribute_type>
-//               , is_convertible<Attr, attribute_type> > predicate;
 
             typedef mpl::and_<
                 traits::is_container<attribute_type>
