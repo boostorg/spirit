@@ -177,9 +177,11 @@ public:
     typedef CharT value_type;
 
     mmap_file_iterator()
+      : m_filesize(0), m_curChar(0)
     {}
 
     explicit mmap_file_iterator(std::string fileName)
+      : m_filesize(0), m_curChar(0)
     {
         HANDLE hFile = ::CreateFileA(
             fileName.c_str(),
@@ -334,9 +336,11 @@ public:
     typedef CharT value_type;
 
     mmap_file_iterator()
+      : m_curChar(0)
     {}
 
     explicit mmap_file_iterator(std::string file_name)
+      : m_curChar(0)
     {
         // open the file
        int fd = open(file_name.c_str(),
