@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <typename Container, typename ValueType, typename Attribute>
     struct pass_through_container_base<Container, ValueType, Attribute
           , typename enable_if<fusion::traits::is_sequence<Attribute> >::type>
-      : detail::pass_through_container_fusion_sequence<Container, ValueType, Attribute>
+      : pass_through_container_fusion_sequence<Container, ValueType, Attribute>
     {};
 
     // Specialization for containers
@@ -124,7 +124,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //
     // If the type embedded in the exposed optional is not a Fusion 
     // sequence we pass through the container attribute if it is compatible
-    // either to the optionals embedded type or to the containrs value 
+    // either to the optionals embedded type or to the containers value 
     // type.
     template <typename Container, typename ValueType, typename Attribute
       , bool IsSequence = fusion::traits::is_sequence<Attribute>::value>
@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
     template <typename Container, typename ValueType, typename Attribute>
     struct pass_through_container<Container, ValueType, boost::optional<Attribute> >
-      : detail::pass_through_container_optional<Container, ValueType, Attribute> 
+      : pass_through_container_optional<Container, ValueType, Attribute> 
     {};
 
     // If both, the containers value type and the exposed attribute type are
@@ -156,6 +156,25 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Container, boost::optional<ValueType>, boost::optional<Attribute> >
       : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
     {};
+
+    // Specialization for exposed variant attributes
+    // 
+    // We pass through the container attribute if at least one of the embedded 
+    // types in the variant requires to pass through the attribute
+
+#define BOOST_SPIRIT_PASS_THROUGH_CONTAINER(z, N, _)                          \
+  pass_through_container<Container, ValueType, BOOST_PP_CAT(T, N)>::type::value ||\
+    /***/
+
+    template <typename Container, typename ValueType
+      , BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct pass_through_container<Container, ValueType
+          , boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+      : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
+          , BOOST_SPIRIT_PASS_THROUGH_CONTAINER, _) false>
+    {};
+
+#undef BOOST_SPIRIT_PASS_THROUGH_CONTAINER
 
     ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
