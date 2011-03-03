@@ -66,7 +66,8 @@ import testing ;
      [ run qi/not_predicate.cpp    : : : : qi_not_predicate ]
      [ run qi/optional.cpp         : : : : qi_optional ]
      [ run qi/parse_attr.cpp       : : : : qi_parse_attr ]
-     [ run qi/pass_container.cpp   : : : : qi_pass_container ]
+     [ run qi/pass_container1.cpp  : : : : qi_pass_container1 ]
+     [ run qi/pass_container2.cpp  : : : : qi_pass_container2 ]
      [ run qi/permutation.cpp      : : : : qi_permutation ]
      [ run qi/plus.cpp             : : : : qi_plus ]
      [ run qi/range_run.cpp        : : : : qi_range_run ]
@@ -113,6 +114,7 @@ import testing ;
      [ run qi/regression_repeat.cpp                               : : : : qi_regression_repeat ]
      [ run qi/regression_transform_assignment.cpp                 : : : : qi_regression_transform_assignment ]
      [ compile qi/regression_fusion_proto_spirit.cpp              : : qi_regression_fusion_proto_spirit ]
+     [ compile qi/pass_container3.cpp                             : : qi_pass_container3 ]
     ;
 
     ###########################################################################

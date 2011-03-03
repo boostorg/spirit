@@ -82,7 +82,9 @@ namespace boost { namespace spirit { namespace traits
     {
         template <typename T, typename Expected>
         struct value_type_is_substitute
-          : is_substitute<typename T::value_type, typename Expected::value_type>
+          : is_substitute<
+                typename container_value<T>::type
+              , typename container_value<Expected>::type>
         {};
     }
 
@@ -121,7 +123,9 @@ namespace boost { namespace spirit { namespace traits
     {
         template <typename T, typename Expected>
         struct value_type_is_weak_substitute
-          : is_weak_substitute<typename T::value_type, typename Expected::value_type>
+          : is_weak_substitute<
+                typename container_value<T>::type
+              , typename container_value<Expected>::type>
         {};
     }
 
