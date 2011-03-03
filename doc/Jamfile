@@ -13,6 +13,8 @@ import boostbook ;
 import quickbook ;
 import modules ;
 
+path-constant here : . ;
+
 if --enable-index in  [ modules.peek : ARGV ]
 {
    ECHO "Building the Spirit docs with automatic index generation enabled." ;
@@ -20,7 +22,7 @@ if --enable-index in  [ modules.peek : ARGV ]
    project : requirements
         <quickbook-define>__use_auto_index__
         <auto-index>on
-        <auto-index-script>index.idx
+        <auto-index-script>$(here)/index.idx
         <format>pdf:<auto-index-internal>off
         <format>html:<auto-index-internal>on
         <xsl:param>index.on.type=1
@@ -51,4 +53,5 @@ boostbook spirit2
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/spirit/doc/html
 
     ;
+
 
