@@ -9,7 +9,7 @@
 project spirit_v2_repository/test
     : requirements
         <include>.
-        <toolset>gcc:<cxxflags>-ftemplate-depth-300
+        <toolset>gcc:<cxxflags>-ftemplate-depth-300 <linkflags>-lrt
         <toolset>darwin:<cxxflags>-ftemplate-depth-300
     :
     :
@@ -26,6 +26,7 @@ import testing ;
     [ run qi/confix.cpp                     : : : : qi_repo_confix ]
     [ run qi/distinct.cpp                   : : : : qi_repo_distinct ]
     [ run qi/subrule.cpp                    : : : : qi_repo_subrule ]
+    [ run qi/keywords.cpp                   : : : : qi_repo_keywords ]
 
     # run Karma repository tests
     [ run karma/confix.cpp                  : : : : karma_repo_confix ]

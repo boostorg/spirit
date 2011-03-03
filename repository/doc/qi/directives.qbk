@@ -9,4 +9,5 @@
 [section:directives Qi Parser Directives]
 [include        confix.qbk]
 [include        distinct.qbk]
+[include        kwd.qbk]
 [endsect]
