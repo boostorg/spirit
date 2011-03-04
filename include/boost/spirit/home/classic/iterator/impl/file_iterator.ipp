@@ -63,7 +63,7 @@ public:
     std_file_iterator()
     {}
 
-    explicit std_file_iterator(std::string fileName)
+    explicit std_file_iterator(std::string const& fileName)
     {
         using namespace std;
         FILE* f = fopen(fileName.c_str(), "rb");
@@ -180,7 +180,7 @@ public:
       : m_filesize(0), m_curChar(0)
     {}
 
-    explicit mmap_file_iterator(std::string fileName)
+    explicit mmap_file_iterator(std::string const& fileName)
       : m_filesize(0), m_curChar(0)
     {
         HANDLE hFile = ::CreateFileA(
@@ -339,7 +339,7 @@ public:
       : m_curChar(0)
     {}
 
-    explicit mmap_file_iterator(std::string file_name)
+    explicit mmap_file_iterator(std::string const& file_name)
       : m_curChar(0)
     {
         // open the file
