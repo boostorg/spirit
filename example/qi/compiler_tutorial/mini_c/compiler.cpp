@@ -53,15 +53,6 @@ namespace client { namespace code_gen
         function_calls[address] = name;
     }
 
-    void function::print_variables(std::vector<int> const& stack) const
-    {
-        typedef std::pair<std::string, int> pair;
-        BOOST_FOREACH(pair const& p, variables)
-        {
-            std::cout << "    " << p.first << ": " << stack[p.second] << std::endl;
-        }
-    }
-
     void function::print_assembler() const
     {
         std::vector<int>::const_iterator pc = code.begin() + address;

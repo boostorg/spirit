@@ -40,23 +40,20 @@ namespace client { namespace parser
             ;
 
         identifier = name;
-        argument_list = -(identifier > *(',' > identifier));
+        argument_list = -(identifier % ',');
 
         start =
                 lexeme[(string("void") | string("int"))
                     >> !(alnum | '_')]  // make sure we have whole words
             >   identifier
-            >   '('
-            >   argument_list
-            >   ')'
-            >   '{'
-            >   body
-            >   '}'
+            >   '(' > argument_list > ')'
+            >   '{' > body > '}'
             ;
 
         // Debugging and error handling and reporting support.
         BOOST_SPIRIT_DEBUG_NODES(
             (identifier)
+            (argument_list)
             (start)
         );
 

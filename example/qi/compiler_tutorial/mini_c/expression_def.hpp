@@ -133,12 +133,7 @@ namespace client { namespace parser
             >   ')'
             ;
 
-        //~ argument_list =
-            //~ (expr > *(',' > expr)) // $$$$
-            //~ ;
-
         argument_list = -(expr % ',');
-
 
         identifier =
                 !keywords
@@ -156,6 +151,8 @@ namespace client { namespace parser
             (multiplicative_expr)
             (unary_expr)
             (primary_expr)
+            (function_call)
+            (argument_list)
             (identifier)
         );
 

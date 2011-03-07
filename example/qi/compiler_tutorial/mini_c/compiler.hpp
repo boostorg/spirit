@@ -42,7 +42,6 @@ namespace client { namespace code_gen
         void add_var(std::string const& name);
         void link_to(std::string const& name, std::size_t address);
 
-        void print_variables(std::vector<int> const& stack) const;
         void print_assembler() const;
 
     private:
