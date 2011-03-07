@@ -55,7 +55,7 @@ namespace client
                     *stack_ptr++ = *pc++;
                     break;
 
-                case op_adstk:
+                case op_stk_adj:
                     stack_ptr = stack.begin() + *pc++;
                     break;
             }

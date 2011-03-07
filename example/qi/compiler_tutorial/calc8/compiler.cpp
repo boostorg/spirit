@@ -9,8 +9,10 @@
 #include <boost/foreach.hpp>
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
+#include <boost/lexical_cast.hpp>
+#include <set>
 
-namespace client
+namespace client { namespace code_gen
 {
     void program::op(int a)
     {
@@ -65,107 +67,138 @@ namespace client
                 << p.first << ", @" << p.second << std::endl;
         }
 
-        std::cout << "start:" << std::endl;
+        std::map<std::size_t, std::string> lines;
+        std::set<std::size_t> jumps;
+
         while (pc != code.end())
         {
-            std::size_t pos = pc-code.begin();
-            if (jumps.find(pos) != jumps.end())
-                std::cout << pos << ':' << std::endl;
+            std::string line;
+            std::size_t address = pc - code.begin();
 
             switch (*pc++)
             {
                 case op_neg:
-                    std::cout << "      op_neg" << std::endl;
+                    line += "      op_neg";
                     break;
 
                 case op_not:
-                    std::cout << "      op_not" << std::endl;
+                    line += "      op_not";
                     break;
 
                 case op_add:
-                    std::cout << "      op_add" << std::endl;
+                    line += "      op_add";
                     break;
 
                 case op_sub:
-                    std::cout << "      op_sub" << std::endl;
+                    line += "      op_sub";
                     break;
 
                 case op_mul:
-                    std::cout << "      op_mul" << std::endl;
+                    line += "      op_mul";
                     break;
 
                 case op_div:
-                    std::cout << "      op_div" << std::endl;
+                    line += "      op_div";
                     break;
 
                 case op_eq:
-                    std::cout << "      op_eq" << std::endl;
+                    line += "      op_eq";
                     break;
 
                 case op_neq:
-                    std::cout << "      op_neq" << std::endl;
+                    line += "      op_neq";
                     break;
 
                 case op_lt:
-                    std::cout << "      op_lt" << std::endl;
+                    line += "      op_lt";
                     break;
 
                 case op_lte:
-                    std::cout << "      op_lte" << std::endl;
+                    line += "      op_lte";
                     break;
 
                 case op_gt:
-                    std::cout << "      op_gt" << std::endl;
+                    line += "      op_gt";
                     break;
 
                 case op_gte:
-                    std::cout << "      op_gte" << std::endl;
+                    line += "      op_gte";
                     break;
 
                 case op_and:
-                    std::cout << "      op_and" << std::endl;
+                    line += "      op_and";
                     break;
 
                 case op_or:
-                    std::cout << "      op_or" << std::endl;
+                    line += "      op_or";
                     break;
 
                 case op_load:
-                    std::cout << "      op_load     " << locals[*pc++] << std::endl;
+                    line += "      op_load     ";
+                    line += boost::lexical_cast<std::string>(locals[*pc++]);
                     break;
 
                 case op_store:
-                    std::cout << "      op_store    " << locals[*pc++] << std::endl;
+                    line += "      op_store    ";
+                    line += boost::lexical_cast<std::string>(locals[*pc++]);
                     break;
 
                 case op_int:
-                    std::cout << "      op_int      " << *pc++ << std::endl;
+                    line += "      op_int      ";
+                    line += boost::lexical_cast<std::string>(*pc++);
                     break;
 
                 case op_true:
-                    std::cout << "      op_true" << std::endl;
+                    line += "      op_true";
                     break;
 
                 case op_false:
-                    std::cout << "      op_false" << std::endl;
+                    line += "      op_false";
                     break;
 
                 case op_jump:
-                    std::cout << "      op_jump     " << *pc++ << std::endl;
+                    {
+                        line += "      op_jump     ";
+                        std::size_t pos = (pc - code.begin()) + *pc++;
+                        if (pos == code.size())
+                            line += "end";
+                        else
+                            line += boost::lexical_cast<std::string>(pos);
+                        jumps.insert(pos);
+                    }
                     break;
 
                 case op_jump_if:
-                    std::cout << "      op_jump_if  " << *pc++ << std::endl;
+                    {
+                        line += "      op_jump_if  ";
+                        std::size_t pos = (pc - code.begin()) + *pc++;
+                        if (pos == code.size())
+                            line += "end";
+                        else
+                            line += boost::lexical_cast<std::string>(pos);
+                        jumps.insert(pos);
+                    }
                     break;
 
-                case op_adstk:
-                    std::cout << "      op_adstk    " << *pc++ << std::endl;
+                case op_stk_adj:
+                    line += "      op_stk_adj  ";
+                    line += boost::lexical_cast<std::string>(*pc++);
                     break;
             }
+            lines[address] = line;
         }
 
-        if (jumps.find(code.size()) != jumps.end())
-            std::cout << code.size() << ':' << std::endl;
+        std::cout << "start:" << std::endl;
+        typedef std::pair<std::size_t, std::string> line_info;
+        BOOST_FOREACH(line_info const& l, lines)
+        {
+            std::size_t pos = l.first;
+            if (jumps.find(pos) != jumps.end())
+                std::cout << pos << ':' << std::endl;
+            std::cout << l.second << std::endl;
+        }
+
+        std::cout << "end:" << std::endl;
     }
 
     bool compiler::operator()(unsigned int x) const
@@ -296,49 +329,45 @@ namespace client
     {
         if (!(*this)(x.condition))
             return false;
-        program.op(op_jump_if, 0);              // we shall fill this (0) in later
-        std::size_t skip = program.size()-1;    // mark its position
+        program.op(op_jump_if, 0);                  // we shall fill this (0) in later
+        std::size_t skip = program.size()-1;        // mark its position
         if (!(*this)(x.then))
             return false;
-        program[skip] = program.size();         // now we know where to jump to (after the if branch)
+        program[skip] = program.size()-skip;        // now we know where to jump to (after the if branch)
 
-        if (x.else_)                            // We got an alse
+        if (x.else_)                                // We got an alse
         {
-            program[skip] += 2;                 // adjust for the "else" jump
-            program.op(op_jump, 0);             // we shall fill this (0) in later
-            std::size_t exit = program.size()-1;// mark its position
+            program[skip] += 2;                     // adjust for the "else" jump
+            program.op(op_jump, 0);                 // we shall fill this (0) in later
+            std::size_t exit = program.size()-1;    // mark its position
             if (!(*this)(*x.else_))
                 return false;
-            program[exit] = program.size();      // now we know where to jump to (after the else branch)
-            program.add_jump(program[exit]);
+            program[exit] = program.size()-exit;    // now we know where to jump to (after the else branch)
         }
 
-        program.add_jump(program[skip]);
         return true;
     }
 
     bool compiler::operator()(ast::while_statement const& x) const
     {
-        std::size_t loop = program.size();      // mark our position
+        std::size_t loop = program.size();          // mark our position
         if (!(*this)(x.condition))
             return false;
-        program.op(op_jump_if, 0);              // we shall fill this (0) in later
-        std::size_t exit = program.size()-1;    // mark its position
+        program.op(op_jump_if, 0);                  // we shall fill this (0) in later
+        std::size_t exit = program.size()-1;        // mark its position
         if (!(*this)(x.body))
             return false;
-        program.op(op_jump, loop);              // loop back
-        program[exit] = program.size();         // now we know where to jump to (to exit the loop)
-
-        program.add_jump(loop);
-        program.add_jump(program[exit]);
+        program.op(op_jump,
+            int(loop-1) - int(program.size()));     // loop back
+        program[exit] = program.size()-exit;        // now we know where to jump to (to exit the loop)
         return true;
     }
 
     bool compiler::start(ast::statement_list const& x) const
     {
         program.clear();
-        // op_adstk 0 for now. we'll know how many variables we'll have later
-        program.op(op_adstk, 0);
+        // op_stk_adj 0 for now. we'll know how many variables we'll have later
+        program.op(op_stk_adj, 0);
 
         if (!(*this)(x))
         {
@@ -348,5 +377,5 @@ namespace client
         program[1] = program.nvars(); // now store the actual number of variables
         return true;
     }
-}
+}}
 

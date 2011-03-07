@@ -48,14 +48,16 @@ main()
     iterator_type iter = source.begin();
     iterator_type end = source.end();
 
-    client::vmachine vm;                                    // Our virtual machine
-    client::program program;                                // Our VM program
-    client::ast::statement_list ast;                        // Our AST
+    client::vmachine vm;                        // Our virtual machine
+    client::code_gen::program program;          // Our VM program
+    client::ast::statement_list ast;            // Our AST
 
     client::error_handler<iterator_type>
-        error_handler(iter, end);                           // Our error handler
-    client::statement<iterator_type> parser(error_handler); // Our parser
-    client::compiler compile(program, error_handler);       // Our compiler
+        error_handler(iter, end);               // Our error handler
+    client::parser::statement<iterator_type>
+        parser(error_handler);                  // Our parser
+    client::code_gen::compiler
+        compile(program, error_handler);       // Our compiler
 
     boost::spirit::ascii::space_type space;
     bool success = phrase_parse(iter, end, parser, space, ast);
@@ -76,7 +78,7 @@ main()
 
             std::cout << "-------------------------\n";
             std::cout << "Results------------------\n\n";
-            program.print_variables(vm.get_stack());
+            program.print_variables(vm.stack);
         }
         else
         {

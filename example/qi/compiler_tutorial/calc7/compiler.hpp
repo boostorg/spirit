@@ -16,7 +16,7 @@
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
-namespace client
+namespace client { namespace code_gen
 {
     ///////////////////////////////////////////////////////////////////////////
     //  The Program
@@ -53,7 +53,7 @@ namespace client
         typedef bool result_type;
 
         template <typename ErrorHandler>
-        compiler(client::program& program, ErrorHandler& error_handler_)
+        compiler(client::code_gen::program& program, ErrorHandler& error_handler_)
           : program(program)
         {
             using namespace boost::phoenix::arg_names;
@@ -74,12 +74,12 @@ namespace client
         bool operator()(ast::variable_declaration const& x) const;
         bool operator()(ast::statement_list const& x) const;
 
-        client::program& program;
+        client::code_gen::program& program;
 
         boost::function<
             void(int tag, std::string const& what)>
         error_handler;
     };
-}
+}}
 
 #endif

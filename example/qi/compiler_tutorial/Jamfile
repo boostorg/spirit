@@ -34,3 +34,14 @@ exe calc8 :
     calc8/statement.cpp
     calc8/main.cpp
     ;
+
+exe mini_c :
+    mini_c/vm.cpp
+    mini_c/compiler.cpp
+    mini_c/expression.cpp
+    mini_c/statement.cpp
+    mini_c/function.cpp
+    mini_c/main.cpp
+    ;
+
+

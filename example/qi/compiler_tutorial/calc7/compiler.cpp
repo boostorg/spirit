@@ -10,7 +10,7 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
 
-namespace client
+namespace client { namespace code_gen
 {
     void program::op(int a)
     {
@@ -101,8 +101,8 @@ namespace client
                     std::cout << "op_int      " << *pc++ << std::endl;
                     break;
 
-                case op_adstk:
-                    std::cout << "op_adstk    " << *pc++ << std::endl;
+                case op_stk_adj:
+                    std::cout << "op_stk_adj  " << *pc++ << std::endl;
                     break;
             }
         }
@@ -204,8 +204,8 @@ namespace client
     {
         program.clear();
 
-        // op_adstk 0 for now. we'll know how many variables we'll have later
-        program.op(op_adstk, 0);
+        // op_stk_adj 0 for now. we'll know how many variables we'll have later
+        program.op(op_stk_adj, 0);
         BOOST_FOREACH(ast::statement const& s, x)
         {
             if (!boost::apply_visitor(*this, s))
@@ -217,5 +217,5 @@ namespace client
         program[1] = program.nvars(); // now store the actual number of variables
         return true;
     }
-}
+}}
 

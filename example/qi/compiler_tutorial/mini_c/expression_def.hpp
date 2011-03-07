@@ -73,12 +73,14 @@ namespace client { namespace parser
             ;
 
         keywords.add
-            ("var")
             ("true")
             ("false")
             ("if")
             ("else")
             ("while")
+            ("int")
+            ("void")
+            ("return")
             ;
 
         ///////////////////////////////////////////////////////////////////////
@@ -119,10 +121,24 @@ namespace client { namespace parser
 
         primary_expr =
                 uint_
+            |   function_call
             |   identifier
             |   bool_
             |   '(' > expr > ')'
             ;
+
+        function_call =
+                (identifier >> '(')
+            >   argument_list
+            >   ')'
+            ;
+
+        //~ argument_list =
+            //~ (expr > *(',' > expr)) // $$$$
+            //~ ;
+
+        argument_list = -(expr % ',');
+
 
         identifier =
                 !keywords

@@ -9,7 +9,7 @@
 
 #include "expression.hpp"
 
-namespace client
+namespace client { namespace parser
 {
     ///////////////////////////////////////////////////////////////////////////////
     //  The statement grammar
@@ -30,7 +30,7 @@ namespace client
         qi::rule<Iterator, ast::while_statement(), ascii::space_type> while_statement;
         qi::rule<Iterator, std::string(), ascii::space_type> identifier;
     };
-}
+}}
 
 #endif
 

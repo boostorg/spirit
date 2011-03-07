@@ -5,7 +5,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include "vm.hpp"
-#include <boost/assert.hpp>
 
 #if defined(_MSC_VER)
 # pragma warning(disable: 4800) // forcing value to bool 'true' or 'false'
@@ -22,10 +21,8 @@ namespace client
     {
         std::vector<int>::iterator stack_ptr = frame_ptr;
 
-        while (pc != code.end())
+        while (true)
         {
-            BOOST_ASSERT(pc != code.end());
-
             switch (*pc++)
             {
                 case op_neg:
@@ -130,7 +127,7 @@ namespace client
                     break;
 
                 case op_stk_adj:
-                    stack_ptr = stack.begin() + *pc++;
+                    stack_ptr += *pc++;
                     break;
 
                 case op_call:

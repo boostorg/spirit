@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_CALC8_VM_HPP)
-#define BOOST_SPIRIT_CALC8_VM_HPP
+#if !defined(BOOST_SPIRIT_MINIC_VM_HPP)
+#define BOOST_SPIRIT_MINIC_VM_HPP
 
 #include <vector>
 
@@ -44,9 +44,9 @@ namespace client
                         //  evaluates to false
         op_jump,        //  jump to a relative position in the code
 
-        op_stk_adj,     // adjust the stack (for args and locals)
-        op_call,        // function call
-        op_return       // return from function
+        op_stk_adj,     //  adjust the stack (for args and locals)
+        op_call,        //  function call
+        op_return       //  return from function
     };
 
     class vmachine
@@ -58,16 +58,21 @@ namespace client
         {
         }
 
+        int execute(std::vector<int> const& code)
+        {
+            return execute(code, code.begin(), stack.begin());
+        }
+
+        std::vector<int> const& get_stack() const { return stack; };
+        std::vector<int>& get_stack() { return stack; };
+
+    private:
+
         int execute(
             std::vector<int> const& code            // the program code
           , std::vector<int>::const_iterator pc     // program counter
           , std::vector<int>::iterator frame_ptr    // start of arguments and locals
         );
-
-        int execute(std::vector<int> const& code)
-        {
-            return execute(code, code.begin(), stack.begin());
-        };
 
         std::vector<int> stack;
     };

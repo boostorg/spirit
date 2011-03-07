@@ -25,7 +25,7 @@ namespace client
         op_load,    //  load a variable
         op_store,   //  store a variable
         op_int,     //  push constant integer into the stack
-        op_adstk    //  adjust the stack for local variables
+        op_stk_adj  //  adjust the stack for local variables
     };
 
     class vmachine

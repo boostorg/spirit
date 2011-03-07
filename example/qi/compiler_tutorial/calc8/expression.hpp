@@ -26,7 +26,7 @@
 #include "error_handler.hpp"
 #include <vector>
 
-namespace client
+namespace client { namespace parser
 {
     namespace qi = boost::spirit::qi;
     namespace ascii = boost::spirit::ascii;
@@ -61,7 +61,7 @@ namespace client
             keywords
             ;
     };
-}
+}}
 
 #endif
 

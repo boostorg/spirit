@@ -8,7 +8,7 @@
 #include "error_handler.hpp"
 #include "annotation.hpp"
 
-namespace client
+namespace client { namespace parser
 {
     template <typename Iterator>
     statement<Iterator>::statement(error_handler<Iterator>& error_handler)
@@ -106,6 +106,6 @@ namespace client
         on_success(assignment,
             annotation_function(error_handler.iters)(_val, _1));
     }
-}
+}}
 
 
