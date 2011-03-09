@@ -244,12 +244,10 @@ namespace client { namespace code_gen
         return true;
     }
 
-    bool compiler::operator()(ast::operation const& x)
+    bool compiler::operator()(ast::optoken const& x)
     {
         BOOST_ASSERT(current != 0);
-        if (!boost::apply_visitor(*this, x.operand_))
-            return false;
-        switch (x.operator_)
+        switch (x)
         {
             case ast::op_plus: current->op(op_add); break;
             case ast::op_minus: current->op(op_sub); break;
@@ -320,16 +318,58 @@ namespace client { namespace code_gen
         return true;
     }
 
+    namespace
+    {
+        int precedence[] = {
+            1, // op_equal
+            1, // op_not_equal
+            2, // op_less
+            2, // op_less_equal
+            2, // op_greater
+            2, // op_greater_equal
+            3, // op_and
+            3, // op_or
+            4, // op_plus
+            4, // op_minus
+            5, // op_times
+            5, // op_divide
+            6, // op_positive
+            6, // op_negative
+            6  // op_not
+        };
+    }
+
+    // The Shunting-yard algorithm
+    bool compiler::compile_expression(
+        int min_precedence,
+        std::list<ast::operation>::const_iterator& rbegin,
+        std::list<ast::operation>::const_iterator rend)
+    {
+        while ((rbegin != rend) && (precedence[rbegin->operator_] >= min_precedence))
+        {
+            ast::optoken op = rbegin->operator_;
+            if (!boost::apply_visitor(*this, rbegin->operand_))
+                return false;
+            ++rbegin;
+
+            while ((rbegin != rend) && (precedence[rbegin->operator_] > precedence[op]))
+            {
+                ast::optoken next_op = rbegin->operator_;
+                compile_expression(precedence[next_op], rbegin, rend);
+            }
+            (*this)(op);
+        }
+        return true;
+    }
+
     bool compiler::operator()(ast::expression const& x)
     {
         BOOST_ASSERT(current != 0);
         if (!boost::apply_visitor(*this, x.first))
             return false;
-        BOOST_FOREACH(ast::operation const& oper, x.rest)
-        {
-            if (!(*this)(oper))
-                return false;
-        }
+        std::list<ast::operation>::const_iterator rbegin = x.rest.begin();
+        if (!compile_expression(0, rbegin, x.rest.end()))
+            return false;
         return true;
     }
 

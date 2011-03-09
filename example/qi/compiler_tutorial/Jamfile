@@ -44,4 +44,13 @@ exe mini_c :
     mini_c/main.cpp
     ;
 
+exe conjure :
+    conjure/vm.cpp
+    conjure/compiler.cpp
+    conjure/expression.cpp
+    conjure/statement.cpp
+    conjure/function.cpp
+    conjure/main.cpp
+    ;
+
 

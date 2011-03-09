@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_MINIC_AST_HPP)
-#define BOOST_SPIRIT_MINIC_AST_HPP
+#if !defined(BOOST_SPIRIT_CONJURE_AST_HPP)
+#define BOOST_SPIRIT_CONJURE_AST_HPP
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/variant/recursive_variant.hpp>
@@ -50,21 +50,32 @@ namespace client { namespace ast
 
     enum optoken
     {
-        op_plus,
-        op_minus,
-        op_times,
-        op_divide,
-        op_positive,
-        op_negative,
-        op_not,
+        // precedence 1
         op_equal,
         op_not_equal,
+
+        // precedence 2
         op_less,
         op_less_equal,
         op_greater,
         op_greater_equal,
+
+        // precedence 3
         op_and,
-        op_or
+        op_or,
+
+        // precedence 4
+        op_plus,
+        op_minus,
+
+        // precedence 5
+        op_times,
+        op_divide,
+
+        // precedence 6
+        op_positive,
+        op_negative,
+        op_not,
     };
 
     struct unary
