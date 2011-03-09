@@ -323,15 +323,15 @@ main()
         print_info(what(alpha | char_('x') >> lit("hello") >> int_));
     }
 
-    { // compile check only
-        using boost::spirit::qi::rule;
-        typedef boost::fusion::vector<int, double> tuple_type;
-        typedef std::vector<tuple_type> attr_type;
-
-        rule<char const*, tuple_type()> r = int_ >> ',' >> double_;
-        rule<char const*, attr_type()> r2 = r >> *(',' >> r);
-        //~ rule<char const*, attr_type()> r2 = r % ',';
-    }
+//     { // compile check only
+//         using boost::spirit::qi::rule;
+//         typedef boost::fusion::vector<int, double> tuple_type;
+//         typedef std::vector<boost::fusion::vector<int, double> > attr_type;
+// 
+//         rule<char const*, tuple_type()> r = int_ >> ',' >> double_;
+//         rule<char const*, attr_type()> r2 = r >> *(',' >> r);
+//         //~ rule<char const*, attr_type()> r2 = r % ',';
+//     }
 
     return boost::report_errors();
 }

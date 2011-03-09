@@ -163,7 +163,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // types in the variant requires to pass through the attribute
 
 #define BOOST_SPIRIT_PASS_THROUGH_CONTAINER(z, N, _)                          \
-  pass_through_container<Container, ValueType, BOOST_PP_CAT(T, N)>::type::value ||\
+    pass_through_container<Container, ValueType,                              \
+        BOOST_PP_CAT(T, N)>::type::value ||                                   \
     /***/
 
     template <typename Container, typename ValueType

@@ -194,17 +194,39 @@ namespace boost { namespace spirit { namespace traits
             traits::push_back(attr, val);
         }
 
-        // T is a container (but not a string)
+        // T is a container (but not a string), and T is convertible to the 
+        // value_type of the Attribute container
         template <typename T_>
-        static void call(T_ const& val, Attribute& attr, mpl::true_, mpl::false_)
+        static void 
+        append_to_container_not_string(T_ const& val, Attribute& attr, mpl::true_)
+        {
+            traits::push_back(attr, val);
+        }
+
+        // T is a container (but not a string), generic overload
+        template <typename T_>
+        static void 
+        append_to_container_not_string(T_ const& val, Attribute& attr, mpl::false_)
         {
             typedef typename traits::container_iterator<T_ const>::type
                 iterator_type;
+
             iterator_type end = traits::end(val);
             for (iterator_type i = traits::begin(val); i != end; traits::next(i))
                 traits::push_back(attr, traits::deref(i));
         }
 
+        // T is a container (but not a string)
+        template <typename T_>
+        static void call(T_ const& val, Attribute& attr,  mpl::true_, mpl::false_)
+        {
+            typedef typename container_value<Attribute>::type value_type;
+            typedef typename is_convertible<T, value_type>::type is_value_type;
+
+            append_to_container_not_string(val, attr, is_value_type());
+        }
+
+        ///////////////////////////////////////////////////////////////////////
         // T is a string
         template <typename Iterator>
         static void append_to_string(Attribute& attr, Iterator begin, Iterator end)
@@ -215,16 +237,17 @@ namespace boost { namespace spirit { namespace traits
 
         // T is string, but not convertible to value_type of container
         template <typename T_>
-        static void append_to_container(Attribute& attr, T_ const& val, mpl::false_)
+        static void append_to_container(T_ const& val, Attribute& attr, mpl::false_)
         {
             typedef typename char_type_of<T_>::type char_type;
+
             append_to_string(attr, traits::get_begin<char_type>(val)
               , traits::get_end<char_type>(val));
         }
 
         // T is string, and convertible to value_type of container
         template <typename T_>
-        static void append_to_container(Attribute& attr, T_ const& val, mpl::true_)
+        static void append_to_container(T_ const& val, Attribute& attr, mpl::true_)
         {
             traits::push_back(attr, val);
         }
@@ -234,9 +257,11 @@ namespace boost { namespace spirit { namespace traits
         {
             typedef typename container_value<Attribute>::type value_type;
             typedef typename is_convertible<T, value_type>::type is_value_type;
-            append_to_container(attr, val, is_value_type());
+
+            append_to_container(val, attr, is_value_type());
         }
 
+        ///////////////////////////////////////////////////////////////////////
         static void call(T const& val, Attribute& attr)
         {
             typedef typename traits::is_container<T>::type is_container;
