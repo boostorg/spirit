@@ -219,6 +219,15 @@ main()
         BOOST_TEST(i == 10);
     }
 
+    {
+        //compile test only
+        typedef boost::variant<double, std::string> value_type;
+
+        using boost::spirit::qi::rule;
+        using boost::spirit::qi::eps;
+        rule<std::string::const_iterator, value_type()> r1 = r1 | eps;
+    }
+
     return boost::report_errors();
 }
 
