@@ -40,14 +40,14 @@ namespace client { namespace parser
         ///////////////////////////////////////////////////////////////////////
         // Tokens
         binary_op.add
+            ("||", ast::op_logical_or)
+            ("&&", ast::op_logical_and)
             ("==", ast::op_equal)
             ("!=", ast::op_not_equal)
             ("<", ast::op_less)
             ("<=", ast::op_less_equal)
             (">", ast::op_greater)
             (">=", ast::op_greater_equal)
-            ("&&", ast::op_and)
-            ("||", ast::op_or)
             ("+", ast::op_plus)
             ("-", ast::op_minus)
             ("*", ast::op_times)

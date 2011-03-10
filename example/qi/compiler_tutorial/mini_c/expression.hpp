@@ -42,7 +42,8 @@ namespace client { namespace parser
 
         qi::rule<Iterator, ast::expression(), skipper<Iterator> >
             expr, equality_expr, relational_expr,
-            logical_expr, additive_expr, multiplicative_expr
+            logical_or_expr, logical_and_expr,
+            additive_expr, multiplicative_expr
             ;
 
         qi::rule<Iterator, ast::operand(), skipper<Iterator> >
@@ -62,7 +63,8 @@ namespace client { namespace parser
             ;
 
         qi::symbols<char, ast::optoken>
-            equality_op, relational_op, logical_op,
+            logical_or_op, logical_and_op,
+            equality_op, relational_op,
             additive_op, multiplicative_op, unary_op
             ;
 

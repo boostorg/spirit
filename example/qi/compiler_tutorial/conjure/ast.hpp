@@ -51,31 +51,70 @@ namespace client { namespace ast
     enum optoken
     {
         // precedence 1
+        op_comma,
+
+        // precedence 2
+        op_assign,
+        op_plus_assign,
+        op_minus_assign,
+        op_times_assign,
+        op_divide_assign,
+        op_mod_assign,
+        op_bit_and_assign,
+        op_bit_xor_assign,
+        op_bitor_assign,
+        op_shift_left_assign,
+        op_shift_right_assign,
+
+        // precedence 3
+        op_logical_or,
+
+        // precedence 4
+        op_logical_and,
+
+        // precedence 5
+        op_bit_or,
+
+        // precedence 6
+        op_bit_xor,
+
+        // precedence 7
+        op_bit_and,
+
+        // precedence 8
         op_equal,
         op_not_equal,
 
-        // precedence 2
+        // precedence 9
         op_less,
         op_less_equal,
         op_greater,
         op_greater_equal,
 
-        // precedence 3
-        op_and,
-        op_or,
+        // precedence 10
+        op_shift_left,
+        op_shift_right,
 
-        // precedence 4
+        // precedence 11
         op_plus,
         op_minus,
 
-        // precedence 5
+        // precedence 12
         op_times,
         op_divide,
+        op_mod,
 
-        // precedence 6
+        // precedence 13
         op_positive,
         op_negative,
+        op_pre_incr,
+        op_pre_decr,
+        op_compl,
         op_not,
+
+        // precedence 14
+        op_post_incr,
+        op_post_decr,
     };
 
     struct unary
