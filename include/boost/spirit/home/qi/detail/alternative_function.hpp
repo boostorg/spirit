@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool call_optional_or_variant(Component const& component, mpl::false_) const
+        bool call_variant(Component const& component, mpl::false_) const
         {
             // If Attribute is a variant, then search the variant types for a
             // suitable substitute type.
@@ -104,6 +104,27 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 return true;
             }
             return false;
+        }
+
+        template <typename Component>
+        bool call_variant(Component const& component, mpl::true_) const
+        {
+            // If Attribute is a variant and the expected attribute is
+            // the same type (pass the variant as-is).
+
+            return component.parse(first, last, context, skipper, attr);
+        }
+
+        template <typename Component>
+        bool call_optional_or_variant(Component const& component, mpl::false_) const
+        {
+            // Attribute is a variant...
+
+            typedef typename
+                traits::attribute_of<Component, Context, Iterator>::type
+            expected;
+            return call_variant(component,
+                is_same<Attribute, expected>());
         }
 
         template <typename Component>
