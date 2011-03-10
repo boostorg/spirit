@@ -218,6 +218,7 @@ import testing ;
      [ run lex/semantic_actions.cpp          : : : : lex_semantic_actions ]
      [ run lex/auto_switch_lexerstate.cpp    : : : : lex_auto_switch_lexerstate ]
      [ run lex/id_type_enum.cpp              : : : : lex_id_type_enum ]
+     [ run lex/string_token_id.cpp           : : : : lex_string_token_id ]
 
     ;
 

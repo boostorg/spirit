@@ -61,6 +61,12 @@
   instantiates the terminals that he needs. So, instead of writing `using qi::uint_`
   one writes instead: `qi::uint_type uint_`.
 
+[heading New Features in Lex]
+
+* Added the possibility to speciy a token id while creating a token definition 
+  using `lex::char_` and `lex::string`. Both primitives now accept a second 
+  parameter which will be interpreted as the requested token id for any token 
+  generated from this definition.
 
 [heading Making Stuff Work]
 
@@ -81,6 +87,8 @@
   in order for the new behavior to kick in. By default, the old behavior
   is still in place.
 * Alternatives now support attribute compatibility.
+* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
+* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
 
 [endsect]
 
