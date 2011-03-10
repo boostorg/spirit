@@ -220,7 +220,7 @@ main()
     }
 
     {
-        //compile test only
+        //compile test only (bug_march_10_2011_8_35_am)
         typedef boost::variant<double, std::string> value_type;
 
         using boost::spirit::qi::rule;
