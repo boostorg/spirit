@@ -177,8 +177,7 @@ namespace boost { namespace spirit { namespace lex
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
         {
-            Char ch = fusion::at_c<0>(term.args);
-            return result_type(ch, ch);
+            return result_type(fusion::at_c<0>(term.args), fusion::at_c<0>(term.args));
         }
     };
 
