@@ -115,6 +115,7 @@ import testing ;
      [ run qi/regression_transform_assignment.cpp                 : : : : qi_regression_transform_assignment ]
      [ compile qi/regression_fusion_proto_spirit.cpp              : : qi_regression_fusion_proto_spirit ]
      [ compile qi/pass_container3.cpp                             : : qi_pass_container3 ]
+     [ compile qi/regression_container_attribute.cpp              : : qi_regression_container_attribute ]
     ;
 
     ###########################################################################
