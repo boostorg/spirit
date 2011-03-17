@@ -47,6 +47,15 @@
 
 * __qi__ integer literals (like `int_(10)`) do not consume input on failure
   anymore.
+* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
+* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
+* Fixed a const correctness problem in `karma::real_policies<>` preventing the
+  use of const floating point types with the generator. Thanks to Jeroen
+  Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
+  a test.
+* Fixed the  __qi__ __qi_attr__ parser, the __qi__ __qi_symbols__ parser, and 
+  the __karma__ [karma_symbols `symbols<>`] generator to properly handle 
+  container attributes. Those have been broken in Boost V1.46.1.
 
 [heading Breaking Changes]
 
@@ -63,7 +72,7 @@
 
 [heading New Features in Lex]
 
-* Added the possibility to speciy a token id while creating a token definition 
+* Added the possibility to specify a token id while creating a token definition 
   using `lex::char_` and `lex::string`. Both primitives now accept a second 
   parameter which will be interpreted as the requested token id for any token 
   generated from this definition.
@@ -78,17 +87,11 @@
   where `Char` is the character type used for the streaming operators
   (`operator>>()` and `operator<<()`). The `hold_any` is still available as a
   `typedef basic_hold_any<char> hold_any`;
-* Fixed a const correctness problem in `karma::real_policies<>` preventing the
-  use of const floating point types with the generator. Thanks to Jeroen
-  Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
-  a test.
 * Semantic actions now support attribute compatibility. This is a breaking
   change but #define BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT must be defined
   in order for the new behavior to kick in. By default, the old behavior
   is still in place.
 * Alternatives now support attribute compatibility.
-* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
-* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
 
 [endsect]
 
