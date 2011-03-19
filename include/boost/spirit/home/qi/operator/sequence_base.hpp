@@ -104,7 +104,7 @@ namespace boost { namespace spirit { namespace qi
             Iterator iter = first;
             // return false if *any* of the parsers fail
             if (fusion::any(elements
-              , detail::make_pass_container(
+              , detail::make_sequence_pass_container(
                     Derived::fail_function(iter, last, context, skipper), attr_))
                 )
                 return false;

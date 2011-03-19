@@ -19,12 +19,15 @@
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/qi_auxiliary.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#include <boost/fusion/include/vector.hpp>
 
 #include "test.hpp"
 
@@ -34,6 +37,18 @@ inline bool compare(std::vector<char> const& v, std::string const& s)
 {
     return v.size() == s.size() && std::equal(v.begin(), v.end(), s.begin());
 }
+
+struct A
+{
+    int i1;
+    double d2;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+    A,
+    (int, i1)
+    (double, d2)
+)
 
 int main()
 {
@@ -157,8 +172,82 @@ int main()
         s1.clear();
         BOOST_TEST(test_attr("ab1cd2", *(alpha >> alpha | digit), s1) &&
             s1 == "ab1cd2");
+    }
+
+    {
+        using boost::spirit::qi::rule;
+        using boost::spirit::qi::space;
+        using boost::spirit::qi::space_type;
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::double_;
+
+        std::vector<A> v;
+        BOOST_TEST(test_attr("A 1 2.0", 'A' >> *(int_ >> double_), v, space) &&
+            v.size() == 1 && v[0].i1 == 1 && v[0].d2 == 2.0);
+
+        v.clear();
+        BOOST_TEST(test_attr("1 2.0", *(int_ >> double_), v, space) &&
+            v.size() == 1 && v[0].i1 == 1 && v[0].d2 == 2.0);
+
+        v.clear();
+        rule<char const*, std::vector<A>()> r = *(int_ >> ',' >> double_);
+        BOOST_TEST(test_attr("1,2.0", r, v) &&
+            v.size() == 1 && v[0].i1 == 1 && v[0].d2 == 2.0);
+    }
+
+    { 
+        using boost::spirit::qi::rule;
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::double_;
+
+        rule<char const*, A()> r = int_ >> ',' >> double_;
+        rule<char const*, std::vector<A>()> r2 = 'A' >> *(r >> ',' >> r);
+
+        std::vector<A> v;
+        BOOST_TEST(test_attr("A1,2.0,3,4.0", r2, v) &&
+            v.size() == 2 && v[0].i1 == 1.0 && v[0].d2 == 2.0 &&
+                             v[1].i1 == 3.0 && v[1].d2 == 4.0);
+
+        v.clear();
+        BOOST_TEST(test_attr("A1,2.0,3,4.0", 'A' >> *(r >> ',' >> r), v) &&
+            v.size() == 2 && v[0].i1 == 1.0 && v[0].d2 == 2.0 &&
+                             v[1].i1 == 3.0 && v[1].d2 == 4.0);
+
+        v.clear();
+        BOOST_TEST(test_attr("1,2.0,3,4.0", *(r >> ',' >> r), v) &&
+            v.size() == 2 && v[0].i1 == 1.0 && v[0].d2 == 2.0 &&
+                             v[1].i1 == 3.0 && v[1].d2 == 4.0);
+    }
+
+    { 
+        using boost::spirit::qi::rule;
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::double_;
+        using boost::fusion::at_c;
+
+        typedef boost::fusion::vector<int, double> data_type;
+
+        rule<char const*, data_type()> r = int_ >> ',' >> double_;
+        rule<char const*, std::vector<data_type>()> r2 = 'A' >> *(r >> ',' >> r);
+
+        std::vector<data_type> v;
+        BOOST_TEST(test_attr("A1,2.0,3,4.0", r2, v) &&
+            v.size() == 2 && at_c<0>(v[0]) == 1 && at_c<1>(v[0]) == 2.0 &&
+                             at_c<0>(v[1]) == 3 && at_c<1>(v[1]) == 4.0);
+
+        v.clear();
+        BOOST_TEST(test_attr("A1,2.0,3,4.0", 'A' >> *(r >> ',' >> r), v) &&
+            v.size() == 2 && at_c<0>(v[0]) == 1 && at_c<1>(v[0]) == 2.0 &&
+                             at_c<0>(v[1]) == 3 && at_c<1>(v[1]) == 4.0);
+
+        v.clear();
+        BOOST_TEST(test_attr("1,2.0,3,4.0", *(r >> ',' >> r), v) &&
+            v.size() == 2 && at_c<0>(v[0]) == 1 && at_c<1>(v[0]) == 2.0 &&
+                             at_c<0>(v[1]) == 3 && at_c<1>(v[1]) == 4.0);
+    }
 
 // doesn't work yet
+//     {
 //         std::vector<std::vector<char> > v2;
 //         BOOST_TEST(test_attr("ab1cd123", *(alpha >> alpha | +digit), v2) &&
 //             v2.size() == 4 &&
@@ -174,10 +263,7 @@ int main()
 //             v3[1] == "1" &&
 //             v3[2] == "cd" &&
 //             v3[3] == "123");
-    }
-
-    {
-    }
+//     }
 
     return boost::report_errors();
 }

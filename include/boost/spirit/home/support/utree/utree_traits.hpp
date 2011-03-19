@@ -586,12 +586,26 @@ namespace boost { namespace spirit { namespace traits
     // or a grammar exposes an utree as it's attribute
     namespace detail
     {
-        // checks if the attr is the explicit utree list type, utree::list_type
-        template <typename Attribute>
-        struct attribute_is_not_utree_list
+        // Checks whether the exposed Attribute allows to handle utree or 
+        // utree::list_type directly. Returning mpl::false_ from this meta 
+        // function will force a new utree instance to be created for each
+        // invocation of the embedded parser.
+        template <typename Attribute, typename Enable = void>
+        struct handles_utree_list_container 
           : mpl::and_<
                 mpl::not_<is_same<utree::list_type, Attribute> >,
                 traits::is_container<Attribute> >
+        {};
+
+        template <typename Attribute>
+        struct handles_utree_list_container<Attribute
+              , typename enable_if<fusion::traits::is_sequence<Attribute> >::type>
+          : mpl::true_
+        {};
+
+        template <typename Attribute>
+        struct handles_utree_list_container<optional<Attribute> >
+          : mpl::true_
         {};
     }
 
@@ -599,8 +613,8 @@ namespace boost { namespace spirit { namespace traits
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
     struct handles_container<qi::rule<IteratorA, T1, T2, T3, T4>
-      , utree, Context, IteratorB>
-      : detail::attribute_is_not_utree_list<typename attribute_of<
+          , utree, Context, IteratorB>
+      : detail::handles_utree_list_container<typename attribute_of<
             qi::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
@@ -609,8 +623,8 @@ namespace boost { namespace spirit { namespace traits
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
     struct handles_container<qi::grammar<IteratorA, T1, T2, T3, T4>
-      , utree, Context, IteratorB>
-      : detail::attribute_is_not_utree_list<typename attribute_of<
+          , utree, Context, IteratorB>
+      : detail::handles_utree_list_container<typename attribute_of<
             qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
@@ -619,8 +633,8 @@ namespace boost { namespace spirit { namespace traits
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
     struct handles_container<qi::rule<IteratorA, T1, T2, T3, T4>
-      , utree::list_type, Context, IteratorB>
-      : detail::attribute_is_not_utree_list<typename attribute_of<
+          , utree::list_type, Context, IteratorB>
+      : detail::handles_utree_list_container<typename attribute_of<
             qi::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
     {};
@@ -629,10 +643,23 @@ namespace boost { namespace spirit { namespace traits
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
     struct handles_container<qi::grammar<IteratorA, T1, T2, T3, T4>
-      , utree::list_type, Context, IteratorB>
-      : detail::attribute_is_not_utree_list<typename attribute_of<
+          , utree::list_type, Context, IteratorB>
+      : detail::handles_utree_list_container<typename attribute_of<
             qi::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename Sequence>
+    struct pass_through_container<
+            utree, utree, Attribute, Sequence, qi::domain>
+      : detail::handles_utree_list_container<Attribute>
+    {};
+
+    template <typename Attribute, typename Sequence>
+    struct pass_through_container<
+            utree::list_type, utree, Attribute, Sequence, qi::domain>
+      : detail::handles_utree_list_container<Attribute>
     {};
 
     ///////////////////////////////////////////////////////////////////////////

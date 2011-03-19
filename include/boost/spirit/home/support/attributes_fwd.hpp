@@ -215,6 +215,10 @@ namespace boost { namespace spirit { namespace traits
             , typename Iterator = unused_type, typename Enable = void>
     struct handles_container;
 
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence, typename Domain, typename Enable = void>
+    struct pass_through_container;
+
     ///////////////////////////////////////////////////////////////////////////
     // Qi only
     template <typename Container, typename T, typename Enable = void>

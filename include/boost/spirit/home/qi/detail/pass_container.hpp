@@ -25,6 +25,15 @@
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
+    // Helper meta-function allowing to evaluate weak substitutability and
+    // negate the result if the predicate is not true
+    template <typename Sequence, typename Attribute, typename ValueType>
+    struct negate_weak_substitute_if_not
+      : mpl::if_<
+            Sequence, traits::is_weak_substitute<Attribute, ValueType>
+          , mpl::not_<traits::is_weak_substitute<Attribute, ValueType> > >
+    {};
+
     // pass_through_container: utility to check decide whether a provided 
     // container attribute needs to be passed through to the current component 
     // or of we need to split the container by passing along instances of its
@@ -34,9 +43,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // sequence nor a container, we will pass through the provided container 
     // only if its value type is not compatible with the component
     template <typename Container, typename ValueType, typename Attribute
-      , typename Enable = void>
+      , typename Sequence, typename Enable = void>
     struct pass_through_container_base
-      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
+      : negate_weak_substitute_if_not<Sequence, Attribute, ValueType>
     {};
 
     // Specialization for fusion sequences, in this case we check whether all
@@ -45,17 +54,19 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // We return false if the rhs attribute itself is a fusion sequence, which
     // is compatible with the LHS sequence (we want to pass through this 
     // attribute without it being split apart).
-    template <typename Container, typename ValueType, typename Attribute>
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence = mpl::true_>
     struct not_compatible_element
       : mpl::and_<
-            mpl::not_<traits::is_weak_substitute<Attribute, Container> >
-          , mpl::not_<traits::is_weak_substitute<Attribute, ValueType> > >
+            negate_weak_substitute_if_not<Sequence, Attribute, Container>
+          , negate_weak_substitute_if_not<Sequence, Attribute, ValueType> >
     {};
 
     // If the value type of the container is not a Fusion sequence, we pass
     // through the container if each of the elements of the Attribute 
     // sequence is compatible with either the container or its value type.
     template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence
       , bool IsSequence = fusion::traits::is_sequence<ValueType>::value>
     struct pass_through_container_fusion_sequence
     {
@@ -70,16 +81,27 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // If both, the Attribute and the value type of the provided container
     // are Fusion sequences, we pass the container only if the two 
     // sequences are not compatible.
-    template <typename Container, typename ValueType, typename Attribute>
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
     struct pass_through_container_fusion_sequence<
-            Container, ValueType, Attribute, true>
-      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
-    {};
+            Container, ValueType, Attribute, Sequence, true>
+    {
+        typedef typename mpl::find_if<
+            Attribute
+          , not_compatible_element<Container, ValueType, mpl::_1, Sequence>
+        >::type iter;
+        typedef typename mpl::end<Attribute>::type end;
 
-    template <typename Container, typename ValueType, typename Attribute>
+        typedef typename is_same<iter, end>::type type;
+    };
+
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
     struct pass_through_container_base<Container, ValueType, Attribute
+          , Sequence
           , typename enable_if<fusion::traits::is_sequence<Attribute> >::type>
-      : pass_through_container_fusion_sequence<Container, ValueType, Attribute>
+      : pass_through_container_fusion_sequence<
+            Container, ValueType, Attribute, Sequence>
     {};
 
     // Specialization for containers
@@ -88,7 +110,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // a Fusion sequence, we have to pass through the provided container if 
     // both are compatible.
     template <typename Container, typename ValueType, typename Attribute
-      , typename AttributeValueType
+      , typename Sequence, typename AttributeValueType
       , bool IsSequence = fusion::traits::is_sequence<AttributeValueType>::value>
     struct pass_through_container_container
       : mpl::or_<
@@ -98,26 +120,22 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
     // If the value type of the exposed container attribute is a Fusion
     // sequence, we use the already existing logic for those.
-    template <typename Container, typename ValueType
-      , typename Attribute, typename AttributeValueType>
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence, typename AttributeValueType>
     struct pass_through_container_container<
-            Container, ValueType, Attribute, AttributeValueType, true>
+            Container, ValueType, Attribute, Sequence, AttributeValueType, true>
       : pass_through_container_fusion_sequence<
-            Container, ValueType, AttributeValueType>
+            Container, ValueType, AttributeValueType, Sequence>
     {};
 
-    template <typename Container, typename ValueType, typename Attribute>
-    struct pass_through_container_base<Container, ValueType, Attribute
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
+    struct pass_through_container_base<
+            Container, ValueType, Attribute, Sequence
           , typename enable_if<traits::is_container<Attribute> >::type>
       : detail::pass_through_container_container<
-          Container, ValueType
-        , Attribute, typename traits::container_value<Attribute>::type>
-    {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Container, typename ValueType, typename Attribute>
-    struct pass_through_container
-      : pass_through_container_base<Container, ValueType, Attribute> 
+          Container, ValueType, Attribute, Sequence
+        , typename traits::container_value<Attribute>::type>
     {};
 
     // Specialization for exposed optional attributes
@@ -127,6 +145,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // either to the optionals embedded type or to the containers value 
     // type.
     template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence
       , bool IsSequence = fusion::traits::is_sequence<Attribute>::value>
     struct pass_through_container_optional
       : mpl::or_<
@@ -136,25 +155,38 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
     // If the embedded type of the exposed optional attribute is a Fusion
     // sequence, we use the already existing logic for those.
-    template <typename Container, typename ValueType, typename Attribute>
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
     struct pass_through_container_optional<
-            Container, ValueType, Attribute, true>
+                Container, ValueType, Attribute, Sequence, true>
       : pass_through_container_fusion_sequence<
-            Container, ValueType, Attribute>
+            Container, ValueType, Attribute, Sequence>
     {};
 
-    template <typename Container, typename ValueType, typename Attribute>
-    struct pass_through_container<Container, ValueType, boost::optional<Attribute> >
-      : pass_through_container_optional<Container, ValueType, Attribute> 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
+    struct pass_through_container
+      : pass_through_container_base<Container, ValueType, Attribute, Sequence> 
+    {};
+
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
+    struct pass_through_container<
+                Container, ValueType, boost::optional<Attribute>, Sequence>
+      : pass_through_container_optional<
+            Container, ValueType, Attribute, Sequence> 
     {};
 
     // If both, the containers value type and the exposed attribute type are
     // optionals we are allowed to pass through the the container only if the
     // embedded types of those optionals are not compatible.
-    template <typename Container, typename ValueType, typename Attribute>
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
     struct pass_through_container<
-            Container, boost::optional<ValueType>, boost::optional<Attribute> >
-      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >
+            Container, boost::optional<ValueType>, boost::optional<Attribute>
+          , Sequence>
+      : mpl::not_<traits::is_weak_substitute<Attribute, ValueType> > 
     {};
 
     // Specialization for exposed variant attributes
@@ -164,24 +196,41 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
 #define BOOST_SPIRIT_PASS_THROUGH_CONTAINER(z, N, _)                          \
     pass_through_container<Container, ValueType,                              \
-        BOOST_PP_CAT(T, N)>::type::value ||                                   \
+        BOOST_PP_CAT(T, N), Sequence>::type::value ||                         \
     /***/
 
-    template <typename Container, typename ValueType
+    template <typename Container, typename ValueType, typename Sequence
       , BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct pass_through_container<Container, ValueType
-          , boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+          , boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, Sequence>
       : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
           , BOOST_SPIRIT_PASS_THROUGH_CONTAINER, _) false>
     {};
 
 #undef BOOST_SPIRIT_PASS_THROUGH_CONTAINER
+}}}}
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // forwarding customization point for domain qi::domain
+    template <typename Container, typename ValueType, typename Attribute
+      , typename Sequence>
+    struct pass_through_container<
+            Container, ValueType, Attribute, Sequence, qi::domain>
+      : qi::detail::pass_through_container<
+            Container, ValueType, Attribute, Sequence>
+    {};
+}}}
+
+namespace boost { namespace spirit { namespace qi { namespace detail
+{
     ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
     // the sequence is an STL container. This is a wrapper around F.
     // The function F does the actual parsing.
-    template <typename F, typename Attr>
+    template <typename F, typename Attr, typename Sequence>
     struct pass_container
     {
         typedef typename F::context_type context_type;
@@ -242,7 +291,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // element is a substitute for the value type of the container
             // attribute 
             typedef mpl::and_<
-                pass_through_container<Attr, value_type, rhs_attribute>
+                traits::pass_through_container<
+                    Attr, value_type, rhs_attribute, Sequence, qi::domain>
               , traits::handles_container<
                     Component, Attr, context_type, iterator_type> 
             > predicate;
@@ -278,12 +328,22 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         pass_container& operator= (pass_container const&);
     };
 
-    // Utility function to make a pass_container
+    ///////////////////////////////////////////////////////////////////////////
+    // Utility function to make a pass_container for container components 
+    // (kleene, list, plus, repeat)
     template <typename F, typename Attr>
-    pass_container<F, Attr>
-    inline make_pass_container(F const& f, Attr& attr)
+    inline pass_container<F, Attr, mpl::false_>
+    make_pass_container(F const& f, Attr& attr)
     {
-        return pass_container<F, Attr>(f, attr);
+        return pass_container<F, Attr, mpl::false_>(f, attr);
+    }
+
+    // Utility function to make a pass_container for sequences
+    template <typename F, typename Attr>
+    inline pass_container<F, Attr, mpl::true_>
+    make_sequence_pass_container(F const& f, Attr& attr)
+    {
+        return pass_container<F, Attr, mpl::true_>(f, attr);
     }
 }}}}
 
