@@ -47,6 +47,18 @@ struct action
     mutable std::vector<char>::iterator it;
 };
 
+struct A
+{
+    double d1;
+    double d2;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+    A,
+    (double, d1)
+    (double, d2)
+)
+
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
@@ -217,6 +229,15 @@ int main()
         std::vector<char> v;
         v += 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h';
         BOOST_TEST(test("[6162636465666768]", '[' << *hex[action(v)] << ']'));
+    }
+
+    {
+        using boost::spirit::karma::double_;
+
+        std::vector<A> v(1);
+        v[0].d1 = 1.0;
+        v[0].d2 = 2.0;
+        BOOST_TEST(test("A1.02.0", 'A' << *(double_ << double_), v));
     }
 
     return boost::report_errors();

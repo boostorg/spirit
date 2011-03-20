@@ -51,7 +51,7 @@ namespace boost { namespace spirit
           , terminal_ex<tag::center, fusion::vector1<T> > >
       : mpl::true_ {};
 
-    // enables *lazy* delimit(d)[g], where d provides a generator
+    // enables *lazy* center(d)[g], where d provides a generator
     template <>
     struct use_lazy_directive<karma::domain, tag::center, 1> 
       : mpl::true_ {};
@@ -63,7 +63,7 @@ namespace boost { namespace spirit
           , terminal_ex<tag::center, fusion::vector2<Width, Padding> > >
       : spirit::traits::matches<karma::domain, Padding> {};
 
-    // enables *lazy* delimit(w, d)[g], where d provides a generator and w is 
+    // enables *lazy* center(w, d)[g], where d provides a generator and w is 
     // a maximum width
     template <>
     struct use_lazy_directive<karma::domain, tag::center, 2> 

@@ -55,7 +55,8 @@
   a test.
 * Fixed the  __qi__ __qi_attr__ parser, the __qi__ __qi_symbols__ parser, and 
   the __karma__ [karma_symbols `symbols<>`] generator to properly handle 
-  container attributes. Those have been broken in Boost V1.46.1.
+  container attributes. Those have been broken in Boost V1.46.1 (thanks to 
+  Aaron Graham and Joerg Becker for reporting those).
 
 [heading Breaking Changes]
 
@@ -92,6 +93,12 @@
   in order for the new behavior to kick in. By default, the old behavior
   is still in place.
 * Alternatives now support attribute compatibility.
+* The attribute handling for container attributes of sequences and container
+  components (list, Kleene, Plus, and repeat) has been completely rewritten. 
+  It now supports many more use cases and behaves much more predictable than 
+  the older version. Thanks to Thomas Taylor, Richard Crossley, Semen, 
+  Adalberto Castelo, and many others for reporting bugs and helping in making 
+  the new code behave as expected.
 
 [endsect]
 
