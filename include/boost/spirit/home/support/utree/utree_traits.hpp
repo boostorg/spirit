@@ -604,7 +604,13 @@ namespace boost { namespace spirit { namespace traits
         {};
 
         template <typename Attribute>
-        struct handles_utree_list_container<optional<Attribute> >
+        struct handles_utree_list_container<boost::optional<Attribute> >
+          : mpl::true_
+        {};
+
+        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+        struct handles_utree_list_container<
+                boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
           : mpl::true_
         {};
     }
