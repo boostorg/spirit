@@ -114,10 +114,22 @@ namespace boost { namespace spirit { namespace traits
             mpl::and_<
                 fusion::traits::is_sequence<T>,
                 fusion::traits::is_sequence<Expected>,
-                mpl::equal<T, Expected, is_weak_substitute<mpl::_1, mpl::_2> >
-            >
+                mpl::equal<T, Expected, is_weak_substitute<mpl::_1, mpl::_2> > >
         >::type>
       : mpl::true_ {};
+
+    // If this is not defined, the main template definition above will return
+    // true if T is convertible to the first type in a fusion::vector. We
+    // globally declare any non-Fusion sequence T as not compatible with any
+    // Fusion sequence Expected.
+    template <typename T, typename Expected>
+    struct is_weak_substitute<T, Expected,
+        typename enable_if<
+            mpl::and_<
+                mpl::not_<fusion::traits::is_sequence<T> >
+              , fusion::traits::is_sequence<Expected> > 
+        >::type>
+      : mpl::false_ {};
 
     namespace detail
     {
@@ -135,8 +147,7 @@ namespace boost { namespace spirit { namespace traits
             mpl::and_<
                 is_container<T>,
                 is_container<Expected>,
-                detail::value_type_is_weak_substitute<T, Expected>
-            >
+                detail::value_type_is_weak_substitute<T, Expected> >
         >::type>
       : mpl::true_ {};
 

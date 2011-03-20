@@ -30,8 +30,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <typename Sequence, typename Attribute, typename ValueType>
     struct negate_weak_substitute_if_not
       : mpl::if_<
-            Sequence, traits::is_weak_substitute<Attribute, ValueType>
-          , mpl::not_<traits::is_weak_substitute<Attribute, ValueType> > >
+            Sequence
+          , typename traits::is_weak_substitute<Attribute, ValueType>::type
+          , typename mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >::type>
     {};
 
     // pass_through_container: utility to check decide whether a provided 
@@ -134,8 +135,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Container, ValueType, Attribute, Sequence
           , typename enable_if<traits::is_container<Attribute> >::type>
       : detail::pass_through_container_container<
-          Container, ValueType, Attribute, Sequence
-        , typename traits::container_value<Attribute>::type>
+            Container, ValueType, Attribute, Sequence
+          , typename traits::container_value<Attribute>::type>
     {};
 
     // Specialization for exposed optional attributes
