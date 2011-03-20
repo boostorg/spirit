@@ -134,13 +134,13 @@ namespace boost { namespace spirit { namespace lex
             template <typename Char>
             result_type operator()(Char ch, unused_type) const
             {
-                return result_type(ch);
+                return result_type(ch, ch);
             }
 
             template <typename Char>
             result_type operator()(Char const* str, unused_type) const
             {
-                return result_type(str[0]);
+                return result_type(str[0], str[0]);
             }
         };
     }
