@@ -26,13 +26,15 @@
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
     // Helper meta-function allowing to evaluate weak substitutability and
-    // negate the result if the predicate is not true
+    // negate the result if the predicate (Sequence) is not true
     template <typename Sequence, typename Attribute, typename ValueType>
     struct negate_weak_substitute_if_not
       : mpl::if_<
             Sequence
           , typename traits::is_weak_substitute<Attribute, ValueType>::type
-          , typename mpl::not_<traits::is_weak_substitute<Attribute, ValueType> >::type>
+          , typename mpl::not_<
+                traits::is_weak_substitute<Attribute, ValueType> 
+            >::type>
     {};
 
     // pass_through_container: utility to check decide whether a provided 
@@ -115,8 +117,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       , bool IsSequence = fusion::traits::is_sequence<AttributeValueType>::value>
     struct pass_through_container_container
       : mpl::or_<
-          traits::is_weak_substitute<Attribute, Container> 
-        , traits::is_weak_substitute<AttributeValueType, Container> >
+            traits::is_weak_substitute<Attribute, Container> 
+          , traits::is_weak_substitute<AttributeValueType, Container> >
     {};
 
     // If the value type of the exposed container attribute is a Fusion
@@ -150,8 +152,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       , bool IsSequence = fusion::traits::is_sequence<Attribute>::value>
     struct pass_through_container_optional
       : mpl::or_<
-          traits::is_weak_substitute<Attribute, Container> 
-        , traits::is_weak_substitute<Attribute, ValueType> >
+            traits::is_weak_substitute<Attribute, Container> 
+          , traits::is_weak_substitute<Attribute, ValueType> >
     {};
 
     // If the embedded type of the exposed optional attribute is a Fusion
@@ -171,6 +173,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       : pass_through_container_base<Container, ValueType, Attribute, Sequence> 
     {};
 
+    // Handle optional attributes
     template <typename Container, typename ValueType, typename Attribute
       , typename Sequence>
     struct pass_through_container<
@@ -292,10 +295,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // element is a substitute for the value type of the container
             // attribute 
             typedef mpl::and_<
-                traits::pass_through_container<
-                    Attr, value_type, rhs_attribute, Sequence, qi::domain>
-              , traits::handles_container<
+                traits::handles_container<
                     Component, Attr, context_type, iterator_type> 
+              , traits::pass_through_container<
+                    Attr, value_type, rhs_attribute, Sequence, qi::domain>
             > predicate;
 
             return dispatch_container(component, predicate());

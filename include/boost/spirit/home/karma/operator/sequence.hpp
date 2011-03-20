@@ -185,7 +185,7 @@ namespace boost { namespace spirit { namespace karma
                 typename traits::make_indirect_iterator<iterator_type>::type 
             indirect_iterator_type;
             typedef detail::pass_container<
-                fail_function, Attribute, indirect_iterator_type, Strict>
+              fail_function, Attribute, indirect_iterator_type, mpl::true_>
             pass_container;
 
             iterator_type begin = traits::begin(attr_);
