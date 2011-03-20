@@ -19,3 +19,5 @@ exe calc1_sr : calc1_sr.cpp ;
 exe mini_xml2_sr : mini_xml2_sr.cpp ;
 exe advance : advance.cpp ;
 exe keywords : keywords.cpp ;
+exe derived : derived.cpp ;
+exe options : options.cpp ;
