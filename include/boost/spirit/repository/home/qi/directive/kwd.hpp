@@ -204,6 +204,26 @@ template <typename T>
         kwd_infinite_iterator& operator= (kwd_infinite_iterator const&);
     };
 
+    // This class enables the transportation of parameters needed to call 
+    // the occurence constraint checker from higher level calls
+    // It also serves to select the correct parse function call 
+    // of the keyword parser. The implementation changes depending if it is
+    // called form a keyword parsing loop or not.
+    template <typename Skipper, typename NoCasePass>
+    struct skipper_keyword_marker
+    {
+        typedef NoCasePass no_case_pass;
+        
+        skipper_keyword_marker(Skipper const &skipper,bool &flag,int &counter) : 
+              skipper(skipper)
+            , flag(flag)
+            , counter(counter) 
+            {}
+            
+        const Skipper &skipper;
+        bool &flag;
+        int &counter;
+    };
     
     template <typename Subject, typename KeywordType, typename LoopIter , typename NoCase >
     struct kwd_parser : spirit::qi::unary_parser<kwd_parser<Subject, KeywordType, LoopIter , NoCase > >
@@ -270,7 +290,31 @@ template <typename T>
             return r;
         }
        
-    template <typename Iterator, typename Context
+       template <typename Iterator, typename Context
+          , typename Skipper, typename Attribute,typename NoCasePass>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, skipper_keyword_marker<Skipper,NoCasePass> const& skipper
+          , Attribute &attr) const
+        {
+            
+            typedef typename traits::attribute_of<
+                Subject, Context, Iterator>::type
+                subject_attribute;
+            
+            typedef typename mpl::and_<
+             traits::is_container<Attribute>
+            , mpl::not_< traits::is_weak_substitute< subject_attribute,Attribute > >
+            >::type predicate;
+            
+            if((no_case_keyword::value && NoCasePass::value) || !NoCasePass::value)
+            {
+                if(parse_impl(first,last,context,skipper.skipper,attr, predicate()))
+                    return iter.register_successful_parse(skipper.flag,skipper.counter);
+            }
+            return false;
+        }
+       
+        template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
@@ -282,7 +326,7 @@ template <typename T>
             
             typedef typename mpl::and_<
             traits::is_container<Attribute>
-            , mpl::not_< traits::detail::attribute_is_compatible< subject_attribute,Attribute > >
+            , mpl::not_< traits::is_weak_substitute< subject_attribute,Attribute > >
             >::type predicate;
             
             // Parse the keyword
@@ -301,27 +345,7 @@ template <typename T>
             first = save;            
             return flag;            
           }
-
-        template <typename Iterator, typename Context
-          , typename Skipper, typename Attribute>
-        bool kwd_loop_parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr, bool no_case_pass) const
-        {
-            
-            typedef typename traits::attribute_of<
-                Subject, Context, Iterator>::type
-                subject_attribute;
-            
-            typedef typename mpl::and_<
-            traits::is_container<Attribute>
-            , mpl::not_< traits::detail::attribute_is_compatible< subject_attribute,Attribute > >
-            >::type predicate;
-            
-            if((no_case_keyword::value && no_case_pass) || !no_case_pass)
-                return parse_impl(first,last,context,skipper,attr, predicate());
-            return false;
-        }        
+       
     
         template <typename Context>
         info what(Context& context) const
