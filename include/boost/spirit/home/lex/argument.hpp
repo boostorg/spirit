@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     //  The state_getter is a Phoenix actor used to access the name of the 
     //  current lexer state by calling get_state_name() on the context (which 
-    //  is the 4th parameter to any lexer semantic actions).
+    //  is the 5th parameter to any lexer semantic actions).
     //
     //  This Phoenix actor is invoked whenever the placeholder '_state' is used
     //  as a rvalue inside a lexer semantic action:
@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     //  The state_setter is a Phoenix actor used to change the name of the 
     //  current lexer state by calling set_state_name() on the context (which 
-    //  is the 4th parameter to any lexer semantic actions).
+    //  is the 5th parameter to any lexer semantic actions).
     //
     //  This Phoenix actor is invoked whenever the placeholder '_state' is used
     //  as a lvalue inside a lexer semantic action:
@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     //  The value_setter is a Phoenix actor used to change the name of the 
     //  current lexer state by calling set_state_name() on the context (which 
-    //  is the 4th parameter to any lexer semantic actions).
+    //  is the 5th parameter to any lexer semantic actions).
     //
     //  This Phoenix actor is invoked whenever the placeholder '_val' is used
     //  as a lvalue inside a lexer semantic action:
@@ -381,7 +381,6 @@ namespace boost { namespace phoenix
         // to its real, second argument (the RHS actor).
         typedef spirit::lex::value_setter<typename as_actor<RHS>::type> type;
     };
-
 }}
 
 #undef SPIRIT_DECLARE_ARG

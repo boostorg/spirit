@@ -1162,7 +1162,7 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <typename Out>
-    inline void print_attribute(Out& out, unused_type)
+    inline void print_attribute(Out&, unused_type)
     {
     }
 

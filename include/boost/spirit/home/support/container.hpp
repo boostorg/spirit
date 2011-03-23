@@ -369,7 +369,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename Enable/* = void*/>
     struct make_container_attribute
     {
-        static void call(Container& c)
+        static void call(Container&)
         {
             // for static types this function does nothing
         }

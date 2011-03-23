@@ -134,7 +134,7 @@ namespace boost { namespace spirit { namespace lex
         result_type operator()(
             typename add_reference<const_string>::type str, unused_type) const
         {
-            return result_type(str);
+            return result_type(str, std::size_t(~0));
         }
     };
 

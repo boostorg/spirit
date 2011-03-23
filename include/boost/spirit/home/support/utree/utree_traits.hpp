@@ -711,7 +711,7 @@ namespace boost { namespace spirit { namespace traits
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
     struct handles_container<karma::rule<IteratorA, T1, T2, T3, T4>
-      , utree, Context, IteratorB>
+          , utree, Context, IteratorB>
       : detail::handles_utree_container<typename attribute_of<
             karma::rule<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>
@@ -721,7 +721,7 @@ namespace boost { namespace spirit { namespace traits
         typename IteratorA, typename IteratorB, typename Context
       , typename T1, typename T2, typename T3, typename T4>
     struct handles_container<karma::grammar<IteratorA, T1, T2, T3, T4>
-      , utree, Context, IteratorB>
+          , utree, Context, IteratorB>
       : detail::handles_utree_container<typename attribute_of<
             karma::grammar<IteratorA, T1, T2, T3, T4>, Context, IteratorB
         >::type>

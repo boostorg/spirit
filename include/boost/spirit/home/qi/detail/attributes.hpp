@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace qi
     {
         typedef Transformed type;
 
-        static Transformed pre(Exposed& val) { return Transformed(); }
+        static Transformed pre(Exposed&) { return Transformed(); }
 
         static void post(Exposed& val, Transformed const& attr)
         {
@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace qi
         typedef Transformed type;
 
         static Transformed pre(Exposed& val) { return Transformed(val); }
-        static void post(Exposed& val, Transformed const& attr) { /* no-op */ }
+        static void post(Exposed&, Transformed const&) { /* no-op */ }
 
         // fail() will be called by Qi rule's if the rhs failed parsing
         static void fail(Exposed&) {}
