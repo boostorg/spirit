@@ -42,6 +42,8 @@
 [def __qi_advance__             [link spirit_repository.qi_components.primitive.advance `advance`]]
 [def __qi_subrule__             [link spirit_repository.qi_components.nonterminal.subrule `subrule`]]
 [def __qi_confix__              [link spirit_repository.qi_components.directives.confix `confix`]]
+[def __qi_keywords__            [link spirit_repository.qi_components.operators.keyword_list keyword_list]]
+[def __qi_keywords_list__       [link spirit_repository.qi_components.directives.kwd `kwd()[]`]]
 
 [def __karma_subrule__          [link spirit_repository.karma_components.nonterminal.subrule `subrule`]]
 

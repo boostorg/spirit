@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit V2.4.2</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
-<link rel="home" href="../../index.html" title="Spirit 2.4.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../index.html" title="Spirit 2.5">
 <link rel="up" href="../what_s_new.html" title="What's New">
 <link rel="prev" href="spirit_2_5.html" title="Spirit V2.5">
 <link rel="next" href="spirit_2_4_1.html" title="Spirit V2.4.1">
@@ -27,13 +27,13 @@
 <a name="spirit.what_s_new.spirit_2_4_2"></a><a class="link" href="spirit_2_4_2.html" title="Spirit V2.4.2">Spirit V2.4.2</a>
 </h3></div></div></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id761030"></a>
+<a name="id855364"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
         from V2.4.1 (Boost V1.45.0) to V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma"></a><h5>
-<a name="id761057"></a>
+<a name="id855388"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_qi_or_karma">New
         Features in Qi or Karma</a>
       </h5>
@@ -43,16 +43,8 @@
             to the docs.
           </li>
 <li class="listitem">
-            Added <a class="link" href="../support/utree.html" title="The utree data structure"><code class="computeroutput"><span class="identifier">utree</span></code></a>,
-            a generic, hierarchical, and dynamic data structure that can represent
-            abstract syntax trees. It's well integrated with <span class="emphasis"><em>Spirit.Qi</em></span>
-            and <span class="emphasis"><em>Spirit.Karma</em></span>. It can be passed as an attribute
-            while parsing almost any grammars. At the same time, it can be used as
-            an attribute to generate output from.
-          </li>
-<li class="listitem">
             Introduced a new customization point <a class="link" href="../advanced/customize/assign_to/assign_to_container_from_value.html" title="Store an Attribute Value into a Container after a Parser Produced a Value (Qi)"><code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">assign_to_container_from_value</span></code></a>
-            which is invoked for container attributes whenever a attribute value
+            which is invoked for container attributes whenever an attribute value
             needs to be added to that container.
           </li>
 <li class="listitem">
@@ -78,7 +70,7 @@
             as well.
           </li>
 <li class="listitem">
-            The <a class="link" href="../qi/reference/string/symbols.html" title="Symbols Parser (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code></a>
+            The <a class="link" href="../qi/reference/string/symbols.html" title="Symbols Parser (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;&gt;</span></code></a>
             parser component now has an explicit name used for error handling and
             debugging, which can be set using the new member functions <code class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">name</span><span class="special">(...)</span></code>.
             Thanks to teajay for contributing a patch.
@@ -90,7 +82,7 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma"></a><h5>
-<a name="id761462"></a>
+<a name="id858988"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_qi_or_karma">Bug
         Fixes in Qi or Karma</a>
       </h5>
@@ -107,13 +99,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_"></a><h5>
-<a name="id761536"></a>
+<a name="id859054"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_4_1__boost_v1_45_0__to_v2_4_2__boost_v1_46_0_">What's
         changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.4.1 (Boost V1.45.0) to
         V2.4.2 (Boost V1.46.0)</a>
       </h5>
 <a name="spirit.what_s_new.spirit_2_4_2.new_features_in_lex"></a><h5>
-<a name="id761557"></a>
+<a name="id859071"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.new_features_in_lex">New Features
         in Lex</a>
       </h5>
@@ -126,7 +118,7 @@
             matched input, as <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span><span class="special">()</span></code> does).
           </li>
 <li class="listitem">
-            Added additional template parameter to the default <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> definition: the type of the token
+            Added an additional template parameter to the default <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> definition: the type of the token
             id. This type defaults to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
             Any type used as the id type needs to be (explicitly) convertible from
             <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
@@ -167,14 +159,14 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex"></a><h5>
-<a name="id762056"></a>
+<a name="id859514"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.bug_fixes_in_lex">Bug Fixes
         in Lex</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Fixed a problem in the Lexer giving problems to assign tokens to all
-            lexer states at once. This is now possible by simply using "*"
+            Fixed an issue in the Lexer giving problems while assigning tokens to
+            all lexer states at once. This is now possible by simply using "*"
             as the state name. For instance this will add the token int_ to all lexer
             states: 
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
@@ -207,12 +199,13 @@
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_4_2.known_problems"></a><h5>
-<a name="id762352"></a>
+<a name="id859777"></a>
         <a class="link" href="spirit_2_4_2.html#spirit.what_s_new.spirit_2_4_2.known_problems">Known Problems</a>
       </h5>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-            Integer literals consume input on failure, which can lead to problems
-            with the alternative operator:
+            <span class="emphasis"><em>Spirit.Qi</em></span> integer literals (like <code class="computeroutput"><span class="identifier">int_</span><span class="special">(</span><span class="number">10</span><span class="special">)</span></code>)
+            consume input on failure, which can lead to problems with the alternative
+            operator.
           </li></ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

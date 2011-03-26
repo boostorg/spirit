@@ -55,11 +55,12 @@
   a test.
 * Fixed the  __qi__ __qi_attr__ parser, the __qi__ __qi_symbols__ parser, and 
   the __karma__ [karma_symbols `symbols<>`] generator to properly handle 
-  container attributes. Those have been broken in Boost V1.46.1 (thanks to 
-  Aaron Graham and Joerg Becker for reporting those).
+  container attributes. These were broken in Boost V1.46.1 (thanks to 
+  Aaron Graham and Joerg Becker for reporting the problems).
 * Fixed the __qi_stream__ parser to properly adjust the iterator of the 
   underlying input stream in the case when the stream parser component was 
-  successful. 
+  successful. Thanks to Brian O'Kennedy who reported the problem on 
+  Stackoverflow.
 
 [heading Breaking Changes]
 

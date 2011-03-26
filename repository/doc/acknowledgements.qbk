@@ -28,4 +28,7 @@ generator components, allowing to create a named parser or generator, and
 to refer to it by name. These components are in fact fully static versions of 
 the corresponding `rule` component.
 
+[*Thomas Bernard] contributed the __qi_keywords__ and __qi_keywords_list__ 
+parser components, allowing to define keyword parsers.
+
 [endsect]
