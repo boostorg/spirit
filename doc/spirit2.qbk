@@ -216,7 +216,7 @@
 [template karma_string[str]         [link spirit.karma.reference.string [str]]]
 [template karma_symbols[str]        [link spirit.karma.reference.string.symbols [str]]]
 
-[template karma_stream[str]         [link spirit.karma.reference.stream [str]]]
+[template karma_stream[str]         [link spirit.karma.reference.stream.stream [str]]]
 
 [template karma_auto[str]           [link spirit.karma.reference.auto [str]]]
 [def __create_generator__           [link spirit.karma.reference.generate_api.create_generator `create_generator`]]
@@ -420,6 +420,8 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [def __qi_plus__                    [link spirit.qi.reference.operator.plus Plus]]
 [def __qi_sequence__                [link spirit.qi.reference.operator.sequence Sequence]]
 [def __qi_sequential_or__           [link spirit.qi.reference.operator.sequential_or Sequential Or]]
+
+[def __qi_stream__                  [link spirit.qi.reference.stream.stream `stream`]]
 
 [/ nonterminal]
 [def __qi_rule__                    [link spirit.qi.reference.nonterminal.rule rule]]

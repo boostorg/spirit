@@ -85,6 +85,7 @@ import testing ;
      [ run qi/sequence.cpp         : : : : qi_sequence ]
      [ run qi/sequential_or.cpp    : : : : qi_sequential_or ]
      [ run qi/skip.cpp             : : : : qi_skip ]
+     [ run qi/stream.cpp           : : : : qi_stream ]
      [ run qi/symbols1.cpp         : : : : qi_symbols1 ]
      [ run qi/symbols2.cpp         : : : : qi_symbols2 ]
      [ run qi/terminal_ex.cpp      : : : : qi_terminal_ex ]

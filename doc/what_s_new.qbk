@@ -57,6 +57,9 @@
   the __karma__ [karma_symbols `symbols<>`] generator to properly handle 
   container attributes. Those have been broken in Boost V1.46.1 (thanks to 
   Aaron Graham and Joerg Becker for reporting those).
+* Fixed the __qi_stream__ parser to properly adjust the iterator of the 
+  underlying input stream in the case when the stream parser component was 
+  successful. 
 
 [heading Breaking Changes]
 
