@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<char, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, char& attr)
+        call(Iterator const& first, Iterator const&, char& attr)
         {
             attr = *first;
         }
@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<signed char, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, signed char& attr)
+        call(Iterator const& first, Iterator const&, signed char& attr)
         {
             attr = *first;
         }
@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<unsigned char, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, unsigned char& attr)
+        call(Iterator const& first, Iterator const&, unsigned char& attr)
         {
             attr = *first;
         }
@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<wchar_t, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, wchar_t& attr)
+        call(Iterator const& first, Iterator const&, wchar_t& attr)
         {
             attr = *first;
         }
@@ -70,7 +70,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_iterators<unsigned short, Iterator>
     {
         static void
-        call(Iterator const& first, Iterator const& last, unsigned short& attr)
+        call(Iterator const& first, Iterator const&, unsigned short& attr)
         {
             attr = *first;
         }

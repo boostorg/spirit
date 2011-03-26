@@ -85,7 +85,7 @@ chr_iterator_type;
 
 // ======================================================================       
 // Main                                                                         
-int main(int argc, char** argv) 
+int main() 
 {
     std::ifstream in("multi_pass.txt");
 

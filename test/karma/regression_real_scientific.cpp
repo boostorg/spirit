@@ -19,7 +19,7 @@ template <typename Num>
 struct scientific_policy : karma::real_policies<Num>
 {
     // we want the numbers always to be in scientific format
-    static int floatfield(Num n) { return std::ios_base::scientific; }
+    static int floatfield(Num) { return std::ios_base::scientific; }
 };
 
 int main() 

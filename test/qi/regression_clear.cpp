@@ -19,7 +19,7 @@ int main()
     list = *qi::raw[qi::char_]; // This fails to compile
     
     char const* test = "abcdef";
-    int test_length = 6;
+    unsigned test_length = 6;
     char const* test_begin = test;
     char const* test_end = test + test_length;
     std::vector<boost::iterator_range<Iterator> > result;
@@ -29,7 +29,7 @@ int main()
     BOOST_TEST(test_begin == test_end);
     BOOST_TEST(result.size() == test_length);
 
-    for(int i = 0; i < test_length; ++i) {
+    for(unsigned i = 0; i < test_length; ++i) {
         BOOST_TEST(result[i].begin() == test + i);
         BOOST_TEST(result[i].end() == test + i + 1);
     }

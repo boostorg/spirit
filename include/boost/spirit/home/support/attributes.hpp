@@ -881,12 +881,12 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <typename A>
-    void swap_impl(A& a, unused_type)
+    void swap_impl(A&, unused_type)
     {
     }
 
     template <typename A>
-    void swap_impl(unused_type, A& a)
+    void swap_impl(unused_type, A&)
     {
     }
 

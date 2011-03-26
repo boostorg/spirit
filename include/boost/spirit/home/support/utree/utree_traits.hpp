@@ -1154,7 +1154,7 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef utree::nil_type type;
 
-        static type pre(utree const& t)
+        static type pre(utree const&)
         {
             return nil;
         }

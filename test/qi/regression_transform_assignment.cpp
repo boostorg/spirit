@@ -59,7 +59,7 @@ struct foo_grammar : qi::grammar<Iterator, foo_parts()>
     qi::rule<Iterator, foo_parts()> start;
 };
 
-int main(int argc, char * argv[]) 
+int main() 
 {
     foo_parts instance;
     foo_grammar<std::string::iterator> grammar;

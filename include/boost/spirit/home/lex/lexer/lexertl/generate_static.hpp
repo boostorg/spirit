@@ -827,7 +827,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             return false;
 
         std::size_t const dfas_ = sm_.data()._dfa->size();
-        std::size_t const lookups_ = sm_.data()._lookup->front()->size();
+//         std::size_t const lookups_ = sm_.data()._lookup->front()->size();
 
         os_ << "// Copyright (c) 2008-2009 Ben Hanson\n";
         os_ << "// Copyright (c) 2008-2011 Hartmut Kaiser\n";

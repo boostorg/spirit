@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             //
             // This function does nothing as long as no semantic actions are 
             // used.
-            Iterator const& less(Iterator const& it, int n) 
+            Iterator const& less(Iterator const& it, int) 
             { 
                 // The following assertion fires most likely because you are 
                 // using lexer semantic actions without using the actor_lexer
@@ -131,7 +131,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             //
             // This function does nothing as long as no semantic actions are 
             // used.
-            bool lookahead(std::size_t id, std::size_t state = std::size_t(~0)) 
+            bool lookahead(std::size_t, std::size_t /*state*/ = std::size_t(~0)) 
             { 
                 // The following assertion fires most likely because you are 
                 // using lexer semantic actions without using the actor_lexer
