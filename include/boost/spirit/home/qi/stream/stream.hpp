@@ -69,8 +69,10 @@ namespace boost { namespace spirit { namespace qi
             in >> attr;                       // use existing operator>>()
 
             // advance the iterator if everything is ok
-            if (in.good())
-                std::advance(first, in.tellg());
+            if (in.good()) {
+                std::streamsize pos = in.tellg();
+                std::advance(first, pos);
+            }
 
             return in.good() || in.eof();
         }
