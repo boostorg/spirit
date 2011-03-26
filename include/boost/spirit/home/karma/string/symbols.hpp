@@ -732,6 +732,17 @@ namespace boost { namespace spirit { namespace karma
     };
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename T, typename Lookup
+      , typename CharEncoding, typename Tag
+      , typename Attr, typename Context, typename Iterator>
+    struct handles_container<karma::symbols<Attribute, T, Lookup, CharEncoding, Tag>
+            , Attr, Context, Iterator>
+      : traits::is_container<Attr> {}; 
+}}}
+
 #if defined(BOOST_MSVC)
 # pragma warning(pop)
 #endif

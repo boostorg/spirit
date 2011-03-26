@@ -51,7 +51,10 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::tokenid;
+#endif
+    using spirit::tokenid_type;
 
     ///////////////////////////////////////////////////////////////////////////
     // The plain_tokenid represents a simple token defined by the lexer inside 

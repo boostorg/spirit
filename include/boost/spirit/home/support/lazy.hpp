@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
+#include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/proto/proto.hpp>
-#include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/support/modify.hpp>
 
 namespace boost { namespace spirit

@@ -62,9 +62,11 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace karma
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::as_string;
-    using spirit::as_string_type;
     using spirit::as_wstring;
+#endif
+    using spirit::as_string_type;
     using spirit::as_wstring_type;
 
     ///////////////////////////////////////////////////////////////////////////

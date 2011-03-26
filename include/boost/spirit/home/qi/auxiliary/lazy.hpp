@@ -18,7 +18,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/lazy.hpp>
-#include <boost/spirit/home/phoenix/core/actor.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/type_traits/remove_reference.hpp>
