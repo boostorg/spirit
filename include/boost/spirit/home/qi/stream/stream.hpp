@@ -64,8 +64,14 @@ namespace boost { namespace spirit { namespace qi
             typedef boost::iostreams::stream<source_device> instream;
 
             qi::skip_over(first, last, skipper);
-            instream in(first, last);
+
+            instream in(first, last);         // copies 'first'
             in >> attr;                       // use existing operator>>()
+
+            // advance the iterator if everything is ok
+            if (in.good())
+                std::advance(first, in.tellg());
+
             return in.good() || in.eof();
         }
 
