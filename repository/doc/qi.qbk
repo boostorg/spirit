@@ -11,7 +11,8 @@
 [include        qi/primitive_parsers.qbk]
 [include        qi/directives.qbk]
 [include        qi/nonterminals.qbk]
-[/include        qi/compound_parsers.qbk]
+[include        qi/operators.qbk]
+[/include       qi/compound_parsers.qbk]
 
 [endsect] [/ Qi]
 

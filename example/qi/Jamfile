@@ -5,7 +5,7 @@
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 project spirit-qi-example
-    : requirements 
+    : requirements
         <toolset>gcc:<c++-template-depth>300
         <toolset>darwin:<cxxflags>-ftemplate-depth-300
     :
@@ -39,40 +39,9 @@ exe adapt_template_struct : adapt_template_struct.cpp ;
 
 exe unescaped_string : unescaped_string.cpp ;
 
-exe calculator1 : calc1.cpp ;
-exe calculator2 : calc2.cpp ;
-exe calculator2_ast : calc2_ast.cpp ;
-exe calculator3 : calc3.cpp ;
-#exe calc3_lexer : calc3_lexer.cpp ;
-exe calculator4 : calc4.cpp ;
-exe calculator4_debug : calc4_debug.cpp ;
-exe calculator5 : calc5.cpp ;
-
-exe calculator6 :
-    calc6/calc6.cpp
-    calc6/calc6a.cpp
-    calc6/calc6b.cpp
-    calc6/calc6c.cpp
-    ;
-
-exe calculator7 :
-    calc7/calc7.cpp
-    calc7/calc7a.cpp
-    calc7/calc7b.cpp
-    calc7/calc7c.cpp
-    ;
-
-#exe calc_utree_naive : calc_utree_naive.cpp ;
-#exe calc_utree_ast : calc_utree_ast.cpp ;
-#exe calc_utree : calc_utree.cpp ;
-
-exe mini_c_interp :
-    mini_c/mini_c.cpp
-    mini_c/mini_ca.cpp
-    mini_c/mini_cb.cpp
-    mini_c/mini_cc.cpp
-    mini_c/mini_cd.cpp
-    ;
+exe calc_utree_naive : calc_utree_naive.cpp ;
+exe calc_utree_ast : calc_utree_ast.cpp ;
+exe calc_utree : calc_utree.cpp ;
 
 exe nabialek : nabialek.cpp ;
 exe typeof : typeof.cpp ;

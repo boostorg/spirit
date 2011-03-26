@@ -1,0 +1,56 @@
+#==============================================================================
+#   Copyright (c) 2001-2011 Joel de Guzman
+#
+#   Distributed under the Boost Software License, Version 1.0. (See accompanying
+#   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+project spirit-qi-compiler_tutorial
+    : requirements
+        <toolset>gcc:<c++-template-depth>300
+        <toolset>darwin:<cxxflags>-ftemplate-depth-300
+    :
+    :
+    ;
+
+exe calc1 : calc1.cpp ;
+exe calc2 : calc2.cpp ;
+exe calc3 : calc3.cpp ;
+exe calc4 : calc4.cpp ;
+exe calc5 : calc5.cpp ;
+exe calc6 : calc6.cpp ;
+
+exe calc7 :
+    calc7/vm.cpp
+    calc7/compiler.cpp
+    calc7/expression.cpp
+    calc7/statement.cpp
+    calc7/main.cpp
+    ;
+
+exe calc8 :
+    calc8/vm.cpp
+    calc8/compiler.cpp
+    calc8/expression.cpp
+    calc8/statement.cpp
+    calc8/main.cpp
+    ;
+
+exe mini_c :
+    mini_c/vm.cpp
+    mini_c/compiler.cpp
+    mini_c/expression.cpp
+    mini_c/statement.cpp
+    mini_c/function.cpp
+    mini_c/main.cpp
+    ;
+
+exe conjure :
+    conjure/vm.cpp
+    conjure/compiler.cpp
+    conjure/expression.cpp
+    conjure/statement.cpp
+    conjure/function.cpp
+    conjure/main.cpp
+    ;
+
+

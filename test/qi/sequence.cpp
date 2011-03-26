@@ -113,12 +113,12 @@ main()
     }
 
     {
-        // make sure single element tuples get passed through if the rhs 
+        // make sure single element tuples get passed through if the rhs
         // has a single element tuple as its attribute
         vector<double, int> fv;
         rule<char const*, vector<double, int>()> r;
         r %= double_ >> ',' >> int_;
-        BOOST_TEST((test_attr("test:2.0,1", "test:" >> r, fv) && 
+        BOOST_TEST((test_attr("test:2.0,1", "test:" >> r, fv) &&
             fv == vector<double, int>(2.0, 1)));
     }
 
@@ -174,6 +174,38 @@ main()
 
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
+        using boost::spirit::qi::hold;
+
+        std::vector<char> v;
+        BOOST_TEST(test_attr("abc", char_ >> *(char_ >> char_), v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+
+        v.clear();
+        BOOST_TEST(!test_attr("abcd", char_ >> *(char_ >> char_), v));
+
+        v.clear();
+        BOOST_TEST(test_attr("abcdef", char_ >> *hold[char_ >> char_] >> char_, v));
+        BOOST_TEST(v.size() == 6);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+        BOOST_TEST(v[3] == 'd');
+        BOOST_TEST(v[4] == 'e');
+        BOOST_TEST(v[5] == 'f');
+
+        v.clear();
+        BOOST_TEST(test_attr("abc", char_ >> +(char_ >> char_), v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+    }
+
+    { // alternative forms of attributes. Allow sequences to take in
+      // stl containers.
 
         std::vector<char> v;
         BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
@@ -189,40 +221,80 @@ main()
         std::string s;
         BOOST_TEST(test_attr("foobar", string("foo") >> string("bar"), s));
         BOOST_TEST(s == "foobar");
+
+        s.clear();
+
+        using boost::spirit::qi::hold;
+
+        rule<char const*, std::string()> word = +char_("abc");
+        BOOST_TEST(test_attr("ab.bc.ca", *hold[word >> string(".")] >> word, s));
+        BOOST_TEST(s == "ab.bc.ca");
     }
 
-//     // alternative forms of attributes. Allow sequences to take in
-//     // stl containers of stl containers.
-//     {
-//         // this use case still does not compile, needs some additional work
-// 
-//         std::vector<std::string> v;
-//         BOOST_TEST(test_attr("abc1,abc2,abc3", 
-//             *~char_(',') >> *(',' >> *~char_(',')), v));
-//         BOOST_TEST(v.size() == 3);
-//         BOOST_TEST(v[0] == "abc1");
-//         BOOST_TEST(v[1] == "abc2");
-//         BOOST_TEST(v[2] == "abc3");
-//     }
+    // alternative forms of attributes. Allow sequences to take in
+    // stl containers of stl containers.
+    {
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("abc1,abc2",
+            *~char_(',') >> *(',' >> *~char_(',')), v));
+        BOOST_TEST(v.size() == 2 && v[0] == "abc1" && v[1] == "abc2");
+    }
 
-//     {
-//         std::vector<std::string> v;
-//         rule<char const*, std::string()> e = *~char_(',');
-//         rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
-// 
-//         BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
-//         BOOST_TEST(v.size() == 3);
-//         BOOST_TEST(v[0] == "abc1");
-//         BOOST_TEST(v[1] == "abc2");
-//         BOOST_TEST(v[2] == "abc3");
-//     }
+    {
+        std::vector<std::string> v;
+        rule<char const*, std::string()> e = *~char_(',');
+        rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
+
+        BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == "abc1");
+        BOOST_TEST(v[1] == "abc2");
+        BOOST_TEST(v[2] == "abc3");
+    }
+
+    // do the same with a plain string object
+    {
+        std::string s;
+        BOOST_TEST(test_attr("abc1,abc2",
+            *~char_(',') >> *(',' >> *~char_(',')), s));
+        BOOST_TEST(s == "abc1abc2");
+    }
+
+    {
+        std::string s;
+        rule<char const*, std::string()> e = *~char_(',');
+        rule<char const*, std::string()> l = e >> *(',' >> e);
+
+        BOOST_TEST(test_attr("abc1,abc2,abc3", l, s));
+        BOOST_TEST(s == "abc1abc2abc3");
+    }
 
     {
         std::vector<char> v;
         BOOST_TEST(test_attr("ab", char_ >> -char_, v));
-        BOOST_TEST(v.size() == 2);
-        BOOST_TEST(v[0] == 'a');
-        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
+    }
+
+    {
+        std::vector<boost::optional<char> > v;
+        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && !v[1]);
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
     }
 
     {   // test action
@@ -248,9 +320,18 @@ main()
     }
 
     {   // testing "what"
-
         print_info(what(alpha | char_('x') >> lit("hello") >> int_));
     }
+
+//     { // compile check only
+//         using boost::spirit::qi::rule;
+//         typedef boost::fusion::vector<int, double> tuple_type;
+//         typedef std::vector<boost::fusion::vector<int, double> > attr_type;
+// 
+//         rule<char const*, tuple_type()> r = int_ >> ',' >> double_;
+//         rule<char const*, attr_type()> r2 = r >> *(',' >> r);
+//         //~ rule<char const*, attr_type()> r2 = r % ',';
+//     }
 
     return boost::report_errors();
 }

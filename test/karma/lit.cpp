@@ -63,6 +63,10 @@ main()
 
         BOOST_TEST(test("abc", str));
         BOOST_TEST(!test("abcd", str));
+    }
+
+    {
+        using namespace boost::spirit::standard_wide;
 
         std::basic_string<wchar_t> wstr(L"abc");
         BOOST_TEST(test(L"abc", lit(wstr)));

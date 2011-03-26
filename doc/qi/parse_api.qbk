@@ -103,6 +103,12 @@ Also, see __include_structure__.
           , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
     }}}
 
+[note Starting with __spirit__ V2.5 (distributed with Boost V1.47) the 
+      placeholder `_val` can be used in semantic actions attached to top level
+      parser components. In this case `_val` refers to the supplied attribute
+      as a whole. For API functions taking more than one attribute argument
+      `_val` will refer to a Fusion vector or references to the attributes.]
+
 __qi__ parser API functions based on the automatic creation of the matching 
 parser type:
 

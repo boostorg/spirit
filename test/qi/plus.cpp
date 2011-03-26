@@ -94,16 +94,10 @@ main()
     }
 
     {
-        // The following 4 tests show that omit does not inhibit explicit attributes
+        // The following 2 tests show that omit does not inhibit explicit attributes
 
         std::string s;
-        BOOST_TEST(test_attr("bbbb", +omit[char_('b')], s) && s == "bbbb");
-
-        s.clear();
         BOOST_TEST(test_attr("bbbb", omit[+char_('b')], s) && s == "bbbb");
-
-        s.clear();
-        BOOST_TEST(test_attr("b b b b ", +omit[char_('b')], s, space) && s == "bbbb");
 
         s.clear();
         BOOST_TEST(test_attr("b b b b ", omit[+char_('b')], s, space) && s == "bbbb");

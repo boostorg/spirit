@@ -11,7 +11,7 @@
 Spirit.Qi parsers fall into a couple of generalized __concepts__. The
 /Parser/ is the most fundamental concept. All Spirit.Qi parsers are
 models of the /Parser/ concept. /PrimitiveParser/, /UnaryParser/,
-/BinaryParser/, /NaryParser/, and /Nonterminal/ are all refinements of the 
+/BinaryParser/, /NaryParser/, and /Nonterminal/ are all refinements of the
 /Parser/ concept.
 
 The following sections provide details on these concepts.
@@ -52,7 +52,7 @@ For any Parser the following expressions must be valid:
 [table
     [[Expression]           [Semantics]                         [Return type]]
     [[
-``p.parse(f, l, context, skip, attr)``]                         
+``p.parse(f, l, context, skip, attr)``]
                             [Match the input sequence
                             starting from `f`. Return
                             `true` if successful, otherwise
@@ -65,8 +65,8 @@ For any Parser the following expressions must be valid:
 [table
     [[Expression]                                   [Description]]
     [[`P::template attribute<Context, Iter>::type`] [The Parser's expected attribute.]]
-    [[`traits::is_parser<P>::type`]                 [Metafunction that evaluates to `mpl::true_` if 
-                                                    a certain type, `P` is a Parser, `mpl::false_`  
+    [[`traits::is_parser<P>::type`]                 [Metafunction that evaluates to `mpl::true_` if
+                                                    a certain type, `P` is a Parser, `mpl::false_`
                                                     otherwise (See __mpl_boolean_constant__).]]
 ]
 
@@ -74,14 +74,14 @@ For any Parser the following expressions must be valid:
 
 Upon return from `p.parse` the following post conditions should hold:
 
-* On a successful match, `f` is positioned one past the last 
+* On a successful match, `f` is positioned one past the last
   matching character/token.
-* On a failed match, if a `skip` parser is __unused__, 
+* On a failed match, if a `skip` parser is __unused__,
   `f` is restored to its original position prior to entry.
-* On a failed match, if a `skip` parser is not __unused__, 
+* On a failed match, if a `skip` parser is not __unused__,
   `f` is positioned one past the last character/token
   matching `skip`.
-* On a failed match, `attrib` is left untouched.
+* On a failed match, `attrib` state is undefined.
 * No post-skips: trailing `skip` characters/tokens will not be skipped.
 
 [heading Models]
@@ -96,7 +96,7 @@ All parsers in Spirit.Qi are models of the /Parser/ concept.
 [heading Description]
 
 /PrimitiveParser/ is the most basic building block that the client uses
-to build more complex parsers. 
+to build more complex parsers.
 
 [heading Refinement of]
 
@@ -110,17 +110,17 @@ to parsing. Only PrimitiveParsers are required to perform this pre-skip.
 This is typically carried out through a call to `qi::skip_over`:
 
     qi::skip_over(f, l, skip);
-    
+
 [heading Type Expressions]
 
 [table
     [[Expression]                                   [Description]]
-    [[`traits::is_primitive_parser<P>::type`]       [Metafunction that evaluates to `mpl::true_` if 
-                                                    a certain type, `P`, is a PrimitiveParser, `mpl::false_`  
+    [[`traits::is_primitive_parser<P>::type`]       [Metafunction that evaluates to `mpl::true_` if
+                                                    a certain type, `P`, is a PrimitiveParser, `mpl::false_`
                                                     otherwise (See __mpl_boolean_constant__).]]
 ]
 
-[heading Models] 
+[heading Models]
 
 * __qi_attr__
 * __qi_eoi__
@@ -137,7 +137,7 @@ This is typically carried out through a call to `qi::skip_over`:
 
 /UnaryParser/ is a composite parser that has a single subject. The
 UnaryParser may change the behavior of its subject following the
-__delegate_pattern__. 
+__delegate_pattern__.
 
 [heading Refinement of]
 
@@ -163,8 +163,8 @@ UnaryParser the following must be met:
 [table
     [[Expression]           [Description]]
     [[`P::subject_type`]    [The subject parser type.]]
-    [[`traits::is_unary_parser<P>::type`]       [Metafunction that evaluates to `mpl::true_` if 
-                                                a certain type, `P` is a UnaryParser, `mpl::false_`  
+    [[`traits::is_unary_parser<P>::type`]       [Metafunction that evaluates to `mpl::true_` if
+                                                a certain type, `P` is a UnaryParser, `mpl::false_`
                                                 otherwise (See __mpl_boolean_constant__).]]
 ]
 
@@ -178,7 +178,7 @@ For any UnaryParser, `P`, the following invariant always holds:
 
 * __qi_and_predicate__
 * __qi_kleene__
-* __qi_lexeme__ 
+* __qi_lexeme__
 * __qi_not_predicate__
 * __qi_omit__
 * __qi_plus__
@@ -196,7 +196,7 @@ For any UnaryParser, `P`, the following invariant always holds:
 /BinaryParser/ is a composite parser that has a two subjects, `left` and
 `right`. The BinaryParser allows its subjects to be treated in the same
 way as a single instance of a __parser_concept__ following the
-__composite_pattern__. 
+__composite_pattern__.
 
 [heading Refinement of]
 
@@ -224,8 +224,8 @@ BinaryParser the following must be met:
     [[Expression]           [Description]]
     [[`P::left_type`]       [The left parser type.]]
     [[`P::right_type`]      [The right parser type.]]
-    [[`traits::is_binary_parser<P>::type`]      [Metafunction that evaluates to `mpl::true_` if 
-                                                a certain type, `P` is a BinaryParser, `mpl::false_`  
+    [[`traits::is_binary_parser<P>::type`]      [Metafunction that evaluates to `mpl::true_` if
+                                                a certain type, `P` is a BinaryParser, `mpl::false_`
                                                 otherwise (See __mpl_boolean_constant__).]]
 ]
 
@@ -250,9 +250,9 @@ For any BinaryParser, `P`, the following invariants always hold:
 
 /NaryParser/ is a composite parser that has one or more subjects. The
 NaryParser allows its subjects to be treated in the same way as a single
-instance of a __parser_concept__ following the __composite_pattern__. 
+instance of a __parser_concept__ following the __composite_pattern__.
 
-[heading Refinement of] 
+[heading Refinement of]
 
 [:__parser_concept__]
 
@@ -276,15 +276,15 @@ NaryParser the following must be met:
 [table
     [[Expression]           [Description]]
     [[`p.elements_type`]    [Elements tuple type.]]
-    [[`traits::is_nary_parser<P>::type`]            [Metafunction that evaluates to `mpl::true_` if 
-                                                    a certain type, `P` is a NaryParser, `mpl::false_`  
+    [[`traits::is_nary_parser<P>::type`]            [Metafunction that evaluates to `mpl::true_` if
+                                                    a certain type, `P` is a NaryParser, `mpl::false_`
                                                     otherwise (See __mpl_boolean_constant__).]]
 ]
 
 [heading Invariants]
 
 For each element, `E`, in any NaryParser, `P`, the following invariant
-always holds: 
+always holds:
 
 * `traits::is_parser<E>::type` evaluates to `mpl::true_`
 
@@ -316,10 +316,10 @@ word "recursive" in recursive descent parsing.
 
 Nonterminals can have both synthesized and inherited attributes. The
 Nonterminal's /Signature/ specifies both the synthesized and inherited
-attributes. The specification uses the function declarator syntax: 
+attributes. The specification uses the function declarator syntax:
 
     RT(A0, A1, A2, ..., AN)
-    
+
 where `RT` is the Nonterminal's synthesized attribute and `A0` ... `AN`
 are the Nonterminal's inherited attributes.
 
@@ -340,6 +340,10 @@ __phoenix__ placeholder refers to the Nonterminal's (synthesized)
 attribute. The `_val` placeholder acts like a mutable reference to the
 Nonterminal's attribute.
 
+[note Starting with __spirit__ V2.5 (distributed with Boost V1.47) the 
+      placeholder `_val` can be used in semantic actions attached to top level
+      parser components as well. See __parse_api__ for more information.]
+
 [heading `_r1` ... `r10`]
 
 The `boost::spirit::_r1` ... `boost::spirit::r10` placeholders can be used
@@ -351,31 +355,31 @@ inherited attributes.
 
 Nonterminals can have local variables that will be created on the stack
 at parse time. A locals descriptor added to the Nonterminal declaration
-will give the Nonterminal local variables: 
+will give the Nonterminal local variables:
 
     template <typename T0, typename T1, typename T2, ..., typename TN>
     struct locals;
 
 where `T0` ... `TN` are the types of local variables accessible in your
-__phoenix__ semantic actions using the placeholders: 
+__phoenix__ semantic actions using the placeholders:
 
 * `boost::spirit::_a`
-* `boost::spirit::_b` 
+* `boost::spirit::_b`
 * `boost::spirit::_c`
-* `boost::spirit::_d` 
-* `boost::spirit::_e` 
-* `boost::spirit::_f` 
+* `boost::spirit::_d`
+* `boost::spirit::_e`
+* `boost::spirit::_f`
 * `boost::spirit::_g`
-* `boost::spirit::_h` 
-* `boost::spirit::_i` 
-* `boost::spirit::_j` 
-    
+* `boost::spirit::_h`
+* `boost::spirit::_i`
+* `boost::spirit::_j`
+
 which correspond to the Nonterminal's local variables `T0` ... `T9`.
 
 [variablelist Notation
     [[`x`]                          [A Nonterminal]]
     [[`X`]                          [A Nonterminal type]]
-    [[`arg1`, `arg2`, ..., `argN`]  [__qi_lazy_arguments__ that evaluate to each of 
+    [[`arg1`, `arg2`, ..., `argN`]  [__qi_lazy_arguments__ that evaluate to each of
                                     the Nonterminal's inherited attributes.]]
 ]
 
@@ -387,7 +391,7 @@ Nonterminal the following must be met:
 [table
     [[Expression]               [Semantics]                                         [Return type]]
     [[`x`]                      [In a parser expression, invoke Nonterminal `x`]    [`X`]]
-    [[`x(arg1, arg2, ..., argN)`][In a parser expression, invoke Nonterminal `r` 
+    [[`x(arg1, arg2, ..., argN)`][In a parser expression, invoke Nonterminal `r`
                                 passing in inherited attributes
                                 `arg1` ... `argN`]                                    [`X`]]
     [[`x.name(name)`]           [Naming a Nonterminal.]                             [`void`]]

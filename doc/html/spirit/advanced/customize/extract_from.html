@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Extract an Attribute Value to Generate Output (Karma)</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../../../index.html" title="Spirit 2.4.2">
 <link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
 <link rel="prev" href="clear_value.html" title="Re-Initialize an Attribute Value before Parsing (Qi)">
-<link rel="next" href="iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
+<link rel="next" href="extract_from_container.html" title="Extract From a Container Attribute Value to Generate Output (Karma)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="clear_value.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="iterate.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="clear_value.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="extract_from_container.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -28,7 +28,7 @@
         Attribute Value to Generate Output (Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.extract_from.extract_from"></a><h6>
-<a name="id1289480"></a>
+<a name="id1126831"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.extract_from">extract_from</a>
         </h6>
 <p>
@@ -50,7 +50,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.module_headers"></a><h6>
-<a name="id1289522"></a>
+<a name="id1126890"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.module_headers">Module
           Headers</a>
         </h6>
@@ -71,7 +71,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.namespace"></a><h6>
-<a name="id1289614"></a>
+<a name="id1127008"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -88,7 +88,7 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.synopsis"></a><h6>
-<a name="id1289687"></a>
+<a name="id1127092"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Exposed</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
@@ -101,7 +101,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.extract_from.template_parameters"></a><h6>
-<a name="id1289876"></a>
+<a name="id1127324"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.template_parameters">Template
           parameters</a>
         </h6>
@@ -222,7 +222,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.extract_from.expression_semantics"></a><h6>
-<a name="id1291597"></a>
+<a name="id1127721"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -261,7 +261,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.predefined_specializations"></a><h6>
-<a name="id1291724"></a>
+<a name="id1127865"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -355,7 +355,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.when_to_implement"></a><h6>
-<a name="id1292075"></a>
+<a name="id1128304"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.when_to_implement">When
           to implement</a>
         </h6>
@@ -365,13 +365,6 @@
           as shown above is not applicable. Examples for this could be that the type
           to be extracted is different from <code class="computeroutput"><span class="identifier">Attrib</span></code>
           and is not copy constructible.
-        </p>
-<a name="spirit.advanced.customize.extract_from.example"></a><h6>
-<a name="id1292108"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.example">Example</a>
-        </h6>
-<p>
-          TBD
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
@@ -384,7 +377,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="clear_value.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="iterate.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="clear_value.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="extract_from_container.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -8,6 +8,7 @@
 =============================================================================*/
 
 #include "int.hpp"
+#include <boost/spirit/include/qi_rule.hpp>
 
 int
 main()
@@ -135,7 +136,20 @@ main()
         BOOST_TEST(n == 456);
         BOOST_TEST(!test("   456", int_(654)[ref(n) = _1], space));
     }
-    
+
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::_1;
+        using boost::spirit::qi::_val;
+        using boost::spirit::qi::space;
+
+        int i = 0;
+        int j = 0;
+        BOOST_TEST(test_attr("456", int_[_val = _1], i) && i == 456);
+        BOOST_TEST(test_attr("   456", int_[_val = _1], j, space) && j == 456);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     //  parameterized lazy tests
     ///////////////////////////////////////////////////////////////////////////

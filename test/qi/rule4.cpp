@@ -166,6 +166,23 @@ main()
         BOOST_TEST(test_attr("1", r, v) && at_c<0>(v) == 1);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::_1;
+        using boost::spirit::qi::_val;
+        using boost::spirit::qi::space;
+        using boost::spirit::qi::space_type;
+
+        rule<const char*, int()> r1 = int_;
+        rule<const char*, int(), space_type> r2 = int_;
+
+        int i = 0;
+        int j = 0;
+        BOOST_TEST(test_attr("456", r1[_val = _1], i) && i == 456);
+        BOOST_TEST(test_attr("   456", r2[_val = _1], j, space) && j == 456);
+    }
+
     return boost::report_errors();
 }
 

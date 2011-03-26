@@ -8,10 +8,10 @@
 
 [article Spirit Repository
     [quickbook 1.4]
-    [version 0.1]
+    [version 0.2]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
-    [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 Joel de Guzman, Hartmut Kaiser]
-    [purpose Parser and Generator Library]
+    [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 Joel de Guzman, Hartmut Kaiser]
+    [/ purpose Parser and Generator Library]
     [license
         Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
@@ -21,7 +21,7 @@
 
 [/ May 26, 2009 ]
 
-[def __spirit__                 [@http://spirit.sourceforge.net Spirit]]
+[def __spirit__                 [@http://boost-spirit.com Spirit]]
 [def __spirit_list__            [@http://www.nabble.com/The-Spirit-Parser-Library-f3430.html Spirit General List]]
 [def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
 [def __boost_phoenix__               [@../../phoenix/doc/html/index.html Phoenix2]]
@@ -39,6 +39,12 @@
 [def __karma__                  /Spirit.Karma/]
 [def __lex__                    /Spirit.Lex/]
 
+[def __qi_advance__             [link spirit_repository.qi_components.primitive.advance `advance`]]
+[def __qi_subrule__             [link spirit_repository.qi_components.nonterminal.subrule `subrule`]]
+[def __qi_confix__              [link spirit_repository.qi_components.directives.confix `confix`]]
+
+[def __karma_subrule__          [link spirit_repository.karma_components.nonterminal.subrule `subrule`]]
+
 [/ Some images ]
 
 [def __note__                   [$images/note.png]]
@@ -55,4 +61,5 @@
 
 [include karma.qbk]
 
+[include acknowledgements.qbk]
 

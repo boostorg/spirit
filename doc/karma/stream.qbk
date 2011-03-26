@@ -173,9 +173,9 @@ instance.
     [[Expression]           [Attribute]]
     [[`stream`]             [`hold_any`, attribute is mandatory (otherwise compilation will fail)]]
     [[`stream(s)`]          [__unused__]]
-    [[`wstream`]            [`hold_any`, attribute is mandatory (otherwise compilation will fail)]]
+    [[`wstream`]            [`whold_any`, attribute is mandatory (otherwise compilation will fail)]]
     [[`wstream(s)`]         [__unused__]]
-    [[`stream_generator<Char>()`]    [`hold_any`, attribute is mandatory (otherwise compilation will fail)]]
+    [[`stream_generator<Char>()`]    [`basic_hold_any<Char>`, attribute is mandatory (otherwise compilation will fail)]]
     [[`stream_generator<Char>()(s)`] [__unused__]]
 ]
 

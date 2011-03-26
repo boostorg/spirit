@@ -114,9 +114,12 @@
 
 [template karma_format[str]     [link spirit.karma.reference.generate_api.stream_api [str]]]
 
+[def __generator_api__          [link spirit.karma.reference.generate_api The Generator API]]
+
 [/ References to classes ]
 
-[/ def __utree__                  [link spirit.support.utree `utree`]]
+[def __utree__                  [link spirit.support.utree `utree`]]
+[def __line_pos_iterator__      [link spirit.support.line_pos_iterator `line_pos_iterator`]]
 [def __multi_pass__             [link spirit.support.multi_pass `multi_pass`]]
 
 [def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `lex::token_def<>`]
@@ -145,7 +148,7 @@
 [/ References to reference ]
 
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
-[def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
+[def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<>`]]
 [template qi_lit_string[str]        [link spirit.qi.reference.string.string [str]]]
 [template qi_lit_char[char]         [link spirit.qi.reference.char.char [char]]]
 [template karma_lit_string[str]        [link spirit.karma.reference.string.string [str]]]
@@ -213,7 +216,7 @@
 [template karma_string[str]         [link spirit.karma.reference.string [str]]]
 [template karma_symbols[str]        [link spirit.karma.reference.string.symbols [str]]]
 
-[template karma_stream[str]         [link spirit.karma.reference.stream [str]]]
+[template karma_stream[str]         [link spirit.karma.reference.stream.stream [str]]]
 
 [template karma_auto[str]           [link spirit.karma.reference.auto [str]]]
 [def __create_generator__           [link spirit.karma.reference.generate_api.create_generator `create_generator`]]
@@ -268,6 +271,7 @@
 [def __customize_container_value__  [link spirit.advanced.customize.store_value.container_value `traits::container_value`]]
 [def __customize_clear_value__      [link spirit.advanced.customize.clear_value `traits::clear_value`]]
 [def __customize_extract_from__     [link spirit.advanced.customize.extract_from `traits::extract_from`]]
+[def __customize_extract_from_container__  [link spirit.advanced.customize.extract_from_container `traits::extract_from_container`]]
 [def __customize_container_iterator__ [link spirit.advanced.customize.iterate.container_iterator `traits::container_iterator`]]
 [def __customize_begin_container__  [link spirit.advanced.customize.iterate.begin_container `traits::begin_container`]]
 [def __customize_end_container__    [link spirit.advanced.customize.iterate.end_container `traits::end_container`]]
@@ -393,6 +397,7 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [def __qi_omit__                    [link spirit.qi.reference.directive.omit `omit`]]
 [def __qi_matches__                 [link spirit.qi.reference.directive.matches `matches`]]
 [def __qi_raw__                     [link spirit.qi.reference.directive.raw `raw`]]
+[def __qi_repeat__                  [link spirit.qi.reference.directive.repeat `repeat`]]
 [template qi_repeat[str]            [link spirit.qi.reference.directive.repeat [str]]]
 [def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
 [template qi_no_skip[str]           [link spirit.qi.reference.directive.no_skip [str]]]
@@ -416,6 +421,8 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [def __qi_sequence__                [link spirit.qi.reference.operator.sequence Sequence]]
 [def __qi_sequential_or__           [link spirit.qi.reference.operator.sequential_or Sequential Or]]
 
+[def __qi_stream__                  [link spirit.qi.reference.stream.stream `stream`]]
+
 [/ nonterminal]
 [def __qi_rule__                    [link spirit.qi.reference.nonterminal.rule rule]]
 [def __qi_rules__                   [link spirit.qi.reference.nonterminal.rule rules]]
@@ -427,6 +434,7 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [template qi_auto[str]              [link spirit.qi.reference.auto [str]]]
 [def __create_parser__              [link spirit.qi.reference.parse_api.create_parser `create_parser`]]
 
+[__parse_api__                      [link spirit.qi.reference.parse_api The Parse API]]
 
 [/ Here we go ]
 

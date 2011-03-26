@@ -26,6 +26,7 @@ import testing ;
     test-suite spirit_v2/qi :
 
      [ run qi/actions.cpp          : : : : qi_actions ]
+     [ run qi/actions2.cpp         : : : : qi_actions2 ]
      [ run qi/alternative.cpp      : : : : qi_alternative ]
      [ run qi/attr.cpp             : : : : qi_attr ]
      [ run qi/attribute1.cpp       : : : : qi_attribute1 ]
@@ -65,6 +66,8 @@ import testing ;
      [ run qi/not_predicate.cpp    : : : : qi_not_predicate ]
      [ run qi/optional.cpp         : : : : qi_optional ]
      [ run qi/parse_attr.cpp       : : : : qi_parse_attr ]
+     [ run qi/pass_container1.cpp  : : : : qi_pass_container1 ]
+     [ run qi/pass_container2.cpp  : : : : qi_pass_container2 ]
      [ run qi/permutation.cpp      : : : : qi_permutation ]
      [ run qi/plus.cpp             : : : : qi_plus ]
      [ run qi/range_run.cpp        : : : : qi_range_run ]
@@ -82,6 +85,7 @@ import testing ;
      [ run qi/sequence.cpp         : : : : qi_sequence ]
      [ run qi/sequential_or.cpp    : : : : qi_sequential_or ]
      [ run qi/skip.cpp             : : : : qi_skip ]
+     [ run qi/stream.cpp           : : : : qi_stream ]
      [ run qi/symbols1.cpp         : : : : qi_symbols1 ]
      [ run qi/symbols2.cpp         : : : : qi_symbols2 ]
      [ run qi/terminal_ex.cpp      : : : : qi_terminal_ex ]
@@ -89,14 +93,14 @@ import testing ;
      [ run qi/uint1.cpp            : : : : qi_uint1 ]
      [ run qi/uint2.cpp            : : : : qi_uint2 ]
      [ run qi/uint3.cpp            : : : : qi_uint3 ]
-#     [ run qi/utree1.cpp           : : : : qi_utree1 ]
-#     [ run qi/utree2.cpp           : : : : qi_utree2 ]
-#     [ run qi/utree3.cpp           : : : : qi_utree3 ]
-#     [ run qi/utree4.cpp           : : : : qi_utree4 ]
-    
+     [ run qi/utree1.cpp           : : : : qi_utree1 ]
+     [ run qi/utree2.cpp           : : : : qi_utree2 ]
+     [ run qi/utree3.cpp           : : : : qi_utree3 ]
+     [ run qi/utree4.cpp           : : : : qi_utree4 ]
+
     ;
-    
-    ###########################################################################    
+
+    ###########################################################################
     test-suite spirit_v2/qi_regressions :
 
      [ compile qi/regression_attr_with_action.cpp                 : : qi_regression_attr_with_action ]
@@ -106,10 +110,13 @@ import testing ;
      [ run qi/regression_clear.cpp                                : : : : qi_regression_clear ]
      #[ run qi/regression_float_fraction.cpp                      : : : : qi_regression_float_fraction ]
      [ run qi/regression_lazy_repeat.cpp                          : : : : qi_regression_lazy_repeat ]
+     [ run qi/regression_numeric_alternatives.cpp                 : : : : qi_regression_numeric_alternatives ]
      [ run qi/regression_reorder.cpp                              : : : : qi_regression_reorder ]
      [ run qi/regression_repeat.cpp                               : : : : qi_regression_repeat ]
      [ run qi/regression_transform_assignment.cpp                 : : : : qi_regression_transform_assignment ]
      [ compile qi/regression_fusion_proto_spirit.cpp              : : qi_regression_fusion_proto_spirit ]
+     [ compile qi/pass_container3.cpp                             : : qi_pass_container3 ]
+     [ compile qi/regression_container_attribute.cpp              : : qi_regression_container_attribute ]
     ;
 
     ###########################################################################
@@ -180,19 +187,20 @@ import testing ;
      [ run karma/symbols2.cpp                  : : : : karma_symbols2 ]
      [ run karma/symbols3.cpp                  : : : : karma_symbols3 ]
      [ run karma/tricky_alignment.cpp          : : : : karma_tricky_alignment ]
-#     [ run karma/utree1.cpp                    : : : : karma_utree1 ]
-#     [ run karma/utree2.cpp                    : : : : karma_utree2 ]
-#     [ run karma/utree3.cpp                    : : : : karma_utree3 ]
+     [ run karma/utree1.cpp                    : : : : karma_utree1 ]
+     [ run karma/utree2.cpp                    : : : : karma_utree2 ]
+     [ run karma/utree3.cpp                    : : : : karma_utree3 ]
      [ run karma/wstream.cpp                   : : : : karma_wstream ]
 
     ;
 
-    ###########################################################################    
+    ###########################################################################
     test-suite spirit_v2/karma_regressions :
 
      [ run karma/regression_optional_double.cpp            : : : :  karma_regression_optional_double ]
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
+     [ compile karma/regression_const_real_policies.cpp    : :  regression_const_real_policies ]
 
     ;
 
@@ -212,7 +220,8 @@ import testing ;
      [ run lex/semantic_actions.cpp          : : : : lex_semantic_actions ]
      [ run lex/auto_switch_lexerstate.cpp    : : : : lex_auto_switch_lexerstate ]
      [ run lex/id_type_enum.cpp              : : : : lex_id_type_enum ]
-    
+     [ run lex/string_token_id.cpp           : : : : lex_string_token_id ]
+
     ;
 
     ###########################################################################
@@ -231,17 +240,18 @@ import testing ;
      [ run lex/regression_file_iterator2.cpp : : : : lex_regression_file_iterator2 ]
      [ run lex/regression_file_iterator3.cpp : : : : lex_regression_file_iterator3 ]
      [ run lex/regression_file_iterator4.cpp : : : : lex_regression_file_iterator4 ]
-    
+
     ;
 
     ###########################################################################
-#    test-suite spirit_v2/support :
-#
-#     [ run support/utree.cpp : : : : support_utree ]
-#
-#    ;
+    test-suite spirit_v2/support :
 
-    ###########################################################################    
+     [ run support/utree.cpp                  : : : : support_utree ]
+     [ run support/utree_debug.cpp            : : : : support_utree_debug ]
+
+    ;
+
+    ###########################################################################
     test-suite spirit_v2/support_regressions :
 
      [ compile support/regression_multi_pass_position_iterator.cpp : : support_regression_multi_pass_position_iterator ]

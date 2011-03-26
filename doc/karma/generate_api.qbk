@@ -100,6 +100,12 @@ Also, see __include_structure__.
           , Attr1 const& attr1, Attr2 const& attr2, ..., AttrN const& attrN);
     }}}
 
+[note Starting with __spirit__ V2.5 (distributed with Boost V1.47) the 
+      placeholder `_val` can be used in semantic actions attached to top level
+      generator components. In this case `_val` refers to the supplied attribute
+      as a whole. For API functions taking more than one attribute argument
+      `_val` will refer to a Fusion vector or references to the attributes.]
+
 __karma__ generator API functions based on the automatic creation of the 
 matching generator type:
 

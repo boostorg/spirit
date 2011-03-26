@@ -1374,6 +1374,113 @@ specific type whenever the default implementation as shown above is not
 applicable. Examples for this could be that the type to be extracted is 
 different from `Attrib` and is not copy constructible.
 
+[/ TODO: examples ]
+
+[endsect] [/ extract_from]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:extract_from_container Extract From a Container Attribute Value to Generate Output (Karma)]
+
+[heading extract_from_container]
+
+Before generating output for a value this value needs to extracted from the 
+attribute instance provided by the user. The customization point 
+`extract_from_container` is utilized to adapt this extraction for any data type possibly
+used to store the values to output.
+
+[note The interface of this customization point has been changed with Boost 
+      V1.44. We added the `Exposed` template parameter to allow for more fine 
+      grained specializations of the required __karma__ attribute 
+      transformations.]
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/karma/detail/extract_from.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename Exposed, typename Attrib, typename Enable>
+    struct extract_from_container
+    {
+        typedef <unspecified> type;
+
+        template <typename Context>
+        static type call(Attrib const& attr, Context& context);
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Exposed`]            [The type, `Exposed` of the attribute natively
+                             exposed by the component the `extract_from_container` is
+                             invoked from.]             [none]]
+    [[`Attrib`]             [The type, `Attrib` is the container attribute to be used to
+                             generate output from.]                 [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `clear_value` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+    [[`Context`]            [This is the type of the current generator execution 
+                             context.]]
+]
+
+[heading Notation]
+
+[variablelist Notation
+    [[`Exposed`]    [A type exposed as the native attribute of a component.]]
+    [[`Attrib`]     [A container type to be used to generate output from.]]
+    [[`attr`]       [An attribute instance of type `Attrib`.]]
+    [[`ctx`]        [An instance of type `Context`.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]       [Semantics]]
+    [[
+``extract_from_container<Exposed, Attrib>::call(attr, ctx)``] 
+                        [Extract the value to generate 
+                         output from the contaner given by `attr` and return 
+                         it to the caller.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. The following table lists those types together with the types
+exposed and the corresponding semantics:
+
+[table
+    [[Template Parameters]     [Value]]
+    [[`Attrib`]                [The exposed typedef `type` is defined to 
+                                `Attrib const&`. The function `call()` returns 
+                                the argument by reference without change.]] 
+    [[__unused_type__]         [The exposed typedef `type` is defined to 
+                                __unused_type__. The function `call()` returns
+                                an instance of __unused_type__.]]
+]
+
+[heading When to implement]
+
+The customization point `extract_from_container` needs to be implemented for a 
+specific container type whenever the default implementation as shown above is not 
+applicable. Examples for this could be that the type to be extracted is 
+different from `Attrib` and is not copy constructible.
+
 [heading Example]
 
 TBD

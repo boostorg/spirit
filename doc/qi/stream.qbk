@@ -61,7 +61,7 @@ Also, see __include_structure__.
                  assigning the generated characters to the 
                  underlying input iterator.]           [`char`]]
     [[`Attrib`] [The type of the attribute the `stream_parser` is
-                 expected to parse its input into.]    [`spirit::hold_any`]]
+                 expected to parse its input into.]    [`spirit::basic_hold_any<Char>`]]
 ]
 
 [heading Model of]
@@ -148,7 +148,7 @@ the attribute of type `attribute_type`.
 [table
     [[Expression]           [Attribute]]
     [[`stream`]             [`spirit::hold_any`]]
-    [[`wstream`]            [`spirit::hold_any`]]
+    [[`wstream`]            [`spirit::whold_any`]]
     [[`stream_parser<Char, Attrib>()`]    [`Attrib`]]
 ]
 
