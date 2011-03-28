@@ -134,7 +134,7 @@ namespace boost { namespace spirit { namespace traits
         // handle case where container value type is convertible to result type
         // we simply return the front element of the container
         template <typename Context, typename Pred>
-        static type call(Attribute const& attr, Context& ctx, mpl::true_, Pred)
+        static type call(Attribute const& attr, Context&, mpl::true_, Pred)
         {
             // return first element from container
             typedef typename traits::container_iterator<Attribute const>::type 
@@ -155,7 +155,7 @@ namespace boost { namespace spirit { namespace traits
         }
 
         template <typename Context>
-        static type call(Attribute const& attr, Context& ctx, mpl::false_, mpl::true_)
+        static type call(Attribute const& attr, Context&, mpl::false_, mpl::true_)
         {
             typedef typename char_type_of<Attribute>::type char_type;
 
@@ -167,7 +167,7 @@ namespace boost { namespace spirit { namespace traits
 
         // everything else gets just passed through
         template <typename Context>
-        static type call(Attribute const& attr, Context& ctx, mpl::false_, mpl::false_)
+        static type call(Attribute const& attr, Context&, mpl::false_, mpl::false_)
         {
             return type(attr);
         }
@@ -191,7 +191,7 @@ namespace boost { namespace spirit { namespace traits
         typedef Attribute const& type;
 
         template <typename Context>
-        static type call(Attribute const& attr, Context& ctx)
+        static type call(Attribute const& attr, Context&)
         {
             return attr;
         }

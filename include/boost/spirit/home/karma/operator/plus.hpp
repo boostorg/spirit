@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace karma
         // are just skipped). This allows to selectively generate items in 
         // the provided attribute.
         template <typename F, typename Attribute>
-        bool generate_subject(F f, Attribute const& attr, bool& result, mpl::false_) const
+        bool generate_subject(F f, Attribute const&, bool& result, mpl::false_) const
         {
             bool r = !f(subject);
             if (r) 
@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename F, typename Attribute>
-        bool generate_subject(F f, Attribute const& attr, bool& result, mpl::true_) const
+        bool generate_subject(F f, Attribute const&, bool& result, mpl::true_) const
         {
             bool r = !f(subject);
             if (r)

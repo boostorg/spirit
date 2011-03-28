@@ -85,7 +85,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Context>
-        static info what(Context const& ctx)
+        static info what(Context const&)
         {
             return info("pad");
         }

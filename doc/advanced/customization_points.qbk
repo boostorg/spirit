@@ -110,7 +110,7 @@ Also, see __include_structure__.
     template <typename Container, typename Enable>
     struct is_container
     {
-        typedef <unspecified> type;
+        <unspecified>;
     };
 
 [heading Template parameters]
@@ -139,7 +139,8 @@ Also, see __include_structure__.
     [[`is_container<C>::type`]    [Result of the metafunction that evaluates to 
                                    `mpl::true_` if a given type, `C`, is to be 
                                    treated as a container, `mpl::false_` otherwise 
-                                   (See __mpl_boolean_constant__).]]
+                                   Generally, any implementation of `is_container` 
+                                   needs to behave as if if was a __mpl_boolean_constant__..]]
 ]
 
 [heading Predefined Specializations]
@@ -238,7 +239,7 @@ Also, see __include_structure__.
     template <typename T>
     struct is_string
     {
-        typedef <unspecified> type;
+        <unspecified>;
     };
 
 [heading Template parameters]
@@ -262,7 +263,9 @@ Also, see __include_structure__.
     [[Expression]       [Semantics]]
     [[`is_string<T>::type`] [Result of the metafunction that evalutes to mpl::true_
                              if a given type, `T`, is to be treated as a string and
-                             mpl::false_ otherwise. (See __mpl_boolean_constant__).]]
+                             mpl::false_ otherwise. Generally,
+                             any implementation of `is_string` needs to behave as 
+                             if if was a __mpl_boolean_constant__.]]
 ]
 
 [heading Predefined Specializations]
@@ -354,10 +357,12 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Component, typename Attribute, typename Enable>
+    template <
+        typename Component, typename Attribute, typename Context, 
+        typename Iterator, typename Enable>
     struct handles_container
     {
-        typedef <unspecified> type;
+        <unspecified>;
     };
 
 [heading Template parameters]
@@ -368,7 +373,11 @@ Also, see __include_structure__.
                              be tested whether it handles container attributes 
                              directly.]                              [none]]
     [[`Attribute`]          [The attribute type `Attribute` as passed to the 
-                             sequence operator.]
+                             sequence operator.]                     [none]]
+    [[`Context`]            [This is the type of the current component execution 
+                             context.]                               [`unused_type`]]
+    [[`Iterator`]           [The type, `Iterator` is the type of the iterators
+                             used to invoke the component.]          [`unused_type`]]
     [[`Enable`]             [Helper template parameter usable to selectively
                              enable or disable certain specializations
                              of `is_container` utilizing SFINAE (i.e.
@@ -390,8 +399,9 @@ Also, see __include_structure__.
                                     [Result of the metafunction that evaluates to 
                                      `mpl::true_` if a given component type `Component`, 
                                      handles container attributes directly, 
-                                     `mpl::false_` otherwise 
-                                   (See __mpl_boolean_constant__).]]
+                                     `mpl::false_` otherwise. Generally,
+                                    any implementation of `handles_container` needs to 
+                                    behave as if if was a __mpl_boolean_constant__.]]
 ]
 
 [heading Predefined Specializations]
@@ -465,6 +475,7 @@ Also, see __include_structure__.
     struct transform_attribute
     {
         typedef <unspecified> type;
+
         static type pre(Exposed& val);
         static void post(Exposed& val, type attr);    // Qi only
         static void fail(Exposed&);                   // Qi only
@@ -2320,8 +2331,9 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename T>
-    struct is_char {
-      typedef <unspecified> type;
+    struct is_char 
+    {
+        <unspecified>;
     };
 
 [heading Template parameters]
@@ -2340,8 +2352,9 @@ Also, see __include_structure__.
 [table
     [[Expression]         [Semantics]]
     [[`is_char<T>::type`] [`mpl::true_` if T should be treated as a character
-                           type, and `mpl::false_` otherwise.
-                           (See __mpl_boolean_constant__).]]
+                           type, and `mpl::false_` otherwise. Generally,
+                           any implementation of `is_char` needs to behave as 
+                           if if was a __mpl_boolean_constant__.]]
 ]
 
 [heading Predefined Specializations]

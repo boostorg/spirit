@@ -605,7 +605,7 @@ namespace boost { namespace spirit
     template <typename F>
     stored_function<F>::~stored_function()
     {
-    };
+    }
 
     template <typename F>
     utree stored_function<F>::operator()(scope const& env) const
@@ -629,7 +629,7 @@ namespace boost { namespace spirit
     template <typename F>
     referenced_function<F>::~referenced_function()
     {
-    };
+    }
 
     template <typename F>
     utree referenced_function<F>::operator()(scope const& env) const
@@ -1437,7 +1437,7 @@ namespace boost { namespace spirit
         }
 
         template <typename From>
-        To dispatch(From const& val, boost::mpl::false_) const
+        To dispatch(From const&, boost::mpl::false_) const
         {
             // From is NOT convertible to To !!!
             boost::throw_exception(std::bad_cast());
@@ -1463,7 +1463,7 @@ namespace boost { namespace spirit
         typedef T* result_type;
 
         template <typename From>
-        T* operator()(From const& val) const
+        T* operator()(From const&) const
         {
             // From is NOT convertible to T !!!
             boost::throw_exception(std::bad_cast());

@@ -49,7 +49,7 @@ template <typename Iterator>
 struct word_count_grammar : qi::grammar<Iterator>
 {
     template <typename TokenDef>
-    word_count_grammar(TokenDef const& tok)
+    word_count_grammar(TokenDef const&)
       : word_count_grammar::base_type(start)
       , w(0), c(0), a(0)
     {

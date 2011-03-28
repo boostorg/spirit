@@ -225,7 +225,7 @@ namespace boost { namespace spirit { namespace karma
         // been initialized from a direct literal
         template <
             typename OutputIterator, typename Context, typename Delimiter>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
+        static bool generate(OutputIterator&, Context&, Delimiter const&
           , unused_type)
         {
             // It is not possible (doesn't make sense) to use binary generators

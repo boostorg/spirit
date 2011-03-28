@@ -175,7 +175,7 @@ namespace boost { namespace spirit
     //[utree_function_object_interface
     struct function_base
     {
-        virtual ~function_base() {};
+        virtual ~function_base() {}
         virtual utree operator()(scope const& env) const = 0;
 
         // Calling f.clone() must return a newly allocated function_base 

@@ -109,6 +109,14 @@ namespace boost { namespace spirit { namespace traits
       : is_weak_substitute<T, Expected> {};
 
     template <typename T, typename Expected>
+    struct is_weak_substitute<optional<T>, Expected>
+      : is_weak_substitute<T, Expected> {};
+
+    template <typename T, typename Expected>
+    struct is_weak_substitute<T, optional<Expected> >
+      : is_weak_substitute<T, Expected> {};
+
+    template <typename T, typename Expected>
     struct is_weak_substitute<T, Expected,
         typename enable_if<
             mpl::and_<
@@ -881,12 +889,12 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <typename A>
-    void swap_impl(A& a, unused_type)
+    void swap_impl(A&, unused_type)
     {
     }
 
     template <typename A>
-    void swap_impl(unused_type, A& a)
+    void swap_impl(unused_type, A&)
     {
     }
 
