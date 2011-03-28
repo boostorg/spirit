@@ -109,6 +109,14 @@ namespace boost { namespace spirit { namespace traits
       : is_weak_substitute<T, Expected> {};
 
     template <typename T, typename Expected>
+    struct is_weak_substitute<optional<T>, Expected>
+      : is_weak_substitute<T, Expected> {};
+
+    template <typename T, typename Expected>
+    struct is_weak_substitute<T, optional<Expected> >
+      : is_weak_substitute<T, Expected> {};
+
+    template <typename T, typename Expected>
     struct is_weak_substitute<T, Expected,
         typename enable_if<
             mpl::and_<
