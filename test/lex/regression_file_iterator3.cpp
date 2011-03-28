@@ -14,10 +14,11 @@
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/home/phoenix/core.hpp>
-#include <boost/spirit/home/phoenix/operator.hpp>
-#include <boost/spirit/home/phoenix/statement.hpp>
-#include <boost/spirit/home/phoenix/object.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/spirit/include/phoenix_stl.hpp>
 
 #include <sstream>
 
@@ -43,7 +44,7 @@ make_file_iterator(std::istream& input, const std::string& filename)
 
 struct string_literal
 {
-    string_literal(file_iterator begin, file_iterator end)
+    string_literal(file_iterator, file_iterator)
     {
     }
 };

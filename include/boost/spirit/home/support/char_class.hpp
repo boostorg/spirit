@@ -269,6 +269,7 @@ namespace boost { namespace spirit { namespace tag
     struct char_code
         : char_code_base<CharClass>, char_encoding_base<CharEncoding>
     {
+        typedef void is_spirit_tag;
         typedef CharEncoding char_encoding; // e.g. ascii
         typedef CharClass char_class;       // e.g. tag::alnum
     };

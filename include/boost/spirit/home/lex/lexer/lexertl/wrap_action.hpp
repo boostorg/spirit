@@ -13,10 +13,10 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/phoenix/core/actor.hpp>
-#include <boost/spirit/home/phoenix/core/argument.hpp>
-#include <boost/spirit/home/phoenix/bind.hpp>
-#include <boost/spirit/home/phoenix/scope.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_bind.hpp>
+#include <boost/spirit/include/phoenix_scope.hpp>
+
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/lex/lexer/pass_flags.hpp>
 
@@ -40,9 +40,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             // wrap phoenix actor
             struct phoenix_action
             {
+                typedef void result_type;
+
                 template <typename F, typename T1, typename T2, typename T3
                   , typename T4, typename T5>
-                struct result { typedef void type; };
+                struct result { typedef result_type type; };
 
                 template <typename Eval>
                 void operator()(phoenix::actor<Eval> const& f, Iterator& start

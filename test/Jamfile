@@ -7,6 +7,26 @@
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
+
+# bring in rules for testing
+import testing ;
+import modules ;
+import feature ;
+
+###############################################################################
+# new feature definition allowing to switch between Phoenix V2 and V3 tests
+feature.feature phoenix_v3 
+    :   on
+    :   optional composite propagated 
+    ;
+
+feature.compose <phoenix_v3>on
+    :   <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
+        <define>BOOST_PROTO_MAX_ARITY=11
+        <define>BOOST_PROTO_MAX_LOGICAL_ARITY=11
+    ;
+
+###############################################################################
 project spirit_v2x/test
     : requirements
         <include>.
@@ -16,10 +36,35 @@ project spirit_v2x/test
     :
     ;
 
-path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
+# use this alias to buil Spirit against Phoenix V2
+alias test_using_phoenix_v2 
+    :   spirit_v2/qi 
+        spirit_v2/qi_regressions
+        spirit_v2/karma
+        spirit_v2/karma_regressions
+        spirit_v2/lex
+        spirit_v2/lex_regressions
+        spirit_v2/support
+        spirit_v2/support_regressions
+    ;
 
-# bring in rules for testing
-import testing ;
+# use this alias to buil Spirit against Phoenix V3
+alias test_using_phoenix_v3 
+    :   spirit_v2/qi 
+        spirit_v2/qi_regressions
+        spirit_v2/karma
+        spirit_v2/karma_regressions
+        spirit_v2/lex
+        spirit_v2/lex_regressions
+        spirit_v2/support
+        spirit_v2/support_regressions
+    :   <phoenix_v3>on 
+    ;
+
+explicit test_using_phoenix_v2 test_using_phoenix_v3 ;
+
+###############################################################################
+path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
 
 {
     ###########################################################################

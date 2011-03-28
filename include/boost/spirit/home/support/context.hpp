@@ -1,5 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c)      2011 Thomas Heller
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,11 +14,11 @@
 #endif
 
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/home/support/nonterminal/expand_arg.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/support/argument.hpp>
-#include <boost/spirit/home/phoenix/core/actor.hpp>
-#include <boost/spirit/home/phoenix/core/argument.hpp>
+#include <boost/spirit/home/support/limits.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/as_list.hpp>
@@ -24,34 +26,68 @@
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/at.hpp>
 
-#if !defined(SPIRIT_ATTRIBUTES_LIMIT)
-# define SPIRIT_ATTRIBUTES_LIMIT PHOENIX_LIMIT
-#endif
-
+///////////////////////////////////////////////////////////////////////////////
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#define SPIRIT_DECLARE_ATTRIBUTE(z, n, data)                                    \
-    typedef phoenix::actor<attribute<n> > const                                 \
-        BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                               \
-    phoenix::actor<attribute<n> > const                                         \
-        BOOST_PP_CAT(_r, n) = attribute<n>();
-
-#define SPIRIT_USING_ATTRIBUTE(z, n, data)                                      \
-    using spirit::BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                     \
-    using spirit::BOOST_PP_CAT(_r, n);                                          \
+#define SPIRIT_DECLARE_ATTRIBUTE(z, n, data)                                   \
+    typedef phoenix::actor<attribute<n> >                                      \
+        BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                              \
+    phoenix::actor<attribute<n> > const                                        \
+        BOOST_PP_CAT(_r, n) = BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type)();
+    /***/
+#define SPIRIT_USING_ATTRIBUTE(z, n, data)                                     \
+    using spirit::BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                    \
+    using spirit::BOOST_PP_CAT(_r, n);                                         \
     /***/
 
 #else
 
-#define SPIRIT_DECLARE_ATTRIBUTE(z, n, data)                                    \
-    typedef phoenix::actor<attribute<n> > const                                 \
-        BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                               \
-
-#define SPIRIT_USING_ATTRIBUTE(z, n, data)                                      \
-    using spirit::BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                     \
+#define SPIRIT_DECLARE_ATTRIBUTE(z, n, data)                                   \
+    typedef phoenix::actor<attribute<n> >                                      \
+        BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                              \
+    /***/
+#define SPIRIT_USING_ATTRIBUTE(z, n, data)                                     \
+    using spirit::BOOST_PP_CAT(BOOST_PP_CAT(_r, n), _type);                    \
     /***/
 
 #endif
+
+namespace boost { namespace spirit
+{
+    template <int>
+    struct attribute;
+
+    template <int>
+    struct local_variable;
+}}
+
+BOOST_PHOENIX_DEFINE_CUSTOM_TERMINAL(
+    template <int N>
+  , boost::spirit::attribute<N>
+  , mpl::false_                 // is not nullary
+  , v2_eval(
+        proto::make<
+            boost::spirit::attribute<N>()
+        >
+      , proto::call<
+            functional::env(proto::_state)
+        >
+    )
+)
+
+BOOST_PHOENIX_DEFINE_CUSTOM_TERMINAL(
+    template <int N>
+  , boost::spirit::local_variable<N>
+  , mpl::false_                 // is not nullary
+  , v2_eval(
+        proto::make<
+            boost::spirit::local_variable<N>()
+        >
+      , proto::call<
+            functional::env(proto::_state)
+        >
+    )
+)
 
 namespace boost { namespace spirit
 {
@@ -100,6 +136,11 @@ namespace boost { namespace spirit
     };
 
     template <typename Context>
+    struct attributes_of<Context &>
+      : attributes_of<Context>
+    {};
+
+    template <typename Context>
     struct locals_of
     {
         typedef typename Context::locals_type type;
@@ -109,6 +150,12 @@ namespace boost { namespace spirit
     struct locals_of<Context const>
     {
         typedef typename Context::locals_type const type;
+    };
+
+    template <typename Context>
+    struct locals_of<Context &>
+    {
+        typedef typename Context::locals_type type;
     };
 
     template <int N>
@@ -182,21 +229,19 @@ namespace boost { namespace spirit
             return get_arg<N>((fusion::at_c<1>(env.args())).locals);
         }
     };
-
+    
     typedef phoenix::actor<attribute<0> > const _val_type;
     typedef phoenix::actor<attribute<0> > const _r0_type;
     typedef phoenix::actor<attribute<1> > const _r1_type;
     typedef phoenix::actor<attribute<2> > const _r2_type;
 
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
-
     // _val refers to the 'return' value of a rule (same as _r0)
     // _r1, _r2, ... refer to the rule arguments
-    _val_type _val = attribute<0>();
-    _r0_type _r0 = attribute<0>();
-    _r1_type _r1 = attribute<1>();
-    _r2_type _r2 = attribute<2>();
-
+    _val_type _val = _val_type();
+    _r0_type _r0 = _r0_type();
+    _r1_type _r1 = _r1_type();
+    _r2_type _r2 = _r2_type();
 #endif
 
     //  Bring in the rest of the attributes (_r4 .. _rN+1), using PP
@@ -215,20 +260,19 @@ namespace boost { namespace spirit
     typedef phoenix::actor<local_variable<9> > const _j_type;
 
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
-
     // _a, _b, ... refer to the local variables of a rule
-    _a_type _a = local_variable<0>();
-    _b_type _b = local_variable<1>();
-    _c_type _c = local_variable<2>();
-    _d_type _d = local_variable<3>();
-    _e_type _e = local_variable<4>();
-    _f_type _f = local_variable<5>();
-    _g_type _g = local_variable<6>();
-    _h_type _h = local_variable<7>();
-    _i_type _i = local_variable<8>();
-    _j_type _j = local_variable<9>();
-
+    _a_type _a = _a_type();
+    _b_type _b = _b_type();
+    _c_type _c = _c_type();
+    _d_type _d = _d_type();
+    _e_type _e = _e_type();
+    _f_type _f = _f_type();
+    _g_type _g = _g_type();
+    _h_type _h = _h_type();
+    _i_type _i = _i_type();
+    _j_type _j = _j_type();
 #endif
+
     // You can bring these in with the using directive
     // without worrying about bringing in too much.
     namespace labels

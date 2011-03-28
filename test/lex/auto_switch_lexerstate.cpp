@@ -15,15 +15,11 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#include <boost/spirit/include/phoenix.hpp>
+
 #include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-
-#include <boost/spirit/home/phoenix/core.hpp>
-#include <boost/spirit/home/phoenix/operator.hpp>
-#include <boost/spirit/home/phoenix/statement.hpp>
-#include <boost/spirit/home/phoenix/object.hpp>
-#include <boost/spirit/home/phoenix/stl.hpp>
 
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;

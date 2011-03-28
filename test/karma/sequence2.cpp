@@ -34,8 +34,13 @@ using namespace spirit_test;
 struct seqsize_impl
 {
     template <typename Sequence>
-    struct result 
+    struct result
       : boost::fusion::result_of::size<Sequence>
+    {};
+
+    template <typename This, typename Sequence>
+    struct result<This(Sequence)>
+        : result<typename boost::proto::detail::uncvref<Sequence>::type>
     {};
 
     template <typename Sequence>
