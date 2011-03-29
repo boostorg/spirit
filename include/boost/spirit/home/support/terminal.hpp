@@ -65,6 +65,13 @@ namespace boost { namespace spirit
     template <typename Domain, typename Terminal, int Arity, typename Enable = void>
     struct use_lazy_directive : mpl::false_ {};
 
+    template <typename Terminal>
+    struct terminal;
+
+    template <typename Domain, typename Terminal>
+    struct use_terminal<Domain, terminal<Terminal> >
+        : use_terminal<Domain, Terminal> {};
+
     template <typename Domain, typename Terminal, int Arity, typename Actor>
     struct use_terminal<Domain, lazy_terminal<Terminal, Actor, Arity> >
         : use_lazy_terminal<Domain, Terminal, Arity> {};

@@ -54,39 +54,79 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace detail
 {
+    template <typename Expr, typename State, typename Data, typename Domain>
+    struct make_terminal_impl
+      : proto::transform_impl<Expr, State, Data>
+    {
+        typedef typename
+            proto::result_of::value<Expr>::type 
+        value;
+
+        typedef typename result_of::make_cons<value>::type elements;
+
+        typedef
+            make_component<Domain, proto::tag::terminal>
+        make_component_;
+
+        typedef typename
+            make_component_::template
+                result<make_component_(elements, Data)>::type
+        result_type;
+
+        result_type operator()(
+            typename make_terminal_impl::expr_param expr
+          , typename make_terminal_impl::state_param /*state*/
+          , typename make_terminal_impl::data_param data
+        ) const
+        {
+            return typename make_terminal_impl::make_component_()(
+                detail::make_cons(proto::value(expr))
+              , data
+            );
+        }
+    };
+
+    template <typename Expr, typename State, typename Data, typename Domain>
+    struct make_terminal_impl<phoenix::actor<Expr>, State, Data, Domain>
+      : proto::transform_impl<phoenix::actor<Expr>, State, Data>
+    {
+        typedef phoenix::actor<Expr> value;
+        typedef typename result_of::make_cons<value>::type elements;
+        typedef make_component<Domain, proto::tag::terminal> make_component_;
+
+        typedef typename
+            make_component_::template
+                result<make_component_(elements, Data)>::type
+        result_type;
+
+        result_type operator()(
+            typename make_terminal_impl::expr_param expr
+          , typename make_terminal_impl::state_param /*state*/
+          , typename make_terminal_impl::data_param data
+        ) const
+        {
+            return typename make_terminal_impl::make_component_()(
+                detail::make_cons(expr)
+              , data
+            );
+        }
+    };
+
+    template <typename Expr, typename State, typename Data, typename Domain>
+    struct make_terminal_impl<phoenix::actor<Expr> &, State, Data, Domain>
+        : make_terminal_impl<phoenix::actor<Expr>, State, Data, Domain>
+    {};
+
+    template <typename Expr, typename State, typename Data, typename Domain>
+    struct make_terminal_impl<phoenix::actor<Expr> const &, State, Data, Domain>
+        : make_terminal_impl<phoenix::actor<Expr>, State, Data, Domain>
+    {};
+
     template <typename Domain>
     struct make_terminal : proto::transform<make_terminal<Domain> >
     {
         template<typename Expr, typename State, typename Data>
-        struct impl : proto::transform_impl<Expr, State, Data>
-        {
-            typedef typename
-                proto::result_of::value<Expr>::type 
-            value;
-
-            typedef typename result_of::make_cons<value>::type elements;
-
-            typedef
-                make_component<Domain, proto::tag::terminal>
-            make_component_;
-
-            typedef typename
-                make_component_::template
-                    result<make_component_(elements, Data)>::type
-            result_type;
-
-            result_type operator()(
-                typename impl::expr_param expr
-              , typename impl::state_param /*state*/
-              , typename impl::data_param data
-            ) const
-            {
-                return typename impl::make_component_()(
-                    detail::make_cons(proto::value(expr))
-                  , data
-                );
-            }
-        };
+        struct impl : make_terminal_impl<Expr, State, Data, Domain> {};
     };
 
     template <typename Domain, typename Tag, typename Grammar>

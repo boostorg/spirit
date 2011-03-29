@@ -85,7 +85,9 @@ namespace boost { namespace phoenix
     struct default_actions::when<spirit::lex::rule::less, Dummy>
       : proto::call<
             v2_eval(
-                spirit::lex::less_type<proto::_child0>(proto::_child0)
+                proto::make<
+                    spirit::lex::less_type<proto::_child0>(proto::_child0)
+                >
               , _env
             )
         >
@@ -100,13 +102,15 @@ namespace boost { namespace phoenix
     struct default_actions::when<spirit::lex::rule::lookahead, Dummy>
       : proto::call<
             v2_eval(
-                spirit::lex::lookahead_type<
-                    proto::_child0
-                  , proto::_child1
-                >(
-                    proto::_child0
-                  , proto::_child1
-                )
+                proto::make<
+                    spirit::lex::lookahead_type<
+                        proto::_child0
+                      , proto::_child1
+                    >(
+                        proto::_child0
+                      , proto::_child1
+                    )
+                >
               , _env
             )
         >

@@ -311,9 +311,10 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
     ;
 }
 
-# use this alias to buil Spirit against Phoenix V2
+# use this alias to build Spirit against Phoenix V2
 alias test_using_phoenix_v2 : $(v2_tests) ;
 
-# use this alias to buil Spirit against Phoenix V3
+# use this alias to build Spirit against Phoenix V3
 alias test_using_phoenix_v3 : $(v3_tests) ;
+
 explicit test_using_phoenix_v2 test_using_phoenix_v3 ;

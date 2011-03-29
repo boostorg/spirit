@@ -106,14 +106,24 @@ namespace boost { namespace phoenix
     template <typename Dummy>
     struct custom_terminal<spirit::attribute_context<Dummy> >
       : proto::call<
-            v2_eval(spirit::attribute_context<Dummy>(), _env)
+            v2_eval(
+                proto::make<spirit::attribute_context<Dummy>()>
+              , proto::call<
+                    functional::env(proto::_state)
+                >
+            )
         >
     {};
 
     template <int N>
     struct custom_terminal<spirit::argument<N> >
       : proto::call<
-            v2_eval(spirit::argument<N>(), _env(proto::_, proto::_state, int()))
+            v2_eval(
+                proto::make<spirit::argument<N>()>
+              , proto::call<
+                    functional::env(proto::_state)
+                >
+            )
         >
     {};
 }}
