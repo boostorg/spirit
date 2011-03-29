@@ -20,6 +20,7 @@
 #include <boost/spirit/home/support/meta_compiler.hpp>
 #include <boost/spirit/home/support/detail/make_vector.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/detail/is_spirit_tag.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 
 #include <boost/spirit/home/support/terminal_expression.hpp>
@@ -487,7 +488,7 @@ namespace boost { namespace spirit
           , typename DataTag1 = unused_type, typename DataTag2 = unused_type>
         struct stateful_tag
         {
-            typedef void is_spirit_tag;
+            BOOST_SPIRIT_IS_TAG()
 
             typedef Data data_type;
 
@@ -573,7 +574,7 @@ namespace boost { namespace phoenix
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
 #define BOOST_SPIRIT_TERMINAL_NAME(name, type_name)                             \
-    namespace tag { struct name { typedef void is_spirit_tag; }; }              \
+    namespace tag { struct name { BOOST_SPIRIT_IS_TAG() }; }                    \
     typedef boost::proto::terminal<tag::name>::type type_name;                  \
     type_name const name = {{}};                                                \
     inline void BOOST_PP_CAT(silence_unused_warnings_, name)() { (void) name; } \
@@ -582,7 +583,7 @@ namespace boost { namespace phoenix
 #else
 
 #define BOOST_SPIRIT_TERMINAL_NAME(name, type_name)                             \
-    namespace tag { struct name { typedef void is_spirit_tag; }; }              \
+    namespace tag { struct name { BOOST_SPIRIT_IS_TAG() }; }                    \
     typedef boost::proto::terminal<tag::name>::type type_name;                  \
     /***/
 
@@ -611,7 +612,7 @@ namespace boost { namespace phoenix
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
 #define BOOST_SPIRIT_TERMINAL_NAME_EX(name, type_name)                          \
-    namespace tag { struct name { typedef void is_spirit_tag; }; }              \
+    namespace tag { struct name { BOOST_SPIRIT_IS_TAG() }; }                    \
     typedef boost::spirit::terminal<tag::name> type_name;                       \
     type_name const name = type_name();                                         \
     inline void BOOST_PP_CAT(silence_unused_warnings_, name)() { (void) name; } \
@@ -620,7 +621,7 @@ namespace boost { namespace phoenix
 #else
 
 #define BOOST_SPIRIT_TERMINAL_NAME_EX(name, type_name)                          \
-    namespace tag { struct name { typedef void is_spirit_tag; }; }              \
+    namespace tag { struct name { BOOST_SPIRIT_IS_TAG() }; }                    \
     typedef boost::spirit::terminal<tag::name> type_name;                       \
     /***/
 

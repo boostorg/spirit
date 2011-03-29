@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/support/detail/is_spirit_tag.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
@@ -37,7 +38,10 @@ namespace boost { namespace spirit
     namespace tag
     {
         template <typename Char = char>
-        struct stream_tag {};
+        struct stream_tag 
+        {
+            BOOST_SPIRIT_IS_TAG()
+        };
     }
 
     namespace karma

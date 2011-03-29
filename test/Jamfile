@@ -24,6 +24,7 @@ feature.compose <phoenix_v3>on
     :   <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
         <define>BOOST_PROTO_MAX_ARITY=11
         <define>BOOST_PROTO_MAX_LOGICAL_ARITY=11
+        <define>BOOST_MPL_LIMIT_METAFUNCTION_ARITY=12
     ;
 
 ###############################################################################
@@ -36,7 +37,7 @@ project spirit_v2x/test
     :
     ;
 
-# use this alias to buil Spirit against Phoenix V2
+# use this alias to build Spirit against Phoenix V2
 alias test_using_phoenix_v2 
     :   spirit_v2/qi 
         spirit_v2/qi_regressions
@@ -48,7 +49,7 @@ alias test_using_phoenix_v2
         spirit_v2/support_regressions
     ;
 
-# use this alias to buil Spirit against Phoenix V3
+# use this alias to build Spirit against Phoenix V3
 alias test_using_phoenix_v3 
     :   spirit_v2/qi 
         spirit_v2/qi_regressions

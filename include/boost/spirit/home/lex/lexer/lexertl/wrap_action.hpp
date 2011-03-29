@@ -29,42 +29,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
           , typename IdType>
         struct wrap_action
         {
-            // plain functions with 5 arguments and function objects are not 
-            // touched at all
+            // plain functions with 5 arguments, function objects (including 
+            // phoenix actors) are not touched at all
             template <typename F>
             static FunctionType call(F const& f)
             {
                 return f;
-            }
-
-            // wrap phoenix actor
-            struct phoenix_action
-            {
-                typedef void result_type;
-
-                template <typename F, typename T1, typename T2, typename T3
-                  , typename T4, typename T5>
-                struct result { typedef result_type type; };
-
-                template <typename Eval>
-                void operator()(phoenix::actor<Eval> const& f, Iterator& start
-                  , Iterator& end, BOOST_SCOPED_ENUM(pass_flags)& pass
-                  , IdType& id, Context& ctx) const
-                {
-                    f (start, end, pass, id, ctx);
-                }
-            };
-
-            template <typename Eval>
-            static FunctionType call(phoenix::actor<Eval> const& f)
-            {
-                using phoenix::arg_names::_1;
-                using phoenix::arg_names::_2;
-                using phoenix::arg_names::_3;
-                using phoenix::arg_names::_4;
-                using phoenix::arg_names::_5;
-                return phoenix::bind(phoenix_action(), phoenix::lambda[f], 
-                    _1, _2, _3, _4, _5);
             }
 
             // semantic actions with 4 arguments

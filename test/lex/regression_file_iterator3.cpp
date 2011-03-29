@@ -60,7 +60,7 @@ struct lexer
     {
         lex::token_def<> string_lookahead('\'');
         self("LA") = string_lookahead;
-            
+
         // make sure lookahead is implicitly evaluated using the lexer state
         // the token_def has been associated with
         self = st [
@@ -78,14 +78,14 @@ int main()
 {
     std::stringstream ss;
     ss << "'foo''bar'";
-    
+
     file_iterator begin = make_file_iterator(ss, "SS");
     file_iterator end;
-    
+
     lexer l;
     token_iterator begin2 = l.begin(begin, end);
     token_iterator end2 = l.end();
-    
+
     char const* test_data[] = { "1,'foo'", "1,'foo''bar'" };
     std::size_t const test_data_size = sizeof(test_data)/sizeof(test_data[0]);
 
