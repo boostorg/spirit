@@ -16,7 +16,7 @@ import feature ;
 ###############################################################################
 # new feature definition allowing to switch between Phoenix V2 and V3 tests
 feature.feature phoenix_v3 
-    :   on
+    :   off on
     :   composite propagated 
     ;
 
@@ -43,8 +43,7 @@ v3_tests = ;
 rule run ( sources + : args * : input-files * : requirements * : target-name ? :  default-build * )
 {
     target-name ?= $(sources[1]:D=:S=) ;
-    local r = [ testing.run $(sources) : $(args) : $(input-files) : $(requirements) : $(target-name)-p2 : $(default-build) ] ;
-    v2_tests += $(r) ;
+    v2_tests += [ testing.run $(sources) : $(args) : $(input-files) : $(requirements) : $(target-name)-p2 : $(default-build) ] ;
     v3_tests += [ testing.run $(sources) : $(args) : $(input-files) : $(requirements) <phoenix_v3>on : $(target-name)-p3 : $(default-build) ] ;
 }
 
