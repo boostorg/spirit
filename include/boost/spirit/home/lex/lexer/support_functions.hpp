@@ -188,7 +188,7 @@ namespace boost { namespace spirit { namespace lex
         // lexer.
         BOOST_ASSERT(std::size_t(~0) != state && 
             "token_def instance not associated with lexer yet");
-        
+
         return expression::lookahead<id_actor_type, state_actor_type>::make(
             phoenix::as_actor<Idtype>::convert(tok.id()),
             phoenix::as_actor<std::size_t>::convert(state));

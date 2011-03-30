@@ -152,7 +152,7 @@ namespace boost { namespace phoenix
       : boost::phoenix::actor<proto::terminal<spirit::lex::value_context>::type>
     {
         typedef boost::phoenix::actor<
-            typename proto::terminal<spirit::lex::value_context>::type
+            proto::terminal<spirit::lex::value_context>::type
         > base_type;
 
         actor(base_type const & base = base_type())
@@ -195,7 +195,7 @@ namespace boost { namespace phoenix
       : boost::phoenix::actor<proto::terminal<spirit::lex::state_context>::type>
     {
         typedef boost::phoenix::actor<
-            typename proto::terminal<spirit::lex::state_context>::type
+            proto::terminal<spirit::lex::state_context>::type
         > base_type;
 
         actor(base_type const & base = base_type())
