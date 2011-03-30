@@ -317,4 +317,12 @@ alias test_using_phoenix_v2 : $(v2_tests) ;
 # use this alias to build Spirit against Phoenix V3
 alias test_using_phoenix_v3 : $(v3_tests) ;
 
-explicit test_using_phoenix_v2 test_using_phoenix_v3 ;
+# We keep  both aliases non-explicit to invoke tests for Phoenix V2 and V3
+# while running the regerssion tests.
+#
+# If you want to avoid running tests for both Phoenix V2 and V3 by default
+# then simply uncomment the following 'explicit' command. If no target is 
+# specified, only the V2 tests will be run.
+# 
+# explicit test_using_phoenix_v2 test_using_phoenix_v3 ;
+
