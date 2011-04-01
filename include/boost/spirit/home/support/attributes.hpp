@@ -101,8 +101,57 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // Find out if T can be a weak substitute for Expected attribute
+    namespace detail
+    {
+        template <typename T, typename Expected>
+        struct value_type_is_weak_substitute
+          : is_weak_substitute<
+                typename container_value<T>::type
+              , typename container_value<Expected>::type>
+        {};
+
+        template <typename T, typename Expected, typename Enable = void>
+        struct is_weak_substitute_impl : is_convertible<T, Expected> {};
+
+        template <typename T, typename Expected>
+        struct is_weak_substitute_impl<T, Expected,
+            typename enable_if<
+                mpl::and_<
+                    is_container<T>,
+                    is_container<Expected>,
+                    value_type_is_weak_substitute<T, Expected> >
+            >::type>
+          : mpl::true_ {};
+
+        template <typename T, typename Expected>
+        struct is_weak_substitute_impl<T, Expected,
+            typename enable_if<
+                mpl::and_<
+                    fusion::traits::is_sequence<T>,
+                    fusion::traits::is_sequence<Expected>,
+                    mpl::equal<T, Expected, is_weak_substitute<mpl::_1, mpl::_2> > >
+            >::type>
+          : mpl::true_ {};
+
+        // If this is not defined, the main template definition above will return
+        // true if T is convertible to the first type in a fusion::vector. We
+        // globally declare any non-Fusion sequence T as not compatible with any
+        // Fusion sequence Expected.
+        template <typename T, typename Expected>
+        struct is_weak_substitute_impl<T, Expected,
+            typename enable_if<
+                mpl::and_<
+                    mpl::not_<fusion::traits::is_sequence<T> >
+                  , fusion::traits::is_sequence<Expected> > 
+            >::type>
+          : mpl::false_ {};
+    }
+
+    // main template forwards to detail namespace, this helps older compilers 
+    // to disambiguate things
     template <typename T, typename Expected, typename Enable /*= void*/>
-    struct is_weak_substitute : is_convertible<T, Expected> {};
+    struct is_weak_substitute 
+      : detail::is_weak_substitute_impl<T, Expected> {};
 
     template <typename T, typename Expected>
     struct is_weak_substitute<optional<T>, optional<Expected> >
@@ -115,49 +164,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, typename Expected>
     struct is_weak_substitute<T, optional<Expected> >
       : is_weak_substitute<T, Expected> {};
-
-    template <typename T, typename Expected>
-    struct is_weak_substitute<T, Expected,
-        typename enable_if<
-            mpl::and_<
-                fusion::traits::is_sequence<T>,
-                fusion::traits::is_sequence<Expected>,
-                mpl::equal<T, Expected, is_weak_substitute<mpl::_1, mpl::_2> > >
-        >::type>
-      : mpl::true_ {};
-
-    // If this is not defined, the main template definition above will return
-    // true if T is convertible to the first type in a fusion::vector. We
-    // globally declare any non-Fusion sequence T as not compatible with any
-    // Fusion sequence Expected.
-    template <typename T, typename Expected>
-    struct is_weak_substitute<T, Expected,
-        typename enable_if<
-            mpl::and_<
-                mpl::not_<fusion::traits::is_sequence<T> >
-              , fusion::traits::is_sequence<Expected> > 
-        >::type>
-      : mpl::false_ {};
-
-    namespace detail
-    {
-        template <typename T, typename Expected>
-        struct value_type_is_weak_substitute
-          : is_weak_substitute<
-                typename container_value<T>::type
-              , typename container_value<Expected>::type>
-        {};
-    }
-
-    template <typename T, typename Expected>
-    struct is_weak_substitute<T, Expected,
-        typename enable_if<
-            mpl::and_<
-                is_container<T>,
-                is_container<Expected>,
-                detail::value_type_is_weak_substitute<T, Expected> >
-        >::type>
-      : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable/* = void*/>
