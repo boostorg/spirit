@@ -208,6 +208,13 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         BOOST_PP_CAT(T, N), Sequence>::type::value ||                         \
     /***/
 
+    // make sure unused variant parameters do not affect the outcome
+    template <typename Container, typename ValueType, typename Sequence>
+    struct pass_through_container<Container, ValueType
+          , boost::detail::variant::void_, Sequence>
+      : mpl::false_
+    {};
+
     template <typename Container, typename ValueType, typename Sequence
       , BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct pass_through_container<Container, ValueType
