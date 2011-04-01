@@ -60,6 +60,18 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename Attribute, typename Iterator>
+    struct assign_to_attribute_from_iterators<
+        boost::optional<Attribute>, Iterator>
+    {
+        static void
+        call(Iterator const& first, Iterator const& last
+          , boost::optional<Attribute>& attr)
+        {
+            attr = Attribute(first, last);
+        }
+    };
+
     template <typename Iterator>
     struct assign_to_attribute_from_iterators<
         iterator_range<Iterator>, Iterator>
@@ -139,21 +151,24 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Attribute, typename T>
-    struct assign_to_attribute_from_value<reference_wrapper<Attribute>, T>
+    struct assign_to_attribute_from_value<Attribute, reference_wrapper<T>
+      , typename disable_if<is_same<Attribute, reference_wrapper<T> > >::type>
     {
         static void
-        call(T const& val, reference_wrapper<Attribute> attr)
+        call(reference_wrapper<T> const& val, Attribute& attr)
         {
             assign_to(val.get(), attr);
         }
     };
 
-    template <typename Attribute>
-    struct assign_to_attribute_from_value<boost::optional<Attribute>, unused_type>
+    template <typename Attribute, typename T>
+    struct assign_to_attribute_from_value<Attribute, boost::optional<T>
+      , typename disable_if<is_same<Attribute, boost::optional<T> > >::type>
     {
         static void
-        call(unused_type, boost::optional<Attribute> const&)
+        call(boost::optional<T> const& val, Attribute& attr)
         {
+            assign_to(val.get(), attr);
         }
     };
 
@@ -270,22 +285,35 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    template <typename Attribute, typename T>
-    struct assign_to_container_from_value<reference_wrapper<Attribute>, T>
+    template <typename Attribute>
+    struct assign_to_container_from_value<Attribute, Attribute>
     {
         static void
-        call(T const& val, reference_wrapper<Attribute> attr)
+        call(Attribute const& val, Attribute& attr)
+        {
+            attr = val;
+        }
+    };
+
+    template <typename Attribute, typename T>
+    struct assign_to_container_from_value<Attribute, boost::optional<T>
+      , typename disable_if<is_same<Attribute, boost::optional<T> > >::type>
+    {
+        static void
+        call(boost::optional<T> const& val, Attribute& attr)
         {
             assign_to(val.get(), attr);
         }
     };
 
-    template <typename Attribute>
-    struct assign_to_container_from_value<boost::optional<Attribute>, unused_type>
+    template <typename Attribute, typename T>
+    struct assign_to_container_from_value<Attribute, reference_wrapper<T>
+      , typename disable_if<is_same<Attribute, reference_wrapper<T> > >::type>
     {
         static void
-        call(unused_type, boost::optional<Attribute> const&)
+        call(reference_wrapper<T> const& val, Attribute& attr)
         {
+            assign_to(val.get(), attr);
         }
     };
 

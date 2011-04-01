@@ -479,7 +479,8 @@ namespace boost { namespace spirit { namespace traits
 
                 typedef lex::lexertl::token<
                     Iterator, AttributeTypes, HasState, Idtype> token_type;
-                const_cast<token_type&>(t).value() = attr;   // re-assign value
+                spirit::traits::assign_to(
+                    attr, const_cast<token_type&>(t).value());   // re-assign value
             }
             else {
             // reuse the already assigned value
