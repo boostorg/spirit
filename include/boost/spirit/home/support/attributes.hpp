@@ -60,24 +60,6 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     // Find out if T can be a (strong) substitute for Expected attribute
-    template <typename T, typename Expected, typename Enable /*= void*/>
-    struct is_substitute : is_same<T, Expected> {};
-
-    template <typename T, typename Expected>
-    struct is_substitute<optional<T>, optional<Expected> >
-      : is_substitute<T, Expected> {};
-
-    template <typename T, typename Expected>
-    struct is_substitute<T, Expected,
-        typename enable_if<
-            mpl::and_<
-                fusion::traits::is_sequence<T>,
-                fusion::traits::is_sequence<Expected>,
-                mpl::equal<T, Expected, is_substitute<mpl::_1, mpl::_2> >
-            >
-        >::type>
-      : mpl::true_ {};
-
     namespace detail
     {
         template <typename T, typename Expected>
@@ -86,17 +68,44 @@ namespace boost { namespace spirit { namespace traits
                 typename container_value<T>::type
               , typename container_value<Expected>::type>
         {};
+
+        template <typename T, typename Expected, typename Enable = void>
+        struct is_substitute_impl : is_same<T, Expected> {};
+
+        template <typename T, typename Expected>
+        struct is_substitute_impl<T, Expected,
+            typename enable_if<
+                mpl::and_<
+                    fusion::traits::is_sequence<T>,
+                    fusion::traits::is_sequence<Expected>,
+                    mpl::equal<T, Expected, is_substitute<mpl::_1, mpl::_2> >
+                >
+            >::type>
+          : mpl::true_ {};
+
+        template <typename T, typename Expected>
+        struct is_substitute_impl<T, Expected,
+            typename enable_if<
+                mpl::and_<
+                    is_container<T>,
+                    is_container<Expected>,
+                    detail::value_type_is_substitute<T, Expected>
+                >
+            >::type>
+          : mpl::true_ {};
     }
 
+    template <typename T, typename Expected, typename Enable /*= void*/>
+    struct is_substitute 
+      : detail::is_substitute_impl<T, Expected> {};
+
     template <typename T, typename Expected>
-    struct is_substitute<T, Expected,
-        typename enable_if<
-            mpl::and_<
-                is_container<T>,
-                is_container<Expected>,
-                detail::value_type_is_substitute<T, Expected>
-            >
-        >::type>
+    struct is_substitute<optional<T>, optional<Expected> >
+      : is_substitute<T, Expected> {};
+
+    template <typename T>
+    struct is_substitute<T, T
+          , typename enable_if<not_is_optional<T> >::type>
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -164,6 +173,11 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, typename Expected>
     struct is_weak_substitute<T, optional<Expected> >
       : is_weak_substitute<T, Expected> {};
+
+    template <typename T>
+    struct is_weak_substitute<T, T
+          , typename enable_if<not_is_optional<T> >::type>
+      : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable/* = void*/>
