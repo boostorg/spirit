@@ -306,6 +306,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ compile support/regression_multi_pass_position_iterator.cpp : : support_regression_multi_pass_position_iterator ]
      [ compile support/regression_multi_pass_functor.cpp           : : support_regression_multi_pass_functor ]
      [ compile support/regression_multi_pass_parse.cpp             : : support_regression_multi_pass_parse ]
+     [ run support/regression_multi_pass_error_handler.cpp         : : : : regression_multi_pass_error_handler ]
 
     ;
 }
