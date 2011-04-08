@@ -15,9 +15,11 @@
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/qi_auxiliary.hpp>
+#include <boost/spirit/include/qi_rule.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant.hpp>
 #include <boost/assert.hpp>
 
@@ -54,6 +56,26 @@ struct test_action_2
             !v[0] && v[1] == 'a' && v[2] == 'b' && v[3] == '1' && v[4] == '2');
     }
 };
+
+struct DIgnore
+{
+	std::string text;
+};
+
+struct DInclude
+{
+	std::string FileName;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+    DIgnore,
+    (std::string, text)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    DInclude,
+    (std::string, FileName)
+)
 
 int
 main()
@@ -226,6 +248,15 @@ main()
         using boost::spirit::qi::rule;
         using boost::spirit::qi::eps;
         rule<std::string::const_iterator, value_type()> r1 = r1 | eps;
+    }
+
+    {
+        using boost::spirit::qi::rule;
+        typedef boost::variant<DIgnore, DInclude> DLine;
+
+        rule<char*, DIgnore()> ignore;
+        rule<char*, DInclude()> include;
+        rule<char*, DLine()> line = include | ignore;
     }
 
     return boost::report_errors();
