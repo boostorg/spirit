@@ -2123,7 +2123,7 @@ semantics.
 
 [table Iteration Algorithms
     [[Function]                         [stl Semantics]]
-    [[`for_each(r, c)`]                 [`for_each(begin(r), end(r), f)`]]
+    [[`for_each(r, f)`]                 [`for_each(begin(r), end(r), f)`]]
     [[`accumulate(r, o[, f])`]          [`accumulate(begin(r), end(r), o[, f])`]]
 ]
 
