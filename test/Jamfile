@@ -22,9 +22,6 @@ feature.feature phoenix_v3
 
 feature.compose <phoenix_v3>on
     :   <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
-        <define>BOOST_PROTO_MAX_ARITY=11
-        <define>BOOST_PROTO_MAX_LOGICAL_ARITY=11
-        <define>BOOST_MPL_LIMIT_METAFUNCTION_ARITY=12
     ;
 
 ###############################################################################
