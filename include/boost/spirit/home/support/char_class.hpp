@@ -14,6 +14,7 @@
 
 #include <string>
 
+#include <boost/spirit/include/phoenix_limits.hpp>      // needs to be included before proto
 #include <boost/proto/proto.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>

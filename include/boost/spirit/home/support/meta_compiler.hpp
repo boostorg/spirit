@@ -14,6 +14,7 @@
 
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/spirit/include/phoenix_limits.hpp>      // needs to be included before proto
 #include <boost/proto/proto.hpp>
 #include <boost/spirit/home/support/make_component.hpp>
 #include <boost/spirit/home/support/modify.hpp>

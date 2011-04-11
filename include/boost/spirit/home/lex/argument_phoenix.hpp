@@ -100,7 +100,7 @@ namespace boost { namespace phoenix
     {
         template <>
         struct is_nullary<custom_terminal<boost::spirit::lex::value_context> >
-            : mpl::false_
+          : mpl::false_
         {};
     }
     
@@ -109,7 +109,7 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct custom_terminal<boost::spirit::lex::value_context, Dummy>
-        : proto::call<
+      : proto::call<
             v2_eval(
                 proto::make<boost::spirit::lex::value_getter()>
               , proto::call<functional::env(proto::_state)>
@@ -164,7 +164,7 @@ namespace boost { namespace phoenix
     {
         template <>
         struct is_nullary<custom_terminal<boost::spirit::lex::state_context> >
-            : mpl::false_
+          : mpl::false_
         {};
     }
     
@@ -173,7 +173,7 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct custom_terminal<boost::spirit::lex::state_context, Dummy>
-        : proto::call<
+      : proto::call<
             v2_eval(
                 proto::make<boost::spirit::lex::state_getter()>
               , proto::call<functional::env(proto::_state)>
@@ -228,7 +228,7 @@ namespace boost { namespace phoenix
     {
         template <>
         struct is_nullary<custom_terminal<boost::spirit::lex::eoi_getter> >
-            : mpl::false_
+          : mpl::false_
         {};
     }
     
@@ -237,7 +237,7 @@ namespace boost { namespace phoenix
     
     template <typename Dummy>
     struct custom_terminal<boost::spirit::lex::eoi_getter, Dummy>
-        : proto::call<
+      : proto::call<
             v2_eval(
                 proto::make<boost::spirit::lex::eoi_getter()>
               , proto::call<functional::env(proto::_state)>

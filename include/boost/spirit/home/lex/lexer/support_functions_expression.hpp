@@ -20,18 +20,6 @@ namespace boost { namespace spirit { namespace lex
     template <typename, typename> struct lookahead_type;
 }}}
 
-/*
-BOOST_PHOENIX_DEFINE_CUSTOM_TERMINAL(
-    template <>
-  , boost::spirit::lex::more_type
-  , mpl::false_
-  , v2_eval(
-        proto::make<boost::spirit::lex::more_type()>
-      , proto::call<functional::env(proto::_state)>
-    )
-)
-*/
-
 ///////////////////////////////////////////////////////////////////////////////
 #ifndef BOOST_SPIRIT_USE_PHOENIX_V3
 
@@ -83,12 +71,12 @@ namespace boost { namespace phoenix
     {
         template <>
         struct is_nullary<custom_terminal<boost::spirit::lex::more_type> >
-            : mpl::false_
+          : mpl::false_
         {};
     }
     
     template <typename Dummy>
-    struct is_custom_terminal<boost::spirit::lex::more_type, Dummy>: mpl::true_ {};
+    struct is_custom_terminal<boost::spirit::lex::more_type, Dummy> : mpl::true_ {};
     
     template <typename Dummy>
     struct custom_terminal<boost::spirit::lex::more_type, Dummy>
