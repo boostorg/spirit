@@ -24,7 +24,7 @@ namespace client
                           ("\\r", '\r')("\\t", '\t')("\\v", '\v')("\\\\", '\\')
                           ("\\\'", '\'')("\\\"", '\"')
                 ;
-            
+
             unesc_str = qi::lit(qi::_r1)
                     >> *(unesc_char | qi::alnum | "\\x" >> qi::hex)
                     >>  qi::lit(qi::_r1)

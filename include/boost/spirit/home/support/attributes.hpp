@@ -174,9 +174,30 @@ namespace boost { namespace spirit { namespace traits
     struct is_weak_substitute<T, optional<Expected> >
       : is_weak_substitute<T, Expected> {};
 
+#define BOOST_SPIRIT_IS_WEAK_SUBSTITUTE(z, N, _)                              \
+    is_weak_substitute<BOOST_PP_CAT(T, N), Expected>::type::value &&          \
+    /***/
+
+    // make sure unused variant parameters do not affect the outcome
+    template <typename Expected>
+    struct is_weak_substitute<boost::detail::variant::void_, Expected>
+      : mpl::true_
+    {};
+
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T), typename Expected>
+    struct is_weak_substitute<
+            boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, Expected>
+      : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
+          , BOOST_SPIRIT_IS_WEAK_SUBSTITUTE, _) true>
+    {};
+
+#undef BOOST_SPIRIT_IS_WEAK_SUBSTITUTE
+
     template <typename T>
     struct is_weak_substitute<T, T
-          , typename enable_if<not_is_optional<T> >::type>
+          , typename enable_if<
+                mpl::and_<not_is_optional<T>, not_is_variant<T> > 
+            >::type>
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////

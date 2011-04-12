@@ -63,6 +63,12 @@ namespace boost { namespace spirit { namespace traits
         is_container<BOOST_PP_CAT(T, N)>::value ||                            \
     /***/
 
+    // make sure unused variant parameters do not affect the outcome
+    template <>
+    struct is_container<boost::detail::variant::void_>
+      : mpl::false_
+    {};
+
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct is_container<variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
        : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
