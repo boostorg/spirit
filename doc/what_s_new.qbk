@@ -24,9 +24,6 @@ define the following preprocessor constants for your builds (before including
 any of Spirit's include files):
 
     #define BOOST_SPIRIT_USE_PHOENIX_V3 1
-    #define BOOST_PROTO_MAX_ARITY 11
-    #define BOOST_PROTO_MAX_LOGICAL_ARITY 11
-    #define BOOST_MPL_LIMIT_METAFUNCTION_ARITY 12
 
 [heading New Features in Qi or Karma]
 
@@ -76,6 +73,8 @@ any of Spirit's include files):
   underlying input stream in the case when the stream parser component was 
   successful. Thanks to Brian O'Kennedy who reported the problem on 
   Stackoverflow.
+* Fixed failing Karma numerics generators when used with adapted ADTs (thanks 
+  to Colin Rundel for reporting that problem).
 
 [heading Breaking Changes]
 

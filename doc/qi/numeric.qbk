@@ -751,10 +751,10 @@ There are four `RealPolicies` predefined for immediate use:
 [table Predefined Policies
 
     [[Policies]                             [Description]]
-    [[`ureal_policies<double> >`]           [Without sign.]]
-    [[`real_policies<double> >`]            [With sign.]]
-    [[`strict_ureal_policies<double> >`]    [Without sign, dot required.]]
-    [[`strict_real_policies<double> >`]     [With sign, dot required.]]
+    [[`ureal_policies<double>`]             [Without sign.]]
+    [[`real_policies<double>`]              [With sign.]]
+    [[`strict_ureal_policies<double>`]      [Without sign, dot required.]]
+    [[`strict_real_policies<double>`]       [With sign, dot required.]]
 ]
 
 [note Integers are considered a subset of real numbers, so for instance,
