@@ -155,6 +155,41 @@ namespace boost { namespace spirit { namespace traits
             clear(type(val));
         }
     };
+
+    // customization point specializations for numeric generators
+    template <typename T, int N, bool Const>
+    struct absolute_value<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        typedef typename 
+            fusion::extension::adt_attribute_proxy<T, N, Const>::type
+        type;
+
+        static type 
+        call (fusion::extension::adt_attribute_proxy<T, N, Const> const& val)
+        {
+            return get_absolute_value(val.get());
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct is_negative<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        static bool 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val) 
+        { 
+            return test_negative(val.get()); 
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct is_zero<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        static bool 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val) 
+        { 
+            return test_zero(val.get()); 
+        }
+    };
 }}}
 
 #endif
