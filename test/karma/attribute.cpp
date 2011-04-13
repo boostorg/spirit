@@ -5,6 +5,9 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
+
+#include <boost/spirit/include/phoenix_limits.hpp>
+
 #include <boost/fusion/include/struct.hpp>
 #include <boost/fusion/include/nview.hpp>
 

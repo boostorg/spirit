@@ -238,6 +238,7 @@ main()
         BOOST_TEST(!test("aaaaaa", repeat(3, val(5))[char_]));
         BOOST_TEST(!test("aa", repeat(val(3), 5)[char_]));
 
+//#warning "testcase commented out"
         BOOST_TEST(test("aaa", repeat(val(3), inf)[char_]));
         BOOST_TEST(test("aaaaa", repeat(3, val(inf))[char_]));
         BOOST_TEST(test("aaaaaa", repeat(val(3), inf)[char_]));

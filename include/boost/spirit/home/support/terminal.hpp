@@ -96,7 +96,7 @@ namespace boost { namespace spirit
             proto::terminal<
                 lazy_terminal<
                     typename F::terminal_type
-                  , typename phoenix::expression::function<F, A0>::type
+                  , typename phoenix::detail::expression::function_eval<F, A0>::type
                   , 1 // arity
                 >
             >::type
@@ -108,7 +108,7 @@ namespace boost { namespace spirit
         {
             typedef typename result_type::proto_child0 child_type;
             return result_type::make(child_type(
-                phoenix::expression::function<F, A0>::make(f, _0)
+                phoenix::detail::expression::function_eval<F, A0>::make(f, _0)
               , f.proto_base().child0
             ));
         }
@@ -121,7 +121,7 @@ namespace boost { namespace spirit
             proto::terminal<
                lazy_terminal<
                     typename F::terminal_type
-                  , typename phoenix::expression::function<F, A0, A1>::type
+                  , typename phoenix::detail::expression::function_eval<F, A0, A1>::type
                   , 2 // arity
                 >
             >::type
@@ -133,7 +133,7 @@ namespace boost { namespace spirit
         {
             typedef typename result_type::proto_child0 child_type;
             return result_type::make(child_type(
-                phoenix::expression::function<F, A0, A1>::make(f, _0, _1)
+                phoenix::detail::expression::function_eval<F, A0, A1>::make(f, _0, _1)
               , f.proto_base().child0
             ));
         }
@@ -146,7 +146,7 @@ namespace boost { namespace spirit
             proto::terminal<
                lazy_terminal<
                     typename F::terminal_type
-                  , typename phoenix::expression::function<F, A0, A1, A2>::type
+                  , typename phoenix::detail::expression::function_eval<F, A0, A1, A2>::type
                   , 3 // arity
                 >
             >::type
@@ -158,7 +158,7 @@ namespace boost { namespace spirit
         {
             typedef typename result_type::proto_child0 child_type;
             return result_type::make(child_type(
-                phoenix::expression::function<F, A0, A1, A2>::make(f, _0, _1, _2)
+                phoenix::detail::expression::function_eval<F, A0, A1, A2>::make(f, _0, _1, _2)
               , f.proto_base().child0
             ));
         }

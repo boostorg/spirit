@@ -11,17 +11,17 @@
 
 #ifndef BOOST_SPIRIT_USE_PHOENIX_V3
 
-namespace boost { namespace phoenix
+namespace boost { namespace phoenix { namespace detail
 {
     namespace expression
     {
         template <
             typename F, typename A0 = void, typename A1 = void
           , typename A2 = void, typename Dummy = void>
-        struct function;
+        struct function_eval;
 
         template <typename F, typename A0>
-        struct function<F, A0>
+        struct function_eval<F, A0>
         {
             typedef phoenix::actor<
                 typename phoenix::as_composite<
@@ -37,7 +37,7 @@ namespace boost { namespace phoenix
         };
         
         template <typename F, typename A0, typename A1>
-        struct function<F, A0, A1>
+        struct function_eval<F, A0, A1>
         {
             typedef phoenix::actor<
                 typename phoenix::as_composite<
@@ -53,7 +53,7 @@ namespace boost { namespace phoenix
         };
 
         template <typename F, typename A0, typename A1, typename A2>
-        struct function<F, A0, A1, A2>
+        struct function_eval<F, A0, A1, A2>
         {
             typedef phoenix::actor<
                 typename phoenix::as_composite<
@@ -68,7 +68,7 @@ namespace boost { namespace phoenix
             }
         };
     }
-}}
+}}}
 
 #endif // !BOOST_SPIRIT_USE_PHOENIX_V3
 
