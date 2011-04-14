@@ -148,9 +148,25 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     {
         boost::spirit::qi::uint_parser<boost::uint8_t> uint8_;
-        boost::uint8_t u;
+        boost::uint8_t u8;
 
-        BOOST_TEST(!test_attr("999", uint8_, u));
+        BOOST_TEST(!test_attr("999", uint8_, u8));
+        BOOST_TEST(!test_attr("256", uint8_, u8));
+        BOOST_TEST(test_attr("255", uint8_, u8));
+
+        boost::spirit::qi::uint_parser<boost::uint16_t> uint16_;
+        boost::uint16_t u16;
+
+        BOOST_TEST(!test_attr("99999", uint16_, u16));
+        BOOST_TEST(!test_attr("65536", uint16_, u16));
+        BOOST_TEST(test_attr("65535", uint16_, u16));
+
+        boost::spirit::qi::uint_parser<boost::uint32_t> uint32_;
+        boost::uint32_t u32;
+
+        BOOST_TEST(!test_attr("9999999999", uint32_, u32));
+        BOOST_TEST(!test_attr("4294967296", uint32_, u32));
+        BOOST_TEST(test_attr("4294967295", uint32_, u32));
     }
 
     ///////////////////////////////////////////////////////////////////////////
