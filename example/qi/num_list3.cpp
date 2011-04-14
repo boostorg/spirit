@@ -42,13 +42,12 @@ namespace client
         using qi::_1;
         using ascii::space;
         using phoenix::push_back;
-        using phoenix::ref;
 
         bool r = phrase_parse(first, last,
 
             //  Begin grammar
             (
-                double_[push_back(ref(v), _1)] % ','
+                double_[push_back(phoenix::ref(v), _1)] % ','
             )
             ,
             //  End grammar

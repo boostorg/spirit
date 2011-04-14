@@ -13,6 +13,18 @@
 
 [heading What's changed in __qi__ and __karma__ from V2.4.2 (Boost V1.46.0) to V2.5 (Boost V1.47.0)]
 
+This version of __spirit__ now supports the new version of __boost_phoenix__ (V3),
+which has been released as part of Boost V1.47. Please note that this support
+is purely preliminary and should not be considered production quality. The
+reason why we are releasing this now is to enable people who want to use the
+new version of __boost_phoenix__ in their code to do so without any conflicts with
+existing code using __spirit__. Generally, no __spirit__ code needs to be
+changed. To activate the use of __boost_phoenix__ V3 for __spirit__ you need to
+define the following preprocessor constant for your builds (before including
+any of Spirit's include files):
+
+    #define BOOST_SPIRIT_USE_PHOENIX_V3 1
+
 [heading New Features in Qi or Karma]
 
 * Added __utree__, a generic, hierarchical, and dynamic data structure that can
@@ -24,16 +36,17 @@
   (the terminal name and its type). Before, there was only one parameter
   (the terminal name) and the type assumed the terminal name with `_type`
   appended. This produced invalid C++ identifiers with terminals such as
-  `int_`, which resulted in generated a type `int__type` with a bogus double 
+  `int_`, which resulted in generated a type `int__type` with a bogus double
   underscore that is reserved for system use in C++.
-* The placeholder `_val` now can be used in top level semantic actions outside 
+* The numeric parsers now allow arbitrary radix from 2..10 and 16
+* The placeholder `_val` now can be used in top level semantic actions outside
   of any right hand side of a rule. Here is an example:
 ``
     int i = 0
     BOOST_TEST(test_attr("456", int_[_val = _1], i) && i == 456);
 ``
-  In this case _val refers to the attribute value, which is passed in to the 
-  `parse()` or `phrase_parse()` functions. 
+  In this case _val refers to the attribute value, which is passed in to the
+  `parse()` or `phrase_parse()` functions.
   Similar constructs are now possible in __karma__ as well:
 ``
     int i = 123;
@@ -53,14 +66,16 @@
   use of const floating point types with the generator. Thanks to Jeroen
   Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
   a test.
-* Fixed the  __qi__ __qi_attr__ parser, the __qi__ __qi_symbols__ parser, and 
-  the __karma__ [karma_symbols `symbols<>`] generator to properly handle 
-  container attributes. Those have been broken in Boost V1.46.1 (thanks to 
-  Aaron Graham and Joerg Becker for reporting those).
-* Fixed the __qi_stream__ parser to properly adjust the iterator of the 
-  underlying input stream in the case when the stream parser component was 
-  successful. Thanks to Brian O'Kennedy who reported the problem on 
+* Fixed the  __qi__ __qi_attr__ parser, the __qi__ __qi_symbols__ parser, and
+  the __karma__ [karma_symbols `symbols<>`] generator to properly handle
+  container attributes. These were broken in Boost V1.46.1 (thanks to
+  Aaron Graham and Joerg Becker for reporting the problems).
+* Fixed the __qi_stream__ parser to properly adjust the iterator of the
+  underlying input stream in the case when the stream parser component was
+  successful. Thanks to Brian O'Kennedy who reported the problem on
   Stackoverflow.
+* Fixed failing Karma numerics generators when used with adapted ADTs (thanks
+  to Colin Rundel for reporting that problem).
 
 [heading Breaking Changes]
 
@@ -77,9 +92,9 @@
 
 [heading New Features in Lex]
 
-* Added the possibility to specify a token id while creating a token definition 
-  using `lex::char_` and `lex::string`. Both primitives now accept a second 
-  parameter which will be interpreted as the requested token id for any token 
+* Added the possibility to specify a token id while creating a token definition
+  using `lex::char_` and `lex::string`. Both primitives now accept a second
+  parameter which will be interpreted as the requested token id for any token
   generated from this definition.
 
 [heading Making Stuff Work]
@@ -98,10 +113,10 @@
   is still in place.
 * Alternatives now support attribute compatibility.
 * The attribute handling for container attributes of sequences and container
-  components (list, Kleene, Plus, and repeat) has been completely rewritten. 
-  It now supports many more use cases and behaves much more predictable than 
-  the older version. Thanks to Thomas Taylor, Richard Crossley, Semen, 
-  Adalberto Castelo, and many others for reporting bugs and helping in making 
+  components (list, Kleene, Plus, and repeat) has been completely rewritten.
+  It now supports many more use cases and behaves much more predictable than
+  the older version. Thanks to Thomas Taylor, Richard Crossley, Semen,
+  Adalberto Castelo, and many others for reporting bugs and helping in making
   the new code behave as expected.
 
 [endsect]
@@ -180,8 +195,8 @@
 
 [heading Bug Fixes in Lex]
 
-* Fixed an issue in the Lexer giving problems while assigning tokens to all 
-  lexer states at once. This is now possible by simply using "*" as the state 
+* Fixed an issue in the Lexer giving problems while assigning tokens to all
+  lexer states at once. This is now possible by simply using "*" as the state
   name. For instance this will add the token int_ to all lexer states:
 ``
     template <typename Lexer>
@@ -208,7 +223,7 @@
 
 [heading Known Problems]
 
-* __qi__ integer literals (like `int_(10)`) consume input on failure, which can 
+* __qi__ integer literals (like `int_(10)`) consume input on failure, which can
   lead to problems with the alternative operator.
 
 [endsect]

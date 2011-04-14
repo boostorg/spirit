@@ -84,13 +84,21 @@ overall usability.
 [*Thomas Bernard] (a.k.a. teajay) for working on the keyword parser and for
 adding explicit names to the `qi::`__qi_symbols__ component.
 
+[*Robert Stewart] for his active participation on the mailing list, his 
+helpful comments, examples and suggestions.
+
+[*Thomas Taylor], [*Richard Crossley], [*Semen], and [*Adalberto Castelo] for 
+their help in isolating problems while testing the new attribute handling code
+released with V2.5.
+
 Special thanks to spirit-devel and spirit-general mailing lists for
 participating in the discussions, being early adopters of pre-release
 versions of Spirit2 from the very start and helping out in various tasks
 such as helping with support, bug tracking, benchmarking and testing,
 etc. The list include: [*Larry Evans], [*Richard Webb], [*Martin Wille],
 [*Dan Marsden], [*Cedric Venet], [*Allan Odgaard], [*Matthias
-Vallentin], [*Justinas V.D.], [*Darid Tromer].
+Vallentin], [*Justinas V.D.], [*Darid Tromer], [*Brian O'Kennedy], 
+[*Aaron Graham], [*Joerg Becker].
 
 [*Joao Abecasis] for his early support and involvement in Spirit2
 development and for disturbing my peace every once in a while for a

@@ -48,7 +48,7 @@ struct multi_tokens : lex::lexer<Lexer>
                           _end = _start 
                       ]
                       .else_ [ 
-                          _state = "INITIAL" 
+                          _state = "INITIAL"
                       ]
                   ]
             ;

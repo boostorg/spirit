@@ -8,7 +8,7 @@
 
 [article Spirit
     [quickbook 1.5]
-    [version 2.4.2]
+    [version 2.5]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser and Generator Library]
@@ -23,10 +23,12 @@
 
 [/ Some links ]
 
+[def __version__                V2.5]
+
 [def __spirit__                 [@http://boost-spirit.com Spirit]]
 [def __spirit_list__            [@http://www.nabble.com/The-Spirit-Parser-Library-f3430.html Spirit General List]]
 [def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
-[def __boost_phoenix__          [@../../phoenix/doc/html/index.html Boost.Phoenix]]
+[def __boost_phoenix__          [@boost:/libs/phoenix/doc/html/index.html Boost.Phoenix]]
 [def __fusion__                 [@boost:/libs/fusion/doc/html/index.html Boost.Fusion]]
 [def __mpl__                    [@http://www.boost.org/libs/mpl/index.html Boost.Mpl]]
 [def __stl__                    [@http://www.sgi.com/tech/stl/ STL]]
@@ -434,12 +436,12 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [template qi_auto[str]              [link spirit.qi.reference.auto [str]]]
 [def __create_parser__              [link spirit.qi.reference.parse_api.create_parser `create_parser`]]
 
-[__parse_api__                      [link spirit.qi.reference.parse_api The Parse API]]
+[def __parse_api__                  [link spirit.qi.reference.parse_api The Parse API]]
 
 [/ Here we go ]
 
 This is the documentation of the newest version of __spirit__ (currently,
-V2.4.2). If you're looking for the documentation of Spirit's previous version
+__version__). If you're looking for the documentation of Spirit's previous version
 (formerly Spirit V1.8), see __classic__.
 
 [include preface.qbk]

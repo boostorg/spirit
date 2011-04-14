@@ -11,10 +11,7 @@
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/home/phoenix/core.hpp>
-#include <boost/spirit/home/phoenix/operator.hpp>
-#include <boost/spirit/home/phoenix/statement.hpp>
-#include <boost/spirit/home/phoenix/object.hpp>
+#include <boost/spirit/include/phoenix.hpp>
 
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;

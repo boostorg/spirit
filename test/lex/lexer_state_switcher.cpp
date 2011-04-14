@@ -26,7 +26,7 @@ struct switch_state_tokens : boost::spirit::lex::lexer<Lexer>
         this->self = identifier [ phoenix::ref(state_) = _state ];
 
         integer = "[0-9]+";
-        this->self("INT") = integer [ _state = phoenix::val("INITIAL") ];
+        this->self("INT") = integer [ _state = "INITIAL" ];
     }
 
     std::string state_;

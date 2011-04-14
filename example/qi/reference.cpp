@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this code is not supposed to be executed, so the asserts are for 
+// this code is not supposed to be executed, so the asserts are for
 // demonstration purposes only
 // boostinspect:naassert_macro
 
@@ -43,7 +43,7 @@ void test_phrase_parser(
 {
     using boost::spirit::qi::phrase_parse;
     using boost::spirit::qi::ascii::space;
-    
+
     char const* f(input);
     char const* l(f + strlen(f));
     if (phrase_parse(f, l, p, space) && (!full_match || (f == l)))
@@ -182,7 +182,7 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
 
 //[reference_test_bool_policy
 ///////////////////////////////////////////////////////////////////////////////
-//  These policies can be used to parse "eurt" (i.e. "true" spelled backwards) 
+//  These policies can be used to parse "eurt" (i.e. "true" spelled backwards)
 //  as `false`
 ///////////////////////////////////////////////////////////////////////////////
 struct backwards_bool_policies : boost::spirit::qi::bool_policies<>
@@ -219,7 +219,7 @@ struct complex
 
 //[reference_qi_stream_complex
 // define streaming operator for the type complex
-std::istream& 
+std::istream&
 operator>> (std::istream& is, complex& z)
 {
     char lbrace = '\0', comma = '\0', rbrace = '\0';
@@ -232,7 +232,7 @@ operator>> (std::istream& is, complex& z)
 
 //[reference_qi_auto_complex
 /*`The following construct is required to allow the `complex` data structure
-   to be utilized as a __fusion__ sequence. This is required as we will 
+   to be utilized as a __fusion__ sequence. This is required as we will
    emit output for this data structure with a __qi__ sequence:
    `'{' >> qi::double_ >> ',' >> qi::double_ >> '}'`.
 */
@@ -243,15 +243,15 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 /*`We add a specialization for the create_parser customization point
-   defining a custom output format for the complex type. Generally, any 
-   specialization for create_parser is expected to return the proto 
-   expression to be used to match input for the type the customization 
+   defining a custom output format for the complex type. Generally, any
+   specialization for create_parser is expected to return the proto
+   expression to be used to match input for the type the customization
    point has been specialized for.
  */
-/*`We need to utilize `proto::deep_copy` as the expression contains literals 
-   (the `'{'`, `','`, and `'}'`) which normally get embedded in the proto 
-   expression by reference only. The deep copy converts the proto tree to 
-   hold this by value. The deep copy operation can be left out for simpler 
+/*`We need to utilize `proto::deep_copy` as the expression contains literals
+   (the `'{'`, `','`, and `'}'`) which normally get embedded in the proto
+   expression by reference only. The deep copy converts the proto tree to
+   hold this by value. The deep copy operation can be left out for simpler
    proto expressions (not containing references to temporaries). Alternatively
    you could use the `proto::make_expr` facility to build the required
    proto expression.
@@ -285,7 +285,7 @@ struct int_data
 // we provide a custom attribute transformation to allow its use as an int
 namespace boost { namespace spirit { namespace traits
 {
-    // in this case we just expose the embedded 'int' as the attribute instance 
+    // in this case we just expose the embedded 'int' as the attribute instance
     // to use, allowing to leave the function 'post()' empty
     template <>
     struct transform_attribute<int_data, int, qi::domain>
@@ -298,7 +298,7 @@ namespace boost { namespace spirit { namespace traits
 }}}
 //]
 
-namespace client 
+namespace client
 {
     using boost::spirit::qi::grammar;
     using boost::spirit::qi::rule;
@@ -329,7 +329,7 @@ main()
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::char_;
         //]
-        
+
         //[reference_char_literals
         test_parser("x", 'x');                      // plain literal
         test_parser("x", lit('x'));                 // explicit literal
@@ -341,37 +341,37 @@ main()
         test_parser_attr("5", char_('0','9'), ch);  // ascii::char_ range
         std::cout << ch << std::endl;               // prints '5'
         //]
-        
+
         //[reference_char_set
         test_parser_attr("5", char_("0-9"), ch);    // ascii::char_ set
         std::cout << ch << std::endl;               // prints '5'
         //]
-        
+
         //[reference_char_phoenix
-        namespace phx = boost::phoenix;        
+        namespace phx = boost::phoenix;
         test_parser("x", phx::val('x'));            // direct
-        test_parser("5", 
+        test_parser("5",
             char_(phx::val('0'),phx::val('9')));    // ascii::char_ range
         //]
     }
-    
+
     {
         //[reference_using_declarations_lit_string
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::string;
         //]
-        
+
         //[reference_string_literals
         test_parser("boost", "boost");          // plain literal
         test_parser("boost", lit("boost"));     // explicit literal
         test_parser("boost", string("boost"));  // ascii::string
         //]
     }
-    
+
     {
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::string;
-        
+
         //[reference_string_std_string
         std::string s("boost");
         test_parser("boost", s);            // direct
@@ -379,19 +379,19 @@ main()
         test_parser("boost", string(s));    // ascii::string
         //]
     }
-    
+
     {
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::string;
-        
+
         //[reference_string_phoenix
-        namespace phx = boost::phoenix;        
+        namespace phx = boost::phoenix;
         test_parser("boost", phx::val("boost"));            // direct
         test_parser("boost", lit(phx::val("boost")));       // explicit
         test_parser("boost", string(phx::val("boost")));    // ascii::string
         //]
     }
-    
+
     {
         //[reference_using_declarations_symbols
         using boost::spirit::qi::symbols;
@@ -411,41 +411,41 @@ main()
         std::cout << i << std::endl;
         //]
     }
-    
+
     {
         //[reference_using_declarations_lexeme
         using boost::spirit::qi::lexeme;
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::digit;
         //]
-        
+
         //[reference_lexeme
         /*`The use of lexeme here will prevent skipping in between the
             digits and the sign making inputs such as `"1 2 345"` erroneous.*/
         test_phrase_parser("12345", lexeme[ -(lit('+') | '-') >> +digit ]);
         //]
     }
-   
-    // as 
+
+    // as
     {
         //[reference_using_declarations_as
         using boost::spirit::utree;
         using boost::spirit::utree_type;
-        using boost::spirit::utf8_symbol_type; 
+        using boost::spirit::utf8_symbol_type;
         using boost::spirit::qi::as;
         using boost::spirit::qi::as_string;
         using boost::spirit::qi::char_;
         //]
-        
+
         //[reference_as
-        /*`To properly handle string concatenation with __utree__, we 
+        /*`To properly handle string concatenation with __utree__, we
            make use of `as_string[]`. We also use `as<T>` to explicitly create
            a __utree__ symbol node.*/
         utree ut;
 
         typedef as<utf8_symbol_type> as_symbol_type;
         as_symbol_type const as_symbol = as_symbol_type();
-        
+
         test_parser_attr("foo", as_string[*char_], ut);
         std::cout << ut << std::endl; // will output >"foo"<
         BOOST_ASSERT(ut.which() == utree_type::string_type);
@@ -455,7 +455,7 @@ main()
         std::cout << ut << std::endl; // will output >"foo"<
         BOOST_ASSERT(ut.which() == utree_type::string_type);
         ut.clear();
-        
+
         test_parser_attr("foo", as_symbol[*char_], ut);
         std::cout << ut << std::endl; // will output >foo<
         BOOST_ASSERT(ut.which() == utree_type::symbol_type);
@@ -472,37 +472,37 @@ main()
         using boost::spirit::qi::no_skip;
         using boost::spirit::qi::char_;
         //]
-        
+
         //[reference_no_skip
-        /*`The use of no_skip here will prevent skipping of whitespace in front 
+        /*`The use of no_skip here will prevent skipping of whitespace in front
            and in between the characters of the string `'  abc  '`.*/
-        
+
         std::string str;
-        test_phrase_parser_attr("'  abc  '", 
-            '\'' >> no_skip[+~char_('\'')] >> '\'', str); 
+        test_phrase_parser_attr("'  abc  '",
+            '\'' >> no_skip[+~char_('\'')] >> '\'', str);
         std::cout << str << std::endl;    // will output: >  abc  <
         //]
     }
-    
+
     {
         //[reference_using_declarations_hold
         using boost::spirit::qi::hold;
         using boost::spirit::qi::int_;
         using boost::spirit::qi::attr;
         //]
-        
+
         //[reference_hold
-        /*`The use of `hold[]` here will make sure the changes to the attribute 
+        /*`The use of `hold[]` here will make sure the changes to the attribute
            caused by the (failing) first alternative will not be visible after
            the whole parsing succeeded. */
-        
+
         std::vector<int> v;
-        test_phrase_parser_attr("123", 
-              hold[int_ >> ':' >> int_] | int_ >> attr(0), v); 
+        test_phrase_parser_attr("123",
+              hold[int_ >> ':' >> int_] | int_ >> attr(0), v);
         std::cout << v[0] << "," << v[1] << std::endl;    // will output: >123,0<
         //]
     }
-    
+
     {
         //[reference_using_declarations_no_case
         using boost::spirit::ascii::no_case;
@@ -510,12 +510,12 @@ main()
         using boost::spirit::ascii::alnum;
         using boost::spirit::qi::symbols;
         //]
-        
+
         //[reference_no_case
         test_parser("X", no_case[char_('x')]);
         test_parser("6", no_case[alnum]);
         //]
-        
+
         //[reference_symbols_with_no_case
         symbols<char, int> sym;
 
@@ -540,7 +540,7 @@ main()
         using boost::spirit::qi::int_;
         using boost::spirit::ascii::char_;
         //]
-        
+
         //[reference_omit
         /*`This parser ignores the first two characters
             and extracts the succeeding `int`:*/
@@ -557,7 +557,7 @@ main()
         //]
 
         //[reference_matches
-        /*`This parser tries to match an `int` and returns `true` a its 
+        /*`This parser tries to match an `int` and returns `true` a its
            attribute as it succeeded matching: */
         bool result = false;
         test_parser_attr("345", matches[int_], result);
@@ -577,7 +577,7 @@ main()
         using boost::spirit::ascii::alpha;
         using boost::spirit::ascii::alnum;
         //]
-        
+
         //[reference_raw
         //`This parser matches and extracts C++ identifiers:
         std::string id;
@@ -585,7 +585,7 @@ main()
         std::cout << id << std::endl; // should print James007
         //]
     }
-    
+
     {
         //[reference_using_declarations_repeat
         using boost::spirit::qi::repeat;
@@ -595,57 +595,57 @@ main()
         using boost::spirit::ascii::char_;
         namespace phx = boost::phoenix;
         //]
-        
+
         //[reference_repeat
         //`A parser for a file name with a maximum of 255 characters:
         test_parser("batman.jpeg", repeat(1, 255)[char_("a-zA-Z_./")]);
-        
+
         /*`A parser for a specific bitmap file format which has exactly 4096 RGB color information.
             (for the purpose of this example, we will be testing only 3 RGB color information.)
          */
         uint_parser<unsigned, 16, 6, 6> rgb;
         std::vector<unsigned> colors;
         test_parser_attr("ffffff0000003f3f3f", repeat(3)[rgb], colors);
-        std::cout 
+        std::cout
             << std::hex
-            << colors[0] << ',' 
-            << colors[1] << ',' 
+            << colors[0] << ','
+            << colors[1] << ','
             << colors[2] << std::endl;
-        
-        /*`A 256 bit binary string (1..256 1s or 0s). (For the purpose of this example, 
+
+        /*`A 256 bit binary string (1..256 1s or 0s). (For the purpose of this example,
             we will be testing only 16 bits.)
          */
         test_parser("1011101011110010", repeat(16)[lit('1') | '0']);
         //]
-        
+
         std::cout << std::dec; // reset to decimal
-        
+
         //[reference_repeat_pascal
-        /*`This trivial example cannot be practically defined in traditional EBNF. 
-            Although some EBNF variants allow more powerful repetition constructs other 
-            than the Kleene Star, we are still limited to parsing fixed strings. 
-            The nature of EBNF forces the repetition factor to be a constant. 
-            On the other hand, Spirit allows the repetition factor to be variable at 
-            run time. We could write a grammar that accepts the input string above. 
-            Example using phoenix: 
+        /*`This trivial example cannot be practically defined in traditional EBNF.
+            Although some EBNF variants allow more powerful repetition constructs other
+            than the Kleene Star, we are still limited to parsing fixed strings.
+            The nature of EBNF forces the repetition factor to be a constant.
+            On the other hand, Spirit allows the repetition factor to be variable at
+            run time. We could write a grammar that accepts the input string above.
+            Example using phoenix:
          */
         std::string str;
         int n;
-        test_parser_attr("\x0bHello World", 
+        test_parser_attr("\x0bHello World",
             char_[phx::ref(n) = _1] >> repeat(phx::ref(n))[char_], str);
         std::cout << n << ',' << str << std::endl;  // will print "11,Hello World"
         //]
     }
-    
+
     {
         //[reference_using_declarations_skip
         using boost::spirit::qi::skip;
         using boost::spirit::qi::int_;
         using boost::spirit::ascii::space;
         //]
-        
+
         //[reference_skip
-        /*`Explicitly specify a skip parser. This parser parses comma 
+        /*`Explicitly specify a skip parser. This parser parses comma
             delimited numbers, ignoring spaces.*/
         test_parser("1, 2, 3, 4, 5", skip(space)[int_ >> *(',' >> int_)]);
         //]
@@ -699,7 +699,7 @@ main()
         test_parser("\n", eol);
         //]
     }
-    
+
     // eoi
     {
         //[reference_using_declarations_eoi
@@ -710,7 +710,7 @@ main()
         test_parser("", eoi);
         //]
     }
-    
+
     // eps
     {
         //[reference_using_declarations_eps
@@ -724,25 +724,25 @@ main()
         //`Basic `eps`:
         test_parser("", eps); // always matches
         //]
-        
+
         //[reference_eps_if
-        /*`This example simulates the "classic" `if_p` parser. Here, `int_` will be 
+        /*`This example simulates the "classic" `if_p` parser. Here, `int_` will be
             tried only if the condition, `c`, is true.
          */
         bool c = true; // a flag
         test_parser("1234", eps(phx::ref(c) == true) >> int_);
         //]
-        
+
         //[reference_eps_while
         /*`This example simulates the "classic" `while_p` parser. Here, the kleene loop
             will exit once the condition, `c`, becomes true. Notice that the condition, `c`,
             is turned to `false` when we get to parse `4`.
          */
-        test_phrase_parser("1 2 3 4", 
+        test_phrase_parser("1 2 3 4",
             *(eps(phx::ref(c) == true) >> int_[phx::ref(c) = (_1 == 4)]));
         //]
     }
-    
+
     // lazy
     {
         //[reference_using_declarations_lazy
@@ -759,12 +759,12 @@ main()
             takes place at parse time.
          */
         test_parser("Hello", lazy(val(string("Hello"))));
-        
+
         //` The above is equivalent to:
         test_parser("Hello", val(string("Hello")));
         //]
     }
-    
+
     // char class
     {
         //[reference_using_declarations_char_class
@@ -774,14 +774,14 @@ main()
         using boost::spirit::ascii::lower;
         //]
 
-        //[reference_char_class        
+        //[reference_char_class
         test_parser("1", alnum);
         test_parser(" ", blank);
         test_parser("1", digit);
         test_parser("a", lower);
         //]
     }
-    
+
     // uint
     {
         //[reference_using_declarations_uint
@@ -794,22 +794,22 @@ main()
         //[reference_uint
         // unsigned int
         test_parser("12345", uint_);
-        test_parser("12345", uint_(12345)); 
+        test_parser("12345", uint_(12345));
         test_parser("12345", uint_(val(12345)));
 
         // literals
-        test_parser("12345", lit(12345)); 
-        test_parser("12345", lit(val(12345))); 
+        test_parser("12345", lit(12345));
+        test_parser("12345", lit(val(12345)));
         //]
 
         //[reference_thousand_separated
         //`Thousand separated number parser:
         uint_parser<unsigned, 10, 1, 3> uint3_p;        //  1..3 digits
-        uint_parser<unsigned, 10, 3, 3> uint3_3_p;      //  exactly 3 digits        
+        uint_parser<unsigned, 10, 3, 3> uint3_3_p;      //  exactly 3 digits
         test_parser("12,345,678", uint3_p >> *(',' >> uint3_3_p));
         //]
     }
-    
+
     // int
     {
         //[reference_using_declarations_int
@@ -820,18 +820,18 @@ main()
 
         //[reference_int
         // signed int
-        test_parser("+12345", int_); 
+        test_parser("+12345", int_);
         test_parser("-12345", int_);
-        test_parser("+12345", int_(12345)); 
+        test_parser("+12345", int_(12345));
         test_parser("-12345", int_(-12345));
-        test_parser("+12345", int_(val(12345))); 
-        test_parser("-12345", int_(val(-12345))); 
-        
+        test_parser("+12345", int_(val(12345)));
+        test_parser("-12345", int_(val(-12345)));
+
         // literals
-        test_parser("+12345", lit(12345)); 
+        test_parser("+12345", lit(12345));
         test_parser("-12345", lit(-12345));
-        test_parser("+12345", lit(val(12345))); 
-        test_parser("-12345", lit(val(-12345))); 
+        test_parser("+12345", lit(val(12345)));
+        test_parser("-12345", lit(val(-12345)));
         //]
     }
 
@@ -841,6 +841,7 @@ main()
         using boost::phoenix::val;
         using boost::spirit::qi::double_;
         using boost::spirit::qi::real_parser;
+        using boost::spirit::qi::lit;
         //]
 
         //[reference_real
@@ -872,6 +873,7 @@ main()
         using boost::phoenix::val;
         using boost::spirit::qi::bool_;
         using boost::spirit::qi::bool_parser;
+        using boost::spirit::qi::lit;
         //]
 
         //[reference_bool
@@ -907,32 +909,32 @@ main()
         using boost::spirit::qi::_2;
         namespace bf = boost::fusion;
         //]
-        
+
         //[reference_sequence
         //`Simple usage:
         test_parser("xy", char_ >> char_);
-        
+
         //`Extracting the attribute tuple (using __fusion__):
         bf::vector<char, char> attr;
         test_parser_attr("xy", char_ >> char_, attr);
         std::cout << bf::at_c<0>(attr) << ',' << bf::at_c<1>(attr) << std::endl;
-        
+
         //`Extracting the attribute vector (using __stl__):
         std::vector<char> vec;
         test_parser_attr("xy", char_ >> char_, vec);
         std::cout << vec[0] << ',' << vec[1] << std::endl;
-        
+
         //`Extracting the attributes using __qi_semantic_actions__ (using __phoenix__):
         test_parser("xy", (char_ >> char_)[std::cout << _1 << ',' << _2 << std::endl]);
         //]
     }
-    
+
     // sequential_or
     {
         //[reference_using_declarations_sequential_or
         using boost::spirit::qi::int_;
         //]
-        
+
         //[reference_sequential_or
         //`Correctly parsing a number with optional fractional digits:
         test_parser("123.456", int_ || ('.' >> int_));  // full
@@ -940,14 +942,14 @@ main()
         test_parser(".456", int_ || ('.' >> int_));     // just the fraction
 
         /*`A naive but incorrect solution would try to do this using optionals (e.g.):
-                
+
                 int_ >> -('.' >> int_)  // will not match ".456"
                 -int_ >> ('.' >> int_)  // will not match "123"
                 -int_ >> -('.' >> int_) // will match empty strings! Ooops.
          */
         //]
     }
-    
+
     // alternative
     {
         //[reference_using_declarations_alternative
@@ -956,7 +958,7 @@ main()
         using boost::spirit::qi::_1;
         using boost::variant;
         //]
-        
+
         //[reference_alternative
         //`Simple usage:
         test_parser("Hello", string("Hello") | int_);
@@ -965,7 +967,7 @@ main()
         //`Extracting the attribute variant (using __boost_variant__):
         variant<std::string, int> attr;
         test_parser_attr("Hello", string("Hello") | int_, attr);
-        
+
         /*`This should print `"Hello"`. Note: There are better ways to extract the value
             from the variant. See __boost_variant__ visitation. This code is solely
             for demonstration.
@@ -982,19 +984,19 @@ main()
         //]
 
     }
-    
+
     // permutation
     {
         //[reference_using_declarations_permutation
         using boost::spirit::ascii::char_;
         //]
-        
+
         //[reference_permutation
         //`Parse a string containing DNA codes (ACTG)
         test_parser("ACTGGCTAGACT", *(char_('A') ^ 'C' ^ 'T' ^ 'G'));
         //]
     }
-    
+
     // expect
     {
         //[reference_using_declarations_expect
@@ -1019,7 +1021,7 @@ main()
             std::cout << "got: \"" << std::string(x.first, x.last) << '"' << std::endl;
         }
         /*`The code above will print:[teletype]
-        
+
                 expected: tag: literal-char, value: o
                 got: "i"``[c++]``
          */
@@ -1031,14 +1033,14 @@ main()
         //[reference_and_predicate
         //`Some using declarations:
         using boost::spirit::lit;
-        
+
         /*`Basic look-ahead example: make sure that the last character is a
             semicolon, but don't consume it, just peek at the next character:
          */
         test_phrase_parser("Hello ;", lit("Hello") >> &lit(';'), false);
         //]
     }
-    
+
     // not-predicate
     {
         //[reference_not_predicate
@@ -1047,20 +1049,20 @@ main()
         using boost::spirit::ascii::alpha;
         using boost::spirit::qi::lit;
         using boost::spirit::qi::symbols;
-        
+
         /*`Here's an alternative to the `*(r - x) >> x` idiom using the
             not-predicate instead. This parses a list of characters terminated
             by a ';':
          */
         test_parser("abcdef;", *(!lit(';') >> char_) >> ';');
-        
-        /*`The following parser ensures that we match distinct keywords 
-            (stored in a symbol table). To do this, we make sure that the  
+
+        /*`The following parser ensures that we match distinct keywords
+            (stored in a symbol table). To do this, we make sure that the
             keyword does not follow an alpha or an underscore:
          */
         symbols<char, int> keywords;
         keywords = "begin", "end", "for";
-        
+
         // This should fail:
         test_parser("beginner", keywords >> !(alpha | '_'));
 
@@ -1071,37 +1073,37 @@ main()
         test_parser("for()", keywords >> !(alpha | '_'), false);
         //]
     }
-    
+
     // difference
     {
         //[reference_difference
         //`Some using declarations:
         using boost::spirit::ascii::char_;
-        
+
         /*`Parse a C/C++ style comment:
          */
         test_parser("/*A Comment*/", "/*" >> *(char_ - "*/") >> "*/");
         //]
     }
-    
+
     // kleene
     {
         //[reference_kleene
         //`Some using declarations:
         using boost::spirit::qi::int_;
-        
+
         /*`Parse a comma separated list of numbers and put them in a vector:
          */
         std::vector<int> attr;
         test_phrase_parser_attr(
             "111, 222, 333, 444, 555", int_ >> *(',' >> int_), attr);
-        std::cout 
-            << attr[0] << ',' << attr[1] << ',' << attr[2] << ',' 
-            << attr[3] << ',' << attr[4] 
+        std::cout
+            << attr[0] << ',' << attr[1] << ',' << attr[2] << ','
+            << attr[3] << ',' << attr[4]
             << std::endl;
         //]
     }
-    
+
     // plus
     {
         //[reference_plus
@@ -1109,7 +1111,7 @@ main()
         using boost::spirit::ascii::alpha;
         using boost::spirit::qi::lexeme;
 
-        /*`Parse one or more strings containing one or more alphabetic 
+        /*`Parse one or more strings containing one or more alphabetic
             characters and put them in a vector:
          */
         std::vector<std::string> attr;
@@ -1117,7 +1119,7 @@ main()
         std::cout << attr[0] << ',' << attr[1] << ',' << attr[2] << std::endl;
         //]
     }
-    
+
     // optional
     {
         //[reference_optional
@@ -1129,29 +1131,29 @@ main()
         using boost::fusion::at_c;
         using boost::optional;
 
-        /*`Parse a person info with name (in quotes) optional age [footnote 
-            James Bond is shy about his age :-)] and optional sex, all 
+        /*`Parse a person info with name (in quotes) optional age [footnote
+            James Bond is shy about his age :-)] and optional sex, all
             separated by comma.
          */
         vector<std::string, optional<int>, optional<char> > attr;
-        
+
         test_phrase_parser_attr(
             "\"James Bond\", M"
           , lexeme['"' >> +(char_ - '"') >> '"']    // name
                 >> -(',' >> int_)                   // optional age
                 >> -(',' >> char_)                  // optional sex
           , attr);
-        
+
         // Should print: James Bond,M
         std::cout << at_c<0>(attr);                 // print name
         if (at_c<1>(attr))                          // print optional age
             std::cout << ',' << *at_c<1>(attr);
         if (at_c<2>(attr))                          // print optional sex
             std::cout << ',' << *at_c<2>(attr);
-        std::cout << std::endl;        
+        std::cout << std::endl;
         //]
     }
-    
+
     // list
     {
         //[reference_list
@@ -1163,9 +1165,9 @@ main()
         std::vector<int> attr;
         test_phrase_parser_attr(
             "111, 222, 333, 444, 555", int_ % ',', attr);
-        std::cout 
-            << attr[0] << ',' << attr[1] << ',' << attr[2] << ',' 
-            << attr[3] << ',' << attr[4] 
+        std::cout
+            << attr[0] << ',' << attr[1] << ',' << attr[2] << ','
+            << attr[3] << ',' << attr[4]
             << std::endl;
         //]
     }
@@ -1173,7 +1175,7 @@ main()
     // stream
     {
         //[reference_qi_stream
-        //`Using declarations and variables: 
+        //`Using declarations and variables:
         using boost::spirit::qi::stream;
         using boost::spirit::qi::stream_parser;
 
@@ -1217,7 +1219,7 @@ main()
     // native binary
     {
         //[reference_qi_native_binary
-        //`Using declarations and variables: 
+        //`Using declarations and variables:
         using boost::spirit::qi::byte_;
         using boost::spirit::qi::word;
         using boost::spirit::qi::dword;
@@ -1235,7 +1237,7 @@ main()
 
 #ifdef BOOST_LITTLE_ENDIAN
 //->
-        //`Basic usage of the native binary parsers for little endian platforms: 
+        //`Basic usage of the native binary parsers for little endian platforms:
         test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);
         test_parser_attr("\x01\x02", word, us); assert(us == 0x0201);
         test_parser_attr("\x01\x02\x03\x04", dword, ui); assert(ui == 0x04030201);
@@ -1253,20 +1255,20 @@ main()
         test_parser("\x01\x02\x03\x04", dword(0x04030201));
 //<-
 #ifdef BOOST_HAS_LONG_LONG
-//->        
+//->
         test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
             qword(0x0807060504030201LL));
 //<-
 #endif
 #else
 //->
-        //`Basic usage of the native binary parsers for big endian platforms: 
+        //`Basic usage of the native binary parsers for big endian platforms:
         test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);
         test_parser_attr("\x01\x02", word, us); assert(us ==  0x0102);
         test_parser_attr("\x01\x02\x03\x04", dword, ui); assert(ui == 0x01020304);
 //<-
 #ifdef BOOST_HAS_LONG_LONG
-//->        
+//->
         test_parser_attr("\x01\x02\x03\x04\x05\x06\x07\x08", qword, ul);
         assert(0x0102030405060708LL);
 
@@ -1278,24 +1280,24 @@ main()
         test_parser("\x01\x02\x03\x04", dword(0x01020304));
 //<-
 #ifdef BOOST_HAS_LONG_LONG
-//->        
+//->
         test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
             qword(0x0102030405060708LL));
 //<-
 #endif
 #endif
-//->        
+//->
         //]
     }
-    
+
     // little binary
     {
         //[reference_qi_little_binary
-        //`Using declarations and variables: 
+        //`Using declarations and variables:
         using boost::spirit::qi::little_word;
         using boost::spirit::qi::little_dword;
         using boost::spirit::qi::little_qword;
-        
+
         boost::uint16_t us;
         boost::uint32_t ui;
 //<-
@@ -1306,7 +1308,7 @@ main()
 #endif
 
 //->
-        //`Basic usage of the little endian binary parsers: 
+        //`Basic usage of the little endian binary parsers:
         test_parser_attr("\x01\x02", little_word, us); assert(us == 0x0201);
         test_parser_attr("\x01\x02\x03\x04", little_dword, ui); assert(ui == 0x04030201);
 //<-
@@ -1322,23 +1324,23 @@ main()
         test_parser("\x01\x02\x03\x04", little_dword(0x04030201));
 //<-
 #ifdef BOOST_HAS_LONG_LONG
-//->        
+//->
         test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
             little_qword(0x0807060504030201LL));
 //<-
 #endif
-//->        
+//->
         //]
     }
-    
+
     // big binary
     {
         //[reference_qi_big_binary
-        //`Using declarations and variables: 
+        //`Using declarations and variables:
         using boost::spirit::qi::big_word;
         using boost::spirit::qi::big_dword;
         using boost::spirit::qi::big_qword;
-        
+
         boost::uint16_t us;
         boost::uint32_t ui;
 //<-
@@ -1349,12 +1351,12 @@ main()
 #endif
 
 //->
-        //`Basic usage of the big endian binary parsers: 
+        //`Basic usage of the big endian binary parsers:
         test_parser_attr("\x01\x02", big_word, us); assert(us ==  0x0102);
         test_parser_attr("\x01\x02\x03\x04", big_dword, ui); assert(ui == 0x01020304);
 //<-
 #ifdef BOOST_HAS_LONG_LONG
-//->        
+//->
         test_parser_attr("\x01\x02\x03\x04\x05\x06\x07\x08", big_qword, ul);
         assert(0x0102030405060708LL);
 
@@ -1365,15 +1367,15 @@ main()
         test_parser("\x01\x02\x03\x04", big_dword(0x01020304));
 //<-
 #ifdef BOOST_HAS_LONG_LONG
-//->        
+//->
         test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
             big_qword(0x0102030405060708LL));
 //<-
 #endif
-//->        
+//->
         //]
     }
-   
+
     // rule
     {
         //[reference_rule
@@ -1392,7 +1394,7 @@ main()
         rule<char const*> r;
         r = int_;
         test_parser("123", r);
-        
+
         /*`Rule with synthesized attribute:
          */
         rule<char const*, int()> ra;
@@ -1400,7 +1402,7 @@ main()
         int i;
         test_parser_attr("123", ra, i);
         assert(i ==  123);
-        
+
         /*`Rule with skipper and synthesized attribute:
          */
         rule<char const*, std::vector<int>(), space_type> rs;
@@ -1410,7 +1412,7 @@ main()
         assert(v[0] ==  123);
         assert(v[1] ==  456);
         assert(v[2] ==  789);
-        
+
         /*`Rule with one local variable:
          */
         rule<char const*, locals<char> > rl;
@@ -1419,7 +1421,7 @@ main()
         test_parser("ax", rl); // fail
         //]
     }
-    
+
     // grammar
     {
         using client::num_list;
@@ -1438,6 +1440,6 @@ main()
         test_phrase_parser("123, 456, 789", nlist);
         //]
     }
-    
+
     return 0;
 }

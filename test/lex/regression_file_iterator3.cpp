@@ -14,10 +14,11 @@
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/home/phoenix/core.hpp>
-#include <boost/spirit/home/phoenix/operator.hpp>
-#include <boost/spirit/home/phoenix/statement.hpp>
-#include <boost/spirit/home/phoenix/object.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/spirit/include/phoenix_stl.hpp>
 
 #include <sstream>
 
@@ -43,7 +44,7 @@ make_file_iterator(std::istream& input, const std::string& filename)
 
 struct string_literal
 {
-    string_literal(file_iterator begin, file_iterator end)
+    string_literal(file_iterator, file_iterator)
     {
     }
 };
@@ -59,7 +60,7 @@ struct lexer
     {
         lex::token_def<> string_lookahead('\'');
         self("LA") = string_lookahead;
-            
+
         // make sure lookahead is implicitly evaluated using the lexer state
         // the token_def has been associated with
         self = st [
@@ -77,14 +78,14 @@ int main()
 {
     std::stringstream ss;
     ss << "'foo''bar'";
-    
+
     file_iterator begin = make_file_iterator(ss, "SS");
     file_iterator end;
-    
+
     lexer l;
     token_iterator begin2 = l.begin(begin, end);
     token_iterator end2 = l.end();
-    
+
     char const* test_data[] = { "1,'foo'", "1,'foo''bar'" };
     std::size_t const test_data_size = sizeof(test_data)/sizeof(test_data[0]);
 

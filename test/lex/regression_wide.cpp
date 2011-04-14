@@ -59,6 +59,7 @@ test_data data[] =
 ///////////////////////////////////////////////////////////////////////////////
 struct test_impl
 {
+    typedef void result_type;
     template <typename TokenId, typename Value>
     struct result { typedef void type; };
 

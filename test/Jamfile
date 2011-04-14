@@ -7,6 +7,24 @@
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
+
+# bring in rules for testing
+import testing ;
+import modules ;
+import feature ;
+
+###############################################################################
+# new feature definition allowing to switch between Phoenix V2 and V3 tests
+feature.feature phoenix_v3 
+    :   off on
+    :   composite propagated 
+    ;
+
+feature.compose <phoenix_v3>on
+    :   <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
+    ;
+
+###############################################################################
 project spirit_v2x/test
     : requirements
         <include>.
@@ -15,11 +33,33 @@ project spirit_v2x/test
     :
     :
     ;
+    
+v2_tests = ;
+v3_tests = ;
+    
+rule run ( sources + : args * : input-files * : requirements * : target-name ? :  default-build * )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    v2_tests += [ testing.run $(sources) : $(args) : $(input-files) : $(requirements) : $(target-name)-p2 : $(default-build) ] ;
+    v3_tests += [ testing.run $(sources) : $(args) : $(input-files) : $(requirements) <phoenix_v3>on : $(target-name)-p3 : $(default-build) ] ;
+}
 
+rule compile ( sources + : requirements * : target-name ? )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    v2_tests += [ testing.compile $(sources) : $(requirements) : $(target-name)-p2 ] ;
+    v3_tests += [ testing.compile $(sources) : $(requirements) <phoenix_v3>on : $(target-name)-p3 ] ;
+}
+
+rule compile-fail ( sources + : requirements * : target-name ? )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    v2_tests += [ testing.compile-fail $(sources) : $(requirements) : $(target-name)-p2 ] ;
+    v3_tests += [ testing.compile-fail $(sources) : $(requirements) <phoenix_v3>on : $(target-name)-p3 ] ;
+}
+    
+###############################################################################
 path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
-
-# bring in rules for testing
-import testing ;
 
 {
     ###########################################################################
@@ -201,6 +241,7 @@ import testing ;
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
      [ compile karma/regression_const_real_policies.cpp    : :  regression_const_real_policies ]
+     [ run karma/regression_numerics_adapt_adt.cpp         : : : :  karma_regression_numerics_adapt_adt ]
 
     ;
 
@@ -230,9 +271,15 @@ import testing ;
      [ run lex/regression_basic_lexer.cpp : : : : lex_regression_basic_lexer ]
      [ run lex/regression_matlib_dynamic.cpp : : : : lex_regression_matlib_dynamic ]
      [ run lex/regression_matlib_generate.cpp : $(LEX_DIR)/matlib_static.h : : : lex_regression_matlib_generate ]
-     [ run lex/regression_matlib_static.cpp : : : <dependency>.//lex_regression_matlib_generate : lex_regression_matlib_static ]
+     [ run lex/regression_matlib_static.cpp : : : 
+       <phoenix_v3>on:<dependency>.//lex_regression_matlib_generate-p3
+       <phoenix_v3>off:<dependency>.//lex_regression_matlib_generate-p2
+       : lex_regression_matlib_static ]
      [ run lex/regression_matlib_generate_switch.cpp : $(LEX_DIR)/matlib_static_switch.h : : : lex_regression_matlib_generate_switch ]
-     [ run lex/regression_matlib_switch.cpp : : : <dependency>.//lex_regression_matlib_generate_switch : lex_regression_matlib_switch ]
+     [ run lex/regression_matlib_switch.cpp : : : 
+       <phoenix_v3>on:<dependency>.//lex_regression_matlib_generate_switch-p3 
+       <phoenix_v3>off:<dependency>.//lex_regression_matlib_generate_switch-p2
+         : lex_regression_matlib_switch ]
      [ run lex/regression_word_count.cpp : : : : lex_regression_word_count ]
      [ run lex/regression_syntax_error.cpp : : : : lex_regression_syntax_error ]
      [ run lex/regression_wide.cpp : : : : lex_regression_wide ]
@@ -261,4 +308,19 @@ import testing ;
 
     ;
 }
+
+# use this alias to build Spirit against Phoenix V2
+alias test_using_phoenix_v2 : $(v2_tests) ;
+
+# use this alias to build Spirit against Phoenix V3
+alias test_using_phoenix_v3 : $(v3_tests) ;
+
+# We keep  both aliases non-explicit to invoke tests for Phoenix V2 and V3
+# while running the regerssion tests.
+#
+# If you want to avoid running tests for both Phoenix V2 and V3 by default
+# then simply uncomment the following 'explicit' command. If no target is 
+# specified, only the V2 tests will be run.
+# 
+# explicit test_using_phoenix_v2 test_using_phoenix_v3 ;
 

@@ -120,7 +120,7 @@ skip "" ".*qi.reference.directive\..*" qi_index
 repeat "" ".*qi.reference.directive\..*" qi_index
 inf "" ".*qi.reference.directive\..*" qi_index
 omit "" ".*qi.reference.directive\..*" qi_index
-"as&lt;T&gt;" "as" ".*qi.reference.directive.as" qi_index
+"as<T>" "as" ".*qi.reference.directive.as" qi_index
 as_string "" ".*qi.reference.directive.as" qi_index
 as_wstring "" ".*qi.reference.directive.as" qi_index
 hold "" ".*qi.reference.directive.hold" qi_index
@@ -139,7 +139,7 @@ columns "" ".*karma.reference.directive\..*" karma_index
 repeat "" ".*karma.reference.directive\..*" karma_index
 inf "" ".*karma.reference.directive\..*" karma_index
 omit "" ".*karma.reference.directive\..*" karma_index
-"as&lt;T&gt;" "as" ".*karma.reference.directive.as" karma_index
+"as<T>" "as" ".*karma.reference.directive.as" karma_index
 as_string "" ".*karma.reference.directive.as" karma_index
 as_wstring "" ".*karma.reference.directive.as" karma_index
 
@@ -209,13 +209,13 @@ uint_generator "" ".*karma.reference.numeric\..*" karma_index
 real_generator "" ".*karma.reference.numeric\..*" karma_index
 
 # parser/generator operators
-"sequence (a &gt;&gt; b)" "sequence" ".*qi.reference.operator.sequence.*" qi_index
+"sequence (a >> b)" "sequence" ".*qi.reference.operator.sequence.*" qi_index
 "alternative (a | b)" "alternative" ".*qi.reference.operator.alternative.*" qi_index
 "kleene (*a)" "[K|k]leene" ".*qi.reference.operator.kleene.*" qi_index
 "plus (+a)" "[P|p]lus" ".*qi.reference.operator.plus.*" qi_index
 "list (a % b)" "list" ".*qi.reference.operator.list.*" qi_index
 "optional (-a)" "optional" ".*qi.reference.operator.optional.*" qi_index
-"and-predicate (&amp;a)" "and-predicate" ".*qi.reference.operator.and_predicate.*" qi_index
+"and-predicate (&a)" "and-predicate" ".*qi.reference.operator.and_predicate.*" qi_index
 "not-predicate (!a)" "not-predicate" ".*qi.reference.operator.not_predicate.*" qi_index
 
 "expectation (a > b)" "expectation" ".*qi.reference.operator.expect.*" qi_index
@@ -223,13 +223,13 @@ real_generator "" ".*karma.reference.numeric\..*" karma_index
 "permutation (a ^ b)" "permutation" ".*qi.reference.operator.permutation.*" qi_index
 "sequential-or (a || b)" "sequential-or" ".*qi.reference.operator.sequential_or.*" qi_index
 
-"sequence (a &lt;&lt; b)" "sequence" ".*karma.reference.operator.sequence.*" karma_index
+"sequence (a << b)" "sequence" ".*karma.reference.operator.sequence.*" karma_index
 "alternative (a | b)" "alternative" ".*karma.reference.operator.alternative.*" karma_index
 "kleene (*a)" "[K|k]leene" ".*karma.reference.operator.kleene.*" karma_index
 "plus (+a)" "[P|p]lus" ".*karma.reference.operator.plus.*" karma_index
 "list (a % b)" "list" ".*karma.reference.operator.list.*" karma_index
 "optional (-a)" "optional" ".*karma.reference.operator.optional.*" karma_index
-"and-predicate (&amp;a)" "and-predicate" ".*karma.reference.operator.and_predicate.*" karma_index
+"and-predicate (&a)" "and-predicate" ".*karma.reference.operator.and_predicate.*" karma_index
 "not-predicate (!a)" "not-predicate" ".*karma.reference.operator.not_predicate.*" karma_index
 
 # stream parsers/generators

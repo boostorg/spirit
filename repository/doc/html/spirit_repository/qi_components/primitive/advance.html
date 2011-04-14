@@ -4,7 +4,7 @@
 <title>Qi advance Parser</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit Repository 0.1">
+<link rel="home" href="../../../index.html" title="Spirit Repository 0.2">
 <link rel="up" href="../primitive.html" title="Qi Parser Primitives">
 <link rel="prev" href="../primitive.html" title="Qi Parser Primitives">
 <link rel="next" href="flush_multi_pass.html" title="Qi flush_multi_pass parser">
@@ -28,7 +28,7 @@
         advance Parser</a>
 </h4></div></div></div>
 <a name="spirit_repository.qi_components.primitive.advance.description"></a><h6>
-<a name="id834496"></a>
+<a name="id863615"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.description">Description</a>
         </h6>
 <p>
@@ -45,7 +45,7 @@
           unnecessary, as in the case where large binary objects are being parsed.
           Take, for example, the following binary data:
         </p>
-<pre class="programlisting"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">77</span> <span class="identifier">fc</span> <span class="identifier">b4</span> <span class="number">51</span> <span class="number">0</span><span class="identifier">a</span> <span class="identifier">b3</span> <span class="identifier">b7</span> <span class="special">...</span> <span class="error">1</span><span class="identifier">e</span> <span class="number">60</span> <span class="number">70</span> <span class="identifier">b6</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">00</span>
+<pre class="programlisting">00 00 00 01 77 fc b4 51 0a b3 b7 ... 1e 60 70 b6 00 00 01 00
 </pre>
 <p>
           If the first 4 bytes are a little-endian 32-bit integer describing the
@@ -66,20 +66,20 @@
 <pre class="programlisting"><span class="identifier">little_dword</span><span class="special">[</span><span class="identifier">_a</span> <span class="special">=</span> <span class="identifier">_1</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="identifier">advance</span><span class="special">(</span><span class="identifier">_a</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">little_dword</span><span class="special">...</span>
 </pre>
 <a name="spirit_repository.qi_components.primitive.advance.header"></a><h6>
-<a name="id842573"></a>
+<a name="id871597"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/qi/primitive/advance.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_advance</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.qi_components.primitive.advance.synopsis"></a><h6>
-<a name="id842651"></a>
+<a name="id871675"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="identifier">advance</span><span class="special">(</span><span class="identifier">distance</span><span class="special">)</span>
 </pre>
 <a name="spirit_repository.qi_components.primitive.advance.parameters"></a><h6>
-<a name="id842688"></a>
+<a name="id871712"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.parameters">Parameters</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -113,7 +113,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit_repository.qi_components.primitive.advance.attribute"></a><h6>
-<a name="id842759"></a>
+<a name="id871783"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.attribute">Attribute</a>
         </h6>
 <p>
@@ -123,7 +123,7 @@
 <pre class="programlisting"><span class="identifier">advance</span> <span class="special">--&gt;</span> <span class="identifier">unused</span>
 </pre>
 <a name="spirit_repository.qi_components.primitive.advance.example"></a><h6>
-<a name="id842813"></a>
+<a name="id871837"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.example">Example</a>
         </h6>
 <p>
@@ -132,7 +132,7 @@
           binary data (for the full example code see <a href="../../../../../example/qi/advance.cpp" target="_top">advance.cpp</a>)
         </p>
 <a name="spirit_repository.qi_components.primitive.advance.prerequisites"></a><h6>
-<a name="id842848"></a>
+<a name="id871872"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -162,7 +162,7 @@
 <p>
         </p>
 <a name="spirit_repository.qi_components.primitive.advance.setting_up_the_grammar"></a><h6>
-<a name="id843119"></a>
+<a name="id872143"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.setting_up_the_grammar">Setting
           up the Grammar</a>
         </h6>
@@ -206,7 +206,7 @@
           descend into alternatives.
         </p>
 <a name="spirit_repository.qi_components.primitive.advance.parsing_a_correctly_delimited_string_of_data"></a><h6>
-<a name="id843574"></a>
+<a name="id872598"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.parsing_a_correctly_delimited_string_of_data">Parsing
           a Correctly-delimited String of Data</a>
         </h6>
@@ -245,7 +245,7 @@
 <p>
         </p>
 <a name="spirit_repository.qi_components.primitive.advance.parsing_the_alternative_representation"></a><h6>
-<a name="id844258"></a>
+<a name="id873282"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.parsing_the_alternative_representation">Parsing
           the Alternative Representation</a>
         </h6>
@@ -284,7 +284,7 @@
 <p>
         </p>
 <a name="spirit_repository.qi_components.primitive.advance.notes"></a><h6>
-<a name="id846009"></a>
+<a name="id875038"></a>
           <a class="link" href="advance.html#spirit_repository.qi_components.primitive.advance.notes">Notes</a>
         </h6>
 <p>
@@ -295,7 +295,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2010 Joel de Guzman, Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2011 Joel de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

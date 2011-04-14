@@ -13,11 +13,7 @@
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/home/phoenix/core.hpp>
-#include <boost/spirit/home/phoenix/operator.hpp>
-#include <boost/spirit/home/phoenix/statement.hpp>
-#include <boost/spirit/home/phoenix/object.hpp>
-#include <boost/spirit/home/phoenix/stl.hpp>
+#include <boost/spirit/include/phoenix.hpp>
 
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;
@@ -39,14 +35,14 @@ make_file_iterator(std::istream& input, const std::string& filename)
 
 struct identifier
 {
-    identifier(file_iterator begin, file_iterator end)
+    identifier(file_iterator, file_iterator)
     {
     }
 };
 
 struct string_literal
 {
-    string_literal(file_iterator begin, file_iterator end)
+    string_literal(file_iterator, file_iterator)
     {
     }
 };
