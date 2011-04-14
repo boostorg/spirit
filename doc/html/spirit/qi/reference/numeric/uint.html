@@ -204,8 +204,7 @@
                   </td>
 <td>
                     <p>
-                      The radix base. This can be either 2 for binary, 8 for octal,
-                      10 for decimal and 16 for hexadecimal.
+                      The radix base. This can be any base from 2..10 and 16
                     </p>
                   </td>
 <td>
@@ -771,12 +770,12 @@
 </p>
 <pre class="programlisting"><span class="comment">// unsigned int
 </span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">uint_</span><span class="special">);</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">uint_</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span> 
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">uint_</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">uint_</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span>
 
 <span class="comment">// literals
-</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span> 
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span> 
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span>
 </pre>
 <p>
           </p>
@@ -787,7 +786,7 @@
             
 </p>
 <pre class="programlisting"><span class="identifier">uint_parser</span><span class="special">&lt;</span><span class="keyword">unsigned</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">3</span><span class="special">&gt;</span> <span class="identifier">uint3_p</span><span class="special">;</span>        <span class="comment">//  1..3 digits
-</span><span class="identifier">uint_parser</span><span class="special">&lt;</span><span class="keyword">unsigned</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">3</span><span class="special">&gt;</span> <span class="identifier">uint3_3_p</span><span class="special">;</span>      <span class="comment">//  exactly 3 digits        
+</span><span class="identifier">uint_parser</span><span class="special">&lt;</span><span class="keyword">unsigned</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">3</span><span class="special">&gt;</span> <span class="identifier">uint3_3_p</span><span class="special">;</span>      <span class="comment">//  exactly 3 digits
 </span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"12,345,678"</span><span class="special">,</span> <span class="identifier">uint3_p</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">uint3_3_p</span><span class="special">));</span>
 </pre>
 <p>

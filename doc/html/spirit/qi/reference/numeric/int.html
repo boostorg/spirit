@@ -190,8 +190,7 @@
                   </td>
 <td>
                     <p>
-                      The radix base. This can be either 2 for binary, 8 for octal,
-                      10 for decimal and 16 for hexadecimal.
+                      The radix base. This can be any base from 2..10 and 16
                     </p>
                   </td>
 <td>
@@ -719,18 +718,18 @@
             
 </p>
 <pre class="programlisting"><span class="comment">// signed int
-</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">);</span> 
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">);</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">);</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span> 
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(-</span><span class="number">12345</span><span class="special">));</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span> 
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(</span><span class="identifier">val</span><span class="special">(-</span><span class="number">12345</span><span class="special">)));</span> 
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">int_</span><span class="special">(</span><span class="identifier">val</span><span class="special">(-</span><span class="number">12345</span><span class="special">)));</span>
 
 <span class="comment">// literals
-</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span> 
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="number">12345</span><span class="special">));</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(-</span><span class="number">12345</span><span class="special">));</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span> 
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(-</span><span class="number">12345</span><span class="special">)));</span> 
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"+12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(</span><span class="number">12345</span><span class="special">)));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"-12345"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="identifier">val</span><span class="special">(-</span><span class="number">12345</span><span class="special">)));</span>
 </pre>
 <p>
           </p>

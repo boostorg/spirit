@@ -695,11 +695,11 @@
     <span class="special">=</span>   <span class="identifier">lit</span><span class="special">(</span><span class="char">'+'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'-'</span>
     <span class="special">;</span>
 
-<span class="identifier">nan</span> 
-    <span class="special">=</span>   <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"1.0#"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">no_case</span><span class="special">[</span><span class="string">"nan"</span><span class="special">]</span> 
+<span class="identifier">nan</span>
+    <span class="special">=</span>   <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"1.0#"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">no_case</span><span class="special">[</span><span class="string">"nan"</span><span class="special">]</span>
         <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">'('</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">')'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">')'</span><span class="special">)</span>
     <span class="special">;</span>
-    
+
 <span class="identifier">inf</span>
     <span class="special">=</span>   <span class="identifier">no_case</span><span class="special">[</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"inf"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"inity"</span><span class="special">)]</span>
     <span class="special">;</span>
@@ -749,7 +749,7 @@
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput"><span class="identifier">ureal_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
+                      <code class="computeroutput"><span class="identifier">ureal_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code>
                     </p>
                   </td>
 <td>
@@ -761,7 +761,7 @@
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
+                      <code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code>
                     </p>
                   </td>
 <td>
@@ -773,7 +773,7 @@
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput"><span class="identifier">strict_ureal_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
+                      <code class="computeroutput"><span class="identifier">strict_ureal_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code>
                     </p>
                   </td>
 <td>
@@ -785,7 +785,7 @@
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput"><span class="identifier">strict_real_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
+                      <code class="computeroutput"><span class="identifier">strict_real_policies</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code>
                     </p>
                   </td>
 <td>
@@ -1065,6 +1065,7 @@
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">real_parser</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
 </pre>
 <p>
           </p>

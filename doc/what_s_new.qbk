@@ -17,10 +17,10 @@ This version of __spirit__ now supports the new version of __boost_phoenix__ (V3
 which has been released as part of Boost V1.47. Please note that this support
 is purely preliminary and should not be considered production quality. The
 reason why we are releasing this now is to enable people who want to use the
-new version of __boost_phoenix__ in their code can do without any conflicts with
+new version of __boost_phoenix__ in their code to do so without any conflicts with
 existing code using __spirit__. Generally, no __spirit__ code needs to be
 changed. To activate the use of __boost_phoenix__ V3 for __spirit__ you need to
-define the following preprocessor constants for your builds (before including
+define the following preprocessor constant for your builds (before including
 any of Spirit's include files):
 
     #define BOOST_SPIRIT_USE_PHOENIX_V3 1

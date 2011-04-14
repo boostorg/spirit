@@ -560,9 +560,9 @@
 <p>
             
 </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">phx</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span>        
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">phx</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span>
 <span class="identifier">test_parser</span><span class="special">(</span><span class="string">"x"</span><span class="special">,</span> <span class="identifier">phx</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="char">'x'</span><span class="special">));</span>            <span class="comment">// direct
-</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"5"</span><span class="special">,</span> 
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"5"</span><span class="special">,</span>
     <span class="identifier">char_</span><span class="special">(</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="char">'0'</span><span class="special">),</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="char">'9'</span><span class="special">)));</span>    <span class="comment">// ascii::char_ range
 </span></pre>
 <p>

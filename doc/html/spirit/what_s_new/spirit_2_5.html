@@ -39,16 +39,13 @@
         support is purely preliminary and should not be considered production quality.
         The reason why we are releasing this now is to enable people who want to
         use the new version of <a href="../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
-        in their code can do without any conflicts with existing code using <a href="http://boost-spirit.com" target="_top">Spirit</a>. Generally, no <a href="http://boost-spirit.com" target="_top">Spirit</a>
+        in their code to do so without any conflicts with existing code using <a href="http://boost-spirit.com" target="_top">Spirit</a>. Generally, no <a href="http://boost-spirit.com" target="_top">Spirit</a>
         code needs to be changed. To activate the use of <a href="../../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
         V3 for <a href="http://boost-spirit.com" target="_top">Spirit</a> you need to define
-        the following preprocessor constants for your builds (before including any
+        the following preprocessor constant for your builds (before including any
         of Spirit's include files):
       </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_SPIRIT_USE_PHOENIX_V3</span> <span class="number">1</span>
-<span class="preprocessor">#define</span> <span class="identifier">BOOST_PROTO_MAX_ARITY</span> <span class="number">11</span>
-<span class="preprocessor">#define</span> <span class="identifier">BOOST_PROTO_MAX_LOGICAL_ARITY</span> <span class="number">11</span>
-<span class="preprocessor">#define</span> <span class="identifier">BOOST_MPL_LIMIT_METAFUNCTION_ARITY</span> <span class="number">12</span>
 </pre>
 <a name="spirit.what_s_new.spirit_2_5.new_features_in_qi_or_karma"></a><h5>
 <a name="spirit.what_s_new.spirit_2_5.new_features_in_qi_or_karma-heading"></a>
@@ -73,6 +70,9 @@
             <code class="computeroutput"><span class="identifier">int_</span></code>, which resulted
             in generated a type <code class="computeroutput"><span class="identifier">int__type</span></code>
             with a bogus double underscore that is reserved for system use in C++.
+          </li>
+<li class="listitem">
+            The numeric parsers now allow arbitrary radix from 2..10 and 16
           </li>
 <li class="listitem">
             The placeholder <code class="computeroutput"><span class="identifier">_val</span></code>
@@ -128,6 +128,10 @@
             the iterator of the underlying input stream in the case when the stream
             parser component was successful. Thanks to Brian O'Kennedy who reported
             the problem on Stackoverflow.
+          </li>
+<li class="listitem">
+            Fixed failing Karma numerics generators when used with adapted ADTs (thanks
+            to Colin Rundel for reporting that problem).
           </li>
 </ul></div>
 <a name="spirit.what_s_new.spirit_2_5.breaking_changes"></a><h5>

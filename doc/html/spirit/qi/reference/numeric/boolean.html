@@ -265,7 +265,7 @@
                       
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">true_</span>
-<span class="identifier">false_</span> 
+<span class="identifier">false_</span>
 </pre>
 <p>
                     </p>
@@ -596,6 +596,7 @@
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">bool_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">bool_parser</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
 </pre>
 <p>
           </p>
@@ -628,7 +629,7 @@
             
 </p>
 <pre class="programlisting"><span class="comment">///////////////////////////////////////////////////////////////////////////////
-</span><span class="comment">//  These policies can be used to parse "eurt" (i.e. "true" spelled backwards) 
+</span><span class="comment">//  These policies can be used to parse "eurt" (i.e. "true" spelled backwards)
 </span><span class="comment">//  as `false`
 </span><span class="comment">///////////////////////////////////////////////////////////////////////////////
 </span><span class="keyword">struct</span> <span class="identifier">backwards_bool_policies</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">bool_policies</span><span class="special">&lt;&gt;</span>
