@@ -30,7 +30,7 @@
 
 namespace boost { namespace spirit { namespace traits
 {
-    using spirit::detail::pow10;
+    using spirit::traits::pow10;
 
     template <typename T>
     inline void

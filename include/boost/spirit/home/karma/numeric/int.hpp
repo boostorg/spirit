@@ -207,10 +207,10 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Attribute>
         static bool insert_int(OutputIterator& sink, Attribute const& attr)
         {
-            return sign_inserter::call(sink, detail::is_zero(attr)
-                      , detail::is_negative(attr), force_sign) &&
+            return sign_inserter::call(sink, traits::test_zero(attr)
+                      , traits::test_negative(attr), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(attr));
+                      , traits::get_absolute_value(attr));
         }
 
     public:
@@ -278,10 +278,10 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Attribute>
         static bool insert_int(OutputIterator& sink, Attribute const& attr)
         {
-            return sign_inserter::call(sink, detail::is_zero(attr)
-                      , detail::is_negative(attr), force_sign) &&
+            return sign_inserter::call(sink, traits::test_zero(attr)
+                      , traits::test_negative(attr), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(attr));
+                      , traits::get_absolute_value(attr));
         }
 
     public:

@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/numeric_traits.hpp>
 #include <boost/fusion/include/adapt_adt.hpp>
 #include <boost/utility/enable_if.hpp>
 
