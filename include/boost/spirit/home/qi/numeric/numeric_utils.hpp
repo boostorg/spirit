@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace qi
     {
         // check template parameter 'Radix' for validity
         BOOST_SPIRIT_ASSERT_MSG(
-            Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
+            Radix >= 2 || Radix <= 10 || Radix == 16,
             not_supported_radix, ());
 
         template <typename Iterator>

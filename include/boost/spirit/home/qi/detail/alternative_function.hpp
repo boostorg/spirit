@@ -31,7 +31,15 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         typedef typename mpl::end<types>::type end;
 
         typedef typename
-            mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >::type
+            mpl::find_if<types, is_same<mpl::_1, Expected> >::type
+        iter_1;
+
+        typedef typename
+            mpl::eval_if<
+                is_same<iter_1, end>,
+                mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >,
+                mpl::identity<iter_1>
+            >::type
         iter;
 
         typedef typename

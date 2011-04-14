@@ -1497,6 +1497,7 @@ namespace boost { namespace spirit
         switch (get_type())
         {
             case type::string_type:
+            case type::string_range_type:
             case type::binary_type:
             case type::symbol_type:
               boost::throw_exception(bad_type_exception());
@@ -1511,6 +1512,7 @@ namespace boost { namespace spirit
         switch (get_type())
         {
             case type::string_type:
+            case type::string_range_type:
             case type::binary_type:
             case type::symbol_type:
               boost::throw_exception(bad_type_exception());

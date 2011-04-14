@@ -17,6 +17,7 @@
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/numeric_traits.hpp>
 #include <boost/spirit/home/support/detail/pow10.hpp>
 #include <boost/spirit/home/support/detail/sign.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
@@ -40,34 +41,32 @@
 #error "Please set the BOOST_KARMA_NUMERICS_LOOP_UNROLL to a non-negative value!"
 #endif
 
-namespace boost { namespace spirit { namespace karma 
+namespace boost { namespace spirit { namespace traits
 { 
-    namespace detail 
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //  return the absolute value from a given number, avoiding over- and 
+    //  underflow
+    //
+    ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
+    struct absolute_value
     {
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //  return the absolute value from a given number, avoiding over- and 
-        //  underflow
-        //
-        ///////////////////////////////////////////////////////////////////////
-        template <typename T>
-        struct absolute_value_helper
+        typedef T type;
+        static T call (T n)
         {
-            typedef T result_type;
-            static T call (T n)
-            {
-                // allow for ADL to find the correct overloads for fabs
-                using namespace std;
-                return fabs(n);
-            }
-        };
+            // allow for ADL to find the correct overloads for fabs
+            using namespace std;
+            return fabs(n);
+        }
+    };
 
-#define BOOST_SPIRIT_ABSOLUTE_VALUE(type, unsignedtype)                       \
+#define BOOST_SPIRIT_ABSOLUTE_VALUE(signedtype, unsignedtype)                 \
         template <>                                                           \
-        struct absolute_value_helper<type>                                    \
+        struct absolute_value<signedtype>                                     \
         {                                                                     \
-            typedef unsignedtype result_type;                                 \
-            static result_type call(type n)                                   \
+            typedef unsignedtype type;                                        \
+            static type call(signedtype n)                                    \
             {                                                                 \
                 return (n >= 0) ? n : (unsignedtype)(-n);                     \
             }                                                                 \
@@ -75,367 +74,410 @@ namespace boost { namespace spirit { namespace karma
     /**/
 #define BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsignedtype)                    \
         template <>                                                           \
-        struct absolute_value_helper<unsignedtype>                            \
+        struct absolute_value<unsignedtype>                                   \
         {                                                                     \
-            typedef unsignedtype result_type;                                 \
-            static result_type call(unsignedtype n)                           \
+            typedef unsignedtype type;                                        \
+            static type call(unsignedtype n)                                  \
             {                                                                 \
                 return n;                                                     \
             }                                                                 \
         }                                                                     \
     /**/
 
-        BOOST_SPIRIT_ABSOLUTE_VALUE(signed char, unsigned char);
-        BOOST_SPIRIT_ABSOLUTE_VALUE(char, unsigned char);
-        BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
-        BOOST_SPIRIT_ABSOLUTE_VALUE(int, unsigned int);
-        BOOST_SPIRIT_ABSOLUTE_VALUE(long, unsigned long);
-        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned char);
-        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned short);
-        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned int);
-        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned long);
+    BOOST_SPIRIT_ABSOLUTE_VALUE(signed char, unsigned char);
+    BOOST_SPIRIT_ABSOLUTE_VALUE(char, unsigned char);
+    BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
+    BOOST_SPIRIT_ABSOLUTE_VALUE(int, unsigned int);
+    BOOST_SPIRIT_ABSOLUTE_VALUE(long, unsigned long);
+    BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned char);
+    BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned short);
+    BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned int);
+    BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned long);
 #ifdef BOOST_HAS_LONG_LONG
-        BOOST_SPIRIT_ABSOLUTE_VALUE(boost::long_long_type, boost::ulong_long_type);
-        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(boost::ulong_long_type);
+    BOOST_SPIRIT_ABSOLUTE_VALUE(boost::long_long_type, boost::ulong_long_type);
+    BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(boost::ulong_long_type);
 #endif
 
 #undef BOOST_SPIRIT_ABSOLUTE_VALUE
 #undef BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED
 
-        template <>
-        struct absolute_value_helper<float>
+    template <>
+    struct absolute_value<float>
+    {
+        typedef float type;
+        static type call(float n)
         {
-            typedef float result_type;
-            static result_type call(float n)
-            {
-                return (spirit::detail::signbit)(n) ? -n : n;
-            }
-        };
-
-        template <>
-        struct absolute_value_helper<double>
-        {
-            typedef double result_type;
-            static result_type call(double n)
-            {
-                return (spirit::detail::signbit)(n) ? -n : n;
-            }
-        };
-
-        template <>
-        struct absolute_value_helper<long double>
-        {
-            typedef long double result_type;
-            static result_type call(long double n)
-            {
-                return (spirit::detail::signbit)(n) ? -n : n;
-            }
-        };
-
-        // specialization for pointers
-        template <typename T>
-        struct absolute_value_helper<T*>
-        {
-            typedef std::size_t result_type;
-            static std::size_t call (T* p)
-            {
-                return std::size_t(p);
-            }
-        };
-
-        template <typename T>
-        typename absolute_value_helper<T>::result_type
-        absolute_value(T n)
-        {
-            return absolute_value_helper<T>::call(n);
+            return (spirit::detail::signbit)(n) ? -n : n;
         }
+    };
 
-        ///////////////////////////////////////////////////////////////////////
-        inline bool is_negative(float n) 
+    template <>
+    struct absolute_value<double>
+    {
+        typedef double type;
+        static type call(double n)
+        {
+            return (spirit::detail::signbit)(n) ? -n : n;
+        }
+    };
+
+    template <>
+    struct absolute_value<long double>
+    {
+        typedef long double type;
+        static type call(long double n)
+        {
+            return (spirit::detail::signbit)(n) ? -n : n;
+        }
+    };
+
+    // specialization for pointers
+    template <typename T>
+    struct absolute_value<T*>
+    {
+        typedef std::size_t type;
+        static type call (T* p)
+        {
+            return std::size_t(p);
+        }
+    };
+
+    template <typename T>
+    inline typename absolute_value<T>::type
+    get_absolute_value(T n)
+    {
+        return absolute_value<T>::call(n);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
+    struct is_negative
+    {
+        static bool call(T n) 
+        { 
+            return (n < 0) ? true : false; 
+        }
+    };
+
+    template <>
+    struct is_negative<float>
+    {
+        static bool call(float n) 
         { 
             return (spirit::detail::signbit)(n) ? true : false; 
         }
+    };
 
-        inline bool is_negative(double n) 
+    template <>
+    struct is_negative<double>
+    {
+        static bool call(double n) 
         { 
             return (spirit::detail::signbit)(n) ? true : false; 
         }
+    };
 
-        inline bool is_negative(long double n) 
+    template <>
+    struct is_negative<long double>
+    {
+        static bool call(long double n) 
         { 
             return (spirit::detail::signbit)(n) ? true : false; 
         }
+    };
+
+    template <typename T>
+    inline bool test_negative(T n)
+    {
+        return is_negative<T>::call(n);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
+    struct is_zero
+    {
+        static bool call(T n) 
+        { 
+            return (n == 0) ? true : false; 
+        }
+    };
+
+    template <>
+    struct is_zero<float>
+    {
+        static bool call(float n) 
+        { 
+            return (math::fpclassify)(n) == FP_ZERO; 
+        }
+    };
+
+    template <>
+    struct is_zero<double>
+    {
+        static bool call(double n) 
+        { 
+            return (math::fpclassify)(n) == FP_ZERO; 
+        }
+    };
+
+    template <>
+    struct is_zero<long double>
+    {
+        static bool call(long double n) 
+        { 
+            return (math::fpclassify)(n) == FP_ZERO; 
+        }
+    };
+
+    template <typename T>
+    inline bool test_zero(T n)
+    {
+        return is_zero<T>::call(n);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    struct cast_to_long
+    {
+        static long call(float n, mpl::false_)
+        {
+            return static_cast<long>(std::floor(n));
+        }
+
+        static long call(double n, mpl::false_)
+        {
+            return static_cast<long>(std::floor(n));
+        }
+
+        static long call(long double n, mpl::false_)
+        {
+            return static_cast<long>(std::floor(n));
+        }
 
         template <typename T>
-        inline bool is_negative(T n)
+        static long call(T n, mpl::false_)
         {
-            return (n < 0) ? true : false;
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        inline bool is_zero(float n) 
-        { 
-            return (math::fpclassify)(n) == FP_ZERO; 
-        }
-
-        inline bool is_zero(double n) 
-        { 
-            return (math::fpclassify)(n) == FP_ZERO; 
-        }
-
-        inline bool is_zero(long double n) 
-        { 
-            return (math::fpclassify)(n) == FP_ZERO; 
+            // allow for ADL to find the correct overload for floor and 
+            // lround
+            using namespace std;
+            return lround(floor(n));
         }
 
         template <typename T>
-        inline bool is_zero(T n)
+        static long call(T n, mpl::true_)
         {
-            return (n == 0) ? true : false;
+            return static_cast<long>(n);
         }
 
-        ///////////////////////////////////////////////////////////////////////
-        struct cast_to_long
+        template <typename T>
+        static long call(T n)
         {
-            static long call(float n, mpl::false_)
-            {
-                return static_cast<long>(std::floor(n));
-            }
+            return call(n, mpl::bool_<is_integral<T>::value>());
+        }
+    };
 
-            static long call(double n, mpl::false_)
-            {
-                return static_cast<long>(std::floor(n));
-            }
-
-            static long call(long double n, mpl::false_)
-            {
-                return static_cast<long>(std::floor(n));
-            }
-
-            template <typename T>
-            static long call(T n, mpl::false_)
-            {
-                // allow for ADL to find the correct overload for floor and 
-                // lround
-                using namespace std;
-                return lround(floor(n));
-            }
-
-            template <typename T>
-            static long call(T n, mpl::true_)
-            {
-                return static_cast<long>(n);
-            }
-
-            template <typename T>
-            static long call(T n)
-            {
-                return call(n, mpl::bool_<is_integral<T>::value>());
-            }
-        };
-
-        ///////////////////////////////////////////////////////////////////////
-        struct truncate_to_long
+    ///////////////////////////////////////////////////////////////////////
+    struct truncate_to_long
+    {
+        static long call(float n, mpl::false_)
         {
-            static long call(float n, mpl::false_)
-            {
-                return is_negative(n) ? static_cast<long>(std::ceil(n)) : 
-                    static_cast<long>(std::floor(n));
-            }
+            return test_negative(n) ? static_cast<long>(std::ceil(n)) : 
+                static_cast<long>(std::floor(n));
+        }
 
-            static long call(double n, mpl::false_)
-            {
-                return is_negative(n) ? static_cast<long>(std::ceil(n)) : 
-                    static_cast<long>(std::floor(n));
-            }
-
-            static long call(long double n, mpl::false_)
-            {
-                return is_negative(n) ? static_cast<long>(std::ceil(n)) : 
-                    static_cast<long>(std::floor(n));
-            }
-
-            template <typename T>
-            static long call(T n, mpl::false_)
-            {
-                // allow for ADL to find the correct overloads for ltrunc
-                using namespace std;
-                return ltrunc(n);
-            }
-
-            template <typename T>
-            static long call(T n, mpl::true_)
-            {
-                return static_cast<long>(n);
-            }
-
-            template <typename T>
-            static long call(T n)
-            {
-                return call(n, mpl::bool_<is_integral<T>::value>());
-            }
-        };
-
-        ///////////////////////////////////////////////////////////////////////
-        //
-        //  Traits class for radix specific number conversion
-        //
-        //      Convert a digit from binary representation to character 
-        //      representation:
-        //
-        //          static int digit(unsigned n);
-        //
-        ///////////////////////////////////////////////////////////////////////
-        template<unsigned Radix, typename CharEncoding, typename Tag>
-        struct radix_traits;
-
-        // Binary
-        template<typename CharEncoding, typename Tag>
-        struct radix_traits<2, CharEncoding, Tag>
+        static long call(double n, mpl::false_)
         {
-            static int digit(unsigned n)
-            {
+            return test_negative(n) ? static_cast<long>(std::ceil(n)) : 
+                static_cast<long>(std::floor(n));
+        }
+
+        static long call(long double n, mpl::false_)
+        {
+            return test_negative(n) ? static_cast<long>(std::ceil(n)) : 
+                static_cast<long>(std::floor(n));
+        }
+
+        template <typename T>
+        static long call(T n, mpl::false_)
+        {
+            // allow for ADL to find the correct overloads for ltrunc
+            using namespace std;
+            return ltrunc(n);
+        }
+
+        template <typename T>
+        static long call(T n, mpl::true_)
+        {
+            return static_cast<long>(n);
+        }
+
+        template <typename T>
+        static long call(T n)
+        {
+            return call(n, mpl::bool_<is_integral<T>::value>());
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////
+    //
+    //  Traits class for radix specific number conversion
+    //
+    //      Convert a digit from binary representation to character 
+    //      representation:
+    //
+    //          static int call(unsigned n);
+    //
+    ///////////////////////////////////////////////////////////////////////
+    template <unsigned Radix, typename CharEncoding, typename Tag>
+    struct convert_digit;
+
+    // Binary
+    template <typename CharEncoding, typename Tag>
+    struct convert_digit<2, CharEncoding, Tag>
+    {
+        static int call(unsigned n)
+        {
+            return n + '0';
+        }
+    };
+
+    // Octal
+    template <typename CharEncoding, typename Tag>
+    struct convert_digit<8, CharEncoding, Tag>
+    {
+        static int call(unsigned n)
+        {
+            return n + '0';
+        }
+    };
+
+    // Decimal 
+    template <typename CharEncoding, typename Tag>
+    struct convert_digit<10, CharEncoding, Tag>
+    {
+        static int call(unsigned n)
+        {
+            return n + '0';
+        }
+    };
+
+    // Hexadecimal, lower case
+    template <>
+    struct convert_digit<16, unused_type, unused_type>
+    {
+        static int call(unsigned n)
+        {
+            if (n <= 9)
                 return n + '0';
-            }
-        };
+            return n - 10 + 'a';
+        }
+    };
 
-        // Octal
-        template<typename CharEncoding, typename Tag>
-        struct radix_traits<8, CharEncoding, Tag>
+    // Hexadecimal, upper case
+    template <typename CharEncoding, typename Tag>
+    struct convert_digit<16, CharEncoding, Tag>
+    {
+        static int call(unsigned n)
         {
-            static int digit(unsigned n)
-            {
+            if (n <= 9)
                 return n + '0';
-            }
-        };
 
-        // Decimal 
-        template<typename CharEncoding, typename Tag>
-        struct radix_traits<10, CharEncoding, Tag>
+            using spirit::char_class::convert;
+            return convert<CharEncoding>::to(Tag(), n - 10 + 'a');
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////
+    template <unsigned Radix>
+    struct divide
+    {
+        template <typename T>
+        static T call(T& n, mpl::true_)
         {
-            static int digit(unsigned n)
-            {
-                return n + '0';
-            }
-        };
+            return n / Radix;
+        }
 
-        // Hexadecimal, lower case
-        template<>
-        struct radix_traits<16, unused_type, unused_type>
+        template <typename T>
+        static T call(T& n, mpl::false_)
         {
-            static int digit(unsigned n)
-            {
-                if (n <= 9)
-                    return n + '0';
-                return n - 10 + 'a';
-            }
-        };
+            // Allow ADL to find the correct overload for floor
+            using namespace std; 
+            return floor(n / Radix);
+        }
 
-        // Hexadecimal, upper case
-        template<typename CharEncoding, typename Tag>
-        struct radix_traits<16, CharEncoding, Tag>
+        template <typename T>
+        static T call(T& n, T const&, int)
         {
-            static int digit(unsigned n)
-            {
-                if (n <= 9)
-                    return n + '0';
+            return call(n, mpl::bool_<is_integral<T>::value>());
+        }
 
-                using spirit::char_class::convert;
-                return convert<CharEncoding>::to(Tag(), n - 10 + 'a');
-            }
-        };
-
-        ///////////////////////////////////////////////////////////////////////
-        template <unsigned Radix>
-        struct divide
+        template <typename T>
+        static T call(T& n)
         {
-            template <typename T>
-            static T call(T& n, mpl::true_)
-            {
-                return n / Radix;
-            }
+            return call(n, mpl::bool_<is_integral<T>::value>());
+        }
+    };
 
-            template <typename T>
-            static T call(T& n, mpl::false_)
-            {
-                // Allow ADL to find the correct overload for floor
-                using namespace std; 
-                return floor(n / Radix);
-            }
-
-            template <typename T>
-            static T call(T& n, T const&, int)
-            {
-                return call(n, mpl::bool_<is_integral<T>::value>());
-            }
-
-            template <typename T>
-            static T call(T& n)
-            {
-                return call(n, mpl::bool_<is_integral<T>::value>());
-            }
-        };
-
-        // specialization for division by 10
-        template <>
-        struct divide<10>
+    // specialization for division by 10
+    template <>
+    struct divide<10>
+    {
+        template <typename T>
+        static T call(T& n, T, int, mpl::true_)
         {
-            template <typename T>
-            static T call(T& n, T, int, mpl::true_)
-            {
-                return n / 10;
-            }
+            return n / 10;
+        }
 
-            template <typename T>
-            static T call(T, T& num, int exp, mpl::false_)
-            {
-                // Allow ADL to find the correct overload for floor
-                using namespace std; 
-                return floor(num / spirit::detail::pow10<T>(exp));
-            }
-
-            template <typename T>
-            static T call(T& n, T& num, int exp)
-            {
-                return call(n, num, exp, mpl::bool_<is_integral<T>::value>());
-            }
-
-            template <typename T>
-            static T call(T& n)
-            {
-                return call(n, n, 1, mpl::bool_<is_integral<T>::value>());
-            }
-        };
-
-        ///////////////////////////////////////////////////////////////////////
-        template <unsigned Radix>
-        struct remainder
+        template <typename T>
+        static T call(T, T& num, int exp, mpl::false_)
         {
-            template <typename T>
-            static long call(T n, mpl::true_)
-            {
-                // this cast is safe since we know the result is not larger 
-                // than Radix
-                return static_cast<long>(n % Radix);
-            }
+            // Allow ADL to find the correct overload for floor
+            using namespace std; 
+            return floor(num / spirit::traits::pow10<T>(exp));
+        }
 
-            template <typename T>
-            static long call(T n, mpl::false_)
-            {
-                // Allow ADL to find the correct overload for fmod
-                using namespace std; 
-                return cast_to_long::call(fmod(n, T(Radix)));
-            }
+        template <typename T>
+        static T call(T& n, T& num, int exp)
+        {
+            return call(n, num, exp, mpl::bool_<is_integral<T>::value>());
+        }
 
-            template <typename T>
-            static long call(T n)
-            {
-                return call(n, mpl::bool_<is_integral<T>::value>());
-            }
-        };
+        template <typename T>
+        static T call(T& n)
+        {
+            return call(n, n, 1, mpl::bool_<is_integral<T>::value>());
+        }
+    };
 
-    }   // namespace detail
+    ///////////////////////////////////////////////////////////////////////
+    template <unsigned Radix>
+    struct remainder
+    {
+        template <typename T>
+        static long call(T n, mpl::true_)
+        {
+            // this cast is safe since we know the result is not larger 
+            // than Radix
+            return static_cast<long>(n % Radix);
+        }
 
+        template <typename T>
+        static long call(T n, mpl::false_)
+        {
+            // Allow ADL to find the correct overload for fmod
+            using namespace std; 
+            return cast_to_long::call(fmod(n, T(Radix)));
+        }
+
+        template <typename T>
+        static long call(T n)
+        {
+            return call(n, mpl::bool_<is_integral<T>::value>());
+        }
+    };
+}}}
+
+namespace boost { namespace spirit { namespace karma 
+{ 
     ///////////////////////////////////////////////////////////////////////////
     //
     //  The int_inserter template takes care of the integer to string 
@@ -448,8 +490,8 @@ namespace boost { namespace spirit { namespace karma
     //
     ///////////////////////////////////////////////////////////////////////////
 #define BOOST_KARMA_NUMERICS_INNER_LOOP_PREFIX(z, x, data)                    \
-        if (!detail::is_zero(n)) {                                            \
-            int ch = radix_type::digit(remainder_type::call(n));              \
+        if (!traits::test_zero(n)) {                                          \
+            int ch = radix_type::call(remainder_type::call(n));               \
             n = divide_type::call(n, num, ++exp);                             \
     /**/
 
@@ -464,23 +506,23 @@ namespace boost { namespace spirit { namespace karma
       , typename Tag = unused_type>
     struct int_inserter
     {
-        typedef detail::radix_traits<Radix, CharEncoding, Tag> radix_type;
-        typedef detail::divide<Radix> divide_type;
-        typedef detail::remainder<Radix> remainder_type;
+        typedef traits::convert_digit<Radix, CharEncoding, Tag> radix_type;
+        typedef traits::divide<Radix> divide_type;
+        typedef traits::remainder<Radix> remainder_type;
 
         template <typename OutputIterator, typename T>
         static bool
         call(OutputIterator& sink, T n, T& num, int exp)
         {
             // remainder_type::call returns n % Radix
-            int ch = radix_type::digit(remainder_type::call(n));
+            int ch = radix_type::call(remainder_type::call(n));
             n = divide_type::call(n, num, ++exp);
 
             BOOST_PP_REPEAT(
                 BOOST_KARMA_NUMERICS_LOOP_UNROLL,
                 BOOST_KARMA_NUMERICS_INNER_LOOP_PREFIX, _);
 
-            if (!detail::is_zero(n)) 
+            if (!traits::test_zero(n)) 
                 call(sink, n, num, exp);
 
             BOOST_PP_REPEAT(
@@ -576,7 +618,7 @@ namespace boost { namespace spirit { namespace karma
         static bool
         call(OutputIterator& sink, T const& n)
         {
-            typedef typename detail::absolute_value_helper<T>::result_type type;
+            typedef typename traits::absolute_value<T>::type type;
             type un = type(n);
             return base_type::call(sink, un, un, 0);
         }

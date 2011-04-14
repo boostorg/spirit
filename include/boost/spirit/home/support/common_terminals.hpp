@@ -136,8 +136,8 @@ namespace boost { namespace spirit
     // special tags (used mainly for stateful tag types)
     namespace tag
     {
-        struct attr_cast {};
-        struct as {};
+        struct attr_cast { BOOST_SPIRIT_IS_TAG() };
+        struct as { BOOST_SPIRIT_IS_TAG() };
     }
 }}
 

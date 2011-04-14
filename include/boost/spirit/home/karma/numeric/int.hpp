@@ -22,6 +22,7 @@
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/support/detail/is_spirit_tag.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
@@ -40,7 +41,10 @@ namespace boost { namespace spirit
     namespace tag
     {
         template <typename T, unsigned Radix, bool force_sign>
-        struct int_generator {};
+        struct int_generator 
+        {
+            BOOST_SPIRIT_IS_TAG()
+        };
     }
 
     namespace karma
@@ -203,10 +207,10 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Attribute>
         static bool insert_int(OutputIterator& sink, Attribute const& attr)
         {
-            return sign_inserter::call(sink, detail::is_zero(attr)
-                      , detail::is_negative(attr), force_sign) &&
+            return sign_inserter::call(sink, traits::test_zero(attr)
+                      , traits::test_negative(attr), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(attr));
+                      , traits::get_absolute_value(attr));
         }
 
     public:
@@ -274,10 +278,10 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Attribute>
         static bool insert_int(OutputIterator& sink, Attribute const& attr)
         {
-            return sign_inserter::call(sink, detail::is_zero(attr)
-                      , detail::is_negative(attr), force_sign) &&
+            return sign_inserter::call(sink, traits::test_zero(attr)
+                      , traits::test_negative(attr), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(attr));
+                      , traits::get_absolute_value(attr));
         }
 
     public:
