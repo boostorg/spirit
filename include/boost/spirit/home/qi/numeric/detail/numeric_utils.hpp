@@ -155,6 +155,32 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         };
     };
 
+    // arbitrary Radix
+    template <unsigned Radix>
+    struct radix_traits
+    {
+        template<typename Char>
+        inline static bool is_valid(Char ch)
+        {
+            return (ch >= '0' && ch <= ('0' + Radix - 1));
+        }
+
+        template<typename Char>
+        inline static unsigned digit(Char ch)
+        {
+            return ch - '0';
+        }
+
+        template<typename T>
+        struct digits
+        {
+            typedef std::numeric_limits<T> numeric_limits_;
+            BOOST_STATIC_CONSTANT(int, value = numeric_limits_::digits10);
+            // TODO(j.f.eick@gmx.de): this is the min number of digits which
+            // can be safely parsed if the radix is < 10 - this is not optimal?
+        };
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     //  positive_accumulator/negative_accumulator: Accumulator policies for
     //  extracting integers. Use positive_accumulator if number is positive.
@@ -175,7 +201,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             // Ensure n *= Radix will not overflow
             static T const max = (std::numeric_limits<T>::max)();
-            static T const val = (max - 1) / Radix;
+            //static T const val = (max - 1) / Radix;
+            static T const val = max / Radix;
             if (n > val)
                 return false;
 
