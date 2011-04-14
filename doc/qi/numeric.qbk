@@ -22,7 +22,7 @@ extensive template metaprogramming) with exceptional performance that
 rivals the low level C functions such as `atof`, `strtod`, `atol`,
 `strtol`. Benchmarks reveal up to 4X speed over the C counterparts. This
 goes to show that you can write extremely tight generic C++ code that
-rivals, if not surpasses C. 
+rivals, if not surpasses C.
 
 [heading Module Header]
 
@@ -42,7 +42,7 @@ arbitrary length and size. The `uint_parser` parser can be used to parse
 ordinary primitive C/C++ integers or even user defined scalars such as
 bigints (unlimited precision integers) as long as the type follows
 certain expression requirements (documented below). The `uint_parser` is
-a template class. Template parameters fine tune its behavior. 
+a template class. Template parameters fine tune its behavior.
 
 [heading Header]
 
@@ -70,10 +70,10 @@ constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `unsigned long long` (64 bit) unsigned integer
 types).]
 
-[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric
       Parsers. In general, a char parser is created when you pass in a
-      character, and a numeric parser is created when you use a numeric 
-      literal.] 
+      character, and a numeric parser is created when you use a numeric
+      literal.]
 
 [heading Synopsis]
 
@@ -88,16 +88,14 @@ types).]
 
 [table
     [[Parameter]    [Description]                       [Default]]
-    [[`T`]          [The numeric base type of the 
+    [[`T`]          [The numeric base type of the
                      numeric parser.]                   [none]]
-    [[`Radix`]      [The radix base. This can be 
-                     either 2 for binary, 8 for octal, 
-                     10 for decimal and 16 for
-                     hexadecimal.]                      [10]]
-    [[`MinDigits`]  [The minimum number of digits 
+    [[`Radix`]      [The radix base. This can be
+                     any base from 2..10 and 16]        [10]]
+    [[`MinDigits`]  [The minimum number of digits
                      allowable.]                        [1]]
-    [[`MaxDigits`]  [The maximum number of digits 
-                     allowable. If this is -1, then the 
+    [[`MaxDigits`]  [The maximum number of digits
+                     allowable. If this is -1, then the
                      maximum limit becomes unbounded.]  [-1]]
 ]
 
@@ -147,7 +145,7 @@ not defined in __primitive_parser_concept__.
     ``]
     [Parse an unsigned integer using radix 2 for `bin`, radix 8 for `oct`, and
      radix 16 for `hex`.]
-  ][ 
+  ][
     [``
         bin(num)
         oct(num)
@@ -156,7 +154,7 @@ not defined in __primitive_parser_concept__.
     [Match the literal `num` using radix 2 for `bin`, radix 8 for `oct`, and
      radix 16 for `hex`. The parser will fail
      if the parsed value is not equal to the specified value.]
-  ][ 
+  ][
     [``
         uint_parser<
             T, Radix, MinDigits, MaxDigits
@@ -173,13 +171,13 @@ not defined in __primitive_parser_concept__.
     [Match the literal `num` of type `T` using radix `Radix`, with
      a minimum of `MinDigits` and a maximum of `MaxDigits`. The parser will fail
      if the parsed value is not equal to the specified value.]
-  ] 
+  ]
 ]
 
 [important All numeric parsers check for overflow conditions based on the type
-      `T` the corresponding `uint_parser<>` has been instantiated with. If the 
+      `T` the corresponding `uint_parser<>` has been instantiated with. If the
       parsed number overflows this type the parsing fails. Please be aware
-      that the overflow check is not based on the type of the supplied 
+      that the overflow check is not based on the type of the supplied
       attribute but solely depends on the template parameter `T`.]
 
 [heading Attributes]
@@ -233,7 +231,7 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [`T`]
-  ] 
+  ]
 ]
 
 [heading Complexity]
@@ -252,13 +250,13 @@ valid:
     [[`n + n`]                              [Addition.]]
     [[`n * n`]                              [Multiplication.]]
     [[`std::numeric_limits<T>::is_bounded`] [`true` or `false` if `T` bounded.]]
-    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits. 
+    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10. 
+    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`. 
+    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`. 
+    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`.
                                             Required only if `T` is bounded.]]
 ]
 
@@ -292,7 +290,7 @@ The class interface is the same as that of the `uint_parser`.
 The `int_parser` parser can be used to parse ordinary primitive C/C++
 integers or even user defined scalars such as bigints (unlimited
 precision integers) as long as the type follows certain expression
-requirements (documented below). 
+requirements (documented below).
 
 [heading Header]
 
@@ -316,10 +314,10 @@ Also, see __include_structure__.
 constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
 native support for `signed long long` (64 bit) unsigned integer types).]
 
-[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric
       Parsers. In general, a char parser is created when you pass in a
-      character, and a numeric parser is created when you use a numeric 
-      literal.] 
+      character, and a numeric parser is created when you use a numeric
+      literal.]
 
 [heading Synopsis]
 
@@ -334,16 +332,14 @@ native support for `signed long long` (64 bit) unsigned integer types).]
 
 [table
     [[Parameter]    [Description]                       [Default]]
-    [[`T`]          [The numeric base type of the 
+    [[`T`]          [The numeric base type of the
                      numeric parser.]                   [none]]
-    [[`Radix`]      [The radix base. This can be 
-                     either 2 for binary, 8 for octal, 
-                     10 for decimal and 16 for
-                     hexadecimal.]                      [10]]
-    [[`MinDigits`]  [The minimum number of digits 
+    [[`Radix`]      [The radix base. This can be
+                     any base from 2..10 and 16]        [10]]
+    [[`MinDigits`]  [The minimum number of digits
                      allowable.]                        [1]]
-    [[`MaxDigits`]  [The maximum number of digits 
-                     allowable. If this is -1, then the 
+    [[`MaxDigits`]  [The maximum number of digits
+                     allowable. If this is -1, then the
                      maximum limit becomes unbounded.]  [-1]]
 ]
 
@@ -385,7 +381,7 @@ not defined in __primitive_parser_concept__.
     ``]
     [Match the literal `num` using the default radix (10). The parser will fail
      if the parsed value is not equal to the specified value.]
-  ][ 
+  ][
     [``
         int_parser<
             T, Radix, MinDigits, MaxDigits
@@ -402,13 +398,13 @@ not defined in __primitive_parser_concept__.
     [Match the literal `num` of type `T` using radix `Radix`, with
      a minimum of `MinDigits` and a maximum of `MaxDigits`. The parser will fail
      if the parsed value is not equal to the specified value.]
-  ] 
+  ]
 ]
 
 [important All numeric parsers check for overflow conditions based on the type `T`
-      the corresponding `int_parser<>` has been instantiated with. If the 
+      the corresponding `int_parser<>` has been instantiated with. If the
       parsed number overflows this type the parsing fails. Please be aware
-      that the overflow check is not based on the type of the supplied 
+      that the overflow check is not based on the type of the supplied
       attribute but solely depends on the template parameter `T`.]
 
 [heading Attributes]
@@ -456,7 +452,7 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [`T`]
-  ] 
+  ]
 ]
 
 [heading Complexity]
@@ -476,13 +472,13 @@ valid:
     [[`n - n`]                              [Subtraction.]]
     [[`n * n`]                              [Multiplication.]]
     [[`std::numeric_limits<T>::is_bounded`] [`true` or `false` if `T` bounded.]]
-    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits. 
+    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10. 
+    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`. 
+    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`. 
+    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`.
                                             Required only if `T` is bounded.]]
 ]
 
@@ -529,10 +525,10 @@ Also, see __include_structure__.
     [[`boost::spirit::long_double   // alias: boost::spirit::qi::long_double`]]
 ]
 
-[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric 
+[note `lit` is reused by the [qi_lit_char Character Parsers], and the Numeric
       Parsers. In general, a char parser is created when you pass in a
-      character, and a numeric parser is created when you use a numeric 
-      literal.] 
+      character, and a numeric parser is created when you use a numeric
+      literal.]
 
 [heading Synopsis]
 
@@ -543,9 +539,9 @@ Also, see __include_structure__.
 
 [table
     [[Parameter]            [Description]                   [Default]]
-    [[`T`]                  [The numeric base type of the 
+    [[`T`]                  [The numeric base type of the
                              numeric parser.]               [none]]
-    [[`RealPolicies`]       [Policies control the 
+    [[`RealPolicies`]       [Policies control the
                              parser's behavior.]            [`real_policies<T>`]]
 ]
 
@@ -586,10 +582,10 @@ not defined in __primitive_parser_concept__.
         double_(num)
         long_double(num)
     ``]
-    [Match the literal `num` using the default policies (`real_policies<T>`). 
-     The parser will fail if the parsed value is not equal to the specified 
+    [Match the literal `num` using the default policies (`real_policies<T>`).
+     The parser will fail if the parsed value is not equal to the specified
      value.]
-  ][ 
+  ][
     [``
         real_parser<
             T, RealPolicies
@@ -603,8 +599,8 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [Match the literal `num` of type `T` using `RealPolicies`. The parser will fail
-     if the parsed value is not equal to the specified value.] 
-  ] 
+     if the parsed value is not equal to the specified value.]
+  ]
 ]
 
 [heading Attributes]
@@ -646,7 +642,7 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [`T`]
-  ] 
+  ]
 ]
 
 [heading Complexity]
@@ -658,7 +654,7 @@ exponent, sign, etc.) being parsed.]
 
 The numeric base type, `T`, the minimum expression requirements listed
 below must be valid. Take note that additional requirements may be
-imposed by custom policies. 
+imposed by custom policies.
 
 [table
     [[Expression]                           [Semantics]]
@@ -668,28 +664,28 @@ imposed by custom policies.
     [[`n - n`]                              [Subtraction.]]
     [[`n * n`]                              [Multiplication.]]
     [[`std::numeric_limits<T>::is_bounded`] [`true` or `false` if `T` bounded.]]
-    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits. 
+    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10. 
+    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`. 
+    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`.
                                             Required only if `T` is bounded.]]
-    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`. 
+    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`.
                                             Required only if `T` is bounded.]]
-                                            
-                                            
-    [[`boost::spirit::traits::scale(exp, n)`]    
+
+
+    [[`boost::spirit::traits::scale(exp, n)`]
                                             [Multiply `n` by `10^exp`. Default implementation
                                             is provided for `float`, `double` and `long double`.]]
 
-    [[`boost::spirit::traits::negate(b, n)`]    
+    [[`boost::spirit::traits::negate(b, n)`]
                                             [Negate `n` if `b` is `true`. Default implementation
                                             is provided for `float`, `double` and `long double`.]]
 
-    [[`boost::spirit::traits::is_equal_to_one(n)`]    
+    [[`boost::spirit::traits::is_equal_to_one(n)`]
                                             [Return `true` if `n` is equal to `1.0`. Default implementation
                                             is provided for `float`, `double` and `long double`.]]
-                                            
+
 ]
 
 [note The additional spirit real number traits above are provided to
@@ -701,7 +697,7 @@ exponent is a very cheap operation.]
 
 The `RealPolicies` template parameter is a class that groups all the
 policies that control the parser's behavior. Policies control the real
-number parsers' behavior. 
+number parsers' behavior.
 
 The default is `real_policies<T>`. The default is provided to take care
 of the most common case (there are many ways to represent, and hence
@@ -713,17 +709,17 @@ C/C++ style floating point numbers of the form `nnn.fff.Eeee` where
 `'+'` with the additional detection of NaN and Inf as mandated by the
 C99 Standard and proposed for inclusion into the C++0x Standard: nan,
 nan(...), inf and infinity (the matching is case-insensitive). This
-corresponds to the following grammar: 
+corresponds to the following grammar:
 
     sign
         =   lit('+') | '-'
         ;
 
-    nan 
-        =   -lit("1.0#") >> no_case["nan"] 
+    nan
+        =   -lit("1.0#") >> no_case["nan"]
             >> -('(' >> *(char_ - ')') >> ')')
         ;
-        
+
     inf
         =   no_case[lit("inf") >> -lit("inity")]
         ;
@@ -772,25 +768,25 @@ For models of `RealPolicies` the following expressions must be valid:
     [[`RP::allow_leading_dot`]              [Allow leading dot.]]
     [[`RP::allow_trailing_dot`]             [Allow trailing dot.]]
     [[`RP::expect_dot`]                     [Require a dot.]]
-    [[`RP::parse_sign(f, l)`]               [Parse the prefix sign (e.g. '-'). 
+    [[`RP::parse_sign(f, l)`]               [Parse the prefix sign (e.g. '-').
                                             Return `true` if successful, otherwise `false`.]]
-    [[`RP::parse_n(f, l, n)`]               [Parse the integer at the left of the decimal point. 
+    [[`RP::parse_n(f, l, n)`]               [Parse the integer at the left of the decimal point.
                                             Return `true` if successful, otherwise `false`.
                                             If successful, place the result into `n`.]]
-    [[`RP::parse_dot(f, l)`]                [Parse the decimal point. 
+    [[`RP::parse_dot(f, l)`]                [Parse the decimal point.
                                             Return `true` if successful, otherwise `false`.]]
-    [[`RP::parse_frac_n(f, l, n)`]          [Parse the fraction after the decimal point. 
+    [[`RP::parse_frac_n(f, l, n)`]          [Parse the fraction after the decimal point.
                                             Return `true` if successful, otherwise `false`.
                                             If successful, place the result into `n`.]]
-    [[`RP::parse_exp(f, l)`]                [Parse the exponent prefix (e.g. 'e'). 
+    [[`RP::parse_exp(f, l)`]                [Parse the exponent prefix (e.g. 'e').
                                             Return `true` if successful, otherwise `false`.]]
-    [[`RP::parse_exp_n(f, l, n)`]           [Parse the actual exponent. 
+    [[`RP::parse_exp_n(f, l, n)`]           [Parse the actual exponent.
                                             Return `true` if successful, otherwise `false`.
                                             If successful, place the result into `n`.]]
-    [[`RP::parse_nan(f, l, n)`]             [Parse a NaN. 
+    [[`RP::parse_nan(f, l, n)`]             [Parse a NaN.
                                             Return `true` if successful, otherwise `false`.
                                             If successful, place the result into `n`.]]
-    [[`RP::parse_inf(f, l, n)`]             [Parse an Inf. 
+    [[`RP::parse_inf(f, l, n)`]             [Parse an Inf.
                                             Return `true` if successful, otherwise `false`.
                                             If successful, place the result into `n`.]]
 ]
@@ -855,7 +851,7 @@ And its use:
 
 [heading Description]
 
-The `bool_parser` can parse booleans of arbitrary type, `B`. The boolean base 
+The `bool_parser` can parse booleans of arbitrary type, `B`. The boolean base
 type `T` can be a user defined boolean type as long as the type follows certain
 expression requirements (documented below).
 
@@ -884,9 +880,9 @@ Also, see __include_structure__.
 
 [table
     [[Parameter]            [Description]                   [Default]]
-    [[`B`]                  [The boolean type of the 
+    [[`B`]                  [The boolean type of the
                             boolean parser.]                [`bool`]]
-    [[`BooleanPolicies`]    [Policies control the 
+    [[`BooleanPolicies`]    [Policies control the
                             parser's behavior.]             [`bool_policies<B>`]]
 ]
 
@@ -925,16 +921,16 @@ not defined in __primitive_parser_concept__.
         lit(boolean)
         bool_(boolean)
     ``]
-    [Match the literal `boolean` using the default policies (`bool_policies<T>`). 
-     The parser will fail if the parsed value is not equal to the specified 
+    [Match the literal `boolean` using the default policies (`bool_policies<T>`).
+     The parser will fail if the parsed value is not equal to the specified
      value.]
-  ][ 
+  ][
     [``
         true_
-        false_ 
+        false_
     ``]
     [Match `"true"` and `"false"`, respectively.]
-  ][ 
+  ][
     [``
         bool_parser<
             T, BoolPolicies
@@ -948,8 +944,8 @@ not defined in __primitive_parser_concept__.
         >()(boolean)
     ``]
     [Match the literal `boolean` of type `T` using `BoolPolicies`. The parser will fail
-     if the parsed value is not equal to the specified value.] 
-  ] 
+     if the parsed value is not equal to the specified value.]
+  ]
 ]
 
 [note   All boolean parsers properly respect the __qi_no_case__`[]` directive.]
@@ -983,7 +979,7 @@ not defined in __primitive_parser_concept__.
         >()(num)
     ``]
     [`T`]
-  ] 
+  ]
 ]
 
 [heading Complexity]
@@ -994,7 +990,7 @@ not defined in __primitive_parser_concept__.
 
 The boolean type, `B`, the minimum expression requirements listed
 below must be valid. Take note that additional requirements may be
-imposed by custom policies. 
+imposed by custom policies.
 
 [table
     [[Expression]                           [Semantics]]
@@ -1005,7 +1001,7 @@ imposed by custom policies.
 
 The boolean `Policies` template parameter is a class that groups all the
 policies that control the parser's behavior. Policies control the boolean
-parsers' behavior. 
+parsers' behavior.
 
 The default is `bool_policies<bool>`. The default is provided to take care
 of the most common case (there are many ways to represent, and hence
@@ -1023,8 +1019,8 @@ For models of boolean `Policies` the following expressions must be valid:
     [[`BP::parse_false(f, l, attr, ctx)`]   [Parse a `false` value.]]
 ]
 
-The functions should return true if the required representations of `true` or 
-`false` have been found. In this case the attribute `n` should be set to the 
+The functions should return true if the required representations of `true` or
+`false` have been found. In this case the attribute `n` should be set to the
 matched value (`true` or `false`).
 
 [heading Boolean `Policies` Specializations]
