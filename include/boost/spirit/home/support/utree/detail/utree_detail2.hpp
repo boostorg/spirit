@@ -578,6 +578,36 @@ namespace boost { namespace spirit { namespace detail
 
     struct index_impl
     {
+        static utree& apply(utree& ut, std::size_t i)
+        {
+            switch (ut.get_type())
+            {
+                case utree_type::reference_type:
+                    return apply(ut.deref(), i);
+                case utree_type::range_type:
+                    return apply(ut.r.first, i);
+                case utree_type::list_type:
+                    return apply(ut.l.first, i);
+                default:
+                    boost::throw_exception(bad_type_exception());
+            }
+        }
+
+        static utree const& apply(utree const& ut, std::size_t i)
+        {
+            switch (ut.get_type())
+            {
+                case utree_type::reference_type:
+                    return apply(ut.deref(), i);
+                case utree_type::range_type:
+                    return apply(ut.r.first, i);
+                case utree_type::list_type:
+                    return apply(ut.l.first, i);
+                default:
+                    boost::throw_exception(bad_type_exception());
+            }
+        }
+
         static utree& apply(list::node* node, std::size_t i)
         {
             for (; i > 0; --i)
@@ -963,33 +993,12 @@ namespace boost { namespace spirit
         return detail::visit_impl<utree, utree>::apply(x, y, f);
     }
 
-    inline utree& utree::operator[](std::size_t i)
-    {
-        if (get_type() == type::reference_type)
-            return (*p)[i];
-        else if (get_type() == type::range_type)
-            return detail::index_impl::apply(r.first, i);
+    inline utree::reference get(utree::reference ut, utree::size_type i)
+    { return detail::index_impl::apply(ut, i); }
 
-        // otherwise...
-        if (get_type() != type::list_type || size() <= i)
-            boost::throw_exception(bad_type_exception());
-
-        return detail::index_impl::apply(l.first, i);
-    }
-
-    inline utree const& utree::operator[](std::size_t i) const
-    {
-        if (get_type() == type::reference_type)
-            return (*(utree const*)p)[i];
-        else if (get_type() == type::range_type)
-            return detail::index_impl::apply(r.first, i);
-
-        // otherwise...
-        if (get_type() != type::list_type || size() <= i)
-            boost::throw_exception(bad_type_exception());
-
-        return detail::index_impl::apply(l.first, i);
-    }
+    inline utree::const_reference
+    get(utree::const_reference ut, utree::size_type i)
+    { return detail::index_impl::apply(ut, i); }
 
     template <typename T>
     inline void utree::push_front(T const& val)
@@ -1216,6 +1225,8 @@ namespace boost { namespace spirit
 
         if (t == type::range_type)
         {
+            // FIXME: O(n), and we have the room to store the size of a range
+            // in the union if we compute it when assigned/constructed.
             std::size_t size = 0;
             detail::list::node* n = r.first;
             while (n)

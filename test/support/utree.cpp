@@ -49,6 +49,7 @@ struct this_
 int main()
 {
     using boost::spirit::utree;
+    using boost::spirit::get;
     using boost::spirit::utf8_symbol_type;
     using boost::spirit::binary_string_type;
 
@@ -56,7 +57,7 @@ int main()
         // test the size
         std::cout << "size of utree is: "
             << sizeof(utree) << " bytes" << std::endl;
-        BOOST_TEST(sizeof(utree) == sizeof(void*[4]));
+        BOOST_TEST_EQ(sizeof(utree), sizeof(void*[4]));
     }
 
     {
@@ -110,7 +111,7 @@ int main()
 
         utree val4("Apple");
         utree val5("Apple");
-        BOOST_TEST(val4 == val5);
+        BOOST_TEST_EQ(val4, val5);
 
         utree val6("ApplePie");
         BOOST_TEST(val4 < val6);
@@ -128,7 +129,7 @@ int main()
 
         utree val4(utf8_symbol_type("Apple"));
         utree val5(utf8_symbol_type("Apple"));
-        BOOST_TEST(val4 == val5);
+        BOOST_TEST_EQ(val4, val5);
 
         utree val6(utf8_symbol_type("ApplePie"));
         BOOST_TEST(val4 < val6);
@@ -146,7 +147,7 @@ int main()
 
         utree val4(binary_string_type("\x01"));
         utree val5(binary_string_type("\x01"));
-        BOOST_TEST(val4 == val5);
+        BOOST_TEST_EQ(val4, val5);
 
         utree val6(binary_string_type("\x01\x02"));
         BOOST_TEST(val4 < val6);
@@ -158,42 +159,42 @@ int main()
         utree val;
         val.push_back(123);
         val.push_back("Chuckie");
-        BOOST_TEST(val.size() == 2);
+        BOOST_TEST_EQ(val.size(), 2);
         utree val2;
         val2.push_back(123.456);
         val2.push_back("Mah Doggie");
         val.push_back(val2);
-        BOOST_TEST(val.size() == 3);
+        BOOST_TEST_EQ(val.size(), 3);
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(check(val.front(), "123"));
 
         utree val3(nil);
         val3.swap(val);
-        BOOST_TEST(val3.size() == 3);
+        BOOST_TEST_EQ(val3.size(), 3);
         BOOST_TEST(check(val, "<nil>"));
         val3.swap(val);
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         val.push_back("another string");
-        BOOST_TEST(val.size() == 4);
+        BOOST_TEST_EQ(val.size(), 4);
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )"));
         val.pop_front();
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )"));
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
-        BOOST_TEST(val.size() == 4);
+        BOOST_TEST_EQ(val.size(), 4);
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" \"another string\" )"));
         val.pop_back();
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" )"));
-        BOOST_TEST(val.size() == 3);
+        BOOST_TEST_EQ(val.size(), 3);
         utree::iterator it = val.end(); --it;
         val.erase(it);
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
-        BOOST_TEST(val.size() == 2);
+        BOOST_TEST_EQ(val.size(), 2);
 
         val.insert(val.begin(), val2.begin(), val2.end());
         BOOST_TEST(check(val, "( 123.456 \"Mah Doggie\" \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
-        BOOST_TEST(val.size() == 4);
+        BOOST_TEST_EQ(val.size(), 4);
     }
 
     {
@@ -211,23 +212,23 @@ int main()
         using boost::spirit::invalid;
 
         utree a(nil), b(nil);
-        BOOST_TEST(a == b);
+        BOOST_TEST_EQ(a, b);
         a = 123;
         BOOST_TEST(a != b);
         b = 123;
-        BOOST_TEST(a == b);
+        BOOST_TEST_EQ(a, b);
         a = 100.00;
         BOOST_TEST(a < b);
 
         b = a = utree(invalid);
-        BOOST_TEST(a == b);
+        BOOST_TEST_EQ(a, b);
         a.push_back(1);
         a.push_back("two");
         a.push_back(3.0);
         b.push_back(1);
         b.push_back("two");
         b.push_back(3.0);
-        BOOST_TEST(a == b);
+        BOOST_TEST_EQ(a, b);
         b.push_back(4);
         BOOST_TEST(a != b);
         BOOST_TEST(a < b);
@@ -237,31 +238,34 @@ int main()
         using boost::spirit::empty_list;
 
         utree a(empty_list);
-        a.push_back(1);
-        a.push_back(2);
-        a.push_back(3);
-        a.push_back(4);
-        a.push_back(5);
-        a.push_back(6);
-        a.push_back(7);
-        a.push_back(8);
-        a.push_back(9);
-        a.push_back(10);
-        a.push_back(11);
-        a.push_back(12);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
+        a.push_back(0);
 
-        BOOST_TEST(a[0] == utree(1));
-        BOOST_TEST(a[1] == utree(2));
-        BOOST_TEST(a[2] == utree(3));
-        BOOST_TEST(a[3] == utree(4));
-        BOOST_TEST(a[4] == utree(5));
-        BOOST_TEST(a[5] == utree(6));
-        BOOST_TEST(a[6] == utree(7));
-        BOOST_TEST(a[7] == utree(8));
-        BOOST_TEST(a[8] == utree(9));
-        BOOST_TEST(a[9] == utree(10));
-        BOOST_TEST(a[10] == utree(11));
-        BOOST_TEST(a[11] == utree(12));
+        for (utree::size_type i = 0; i < a.size(); ++i)
+            get(a, i) = int(i + 1);
+
+        BOOST_TEST_EQ(get(a, 0), utree(1));
+        BOOST_TEST_EQ(get(a, 1), utree(2));
+        BOOST_TEST_EQ(get(a, 2), utree(3));
+        BOOST_TEST_EQ(get(a, 3), utree(4));
+        BOOST_TEST_EQ(get(a, 4), utree(5));
+        BOOST_TEST_EQ(get(a, 5), utree(6));
+        BOOST_TEST_EQ(get(a, 6), utree(7));
+        BOOST_TEST_EQ(get(a, 7), utree(8));
+        BOOST_TEST_EQ(get(a, 8), utree(9));
+        BOOST_TEST_EQ(get(a, 9), utree(10));
+        BOOST_TEST_EQ(get(a, 10), utree(11));
+        BOOST_TEST_EQ(get(a, 11), utree(12));
     }
 
     {
@@ -282,7 +286,7 @@ int main()
         utree val(123);
         utree ref(boost::ref(val));
         BOOST_TEST(check(ref, "123"));
-        BOOST_TEST(ref == utree(123));
+        BOOST_TEST_EQ(ref, utree(123));
 
         val.clear();
         val.push_back(1);
@@ -290,10 +294,10 @@ int main()
         val.push_back(3);
         val.push_back(4);
         BOOST_TEST(check(ref, "( 1 2 3 4 )"));
-        BOOST_TEST(ref[0] == utree(1));
-        BOOST_TEST(ref[1] == utree(2));
-        BOOST_TEST(ref[2] == utree(3));
-        BOOST_TEST(ref[3] == utree(4));
+        BOOST_TEST_EQ(get(ref, 0), utree(1));
+        BOOST_TEST_EQ(get(ref, 1), utree(2));
+        BOOST_TEST_EQ(get(ref, 2), utree(3));
+        BOOST_TEST_EQ(get(ref, 3), utree(4));
     }
 
     { // put it in an array
@@ -367,18 +371,20 @@ int main()
         utree::ref_iterator e = val.ref_end();
 
         utree ref(boost::make_iterator_range(b, e));
-        BOOST_TEST(ref[0] == utree(1));
-        BOOST_TEST(ref[1] == utree(2));
-        BOOST_TEST(ref[2] == utree(3));
-        BOOST_TEST(ref[3] == utree(4));
+        BOOST_TEST_EQ(get(ref, 0), utree(1));
+        BOOST_TEST_EQ(get(ref, 1), utree(2));
+        BOOST_TEST_EQ(get(ref, 2), utree(3));
+        BOOST_TEST_EQ(get(ref, 3), utree(4));
         BOOST_TEST(check(ref, "( 1 2 3 4 )"));
     }
 
     {
         // check the tag
+        // TODO: test tags on all utree types (some are invalid and should 
+        // throw).
         utree x;
         x.tag(123);
-        BOOST_TEST(x.tag() == 123);
+        BOOST_TEST_EQ(x.tag(), 123);
     }
 
     {
@@ -414,11 +420,11 @@ int main()
         utree alias(utree::range(i, val.end()), shallow);
 
         BOOST_TEST(check(alias, "( 2 3 4 )"));
-        BOOST_TEST(alias.size() == 3);
-        BOOST_TEST(alias.front() == 2);
-        BOOST_TEST(alias.back() == 4);
+        BOOST_TEST_EQ(alias.size(), 3);
+        BOOST_TEST_EQ(alias.front(), 2);
+        BOOST_TEST_EQ(alias.back(), 4);
         BOOST_TEST(!alias.empty());
-        BOOST_TEST(alias[1] == 3);
+        BOOST_TEST_EQ(get(alias, 1), 3);
     }
 
     {

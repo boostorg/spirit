@@ -471,17 +471,16 @@ namespace boost { namespace spirit
         ref_iterator ref_end();
         //]
 
-        // random access
-        reference operator[](size_type);
-        const_reference operator[](size_type) const;
-
         // This clears the utree instance and resets its type to `invalid_type`
         void clear();
 
         void swap(utree&);
-
+ 
         bool empty() const;
+
         size_type size() const;
+        /*`[warning `size()` has O(n) complexity on `utree` ranges. On utree
+            lists, it has O(1) complexity.]`*/
 
         ////////////////////////////////////////////////////////////////////////
 
@@ -517,9 +516,6 @@ namespace boost { namespace spirit
         friend struct detail::index_impl;
         friend struct detail::assign_impl;
 
-        template <class T>
-        friend struct detail::get_impl;
-
         type::info get_type() const;
         void set_type(type::info);
         void free();
@@ -539,6 +535,14 @@ namespace boost { namespace spirit
         };
     //->
     };
+    //]
+
+    //[utree_tuple_interface 
+    /*<-*/inline/*->*/
+    utree::reference get(utree::reference, utree::size_type);
+    /*<-*/inline/*->*/
+    utree::const_reference get(utree::const_reference, utree::size_type);
+    /*`[warning `get()` has O(n) complexity.]`*/
     //]
 
     struct utree::list_type : utree

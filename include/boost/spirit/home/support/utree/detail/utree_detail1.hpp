@@ -18,9 +18,6 @@ namespace boost { namespace spirit { namespace detail
     struct index_impl;
     struct assign_impl;
 
-    template <typename T>
-    struct get_impl;
-
     ///////////////////////////////////////////////////////////////////////////
     // Our POD double linked list. Straightforward implementation.
     // This implementation is very primitive and is not meant to be
