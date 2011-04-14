@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Parser Directive for Attribute Commit/Rollback (hold[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5">
 <link rel="up" href="../directive.html" title="Parser Directives">
 <link rel="prev" href="skip.html" title="Parser Directive Re-Establishing Skipping (skip[])">
 <link rel="next" href="as.html" title="Parser Directives Forcing Atomic Assignment (as&lt;T&gt;, as_string[], as_wstring[])">
@@ -28,7 +28,7 @@
           for Attribute Commit/Rollback (<code class="computeroutput"><span class="identifier">hold</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.directive.hold.description"></a><h6>
-<a name="id864901"></a>
+<a name="spirit.qi.reference.directive.hold.description-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.description">Description</a>
           </h6>
 <p>
@@ -43,7 +43,7 @@
             the attribute.
           </p>
 <a name="spirit.qi.reference.directive.hold.header"></a><h6>
-<a name="id864959"></a>
+<a name="spirit.qi.reference.directive.hold.header-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/hold.hpp&gt;
@@ -53,7 +53,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.hold.namespace"></a><h6>
-<a name="id865059"></a>
+<a name="spirit.qi.reference.directive.hold.namespace-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -71,7 +71,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.hold.model_of"></a><h6>
-<a name="id865150"></a>
+<a name="spirit.qi.reference.directive.hold.model_of-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -87,7 +87,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.hold.expression_semantics"></a><h6>
-<a name="id865235"></a>
+<a name="spirit.qi.reference.directive.hold.expression_semantics-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -128,7 +128,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.hold.attributes"></a><h6>
-<a name="id865370"></a>
+<a name="spirit.qi.reference.directive.hold.attributes-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.attributes">Attributes</a>
           </h6>
 <p>
@@ -184,7 +184,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.directive.hold.complexity"></a><h6>
-<a name="id865697"></a>
+<a name="spirit.qi.reference.directive.hold.complexity-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -192,7 +192,7 @@
               <code class="computeroutput"><span class="identifier">a</span></code>
             </p></blockquote></div>
 <a name="spirit.qi.reference.directive.hold.example"></a><h6>
-<a name="id865735"></a>
+<a name="spirit.qi.reference.directive.hold.example-heading"></a>
             <a class="link" href="hold.html#spirit.qi.reference.directive.hold.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -226,8 +226,8 @@
             
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
-<span class="identifier">test_phrase_parser_attr</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> 
-      <span class="identifier">hold</span><span class="special">[</span><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="char">':'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">]</span> <span class="special">|</span> <span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="identifier">attr</span><span class="special">(</span><span class="number">0</span><span class="special">),</span> <span class="identifier">v</span><span class="special">);</span> 
+<span class="identifier">test_phrase_parser_attr</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span>
+      <span class="identifier">hold</span><span class="special">[</span><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="char">':'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">]</span> <span class="special">|</span> <span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="identifier">attr</span><span class="special">(</span><span class="number">0</span><span class="special">),</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">v</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="string">","</span> <span class="special">&lt;&lt;</span> <span class="identifier">v</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>    <span class="comment">// will output: &gt;123,0&lt;
 </span></pre>
 <p>

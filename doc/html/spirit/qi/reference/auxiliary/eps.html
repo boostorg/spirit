@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Epsilon Parser (eps)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
-<link rel="home" href="../../../../index.html" title="Spirit 2.4.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../../index.html" title="Spirit 2.5">
 <link rel="up" href="../auxiliary.html" title="Auxiliary Parsers">
 <link rel="prev" href="eoi.html" title="End of Input Parser (eoi)">
 <link rel="next" href="lazy.html" title="Lazy Parser (lazy)">
@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="identifier">eps</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.auxiliary.eps.description"></a><h6>
-<a name="id839491"></a>
+<a name="spirit.qi.reference.auxiliary.eps.description-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             a multi-purpose parser that returns a zero length match.
           </p>
 <a name="spirit.qi.reference.auxiliary.eps.simple_form"></a><h6>
-<a name="id839524"></a>
+<a name="spirit.qi.reference.auxiliary.eps.simple_form-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.simple_form">Simple
             Form</a>
           </h6>
@@ -54,7 +54,7 @@
 <pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span> <span class="special">|</span> <span class="identifier">c</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">[</span><span class="identifier">error</span><span class="special">()];</span> <span class="comment">// Call error if a, b, and c fail to match
 </span></pre>
 <a name="spirit.qi.reference.auxiliary.eps.semantic_predicate"></a><h6>
-<a name="id839654"></a>
+<a name="spirit.qi.reference.auxiliary.eps.semantic_predicate-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.semantic_predicate">Semantic
             Predicate</a>
           </h6>
@@ -79,7 +79,7 @@
             touching rest.
           </p>
 <a name="spirit.qi.reference.auxiliary.eps.header"></a><h6>
-<a name="id839808"></a>
+<a name="spirit.qi.reference.auxiliary.eps.header-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/eps.hpp&gt;
@@ -89,7 +89,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.auxiliary.eps.namespace"></a><h6>
-<a name="id839907"></a>
+<a name="spirit.qi.reference.auxiliary.eps.namespace-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -107,7 +107,7 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.eps.model_of"></a><h6>
-<a name="id839997"></a>
+<a name="spirit.qi.reference.auxiliary.eps.model_of-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -124,7 +124,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.eps.expression_semantics"></a><h6>
-<a name="id840084"></a>
+<a name="spirit.qi.reference.auxiliary.eps.expression_semantics-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -179,7 +179,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.eps.attributes"></a><h6>
-<a name="id840244"></a>
+<a name="spirit.qi.reference.auxiliary.eps.attributes-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -213,7 +213,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.eps.complexity"></a><h6>
-<a name="id840335"></a>
+<a name="spirit.qi.reference.auxiliary.eps.complexity-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -222,7 +222,7 @@
               function <code class="computeroutput"><span class="identifier">f</span></code>.
             </p></blockquote></div>
 <a name="spirit.qi.reference.auxiliary.eps.example"></a><h6>
-<a name="id840406"></a>
+<a name="spirit.qi.reference.auxiliary.eps.example-heading"></a>
             <a class="link" href="eps.html#spirit.qi.reference.auxiliary.eps.example">Example</a>
           </h6>
 <div class="note"><table border="0" summary="Note">
@@ -280,7 +280,7 @@
 <p>
             
 </p>
-<pre class="programlisting"><span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="string">"1 2 3 4"</span><span class="special">,</span> 
+<pre class="programlisting"><span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="string">"1 2 3 4"</span><span class="special">,</span>
     <span class="special">*(</span><span class="identifier">eps</span><span class="special">(</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">_1</span> <span class="special">==</span> <span class="number">4</span><span class="special">)]));</span>
 </pre>
 <p>

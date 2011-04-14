@@ -4,9 +4,9 @@
 <title>The utree data structure</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../index.html" title="Spirit 2.4.2">
+<link rel="home" href="../../index.html" title="Spirit 2.5">
 <link rel="up" href="../support.html" title="Supporting Libraries">
-<link rel="prev" href="multi_pass.html" title="The multi pass iterator">
+<link rel="prev" href="line_pos_iterator.html" title="The line position iterator">
 <link rel="next" href="../faq.html" title="Spirit FAQ">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="multi_pass.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../faq.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="line_pos_iterator.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../faq.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -94,7 +94,7 @@
         for. It is 14 bytes for a 32-bit platform and 30 bytes for a 64-bit platform.
       </p>
 <a name="spirit.support.utree.class_reference"></a><h5>
-<a name="id1297534"></a>
+<a name="spirit.support.utree.class_reference-heading"></a>
         <a class="link" href="utree.html#spirit.support.utree.class_reference">Class Reference</a>
       </h5>
 <p>
@@ -251,6 +251,13 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">stored_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 
+<span class="comment">// This initializes a `function_type` node, storing by reference
+</span><span class="comment">// instead of copying the function object. 
+</span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
+<span class="identifier">utree</span><span class="special">(</span><span class="identifier">referenced_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
+<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">referenced_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+
 <span class="comment">// This initializes either a `string_type`, a `symbol_type`, or a 
 </span><span class="comment">// `binary_type` node (depending on the template parameter `type_`), 
 </span><span class="comment">// which will hold the corresponding narrow character sequence (usually 
@@ -290,7 +297,7 @@
         attribute type.
       </p>
 <a name="spirit.support.utree.string_types"></a><h5>
-<a name="id1299588"></a>
+<a name="spirit.support.utree.string_types-heading"></a>
         <a class="link" href="utree.html#spirit.support.utree.string_types">String Types</a>
       </h5>
 <p>
@@ -355,7 +362,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.function_object_interface"></a><h5>
-<a name="id1300764"></a>
+<a name="spirit.support.utree.function_object_interface-heading"></a>
         <a class="link" href="utree.html#spirit.support.utree.function_object_interface">Function Object
         Interface</a>
       </h5>
@@ -368,7 +375,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">function_base</span>
 <span class="special">{</span>
-    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">function_base</span><span class="special">()</span> <span class="special">{};</span>
+    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">function_base</span><span class="special">()</span> <span class="special">{}</span>
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 
     <span class="comment">// Calling f.clone() must return a newly allocated function_base 
@@ -385,11 +392,21 @@
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
     <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">referenced_function</span> <span class="special">:</span> <span class="identifier">function_base</span>
+<span class="special">{</span>
+    <span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">;</span>
+    <span class="identifier">referenced_function</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">);</span>
+    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">referenced_function</span><span class="special">();</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="special">};</span>
 </pre>
 <p>
       </p>
 <a name="spirit.support.utree.exceptions"></a><h5>
-<a name="id1301122"></a>
+<a name="spirit.support.utree.exceptions-heading"></a>
         <a class="link" href="utree.html#spirit.support.utree.exceptions">Exceptions</a>
       </h5>
 <p>
@@ -420,7 +437,7 @@
 <p>
       </p>
 <a name="spirit.support.utree.example__sexpr_parser"></a><h5>
-<a name="id1301292"></a>
+<a name="spirit.support.utree.example__sexpr_parser-heading"></a>
         <a class="link" href="utree.html#spirit.support.utree.example__sexpr_parser">Example: Sexpr
         Parser</a>
       </h5>
@@ -553,7 +570,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="multi_pass.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../faq.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="line_pos_iterator.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../support.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../faq.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

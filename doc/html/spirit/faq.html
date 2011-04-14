@@ -3,9 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spirit FAQ</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
-<link rel="home" href="../index.html" title="Spirit 2.4.2">
-<link rel="up" href="../index.html" title="Spirit 2.4.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../index.html" title="Spirit 2.5">
+<link rel="up" href="../index.html" title="Spirit 2.5">
 <link rel="prev" href="support/utree.html" title="The utree data structure">
 <link rel="next" href="notes.html" title="Notes">
 </head>
@@ -27,7 +27,7 @@
 <a name="spirit.faq"></a><a class="link" href="faq.html" title="Spirit FAQ">Spirit FAQ</a>
 </h2></div></div></div>
 <a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_"></a><h4>
-<a name="id1172369"></a>
+<a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_-heading"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_">I'm
       getting multiple symbol definition errors while using Visual C++. Anything
       I could do about that?</a>
@@ -63,7 +63,7 @@
       while using this workaround is less verbose error messages generated from static_assert.
     </p>
 <a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_"></a><h4>
-<a name="id1172594"></a>
+<a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_-heading"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">I'm
       very confused about the header hell in my boost/spirit directory. What's all
       this about?</a>
@@ -160,9 +160,9 @@
       directly, always include files from the boost/spirit/include directory.
     </p>
 <p>
-      The last bit missing is <a href="../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+      The last bit missing is <a href="../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
       (which currently still lives under the Spirit umbrella, but already has been
-      accepted as a Boost library, so it will move away). <a href="../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+      accepted as a Boost library, so it will move away). <a href="../../../../../libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
       is a library allowing to write functional style C++, which is interesting in
       itself, but as it initially has been developed for Spirit, it is nicely integrated
       and very useful when it comes to writing semantic actions. I think using the
@@ -171,21 +171,19 @@
       are available.
     </p>
 <a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_"></a><h4>
-<a name="id1173257"></a>
+<a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_-heading"></a>
       <a class="link" href="faq.html#spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_">Why
       doesn't my symbol table work in a <code class="computeroutput"><span class="identifier">no_case</span></code>
       directive?</a>
     </h4>
 <p>
       In order to perform case-insensitive parsing (using <a class="link" href="qi/reference/directive/no_case.html" title="Parser Directive Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a>) with a symbol table (i.e.
-      use a <a class="link" href="qi/reference/string/symbols.html" title="Symbols Parser (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span>
-      <span class="identifier">T</span><span class="special">&gt;</span></code></a>
-      parser in a <code class="computeroutput"><span class="identifier">no_case</span></code> directive),
-      that symbol table needs to be filled with all-lowercase contents. Entries containing
-      one or more uppercase characters will not match any input.
+      use a <a class="link" href="qi/reference/string/symbols.html" title="Symbols Parser (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;&gt;</span></code></a> parser in a <code class="computeroutput"><span class="identifier">no_case</span></code>
+      directive), that symbol table needs to be filled with all-lowercase contents.
+      Entries containing one or more uppercase characters will not match any input.
     </p>
 <a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_"></a><h4>
-<a name="id1173360"></a>
+<a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_-heading"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_">I'm
       getting a compilation error mentioning <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span></code>
       and/or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function4</span></code>. What does this mean?</a>
