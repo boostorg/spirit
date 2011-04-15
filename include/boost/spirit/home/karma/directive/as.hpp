@@ -127,7 +127,7 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject, typename Modifiers>
     struct make_directive<tag::as_wstring, Subject, Modifiers>
     {
-        typedef as_directive<Subject, std::wstring> result_type;
+        typedef as_directive<Subject, std::basic_string<wchar_t> > result_type;
         result_type operator()(unused_type, Subject const& subject
           , unused_type) const
         {
