@@ -12,9 +12,11 @@
 #include <cstddef>
 #include <algorithm>
 #include <string>
-#include <ostream>
+#include <iostream>
+#include <sstream>
 #include <typeinfo>
 
+#include <boost/integer.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
@@ -45,13 +47,7 @@ namespace boost { namespace spirit
        function, which applies to certain stored utree_type's only, but this 
        precondition is violated as the `utree` instance holds some other type.
     */
-    struct bad_type_exception : utree_exception
-    {
-        virtual const char* what() const throw()
-        {
-            return "utree: Illegal operation for currently stored data.";
-        }
-    };
+    struct bad_type_exception /*: utree_exception*/;
     //]
 
     //[utree_types
@@ -86,8 +82,64 @@ namespace boost { namespace spirit
 
             binary_type         // Arbitrary binary data
         };
+        typedef boost::uint_t<sizeof(info)*8>::exact exact_integral_type; 
+        typedef boost::uint_t<sizeof(info)*8>::fast fast_integral_type; 
     };
     //]
+
+    // streaming operator for utree types - essential for diagnostics    
+    inline std::ostream& operator<<(std::ostream& out, utree_type::info t)
+    {
+        switch (t) {
+            case utree_type::invalid_type: { out << "invalid"; break; }
+            case utree_type::nil_type: { out << "nil"; break; }
+            case utree_type::list_type: { out << "list"; break; }
+            case utree_type::range_type: { out << "range"; break; }
+            case utree_type::reference_type: { out << "reference"; break; }
+            case utree_type::any_type: { out << "any"; break; }
+            case utree_type::function_type: { out << "function"; break; }
+            case utree_type::bool_type: { out << "bool"; break; }
+            case utree_type::int_type: { out << "int"; break; }
+            case utree_type::double_type: { out << "double"; break; }
+            case utree_type::string_type: { out << "string"; break; }
+            case utree_type::string_range_type: { out << "string_range"; break; }
+            case utree_type::symbol_type: { out << "symbol"; break; }
+            case utree_type::binary_type: { out << "binary"; break; }
+            default: { out << "unknown"; break; }
+        }
+        out << std::hex << "[0x"
+            << static_cast<utree_type::fast_integral_type>(t) << "]";
+        return out;
+    }
+    
+    struct bad_type_exception : utree_exception
+    {
+        std::string msg;
+
+        bad_type_exception(char const* error, utree_type::info got)
+          : msg()
+        {
+            std::ostringstream oss;
+            oss << "utree: " << error
+                << " (got utree type '" << got << "')";
+            msg = oss.str();
+        }
+        
+        bad_type_exception(char const* error, utree_type::info got1,
+                           utree_type::info got2)
+          : msg()
+        {
+            std::ostringstream oss;
+            oss << "utree: " << error
+                << " (got utree types '" << got1 << "' and '" << got2 << "')";
+            msg = oss.str();
+        }
+
+        virtual ~bad_type_exception() throw() {}
+
+        virtual const char* what() const throw()
+        { return msg.c_str(); }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     // A typed string with parametric Base storage. The storage can be any
@@ -506,7 +558,7 @@ namespace boost { namespace spirit
 
     //<-
     protected:
-        void ensure_list_type();
+        void ensure_list_type(char const* failed_in = "ensure_list_type()");
 
     private:
         typedef utree_type type;
@@ -549,7 +601,7 @@ namespace boost { namespace spirit
     {
         using utree::operator=;
 
-        list_type() : utree() { ensure_list_type(); }
+        list_type() : utree() { ensure_list_type("list_type()"); }
 
         template <typename T0>
         list_type(T0 t0) : utree(t0) {}
