@@ -35,7 +35,7 @@ namespace client
 
     struct expr
     {
-        template <typename T1, typename T2>
+        template <typename T1, typename T2 = void>
         struct result { typedef void type; };
 
         expr(char op) : op(op) {}
@@ -58,7 +58,7 @@ namespace client
 
     struct negate_expr
     {
-        template <typename T1, typename T2>
+        template <typename T1, typename T2 = void>
         struct result { typedef void type; };
 
         void operator()(spirit::utree& expr, spirit::utree const& rhs) const
