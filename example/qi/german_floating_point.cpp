@@ -11,14 +11,14 @@ namespace qi = boost::spirit::qi;
 template <typename T>
 struct german_real_policies : qi::real_policies<T>
 {
-   template <typename Iterator>
-   static bool parse_dot(Iterator& first, Iterator const& last)
-   {
-       if (first == last || *first != ',')
-           return false;
-       ++first;
-       return true;
-   }
+    template <typename Iterator>
+    static bool parse_dot(Iterator& first, Iterator const& last)
+    {
+        if (first == last || *first != ',')
+            return false;
+        ++first;
+        return true;
+    }
 };
 
 qi::real_parser<double, german_real_policies<double> > const german_double;
