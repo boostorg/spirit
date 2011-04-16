@@ -157,13 +157,13 @@ See here for more information about __karma_numeric__.
     [[[real_number `lit(num)`]]         [`Unused`]      [Generate `num`]]
     [[[real_number `float_`]]           [`float`]       [Generate a real number from a `float`]]
     [[[real_number `float_(num)`]]      [`float`]       [Generate `num` as a real number from a `float`, 
-                                                            if an attribute is supplied it must match]]
+                                                            if an attribute is supplied it must match `num`]]
     [[[real_number `double_`]]          [`double`]      [Generate a real number from a `double`]]
     [[[real_number `double_(num)`]]     [`double`]      [Generate a `num` as a real number from a `double`, 
-                                                            if an attribute is supplied it must match]]
+                                                            if an attribute is supplied it must match `num`]]
     [[[real_number `long_double`]]      [`long double`] [Generate a real number from a `long double`]]
     [[[real_number `long_double(num)`]] [`long double`] [Generate `num` as a real number from a `long double`, 
-                                                            if an attribute is supplied it must match]]
+                                                            if an attribute is supplied it must match `num`]]
 
     [[[real_number ``real_generator<
     Num, Policies
@@ -515,7 +515,7 @@ notation `tuple<A, B...>` stands for ['any __fusion__ sequence] holding
 [table 
     [[Expression]           [Attribute]]
 
-    [[__karma_sequence__]
+    [[__karma_sequence__ (`a << b`)]
 [``a: A, b: B --> (a << b): tuple<A, B>
 a: A, b: Unused --> (a << b): A
 a: Unused, b: B --> (a << b): B
@@ -526,34 +526,34 @@ a: vector<A>, b: A --> (a << b): vector<A>
 a: A, b: vector<A> --> (a << b): vector<A>
 a: vector<A>, b: vector<A> --> (a << b): vector<A>``]]
 
-    [[__karma_alternative__]
+    [[__karma_alternative__ (`a | b`)]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): A
 a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[[karma_kleene Kleene (unary `*`)]]
+    [[[karma_kleene Kleene (`*a`)]]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
-    [[__karma_plus__]
+    [[__karma_plus__ (`+a`)]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 
-    [[__karma_list__]
+    [[__karma_list__ (`a % b`)]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[[karma_repeat Repetition]]
+    [[[karma_repeat Repetition] (`repeat[]`)]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[__karma_optional__]
+    [[__karma_optional__ (`-a`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 
-    [[__karma_and_predicate__]  [`a: A --> &a: A`]]
-    [[__karma_not_predicate__]  [`a: A --> !a: A`]]
+    [[__karma_and_predicate__ (`&a`)]  [`a: A --> &a: A`]]
+    [[__karma_not_predicate__ (`!a`)]  [`a: A --> !a: A`]]
 ]
 
 [endsect]
