@@ -31,9 +31,25 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, int N, bool Const>
     struct container_value<fusion::extension::adt_attribute_proxy<T, N, Const> >
       : container_value<
-            typename fusion::extension::adt_attribute_proxy<
-                T, N, Const
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<
+                    T, N, Const
+                >::type
             >::type
+        >
+    {};
+
+    template <typename T, int N, bool Const>
+    struct container_value<
+            fusion::extension::adt_attribute_proxy<T, N, Const> const>
+      : container_value<
+            typename add_const<
+                typename remove_reference<
+                    typename fusion::extension::adt_attribute_proxy<
+                        T, N, Const
+                    >::type
+                >::type 
+            >::type 
         >
     {};
 
@@ -59,9 +75,87 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, int N, bool Const>
     struct container_iterator<fusion::extension::adt_attribute_proxy<T, N, Const> >
       : container_iterator<
-            typename fusion::extension::adt_attribute_proxy<T, N, Const>::type
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<
+                    T, N, Const
+                >::type
+            >::type
         >
     {};
+
+    template <typename T, int N, bool Const>
+    struct container_iterator<
+            fusion::extension::adt_attribute_proxy<T, N, Const> const>
+      : container_iterator<
+            typename add_const<
+                typename remove_reference<
+                    typename fusion::extension::adt_attribute_proxy<
+                        T, N, Const
+                    >::type
+                >::type 
+            >::type 
+        >
+    {};
+
+    template <typename T, int N, bool Const>
+    struct begin_container<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        typedef typename remove_reference<
+            typename fusion::extension::adt_attribute_proxy<T, N, Const>::type
+        >::type container_type;
+
+        static typename container_iterator<container_type>::type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const>& c)
+        {
+            return c.get().begin();
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct begin_container<fusion::extension::adt_attribute_proxy<T, N, Const> const>
+    {
+        typedef typename add_const<
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+            >::type
+        >::type container_type;
+
+        static typename container_iterator<container_type>::type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& c)
+        {
+            return c.get().begin();
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct end_container<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        typedef typename remove_reference<
+            typename fusion::extension::adt_attribute_proxy<T, N, Const>::type
+        >::type container_type;
+
+        static typename container_iterator<container_type>::type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const>& c)
+        {
+            return c.get().end();
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct end_container<fusion::extension::adt_attribute_proxy<T, N, Const> const>
+    {
+        typedef typename add_const<
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+            >::type
+        >::type container_type;
+
+        static typename container_iterator<container_type>::type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& c)
+        {
+            return c.get().end();
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, typename Val>
