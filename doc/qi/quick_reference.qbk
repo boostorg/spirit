@@ -49,61 +49,83 @@ pages and pages of reference documentation.
 [section:char Character Parsers]
 
 [table
-    [[Expression]               [Attribute]       [Description]]
-    [[[qi_lit_string `ch`]]     [`Unused`]        [Matches `ch`]]
-    [[[qi_lit_string `lit(ch)`]][`Unused`]        [Matches `ch`]]
-    [[`char_`]                  [`Ch`]            [Matches any character]]
-    [[`char_(ch)`]              [`Ch`]            [Matches `ch`]]
-    [[`char_("c")`]             [`Ch`]            [Matches a single char string literal, `c`]]
-    [[`char_(ch, ch2)`]         [`Ch`]            [Matches a range of chars from `ch` to `ch2` (inclusive)]]
-    [[`char_(charset)`]         [`Ch`]            [Matches a character set `charset`]]
+    [[Expression]                [Attribute]       [Description]]
+    [[[qi_char `ch`]]            [`Unused`]        [Matches `ch`]]
+    [[[qi_char `lit(ch)`]]       [`Unused`]        [Matches `ch`]]
+    [[[qi_char `char_`]]         [`Ch`]            [Matches any character]]
+    [[[qi_char `char_(ch)`]]     [`Ch`]            [Matches `ch`]]
+    [[[qi_char `char_("c")`]]    [`Ch`]            [Matches a single char string literal, `c`]]
+    [[[qi_char `char_(ch, ch2)`]][`Ch`]            [Matches a range of chars from `ch` to `ch2` (inclusive)]]
+    [[[qi_char `char_(charset)`]][`Ch`]            [Matches a character set `charset`]]
 
-    [[`alnum`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isalnum` in the current character set]]
-    [[`alpha`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isalpha` in the current character set]]
-    [[`blank`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isblank` in the current character set]]
-    [[`cntrl`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::iscntrl` in the current character set]]
-    [[`digit`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isdigit` in the current character set]]
-    [[`graph`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isgraph` in the current character set]]
-    [[`print`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isprint` in the current character set]]
-    [[`punct`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::ispunct` in the current character set]]
-    [[`space`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isspace` in the current character set]]
-    [[`xdigit`]                 [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isxdigit` in the current character set]]
-    [[`lower`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::islower` in the current character set]]
-    [[`upper`]                  [`Ch`]            [Matches a character based on the equivalent of
-                                                  `std::isupper` in the current character set]]
+    [[[qi_char_class `alnum`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isalnum` in the current character set]]
+    [[[qi_char_class `alpha`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isalpha` in the current character set]]
+    [[[qi_char_class `blank`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isblank` in the current character set]]
+    [[[qi_char_class `cntrl`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::iscntrl` in the current character set]]
+    [[[qi_char_class `digit`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isdigit` in the current character set]]
+    [[[qi_char_class `graph`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isgraph` in the current character set]]
+    [[[qi_char_class `print`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isprint` in the current character set]]
+    [[[qi_char_class `punct`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::ispunct` in the current character set]]
+    [[[qi_char_class `space`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isspace` in the current character set]]
+    [[[qi_char_class `xdigit`]]  [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isxdigit` in the current character set]]
+    [[[qi_char_class `lower`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::islower` in the current character set]]
+    [[[qi_char_class `upper`]]   [`Ch`]            [Matches a character based on the equivalent of
+                                   `std::isupper` in the current character set]]
 ]
 
 [endsect]
 [section:numeric Numeric Parsers]
 
 [table
-    [[Expression]           [Attribute]                 [Description]]
-    [[`float_`]             [`float`]                   [Parse a floating point number into a `float`]]
-    [[`double_`]            [`double`]                  [Parse a floating point number into a `double`]]
-    [[`long_double`]        [`long double`]             [Parse a floating point number into a `long double`]]
+    [[Expression]                 [Attribute]           [Description]]
+    [[[qi_real_number `float_`]]  [`float`]             [Parse a floating point number into a `float`]]
+    [[[qi_real_number `float_(num)`]]  [`float`]        [Parse a floating point number into a `float`,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_real_number `double_`]] [`double`]            [Parse a floating point number into a `double`]]
+    [[[qi_real_number `double_`]] [`double`]            [Parse a floating point number into a `double`,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_real_number `long_double`]] [`long double`]   [Parse a floating point number into a `long double`]]
+    [[[qi_real_number `long_double`]] [`long double`]   [Parse a floating point number into a `long double`,
+                                                            a number is matched only if it's `num`]]
 
-    [[`bin`]                [`unsigned`]                [Parse a binary integer into an `unsigned`]]
-    [[`oct`]                [`unsigned`]                [Parse an octal integer into an `unsigned`]]
-    [[`hex`]                [`unsigned`]                [Parse a hexadecimal integer into an `unsigned`]]
-    [[`ushort_`]            [`unsigned short`]          [Parse an unsigned short integer]]
-    [[`ulong_`]             [`unsigned long`]           [Parse an unsigned long integer]]
-    [[`uint_`]              [`unsigned int`]            [Parse an unsigned int]]
-    [[`ulong_long`]         [`unsigned long long`]      [Parse an unsigned long long]]
-    [[`short_`]             [`short`]                   [Parse a short integer]]
-    [[`long_`]              [`long`]                    [Parse a long integer]]
-    [[`int_`]               [`int`]                     [Parse an int]]
-    [[`long_long`]          [`long long`]               [Parse a long long]]
+    [[[qi_unsigned_int `bin`]]     [`unsigned`]                [Parse a binary integer into an `unsigned`]]
+    [[[qi_unsigned_int `oct`]]     [`unsigned`]                [Parse an octal integer into an `unsigned`]]
+    [[[qi_unsigned_int `hex`]]     [`unsigned`]                [Parse a hexadecimal integer into an `unsigned`]]
+    [[[qi_unsigned_int `ushort_`]] [`unsigned short`]          [Parse an unsigned short integer]]
+    [[[qi_unsigned_int `ushort_(num)`]] [`unsigned short`]     [Parse an unsigned short integer,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_unsigned_int `ulong_`]]  [`unsigned long`]           [Parse an unsigned long integer]]
+    [[[qi_unsigned_int `ulong_(num)`]]  [`unsigned long`]      [Parse an unsigned long integer,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_unsigned_int `uint_`]]   [`unsigned int`]            [Parse an unsigned int]]
+    [[[qi_unsigned_int `uint_(num)`]]   [`unsigned int`]       [Parse an unsigned int,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_unsigned_int `ulong_long`]] [`unsigned long long`]   [Parse an unsigned long long]]
+    [[[qi_unsigned_int `ulong_long(num)`]] [`unsigned long long`]   [Parse an unsigned long long,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_signed_int `short_`]]    [`short`]                   [Parse a short integer]]
+    [[[qi_signed_int `short_(num)`]]    [`short`]              [Parse a short integer,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_signed_int `long_`]]     [`long`]                    [Parse a long integer]]
+    [[[qi_signed_int `long_(num)`]]     [`long`]               [Parse a long integer,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_signed_int `int_`]]      [`int`]                     [Parse an int]]
+    [[[qi_signed_int `int_(num)`]]      [`int`]                [Parse an int,
+                                                            a number is matched only if it's `num`]]
+    [[[qi_signed_int `long_long`]] [`long long`]               [Parse a long long]]
+    [[[qi_signed_int `long_long(num)`]] [`long long`]          [Parse a long long,
+                                                            a number is matched only if it's `num`]]
 ]
 
 [endsect]
@@ -156,17 +178,17 @@ pages and pages of reference documentation.
 [section:binary Binary Parsers]
 
 [table
-    [[Expression]           [Attribute]                 [Description]]
-    [[`byte_`]              [8 bits native endian]      [Matches an 8 bit binary]]
-    [[`word`]               [16 bits native endian]     [Matches a 16 bit binary]]
-    [[`big_word`]           [16 bits big endian]        [Matches a 16 bit binary]]
-    [[`little_word`]        [16 bits little endian]     [Matches a 16 bit binary]]
-    [[`dword`]              [32 bits native endian]     [Matches a 32 bit binary]]
-    [[`big_dword`]          [32 bits big endian]        [Matches a 32 bit binary]]
-    [[`little_dword`]       [32 bits little endian]     [Matches a 32 bit binary]]
-    [[`qword`]              [64 bits native endian]     [Matches a 64 bit binary]]
-    [[`big_qword`]          [64 bits big endian]        [Matches a 64 bit binary]]
-    [[`little_qword`]       [64 bits little endian]     [Matches a 64 bit binary]]
+    [[Expression]                   [Attribute]                 [Description]]
+    [[[qi_native_binary `byte_`]]   [8 bits native endian]      [Matches an 8 bit binary in native endian representation]]
+    [[[qi_native_binary `word`]]    [16 bits native endian]     [Matches a 16 bit binary in native endian representation]]
+    [[[qi_big_binary `big_word`]]   [16 bits big endian]        [Matches a 16 bit binary in big endian representation]]
+    [[[qi_little_binary `little_word`]]  [16 bits little endian][Matches a 16 bit binary in little endian representation]]
+    [[[qi_native_binary `dword`]]   [32 bits native endian]     [Matches a 32 bit binary in native endian representation]]
+    [[[qi_big_binary `big_dword`]]  [32 bits big endian]        [Matches a 32 bit binary in big endian representation]]
+    [[[qi_little_binary `little_dword`]] [32 bits little endian][Matches a 32 bit binary in little endian representation]]
+    [[[qi_native_binary `qword`]]   [64 bits native endian]     [Matches a 64 bit binary in native endian representation]]
+    [[[qi_big_binary `big_qword`]]  [64 bits big endian]        [Matches a 64 bit binary in big endian representation]]
+    [[[qi_little_binary `little_qword`]] [64 bits little endian][Matches a 64 bit binary in little endian representation]]
 ]
 
 [endsect]
@@ -214,25 +236,37 @@ See here for more information about [qi_auto Auto Parsers].
 
 [table
     [[Expression]           [Attribute]                 [Description]]
-    [[`!a`]                 [`Unused`]                  [Not predicate. If the predicate `a` matches,
+    [[[link spirit.qi.reference.operator.not_predicate `!a`]]
+                            [`Unused`]                  [Not predicate. If the predicate `a` matches,
                                                         fail. Otherwise, return a zero length match.]]
-    [[`&a`]                 [`Unused`]                  [And predicate. If the predicate `a` matches,
+    [[[link spirit.qi.reference.operator.not_predicate `&a`]]
+                            [`Unused`]                  [And predicate. If the predicate `a` matches,
                                                         return a zero length match. Otherwise, fail.]]
-    [[`-a`]                 [`optional<A>`]             [Optional. Parse `a` zero or one time]]
-    [[`*a`]                 [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
-    [[`+a`]                 [`vector<A>`]               [Plus. Parse `a` one or more times]]
-    [[`a | b`]              [`variant<A, B>`]           [Alternative. Parse `a` or `b`]]
-    [[`a >> b`]             [`tuple<A, B>`]             [Sequence. Parse `a` followed by `b`]]
-    [[`a > b`]              [`tuple<A, B>`]             [Expect. Parse `a` followed by `b`. `b` is
+    [[[link spirit.qi.reference.operator.optional `-a`]]
+                            [`optional<A>`]             [Optional. Parse `a` zero or one time]]
+    [[[link spirit.qi.reference.operator.kleene `*a`]]
+                            [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
+    [[[link spirit.qi.reference.operator.plus `+a`]]
+                            [`vector<A>`]               [Plus. Parse `a` one or more times]]
+    [[[link spirit.qi.reference.operator.alternative `a | b`]]
+                            [`variant<A, B>`]           [Alternative. Parse `a` or `b`]]
+    [[[link spirit.qi.reference.operator.sequence `a >> b`]]
+                            [`tuple<A, B>`]             [Sequence. Parse `a` followed by `b`]]
+    [[[link spirit.qi.reference.operator.expect `a > b`]]
+                            [`tuple<A, B>`]             [Expect. Parse `a` followed by `b`. `b` is
                                                         expected to match when `a` matches, otherwise,
                                                         an `expectation_failure` is thrown.]]
-    [[`a - b`]              [`A`]                       [Difference. Parse `a` but not `b`]]
-    [[`a || b`]             [`tuple<`
+    [[[link spirit.qi.reference.operator.difference `a - b`]]
+                            [`A`]                       [Difference. Parse `a` but not `b`]]
+    [[[link spirit.qi.reference.operator.sequential_or `a || b`]]
+                            [`tuple<`
                                 `optional<A>,`
                                 `optional<B> >`
                             ]                           [Sequential Or. Parse `a` or `b` or `a` followed by `b`]]
-    [[`a % b`]              [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
-    [[`a ^ b`]              [`tuple<`
+    [[[link spirit.qi.reference.operator.list `a % b`]]
+                            [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
+    [[[link spirit.qi.reference.operator.permutation `a ^ b`]]
+                            [`tuple<`
                                 `optional<A>,`
                                 `optional<B> >`
                             ]                           [Permutation. Parse `a` or `b` or `a` followed by `b` or `b` followed by `a`.]]
@@ -281,7 +315,7 @@ __unused_type__. ]
 [table
     [[Expression]           [Attribute]]
 
-    [[`a >> b`]
+    [[__qi_sequence__ (`a >> b`)]
 [``a: A, b: B --> (a >> b): tuple<A, B>
 a: A, b: Unused --> (a >> b): A
 a: Unused, b: B --> (a >> b): B
@@ -292,7 +326,7 @@ a: vector<A>, b: A --> (a >> b): vector<A>
 a: A, b: vector<A> --> (a >> b): vector<A>
 a: vector<A>, b: vector<A> --> (a >> b): vector<A>``]]
 
-    [[`a > b`]
+    [[__qi_expect__ (`a > b`)]
 [``a: A, b: B --> (a > b): tuple<A, B>
 a: A, b: Unused --> (a > b): A
 a: Unused, b: B --> (a > b): B
@@ -303,7 +337,7 @@ a: vector<A>, b: A --> (a > b): vector<A>
 a: A, b: vector<A> --> (a > b): vector<A>
 a: vector<A>, b: vector<A> --> (a > b): vector<A>``]]
 
-    [[`a | b`]
+    [[__qi_alternative__ (`a | b`)]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): optional<A>
 a: A, b: B, c: Unused --> (a | b | c): optional<variant<A, B> >
@@ -311,26 +345,26 @@ a: Unused, b: B --> (a | b): optional<B>
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[`a - b`]
+    [[__qi_difference__ (`a - b`)]
 [``a: A, b: B --> (a - b): A
 a: Unused, b: B --> (a - b): Unused``]]
 
-    [[`*a`]
+    [[__qi_kleene__ (`*a`)]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
-    [[`+a`]
+    [[__qi_plus__ (`+a`)]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 
-    [[`a % b`]
+    [[__qi_list__ (`a % b`)]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[`repeat(...,...)[a]`]
+    [[[link spirit.qi.reference.directive.repeat `repeat(...,...)[a]`]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[`a || b`]
+    [[__qi_sequential_or__ (`a || b`)]
 [``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a || b): optional<A>
 a: Unused, b: B --> (a || b): optional<B>
@@ -338,19 +372,18 @@ a: Unused, b: Unused --> (a || b): Unused
 
 a: A, b: A --> (a || b): vector<optional<A> >``]]
 
-    [[`-a`]
+    [[__qi_optional__ (`-a`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 
     [[`&a`]  [`a: A --> &a: Unused`]]
     [[`!b`]  [`a: A --> !a: Unused`]]
 
-    [[`a ^ b`]
+    [[__qi_permutation__ (`a ^ b`)]
 [``a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a ^ b): optional<A>
 a: Unused, b: B --> (a ^ b): optional<B>
 a: Unused, b: Unused --> (a ^ b): Unused``]]
-
 ]
 
 [endsect]

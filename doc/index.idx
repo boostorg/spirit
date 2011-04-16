@@ -256,7 +256,17 @@ symbols "" ".*karma.reference.string\..*" karma_index
 
 # placeholders
 placeholders "_\d|_r\d|_val|_[a-j]|_pass" ".*qi.quick_reference.phoenix.*" qi_index
+"_1 ... _N" "_\d" ".*qi.quick_reference.phoenix.*" qi_index
+"_r1 ... _rN" "_r\d" ".*qi.quick_reference.phoenix.*" qi_index
+_val "" ".*qi.quick_reference.phoenix.*" qi_index
+"_a ... _j" "_[a-j]" ".*qi.quick_reference.phoenix.*" qi_index
+_pass "" ".*qi.quick_reference.phoenix.*" qi_index
 placeholders "_\d|_r\d|_val|_[a-j]|_pass" ".*karma.quick_reference.phoenix.*" karma_index
+"_1 ... _N" "_\d" ".*karma.quick_reference.phoenix.*" karma_index
+"_r1 ... _rN" "_r\d" ".*karma.quick_reference.phoenix.*" karma_index
+_val "" ".*karma.quick_reference.phoenix.*" karma_index
+"_a ... _j" "_[a-j]" ".*karma.quick_reference.phoenix.*" karma_index
+_pass "" ".*karma.quick_reference.phoenix.*" karma_index
 
 ###############################################################################
 #!exclude N 

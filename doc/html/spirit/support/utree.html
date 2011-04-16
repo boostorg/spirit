@@ -69,6 +69,8 @@
 </span>
         <span class="identifier">binary_type</span>         <span class="comment">// Arbitrary binary data
 </span>    <span class="special">};</span>
+    <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_t</span><span class="special">&lt;</span><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">info</span><span class="special">)*</span><span class="number">8</span><span class="special">&gt;::</span><span class="identifier">exact</span> <span class="identifier">exact_integral_type</span><span class="special">;</span> 
+    <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_t</span><span class="special">&lt;</span><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">info</span><span class="special">)*</span><span class="number">8</span><span class="special">&gt;::</span><span class="identifier">fast</span> <span class="identifier">fast_integral_type</span><span class="special">;</span> 
 <span class="special">};</span>
 </pre>
 <p>
@@ -426,13 +428,7 @@
 <p>
         
 </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">bad_type_exception</span> <span class="special">:</span> <span class="identifier">utree_exception</span>
-<span class="special">{</span>
-    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">what</span><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">throw</span><span class="special">()</span>
-    <span class="special">{</span>
-        <span class="keyword">return</span> <span class="string">"utree: Illegal operation for currently stored data."</span><span class="special">;</span>
-    <span class="special">}</span>
-<span class="special">};</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">bad_type_exception</span> <span class="comment">/*: utree_exception*/</span><span class="special">;</span>
 </pre>
 <p>
       </p>

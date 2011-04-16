@@ -386,6 +386,21 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 [/ action]
 [def __qi_semantic_actions__        Semantic Actions] [/ TODO Link Me]
 
+[/ char]
+[template qi_char[str]              [link spirit.qi.reference.char.char [str]]]
+[template qi_char_class[str]        [link spirit.qi.reference.char.char_class [str]]]
+
+[/ numerics]
+[template qi_signed_int[str]        [link spirit.qi.reference.numeric.int [str]]]
+[template qi_unsigned_int[str]      [link spirit.qi.reference.numeric.uint [str]]]
+[template qi_real_number[str]       [link spirit.qi.reference.numeric.real [str]]]
+[template qi_boolean[str]           [link spirit.qi.reference.numeric.boolean [str]]]
+
+[/ binary]
+[template qi_native_binary[str]     [link spirit.qi.reference.binary.binary_native [str]]]
+[template qi_little_binary[str]     [link spirit.qi.reference.binary.binary_little [str]]]
+[template qi_big_binary[str]        [link spirit.qi.reference.binary.binary_big [str]]]
+
 [/ auxiliary]
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr`]]
 [def __qi_eol__                     [link spirit.qi.reference.auxiliary.eol `eol`]]
