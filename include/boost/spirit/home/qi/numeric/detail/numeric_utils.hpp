@@ -2,6 +2,7 @@
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2006 Stephen Nutt
+    Copyright (c) 2011 Jan Frederick Eick
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +19,10 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/iteration/local.hpp>
+#include <boost/preprocessor/comparison/less.hpp>
+#include <boost/preprocessor/control/if.hpp>
+#include <boost/preprocessor/seq/elem.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_signed.hpp>
@@ -55,131 +60,52 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <unsigned Radix>
     struct radix_traits;
 
-    // Binary
-    template <>
-    struct radix_traits<2>
-    {
-        template<typename Char>
-        inline static bool is_valid(Char ch)
-        {
-            return ('0' == ch || '1' == ch);
-        }
+// lookup table for log2(x) : 2 <= x <= 36
+#define LOG2 (#error)(#error)                                                 \
+        (1.0)(1.58496)(2.0)(2.32192)(2.58496)(2.80735)(3.0)                   \
+        (3.16992)(3.32192)(3.45943)(3.58496)(3.70043)(3.80735)                \
+        (3.90689)(4.0)(4.08746)(4.16992)(4.24792)(4.32192)                    \
+        (4.39231)(4.45943)(4.52356)(4.58496)(4.64385)(4.70043)                \
+        (4.75488)(4.80735)(4.85798)(4.90689)(4.95419)(5.0)                    \
+        (5.04439)(5.08746)(5.12928)(5.169925)                                 \
+    /***/
 
-        template<typename Char>
-        inline static unsigned digit(Char ch)
-        {
-            return ch - '0';
-        }
+#define BOOST_PP_LOCAL_MACRO(Radix)                                           \
+    template<> struct radix_traits<Radix>                                     \
+    {                                                                         \
+        template <typename Char>                                              \
+        inline static bool is_valid(Char ch)                                  \
+        {                                                                     \
+            BOOST_PP_IF( BOOST_PP_LESS_EQUAL(Radix, 10)                       \
+              , return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1)) \
+              , return (ch >= '0' && ch <= '9')                               \
+                || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1)) \
+                || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1)) \
+            );                                                                \
+        }                                                                     \
+        template <typename Char>                                              \
+        inline static unsigned digit(Char ch)                                 \
+        {                                                                     \
+            BOOST_PP_IF( BOOST_PP_LESS_EQUAL(Radix, 10)                       \
+              , return ch - '0';                                              \
+              , if (ch >= '0' && ch <= '9') return ch - '0';                  \
+                return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;  \
+            )                                                                 \
+        }                                                                     \
+        template <typename T>                                                 \
+        struct digits                                                         \
+        {                                                                     \
+            typedef std::numeric_limits<T> numeric_limits_;                   \
+            BOOST_STATIC_CONSTANT(int, value = static_cast<int>(              \
+                numeric_limits_::digits / BOOST_PP_SEQ_ELEM(Radix, LOG2)));   \
+        };                                                                    \
+    };                                                                        \
+    /***/
 
-        template<typename T>
-        struct digits
-        {
-            typedef std::numeric_limits<T> numeric_limits_;
-            BOOST_STATIC_CONSTANT(int, value = numeric_limits_::digits);
-        };
-    };
+#define BOOST_PP_LOCAL_LIMITS (2, 36)
+#include BOOST_PP_LOCAL_ITERATE()
 
-    // Octal
-    template <>
-    struct radix_traits<8>
-    {
-        template<typename Char>
-        inline static bool is_valid(Char ch)
-        {
-            return ch >= '0' && ch <= '7';
-        }
-
-        template<typename Char>
-        inline static unsigned digit(Char ch)
-        {
-            return ch - '0';
-        }
-
-        template<typename T>
-        struct digits
-        {
-            typedef std::numeric_limits<T> numeric_limits_;
-            BOOST_STATIC_CONSTANT(int, value = numeric_limits_::digits / 3);
-        };
-    };
-
-    // Decimal
-    template <>
-    struct radix_traits<10>
-    {
-        template<typename Char>
-        inline static bool is_valid(Char ch)
-        {
-            return ch >= '0' && ch <= '9';
-        }
-
-        template<typename Char>
-        inline static unsigned digit(Char ch)
-        {
-            return ch - '0';
-        }
-
-        template<typename T>
-        struct digits
-        {
-            typedef std::numeric_limits<T> numeric_limits_;
-            BOOST_STATIC_CONSTANT(int, value = numeric_limits_::digits10);
-        };
-    };
-
-    // Hexadecimal
-    template <>
-    struct radix_traits<16>
-    {
-        template<typename Char>
-        inline static bool is_valid(Char ch)
-        {
-            return (ch >= '0' && ch <= '9')
-            || (ch >= 'a' && ch <= 'f')
-            || (ch >= 'A' && ch <= 'F');
-        }
-
-        template<typename Char>
-        inline static unsigned digit(Char ch)
-        {
-            if (ch >= '0' && ch <= '9')
-                return ch - '0';
-            return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;
-        }
-
-        template<typename T>
-        struct digits
-        {
-            typedef std::numeric_limits<T> numeric_limits_;
-            BOOST_STATIC_CONSTANT(int, value = numeric_limits_::digits / 4);
-        };
-    };
-
-    // arbitrary Radix
-    template <unsigned Radix>
-    struct radix_traits
-    {
-        template<typename Char>
-        inline static bool is_valid(Char ch)
-        {
-            return (ch >= '0' && ch <= ('0' + Radix - 1));
-        }
-
-        template<typename Char>
-        inline static unsigned digit(Char ch)
-        {
-            return ch - '0';
-        }
-
-        template<typename T>
-        struct digits
-        {
-            typedef std::numeric_limits<T> numeric_limits_;
-            BOOST_STATIC_CONSTANT(int, value = numeric_limits_::digits10);
-            // TODO(j.f.eick@gmx.de): this is the min number of digits which
-            // can be safely parsed if the radix is < 10 - this is not optimal?
-        };
-    };
+#undef LOG2
 
     ///////////////////////////////////////////////////////////////////////////
     //  positive_accumulator/negative_accumulator: Accumulator policies for
@@ -201,7 +127,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             // Ensure n *= Radix will not overflow
             static T const max = (std::numeric_limits<T>::max)();
-            //static T const val = (max - 1) / Radix;
             static T const val = max / Radix;
             if (n > val)
                 return false;
@@ -333,15 +258,15 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     //  extract_int: main code for extracting integers
     ///////////////////////////////////////////////////////////////////////////
-#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                   \
-        if (!check_max_digits<MaxDigits>::call(count + leading_zeros)           \
-            || it == last)                                                      \
-            break;                                                              \
-        ch = *it;                                                               \
-        if (!radix_check::is_valid(ch) || !extractor::call(ch, count, val))     \
-            break;                                                              \
-        ++it;                                                                   \
-        ++count;                                                                \
+#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                 \
+        if (!check_max_digits<MaxDigits>::call(count + leading_zeros)         \
+            || it == last)                                                    \
+            break;                                                            \
+        ch = *it;                                                             \
+        if (!radix_check::is_valid(ch) || !extractor::call(ch, count, val))   \
+            break;                                                            \
+        ++it;                                                                 \
+        ++count;                                                              \
     /**/
 
     template <
@@ -434,16 +359,16 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //  extract_int: main code for extracting integers
     //  common case where MinDigits == 1 and MaxDigits = -1
     ///////////////////////////////////////////////////////////////////////////
-#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                   \
-        if (it == last)                                                         \
-            break;                                                              \
-        ch = *it;                                                               \
-        if (!radix_check::is_valid(ch))                                         \
-            break;                                                              \
-        if (!extractor::call(ch, count, val))                                   \
-            return false;                                                       \
-        ++it;                                                                   \
-        ++count;                                                                \
+#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                 \
+        if (it == last)                                                       \
+            break;                                                            \
+        ch = *it;                                                             \
+        if (!radix_check::is_valid(ch))                                       \
+            break;                                                            \
+        if (!extractor::call(ch, count, val))                                 \
+            return false;                                                     \
+        ++it;                                                                 \
+        ++count;                                                              \
     /**/
 
     template <typename T, unsigned Radix, typename Accumulator, bool Accumulate>
@@ -572,7 +497,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return n;
         }
     };
-
 }}}}
 
 #endif
