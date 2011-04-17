@@ -107,6 +107,12 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T, typename Enable = void>
     struct pow10_helper;
+
+    template <typename T, typename Enable = void>
+    struct is_nan;
+
+    template <typename T, typename Enable = void>
+    struct is_infinite;
 }}}
 
 #endif

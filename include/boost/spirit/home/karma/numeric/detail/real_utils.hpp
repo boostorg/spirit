@@ -41,61 +41,19 @@ namespace boost { namespace spirit { namespace karma
       , typename Tag = unused_type>
     struct real_inserter
     {
-        template <typename OutputIterator>
-        static bool
-        call (OutputIterator& sink, float n, Policies const& p = Policies())
-        {
-            int fpclass = (math::fpclassify)(n);
-            if ((int)FP_NAN == fpclass) {
-                return Policies::template nan<CharEncoding, Tag>(
-                    sink, n, p.force_sign(n));
-            }
-            else if ((int)FP_INFINITE == fpclass) {
-                return Policies::template inf<CharEncoding, Tag>(
-                    sink, n, p.force_sign(n));
-            }
-            return p.template call<real_inserter>(sink, n, p);
-        }
-
-        template <typename OutputIterator>
-        static bool
-        call (OutputIterator& sink, double n, Policies const& p = Policies())
-        {
-            int fpclass = (math::fpclassify)(n);
-            if ((int)FP_NAN == fpclass) {
-                return Policies::template nan<CharEncoding, Tag>(
-                    sink, n, p.force_sign(n));
-            }
-            else if ((int)FP_INFINITE == fpclass) {
-                return Policies::template inf<CharEncoding, Tag>(
-                    sink, n, p.force_sign(n));
-            }
-            return p.template call<real_inserter>(sink, n, p);
-        }
-
-        template <typename OutputIterator>
-        static bool
-        call (OutputIterator& sink, long double n, Policies const& p = Policies())
-        {
-            int fpclass = (math::fpclassify)(n);
-            if ((int)FP_NAN == fpclass) {
-                return Policies::template nan<CharEncoding, Tag>(
-                    sink, n, p.force_sign(n));
-            }
-            else if ((int)FP_INFINITE == fpclass) {
-                return Policies::template inf<CharEncoding, Tag>(
-                    sink, n, p.force_sign(n));
-            }
-            return p.template call<real_inserter>(sink, n, p);
-        }
-
         template <typename OutputIterator, typename U>
         static bool
         call (OutputIterator& sink, U n, Policies const& p = Policies())
         {
-            // we have no means of testing whether the number is normalized if
-            // the type is not float, double or long double
-            return p.template call<real_inserter>(sink, T(n), p);
+            if (traits::test_nan(n)) {
+                return Policies::template nan<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            else if (traits::test_infinite(n)) {
+                return Policies::template inf<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            return p.template call<real_inserter>(sink, n, p);
         }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  

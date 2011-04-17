@@ -68,6 +68,26 @@ BOOST_FUSION_ADAPT_ADT(
 );
 
 ///////////////////////////////////////////////////////////////////////////////
+class data3
+{
+private:
+    double data_;
+
+public:
+    data3(double data = 0.0)
+      : data_(data) 
+    {}
+
+    double data() const { return data_;}
+    void set_data(double data) { data_ = data;}
+};
+
+BOOST_FUSION_ADAPT_ADT(
+    data3,
+    (double, double, obj.data(), obj.set_data(val))
+);
+
+///////////////////////////////////////////////////////////////////////////////
 int main () 
 {
     using spirit_test::test;
@@ -87,6 +107,25 @@ int main ()
         data2 d("test");
         BOOST_TEST(test("data: test\n", "data: " << +char_ << "\n", d));
         BOOST_TEST(test("data: test\n", "data: " << string << "\n", d));
+    }
+
+    {
+        using boost::spirit::karma::double_;
+
+        BOOST_TEST(test("x=0.0\n", "x=" << double_ << "\n", data3(0)));
+        BOOST_TEST(test("x=1.1\n", "x=" << double_ << "\n", data3(1.1)));
+        BOOST_TEST(test("x=1.0e10\n", "x=" << double_ << "\n", data3(1e10)));
+
+        BOOST_TEST(test("x=inf\n", "x=" << double_ << "\n", 
+            data3(std::numeric_limits<double>::infinity())));
+        if (std::numeric_limits<double>::has_quiet_NaN) {
+            BOOST_TEST(test("x=nan\n", "x=" << double_ << "\n", 
+                data3(std::numeric_limits<double>::quiet_NaN())));
+        }
+        if (std::numeric_limits<double>::has_signaling_NaN) {
+            BOOST_TEST(test("x=nan\n", "x=" << double_ << "\n", 
+                data3(std::numeric_limits<double>::signaling_NaN())));
+        }
     }
 
     return boost::report_errors();
