@@ -40,6 +40,43 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     //
+    //  The maximum radix digits that can be represented without
+    //  overflow:
+    //
+    //          template<typename T, unsigned Radix> 
+    //          struct digits_traits::value;
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, unsigned Radix>
+    struct digits_traits;
+
+// lookup table for log2(x) : 2 <= x <= 36
+#define BOOST_SPIRIT_LOG2 (#error)(#error)                                    \
+        (1.0)    (1.58496)(2.0)    (2.32192)(2.58496)(2.80735)(3.0)           \
+        (3.16992)(3.32192)(3.45943)(3.58496)(3.70043)(3.80735)                \
+        (3.90689)(4.0)    (4.08746)(4.16992)(4.24792)(4.32192)                \
+        (4.39231)(4.45943)(4.52356)(4.58496)(4.64385)(4.70043)                \
+        (4.75488)(4.80735)(4.85798)(4.90689)(4.95419)(5.0)                    \
+        (5.04439)(5.08746)(5.12928)(5.169925)                                 \
+    /***/
+
+#define BOOST_PP_LOCAL_MACRO(Radix)                                           \
+    template <typename T> struct digits_traits<T, Radix>                      \
+    {                                                                         \
+        typedef std::numeric_limits<T> numeric_limits_type;                   \
+        BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                  \
+            numeric_limits_type::digits /                                     \
+                BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_LOG2)));                \
+    };                                                                        \
+    /***/
+
+#define BOOST_PP_LOCAL_LIMITS (2, 36)
+#include BOOST_PP_LOCAL_ITERATE()
+
+#undef BOOST_SPIRIT_LOG2
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
     //  Traits class for radix specific number conversion
     //
     //      Test the validity of a single character:
@@ -51,61 +88,28 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //
     //          template<typename Char> static int digit(Char ch);
     //
-    //      The maximum radix digits that can be represented without
-    //      overflow:
-    //
-    //          template<typename T> struct digits::value;
-    //
     ///////////////////////////////////////////////////////////////////////////
-    template <unsigned Radix>
-    struct radix_traits;
+    template <unsigned Radix> 
+    struct radix_traits
+    {
+        template <typename Char>
+        inline static bool is_valid(Char ch)
+        {
+            if (Radix <= 10)
+                return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1));
+            return (ch >= '0' && ch <= '9')
+                || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
+                || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
+        }
 
-// lookup table for log2(x) : 2 <= x <= 36
-#define LOG2 (#error)(#error)                                                 \
-        (1.0)(1.58496)(2.0)(2.32192)(2.58496)(2.80735)(3.0)                   \
-        (3.16992)(3.32192)(3.45943)(3.58496)(3.70043)(3.80735)                \
-        (3.90689)(4.0)(4.08746)(4.16992)(4.24792)(4.32192)                    \
-        (4.39231)(4.45943)(4.52356)(4.58496)(4.64385)(4.70043)                \
-        (4.75488)(4.80735)(4.85798)(4.90689)(4.95419)(5.0)                    \
-        (5.04439)(5.08746)(5.12928)(5.169925)                                 \
-    /***/
-
-#define BOOST_PP_LOCAL_MACRO(Radix)                                           \
-    template<> struct radix_traits<Radix>                                     \
-    {                                                                         \
-        template <typename Char>                                              \
-        inline static bool is_valid(Char ch)                                  \
-        {                                                                     \
-            BOOST_PP_IF( BOOST_PP_LESS_EQUAL(Radix, 10)                       \
-              , return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1)) \
-              , return (ch >= '0' && ch <= '9')                               \
-                || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1)) \
-                || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1)) \
-            );                                                                \
-        }                                                                     \
-        template <typename Char>                                              \
-        inline static unsigned digit(Char ch)                                 \
-        {                                                                     \
-            BOOST_PP_IF( BOOST_PP_LESS_EQUAL(Radix, 10)                       \
-              , return ch - '0';                                              \
-              , if (ch >= '0' && ch <= '9') return ch - '0';                  \
-                return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;  \
-            )                                                                 \
-        }                                                                     \
-        template <typename T>                                                 \
-        struct digits                                                         \
-        {                                                                     \
-            typedef std::numeric_limits<T> numeric_limits_;                   \
-            BOOST_STATIC_CONSTANT(int, value = static_cast<int>(              \
-                numeric_limits_::digits / BOOST_PP_SEQ_ELEM(Radix, LOG2)));   \
-        };                                                                    \
-    };                                                                        \
-    /***/
-
-#define BOOST_PP_LOCAL_LIMITS (2, 36)
-#include BOOST_PP_LOCAL_ITERATE()
-
-#undef LOG2
+        template <typename Char>
+        inline static unsigned digit(Char ch)
+        {
+            if (Radix <= 10 || ch >= '0' && ch <= '9') 
+                return ch - '0';
+            return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     //  positive_accumulator/negative_accumulator: Accumulator policies for
@@ -185,7 +189,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         call(Char ch, std::size_t count, T& n, mpl::true_)
         {
             static std::size_t const
-                overflow_free = radix_traits<Radix>::template digits<T>::value - 1;
+                overflow_free = digits_traits<T, Radix>::value - 1;
 
             if (count < overflow_free)
             {
@@ -222,7 +226,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return call(ch, count, n
               , mpl::bool_<
                     (   (MaxDigits < 0)
-                    ||  (MaxDigits > radix_traits<Radix>::template digits<T>::value)
+                    ||  (MaxDigits > digits_traits<T, Radix>::value)
                     )
                   && std::numeric_limits<T>::is_modulo
                 >()
