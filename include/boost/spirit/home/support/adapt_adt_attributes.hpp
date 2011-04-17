@@ -251,6 +251,7 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
     // customization point specializations for numeric generators
     template <typename T, int N, bool Const>
     struct absolute_value<fusion::extension::adt_attribute_proxy<T, N, Const> >
@@ -283,6 +284,26 @@ namespace boost { namespace spirit { namespace traits
         call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val) 
         { 
             return test_zero(val.get()); 
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct is_nan<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        static bool 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val) 
+        { 
+            return test_nan(val.get()); 
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct is_infinite<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        static bool 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val) 
+        { 
+            return test_infinite(val.get()); 
         }
     };
 }}}

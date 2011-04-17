@@ -236,6 +236,93 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
+    struct is_nan
+    {
+        static bool call(T n) 
+        { 
+            // NaN numbers are not equal to anything
+            return (n != n) ? true : false;
+        }
+    };
+
+    template <>
+    struct is_nan<float>
+    {
+        static bool call(float n) 
+        { 
+            return (math::fpclassify)(n) == FP_NAN; 
+        }
+    };
+
+    template <>
+    struct is_nan<double>
+    {
+        static bool call(double n) 
+        { 
+            return (math::fpclassify)(n) == FP_NAN; 
+        }
+    };
+
+    template <>
+    struct is_nan<long double>
+    {
+        static bool call(long double n) 
+        { 
+            return (math::fpclassify)(n) == FP_NAN; 
+        }
+    };
+
+    template <typename T>
+    inline bool test_nan(T n)
+    {
+        return is_nan<T>::call(n);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
+    struct is_infinite
+    {
+        static bool call(T n) 
+        { 
+          return (n == std::numeric_limits<T>::infinity()) ? true : false; 
+        }
+    };
+
+    template <>
+    struct is_infinite<float>
+    {
+        static bool call(float n) 
+        { 
+            return (math::fpclassify)(n) == FP_INFINITE; 
+        }
+    };
+
+    template <>
+    struct is_infinite<double>
+    {
+        static bool call(double n) 
+        { 
+            return (math::fpclassify)(n) == FP_INFINITE; 
+        }
+    };
+
+    template <>
+    struct is_infinite<long double>
+    {
+        static bool call(long double n) 
+        { 
+            return (math::fpclassify)(n) == FP_INFINITE; 
+        }
+    };
+
+    template <typename T>
+    inline bool test_infinite(T n)
+    {
+        return is_infinite<T>::call(n);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
     struct cast_to_long
     {
         static long call(float n, mpl::false_)
