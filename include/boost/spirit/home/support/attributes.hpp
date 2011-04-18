@@ -413,50 +413,63 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // Retrieve the size of an attribute (runtime)
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute, typename Enable/* = void*/>
-    struct attribute_size
+    namespace detail
     {
-        typedef std::size_t type;
-
-        static type call(Attribute const&)
+        template <typename Attribute, typename Enable = void>
+        struct attribute_size_impl
         {
-            return 1;
-        }
-    };
+            typedef std::size_t type;
+
+            static type call(Attribute const&)
+            {
+                return 1;
+            }
+        };
+
+        template <typename Attribute>
+        struct attribute_size_impl<Attribute
+          , typename enable_if<
+                mpl::and_<
+                    fusion::traits::is_sequence<Attribute>
+                  , mpl::not_<traits::is_container<Attribute> >
+                >
+            >::type> 
+        {
+            typedef typename fusion::result_of::size<Attribute>::value_type type;
+
+            static type call(Attribute const& attr)
+            {
+                return fusion::size(attr);
+            }
+        };
+
+        template <typename Attribute>
+        struct attribute_size_impl<Attribute
+          , typename enable_if<
+                mpl::and_<
+                    traits::is_container<Attribute>
+                  , mpl::not_<traits::is_iterator_range<Attribute> >
+                >
+            >::type> 
+        {
+            typedef typename Attribute::size_type type;
+
+            static type call(Attribute const& attr)
+            {
+                return attr.size();
+            }
+        };
+    }
+
+    template <typename Attribute, typename Enable/* = void*/>
+    struct attribute_size 
+      : detail::attribute_size_impl<Attribute>
+    {};
 
     template <typename Attribute>
-    struct attribute_size<Attribute
-      , typename enable_if<
-            mpl::and_<
-                fusion::traits::is_sequence<Attribute>
-              , mpl::not_<traits::is_container<Attribute> >
-            >
-        >::type
-    > {
-        typedef typename fusion::result_of::size<Attribute>::value_type type;
-
-        static type call(Attribute const& attr)
-        {
-            return fusion::size(attr);
-        }
-    };
-
-    template <typename Attribute>
-    struct attribute_size<Attribute
-      , typename enable_if<
-            mpl::and_<
-                traits::is_container<Attribute>
-              , mpl::not_<traits::is_iterator_range<Attribute> >
-            >
-        >::type
-    > {
-        typedef typename Attribute::size_type type;
-
-        static type call(Attribute const& attr)
-        {
-            return attr.size();
-        }
-    };
+    struct attribute_size<optional<Attribute> >
+      : attribute_size<Attribute>
+    {};
 
     template <typename Iterator>
     struct attribute_size<iterator_range<Iterator> >
@@ -483,7 +496,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute>
     typename attribute_size<Attribute>::type
-    size(Attribute const& attr)
+    size (Attribute const& attr)
     {
         return attribute_size<Attribute>::call(attr);
     }

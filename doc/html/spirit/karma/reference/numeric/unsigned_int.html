@@ -207,13 +207,13 @@
                   </td>
 <td>
                     <p>
-                      The radix base. This can be either 2: binary, 8: octal, 10:
-                      decimal and 16: hexadecimal.
+                      The radix base. This can be any value in the (inclusive) range
+                      from <code class="computeroutput"><span class="number">2</span></code> .. <code class="computeroutput"><span class="number">36</span></code>.
                     </p>
                   </td>
 <td>
                     <p>
-                      10
+                      <code class="computeroutput"><span class="number">10</span></code>
                     </p>
                   </td>
 </tr>
@@ -245,9 +245,7 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Radix</span></code></span></dt>
 <dd><p>
                   An integer literal specifying the required radix for the output
-                  conversion. Valid values are <code class="computeroutput"><span class="number">2</span></code>,
-                  <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>,
-                  and <code class="computeroutput"><span class="number">16</span></code>.
+                  conversion. Valid values are from the (inclusive) range <code class="computeroutput"><span class="number">2</span></code> .. <code class="computeroutput"><span class="number">36</span></code>.
                 </p></dd>
 </dl>
 </div>
@@ -287,9 +285,9 @@
 <td>
                     <p>
                       Generate the unsigned integer literal <code class="computeroutput"><span class="identifier">num</span></code>
-                      using the default formatting (radix is 10). This generator
-                      never fails (unless the underlying output stream reports an
-                      error).
+                      using the default formatting (radix is <code class="computeroutput"><span class="number">10</span></code>).
+                      This generator never fails (unless the underlying output stream
+                      reports an error).
                     </p>
                   </td>
 </tr>
@@ -308,9 +306,9 @@
 <td>
                     <p>
                       Generate the unsigned integer provided by a mandatory attribute
-                      using the default formatting (radix is 10). This generator
-                      never fails (unless the underlying output stream reports an
-                      error).
+                      using the default formatting (radix is <code class="computeroutput"><span class="number">10</span></code>).
+                      This generator never fails (unless the underlying output stream
+                      reports an error).
                     </p>
                   </td>
 </tr>
@@ -330,10 +328,11 @@
                     <p>
                       Generate the unsigned integer provided by the immediate literal
                       value the generator is initialized from using the default formatting
-                      (radix is 10). If this generator has an associated attribute
-                      it succeeds only if the attribute is equal to the immediate
-                      literal (unless the underlying output stream reports an error).
-                      Otherwise this generator fails and does not generate any output.
+                      (radix is <code class="computeroutput"><span class="number">10</span></code>).
+                      If this generator has an associated attribute it succeeds only
+                      if the attribute is equal to the immediate literal (unless
+                      the underlying output stream reports an error). Otherwise this
+                      generator fails and does not generate any output.
                     </p>
                   </td>
 </tr>
@@ -351,9 +350,9 @@
 <td>
                     <p>
                       Generate the unsigned integer provided by a mandatory attribute
-                      using the default formatting and the corresponding radix (<code class="computeroutput"><span class="identifier">bin</span></code>: radix is 2, <code class="computeroutput"><span class="identifier">oct</span></code>: radix is 8, <code class="computeroutput"><span class="identifier">hex</span></code>: radix is 16). This generator
-                      never fails (unless the underlying output stream reports an
-                      error).
+                      using the default formatting and the corresponding radix (<code class="computeroutput"><span class="identifier">bin</span></code>: radix is <code class="computeroutput"><span class="number">2</span></code>, <code class="computeroutput"><span class="identifier">oct</span></code>:
+                      radix is <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="identifier">hex</span></code>: radix is <code class="computeroutput"><span class="number">16</span></code>). This generator never fails
+                      (unless the underlying output stream reports an error).
                     </p>
                   </td>
 </tr>
@@ -373,12 +372,12 @@
                       Generate the unsigned integer provided by the immediate literal
                       value the generator is initialized from using the default formatting
                       and the corresponding radix (<code class="computeroutput"><span class="identifier">bin</span></code>:
-                      radix is 2, <code class="computeroutput"><span class="identifier">oct</span></code>:
-                      radix is 8, <code class="computeroutput"><span class="identifier">hex</span></code>:
-                      radix is 16). If this generator has an associated attribute
-                      it succeeds only if the attribute is equal to the immediate
-                      literal (unless the underlying output stream reports an error).
-                      Otherwise this generator fails and does not generate any output.
+                      radix is <code class="computeroutput"><span class="number">2</span></code>, <code class="computeroutput"><span class="identifier">oct</span></code>: radix is <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="identifier">hex</span></code>:
+                      radix is <code class="computeroutput"><span class="number">16</span></code>). If
+                      this generator has an associated attribute it succeeds only
+                      if the attribute is equal to the immediate literal (unless
+                      the underlying output stream reports an error). Otherwise this
+                      generator fails and does not generate any output.
                     </p>
                   </td>
 </tr>
@@ -423,9 +422,9 @@
 <td>
                     <p>
                       Generate the unsigned integer of type <code class="computeroutput"><span class="identifier">Num</span></code>
-                      provided by a mandatory attribute using the specified <code class="computeroutput"><span class="identifier">Radix</span></code> (possible values are
-                      <code class="computeroutput"><span class="number">2</span></code>, <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>,
-                      and <code class="computeroutput"><span class="number">16</span></code>, the default
+                      provided by a mandatory attribute using the specified <code class="computeroutput"><span class="identifier">Radix</span></code> (allowed values are
+                      from the (inclusive) range from <code class="computeroutput"><span class="number">2</span></code>
+                      .. <code class="computeroutput"><span class="number">36</span></code>, the default
                       value is <code class="computeroutput"><span class="number">10</span></code>).This
                       generator never fails (unless the underlying output stream
                       reports an error).
@@ -448,8 +447,7 @@
                       Generate the unsigned integer of type <code class="computeroutput"><span class="identifier">Num</span></code>
                       provided by the immediate literal value the generator is initialized
                       from, using the specified <code class="computeroutput"><span class="identifier">Radix</span></code>
-                      (possible values are <code class="computeroutput"><span class="number">2</span></code>,
-                      <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>, and <code class="computeroutput"><span class="number">16</span></code>,
+                      (allowed values are from the (inclusive) range from <code class="computeroutput"><span class="number">2</span></code> .. <code class="computeroutput"><span class="number">36</span></code>,
                       the default value is <code class="computeroutput"><span class="number">10</span></code>).
                       If this generator has an associated attribute it succeeds only
                       if the attribute is equal to the immediate literal (unless

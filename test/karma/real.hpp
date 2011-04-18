@@ -24,7 +24,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 
-#include <limits>
+#include <boost/limits.hpp>
 #include "test.hpp"
 
 using namespace spirit_test;

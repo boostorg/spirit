@@ -14,7 +14,7 @@
 #endif
 
 #include <boost/config/no_tr1/cmath.hpp>
-#include <limits>
+#include <boost/limits.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/numeric_traits.hpp>
 

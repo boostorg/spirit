@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-#include <limits>
+#include <boost/limits.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -254,8 +254,7 @@ namespace boost { namespace spirit { namespace karma
 
         // check template Attribute 'Radix' for validity
         BOOST_SPIRIT_ASSERT_MSG(
-            Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
-            not_supported_radix, ());
+            Radix >= 2 && Radix <= 36, not_supported_radix, ());
 
         BOOST_SPIRIT_ASSERT_MSG(
             // the following is a workaround for STLPort, where the simpler
@@ -320,8 +319,7 @@ namespace boost { namespace spirit { namespace karma
 
         // check template Attribute 'Radix' for validity
         BOOST_SPIRIT_ASSERT_MSG(
-            Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
-            not_supported_radix, ());
+            Radix >= 2 && Radix <= 36, not_supported_radix, ());
 
         BOOST_SPIRIT_ASSERT_MSG(
             // the following is a workaround for STLPort, where the simpler

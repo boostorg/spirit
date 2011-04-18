@@ -180,6 +180,16 @@ namespace boost { namespace spirit { namespace traits
         typedef typename Container::const_iterator type;
     };
 
+    template <typename T>
+    struct container_iterator<optional<T> >
+      : container_iterator<T>
+    {};
+
+    template <typename T>
+    struct container_iterator<optional<T> const>
+      : container_iterator<T const>
+    {};
+
     template <typename Iterator>
     struct container_iterator<iterator_range<Iterator> >
     {

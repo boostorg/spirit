@@ -24,7 +24,7 @@
 #include <boost/spirit/include/karma_rule.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
-#include <limits>
+#include <boost/limits.hpp>
 #include "test.hpp"
 
 using namespace spirit_test;

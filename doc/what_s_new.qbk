@@ -55,6 +55,8 @@ any of Spirit's include files):
   This change unifies the handling of the `_val` placeholder allowing to use it
   everywhere, not only in semantic actions attached to the right hand sides of
   a rule.
+* Added support for __karma__ [unsigned_int unsigned numeric generators] with 
+  arbitrary radix values in the (inclusive) range from `2` .. `36`.
 
 [heading Bug Fixes in Qi or Karma]
 

@@ -140,7 +140,7 @@ namespace boost { namespace spirit { namespace traits
             typedef typename traits::container_iterator<Attribute const>::type 
                 iterator_type;
 
-            iterator_type it = boost::begin(attr);
+            iterator_type it = traits::begin(attr);
             type result = *it;
             ++it;
             return result;
