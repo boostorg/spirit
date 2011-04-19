@@ -21,6 +21,23 @@
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
+    template <typename T, int N, bool Const, typename Domain>
+    struct not_is_variant<
+            fusion::extension::adt_attribute_proxy<T, N, Const>, Domain>
+      : not_is_variant<
+            typename fusion::extension::adt_attribute_proxy<T, N, Const>::type
+          , Domain>
+    {};
+
+    template <typename T, int N, bool Const, typename Domain>
+    struct not_is_optional<
+            fusion::extension::adt_attribute_proxy<T, N, Const>, Domain>
+      : not_is_optional<
+            typename fusion::extension::adt_attribute_proxy<T, N, Const>::type
+          , Domain>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, bool Const>
     struct is_container<fusion::extension::adt_attribute_proxy<T, N, Const> >
       : is_container<
@@ -73,7 +90,8 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename T, int N, bool Const>
-    struct container_iterator<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    struct container_iterator<
+            fusion::extension::adt_attribute_proxy<T, N, Const> >
       : container_iterator<
             typename remove_reference<
                 typename fusion::extension::adt_attribute_proxy<
@@ -171,11 +189,56 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+    template <typename T, int N, bool Const, typename Exposed>
+    struct extract_from_attribute<
+        fusion::extension::adt_attribute_proxy<T, N, Const>, Exposed>
+    {
+        typedef typename remove_const<
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+            >::type
+        >::type embedded_type;
+        typedef 
+            typename spirit::result_of::extract_from<Exposed, embedded_type>::type
+        type;
+
+        template <typename Context>
+        static type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val, Context& ctx)
+        {
+            return extract_from<Exposed>(val.get(), ctx);
+        }
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, bool Const>
     struct attribute_type<fusion::extension::adt_attribute_proxy<T, N, Const> >
       : fusion::extension::adt_attribute_proxy<T, N, Const>
     {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, int N, bool Const>
+    struct optional_attribute<
+        fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        typedef typename result_of::optional_value<
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+            >::type
+        >::type type;
+
+        static type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val)
+        {
+            return optional_value(val.get());
+        }
+
+        static bool 
+        is_valid(fusion::extension::adt_attribute_proxy<T, N, Const> const& val)
+        {
+            return has_optional_value(val.get());
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, int N, typename Attribute, typename Domain>
@@ -248,6 +311,24 @@ namespace boost { namespace spirit { namespace traits
                 fusion::extension::adt_attribute_proxy<T, N, Const>::type
             type;
             clear(type(val));
+        }
+    };
+
+    template <typename T, int N, bool Const>
+    struct attribute_size<fusion::extension::adt_attribute_proxy<T, N, Const> >
+    {
+        typedef typename remove_const<
+            typename remove_reference<
+                typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+            >::type
+        >::type embedded_type;
+
+        typedef typename attribute_size<embedded_type>::type type;
+
+        static type 
+        call(fusion::extension::adt_attribute_proxy<T, N, Const> const& val)
+        {
+            return attribute_size<embedded_type>::call(val.get());
         }
     };
 

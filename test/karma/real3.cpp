@@ -6,7 +6,34 @@
 
 //#define KARMA_FAIL_COMPILATION
 
+#include <boost/spirit/include/version.hpp>
 #include "real.hpp"
+
+///////////////////////////////////////////////////////////////////////////////
+// the customization points below have been added only recently
+#if SPIRIT_VERSION >= 0x2050
+// does not provide proper std::numeric_limits, we need to roll our own
+namespace boost { namespace spirit { namespace traits
+{
+    template <>
+    struct is_nan<boost::math::concepts::real_concept>
+    {
+        static bool call(boost::math::concepts::real_concept n) 
+        { 
+            return test_nan(n.value()); 
+        }
+    };
+
+    template <>
+    struct is_infinite<boost::math::concepts::real_concept>
+    {
+        static bool call(boost::math::concepts::real_concept n) 
+        { 
+            return test_infinite(n.value()); 
+        }
+    };
+}}}
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()

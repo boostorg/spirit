@@ -14,7 +14,7 @@
 #endif
 
 #include <cmath>
-#include <limits>
+#include <boost/limits.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>

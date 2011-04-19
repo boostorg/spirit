@@ -13,7 +13,7 @@
 #include <boost/config.hpp>
 #include <boost/config/no_tr1/cmath.hpp>
 #include <boost/detail/workaround.hpp>
-#include <limits>
+#include <boost/limits.hpp>
 
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/unused.hpp>

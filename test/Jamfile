@@ -133,6 +133,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run qi/uint1.cpp            : : : : qi_uint1 ]
      [ run qi/uint2.cpp            : : : : qi_uint2 ]
      [ run qi/uint3.cpp            : : : : qi_uint3 ]
+#     [ run qi/uint_radix.cpp       : : : : qi_uint_radix ]
      [ run qi/utree1.cpp           : : : : qi_utree1 ]
      [ run qi/utree2.cpp           : : : : qi_utree2 ]
      [ run qi/utree3.cpp           : : : : qi_utree3 ]
@@ -227,6 +228,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run karma/symbols2.cpp                  : : : : karma_symbols2 ]
      [ run karma/symbols3.cpp                  : : : : karma_symbols3 ]
      [ run karma/tricky_alignment.cpp          : : : : karma_tricky_alignment ]
+     [ run karma/uint_radix.cpp                : : : : karma_uint_radix ]
      [ run karma/utree1.cpp                    : : : : karma_utree1 ]
      [ run karma/utree2.cpp                    : : : : karma_utree2 ]
      [ run karma/utree3.cpp                    : : : : karma_utree3 ]
@@ -241,7 +243,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
      [ compile karma/regression_const_real_policies.cpp    : :  regression_const_real_policies ]
-     [ run karma/regression_numerics_adapt_adt.cpp         : : : :  karma_regression_numerics_adapt_adt ]
+     [ run karma/regression_adapt_adt.cpp                  : : : :  karma_regression_adapt_adt ]
 
     ;
 

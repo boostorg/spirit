@@ -12,7 +12,7 @@
 
 #include <boost/config.hpp>
 #include <boost/config/no_tr1/cmath.hpp>
-#include <limits>
+#include <boost/limits.hpp>
 
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
@@ -414,64 +414,46 @@ namespace boost { namespace spirit { namespace traits
     //          static int call(unsigned n);
     //
     ///////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename CharEncoding, typename Tag, bool radix_less_than_10>
+        struct convert_digit
+        {
+            static int call(unsigned n)
+            {
+                if (n <= 9)
+                    return n + '0';
+
+                using spirit::char_class::convert;
+                return convert<CharEncoding>::to(Tag(), n - 10 + 'a');
+            }
+        };
+
+        template <>
+        struct convert_digit<unused_type, unused_type, false>
+        {
+            static int call(unsigned n)
+            {
+                if (n <= 9)
+                    return n + '0';
+                return n - 10 + 'a';
+            }
+        };
+
+        template <typename CharEncoding, typename Tag>
+        struct convert_digit<CharEncoding, Tag, true>
+        {
+            static int call(unsigned n)
+            {
+                return n + '0';
+            }
+        };
+    }
+
     template <unsigned Radix, typename CharEncoding, typename Tag>
-    struct convert_digit;
-
-    // Binary
-    template <typename CharEncoding, typename Tag>
-    struct convert_digit<2, CharEncoding, Tag>
-    {
-        static int call(unsigned n)
-        {
-            return n + '0';
-        }
-    };
-
-    // Octal
-    template <typename CharEncoding, typename Tag>
-    struct convert_digit<8, CharEncoding, Tag>
-    {
-        static int call(unsigned n)
-        {
-            return n + '0';
-        }
-    };
-
-    // Decimal 
-    template <typename CharEncoding, typename Tag>
-    struct convert_digit<10, CharEncoding, Tag>
-    {
-        static int call(unsigned n)
-        {
-            return n + '0';
-        }
-    };
-
-    // Hexadecimal, lower case
-    template <>
-    struct convert_digit<16, unused_type, unused_type>
-    {
-        static int call(unsigned n)
-        {
-            if (n <= 9)
-                return n + '0';
-            return n - 10 + 'a';
-        }
-    };
-
-    // Hexadecimal, upper case
-    template <typename CharEncoding, typename Tag>
-    struct convert_digit<16, CharEncoding, Tag>
-    {
-        static int call(unsigned n)
-        {
-            if (n <= 9)
-                return n + '0';
-
-            using spirit::char_class::convert;
-            return convert<CharEncoding>::to(Tag(), n - 10 + 'a');
-        }
-    };
+    struct convert_digit 
+      : detail::convert_digit<CharEncoding, Tag, (Radix <= 10) ? true : false>
+    {};
 
     ///////////////////////////////////////////////////////////////////////
     template <unsigned Radix>

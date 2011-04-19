@@ -23,8 +23,6 @@
 #include <boost/type_traits/is_signed.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
-
-#include <limits>
 #include <boost/limits.hpp>
 
 #if !defined(SPIRIT_NUMERICS_LOOP_UNROLL)

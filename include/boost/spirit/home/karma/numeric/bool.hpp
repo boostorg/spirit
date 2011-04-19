@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-#include <limits>
+#include <boost/limits.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/utility/enable_if.hpp>
 
