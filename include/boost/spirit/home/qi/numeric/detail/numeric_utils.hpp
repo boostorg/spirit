@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //  The maximum radix digits that can be represented without
     //  overflow:
     //
-    //          template<typename T, unsigned Radix> 
+    //          template<typename T, unsigned Radix>
     //          struct digits_traits::value;
     //
     ///////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     //          template<typename Char> static int digit(Char ch);
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <unsigned Radix> 
+    template <unsigned Radix>
     struct radix_traits
     {
         template <typename Char>
@@ -103,7 +103,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Char>
         inline static unsigned digit(Char ch)
         {
-            if (Radix <= 10 || ch >= '0' && ch <= '9') 
+            if (Radix <= 10 || (ch >= '0' && ch <= '9'))
                 return ch - '0';
             return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
