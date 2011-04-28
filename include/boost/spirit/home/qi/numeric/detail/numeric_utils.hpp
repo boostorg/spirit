@@ -1,8 +1,9 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
-    Copyright (c) 2006 Stephen Nutt
     Copyright (c) 2011 Jan Frederick Eick
+    Copyright (c) 2011 Christopher Jefferson 
+    Copyright (c) 2006 Stephen Nutt
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -50,12 +51,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
 // lookup table for log2(x) : 2 <= x <= 36
 #define BOOST_SPIRIT_LOG2 (#error)(#error)                                    \
-        (1.0)    (1.58496)(2.0)    (2.32192)(2.58496)(2.80735)(3.0)           \
-        (3.16992)(3.32192)(3.45943)(3.58496)(3.70043)(3.80735)                \
-        (3.90689)(4.0)    (4.08746)(4.16992)(4.24792)(4.32192)                \
-        (4.39231)(4.45943)(4.52356)(4.58496)(4.64385)(4.70043)                \
-        (4.75488)(4.80735)(4.85798)(4.90689)(4.95419)(5.0)                    \
-        (5.04439)(5.08746)(5.12928)(5.169925)                                 \
+        (1000000)(1584960)(2000000)(2321920)(2584960)(2807350)                \
+        (3000000)(3169920)(3321920)(3459430)(3584960)(3700430)                \
+        (3807350)(3906890)(4000000)(4087460)(4169920)(4247920)                \
+        (4321920)(4392310)(4459430)(4523560)(4584960)(4643850)                \
+        (4700430)(4754880)(4807350)(4857980)(4906890)(4954190)                \
+        (5000000)(5044390)(5087460)(5129280)(5169925)                         \
     /***/
 
 #define BOOST_PP_LOCAL_MACRO(Radix)                                           \
@@ -63,7 +64,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     {                                                                         \
         typedef std::numeric_limits<T> numeric_limits_type;                   \
         BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                  \
-            numeric_limits_type::digits /                                     \
+            (numeric_limits_type::digits * 1000000) /                         \
                 BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_LOG2)));                \
     };                                                                        \
     /***/
