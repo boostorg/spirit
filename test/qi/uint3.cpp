@@ -58,10 +58,14 @@ main()
         unsigned u;
 
         BOOST_TEST(test("12545674515", oct(012545674515)));
+#if UINT_MAX > 4294967296 // > 32 bits only
         BOOST_TEST(!test("12545674515", oct(051547654521)));
+#endif
         BOOST_TEST(test_attr("12545674515", oct(012545674515), u));
         BOOST_TEST(u == 012545674515);
+#if UINT_MAX > 4294967296 // > 32 bits only
         BOOST_TEST(!test_attr("12545674515", oct(051547654521), u));
+#endif
 
         BOOST_TEST(test(max_octal, oct(UINT_MAX)));
         BOOST_TEST(test_attr(max_octal, oct(UINT_MAX), u));
@@ -105,7 +109,7 @@ main()
         BOOST_TEST(test("123", uint_(123)[ref(n) = _1]));
         BOOST_TEST(n == 123);
         BOOST_TEST(!test("123", uint_(321)[ref(n) = _1]));
-        
+
         BOOST_TEST(test_attr("789", uint_(789)[ref(n) = _1], m));
         BOOST_TEST(n == 789 && m == 789);
         BOOST_TEST(!test_attr("789", uint_(987)[ref(n) = _1], m));
@@ -114,7 +118,7 @@ main()
         BOOST_TEST(n == 456);
         BOOST_TEST(!test("   456", uint_(654)[ref(n) = _1], space));
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  parameterized lazy tests
     ///////////////////////////////////////////////////////////////////////////

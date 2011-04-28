@@ -110,6 +110,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run qi/pass_container2.cpp  : : : : qi_pass_container2 ]
      [ run qi/permutation.cpp      : : : : qi_permutation ]
      [ run qi/plus.cpp             : : : : qi_plus ]
+     [ run qi/uint_radix.cpp       : : : : qi_uint_radix ]
      [ run qi/range_run.cpp        : : : : qi_range_run ]
      [ run qi/raw.cpp              : : : : qi_raw ]
      [ run qi/real1.cpp            : : : : qi_real1 ]

@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
-    Copyright (c)      2011 Bryce Lelbach
+    Copyright (c) 2011 Bryce Lelbach
+    Copyright (c) 2011 Jan Frederick Eick
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,6 +20,7 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/detail/is_spirit_tag.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -28,7 +30,10 @@ namespace boost { namespace spirit
     {
         template <typename T, unsigned Radix, unsigned MinDigits
                 , int MaxDigits>
-        struct uint_parser {};
+        struct uint_parser
+        {
+            BOOST_SPIRIT_IS_TAG()
+        };
     }
 
     namespace qi
@@ -217,7 +222,7 @@ namespace boost { namespace spirit { namespace qi
     {
         // check template parameter 'Radix' for validity
         BOOST_SPIRIT_ASSERT_MSG(
-            Radix >= 2 || Radix <= 10 || Radix == 16,
+            Radix >= 2 && Radix <= 36,
             not_supported_radix, ());
 
         template <typename Context, typename Iterator>

@@ -52,56 +52,56 @@ namespace boost { namespace spirit { namespace karma
     struct meta_create_string
     {
         typedef spirit::standard::string_type type;
-        static type const& call() { return spirit::standard::string; }
+        static type const call() { return type(); }
     };
 
     template <>
     struct meta_create_string<wchar_t*>
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     template <>
     struct meta_create_string<wchar_t const*>
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     template <int N>
     struct meta_create_string<wchar_t[N]>
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     template <int N>
     struct meta_create_string<wchar_t const[N]>
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     template <int N>
     struct meta_create_string<wchar_t(&)[N]>
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     template <int N>
     struct meta_create_string<wchar_t const(&)[N]>
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     template <typename Traits, typename Allocator>
     struct meta_create_string<std::basic_string<wchar_t, Traits, Allocator> >
     {
         typedef spirit::standard_wide::string_type type;
-        static type const& call() { return spirit::standard_wide::string; }
+        static type const call() { return type(); }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -205,26 +205,26 @@ namespace boost { namespace spirit { namespace karma
     struct meta_create<char>
     {
         typedef spirit::standard::char_type type;
-        static type const& call() { return spirit::standard::char_; }
+        static type const call() { return type(); }
     };
     template <>
     struct meta_create<signed char>
     {
         typedef spirit::standard::char_type type;
-        static type const& call() { return spirit::standard::char_; }
+        static type const call() { return type(); }
     };
     template <>
     struct meta_create<wchar_t>
     {
         typedef spirit::standard_wide::char_type type;
-        static type const& call() { return spirit::standard_wide::char_; }
+        static type const call() { return type(); }
     };
 
     template <>
     struct meta_create<unsigned char>
     {
         typedef spirit::standard::char_type type;
-        static type const& call() { return spirit::standard::char_; }
+        static type const call() { return type(); }
     };
 
     // boolean generator

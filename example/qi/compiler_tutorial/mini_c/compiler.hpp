@@ -66,11 +66,11 @@ namespace client { namespace code_gen
           : current(0)
         {
             using namespace boost::phoenix::arg_names;
-            using boost::phoenix::cref;
+            namespace phx = boost::phoenix;
             using boost::phoenix::function;
 
             error_handler = function<ErrorHandler>(error_handler_)(
-                "Error! ", _2, cref(error_handler_.iters)[_1]);
+                "Error! ", _2, phx::cref(error_handler_.iters)[_1]);
         }
 
         bool operator()(ast::nil) { BOOST_ASSERT(0); return false; }

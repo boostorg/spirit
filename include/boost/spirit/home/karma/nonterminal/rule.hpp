@@ -175,18 +175,28 @@ namespace boost { namespace spirit { namespace karma
         {
         }
 
+        template <typename Auto, typename Expr>
+        static void define(rule& lhs, Expr const& expr, mpl::false_)
+        {
+            // Report invalid expression error as early as possible.
+            // If you got an error_invalid_expression error message here,
+            // then the expression (expr) is not a valid spirit karma expression.
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        }
+
+        template <typename Auto, typename Expr>
+        static void define(rule& lhs, Expr const& expr, mpl::true_)
+        {
+            lhs.f = detail::bind_generator<Auto>(
+                compile<karma::domain>(expr, encoding_modifier_type()));
+        }
+
         template <typename Expr>
         rule (Expr const& expr, std::string const& name_ = "unnamed-rule")
           : base_type(terminal::make(reference_(*this)))
           , name_(name_)
         {
-            // Report invalid expression error as early as possible.
-            // If you got an error_invalid_expression error message here, then
-            // the expression (expr) is not a valid spirit karma expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
-
-            f = detail::bind_generator<mpl::false_>(
-                compile<karma::domain>(expr, encoding_modifier_type()));
+            define<mpl::false_>(*this, expr, traits::matches<karma::domain, Expr>());
         }
 
         rule& operator=(rule const& rhs)
@@ -215,13 +225,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Expr>
         rule& operator=(Expr const& expr)
         {
-            // Report invalid expression error as early as possible.
-            // If you got an error_invalid_expression error message here, then
-            // the expression (expr) is not a valid spirit karma expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
-
-            f = detail::bind_generator<mpl::false_>(
-                compile<karma::domain>(expr, encoding_modifier_type()));
+            define<mpl::false_>(*this, expr, traits::matches<karma::domain, Expr>());
             return *this;
         }
 
@@ -231,13 +235,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Expr>
         friend rule& operator%=(rule& r, Expr const& expr)
         {
-            // Report invalid expression error as early as possible.
-            // If you got an error_invalid_expression error message here, then
-            // the expression (expr) is not a valid spirit karma expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
-
-            r.f = detail::bind_generator<mpl::true_>(
-                compile<karma::domain>(expr, encoding_modifier_type()));
+            define<mpl::true_>(r, expr, traits::matches<karma::domain, Expr>());
             return r;
         }
 
