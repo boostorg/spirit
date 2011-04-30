@@ -389,4 +389,18 @@ namespace boost { namespace spirit { namespace traits
     };
 }}}
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace result_of
+{
+    template <typename T, int N, bool Const>
+    struct optional_value<fusion::extension::adt_attribute_proxy<T, N, Const> >
+      : result_of::optional_value<
+            typename remove_const<
+                typename remove_reference<
+                    typename fusion::extension::adt_attribute_proxy<T, N, Const>::type 
+                >::type
+            >::type>
+    {};
+}}}
+
 #endif

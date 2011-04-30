@@ -65,7 +65,8 @@ namespace boost { namespace spirit { namespace qi
           , Attribute& attr, mpl::false_) const
         {
             // create a local value if Attribute is not unused_type
-            typename spirit::result_of::optional_value<Attribute>::type val;
+            typename spirit::result_of::optional_value<Attribute>::type val = 
+                spirit::result_of::optional_value<Attribute>::type();
 
             if (subject.parse(first, last, context, skipper, val))
             {
