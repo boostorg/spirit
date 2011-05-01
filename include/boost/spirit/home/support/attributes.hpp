@@ -468,8 +468,16 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Attribute>
     struct attribute_size<optional<Attribute> >
-      : attribute_size<Attribute>
-    {};
+    {
+        typedef typename attribute_size<Attribute>::type type;
+
+        static type call(optional<Attribute> const& val)
+        {
+            if (!val) 
+                return 0;
+            return val.get();
+        }
+    };
 
     template <typename Iterator>
     struct attribute_size<iterator_range<Iterator> >
