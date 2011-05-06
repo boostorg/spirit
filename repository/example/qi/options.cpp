@@ -11,6 +11,7 @@
 #include <boost/spirit/repository/include/qi_kwd.hpp>
 #include <boost/spirit/repository/include/qi_keywords.hpp>
 #include <boost/optional.hpp>
+#include <boost/cstdint.hpp>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -21,11 +22,11 @@
 // Data structure definitions
 
 // preprocessor constants
-typedef std::pair<std::string, int32_t> preprocessor_symbol; 
+typedef std::pair<std::string, boost::int32_t> preprocessor_symbol; 
 
 BOOST_FUSION_ADAPT_STRUCT( preprocessor_symbol,
     (std::string, first)
-    (int32_t, second)
+    (boost::int32_t, second)
 )
 
 // A data structure to store our program options
