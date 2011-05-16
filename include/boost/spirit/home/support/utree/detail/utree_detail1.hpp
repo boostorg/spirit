@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace detail
             small_string_size = buff_size-sizeof(char);
 
         static std::size_t const
-            max_string_len = small_string_size - 1;
+            max_string_len = small_string_size - 3;
 
         struct heap_store
         {

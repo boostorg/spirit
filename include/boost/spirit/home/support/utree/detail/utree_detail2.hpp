@@ -43,15 +43,11 @@ namespace boost { namespace spirit { namespace detail
 
     inline short fast_string::tag() const
     {
-        // warning the tag is not allowed for fast_string!!! it's only
-        // placed here to avoid excess padding.
         return (int(buff[small_string_size-2]) << 8) + (unsigned char)buff[small_string_size-1];
     }
 
     inline void fast_string::tag(short tag)
     {
-        // warning the tag is not allowed for fast_string!!! it's only
-        // placed here to avoid excess padding.
         buff[small_string_size-2] = tag >> 8;
         buff[small_string_size-1] = tag & 0xff;
     }
@@ -66,7 +62,7 @@ namespace boost { namespace spirit { namespace detail
         if (is_heap_allocated())
             return heap.size;
         else
-            return max_string_len - buff[small_string_size - 1];
+            return max_string_len - buff[max_string_len];
     }
 
     inline char const* fast_string::str() const
@@ -87,7 +83,7 @@ namespace boost { namespace spirit { namespace detail
             // if it fits, store it in-situ; small_string_size minus the length
             // of the string is placed in buff[small_string_size - 1]
             str = buff;
-            buff[small_string_size - 1] = static_cast<char>(max_string_len - size);
+            buff[max_string_len] = static_cast<char>(max_string_len - size);
             info() &= ~0x1;
         }
         else
@@ -1265,10 +1261,22 @@ namespace boost { namespace spirit
         if (t == type::list_type)
             return l.size;
 
+        if (t == type::string_type)
+            return s.size();
+
+        if (t == type::symbol_type)
+            return s.size();
+        
+        if (t == type::binary_type)
+            return s.size();
+        
+        if (t == type::string_range_type)
+            return sr.last - sr.first;
+
         if (t != type::nil_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("size() called on non-list utree type",
+                    ("size() called on non-list and non-string utree type",
                      get_type()));
 
         return 0;
@@ -1462,6 +1470,7 @@ namespace boost { namespace spirit
             case type::symbol_type:
             case type::binary_type:
                 s.copy(other.s);
+                s.tag(other.s.tag());
                 break;
             case type::list_type:
                 l.copy(other.l);
@@ -1549,35 +1558,11 @@ namespace boost { namespace spirit
 
     inline short utree::tag() const
     {
-        switch (get_type())
-        {
-            case type::string_type:
-            case type::string_range_type:
-            case type::binary_type:
-            case type::symbol_type:
-                BOOST_THROW_EXCEPTION(
-                    bad_type_exception(
-                        "tag() called on string utree type", get_type()));
-            default:
-              break;
-        }
         return s.tag();
     }
 
     inline void utree::tag(short tag)
     {
-        switch (get_type())
-        {
-            case type::string_type:
-            case type::string_range_type:
-            case type::binary_type:
-            case type::symbol_type:
-                BOOST_THROW_EXCEPTION(
-                    bad_type_exception(
-                        "tag() called on string utree type", get_type()));
-            default:
-              break;
-        }
         s.tag(tag);
     }
 

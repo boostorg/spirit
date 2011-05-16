@@ -159,42 +159,42 @@ int main()
         utree val;
         val.push_back(123);
         val.push_back("Chuckie");
-        BOOST_TEST_EQ(val.size(), 2);
+        BOOST_TEST_EQ(val.size(), 2U);
         utree val2;
         val2.push_back(123.456);
         val2.push_back("Mah Doggie");
         val.push_back(val2);
-        BOOST_TEST_EQ(val.size(), 3);
+        BOOST_TEST_EQ(val.size(), 3U);
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST(check(val.front(), "123"));
 
         utree val3(nil);
         val3.swap(val);
-        BOOST_TEST_EQ(val3.size(), 3);
+        BOOST_TEST_EQ(val3.size(), 3U);
         BOOST_TEST(check(val, "<nil>"));
         val3.swap(val);
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         val.push_back("another string");
-        BOOST_TEST_EQ(val.size(), 4);
+        BOOST_TEST_EQ(val.size(), 4U);
         BOOST_TEST(check(val, "( 123 \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )"));
         val.pop_front();
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"another string\" )"));
         utree::iterator i = val.begin();
         ++++i;
         val.insert(i, "Right in the middle");
-        BOOST_TEST_EQ(val.size(), 4);
+        BOOST_TEST_EQ(val.size(), 4U);
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" \"another string\" )"));
         val.pop_back();
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) \"Right in the middle\" )"));
-        BOOST_TEST_EQ(val.size(), 3);
+        BOOST_TEST_EQ(val.size(), 3U);
         utree::iterator it = val.end(); --it;
         val.erase(it);
         BOOST_TEST(check(val, "( \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
-        BOOST_TEST_EQ(val.size(), 2);
+        BOOST_TEST_EQ(val.size(), 2U);
 
         val.insert(val.begin(), val2.begin(), val2.end());
         BOOST_TEST(check(val, "( 123.456 \"Mah Doggie\" \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
-        BOOST_TEST_EQ(val.size(), 4);
+        BOOST_TEST_EQ(val.size(), 4U);
     }
 
     {
@@ -380,11 +380,28 @@ int main()
 
     {
         // check the tag
-        // TODO: test tags on all utree types (some are invalid and should 
-        // throw).
+        // TODO: test tags on all utree types 
         utree x;
         x.tag(123);
         BOOST_TEST_EQ(x.tag(), 123);
+
+        x = "hello world! my name is bob the builder";
+        x.tag(123);
+        BOOST_TEST_EQ(x.tag(), 123);
+
+        x.tag(456);
+        BOOST_TEST_EQ(x.tag(), 456);
+        BOOST_TEST_EQ(x.size(), 39U);
+        BOOST_TEST(check(x, "\"hello world! my name is bob the builder\""));
+
+        x = "hello";
+        x.tag(456);
+        BOOST_TEST_EQ(x.tag(), 456);
+
+        x.tag(789);
+        BOOST_TEST_EQ(x.tag(), 789);
+        BOOST_TEST_EQ(x.size(), 5U);
+        BOOST_TEST(check(x, "\"hello\""));
     }
 
     {
@@ -420,7 +437,7 @@ int main()
         utree alias(utree::range(i, val.end()), shallow);
 
         BOOST_TEST(check(alias, "( 2 3 4 )"));
-        BOOST_TEST_EQ(alias.size(), 3);
+        BOOST_TEST_EQ(alias.size(), 3U);
         BOOST_TEST_EQ(alias.front(), 2);
         BOOST_TEST_EQ(alias.back(), 4);
         BOOST_TEST(!alias.empty());
