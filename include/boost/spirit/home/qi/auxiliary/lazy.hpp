@@ -76,15 +76,50 @@ namespace boost { namespace spirit { namespace qi
         lazy_parser(Function const& function, Modifiers const& modifiers)
           : function(function), modifiers(modifiers) {}
 
+        template <typename Parser, typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl(Parser const& p
+          , Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr, mpl::false_) const
+        {
+            return p.parse(first, last, context, skipper, attr);
+        }
+
+        template <typename Parser, typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl(Parser const& p
+          , Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr, mpl::true_) const
+        {
+            // If DeducedAuto is false (semantic actions is present), the
+            // component's attribute is unused.
+            return p.parse(first, last, context, skipper, unused);
+        }
+
+        template <typename Parser, typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl_main(Parser const& p
+          , Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr) const
+        {
+            // If DeducedAuto is true (no semantic action), we pass the parser's
+            // attribute on to the component.
+            typedef typename traits::has_semantic_action<Parser>::type auto_rule;
+            return parse_impl(p, first, last, context, skipper, attr, auto_rule());
+        }
+
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
           , Attribute& attr) const
         {
-            return compile<qi::domain>(function(unused, context)
+            return parse_impl_main(compile<qi::domain>(function(unused, context)
                 , qi_modify()(tag::lazy_eval(), modifiers))
-                    .parse(first, last, context, skipper, attr);
+                , first, last, context, skipper, attr);
         }
 
         template <typename Context>
@@ -103,7 +138,7 @@ namespace boost { namespace spirit { namespace qi
 
 
     template <typename Function, typename Subject, typename Modifiers>
-    struct lazy_directive 
+    struct lazy_directive
         : unary_parser<lazy_directive<Function, Subject, Modifiers> >
     {
         typedef Subject subject_type;
@@ -149,18 +184,53 @@ namespace boost { namespace spirit { namespace qi
           , Modifiers const& modifiers)
           : function(function), subject(subject), modifiers(modifiers) {}
 
+        template <typename Parser, typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl(Parser const& p
+          , Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr, mpl::false_) const
+        {
+            return p.parse(first, last, context, skipper, attr);
+        }
+
+        template <typename Parser, typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl(Parser const& p
+          , Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr, mpl::true_) const
+        {
+            // If DeducedAuto is false (semantic actions is present), the
+            // component's attribute is unused.
+            return p.parse(first, last, context, skipper, unused);
+        }
+
+        template <typename Parser, typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl_main(Parser const& p
+          , Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr) const
+        {
+            // If DeducedAuto is true (no semantic action), we pass the parser's
+            // attribute on to the component.
+            typedef typename traits::has_semantic_action<Parser>::type auto_rule;
+            return parse_impl(p, first, last, context, skipper, attr, auto_rule());
+        }
+
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
           , Attribute& attr) const
         {
-            return compile<qi::domain>(
+            return parse_impl_main(compile<qi::domain>(
                 proto::make_expr<proto::tag::subscript>(
                     function(unused, context)
                   , subject
                 ), qi_modify()(tag::lazy_eval(), modifiers))
-                .parse(first, last, context, skipper, attr);
+                , first, last, context, skipper, attr);
         }
 
         template <typename Context>
@@ -230,7 +300,7 @@ namespace boost { namespace spirit { namespace traits
       : handles_container<
           typename qi::lazy_parser<Actor, Modifiers>::template
               attribute<Context, Iterator>::parser_type
-        , Attribute, Context, Iterator> 
+        , Attribute, Context, Iterator>
     {};
 
     template <typename Subject, typename Actor, typename Modifiers
@@ -241,7 +311,7 @@ namespace boost { namespace spirit { namespace traits
       : handles_container<
           typename qi::lazy_directive<Actor, Subject, Modifiers>::template
               attribute<Context, Iterator>::parser_type
-        , Attribute, Context, Iterator> 
+        , Attribute, Context, Iterator>
     {};
 }}}
 
