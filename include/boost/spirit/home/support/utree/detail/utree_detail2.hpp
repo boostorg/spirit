@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c)      2011 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -642,7 +643,13 @@ namespace boost { namespace spirit
     }
 
     template <typename F>
-    utree stored_function<F>::operator()(scope const& env) const
+    utree stored_function<F>::operator()(utree const& env) const
+    {
+        return f(env);
+    }
+    
+    template <typename F>
+    utree stored_function<F>::operator()(utree& env) 
     {
         return f(env);
     }
@@ -666,7 +673,13 @@ namespace boost { namespace spirit
     }
 
     template <typename F>
-    utree referenced_function<F>::operator()(scope const& env) const
+    utree referenced_function<F>::operator()(utree const& env) const
+    {
+        return f(env);
+    }
+    
+    template <typename F>
+    utree referenced_function<F>::operator()(utree& env)
     {
         return f(env);
     }
@@ -770,22 +783,20 @@ namespace boost { namespace spirit
         set_type(type::any_type);
     }
 
-    template <typename F>
-    inline utree::utree(stored_function<F> const& pf_)
+    inline utree::utree(function_base const& pf_)
     {
         s.initialize();
-        pf = new stored_function<F>(pf_);
+        pf = pf_.clone();
         set_type(type::function_type);
     }
     
-    template <typename F>
-    inline utree::utree(referenced_function<F> const& pf_)
+    inline utree::utree(function_base* pf_)
     {
         s.initialize();
-        pf = new referenced_function<F>(pf_);
+        pf = pf_;
         set_type(type::function_type);
     }
-
+    
     template <typename Iter>
     inline utree::utree(boost::iterator_range<Iter> r)
     {
@@ -928,25 +939,23 @@ namespace boost { namespace spirit
         set_type(type::any_type);
         return *this;
     }
-
-    template <typename F>
-    utree& utree::operator=(stored_function<F> const& pf_)
+    
+    utree& utree::operator=(function_base const& pf_)
     {
         free();
-        pf = new stored_function<F>(pf_);
+        pf = pf_.clone();
+        set_type(type::function_type);
+        return *this;
+    }
+
+    utree& utree::operator=(function_base* pf_)
+    {
+        free();
+        pf = pf_;
         set_type(type::function_type);
         return *this;
     }
     
-    template <typename F>
-    utree& utree::operator=(referenced_function<F> const& pf_)
-    {
-        free();
-        pf = new referenced_function<F>(pf_);
-        set_type(type::function_type);
-        return *this;
-    }
-
     template <typename Iter>
     inline utree& utree::operator=(boost::iterator_range<Iter> r)
     {
@@ -1566,13 +1575,32 @@ namespace boost { namespace spirit
         s.tag(tag);
     }
 
-    inline utree utree::eval(scope const& env) const
+    inline utree utree::eval(utree const& env) const
     {
         if (get_type() != type::function_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception(
                     "eval() called on non-function utree type", get_type()));
         return (*pf)(env);
+    }
+    
+    inline utree utree::eval(utree& env) const
+    {
+        if (get_type() != type::function_type)
+            BOOST_THROW_EXCEPTION(
+                bad_type_exception(
+                    "eval() called on non-function utree type", get_type()));
+        return (*pf)(env);
+    }
+    
+    inline utree utree::operator() (utree const& env) const
+    {
+        return eval(env);
+    }
+    
+    inline utree utree::operator() (utree& env) const
+    {
+        return eval(env);
     }
 }}
 

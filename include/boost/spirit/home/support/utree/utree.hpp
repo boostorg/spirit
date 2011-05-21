@@ -24,6 +24,8 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/is_polymorphic.hpp>
+#include <boost/shared_array.hpp>
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/ref.hpp>
@@ -67,7 +69,7 @@ namespace boost { namespace spirit
             any_type,           // A pointer or reference to any C++ type. 
             function_type,      // A utree holding a stored_function<F> object,
                                 // where F is an unary function object taking a 
-                                // scope as it's parameter and returning a
+                                // utree as it's parameter and returning a
                                 // utree.
 
             // numeric atoms
@@ -222,13 +224,13 @@ namespace boost { namespace spirit
     // Our function type
     ///////////////////////////////////////////////////////////////////////////
     class utree;
-    class scope;
 
     //[utree_function_object_interface
     struct function_base
     {
         virtual ~function_base() {}
-        virtual utree operator()(scope const& env) const = 0;
+        virtual utree operator()(utree const& env) const = 0;
+        virtual utree operator()(utree& env) = 0;
 
         // Calling f.clone() must return a newly allocated function_base 
         // instance that is equal to f.
@@ -241,7 +243,8 @@ namespace boost { namespace spirit
         F f;
         stored_function(F f = F());
         virtual ~stored_function();
-        virtual utree operator()(scope const& env) const;
+        virtual utree operator()(utree const& env) const;
+        virtual utree operator()(utree& env);
         virtual function_base* clone() const;
     };
     
@@ -251,7 +254,8 @@ namespace boost { namespace spirit
         F& f;
         referenced_function(F& f);
         virtual ~referenced_function();
-        virtual utree operator()(scope const& env) const;
+        virtual utree operator()(utree const& env) const;
+        virtual utree operator()(utree& env);
         virtual function_base* clone() const;
     };
     //]
@@ -416,20 +420,13 @@ namespace boost { namespace spirit
         utree(boost::iterator_range<Iterator>);
         template <class Iterator>
         reference operator=(boost::iterator_range<Iterator>);
-
-        // This initializes a `function_type` node, which can store an 
-        // arbitrary function or function object.
-        template <class F>
-        utree(stored_function<F> const&);
-        template <class F>
-        reference operator=(stored_function<F> const&);
-       
-        // This initializes a `function_type` node, storing by reference
-        // instead of copying the function object. 
-        template <class F>
-        utree(referenced_function<F> const&);
-        template <class F>
-        reference operator=(referenced_function<F> const&);
+        
+        // This initializes a `function_type` node from a polymorphic function
+        // object pointer (takes ownership) or reference. 
+        utree(function_base const&);
+        reference operator=(function_base const&);
+        utree(function_base*);
+        reference operator=(function_base*);
 
         // This initializes either a `string_type`, a `symbol_type`, or a 
         // `binary_type` node (depending on the template parameter `type_`), 
@@ -554,8 +551,11 @@ namespace boost { namespace spirit
         short tag() const;
         void tag(short);
 
-        utree eval(scope const&) const;
+        utree eval(utree const&) const;
+        utree eval(utree&) const;
 
+        utree operator() (utree const&) const;
+        utree operator() (utree&) const;
     //<-
     protected:
         void ensure_list_type(char const* failed_in = "ensure_list_type()");
@@ -566,7 +566,6 @@ namespace boost { namespace spirit
         template <class UTreeX, class UTreeY>
         friend struct detail::visit_impl;
         friend struct detail::index_impl;
-        friend struct detail::assign_impl;
 
         type::info get_type() const;
         void set_type(type::info);
@@ -615,42 +614,6 @@ namespace boost { namespace spirit
     utree::invalid_type const invalid = {};
     utree::nil_type const nil = {};
     utree::list_type const empty_list = utree::list_type();
-
-    ///////////////////////////////////////////////////////////////////////////
-    //[utree_scope
-    class scope : public boost::iterator_range<utree*> 
-    {
-    public:
-        scope(utree* first = 0,
-              utree* last = 0,
-              scope const* parent = 0) 
-              //<-
-              : boost::iterator_range<utree*>(first, last)
-              , parent(parent)
-              , depth(parent? parent->depth + 1 : 0) {}
-              //->
-
-        scope const* outer() const 
-        //<-
-        {
-            return parent;
-        }
-        //->
-
-        std::size_t level() const 
-        //<-
-        {
-            return depth;
-        }
-        //->
-
-      //<-  
-      private:
-        scope const* parent;
-        std::size_t depth;
-      //->
-    };
-    //]
 }}
 
 #if defined(BOOST_MSVC)

@@ -32,7 +32,7 @@ inline bool check(boost::spirit::utree const& val, std::string expected)
 
 struct one_two_three
 {
-    boost::spirit::utree operator()(boost::spirit::scope) const
+    boost::spirit::utree operator()(boost::spirit::utree) const
     {
         return boost::spirit::utree(123);
     }
@@ -40,7 +40,7 @@ struct one_two_three
 
 struct this_
 {
-    boost::spirit::utree operator()(boost::spirit::scope) const
+    boost::spirit::utree operator()(boost::spirit::utree) const
     {
         return boost::spirit::utree(static_cast<int>(boost::hash_value(this)));
     }
@@ -407,20 +407,18 @@ int main()
     {
         // test functions
         using boost::spirit::stored_function;
-        using boost::spirit::scope;
 
         utree f = stored_function<one_two_three>();
-        f.eval(scope());
+        f.eval(utree());
     }
     
     {
         // test referenced functions
         using boost::spirit::referenced_function;
-        using boost::spirit::scope;
 
         one_two_three f;
         utree ff = referenced_function<one_two_three>(f);
-        BOOST_TEST_EQ(ff.eval(scope()), f(scope()));
+        BOOST_TEST_EQ(ff.eval(utree()), f(utree()));
     }
 
     {
