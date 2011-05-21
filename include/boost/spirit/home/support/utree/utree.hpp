@@ -24,8 +24,6 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/is_polymorphic.hpp>
-#include <boost/shared_array.hpp>
-#include <boost/enable_shared_from_this.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/ref.hpp>
