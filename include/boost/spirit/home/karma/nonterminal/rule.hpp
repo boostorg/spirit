@@ -30,6 +30,7 @@
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>
 #include <boost/spirit/home/support/nonterminal/extract_param.hpp>
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
