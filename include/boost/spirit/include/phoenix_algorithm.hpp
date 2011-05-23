@@ -12,7 +12,7 @@
 #ifndef BOOST_SPIRIT_USE_PHOENIX_V3
 #include <boost/spirit/home/phoenix/algorithm.hpp>
 #else
-#include <boost/phoenix/algorithm.hpp>
+#include <boost/phoenix/stl/algorithm.hpp>
 #endif
 
 #endif
