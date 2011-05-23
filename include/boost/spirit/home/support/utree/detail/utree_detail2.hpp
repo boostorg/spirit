@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace detail
     {
         unsigned const size = l-f;
         char* str;
-        if (size < small_string_size)
+        if (size < max_string_len)
         {
             // if it fits, store it in-situ; small_string_size minus the length
             // of the string is placed in buff[small_string_size - 1]
