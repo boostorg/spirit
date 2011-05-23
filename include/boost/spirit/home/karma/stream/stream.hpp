@@ -229,7 +229,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const&)
+          , Attribute const&) const
         {
             typedef karma::detail::iterator_sink<
                 OutputIterator, Char, CharEncoding, Tag
@@ -251,7 +251,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(
             karma::detail::output_iterator<
                 karma::ostream_iterator<T1, Char, Traits>, Properties
-            >& sink, Context&, Delimiter const& d, Attribute const&)
+            >& sink, Context&, Delimiter const& d, Attribute const&) const
         {
             typedef karma::detail::output_iterator<
                 karma::ostream_iterator<T1, Char, Traits>, Properties
