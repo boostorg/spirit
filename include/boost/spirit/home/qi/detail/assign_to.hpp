@@ -68,7 +68,9 @@ namespace boost { namespace spirit { namespace traits
         call(Iterator const& first, Iterator const& last
           , boost::optional<Attribute>& attr)
         {
-            attr = Attribute(first, last);
+            Attribute val;
+            assign_to(first, last, val);
+            attr = val;
         }
     };
 
