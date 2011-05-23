@@ -5,6 +5,9 @@
 
 // compilation test only
 
+#include <boost/config/warning_disable.hpp>
+#include <boost/detail/lightweight_test.hpp>
+
 #include <string>
 #include <vector>
 
@@ -12,6 +15,10 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 
 #include <boost/variant.hpp>
+
+#include "test.hpp"
+
+using namespace spirit_test;
 
 //////////////////////////////////////////////////////////////////////////////
 struct ast; // Forward declaration
@@ -38,9 +45,21 @@ int main()
 {
     namespace qi = boost::spirit::qi;
 
-    qi::rule<char const*, ast()> num_expr;
-    num_expr = (*(qi::char_ >> num_expr))[ qi::_1 ];
+    {
+        qi::rule<char const*, ast()> num_expr;
+        num_expr = (*(qi::char_ >> num_expr))[ qi::_1 ];
+    }
 
-    return 0;
+// doesn't currently work
+//     {
+//         qi::rule<char const*, std::string()> str = "abc";
+//         qi::rule<char const*, std::string()> r = 
+//             '"' >> *('\\' >> qi::char_ | str) >> "'";
+// 
+//         std::string s;
+//         BOOST_TEST(test_attr("\"abc\\a\"", r, s) && s == "abca");
+//     }
+
+    return boost::report_errors();
 }
 
