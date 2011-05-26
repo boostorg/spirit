@@ -1302,16 +1302,20 @@ namespace boost { namespace spirit
             return p->front();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.first != 0);
+            if (!r.first)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("front() called on empty utree range"));
             return r.first->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.first == 0)
+        if (get_type() != type::list_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("front() called on non-list utree type",
-                     get_type()));
+                    ("front() called on non-list utree type", get_type()));
+        else if (!l.first)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("front() called on empty utree list"));
 
         return l.first->val;
     }
@@ -1322,16 +1326,20 @@ namespace boost { namespace spirit
             return p->back();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.last != 0);
+            if (!r.last)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("back() called on empty utree range"));
             return r.last->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.last == 0)
+        if (get_type() != type::list_type) 
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("back() called on non-list utree type",
-                     get_type()));
+                    ("back() called on non-list utree type", get_type()));
+        else if (!l.last)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("back() called on empty utree list"));
 
         return l.last->val;
     }
@@ -1342,16 +1350,20 @@ namespace boost { namespace spirit
             return ((utree const*)p)->front();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.first != 0);
+            if (!r.first)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("front() called on empty utree range"));
             return r.first->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.first == 0)
+        if (get_type() != type::list_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("front() called on non-list utree type",
-                     get_type()));
+                    ("front() called on non-list utree type", get_type()));
+        else if (!l.first)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("front() called on empty utree list"));
 
         return l.first->val;
     }
@@ -1362,16 +1374,20 @@ namespace boost { namespace spirit
             return ((utree const*)p)->back();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.last != 0);
+            if (!r.last)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("back() called on empty utree range"));
             return r.last->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.last == 0)
+        if (get_type() != type::list_type) 
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("back() called on non-list utree type",
-                     get_type()));
+                    ("back() called on non-list utree type", get_type()));
+        else if (!l.last)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("back() called on empty utree list"));
 
         return l.last->val;
     }

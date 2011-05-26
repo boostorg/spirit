@@ -48,6 +48,11 @@ namespace boost { namespace spirit
        precondition is violated as the `utree` instance holds some other type.
     */
     struct bad_type_exception /*: utree_exception*/;
+
+    /*`The `empty_exception` is thrown whenever a precondition of a list
+       or range utree method is violated due to the list or range being empty. 
+    */
+    struct empty_exception /*: utree_exception*/;
     //]
 
     //[utree_types
@@ -137,8 +142,20 @@ namespace boost { namespace spirit
 
         virtual ~bad_type_exception() throw() {}
 
-        virtual const char* what() const throw()
+        virtual char const* what() const throw()
         { return msg.c_str(); }
+    };
+    
+    struct empty_exception : utree_exception
+    {
+        char const* msg;
+
+        empty_exception(char const* error) : msg(error) {}
+        
+        virtual ~empty_exception() throw() {}
+
+        virtual char const* what() const throw()
+        { return msg; }
     };
 
     ///////////////////////////////////////////////////////////////////////////
