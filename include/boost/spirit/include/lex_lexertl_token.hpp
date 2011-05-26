@@ -6,13 +6,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_PHOENIX_ALGORITHM
-#define BOOST_SPIRIT_INCLUDE_PHOENIX_ALGORITHM
+#ifndef BOOST_SPIRIT_INCLUDE_LEX_LEXERTL_TOKEN
+#define BOOST_SPIRIT_INCLUDE_LEX_LEXERTL_TOKEN
 
-#ifndef BOOST_SPIRIT_USE_PHOENIX_V3
-#include <boost/spirit/home/phoenix/algorithm.hpp>
-#else
-#include <boost/phoenix/stl/algorithm.hpp>
+#if defined(_MSC_VER)
+#pragma once
 #endif
+
+#include <boost/spirit/home/lex/lexer/lexertl/token.hpp>
 
 #endif

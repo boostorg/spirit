@@ -12,18 +12,16 @@
 
 [section:utree The utree data structure]
 
-The `utree` data structure is a generic, hierarchical, and dynamic data 
-structure that can represent abstract syntax trees. It's well integrated with 
-__qi__ and __karma__. It can be passed as an attribute while parsing almost any
-grammars. At the same time, it can be used as an attribute to generate output 
-from.
+`utree` is a dynamically-typed hierarchical data structure that can represent
+abstract syntax trees. It's well integrated with __qi__ and __karma__. `utree`
+can be passed as an attribute to almost any grammar. `utree`'s type system is
+implemented through the use of a discriminated union and type punning.
+
+`utree` has a minimal memory footprint. The data structure size is 16 bytes on a
+32-bit platform, and 32 bytes on 64-bit a platform (`4*sizeof(void*)`). Being a
+container of itself, it can represent tree structures.
 
 [utree_types]
-
-[note utree has minimal memory footprint. The data structure size is
-16 bytes on a 32-bit platform, and 32 bytes on 64-bit a platform 
-(`4*sizeof(void*)`). Being a container of itself, it can represent tree 
-structures.]
 
 The UTF-8 string, UTF-8 symbol, and binary data types are internally stored 
 either directly as the node data (small string optimization applied), or they 

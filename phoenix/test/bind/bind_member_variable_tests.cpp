@@ -86,18 +86,18 @@ struct add_const_pointer
 int
 main()
 {
-    write_test<test::x>(identity());
-    write_test<test::x>(add_pointer());
-    write_test<test::xx>(identity());
-    write_test<test::xx>(add_pointer());
+    write_test<test::x>(::identity());
+    write_test<test::x>(::add_pointer());
+    write_test<test::xx>(::identity());
+    write_test<test::xx>(::add_pointer());
 
-    read_test<test::x>(identity());
+    read_test<test::x>(::identity());
     //read_test<test::x>(constify()); // this fails because of capture by value.
-    read_test<test::x>(add_pointer());
+    read_test<test::x>(::add_pointer());
     read_test<test::x>(add_const_pointer());
-    read_test<test::xx>(identity());
+    read_test<test::xx>(::identity());
     //read_test<test::xx>(constify());// this fails because of capture by value.
-    read_test<test::xx>(add_pointer());
+    read_test<test::xx>(::add_pointer());
     read_test<test::xx>(add_const_pointer());
     return boost::report_errors();
 }

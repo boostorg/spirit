@@ -246,7 +246,7 @@ int main()
                              at_c<0>(v[1]) == 3 && at_c<1>(v[1]) == 4.0);
     }
 
-// doesn't work yet
+// doesn't currently work
 //     {
 //         std::vector<std::vector<char> > v2;
 //         BOOST_TEST(test_attr("ab1cd123", *(alpha >> alpha | +digit), v2) &&

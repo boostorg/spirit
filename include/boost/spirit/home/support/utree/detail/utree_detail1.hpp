@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c)      2011 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +17,6 @@ namespace boost { namespace spirit { namespace detail
     struct visit_impl;
 
     struct index_impl;
-    struct assign_impl;
 
     ///////////////////////////////////////////////////////////////////////////
     // Our POD double linked list. Straightforward implementation.
@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace detail
             small_string_size = buff_size-sizeof(char);
 
         static std::size_t const
-            max_string_len = small_string_size - 1;
+            max_string_len = small_string_size - 3;
 
         struct heap_store
         {

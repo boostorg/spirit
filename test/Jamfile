@@ -254,20 +254,24 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
     ###########################################################################
     test-suite spirit_v2/lex :
 
+     [ run lex/auto_switch_lexerstate.cpp    : : : : lex_auto_switch_lexerstate ]
+     [ run lex/dedent_handling_phoenix.cpp   : : : : lex_dedent_handling_phoenix ]
+     [ run lex/id_type_enum.cpp              : : : : lex_id_type_enum ]
      [ run lex/lexertl1.cpp                  : : : : lex_lexertl1 ]
      [ run lex/lexertl2.cpp                  : : : : lex_lexertl2 ]
      [ run lex/lexertl3.cpp                  : : : : lex_lexertl3 ]
      [ run lex/lexertl4.cpp                  : : : : lex_lexertl4 ]
      [ run lex/lexertl5.cpp                  : : : : lex_lexertl5 ]
-     [ run lex/state_switcher.cpp            : : : : lex_state_switcher ]
      [ run lex/lexer_state_switcher.cpp      : : : : lex_lexer_state_switcher ]
-     [ run lex/set_token_value.cpp           : : : : lex_set_token_value ]
-     [ run lex/dedent_handling_phoenix.cpp   : : : : lex_dedent_handling_phoenix ]
-     [ run lex/set_token_value_phoenix.cpp   : : : : lex_set_token_value_phoenix ]
      [ run lex/semantic_actions.cpp          : : : : lex_semantic_actions ]
-     [ run lex/auto_switch_lexerstate.cpp    : : : : lex_auto_switch_lexerstate ]
-     [ run lex/id_type_enum.cpp              : : : : lex_id_type_enum ]
+     [ run lex/set_token_value.cpp           : : : : lex_set_token_value ]
+     [ run lex/set_token_value_phoenix.cpp   : : : : lex_set_token_value_phoenix ]
+     [ run lex/state_switcher.cpp            : : : : lex_state_switcher ]
      [ run lex/string_token_id.cpp           : : : : lex_string_token_id ]
+     [ run lex/token_iterpair.cpp            : : : : lex_token_iterpair ]
+     [ run lex/token_moretypes.cpp           : : : : lex_token_moretypes ]
+     [ run lex/token_omit.cpp                : : : : lex_token_omit ]
+     [ run lex/token_onetype.cpp             : : : : lex_token_onetype ]
 
     ;
 

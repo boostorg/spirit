@@ -13,6 +13,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/directive/as_string.hpp>
+#include <boost/spirit/home/qi/directive/as.hpp>
 
 #endif

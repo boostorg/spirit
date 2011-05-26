@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c)      2011 Bryce Lelbach
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -43,15 +44,11 @@ namespace boost { namespace spirit { namespace detail
 
     inline short fast_string::tag() const
     {
-        // warning the tag is not allowed for fast_string!!! it's only
-        // placed here to avoid excess padding.
         return (int(buff[small_string_size-2]) << 8) + (unsigned char)buff[small_string_size-1];
     }
 
     inline void fast_string::tag(short tag)
     {
-        // warning the tag is not allowed for fast_string!!! it's only
-        // placed here to avoid excess padding.
         buff[small_string_size-2] = tag >> 8;
         buff[small_string_size-1] = tag & 0xff;
     }
@@ -66,7 +63,7 @@ namespace boost { namespace spirit { namespace detail
         if (is_heap_allocated())
             return heap.size;
         else
-            return max_string_len - buff[small_string_size - 1];
+            return max_string_len - buff[max_string_len];
     }
 
     inline char const* fast_string::str() const
@@ -82,12 +79,12 @@ namespace boost { namespace spirit { namespace detail
     {
         unsigned const size = l-f;
         char* str;
-        if (size < small_string_size)
+        if (size < max_string_len)
         {
             // if it fits, store it in-situ; small_string_size minus the length
             // of the string is placed in buff[small_string_size - 1]
             str = buff;
-            buff[small_string_size - 1] = static_cast<char>(max_string_len - size);
+            buff[max_string_len] = static_cast<char>(max_string_len - size);
             info() &= ~0x1;
         }
         else
@@ -646,7 +643,13 @@ namespace boost { namespace spirit
     }
 
     template <typename F>
-    utree stored_function<F>::operator()(scope const& env) const
+    utree stored_function<F>::operator()(utree const& env) const
+    {
+        return f(env);
+    }
+    
+    template <typename F>
+    utree stored_function<F>::operator()(utree& env) 
     {
         return f(env);
     }
@@ -670,7 +673,13 @@ namespace boost { namespace spirit
     }
 
     template <typename F>
-    utree referenced_function<F>::operator()(scope const& env) const
+    utree referenced_function<F>::operator()(utree const& env) const
+    {
+        return f(env);
+    }
+    
+    template <typename F>
+    utree referenced_function<F>::operator()(utree& env)
     {
         return f(env);
     }
@@ -774,22 +783,20 @@ namespace boost { namespace spirit
         set_type(type::any_type);
     }
 
-    template <typename F>
-    inline utree::utree(stored_function<F> const& pf_)
+    inline utree::utree(function_base const& pf_)
     {
         s.initialize();
-        pf = new stored_function<F>(pf_);
+        pf = pf_.clone();
         set_type(type::function_type);
     }
     
-    template <typename F>
-    inline utree::utree(referenced_function<F> const& pf_)
+    inline utree::utree(function_base* pf_)
     {
         s.initialize();
-        pf = new referenced_function<F>(pf_);
+        pf = pf_;
         set_type(type::function_type);
     }
-
+    
     template <typename Iter>
     inline utree::utree(boost::iterator_range<Iter> r)
     {
@@ -932,25 +939,23 @@ namespace boost { namespace spirit
         set_type(type::any_type);
         return *this;
     }
-
-    template <typename F>
-    utree& utree::operator=(stored_function<F> const& pf_)
+    
+    utree& utree::operator=(function_base const& pf_)
     {
         free();
-        pf = new stored_function<F>(pf_);
+        pf = pf_.clone();
+        set_type(type::function_type);
+        return *this;
+    }
+
+    utree& utree::operator=(function_base* pf_)
+    {
+        free();
+        pf = pf_;
         set_type(type::function_type);
         return *this;
     }
     
-    template <typename F>
-    utree& utree::operator=(referenced_function<F> const& pf_)
-    {
-        free();
-        pf = new referenced_function<F>(pf_);
-        set_type(type::function_type);
-        return *this;
-    }
-
     template <typename Iter>
     inline utree& utree::operator=(boost::iterator_range<Iter> r)
     {
@@ -1265,10 +1270,22 @@ namespace boost { namespace spirit
         if (t == type::list_type)
             return l.size;
 
+        if (t == type::string_type)
+            return s.size();
+
+        if (t == type::symbol_type)
+            return s.size();
+        
+        if (t == type::binary_type)
+            return s.size();
+        
+        if (t == type::string_range_type)
+            return sr.last - sr.first;
+
         if (t != type::nil_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("size() called on non-list utree type",
+                    ("size() called on non-list and non-string utree type",
                      get_type()));
 
         return 0;
@@ -1285,16 +1302,20 @@ namespace boost { namespace spirit
             return p->front();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.first != 0);
+            if (!r.first)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("front() called on empty utree range"));
             return r.first->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.first == 0)
+        if (get_type() != type::list_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("front() called on non-list utree type",
-                     get_type()));
+                    ("front() called on non-list utree type", get_type()));
+        else if (!l.first)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("front() called on empty utree list"));
 
         return l.first->val;
     }
@@ -1305,16 +1326,20 @@ namespace boost { namespace spirit
             return p->back();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.last != 0);
+            if (!r.last)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("back() called on empty utree range"));
             return r.last->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.last == 0)
+        if (get_type() != type::list_type) 
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("back() called on non-list utree type",
-                     get_type()));
+                    ("back() called on non-list utree type", get_type()));
+        else if (!l.last)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("back() called on empty utree list"));
 
         return l.last->val;
     }
@@ -1325,16 +1350,20 @@ namespace boost { namespace spirit
             return ((utree const*)p)->front();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.first != 0);
+            if (!r.first)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("front() called on empty utree range"));
             return r.first->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.first == 0)
+        if (get_type() != type::list_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("front() called on non-list utree type",
-                     get_type()));
+                    ("front() called on non-list utree type", get_type()));
+        else if (!l.first)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("front() called on empty utree list"));
 
         return l.first->val;
     }
@@ -1345,16 +1374,20 @@ namespace boost { namespace spirit
             return ((utree const*)p)->back();
         if (get_type() == type::range_type)
         {
-            BOOST_ASSERT(r.last != 0);
+            if (!r.last)
+                BOOST_THROW_EXCEPTION(
+                    empty_exception("back() called on empty utree range"));
             return r.last->val;
         }
 
         // otherwise...
-        if (get_type() != type::list_type || l.last == 0)
+        if (get_type() != type::list_type) 
             BOOST_THROW_EXCEPTION(
                 bad_type_exception
-                    ("back() called on non-list utree type",
-                     get_type()));
+                    ("back() called on non-list utree type", get_type()));
+        else if (!l.last)
+            BOOST_THROW_EXCEPTION(
+                empty_exception("back() called on empty utree list"));
 
         return l.last->val;
     }
@@ -1462,6 +1495,7 @@ namespace boost { namespace spirit
             case type::symbol_type:
             case type::binary_type:
                 s.copy(other.s);
+                s.tag(other.s.tag());
                 break;
             case type::list_type:
                 l.copy(other.l);
@@ -1549,45 +1583,40 @@ namespace boost { namespace spirit
 
     inline short utree::tag() const
     {
-        switch (get_type())
-        {
-            case type::string_type:
-            case type::string_range_type:
-            case type::binary_type:
-            case type::symbol_type:
-                BOOST_THROW_EXCEPTION(
-                    bad_type_exception(
-                        "tag() called on string utree type", get_type()));
-            default:
-              break;
-        }
         return s.tag();
     }
 
     inline void utree::tag(short tag)
     {
-        switch (get_type())
-        {
-            case type::string_type:
-            case type::string_range_type:
-            case type::binary_type:
-            case type::symbol_type:
-                BOOST_THROW_EXCEPTION(
-                    bad_type_exception(
-                        "tag() called on string utree type", get_type()));
-            default:
-              break;
-        }
         s.tag(tag);
     }
 
-    inline utree utree::eval(scope const& env) const
+    inline utree utree::eval(utree const& env) const
     {
         if (get_type() != type::function_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception(
                     "eval() called on non-function utree type", get_type()));
         return (*pf)(env);
+    }
+    
+    inline utree utree::eval(utree& env) const
+    {
+        if (get_type() != type::function_type)
+            BOOST_THROW_EXCEPTION(
+                bad_type_exception(
+                    "eval() called on non-function utree type", get_type()));
+        return (*pf)(env);
+    }
+    
+    inline utree utree::operator() (utree const& env) const
+    {
+        return eval(env);
+    }
+    
+    inline utree utree::operator() (utree& env) const
+    {
+        return eval(env);
     }
 }}
 

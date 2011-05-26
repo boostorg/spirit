@@ -98,6 +98,15 @@ any of Spirit's include files):
   using `lex::char_` and `lex::string`. Both primitives now accept a second
   parameter which will be interpreted as the requested token id for any token
   generated from this definition.
+* Added a new token type `lex::lexertl::position_token<>`, which is essentially 
+  plup-in compatible with the existing `lex::lexertl::token<>` class. However
+  it additionally stores the pair of iterators pointing to the underlying 
+  matched input sequence as an iterator_range.
+
+[heading Bug Fixes in Lex]
+
+* Fixed a problem with associating token definitions with all states (using 
+  `"*"` as the state name) when actions were attached to them.
 
 [heading Making Stuff Work]
 
