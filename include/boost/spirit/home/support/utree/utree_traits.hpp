@@ -322,11 +322,35 @@ namespace boost { namespace spirit { namespace traits
                 push_back(attr, val);
         }
     };
+    
+    template <>
+    struct assign_to_container_from_value<utree, binary_string_type>
+    {
+        static void call(binary_string_type const& val, utree& attr)
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
 
     template<>
     struct assign_to_container_from_value<utree, utf8_symbol_range_type> 
     {
         static void call (utf8_symbol_range_type const& val, utree& attr) 
+        {
+            if (attr.empty())
+                attr = val;
+            else
+                push_back(attr, val);
+        }
+    };
+    
+    template <>
+    struct assign_to_container_from_value<utree, binary_range_type>
+    {
+        static void call(binary_range_type const& val, utree& attr)
         {
             if (attr.empty())
                 attr = val;
@@ -449,7 +473,7 @@ namespace boost { namespace spirit { namespace traits
     struct attribute_as<utf8_symbol_range_type, utree>
       : detail::attribute_as_symbol_type 
     {};
-
+    
     template <typename Attribute>
     struct attribute_as<Attribute, utree::list_type>
       : attribute_as<Attribute, utree>
