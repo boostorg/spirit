@@ -18,6 +18,7 @@
 #include <exception>
 #if !defined(BOOST_SPIRIT_DISABLE_UTREE_IO)
   #include <ios>
+  #include <boost/io/ios_state.hpp>
 #endif
 #include <boost/spirit/home/support/utree/utree.hpp>
 #include <boost/preprocessor/cat.hpp>
@@ -224,6 +225,7 @@ namespace boost { namespace spirit
 
         void operator()(binary_range_type const& b) const
         {
+            boost::io::ios_all_saver saver(out);
             out << "#";
             out.width(2);
             out.fill('0');
@@ -231,7 +233,7 @@ namespace boost { namespace spirit
             typedef binary_range_type::const_iterator iterator;
             for (iterator i = b.begin(); i != b.end(); ++i)
                 out << std::hex << int((unsigned char)*i);
-            out << std::dec << "# ";
+            out << "# ";
         }
 
         void operator()(utf8_string_range_type const& str) const
