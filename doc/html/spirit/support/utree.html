@@ -27,12 +27,19 @@
 <a name="spirit.support.utree"></a><a class="link" href="utree.html" title="The utree data structure">The utree data structure</a>
 </h3></div></div></div>
 <p>
-        The <code class="computeroutput"><span class="identifier">utree</span></code> data structure
-        is a generic, hierarchical, and dynamic data structure that can represent
-        abstract syntax trees. It's well integrated with <span class="emphasis"><em>Spirit.Qi</em></span>
-        and <span class="emphasis"><em>Spirit.Karma</em></span>. It can be passed as an attribute while
-        parsing almost any grammars. At the same time, it can be used as an attribute
-        to generate output from.
+        <code class="computeroutput"><span class="identifier">utree</span></code> is a dynamically-typed
+        hierarchical data structure that can represent abstract syntax trees. It's
+        well integrated with <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>.
+        <code class="computeroutput"><span class="identifier">utree</span></code> can be passed as an
+        attribute to almost any grammar. <code class="computeroutput"><span class="identifier">utree</span></code>'s
+        type system is implemented through the use of a discriminated union and type
+        punning.
+      </p>
+<p>
+        <code class="computeroutput"><span class="identifier">utree</span></code> has a minimal memory
+        footprint. The data structure size is 16 bytes on a 32-bit platform, and
+        32 bytes on 64-bit a platform (<code class="computeroutput"><span class="number">4</span><span class="special">*</span><span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">void</span><span class="special">*)</span></code>). Being
+        a container of itself, it can represent tree structures.
       </p>
 <p>
         Each instance of an <code class="computeroutput"><span class="identifier">utree</span></code>
@@ -54,7 +61,7 @@
 </span>        <span class="identifier">any_type</span><span class="special">,</span>           <span class="comment">// A pointer or reference to any C++ type. 
 </span>        <span class="identifier">function_type</span><span class="special">,</span>      <span class="comment">// A utree holding a stored_function&lt;F&gt; object,
 </span>                            <span class="comment">// where F is an unary function object taking a 
-</span>                            <span class="comment">// scope as it's parameter and returning a
+</span>                            <span class="comment">// utree as it's parameter and returning a
 </span>                            <span class="comment">// utree.
 </span>
         <span class="comment">// numeric atoms
@@ -75,17 +82,6 @@
 </pre>
 <p>
       </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          utree has minimal memory footprint. The data structure size is 16 bytes
-          on a 32-bit platform, and 32 bytes on 64-bit a platform (<code class="computeroutput"><span class="number">4</span><span class="special">*</span><span class="keyword">sizeof</span><span class="special">(</span><span class="keyword">void</span><span class="special">*)</span></code>).
-          Being a container of itself, it can represent tree structures.
-        </p></td></tr>
-</table></div>
 <p>
         The UTF-8 string, UTF-8 symbol, and binary data types are internally stored
         either directly as the node data (small string optimization applied), or
@@ -246,19 +242,12 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;);</span>
 
-<span class="comment">// This initializes a `function_type` node, which can store an 
-</span><span class="comment">// arbitrary function or function object.
-</span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="identifier">utree</span><span class="special">(</span><span class="identifier">stored_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">stored_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
-
-<span class="comment">// This initializes a `function_type` node, storing by reference
-</span><span class="comment">// instead of copying the function object. 
-</span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="identifier">utree</span><span class="special">(</span><span class="identifier">referenced_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
-<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">referenced_function</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+<span class="comment">// This initializes a `function_type` node from a polymorphic function
+</span><span class="comment">// object pointer (takes ownership) or reference. 
+</span><span class="identifier">utree</span><span class="special">(</span><span class="identifier">function_base</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">function_base</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+<span class="identifier">utree</span><span class="special">(</span><span class="identifier">function_base</span><span class="special">*);</span>
+<span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">function_base</span><span class="special">*);</span>
 
 <span class="comment">// This initializes either a `string_type`, a `symbol_type`, or a 
 </span><span class="comment">// `binary_type` node (depending on the template parameter `type_`), 
@@ -378,7 +367,8 @@
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">function_base</span>
 <span class="special">{</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">function_base</span><span class="special">()</span> <span class="special">{}</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 
     <span class="comment">// Calling f.clone() must return a newly allocated function_base 
 </span>    <span class="comment">// instance that is equal to f.
@@ -391,7 +381,8 @@
     <span class="identifier">F</span> <span class="identifier">f</span><span class="special">;</span>
     <span class="identifier">stored_function</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">F</span><span class="special">());</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">stored_function</span><span class="special">();</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">);</span>
     <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 
@@ -401,7 +392,8 @@
     <span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">;</span>
     <span class="identifier">referenced_function</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">);</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">referenced_function</span><span class="special">();</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">scope</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">);</span>
     <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
@@ -428,7 +420,18 @@
 <p>
         
 </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">bad_type_exception</span> <span class="comment">/*: utree_exception*/</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">bad_type_exception</span> <span class="comment">/*: utree_exception*/</span><span class="special">;</span></pre>
+<p>
+      </p>
+<p>
+        The <code class="computeroutput"><span class="identifier">empty_exception</span></code> is thrown
+        whenever a precondition of a list or range utree method is violated due to
+        the list or range being empty.
+      </p>
+<p>
+        
+</p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">empty_exception</span> <span class="comment">/*: utree_exception*/</span><span class="special">;</span>
 </pre>
 <p>
       </p>

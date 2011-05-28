@@ -168,11 +168,29 @@
         <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.new_features_in_lex">New Features
         in Lex</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
             Added the possibility to specify a token id while creating a token definition
             using <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">char_</span></code> and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">string</span></code>.
             Both primitives now accept a second parameter which will be interpreted
             as the requested token id for any token generated from this definition.
+          </li>
+<li class="listitem">
+            Added a new token type <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">position_token</span><span class="special">&lt;&gt;</span></code>, which is essentially plup-in
+            compatible with the existing <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;&gt;</span></code> class. However it additionally
+            stores the pair of iterators pointing to the underlying matched input
+            sequence as an iterator_range.
+          </li>
+</ul></div>
+<a name="spirit.what_s_new.spirit_2_5.bug_fixes_in_lex"></a><h5>
+<a name="spirit.what_s_new.spirit_2_5.bug_fixes_in_lex-heading"></a>
+        <a class="link" href="spirit_2_5.html#spirit.what_s_new.spirit_2_5.bug_fixes_in_lex">Bug Fixes in
+        Lex</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+            Fixed a problem with associating token definitions with all states (using
+            <code class="computeroutput"><span class="string">"*"</span></code> as the state
+            name) when actions were attached to them.
           </li></ul></div>
 <a name="spirit.what_s_new.spirit_2_5.making_stuff_work"></a><h5>
 <a name="spirit.what_s_new.spirit_2_5.making_stuff_work-heading"></a>
