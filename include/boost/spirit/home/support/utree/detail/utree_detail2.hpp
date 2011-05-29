@@ -940,7 +940,7 @@ namespace boost { namespace spirit
         return *this;
     }
     
-    utree& utree::operator=(function_base const& pf_)
+    inline utree& utree::operator=(function_base const& pf_)
     {
         free();
         pf = pf_.clone();
@@ -948,7 +948,7 @@ namespace boost { namespace spirit
         return *this;
     }
 
-    utree& utree::operator=(function_base* pf_)
+    inline utree& utree::operator=(function_base* pf_)
     {
         free();
         pf = pf_;
