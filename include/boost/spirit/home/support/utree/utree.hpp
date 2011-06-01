@@ -245,7 +245,7 @@ namespace boost { namespace spirit
     {
         virtual ~function_base() {}
         virtual utree operator()(utree const& env) const = 0;
-        virtual utree operator()(utree& env) = 0;
+        virtual utree operator()(utree& env) const = 0;
 
         // Calling f.clone() must return a newly allocated function_base 
         // instance that is equal to f.
@@ -259,7 +259,7 @@ namespace boost { namespace spirit
         stored_function(F f = F());
         virtual ~stored_function();
         virtual utree operator()(utree const& env) const;
-        virtual utree operator()(utree& env);
+        virtual utree operator()(utree& env) const;
         virtual function_base* clone() const;
     };
     
@@ -270,7 +270,7 @@ namespace boost { namespace spirit
         referenced_function(F& f);
         virtual ~referenced_function();
         virtual utree operator()(utree const& env) const;
-        virtual utree operator()(utree& env);
+        virtual utree operator()(utree& env) const;
         virtual function_base* clone() const;
     };
     //]
@@ -384,7 +384,7 @@ namespace boost { namespace spirit
 
         // This initializes a `boolean_type` node, which can hold 'true' or
         // 'false' only.
-        utree(bool);
+        explicit utree(bool);
         reference operator=(bool);
 
         // This initializes an `integer_type` node, which can hold arbitrary 
