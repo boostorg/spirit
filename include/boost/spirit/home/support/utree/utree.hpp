@@ -13,9 +13,11 @@
 #include <algorithm>
 #include <string>
 #include <iostream>
+#include <ios>
 #include <sstream>
 #include <typeinfo>
 
+#include <boost/io/ios_state.hpp>
 #include <boost/integer.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/assert.hpp>
@@ -95,6 +97,7 @@ namespace boost { namespace spirit
     // streaming operator for utree types - essential for diagnostics    
     inline std::ostream& operator<<(std::ostream& out, utree_type::info t)
     {
+        boost::io::ios_all_saver saver(out);
         switch (t) {
             case utree_type::invalid_type: { out << "invalid"; break; }
             case utree_type::nil_type: { out << "nil"; break; }
