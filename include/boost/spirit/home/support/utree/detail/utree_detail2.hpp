@@ -649,7 +649,7 @@ namespace boost { namespace spirit
     }
     
     template <typename F>
-    utree stored_function<F>::operator()(utree& env) 
+    utree stored_function<F>::operator()(utree& env) const 
     {
         return f(env);
     }
@@ -679,7 +679,7 @@ namespace boost { namespace spirit
     }
     
     template <typename F>
-    utree referenced_function<F>::operator()(utree& env)
+    utree referenced_function<F>::operator()(utree& env) const
     {
         return f(env);
     }
@@ -1593,6 +1593,9 @@ namespace boost { namespace spirit
 
     inline utree utree::eval(utree const& env) const
     {
+        if (get_type() == type::reference_type)
+            return deref().eval(env);
+
         if (get_type() != type::function_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception(
@@ -1602,6 +1605,9 @@ namespace boost { namespace spirit
     
     inline utree utree::eval(utree& env) const
     {
+        if (get_type() == type::reference_type)
+            return deref().eval(env);
+
         if (get_type() != type::function_type)
             BOOST_THROW_EXCEPTION(
                 bad_type_exception(
