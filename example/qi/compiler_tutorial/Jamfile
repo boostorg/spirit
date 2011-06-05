@@ -53,4 +53,14 @@ exe conjure :
     conjure/main.cpp
     ;
 
+exe conjure_lexer :
+    conjure_lexer/compiler.cpp
+    conjure_lexer/expression.cpp
+    conjure_lexer/function.cpp
+    conjure_lexer/lexer.cpp
+    conjure_lexer/main.cpp
+    conjure_lexer/statement.cpp
+    conjure_lexer/vm.cpp
+    ;
+
 

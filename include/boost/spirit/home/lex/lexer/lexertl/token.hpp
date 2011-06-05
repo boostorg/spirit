@@ -178,7 +178,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             if (this != &rhs) 
             {
                 id_ = rhs.id_;
-                matched_ = rhs.matched_;
+                if (is_valid()) 
+                    matched_ = rhs.matched_;
             }
             return *this;
         }
@@ -380,7 +381,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             if (this != &rhs) 
             {
                 this->base_type::operator=(static_cast<base_type const&>(rhs));
-                if (this->id_ != boost::lexer::npos && this->id_ != 0) 
+                if (this->is_valid()) 
                     value_ = rhs.value_;
             }
             return *this;

@@ -3,8 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(BOOST_SPIRIT_LEX_PLAIN_TOKEN_NOV_11_2007_0451PM)
-#define BOOST_SPIRIT_LEX_PLAIN_TOKEN_NOV_11_2007_0451PM
+#if !defined(BOOST_SPIRIT_LEX_PLAIN_RAW_TOKEN_JUN_03_2011_0853PM)
+#define BOOST_SPIRIT_LEX_PLAIN_RAW_TOKEN_JUN_03_2011_0853PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -32,45 +32,43 @@ namespace boost { namespace spirit
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
 
-    // enables token
+    // enables raw_token
     template <>
-    struct use_terminal<qi::domain, tag::token>
+    struct use_terminal<qi::domain, tag::raw_token>
       : mpl::true_ {};
 
-    // enables token(id)
+    // enables raw_token(id)
     template <typename A0>
     struct use_terminal<qi::domain
-      , terminal_ex<tag::token, fusion::vector1<A0> >
+      , terminal_ex<tag::raw_token, fusion::vector1<A0> >
     > : mpl::or_<is_integral<A0>, is_enum<A0> > {};
 
-    // enables *lazy* token(id)
+    // enables *lazy* raw_token(id)
     template <>
     struct use_lazy_terminal<
-        qi::domain, tag::token, 1
+        qi::domain, tag::raw_token, 1
     > : mpl::true_ {};
-
 }}
 
 namespace boost { namespace spirit { namespace qi
 {
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
-    using spirit::token;
+    using spirit::raw_token;
 #endif
-    using spirit::token_type;
+    using spirit::raw_token_type;
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename TokenId>
-    struct plain_token 
-      : primitive_parser<plain_token<TokenId> >
+    struct plain_raw_token 
+      : primitive_parser<plain_raw_token<TokenId> >
     {
         template <typename Context, typename Iterator>
         struct attribute
         {
-            typedef typename Iterator::base_iterator_type iterator_type;
-            typedef iterator_range<iterator_type> type;
+            typedef unused_type type;
         };
 
-        plain_token(TokenId const& id)
+        plain_raw_token(TokenId const& id)
           : id(id) {}
 
         template <typename Iterator, typename Context
@@ -113,9 +111,9 @@ namespace boost { namespace spirit { namespace qi
     // Parser generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
-    struct make_primitive<tag::token, Modifiers>
+    struct make_primitive<tag::raw_token, Modifiers>
     {
-        typedef plain_token<std::size_t> result_type;
+        typedef plain_raw_token<std::size_t> result_type;
 
         result_type operator()(unused_type, unused_type) const
         {
@@ -124,10 +122,10 @@ namespace boost { namespace spirit { namespace qi
     };
 
     template <typename Modifiers, typename TokenId>
-    struct make_primitive<terminal_ex<tag::token, fusion::vector1<TokenId> >
+    struct make_primitive<terminal_ex<tag::raw_token, fusion::vector1<TokenId> >
       , Modifiers>
     {
-        typedef plain_token<TokenId> result_type;
+        typedef plain_raw_token<TokenId> result_type;
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
@@ -141,7 +139,7 @@ namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     template<typename Idtype, typename Attr, typename Context, typename Iterator>
-    struct handles_container<qi::plain_token<Idtype>, Attr, Context, Iterator>
+    struct handles_container<qi::plain_raw_token<Idtype>, Attr, Context, Iterator>
       : mpl::true_
     {};
 }}}
