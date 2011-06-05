@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,6 +11,7 @@
 //
 //  [ JDG April 10, 2007 ]      spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
+//  [ HK June 3, 2011 ]         Adding lexer
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -17,10 +19,11 @@
 // Define this to enable debugging
 //#define BOOST_SPIRIT_QI_DEBUG
 
+#include "config.hpp"
 #include "function.hpp"
-#include "skipper.hpp"
 #include "vm.hpp"
 #include "compiler.hpp"
+#include "lexer.hpp"
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 
@@ -56,24 +59,30 @@ int main(int argc, char **argv)
         std::istream_iterator<char>(),
         std::back_inserter(source_code));
 
-    typedef std::string::const_iterator iterator_type;
-    iterator_type iter = source_code.begin();
-    iterator_type end = source_code.end();
+    typedef std::string::const_iterator base_iterator_type;
+    typedef client::lexer::conjure_tokens<base_iterator_type> lexer_type;
+    typedef lexer_type::iterator_type iterator_type;
+
+    lexer_type lexer;                           // Our lexer
+
+    base_iterator_type first = source_code.begin();
+    base_iterator_type last = source_code.end();
+
+    iterator_type iter = lexer.begin(first, last);
+    iterator_type end = lexer.end();
 
     client::vmachine vm;                        // Our virtual machine
     client::ast::function_list ast;             // Our AST
 
-    client::error_handler<iterator_type>
-        error_handler(iter, end);               // Our error handler
-    client::parser::function<iterator_type>
-        function(error_handler);                // Our parser
-    client::parser::skipper<iterator_type>
-        skipper;                                // Our skipper
+    client::error_handler<base_iterator_type, iterator_type>
+        error_handler(first, last);             // Our error handler
+    client::parser::function<iterator_type, lexer_type>
+        function(error_handler, lexer);         // Our parser
     client::code_gen::compiler
         compiler(error_handler);                // Our compiler
 
-
-    bool success = phrase_parse(iter, end, +function, skipper, ast);
+    // note: we don't need a skipper
+    bool success = parse(iter, end, +function, ast);
 
     std::cout << "-------------------------\n";
 

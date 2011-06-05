@@ -128,6 +128,8 @@ namespace boost { namespace spirit
         ( in_state, in_state_type )
         ( token, token_type )
         ( tokenid, tokenid_type )
+        ( raw_token, raw_token_type )
+        ( tokenid_mask, tokenid_mask_type )
         ( attr, attr_type )
         ( columns, columns_type )
         ( auto_, auto_type )

@@ -57,8 +57,12 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::set_state;
     using spirit::in_state;
+#endif
+    using spirit::set_state_type;
+    using spirit::in_state_type;
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
