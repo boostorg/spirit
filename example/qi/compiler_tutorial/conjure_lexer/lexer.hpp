@@ -7,6 +7,9 @@
 #if !defined(BOOST_SPIRIT_CONJURE_LEXER_HPP)
 #define BOOST_SPIRIT_CONJURE_LEXER_HPP
 
+#include "config.hpp"
+#include "token_ids.hpp"
+
 #if CONJURE_LEXER_STATIC_TABLES != 0
 #include <boost/spirit/include/lex_static_lexertl.hpp>
 #include "conjure_static_lexer.hpp"
@@ -14,8 +17,6 @@
 #include <boost/spirit/include/lex_static_lexertl.hpp>
 #include "conjure_static_switch_lexer.hpp"
 #endif
-
-#include "token_ids.hpp"
 
 namespace client { namespace lexer 
 {
@@ -42,12 +43,14 @@ namespace client { namespace lexer
                 token_type
               , boost::spirit::lex::lexertl::static_::lexer_conjure_static
             > type;
-#else // CONJURE_LEXER_STATIC_SWITCH != 0
-            // use the lexer based on runtime generated DFA tables
+#elif CONJURE_LEXER_STATIC_SWITCH != 0
+            // use the lexer based on pre-generated static DFA tables
             typedef lex::lexertl::static_actor_lexer<
                 token_type
               , boost::spirit::lex::lexertl::static_::lexer_conjure_static_switch
             > type;
+#else
+#error "Configuration problem: please select exactly one type of lexer to build"
 #endif
         };
     }

@@ -9,9 +9,6 @@
 #include <fstream>
 #include <iostream>
 
-// Generating the static lexers is done based on the dynamic table based lexer
-#define CONJURE_LEXER_DYNAMIC_TABLES 1
-
 #include "lexer_def.hpp"
 #include <boost/spirit/include/lex_generate_static_lexertl.hpp>
 
