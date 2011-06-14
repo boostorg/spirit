@@ -190,7 +190,7 @@
 
 <span class="comment">// This initializes a `boolean_type` node, which can hold 'true' or
 </span><span class="comment">// 'false' only.
-</span><span class="identifier">utree</span><span class="special">(</span><span class="keyword">bool</span><span class="special">);</span>
+</span><span class="keyword">explicit</span> <span class="identifier">utree</span><span class="special">(</span><span class="keyword">bool</span><span class="special">);</span>
 <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">bool</span><span class="special">);</span>
 
 <span class="comment">// This initializes an `integer_type` node, which can hold arbitrary 
@@ -368,7 +368,7 @@
 <span class="special">{</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">function_base</span><span class="special">()</span> <span class="special">{}</span>
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 
     <span class="comment">// Calling f.clone() must return a newly allocated function_base 
 </span>    <span class="comment">// instance that is equal to f.
@@ -382,7 +382,7 @@
     <span class="identifier">stored_function</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">f</span> <span class="special">=</span> <span class="identifier">F</span><span class="special">());</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">stored_function</span><span class="special">();</span>
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">);</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
     <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 
@@ -393,7 +393,7 @@
     <span class="identifier">referenced_function</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">);</span>
     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">referenced_function</span><span class="special">();</span>
     <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">);</span>
+    <span class="keyword">virtual</span> <span class="identifier">utree</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">utree</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
     <span class="keyword">virtual</span> <span class="identifier">function_base</span><span class="special">*</span> <span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
