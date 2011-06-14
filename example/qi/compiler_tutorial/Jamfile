@@ -44,23 +44,23 @@ exe mini_c :
     mini_c/main.cpp
     ;
 
-exe conjure :
-    conjure/vm.cpp
-    conjure/compiler.cpp
-    conjure/expression.cpp
-    conjure/statement.cpp
-    conjure/function.cpp
-    conjure/main.cpp
+exe conjure1 :
+    conjure1/vm.cpp
+    conjure1/compiler.cpp
+    conjure1/expression.cpp
+    conjure1/statement.cpp
+    conjure1/function.cpp
+    conjure1/main.cpp
     ;
 
-exe conjure_lexer :
-    conjure_lexer/compiler.cpp
-    conjure_lexer/expression.cpp
-    conjure_lexer/function.cpp
-    conjure_lexer/lexer.cpp
-    conjure_lexer/main.cpp
-    conjure_lexer/statement.cpp
-    conjure_lexer/vm.cpp
+exe conjure2 :
+    conjure2/compiler.cpp
+    conjure2/expression.cpp
+    conjure2/function.cpp
+    conjure2/lexer.cpp
+    conjure2/main.cpp
+    conjure2/statement.cpp
+    conjure2/vm.cpp
     ;
 
 

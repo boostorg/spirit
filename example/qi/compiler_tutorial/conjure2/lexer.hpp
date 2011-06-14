@@ -28,8 +28,15 @@ namespace client { namespace lexer
         template <typename BaseIterator>
         struct get_lexer_type
         {
+            // Our token needs to be able to carry several token values: 
+            // std::string, unsigned int, and bool
             typedef boost::mpl::vector<std::string, unsigned int, bool> 
                 token_value_types;
+
+            // Using the position_token class as the token type to be returned
+            // from the lexer iterators allows to retain positional information
+            // as every token instance stores an iterator pair pointing to the
+            // matched input sequence.
             typedef lex::lexertl::position_token<
                 BaseIterator, token_value_types, boost::mpl::false_
             > token_type;
@@ -44,7 +51,7 @@ namespace client { namespace lexer
               , boost::spirit::lex::lexertl::static_::lexer_conjure_static
             > type;
 #elif CONJURE_LEXER_STATIC_SWITCH != 0
-            // use the lexer based on pre-generated static DFA tables
+            // use the lexer based on pre-generated static code
             typedef lex::lexertl::static_actor_lexer<
                 token_type
               , boost::spirit::lex::lexertl::static_::lexer_conjure_static_switch

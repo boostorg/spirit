@@ -4,6 +4,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include "config.hpp"
 #include "compiler.hpp"
 #include "vm.hpp"
 #include <boost/foreach.hpp>
@@ -45,7 +46,8 @@ namespace client { namespace code_gen
 
     void function::add_var(std::string const& name)
     {
-        variables[name] = variables.size();
+        std::size_t n = variables.size();
+        variables[name] = n;
     }
 
     void function::link_to(std::string const& name, std::size_t address)
@@ -275,9 +277,9 @@ namespace client { namespace code_gen
             return false;
         switch (x.operator_)
         {
-            case ast::op_negative: current->op(op_neg); break;
+            case ast::op_minus: current->op(op_neg); break;
             case ast::op_not: current->op(op_not); break;
-            case ast::op_positive: break;
+            case ast::op_plus: break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -389,23 +391,28 @@ namespace client { namespace code_gen
         };
     }
 
+    inline int get_precedence(ast::optoken op)
+    {
+        return precedence[op & ~ast::op_mask];
+    }
+
     // The Shunting-yard algorithm
     bool compiler::compile_expression(
         int min_precedence,
         std::list<ast::operation>::const_iterator& rbegin,
         std::list<ast::operation>::const_iterator rend)
     {
-        while ((rbegin != rend) && (precedence[rbegin->operator_] >= min_precedence))
+        while ((rbegin != rend) && (get_precedence(rbegin->operator_) >= min_precedence))
         {
             ast::optoken op = rbegin->operator_;
             if (!boost::apply_visitor(*this, rbegin->operand_))
                 return false;
             ++rbegin;
 
-            while ((rbegin != rend) && (precedence[rbegin->operator_] > precedence[op]))
+            while ((rbegin != rend) && (get_precedence(rbegin->operator_) > get_precedence(op)))
             {
                 ast::optoken next_op = rbegin->operator_;
-                compile_expression(precedence[next_op], rbegin, rend);
+                compile_expression(get_precedence(next_op), rbegin, rend);
             }
             (*this)(op);
         }

@@ -45,7 +45,8 @@ namespace client { namespace code_gen
 
     void function::add_var(std::string const& name)
     {
-        variables[name] = variables.size();
+        std::size_t n = variables.size();
+        variables[name] = n;
     }
 
     void function::link_to(std::string const& name, std::size_t address)

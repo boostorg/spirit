@@ -42,7 +42,8 @@ namespace client { namespace code_gen
 
     void program::add_var(std::string const& name)
     {
-        variables[name] = variables.size();
+        std::size_t n = variables.size();
+        variables[name] = n;
     }
 
     void program::print_variables(std::vector<int> const& stack) const
