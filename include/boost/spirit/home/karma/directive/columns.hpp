@@ -186,6 +186,9 @@ namespace boost { namespace spirit { namespace karma
         result_type operator()(unused_type, Subject const& subject
           , unused_type) const
         {
+#if defined(BOOST_SPIRIT_NO_PREDEFINED_TERMINALS)
+            eol_type const eol = eol_type();
+#endif
             return result_type(subject, detail::default_columns()
               , compile<karma::domain>(eol));
         }
@@ -209,6 +212,9 @@ namespace boost { namespace spirit { namespace karma
         result_type operator()(Terminal const& term, Subject const& subject
           , unused_type) const
         {
+#if defined(BOOST_SPIRIT_NO_PREDEFINED_TERMINALS)
+            eol_type const eol = eol_type();
+#endif
             return result_type(subject, fusion::at_c<0>(term.args)
               , compile<karma::domain>(eol));
         }

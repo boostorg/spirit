@@ -564,7 +564,7 @@ namespace boost { namespace spirit { namespace karma
         // non-const version needed to suppress proto's -= kicking in
         template <typename Attr>
         friend remover const&
-        operator-= (symbols& sym, Attr& str)
+        operator-= (symbols& sym, Attr& attr)
         {
             return sym.remove(attr);
         }
