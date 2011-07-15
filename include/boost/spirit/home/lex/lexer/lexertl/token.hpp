@@ -140,7 +140,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token(id_type id, std::size_t, token_value_type)
           : id_(id) {}
 
-        token_value_type& value() { return unused; }
+        token_value_type& value() { static token_value_type u; return u; }
         token_value_type const& value() const { return unused; }
 
 #if defined(BOOST_SPIRIT_DEBUG)

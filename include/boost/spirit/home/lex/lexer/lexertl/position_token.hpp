@@ -173,7 +173,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         iterpair_type& matched() { return matched_; }
         iterpair_type const& matched() const { return matched_; }
 
-        token_value_type& value() { return unused; }
+        token_value_type& value() { static token_value_type u; return u; }
         token_value_type const& value() const { return unused; }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, == 1600)
