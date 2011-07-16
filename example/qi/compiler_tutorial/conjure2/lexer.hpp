@@ -69,7 +69,7 @@ namespace client { namespace lexer
       : lex::lexer<typename detail::get_lexer_type<BaseIterator>::type>
     {
     private:
-      // get the type of any qi::raw_token(...) and qi::token(...) constructs
+        // get the type of any qi::raw_token(...) and qi::token(...) constructs
         typedef typename boost::spirit::result_of::terminal<
             boost::spirit::tag::raw_token(tokenids)
         >::type raw_token_spec;
@@ -89,7 +89,7 @@ namespace client { namespace lexer
 
         conjure_tokens();
 
-        // extract a raw_token(id) when given a registered keyword
+        // extract a raw_token(id) for the given registered keyword
         raw_token_spec raw_token (std::string const& kwd) const
         {
             namespace qi = boost::spirit::qi;
@@ -100,6 +100,7 @@ namespace client { namespace lexer
             return qi::raw_token((it != keywords_.end()) ? (*it).second : ID_INVALID);
         }
 
+        // extract a token(id) for the given registered keyword
         token_spec token (std::string const& kwd) const
         {
             namespace qi = boost::spirit::qi;

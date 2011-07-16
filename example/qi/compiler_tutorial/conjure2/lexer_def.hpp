@@ -60,7 +60,7 @@ namespace client { namespace lexer
     template <typename BaseIterator>
     bool conjure_tokens<BaseIterator>::add_keyword(std::string const& keyword)
     {
-        // ad the token to the lexer
+        // add the token to the lexer
         tokenids id = tokenids(this->get_next_id());
         this->self.add(keyword, id);
 
