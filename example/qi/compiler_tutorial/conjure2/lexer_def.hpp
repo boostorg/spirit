@@ -19,14 +19,12 @@ namespace client { namespace lexer
 
         this->self = uint_ | bool_;
 
-        this->self.add 
-                ("void", ID_VOID_KWD) 
-                ("int", ID_INT_KWD) 
-                ("if", ID_IF_KWD) 
-                ("else", ID_ELSE_KWD)
-                ("while", ID_WHILE_KWD)
-                ("return", ID_RETURN_KWD)
-            ;
+        add_keyword("void");
+        add_keyword("int");
+        add_keyword("if");
+        add_keyword("else");
+        add_keyword("while");
+        add_keyword("return");
 
         this->self.add 
                 ("\\|\\|", ID_OP_LOGICAL_OR)
@@ -57,6 +55,20 @@ namespace client { namespace lexer
                     lex::_pass = lex::pass_flags::pass_ignore
                 ]
             ;
+    }
+
+    template <typename BaseIterator>
+    bool conjure_tokens<BaseIterator>::add_keyword(std::string const& keyword)
+    {
+        // ad the token to the lexer
+        tokenids id = tokenids(this->get_next_id());
+        this->self.add(keyword, id);
+
+        // store the mapping for later retrieval 
+        std::pair<typename keyword_map_type::iterator, bool> p = 
+            keywords_.insert(typename keyword_map_type::value_type(keyword, id));
+
+        return p.second;
     }
 }}
 

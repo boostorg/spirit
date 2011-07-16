@@ -17,6 +17,7 @@
 #include <boost/spirit/include/lex_static_lexertl.hpp>
 #include "conjure_static_switch_lexer.hpp"
 #endif
+#include <boost/assert.hpp>
 
 namespace client { namespace lexer 
 {
@@ -67,13 +68,52 @@ namespace client { namespace lexer
     struct conjure_tokens 
       : lex::lexer<typename detail::get_lexer_type<BaseIterator>::type>
     {
+    private:
+      // get the type of any qi::raw_token(...) and qi::token(...) constructs
+        typedef typename boost::spirit::result_of::terminal<
+            boost::spirit::tag::raw_token(tokenids)
+        >::type raw_token_spec;
+
+        typedef typename boost::spirit::result_of::terminal<
+            boost::spirit::tag::token(tokenids)
+        >::type token_spec;
+
+        typedef std::map<std::string, tokenids> keyword_map_type;
+
+    protected:
+        // add a keyword to the mapping table
+        bool add_keyword(std::string const& keyword);
+
+    public:
         typedef BaseIterator base_iterator_type;
 
         conjure_tokens();
 
+        // extract a raw_token(id) when given a registered keyword
+        raw_token_spec raw_token (std::string const& kwd) const
+        {
+            namespace qi = boost::spirit::qi;
+            qi::raw_token_type raw_token;
+
+            typename keyword_map_type::const_iterator it = keywords_.find(kwd);
+            BOOST_ASSERT(it != keywords_.end());
+            return qi::raw_token((it != keywords_.end()) ? (*it).second : ID_INVALID);
+        }
+
+        token_spec token (std::string const& kwd) const
+        {
+            namespace qi = boost::spirit::qi;
+            qi::token_type token;
+
+            typename keyword_map_type::const_iterator it = keywords_.find(kwd);
+            BOOST_ASSERT(it != keywords_.end());
+            return qi::token((it != keywords_.end()) ? (*it).second : ID_INVALID);
+        }
+
         lex::token_def<std::string> identifier;
         lex::token_def<unsigned int> uint_;
         lex::token_def<bool> bool_;
+        keyword_map_type keywords_;
     };
 }}
 

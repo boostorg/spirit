@@ -39,7 +39,7 @@ namespace client { namespace parser
         identifier = body.expr.identifier;
         argument_list = -(identifier % ',');
 
-        start = (token(lexer::ID_VOID_KWD) | token(lexer::ID_INT_KWD))
+        start = (l.token("void") | l.token("int"))
             >   identifier
             >   '(' > argument_list > ')'
             >   '{' > body > '}'

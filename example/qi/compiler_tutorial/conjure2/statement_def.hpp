@@ -50,7 +50,7 @@ namespace client { namespace parser
             ;
 
         variable_declaration =
-                raw_token(lexer::ID_INT_KWD) 
+                l.raw_token("int") 
             >   expr.identifier
             >  -('=' > expr)
             >   ';'
@@ -64,20 +64,20 @@ namespace client { namespace parser
             ;
 
         if_statement =
-                raw_token(lexer::ID_IF_KWD)
+                l.raw_token("if")
             >   '('
             >   expr
             >   ')'
             >   statement_
             >
                -(
-                    raw_token(lexer::ID_ELSE_KWD)
+                    l.raw_token("else")
                 >   statement_
                 )
             ;
 
         while_statement =
-                raw_token(lexer::ID_WHILE_KWD)
+                l.raw_token("while")
             >   '('
             >   expr
             >   ')'
@@ -89,7 +89,7 @@ namespace client { namespace parser
             ;
 
         return_statement =
-                raw_token(lexer::ID_RETURN_KWD)
+                l.raw_token("return")
             >  -expr
             >   ';'
             ;

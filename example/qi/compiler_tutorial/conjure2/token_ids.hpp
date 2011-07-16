@@ -16,6 +16,8 @@ namespace client { namespace lexer
 
     enum tokenids
     {
+        ID_INVALID = - 1,
+
         ID_OP_OPERATOR = 0x10000,
         ID_OP_BINARY = 0x20000,
         ID_OP_UNARY = 0x40000,
@@ -39,12 +41,6 @@ namespace client { namespace lexer
         ID_IDENTIFIER = ID_OP_OPERATOR + 100,
         ID_COMMENT,
         ID_WHITESPACE,
-        ID_VOID_KWD,
-        ID_INT_KWD,
-        ID_IF_KWD,
-        ID_ELSE_KWD,
-        ID_WHILE_KWD,
-        ID_RETURN_KWD,
         ID_UINT,
         ID_BOOL
     };
