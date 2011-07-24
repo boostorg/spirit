@@ -372,20 +372,13 @@ namespace client { namespace code_gen
             // precedence 12
             12, // op_times
             12, // op_divide
-            12, // op_mod
-
-            // precedence 13
-            13, // op_positive
-            13, // op_negative
-            13, // op_pre_incr
-            13, // op_pre_decr
-            13, // op_compl
-            13, // op_not
-
-            // precedence 14
-            14, // op_post_incr
-            14  // op_post_decr
+            12  // op_mod
         };
+    }
+
+    inline int precedence_of(token::type op)
+    {
+        return precedence[op & 0xFF];
     }
 
     // The Shunting-yard algorithm

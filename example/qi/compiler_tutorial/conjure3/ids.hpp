@@ -24,6 +24,7 @@ namespace client
     {
         enum type
         {
+            // binary
             comma,
             assign,
             plus_assign,
@@ -54,37 +55,38 @@ namespace client
             times,
             divide,
             mod,
-            positive,
-            negative,
-            pre_incr,
-            pre_decr,
+
+            // unary
+            plus_plus,
+            minus_minus,
             compl_,
             not_,
-            post_incr,
-            post_decr
         };
     };
 
-    template <int type, int op, int precedence>
+    template <int type, int op>
     struct make_op
     {
         static int const value =
-                (precedence << 19)
             +   type
             +   op
             ;
     };
 
-    template <int op, int precedence>
-    struct unary_op : make_op<op_type::unary, op, precedence> {};
+    template <op::type op>
+    struct unary_op : make_op<op_type::unary, op> {};
 
-    template <int op, int precedence>
+    template <op::type op>
     struct binary_op
-        : make_op<op_type::binary, op, precedence> {};
+        : make_op<op_type::binary, op> {};
 
-    template <int op, int precedence>
+    template <op::type op>
     struct assign_op
-        : make_op<op_type::binary | op_type::assign, op, precedence> {};
+        : make_op<op_type::binary | op_type::assign, op> {};
+
+    template <op::type op>
+    struct binary_or_unary_op
+        : make_op<op_type::unary | op_type::binary, op> {};
 
     struct token
     {
@@ -92,88 +94,64 @@ namespace client
         {
             // pseudo tags
             invalid             = -1,
-            binary              = op_type::binary,
-            unary               = op_type::unary,
+            op_binary           = op_type::binary,
+            op_unary            = op_type::unary,
+            op_assign           = op_type::assign,
 
-            // binary operators precedence 1
-            comma               = binary_op<op::comma, 1>::value,
+            // binary / unary operators with common tokens
+            // '+' and '-' can be binary or unary
+            // (the lexer cannot distinguish which)
+            plus                = binary_or_unary_op<op::plus>::value,
+            minus               = binary_or_unary_op<op::minus>::value,
 
-            // binary operators precedence 2
-            assign              = assign_op<op::assign, 2>::value,
-            plus_assign         = assign_op<op::plus_assign, 2>::value,
-            minus_assign        = assign_op<op::minus_assign, 2>::value,
-            times_assign        = assign_op<op::times_assign, 2>::value,
-            divide_assign       = assign_op<op::divide_assign, 2>::value,
-            mod_assign          = assign_op<op::mod_assign, 2>::value,
-            bit_and_assign      = assign_op<op::bit_and_assign, 2>::value,
-            bit_xor_assign      = assign_op<op::bit_xor_assign, 2>::value,
-            bit_or_assign       = assign_op<op::bit_or_assign, 2>::value,
-            shift_left_assign   = assign_op<op::shift_left_assign, 2>::value,
-            shift_right_assign  = assign_op<op::shift_right_assign, 2>::value,
+            // binary operators
+            comma               = binary_op<op::comma>::value,
+            assign              = assign_op<op::assign>::value,
+            plus_assign         = assign_op<op::plus_assign>::value,
+            minus_assign        = assign_op<op::minus_assign>::value,
+            times_assign        = assign_op<op::times_assign>::value,
+            divide_assign       = assign_op<op::divide_assign>::value,
+            mod_assign          = assign_op<op::mod_assign>::value,
+            bit_and_assign      = assign_op<op::bit_and_assign>::value,
+            bit_xor_assign      = assign_op<op::bit_xor_assign>::value,
+            bit_or_assign       = assign_op<op::bit_or_assign>::value,
+            shift_left_assign   = assign_op<op::shift_left_assign>::value,
+            shift_right_assign  = assign_op<op::shift_right_assign>::value,
+            logical_or          = binary_op<op::logical_or>::value,
+            logical_and         = binary_op<op::logical_and>::value,
+            bit_or              = binary_op<op::bit_or>::value,
+            bit_xor             = binary_op<op::bit_xor>::value,
+            bit_and             = binary_op<op::bit_and>::value,
+            equal               = binary_op<op::equal>::value,
+            not_equal           = binary_op<op::not_equal>::value,
+            less                = binary_op<op::less>::value,
+            less_equal          = binary_op<op::less_equal>::value,
+            greater             = binary_op<op::greater>::value,
+            greater_equal       = binary_op<op::greater_equal>::value,
+            shift_left          = binary_op<op::shift_left>::value,
+            shift_right         = binary_op<op::shift_right>::value,
+            times               = binary_op<op::times>::value,
+            divide              = binary_op<op::divide>::value,
+            mod                 = binary_op<op::mod>::value,
 
-            // binary operators precedence 3
-            logical_or          = binary_op<op::logical_or, 3>::value,
+            // unary operators with overlaps
+            // '++' and '--' can be prefix or postfix
+            // (the lexer cannot distinguish which)
+            plus_plus           = unary_op<op::plus_plus>::value,
+            minus_minus         = unary_op<op::minus_minus>::value,
 
-            // binary operators precedence 4
-            logical_and         = binary_op<op::logical_and, 4>::value,
-
-            // binary operators precedence 5
-            bit_or              = binary_op<op::bit_or, 5>::value,
-
-            // binary operators precedence 6
-            bit_xor             = binary_op<op::bit_xor, 6>::value,
-
-            // binary operators precedence 7
-            bit_and             = binary_op<op::bit_and, 7>::value,
-
-            // binary operators precedence 8
-            equal               = binary_op<op::equal, 8>::value,
-            not_equal           = binary_op<op::not_equal, 8>::value,
-
-            // binary operators precedence 9
-            less                = binary_op<op::less, 9>::value,
-            less_equal          = binary_op<op::less_equal, 9>::value,
-            greater             = binary_op<op::greater, 9>::value,
-            greater_equal       = binary_op<op::greater_equal, 9>::value,
-
-            // binary operators precedence 10
-            shift_left          = binary_op<op::shift_left, 10>::value,
-            shift_right         = binary_op<op::shift_right, 10>::value,
-
-            // binary operators precedence 11
-            plus                = binary_op<op::plus, 11>::value,
-            minus               = binary_op<op::minus, 11>::value,
-
-            // binary operators precedence 12
-            times               = binary_op<op::times, 12>::value,
-            divide              = binary_op<op::divide, 12>::value,
-            mod                 = binary_op<op::mod, 12>::value,
-
-            // unary operators precedence 13
-            positive            = unary_op<op::positive, 13>::value,
-            negative            = unary_op<op::negative, 13>::value,
-            pre_incr            = unary_op<op::pre_incr, 13>::value,
-            pre_decr            = unary_op<op::pre_decr, 13>::value,
-            compl_              = unary_op<op::compl_, 13>::value,
-            not_                = unary_op<op::not_, 13>::value,
-
-            // unary operators precedence 14
-            post_incr           = unary_op<op::post_incr, 14>::value,
-            post_decr           = unary_op<op::post_decr, 14>::value,
+            // unary operators
+            compl_              = unary_op<op::compl_>::value,
+            not_                = unary_op<op::not_>::value,
 
             // misc tags
-            identifier          = op::post_decr + 1,
+            identifier          = op::minus_minus + 1,
             comment,
             whitespace,
             lit_uint,
             true_or_false
         };
     };
-
-    inline int precedence_of(token::type op)
-    {
-        return (op >> 19) & 0xF;
-    }
 }
 
 #endif
