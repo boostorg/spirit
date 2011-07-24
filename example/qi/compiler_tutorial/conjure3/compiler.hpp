@@ -96,7 +96,7 @@ namespace client { namespace code_gen
         void init_fpm();
 
         llvm::Value* compile_binary_expression(
-            llvm::Value* lhs, llvm::Value* rhs, ast::optoken op);
+            llvm::Value* lhs, llvm::Value* rhs, token::type op);
 
         llvm::Value* compile_expression(
             int min_precedence,

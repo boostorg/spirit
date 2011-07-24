@@ -5,7 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include "token_ids.hpp"
 #include "statement.hpp"
 #include "error_handler.hpp"
 #include "annotation.hpp"
@@ -50,7 +49,7 @@ namespace client { namespace parser
             ;
 
         variable_declaration =
-                l.raw_token("int") 
+                l("int")
             >   expr.identifier
             >  -('=' > expr)
             >   ';'
@@ -64,20 +63,20 @@ namespace client { namespace parser
             ;
 
         if_statement =
-                l.raw_token("if")
+                l("if")
             >   '('
             >   expr
             >   ')'
             >   statement_
             >
                -(
-                    l.raw_token("else")
+                    l("else")
                 >   statement_
                 )
             ;
 
         while_statement =
-                l.raw_token("while")
+                l("while")
             >   '('
             >   expr
             >   ')'
@@ -89,7 +88,7 @@ namespace client { namespace parser
             ;
 
         return_statement =
-                l.raw_token("return")
+                l("return")
             >  -expr
             >   ';'
             ;

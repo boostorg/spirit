@@ -5,7 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include "token_ids.hpp"
 #include "function.hpp"
 #include "error_handler.hpp"
 #include "annotation.hpp"
@@ -39,7 +38,7 @@ namespace client { namespace parser
         identifier = body.expr.identifier;
         argument_list = -(identifier % ',');
 
-        start = (token(lexer::ID_VOID_KWD) | token(lexer::ID_INT_KWD))
+        start = (l.token("void") | l.token("int"))
             >   identifier
             >   '(' > argument_list > ')'
             >   (';' | '{' > body > '}')

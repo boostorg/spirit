@@ -245,25 +245,25 @@ namespace client { namespace code_gen
         return true;
     }
 
-    bool compiler::operator()(ast::optoken const& x)
+    bool compiler::operator()(token::type const& x)
     {
         BOOST_ASSERT(current != 0);
         switch (x)
         {
-            case ast::op_plus: current->op(op_add); break;
-            case ast::op_minus: current->op(op_sub); break;
-            case ast::op_times: current->op(op_mul); break;
-            case ast::op_divide: current->op(op_div); break;
+            case token::plus: current->op(op_add); break;
+            case token::minus: current->op(op_sub); break;
+            case token::times: current->op(op_mul); break;
+            case token::divide: current->op(op_div); break;
 
-            case ast::op_equal: current->op(op_eq); break;
-            case ast::op_not_equal: current->op(op_neq); break;
-            case ast::op_less: current->op(op_lt); break;
-            case ast::op_less_equal: current->op(op_lte); break;
-            case ast::op_greater: current->op(op_gt); break;
-            case ast::op_greater_equal: current->op(op_gte); break;
+            case token::equal: current->op(op_eq); break;
+            case token::not_equal: current->op(op_neq); break;
+            case token::less: current->op(op_lt); break;
+            case token::less_equal: current->op(op_lte); break;
+            case token::greater: current->op(op_gt); break;
+            case token::greater_equal: current->op(op_gte); break;
 
-            case ast::op_logical_or: current->op(op_or); break;
-            case ast::op_logical_and: current->op(op_and); break;
+            case token::logical_or: current->op(op_or); break;
+            case token::logical_and: current->op(op_and); break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -276,9 +276,9 @@ namespace client { namespace code_gen
             return false;
         switch (x.operator_)
         {
-            case ast::op_minus: current->op(op_neg); break;
-            case ast::op_not: current->op(op_not); break;
-            case ast::op_plus: break;
+            case token::minus: current->op(op_neg); break;
+            case token::not_: current->op(op_not); break;
+            case token::plus: break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -388,11 +388,6 @@ namespace client { namespace code_gen
         };
     }
 
-    inline int precedence_of(ast::optoken op)
-    {
-        return precedence[op & ~ast::op_mask];
-    }
-
     // The Shunting-yard algorithm
     bool compiler::compile_expression(
         int min_precedence,
@@ -401,14 +396,14 @@ namespace client { namespace code_gen
     {
         while ((rbegin != rend) && (precedence_of(rbegin->operator_) >= min_precedence))
         {
-            ast::optoken op = rbegin->operator_;
+            token::type op = rbegin->operator_;
             if (!boost::apply_visitor(*this, rbegin->operand_))
                 return false;
             ++rbegin;
 
             while ((rbegin != rend) && (precedence_of(rbegin->operator_) > precedence_of(op)))
             {
-                ast::optoken next_op = rbegin->operator_;
+                token::type next_op = rbegin->operator_;
                 compile_expression(precedence_of(next_op), rbegin, rend);
             }
             (*this)(op);

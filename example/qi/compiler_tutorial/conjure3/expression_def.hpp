@@ -41,19 +41,19 @@ namespace client { namespace parser
         // Main expression grammar
         expr =
                 unary_expr
-                >> *(tokenid_mask(ast::op_binary) > unary_expr)
+                >> *(tokenid_mask(token::binary) > unary_expr)
             ;
 
         unary_expr =
                 primary_expr
-            |   (tokenid_mask(ast::op_unary) > primary_expr)
+            |   (tokenid_mask(token::unary) > primary_expr)
             ;
 
         primary_expr =
-                lexer.uint_
+                lexer.lit_uint
             |   function_call
             |   identifier
-            |   lexer.bool_
+            |   lexer.true_or_false
             |   '(' > expr > ')'
             ;
 

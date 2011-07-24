@@ -69,9 +69,9 @@ namespace client { namespace code_gen
 
         switch (x.operator_)
         {
-            case ast::op_minus: return builder.CreateNeg(operand, "negtmp");
-            case ast::op_not: return builder.CreateNot(operand, "nottmp");
-            case ast::op_plus: return operand;
+            case token::minus: return builder.CreateNeg(operand, "negtmp");
+            case token::not_: return builder.CreateNot(operand, "nottmp");
+            case token::plus: return operand;
             default: BOOST_ASSERT(0); return 0;
         }
     }
@@ -174,31 +174,26 @@ namespace client { namespace code_gen
     }
 
     llvm::Value* compiler::compile_binary_expression(
-        llvm::Value* lhs, llvm::Value* rhs, ast::optoken op)
+        llvm::Value* lhs, llvm::Value* rhs, token::type op)
     {
         switch (op)
         {
-            case ast::op_plus: return builder.CreateAdd(lhs, rhs, "addtmp");
-            case ast::op_minus: return builder.CreateSub(lhs, rhs, "subtmp");
-            case ast::op_times: return builder.CreateMul(lhs, rhs, "multmp");
-            case ast::op_divide: return builder.CreateSDiv(lhs, rhs, "divtmp");
+            case token::plus: return builder.CreateAdd(lhs, rhs, "addtmp");
+            case token::minus: return builder.CreateSub(lhs, rhs, "subtmp");
+            case token::times: return builder.CreateMul(lhs, rhs, "multmp");
+            case token::divide: return builder.CreateSDiv(lhs, rhs, "divtmp");
 
-            case ast::op_equal: return builder.CreateICmpEQ(lhs, rhs, "eqtmp");
-            case ast::op_not_equal: return builder.CreateICmpNE(lhs, rhs, "netmp");
-            case ast::op_less: return builder.CreateICmpSLT(lhs, rhs, "slttmp");
-            case ast::op_less_equal: return builder.CreateICmpSLE(lhs, rhs, "sletmp");
-            case ast::op_greater: return builder.CreateICmpSGT(lhs, rhs, "sgttmp");
-            case ast::op_greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sgetmp");
+            case token::equal: return builder.CreateICmpEQ(lhs, rhs, "eqtmp");
+            case token::not_equal: return builder.CreateICmpNE(lhs, rhs, "netmp");
+            case token::less: return builder.CreateICmpSLT(lhs, rhs, "slttmp");
+            case token::less_equal: return builder.CreateICmpSLE(lhs, rhs, "sletmp");
+            case token::greater: return builder.CreateICmpSGT(lhs, rhs, "sgttmp");
+            case token::greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sgetmp");
 
-            case ast::op_logical_or: return builder.CreateOr(lhs, rhs, "ortmp");
-            case ast::op_logical_and: return builder.CreateAnd(lhs, rhs, "andtmp");
+            case token::logical_or: return builder.CreateOr(lhs, rhs, "ortmp");
+            case token::logical_and: return builder.CreateAnd(lhs, rhs, "andtmp");
             default: BOOST_ASSERT(0); return 0;
         }
-    }
-
-    inline int precedence_of(ast::optoken op)
-    {
-        return precedence[op & ~ast::op_mask];
     }
 
     // The Shunting-yard algorithm
@@ -211,7 +206,7 @@ namespace client { namespace code_gen
         while ((rest_begin != rest_end) &&
             (precedence_of(rest_begin->operator_) >= min_precedence))
         {
-            ast::optoken op = rest_begin->operator_;
+            token::type op = rest_begin->operator_;
             llvm::Value* rhs = boost::apply_visitor(*this, rest_begin->operand_);
             if (rhs == 0)
                 return 0;
@@ -220,7 +215,7 @@ namespace client { namespace code_gen
             while ((rest_begin != rest_end) &&
                 (precedence_of(rest_begin->operator_) > precedence_of(op)))
             {
-                ast::optoken next_op = rest_begin->operator_;
+                token::type next_op = rest_begin->operator_;
                 rhs = compile_expression(
                     precedence_of(next_op), rhs, rest_begin, rest_end);
             }
