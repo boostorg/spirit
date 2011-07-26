@@ -33,7 +33,7 @@ namespace client
             Iterator err_pos) const
         {
             // retrieve underlying iterator from current token, err_pos points
-            // to the last validly matched token, so we use it's end iterator 
+            // to the last validly matched token, so we use its end iterator 
             // as the error position
             BaseIterator err_pos_base = err_pos->matched().end();
 
