@@ -50,11 +50,15 @@ namespace client { namespace parser
             ;
 
         primary_expr =
-                lexer.lit_uint
+                literal
             |   function_call
             |   identifier
-            |   lexer.true_or_false
             |   '(' > expr > ')'
+            ;
+
+        literal =
+                lexer.lit_uint
+            |   lexer.true_or_false
             ;
 
         function_call =

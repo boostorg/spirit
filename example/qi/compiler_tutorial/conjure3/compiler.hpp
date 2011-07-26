@@ -58,6 +58,7 @@ namespace client { namespace code_gen
         llvm::Value* operator()(ast::nil) { BOOST_ASSERT(0); return 0; }
         llvm::Value* operator()(unsigned int x);
         llvm::Value* operator()(bool x);
+        llvm::Value* operator()(ast::literal const& x);
         llvm::Value* operator()(ast::identifier const& x);
         llvm::Value* operator()(ast::unary const& x);
         llvm::Value* operator()(ast::function_call const& x);

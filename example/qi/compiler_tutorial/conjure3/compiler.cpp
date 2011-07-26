@@ -6,6 +6,7 @@
 =============================================================================*/
 #include "config.hpp"
 #include "compiler.hpp"
+#include "annotation.hpp"
 #include "vm.hpp"
 
 #include <boost/foreach.hpp>
@@ -45,6 +46,11 @@ namespace client { namespace code_gen
     llvm::Value* compiler::operator()(bool x)
     {
         return llvm::ConstantInt::get(context(), llvm::APInt(1, x));
+    }
+
+    llvm::Value* compiler::operator()(ast::literal const& x)
+    {
+        return boost::apply_visitor(*this, x.val);
     }
 
     llvm::Value* compiler::operator()(ast::identifier const& x)
@@ -164,6 +170,12 @@ namespace client { namespace code_gen
     inline int precedence_of(token::type op)
     {
         return precedence[op & 0xFF];
+    }
+
+    inline bool is_left_assoc(token::type op)
+    {
+        // only the assignment operators are right to left
+        return (op & token::op_assign) == 0;
     }
 
     llvm::Value* compiler::compile_binary_expression(

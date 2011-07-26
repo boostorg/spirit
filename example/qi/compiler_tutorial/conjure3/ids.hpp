@@ -67,10 +67,7 @@ namespace client
     template <int type, int op>
     struct make_op
     {
-        static int const value =
-            +   type
-            +   op
-            ;
+        static int const value = type + op;
     };
 
     template <op::type op>

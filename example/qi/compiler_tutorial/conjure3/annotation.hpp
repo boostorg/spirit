@@ -20,6 +20,67 @@ namespace client
     //  for the purpose of subsequent semantic error handling when the
     //  program is being compiled.
     ///////////////////////////////////////////////////////////////////////////////
+    struct set_annotation_id
+        {
+            typedef void result_type;
+
+            int id;
+        set_annotation_id(int id) : id(id) {}
+
+            void operator()(ast::function_call& x) const
+            {
+                x.function_name.id = id;
+            }
+
+        template <typename T>
+        void dispatch(T& x, boost::mpl::true_) const
+            {
+                x.id = id;
+            }
+
+            template <typename T>
+        void dispatch(T& x, boost::mpl::false_) const
+        {
+            // no-op
+        }
+
+        template <typename T>
+            void operator()(T& x) const
+            {
+            typename boost::is_base_of<ast::tagged, T> is_tagged;
+            dispatch(x, is_tagged);
+            }
+        };
+
+    struct get_annotation_id
+    {
+        typedef int result_type;
+
+        int operator()(ast::function_call& x) const
+        {
+            return x.function_name.id;
+        }
+
+        template <typename T>
+        int dispatch(T& x, boost::mpl::true_) const
+        {
+            return x.id;
+        }
+
+        template <typename T>
+        int dispatch(T& x, boost::mpl::false_) const
+        {
+            return -1;
+        }
+
+        template <typename T>
+        int operator()(T& x) const
+        {
+            typename boost::is_base_of<ast::tagged, T> is_tagged;
+            return dispatch(x, is_tagged);
+        }
+    };
+
     template <typename Iterator>
     struct annotation
     {
@@ -30,35 +91,11 @@ namespace client
         annotation(std::vector<Iterator>& iters)
           : iters(iters) {}
 
-        struct set_id
-        {
-            typedef void result_type;
-
-            int id;
-            set_id(int id) : id(id) {}
-
-            void operator()(ast::function_call& x) const
-            {
-                x.function_name.id = id;
-            }
-
-            void operator()(ast::identifier& x) const
-            {
-                x.id = id;
-            }
-
-            template <typename T>
-            void operator()(T& x) const
-            {
-                // no-op
-            }
-        };
-
         void operator()(ast::operand& ast, Iterator pos) const
         {
             int id = iters.size();
             iters.push_back(pos);
-            boost::apply_visitor(set_id(id), ast);
+            boost::apply_visitor(set_annotation_id(id), ast);
         }
 
         void operator()(ast::assignment& ast, Iterator pos) const

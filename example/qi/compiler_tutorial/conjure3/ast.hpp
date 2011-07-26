@@ -12,6 +12,7 @@
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
+#include <boost/spirit/include/support_attributes.hpp>
 #include <boost/optional.hpp>
 #include <list>
 
@@ -40,10 +41,29 @@ namespace client { namespace ast
         std::string name;
     };
 
+    struct literal : tagged
+    {
+        // tell spirit that this is an adapted variant
+        struct adapted_variant;
+
     typedef boost::variant<
             nil
           , bool
-          , unsigned int
+          , unsigned int>
+        variant_type;
+
+        typedef variant_type::types types;
+
+        literal() : val() {}
+        literal(bool val) : val(val) {}
+        literal(unsigned int val) : val(val) {}
+
+        variant_type val;
+    };
+
+    typedef boost::variant<
+            nil
+          , literal
           , identifier
           , boost::recursive_wrapper<unary>
           , boost::recursive_wrapper<function_call>
@@ -51,7 +71,7 @@ namespace client { namespace ast
         >
     operand;
 
-    struct unary
+    struct unary : tagged
     {
         token::type operator_;
         operand operand_;

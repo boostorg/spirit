@@ -50,6 +50,7 @@ namespace client { namespace parser
         qi::rule<Iterator, ast::function_call()> function_call;
         qi::rule<Iterator, std::list<ast::expression>()> argument_list;
         qi::rule<Iterator, std::string()> identifier;
+        qi::rule<Iterator, ast::literal()> literal;
     };
 }}
 
