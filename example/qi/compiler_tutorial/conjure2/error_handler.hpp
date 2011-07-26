@@ -32,8 +32,10 @@ namespace client
             What const& what,
             Iterator err_pos) const
         {
-            // retrieve underlying iterator from current token
-            BaseIterator err_pos_base = err_pos->matched().begin();
+            // retrieve underlying iterator from current token, err_pos points
+            // to the last validly matched token, so we use it's end iterator 
+            // as the error position
+            BaseIterator err_pos_base = err_pos->matched().end();
 
             int line;
             BaseIterator line_start = get_pos(err_pos_base, line);
