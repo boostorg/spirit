@@ -53,13 +53,13 @@ namespace client { namespace ast
 
     struct unary
     {
-        token::type operator_;
+        token_ids::type operator_;
         operand operand_;
     };
 
     struct operation
     {
-        token::type operator_;
+        token_ids::type operator_;
         operand operand_;
     };
 
@@ -146,13 +146,13 @@ namespace client { namespace ast
 
 BOOST_FUSION_ADAPT_STRUCT(
     client::ast::unary,
-    (client::token::type, operator_)
+    (client::token_ids::type, operator_)
     (client::ast::operand, operand_)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
     client::ast::operation,
-    (client::token::type, operator_)
+    (client::token_ids::type, operator_)
     (client::ast::operand, operand_)
 )
 

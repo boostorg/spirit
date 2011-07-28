@@ -75,9 +75,9 @@ namespace client { namespace code_gen
 
         switch (x.operator_)
         {
-            case token::minus: return builder.CreateNeg(operand, "negtmp");
-            case token::not_: return builder.CreateNot(operand, "nottmp");
-            case token::plus: return operand;
+            case token_ids::minus: return builder.CreateNeg(operand, "negtmp");
+            case token_ids::not_: return builder.CreateNot(operand, "nottmp");
+            case token_ids::plus: return operand;
             default: BOOST_ASSERT(0); return 0;
         }
     }
@@ -167,36 +167,36 @@ namespace client { namespace code_gen
         };
     }
 
-    inline int precedence_of(token::type op)
+    inline int precedence_of(token_ids::type op)
     {
         return precedence[op & 0xFF];
     }
 
-    inline bool is_left_assoc(token::type op)
+    inline bool is_left_assoc(token_ids::type op)
     {
         // only the assignment operators are right to left
-        return (op & token::op_assign) == 0;
+        return (op & token_ids::op_assign) == 0;
     }
 
     llvm::Value* compiler::compile_binary_expression(
-        llvm::Value* lhs, llvm::Value* rhs, token::type op)
+        llvm::Value* lhs, llvm::Value* rhs, token_ids::type op)
     {
         switch (op)
         {
-            case token::plus: return builder.CreateAdd(lhs, rhs, "addtmp");
-            case token::minus: return builder.CreateSub(lhs, rhs, "subtmp");
-            case token::times: return builder.CreateMul(lhs, rhs, "multmp");
-            case token::divide: return builder.CreateSDiv(lhs, rhs, "divtmp");
+            case token_ids::plus: return builder.CreateAdd(lhs, rhs, "addtmp");
+            case token_ids::minus: return builder.CreateSub(lhs, rhs, "subtmp");
+            case token_ids::times: return builder.CreateMul(lhs, rhs, "multmp");
+            case token_ids::divide: return builder.CreateSDiv(lhs, rhs, "divtmp");
 
-            case token::equal: return builder.CreateICmpEQ(lhs, rhs, "eqtmp");
-            case token::not_equal: return builder.CreateICmpNE(lhs, rhs, "netmp");
-            case token::less: return builder.CreateICmpSLT(lhs, rhs, "slttmp");
-            case token::less_equal: return builder.CreateICmpSLE(lhs, rhs, "sletmp");
-            case token::greater: return builder.CreateICmpSGT(lhs, rhs, "sgttmp");
-            case token::greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sgetmp");
+            case token_ids::equal: return builder.CreateICmpEQ(lhs, rhs, "eqtmp");
+            case token_ids::not_equal: return builder.CreateICmpNE(lhs, rhs, "netmp");
+            case token_ids::less: return builder.CreateICmpSLT(lhs, rhs, "slttmp");
+            case token_ids::less_equal: return builder.CreateICmpSLE(lhs, rhs, "sletmp");
+            case token_ids::greater: return builder.CreateICmpSGT(lhs, rhs, "sgttmp");
+            case token_ids::greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sgetmp");
 
-            case token::logical_or: return builder.CreateOr(lhs, rhs, "ortmp");
-            case token::logical_and: return builder.CreateAnd(lhs, rhs, "andtmp");
+            case token_ids::logical_or: return builder.CreateOr(lhs, rhs, "ortmp");
+            case token_ids::logical_and: return builder.CreateAnd(lhs, rhs, "andtmp");
             default: BOOST_ASSERT(0); return 0;
         }
     }
@@ -211,7 +211,7 @@ namespace client { namespace code_gen
         while ((rest_begin != rest_end) &&
             (precedence_of(rest_begin->operator_) >= min_precedence))
         {
-            token::type op = rest_begin->operator_;
+            token_ids::type op = rest_begin->operator_;
             llvm::Value* rhs = boost::apply_visitor(*this, rest_begin->operand_);
             if (rhs == 0)
                 return 0;
@@ -220,7 +220,7 @@ namespace client { namespace code_gen
             while ((rest_begin != rest_end) &&
                 (precedence_of(rest_begin->operator_) > precedence_of(op)))
             {
-                token::type next_op = rest_begin->operator_;
+                token_ids::type next_op = rest_begin->operator_;
                 rhs = compile_expression(
                     precedence_of(next_op), rhs, rest_begin, rest_end);
             }

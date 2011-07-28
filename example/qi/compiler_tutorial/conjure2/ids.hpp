@@ -85,7 +85,7 @@ namespace client
     struct binary_or_unary_op
         : make_op<op_type::unary | op_type::binary, op> {};
 
-    struct token
+    struct token_ids
     {
         enum type
         {

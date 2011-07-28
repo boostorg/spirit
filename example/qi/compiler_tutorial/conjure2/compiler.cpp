@@ -245,25 +245,25 @@ namespace client { namespace code_gen
         return true;
     }
 
-    bool compiler::operator()(token::type const& x)
+    bool compiler::operator()(token_ids::type const& x)
     {
         BOOST_ASSERT(current != 0);
         switch (x)
         {
-            case token::plus: current->op(op_add); break;
-            case token::minus: current->op(op_sub); break;
-            case token::times: current->op(op_mul); break;
-            case token::divide: current->op(op_div); break;
+            case token_ids::plus: current->op(op_add); break;
+            case token_ids::minus: current->op(op_sub); break;
+            case token_ids::times: current->op(op_mul); break;
+            case token_ids::divide: current->op(op_div); break;
 
-            case token::equal: current->op(op_eq); break;
-            case token::not_equal: current->op(op_neq); break;
-            case token::less: current->op(op_lt); break;
-            case token::less_equal: current->op(op_lte); break;
-            case token::greater: current->op(op_gt); break;
-            case token::greater_equal: current->op(op_gte); break;
+            case token_ids::equal: current->op(op_eq); break;
+            case token_ids::not_equal: current->op(op_neq); break;
+            case token_ids::less: current->op(op_lt); break;
+            case token_ids::less_equal: current->op(op_lte); break;
+            case token_ids::greater: current->op(op_gt); break;
+            case token_ids::greater_equal: current->op(op_gte); break;
 
-            case token::logical_or: current->op(op_or); break;
-            case token::logical_and: current->op(op_and); break;
+            case token_ids::logical_or: current->op(op_or); break;
+            case token_ids::logical_and: current->op(op_and); break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -276,9 +276,9 @@ namespace client { namespace code_gen
             return false;
         switch (x.operator_)
         {
-            case token::minus: current->op(op_neg); break;
-            case token::not_: current->op(op_not); break;
-            case token::plus: break;
+            case token_ids::minus: current->op(op_neg); break;
+            case token_ids::not_: current->op(op_not); break;
+            case token_ids::plus: break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -376,7 +376,7 @@ namespace client { namespace code_gen
         };
     }
 
-    inline int precedence_of(token::type op)
+    inline int precedence_of(token_ids::type op)
     {
         return precedence[op & 0xFF];
     }
@@ -389,14 +389,14 @@ namespace client { namespace code_gen
     {
         while ((rbegin != rend) && (precedence_of(rbegin->operator_) >= min_precedence))
         {
-            token::type op = rbegin->operator_;
+            token_ids::type op = rbegin->operator_;
             if (!boost::apply_visitor(*this, rbegin->operand_))
                 return false;
             ++rbegin;
 
             while ((rbegin != rend) && (precedence_of(rbegin->operator_) > precedence_of(op)))
             {
-                token::type next_op = rbegin->operator_;
+                token_ids::type next_op = rbegin->operator_;
                 compile_expression(precedence_of(next_op), rbegin, rend);
             }
             (*this)(op);

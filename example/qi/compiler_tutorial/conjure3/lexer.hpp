@@ -76,14 +76,14 @@ namespace client { namespace lexer
     private:
         // get the type of any qi::raw_token(...) and qi::token(...) constructs
         typedef typename boost::spirit::result_of::terminal<
-            boost::spirit::tag::raw_token(token::type)
+            boost::spirit::tag::raw_token(token_ids::type)
         >::type raw_token_spec;
 
         typedef typename boost::spirit::result_of::terminal<
-            boost::spirit::tag::token(token::type)
+            boost::spirit::tag::token(token_ids::type)
         >::type token_spec;
 
-        typedef std::map<std::string, token::type> keyword_map_type;
+        typedef std::map<std::string, token_ids::type> keyword_map_type;
 
     protected:
         // add a keyword to the mapping table
@@ -102,7 +102,7 @@ namespace client { namespace lexer
 
             typename keyword_map_type::const_iterator it = keywords_.find(kwd);
             BOOST_ASSERT(it != keywords_.end());
-            return qi::raw_token((it != keywords_.end()) ? (*it).second : token::invalid);
+            return qi::raw_token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
         }
 
         // extract a token(id) for the given registered keyword
@@ -113,7 +113,7 @@ namespace client { namespace lexer
 
             typename keyword_map_type::const_iterator it = keywords_.find(kwd);
             BOOST_ASSERT(it != keywords_.end());
-            return qi::token((it != keywords_.end()) ? (*it).second : token::invalid);
+            return qi::token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
         }
 
         lex::token_def<std::string> identifier;

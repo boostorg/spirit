@@ -11,9 +11,9 @@ namespace client { namespace lexer
 {
     template <typename BaseIterator>
     conjure_tokens<BaseIterator>::conjure_tokens()
-      : identifier("[a-zA-Z_][a-zA-Z_0-9]*", token::identifier)
-      , lit_uint("[0-9]+", token::lit_uint)
-      , true_or_false("true|false", token::true_or_false)
+      : identifier("[a-zA-Z_][a-zA-Z_0-9]*", token_ids::identifier)
+      , lit_uint("[0-9]+", token_ids::lit_uint)
+      , true_or_false("true|false", token_ids::true_or_false)
     {
         lex::_pass_type _pass;
 
@@ -27,30 +27,30 @@ namespace client { namespace lexer
         add_keyword("return");
 
         this->self.add
-                ("\\|\\|", token::logical_or)
-                ("&&", token::logical_and)
-                ("==", token::equal)
-                ("!=", token::not_equal)
-                ("<", token::less)
-                ("<=", token::less_equal)
-                (">", token::greater)
-                (">=", token::greater_equal)
-                ("\\+", token::plus)
-                ("\\-", token::minus)
-                ("\\*", token::times)
-                ("\\/", token::divide)
-                ("!", token::not_)
+                ("\\|\\|", token_ids::logical_or)
+                ("&&", token_ids::logical_and)
+                ("==", token_ids::equal)
+                ("!=", token_ids::not_equal)
+                ("<", token_ids::less)
+                ("<=", token_ids::less_equal)
+                (">", token_ids::greater)
+                (">=", token_ids::greater_equal)
+                ("\\+", token_ids::plus)
+                ("\\-", token_ids::minus)
+                ("\\*", token_ids::times)
+                ("\\/", token_ids::divide)
+                ("!", token_ids::not_)
             ;
 
         this->self += lex::char_('(') | ')' | '{' | '}' | ',' | '=' | ';';
 
         this->self +=
                 identifier
-            |   lex::string("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", token::comment)
+            |   lex::string("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", token_ids::comment)
                 [
                     lex::_pass = lex::pass_flags::pass_ignore
                 ]
-            |   lex::string("[ \t\n\r]+", token::whitespace)
+            |   lex::string("[ \t\n\r]+", token_ids::whitespace)
                 [
                     lex::_pass = lex::pass_flags::pass_ignore
                 ]
@@ -61,7 +61,7 @@ namespace client { namespace lexer
     bool conjure_tokens<BaseIterator>::add_keyword(std::string const& keyword)
     {
         // add the token to the lexer
-        token::type id = token::type(this->get_next_id());
+        token_ids::type id = token_ids::type(this->get_next_id());
         this->self.add(keyword, id);
 
         // store the mapping for later retrieval
