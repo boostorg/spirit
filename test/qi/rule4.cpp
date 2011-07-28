@@ -138,7 +138,7 @@ main()
         typedef boost::variant<double, int> v_type;
         rule<const char*, v_type()> r1 = int_;
         v_type v;
-        BOOST_TEST(test_attr("1", r1, v) && v.which() == 1 && 
+        BOOST_TEST(test_attr("1", r1, v) && v.which() == 1 &&
             boost::get<int>(v) == 1);
 
         typedef boost::optional<int> ov_type;
@@ -181,6 +181,18 @@ main()
         int j = 0;
         BOOST_TEST(test_attr("456", r1[_val = _1], i) && i == 456);
         BOOST_TEST(test_attr("   456", r2[_val = _1], j, space) && j == 456);
+    }
+
+    {
+        using boost::spirit::qi::lexeme;
+        using boost::spirit::qi::alnum;
+
+        rule<const char*, std::string()> literal_;
+        literal_ = lexeme[ +(alnum | '_') ];
+
+        std::string attr;
+        BOOST_TEST(test_attr("foo_bar", literal_, attr) && attr == "foo_bar");
+        std::cout << attr << std::endl;
     }
 
     return boost::report_errors();
