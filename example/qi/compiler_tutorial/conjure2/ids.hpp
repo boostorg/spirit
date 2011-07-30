@@ -79,7 +79,7 @@ namespace client
 
     template <op::type op>
     struct assign_op
-        : make_op<op_type::binary | op_type::assign, op> {};
+        : make_op<op_type::assign, op> {};
 
     template <op::type op>
     struct binary_or_unary_op
