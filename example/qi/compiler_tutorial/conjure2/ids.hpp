@@ -142,7 +142,7 @@ namespace client
             not_                = unary_op<op::not_>::value,
 
             // misc tags
-            identifier          = op::minus_minus + 1,
+            identifier          = op::not_ + 1,
             comment,
             whitespace,
             lit_uint,
