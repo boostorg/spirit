@@ -554,24 +554,19 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef Iterator iterator_type;
 
         //  default constructed tokens correspond to EOI tokens
-        position_token() 
-          : value_(iterpair_type(iterator_type(), iterator_type())) 
-        {}
+        position_token() {}
 
         //  construct an invalid token
         explicit position_token(int)
-          : base_type(0)
-          , value_(iterpair_type(iterator_type(), iterator_type())) 
-        {}
+          : base_type(0) {}
 
         position_token(id_type id, std::size_t state, token_value_type const& value)
-          : base_type(id, state, value), value_(value) 
-        {}
+          : base_type(id, state, value), value_(value) {}
 
         position_token(id_type id, std::size_t state, Iterator const& first
               , Iterator const& last)
           : base_type(id, state, first, last)
-          , value_(iterpair_type(iterator_type(), iterator_type())) 
+          , value_(iterpair_type(first, last)) 
         {}
 
         token_value_type& value() { return value_; }
