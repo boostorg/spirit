@@ -96,8 +96,13 @@ namespace client { namespace parser
         // Debugging and error handling and reporting support.
         BOOST_SPIRIT_DEBUG_NODES(
             (statement_list)
+            (statement_)
             (variable_declaration)
             (assignment)
+            (if_statement)
+            (while_statement)
+            (compound_statement)
+            (return_statement)
         );
 
         // Error handling: on error in statement_list, call error_handler.
