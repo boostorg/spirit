@@ -21,36 +21,36 @@ namespace client
     //  program is being compiled.
     ///////////////////////////////////////////////////////////////////////////////
     struct set_annotation_id
-        {
-            typedef void result_type;
+    {
+        typedef void result_type;
 
-            int id;
+        int id;
         set_annotation_id(int id) : id(id) {}
 
-            void operator()(ast::function_call& x) const
-            {
-                x.function_name.id = id;
-            }
+        void operator()(ast::function_call& x) const
+        {
+            x.function_name.id = id;
+        }
 
         template <typename T>
         void dispatch(T& x, boost::mpl::true_) const
-            {
-                x.id = id;
-            }
+        {
+            x.id = id;
+        }
 
-            template <typename T>
+        template <typename T>
         void dispatch(T& x, boost::mpl::false_) const
         {
             // no-op
         }
 
         template <typename T>
-            void operator()(T& x) const
-            {
+        void operator()(T& x) const
+        {
             typename boost::is_base_of<ast::tagged, T> is_tagged;
             dispatch(x, is_tagged);
-            }
-        };
+        }
+    };
 
     struct get_annotation_id
     {

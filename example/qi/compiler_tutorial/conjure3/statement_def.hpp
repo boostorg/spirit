@@ -41,8 +41,8 @@ namespace client { namespace parser
 
         statement_ =
                 variable_declaration
-            |   assignment
             |   compound_statement
+            |   expr_statement
             |   if_statement
             |   while_statement
             |   return_statement
@@ -51,15 +51,12 @@ namespace client { namespace parser
         variable_declaration =
                 l("int")
             >   expr.identifier
-            >  -('=' > expr)
+            >  -(l("=") > expr.binary_expr)
             >   ';'
             ;
 
-        assignment =
-                expr.identifier
-            >   '='
-            >   expr
-            >   ';'
+        expr_statement =
+            ';' | (expr > ';')
             ;
 
         if_statement =
@@ -96,8 +93,13 @@ namespace client { namespace parser
         // Debugging and error handling and reporting support.
         BOOST_SPIRIT_DEBUG_NODES(
             (statement_list)
+            (statement_)
             (variable_declaration)
-            (assignment)
+            (expr_statement)
+            (if_statement)
+            (while_statement)
+            (compound_statement)
+            (return_statement)
         );
 
         // Error handling: on error in statement_list, call error_handler.
@@ -105,9 +107,7 @@ namespace client { namespace parser
             error_handler_function(error_handler)(
                 "Error! Expecting ", _4, _3));
 
-        // Annotation: on success in assignment, call annotation.
-        on_success(assignment,
-            annotation_function(error_handler.iters)(_val, _1));
+        // Annotation: on success in return_statement, call annotation.
         on_success(return_statement,
             annotation_function(error_handler.iters)(_val, _1));
     }

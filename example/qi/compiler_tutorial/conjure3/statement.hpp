@@ -30,7 +30,7 @@ namespace client { namespace parser
 
         qi::rule<Iterator, ast::statement()> statement_;
         qi::rule<Iterator, ast::variable_declaration()> variable_declaration;
-        qi::rule<Iterator, ast::assignment()> assignment;
+        qi::rule<Iterator, ast::expression_statement()> expr_statement;
         qi::rule<Iterator, ast::if_statement()> if_statement;
         qi::rule<Iterator, ast::while_statement()> while_statement;
         qi::rule<Iterator, ast::return_statement()> return_statement;

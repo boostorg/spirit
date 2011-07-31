@@ -39,7 +39,19 @@ namespace client { namespace parser
 
         ///////////////////////////////////////////////////////////////////////
         // Main expression grammar
+
         expr =
+                assign_expr
+            |   binary_expr
+            ;
+
+        assign_expr =
+                identifier
+            >>  tokenid_mask(token_ids::op_assign)
+            >>  expr
+            ;
+
+        binary_expr =
                 unary_expr
                 >> *(tokenid_mask(token_ids::op_binary) > unary_expr)
             ;
@@ -75,8 +87,11 @@ namespace client { namespace parser
         // Debugging and error handling and reporting support.
         BOOST_SPIRIT_DEBUG_NODES(
             (expr)
+            (assign_expr)
+            (binary_expr)
             (unary_expr)
             (primary_expr)
+            (literal)
             (function_call)
             (argument_list)
             (identifier)

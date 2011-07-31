@@ -26,6 +26,8 @@ namespace client { namespace lexer
         add_keyword("while");
         add_keyword("return");
 
+        add_keyword("=", token_ids::assign);
+
         this->self.add
                 ("\\|\\|", token_ids::logical_or)
                 ("&&", token_ids::logical_and)
@@ -42,7 +44,7 @@ namespace client { namespace lexer
                 ("!", token_ids::not_)
             ;
 
-        this->self += lex::char_('(') | ')' | '{' | '}' | ',' | '=' | ';';
+        this->self += lex::char_('(') | ')' | '{' | '}' | ',' | ';';
 
         this->self +=
                 identifier
@@ -58,12 +60,17 @@ namespace client { namespace lexer
     }
 
     template <typename BaseIterator>
-    bool conjure_tokens<BaseIterator>::add_keyword(std::string const& keyword)
+    bool conjure_tokens<BaseIterator>::add_keyword(
+        std::string const& keyword, int id_)
     {
         // add the token to the lexer
-        token_ids::type id = token_ids::type(this->get_next_id());
-        this->self.add(keyword, id);
+        token_ids::type id;
+        if (id_ == token_ids::invalid)
+            id = token_ids::type(this->get_next_id());
+        else
+            id = token_ids::type(id_);
 
+        this->self.add(keyword, id);
         // store the mapping for later retrieval
         std::pair<typename keyword_map_type::iterator, bool> p =
             keywords_.insert(typename keyword_map_type::value_type(keyword, id));

@@ -87,7 +87,7 @@ namespace client { namespace lexer
 
     protected:
         // add a keyword to the mapping table
-        bool add_keyword(std::string const& keyword);
+        bool add_keyword(std::string const& keyword, int id = token_ids::invalid);
 
     public:
         typedef BaseIterator base_iterator_type;

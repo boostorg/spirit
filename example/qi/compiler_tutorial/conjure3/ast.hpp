@@ -41,24 +41,18 @@ namespace client { namespace ast
         std::string name;
     };
 
-    struct literal : tagged
-    {
-        // tell spirit that this is an adapted variant
-        struct adapted_variant;
-
-    typedef boost::variant<
+    struct literal :
+        tagged,
+        boost::spirit::adapted_variant<
             nil
           , bool
           , unsigned int>
-        variant_type;
-
-        typedef variant_type::types types;
-
-        literal() : val() {}
-        literal(bool val) : val(val) {}
-        literal(unsigned int val) : val(val) {}
-
-        variant_type val;
+    {
+        literal() : base_type() {}
+        literal(bool val) : base_type(val) {}
+        literal(unsigned int val) : base_type(val) {}
+        literal(literal const& rhs)
+            : base_type(rhs.get()) {}
     };
 
     typedef boost::variant<
@@ -89,15 +83,31 @@ namespace client { namespace ast
         std::list<expression> args;
     };
 
-    struct expression
+    struct binary
     {
         operand first;
         std::list<operation> rest;
     };
 
+    struct assignment;
+
+    struct expression :
+        boost::spirit::adapted_variant<
+          nil
+        , boost::recursive_wrapper<assignment>
+        , binary>
+    {
+        expression() : base_type() {}
+        expression(assignment const& val) : base_type(val) {}
+        expression(binary const& val) : base_type(val) {}
+        expression(expression const& rhs)
+            : base_type(rhs.get()) {}
+    };
+
     struct assignment
     {
         identifier lhs;
+        token_ids::type operator_;
         expression rhs;
     };
 
@@ -112,9 +122,11 @@ namespace client { namespace ast
     struct statement_list;
     struct return_statement;
 
+    typedef boost::optional<expression> expression_statement;
+
     typedef boost::variant<
             variable_declaration
-          , assignment
+          , expression_statement
           , boost::recursive_wrapper<if_statement>
           , boost::recursive_wrapper<while_statement>
           , boost::recursive_wrapper<return_statement>
@@ -183,7 +195,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::expression,
+    client::ast::binary,
     (client::ast::operand, first)
     (std::list<client::ast::operation>, rest)
 )
@@ -197,6 +209,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
     client::ast::assignment,
     (client::ast::identifier, lhs)
+    (client::token_ids::type, operator_)
     (client::ast::expression, rhs)
 )
 

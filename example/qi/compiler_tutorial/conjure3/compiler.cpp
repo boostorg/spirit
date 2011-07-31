@@ -50,7 +50,7 @@ namespace client { namespace code_gen
 
     llvm::Value* compiler::operator()(ast::literal const& x)
     {
-        return boost::apply_visitor(*this, x.val);
+        return boost::apply_visitor(*this, x.get());
     }
 
     llvm::Value* compiler::operator()(ast::identifier const& x)
@@ -230,7 +230,7 @@ namespace client { namespace code_gen
         return lhs;
     }
 
-    llvm::Value* compiler::operator()(ast::expression const& x)
+    llvm::Value* compiler::operator()(ast::binary const& x)
     {
         llvm::Value* lhs = boost::apply_visitor(*this, x.first);
         if (lhs == 0)
@@ -239,21 +239,28 @@ namespace client { namespace code_gen
         return compile_expression(0, lhs, rest_begin, x.rest.end());
     }
 
+    llvm::Value* compiler::operator()(ast::expression const& x)
+    {
+        return boost::apply_visitor(*this, x.get());
+    }
+
     llvm::Value* compiler::operator()(ast::assignment const& x)
     {
-        llvm::Value* lhs = named_values[x.lhs.name];
-        if (lhs == 0)
-        {
-            error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
-            return 0;
-        }
+        //~ llvm::Value* lhs = named_values[x.lhs.name];
+        //~ if (lhs == 0)
+        //~ {
+            //~ error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
+            //~ return 0;
+        //~ }
 
-        llvm::Value* rhs = (*this)(x.rhs);
-        if (rhs == 0)
-            return 0;
+        //~ llvm::Value* rhs = (*this)(x.rhs);
+        //~ if (rhs == 0)
+            //~ return 0;
 
-        builder.CreateStore(rhs, lhs);
-        return rhs;
+        //~ builder.CreateStore(rhs, lhs);
+        //~ return rhs;
+
+        return 0;
     }
 
     //  Create an alloca instruction in the entry block of
@@ -317,6 +324,16 @@ namespace client { namespace code_gen
         BOOST_FOREACH(ast::statement const& s, x)
         {
             if (!(*this)(s))
+                return false;
+        }
+        return true;
+    }
+
+    bool compiler::operator()(ast::expression_statement const& x)
+    {
+        if (x)
+        {
+            if ((*this)(*x) == 0)
                 return false;
         }
         return true;
