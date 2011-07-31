@@ -172,12 +172,6 @@ namespace client { namespace code_gen
         return precedence[op & 0xFF];
     }
 
-    inline bool is_left_assoc(token_ids::type op)
-    {
-        // only the assignment operators are right to left
-        return (op & token_ids::op_assign) == 0;
-    }
-
     llvm::Value* compiler::compile_binary_expression(
         llvm::Value* lhs, llvm::Value* rhs, token_ids::type op)
     {
@@ -246,21 +240,19 @@ namespace client { namespace code_gen
 
     llvm::Value* compiler::operator()(ast::assignment const& x)
     {
-        //~ llvm::Value* lhs = named_values[x.lhs.name];
-        //~ if (lhs == 0)
-        //~ {
-            //~ error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
-            //~ return 0;
-        //~ }
+        llvm::Value* lhs = named_values[x.lhs.name];
+        if (lhs == 0)
+        {
+            error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
+            return 0;
+        }
 
-        //~ llvm::Value* rhs = (*this)(x.rhs);
-        //~ if (rhs == 0)
-            //~ return 0;
+        llvm::Value* rhs = (*this)(x.rhs);
+        if (rhs == 0)
+            return 0;
 
-        //~ builder.CreateStore(rhs, lhs);
-        //~ return rhs;
-
-        return 0;
+        builder.CreateStore(rhs, lhs);
+        return rhs;
     }
 
     //  Create an alloca instruction in the entry block of
