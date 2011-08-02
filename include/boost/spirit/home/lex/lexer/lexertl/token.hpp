@@ -446,7 +446,7 @@ namespace boost { namespace spirit { namespace traits
             if (0 == t.value().which()) {
             //  first access to the token value
                 typedef iterator_range<Iterator> iterpair_type;
-                iterpair_type const& ip = get<iterpair_type>(t.value());
+                iterpair_type const& ip = boost::get<iterpair_type>(t.value());
 
             // Interestingly enough we use the assign_to() framework defined in 
             // Spirit.Qi allowing to convert the pair of iterators to almost any 
@@ -489,7 +489,7 @@ namespace boost { namespace spirit { namespace traits
             }
             else {
             // reuse the already assigned value
-                spirit::traits::assign_to(get<Attribute>(t.value()), attr);
+                spirit::traits::assign_to(boost::get<Attribute>(t.value()), attr);
             }
         }
     };
@@ -499,6 +499,14 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_container_from_value<Attribute
           , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
       : assign_to_attribute_from_value<Attribute
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+    {};
+
+    template <typename Iterator, typename AttributeTypes
+      , typename HasState, typename Idtype>
+    struct assign_to_container_from_value<utree
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+      : assign_to_attribute_from_value<utree
           , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
     {};
 
@@ -607,7 +615,7 @@ namespace boost { namespace spirit { namespace traits
             typedef fusion::vector2<Idtype_, iterator_range<Iterator> > 
                 attribute_type;
 
-            iterpair_type const& ip = get<iterpair_type>(t.value());
+            iterpair_type const& ip = boost::get<iterpair_type>(t.value());
             attr = attribute_type(t.id(), ip);
         }
     };

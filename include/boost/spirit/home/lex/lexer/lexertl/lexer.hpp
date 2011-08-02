@@ -337,6 +337,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 boost::lexer::debug::dump(state_machine_, std::cerr);
 #endif
                 initialized_dfa_ = true;
+
+//                 // release memory held by rules description
+//                 basic_rules_type rules;
+//                 rules.init_state_info(rules_);        // preserve states
+//                 std::swap(rules, rules_);
             }
             return true;
         }
@@ -345,7 +350,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // lexertl specific data
         mutable boost::lexer::basic_state_machine<char_type> state_machine_;
         boost::lexer::regex_flags flags_;
-        basic_rules_type rules_;
+        /*mutable*/ basic_rules_type rules_;
 
         typename Functor::semantic_actions_type actions_;
         mutable bool initialized_dfa_;
