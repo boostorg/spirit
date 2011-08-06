@@ -1,4 +1,4 @@
-/* mini program with syntax error */
+/* conjure program with syntax error */
 
 int foo(n)
 {

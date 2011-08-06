@@ -1,0 +1,90 @@
+/* More operators tests */
+/* Conjure >=3 only!!! */
+
+int plus(x, y)
+{
+    int t = x;
+    t += y;
+    return t;
+}
+
+int minus(x, y)
+{
+    int t = x;
+    t -= y;
+    return t;
+}
+
+int shl(x, y)
+{
+    int t = x;
+    t <<= y;
+    return t;
+}
+
+int div(x, y)
+{
+    int t = x;
+    t /= y;
+    return t;
+}
+
+int mult(x, y)
+{
+    int t = x;
+    t *= y;
+    return t;
+}
+
+int mod(x, y)
+{
+    int t = x;
+    t %= y;
+    return t;
+}
+
+int or(x, y)
+{
+    int t = x;
+    t |= y;
+    return t;
+}
+
+int and(x, y)
+{
+    int t = x;
+    t &= y;
+    return t;
+}
+
+int xor(x, y)
+{
+    int t = x;
+    t ^= y;
+    return t;
+}
+
+int shr(x, y)
+{
+    int t = x;
+    t >>= y;
+    return t;
+}
+
+int main()
+{
+    int a = plus(2, 3);     // 5
+    int b = shl(a, 2);      // 20
+    int c = minus(b, 2);    // 18
+    int d = div(c, 2);      // 9
+    int e = mult(d, c);     // 162
+    int f = mod(e, 10);     // 2
+    int g = or(f, 45);      // 47
+    int h = and(g, 48);     // 32
+    int j = xor(h, h);      // 0
+    int k = or(j, 65535);   // 65535
+    int l = shr(k, 3);      // 8191
+    return l;
+}
+
+

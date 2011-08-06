@@ -246,8 +246,60 @@ namespace client { namespace code_gen
         if (rhs == 0)
             return 0;
 
-        builder.CreateStore(rhs, lhs);
-        return rhs;
+        if (x.operator_ == token_ids::assign)
+        {
+            builder.CreateStore(rhs, lhs);
+            return rhs;
+        }
+
+        llvm::Value* result = builder.CreateLoad(lhs, x.lhs.name.c_str());
+        switch (x.operator_)
+        {
+            case token_ids::plus_assign:
+                result = builder.CreateAdd(result, rhs, "addtmp");
+                break;
+
+            case token_ids::minus_assign:
+                result = builder.CreateSub(result, rhs, "subtmp");
+                break;
+
+            case token_ids::times_assign:
+                result = builder.CreateMul(result, rhs, "multmp");
+                break;
+
+            case token_ids::divide_assign:
+                result = builder.CreateSDiv(result, rhs, "divtmp");
+                break;
+
+            case token_ids::mod_assign:
+                result = builder.CreateSRem(result, rhs, "modtmp");
+                break;
+
+            case token_ids::bit_and_assign:
+                result = builder.CreateAnd(result, rhs, "andtmp");
+                break;
+
+            case token_ids::bit_xor_assign:
+                result = builder.CreateXor(result, rhs, "xortmp");
+                break;
+
+            case token_ids::bit_or_assign:
+                result = builder.CreateOr(result, rhs, "ortmp");
+                break;
+
+            case token_ids::shift_left_assign:
+                result = builder.CreateShl(result, rhs, "shltmp");
+                break;
+
+            case token_ids::shift_right_assign:
+                result = builder.CreateLShr(result, rhs, "shrtmp");
+                break;
+
+            default: BOOST_ASSERT(0); return 0;
+        }
+
+        builder.CreateStore(result, lhs);
+        return result;
     }
 
     //  Create an alloca instruction in the entry block of

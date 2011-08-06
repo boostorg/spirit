@@ -61,6 +61,13 @@ namespace client
             boost::apply_visitor(set_id(id), ast);
         }
 
+        void operator()(ast::variable_declaration& ast, Iterator pos) const
+        {
+            int id = iters.size();
+            iters.push_back(pos);
+            ast.lhs.id = id;
+        }
+
         void operator()(ast::assignment& ast, Iterator pos) const
         {
             int id = iters.size();

@@ -110,7 +110,10 @@ namespace client { namespace parser
             error_handler_function(error_handler)(
                 "Error! Expecting ", _4, _3));
 
-        // Annotation: on success in assignment, call annotation.
+        // Annotation: on success in variable_declaration,
+        // assignment and return_statement, call annotation.
+        on_success(variable_declaration,
+            annotation_function(error_handler.iters)(_val, _1));
         on_success(assignment,
             annotation_function(error_handler.iters)(_val, _1));
         on_success(return_statement,

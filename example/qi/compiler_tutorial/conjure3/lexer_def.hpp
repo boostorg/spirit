@@ -28,27 +28,37 @@ namespace client { namespace lexer
                 ("else")
                 ("while")
                 ("return")
-                ("=", token_ids::assign)
-                ("\\|\\|", token_ids::logical_or)
-                ("&&", token_ids::logical_and)
-                ("==", token_ids::equal)
-                ("!=", token_ids::not_equal)
-                ("<", token_ids::less)
-                ("<=", token_ids::less_equal)
-                (">", token_ids::greater)
-                (">=", token_ids::greater_equal)
-                ("\\+", token_ids::plus)
-                ("\\-", token_ids::minus)
-                ("\\*", token_ids::times)
-                ("\\/", token_ids::divide)
-                ("!", token_ids::not_)
+                ("=",       token_ids::assign)
+                ("\\+=",    token_ids::plus_assign)
+                ("\\-=",    token_ids::minus_assign)
+                ("\\*=",    token_ids::times_assign)
+                ("\\/=",    token_ids::divide_assign)
+                ("%=",      token_ids::mod_assign)
+                ("\\&=",    token_ids::bit_and_assign)
+                ("\\^=",    token_ids::bit_xor_assign)
+                ("\\|=",    token_ids::bit_or_assign)
+                ("<<=",     token_ids::shift_left_assign)
+                (">>=",     token_ids::shift_right_assign)
+                ("\\|\\|",  token_ids::logical_or)
+                ("&&",      token_ids::logical_and)
+                ("==",      token_ids::equal)
+                ("!=",      token_ids::not_equal)
+                ("<",       token_ids::less)
+                ("<=",      token_ids::less_equal)
+                (">",       token_ids::greater)
+                (">=",      token_ids::greater_equal)
+                ("\\+",     token_ids::plus)
+                ("\\-",     token_ids::minus)
+                ("\\*",     token_ids::times)
+                ("\\/",     token_ids::divide)
+                ("!",       token_ids::not_)
             ;
 
         this->self += lex::char_('(') | ')' | '{' | '}' | ',' | ';';
 
         this->self +=
                 identifier
-            |   lex::string("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", token_ids::comment)
+            |   lex::string("(\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/)|(\\/\\/[^\r\n]*)", token_ids::comment)
                 [
                     lex::_pass = lex::pass_flags::pass_ignore
                 ]
