@@ -17,6 +17,94 @@
 
 namespace client { namespace code_gen
 {
+    value::value(
+        llvm::Value* v,
+        bool is_lvalue_,
+        llvm::IRBuilder<>* builder)
+      : v(v),
+        is_lvalue_(is_lvalue_),
+        builder(builder)
+    {}
+
+    value::value(value const& rhs)
+      : v(rhs.v),
+        is_lvalue_(rhs.is_lvalue_),
+        builder(rhs.builder)
+    {}
+
+    value::value(unsigned int x)
+      : v(llvm::ConstantInt::get(context(), llvm::APInt(int_size, x))),
+        is_lvalue_(false),
+        builder(0)
+    {}
+
+    value::value(int x)
+      : v(llvm::ConstantInt::get(context(), llvm::APInt(int_size, x))),
+        is_lvalue_(false),
+        builder(0)
+    {}
+
+    value::value(bool x)
+      : v(llvm::ConstantInt::get(context(), llvm::APInt(1, x))),
+        is_lvalue_(false),
+        builder(0)
+    {}
+
+    value::operator llvm::Value*() const
+    {
+        if (is_lvalue_)
+        {
+            BOOST_ASSERT(builder != 0);
+            return builder->CreateLoad(v, v->getName());
+        }
+        return v;
+    }
+
+    value& value::operator=(value const& rhs)
+    {
+        v = rhs.v;
+        is_lvalue_ = rhs.is_lvalue_;
+        builder = rhs.builder;
+        return *this;
+    }
+
+    value& value::assign(value const& rhs)
+    {
+        BOOST_ASSERT(is_lvalue());
+        BOOST_ASSERT(builder != 0);
+        builder->CreateStore(rhs, v);
+        return *this;
+    }
+
+    namespace
+    {
+        //  Create an alloca instruction in the entry block of
+        //  the function. This is used for mutable variables etc.
+        llvm::AllocaInst*
+        create_entry_block_alloca(
+            llvm::Function* function,
+            char const* name,
+            llvm::LLVMContext& context)
+        {
+            llvm::IRBuilder<> builder(
+                &function->getEntryBlock(),
+                function->getEntryBlock().begin());
+
+            return builder.CreateAlloca(
+                llvm::Type::getIntNTy(context, int_size), 0, name);
+        }
+    }
+
+    lvalue::lvalue(llvm::IRBuilder<>& builder, char const* name)
+      : value(
+            create_entry_block_alloca(
+                builder.GetInsertBlock()->getParent(),
+                name,
+                context()),
+        true, &builder)
+    {
+    }
+
     void compiler::init_fpm()
     {
         // Set up the optimizer pipeline.  Start with registering info about how the
@@ -38,26 +126,26 @@ namespace client { namespace code_gen
         fpm.doInitialization();
     }
 
-    llvm::Value* compiler::operator()(unsigned int x)
+    value compiler::operator()(unsigned int x)
     {
-        return llvm::ConstantInt::get(context(), llvm::APInt(int_size, x));
+        return value(x);
     }
 
-    llvm::Value* compiler::operator()(bool x)
+    value compiler::operator()(bool x)
     {
-        return llvm::ConstantInt::get(context(), llvm::APInt(1, x));
+        return value(x);
     }
 
-    llvm::Value* compiler::operator()(ast::literal const& x)
+    value compiler::operator()(ast::literal const& x)
     {
         return boost::apply_visitor(*this, x.get());
     }
 
-    llvm::Value* compiler::operator()(ast::identifier const& x)
+    value compiler::operator()(ast::identifier const& x)
     {
         // Look this variable up in the function.
-        llvm::Value* value = named_values[x.name];
-        if (value == 0)
+        value value = named_values[x.name];
+        if (!value)
         {
             error_handler(x.id, "Undeclared variable: " + x.name);
             return 0;
@@ -67,28 +155,17 @@ namespace client { namespace code_gen
         return builder.CreateLoad(value, x.name.c_str());
     }
 
-    namespace
+    value compiler::operator()(ast::unary const& x)
     {
-        llvm::Value*
-        neg1(llvm::LLVMContext& context, llvm::IRBuilder<>& builder)
-        {
-            llvm::Value* one = llvm::ConstantInt::get(context,
-                llvm::APInt(int_size, 1));
-            return builder.CreateNeg(one, "neg1");
-        }
-    }
-
-    llvm::Value* compiler::operator()(ast::unary const& x)
-    {
-        llvm::Value* operand = boost::apply_visitor(*this, x.operand_);
-        if (operand == 0)
+        value operand = boost::apply_visitor(*this, x.operand_);
+        if (!operand)
             return 0;
 
         switch (x.operator_)
         {
             case token_ids::compl_:
                 return builder.CreateXor(
-                    operand, neg1(context(), builder), "compltmp");
+                    operand, value(-1), "compltmp");
             case token_ids::minus:
                 return builder.CreateNeg(operand, "negtmp");
             case token_ids::not_:
@@ -99,10 +176,10 @@ namespace client { namespace code_gen
         }
     }
 
-    llvm::Value* compiler::operator()(ast::function_call const& x)
+    value compiler::operator()(ast::function_call const& x)
     {
         llvm::Function* callee = vm.module()->getFunction(x.function_name.name);
-        if (callee == 0)
+        if (!callee)
         {
             error_handler(x.function_name.id, "Function not found: " + x.function_name.name);
             return false;
@@ -189,8 +266,8 @@ namespace client { namespace code_gen
         return precedence[op & 0xFF];
     }
 
-    llvm::Value* compiler::compile_binary_expression(
-        llvm::Value* lhs, llvm::Value* rhs, token_ids::type op)
+    value compiler::compile_binary_expression(
+        value lhs, value rhs, token_ids::type op)
     {
         switch (op)
         {
@@ -220,9 +297,9 @@ namespace client { namespace code_gen
     }
 
     // The Shunting-yard algorithm
-    llvm::Value* compiler::compile_expression(
+    value compiler::compile_expression(
         int min_precedence,
-        llvm::Value* lhs,
+        value lhs,
         std::list<ast::operation>::const_iterator& rest_begin,
         std::list<ast::operation>::const_iterator rest_end)
     {
@@ -230,8 +307,8 @@ namespace client { namespace code_gen
             (precedence_of(rest_begin->operator_) >= min_precedence))
         {
             token_ids::type op = rest_begin->operator_;
-            llvm::Value* rhs = boost::apply_visitor(*this, rest_begin->operand_);
-            if (rhs == 0)
+            value rhs = boost::apply_visitor(*this, rest_begin->operand_);
+            if (!rhs)
                 return 0;
             ++rest_begin;
 
@@ -248,94 +325,82 @@ namespace client { namespace code_gen
         return lhs;
     }
 
-    llvm::Value* compiler::operator()(ast::expression const& x)
+    value compiler::operator()(ast::expression const& x)
     {
-        llvm::Value* lhs = boost::apply_visitor(*this, x.first);
-        if (lhs == 0)
+        value lhs = boost::apply_visitor(*this, x.first);
+        if (!lhs)
             return 0;
         std::list<ast::operation>::const_iterator rest_begin = x.rest.begin();
         return compile_expression(0, lhs, rest_begin, x.rest.end());
     }
 
-    llvm::Value* compiler::operator()(ast::assignment const& x)
+    value compiler::operator()(ast::assignment const& x)
     {
-        llvm::Value* lhs = named_values[x.lhs.name];
-        if (lhs == 0)
+        lvalue lhs(named_values[x.lhs.name], builder);
+        if (!lhs)
         {
             error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
             return 0;
         }
 
-        llvm::Value* rhs = (*this)(x.rhs);
-        if (rhs == 0)
+        value rhs = (*this)(x.rhs);
+        if (!rhs)
             return 0;
 
         if (x.operator_ == token_ids::assign)
         {
-            builder.CreateStore(rhs, lhs);
-            return rhs;
+            lhs.assign(rhs);
+            return lhs;
         }
 
-        llvm::Value* result = builder.CreateLoad(lhs, x.lhs.name.c_str());
+        value result;
         switch (x.operator_)
         {
             case token_ids::plus_assign:
-                result = builder.CreateAdd(result, rhs, "addtmp");
+                result = builder.CreateAdd(lhs, rhs, "addtmp");
                 break;
 
             case token_ids::minus_assign:
-                result = builder.CreateSub(result, rhs, "subtmp");
+                result = builder.CreateSub(lhs, rhs, "subtmp");
                 break;
 
             case token_ids::times_assign:
-                result = builder.CreateMul(result, rhs, "multmp");
+                result = builder.CreateMul(lhs, rhs, "multmp");
                 break;
 
             case token_ids::divide_assign:
-                result = builder.CreateSDiv(result, rhs, "divtmp");
+                result = builder.CreateSDiv(lhs, rhs, "divtmp");
                 break;
 
             case token_ids::mod_assign:
-                result = builder.CreateSRem(result, rhs, "modtmp");
+                result = builder.CreateSRem(lhs, rhs, "modtmp");
                 break;
 
             case token_ids::bit_and_assign:
-                result = builder.CreateAnd(result, rhs, "andtmp");
+                result = builder.CreateAnd(lhs, rhs, "andtmp");
                 break;
 
             case token_ids::bit_xor_assign:
-                result = builder.CreateXor(result, rhs, "xortmp");
+                result = builder.CreateXor(lhs, rhs, "xortmp");
                 break;
 
             case token_ids::bit_or_assign:
-                result = builder.CreateOr(result, rhs, "ortmp");
+                result = builder.CreateOr(lhs, rhs, "ortmp");
                 break;
 
             case token_ids::shift_left_assign:
-                result = builder.CreateShl(result, rhs, "shltmp");
+                result = builder.CreateShl(lhs, rhs, "shltmp");
                 break;
 
             case token_ids::shift_right_assign:
-                result = builder.CreateLShr(result, rhs, "shrtmp");
+                result = builder.CreateLShr(lhs, rhs, "shrtmp");
                 break;
 
             default: BOOST_ASSERT(0); return 0;
         }
 
-        builder.CreateStore(result, lhs);
-        return result;
-    }
-
-    //  Create an alloca instruction in the entry block of
-    //  the function. This is used for mutable variables etc.
-    llvm::AllocaInst*
-    create_entry_block_alloca(
-        llvm::Function* function, std::string const& var, llvm::LLVMContext& context)
-    {
-        llvm::IRBuilder<> builder(
-            &function->getEntryBlock(), function->getEntryBlock().begin());
-        return builder.CreateAlloca(
-            llvm::Type::getIntNTy(context, int_size), 0, var.c_str());
+        lhs.assign(result);
+        return lhs;
     }
 
     bool compiler::operator()(ast::variable_declaration const& x)
@@ -346,21 +411,19 @@ namespace client { namespace code_gen
             return false;
         }
 
-        llvm::Function* function = builder.GetInsertBlock()->getParent();
-        llvm::Value* init = 0;
+        value init;
         std::string const& var = x.lhs.name;
 
         if (x.rhs) // if there's an RHS initializer
         {
             init = (*this)(*x.rhs);
-            if (init == 0) // don't add the variable if the RHS fails
+            if (!init) // don't add the variable if the RHS fails
                 return false;
         }
 
-        llvm::AllocaInst* alloca
-            = create_entry_block_alloca(function, var, context());
-        if (init != 0)
-            builder.CreateStore(init, alloca);
+        lvalue alloca(builder, var.c_str());
+        if (init)
+            alloca.assign(init);
 
         // Remember this binding.
         named_values[var] = alloca;
@@ -396,8 +459,8 @@ namespace client { namespace code_gen
 
     bool compiler::operator()(ast::if_statement const& x)
     {
-        llvm::Value* condition = (*this)(x.condition);
-        if (condition == 0)
+        value condition = (*this)(x.condition);
+        if (!condition)
             return 0;
 
         llvm::Function* function = builder.GetInsertBlock()->getParent();
@@ -468,8 +531,8 @@ namespace client { namespace code_gen
 
         builder.CreateBr(cond_block);
         builder.SetInsertPoint(cond_block);
-        llvm::Value* condition = (*this)(x.condition);
-        if (condition == 0)
+        value condition = (*this)(x.condition);
+        if (!condition)
             return false;
         builder.CreateCondBr(condition, body_block, exit_block);
         function->getBasicBlockList().push_back(body_block);
@@ -512,8 +575,8 @@ namespace client { namespace code_gen
 
         if (x.expr)
         {
-            llvm::Value* return_val = (*this)(*x.expr);
-            if (return_val == 0)
+            value return_val = (*this)(*x.expr);
+            if (!return_val)
                 return false;
             builder.CreateStore(return_val, return_alloca);
         }
@@ -589,7 +652,8 @@ namespace client { namespace code_gen
         {
             // Create an alloca for this variable.
             llvm::AllocaInst* alloca =
-                create_entry_block_alloca(function, arg.name, context());
+                create_entry_block_alloca(
+                    function, arg.name.c_str(), context());
 
             // Store the initial value into the alloca.
             builder.CreateStore(iter, alloca);
