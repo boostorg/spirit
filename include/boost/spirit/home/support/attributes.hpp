@@ -60,7 +60,7 @@ namespace boost { namespace spirit
             // but I'm not sure if this can fixed. Any other way is
             // clumsy at best.
         >
-    struct adapted_variant
+    struct extended_variant
     {
         // tell spirit that this is an adapted variant
         struct adapted_variant_tag;
@@ -70,12 +70,12 @@ namespace boost { namespace spirit
         variant_type;
         typedef typename variant_type::types types;
 
-        typedef adapted_variant<BOOST_VARIANT_ENUM_PARAMS(T)> base_type;
+        typedef extended_variant<BOOST_VARIANT_ENUM_PARAMS(T)> base_type;
 
-        adapted_variant() : var() {}
+        extended_variant() : var() {}
 
         template <typename T>
-        adapted_variant(T const& var)
+        extended_variant(T const& var)
             : var(var) {}
 
         template <typename F>
