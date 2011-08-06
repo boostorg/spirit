@@ -144,20 +144,19 @@ namespace client { namespace code_gen
     value compiler::operator()(ast::identifier const& x)
     {
         // Look this variable up in the function.
-        lvalue value = named_values[x.name];
-        if (!value)
+        if (named_values.find(x.name) == named_values.end())
         {
             error_handler(x.id, "Undeclared variable: " + x.name);
-            return 0;
+            return value();
         }
-        return value;
+        return named_values[x.name];
     }
 
     value compiler::operator()(ast::unary const& x)
     {
         value operand = boost::apply_visitor(*this, x.operand_);
         if (!operand)
-            return 0;
+            return value();
 
         switch (x.operator_)
         {
@@ -172,17 +171,31 @@ namespace client { namespace code_gen
                 return operand;
             case token_ids::plus_plus:
             {
+                if (!operand.is_lvalue())
+                {
+                    // $$$ JDG Error here $$$
+                    return value();
+                }
+
                 value r = builder.CreateAdd(operand, value(1), "add_tmp");
                 operand.assign(r);
                 return operand;
             }
             case token_ids::minus_minus:
             {
+                if (!operand.is_lvalue())
+                {
+                    // $$$ JDG Error here $$$
+                    return value();
+                }
+
                 value r = builder.CreateSub(operand, value(1), "sub_tmp");
                 operand.assign(r);
                 return operand;
             }
-            default: BOOST_ASSERT(0); return 0;
+            default:
+                BOOST_ASSERT(0);
+                return value();
         }
     }
 
@@ -192,13 +205,13 @@ namespace client { namespace code_gen
         if (!callee)
         {
             error_handler(x.function_name.id, "Function not found: " + x.function_name.name);
-            return false;
+            return value();
         }
 
         if (callee->arg_size() != x.args.size())
         {
             error_handler(x.function_name.id, "Wrong number of arguments: " + x.function_name.name);
-            return 0;
+            return value();
         }
 
         std::vector<llvm::Value*> args;
@@ -206,7 +219,7 @@ namespace client { namespace code_gen
         {
             args.push_back((*this)(expr));
             if (args.back() == 0)
-                return 0;
+                return value();
         }
 
         return builder.CreateCall(callee, args.begin(), args.end(), "calltmp");
@@ -302,7 +315,10 @@ namespace client { namespace code_gen
 
             case token_ids::logical_or: return builder.CreateOr(lhs, rhs, "ortmp");
             case token_ids::logical_and: return builder.CreateAnd(lhs, rhs, "andtmp");
-            default: BOOST_ASSERT(0); return 0;
+
+            default:
+                BOOST_ASSERT(0);
+                return value();
         }
     }
 
@@ -319,7 +335,7 @@ namespace client { namespace code_gen
             token_ids::type op = rest_begin->operator_;
             value rhs = boost::apply_visitor(*this, rest_begin->operand_);
             if (!rhs)
-                return 0;
+                return value();
             ++rest_begin;
 
             while ((rest_begin != rest_end) &&
@@ -339,7 +355,7 @@ namespace client { namespace code_gen
     {
         value lhs = boost::apply_visitor(*this, x.first);
         if (!lhs)
-            return 0;
+            return value();
         std::list<ast::operation>::const_iterator rest_begin = x.rest.begin();
         return compile_expression(0, lhs, rest_begin, x.rest.end());
     }
@@ -349,13 +365,13 @@ namespace client { namespace code_gen
         if (named_values.find(x.lhs.name) == named_values.end())
         {
             error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
-            return 0;
+            return value();
         }
 
         lvalue lhs = named_values[x.lhs.name];
         value rhs = (*this)(x.rhs);
         if (!rhs)
-            return 0;
+            return value();
 
         if (x.operator_ == token_ids::assign)
         {
@@ -406,7 +422,7 @@ namespace client { namespace code_gen
                 result = builder.CreateLShr(lhs, rhs, "shrtmp");
                 break;
 
-            default: BOOST_ASSERT(0); return 0;
+            default: BOOST_ASSERT(0); return value();
         }
 
         lhs.assign(result);
@@ -471,7 +487,7 @@ namespace client { namespace code_gen
     {
         value condition = (*this)(x.condition);
         if (!condition)
-            return 0;
+            return false;
 
         llvm::Function* function = builder.GetInsertBlock()->getParent();
 
@@ -495,7 +511,7 @@ namespace client { namespace code_gen
         // Emit then value.
         builder.SetInsertPoint(then_block);
         if (!(*this)(x.then))
-            return 0;
+            return false;
         if (then_block->getTerminator() == 0)
         {
             if (exit_block == 0)
@@ -511,7 +527,7 @@ namespace client { namespace code_gen
             function->getBasicBlockList().push_back(else_block);
             builder.SetInsertPoint(else_block);
             if (!(*this)(*x.else_))
-                return 0;
+                return false;
             if (else_block->getTerminator() == 0)
             {
                 if (exit_block == 0)

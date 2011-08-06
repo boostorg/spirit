@@ -154,9 +154,6 @@ namespace client { namespace code_gen
         vmachine& vm;
         llvm::FunctionPassManager fpm;
 
-        llvm::LLVMContext& context() const
-        { return llvm::getGlobalContext(); }
-
         llvm::Module* init_llvm();
         void init_fpm();
 
