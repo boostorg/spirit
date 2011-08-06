@@ -67,7 +67,7 @@ namespace client { namespace code_gen
         );
     }
 
-    value not_(value a)
+    value operator!(value a)
     {
         BOOST_ASSERT(a.builder != 0);
         return value(
@@ -212,14 +212,14 @@ namespace client { namespace code_gen
     value compiler::operator()(ast::unary const& x)
     {
         value operand = boost::apply_visitor(*this, x.operand_);
-        if (!operand)
+        if (!operand.is_valid())
             return val();
 
         switch (x.operator_)
         {
             case token_ids::compl_:     return operand ^ val(-1);
             case token_ids::minus:      return -operand;
-            case token_ids::not_:       return not_(operand);
+            case token_ids::not_:       return !operand;
             case token_ids::plus:       return operand;
             case token_ids::plus_plus:
             {
@@ -386,7 +386,7 @@ namespace client { namespace code_gen
         {
             token_ids::type op = rest_begin->operator_;
             value rhs = boost::apply_visitor(*this, rest_begin->operand_);
-            if (!rhs)
+            if (!rhs.is_valid())
                 return val();
             ++rest_begin;
 
@@ -406,7 +406,7 @@ namespace client { namespace code_gen
     value compiler::operator()(ast::expression const& x)
     {
         value lhs = boost::apply_visitor(*this, x.first);
-        if (!lhs)
+        if (!lhs.is_valid())
             return val();
         std::list<ast::operation>::const_iterator rest_begin = x.rest.begin();
         return compile_expression(0, lhs, rest_begin, x.rest.end());
@@ -422,7 +422,7 @@ namespace client { namespace code_gen
 
         lvalue lhs = named_values[x.lhs.name];
         value rhs = (*this)(x.rhs);
-        if (!rhs)
+        if (!rhs.is_valid())
             return val();
 
         if (x.operator_ == token_ids::assign)
@@ -497,7 +497,7 @@ namespace client { namespace code_gen
         if (x.rhs) // if there's an RHS initializer
         {
             init = (*this)(*x.rhs);
-            if (!init) // don't add the variable if the RHS fails
+            if (!init.is_valid()) // don't add the variable if the RHS fails
                 return false;
         }
 
@@ -540,7 +540,7 @@ namespace client { namespace code_gen
     bool compiler::operator()(ast::if_statement const& x)
     {
         value condition = (*this)(x.condition);
-        if (!condition)
+        if (!condition.is_valid())
             return false;
 
         llvm::Function* function = builder.GetInsertBlock()->getParent();
@@ -612,7 +612,7 @@ namespace client { namespace code_gen
         builder.CreateBr(cond_block);
         builder.SetInsertPoint(cond_block);
         value condition = (*this)(x.condition);
-        if (!condition)
+        if (!condition.is_valid())
             return false;
         builder.CreateCondBr(condition, body_block, exit_block);
         function->getBasicBlockList().push_back(body_block);
@@ -656,7 +656,7 @@ namespace client { namespace code_gen
         if (x.expr)
         {
             value return_val = (*this)(*x.expr);
-            if (!return_val)
+            if (!return_val.is_valid())
                 return false;
             return_var.assign(return_val);
         }

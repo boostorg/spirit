@@ -45,11 +45,12 @@ namespace client { namespace code_gen
 
         value& operator=(value const& rhs);
         bool is_lvalue() const { return is_lvalue_; }
+        bool is_valid() const { return v != 0; }
 
         value& assign(value const& rhs);
 
         friend value operator-(value a);
-        friend value not_(value a);
+        friend value operator!(value a);
         friend value operator+(value a, value b);
         friend value operator-(value a, value b);
         friend value operator^(value a, value b);
