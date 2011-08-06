@@ -181,6 +181,13 @@ namespace client { namespace code_gen
             case token_ids::minus: return builder.CreateSub(lhs, rhs, "subtmp");
             case token_ids::times: return builder.CreateMul(lhs, rhs, "multmp");
             case token_ids::divide: return builder.CreateSDiv(lhs, rhs, "divtmp");
+            case token_ids::mod: return builder.CreateSRem(lhs, rhs, "modtmp");
+
+            case token_ids::bit_or: return builder.CreateOr(lhs, rhs, "ortmp");
+            case token_ids::bit_xor: return builder.CreateXor(lhs, rhs, "xortmp");
+            case token_ids::bit_and: return builder.CreateAnd(lhs, rhs, "andtmp");
+            case token_ids::shift_left: return builder.CreateShl(lhs, rhs, "shltmp");
+            case token_ids::shift_right: return builder.CreateLShr(lhs, rhs, "shrtmp");
 
             case token_ids::equal: return builder.CreateICmpEQ(lhs, rhs, "eqtmp");
             case token_ids::not_equal: return builder.CreateICmpNE(lhs, rhs, "netmp");

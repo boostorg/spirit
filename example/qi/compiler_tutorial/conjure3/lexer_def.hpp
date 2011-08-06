@@ -41,6 +41,11 @@ namespace client { namespace lexer
                 (">>=",     token_ids::shift_right_assign)
                 ("\\|\\|",  token_ids::logical_or)
                 ("&&",      token_ids::logical_and)
+                ("\\|",     token_ids::bit_or)
+                ("\\^",     token_ids::bit_xor)
+                ("&",       token_ids::bit_and)
+                ("<<",      token_ids::shift_left)
+                (">>",      token_ids::shift_right)
                 ("==",      token_ids::equal)
                 ("!=",      token_ids::not_equal)
                 ("<",       token_ids::less)
@@ -51,6 +56,7 @@ namespace client { namespace lexer
                 ("\\-",     token_ids::minus)
                 ("\\*",     token_ids::times)
                 ("\\/",     token_ids::divide)
+                ("%",       token_ids::mod)
                 ("!",       token_ids::not_)
             ;
 
