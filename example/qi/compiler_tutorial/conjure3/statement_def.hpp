@@ -24,6 +24,7 @@ namespace client { namespace parser
 
         qi::_val_type _val;
         qi::raw_token_type raw_token;
+        qi::tokenid_mask_type tokenid_mask;
 
         using qi::on_error;
         using qi::on_success;
@@ -40,9 +41,10 @@ namespace client { namespace parser
             ;
 
         statement_ =
-                variable_declaration
+                ';'
+            |   variable_declaration
+            |   assignment
             |   compound_statement
-            |   expr_statement
             |   if_statement
             |   while_statement
             |   return_statement
@@ -51,12 +53,15 @@ namespace client { namespace parser
         variable_declaration =
                 l("int")
             >   expr.identifier
-            >  -(l("=") > expr.binary_expr)
+            >  -(l("=") > expr)
             >   ';'
             ;
 
-        expr_statement =
-            ';' | (expr > ';')
+        assignment =
+                expr.identifier
+            >   tokenid_mask(token_ids::op_assign)
+            >   expr
+            >   ';'
             ;
 
         if_statement =
@@ -95,7 +100,7 @@ namespace client { namespace parser
             (statement_list)
             (statement_)
             (variable_declaration)
-            (expr_statement)
+            (assignment)
             (if_statement)
             (while_statement)
             (compound_statement)

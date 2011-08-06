@@ -62,14 +62,12 @@ namespace client { namespace code_gen
         llvm::Value* operator()(ast::identifier const& x);
         llvm::Value* operator()(ast::unary const& x);
         llvm::Value* operator()(ast::function_call const& x);
-        llvm::Value* operator()(ast::binary const& x);
         llvm::Value* operator()(ast::expression const& x);
         llvm::Value* operator()(ast::assignment const& x);
 
         bool operator()(ast::variable_declaration const& x);
         bool operator()(ast::statement_list const& x);
         bool operator()(ast::statement const& x);
-        bool operator()(ast::expression_statement const& x);
         bool operator()(ast::if_statement const& x);
         bool operator()(ast::while_statement const& x);
         bool operator()(ast::return_statement const& x);

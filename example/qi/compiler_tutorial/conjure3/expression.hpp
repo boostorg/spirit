@@ -46,8 +46,6 @@ namespace client { namespace parser
         Lexer const& lexer;
 
         qi::rule<Iterator, ast::expression()> expr;
-        qi::rule<Iterator, ast::assignment()> assign_expr;
-        qi::rule<Iterator, ast::binary()> binary_expr;
         qi::rule<Iterator, ast::operand()> unary_expr, primary_expr;
         qi::rule<Iterator, ast::function_call()> function_call;
         qi::rule<Iterator, std::list<ast::expression>()> argument_list;

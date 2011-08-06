@@ -224,18 +224,13 @@ namespace client { namespace code_gen
         return lhs;
     }
 
-    llvm::Value* compiler::operator()(ast::binary const& x)
+    llvm::Value* compiler::operator()(ast::expression const& x)
     {
         llvm::Value* lhs = boost::apply_visitor(*this, x.first);
         if (lhs == 0)
             return 0;
         std::list<ast::operation>::const_iterator rest_begin = x.rest.begin();
         return compile_expression(0, lhs, rest_begin, x.rest.end());
-    }
-
-    llvm::Value* compiler::operator()(ast::expression const& x)
-    {
-        return boost::apply_visitor(*this, x.get());
     }
 
     llvm::Value* compiler::operator()(ast::assignment const& x)
@@ -308,6 +303,8 @@ namespace client { namespace code_gen
 
     bool compiler::operator()(ast::statement const& x)
     {
+        if (boost::get<ast::nil>(&x) != 0) // empty statement
+            return true;
         return boost::apply_visitor(as_statement(), x);
     }
 
@@ -316,16 +313,6 @@ namespace client { namespace code_gen
         BOOST_FOREACH(ast::statement const& s, x)
         {
             if (!(*this)(s))
-                return false;
-        }
-        return true;
-    }
-
-    bool compiler::operator()(ast::expression_statement const& x)
-    {
-        if (x)
-        {
-            if ((*this)(*x) == 0)
                 return false;
         }
         return true;

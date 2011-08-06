@@ -43,7 +43,7 @@ namespace client { namespace ast
 
     struct literal :
         tagged,
-        boost::spirit::adapted_variant<
+        boost::spirit::extended_variant<
             nil
           , bool
           , unsigned int>
@@ -83,25 +83,10 @@ namespace client { namespace ast
         std::list<expression> args;
     };
 
-    struct binary
+    struct expression
     {
         operand first;
         std::list<operation> rest;
-    };
-
-    struct assignment;
-
-    struct expression :
-        boost::spirit::adapted_variant<
-          nil
-        , boost::recursive_wrapper<assignment>
-        , binary>
-    {
-        expression() : base_type() {}
-        expression(assignment const& val) : base_type(val) {}
-        expression(binary const& val) : base_type(val) {}
-        expression(expression const& rhs)
-            : base_type(rhs.get()) {}
     };
 
     struct assignment
@@ -122,11 +107,10 @@ namespace client { namespace ast
     struct statement_list;
     struct return_statement;
 
-    typedef boost::optional<expression> expression_statement;
-
     typedef boost::variant<
-            variable_declaration
-          , expression_statement
+            nil
+          , variable_declaration
+          , assignment
           , boost::recursive_wrapper<if_statement>
           , boost::recursive_wrapper<while_statement>
           , boost::recursive_wrapper<return_statement>
@@ -195,7 +179,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::binary,
+    client::ast::expression,
     (client::ast::operand, first)
     (std::list<client::ast::operation>, rest)
 )
