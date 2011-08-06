@@ -50,54 +50,6 @@
 #include <ios>
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit
-{
-    template <
-        BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-            BOOST_VARIANT_LIMIT_TYPES,
-            typename T, boost::detail::variant::void_)
-            // We should not be depending on detail::variant::void_
-            // but I'm not sure if this can fixed. Any other way is
-            // clumsy at best.
-        >
-    struct extended_variant
-    {
-        // tell spirit that this is an adapted variant
-        struct adapted_variant_tag;
-
-        typedef boost::variant<
-            BOOST_VARIANT_ENUM_PARAMS(T)>
-        variant_type;
-        typedef typename variant_type::types types;
-
-        typedef extended_variant<BOOST_VARIANT_ENUM_PARAMS(T)> base_type;
-
-        extended_variant() : var() {}
-
-        template <typename T>
-        extended_variant(T const& var)
-            : var(var) {}
-
-        template <typename F>
-        typename F::result_type apply_visitor(F v) const
-        {
-            var.apply_visitor(v);
-        }
-
-        variant_type const& get() const
-        {
-            return var;
-        }
-
-        variant_type& get()
-        {
-            return var;
-        }
-
-        variant_type var;
-    };
-}}
-
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
