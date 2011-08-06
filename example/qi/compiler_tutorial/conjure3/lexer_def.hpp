@@ -15,21 +15,20 @@ namespace client { namespace lexer
       : identifier("[a-zA-Z_][a-zA-Z_0-9]*", token_ids::identifier)
       , lit_uint("[0-9]+", token_ids::lit_uint)
       , true_or_false("true|false", token_ids::true_or_false)
+      , add(*this)
     {
         lex::_pass_type _pass;
 
         this->self = lit_uint | true_or_false;
 
-        add_keyword("void");
-        add_keyword("int");
-        add_keyword("if");
-        add_keyword("else");
-        add_keyword("while");
-        add_keyword("return");
-
-        add_keyword("=", token_ids::assign);
-
-        this->self.add
+        this->add
+                ("void")
+                ("int")
+                ("if")
+                ("else")
+                ("while")
+                ("return")
+                ("=", token_ids::assign)
                 ("\\|\\|", token_ids::logical_or)
                 ("&&", token_ids::logical_and)
                 ("==", token_ids::equal)
@@ -61,7 +60,7 @@ namespace client { namespace lexer
     }
 
     template <typename BaseIterator>
-    bool conjure_tokens<BaseIterator>::add_keyword(
+    bool conjure_tokens<BaseIterator>::add_(
         std::string const& keyword, int id_)
     {
         // add the token to the lexer
