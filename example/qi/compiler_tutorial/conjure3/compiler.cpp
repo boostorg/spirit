@@ -144,15 +144,13 @@ namespace client { namespace code_gen
     value compiler::operator()(ast::identifier const& x)
     {
         // Look this variable up in the function.
-        value value = named_values[x.name];
+        lvalue value = named_values[x.name];
         if (!value)
         {
             error_handler(x.id, "Undeclared variable: " + x.name);
             return 0;
         }
-
-        // Load the value.
-        return builder.CreateLoad(value, x.name.c_str());
+        return value;
     }
 
     value compiler::operator()(ast::unary const& x)
@@ -165,13 +163,25 @@ namespace client { namespace code_gen
         {
             case token_ids::compl_:
                 return builder.CreateXor(
-                    operand, value(-1), "compltmp");
+                    operand, value(-1), "compl_tmp");
             case token_ids::minus:
-                return builder.CreateNeg(operand, "negtmp");
+                return builder.CreateNeg(operand, "neg_tmp");
             case token_ids::not_:
-                return builder.CreateNot(operand, "nottmp");
+                return builder.CreateNot(operand, "not_tmp");
             case token_ids::plus:
                 return operand;
+            case token_ids::plus_plus:
+            {
+                value r = builder.CreateAdd(operand, value(1), "add_tmp");
+                operand.assign(r);
+                return operand;
+            }
+            case token_ids::minus_minus:
+            {
+                value r = builder.CreateSub(operand, value(1), "sub_tmp");
+                operand.assign(r);
+                return operand;
+            }
             default: BOOST_ASSERT(0); return 0;
         }
     }
@@ -336,13 +346,13 @@ namespace client { namespace code_gen
 
     value compiler::operator()(ast::assignment const& x)
     {
-        lvalue lhs(named_values[x.lhs.name], builder);
-        if (!lhs)
+        if (named_values.find(x.lhs.name) == named_values.end())
         {
             error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
             return 0;
         }
 
+        lvalue lhs = named_values[x.lhs.name];
         value rhs = (*this)(x.rhs);
         if (!rhs)
             return 0;

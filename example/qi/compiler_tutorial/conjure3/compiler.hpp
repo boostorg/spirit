@@ -79,11 +79,6 @@ namespace client { namespace code_gen
         {}
 
         lvalue(llvm::IRBuilder<>& builder, char const* name);
-
-        operator llvm::AllocaInst*() const
-        {
-            return dynamic_cast<llvm::AllocaInst*>(v);
-        }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -152,7 +147,7 @@ namespace client { namespace code_gen
 
         bool void_return;
         std::string current_function_name;
-        std::map<std::string, llvm::AllocaInst*> named_values;
+        std::map<std::string, lvalue> named_values;
         llvm::BasicBlock* return_block;
         lvalue return_alloca;
 
