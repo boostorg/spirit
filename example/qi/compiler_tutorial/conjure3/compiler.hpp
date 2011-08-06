@@ -31,32 +31,38 @@
 namespace client { namespace code_gen
 {
     unsigned const int_size = 32;
+    struct compiler;
+    struct expression_compiler;
 
     ///////////////////////////////////////////////////////////////////////////
     //  The Value (light abstraction of an LLVM::Value
     ///////////////////////////////////////////////////////////////////////////
     struct value
     {
-        value(
-            llvm::Value* v = 0,
-            bool is_lvalue_ = false,
-            llvm::IRBuilder<>* builder = 0);
-
         value(value const& rhs);
 
-        explicit value(unsigned int x);
-        explicit value(int x);
-        explicit value(bool x);
-
         operator llvm::Value*() const;
-        bool operator!() const { return v == 0; }
 
         value& operator=(value const& rhs);
         bool is_lvalue() const { return is_lvalue_; }
 
         value& assign(value const& rhs);
 
+        friend value operator-(value a);
+        friend value not_(value a);
+        friend value operator+(value a, value b);
+        friend value operator-(value a, value b);
+        friend value operator^(value a, value b);
+
     protected:
+
+        friend struct compiler;
+        friend struct expression_compiler;
+
+        value(
+            llvm::Value* v = 0,
+            bool is_lvalue_ = false,
+            llvm::IRBuilder<>* builder = 0);
 
         llvm::LLVMContext& context() const
         { return llvm::getGlobalContext(); }
@@ -90,6 +96,15 @@ namespace client { namespace code_gen
           : builder(context())
         {}
 
+        value val() { return value(); }
+        value val(unsigned int x);
+        value val(int x);
+        value val(bool x);
+
+        value call(
+            llvm::Function* callee,
+            std::vector<llvm::Value*> const& args);
+
     protected:
 
         llvm::LLVMContext& context() const
@@ -120,7 +135,7 @@ namespace client { namespace code_gen
             init_fpm();
         }
 
-        value operator()(ast::nil) { BOOST_ASSERT(0); return 0; }
+        value operator()(ast::nil) { BOOST_ASSERT(0); return val(); }
         value operator()(unsigned int x);
         value operator()(bool x);
         value operator()(ast::literal const& x);
@@ -149,7 +164,7 @@ namespace client { namespace code_gen
         std::string current_function_name;
         std::map<std::string, lvalue> named_values;
         llvm::BasicBlock* return_block;
-        lvalue return_alloca;
+        lvalue return_var;
 
         vmachine& vm;
         llvm::FunctionPassManager fpm;

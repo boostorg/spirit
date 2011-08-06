@@ -32,24 +32,6 @@ namespace client { namespace code_gen
         builder(rhs.builder)
     {}
 
-    value::value(unsigned int x)
-      : v(llvm::ConstantInt::get(context(), llvm::APInt(int_size, x))),
-        is_lvalue_(false),
-        builder(0)
-    {}
-
-    value::value(int x)
-      : v(llvm::ConstantInt::get(context(), llvm::APInt(int_size, x))),
-        is_lvalue_(false),
-        builder(0)
-    {}
-
-    value::value(bool x)
-      : v(llvm::ConstantInt::get(context(), llvm::APInt(1, x))),
-        is_lvalue_(false),
-        builder(0)
-    {}
-
     value::operator llvm::Value*() const
     {
         if (is_lvalue_)
@@ -74,6 +56,51 @@ namespace client { namespace code_gen
         BOOST_ASSERT(builder != 0);
         builder->CreateStore(rhs, v);
         return *this;
+    }
+
+    value operator-(value a)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateNeg(a, "neg_tmp"),
+            false, a.builder
+        );
+    }
+
+    value not_(value a)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateNot(a, "not_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator+(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateAdd(a, b, "add_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator-(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateSub(a, b, "sub_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator^(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateXor(a, b, "xor_tmp"),
+            false, a.builder
+        );
     }
 
     namespace
@@ -105,6 +132,36 @@ namespace client { namespace code_gen
     {
     }
 
+    value expression_compiler::val(unsigned int x)
+    {
+        return value(
+            llvm::ConstantInt::get(context(), llvm::APInt(int_size, x)),
+            false, &builder);
+    }
+
+    value expression_compiler::val(int x)
+    {
+        return value(
+            llvm::ConstantInt::get(context(), llvm::APInt(int_size, x)),
+            false, &builder);
+    }
+
+    value expression_compiler::val(bool x)
+    {
+        return value(
+            llvm::ConstantInt::get(context(), llvm::APInt(1, x)),
+            false, &builder);
+    }
+
+    value expression_compiler::call(
+        llvm::Function* callee,
+        std::vector<llvm::Value*> const& args)
+    {
+        return value(
+            builder.CreateCall(callee, args.begin(), args.end(), "call_tmp"),
+            false, &builder);
+    }
+
     void compiler::init_fpm()
     {
         // Set up the optimizer pipeline.  Start with registering info about how the
@@ -128,12 +185,12 @@ namespace client { namespace code_gen
 
     value compiler::operator()(unsigned int x)
     {
-        return value(x);
+        return val(x);
     }
 
     value compiler::operator()(bool x)
     {
-        return value(x);
+        return val(x);
     }
 
     value compiler::operator()(ast::literal const& x)
@@ -147,7 +204,7 @@ namespace client { namespace code_gen
         if (named_values.find(x.name) == named_values.end())
         {
             error_handler(x.id, "Undeclared variable: " + x.name);
-            return value();
+            return val();
         }
         return named_values[x.name];
     }
@@ -156,28 +213,23 @@ namespace client { namespace code_gen
     {
         value operand = boost::apply_visitor(*this, x.operand_);
         if (!operand)
-            return value();
+            return val();
 
         switch (x.operator_)
         {
-            case token_ids::compl_:
-                return builder.CreateXor(
-                    operand, value(-1), "compl_tmp");
-            case token_ids::minus:
-                return builder.CreateNeg(operand, "neg_tmp");
-            case token_ids::not_:
-                return builder.CreateNot(operand, "not_tmp");
-            case token_ids::plus:
-                return operand;
+            case token_ids::compl_:     return operand ^ val(-1);
+            case token_ids::minus:      return -operand;
+            case token_ids::not_:       return not_(operand);
+            case token_ids::plus:       return operand;
             case token_ids::plus_plus:
             {
                 if (!operand.is_lvalue())
                 {
                     // $$$ JDG Error here $$$
-                    return value();
+                    return val();
                 }
 
-                value r = builder.CreateAdd(operand, value(1), "add_tmp");
+                value r = operand + val(1);
                 operand.assign(r);
                 return operand;
             }
@@ -186,16 +238,16 @@ namespace client { namespace code_gen
                 if (!operand.is_lvalue())
                 {
                     // $$$ JDG Error here $$$
-                    return value();
+                    return val();
                 }
 
-                value r = builder.CreateSub(operand, value(1), "sub_tmp");
+                value r = operand - val(1);
                 operand.assign(r);
                 return operand;
             }
             default:
                 BOOST_ASSERT(0);
-                return value();
+                return val();
         }
     }
 
@@ -205,13 +257,13 @@ namespace client { namespace code_gen
         if (!callee)
         {
             error_handler(x.function_name.id, "Function not found: " + x.function_name.name);
-            return value();
+            return val();
         }
 
         if (callee->arg_size() != x.args.size())
         {
             error_handler(x.function_name.id, "Wrong number of arguments: " + x.function_name.name);
-            return value();
+            return val();
         }
 
         std::vector<llvm::Value*> args;
@@ -219,10 +271,10 @@ namespace client { namespace code_gen
         {
             args.push_back((*this)(expr));
             if (args.back() == 0)
-                return value();
+                return val();
         }
 
-        return builder.CreateCall(callee, args.begin(), args.end(), "calltmp");
+        return call(callee, args);
     }
 
     namespace
@@ -294,31 +346,31 @@ namespace client { namespace code_gen
     {
         switch (op)
         {
-            case token_ids::plus: return builder.CreateAdd(lhs, rhs, "addtmp");
-            case token_ids::minus: return builder.CreateSub(lhs, rhs, "subtmp");
-            case token_ids::times: return builder.CreateMul(lhs, rhs, "multmp");
-            case token_ids::divide: return builder.CreateSDiv(lhs, rhs, "divtmp");
-            case token_ids::mod: return builder.CreateSRem(lhs, rhs, "modtmp");
+            case token_ids::plus: return builder.CreateAdd(lhs, rhs, "add_tmp");
+            case token_ids::minus: return builder.CreateSub(lhs, rhs, "sub_tmp");
+            case token_ids::times: return builder.CreateMul(lhs, rhs, "mul_tmp");
+            case token_ids::divide: return builder.CreateSDiv(lhs, rhs, "div_tmp");
+            case token_ids::mod: return builder.CreateSRem(lhs, rhs, "mod_tmp");
 
-            case token_ids::bit_or: return builder.CreateOr(lhs, rhs, "ortmp");
-            case token_ids::bit_xor: return builder.CreateXor(lhs, rhs, "xortmp");
-            case token_ids::bit_and: return builder.CreateAnd(lhs, rhs, "andtmp");
-            case token_ids::shift_left: return builder.CreateShl(lhs, rhs, "shltmp");
-            case token_ids::shift_right: return builder.CreateLShr(lhs, rhs, "shrtmp");
+            case token_ids::bit_or: return builder.CreateOr(lhs, rhs, "or_tmp");
+            case token_ids::bit_xor: return builder.CreateXor(lhs, rhs, "xor_tmp");
+            case token_ids::bit_and: return builder.CreateAnd(lhs, rhs, "and_tmp");
+            case token_ids::shift_left: return builder.CreateShl(lhs, rhs, "shl_tmp");
+            case token_ids::shift_right: return builder.CreateLShr(lhs, rhs, "shr_tmp");
 
-            case token_ids::equal: return builder.CreateICmpEQ(lhs, rhs, "eqtmp");
-            case token_ids::not_equal: return builder.CreateICmpNE(lhs, rhs, "netmp");
-            case token_ids::less: return builder.CreateICmpSLT(lhs, rhs, "slttmp");
-            case token_ids::less_equal: return builder.CreateICmpSLE(lhs, rhs, "sletmp");
-            case token_ids::greater: return builder.CreateICmpSGT(lhs, rhs, "sgttmp");
-            case token_ids::greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sgetmp");
+            case token_ids::equal: return builder.CreateICmpEQ(lhs, rhs, "eq_tmp");
+            case token_ids::not_equal: return builder.CreateICmpNE(lhs, rhs, "ne_tmp");
+            case token_ids::less: return builder.CreateICmpSLT(lhs, rhs, "slt_tmp");
+            case token_ids::less_equal: return builder.CreateICmpSLE(lhs, rhs, "sle_tmp");
+            case token_ids::greater: return builder.CreateICmpSGT(lhs, rhs, "sgt_tmp");
+            case token_ids::greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sge_tmp");
 
-            case token_ids::logical_or: return builder.CreateOr(lhs, rhs, "ortmp");
-            case token_ids::logical_and: return builder.CreateAnd(lhs, rhs, "andtmp");
+            case token_ids::logical_or: return builder.CreateOr(lhs, rhs, "or_tmp");
+            case token_ids::logical_and: return builder.CreateAnd(lhs, rhs, "and_tmp");
 
             default:
                 BOOST_ASSERT(0);
-                return value();
+                return val();
         }
     }
 
@@ -335,7 +387,7 @@ namespace client { namespace code_gen
             token_ids::type op = rest_begin->operator_;
             value rhs = boost::apply_visitor(*this, rest_begin->operand_);
             if (!rhs)
-                return value();
+                return val();
             ++rest_begin;
 
             while ((rest_begin != rest_end) &&
@@ -355,7 +407,7 @@ namespace client { namespace code_gen
     {
         value lhs = boost::apply_visitor(*this, x.first);
         if (!lhs)
-            return value();
+            return val();
         std::list<ast::operation>::const_iterator rest_begin = x.rest.begin();
         return compile_expression(0, lhs, rest_begin, x.rest.end());
     }
@@ -365,13 +417,13 @@ namespace client { namespace code_gen
         if (named_values.find(x.lhs.name) == named_values.end())
         {
             error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
-            return value();
+            return val();
         }
 
         lvalue lhs = named_values[x.lhs.name];
         value rhs = (*this)(x.rhs);
         if (!rhs)
-            return value();
+            return val();
 
         if (x.operator_ == token_ids::assign)
         {
@@ -383,46 +435,48 @@ namespace client { namespace code_gen
         switch (x.operator_)
         {
             case token_ids::plus_assign:
-                result = builder.CreateAdd(lhs, rhs, "addtmp");
+                result = builder.CreateAdd(lhs, rhs, "add_tmp");
                 break;
 
             case token_ids::minus_assign:
-                result = builder.CreateSub(lhs, rhs, "subtmp");
+                result = builder.CreateSub(lhs, rhs, "sub_tmp");
                 break;
 
             case token_ids::times_assign:
-                result = builder.CreateMul(lhs, rhs, "multmp");
+                result = builder.CreateMul(lhs, rhs, "mul_tmp");
                 break;
 
             case token_ids::divide_assign:
-                result = builder.CreateSDiv(lhs, rhs, "divtmp");
+                result = builder.CreateSDiv(lhs, rhs, "div_tmp");
                 break;
 
             case token_ids::mod_assign:
-                result = builder.CreateSRem(lhs, rhs, "modtmp");
+                result = builder.CreateSRem(lhs, rhs, "mod_tmp");
                 break;
 
             case token_ids::bit_and_assign:
-                result = builder.CreateAnd(lhs, rhs, "andtmp");
+                result = builder.CreateAnd(lhs, rhs, "and_tmp");
                 break;
 
             case token_ids::bit_xor_assign:
-                result = builder.CreateXor(lhs, rhs, "xortmp");
+                result = builder.CreateXor(lhs, rhs, "xor_tmp");
                 break;
 
             case token_ids::bit_or_assign:
-                result = builder.CreateOr(lhs, rhs, "ortmp");
+                result = builder.CreateOr(lhs, rhs, "or_tmp");
                 break;
 
             case token_ids::shift_left_assign:
-                result = builder.CreateShl(lhs, rhs, "shltmp");
+                result = builder.CreateShl(lhs, rhs, "shl_tmp");
                 break;
 
             case token_ids::shift_right_assign:
-                result = builder.CreateLShr(lhs, rhs, "shrtmp");
+                result = builder.CreateLShr(lhs, rhs, "shr_tmp");
                 break;
 
-            default: BOOST_ASSERT(0); return value();
+            default:
+                BOOST_ASSERT(0);
+                return val();
         }
 
         lhs.assign(result);
@@ -438,7 +492,7 @@ namespace client { namespace code_gen
         }
 
         value init;
-        std::string const& var = x.lhs.name;
+        std::string const& name = x.lhs.name;
 
         if (x.rhs) // if there's an RHS initializer
         {
@@ -447,12 +501,12 @@ namespace client { namespace code_gen
                 return false;
         }
 
-        lvalue alloca(builder, var.c_str());
+        lvalue var(builder, name.c_str());
         if (init)
-            alloca.assign(init);
+            var.assign(init);
 
         // Remember this binding.
-        named_values[var] = alloca;
+        named_values[name] = var;
         return true;
     }
 
@@ -604,7 +658,7 @@ namespace client { namespace code_gen
             value return_val = (*this)(*x.expr);
             if (!return_val)
                 return false;
-            return_alloca.assign(return_val);
+            return_var.assign(return_val);
         }
 
         builder.CreateBr(return_block);
@@ -671,26 +725,26 @@ namespace client { namespace code_gen
 
     void compiler::function_allocas(ast::function const& x, llvm::Function* function)
     {
-        // CreateArgumentAllocas - Create an alloca for each argument and register the
+        // Create an variables for each argument and register the
         // argument in the symbol table so that references to it will succeed.
         llvm::Function::arg_iterator iter = function->arg_begin();
         BOOST_FOREACH(ast::identifier const& arg, x.args)
         {
-            // Create an alloca for this variable.
-            lvalue alloca(builder, arg.name.c_str());
+            // Create an arg_ for this variable.
+            lvalue arg_(builder, arg.name.c_str());
 
-            // Store the initial value into the alloca.
-            alloca.assign(value(iter));
+            // Store the initial value into the arg_.
+            arg_.assign(value(iter));
 
             // Add arguments to variable symbol table.
-            named_values[arg.name] = alloca;
+            named_values[arg.name] = arg_;
             ++iter;
         }
 
         if (!void_return)
         {
             // Create an alloca for the return value
-            return_alloca = lvalue(builder, "return.val");
+            return_var = lvalue(builder, "return.val");
         }
     }
 
@@ -737,7 +791,7 @@ namespace client { namespace code_gen
             if (void_return)
                 builder.CreateRetVoid();
             else
-                builder.CreateRet(return_alloca);
+                builder.CreateRet(return_var);
 
             //~ vm.module()->dump();
 
