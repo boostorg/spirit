@@ -68,6 +68,10 @@ namespace client { namespace code_gen
 
     struct lvalue : value
     {
+        lvalue()
+          : value(0, true, 0)
+        {}
+
         lvalue(
             llvm::AllocaInst* var,
             llvm::IRBuilder<>& builder)
@@ -150,7 +154,7 @@ namespace client { namespace code_gen
         std::string current_function_name;
         std::map<std::string, llvm::AllocaInst*> named_values;
         llvm::BasicBlock* return_block;
-        llvm::AllocaInst* return_alloca;
+        lvalue return_alloca;
 
         vmachine& vm;
         llvm::FunctionPassManager fpm;

@@ -578,7 +578,7 @@ namespace client { namespace code_gen
             value return_val = (*this)(*x.expr);
             if (!return_val)
                 return false;
-            builder.CreateStore(return_val, return_alloca);
+            return_alloca.assign(return_val);
         }
 
         builder.CreateBr(return_block);
@@ -651,12 +651,10 @@ namespace client { namespace code_gen
         BOOST_FOREACH(ast::identifier const& arg, x.args)
         {
             // Create an alloca for this variable.
-            llvm::AllocaInst* alloca =
-                create_entry_block_alloca(
-                    function, arg.name.c_str(), context());
+            lvalue alloca(builder, arg.name.c_str());
 
             // Store the initial value into the alloca.
-            builder.CreateStore(iter, alloca);
+            alloca.assign(value(iter));
 
             // Add arguments to variable symbol table.
             named_values[arg.name] = alloca;
@@ -666,8 +664,7 @@ namespace client { namespace code_gen
         if (!void_return)
         {
             // Create an alloca for the return value
-            return_alloca =
-                create_entry_block_alloca(function, "return.val", context());
+            return_alloca = lvalue(builder, "return.val");
         }
     }
 
@@ -714,7 +711,7 @@ namespace client { namespace code_gen
             if (void_return)
                 builder.CreateRetVoid();
             else
-                builder.CreateRet(builder.CreateLoad(return_alloca, "return.val"));
+                builder.CreateRet(return_alloca);
 
             //~ vm.module()->dump();
 
