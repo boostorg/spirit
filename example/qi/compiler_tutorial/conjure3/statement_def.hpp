@@ -41,13 +41,14 @@ namespace client { namespace parser
             ;
 
         statement_ =
-                ';'
-            |   variable_declaration
+                variable_declaration
             |   assignment
             |   compound_statement
             |   if_statement
             |   while_statement
             |   return_statement
+            |   expr
+            |   ';'
             ;
 
         variable_declaration =

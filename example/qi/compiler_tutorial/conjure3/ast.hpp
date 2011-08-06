@@ -116,6 +116,7 @@ namespace client { namespace ast
           , boost::recursive_wrapper<while_statement>
           , boost::recursive_wrapper<return_statement>
           , boost::recursive_wrapper<statement_list>
+          , boost::recursive_wrapper<expression>
         >
     statement;
 

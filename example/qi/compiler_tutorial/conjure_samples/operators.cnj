@@ -129,6 +129,6 @@ int unary()
 
 int main()
 {
-    return (assign() ^ binary()) + unary(); // -1
+    return (assign() ^ binary()) + unary(); // 1
 }
 
