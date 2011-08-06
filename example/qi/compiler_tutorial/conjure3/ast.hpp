@@ -12,6 +12,7 @@
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
+#include <boost/spirit/include/support_extended_variant.hpp>
 #include <boost/spirit/include/support_attributes.hpp>
 #include <boost/optional.hpp>
 #include <list>
