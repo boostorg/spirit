@@ -118,7 +118,7 @@ namespace client { namespace lexer
 
             typename keyword_map_type::const_iterator it = keywords_.find(kwd);
             BOOST_ASSERT(it != keywords_.end());
-            return qi::raw_token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
+            return raw_token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
         }
 
         // extract a token(id) for the given registered keyword
@@ -129,7 +129,7 @@ namespace client { namespace lexer
 
             typename keyword_map_type::const_iterator it = keywords_.find(kwd);
             BOOST_ASSERT(it != keywords_.end());
-            return qi::token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
+            return token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
         }
 
         lex::token_def<std::string> identifier;

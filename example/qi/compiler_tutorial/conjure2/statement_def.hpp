@@ -23,7 +23,6 @@ namespace client { namespace parser
         qi::_4_type _4;
 
         qi::_val_type _val;
-        qi::raw_token_type raw_token;
 
         using qi::on_error;
         using qi::on_success;
