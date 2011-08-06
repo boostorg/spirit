@@ -67,6 +67,17 @@ namespace client { namespace code_gen
         return builder.CreateLoad(value, x.name.c_str());
     }
 
+    namespace
+    {
+        llvm::Value*
+        neg1(llvm::LLVMContext& context, llvm::IRBuilder<>& builder)
+        {
+            llvm::Value* one = llvm::ConstantInt::get(context,
+                llvm::APInt(int_size, 1));
+            return builder.CreateNeg(one, "neg1");
+        }
+    }
+
     llvm::Value* compiler::operator()(ast::unary const& x)
     {
         llvm::Value* operand = boost::apply_visitor(*this, x.operand_);
@@ -75,9 +86,15 @@ namespace client { namespace code_gen
 
         switch (x.operator_)
         {
-            case token_ids::minus: return builder.CreateNeg(operand, "negtmp");
-            case token_ids::not_: return builder.CreateNot(operand, "nottmp");
-            case token_ids::plus: return operand;
+            case token_ids::compl_:
+                return builder.CreateXor(
+                    operand, neg1(context(), builder), "compltmp");
+            case token_ids::minus:
+                return builder.CreateNeg(operand, "negtmp");
+            case token_ids::not_:
+                return builder.CreateNot(operand, "nottmp");
+            case token_ids::plus:
+                return operand;
             default: BOOST_ASSERT(0); return 0;
         }
     }

@@ -118,7 +118,17 @@ int binary()
     return l;
 }
 
+int zero() { return 0; }
+
+int unary()
+{
+    int i = ~zero();    // -1
+    int j = -i;         // 1
+    return j;
+}
+
 int main()
 {
-    return assign() ^ binary();     // 0
+    return (assign() ^ binary()) + unary(); // -1
 }
+

@@ -57,6 +57,9 @@ namespace client { namespace lexer
                 ("\\*",     token_ids::times)
                 ("\\/",     token_ids::divide)
                 ("%",       token_ids::mod)
+                ("\\+\\+",  token_ids::plus_plus)
+                ("\\-\\-",  token_ids::minus_minus)
+                ("~",       token_ids::compl_)
                 ("!",       token_ids::not_)
             ;
 
