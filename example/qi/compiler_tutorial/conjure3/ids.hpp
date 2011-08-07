@@ -16,7 +16,8 @@ namespace client
         {
             binary = 0x20000,
             unary = 0x40000,
-            assign = 0x80000
+            postfix_unary = 0x80000,
+            assign = 0x100000
         };
     };
 
@@ -134,8 +135,13 @@ namespace client
             // unary operators with overlaps
             // '++' and '--' can be prefix or postfix
             // (the lexer cannot distinguish which)
-            plus_plus           = unary_op<op::plus_plus>::value,
-            minus_minus         = unary_op<op::minus_minus>::value,
+            plus_plus           = make_op<
+                    op_type::unary
+                |   op_type::postfix_unary, op::plus_plus>::value,
+
+            minus_minus         = make_op<
+                    op_type::unary
+                |   op_type::postfix_unary, op::minus_minus>::value,
 
             // unary operators
             compl_              = unary_op<op::compl_>::value,

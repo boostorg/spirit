@@ -46,7 +46,7 @@ namespace client { namespace parser
 
         unary_expr =
                 primary_expr
-            |   (tokenid_mask(token_ids::op_unary) > primary_expr)
+            |   (tokenid_mask(token_ids::op_unary) > unary_expr)
             ;
 
         primary_expr =

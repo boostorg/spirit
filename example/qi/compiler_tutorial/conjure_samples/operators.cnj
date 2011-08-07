@@ -125,8 +125,7 @@ int unary()
     int i = ~zero();    // -1
     int j = -i;         // 1
     ++j;                // 2
-    ++j;                // 3
-    ++j;                // 4
+    ++++j;              // 4
     --j;                // 3
     return j;
 }
