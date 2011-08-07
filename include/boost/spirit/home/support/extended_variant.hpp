@@ -49,6 +49,12 @@ namespace boost { namespace spirit
             return var.apply_visitor(v);
         }
 
+        template <typename F>
+        typename F::result_type apply_visitor(F const& v) const
+        {
+            return var.apply_visitor(v);
+        }
+
         variant_type const& get() const
         {
             return var;
