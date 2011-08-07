@@ -99,6 +99,14 @@ namespace client
             ast.id = id;
         }
 
+        void operator()(ast::primary_expr& ast, Iterator pos) const
+        {
+            int id = iters.size();
+            iters.push_back(pos);
+            boost::apply_visitor(set_annotation_id(id), ast);
+            ast.id = id;
+        }
+
         void operator()(ast::variable_declaration& ast, Iterator pos) const
         {
             int id = iters.size();

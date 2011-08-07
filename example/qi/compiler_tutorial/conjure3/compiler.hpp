@@ -139,9 +139,9 @@ namespace client { namespace code_gen
         value operator()(ast::nil) { BOOST_ASSERT(0); return val(); }
         value operator()(unsigned int x);
         value operator()(bool x);
-        value operator()(ast::literal const& x);
+        value operator()(ast::primary_expr const& x);
         value operator()(ast::identifier const& x);
-        value operator()(ast::unary const& x);
+        value operator()(ast::unary_expr const& x);
         value operator()(ast::function_call const& x);
         value operator()(ast::expression const& x);
         value operator()(ast::assignment const& x);

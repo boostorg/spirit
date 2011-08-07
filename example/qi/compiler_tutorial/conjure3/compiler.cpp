@@ -193,7 +193,7 @@ namespace client { namespace code_gen
         return val(x);
     }
 
-    value compiler::operator()(ast::literal const& x)
+    value compiler::operator()(ast::primary_expr const& x)
     {
         return boost::apply_visitor(*this, x.get());
     }
@@ -209,7 +209,7 @@ namespace client { namespace code_gen
         return named_values[x.name];
     }
 
-    value compiler::operator()(ast::unary const& x)
+    value compiler::operator()(ast::unary_expr const& x)
     {
         value operand = boost::apply_visitor(*this, x.operand_);
         if (!operand.is_valid())
@@ -225,7 +225,7 @@ namespace client { namespace code_gen
             {
                 if (!operand.is_lvalue())
                 {
-                    // $$$ JDG Error here $$$
+                    error_handler(x.id, "++ needs an lvalue");
                     return val();
                 }
 
@@ -237,7 +237,7 @@ namespace client { namespace code_gen
             {
                 if (!operand.is_lvalue())
                 {
-                    // $$$ JDG Error here $$$
+                    error_handler(x.id, "-- needs an lvalue");
                     return val();
                 }
 

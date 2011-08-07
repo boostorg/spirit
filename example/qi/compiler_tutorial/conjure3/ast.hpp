@@ -32,7 +32,7 @@ namespace client { namespace ast
     };
 
     struct nil {};
-    struct unary;
+    struct unary_expr;
     struct function_call;
     struct expression;
 
@@ -42,18 +42,22 @@ namespace client { namespace ast
         std::string name;
     };
 
-    struct literal :
+    struct primary_expr :
         tagged,
         boost::spirit::extended_variant<
             nil
           , bool
           , unsigned int
+          , identifier
+          , boost::recursive_wrapper<expression>
         >
     {
-        literal() : base_type() {}
-        literal(bool val) : base_type(val) {}
-        literal(unsigned int val) : base_type(val) {}
-        literal(literal const& rhs)
+        primary_expr() : base_type() {}
+        primary_expr(bool val) : base_type(val) {}
+        primary_expr(unsigned int val) : base_type(val) {}
+        primary_expr(identifier const& val) : base_type(val) {}
+        primary_expr(expression const& val) : base_type(val) {}
+        primary_expr(primary_expr const& rhs)
             : base_type(rhs.get()) {}
     };
 
@@ -61,24 +65,20 @@ namespace client { namespace ast
         tagged,
         boost::spirit::extended_variant<
             nil
-          , literal
-          , identifier
-          , boost::recursive_wrapper<unary>
+          , primary_expr
+          , boost::recursive_wrapper<unary_expr>
           , boost::recursive_wrapper<function_call>
-          , boost::recursive_wrapper<expression>
         >
     {
         operand() : base_type() {}
-        operand(literal const& val) : base_type(val) {}
-        operand(identifier const& val) : base_type(val) {}
-        operand(unary const& val) : base_type(val) {}
+        operand(primary_expr const& val) : base_type(val) {}
+        operand(unary_expr const& val) : base_type(val) {}
         operand(function_call const& val) : base_type(val) {}
-        operand(expression const& val) : base_type(val) {}
         operand(operand const& rhs)
             : base_type(rhs.get()) {}
     };
 
-    struct unary : tagged
+    struct unary_expr : tagged
     {
         token_ids::type operator_;
         operand operand_;
@@ -175,7 +175,7 @@ namespace client { namespace ast
 }}
 
 BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::unary,
+    client::ast::unary_expr,
     (client::token_ids::type, operator_)
     (client::ast::operand, operand_)
 )
