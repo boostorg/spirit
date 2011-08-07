@@ -44,7 +44,7 @@ namespace boost { namespace spirit
             : var(var) {}
 
         template <typename F>
-        typename F::result_type apply_visitor(F v) const
+        typename F::result_type apply_visitor(F const& v)
         {
             return var.apply_visitor(v);
         }
