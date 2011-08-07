@@ -47,7 +47,8 @@ namespace client { namespace ast
         boost::spirit::extended_variant<
             nil
           , bool
-          , unsigned int>
+          , unsigned int
+        >
     {
         literal() : base_type() {}
         literal(bool val) : base_type(val) {}
@@ -56,7 +57,9 @@ namespace client { namespace ast
             : base_type(rhs.get()) {}
     };
 
-    typedef boost::variant<
+    struct operand :
+        tagged,
+        boost::spirit::extended_variant<
             nil
           , literal
           , identifier
@@ -64,7 +67,16 @@ namespace client { namespace ast
           , boost::recursive_wrapper<function_call>
           , boost::recursive_wrapper<expression>
         >
-    operand;
+    {
+        operand() : base_type() {}
+        operand(literal const& val) : base_type(val) {}
+        operand(identifier const& val) : base_type(val) {}
+        operand(unary const& val) : base_type(val) {}
+        operand(function_call const& val) : base_type(val) {}
+        operand(expression const& val) : base_type(val) {}
+        operand(operand const& rhs)
+            : base_type(rhs.get()) {}
+    };
 
     struct unary : tagged
     {
