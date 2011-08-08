@@ -53,7 +53,22 @@ namespace client { namespace code_gen
         friend value operator!(value a);
         friend value operator+(value a, value b);
         friend value operator-(value a, value b);
+        friend value operator*(value a, value b);
+        friend value operator/(value a, value b);
+        friend value operator%(value a, value b);
+
+        friend value operator&(value a, value b);
+        friend value operator|(value a, value b);
         friend value operator^(value a, value b);
+        friend value operator<<(value a, value b);
+        friend value operator>>(value a, value b);
+
+        friend value operator==(value a, value b);
+        friend value operator!=(value a, value b);
+        friend value operator<(value a, value b);
+        friend value operator<=(value a, value b);
+        friend value operator>(value a, value b);
+        friend value operator>=(value a, value b);
 
     protected:
 

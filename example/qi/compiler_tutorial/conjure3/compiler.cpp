@@ -94,11 +94,128 @@ namespace client { namespace code_gen
         );
     }
 
+    value operator*(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateMul(a, b, "mul_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator/(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateSDiv(a, b, "div_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator%(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateSRem(a, b, "mod_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator&(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateAnd(a, b, "and_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator|(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateOr(a, b, "or_tmp"),
+            false, a.builder
+        );
+    }
+
     value operator^(value a, value b)
     {
         BOOST_ASSERT(a.builder != 0);
         return value(
             a.builder->CreateXor(a, b, "xor_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator<<(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateShl(a, b, "shl_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator>>(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateLShr(a, b, "shr_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator==(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateICmpEQ(a, b, "eq_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator!=(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateICmpNE(a, b, "ne_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator<(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateICmpSLT(a, b, "slt_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator<=(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateICmpSLE(a, b, "sle_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator>(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateICmpSGT(a, b, "sgt_tmp"),
+            false, a.builder
+        );
+    }
+
+    value operator>=(value a, value b)
+    {
+        BOOST_ASSERT(a.builder != 0);
+        return value(
+            a.builder->CreateICmpSGE(a, b, "sge_tmp"),
             false, a.builder
         );
     }
@@ -346,31 +463,30 @@ namespace client { namespace code_gen
     {
         switch (op)
         {
-            case token_ids::plus: return builder.CreateAdd(lhs, rhs, "add_tmp");
-            case token_ids::minus: return builder.CreateSub(lhs, rhs, "sub_tmp");
-            case token_ids::times: return builder.CreateMul(lhs, rhs, "mul_tmp");
-            case token_ids::divide: return builder.CreateSDiv(lhs, rhs, "div_tmp");
-            case token_ids::mod: return builder.CreateSRem(lhs, rhs, "mod_tmp");
+            case token_ids::plus:           return lhs + rhs;
+            case token_ids::minus:          return lhs - rhs;
+            case token_ids::times:          return lhs * rhs;
+            case token_ids::divide:         return lhs / rhs;
+            case token_ids::mod:            return lhs % rhs;
 
-            case token_ids::bit_or: return builder.CreateOr(lhs, rhs, "or_tmp");
-            case token_ids::bit_xor: return builder.CreateXor(lhs, rhs, "xor_tmp");
-            case token_ids::bit_and: return builder.CreateAnd(lhs, rhs, "and_tmp");
-            case token_ids::shift_left: return builder.CreateShl(lhs, rhs, "shl_tmp");
-            case token_ids::shift_right: return builder.CreateLShr(lhs, rhs, "shr_tmp");
+            case token_ids::logical_or:
+            case token_ids::bit_or:         return lhs | rhs;
 
-            case token_ids::equal: return builder.CreateICmpEQ(lhs, rhs, "eq_tmp");
-            case token_ids::not_equal: return builder.CreateICmpNE(lhs, rhs, "ne_tmp");
-            case token_ids::less: return builder.CreateICmpSLT(lhs, rhs, "slt_tmp");
-            case token_ids::less_equal: return builder.CreateICmpSLE(lhs, rhs, "sle_tmp");
-            case token_ids::greater: return builder.CreateICmpSGT(lhs, rhs, "sgt_tmp");
-            case token_ids::greater_equal: return builder.CreateICmpSGE(lhs, rhs, "sge_tmp");
+            case token_ids::logical_and:
+            case token_ids::bit_and:        return lhs & rhs;
 
-            case token_ids::logical_or: return builder.CreateOr(lhs, rhs, "or_tmp");
-            case token_ids::logical_and: return builder.CreateAnd(lhs, rhs, "and_tmp");
+            case token_ids::bit_xor:        return lhs ^ rhs;
+            case token_ids::shift_left:     return lhs << rhs;
+            case token_ids::shift_right:    return lhs >> rhs;
 
-            default:
-                BOOST_ASSERT(0);
-                return val();
+            case token_ids::equal:          return lhs == rhs;
+            case token_ids::not_equal:      return lhs != rhs;
+            case token_ids::less:           return lhs < rhs;
+            case token_ids::less_equal:     return lhs <= rhs;
+            case token_ids::greater:        return lhs > rhs;
+            case token_ids::greater_equal:  return lhs >= rhs;
+
+            default: BOOST_ASSERT(0);       return val();
         }
     }
 
@@ -434,49 +550,17 @@ namespace client { namespace code_gen
         value result;
         switch (x.operator_)
         {
-            case token_ids::plus_assign:
-                result = builder.CreateAdd(lhs, rhs, "add_tmp");
-                break;
-
-            case token_ids::minus_assign:
-                result = builder.CreateSub(lhs, rhs, "sub_tmp");
-                break;
-
-            case token_ids::times_assign:
-                result = builder.CreateMul(lhs, rhs, "mul_tmp");
-                break;
-
-            case token_ids::divide_assign:
-                result = builder.CreateSDiv(lhs, rhs, "div_tmp");
-                break;
-
-            case token_ids::mod_assign:
-                result = builder.CreateSRem(lhs, rhs, "mod_tmp");
-                break;
-
-            case token_ids::bit_and_assign:
-                result = builder.CreateAnd(lhs, rhs, "and_tmp");
-                break;
-
-            case token_ids::bit_xor_assign:
-                result = builder.CreateXor(lhs, rhs, "xor_tmp");
-                break;
-
-            case token_ids::bit_or_assign:
-                result = builder.CreateOr(lhs, rhs, "or_tmp");
-                break;
-
-            case token_ids::shift_left_assign:
-                result = builder.CreateShl(lhs, rhs, "shl_tmp");
-                break;
-
-            case token_ids::shift_right_assign:
-                result = builder.CreateLShr(lhs, rhs, "shr_tmp");
-                break;
-
-            default:
-                BOOST_ASSERT(0);
-                return val();
+            case token_ids::plus_assign:        result = lhs + rhs; break;
+            case token_ids::minus_assign:       result = lhs - rhs; break;
+            case token_ids::times_assign:       result = lhs * rhs; break;
+            case token_ids::divide_assign:      result = lhs / rhs; break;
+            case token_ids::mod_assign:         result = lhs % rhs; break;
+            case token_ids::bit_and_assign:     result = lhs & rhs; break;
+            case token_ids::bit_xor_assign:     result = lhs ^ rhs; break;
+            case token_ids::bit_or_assign:      result = lhs | rhs; break;
+            case token_ids::shift_left_assign:  result = lhs << rhs; break;
+            case token_ids::shift_right_assign: result = lhs >> rhs; break;
+            default: BOOST_ASSERT(0);           return val();
         }
 
         lhs.assign(result);
