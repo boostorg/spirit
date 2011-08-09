@@ -36,17 +36,17 @@ namespace client { namespace code_gen
     struct llvm_compiler;
 
     ///////////////////////////////////////////////////////////////////////////
-    //  The Value (light abstraction of an LLVM::Value
+    //  The Value (light abstraction of an LLVM::Value)
     ///////////////////////////////////////////////////////////////////////////
     struct value
     {
         value();
         value(value const& rhs);
-        operator llvm::Value*() const;
 
         value& operator=(value const& rhs);
         bool is_lvalue() const;
         bool is_valid() const;
+        operator bool() const;
 
         value& assign(value const& rhs);
 
@@ -76,6 +76,8 @@ namespace client { namespace code_gen
 
     protected:
 
+        struct to_llvm_value;
+        friend struct to_llvm_value;
         friend struct llvm_compiler;
 
         value(
@@ -88,11 +90,15 @@ namespace client { namespace code_gen
 
     private:
 
+        operator llvm::Value*() const;
+
         llvm::Value* v;
         bool is_lvalue_;
         llvm::IRBuilder<>* builder;
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    //  The Basic Block (light abstraction of an LLVM::BasicBlock)
     ///////////////////////////////////////////////////////////////////////////
     struct function;
 
@@ -117,6 +123,8 @@ namespace client { namespace code_gen
         llvm::BasicBlock* b;
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    //  The Function (light abstraction of an LLVM::Function)
     ///////////////////////////////////////////////////////////////////////////
     struct llvm_compiler;
 
@@ -218,9 +226,6 @@ namespace client { namespace code_gen
         llvm::IRBuilder<>& builder()
         { return llvm_builder; }
 
-        vmachine& vm; // $$$ protected for now $$$
-        llvm::FunctionPassManager fpm; // $$$ protected for now $$$
-
     private:
 
         friend struct function::to_value;
@@ -234,10 +239,12 @@ namespace client { namespace code_gen
 
         void init_fpm();
         llvm::IRBuilder<> llvm_builder;
+        vmachine& vm;
+        llvm::FunctionPassManager fpm;
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  The Compiler
+    //  The main compiler. Generates code from our AST.
     ///////////////////////////////////////////////////////////////////////////
     struct compiler : llvm_compiler
     {

@@ -49,6 +49,11 @@ namespace client { namespace code_gen
         return v != 0;
     }
 
+    value::operator bool() const
+    {
+        return v != 0;
+    }
+
     void value::name(char const* id)
     {
         v->setName(id);
@@ -379,17 +384,14 @@ namespace client { namespace code_gen
         return value(alloca, true, &llvm_builder);
     }
 
-    namespace
+    struct value::to_llvm_value
     {
-        struct llvm_value
+        typedef llvm::Value* result_type;
+        llvm::Value* operator()(value const& x) const
         {
-            typedef llvm::Value* result_type;
-            llvm::Value* operator()(value const& x) const
-            {
-                return x;
-            }
-        };
-    }
+            return x;
+        }
+    };
 
     template <typename C>
     llvm::Value* llvm_compiler::call_impl(
@@ -422,7 +424,7 @@ namespace client { namespace code_gen
     {
         llvm::Value* call = call_impl(
             callee,
-            args | boost::adaptors::transformed(llvm_value()));
+            args | boost::adaptors::transformed(value::to_llvm_value()));
 
         if (call == 0)
             return val();
