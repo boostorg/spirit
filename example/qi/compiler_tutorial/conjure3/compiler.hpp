@@ -32,15 +32,15 @@ namespace client { namespace code_gen
 {
     unsigned const int_size = 32;
     struct compiler;
-    struct expression_compiler;
+    struct llvm_compiler;
 
     ///////////////////////////////////////////////////////////////////////////
     //  The Value (light abstraction of an LLVM::Value
     ///////////////////////////////////////////////////////////////////////////
     struct value
     {
+        value();
         value(value const& rhs);
-
         operator llvm::Value*() const;
 
         value& operator=(value const& rhs);
@@ -72,50 +72,43 @@ namespace client { namespace code_gen
 
     protected:
 
-        friend struct compiler;
-        friend struct expression_compiler;
+        friend struct llvm_compiler;
 
         value(
-            llvm::Value* v = 0,
-            bool is_lvalue_ = false,
-            llvm::IRBuilder<>* builder = 0);
+            llvm::Value* v,
+            bool is_lvalue_,
+            llvm::IRBuilder<>* builder);
 
         llvm::LLVMContext& context() const
         { return llvm::getGlobalContext(); }
+
+    private:
 
         llvm::Value* v;
         bool is_lvalue_;
         llvm::IRBuilder<>* builder;
     };
 
-    struct lvalue : value
-    {
-        lvalue()
-          : value(0, true, 0)
-        {}
-
-        lvalue(
-            llvm::AllocaInst* var,
-            llvm::IRBuilder<>& builder)
-          : value(var, true, &builder)
-        {}
-
-        lvalue(llvm::IRBuilder<>& builder, char const* name);
-    };
-
     ///////////////////////////////////////////////////////////////////////////
-    //  The Expression Compiler
+    //  The LLVM Compiler. Lower level compiler (does not deal with ASTs)
     ///////////////////////////////////////////////////////////////////////////
-    struct expression_compiler
+    struct llvm_compiler
     {
-        expression_compiler()
-          : builder(context())
-        {}
+        llvm_compiler(vmachine& vm)
+          : llvm_builder(context())
+          , vm(vm)
+          , fpm(vm.module())
+        {
+            init_fpm();
+        }
 
         value val() { return value(); }
         value val(unsigned int x);
         value val(int x);
         value val(bool x);
+        value val(llvm::Value* v);
+
+        value var(char const* name);
 
         value call(
             llvm::Function* callee,
@@ -126,20 +119,28 @@ namespace client { namespace code_gen
         llvm::LLVMContext& context() const
         { return llvm::getGlobalContext(); }
 
-        llvm::IRBuilder<> builder;
+        llvm::IRBuilder<>& builder()
+        { return llvm_builder; }
+
+        vmachine& vm; // $$$ protected for now $$$
+        llvm::FunctionPassManager fpm; // $$$ protected for now $$$
+
+    private:
+
+        void init_fpm();
+        llvm::IRBuilder<> llvm_builder;
     };
 
     ///////////////////////////////////////////////////////////////////////////
     //  The Compiler
     ///////////////////////////////////////////////////////////////////////////
-    struct compiler : expression_compiler
+    struct compiler : llvm_compiler
     {
         typedef value result_type;
 
         template <typename ErrorHandler>
         compiler(vmachine& vm, ErrorHandler& error_handler_)
-          : vm(vm),
-            fpm(vm.module())
+          : llvm_compiler(vm)
         {
             using namespace boost::phoenix::arg_names;
             namespace phx = boost::phoenix;
@@ -147,8 +148,6 @@ namespace client { namespace code_gen
 
             error_handler = function<ErrorHandler>(error_handler_)(
                 "Error! ", _2, phx::cref(error_handler_.iters)[_1]);
-
-            init_fpm();
         }
 
         value operator()(ast::nil) { BOOST_ASSERT(0); return val(); }
@@ -172,22 +171,6 @@ namespace client { namespace code_gen
 
     private:
 
-        boost::function<
-            void(int tag, std::string const& what)>
-        error_handler;
-
-        bool void_return;
-        std::string current_function_name;
-        std::map<std::string, lvalue> named_values;
-        llvm::BasicBlock* return_block;
-        lvalue return_var;
-
-        vmachine& vm;
-        llvm::FunctionPassManager fpm;
-
-        llvm::Module* init_llvm();
-        void init_fpm();
-
         value compile_binary_expression(
             value lhs, value rhs, token_ids::type op);
 
@@ -202,6 +185,16 @@ namespace client { namespace code_gen
 
         llvm::Function* function_decl(ast::function const& x);
         void function_allocas(ast::function const& x, llvm::Function* function);
+
+        boost::function<
+            void(int tag, std::string const& what)>
+        error_handler;
+
+        bool void_return;
+        std::string current_function_name;
+        std::map<std::string, value> named_values;
+        llvm::BasicBlock* return_block;
+        value return_var;
     };
 }}
 

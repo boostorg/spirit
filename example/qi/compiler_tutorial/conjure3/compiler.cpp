@@ -17,6 +17,12 @@
 
 namespace client { namespace code_gen
 {
+    value::value()
+      : v(0),
+        is_lvalue_(false),
+        builder(0)
+    {}
+
     value::value(
         llvm::Value* v,
         bool is_lvalue_,
@@ -220,6 +226,32 @@ namespace client { namespace code_gen
         );
     }
 
+    value llvm_compiler::val(unsigned int x)
+    {
+        return value(
+            llvm::ConstantInt::get(context(), llvm::APInt(int_size, x)),
+            false, &llvm_builder);
+    }
+
+    value llvm_compiler::val(int x)
+    {
+        return value(
+            llvm::ConstantInt::get(context(), llvm::APInt(int_size, x)),
+            false, &llvm_builder);
+    }
+
+    value llvm_compiler::val(bool x)
+    {
+        return value(
+            llvm::ConstantInt::get(context(), llvm::APInt(1, x)),
+            false, &llvm_builder);
+    }
+
+    value llvm_compiler::val(llvm::Value* v)
+    {
+        return value(v, false, &llvm_builder);
+    }
+
     namespace
     {
         //  Create an alloca instruction in the entry block of
@@ -239,47 +271,29 @@ namespace client { namespace code_gen
         }
     }
 
-    lvalue::lvalue(llvm::IRBuilder<>& builder, char const* name)
-      : value(
-            create_entry_block_alloca(
-                builder.GetInsertBlock()->getParent(),
-                name,
-                context()),
-        true, &builder)
+    value llvm_compiler::var(char const* name)
     {
+        llvm::Function* function = llvm_builder.GetInsertBlock()->getParent();
+        llvm::IRBuilder<> builder(
+            &function->getEntryBlock(),
+            function->getEntryBlock().begin());
+
+        llvm::AllocaInst* alloca = builder.CreateAlloca(
+            llvm::Type::getIntNTy(context(), int_size), 0, name);
+
+        return value(alloca, true, &llvm_builder);
     }
 
-    value expression_compiler::val(unsigned int x)
-    {
-        return value(
-            llvm::ConstantInt::get(context(), llvm::APInt(int_size, x)),
-            false, &builder);
-    }
-
-    value expression_compiler::val(int x)
-    {
-        return value(
-            llvm::ConstantInt::get(context(), llvm::APInt(int_size, x)),
-            false, &builder);
-    }
-
-    value expression_compiler::val(bool x)
-    {
-        return value(
-            llvm::ConstantInt::get(context(), llvm::APInt(1, x)),
-            false, &builder);
-    }
-
-    value expression_compiler::call(
+    value llvm_compiler::call(
         llvm::Function* callee,
         std::vector<llvm::Value*> const& args)
     {
         return value(
-            builder.CreateCall(callee, args.begin(), args.end(), "call_tmp"),
-            false, &builder);
+            llvm_builder.CreateCall(callee, args.begin(), args.end(), "call_tmp"),
+            false, &llvm_builder);
     }
 
-    void compiler::init_fpm()
+    void llvm_compiler::init_fpm()
     {
         // Set up the optimizer pipeline.  Start with registering info about how the
         // target lays out data structures.
@@ -342,7 +356,7 @@ namespace client { namespace code_gen
             {
                 if (!operand.is_lvalue())
                 {
-                    error_handler(x.id, "++ needs an lvalue");
+                    error_handler(x.id, "++ needs an var");
                     return val();
                 }
 
@@ -354,7 +368,7 @@ namespace client { namespace code_gen
             {
                 if (!operand.is_lvalue())
                 {
-                    error_handler(x.id, "-- needs an lvalue");
+                    error_handler(x.id, "-- needs an var");
                     return val();
                 }
 
@@ -536,7 +550,7 @@ namespace client { namespace code_gen
             return val();
         }
 
-        lvalue lhs = named_values[x.lhs.name];
+        value lhs = named_values[x.lhs.name];
         value rhs = (*this)(x.rhs);
         if (!rhs.is_valid())
             return val();
@@ -585,12 +599,12 @@ namespace client { namespace code_gen
                 return false;
         }
 
-        lvalue var(builder, name.c_str());
+        value var_ = var(name.c_str());
         if (init)
-            var.assign(init);
+            var_.assign(init);
 
         // Remember this binding.
-        named_values[name] = var;
+        named_values[name] = var_;
         return true;
     }
 
@@ -627,7 +641,7 @@ namespace client { namespace code_gen
         if (!condition.is_valid())
             return false;
 
-        llvm::Function* function = builder.GetInsertBlock()->getParent();
+        llvm::Function* function = builder().GetInsertBlock()->getParent();
 
         // Create blocks for the then and else cases.  Insert the 'then' block at the
         // end of the function.
@@ -638,79 +652,79 @@ namespace client { namespace code_gen
         if (x.else_)
         {
             else_block = llvm::BasicBlock::Create(context(), "if.else");
-            builder.CreateCondBr(condition, then_block, else_block);
+            builder().CreateCondBr(condition, then_block, else_block);
         }
         else
         {
             exit_block = llvm::BasicBlock::Create(context(), "if.end");
-            builder.CreateCondBr(condition, then_block, exit_block);
+            builder().CreateCondBr(condition, then_block, exit_block);
         }
 
         // Emit then value.
-        builder.SetInsertPoint(then_block);
+        builder().SetInsertPoint(then_block);
         if (!(*this)(x.then))
             return false;
         if (then_block->getTerminator() == 0)
         {
             if (exit_block == 0)
                 exit_block = llvm::BasicBlock::Create(context(), "if.end");
-            builder.CreateBr(exit_block);
+            builder().CreateBr(exit_block);
         }
         // Codegen of 'then' can change the current block, update then_block
-        then_block = builder.GetInsertBlock();
+        then_block = builder().GetInsertBlock();
 
         if (x.else_)
         {
             // Emit else block.
             function->getBasicBlockList().push_back(else_block);
-            builder.SetInsertPoint(else_block);
+            builder().SetInsertPoint(else_block);
             if (!(*this)(*x.else_))
                 return false;
             if (else_block->getTerminator() == 0)
             {
                 if (exit_block == 0)
                     exit_block = llvm::BasicBlock::Create(context(), "if.end");
-                builder.CreateBr(exit_block);
+                builder().CreateBr(exit_block);
             }
             // Codegen of 'else' can change the current block, update else_block
-            else_block = builder.GetInsertBlock();
+            else_block = builder().GetInsertBlock();
         }
 
         if (exit_block != 0)
         {
             // Emit exit block
             function->getBasicBlockList().push_back(exit_block);
-            builder.SetInsertPoint(exit_block);
+            builder().SetInsertPoint(exit_block);
         }
         return true;
     }
 
     bool compiler::operator()(ast::while_statement const& x)
     {
-        llvm::Function* function = builder.GetInsertBlock()->getParent();
+        llvm::Function* function = builder().GetInsertBlock()->getParent();
 
         llvm::BasicBlock* cond_block = llvm::BasicBlock::Create(context(), "while.cond", function);
         llvm::BasicBlock* body_block = llvm::BasicBlock::Create(context(), "while.body");
         llvm::BasicBlock* exit_block = llvm::BasicBlock::Create(context(), "while.end");
 
-        builder.CreateBr(cond_block);
-        builder.SetInsertPoint(cond_block);
+        builder().CreateBr(cond_block);
+        builder().SetInsertPoint(cond_block);
         value condition = (*this)(x.condition);
         if (!condition.is_valid())
             return false;
-        builder.CreateCondBr(condition, body_block, exit_block);
+        builder().CreateCondBr(condition, body_block, exit_block);
         function->getBasicBlockList().push_back(body_block);
-        builder.SetInsertPoint(body_block);
+        builder().SetInsertPoint(body_block);
 
         if (!(*this)(x.body))
             return false;
 
         if (body_block->getTerminator() == 0)
-            builder.CreateBr(cond_block); // loop back
+            builder().CreateBr(cond_block); // loop back
 
         // Emit exit block
         function->getBasicBlockList().push_back(exit_block);
-        builder.SetInsertPoint(exit_block);
+        builder().SetInsertPoint(exit_block);
 
         return true;
     }
@@ -745,7 +759,7 @@ namespace client { namespace code_gen
             return_var.assign(return_val);
         }
 
-        builder.CreateBr(return_block);
+        builder().CreateBr(return_block);
         return true;
     }
 
@@ -815,10 +829,10 @@ namespace client { namespace code_gen
         BOOST_FOREACH(ast::identifier const& arg, x.args)
         {
             // Create an arg_ for this variable.
-            lvalue arg_(builder, arg.name.c_str());
+            value arg_ = var(arg.name.c_str());
 
             // Store the initial value into the arg_.
-            arg_.assign(value(iter));
+            arg_.assign(val(iter));
 
             // Add arguments to variable symbol table.
             named_values[arg.name] = arg_;
@@ -828,7 +842,7 @@ namespace client { namespace code_gen
         if (!void_return)
         {
             // Create an alloca for the return value
-            return_var = lvalue(builder, "return.val");
+            return_var = var("return.val");
         }
     }
 
@@ -847,7 +861,7 @@ namespace client { namespace code_gen
             // Create a new basic block to start insertion into.
             llvm::BasicBlock* block =
                 llvm::BasicBlock::Create(context(), "entry", function);
-            builder.SetInsertPoint(block);
+            builder().SetInsertPoint(block);
 
             function_allocas(x, function);
             return_block = llvm::BasicBlock::Create(context(), "return");
@@ -865,17 +879,17 @@ namespace client { namespace code_gen
             // If the last block is unterminated, connect it to return_block
             if (last_block->getTerminator() == 0)
             {
-                builder.SetInsertPoint(last_block);
-                builder.CreateBr(return_block);
+                builder().SetInsertPoint(last_block);
+                builder().CreateBr(return_block);
             }
 
             function->getBasicBlockList().push_back(return_block);
-            builder.SetInsertPoint(return_block);
+            builder().SetInsertPoint(return_block);
 
             if (void_return)
-                builder.CreateRetVoid();
+                builder().CreateRetVoid();
             else
-                builder.CreateRet(return_var);
+                builder().CreateRet(return_var);
 
             //~ vm.module()->dump();
 
