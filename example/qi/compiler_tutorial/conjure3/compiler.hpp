@@ -90,6 +90,27 @@ namespace client { namespace code_gen
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    struct function
+    {
+        function()
+          : f(0) {}
+
+        operator llvm::Function*() const
+        { return f; }
+
+        std::size_t arg_size() const
+        { return f->arg_size(); }
+
+    private:
+
+        function(llvm::Function* f)
+          : f(f) {}
+
+        friend struct llvm_compiler;
+        llvm::Function* f;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     //  The LLVM Compiler. Lower level compiler (does not deal with ASTs)
     ///////////////////////////////////////////////////////////////////////////
     struct llvm_compiler
@@ -109,10 +130,17 @@ namespace client { namespace code_gen
         value val(llvm::Value* v);
 
         value var(char const* name);
+        value var(std::string const& name)
+        { return var(name.c_str()); }
 
-        value call(
-            llvm::Function* callee,
-            std::vector<llvm::Value*> const& args);
+        template <typename Container>
+        value call(function callee, Container const& args);
+
+        function get_function(char const* name) const;
+        function get_function(std::string const& name) const
+        { return get_function(name.c_str()); }
+
+        function get_current_function() const;
 
     protected:
 
