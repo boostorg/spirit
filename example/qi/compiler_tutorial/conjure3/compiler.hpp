@@ -49,6 +49,9 @@ namespace client { namespace code_gen
 
         value& assign(value const& rhs);
 
+        void name(char const* id)
+        { v->setName(id); }
+
         friend value operator-(value a);
         friend value operator!(value a);
         friend value operator+(value a, value b);
@@ -90,6 +93,32 @@ namespace client { namespace code_gen
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    struct function;
+
+    struct basic_block
+    {
+        basic_block()
+          : b(0) {}
+
+        bool has_terminator() const
+        { return b->getTerminator() != 0; }
+
+        bool is_valid() const { return b != 0; }
+
+    private:
+
+        basic_block(llvm::BasicBlock* b)
+          : b(b) {}
+
+        operator llvm::BasicBlock*() const
+        { return b; }
+
+        friend struct llvm_compiler;
+        friend struct function;
+        llvm::BasicBlock* b;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     struct function
     {
         function()
@@ -101,6 +130,20 @@ namespace client { namespace code_gen
         std::size_t arg_size() const
         { return f->arg_size(); }
 
+        void add(basic_block const& b);
+
+        void erase_from_parent()
+        { f->eraseFromParent(); }
+
+        basic_block last_block()
+        { return &f->getBasicBlockList().back(); }
+
+        bool empty() const
+        { return f->empty(); }
+
+        std::string name() const
+        { return f->getName(); }
+
     private:
 
         function(llvm::Function* f)
@@ -109,6 +152,7 @@ namespace client { namespace code_gen
         friend struct llvm_compiler;
         llvm::Function* f;
     };
+
 
     ///////////////////////////////////////////////////////////////////////////
     //  The LLVM Compiler. Lower level compiler (does not deal with ASTs)
@@ -141,6 +185,45 @@ namespace client { namespace code_gen
         { return get_function(name.c_str()); }
 
         function get_current_function() const;
+
+        template <typename F>
+        void for_each_arg(function f, F do_)
+        {
+            typedef typename llvm::Function::arg_iterator iter;
+            for (iter i = f.f->arg_begin(); i != f.f->arg_end(); ++i)
+                do_(val(i));
+        }
+
+        function declare_function(
+            bool void_return
+          , std::string const& name
+          , std::size_t nargs);
+
+        basic_block make_basic_block(
+            char const* name
+          , function parent = function()
+          , basic_block before = basic_block());
+
+        basic_block get_insert_block()
+        { return llvm_builder.GetInsertBlock(); }
+
+        void set_insert_point(basic_block b)
+        { llvm_builder.SetInsertPoint(b); }
+
+        void conditional_branch(
+            value cond, basic_block true_br, basic_block false_br)
+        { llvm_builder.CreateCondBr(cond, true_br, false_br); }
+
+        void branch(basic_block b)
+        { llvm_builder.CreateBr(b); }
+
+        void return_()
+        { llvm_builder.CreateRetVoid(); }
+
+        void return_(value v)
+        { llvm_builder.CreateRet(v); }
+
+        struct get_llvm_value;
 
     protected:
 
@@ -211,8 +294,8 @@ namespace client { namespace code_gen
         struct statement_compiler;
         statement_compiler& as_statement();
 
-        llvm::Function* function_decl(ast::function const& x);
-        void function_allocas(ast::function const& x, llvm::Function* function);
+        function function_decl(ast::function const& x);
+        void function_allocas(ast::function const& x, function function);
 
         boost::function<
             void(int tag, std::string const& what)>
@@ -220,8 +303,8 @@ namespace client { namespace code_gen
 
         bool void_return;
         std::string current_function_name;
-        std::map<std::string, value> named_values;
-        llvm::BasicBlock* return_block;
+        std::map<std::string, value> locals;
+        basic_block return_block;
         value return_var;
     };
 }}

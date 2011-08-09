@@ -227,6 +227,11 @@ namespace client { namespace code_gen
         );
     }
 
+    void function::add(basic_block const& b)
+    {
+        f->getBasicBlockList().push_back(b);
+    }
+
     value llvm_compiler::val(unsigned int x)
     {
         return value(
@@ -258,7 +263,7 @@ namespace client { namespace code_gen
         //  Create an alloca instruction in the entry block of
         //  the function. This is used for mutable variables etc.
         llvm::AllocaInst*
-        create_entry_block_alloca(
+        make_entry_block_alloca(
             llvm::Function* f,
             char const* name,
             llvm::LLVMContext& context)
@@ -347,6 +352,34 @@ namespace client { namespace code_gen
         return llvm_builder.GetInsertBlock()->getParent();
     }
 
+    function llvm_compiler::declare_function(
+        bool void_return
+      , std::string const& name
+      , std::size_t nargs)
+    {
+        llvm::Type* int_type =
+            llvm::Type::getIntNTy(context(), int_size);
+        llvm::Type* void_type = llvm::Type::getVoidTy(context());
+
+        std::vector<llvm::Type*> ints(nargs, int_type);
+        llvm::Type* return_type = void_return ? void_type : int_type;
+
+        llvm::FunctionType* function_type =
+            llvm::FunctionType::get(void_return ? void_type : int_type, ints, false);
+
+        return llvm::Function::Create(
+                function_type, llvm::Function::ExternalLinkage,
+                name, vm.module());
+    }
+
+    basic_block llvm_compiler::make_basic_block(
+        char const* name
+      , function parent
+      , basic_block before)
+    {
+        return llvm::BasicBlock::Create(context(), name, parent, before);
+    }
+
     void llvm_compiler::init_fpm()
     {
         // Set up the optimizer pipeline.  Start with registering info about how the
@@ -386,12 +419,12 @@ namespace client { namespace code_gen
     value compiler::operator()(ast::identifier const& x)
     {
         // Look this variable up in the function.
-        if (named_values.find(x.name) == named_values.end())
+        if (locals.find(x.name) == locals.end())
         {
             error_handler(x.id, "Undeclared variable: " + x.name);
             return val();
         }
-        return named_values[x.name];
+        return locals[x.name];
     }
 
     value compiler::operator()(ast::unary_expr const& x)
@@ -608,13 +641,13 @@ namespace client { namespace code_gen
 
     value compiler::operator()(ast::assignment const& x)
     {
-        if (named_values.find(x.lhs.name) == named_values.end())
+        if (locals.find(x.lhs.name) == locals.end())
         {
             error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
             return val();
         }
 
-        value lhs = named_values[x.lhs.name];
+        value lhs = locals[x.lhs.name];
         value rhs = (*this)(x.rhs);
         if (!rhs.is_valid())
             return val();
@@ -647,7 +680,7 @@ namespace client { namespace code_gen
 
     bool compiler::operator()(ast::variable_declaration const& x)
     {
-        if (named_values.find(x.lhs.name) != named_values.end())
+        if (locals.find(x.lhs.name) != locals.end())
         {
             error_handler(x.lhs.id, "Duplicate variable: " + x.lhs.name);
             return false;
@@ -664,11 +697,11 @@ namespace client { namespace code_gen
         }
 
         value var_ = var(name.c_str());
-        if (init)
+        if (init.is_valid())
             var_.assign(init);
 
         // Remember this binding.
-        named_values[name] = var_;
+        locals[name] = var_;
         return true;
     }
 
@@ -705,90 +738,90 @@ namespace client { namespace code_gen
         if (!condition.is_valid())
             return false;
 
-        llvm::Function* f = get_current_function();
+        function f = get_current_function();
 
         // Create blocks for the then and else cases.  Insert the 'then' block at the
         // end of the function.
-        llvm::BasicBlock* then_block = llvm::BasicBlock::Create(context(), "if.then", f);
-        llvm::BasicBlock* else_block = 0;
-        llvm::BasicBlock* exit_block = 0;
+        basic_block then_block = make_basic_block("if.then", f);
+        basic_block else_block;
+        basic_block exit_block;
 
         if (x.else_)
         {
-            else_block = llvm::BasicBlock::Create(context(), "if.else");
-            builder().CreateCondBr(condition, then_block, else_block);
+            else_block = make_basic_block("if.else");
+            conditional_branch(condition, then_block, else_block);
         }
         else
         {
-            exit_block = llvm::BasicBlock::Create(context(), "if.end");
-            builder().CreateCondBr(condition, then_block, exit_block);
+            exit_block = make_basic_block("if.end");
+            conditional_branch(condition, then_block, exit_block);
         }
 
         // Emit then value.
-        builder().SetInsertPoint(then_block);
+        set_insert_point(then_block);
         if (!(*this)(x.then))
             return false;
-        if (then_block->getTerminator() == 0)
+        if (!then_block.has_terminator())
         {
-            if (exit_block == 0)
-                exit_block = llvm::BasicBlock::Create(context(), "if.end");
-            builder().CreateBr(exit_block);
+            if (!exit_block.is_valid())
+                exit_block = make_basic_block("if.end");
+            branch(exit_block);
         }
         // Codegen of 'then' can change the current block, update then_block
-        then_block = builder().GetInsertBlock();
+        then_block = get_insert_block();
 
         if (x.else_)
         {
             // Emit else block.
-            f->getBasicBlockList().push_back(else_block);
-            builder().SetInsertPoint(else_block);
+            f.add(else_block);
+            set_insert_point(else_block);
             if (!(*this)(*x.else_))
                 return false;
-            if (else_block->getTerminator() == 0)
+            if (!else_block.has_terminator())
             {
-                if (exit_block == 0)
-                    exit_block = llvm::BasicBlock::Create(context(), "if.end");
-                builder().CreateBr(exit_block);
+                if (!exit_block.is_valid())
+                    exit_block = make_basic_block("if.end");
+                branch(exit_block);
             }
             // Codegen of 'else' can change the current block, update else_block
-            else_block = builder().GetInsertBlock();
+            else_block = get_insert_block();
         }
 
-        if (exit_block != 0)
+        if (exit_block.is_valid())
         {
             // Emit exit block
-            f->getBasicBlockList().push_back(exit_block);
-            builder().SetInsertPoint(exit_block);
+            f.add(exit_block);
+            set_insert_point(exit_block);
         }
         return true;
     }
 
     bool compiler::operator()(ast::while_statement const& x)
     {
-        llvm::Function* f = get_current_function();
+        function f = get_current_function();
 
-        llvm::BasicBlock* cond_block = llvm::BasicBlock::Create(context(), "while.cond", f);
-        llvm::BasicBlock* body_block = llvm::BasicBlock::Create(context(), "while.body");
-        llvm::BasicBlock* exit_block = llvm::BasicBlock::Create(context(), "while.end");
+        basic_block cond_block = make_basic_block("while.cond", f);
+        basic_block body_block = make_basic_block("while.body");
+        basic_block exit_block = make_basic_block("while.end");
 
-        builder().CreateBr(cond_block);
-        builder().SetInsertPoint(cond_block);
+        branch(cond_block);
+        set_insert_point(cond_block);
         value condition = (*this)(x.condition);
         if (!condition.is_valid())
             return false;
-        builder().CreateCondBr(condition, body_block, exit_block);
-        f->getBasicBlockList().push_back(body_block);
-        builder().SetInsertPoint(body_block);
+        conditional_branch(condition, body_block, exit_block);
+        f.add(body_block);
+        set_insert_point(body_block);
 
         if (!(*this)(x.body))
             return false;
 
-        if (body_block->getTerminator() == 0)
-            builder().CreateBr(cond_block); // loop back
+        if (!body_block.has_terminator())
+            branch(cond_block); // loop back
 
         // Emit exit block
-        f->getBasicBlockList().push_back(exit_block);
-        builder().SetInsertPoint(exit_block);
+        f.add(exit_block);
+        set_insert_point(exit_block);
 
         return true;
     }
@@ -823,85 +856,110 @@ namespace client { namespace code_gen
             return_var.assign(return_val);
         }
 
-        builder().CreateBr(return_block);
+        branch(return_block);
         return true;
     }
 
-    llvm::Function* compiler::function_decl(ast::function const& x)
+    namespace
+    {
+        struct set_arg_name
+        {
+            typedef std::list<ast::identifier>::const_iterator ast_iter;
+            typedef void result_type;
+
+            mutable ast_iter i;
+            set_arg_name(ast_iter i)
+              : i(i) {}
+
+            void operator()(value arg) const
+            {
+                arg.name(i->name.c_str());
+                ++i;
+            }
+        };
+    }
+
+    function compiler::function_decl(ast::function const& x)
     {
         void_return = x.return_type == "void";
         current_function_name = x.function_name.name;
 
-        llvm::Type* int_type =
-            llvm::Type::getIntNTy(context(), int_size);
-        llvm::Type* void_type = llvm::Type::getVoidTy(context());
-
-        std::vector<llvm::Type*> ints(x.args.size(), int_type);
-        llvm::Type* return_type = void_return ? void_type : int_type;
-
-        llvm::FunctionType* function_type =
-            llvm::FunctionType::get(void_return ? void_type : int_type, ints, false);
-
-        llvm::Function* f =
-            llvm::Function::Create(
-                function_type, llvm::Function::ExternalLinkage,
-                current_function_name, vm.module());
+        function f =
+            declare_function(
+                void_return
+              , current_function_name
+              , x.args.size());
 
         // If function conflicted, the function already exixts. If it has a
         // body, don't allow redefinition or reextern.
-        if (f->getName() != current_function_name)
+        if (f.name() != current_function_name)
         {
             // Delete the one we just made and get the existing one.
-            f->eraseFromParent();
+            f.erase_from_parent();
             f = get_function(current_function_name);
 
             // If function already has a body, reject this.
-            if (!f->empty())
+            if (!f.empty())
             {
                 error_handler(
                     x.function_name.id,
                     "Duplicate function: " + x.function_name.name);
-                return 0;
+                return function();
             }
 
             // If function took a different number of args, reject.
-            if (f->arg_size() != x.args.size())
+            if (f.arg_size() != x.args.size())
             {
                 error_handler(
                     x.function_name.id,
                     "Redefinition of function with different # args: "
                         + x.function_name.name);
-                return 0;
+                return function();
             }
 
             // Set names for all arguments.
-            llvm::Function::arg_iterator iter = f->arg_begin();
-            BOOST_FOREACH(ast::identifier const& arg, x.args)
-            {
-                iter->setName(arg.name);
-                ++iter;
-            }
+            for_each_arg(f, set_arg_name(x.args.begin()));
         }
         return f;
     }
 
-    void compiler::function_allocas(ast::function const& x, llvm::Function* f)
+    namespace
     {
-        // Create an variables for each argument and register the
-        // argument in the symbol table so that references to it will succeed.
-        llvm::Function::arg_iterator iter = f->arg_begin();
-        BOOST_FOREACH(ast::identifier const& arg, x.args)
+        struct make_arg
         {
-            // Create an arg_ for this variable.
-            value arg_ = var(arg.name.c_str());
+            typedef std::list<ast::identifier>::const_iterator ast_iter;
+            typedef void result_type;
 
-            // Store the initial value into the arg_.
-            arg_.assign(val(iter));
+            llvm_compiler& c;
+            std::map<std::string, value>& locals;
+            mutable ast_iter i;
 
-            // Add arguments to variable symbol table.
-            named_values[arg.name] = arg_;
-            ++iter;
-        }
+            make_arg(
+                llvm_compiler& c
+              , std::map<std::string, value>& locals
+              , ast_iter i)
+              : c(c), locals(locals), i(i) {}
+
+            void operator()(value arg) const
+            {
+                // Create an arg_ for this variable.
+                value arg_ = c.var(i->name.c_str());
+
+                // Store the initial value into the arg_.
+                arg_.assign(arg);
+
+                // Add arguments to variable symbol table.
+                locals[i->name] = arg_;
+                ++i;
+            }
+        };
+    }
+
+    void compiler::function_allocas(ast::function const& x, function f)
+    {
+        // Create variables for each argument and register the
+        // argument in the symbol table so that references to it will succeed.
+        for_each_arg(f, make_arg(*this, locals, x.args.begin()));
 
         if (!void_return)
         {
@@ -914,7 +972,7 @@ namespace client { namespace code_gen
     {
         ///////////////////////////////////////////////////////////////////////
         // the signature:
-        llvm::Function* f = function_decl(x);
+        function f = function_decl(x);
         if (f == 0)
             return false;
 
@@ -923,37 +981,35 @@ namespace client { namespace code_gen
         if (x.body) // compile the body if this is not a prototype
         {
             // Create a new basic block to start insertion into.
-            llvm::BasicBlock* block =
-                llvm::BasicBlock::Create(context(), "entry", f);
-            builder().SetInsertPoint(block);
+            basic_block block = make_basic_block("entry", f);
+            set_insert_point(block);
 
             function_allocas(x, f);
-            return_block = llvm::BasicBlock::Create(context(), "return");
+            return_block = make_basic_block("return");
 
             if (!(*this)(*x.body))
             {
                 // Error reading body, remove function.
-                f->eraseFromParent();
+                f.erase_from_parent();
                 return false;
             }
 
-            llvm::BasicBlock* last_block =
-                &f->getBasicBlockList().back();
+            basic_block last_block = f.last_block();
 
             // If the last block is unterminated, connect it to return_block
-            if (last_block->getTerminator() == 0)
+            if (!last_block.has_terminator())
             {
-                builder().SetInsertPoint(last_block);
-                builder().CreateBr(return_block);
+                set_insert_point(last_block);
+                branch(return_block);
             }
 
-            f->getBasicBlockList().push_back(return_block);
-            builder().SetInsertPoint(return_block);
+            f.add(return_block);
+            set_insert_point(return_block);
 
             if (void_return)
-                builder().CreateRetVoid();
+                return_();
             else
-                builder().CreateRet(return_var);
+                return_(return_var);
 
             //~ vm.module()->dump();
 
@@ -971,7 +1027,7 @@ namespace client { namespace code_gen
     {
         BOOST_FOREACH(ast::function const& f, x)
         {
-            named_values.clear(); // clear the variables
+            locals.clear(); // clear the variables
             if (!(*this)(f))
                 return false;
         }
