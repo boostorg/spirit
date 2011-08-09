@@ -17,6 +17,7 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/iterator/transform_iterator.hpp>
 
 #include <llvm/DerivedTypes.h>
 #include <llvm/Constants.h>
@@ -44,13 +45,13 @@ namespace client { namespace code_gen
         operator llvm::Value*() const;
 
         value& operator=(value const& rhs);
-        bool is_lvalue() const { return is_lvalue_; }
-        bool is_valid() const { return v != 0; }
+        bool is_lvalue() const;
+        bool is_valid() const;
 
         value& assign(value const& rhs);
 
-        void name(char const* id)
-        { v->setName(id); }
+        void name(char const* id);
+        void name(std::string const& id);
 
         friend value operator-(value a);
         friend value operator!(value a);
@@ -100,10 +101,8 @@ namespace client { namespace code_gen
         basic_block()
           : b(0) {}
 
-        bool has_terminator() const
-        { return b->getTerminator() != 0; }
-
-        bool is_valid() const { return b != 0; }
+        bool has_terminator() const;
+        bool is_valid() const;
 
     private:
 
@@ -119,40 +118,49 @@ namespace client { namespace code_gen
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    struct llvm_compiler;
+
     struct function
     {
+    private:
+
+        struct to_value;
+        typedef llvm::Function::arg_iterator arg_iterator;
+        typedef boost::transform_iterator<
+            to_value, arg_iterator>
+        argval_iterator;
+
+    public:
+
+        typedef boost::iterator_range<argval_iterator> arg_range;
+
         function()
-          : f(0) {}
+          : f(0), c(c) {}
 
-        operator llvm::Function*() const
-        { return f; }
+        std::string name() const;
 
-        std::size_t arg_size() const
-        { return f->arg_size(); }
+        std::size_t arg_size() const;
+        arg_range args() const;
 
         void add(basic_block const& b);
+        void erase_from_parent();
+        basic_block last_block();
+        bool empty() const;
 
-        void erase_from_parent()
-        { f->eraseFromParent(); }
-
-        basic_block last_block()
-        { return &f->getBasicBlockList().back(); }
-
-        bool empty() const
-        { return f->empty(); }
-
-        std::string name() const
-        { return f->getName(); }
+        bool is_valid() const;
+        void verify() const;
 
     private:
 
-        function(llvm::Function* f)
-          : f(f) {}
+        function(llvm::Function* f, llvm_compiler* c)
+          : f(f), c(c) {}
+
+        operator llvm::Function*() const;
 
         friend struct llvm_compiler;
         llvm::Function* f;
+        llvm_compiler* c;
     };
-
 
     ///////////////////////////////////////////////////////////////////////////
     //  The LLVM Compiler. Lower level compiler (does not deal with ASTs)
@@ -163,36 +171,22 @@ namespace client { namespace code_gen
           : llvm_builder(context())
           , vm(vm)
           , fpm(vm.module())
-        {
-            init_fpm();
-        }
+        { init_fpm(); }
 
         value val() { return value(); }
         value val(unsigned int x);
         value val(int x);
         value val(bool x);
-        value val(llvm::Value* v);
 
         value var(char const* name);
-        value var(std::string const& name)
-        { return var(name.c_str()); }
+        value var(std::string const& name);
 
         template <typename Container>
         value call(function callee, Container const& args);
 
-        function get_function(char const* name) const;
-        function get_function(std::string const& name) const
-        { return get_function(name.c_str()); }
-
-        function get_current_function() const;
-
-        template <typename F>
-        void for_each_arg(function f, F do_)
-        {
-            typedef typename llvm::Function::arg_iterator iter;
-            for (iter i = f.f->arg_begin(); i != f.f->arg_end(); ++i)
-                do_(val(i));
-        }
+        function get_function(char const* name);
+        function get_function(std::string const& name);
+        function get_current_function();
 
         function declare_function(
             bool void_return
@@ -204,26 +198,17 @@ namespace client { namespace code_gen
           , function parent = function()
           , basic_block before = basic_block());
 
-        basic_block get_insert_block()
-        { return llvm_builder.GetInsertBlock(); }
-
-        void set_insert_point(basic_block b)
-        { llvm_builder.SetInsertPoint(b); }
+        basic_block get_insert_block();
+        void set_insert_point(basic_block b);
 
         void conditional_branch(
-            value cond, basic_block true_br, basic_block false_br)
-        { llvm_builder.CreateCondBr(cond, true_br, false_br); }
+            value cond, basic_block true_br, basic_block false_br);
+        void branch(basic_block b);
 
-        void branch(basic_block b)
-        { llvm_builder.CreateBr(b); }
+        void return_();
+        void return_(value v);
 
-        void return_()
-        { llvm_builder.CreateRetVoid(); }
-
-        void return_(value v)
-        { llvm_builder.CreateRet(v); }
-
-        struct get_llvm_value;
+        void optimize_function(function f);
 
     protected:
 
@@ -237,6 +222,15 @@ namespace client { namespace code_gen
         llvm::FunctionPassManager fpm; // $$$ protected for now $$$
 
     private:
+
+        friend struct function::to_value;
+
+        value val(llvm::Value* v);
+
+        template <typename C>
+        llvm::Value* call_impl(
+            function callee,
+            C const& args);
 
         void init_fpm();
         llvm::IRBuilder<> llvm_builder;

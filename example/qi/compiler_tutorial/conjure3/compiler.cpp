@@ -39,6 +39,26 @@ namespace client { namespace code_gen
         builder(rhs.builder)
     {}
 
+    bool value::is_lvalue() const
+    {
+        return is_lvalue_;
+    }
+
+    bool value::is_valid() const
+    {
+        return v != 0;
+    }
+
+    void value::name(char const* id)
+    {
+        v->setName(id);
+    }
+
+    void value::name(std::string const& id)
+    {
+        v->setName(id);
+    }
+
     value::operator llvm::Value*() const
     {
         if (is_lvalue_)
@@ -227,9 +247,78 @@ namespace client { namespace code_gen
         );
     }
 
+    struct function::to_value
+    {
+        typedef value result_type;
+        llvm_compiler* c;
+        to_value(llvm_compiler* c = 0) : c(c) {}
+        value operator()(llvm::Value& v) const
+        {
+            return c->val(&v);
+        }
+    };
+
+    bool basic_block::has_terminator() const
+    {
+        return b->getTerminator() != 0;
+    }
+
+    bool basic_block::is_valid() const
+    {
+        return b != 0;
+    }
+
+    function::operator llvm::Function*() const
+    {
+        return f;
+    }
+
+    std::size_t function::arg_size() const
+    {
+        return f->arg_size();
+    }
+
     void function::add(basic_block const& b)
     {
         f->getBasicBlockList().push_back(b);
+    }
+
+    void function::erase_from_parent()
+    {
+        f->eraseFromParent();
+    }
+
+    basic_block function::last_block()
+    {
+        return &f->getBasicBlockList().back();
+    }
+
+    bool function::empty() const
+    {
+        return f->empty();
+    }
+
+    std::string function::name() const
+    {
+        return f->getName();
+    }
+
+    function::arg_range function::args() const
+    {
+        BOOST_ASSERT(c != 0);
+        argval_iterator first(f->arg_begin(), to_value());
+        argval_iterator last(f->arg_end(), to_value());
+        return arg_range(first, last);
+    }
+
+    bool function::is_valid() const
+    {
+        return f != 0;
+    }
+
+    void function::verify() const
+    {
+        llvm::verifyFunction(*f);
     }
 
     value llvm_compiler::val(unsigned int x)
@@ -300,31 +389,30 @@ namespace client { namespace code_gen
                 return x;
             }
         };
+    }
 
-        template <typename C>
-        llvm::Value* call_impl(
-            llvm::IRBuilder<>& llvm_builder,
-            function callee,
-            C const& args_)
+    template <typename C>
+    llvm::Value* llvm_compiler::call_impl(
+        function callee,
+        C const& args_)
+    {
+        // Sigh. LLVM requires CreateCall arguments to be random access.
+        // It would have been better if it can accept forward iterators.
+        // I guess it needs the arguments to be in contiguous memory.
+        // So, we have to put the args into a temporary std::vector.
+        std::vector<llvm::Value*> args(
+            args_.begin(), args_.end());
+
+        // Check the args for null values. We can't have null values.
+        // Return 0 if we find one to flag error.
+        BOOST_FOREACH(llvm::Value* arg, args)
         {
-            // Sigh. LLVM requires CreateCall arguments to be random access.
-            // It would have been better if it can accept forward iterators.
-            // I guess it needs the arguments to be in contiguous memory.
-            // So, we have to put the args into a temporary std::vector.
-            std::vector<llvm::Value*> args(
-                args_.begin(), args_.end());
-
-            // Check the args for null values. We can't have null values.
-            // Return 0 if we find one to flag error.
-            BOOST_FOREACH(llvm::Value* arg, args)
-            {
-                if (arg == 0)
-                    return 0;
-            }
-
-            return llvm_builder.CreateCall(
-                callee, args.begin(), args.end(), "call_tmp");
+            if (arg == 0)
+                return 0;
         }
+
+        return llvm_builder.CreateCall(
+            callee, args.begin(), args.end(), "call_tmp");
     }
 
     template <typename Container>
@@ -333,7 +421,7 @@ namespace client { namespace code_gen
         Container const& args)
     {
         llvm::Value* call = call_impl(
-            llvm_builder, callee,
+            callee,
             args | boost::adaptors::transformed(llvm_value()));
 
         if (call == 0)
@@ -341,15 +429,15 @@ namespace client { namespace code_gen
         return value(call, false, &llvm_builder);
     }
 
-    function llvm_compiler::get_function(char const* name) const
+    function llvm_compiler::get_function(char const* name)
     {
-        return vm.module()->getFunction(name);
+        return function(vm.module()->getFunction(name), this);
     }
 
-    function llvm_compiler::get_current_function() const
+    function llvm_compiler::get_current_function()
     {
         // get the current function
-        return llvm_builder.GetInsertBlock()->getParent();
+        return function(llvm_builder.GetInsertBlock()->getParent(), this);
     }
 
     function llvm_compiler::declare_function(
@@ -367,9 +455,9 @@ namespace client { namespace code_gen
         llvm::FunctionType* function_type =
             llvm::FunctionType::get(void_return ? void_type : int_type, ints, false);
 
-        return llvm::Function::Create(
+        return function(llvm::Function::Create(
                 function_type, llvm::Function::ExternalLinkage,
-                name, vm.module());
+                name, vm.module()), this);
     }
 
     basic_block llvm_compiler::make_basic_block(
@@ -378,6 +466,53 @@ namespace client { namespace code_gen
       , basic_block before)
     {
         return llvm::BasicBlock::Create(context(), name, parent, before);
+    }
+
+    value llvm_compiler::var(std::string const& name)
+    {
+        return var(name.c_str());
+    }
+
+    function llvm_compiler::get_function(std::string const& name)
+    {
+        return get_function(name.c_str());
+    }
+
+    basic_block llvm_compiler::get_insert_block()
+    {
+        return llvm_builder.GetInsertBlock();
+    }
+
+    void llvm_compiler::set_insert_point(basic_block b)
+    {
+        llvm_builder.SetInsertPoint(b);
+    }
+
+    void llvm_compiler::conditional_branch(
+        value cond, basic_block true_br, basic_block false_br)
+    {
+        llvm_builder.CreateCondBr(cond, true_br, false_br);
+    }
+
+    void llvm_compiler::branch(basic_block b)
+    {
+        llvm_builder.CreateBr(b);
+    }
+
+    void llvm_compiler::return_()
+    {
+        llvm_builder.CreateRetVoid();
+    }
+
+    void llvm_compiler::return_(value v)
+    {
+        llvm_builder.CreateRet(v);
+    }
+
+    void llvm_compiler::optimize_function(function f)
+    {
+        // Optimize the function.
+        fpm.run(*f);
     }
 
     void llvm_compiler::init_fpm()
@@ -487,7 +622,7 @@ namespace client { namespace code_gen
     value compiler::operator()(ast::function_call const& x)
     {
         function callee = get_function(x.function_name.name);
-        if (!callee)
+        if (!callee.is_valid())
         {
             error_handler(x.function_name.id,
                 "Function not found: " + x.function_name.name);
@@ -860,25 +995,6 @@ namespace client { namespace code_gen
         return true;
     }
 
-    namespace
-    {
-        struct set_arg_name
-        {
-            typedef std::list<ast::identifier>::const_iterator ast_iter;
-            typedef void result_type;
-
-            mutable ast_iter i;
-            set_arg_name(ast_iter i)
-              : i(i) {}
-
-            void operator()(value arg) const
-            {
-                arg.name(i->name.c_str());
-                ++i;
-            }
-        };
-    }
-
     function compiler::function_decl(ast::function const& x)
     {
         void_return = x.return_type == "void";
@@ -918,48 +1034,35 @@ namespace client { namespace code_gen
             }
 
             // Set names for all arguments.
-            for_each_arg(f, set_arg_name(x.args.begin()));
+            function::arg_range rng = f.args();
+            function::arg_range::const_iterator iter = rng.begin();
+            BOOST_FOREACH(ast::identifier const& arg, x.args)
+            {
+                iter->name(arg.name);
+                ++iter;
+            }
         }
         return f;
-    }
-
-    namespace
-    {
-        struct make_arg
-        {
-            typedef std::list<ast::identifier>::const_iterator ast_iter;
-            typedef void result_type;
-
-            llvm_compiler& c;
-            std::map<std::string, value>& locals;
-            mutable ast_iter i;
-
-            make_arg(
-                llvm_compiler& c
-              , std::map<std::string, value>& locals
-              , ast_iter i)
-              : c(c), locals(locals), i(i) {}
-
-            void operator()(value arg) const
-            {
-                // Create an arg_ for this variable.
-                value arg_ = c.var(i->name.c_str());
-
-                // Store the initial value into the arg_.
-                arg_.assign(arg);
-
-                // Add arguments to variable symbol table.
-                locals[i->name] = arg_;
-                ++i;
-            }
-        };
     }
 
     void compiler::function_allocas(ast::function const& x, function f)
     {
         // Create variables for each argument and register the
         // argument in the symbol table so that references to it will succeed.
-        for_each_arg(f, make_arg(*this, locals, x.args.begin()));
+        function::arg_range rng = f.args();
+        function::arg_range::const_iterator iter = rng.begin();
+        BOOST_FOREACH(ast::identifier const& arg, x.args)
+        {
+            // Create an arg_ for this variable.
+            value arg_ = var(arg.name);
+
+            // Store the initial value into the arg_.
+            arg_.assign(*iter);
+
+            // Add arguments to variable symbol table.
+            locals[arg.name] = arg_;
+            ++iter;
+        }
 
         if (!void_return)
         {
@@ -973,7 +1076,7 @@ namespace client { namespace code_gen
         ///////////////////////////////////////////////////////////////////////
         // the signature:
         function f = function_decl(x);
-        if (f == 0)
+        if (!f.is_valid())
             return false;
 
         ///////////////////////////////////////////////////////////////////////
@@ -1011,13 +1114,11 @@ namespace client { namespace code_gen
             else
                 return_(return_var);
 
-            //~ vm.module()->dump();
-
             // Validate the generated code, checking for consistency.
-            llvm::verifyFunction(*f);
+            f.verify();
 
             // Optimize the function.
-            fpm.run(*f);
+            optimize_function(f);
         }
 
         return true;
