@@ -256,7 +256,9 @@ namespace client { namespace code_gen
     {
         typedef value result_type;
         llvm_compiler* c;
+
         to_value(llvm_compiler* c = 0) : c(c) {}
+
         value operator()(llvm::Value& v) const
         {
             return c->val(&v);

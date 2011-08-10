@@ -74,7 +74,7 @@ namespace client { namespace code_gen
         friend value operator>(value a, value b);
         friend value operator>=(value a, value b);
 
-    protected:
+    private:
 
         struct to_llvm_value;
         friend struct to_llvm_value;
@@ -87,8 +87,6 @@ namespace client { namespace code_gen
 
         llvm::LLVMContext& context() const
         { return llvm::getGlobalContext(); }
-
-    private:
 
         operator llvm::Value*() const;
 
@@ -136,11 +134,11 @@ namespace client { namespace code_gen
         typedef llvm::Function::arg_iterator arg_iterator;
         typedef boost::transform_iterator<
             to_value, arg_iterator>
-        argval_iterator;
+        arg_val_iterator;
 
     public:
 
-        typedef boost::iterator_range<argval_iterator> arg_range;
+        typedef boost::iterator_range<arg_val_iterator> arg_range;
 
         function()
           : f(0), c(c) {}
