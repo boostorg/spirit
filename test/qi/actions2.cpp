@@ -27,7 +27,11 @@ void f(std::string const& s)
     std::cout << "parsing got: " << s << std::endl;
 }
 
-void b(char x) {}
+std::string s;
+void b(char c)
+{
+    s += c;
+}
 
 int main()
 {
@@ -48,7 +52,9 @@ int main()
     { // chaining
         using namespace boost::spirit::ascii;
 
+        s = "";
         BOOST_TEST(test("a", char_[b][b]));
+        BOOST_TEST(s == "aa");
     }
 
     return boost::report_errors();
