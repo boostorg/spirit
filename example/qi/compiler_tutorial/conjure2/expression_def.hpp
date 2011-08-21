@@ -41,7 +41,7 @@ namespace client { namespace parser
         // Main expression grammar
         expr =
                 unary_expr
-                >> *(tokenid_mask(token_ids::op_binary) > unary_expr)
+            >>  *(tokenid_mask(token_ids::op_binary) > unary_expr)
             ;
 
         unary_expr =
