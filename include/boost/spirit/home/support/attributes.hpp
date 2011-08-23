@@ -1301,7 +1301,7 @@ namespace boost { namespace spirit { namespace traits
                     o << "\\t";
                 else if (c == static_cast<Char>('\v'))
                     o << "\\v";
-                else if (c < 127 && iscntrl(c))
+                else if (c >= 0 && c < 127 && iscntrl(c))
                     o << "\\" << std::oct << static_cast<int>(c);
                 else
                     o << static_cast<char>(c);
