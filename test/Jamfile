@@ -160,6 +160,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run qi/regression_reorder.cpp                              : : : : qi_regression_reorder ]
      [ run qi/regression_repeat.cpp                               : : : : qi_regression_repeat ]
      [ run qi/regression_transform_assignment.cpp                 : : : : qi_regression_transform_assignment ]
+     [ run qi/regression_binary_action.cpp                        : : : : qi_regression_binary_action ]
     ;
 
     ###########################################################################
