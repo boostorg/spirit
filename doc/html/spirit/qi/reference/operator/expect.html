@@ -4,7 +4,7 @@
 <title>Expectation Parser (a &gt; b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../../index.html" title="Spirit 2.5">
+<link rel="home" href="../../../../index.html" title="Spirit 2.6">
 <link rel="up" href="../operator.html" title="Parser Operators">
 <link rel="prev" href="difference.html" title="Difference Parser (a - b)">
 <link rel="next" href="kleene.html" title="Kleene Parser (*a)">
@@ -32,6 +32,25 @@
 <a name="spirit.qi.reference.operator.expect.description-heading"></a>
             <a class="link" href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
           </h6>
+<p>
+            There are occasions in which it is expected that the input must match
+            a particular parser or the input is invalid. Such cases generally arise
+            after matching a portion of a grammar, such that the context is fully
+            known. In such a situation, failure to match should result in an exception.
+            For example, when parsing an e-mail address, after matching a name and
+            "@" there must be a domain name or the address is invalid.
+          </p>
+<p>
+            The expectation operator (&gt;) requires that the following parser match
+            the input or an exception is emitted. Using on_error(), that exception
+            can be handled by calling a handler with the context at which the parsing
+            failed can be reported.
+          </p>
+<p>
+            By contrast, the follows operator (&gt;&gt;) does not require that the
+            following parser match the input, which allows for backtracking or simply
+            returning false from the parse() function with no exceptions.
+          </p>
 <p>
             Like the <a class="link" href="sequence.html" title="Sequence Parser (a &gt;&gt; b)">Sequence</a>,
             the expectation operator, <code class="computeroutput"><span class="identifier">a</span>
