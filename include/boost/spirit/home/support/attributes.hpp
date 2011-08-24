@@ -119,7 +119,7 @@ namespace boost { namespace spirit { namespace traits
 
 //        // An exposed attribute is a weak substitute for a supplied container
 //        // attribute if it is a weak substitute for its value_type. This is
-//        // true as all character parsers exposing compatible with a container
+//        // true as all character parsers are compatible with a container
 //        // attribute having the corresponding character type as its value_type.
 //        template <typename T, typename Expected>
 //        struct is_weak_substitute_for_value_type
@@ -600,6 +600,12 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct build_optional
+    {
+        typedef boost::optional<T> type;
+    };
+
+    template <typename T>
+    struct build_optional<boost::optional<T> >
     {
         typedef boost::optional<T> type;
     };
