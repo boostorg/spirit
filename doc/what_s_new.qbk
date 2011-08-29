@@ -9,6 +9,30 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_1 Spirit V2.5.1]
+
+[heading What's changed from V2.5 (Boost V1.47.0) to V2.5.1 (Boost V1.48.0)]
+
+* The `spirit::istream_iterator` (see __multi_pass__) now checks at 
+  construction time whether the underlying stream has reached eof (end of file).
+* __qi__ now properly collapses attributes generated from optionals embedded 
+  inside another optional parser (i.e. `-('(' > -int_ >> ')'). That means that
+  attributes like `boost::optiona<boost::optional<int> >` will be collapsed
+  to `boost::optional<int>`. Thanks to Peter Schueller for reporting that 
+  problem.
+* Actions attached to binary parsers now properly propagate the parser's 
+  attribute. Thanks to Mathias Born for reporting this issue.
+
+[heading Bug Fixes in Lex]
+
+* Fixed Boost ticket #5701: lexertl token_value_type returns const unused for 
+  nonconst ref.
+* Fixed a problem in the lexer (position_token) causing problems with enabled 
+  parser debugging (MSVC2010).
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5 Spirit V2.5]
 
 [heading What's changed in __qi__ and __karma__ from V2.4.2 (Boost V1.46.0) to V2.5 (Boost V1.47.0)]

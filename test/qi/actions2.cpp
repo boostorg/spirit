@@ -27,11 +27,18 @@ void f(std::string const& s)
     std::cout << "parsing got: " << s << std::endl;
 }
 
+std::string s;
+void b(char c)
+{
+    s += c;
+}
+
 int main()
 {
     namespace qi = boost::spirit::qi;
     namespace phoenix = boost::phoenix;
     using spirit_test::test_attr;
+    using spirit_test::test;
 
     {
         qi::rule<char const*, std::string()> r;
@@ -40,6 +47,14 @@ int main()
         std::string attr;
         BOOST_TEST(test_attr("abcdef", r, attr));
         BOOST_TEST(attr == "abcdef");
+    }
+
+    { // chaining
+        using namespace boost::spirit::ascii;
+
+        s = "";
+        BOOST_TEST(test("a", char_[b][b]));
+        BOOST_TEST(s == "aa");
     }
 
     return boost::report_errors();

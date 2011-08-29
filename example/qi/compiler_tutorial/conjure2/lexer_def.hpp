@@ -11,52 +11,64 @@ namespace client { namespace lexer
 {
     template <typename BaseIterator>
     conjure_tokens<BaseIterator>::conjure_tokens()
-      : identifier("[a-zA-Z_][a-zA-Z_0-9]*", ID_IDENTIFIER)
-      , uint_("[0-9]+", ID_UINT)
-      , bool_("true|false", ID_BOOL)
+      : identifier("[a-zA-Z_][a-zA-Z_0-9]*", token_ids::identifier)
+      , lit_uint("[0-9]+", token_ids::lit_uint)
+      , true_or_false("true|false", token_ids::true_or_false)
     {
         lex::_pass_type _pass;
 
-        this->self = uint_ | bool_;
+        this->self = lit_uint | true_or_false;
 
-        this->self.add 
-                ("void", ID_VOID_KWD) 
-                ("int", ID_INT_KWD) 
-                ("if", ID_IF_KWD) 
-                ("else", ID_ELSE_KWD)
-                ("while", ID_WHILE_KWD)
-                ("return", ID_RETURN_KWD)
-            ;
+        add_keyword("void");
+        add_keyword("int");
+        add_keyword("if");
+        add_keyword("else");
+        add_keyword("while");
+        add_keyword("return");
 
-        this->self.add 
-                ("\\|\\|", ID_OP_LOGICAL_OR)
-                ("&&", ID_OP_LOGICAL_AND)
-                ("==", ID_OP_EQUAL)
-                ("!=", ID_OP_NOT_EQUAL)
-                ("<", ID_OP_LESS)
-                ("<=", ID_OP_LESS_EQUAL)
-                (">", ID_OP_GREATER)
-                (">=", ID_OP_GREATER_EQUAL)
-                ("\\+", ID_OP_PLUS)
-                ("\\-", ID_OP_MINUS)
-                ("\\*", ID_OP_TIMES)
-                ("\\/", ID_OP_DIVIDE)
-                ("!", ID_OP_NOT)
+        this->self.add
+                ("\\|\\|", token_ids::logical_or)
+                ("&&", token_ids::logical_and)
+                ("==", token_ids::equal)
+                ("!=", token_ids::not_equal)
+                ("<", token_ids::less)
+                ("<=", token_ids::less_equal)
+                (">", token_ids::greater)
+                (">=", token_ids::greater_equal)
+                ("\\+", token_ids::plus)
+                ("\\-", token_ids::minus)
+                ("\\*", token_ids::times)
+                ("\\/", token_ids::divide)
+                ("!", token_ids::not_)
             ;
 
         this->self += lex::char_('(') | ')' | '{' | '}' | ',' | '=' | ';';
 
-        this->self += 
+        this->self +=
                 identifier
-            |   lex::string("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", ID_COMMENT) 
+            |   lex::string("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", token_ids::comment)
                 [
                     lex::_pass = lex::pass_flags::pass_ignore
-                ] 
-            |   lex::string("[ \t\n\r]+", ID_WHITESPACE) 
+                ]
+            |   lex::string("[ \t\n\r]+", token_ids::whitespace)
                 [
                     lex::_pass = lex::pass_flags::pass_ignore
                 ]
             ;
+    }
+
+    template <typename BaseIterator>
+    bool conjure_tokens<BaseIterator>::add_keyword(std::string const& keyword)
+    {
+        // add the token to the lexer
+        token_ids::type id = token_ids::type(this->get_next_id());
+        this->self.add(keyword, id);
+
+        // store the mapping for later retrieval
+        std::pair<typename keyword_map_type::iterator, bool> p =
+            keywords_.insert(typename keyword_map_type::value_type(keyword, id));
+
+        return p.second;
     }
 }}
 

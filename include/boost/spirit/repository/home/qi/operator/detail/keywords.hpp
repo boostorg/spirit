@@ -42,10 +42,12 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
         class parse_dispatcher
             : public boost::static_visitor<bool>
         {
+            typedef typename add_reference<Attribute>::type attr_reference; 
+            
             public:
             parse_dispatcher(const Elements &elements,Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
-          , Flags &flags, Counters &counters, Attribute& attr) : 
+          , Flags &flags, Counters &counters, attr_reference attr) : 
                  elements(elements), first(first), last(last)
                , context(context), skipper(skipper)
                , flags(flags),counters(counters), attr(attr)
@@ -107,7 +109,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
             const Skipper &skipper;
             Flags &flags;
             Counters &counters;
-            Attribute &attr;
+            attr_reference attr;
         };
       
 }}}}}

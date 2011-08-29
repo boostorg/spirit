@@ -100,9 +100,13 @@ namespace client { namespace parser
         // Debugging and error handling and reporting support.
         BOOST_SPIRIT_DEBUG_NODES(
             (statement_list)
-            (identifier)
+            (statement_)
             (variable_declaration)
             (assignment)
+            (if_statement)
+            (while_statement)
+            (compound_statement)
+            (return_statement)
         );
 
         // Error handling: on error in statement_list, call error_handler.
@@ -110,7 +114,10 @@ namespace client { namespace parser
             error_handler_function(error_handler)(
                 "Error! Expecting ", _4, _3));
 
-        // Annotation: on success in assignment, call annotation.
+        // Annotation: on success in variable_declaration,
+        // assignment and return_statement, call annotation.
+        on_success(variable_declaration,
+            annotation_function(error_handler.iters)(_val, _1));
         on_success(assignment,
             annotation_function(error_handler.iters)(_val, _1));
         on_success(return_statement,

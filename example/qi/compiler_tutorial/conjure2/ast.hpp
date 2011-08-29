@@ -15,7 +15,7 @@
 #include <boost/optional.hpp>
 #include <list>
 
-#include "token_ids.hpp"
+#include "ids.hpp"
 
 namespace client { namespace ast
 {
@@ -51,93 +51,15 @@ namespace client { namespace ast
         >
     operand;
 
-    #define OP(id)              (id + op_operator)
-    #define OP_EX(id, mask)     (id + (mask | op_operator))
-
-    enum optoken
-    {
-        // pseudo tags
-        op_operator = lexer::ID_OP_OPERATOR,
-        op_binary = lexer::ID_OP_BINARY,
-        op_unary = lexer::ID_OP_UNARY,
-        op_mask = (op_operator | op_unary | op_binary),
-
-        // precedence 1
-        op_comma = OP(0),
-
-        // precedence 2
-        op_assign = OP(1),
-        op_plus_assign = OP(2),
-        op_minus_assign = OP(3),
-        op_times_assign = OP(4),
-        op_divide_assign = OP(5),
-        op_mod_assign = OP(6),
-        op_bit_and_assign = OP(7),
-        op_bit_xor_assign = OP(8),
-        op_bitor_assign = OP(9),
-        op_shift_left_assign = OP(10),
-        op_shift_right_assign = OP(11),
-
-        // precedence 3
-        op_logical_or = OP_EX(12, op_binary),
-
-        // precedence 4
-        op_logical_and = OP_EX(13, op_binary),
-
-        // precedence 5
-        op_bit_or = OP_EX(14, op_binary),
-
-        // precedence 6
-        op_bit_xor = OP_EX(15, op_binary),
-
-        // precedence 7
-        op_bit_and = OP_EX(16, op_binary),
-
-        // precedence 8
-        op_equal = OP_EX(17, op_binary),
-        op_not_equal = OP_EX(18, op_binary),
-
-        // precedence 9
-        op_less = OP_EX(19, op_binary),
-        op_less_equal = OP_EX(20, op_binary),
-        op_greater = OP_EX(21, op_binary),
-        op_greater_equal = OP_EX(22, op_binary),
-
-        // precedence 10
-        op_shift_left = OP_EX(23, op_binary),
-        op_shift_right = OP_EX(24, op_binary),
-
-        // precedence 11
-        op_plus = OP_EX(25, op_binary|op_unary),
-        op_minus = OP_EX(26, op_binary|op_unary),
-
-        // precedence 12
-        op_times = OP_EX(27, op_binary),
-        op_divide = OP_EX(28, op_binary),
-        op_mod = OP_EX(29, op_binary),
-
-        // precedence 13
-        op_positive = OP_EX(30, op_unary),
-        op_negative = OP_EX(31, op_unary),
-        op_pre_incr = OP_EX(32, op_unary),
-        op_pre_decr = OP_EX(33, op_unary),
-        op_compl = OP_EX(34, op_unary),
-        op_not = OP_EX(35, op_unary),
-
-        // precedence 14
-        op_post_incr = OP(36),
-        op_post_decr = OP(37)
-    };
-
     struct unary
     {
-        optoken operator_;
+        token_ids::type operator_;
         operand operand_;
     };
 
     struct operation
     {
-        optoken operator_;
+        token_ids::type operator_;
         operand operand_;
     };
 
@@ -224,13 +146,13 @@ namespace client { namespace ast
 
 BOOST_FUSION_ADAPT_STRUCT(
     client::ast::unary,
-    (client::ast::optoken, operator_)
+    (client::token_ids::type, operator_)
     (client::ast::operand, operand_)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
     client::ast::operation,
-    (client::ast::optoken, operator_)
+    (client::token_ids::type, operator_)
     (client::ast::operand, operand_)
 )
 

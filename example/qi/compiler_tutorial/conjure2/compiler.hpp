@@ -77,7 +77,7 @@ namespace client { namespace code_gen
         bool operator()(unsigned int x);
         bool operator()(bool x);
         bool operator()(ast::identifier const& x);
-        bool operator()(ast::optoken const& x);
+        bool operator()(token_ids::type const& x);
         bool operator()(ast::unary const& x);
         bool operator()(ast::function_call const& x);
         bool operator()(ast::expression const& x);

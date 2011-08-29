@@ -20,7 +20,7 @@ yields a new parser type which is a composite of its operands, `a` and
 This module includes different parsers which get instantiated if one of
 the overloaded operators is used with more primitive parser constructs.
 It includes Alternative (`|`), And-predicate (unary `&`), Difference
-(`-`), Expect (`>`), Kleene star (unary `*`), Lists (`%`), Not-predicate (`!`), 
+(`-`), Expect (`>`), Kleene star (unary `*`), Lists (`%`), Not-predicate (`!`),
 Optional (unary `-`), Permutation (`^`), Plus (unary
 `+`), Sequence (`>>`), and Sequential-Or (`||`).
 
@@ -96,9 +96,9 @@ a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 ]
 
-[note Alternative parsers do not roll back changes made to the outer attribute 
-      because of a failed alternative. If you need to enforce that only the 
-      succeeded alternative changes the outer attribute please utilize the 
+[note Alternative parsers do not roll back changes made to the outer attribute
+      because of a failed alternative. If you need to enforce that only the
+      succeeded alternative changes the outer attribute please utilize the
       directive __qi_hold__`[]`.]
 
 [heading Complexity]
@@ -127,7 +127,7 @@ Some using declarations:
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
-__qi_eps__, syntactic predicates do not consume any input. The /and-predicate/, 
+__qi_eps__, syntactic predicates do not consume any input. The /and-predicate/,
 `&a`, is a positive syntactic predicate that returns a zero
 length match only if its predicate matches.
 
@@ -247,6 +247,22 @@ __qi_basics_examples__ section.]
 [section:expect Expectation Parser (`a > b`)]
 
 [heading Description]
+
+There are occasions in which it is expected that the input must match a
+particular parser or the input is invalid. Such cases generally arise
+after matching a portion of a grammar, such that the context is fully
+known. In such a situation, failure to match should result in an
+exception. For example, when parsing an e-mail address, after matching a
+name and "@" there must be a domain name or the address is invalid.
+
+The expectation operator (>) requires that the following parser match
+the input or an exception is emitted. Using on_error(), that exception
+can be handled by calling a handler with the context at which the
+parsing failed can be reported.
+
+By contrast, the follows operator (>>) does not require that the
+following parser match the input, which allows for backtracking or
+simply returning false from the parse() function with no exceptions.
 
 Like the __qi_sequence__, the expectation operator, `a > b`, parses two or
 more operands (`a`, `b`, ... etc.), in sequence:
@@ -465,7 +481,7 @@ __qi_basics_examples__ section.]
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
-__qi_eps__, syntactic predicates do not consume any input. The /not-predicate/, 
+__qi_eps__, syntactic predicates do not consume any input. The /not-predicate/,
 `!a`, is a negative syntactic predicate that returns a zero
 length match only if its predicate fails to match.
 

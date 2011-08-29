@@ -21,6 +21,7 @@
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/cons.hpp>
+#include <boost/fusion/include/make_cons.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at_c.hpp>
 #include <boost/mpl/identity.hpp>

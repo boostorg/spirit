@@ -124,7 +124,7 @@ namespace client { namespace parser
 
         unary_expr =
                 primary_expr
-            |   (unary_op > primary_expr)
+            |   (unary_op > unary_expr)
             ;
 
         primary_expr =

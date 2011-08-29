@@ -238,7 +238,6 @@ namespace client { namespace code_gen
         int const* p = current->find_var(x.name);
         if (p == 0)
         {
-            std::cout << x.id << std::endl;
             error_handler(x.id, "Undeclared variable: " + x.name);
             return false;
         }
@@ -246,25 +245,25 @@ namespace client { namespace code_gen
         return true;
     }
 
-    bool compiler::operator()(ast::optoken const& x)
+    bool compiler::operator()(token_ids::type const& x)
     {
         BOOST_ASSERT(current != 0);
         switch (x)
         {
-            case ast::op_plus: current->op(op_add); break;
-            case ast::op_minus: current->op(op_sub); break;
-            case ast::op_times: current->op(op_mul); break;
-            case ast::op_divide: current->op(op_div); break;
+            case token_ids::plus: current->op(op_add); break;
+            case token_ids::minus: current->op(op_sub); break;
+            case token_ids::times: current->op(op_mul); break;
+            case token_ids::divide: current->op(op_div); break;
 
-            case ast::op_equal: current->op(op_eq); break;
-            case ast::op_not_equal: current->op(op_neq); break;
-            case ast::op_less: current->op(op_lt); break;
-            case ast::op_less_equal: current->op(op_lte); break;
-            case ast::op_greater: current->op(op_gt); break;
-            case ast::op_greater_equal: current->op(op_gte); break;
+            case token_ids::equal: current->op(op_eq); break;
+            case token_ids::not_equal: current->op(op_neq); break;
+            case token_ids::less: current->op(op_lt); break;
+            case token_ids::less_equal: current->op(op_lte); break;
+            case token_ids::greater: current->op(op_gt); break;
+            case token_ids::greater_equal: current->op(op_gte); break;
 
-            case ast::op_logical_or: current->op(op_or); break;
-            case ast::op_logical_and: current->op(op_and); break;
+            case token_ids::logical_or: current->op(op_or); break;
+            case token_ids::logical_and: current->op(op_and); break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -277,9 +276,9 @@ namespace client { namespace code_gen
             return false;
         switch (x.operator_)
         {
-            case ast::op_minus: current->op(op_neg); break;
-            case ast::op_not: current->op(op_not); break;
-            case ast::op_plus: break;
+            case token_ids::minus: current->op(op_neg); break;
+            case token_ids::not_: current->op(op_not); break;
+            case token_ids::plus: break;
             default: BOOST_ASSERT(0); return false;
         }
         return true;
@@ -291,7 +290,6 @@ namespace client { namespace code_gen
 
         if (functions.find(x.function_name.name) == functions.end())
         {
-            std::cout << x.function_name.id << std::endl;
             error_handler(x.function_name.id, "Function not found: " + x.function_name.name);
             return false;
         }
@@ -300,7 +298,6 @@ namespace client { namespace code_gen
 
         if (p->nargs() != x.args.size())
         {
-            std::cout << x.function_name.id << std::endl;
             error_handler(x.function_name.id, "Wrong number of arguments: " + x.function_name.name);
             return false;
         }
@@ -375,25 +372,13 @@ namespace client { namespace code_gen
             // precedence 12
             12, // op_times
             12, // op_divide
-            12, // op_mod
-
-            // precedence 13
-            13, // op_positive
-            13, // op_negative
-            13, // op_pre_incr
-            13, // op_pre_decr
-            13, // op_compl
-            13, // op_not
-
-            // precedence 14
-            14, // op_post_incr
-            14  // op_post_decr
+            12  // op_mod
         };
     }
 
-    inline int get_precedence(ast::optoken op)
+    inline int precedence_of(token_ids::type op)
     {
-        return precedence[op & ~ast::op_mask];
+        return precedence[op & 0xFF];
     }
 
     // The Shunting-yard algorithm
@@ -402,17 +387,17 @@ namespace client { namespace code_gen
         std::list<ast::operation>::const_iterator& rbegin,
         std::list<ast::operation>::const_iterator rend)
     {
-        while ((rbegin != rend) && (get_precedence(rbegin->operator_) >= min_precedence))
+        while ((rbegin != rend) && (precedence_of(rbegin->operator_) >= min_precedence))
         {
-            ast::optoken op = rbegin->operator_;
+            token_ids::type op = rbegin->operator_;
             if (!boost::apply_visitor(*this, rbegin->operand_))
                 return false;
             ++rbegin;
 
-            while ((rbegin != rend) && (get_precedence(rbegin->operator_) > get_precedence(op)))
+            while ((rbegin != rend) && (precedence_of(rbegin->operator_) > precedence_of(op)))
             {
-                ast::optoken next_op = rbegin->operator_;
-                compile_expression(get_precedence(next_op), rbegin, rend);
+                token_ids::type next_op = rbegin->operator_;
+                compile_expression(precedence_of(next_op), rbegin, rend);
             }
             (*this)(op);
         }
@@ -438,7 +423,6 @@ namespace client { namespace code_gen
         int const* p = current->find_var(x.lhs.name);
         if (p == 0)
         {
-            std::cout << x.lhs.id << std::endl;
             error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
             return false;
         }
@@ -452,7 +436,6 @@ namespace client { namespace code_gen
         int const* p = current->find_var(x.lhs.name);
         if (p != 0)
         {
-            std::cout << x.lhs.id << std::endl;
             error_handler(x.lhs.id, "Duplicate variable: " + x.lhs.name);
             return false;
         }
@@ -536,7 +519,6 @@ namespace client { namespace code_gen
         {
             if (x.expr)
             {
-                std::cout << x.id << std::endl;
                 error_handler(x.id, "'void' function returning a value: ");
                 return false;
             }
@@ -545,7 +527,6 @@ namespace client { namespace code_gen
         {
             if (!x.expr)
             {
-                std::cout << x.id << std::endl;
                 error_handler(x.id, current_function_name + " function must return a value: ");
                 return false;
             }
@@ -565,7 +546,6 @@ namespace client { namespace code_gen
         void_return = x.return_type == "void";
         if (functions.find(x.function_name.name) != functions.end())
         {
-            std::cout << x.function_name.id << std::endl;
             error_handler(x.function_name.id, "Duplicate function: " + x.function_name.name);
             return false;
         }

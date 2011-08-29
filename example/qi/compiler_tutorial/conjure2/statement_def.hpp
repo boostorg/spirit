@@ -5,7 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include "token_ids.hpp"
 #include "statement.hpp"
 #include "error_handler.hpp"
 #include "annotation.hpp"
@@ -24,7 +23,6 @@ namespace client { namespace parser
         qi::_4_type _4;
 
         qi::_val_type _val;
-        qi::raw_token_type raw_token;
 
         using qi::on_error;
         using qi::on_success;
@@ -50,7 +48,7 @@ namespace client { namespace parser
             ;
 
         variable_declaration =
-                raw_token(lexer::ID_INT_KWD) 
+                l("int")
             >   expr.identifier
             >  -('=' > expr)
             >   ';'
@@ -64,20 +62,20 @@ namespace client { namespace parser
             ;
 
         if_statement =
-                raw_token(lexer::ID_IF_KWD)
+                l("if")
             >   '('
             >   expr
             >   ')'
             >   statement_
             >
                -(
-                    raw_token(lexer::ID_ELSE_KWD)
+                    l("else")
                 >   statement_
                 )
             ;
 
         while_statement =
-                raw_token(lexer::ID_WHILE_KWD)
+                l("while")
             >   '('
             >   expr
             >   ')'
@@ -89,7 +87,7 @@ namespace client { namespace parser
             ;
 
         return_statement =
-                raw_token(lexer::ID_RETURN_KWD)
+                l("return")
             >  -expr
             >   ';'
             ;
@@ -97,8 +95,13 @@ namespace client { namespace parser
         // Debugging and error handling and reporting support.
         BOOST_SPIRIT_DEBUG_NODES(
             (statement_list)
+            (statement_)
             (variable_declaration)
             (assignment)
+            (if_statement)
+            (while_statement)
+            (compound_statement)
+            (return_statement)
         );
 
         // Error handling: on error in statement_list, call error_handler.
@@ -106,7 +109,10 @@ namespace client { namespace parser
             error_handler_function(error_handler)(
                 "Error! Expecting ", _4, _3));
 
-        // Annotation: on success in assignment, call annotation.
+        // Annotation: on success in variable_declaration,
+        // assignment and return_statement, call annotation.
+        on_success(variable_declaration,
+            annotation_function(error_handler.iters)(_val, _1));
         on_success(assignment,
             annotation_function(error_handler.iters)(_val, _1));
         on_success(return_statement,

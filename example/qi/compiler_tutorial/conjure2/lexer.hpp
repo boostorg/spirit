@@ -7,8 +7,11 @@
 #if !defined(BOOST_SPIRIT_CONJURE_LEXER_HPP)
 #define BOOST_SPIRIT_CONJURE_LEXER_HPP
 
+#include <boost/spirit/include/lex_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl_position_token.hpp>
+
 #include "config.hpp"
-#include "token_ids.hpp"
+#include "ids.hpp"
 
 #if CONJURE_LEXER_STATIC_TABLES != 0
 #include <boost/spirit/include/lex_static_lexertl.hpp>
@@ -17,9 +20,12 @@
 #include <boost/spirit/include/lex_static_lexertl.hpp>
 #include "conjure_static_switch_lexer.hpp"
 #endif
+#include <boost/assert.hpp>
 
-namespace client { namespace lexer 
+namespace client { namespace lexer
 {
+    namespace lex = boost::spirit::lex;
+
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
@@ -28,9 +34,9 @@ namespace client { namespace lexer
         template <typename BaseIterator>
         struct get_lexer_type
         {
-            // Our token needs to be able to carry several token values: 
+            // Our token needs to be able to carry several token values:
             // std::string, unsigned int, and bool
-            typedef boost::mpl::vector<std::string, unsigned int, bool> 
+            typedef boost::mpl::vector<std::string, unsigned int, bool>
                 token_value_types;
 
             // Using the position_token class as the token type to be returned
@@ -64,16 +70,56 @@ namespace client { namespace lexer
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename BaseIterator>
-    struct conjure_tokens 
+    struct conjure_tokens
       : lex::lexer<typename detail::get_lexer_type<BaseIterator>::type>
     {
+    private:
+        // get the type of any qi::raw_token(...) and qi::token(...) constructs
+        typedef typename boost::spirit::result_of::terminal<
+            boost::spirit::tag::raw_token(token_ids::type)
+        >::type raw_token_spec;
+
+        typedef typename boost::spirit::result_of::terminal<
+            boost::spirit::tag::token(token_ids::type)
+        >::type token_spec;
+
+        typedef std::map<std::string, token_ids::type> keyword_map_type;
+
+    protected:
+        // add a keyword to the mapping table
+        bool add_keyword(std::string const& keyword);
+
+    public:
         typedef BaseIterator base_iterator_type;
 
         conjure_tokens();
 
+        // extract a raw_token(id) for the given registered keyword
+        raw_token_spec operator()(std::string const& kwd) const
+        {
+            namespace qi = boost::spirit::qi;
+            qi::raw_token_type raw_token;
+
+            typename keyword_map_type::const_iterator it = keywords_.find(kwd);
+            BOOST_ASSERT(it != keywords_.end());
+            return raw_token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
+        }
+
+        // extract a token(id) for the given registered keyword
+        token_spec token(std::string const& kwd) const
+        {
+            namespace qi = boost::spirit::qi;
+            qi::token_type token;
+
+            typename keyword_map_type::const_iterator it = keywords_.find(kwd);
+            BOOST_ASSERT(it != keywords_.end());
+            return token((it != keywords_.end()) ? (*it).second : token_ids::invalid);
+        }
+
         lex::token_def<std::string> identifier;
-        lex::token_def<unsigned int> uint_;
-        lex::token_def<bool> bool_;
+        lex::token_def<unsigned int> lit_uint;
+        lex::token_def<bool> true_or_false;
+        keyword_map_type keywords_;
     };
 }}
 

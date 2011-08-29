@@ -37,24 +37,20 @@ namespace client
             int id;
             set_id(int id) : id(id) {}
 
+            void operator()(ast::function_call& x) const
+            {
+                x.function_name.id = id;
+            }
+
+            void operator()(ast::identifier& x) const
+            {
+                x.id = id;
+            }
+
             template <typename T>
             void operator()(T& x) const
             {
-                this->dispatch(x, boost::is_base_of<ast::tagged, T>());
-            }
-
-            // This will catch all nodes except those inheriting from ast::tagged
-            template <typename T>
-            void dispatch(T& x, boost::mpl::false_) const
-            {
-                // (no-op) no need for tags
-            }
-
-            // This will catch all nodes inheriting from ast::tagged
-            template <typename T>
-            void dispatch(T& x, boost::mpl::true_) const
-            {
-                x.id = id;
+                // no-op
             }
         };
 
@@ -63,6 +59,13 @@ namespace client
             int id = iters.size();
             iters.push_back(pos);
             boost::apply_visitor(set_id(id), ast);
+        }
+
+        void operator()(ast::variable_declaration& ast, Iterator pos) const
+        {
+            int id = iters.size();
+            iters.push_back(pos);
+            ast.lhs.id = id;
         }
 
         void operator()(ast::assignment& ast, Iterator pos) const

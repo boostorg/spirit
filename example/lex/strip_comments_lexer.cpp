@@ -115,7 +115,7 @@ struct strip_comments_tokens : lex::lexer<Lexer>
         cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
         ccomment = "\\/\\*";            // '/*'
         endcomment = "\\*\\/";          // '*/'
-        any = ".";
+        any = std::string(".");
         eol = "\n";
 
         // The following tokens are associated with the default lexer state 
@@ -132,7 +132,7 @@ struct strip_comments_tokens : lex::lexer<Lexer>
         this->self("COMMENT") 
             =   endcomment  [ set_lexer_state("INITIAL") ]
             |   "\n"
-            |   "." 
+            |   std::string(".") 
             ;
     }
 
