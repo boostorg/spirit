@@ -136,11 +136,11 @@ namespace boost { namespace spirit { namespace qi
 #endif
 
         ///////////////////////////////////////////////////////////////////////
-        template <BOOST_SCOPED_ENUM(boost::integer::endianness) bits>
+        template <BOOST_SCOPED_ENUM(boost::endian::endianness) bits>
         struct what;
 
         template <>
-        struct what<boost::integer::endianness::native>
+        struct what<boost::endian::endianness::native>
         {
             static std::string is()
             {
@@ -149,7 +149,7 @@ namespace boost { namespace spirit { namespace qi
         };
 
         template <>
-        struct what<boost::integer::endianness::little>
+        struct what<boost::endian::endianness::little>
         {
             static char const* is()
             {
@@ -158,7 +158,7 @@ namespace boost { namespace spirit { namespace qi
         };
 
         template <>
-        struct what<boost::integer::endianness::big>
+        struct what<boost::endian::endianness::big>
         {
             static char const* is()
             {
@@ -168,13 +168,13 @@ namespace boost { namespace spirit { namespace qi
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
+    template <BOOST_SCOPED_ENUM(boost::endian::endianness) endian, int bits>
     struct any_binary_parser : primitive_parser<any_binary_parser<endian, bits> >
     {
         template <typename Context, typename Iterator>
         struct attribute
         {
-            typedef boost::integer::endian<
+            typedef boost::endian::endian<
                 endian, typename qi::detail::integer<bits>::type, bits
             > type;
         };
@@ -212,7 +212,7 @@ namespace boost { namespace spirit { namespace qi
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Int
-      , BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
+      , BOOST_SCOPED_ENUM(boost::endian::endianness) endian, int bits>
     struct binary_lit_parser
       : primitive_parser<binary_lit_parser<Int, endian, bits> >
     {
@@ -237,7 +237,7 @@ namespace boost { namespace spirit { namespace qi
             // definition of C++03) it seems to be safe to assume they are
             // (but in C++0x the endian types _are_ PODs).
             // This allows us to treat them as a sequence of consecutive bytes.
-            boost::integer::endian<
+            boost::endian::endian<
                 endian, typename qi::detail::integer<bits>::type, bits> attr_;
 
 #if defined(BOOST_MSVC)
@@ -276,7 +276,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     // Parser generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
+    template <BOOST_SCOPED_ENUM(boost::endian::endianness) endian, int bits>
     struct make_binary_parser
     {
         typedef any_binary_parser<endian, bits> result_type;
@@ -287,7 +287,7 @@ namespace boost { namespace spirit { namespace qi
     };
 
     template <typename Int
-      , BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
+      , BOOST_SCOPED_ENUM(boost::endian::endianness) endian, int bits>
     struct make_binary_lit_parser
     {
         typedef binary_lit_parser<Int, endian, bits> result_type;
@@ -298,15 +298,15 @@ namespace boost { namespace spirit { namespace qi
         }
     };
 
-#define BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(name, endian, bits)                  \
+#define BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(name, endiantype, bits)              \
     template <typename Modifiers>                                               \
     struct make_primitive<tag::name, Modifiers>                                 \
-      : make_binary_parser<boost::integer::endianness::endian, bits> {};        \
+      : make_binary_parser<boost::endian::endianness::endiantype, bits> {};     \
                                                                                 \
     template <typename Modifiers, typename A0>                                  \
     struct make_primitive<                                                      \
         terminal_ex<tag::name, fusion::vector1<A0> > , Modifiers>               \
-      : make_binary_lit_parser<A0, boost::integer::endianness::endian, bits> {};\
+      : make_binary_lit_parser<A0, boost::endian::endianness::endiantype, bits> {};\
                                                                                 \
     /***/
 

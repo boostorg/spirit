@@ -16,8 +16,8 @@
 
 //----------------------------------------------------------------------------//
 
-#ifndef BOOST_INTEGER_COVER_OPERATORS_HPP
-#define BOOST_INTEGER_COVER_OPERATORS_HPP
+#ifndef BOOST_SPIRIT_INTEGER_COVER_OPERATORS_HPP
+#define BOOST_SPIRIT_INTEGER_COVER_OPERATORS_HPP
 
 #if defined(_MSC_VER)
 #pragma once
@@ -29,9 +29,9 @@
 
 #include <iosfwd>
 
-namespace boost
+namespace boost { namespace spirit
 {
-  namespace integer
+  namespace endian
   {
 
   // A class that adds integer operators to an integer cover class
@@ -109,7 +109,7 @@ namespace boost
         }
 #   endif
     };
-  } // namespace integer
-} // namespace boost
+  } // namespace endian
+}} // namespace boost::spirit
 
-#endif // BOOST_INTEGER_COVER_OPERATORS_HPP
+#endif // BOOST_SPIRIT_INTEGER_COVER_OPERATORS_HPP
