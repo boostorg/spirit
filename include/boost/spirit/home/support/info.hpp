@@ -15,7 +15,6 @@
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/foreach.hpp>
-#include <boost/locale/encoding_utf.hpp>
 #include <boost/spirit/home/support/utf8.hpp>
 #include <list>
 #include <iterator>
@@ -128,7 +127,6 @@ namespace boost { namespace spirit
     struct simple_printer
     {
         typedef utf8_string string;
-        typedef typename Out::char_type char_type;
 
         simple_printer(Out& out)
           : out(out) {}
@@ -136,13 +134,9 @@ namespace boost { namespace spirit
         void element(string const& tag, string const& value, int /*depth*/) const
         {
             if (value == "")
-                out << char_type('<')
-                    << locale::conv::utf_to_utf<char_type>(tag)
-                    << char_type('>');
+                out << '<' << tag << '>';
             else
-                out << char_type('"')
-                    << locale::conv::utf_to_utf<char_type>(value)
-                    << char_type('"');
+                out << '"' << value << '"';
         }
 
         Out& out;
