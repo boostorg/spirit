@@ -313,8 +313,8 @@ namespace client { namespace code_gen
     function::arg_range function::args() const
     {
         BOOST_ASSERT(c != 0);
-        argval_iterator first(f->arg_begin(), to_value());
-        argval_iterator last(f->arg_end(), to_value());
+        arg_val_iterator first(f->arg_begin(), to_value());
+        arg_val_iterator last(f->arg_end(), to_value());
         return arg_range(first, last);
     }
 
@@ -449,12 +449,12 @@ namespace client { namespace code_gen
       , std::string const& name
       , std::size_t nargs)
     {
-        llvm::Type* int_type =
+        llvm::Type const* int_type =
             llvm::Type::getIntNTy(context(), int_size);
-        llvm::Type* void_type = llvm::Type::getVoidTy(context());
+        llvm::Type const* void_type = llvm::Type::getVoidTy(context());
 
-        std::vector<llvm::Type*> ints(nargs, int_type);
-        llvm::Type* return_type = void_return ? void_type : int_type;
+        std::vector<llvm::Type const*> ints(nargs, int_type);
+        llvm::Type const* return_type = void_return ? void_type : int_type;
 
         llvm::FunctionType* function_type =
             llvm::FunctionType::get(void_return ? void_type : int_type, ints, false);

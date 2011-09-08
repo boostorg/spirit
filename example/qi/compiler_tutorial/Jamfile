@@ -12,6 +12,8 @@ project spirit-qi-compiler_tutorial
     :
     ;
 
+import modules ;
+
 exe calc1 : calc1.cpp ;
 exe calc2 : calc2.cpp ;
 exe calc3 : calc3.cpp ;
@@ -62,5 +64,63 @@ exe conjure2 :
     conjure2/statement.cpp
     conjure2/vm.cpp
     ;
+
+#==============================================================================
+# conjure3 and above require LLVM. Make sure you provide the
+# LLVM_PATH in your bjam invocation. E.g.:
+#
+#     bjam msvc -sLLVM_PATH=C:/dev/llvm conjure3
+#
+#==============================================================================
+
+if [ modules.peek : LLVM_PATH ]
+{
+    LLVM_PATH =  [ modules.peek : LLVM_PATH ] ;
+}
+
+if $(LLVM_PATH)
+{
+  LLVM_LIB_DEBUG_PATH = $(LLVM_PATH)/lib/Debug ;
+  LLVM_LIB_RELEASE_PATH = $(LLVM_PATH)/lib/Release ;
+  LLVM_LINKER_FLAGS =
+       "advapi32.lib"
+       "shell32.lib"
+      ;
+
+  conjure3sources =
+        conjure3/compiler.cpp
+        conjure3/expression.cpp
+        conjure3/function.cpp
+        conjure3/lexer.cpp
+        conjure3/main.cpp
+        conjure3/statement.cpp
+        conjure3/vm.cpp
+        ;
+
+    exe conjure3 :
+        $(conjure3sources)
+
+        # bring in the LLVM libs
+        [ glob $(LLVM_LIB_DEBUG_PATH)/LLVM*.lib ]
+    :
+        <variant>debug
+        <toolset>msvc
+        <include>$(LLVM_PATH)/include
+        <linkflags>$(LLVM_LINKER_FLAGS)
+    ;
+
+    exe conjure3 :
+        $(conjure3sources)
+
+        # bring in the LLVM libs
+        [ glob $(LLVM_LIB_RELEASE_PATH)/LLVM*.lib ]
+    :
+        <variant>release
+        <toolset>msvc
+        <include>$(LLVM_PATH)/include
+        <linkflags>$(LLVM_LINKER_FLAGS)
+    ;
+}
+
 
 
