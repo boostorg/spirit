@@ -8,41 +8,19 @@ project spirit-qi-compiler_tutorial
     : requirements
         <toolset>gcc:<c++-template-depth>300
         <toolset>darwin:<cxxflags>-ftemplate-depth-300
-    :
+        <variant>release:<location>"bin/release"
+        <variant>debug:<location>"bin/debug"
     :
     ;
 
 import modules ;
 
-exe calc1 : calc1.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-;
-
-exe calc2 : calc2.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-;
-
-exe calc3 : calc3.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-;
-
-exe calc4 : calc4.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-;
-
-exe calc5 : calc5.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-;
-
-exe calc6 : calc6.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-;
+exe calc1 : calc1.cpp ;
+exe calc2 : calc2.cpp ;
+exe calc3 : calc3.cpp ;
+exe calc4 : calc4.cpp ;
+exe calc5 : calc5.cpp ;
+exe calc6 : calc6.cpp ;
 
 exe calc7 :
     calc7/vm.cpp
@@ -50,8 +28,6 @@ exe calc7 :
     calc7/expression.cpp
     calc7/statement.cpp
     calc7/main.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
 ;
 
 exe calc8 :
@@ -60,8 +36,6 @@ exe calc8 :
     calc8/expression.cpp
     calc8/statement.cpp
     calc8/main.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
 ;
 
 exe mini_c :
@@ -71,8 +45,6 @@ exe mini_c :
     mini_c/statement.cpp
     mini_c/function.cpp
     mini_c/main.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
 ;
 
 exe conjure1 :
@@ -82,8 +54,6 @@ exe conjure1 :
     conjure1/statement.cpp
     conjure1/function.cpp
     conjure1/main.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
 ;
 
 exe conjure2 :
@@ -94,15 +64,13 @@ exe conjure2 :
     conjure2/main.cpp
     conjure2/statement.cpp
     conjure2/vm.cpp
-:   <variant>release:<location>"bin/release"
-    <variant>debug:<location>"bin/debug"
-    ;
+;
 
 #==============================================================================
 # conjure3 and above require LLVM. Make sure you provide the
 # LLVM_PATH in your bjam invocation. E.g.:
 #
-#     bjam msvc -sLLVM_PATH=C:/dev/llvm conjure3
+#     bjam -sLLVM_PATH=C:/dev/llvm conjure3
 #
 #==============================================================================
 
@@ -127,25 +95,22 @@ if $(LLVM_PATH)
     rule build_exe_1 ( target-name : sources + : requirements * )
     {
         local llvm_lib ;
-        local target_location ;
         if <variant>debug in $(requirements)
         {
             llvm_lib = $(llvm_debug_libs) ;
-            target_location = "bin/debug" ;
         }
         else
         {
             llvm_lib = $(llvm_release_libs) ;
-            target_location = "bin/release" ;
         }
 
         exe $(target-name)
-        :   $(sources) $(llvm_lib)
+        :   $(sources)
+            $(llvm_lib)
         :   $(requirements)
             <toolset>msvc
             <include>$(LLVM_PATH)/include
             <linkflags>$(llvm_linker_flags)
-            <location>$(target_location)
         ;
     }
 
