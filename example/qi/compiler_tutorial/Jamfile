@@ -8,9 +8,12 @@ project spirit-qi-compiler_tutorial
     : requirements
         <toolset>gcc:<c++-template-depth>300
         <toolset>darwin:<cxxflags>-ftemplate-depth-300
-    :
+        <variant>release:<location>"bin/release"
+        <variant>debug:<location>"bin/debug"
     :
     ;
+
+import modules ;
 
 exe calc1 : calc1.cpp ;
 exe calc2 : calc2.cpp ;
@@ -25,7 +28,7 @@ exe calc7 :
     calc7/expression.cpp
     calc7/statement.cpp
     calc7/main.cpp
-    ;
+;
 
 exe calc8 :
     calc8/vm.cpp
@@ -33,7 +36,7 @@ exe calc8 :
     calc8/expression.cpp
     calc8/statement.cpp
     calc8/main.cpp
-    ;
+;
 
 exe mini_c :
     mini_c/vm.cpp
@@ -42,7 +45,7 @@ exe mini_c :
     mini_c/statement.cpp
     mini_c/function.cpp
     mini_c/main.cpp
-    ;
+;
 
 exe conjure1 :
     conjure1/vm.cpp
@@ -51,7 +54,7 @@ exe conjure1 :
     conjure1/statement.cpp
     conjure1/function.cpp
     conjure1/main.cpp
-    ;
+;
 
 exe conjure2 :
     conjure2/compiler.cpp
@@ -61,6 +64,72 @@ exe conjure2 :
     conjure2/main.cpp
     conjure2/statement.cpp
     conjure2/vm.cpp
+;
+
+#==============================================================================
+# conjure3 and above require LLVM. Make sure you provide the
+# LLVM_PATH in your bjam invocation. E.g.:
+#
+#     bjam -sLLVM_PATH=C:/dev/llvm conjure3
+#
+#==============================================================================
+
+if [ modules.peek : LLVM_PATH ]
+{
+    LLVM_PATH =  [ modules.peek : LLVM_PATH ] ;
+}
+
+if $(LLVM_PATH)
+{
+    path-constant LLVM_LIB_DEBUG_PATH : $(LLVM_PATH)/lib/Debug ;
+    path-constant LLVM_LIB_RELEASE_PATH : $(LLVM_PATH)/lib/Release ;
+
+    llvm_linker_flags =
+         "advapi32.lib"
+         "shell32.lib"
+        ;
+
+    llvm_debug_libs = [ glob $(LLVM_LIB_DEBUG_PATH)/LLVM*.lib ] ;
+    llvm_release_libs = [ glob $(LLVM_LIB_RELEASE_PATH)/LLVM*.lib ] ;
+
+    rule build_exe_1 ( target-name : sources + : requirements * )
+    {
+        local llvm_lib ;
+        if <variant>debug in $(requirements)
+        {
+            llvm_lib = $(llvm_debug_libs) ;
+        }
+        else
+        {
+            llvm_lib = $(llvm_release_libs) ;
+        }
+
+        exe $(target-name)
+        :   $(sources)
+            $(llvm_lib)
+        :   $(requirements)
+            <toolset>msvc
+            <include>$(LLVM_PATH)/include
+            <linkflags>$(llvm_linker_flags)
+        ;
+    }
+
+    rule build_exe ( target-name : sources + )
+    {
+        build_exe_1 $(target-name) : $(sources) : <variant>debug ;
+        build_exe_1 $(target-name) : $(sources) : <variant>release ;
+    }
+
+    build_exe conjure3 :
+        conjure3/compiler.cpp
+        conjure3/expression.cpp
+        conjure3/function.cpp
+        conjure3/lexer.cpp
+        conjure3/main.cpp
+        conjure3/statement.cpp
+        conjure3/vm.cpp
     ;
+}
+
 
 
