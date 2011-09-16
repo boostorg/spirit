@@ -147,6 +147,7 @@ main()
     {
         using boost::phoenix::for_each;
         using boost::phoenix::push_back;
+        namespace phx = boost::phoenix;
 
         int x = 10;
         std::vector<std::vector<int> > v(10);
@@ -154,7 +155,7 @@ main()
         for_each(_1, lambda(_a = _2)[push_back(_1, _a)])(v, x);
 
         int y = 0;
-        for_each(arg1, lambda[ref(y) += _1[0]])(v);
+        for_each(arg1, lambda[phx::ref(y) += _1[0]])(v);
         BOOST_TEST(y == 100);
     }
 
