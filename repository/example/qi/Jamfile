@@ -21,3 +21,4 @@ exe advance : advance.cpp ;
 exe keywords : keywords.cpp ;
 exe derived : derived.cpp ;
 exe options : options.cpp ;
+exe seek : seek.cpp ;
