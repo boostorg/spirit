@@ -92,7 +92,7 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct pow10_helper<float>
     {
-        inline float call(unsigned dim)
+        static float call(unsigned dim)
         {
             return pow10_helper<double>::call(dim);
         }
