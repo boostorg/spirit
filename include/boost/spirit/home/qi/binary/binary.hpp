@@ -189,11 +189,6 @@ namespace boost { namespace spirit { namespace qi
           , Context& /*context*/, Skipper const& skipper
           , Attribute& attr) const
         {
-            // This assertion makes sure that the supplied attribute type is 
-            // large enough to hold the amount of bytes to be read from the
-            // input.
-            BOOST_STATIC_ASSERT(sizeof(Attribute) < qi::detail::integer<bits>::size);
-
             qi::skip_over(first, last, skipper);
 
             typename attribute<Context, Iterator>::type attr_;
