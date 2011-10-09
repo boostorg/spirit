@@ -24,10 +24,6 @@
 #include <boost/endian/integers.hpp>
 #else
 #include <boost/spirit/home/support/detail/endian/endian.hpp>
-namespace boost { namespace endian
-{
-    using namespace boost::spirit::endian;
-}}
 #endif
 
 #endif

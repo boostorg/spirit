@@ -419,6 +419,12 @@ namespace boost { namespace spirit
   } // namespace endian
 }} // namespace boost::spirit
 
+// import the namespace above into boost::endian
+namespace boost { namespace endian
+{
+    using namespace boost::spirit::endian;
+}}
+
 #if defined(__BORLANDC__) || defined( __CODEGEARC__)
 # pragma pack(pop)
 #endif
