@@ -240,17 +240,17 @@ namespace boost { namespace spirit { namespace karma
             return r;
         }
 
+#if defined(BOOST_NO_RVALUE_REFERENCES)
         // non-const version needed to suppress proto's %= kicking in
         template <typename Expr>
         friend rule& operator%=(rule& r, Expr& expr)
         {
             return r %= static_cast<Expr const&>(expr);
         }
-
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#else
         // for rvalue references
         template <typename Expr>
-        friend rule& operator%=(rule& r, Expr const&& expr)
+        friend rule& operator%=(rule& r, Expr&& expr)
         {
             define<mpl::true_>(r, expr, traits::matches<karma::domain, Expr>());
             return r;
