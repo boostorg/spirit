@@ -112,18 +112,21 @@ namespace boost { namespace spirit { namespace qi
         template <>
         struct integer<8>
         {
+            enum { size = 1 };
             typedef uint_least8_t type;
         };
 
         template <>
         struct integer<16>
         {
+            enum { size = 2 };
             typedef uint_least16_t type;
         };
 
         template <>
         struct integer<32>
         {
+            enum { size = 4 };
             typedef uint_least32_t type;
         };
 
@@ -131,6 +134,7 @@ namespace boost { namespace spirit { namespace qi
         template <>
         struct integer<64>
         {
+            enum { size = 8 };
             typedef uint_least64_t type;
         };
 #endif

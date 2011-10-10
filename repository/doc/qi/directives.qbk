@@ -10,4 +10,5 @@
 [include        confix.qbk]
 [include        distinct.qbk]
 [include        kwd.qbk]
+[include        seek.qbk]
 [endsect]
