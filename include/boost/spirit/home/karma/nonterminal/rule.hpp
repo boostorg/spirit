@@ -250,7 +250,7 @@ namespace boost { namespace spirit { namespace karma
 #if !defined(BOOST_NO_RVALUE_REFERENCES)
         // for rvalue references
         template <typename Expr>
-        friend rule& operator%=(rule& r, Expr&& expr)
+        friend rule& operator%=(rule& r, Expr const&& expr)
         {
             define<mpl::true_>(r, expr, traits::matches<karma::domain, Expr>());
             return r;
