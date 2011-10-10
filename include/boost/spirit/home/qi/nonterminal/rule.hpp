@@ -237,6 +237,17 @@ namespace boost { namespace spirit { namespace qi
         {
             return r %= static_cast<Expr const&>(expr);
         }
+
+#if !defined(BOOST_NO_RVALUE_REFERENCES)
+        // for rvalue references
+        template <typename Expr>
+        friend rule& operator%=(rule& r, Expr&& expr)
+        {
+            define<mpl::true_>(r, expr, traits::matches<qi::domain, Expr>());
+            return r;
+        }
+#endif
+
 #else
         // both friend functions have to be defined out of class as VC7.1
         // will complain otherwise
