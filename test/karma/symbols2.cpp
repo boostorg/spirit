@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2011 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config/warning_disable.hpp>
@@ -19,7 +19,7 @@
 namespace fusion = boost::fusion;
 
 template <typename T>
-inline std::vector<T> 
+inline std::vector<T>
 make_vector(T const& t1, T const& t2)
 {
     std::vector<T> v;
@@ -45,7 +45,7 @@ int main()
         rule<output_iterator_type> r2 = lit("Hartmut");
         rule<output_iterator_type> r3 = lit("Tom");
         rule<output_iterator_type> r4 = lit("Kim");
-        
+
         sym.add
             ('j', r1.alias())
             ('h', r2.alias())
@@ -53,11 +53,11 @@ int main()
             ('k', r4.alias())
         ;
 
-        boost::mpl::true_ f = 
+        boost::mpl::true_ f =
             boost::mpl::bool_<boost::spirit::traits::is_generator<
                 symbols<char, rule<output_iterator_type> > >::value>();
 
-        // silence stupid compiler warnings 
+        // silence stupid compiler warnings
         // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
         BOOST_TEST((f.value));
 
@@ -97,7 +97,7 @@ int main()
 
         symbols<char, rule<output_iterator_type, std::string()> > sym;
         rule<output_iterator_type, std::string()> r1 = string;
-        
+
         sym.add
             ('j', r1.alias())
             ('h', r1.alias())
@@ -105,11 +105,11 @@ int main()
             ('k', r1.alias())
         ;
 
-        boost::mpl::true_ f = 
+        boost::mpl::true_ f =
             boost::mpl::bool_<boost::spirit::traits::is_generator<
                 symbols<char, std::string> >::value>();
 
-        // silence stupid compiler warnings 
+        // silence stupid compiler warnings
         // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
         BOOST_TEST((f.value));
 
@@ -138,6 +138,16 @@ int main()
 
         BOOST_TEST((!test("", sym, 'j')));
         BOOST_TEST((!test("", sym, 'h')));
+    }
+
+    { // test for proto problem with rvalue references (10-11-2011)
+        symbols<char, std::string> sym;
+
+        sym += std::make_pair('j', "Joel");
+        sym += std::make_pair('h', "Hartmut");
+
+        BOOST_TEST((test("Joel", sym, 'j')));
+        BOOST_TEST((test("Hartmut", sym, 'h')));
     }
 
     return boost::report_errors();
