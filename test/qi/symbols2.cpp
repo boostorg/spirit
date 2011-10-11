@@ -31,6 +31,11 @@ private:
     char str[2];
 };
 
+std::string get_str(char const* str)
+{
+    return std::string(str);
+}
+
 int
 main()
 {
@@ -124,12 +129,12 @@ main()
         BOOST_TEST(i == 2);
         BOOST_TEST(!test("c", r(phx::ref(sym))));
     }
-    
+
     { // find
-    
+
         symbols<char, int> sym;
         sym.add("a", 1)("b", 2);
-        
+
         BOOST_TEST(!sym.find("c"));
 
         BOOST_TEST(sym.find("a") && *sym.find("a") == 1);
@@ -142,14 +147,14 @@ main()
         BOOST_TEST(sym.find("a") && *sym.find("a") == 1);
         BOOST_TEST(sym.find("b") && *sym.find("b") == 2);
         BOOST_TEST(sym.find("c") && *sym.find("c") == 0);
-        
+
         symbols<char, int> const_sym(sym);
 
         BOOST_TEST(const_sym.find("a") && *const_sym.find("a") == 1);
         BOOST_TEST(const_sym.find("b") && *const_sym.find("b") == 2);
         BOOST_TEST(const_sym.find("c") && *const_sym.find("c") == 0);
         BOOST_TEST(!const_sym.find("d"));
-        
+
         char const *str1 = "all";
         char const *first = str1, *last = str1 + 3;
         BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str1 + 1);
@@ -169,9 +174,9 @@ main()
         symbols <char,int> sym3(sym);
         BOOST_TEST(sym3.name()=="test");
     }
-    
+
     { // Substrings
-    
+
         symbols<char, int> sym;
         BOOST_TEST(sym.at("foo") == 0);
         sym.at("foo") = 1;
@@ -184,10 +189,10 @@ main()
         BOOST_TEST(!sym.find("foot"));
         BOOST_TEST(!sym.find("afoot"));
 
-        char const *str, *first, *last;        
+        char const *str, *first, *last;
         str = "foolish"; first = str; last = str + 7;
         BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
-        
+
         first = str; last = str + 4;
         BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
 
@@ -200,19 +205,28 @@ main()
         first = str; last = str + 2;
         BOOST_TEST(!sym.prefix_find(first, last) && first == str);
     }
-    
+
     {
         // remove bug
-        
+
         std::string s;
         symbols<char, double> vars;
-        
+
         vars.add("l1", 12.0);
         vars.add("l2", 0.0);
         vars.remove("l2");
         vars.find("l1");
         double* d = vars.find("l1");
         BOOST_TEST(d != 0);
+    }
+
+    { // test for proto problem with rvalue references (10-11-2011)
+        symbols<char, int> sym;
+        sym += get_str("Joel");
+        sym += get_str("Ruby");
+
+        BOOST_TEST((test("Joel", sym)));
+        BOOST_TEST((test("Ruby", sym)));
     }
 
     return boost::report_errors();
