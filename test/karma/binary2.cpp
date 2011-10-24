@@ -38,6 +38,11 @@ main()
         BOOST_TEST(binary_test_delimited("\x01\x02\x03\x04\x05\x06\x07\x08\x00\x00", 
             10, big_qword, 0x0102030405060708LL, pad(10)));
 #endif
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, big_bin_float, 1.0f));
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            big_bin_double, 1.0));
+        BOOST_TEST(binary_test_delimited("\x3f\xf0\x00\x00\x00\x00\x00\x00\x00\x00",
+            10, big_bin_double, 1.0, pad(10)));
     }
 
     {
@@ -49,6 +54,11 @@ main()
         BOOST_TEST(binary_test_delimited("\x01\x02\x03\x04\x05\x06\x07\x08\x00\x00", 
             10, big_qword(0x0102030405060708LL), pad(10)));
 #endif
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, big_bin_float(1.0f)));
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            big_bin_double(1.0)));
+        BOOST_TEST(binary_test_delimited("\x3f\xf0\x00\x00\x00\x00\x00\x00\x00\x00",
+            10, big_bin_double(1.0), pad(10)));
     }
 
     {   // test little endian binaries
@@ -64,6 +74,11 @@ main()
         BOOST_TEST(binary_test_delimited("\x01\x02\x03\x04\x05\x06\x07\x08\x00\x00", 
             10, little_qword, 0x0807060504030201LL, pad(10)));
 #endif
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, little_bin_float, 1.0f));
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            little_bin_double, 1.0));
+        BOOST_TEST(binary_test_delimited("\x00\x00\x00\x00\x00\x00\xf0\x3f\x00\x00",
+            10, little_bin_double, 1.0, pad(10)));
     }
 
     {
@@ -75,12 +90,19 @@ main()
         BOOST_TEST(binary_test_delimited("\x01\x02\x03\x04\x05\x06\x07\x08\x00\x00", 
             10, little_qword(0x0807060504030201LL), pad(10)));
 #endif
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, little_bin_float(1.0f)));
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            little_bin_double(1.0)));
+        BOOST_TEST(binary_test_delimited("\x00\x00\x00\x00\x00\x00\xf0\x3f\x00\x00",
+            10, little_bin_double(1.0), pad(10)));
     }
 
     {   // test native endian binaries
         boost::optional<boost::uint8_t> v8;
         boost::optional<boost::uint16_t> v16;
         boost::optional<boost::uint32_t> v32;
+        boost::optional<float> vf;
+        boost::optional<double> vd;
 
 #ifdef BOOST_LITTLE_ENDIAN
 
@@ -91,6 +113,8 @@ main()
         boost::optional<boost::uint64_t> v64;
         BOOST_TEST(!binary_test("", 8, qword, v64));
 #endif
+        BOOST_TEST(!binary_test("", 4, bin_float, vf));
+        BOOST_TEST(!binary_test("", 8, bin_double, vd));
 
 #else // BOOST_LITTLE_ENDIAN
 
@@ -101,6 +125,8 @@ main()
         boost::optional<boost::uint64_t> v64;
         BOOST_TEST(!binary_test("", 8, qword, v64));
 #endif
+        BOOST_TEST(!binary_test("", 4, bin_float, vf));
+        BOOST_TEST(!binary_test("", 8, bin_double, vd));
 
 #endif
     }

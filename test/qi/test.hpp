@@ -44,6 +44,32 @@ namespace spirit_test
             && (!full_match || (in == last));
     }
 
+    template <typename Char, typename Parser>
+    bool binary_test(Char const* in, std::size_t size, Parser const& p,
+        bool full_match = true)
+    {
+        // we don't care about the result of the "what" function.
+        // we only care that all parsers have it:
+        boost::spirit::qi::what(p);
+
+        Char const* last = in + size;
+        return boost::spirit::qi::parse(in, last, p)
+            && (!full_match || (in == last));
+    }
+
+    template <typename Char, typename Parser, typename Skipper>
+    bool binary_test(Char const* in, std::size_t size, Parser const& p,
+        Skipper const& s, bool full_match = true)
+    {
+        // we don't care about the result of the "what" function.
+        // we only care that all parsers have it:
+        boost::spirit::qi::what(p);
+
+        Char const* last = in + size;
+        return boost::spirit::qi::phrase_parse(in, last, p, s)
+            && (!full_match || (in == last));
+    }
+
     template <typename Char, typename Parser, typename Attr>
     bool test_attr(Char const* in, Parser const& p
         , Attr& attr, bool full_match = true)
@@ -70,6 +96,32 @@ namespace spirit_test
         Char const* last = in;
         while (*last)
             last++;
+        return boost::spirit::qi::phrase_parse(in, last, p, s, attr)
+            && (!full_match || (in == last));
+    }
+
+    template <typename Char, typename Parser, typename Attr>
+    bool binary_test_attr(Char const* in, std::size_t size, Parser const& p,
+        Attr& attr, bool full_match = true)
+    {
+        // we don't care about the result of the "what" function.
+        // we only care that all parsers have it:
+        boost::spirit::qi::what(p);
+
+        Char const* last = in + size;
+        return boost::spirit::qi::parse(in, last, p, attr)
+            && (!full_match || (in == last));
+    }
+
+    template <typename Char, typename Parser, typename Attr, typename Skipper>
+    bool binary_test_attr(Char const* in, std::size_t size, Parser const& p,
+        Attr& attr, Skipper const& s, bool full_match = true)
+    {
+        // we don't care about the result of the "what" function.
+        // we only care that all parsers have it:
+        boost::spirit::qi::what(p);
+
+        Char const* last = in + size;
         return boost::spirit::qi::phrase_parse(in, last, p, s, attr)
             && (!full_match || (in == last));
     }
