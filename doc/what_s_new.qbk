@@ -15,6 +15,8 @@
 
 * Integrated Vitaly Budovski's patch to add binary floating point parsers and
   generators.
+* Added the __qi__ directive __qi_seek__ enabling skipping over the input,
+  getting to the interested portion.
 
 [endsect]
 
