@@ -37,6 +37,7 @@
 #include <boost/mpl/not.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/mpl/accumulate.hpp>
+#include <boost/config.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -72,9 +73,11 @@ namespace boost { namespace spirit { namespace traits
             };
 
             // never called, but needed for decltype-based result_of (C++0x)
+#ifndef BOOST_NO_RVALUE_REFERENCES
             template <typename Element>
             typename result<element_properties(Element)>::type
-            operator()(Element&) const;
+            operator()(Element&&) const;
+#endif
         };
 
         typedef typename mpl::accumulate<

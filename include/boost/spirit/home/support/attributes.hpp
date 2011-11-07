@@ -45,6 +45,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <boost/config.hpp>
 #include <vector>
 #include <utility>
 #include <ios>
@@ -747,9 +748,11 @@ namespace boost { namespace spirit { namespace traits
             };
 
             // never called, but needed for decltype-based result_of (C++0x)
+#ifndef BOOST_NO_RVALUE_REFERENCES
             template <typename Element>
             typename result<element_attribute(Element)>::type
-            operator()(Element&) const;
+            operator()(Element&&) const;
+#endif
         };
 
         // Compute the list of attributes of all sub-components
