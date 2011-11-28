@@ -20,7 +20,7 @@
 
 // If Boost has the endian library, use it, otherwise use an adapted version 
 // included with Spirit
-#if BOOST_VERSION >= 104900
+#if BOOST_VERSION >= 105000
 #include <boost/endian/integers.hpp>
 #else
 #include <boost/spirit/home/support/detail/endian/endian.hpp>
