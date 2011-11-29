@@ -51,11 +51,12 @@ main()
             ("Tutit")
             ("Kim")
             ("Joey")
+            ("Joeyboy")
         ;
 
         boost::mpl::true_ f = boost::mpl::bool_<boost::spirit::traits::is_parser<symbols<char, int> >::value>();
 
-        // silence stupid compiler warnings 
+        // silence stupid compiler warnings
         // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
         BOOST_TEST((f.value));
 
@@ -65,6 +66,7 @@ main()
         BOOST_TEST((test("Tutit", sym)));
         BOOST_TEST((test("Kim", sym)));
         BOOST_TEST((test("Joey", sym)));
+        BOOST_TEST((test("Joeyboy", sym)));
         BOOST_TEST((!test("XXX", sym)));
 
         // test copy
@@ -159,12 +161,12 @@ main()
         BOOST_TEST((test_attr("Joey", sym, i)));
         BOOST_TEST(i == 6);
         BOOST_TEST((!test_attr("XXX", sym, i)));
-        
+
         // double add:
-        
+
         sym.add("Joel", 265);
         BOOST_TEST((test_attr("Joel", sym, i)));
-        BOOST_TEST(i == 1);        
+        BOOST_TEST(i == 1);
     }
 
     { // actions
