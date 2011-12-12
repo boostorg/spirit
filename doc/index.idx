@@ -41,7 +41,7 @@ auto_ "" ".*qi.reference.auto.*" qi_index
 auto_ "" ".*karma.reference.auto.*" karma_index
 
 # auxiliary parsers/generators
-attr "" ".*qi.reference.auxiliary.attr\..*" qi_index
+attr "" ".*qi.reference.auxiliary.attr" qi_index
 attr_cast "" ".*qi.reference.auxiliary.attr_cast.*" qi_index
 eol "" ".*qi.reference.auxiliary.eol.*" qi_index
 eoi "" ".*qi.reference.auxiliary.eoi.*" qi_index
