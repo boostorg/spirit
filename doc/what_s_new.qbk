@@ -27,7 +27,7 @@
   construction time whether the underlying stream has reached eof (end of file).
 * __qi__ now properly collapses attributes generated from optionals embedded
   inside another optional parser (i.e. `-('(' > -int_ >> ')'). That means that
-  attributes like `boost::optiona<boost::optional<int> >` will be collapsed
+  attributes like `boost::optional<boost::optional<int> >` will be collapsed
   to `boost::optional<int>`. Thanks to Peter Schueller for reporting that
   problem.
 * Actions attached to binary parsers now properly propagate the parser's
