@@ -898,7 +898,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         std::basic_string<Char> guard(name_suffix);
         guard += L<Char>(name_suffix[0] ? "_" : "");
         guard += L<Char>(__DATE__ "_" __TIME__);
-        std::basic_string<Char>::size_type p = guard.find_first_of(L<Char>(": "));
+        typename std::basic_string<Char>::size_type p = 
+            guard.find_first_of(L<Char>(": "));
         while (std::string::npos != p)
         {
             guard.replace(p, 1, L<Char>("_"));
