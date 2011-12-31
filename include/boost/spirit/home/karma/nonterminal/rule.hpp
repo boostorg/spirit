@@ -436,7 +436,7 @@ namespace boost { namespace spirit { namespace traits
             typename attribute_of<
                 karma::rule<IteratorA, T1, T2, T3, T4>
               , Context, IteratorB
-          >::type, Attribute>
+            >::type, Attribute>
     {};
 }}}
 

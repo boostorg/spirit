@@ -15,6 +15,11 @@
 
 * Integrated Vitaly Budovski's patch to add binary floating point parsers and
   generators.
+* Fixed #6253: `lex::lexertl::generate_static_dfa` compiler errors if lexer has
+  wchar_t as underlying stream type.
+* Added the possibility to match a token range when parsing with a lexer by
+  using `qi::token(min, max)`, or `qi::tokenid(min, max)`. Both parsers match
+  any token with a token id in the range [min, max].
 
 [endsect]
 
