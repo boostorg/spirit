@@ -162,7 +162,7 @@ namespace boost { namespace spirit { namespace qi
                 token_type const& t = *first;
                 if (id_type(idmin) >= t.id() && id_type(idmin) <= t.id())
                 {
-                    spirit::traits::assign_to(id, attr);
+                    spirit::traits::assign_to(t.id(), attr);
                     ++first;
                     return true;
                 }
