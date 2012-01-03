@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace qi
                 typedef typename token_type::id_type id_type;
 
                 token_type const& t = *first;
-                if (std::size_t(~0) == id || id_type(id) == t.id()) {
+                if (id_type(~0) == id_type(id) || id_type(id) == t.id()) {
                     spirit::traits::assign_to(t, attr);
                     ++first;
                     return true;
