@@ -23,6 +23,8 @@
 * Fixed a problem in [karma_align `center`]`(num)[a]` and
   [karma_align `center`]`(num, g)[a]` if used inside a compound generator (such
   as sequences, Kleene, list, or plus.
+* Fixed `karma::subrule` from the [@../../repository/doc/html/index.html repository]
+  (thanks to Lee Clagett for submitting a patch).
 
 [endsect]
 
