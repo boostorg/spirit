@@ -39,6 +39,9 @@ main()
         BOOST_TEST(binary_test("\x81\x02\x03\x04\x05\x06\x07\x08", 8, qword,
             0x0807060504030281LL));
 #endif
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, bin_float, 1.0f));
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            bin_double, 1.0));
 
         BOOST_TEST(binary_test_delimited("\x01\x00\x00\x00", 4, byte_, 0x01, pad(4)));
         BOOST_TEST(binary_test_delimited("\x01\x02\x00\x00", 4, word, 0x0201, pad(4)));
@@ -47,6 +50,10 @@ main()
         BOOST_TEST(binary_test_delimited("\x01\x02\x03\x04\x05\x06\x07\x08\x00\x00", 10, 
             qword, 0x0807060504030201LL, pad(10)));
 #endif
+        BOOST_TEST(binary_test_delimited("\x00\x00\x80\x3f", 4, bin_float,
+            1.0f, pad(4)));
+        BOOST_TEST(binary_test_delimited("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            bin_double, 1.0, pad(8)));
 
 #else // BOOST_LITTLE_ENDIAN
 
@@ -62,6 +69,9 @@ main()
         BOOST_TEST(binary_test("\x81\x02\x03\x04\x05\x06\x07\x08", 8, qword,
             0x8102030405060708LL));
 #endif
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float, 1.0f));
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            bin_double, 1.0));
 
         BOOST_TEST(binary_test_delimited("\x01\x00\x00\x00", 4, byte_, 0x01, pad(4)));
         BOOST_TEST(binary_test_delimited("\x01\x02\x00\x00", 4, word, 0x0102, pad(4)));
@@ -70,6 +80,10 @@ main()
         BOOST_TEST(binary_test_delimited("\x01\x02\x03\x04\x05\x06\x07\x08\x00\x00", 10, 
             qword, 0x0102030405060708LL, pad(10)));
 #endif
+        BOOST_TEST(binary_test_delimited("\x3f\x80\x00\x00", 4, bin_float,
+            1.0f, pad(4)));
+        BOOST_TEST(binary_test_delimited("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            bin_double, 1.0, pad(8)));
 #endif
     }
 
@@ -82,6 +96,9 @@ main()
         BOOST_TEST(binary_test("\x01\x02\x03\x04\x05\x06\x07\x08", 8,
             qword(0x0807060504030201LL)));
 #endif
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, bin_float(1.0f)));
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            bin_double(1.0)));
 #else
         BOOST_TEST(binary_test("\x01", 1, byte_(0x01)));
         BOOST_TEST(binary_test("\x01\x02", 2, word(0x0102)));
@@ -90,6 +107,9 @@ main()
         BOOST_TEST(binary_test("\x01\x02\x03\x04\x05\x06\x07\x08", 8,
             qword(0x0102030405060708LL)));
 #endif
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float(1.0f)));
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            bin_double(1.0)));
 #endif
     }
 

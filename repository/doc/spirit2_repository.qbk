@@ -44,6 +44,7 @@
 [def __qi_confix__              [link spirit_repository.qi_components.directives.confix `confix`]]
 [def __qi_keywords__            [link spirit_repository.qi_components.operators.keyword_list keyword_list]]
 [def __qi_keywords_list__       [link spirit_repository.qi_components.directives.kwd `kwd()[]`]]
+[def __qi_seek__                [link spirit_repository.qi_components.directives.seek `seek[]`]]
 
 [def __karma_subrule__          [link spirit_repository.karma_components.nonterminal.subrule `subrule`]]
 
@@ -103,6 +104,8 @@
 [/ Here we go ]
 
 [include preface.qbk]
+
+[include what_s_new.qbk]
 
 [include qi.qbk]
 

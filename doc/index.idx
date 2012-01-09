@@ -6,8 +6,8 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-#!scan-path "../../../boost/spirit/home/qi" ".*hpp" true 
-#!scan-path "../../../boost/spirit/home/karma" ".*hpp" true 
+#!scan-path "../../../boost/spirit/home/qi" ".*hpp" true
+#!scan-path "../../../boost/spirit/home/karma" ".*hpp" true
 
 ###############################################################################
 # Qi API
@@ -41,7 +41,7 @@ auto_ "" ".*qi.reference.auto.*" qi_index
 auto_ "" ".*karma.reference.auto.*" karma_index
 
 # auxiliary parsers/generators
-attr "" ".*qi.reference.auxiliary.attr\..*" qi_index
+attr "" ".*qi.reference.auxiliary.attr" qi_index
 attr_cast "" ".*qi.reference.auxiliary.attr_cast.*" qi_index
 eol "" ".*qi.reference.auxiliary.eol.*" qi_index
 eoi "" ".*qi.reference.auxiliary.eoi.*" qi_index
@@ -59,23 +59,35 @@ byte_ "" ".*qi.reference.binary.binary_native.*" qi_index
 word "" ".*qi.reference.binary.binary_native.*" qi_index
 dword "" ".*qi.reference.binary.binary_native.*" qi_index
 qword "" ".*qi.reference.binary.binary_native.*" qi_index
+bin_float "" ".*qi.reference.binary.binary_native.*" qi_index
+bin_double "" ".*qi.reference.binary.binary_native.*" qi_index
 little_word "" ".*qi.reference.binary.binary_little.*" qi_index
 little_dword "" ".*qi.reference.binary.binary_little.*" qi_index
 little_qword "" ".*qi.reference.binary.binary_little.*" qi_index
+little_bin_float "" ".*qi.reference.binary.binary_little.*" qi_index
+little_bin_double "" ".*qi.reference.binary.binary_little.*" qi_index
 big_word "" ".*qi.reference.binary.binary_big.*" qi_index
 big_dword "" ".*qi.reference.binary.binary_big.*" qi_index
 big_qword "" ".*qi.reference.binary.binary_big.*" qi_index
+big_bin_float "" ".*qi.reference.binary.binary_big.*" qi_index
+big_bin_double "" ".*qi.reference.binary.binary_big.*" qi_index
 
 byte_ "" ".*karma.reference.binary.binary_native.*" karma_index
 word "" ".*karma.reference.binary.binary_native.*" karma_index
 dword "" ".*karma.reference.binary.binary_native.*" karma_index
 qword "" ".*karma.reference.binary.binary_native.*" karma_index
+bin_float "" ".*karma.reference.binary.binary_native.*" karma_index
+bin_double "" ".*karma.reference.binary.binary_native.*" karma_index
 little_word "" ".*karma.reference.binary.binary_little.*" karma_index
 little_dword "" ".*karma.reference.binary.binary_little.*" karma_index
 little_qword "" ".*karma.reference.binary.binary_little.*" karma_index
+little_bin_float "" ".*karma.reference.binary.binary_little.*" karma_index
+little_bin_double "" ".*karma.reference.binary.binary_little.*" karma_index
 big_word "" ".*karma.reference.binary.binary_big.*" karma_index
 big_dword "" ".*karma.reference.binary.binary_big.*" karma_index
 big_qword "" ".*karma.reference.binary.binary_big.*" karma_index
+big_bin_float "" ".*karma.reference.binary.binary_big.*" karma_index
+big_bin_double "" ".*karma.reference.binary.binary_big.*" karma_index
 
 # char parsers/generators
 char_ "" ".*qi.reference.char\..*" qi_index
@@ -269,7 +281,7 @@ _val "" ".*karma.quick_reference.phoenix.*" karma_index
 _pass "" ".*karma.quick_reference.phoenix.*" karma_index
 
 ###############################################################################
-#!exclude N 
+#!exclude N
 #!exclude type iterator Auto call where: f info derived_type subject_type
 #!exclude if floatfield precision trailing_zeros force_sign in pointer
 #!exclude result_type value_type difference_type assign clear

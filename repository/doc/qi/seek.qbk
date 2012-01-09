@@ -59,40 +59,36 @@ a: Unused --> seek[a]: Unused``]]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `a`]
+[:The overall complexity is defined by the complexity of its subject
+parser. The complexity of `seek` itself is O(N), where N is the number
+of unsuccessful matches.]
+
+[note *seeking sequence with skipping*
+
+Using `seek[a >> b]` with skipping is inefficient, because when sequence fails, the backtracked position is non-skipped.
+The solution is to ensure the input will always be pre-skipped, for example:
+``
+    seek[lexeme[skip[a >> b]]]
+``	
+does the trick.]
 
 [heading Example]
 
 [import ../../example/qi/seek.cpp]
 
-The following example shows a simple use case of the `seek[]` directive, seeking
-all the ints preceding by `'#'`.
+The following example shows a simple use case of the `seek[]` directive, parsing C-style comment.
 (For the full source of the example, see [@../../example/qi/seek.cpp seek.cpp])
 
 Some namespace aliases:
 
 [reference_qi_seek_namespace]
 
-The input iterators and the attribute to store the result:
+The input string and its iterators:
 
 [reference_qi_seek_vars]
 
 Parsing and showing the result:
 
 [reference_qi_seek_parse]
-
-Input:
-
-[pre
-1 will not be outputted while #2, ##3 and # 4 will.
-]
-
-Output:
-
-[pre
--------------------------------- 
-Parsing succeeded, got: \[ 2, 3, 4 \]
----------------------------------
-]
 
 [endsect]

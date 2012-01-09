@@ -1,6 +1,6 @@
 #==============================================================================
 #   Copyright (c) 2001-2011 Joel de Guzman
-#   Copyright (c) 2001-2011 Hartmut Kaiser
+#   Copyright (c) 2001-2012 Hartmut Kaiser
 #   Copyright (c)      2011 Bryce Lelbach
 #
 #   Use, modification and distribution is subject to the Boost Software
@@ -15,9 +15,9 @@ import feature ;
 
 ###############################################################################
 # new feature definition allowing to switch between Phoenix V2 and V3 tests
-feature.feature phoenix_v3 
+feature.feature phoenix_v3
     :   off on
-    :   composite propagated 
+    :   composite propagated
     ;
 
 feature.compose <phoenix_v3>on
@@ -33,10 +33,10 @@ project spirit_v2x/test
     :
     :
     ;
-    
+
 v2_tests = ;
 v3_tests = ;
-    
+
 rule run ( sources + : args * : input-files * : requirements * : target-name ? :  default-build * )
 {
     target-name ?= $(sources[1]:D=:S=) ;
@@ -57,7 +57,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     v2_tests += [ testing.compile-fail $(sources) : $(requirements) : $(target-name)-p2 ] ;
     v3_tests += [ testing.compile-fail $(sources) : $(requirements) <phoenix_v3>on : $(target-name)-p3 ] ;
 }
-    
+
 ###############################################################################
 path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
 
@@ -249,6 +249,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run karma/regression_optional_double.cpp            : : : :  karma_regression_optional_double ]
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
+     [ run karma/regression_center_alignment.cpp           : : : :  karma_regression_center_alignment ]
 
     ;
 
@@ -282,13 +283,13 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run lex/regression_basic_lexer.cpp : : : : lex_regression_basic_lexer ]
      [ run lex/regression_matlib_dynamic.cpp : : : : lex_regression_matlib_dynamic ]
      [ run lex/regression_matlib_generate.cpp : $(LEX_DIR)/matlib_static.h : : : lex_regression_matlib_generate ]
-     [ run lex/regression_matlib_static.cpp : : : 
+     [ run lex/regression_matlib_static.cpp : : :
        <phoenix_v3>on:<dependency>.//lex_regression_matlib_generate-p3
        <phoenix_v3>off:<dependency>.//lex_regression_matlib_generate-p2
        : lex_regression_matlib_static ]
      [ run lex/regression_matlib_generate_switch.cpp : $(LEX_DIR)/matlib_static_switch.h : : : lex_regression_matlib_generate_switch ]
-     [ run lex/regression_matlib_switch.cpp : : : 
-       <phoenix_v3>on:<dependency>.//lex_regression_matlib_generate_switch-p3 
+     [ run lex/regression_matlib_switch.cpp : : :
+       <phoenix_v3>on:<dependency>.//lex_regression_matlib_generate_switch-p3
        <phoenix_v3>off:<dependency>.//lex_regression_matlib_generate_switch-p2
          : lex_regression_matlib_switch ]
      [ run lex/regression_word_count.cpp : : : : lex_regression_word_count ]
@@ -298,6 +299,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run lex/regression_file_iterator2.cpp : : : : lex_regression_file_iterator2 ]
      [ run lex/regression_file_iterator3.cpp : : : : lex_regression_file_iterator3 ]
      [ run lex/regression_file_iterator4.cpp : : : : lex_regression_file_iterator4 ]
+     [ run lex/regression_static_wide_6253.cpp : : : : regression_static_wide_6253 ]
 
     ;
 
@@ -330,8 +332,9 @@ alias test_using_phoenix_v3 : $(v3_tests) ;
 # while running the regerssion tests.
 #
 # If you want to avoid running tests for both Phoenix V2 and V3 by default
-# then simply uncomment the following 'explicit' command. If no target is 
+# then simply uncomment the following 'explicit' command. If no target is
 # specified, only the V2 tests will be run.
-# 
-# explicit test_using_phoenix_v2 test_using_phoenix_v3 ;
+#
+
+explicit test_using_phoenix_v2 test_using_phoenix_v3 ;
 

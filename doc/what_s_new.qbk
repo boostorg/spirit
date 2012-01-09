@@ -9,25 +9,47 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_2 Spirit V2.5.2]
+
+[heading What's changed from V2.5.1 (Boost V1.48.0) to V2.5.2 (Boost V1.49.0)]
+
+* Integrated Vitaly Budovski's patch to add binary floating point parsers and
+  generators.
+* Fixed #6253: `lex::lexertl::generate_static_dfa` compiler errors if lexer has
+  wchar_t as underlying stream type.
+* Added the possibility to match a token range when parsing with a lexer by
+  using `qi::token(min, max)`, or `qi::tokenid(min, max)`. Both parsers match
+  any token with a token id in the range [min, max].
+* Fixed a problem in [karma_align `center`]`(num)[a]` and
+  [karma_align `center`]`(num, g)[a]` if used inside a compound generator (such
+  as sequences, Kleene, list, or plus.
+* Fixed `karma::subrule` from the [@../../repository/doc/html/index.html repository]
+  (thanks to Lee Clagett for submitting a patch).
+* Fixed __karma__ examples (thanks to Lee Clagett for submitting a patch).
+* Fixed #6368: [multi_pass] clear_queue isn't forwarded to the storage policy.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_1 Spirit V2.5.1]
 
 [heading What's changed from V2.5 (Boost V1.47.0) to V2.5.1 (Boost V1.48.0)]
 
-* The `spirit::istream_iterator` (see __multi_pass__) now checks at 
+* The `spirit::istream_iterator` (see __multi_pass__) now checks at
   construction time whether the underlying stream has reached eof (end of file).
-* __qi__ now properly collapses attributes generated from optionals embedded 
+* __qi__ now properly collapses attributes generated from optionals embedded
   inside another optional parser (i.e. `-('(' > -int_ >> ')'). That means that
-  attributes like `boost::optiona<boost::optional<int> >` will be collapsed
-  to `boost::optional<int>`. Thanks to Peter Schueller for reporting that 
+  attributes like `boost::optional<boost::optional<int> >` will be collapsed
+  to `boost::optional<int>`. Thanks to Peter Schueller for reporting that
   problem.
-* Actions attached to binary parsers now properly propagate the parser's 
+* Actions attached to binary parsers now properly propagate the parser's
   attribute. Thanks to Mathias Born for reporting this issue.
 
 [heading Bug Fixes in Lex]
 
-* Fixed Boost ticket #5701: lexertl token_value_type returns const unused for 
+* Fixed Boost ticket #5701: lexertl token_value_type returns const unused for
   nonconst ref.
-* Fixed a problem in the lexer (position_token) causing problems with enabled 
+* Fixed a problem in the lexer (position_token) causing problems with enabled
   parser debugging (MSVC2010).
 
 [endsect]
@@ -79,7 +101,7 @@ any of Spirit's include files):
   This change unifies the handling of the `_val` placeholder allowing to use it
   everywhere, not only in semantic actions attached to the right hand sides of
   a rule.
-* Added support for __karma__ [unsigned_int unsigned numeric generators] with 
+* Added support for __karma__ [unsigned_int unsigned numeric generators] with
   arbitrary radix values in the (inclusive) range from `2` .. `36`.
 
 [heading Bug Fixes in Qi or Karma]
@@ -122,14 +144,14 @@ any of Spirit's include files):
   using `lex::char_` and `lex::string`. Both primitives now accept a second
   parameter which will be interpreted as the requested token id for any token
   generated from this definition.
-* Added a new token type `lex::lexertl::position_token<>`, which is essentially 
+* Added a new token type `lex::lexertl::position_token<>`, which is essentially
   plup-in compatible with the existing `lex::lexertl::token<>` class. However
-  it additionally stores the pair of iterators pointing to the underlying 
+  it additionally stores the pair of iterators pointing to the underlying
   matched input sequence as an iterator_range.
 
 [heading Bug Fixes in Lex]
 
-* Fixed a problem with associating token definitions with all states (using 
+* Fixed a problem with associating token definitions with all states (using
   `"*"` as the state name) when actions were attached to them.
 
 [heading Making Stuff Work]

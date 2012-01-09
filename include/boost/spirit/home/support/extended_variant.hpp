@@ -81,4 +81,35 @@ namespace boost { namespace spirit
     };
 }}
 
+namespace boost
+{
+    template <typename T, BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    inline T const&
+    get(boost::spirit::extended_variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& x)
+    {
+        return boost::get<T>(x.get());
+    }
+
+    template <typename T, BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    inline T&
+    get(boost::spirit::extended_variant<BOOST_VARIANT_ENUM_PARAMS(T)>& x)
+    {
+        return boost::get<T>(x.get());
+    }
+
+    template <typename T, BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    inline T const*
+    get(boost::spirit::extended_variant<BOOST_VARIANT_ENUM_PARAMS(T)> const* x)
+    {
+        return boost::get<T>(&x->get());
+    }
+
+    template <typename T, BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    inline T*
+    get(boost::spirit::extended_variant<BOOST_VARIANT_ENUM_PARAMS(T)>* x)
+    {
+        return boost::get<T>(&x->get());
+    }
+}
+
 #endif

@@ -38,6 +38,11 @@ main()
         boost::optional<boost::uint64_t> v64 (0x0807060504030201LL);
         BOOST_TEST(binary_test("\x01\x02\x03\x04\x05\x06\x07\x08", 8, qword, v64));
 #endif
+        boost::optional<float> vf(1.0f);
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, bin_float, vf));
+        boost::optional<double> vd(1.0);
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            bin_double, vd));
 
 #else // BOOST_LITTLE_ENDIAN
 
@@ -51,6 +56,11 @@ main()
         boost::optional<boost::uint64_t> v64 (0x0102030405060708LL);
         BOOST_TEST(binary_test("\x01\x02\x03\x04\x05\x06\x07\x08", 8, qword, v64));
 #endif
+        boost::optional<float> vf(1.0f);
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float, vf));
+        boost::optional<double> vd(1.0);
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            bin_double, vd));
 
 #endif
     }
@@ -89,6 +99,21 @@ main()
         BOOST_TEST(binary_test("\x02\x02\x03\x04\x05\x06\x07\x08", 8, qword, 
             ++phoenix::ref(v64)));
 #endif
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, bin_float,
+            phoenix::val(1.0f)));
+        float vf(1.0f);
+        BOOST_TEST(binary_test("\x00\x00\x80\x3f", 4, bin_float,
+            phoenix::ref(vf)));
+        BOOST_TEST(binary_test("\x00\x00\x00\x40", 4, bin_float,
+            ++phoenix::ref(vf)));
+
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            bin_double, phoenix::val(1.0)));
+        double vd(1.0);
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
+            bin_double, phoenix::ref(vd)));
+        BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\x00\x40", 8,
+            bin_double, ++phoenix::ref(vd)));
 
 #else // BOOST_LITTLE_ENDIAN
 
@@ -119,6 +144,21 @@ main()
         BOOST_TEST(binary_test("\x01\x02\x03\x04\x05\x06\x07\x09", 8, qword, 
             ++phoenix::ref(v64)));
 #endif
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float,
+            phoenix::val(1.0f)));
+        float vf(1.0f);
+        BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float,
+            phoenix::ref(vf)));
+        BOOST_TEST(binary_test("\x40\x00\x00\x00", 4, bin_float,
+            ++phoenix::ref(vf)));
+
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            bin_double, phoenix::val(1.0)));
+        double vd(1.0);
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
+            bin_double, phoenix::ref(vd)));
+        BOOST_TEST(binary_test("\x40\x00\x00\x00\x00\x00\x00\x00", 8,
+            bin_double, ++phoenix::ref(vd)));
 
 #endif
     }

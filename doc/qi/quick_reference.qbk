@@ -93,10 +93,10 @@ pages and pages of reference documentation.
     [[[qi_real_number `float_(num)`]]  [`float`]        [Parse a floating point number into a `float`,
                                                             a number is matched only if it's `num`]]
     [[[qi_real_number `double_`]] [`double`]            [Parse a floating point number into a `double`]]
-    [[[qi_real_number `double_`]] [`double`]            [Parse a floating point number into a `double`,
+    [[[qi_real_number `double_(num)`]] [`double`]            [Parse a floating point number into a `double`,
                                                             a number is matched only if it's `num`]]
     [[[qi_real_number `long_double`]] [`long double`]   [Parse a floating point number into a `long double`]]
-    [[[qi_real_number `long_double`]] [`long double`]   [Parse a floating point number into a `long double`,
+    [[[qi_real_number `long_double(num)`]] [`long double`]   [Parse a floating point number into a `long double`,
                                                             a number is matched only if it's `num`]]
 
     [[[qi_unsigned_int `bin`]]     [`unsigned`]                [Parse a binary integer into an `unsigned`]]
