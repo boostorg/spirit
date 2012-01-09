@@ -26,6 +26,7 @@
 * Fixed `karma::subrule` from the [@../../repository/doc/html/index.html repository]
   (thanks to Lee Clagett for submitting a patch).
 * Fixed __karma__ examples (thanks to Lee Clagett for submitting a patch).
+* Fixed #6368: [multi_pass] clear_queue isn't forwarded to the storage policy.
 
 [endsect]
 
