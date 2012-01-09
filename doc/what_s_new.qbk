@@ -25,6 +25,7 @@
   as sequences, Kleene, list, or plus.
 * Fixed `karma::subrule` from the [@../../repository/doc/html/index.html repository]
   (thanks to Lee Clagett for submitting a patch).
+* Fixed __karma__ examples (thanks to Lee Clagett for submitting a patch).
 
 [endsect]
 
