@@ -20,6 +20,9 @@
 * Added the possibility to match a token range when parsing with a lexer by
   using `qi::token(min, max)`, or `qi::tokenid(min, max)`. Both parsers match
   any token with a token id in the range [min, max].
+* Fixed a problem in [karma_align `center`]`(num)[a]` and
+  [karma_align `center`]`(num, g)[a]` if used inside a compound generator (such
+  as sequences, Kleene, list, or plus.
 
 [endsect]
 

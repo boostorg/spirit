@@ -1,6 +1,6 @@
 #==============================================================================
 #   Copyright (c) 2001-2011 Joel de Guzman
-#   Copyright (c) 2001-2011 Hartmut Kaiser
+#   Copyright (c) 2001-2012 Hartmut Kaiser
 #   Copyright (c)      2011 Bryce Lelbach
 #
 #   Use, modification and distribution is subject to the Boost Software
@@ -248,6 +248,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run karma/regression_optional_double.cpp            : : : :  karma_regression_optional_double ]
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
+     [ run karma/regression_center_alignment.cpp           : : : :  karma_regression_center_alignment ]
 
     ;
 
