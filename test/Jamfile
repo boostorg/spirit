@@ -249,6 +249,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run karma/regression_semantic_action_attribute.cpp  : : : :  karma_regression_semantic_action_attribute ]
      [ run karma/regression_real_scientific.cpp            : : : :  karma_regression_real_scientific ]
      [ run karma/regression_center_alignment.cpp           : : : :  karma_regression_center_alignment ]
+     [ run karma/regression_container_variant_sequence.cpp : : : :  regression_container_variant_sequence ]
 
     ;
 
