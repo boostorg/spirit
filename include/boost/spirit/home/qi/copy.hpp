@@ -8,12 +8,11 @@
 #define BOOST_SPIRIT_COPY_FEBRUARY_7_2012_0159PM
 
 #include <boost/config.hpp>
+#include <boost/proto/proto.hpp>
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
-
-#include <boost/config.hpp>
 
 #if !defined(BOOST_NO_AUTO_DECLARATIONS)
 
