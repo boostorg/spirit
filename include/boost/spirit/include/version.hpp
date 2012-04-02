@@ -15,6 +15,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #define SPIRIT_VERSION 0x2053
-#define SPIRIT_PIZZA_VERSION HOT_SPANISH_SARDINES  // :-O
+#define SPIRIT_PIZZA_VERSION SUPER_HOT_SPANISH_SARDINES  // :-O
 
 #endif
