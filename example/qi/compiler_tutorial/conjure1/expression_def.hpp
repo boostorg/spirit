@@ -100,7 +100,7 @@ namespace client { namespace parser
         argument_list = -(expr % ',');
 
         identifier =
-                !keywords
+                !lexeme[keywords >> !(alnum | '_')]
             >>  raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
             ;
 
