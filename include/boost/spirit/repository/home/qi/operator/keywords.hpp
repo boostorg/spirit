@@ -166,7 +166,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {};
 
         // filter out the string kwd directives
-        typedef typename mpl::filter_view< Elements, is_kwd_parser<mpl_::_> >::type string_keywords;
+        typedef typename mpl::filter_view< Elements, is_kwd_parser<mpl::_> >::type string_keywords;
 
         typedef typename mpl::filter_view< parser_index_vector ,
                                          is_kwd_parser_filter< mpl::_ >
@@ -272,27 +272,27 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                     save = first;
                 }
                 else {
-          // restore the position to the last successful keyword parse
-          first = save;
-          if(!complex_keywords_inst.parse(complex_function))
-          {
-            first = save;
-            // Check that we are leaving the keywords parser in a successfull state
-            BOOST_FOREACH(bool &valid,flags)
-            {
-              if(!valid)
-              {
-                return false;
-              }
-            }
-            return true;
-          }
-          else
-            save = first;
-        }
+                  // restore the position to the last successful keyword parse
+                  first = save;
+                  if(!complex_keywords_inst.parse(complex_function))
+                  {
+                    first = save;
+                    // Check that we are leaving the keywords parser in a successfull state
+                    BOOST_FOREACH(bool &valid,flags)
+                    {
+                      if(!valid)
+                      {
+                        return false;
+                      }
+                    }
+                    return true;
+                  }
+                  else
+                    save = first;
+                }
             }
             return false;
-        }
+          }
 
         // Handle the mixed kwd and ikwd case
         template <typename Iterator, typename Context
@@ -353,29 +353,29 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                     save = first;
                 }
                 else {
-          first = save;
+                  first = save;
 
-          if(!complex_keywords_inst.parse(complex_function))
-          {
-            first = save;
-            // Check that we are leaving the keywords parser in a successfull state
-            BOOST_FOREACH(bool &valid,flags)
-            {
-              if(!valid)
-              {
-                return false;
-              }
-            }
-            return true;
-          }
-          else
-          {
-            save = first;
-          }
+                  if(!complex_keywords_inst.parse(complex_function))
+                  {
+                    first = save;
+                    // Check that we are leaving the keywords parser in a successfull state
+                    BOOST_FOREACH(bool &valid,flags)
+                    {
+                      if(!valid)
+                      {
+                        return false;
+                      }
+                    }
+                    return true;
+                  }
+                  else
+                  {
+                    save = first;
+                  }
                 }
             }
             return false;
-        }
+          }
 
         template <typename Context>
         info what(Context& context) const

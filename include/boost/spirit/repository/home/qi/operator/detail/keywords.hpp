@@ -369,8 +369,8 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
 
                         // Make the keyword/parse index entry in the tst parser
                         lookup->add(
-                                traits::get_begin<char_type>(parser.subject.keyword.str),
-                                traits::get_end<char_type>(parser.subject.keyword.str),
+                                traits::get_begin<char_type>(get_string(parser.subject.keyword)),
+                                traits::get_end<char_type>(get_string(parser.subject.keyword)),
                                 position
                                 );
                         // Get the initial state of the flags array and store it in the flags initializer
@@ -397,8 +397,8 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     {
                         // Make the keyword/parse index entry in the tst parser
                         lookup->add(
-                                traits::get_begin<char_type>(parser.subject.keyword.str),
-                                traits::get_end<char_type>(parser.subject.keyword.str),
+                                traits::get_begin<char_type>(get_string(parser.subject.keyword)),
+                                traits::get_end<char_type>(get_string(parser.subject.keyword)),
                                 position
                                 );
                         // Get the initial state of the flags array and store it in the flags initializer
@@ -406,19 +406,20 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                         return 0;
                     }
 
+
                 template <typename String, bool no_attribute>
-                const String & get_string(const boost::spirit::qi::literal_string<String,no_attribute> &parser) const
+                const String get_string(const boost::spirit::qi::literal_string<String,no_attribute> &parser) const
                 {
                         return parser.str;
                 }
 
-                template <typename String, bool no_attribute>
+        template <typename String, bool no_attribute>
                 const typename boost::spirit::qi::no_case_literal_string<String,no_attribute>::string_type &
                         get_string(const boost::spirit::qi::no_case_literal_string<String,no_attribute> &parser) const
                 {
                         return parser.str_lo;
                 }
-
+   
 
 
                 shared_ptr<keywords_type> lookup;
