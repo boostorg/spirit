@@ -44,7 +44,7 @@ struct print_numbers_tokenids : lex::lexer<Lexer>
     print_numbers_tokenids()
       : print_numbers_tokenids::base_type(lex::match_flags::match_not_dot_newline)
     {
-        this->self = lex::token_def<int>("[0-9]*") | ".|\n";
+        this->self = lex::token_def<int>("[0-9]+") | ".|\n";
     }
 };
 
@@ -58,7 +58,7 @@ struct print_numbers_grammar : qi::grammar<Iterator>
       : print_numbers_grammar::base_type(start)
     {
         // we just know, that the token ids get assigned starting min_token_id
-        // so, "[0-9]*" gets the id 'min_token_id' and ".|\n" gets the id
+        // so, "[0-9]+" gets the id 'min_token_id' and ".|\n" gets the id
         // 'min_token_id+1'.
 
         // this prints the token ids of the matched tokens
