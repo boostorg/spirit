@@ -16,6 +16,8 @@
 * The deprecated headers are removed. It's been there for a couple of years now
   and it's about time to do some cleanup.
 
+[endsect]
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_2 Spirit V2.5.2]
 
