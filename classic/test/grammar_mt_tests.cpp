@@ -70,7 +70,7 @@ milli_sleep(unsigned long milliseconds)
 {
     static long const nanoseconds_per_second = 1000L*1000L*1000L;
     boost::xtime xt;
-    boost::xtime_get(&xt, boost::TIME_UTC);
+    boost::xtime_get(&xt, boost::TIME_UTC_);
     xt.nsec+=1000*1000*milliseconds;
     while (xt.nsec > nanoseconds_per_second)
     {
