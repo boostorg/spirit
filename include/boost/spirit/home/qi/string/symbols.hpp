@@ -257,14 +257,14 @@ public:
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& /*context*/, Skipper const& skipper, Attribute& attr) const
+          , Context& /*context*/, Skipper const& skipper, Attribute& attr_) const
         {
             qi::skip_over(first, last, skipper);
 
             if (value_type* val_ptr
                 = lookup->find(first, last, Filter()))
             {
-                spirit::traits::assign_to(*val_ptr, attr);
+                spirit::traits::assign_to(*val_ptr, attr_);
                 return true;
             }
             return false;
@@ -290,8 +290,8 @@ public:
             template <typename, typename = unused_type, typename = unused_type>
             struct result { typedef adder const& type; };
 
-            adder(symbols& sym)
-              : sym(sym)
+            adder(symbols& sym_)
+              : sym(sym_)
             {
             }
 
@@ -333,8 +333,8 @@ public:
             template <typename, typename = unused_type, typename = unused_type>
             struct result { typedef remover const& type; };
 
-            remover(symbols& sym)
-              : sym(sym)
+            remover(symbols& sym_)
+              : sym(sym_)
             {
             }
 
