@@ -4,10 +4,10 @@
  */
 
 #include <boost/detail/lightweight_test.hpp>
-#include "value.hpp"
-#include "io.hpp"
-#include "parser/grammar.hpp"
-#include "parser/grammar_def.hpp"
+#include "json/value.hpp"
+#include "json/io.hpp"
+#include "json/parser/grammar.hpp"
+#include "json/parser/grammar_def.hpp"
 
 
 int main()
@@ -72,7 +72,6 @@ int main()
       std::cout << "ast post erase : " << value << std::endl;
    }
 
-   BOOST_TEST(0);   // show some output
    return boost::report_errors();
 }
 
