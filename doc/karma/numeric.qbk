@@ -875,8 +875,7 @@ functions:
           Moreover, this precision will be limited to the value of 
           `std::numeric_limits<T>::digits10 + 1`.]]
 [   [``
-        template <bool ForceSign, 
-            typename OutputIterator>
+        template <typename OutputIterator>
         bool integer_part(OutputIterator& sink
           , Num n, bool sign, bool force_sign);
     ``]
