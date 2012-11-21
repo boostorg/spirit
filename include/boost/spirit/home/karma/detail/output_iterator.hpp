@@ -452,6 +452,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // plain output iterators are considered to be good all the time
         bool good() const { return true; }
 
+        // allow to access underlying output iterator
+        OutputIterator& base() { return *sink; }
+
     protected:
         // this is the wrapped user supplied output iterator
         OutputIterator* sink;
