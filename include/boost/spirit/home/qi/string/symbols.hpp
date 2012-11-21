@@ -166,7 +166,7 @@ namespace boost { namespace spirit { namespace qi
             return sym.remove(str);
         }
 
-#if defined(BOOST_NO_RVALUE_REFERENCES)
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         // non-const version needed to suppress proto's += kicking in
         template <typename Str>
         friend adder const&

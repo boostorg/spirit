@@ -14,7 +14,7 @@
 #pragma once
 #endif
 
-#if !defined(BOOST_NO_AUTO_DECLARATIONS)
+#if !defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 
 namespace boost { namespace spirit { namespace qi
 {
