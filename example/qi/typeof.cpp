@@ -25,7 +25,7 @@ main()
 
 ///////////////////////////////////////////////////////////////////////////////
 // this works for non-c++11 compilers
-#ifdef BOOST_NO_AUTO_DECLARATIONS
+#ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 
     BOOST_SPIRIT_AUTO(qi, comment, "/*" >> *(char_ - "*/") >> "*/");
 
