@@ -258,7 +258,7 @@ namespace boost { namespace spirit { namespace detail
             typedef typename
                 proto::reverse_fold_tree<
                     proto::_
-                  , proto::make<fusion::nil>
+                  , proto::make<fusion::nil_>
                   , make_binary_helper<Grammar>
                 >::template impl<Expr, State, Data>
             reverse_fold_tree;
