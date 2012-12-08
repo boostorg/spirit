@@ -481,8 +481,8 @@ int main()
 
     // tags
     {
-        short min = std::numeric_limits<short>::min();
-        short max = std::numeric_limits<short>::max();
+        short min = (std::numeric_limits<short>::min)();
+        short max = (std::numeric_limits<short>::max)();
 
         utree::list_type u;
         utree u2;
