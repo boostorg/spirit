@@ -59,12 +59,12 @@ struct test_action_2
 
 struct DIgnore
 {
-	std::string text;
+    std::string text;
 };
 
 struct DInclude
 {
-	std::string FileName;
+    std::string FileName;
 };
 
 BOOST_FUSION_ADAPT_STRUCT(
