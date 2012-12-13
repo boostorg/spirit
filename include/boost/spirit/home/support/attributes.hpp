@@ -524,11 +524,17 @@ namespace boost { namespace spirit { namespace traits
     {
         struct attribute_size_visitor : static_visitor<>
         {
+            attribute_size_visitor(std::size_t& size)
+              :size_(size)
+            {}
+
             template <typename T>
-            typename attribute_size<T>::type operator()(T const& val) const
+            typename void operator()(T const& val)
             {
-                return spirit::traits::size(val);
+                size_ = spirit::traits::size(val);
             }
+
+            std::size_t& size_;
         };
     }
 
@@ -539,7 +545,9 @@ namespace boost { namespace spirit { namespace traits
 
         static std::size_t call(variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& val)
         {
-            return apply_visitor(detail::attribute_size_visitor(), val);
+            std::size_t size = 0;
+            apply_visitor(detail::attribute_size_visitor(size), val);
+            return size;
         }
     };
 
