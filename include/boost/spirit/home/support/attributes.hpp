@@ -537,9 +537,9 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef std::size_t type;
 
-        static void call(variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& val)
+        static std::size_t call(variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& val)
         {
-            apply_visitor(detail::attribute_size_visitor(), val);
+            return apply_visitor(detail::attribute_size_visitor(), val);
         }
     };
 
