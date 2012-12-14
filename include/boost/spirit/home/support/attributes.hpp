@@ -529,7 +529,7 @@ namespace boost { namespace spirit { namespace traits
             {}
 
             template <typename T>
-            void operator()(T const& val)
+            void operator()(T const& val) const
             {
                 size_ = spirit::traits::size(val);
             }
