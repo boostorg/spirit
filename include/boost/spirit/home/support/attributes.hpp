@@ -522,13 +522,8 @@ namespace boost { namespace spirit { namespace traits
 
     namespace detail
     {
-        struct attribute_size_visitor : static_visitor<>
+        struct attribute_size_visitor : static_visitor<std::size_t>
         {
-            typedef std::size_t result_type;
-
-            attribute_size_visitor()
-            {}
-
             template <typename T>
             std::size_t operator()(T const& val) const
             {
