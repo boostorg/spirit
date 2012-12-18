@@ -65,16 +65,17 @@ namespace boost { namespace spirit { namespace qi
 
             qi::skip_over(first, last, skipper);
 
-            instream in(first, last);         // copies 'first'
-            in >> attr_;                       // use existing operator>>()
+            instream in(first, last);           // copies 'first'
+            in >> attr_;                        // use existing operator>>()
 
             // advance the iterator if everything is ok
-            if (in.good()) {
+            if (in) {
                 std::streamsize pos = in.tellg();
                 std::advance(first, pos);
+                return true;
             }
 
-            return in.good() || in.eof();
+            return false;
         }
 
         template <typename Context>
