@@ -79,7 +79,7 @@ main()
         // no constraints
         boost::fusion::vector<char,char,int> data;
         BOOST_TEST( test_attr("c=1 a=a", kwd("a")[ '=' > char_] / kwd("b")[ '=' > char_] / kwd("c")['=' > int_], data, space));
-	      BOOST_TEST( boost::fusion::at_c<0>(data) == 'a' );
+        BOOST_TEST( boost::fusion::at_c<0>(data) == 'a' );
         BOOST_TEST( boost::fusion::at_c<1>(data) == 0 );
         BOOST_TEST( boost::fusion::at_c<2>(data) == 1 );
 

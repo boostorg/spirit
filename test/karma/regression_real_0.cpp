@@ -1,4 +1,4 @@
-//  Copyright (c) 2012 Agustín K-ballo Berge
+//  Copyright (c) 2012 Agustin K-ballo Berge
 //  Copyright (c) 2001-2012 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
