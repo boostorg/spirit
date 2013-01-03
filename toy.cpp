@@ -20,12 +20,9 @@ namespace boost { namespace spirit { namespace x3
       char_parser(Char ch) : ch(ch) {}
 
       template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator const& last, Environment const& env) const
+      bool parse(Iterator& first, Iterator last, Environment const& env) const
       {
-         if (first == last)
-            return false;
-
-         if (*first == ch)
+         if (first != last && *first == ch)
          {
             ++first;
             return true;
@@ -49,7 +46,7 @@ namespace boost { namespace spirit { namespace x3
          : left(left), right(right) {}
 
       template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator const& last, Environment const& env) const
+      bool parse(Iterator& first, Iterator last, Environment const& env) const
       {
          return left.parse(first, last, env)
             && right.parse(first, last, env);
@@ -74,12 +71,10 @@ namespace boost { namespace spirit { namespace x3
          : left(left), right(right) {}
 
       template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator const& last, Environment const& env) const
+      bool parse(Iterator& first, Iterator last, Environment const& env) const
       {
-         Iterator save = first;
          if (left.parse(first, last, env))
             return true;
-         first = save;
          return right.parse(first, last, env);
       }
 
@@ -95,73 +90,73 @@ namespace boost { namespace spirit { namespace x3
          left.derived(), right.derived());
    }
 
-   template <typename Tag, typename Subject, typename Next>
+   template <typename ID, typename T, typename NextEnv>
    struct environment
    {
-      environment(Subject const& subject, Next const& next)
-         : subject(subject), next(next) {}
+      environment(T const& val, NextEnv const& next_env)
+         : val(val), next_env(next_env) {}
 
-      Subject const& find(mpl::identity<Tag>) const
+      T const& find(mpl::identity<ID>) const
       {
-         return subject;
+         return val;
       }
 
-      template <typename Tag_>
-      decltype(std::declval<Next>().find(mpl::identity<Tag_>()))
-      find(mpl::identity<Tag_> id) const
+      template <typename Identity>
+      decltype(std::declval<NextEnv>().find(Identity()))
+      find(Identity id) const
       {
-         return next.find(id);
+         return next_env.find(id);
       }
 
-      Subject const& subject;
-      Next const& next;
+      T const& val;
+      NextEnv const& next_env;
    };
 
    struct empty_environment
    {
       struct undefined {};
-      template <typename Tag>
-      undefined find(Tag) const
+      template <typename ID>
+      undefined find(ID) const
       {
          return undefined();
       }
    };
 
-   template <typename Tag, typename Subject>
-   struct rule_definition : parser<rule_definition<Tag, Subject>>
+   template <typename ID, typename RHS>
+   struct rule_definition : parser<rule_definition<ID, RHS>>
    {
-      rule_definition(Subject subject)
-         : subject(subject) {}
+      rule_definition(RHS rhs)
+         : rhs(rhs) {}
 
       template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator const& last, Environment const& env) const
+      bool parse(Iterator& first, Iterator last, Environment const& env) const
       {
-         environment<Tag, Subject, Environment> new_env(subject,  env);
-         return subject.parse(first, last, new_env);
+         environment<ID, RHS, Environment> new_env(rhs,  env);
+         return rhs.parse(first, last, new_env);
       }
 
-      Subject subject;
+      RHS rhs;
    };
 
-   template <typename Tag>
-   struct rule : parser<rule<Tag>>
+   template <typename ID>
+   struct rule : parser<rule<ID>>
    {
       template <typename Derived>
-      rule_definition<Tag, Derived>
-      operator=(parser<Derived> const& definition)
+      rule_definition<ID, Derived>
+      operator=(parser<Derived> const& definition) const
       {
-         return rule_definition<Tag, Derived>(definition.derived());
+         return rule_definition<ID, Derived>(definition.derived());
       }
 
       template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator const& last, Environment const& env) const
+      bool parse(Iterator& first, Iterator last, Environment const& env) const
       {
-         return env.find(mpl::identity<Tag>()).parse(first, last, env);
+         return env.find(mpl::identity<ID>()).parse(first, last, env);
       }
    };
 
    template <typename Iterator, typename Derived>
-   inline bool parse(parser<Derived> const& definition, Iterator& first, Iterator const& last)
+   inline bool parse(parser<Derived> const& definition, Iterator& first, Iterator last)
    {
       empty_environment env;
       return definition.derived().parse(first, last, env);
@@ -178,39 +173,73 @@ bool test_parse(Parser const& p, char const* in)
    return parse(p, in, in + std::strlen(in));
 }
 
-int main()
+namespace parser
 {
    using namespace boost::spirit::x3;
 
+   namespace g_definition
+   {
+      rule<class x> const x;
+      auto const ax = char_('a') >> x;
+
+      auto const g =
+         x = char_('x') | ax;
+   }
+   using g_definition::g;
+}
+
+int main()
+{
+
    { // a non-recursive parser
+      using namespace boost::spirit::x3;
+
       auto abc = char_('a') >> char_('b') >> char_('c');
       std::cout << test_parse(abc, "abc") << std::endl;
       std::cout << test_parse(abc, "abx") << std::endl;
+      std::cout << "==========================================" << std::endl;
    }
 
    { // a recursive rule
-      rule<class x> x;
-      auto ax = char_('a') >> x;
-      auto start = (x = char_('x') | ax);
+      using namespace boost::spirit::x3;
+
+      rule<class x> const x;
+      auto const ax = char_('a') >> x;
+      auto const start = (x = char_('x') | ax);
 
       std::cout << test_parse(start, "x") << std::endl;
       std::cout << test_parse(start, "ax") << std::endl;
       std::cout << test_parse(start, "aaaaax") << std::endl;
       std::cout << test_parse(start, "aaz") << std::endl;
+      std::cout << "==========================================" << std::endl;
    }
 
-   { // a grammar
+   { // a grammar (gcc only: see http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3386.html)
+
+      using namespace boost::spirit::x3;
       auto g = []()
       {
          rule<class x> x;
          auto ax = char_('a') >> x;
          return x = char_('x') | ax;
+
       }();
 
       std::cout << test_parse(g, "x") << std::endl;
       std::cout << test_parse(g, "ax") << std::endl;
       std::cout << test_parse(g, "aaaaax") << std::endl;
       std::cout << test_parse(g, "aaz") << std::endl;
+      std::cout << "==========================================" << std::endl;
+   }
+
+   { // another grammar using namespaces (standard c++, see grammar g definition above in namespace parser.)
+      using parser::g;
+
+      std::cout << test_parse(g, "x") << std::endl;
+      std::cout << test_parse(g, "ax") << std::endl;
+      std::cout << test_parse(g, "aaaaax") << std::endl;
+      std::cout << test_parse(g, "aaz") << std::endl;
+      std::cout << "==========================================" << std::endl;
    }
 
    return 0;
