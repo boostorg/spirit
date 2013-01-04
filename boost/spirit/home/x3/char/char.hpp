@@ -36,14 +36,30 @@ namespace boost { namespace spirit { namespace x3
         char_type ch;
     };
 
+    template <typename Encoding>
+    struct any_char : char_parser<any_char<Encoding>>
+    {
+        typedef typename Encoding::char_type char_type;
+        typedef Encoding encoding;
+
+        template <typename Char, typename Context>
+        bool test(Char ch_, Context&) const
+        {
+            return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_));
+        }
+
+        template <typename Char>
+        literal_char<Encoding>
+        operator()(Char ch) const
+        {
+            return literal_char<Encoding>(ch);
+        }
+    };
+
     namespace ascii
     {
-        template <typename Char>
-        inline literal_char<char_encoding::ascii>
-        char_(Char ch)
-        {
-            return literal_char<char_encoding::ascii>(ch);
-        }
+        typedef any_char<char_encoding::ascii> char_type;
+        char_type const char_ = char_type();
     }
 }}}
 

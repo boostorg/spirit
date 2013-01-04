@@ -30,7 +30,7 @@ main()
         //~ BOOST_TEST(!test("y", 'x'));
         //~ BOOST_TEST(!test(L"y", L'x'));
 
-        //~ BOOST_TEST(test("x", char_));
+        BOOST_TEST(test("x", char_));
         BOOST_TEST(test("x", char_('x')));
         BOOST_TEST(!test("x", char_('y')));
         //~ BOOST_TEST(test("x", char_('a', 'z')));
@@ -59,7 +59,7 @@ main()
         //~ BOOST_TEST(test("   x", 'x', space));
         //~ BOOST_TEST(test(L"   x", L'x', space));
 
-        //~ BOOST_TEST(test("   x", char_, space));
+        BOOST_TEST(test("   x", char_, space));
         BOOST_TEST(test("   x", char_('x'), space));
         BOOST_TEST(!test("   x", char_('y'), space));
         //~ BOOST_TEST(test("   x", char_('a', 'z'), space));
