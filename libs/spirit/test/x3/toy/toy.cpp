@@ -19,8 +19,8 @@ namespace boost { namespace spirit { namespace x3
    {
       char_parser(Char ch) : ch(ch) {}
 
-      template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator last, Environment const& env) const
+      template <typename Iterator, typename Context>
+      bool parse(Iterator& first, Iterator last, Context const& ctx) const
       {
          if (first != last && *first == ch)
          {
@@ -45,11 +45,11 @@ namespace boost { namespace spirit { namespace x3
       sequence_parser(Left left, Right right)
          : left(left), right(right) {}
 
-      template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator last, Environment const& env) const
+      template <typename Iterator, typename Context>
+      bool parse(Iterator& first, Iterator last, Context const& ctx) const
       {
-         return left.parse(first, last, env)
-            && right.parse(first, last, env);
+         return left.parse(first, last, ctx)
+            && right.parse(first, last, ctx);
       }
 
       Left left;
@@ -70,12 +70,12 @@ namespace boost { namespace spirit { namespace x3
       alternative_parser(Left left, Right right)
          : left(left), right(right) {}
 
-      template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator last, Environment const& env) const
+      template <typename Iterator, typename Context>
+      bool parse(Iterator& first, Iterator last, Context const& ctx) const
       {
-         if (left.parse(first, last, env))
+         if (left.parse(first, last, ctx))
             return true;
-         return right.parse(first, last, env);
+         return right.parse(first, last, ctx);
       }
 
       Left left;
@@ -91,9 +91,9 @@ namespace boost { namespace spirit { namespace x3
    }
 
    template <typename ID, typename T, typename NextEnv>
-   struct environment
+   struct context
    {
-      environment(T const& val, NextEnv const& next_env)
+      context(T const& val, NextEnv const& next_env)
          : val(val), next_env(next_env) {}
 
       T const& find(mpl::identity<ID>) const
@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace x3
       NextEnv const& next_env;
    };
 
-   struct empty_environment
+   struct empty_context
    {
       struct undefined {};
       template <typename ID>
@@ -128,10 +128,10 @@ namespace boost { namespace spirit { namespace x3
       rule_definition(RHS rhs)
          : rhs(rhs) {}
 
-      template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator last, Environment const& env) const
+      template <typename Iterator, typename Context>
+      bool parse(Iterator& first, Iterator last, Context const& ctx) const
       {
-         environment<ID, RHS, Environment> new_env(rhs,  env);
+         context<ID, RHS, Context> new_env(rhs,  ctx);
          return rhs.parse(first, last, new_env);
       }
 
@@ -148,18 +148,18 @@ namespace boost { namespace spirit { namespace x3
          return rule_definition<ID, Derived>(definition.derived());
       }
 
-      template <typename Iterator, typename Environment>
-      bool parse(Iterator& first, Iterator last, Environment const& env) const
+      template <typename Iterator, typename Context>
+      bool parse(Iterator& first, Iterator last, Context const& ctx) const
       {
-         return env.find(mpl::identity<ID>()).parse(first, last, env);
+         return ctx.find(mpl::identity<ID>()).parse(first, last, ctx);
       }
    };
 
    template <typename Iterator, typename Derived>
    inline bool parse(parser<Derived> const& definition, Iterator& first, Iterator last)
    {
-      empty_environment env;
-      return definition.derived().parse(first, last, env);
+      empty_context ctx;
+      return definition.derived().parse(first, last, ctx);
    }
 
 }}}
