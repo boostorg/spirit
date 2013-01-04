@@ -13,17 +13,18 @@
 
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/concept_check.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Derived>
+    template <typename Iterator, typename P>
     inline bool
     parse(
         Iterator& first
       , Iterator last
-      , parser<Derived> const& p)
+      , parser<P> const& p)
     {
         // Make sure the iterator is at least a forward_iterator. If you got a
         // compilation error here, then you are using an input_iterator while
@@ -32,6 +33,25 @@ namespace boost { namespace spirit { namespace x3
         BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
 
         return p.derived().parse(first, last, unused, unused);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename P, typename S>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , parser<P> const& p
+      , parser<S> const& s)
+    {
+        // Make sure the iterator is at least a forward_iterator. If you got a
+        // compilation error here, then you are using an input_iterator while
+        // calling this function, you need to supply at least a
+        // forward_iterator instead.
+        BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
+
+        context<skipper_tag, S const> skipper(s.derived());
+        return p.derived().parse(first, last, skipper, unused);
     }
 }}}
 

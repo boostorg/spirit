@@ -17,7 +17,7 @@
 
 namespace boost { namespace spirit
 {
-    template <typename ID, typename T, typename Next>
+    template <typename ID, typename T, typename Next = unused_type>
     struct context
     {
         context(T& val, Next const& next)
@@ -39,13 +39,25 @@ namespace boost { namespace spirit
         Next const& next;
     };
 
-    struct empty_context : unused_type {};
+    template <typename ID, typename T>
+    struct context<ID, T, unused_type>
+    {
+        context(T& val)
+            : val(val) {}
+
+        T& get(mpl::identity<ID>) const
+        {
+            return val;
+        }
+
+        T& val;
+    };
 
     template <typename Tag, typename Context>
     inline auto
-    get(Context const& context) -> decltype(context.find(mpl::identity<Tag>()))
+    get(Context const& context) -> decltype(context.get(mpl::identity<Tag>()))
     {
-        return context.find(mpl::identity<Tag>());
+        return context.get(mpl::identity<Tag>());
     }
 }}
 

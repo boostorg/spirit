@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2013 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,10 +20,6 @@ namespace spirit_test
     template <typename Char, typename Parser>
     bool test(Char const* in, Parser const& p, bool full_match = true)
     {
-        //~ // we don't care about the result of the "what" function.
-        //~ // we only care that all parsers have it:
-        //~ boost::spirit::qi::what(p);
-
         Char const* last = in;
         while (*last)
             last++;
@@ -31,20 +27,16 @@ namespace spirit_test
             && (!full_match || (in == last));
     }
 
-    //~ template <typename Char, typename Parser, typename Skipper>
-    //~ bool test(Char const* in, Parser const& p
-        //~ , Skipper const& s, bool full_match = true)
-    //~ {
-        //~ // we don't care about the result of the "what" function.
-        //~ // we only care that all parsers have it:
-        //~ boost::spirit::qi::what(p);
-
-        //~ Char const* last = in;
-        //~ while (*last)
-            //~ last++;
-        //~ return boost::spirit::qi::phrase_parse(in, last, p, s)
-            //~ && (!full_match || (in == last));
-    //~ }
+    template <typename Char, typename Parser, typename Skipper>
+    bool test(Char const* in, Parser const& p
+        , Skipper const& s, bool full_match = true)
+    {
+        Char const* last = in;
+        while (*last)
+            last++;
+        return boost::spirit::x3::phrase_parse(in, last, p, s)
+            && (!full_match || (in == last));
+    }
 
     //~ template <typename Char, typename Parser>
     //~ bool binary_test(Char const* in, std::size_t size, Parser const& p,

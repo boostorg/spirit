@@ -62,7 +62,7 @@ namespace boost { namespace spirit
 
         // unused_type can also masquerade as an empty context (see context.hpp)
         template <typename ID>
-        unused_type find(ID) const
+        unused_type get(ID) const
         {
             return unused_type();
         }

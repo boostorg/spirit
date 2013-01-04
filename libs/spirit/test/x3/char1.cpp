@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2013 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -7,6 +7,7 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/char/char.hpp>
+#include <boost/spirit/home/x3/char/char_class.hpp>
 //~ #include <boost/spirit/include/qi_action.hpp>
 //~ #include <boost/spirit/include/phoenix_core.hpp>
 //~ #include <boost/spirit/include/phoenix_operator.hpp>
@@ -52,18 +53,18 @@ main()
         //~ BOOST_TEST(!test("z", ~~char_('b', 'y')));
     }
 
-    //~ {
-        //~ using namespace boost::spirit::ascii;
+    {
+        using namespace boost::spirit::x3::ascii;
 
         //~ BOOST_TEST(test("   x", 'x', space));
         //~ BOOST_TEST(test(L"   x", L'x', space));
 
         //~ BOOST_TEST(test("   x", char_, space));
-        //~ BOOST_TEST(test("   x", char_('x'), space));
-        //~ BOOST_TEST(!test("   x", char_('y'), space));
+        BOOST_TEST(test("   x", char_('x'), space));
+        BOOST_TEST(!test("   x", char_('y'), space));
         //~ BOOST_TEST(test("   x", char_('a', 'z'), space));
         //~ BOOST_TEST(!test("   x", char_('0', '9'), space));
-    //~ }
+    }
 
     //~ {
         //~ using namespace boost::spirit::standard_wide;

@@ -26,10 +26,11 @@ namespace boost { namespace spirit { namespace x3
         literal_char(Char ch)
           : ch(static_cast<char_type>(ch)) {}
 
-        template <typename CharParam, typename Context>
-        bool test(CharParam ch_, Context&) const
+        template <typename Char, typename Context>
+        bool test(Char ch_, Context&) const
         {
-            return encoding::ischar(ch_) && ch == char_type(ch_);
+            return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
+                && ch == char_type(ch_);
         }
 
         char_type ch;
