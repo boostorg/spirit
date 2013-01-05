@@ -14,6 +14,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/support/numeric_utils/extract_int.hpp>
+#include <cstdint>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -42,17 +43,22 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-    typedef int_parser<short> short_type;
-    short_type const short_ = short_type();
+#define BOOST_SPIRIT_INT_PARSER(int_type, name)                                 \
+    typedef int_parser<int_type> name##type;                                    \
+    name##type const name = name##type();                                       \
+    /***/
 
-    typedef int_parser<long> long_type;
-    long_type const long_ = long_type();
+    BOOST_SPIRIT_INT_PARSER(long, long_)
+    BOOST_SPIRIT_INT_PARSER(short, short_)
+    BOOST_SPIRIT_INT_PARSER(int, int_)
+    BOOST_SPIRIT_INT_PARSER(long long, long_long)
 
-    typedef int_parser<int> int_type;
-    int_type const int_ = int_type();
+    BOOST_SPIRIT_INT_PARSER(int8_t, int8_)
+    BOOST_SPIRIT_INT_PARSER(int16_t, int16_)
+    BOOST_SPIRIT_INT_PARSER(int32_t, int32_)
+    BOOST_SPIRIT_INT_PARSER(int64_t, int64_)
 
-    typedef int_parser<long long> long_long_type;
-    long_long_type const long_long = long_long_type();
+#undef BOOST_SPIRIT_INT_PARSER
 
 }}}
 
