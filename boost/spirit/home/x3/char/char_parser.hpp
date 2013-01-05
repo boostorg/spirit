@@ -39,39 +39,6 @@ namespace boost { namespace spirit { namespace x3
             return false;
         }
     };
-
-    ///////////////////////////////////////////////////////////////////////////
-    // negated_char_parser handles ~cp expressions (cp is a char_parser)
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Positive>
-    struct negated_char_parser :
-        char_parser<negated_char_parser<Positive>>
-    {
-        negated_char_parser(Positive const& positive)
-          : positive(positive) {}
-
-        template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context& context) const
-        {
-            return !positive.test(ch, context);
-        }
-
-        Positive positive;
-    };
-
-    template <typename Positive>
-    inline negated_char_parser<Positive>
-    operator~(char_parser<Positive> const& cp)
-    {
-        return negated_char_parser<Positive>(cp.derived());
-    }
-
-    template <typename Positive>
-    inline Positive const&
-    operator~(negated_char_parser<Positive> const& cp)
-    {
-        return cp.positive;
-    }
 }}}
 
 #endif
