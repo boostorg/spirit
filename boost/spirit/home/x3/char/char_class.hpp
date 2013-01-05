@@ -40,6 +40,7 @@ namespace boost { namespace spirit { namespace x3
         typedef Encoding encoding;
         typedef Tag tag;
         typedef typename Encoding::char_type char_type;
+        typedef char_type attribute_type;
 
 #define BOOST_SPIRIT_CLASSIFY(name)                                             \
         template <typename Char>                                                \

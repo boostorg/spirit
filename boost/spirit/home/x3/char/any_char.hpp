@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef typename Encoding::char_type char_type;
         typedef Encoding encoding;
-        typedef literal_char<Encoding> literal_char_type;
+        typedef char_type attribute_type;
 
         template <typename Char, typename Context>
         bool test(Char ch_, Context&) const
@@ -29,10 +29,10 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Char>
-        literal_char_type
+        literal_char<Encoding>
         operator()(Char ch) const
         {
-            return literal_char_type(ch);
+            return literal_char<Encoding>(ch);
         }
     };
 }}}

@@ -15,11 +15,12 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename Encoding>
+    template <typename Encoding, typename Attribute = typename Encoding::char_type>
     struct literal_char : char_parser<literal_char<Encoding>>
     {
         typedef typename Encoding::char_type char_type;
         typedef Encoding encoding;
+        typedef Attribute attribute_type;
 
         template <typename Char>
         literal_char(Char ch)

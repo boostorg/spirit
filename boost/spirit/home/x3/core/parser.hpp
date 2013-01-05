@@ -13,6 +13,7 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -41,6 +42,16 @@ namespace boost { namespace spirit { namespace x3
     {
         template <typename T, typename Enable = void>
         struct as_parser {};
+
+        template <>
+        struct as_parser<unused_type>
+        {
+            typedef unused_type type;
+            static type call(unused_type)
+            {
+                return unused;
+            }
+        };
 
         template <typename Derived>
         struct as_parser<Derived

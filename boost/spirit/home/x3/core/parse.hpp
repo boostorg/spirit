@@ -19,12 +19,13 @@
 namespace boost { namespace spirit { namespace x3
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Parser>
+    template <typename Iterator, typename Parser, typename Attribute>
     inline bool
     parse(
         Iterator& first
       , Iterator last
-      , Parser const& p)
+      , Parser const& p
+      , Attribute& attr)
     {
         // Make sure the iterator is at least a forward_iterator. If you got a
         // compilation error here, then you are using an input_iterator while
@@ -35,17 +36,29 @@ namespace boost { namespace spirit { namespace x3
         // If you get an error no matching function for call to 'as_parser'
         // here, then p is not a parser or there is no suitable conversion
         // from p to a parser.
-        return as_parser(p).parse(first, last, unused, unused);
+        return as_parser(p).parse(first, last, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Parser, typename Skipper>
+    template <typename Iterator, typename Parser>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , Parser const& p)
+    {
+        return parse(first, last, p, unused);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
     inline bool
     phrase_parse(
         Iterator& first
       , Iterator last
       , Parser const& p
-      , Skipper const& s)
+      , Skipper const& s
+      , Attribute& attr)
     {
         // Make sure the iterator is at least a forward_iterator. If you got a
         // compilation error here, then you are using an input_iterator while
@@ -57,7 +70,19 @@ namespace boost { namespace spirit { namespace x3
         // here, for either p or s, then p or s is not a parser or there is
         // no suitable conversion from p to a parser.
         context<skipper_tag, Skipper const> skipper(as_parser(s));
-        return as_parser(p).parse(first, last, skipper, unused);
+        return as_parser(p).parse(first, last, skipper, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s)
+    {
+        return phrase_parse(first, last, p, s, unused);
     }
 }}}
 
