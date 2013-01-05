@@ -13,6 +13,8 @@
 
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
+#include <boost/spirit/home/support/char_encoding/standard.hpp>
+#include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -41,6 +43,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef typename Encoding::char_type char_type;
         typedef Encoding encoding;
+        typedef literal_char<Encoding> literal_char_type;
 
         template <typename Char, typename Context>
         bool test(Char ch_, Context&) const
@@ -49,17 +52,52 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Char>
-        literal_char<Encoding>
+        literal_char_type
         operator()(Char ch) const
         {
-            return literal_char<Encoding>(ch);
+            return literal_char_type(ch);
         }
     };
+
+    namespace standard
+    {
+        typedef any_char<char_encoding::standard> char_type;
+        char_type const char_ = char_type();
+    }
+
+    namespace standard_wide
+    {
+        typedef any_char<char_encoding::standard_wide> char_type;
+        char_type const char_ = char_type();
+    }
 
     namespace ascii
     {
         typedef any_char<char_encoding::ascii> char_type;
         char_type const char_ = char_type();
+    }
+
+    namespace extension
+    {
+        template <>
+        struct as_parser<char>
+        {
+            typedef standard::char_type::literal_char_type type;
+            static type call(char ch)
+            {
+                return type(ch);
+            }
+        };
+
+        template <>
+        struct as_parser<wchar_t>
+        {
+            typedef standard_wide::char_type::literal_char_type type;
+            static type call(wchar_t ch)
+            {
+                return type(ch);
+            }
+        };
     }
 }}}
 

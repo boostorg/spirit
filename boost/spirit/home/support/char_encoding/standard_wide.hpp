@@ -16,15 +16,14 @@
 #include <string>
 
 #include <boost/cstdint.hpp>
-#include <boost/spirit/home/support/assert_msg.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
     template <std::size_t N>
     struct wchar_t_size
     {
-        BOOST_SPIRIT_ASSERT_MSG(N == 1 || N == 2 || N == 4,
-            not_supported_size_of_wchar_t, ());
+        static_assert(N == 1 || N == 2 || N == 4,
+            "not supported size of wchar_t");
     };
 
     template <> struct wchar_t_size<1> { enum { mask = 0xff }; };
@@ -60,13 +59,13 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         ischar(int ch)
         {
-            // we have to watch out for sign extensions (casting is there to 
+            // we have to watch out for sign extensions (casting is there to
             // silence certain compilers complaining about signed/unsigned
             // mismatch)
             return (
-                std::size_t(0) == 
-                    std::size_t(ch & ~traits::wchar_t_size<sizeof(wchar_t)>::mask) || 
-                std::size_t(~0) == 
+                std::size_t(0) ==
+                    std::size_t(ch & ~traits::wchar_t_size<sizeof(wchar_t)>::mask) ||
+                std::size_t(~0) ==
                     std::size_t(ch | traits::wchar_t_size<sizeof(wchar_t)>::mask)
             ) ? true : false;     // any wchar_t, but no other bits set
         }

@@ -25,10 +25,10 @@ main()
     {
         using namespace boost::spirit::x3::ascii;
 
-        //~ BOOST_TEST(test("x", 'x'));
-        //~ BOOST_TEST(test(L"x", L'x'));
-        //~ BOOST_TEST(!test("y", 'x'));
-        //~ BOOST_TEST(!test(L"y", L'x'));
+        BOOST_TEST(test("x", 'x'));
+        BOOST_TEST(test(L"x", L'x'));
+        BOOST_TEST(!test("y", 'x'));
+        BOOST_TEST(!test(L"y", L'x'));
 
         BOOST_TEST(test("x", char_));
         BOOST_TEST(test("x", char_('x')));
@@ -56,8 +56,8 @@ main()
     {
         using namespace boost::spirit::x3::ascii;
 
-        //~ BOOST_TEST(test("   x", 'x', space));
-        //~ BOOST_TEST(test(L"   x", L'x', space));
+        BOOST_TEST(test("   x", 'x', space));
+        BOOST_TEST(test(L"   x", L'x', space));
 
         BOOST_TEST(test("   x", char_, space));
         BOOST_TEST(test("   x", char_('x'), space));

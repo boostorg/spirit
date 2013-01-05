@@ -11,6 +11,9 @@
 #pragma once
 #endif
 
+#include <boost/type_traits/is_base_of.hpp>
+#include <boost/utility/enable_if.hpp>
+
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Subject, typename Action>
@@ -33,6 +36,40 @@ namespace boost { namespace spirit { namespace x3
             return action<Derived, Action>(this->derived(), f);
         }
     };
+
+    namespace extension
+    {
+        template <typename T, typename Enable = void>
+        struct as_parser {};
+
+        template <typename Derived>
+        struct as_parser<Derived
+            , typename enable_if<is_base_of<parser<Derived>, Derived>>::type>
+        {
+            typedef Derived const& type;
+            static type call(Derived const& p)
+            {
+                return p.derived();
+            }
+        };
+
+        template <typename Derived>
+        struct as_parser<parser<Derived>>
+        {
+            typedef Derived const& type;
+            static type call(parser<Derived> const& p)
+            {
+                return p.derived();
+            }
+        };
+    }
+
+    template <typename T>
+    inline typename extension::as_parser<T>::type
+    as_parser(T const& x)
+    {
+        return extension::as_parser<T>::call(x);
+    }
 }}}
 
 #endif

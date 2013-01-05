@@ -19,39 +19,45 @@
 namespace boost { namespace spirit { namespace x3
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename P>
+    template <typename Iterator, typename Parser>
     inline bool
     parse(
         Iterator& first
       , Iterator last
-      , parser<P> const& p)
+      , Parser const& p)
     {
         // Make sure the iterator is at least a forward_iterator. If you got a
         // compilation error here, then you are using an input_iterator while
-        // calling this function, you need to supply at least a
-        // forward_iterator instead.
+        // calling this function. You need to supply at least a forward_iterator
+        // instead.
         BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
 
-        return p.derived().parse(first, last, unused, unused);
+        // If you get an error no matching function for call to 'as_parser'
+        // here, then p is not a parser or there is no suitable conversion
+        // from p to a parser.
+        return as_parser(p).parse(first, last, unused, unused);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename P, typename S>
+    template <typename Iterator, typename Parser, typename Skipper>
     inline bool
     phrase_parse(
         Iterator& first
       , Iterator last
-      , parser<P> const& p
-      , parser<S> const& s)
+      , Parser const& p
+      , Skipper const& s)
     {
         // Make sure the iterator is at least a forward_iterator. If you got a
         // compilation error here, then you are using an input_iterator while
-        // calling this function, you need to supply at least a
-        // forward_iterator instead.
+        // calling this function. You need to supply at least a forward_iterator
+        // instead.
         BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
 
-        context<skipper_tag, S const> skipper(s.derived());
-        return p.derived().parse(first, last, skipper, unused);
+        // If you get an error no matching function for call to 'as_parser'
+        // here, for either p or s, then p or s is not a parser or there is
+        // no suitable conversion from p to a parser.
+        context<skipper_tag, Skipper const> skipper(as_parser(s));
+        return as_parser(p).parse(first, last, skipper, unused);
     }
 }}}
 
