@@ -7,6 +7,8 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/operator/sequence.hpp>
 #include <boost/spirit/home/x3/char.hpp>
+#include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/at.hpp>
 
 #include <string>
 #include <iostream>
@@ -29,11 +31,11 @@ main()
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_2;
 
-    //~ using boost::fusion::vector;
-    //~ using boost::fusion::at_c;
+    using boost::fusion::vector;
+    using boost::fusion::at_c;
 
     using spirit_test::test;
-    //~ using spirit_test::test_attr;
+    using spirit_test::test_attr;
 
     {
         BOOST_TEST((test("aa", char_ >> char_)));
@@ -43,6 +45,14 @@ main()
         BOOST_TEST((!test("xi", char_('x') >> char_('o'))));
         BOOST_TEST((test("xin", char_('x') >> char_('i') >> char_('n'))));
     }
+
+#ifdef BOOST_SPIRIT_COMPILE_ERROR_CHECK
+    {
+        // Compile check only
+        struct x {};
+        char_ >> x(); // should give a reasonable error message
+    }
+#endif
 
     {
         BOOST_TEST((test(" a a", char_ >> char_, space)));
@@ -54,13 +64,25 @@ main()
     {
         BOOST_TEST((test(" Hello, World", lit("Hello") >> ',' >> "World", space)));
     }
+*/
 
     {
         vector<char, char> attr;
-        BOOST_TEST((test_attr("abcdefg", char_ >> char_ >> "cdefg", attr)));
+        BOOST_TEST((test_attr("ab", char_ >> char_, attr)));
         BOOST_TEST((at_c<0>(attr) == 'a'));
         BOOST_TEST((at_c<1>(attr) == 'b'));
     }
+
+    {
+        vector<char, char> attr;
+        BOOST_TEST((test_attr("abx", char_ >> char_ >> 'x', attr)));
+        BOOST_TEST((at_c<0>(attr) == 'a'));
+        BOOST_TEST((at_c<1>(attr) == 'b'));
+    }
+
+/*
+
+
 
     {
         vector<char, char, char> attr;

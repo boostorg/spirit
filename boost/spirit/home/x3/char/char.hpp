@@ -48,6 +48,8 @@ namespace boost { namespace spirit { namespace x3
                 char_encoding::standard, unused_type>
             type;
 
+            typedef type value_type;
+
             static type call(char ch)
             {
                 return type(ch);
@@ -60,6 +62,8 @@ namespace boost { namespace spirit { namespace x3
             typedef literal_char<
                 char_encoding::standard_wide, unused_type>
             type;
+
+            typedef type value_type;
 
             static type call(wchar_t ch)
             {
