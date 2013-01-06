@@ -50,7 +50,7 @@ main()
     {
         // Compile check only
         struct x {};
-        char_ >> x(); // should give a reasonable error message
+        char_ >> x(); // this should give a reasonable error message
     }
 #endif
 
@@ -73,16 +73,15 @@ main()
         BOOST_TEST((at_c<1>(attr) == 'b'));
     }
 
+#ifdef BOOST_SPIRIT_COMPILE_ERROR_CHECK
     {
+        // Compile check only
         vector<char, char> attr;
-        BOOST_TEST((test_attr("abx", char_ >> char_ >> 'x', attr)));
-        BOOST_TEST((at_c<0>(attr) == 'a'));
-        BOOST_TEST((at_c<1>(attr) == 'b'));
+
+        // error: attr does not have enough elements
+        test_attr("abc", char_ >> char_ >> char_, attr);
     }
-
-/*
-
-
+#endif
 
     {
         vector<char, char, char> attr;
@@ -93,7 +92,7 @@ main()
     }
 
     {
-        // unused_type means we don't care about the attribute
+        // 'b' has an unused_type. unused attributes are not part of the sequence
         vector<char, char> attr;
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, attr)));
         BOOST_TEST((at_c<0>(attr) == 'a'));
@@ -101,12 +100,14 @@ main()
     }
 
     {
-        // unused_type means we don't care about the attribute, even at the end
+        // 'b' has an unused_type. unused attributes are not part of the sequence
         vector<char, char> attr;
         BOOST_TEST((test_attr("acb", char_ >> char_ >> 'b', attr)));
         BOOST_TEST((at_c<0>(attr) == 'a'));
         BOOST_TEST((at_c<1>(attr) == 'c'));
     }
+
+/*
 
     {
         // "hello" has an unused_type. unused attributes are not part of the sequence

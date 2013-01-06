@@ -29,18 +29,17 @@ namespace boost { namespace spirit { namespace x3
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
     template <typename Parser>
-    struct num_elements
+    struct sequence_size
     {
         static int const value = Parser::has_attribute;
     };
 
     template <typename L, typename R>
-    struct num_elements<sequence<L, R>>
+    struct sequence_size<sequence<L, R>>
     {
         static int const value =
-            num_elements<L>::value + num_elements<R>::value;
+            sequence_size<L>::value + sequence_size<R>::value;
     };
-
 
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute_unused
@@ -92,8 +91,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename L, typename R, typename Attribute>
     struct partition_attribute
     {
-        static int const l_size = num_elements<L>::value;
-        static int const r_size = num_elements<R>::value;
+        static int const l_size = sequence_size<L>::value;
+        static int const r_size = sequence_size<R>::value;
 
         // If you got an error here, then you are trying to pass
         // a fusion sequence with the wrong number of elements
