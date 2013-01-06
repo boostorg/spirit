@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace qi
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& /*context*/, Skipper const& skipper
-          , Attribute& attr) const
+          , Attribute& attr_) const
         {
             typedef qi::detail::iterator_source<Iterator> source_device;
             typedef boost::iostreams::stream<source_device> instream;
