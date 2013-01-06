@@ -32,6 +32,7 @@ namespace boost { namespace spirit { namespace x3
             "Error Unsupported Radix");
 
         typedef T attribute_type;
+        static bool const has_attribute = true;
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last

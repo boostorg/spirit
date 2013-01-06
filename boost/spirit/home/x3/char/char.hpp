@@ -24,6 +24,9 @@ namespace boost { namespace spirit { namespace x3
         char_type const char_ = char_type();
     }
 
+    using standard::char_type;
+    using standard::char_;
+
     namespace standard_wide
     {
         typedef any_char<char_encoding::standard_wide> char_type;

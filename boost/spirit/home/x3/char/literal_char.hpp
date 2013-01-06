@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/x3/char/char_parser.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -21,6 +22,8 @@ namespace boost { namespace spirit { namespace x3
         typedef typename Encoding::char_type char_type;
         typedef Encoding encoding;
         typedef Attribute attribute_type;
+        static bool const has_attribute =
+            !is_same<unused_type, attribute_type>::value;
 
         template <typename Char>
         literal_char(Char ch)

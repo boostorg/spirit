@@ -14,6 +14,7 @@
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 #include <boost/spirit/home/x3/char/detail/cast_char.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
+#include <boost/spirit/home/support/char_encoding/standard.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -41,6 +42,7 @@ namespace boost { namespace spirit { namespace x3
         typedef Tag tag;
         typedef typename Encoding::char_type char_type;
         typedef char_type attribute_type;
+        static bool const has_attribute = true;
 
 #define BOOST_SPIRIT_CLASSIFY(name)                                             \
         template <typename Char>                                                \
@@ -82,6 +84,15 @@ namespace boost { namespace spirit { namespace x3
         typedef char_class<char_encoding::ascii, space_tag> space_type;
         space_type const space = space_type();
     }
+
+    namespace standard
+    {
+        typedef char_class<char_encoding::standard, space_tag> space_type;
+        space_type const space = space_type();
+    }
+
+    using standard::space_type;
+    using standard::space;
 
 }}}
 

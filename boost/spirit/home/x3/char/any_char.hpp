@@ -21,6 +21,7 @@ namespace boost { namespace spirit { namespace x3
         typedef typename Encoding::char_type char_type;
         typedef Encoding encoding;
         typedef char_type attribute_type;
+        static bool const has_attribute = true;
 
         template <typename Char, typename Context>
         bool test(Char ch_, Context&) const

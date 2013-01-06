@@ -22,6 +22,9 @@ namespace boost { namespace spirit { namespace x3
     struct negated_char_parser :
         char_parser<negated_char_parser<Positive>>
     {
+        typedef typename Positive::attribute_type attribute_type;
+        static bool const has_attribute = Positive::has_attribute;
+
         negated_char_parser(Positive const& positive)
           : positive(positive) {}
 
