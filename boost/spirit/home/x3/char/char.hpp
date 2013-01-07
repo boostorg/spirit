@@ -71,6 +71,18 @@ namespace boost { namespace spirit { namespace x3
             }
         };
     }
+
+    inline literal_char<char_encoding::standard, unused_type>
+    lit(char ch)
+    {
+        return literal_char<char_encoding::standard, unused_type>(ch);
+    }
+
+    inline literal_char<char_encoding::standard_wide, unused_type>
+    lit(wchar_t ch)
+    {
+        return literal_char<char_encoding::standard_wide, unused_type>(ch);
+    }
 }}}
 
 #endif

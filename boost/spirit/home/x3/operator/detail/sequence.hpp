@@ -11,14 +11,26 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/traits/attribute_of.hpp>
+
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/end.hpp>
 #include <boost/fusion/include/advance.hpp>
 #include <boost/fusion/include/empty.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/iterator_range.hpp>
-#include <boost/type_traits/add_reference.hpp>
+#include <boost/fusion/include/as_deque.hpp>
+
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/push_back.hpp>
+#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/joint_view.hpp>
+#include <boost/mpl/copy_if.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
+
+#include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -122,6 +134,71 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 fusion::advance_c<l_size>(fusion::begin(s))
               , fusion::end(s));
         }
+    };
+
+    template <typename L, typename R>
+    struct get_sequence_types
+    {
+        typedef
+            mpl::vector<
+                typename traits::attribute_of<L>::type
+              , typename traits::attribute_of<R>::type
+            >
+        type;
+    };
+
+    template <typename LL, typename LR, typename R>
+    struct get_sequence_types<sequence<LL, LR>, R>
+    {
+        typedef typename
+            mpl::push_front<
+                typename get_sequence_types<LL, LR>::type
+              , typename traits::attribute_of<R>::type
+            >::type
+        type;
+    };
+
+    template <typename L, typename RL, typename RR>
+    struct get_sequence_types<L, sequence<RL, RR>>
+    {
+        typedef typename
+            mpl::push_back<
+                typename get_sequence_types<RL, RR>::type
+              , typename traits::attribute_of<L>::type
+            >::type
+        type;
+    };
+
+    template <typename LL, typename LR, typename RL, typename RR>
+    struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>>
+    {
+        typedef
+            mpl::joint_view<
+                typename get_sequence_types<LL, LR>::type
+              , typename get_sequence_types<RL, RR>::type
+            >
+        type;
+    };
+
+    template <typename L, typename R>
+    struct attribute_of_sequence
+    {
+        // Get all sequence attribute types
+        typedef typename get_sequence_types<L, R>::type all_types;
+
+        // Filter all unused_types
+        typedef typename
+            mpl::copy_if<
+                all_types
+              , mpl::not_<is_same<mpl::_1, unused_type>>
+              , mpl::back_inserter<mpl::vector<>>
+            >::type
+        filtered_types;
+
+        // Build a fusion::deque
+        typedef typename
+            fusion::result_of::as_deque<filtered_types>::type
+        type;
     };
 }}}}
 

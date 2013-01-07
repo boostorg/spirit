@@ -17,11 +17,16 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    using spirit::unused_type;
+    using spirit::unused;
+
     template <typename Subject, typename Action>
     struct action;
 
+    struct parser_base {};
+
     template <typename Derived>
-    struct parser
+    struct parser : parser_base
     {
         typedef Derived derived_type;
 
@@ -56,13 +61,13 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Derived>
         struct as_parser<Derived
-            , typename enable_if<is_base_of<parser<Derived>, Derived>>::type>
+            , typename enable_if<is_base_of<parser_base, Derived>>::type>
         {
             typedef Derived const& type;
             typedef Derived value_type;
             static type call(Derived const& p)
             {
-                return p.derived();
+                return p;
             }
         };
 
@@ -83,6 +88,13 @@ namespace boost { namespace spirit { namespace x3
     as_parser(T const& x)
     {
         return extension::as_parser<T>::call(x);
+    }
+
+    template <typename Derived>
+    inline Derived const&
+    as_parser(parser<Derived> const& p)
+    {
+        return p.derived();
     }
 }}}
 
