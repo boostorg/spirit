@@ -15,9 +15,6 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/support/traits/container_traits.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
-//~ #include <boost/spirit/home/x3/detail/fail_function.hpp>
-//~ #include <boost/spirit/home/x3/detail/pass_container.hpp>
-//~ #include <boost/spirit/home/support/traits/handles_container.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

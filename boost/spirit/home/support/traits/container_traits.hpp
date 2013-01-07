@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2012 Joel de Guzman
+    Copyright (c) 2001-2013 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -22,9 +22,7 @@
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    //  This file contains some container utils for stl containers. The
-    //  utilities provided also accept spirit's unused_type; all no-ops.
-    //  Compiler optimization will easily strip these away.
+    //  This file contains some container utils for stl containers.
     ///////////////////////////////////////////////////////////////////////////
 
     namespace detail
@@ -44,31 +42,17 @@ namespace boost { namespace spirit { namespace traits
             detail::has_reference<T>::value>
     {};
 
-    template <typename T>
-    struct is_container<T&> : is_container<T> {};
-
-    template <typename T, typename Enable = void>
-    struct is_iterator_range : mpl::false_ {};
-
-    template <typename T>
-    struct is_iterator_range<iterator_range<T> > : mpl::true_ {};
-
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
         template <typename T>
-        struct remove_value_const
-        {
-            typedef T type;
-        };
+        struct remove_value_const : mpl::identity<T> {};
 
         template <typename T>
-        struct remove_value_const<T const>
-          : remove_value_const<T>
-        {};
+        struct remove_value_const<T const> : remove_value_const<T> {};
 
         template <typename F, typename S>
-        struct remove_value_const<std::pair<F, S> >
+        struct remove_value_const<std::pair<F, S>>
         {
             typedef typename remove_value_const<F>::type first_type;
             typedef typename remove_value_const<S>::type second_type;
@@ -82,59 +66,28 @@ namespace boost { namespace spirit { namespace traits
       : detail::remove_value_const<typename Container::value_type>
     {};
 
-    template <typename T>
-    struct container_value<T&>
-      : container_value<T>
-    {};
+    template <typename Container>
+    struct container_value<Container const> : container_value<Container> {};
 
     template <>
-    struct container_value<unused_type>
-    {
-        typedef unused_type type;
-    };
-
-    template <>
-    struct container_value<unused_type const>
-    {
-        typedef unused_type type;
-    };
+    struct container_value<unused_type> : mpl::identity<unused_type> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct container_iterator
-    {
-        typedef typename Container::iterator type;
-    };
-
-    template <typename Container>
-    struct container_iterator<Container&>
-      : container_iterator<Container>
-    {};
+        : mpl::identity<typename Container::iterator> {};
 
     template <typename Container>
     struct container_iterator<Container const>
-    {
-        typedef typename Container::const_iterator type;
-    };
-
-    template <typename Iterator>
-    struct container_iterator<iterator_range<Iterator> >
-    {
-        typedef typename range_const_iterator<
-              iterator_range<Iterator> >::type type;
-    };
+         : mpl::identity<typename Container::const_iterator> {};
 
     template <>
     struct container_iterator<unused_type>
-    {
-        typedef unused_type const* type;
-    };
+        : mpl::identity<unused_type const*> {};
 
     template <>
     struct container_iterator<unused_type const>
-    {
-        typedef unused_type const* type;
-    };
+        : mpl::identity<unused_type const*> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename T>
@@ -151,19 +104,19 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Container, typename T>
-    bool push_back(Container& c, T const& val)
+    inline bool push_back(Container& c, T const& val)
     {
         return push_back_container<Container, T>::call(c, val);
     }
 
     template <typename Container>
-    bool push_back(Container&, unused_type)
+    inline bool push_back(Container&, unused_type)
     {
         return true;
     }
 
     template <typename T>
-    bool push_back(unused_type, T const&)
+    inline bool push_back(unused_type, T const&)
     {
         return true;
     }
@@ -184,7 +137,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Container>
-    bool is_empty(Container const& c)
+    inline bool is_empty(Container const& c)
     {
         return is_empty_container<Container>::call(c);
     }
@@ -205,7 +158,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <typename Container>
-    typename container_iterator<Container>::type
+    inline typename container_iterator<Container>::type
     begin(Container& c)
     {
         return begin_container<Container>::call(c);
@@ -238,72 +191,6 @@ namespace boost { namespace spirit { namespace traits
     end(unused_type)
     {
         return &unused;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Enable = void>
-    struct deref_iterator
-    {
-        typedef typename boost::detail::iterator_traits<Iterator>::reference type;
-        static type call(Iterator& it)
-        {
-            return *it;
-        }
-    };
-
-    template <typename Iterator>
-    typename deref_iterator<Iterator>::type
-    deref(Iterator& it)
-    {
-        return deref_iterator<Iterator>::call(it);
-    }
-
-    inline unused_type
-    deref(unused_type const*)
-    {
-        return unused;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Enable = void>
-    struct next_iterator
-    {
-        static void call(Iterator& it)
-        {
-            ++it;
-        }
-    };
-
-    template <typename Iterator>
-    void next(Iterator& it)
-    {
-        next_iterator<Iterator>::call(it);
-    }
-
-    inline void next(unused_type const*)
-    {
-        // do nothing
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Enable = void>
-    struct compare_iterators
-    {
-        static bool call(Iterator const& it1, Iterator const& it2)
-        {
-            return it1 == it2;
-        }
-    };
-
-    template <typename Iterator>
-    bool compare(Iterator& it1, Iterator& it2)
-    {
-        return compare_iterators<Iterator>::call(it1, it2);
-    }
-
-    inline bool compare(unused_type const*, unused_type const*)
-    {
-        return false;
     }
 
     ///////////////////////////////////////////////////////////////////////////
