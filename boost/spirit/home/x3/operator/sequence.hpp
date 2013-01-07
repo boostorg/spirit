@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_SEQUENCE_JAN_06_2012_1015AM)
-#define SPIRIT_SEQUENCE_JAN_06_2012_1015AM
+#if !defined(SPIRIT_SEQUENCE_JAN_06_2013_1015AM)
+#define SPIRIT_SEQUENCE_JAN_06_2013_1015AM
 
 #if defined(_MSC_VER)
 #pragma once

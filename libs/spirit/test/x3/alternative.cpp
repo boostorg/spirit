@@ -9,9 +9,10 @@
 //~ #include <boost/mpl/print.hpp>
 #include <boost/spirit/home/x3/operator/alternative.hpp>
 #include <boost/spirit/home/x3/char.hpp>
+#include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/numeric.hpp>
 //~ #include <boost/fusion/include/adapt_struct.hpp>
-//~ #include <boost/variant.hpp>
+#include <boost/variant.hpp>
 //~ #include <boost/assert.hpp>
 
 #include <string>
@@ -68,11 +69,13 @@
     //~ (std::string, FileName)
 //~ )
 
+struct undefined {};
+
 int
 main()
 {
     using spirit_test::test;
-    //~ using spirit_test::test_attr;
+    using spirit_test::test_attr;
 
     using boost::spirit::x3::char_;
     using boost::spirit::x3::int_;
@@ -81,18 +84,9 @@ main()
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::omit;
 
-    //~ using boost::spirit::x3::literal_char;
-    //~ using boost::spirit::char_encoding::standard;
-    //~ using boost::spirit::x3::as_parser;
-
 
     {
         BOOST_TEST((test("a", char_ | char_)));
-
-        //~ auto l = as_parser(lit('x'));
-
-        //~ l | char_;
-
         BOOST_TEST((test("x", lit('x') | lit('i'))));
         BOOST_TEST((test("i", lit('x') | lit('i'))));
         BOOST_TEST((!test("z", lit('x') | lit('o'))));
@@ -102,18 +96,23 @@ main()
         //~ BOOST_TEST((test("12345", lit("rock") | int_)));
     }
 
-    //~ {
-        //~ boost::variant<unused_type, int, char> v;
+    {
+        typedef boost::variant<undefined, int, char> attr_type;
+        attr_type v;
 
-        //~ BOOST_TEST((test_attr("12345", lit("rock") | int_ | char_, v)));
-        //~ BOOST_TEST(boost::get<int>(v) == 12345);
+        BOOST_TEST((test_attr("12345", int_ | char_, v)));
+        BOOST_TEST(boost::get<int>(v) == 12345);
 
-        //~ BOOST_TEST((test_attr("rock", lit("rock") | int_ | char_, v)));
-        //~ BOOST_TEST(v.which() == 1);
+        BOOST_TEST((test_attr("12345", lit("rock") | int_ | char_, v)));
+        BOOST_TEST(boost::get<int>(v) == 12345);
 
-        //~ BOOST_TEST((test_attr("x", lit("rock") | int_ | char_, v)));
-        //~ BOOST_TEST(boost::get<char>(v) == 'x');
-    //~ }
+        v = attr_type();
+        BOOST_TEST((test_attr("rock", lit("rock") | int_ | char_, v)));
+        BOOST_TEST(v.which() == 0);
+
+        BOOST_TEST((test_attr("x", lit("rock") | int_ | char_, v)));
+        BOOST_TEST(boost::get<char>(v) == 'x');
+    }
 
     //~ {   // Make sure that we are using the actual supplied attribute types
         //~ // from the variant and not the expected type.
@@ -140,10 +139,10 @@ main()
         //~ BOOST_TEST(!v);
     //~ }
 
-    //~ {
-        //~ unused_type x;
-        //~ BOOST_TEST((test_attr("rock", lit("rock") | lit('x'), x)));
-    //~ }
+    {
+        unused_type x;
+        BOOST_TEST((test_attr("rock", lit("rock") | lit('x'), x)));
+    }
 
     //~ {
         //~ // test if alternatives with all components having unused

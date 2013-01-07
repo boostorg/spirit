@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_SEQUENCE_DETAIL_JAN_06_2012_1015AM)
-#define SPIRIT_SEQUENCE_DETAIL_JAN_06_2012_1015AM
+#if !defined(SPIRIT_SEQUENCE_DETAIL_JAN_06_2013_1015AM)
+#define SPIRIT_SEQUENCE_DETAIL_JAN_06_2013_1015AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -53,27 +53,25 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             sequence_size<L>::value + sequence_size<R>::value;
     };
 
-    template <typename Parser, typename Attribute>
     struct pass_sequence_attribute_unused
     {
         typedef unused_type type;
 
-        template <typename Attribute_>
+        template <typename T>
         static unused_type
-        call(Attribute_& attr)
+        call(T&)
         {
             return unused_type();
         }
     };
 
-    template <typename Parser, typename Attribute>
+    template <typename Attribute>
     struct pass_sequence_attribute_used
     {
         typedef typename fusion::result_of::front<Attribute>::type type;
 
-        template <typename Attribute_>
         static typename add_reference<type>::type
-        call(Attribute_& attr)
+        call(Attribute& attr)
         {
             return fusion::front(attr);
         }
@@ -82,8 +80,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute :
         mpl::if_<fusion::result_of::empty<Attribute>
-          , pass_sequence_attribute_unused<Parser, Attribute>
-          , pass_sequence_attribute_used<Parser, Attribute>>::type
+          , pass_sequence_attribute_unused
+          , pass_sequence_attribute_used<Attribute>>::type
     {
     };
 

@@ -4,15 +4,16 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_ALTERNATIVE_JAN_07_2012_1131AM)
-#define SPIRIT_ALTERNATIVE_JAN_07_2012_1131AM
+#if !defined(SPIRIT_ALTERNATIVE_JAN_07_2013_1131AM)
+#define SPIRIT_ALTERNATIVE_JAN_07_2013_1131AM
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
 #include <boost/spirit/home/x3/core/parser.hpp>
-//~ #include <boost/spirit/home/x3/operator/detail/sequence.hpp>
+#include <boost/spirit/home/x3/operator/detail/alternative.hpp>
+#include <boost/spirit/home/support/traits/assign_to.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -41,6 +42,22 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
+            typedef detail::pass_variant_attribute<Left, Attribute> l_pass;
+            typedef detail::pass_variant_attribute<Right, Attribute> r_pass;
+
+            typename l_pass::type l_attr = l_pass::call(attr);
+            if (left.parse(first, last, context, l_attr))
+            {
+                traits::assign_to(l_attr, attr);
+                return true;
+            }
+
+            typename r_pass::type r_attr = r_pass::call(attr);
+            if (right.parse(first, last, context, r_attr))
+            {
+                traits::assign_to(r_attr, attr);
+                return true;
+            }
             return false;
         }
 

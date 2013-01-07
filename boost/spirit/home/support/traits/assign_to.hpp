@@ -30,13 +30,68 @@ namespace boost { namespace spirit { namespace traits
         {
             attr = val;
         }
+
+        template <typename T>
+        inline void
+        assign_to(T const& val, T& attr, plain_attribute)
+        {
+            if (&val != &attr)
+                attr = val;
+        }
+
+        template <typename Iterator>
+        inline void
+        assign_to(Iterator const&, Iterator const&, unused_type, unused_attribute)
+        {
+        }
+
+        template <typename Iterator, typename Attribute>
+        inline void
+        assign_to(Iterator const& first, Iterator const& last, Attribute& attr, plain_attribute)
+        {
+            if (attr.empty())
+            {
+                attr = Attribute(first, last);
+            }
+            else
+            {
+                attr.reserve(attr.size() + std::distance(first, last));
+                for (Iterator i = first; i != last; ++i)
+                    attr.push_back(*i);
+            }
+        }
     }
 
     template <typename T, typename Attribute>
     inline void
     assign_to(T const& val, Attribute& attr)
     {
-        detail::assign_to(val, attr, typename attribute_category<T>::type());
+        detail::assign_to(val, attr, typename attribute_category<Attribute>::type());
+    }
+
+    template <typename Attribute>
+    inline void
+    assign_to(unused_type, Attribute& attr)
+    {
+    }
+
+    template <typename T>
+    inline void
+    assign_to(T const& val, unused_type)
+    {
+    }
+
+    template <typename Iterator, typename Attribute>
+    inline void
+    assign_to(Iterator const& first, Iterator const& last, Attribute& attr)
+    {
+        detail::assign_to(first, last, attr, typename attribute_category<Attribute>::type());
+    }
+
+    template <typename Iterator>
+    inline void
+    assign_to(Iterator const& first, Iterator const& last, unused_type)
+    {
     }
 }}}
 
