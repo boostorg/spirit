@@ -90,10 +90,10 @@ main()
         BOOST_TEST((test("x", lit('x') | lit('i'))));
         BOOST_TEST((test("i", lit('x') | lit('i'))));
         BOOST_TEST((!test("z", lit('x') | lit('o'))));
-        //~ BOOST_TEST((test("rock", lit("rock") | lit("roll"))));
-        //~ BOOST_TEST((test("roll", lit("rock") | lit("roll"))));
-        //~ BOOST_TEST((test("rock", lit("rock") | int_)));
-        //~ BOOST_TEST((test("12345", lit("rock") | int_)));
+        BOOST_TEST((test("rock", lit("rock") | lit("roll"))));
+        BOOST_TEST((test("roll", lit("rock") | lit("roll"))));
+        BOOST_TEST((test("rock", lit("rock") | int_)));
+        BOOST_TEST((test("12345", lit("rock") | int_)));
     }
 
     {

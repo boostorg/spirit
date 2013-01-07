@@ -31,14 +31,6 @@ namespace boost { namespace spirit { namespace traits
             attr = val;
         }
 
-        template <typename T>
-        inline void
-        assign_to(T const& val, T& attr, plain_attribute)
-        {
-            if (&val != &attr)
-                attr = val;
-        }
-
         template <typename Iterator>
         inline void
         assign_to(Iterator const&, Iterator const&, unused_type, unused_attribute)

@@ -88,6 +88,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_parser_attribute<Parser, Attribute>
           , pass_variant_unused>::type
     {
+        static bool const is_alternative = false;
     };
 
     template <typename L, typename R, typename Attribute>
@@ -96,6 +97,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_variant_used<Attribute>
           , pass_variant_unused>::type
     {
+        static bool const is_alternative = true;
     };
 
 }}}}

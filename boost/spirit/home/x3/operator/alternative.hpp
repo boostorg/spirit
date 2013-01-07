@@ -48,14 +48,16 @@ namespace boost { namespace spirit { namespace x3
             typename l_pass::type l_attr = l_pass::call(attr);
             if (left.parse(first, last, context, l_attr))
             {
-                traits::assign_to(l_attr, attr);
+                if (!l_pass::is_alternative)
+                    traits::assign_to(l_attr, attr);
                 return true;
             }
 
             typename r_pass::type r_attr = r_pass::call(attr);
             if (right.parse(first, last, context, r_attr))
             {
-                traits::assign_to(r_attr, attr);
+                if (!r_pass::is_alternative)
+                    traits::assign_to(r_attr, attr);
                 return true;
             }
             return false;
