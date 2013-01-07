@@ -17,15 +17,12 @@
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Left, typename Right>
-    struct sequence : parser<sequence<Left, Right>>
+    struct sequence : binary_parser<Left, Right, sequence<Left, Right>>
     {
-        typedef Left left_type;
-        typedef Right right_type;
-        static bool const has_attribute =
-            left_type::has_attribute || right_type::has_attribute;
+        typedef binary_parser<Left, Right, sequence<Left, Right>> base_type;
 
         sequence(Left left, Right right)
-            : left(left), right(right) {}
+            : base_type(left, right) {}
 
         template <typename Iterator, typename Context>
         bool parse(
@@ -33,8 +30,8 @@ namespace boost { namespace spirit { namespace x3
           , Context& context, unused_type) const
         {
             Iterator save = first;
-            if (left.parse(first, last, context, unused)
-                && right.parse(first, last, context, unused))
+            if (this->left.parse(first, last, context, unused)
+                && this->right.parse(first, last, context, unused))
                 return true;
             first = save;
             return false;
@@ -55,15 +52,12 @@ namespace boost { namespace spirit { namespace x3
             typename r_pass::type r_attr = r_pass::call(right_seq);
 
             Iterator save = first;
-            if (left.parse(first, last, context, l_attr)
-                && right.parse(first, last, context, r_attr))
+            if (this->left.parse(first, last, context, l_attr)
+                && this->right.parse(first, last, context, r_attr))
                 return true;
             first = save;
             return false;
         }
-
-        left_type left;
-        right_type right;
     };
 
     template <typename Left, typename Right>

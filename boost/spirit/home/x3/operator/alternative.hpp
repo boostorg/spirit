@@ -18,23 +18,20 @@
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Left, typename Right>
-    struct alternative : parser<alternative<Left, Right>>
+    struct alternative : binary_parser<Left, Right, alternative<Left, Right>>
     {
-        typedef Left left_type;
-        typedef Right right_type;
-        static bool const has_attribute =
-            left_type::has_attribute || right_type::has_attribute;
+        typedef binary_parser<Left, Right, alternative<Left, Right>> base_type;
 
         alternative(Left left, Right right)
-            : left(left), right(right) {}
+            : base_type(left, right) {}
 
         template <typename Iterator, typename Context>
         bool parse(
             Iterator& first, Iterator const& last
           , Context& context, unused_type) const
         {
-            return left.parse(first, last, context, unused)
-               || right.parse(first, last, context, unused);
+            return this->left.parse(first, last, context, unused)
+               || this->right.parse(first, last, context, unused);
         }
 
         template <typename Iterator, typename Context, typename Attribute>
@@ -46,7 +43,7 @@ namespace boost { namespace spirit { namespace x3
             typedef detail::pass_variant_attribute<Right, Attribute> r_pass;
 
             typename l_pass::type l_attr = l_pass::call(attr);
-            if (left.parse(first, last, context, l_attr))
+            if (this->left.parse(first, last, context, l_attr))
             {
                 if (!l_pass::is_alternative)
                     traits::assign_to(l_attr, attr);
@@ -54,7 +51,7 @@ namespace boost { namespace spirit { namespace x3
             }
 
             typename r_pass::type r_attr = r_pass::call(attr);
-            if (right.parse(first, last, context, r_attr))
+            if (this->right.parse(first, last, context, r_attr))
             {
                 if (!r_pass::is_alternative)
                     traits::assign_to(r_attr, attr);
@@ -62,9 +59,6 @@ namespace boost { namespace spirit { namespace x3
             }
             return false;
         }
-
-        left_type left;
-        right_type right;
     };
 
     template <typename Left, typename Right>
@@ -82,11 +76,11 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-//~ namespace boost { namespace spirit { namespace traits
-//~ {
-    //~ template <typename Left, typename Right>
-    //~ struct attribute_of<x3::sequence<Left, Right>>
-        //~ : x3::detail::attribute_of_sequence<Left, Right> {};
-//~ }}}
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Left, typename Right>
+    struct attribute_of<x3::alternative<Left, Right>>
+        : x3::detail::attribute_of_alternative<Left, Right> {};
+}}}
 
 #endif

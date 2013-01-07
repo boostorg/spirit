@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/core/detail/get_types.hpp>
 
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/end.hpp>
@@ -134,48 +135,24 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
+    template <typename T>
+    struct get_sequence_base
+    {
+        typedef T type;
+    };
+
     template <typename L, typename R>
-    struct get_sequence_types
+    struct get_sequence_base<sequence<L, R>>
     {
-        typedef
-            mpl::vector<
-                typename traits::attribute_of<L>::type
-              , typename traits::attribute_of<R>::type
-            >
-        type;
+        typedef binary_parser<L, R, sequence<L, R>> type;
     };
 
-    template <typename LL, typename LR, typename R>
-    struct get_sequence_types<sequence<LL, LR>, R>
+    template <typename L, typename R>
+    struct get_sequence_types :
+        get_types<
+            typename get_sequence_base<L>::type
+          , typename get_sequence_base<R>::type>
     {
-        typedef typename
-            mpl::push_front<
-                typename get_sequence_types<LL, LR>::type
-              , typename traits::attribute_of<R>::type
-            >::type
-        type;
-    };
-
-    template <typename L, typename RL, typename RR>
-    struct get_sequence_types<L, sequence<RL, RR>>
-    {
-        typedef typename
-            mpl::push_back<
-                typename get_sequence_types<RL, RR>::type
-              , typename traits::attribute_of<L>::type
-            >::type
-        type;
-    };
-
-    template <typename LL, typename LR, typename RL, typename RR>
-    struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>>
-    {
-        typedef
-            mpl::joint_view<
-                typename get_sequence_types<LL, LR>::type
-              , typename get_sequence_types<RL, RR>::type
-            >
-        type;
     };
 
     template <typename L, typename R>

@@ -28,6 +28,7 @@ namespace boost { namespace spirit { namespace x3
     template <typename Derived>
     struct parser : parser_base
     {
+        struct parser_id;
         typedef Derived derived_type;
 
         Derived const& derived() const
@@ -41,6 +42,44 @@ namespace boost { namespace spirit { namespace x3
         {
             return action<Derived, Action>(this->derived(), f);
         }
+    };
+
+    struct unary_category;
+    struct binary_category;
+
+    template <typename Subject, typename Derived>
+    struct unary_parser : parser<Derived>
+    {
+        struct unary_parser_id;
+        typedef unary_category category;
+        typedef Subject subject_type;
+        static bool const has_attribute = Subject::has_attribute;
+
+        unary_parser(Subject subject)
+            : subject(subject) {}
+
+        unary_parser const& get_unary() const { return *this; }
+
+        Subject subject;
+    };
+
+    template <typename Left, typename Right, typename Derived>
+    struct binary_parser : parser<Derived>
+    {
+        struct binary_parser_id;
+        typedef binary_category category;
+        typedef Left left_type;
+        typedef Right right_type;
+        static bool const has_attribute =
+            left_type::has_attribute || right_type::has_attribute;
+
+        binary_parser(Left left, Right right)
+            : left(left), right(right) {}
+
+        binary_parser const& get_binary() const { return *this; }
+
+        Left left;
+        Right right;
     };
 
     namespace extension
