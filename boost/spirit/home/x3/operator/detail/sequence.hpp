@@ -22,10 +22,6 @@
 #include <boost/fusion/include/iterator_range.hpp>
 #include <boost/fusion/include/as_deque.hpp>
 
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/push_back.hpp>
-#include <boost/mpl/push_front.hpp>
-#include <boost/mpl/joint_view.hpp>
 #include <boost/mpl/copy_if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
@@ -170,10 +166,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             >::type
         filtered_types;
 
-        // Build a fusion::deque
+        // Build a fusion::deque if filtered_types is not empty,
+        // else just return unused_type
         typedef typename
-            fusion::result_of::as_deque<filtered_types>::type
+            mpl::eval_if<
+                mpl::empty<filtered_types>
+              , unused_type
+              , fusion::result_of::as_deque<filtered_types>
+            >::type
         type;
+
     };
 }}}}
 

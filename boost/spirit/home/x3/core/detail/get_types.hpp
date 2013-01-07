@@ -17,9 +17,6 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/joint_view.hpp>
-#include <boost/mpl/copy_if.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/if.hpp>
 
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
