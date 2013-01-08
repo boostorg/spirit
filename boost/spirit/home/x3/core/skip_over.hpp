@@ -19,9 +19,17 @@ namespace boost { namespace spirit { namespace x3
 {
     ///////////////////////////////////////////////////////////////////////////
     // Move the /first/ iterator to the first non-matching position
-    // given a skip-parser. The function is a no-op if unused_type is
-    // passed as the skip-parser.
+    // given a skip-parser. The function is a no-op if unused_type or
+    // unused_skipper is passed as the skip-parser.
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Skipper>
+    struct unused_skipper : unused_type
+    {
+        unused_skipper(Skipper const& skipper)
+          : skipper(skipper) {}
+        Skipper const& skipper;
+    };
+
     namespace detail
     {
         template <typename Iterator, typename Skipper>
@@ -36,6 +44,12 @@ namespace boost { namespace spirit { namespace x3
         inline void skip_over(Iterator&, Iterator const&, unused_type)
         {
         }
+
+        template <typename Iterator, typename Skipper>
+        inline void skip_over(
+            Iterator&, Iterator const&, unused_skipper<Skipper> const&)
+        {
+        }
     }
 
     // this tag is used to find the skipper from the context
@@ -43,9 +57,9 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Iterator, typename Context>
     inline void skip_over(
-        Iterator& first, Iterator const& last, Context const& ctx)
+        Iterator& first, Iterator const& last, Context const& context)
     {
-        detail::skip_over(first, last, get<skipper_tag>(ctx));
+        detail::skip_over(first, last, get<skipper_tag>(context));
     }
 }}}
 

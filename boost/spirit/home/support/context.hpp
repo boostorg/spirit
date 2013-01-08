@@ -29,7 +29,7 @@ namespace boost { namespace spirit
         }
 
         template <typename Identity>
-        decltype(std::declval<Next>().find(Identity()))
+        decltype(std::declval<Next>().get(Identity()))
         get(Identity id) const
         {
             return next.get(id);
