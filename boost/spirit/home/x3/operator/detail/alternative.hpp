@@ -128,7 +128,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef typename
             mpl::eval_if<
                 mpl::empty<filtered_types>
-              , unused_type
+              , mpl::identity<unused_type>
               , make_variant_over<filtered_types>
             >::type
         type;

@@ -23,14 +23,26 @@ namespace boost { namespace spirit
         context(T& val, Next const& next)
             : val(val), next(next) {}
 
+        template <typename ID_, typename Unused = void>
+        struct get_result
+        {
+            typedef typename Next::template get_result<ID_>::type type;
+        };
+
+        template <typename Unused>
+        struct get_result<mpl::identity<ID>, Unused>
+        {
+            typedef T& type;
+        };
+
         T& get(mpl::identity<ID>) const
         {
             return val;
         }
 
-        template <typename Identity>
-        decltype(std::declval<Next>().get(Identity()))
-        get(Identity id) const
+        template <typename ID_>
+        typename Next::template get_result<ID_>::type
+        get(ID_ id) const
         {
             return next.get(id);
         }
@@ -45,9 +57,28 @@ namespace boost { namespace spirit
         context(T& val)
             : val(val) {}
 
+        template <typename ID_, typename Unused = void>
+        struct get_result
+        {
+            typedef unused_type type;
+        };
+
+        template <typename Unused>
+        struct get_result<mpl::identity<ID>, Unused>
+        {
+            typedef T& type;
+        };
+
         T& get(mpl::identity<ID>) const
         {
             return val;
+        }
+
+        template <typename ID_>
+        unused_type
+        get(ID_ id) const
+        {
+            return unused;
         }
 
         T& val;
