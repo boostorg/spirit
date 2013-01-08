@@ -14,6 +14,7 @@
 
 #include <ostream>
 #include <istream>
+#include <boost/mpl/identity.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -61,6 +62,10 @@ namespace boost { namespace spirit
         }
 
         // unused_type can also masquerade as an empty context (see context.hpp)
+
+        template <typename ID>
+        struct get_result : mpl::identity<unused_type> {};
+
         template <typename ID>
         unused_type get(ID) const
         {
