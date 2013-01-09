@@ -66,45 +66,44 @@ main()
             BOOST_TEST(test("aaaabababaaabba", start, space, false));
         }
     }
-/*
-    { // basic tests with direct initialization
+    //~ { // basic tests with direct initialization
 
-        rule<char const*> a ('a');
-        rule<char const*> b ('b');
-        rule<char const*> c ('c');
-        rule<char const*> start = (a | b) >> (start | b);
+        //~ rule<char const*> a ('a');
+        //~ rule<char const*> b ('b');
+        //~ rule<char const*> c ('c');
+        //~ rule<char const*> start = (a | b) >> (start | b);
 
-        BOOST_TEST(test("aaaabababaaabbb", start));
-        BOOST_TEST(test("aaaabababaaabba", start, false));
+        //~ BOOST_TEST(test("aaaabababaaabbb", start));
+        //~ BOOST_TEST(test("aaaabababaaabba", start, false));
 
-        // ignore the skipper!
-        BOOST_TEST(test("aaaabababaaabba", start, space, false));
-    }
+        //~ // ignore the skipper!
+        //~ BOOST_TEST(test("aaaabababaaabba", start, space, false));
+    //~ }
 
     { // basic tests w/ skipper
-        rule<char const*, space_type> a, b, c, start;
 
-        a = 'a';
-        b = 'b';
-        c = 'c';
+        auto a = lit('a');
+        auto b = lit('b');
+        auto c = lit('c');
+        rule<class r> r;
 
-        a.name("a");
-        b.name("b");
-        c.name("c");
-        start.name("start");
+        {
+            auto start =
+                r = *(a | b | c);
 
-        debug(a);
-        debug(b);
-        debug(c);
-        debug(start);
+            BOOST_TEST(test(" a b c a b c a c b ", start, space));
+        }
 
-        start = *(a | b | c);
-        BOOST_TEST(test(" a b c a b c a c b ", start, space));
+        {
+            auto start =
+                r = (a | b) >> (r | b);
 
-        start = (a | b) >> (start | b);
-        BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start, space));
-        BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
+            BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start, space));
+            BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
+        }
     }
+
+/*
 
     { // basic tests w/ skipper but no final post-skip
 

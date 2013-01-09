@@ -24,11 +24,11 @@ namespace boost { namespace spirit { namespace x3
     struct action;
 
     struct parser_base {};
+    struct parser_id;
 
     template <typename Derived>
     struct parser : parser_base
     {
-        struct parser_id;
         typedef Derived derived_type;
 
         Derived const& derived() const
@@ -50,7 +50,6 @@ namespace boost { namespace spirit { namespace x3
     template <typename Subject, typename Derived>
     struct unary_parser : parser<Derived>
     {
-        struct unary_parser_id;
         typedef unary_category category;
         typedef Subject subject_type;
         static bool const has_attribute = Subject::has_attribute;
@@ -66,7 +65,6 @@ namespace boost { namespace spirit { namespace x3
     template <typename Left, typename Right, typename Derived>
     struct binary_parser : parser<Derived>
     {
-        struct binary_parser_id;
         typedef binary_category category;
         typedef Left left_type;
         typedef Right right_type;

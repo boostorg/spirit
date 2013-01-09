@@ -70,7 +70,9 @@ namespace boost { namespace spirit { namespace x3
         // here, for either p or s, then p or s is not a parser or there is
         // no suitable conversion from p to a parser.
         context<skipper_tag, Skipper const> skipper(as_parser(s));
-        return as_parser(p).parse(first, last, skipper, attr);
+        bool r = as_parser(p).parse(first, last, skipper, attr);
+        x3::skip_over(first, last, skipper);
+        return r;
     }
 
     ///////////////////////////////////////////////////////////////////////////

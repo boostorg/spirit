@@ -21,6 +21,7 @@
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/iterator_range.hpp>
 #include <boost/fusion/include/as_deque.hpp>
+#include <boost/fusion/include/mpl.hpp>
 
 #include <boost/mpl/copy_if.hpp>
 #include <boost/mpl/not.hpp>
