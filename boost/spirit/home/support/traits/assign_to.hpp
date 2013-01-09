@@ -31,6 +31,24 @@ namespace boost { namespace spirit { namespace traits
             attr = val;
         }
 
+        namespace detail
+        {
+            template <typename A, typename B>
+            struct is_same_size_sequence
+              : mpl::bool_<fusion::result_of::size<A>::value
+                    == fusion::result_of::size<B>::value>
+            {};
+        }
+
+        template <typename T, typename Attribute>
+        inline typename enable_if<
+            detail::is_same_size_sequence<Attribute, T>
+        >::type
+        assign_to(T const& val, Attribute& attr, tuple_attribute)
+        {
+            fusion::copy(val, attr);
+        }
+
         template <typename Iterator>
         inline void
         assign_to(Iterator const&, Iterator const&, unused_type, unused_attribute)

@@ -13,6 +13,8 @@
 #endif
 
 #include <boost/mpl/identity.hpp>
+#include <boost/fusion/include/copy.hpp>
+#include <boost/fusion/include/is_sequence.hpp>
 
 namespace boost { namespace spirit
 {
@@ -28,13 +30,18 @@ namespace boost { namespace spirit { namespace traits
     struct variant_attribute {};
     struct optional_attribute {};
 
-    template <typename T>
+    template <typename T, typename Enable = void>
     struct attribute_category
         : mpl::identity<plain_attribute> {};
 
     template <>
     struct attribute_category<unused_type>
         : mpl::identity<unused_attribute> {};
+
+    template <typename T>
+    struct attribute_category<T,
+        typename enable_if<fusion::traits::is_sequence<T>>::type>
+        : mpl::identity<tuple_attribute> {};
 
 }}}
 

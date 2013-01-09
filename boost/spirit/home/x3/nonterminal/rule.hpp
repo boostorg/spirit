@@ -19,16 +19,42 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename RHS, typename Attribute>
-    struct rule_context
+    namespace detail
     {
-        Attribute val;
-        RHS const& rhs;
-    };
+        template <typename Attribute>
+        struct parse_rule
+        {
+            template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+            static bool call(RHS const& rhs, Iterator& first, Iterator const& last
+              , Context& context, ActualAttribute& attr)
+            {
+                typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
+
+                // do down-stream transformation, provides attribute for
+                // rhs parser
+                typedef traits::transform_attribute<
+                    typename make_attribute::type, Attribute, parser_id>
+                transform;
+
+                typename make_attribute::type made_attr = make_attribute::call(attr);
+                typename transform::type attr_ = transform::pre(made_attr);
+
+                if (rhs.parse(first, last, context, attr_))
+                {
+                    // do up-stream transformation, this integrates the results
+                    // back into the original attribute value, if appropriate
+                    traits::post_transform(attr, attr_);
+                    return true;
+                }
+                return false;
+            }
+        };
+    }
 
     template <typename ID, typename RHS, typename Attribute>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute>>
     {
+        typedef rule_definition<ID, RHS, Attribute> this_type;
         typedef ID id;
         typedef RHS rhs_type;
         typedef Attribute attribute_type;
@@ -42,28 +68,9 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute_& attr) const
         {
-            typedef traits::make_attribute<attribute_type, Attribute_> make_attribute;
-
-            // do down-stream transformation, provides attribute for
-            // rhs parser
-            typedef traits::transform_attribute<
-                typename make_attribute::type, attribute_type, parser_id>
-            transform;
-
-            typename make_attribute::type made_attr = make_attribute::call(attr);
-            typedef rule_context<RHS, typename transform::type> rule_context_type;
-            typedef spirit::context<ID, rule_context_type, Context> our_context_type;
-
-            rule_context_type context_info = { transform::pre(made_attr), rhs };
-            our_context_type our_context(context_info,  context);
-            if (rhs.parse(first, last, our_context, context_info.val))
-            {
-                // do up-stream transformation, this integrates the results
-                // back into the original attribute value, if appropriate
-                traits::post_transform(attr, context_info.val);
-                return true;
-            }
-            return false;
+            typedef spirit::context<ID, this_type const, Context> our_context_type;
+            our_context_type our_context(*this,  context);
+            return detail::parse_rule<attribute_type>::call(rhs, first, last, our_context, attr);
         }
 
         RHS rhs;
@@ -93,7 +100,8 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute_& attr) const
         {
-            return get<ID>(context).rhs.parse(first, last, context, attr);
+            return detail::parse_rule<attribute_type>::call(
+                get<ID>(context).rhs, first, last, context, attr);
         }
     };
 }}}
