@@ -45,15 +45,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser>
     struct sequence_size
     {
-        typedef typename traits::attribute_of<Parser>::type attr_type;
-        typedef typename
-            mpl::eval_if<
-                fusion::traits::is_sequence<attr_type>
-              , fusion::result_of::size<attr_type>
-              , mpl::not_<is_same<attr_type, unused_type>>
-            >::type
-        size_type;
-        static int const value = size_type::value;
+        //~ typedef typename traits::attribute_of<Parser>::type attr_type;
+        //~ typedef typename
+            //~ mpl::eval_if<
+                //~ fusion::traits::is_sequence<attr_type>
+              //~ , fusion::result_of::size<attr_type>
+              //~ , mpl::not_<is_same<attr_type, unused_type>>
+            //~ >::type
+        //~ size_type;
+        //~ static int const value = size_type::value;
+
+        static int const value = Parser::has_attribute;
     };
 
     template <typename L, typename R>
@@ -102,10 +104,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute_used :
-        mpl::if_<
-            traits::is_substitute<Attribute, typename traits::attribute_of<Parser>::type>
-          , pass_through_sequence_attribute<Attribute>
-          , pass_sequence_attribute_front<Attribute>>::type {};
+        pass_sequence_attribute_front<Attribute> {};
+
+
+    //~ template <typename Parser, typename Attribute>
+    //~ struct pass_sequence_attribute_used :
+        //~ mpl::if_<
+            //~ traits::is_substitute<Attribute, typename traits::attribute_of<Parser>::type>
+          //~ , pass_through_sequence_attribute<Attribute>
+          //~ , pass_sequence_attribute_front<Attribute>>::type {};
 
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute :

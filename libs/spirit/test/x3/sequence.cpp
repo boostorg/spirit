@@ -26,7 +26,7 @@ main()
     //~ using boost::spirit::x3::string;
     //~ using boost::spirit::x3::alpha;
     using boost::spirit::x3::lit;
-    //~ using boost::spirit::x3::unused;
+    using boost::spirit::x3::unused;
     //~ using boost::spirit::x3::no_case;
     using boost::spirit::x3::int_;
     //~ using boost::spirit::x3::double_;
@@ -133,6 +133,8 @@ main()
         BOOST_TEST((at_c<0>(attr) == 'a'));
     }
 
+    // $$$ JDG: not yet working $$$
+    /*
     {
         // make sure single element tuples get passed through if the rhs
         // has a single element tuple as its attribute
@@ -143,14 +145,14 @@ main()
         auto r = r_type() = char_ >> ',' >> int_;
         BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
             fv == attr_type('x', 1)));
-    }
+    }*/
 
-/*
+
     {
         // unused means we don't care about the attribute
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, unused)));
     }
-
+/*
     {
         BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
         BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));

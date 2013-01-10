@@ -77,6 +77,9 @@ namespace boost { namespace spirit { namespace x3
         };
 
         template <int N>
+        struct as_parser<char const[N]> : as_parser<char[N]> {};
+
+        template <int N>
         struct as_parser<wchar_t[N]>
         {
             typedef
@@ -91,6 +94,9 @@ namespace boost { namespace spirit { namespace x3
                 return type(s);
             }
         };
+
+        template <int N>
+        struct as_parser<wchar_t const[N]> : as_parser<wchar_t[N]> {};
     }
 
     using standard::string;

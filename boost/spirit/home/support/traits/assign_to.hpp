@@ -14,6 +14,8 @@
 
 #include <boost/spirit/home/support/traits/attribute_category.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
+#include <boost/fusion/include/deque.hpp>
+#include <boost/fusion/include/front.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -59,6 +61,14 @@ namespace boost { namespace spirit { namespace traits
         assign_to(T const& val, Attribute& attr, variant_attribute)
         {
             attr = val;
+        }
+
+        // $$$ JDG $$$ Fixme don't rely on sequences being a deque
+        template <typename T, typename Attribute>
+        inline void
+        assign_to(fusion::deque<T> const& val, Attribute& attr, variant_attribute)
+        {
+            attr = fusion::front(val);
         }
 
         template <typename Iterator>
