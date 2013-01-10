@@ -13,6 +13,7 @@
 #endif
 
 #include <boost/spirit/home/support/traits/attribute_category.hpp>
+#include <boost/fusion/include/is_sequence.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -35,8 +36,12 @@ namespace boost { namespace spirit { namespace traits
         {
             template <typename A, typename B>
             struct is_same_size_sequence
-              : mpl::bool_<fusion::result_of::size<A>::value
-                    == fusion::result_of::size<B>::value>
+              : mpl::and_<
+                    fusion::traits::is_sequence<A> // we know that B is a sequence, but not A
+                  , mpl::equal_to<
+                        fusion::result_of::size<A>
+                      , fusion::result_of::size<B>>
+                >
             {};
         }
 
@@ -47,6 +52,13 @@ namespace boost { namespace spirit { namespace traits
         assign_to(T const& val, Attribute& attr, tuple_attribute)
         {
             fusion::copy(val, attr);
+        }
+
+        template <typename T, typename Attribute>
+        inline void
+        assign_to(T const& val, Attribute& attr, variant_attribute)
+        {
+            attr = val;
         }
 
         template <typename Iterator>

@@ -15,6 +15,7 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/fusion/include/copy.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
+#include <boost/spirit/home/support/traits/is_variant.hpp>
 
 namespace boost { namespace spirit
 {
@@ -42,6 +43,11 @@ namespace boost { namespace spirit { namespace traits
     struct attribute_category<T,
         typename enable_if<fusion::traits::is_sequence<T>>::type>
         : mpl::identity<tuple_attribute> {};
+
+    template <typename T>
+    struct attribute_category<T,
+        typename enable_if<traits::is_variant<T>>::type>
+        : mpl::identity<variant_attribute> {};
 
 }}}
 

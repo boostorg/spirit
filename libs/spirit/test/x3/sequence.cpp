@@ -6,9 +6,13 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/operator/sequence.hpp>
+#include <boost/spirit/home/x3/nonterminal/rule.hpp>
 #include <boost/spirit/home/x3/char.hpp>
+#include <boost/spirit/home/x3/string.hpp>
+#include <boost/spirit/home/x3/numeric.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
+#include <boost/fusion/include/comparison.hpp>
 
 #include <string>
 #include <iostream>
@@ -21,13 +25,13 @@ main()
     using boost::spirit::x3::space;
     //~ using boost::spirit::x3::string;
     //~ using boost::spirit::x3::alpha;
-    //~ using boost::spirit::x3::lit;
+    using boost::spirit::x3::lit;
     //~ using boost::spirit::x3::unused;
     //~ using boost::spirit::x3::no_case;
-    //~ using boost::spirit::x3::int_;
+    using boost::spirit::x3::int_;
     //~ using boost::spirit::x3::double_;
     //~ using boost::spirit::x3::what;
-    //~ using boost::spirit::x3::rule;
+    using boost::spirit::x3::rule;
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_2;
 
@@ -59,12 +63,12 @@ main()
         BOOST_TEST((test(" x i", char_('x') >> char_('i'), space)));
         BOOST_TEST((!test(" x i", char_('x') >> char_('o'), space)));
     }
-/*
+
 
     {
         BOOST_TEST((test(" Hello, World", lit("Hello") >> ',' >> "World", space)));
     }
-*/
+
 
     {
         vector<char, char> attr;
@@ -107,8 +111,6 @@ main()
         BOOST_TEST((at_c<1>(attr) == 'c'));
     }
 
-/*
-
     {
         // "hello" has an unused_type. unused attributes are not part of the sequence
         vector<char, char> attr;
@@ -134,13 +136,16 @@ main()
     {
         // make sure single element tuples get passed through if the rhs
         // has a single element tuple as its attribute
-        vector<double, int> fv;
-        rule<char const*, vector<double, int>()> r;
-        r %= double_ >> ',' >> int_;
-        BOOST_TEST((test_attr("test:2.0,1", "test:" >> r, fv) &&
-            fv == vector<double, int>(2.0, 1)));
+
+        typedef vector<char, int> attr_type;
+        attr_type fv;
+        typedef rule<class r, attr_type> r_type;
+        auto r = r_type() = char_ >> ',' >> int_;
+        BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
+            fv == attr_type('x', 1)));
     }
 
+/*
     {
         // unused means we don't care about the attribute
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, unused)));

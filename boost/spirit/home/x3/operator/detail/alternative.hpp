@@ -12,7 +12,10 @@
 #endif
 
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/support/traits/is_substitute.hpp>
+#include <boost/spirit/home/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/core/detail/get_types.hpp>
+#include <boost/spirit/home/support/traits/assign_to.hpp>
 #include <boost/variant/variant.hpp>
 
 #include <boost/mpl/copy_if.hpp>
@@ -28,6 +31,37 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
+    template <typename Variant, typename Expected>
+    struct find_substitute
+    {
+        // Get the type from the variant that can be a substitute for Expected.
+        // If none is found, just return Expected
+
+        typedef Variant variant_type;
+        typedef typename variant_type::types types;
+        typedef typename mpl::end<types>::type end;
+
+        typedef typename
+            mpl::find_if<types, is_same<mpl::_1, Expected> >::type
+        iter_1;
+
+        typedef typename
+            mpl::eval_if<
+                is_same<iter_1, end>,
+                mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >,
+                mpl::identity<iter_1>
+            >::type
+        iter;
+
+        typedef typename
+            mpl::eval_if<
+                is_same<iter, end>,
+                mpl::identity<Expected>,
+                mpl::deref<iter>
+            >::type
+        type;
+    };
+
     struct pass_variant_unused
     {
         typedef unused_type type;
@@ -55,15 +89,54 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <>
     struct pass_variant_used<unused_type> : pass_variant_unused {};
 
-    template <typename Parser, typename Attribute>
+    template <typename Parser, typename Attribute, typename Enable = void>
     struct pass_parser_attribute
     {
-        typedef typename traits::attribute_of<Parser>::type type;
+        typedef typename traits::attribute_of<Parser>::type expected_type;
+        typedef typename
+            find_substitute<Attribute, expected_type>::type
+        substitute_type;
 
+        typedef typename
+            mpl::if_<
+                is_same<Attribute, substitute_type>
+              , Attribute&
+              , substitute_type
+            >::type
+        type;
+
+        template <typename Attribute_>
+        static Attribute_&
+        call(Attribute_& attr, mpl::true_)
+        {
+            return attr;
+        }
+
+        template <typename Attribute_>
         static type
-        call(Attribute&)
+        call(Attribute_& attr, mpl::false_)
         {
             return type();
+        }
+
+        template <typename Attribute_>
+        static type
+        call(Attribute_& attr)
+        {
+            return call(attr, is_same<Attribute_, type>());
+        }
+    };
+
+    template <typename Parser, typename Attribute>
+    struct pass_parser_attribute<Parser, Attribute,
+        typename enable_if_c<(!traits::is_variant<Attribute>::value)>::type>
+    {
+        typedef Attribute& type;
+
+        static Attribute&
+        call(Attribute& attr)
+        {
+            return attr;
         }
     };
 
@@ -88,24 +161,48 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool const is_alternative = true;
     };
 
-    template <typename T>
-    struct get_alternative_base
+    template <typename L, typename R>
+    struct get_alternative_types
     {
-        typedef T type;
+        typedef
+            mpl::vector<
+                typename traits::attribute_of<L>::type
+              , typename traits::attribute_of<R>::type
+            >
+        type;
     };
 
-    template <typename L, typename R>
-    struct get_alternative_base<alternative<L, R>>
+    template <typename LL, typename LR, typename R>
+    struct get_alternative_types<alternative<LL, LR>, R>
     {
-        typedef binary_parser<L, R, alternative<L, R>> type;
+        typedef typename
+            mpl::push_front<
+                typename get_alternative_types<LL, LR>::type
+              , typename traits::attribute_of<R>::type
+            >::type
+        type;
     };
 
-    template <typename L, typename R>
-    struct get_alternative_types :
-        get_types<
-            typename get_alternative_base<L>::type
-          , typename get_alternative_base<R>::type>
+    template <typename L, typename RL, typename RR>
+    struct get_alternative_types<L, alternative<RL, RR>>
     {
+        typedef typename
+            mpl::push_back<
+                typename get_alternative_types<RL, RR>::type
+              , typename traits::attribute_of<L>::type
+            >::type
+        type;
+    };
+
+    template <typename LL, typename LR, typename RL, typename RR>
+    struct get_alternative_types<alternative<LL, LR>, alternative<RL, RR>>
+    {
+        typedef
+            mpl::joint_view<
+                typename get_alternative_types<LL, LR>::type
+              , typename get_alternative_types<RL, RR>::type
+            >
+        type;
     };
 
     template <typename L, typename R>
@@ -133,6 +230,23 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             >::type
         type;
     };
+
+    template <typename Parser, typename Iterator, typename Context, typename Attribute>
+    bool parse_alternative(
+        Parser const& p, Iterator& first, Iterator const& last
+      , Context& context, Attribute& attr)
+    {
+        typedef detail::pass_variant_attribute<Parser, Attribute> pass;
+
+        typename pass::type attr_ = pass::call(attr);
+        if (p.parse(first, last, context, attr_))
+        {
+            if (!pass::is_alternative)
+                traits::assign_to(attr_, attr);
+            return true;
+        }
+        return false;
+    }
 
 }}}}
 

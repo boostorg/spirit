@@ -58,6 +58,41 @@ namespace boost { namespace spirit { namespace x3
         }
     }
 
+    namespace extension
+    {
+        template <int N>
+        struct as_parser<char[N]>
+        {
+            typedef
+                literal_string<
+                    char const*, char_encoding::standard, unused_type>
+            type;
+
+            typedef type value_type;
+
+            static type call(char const* s)
+            {
+                return type(s);
+            }
+        };
+
+        template <int N>
+        struct as_parser<wchar_t[N]>
+        {
+            typedef
+                literal_string<
+                    wchar_t const*, char_encoding::standard_wide, unused_type>
+            type;
+
+            typedef type value_type;
+
+            static type call(wchar_t const* s)
+            {
+                return type(s);
+            }
+        };
+    }
+
     using standard::string;
 
     inline literal_string<char const*, char_encoding::standard, unused_type>

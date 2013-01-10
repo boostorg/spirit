@@ -13,7 +13,6 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/alternative.hpp>
-#include <boost/spirit/home/support/traits/assign_to.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -39,24 +38,10 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
-            typedef detail::pass_variant_attribute<Left, Attribute> l_pass;
-            typedef detail::pass_variant_attribute<Right, Attribute> r_pass;
-
-            typename l_pass::type l_attr = l_pass::call(attr);
-            if (this->left.parse(first, last, context, l_attr))
-            {
-                if (!l_pass::is_alternative)
-                    traits::assign_to(l_attr, attr);
+            if (detail::parse_alternative(this->left, first, last, context, attr))
                 return true;
-            }
-
-            typename r_pass::type r_attr = r_pass::call(attr);
-            if (this->right.parse(first, last, context, r_attr))
-            {
-                if (!r_pass::is_alternative)
-                    traits::assign_to(r_attr, attr);
+            if (detail::parse_alternative(this->right, first, last, context, attr))
                 return true;
-            }
             return false;
         }
     };

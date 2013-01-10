@@ -116,12 +116,21 @@ namespace boost { namespace spirit { namespace x3
         Elements elements;
     };
 
-    template <typename ...Elements>
-    grammar_parser<fusion::deque<Elements...>>
-    grammar(Elements const&... elements)
+    //~ template <typename ...Elements>
+    //~ grammar_parser<fusion::deque<Elements...>>
+    //~ grammar(Elements const&... elements)
+    //~ {
+        //~ typedef fusion::deque<Elements...> sequence;
+        //~ return grammar_parser<sequence>(sequence(elements...));
+    //~ }
+
+
+    template <typename A, typename B, typename C>
+    grammar_parser<fusion::deque<A, B, C>>
+    grammar(A const& a, B const& b, C const& c)
     {
-        typedef fusion::deque<Elements...> sequence;
-        return grammar_parser<sequence>(sequence(elements...));
+        typedef fusion::deque<A, B, C> sequence;
+        return grammar_parser<sequence>(sequence(a, b, c));
     }
 }}}
 

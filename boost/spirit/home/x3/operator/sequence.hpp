@@ -42,20 +42,8 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
-            typedef detail::partition_attribute<Left, Right, Attribute> partition;
-            typedef typename partition::l_pass l_pass;
-            typedef typename partition::r_pass r_pass;
-
-            typename partition::l_range left_seq = partition::left(attr);
-            typename partition::r_range right_seq = partition::right(attr);
-            typename l_pass::type l_attr = l_pass::call(left_seq);
-            typename r_pass::type r_attr = r_pass::call(right_seq);
-
-            Iterator save = first;
-            if (this->left.parse(first, last, context, l_attr)
-                && this->right.parse(first, last, context, r_attr))
-                return true;
-            first = save;
+            return detail::parse_sequence(
+                this->left, this->right, first, last, context, attr);
             return false;
         }
     };
