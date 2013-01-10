@@ -216,7 +216,7 @@ namespace client
             |   (char_('+') >> factor)
             ;
 
-        auto calculator = x3::grammar(
+        auto const calculator = x3::grammar(
                 expression = expression_def,
                 term = term_def,
                 factor = factor_def
