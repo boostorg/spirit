@@ -8,6 +8,7 @@
 #include <boost/spirit/home/x3/operator/sequence.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 #include <boost/spirit/home/x3/operator/plus.hpp>
+#include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/nonterminal/rule.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/string.hpp>
@@ -25,7 +26,7 @@ main()
 {
     using boost::spirit::x3::char_;
     using boost::spirit::x3::space;
-    //~ using boost::spirit::x3::string;
+    using boost::spirit::x3::string;
     //~ using boost::spirit::x3::alpha;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
@@ -244,7 +245,6 @@ main()
         //~ BOOST_TEST(v[2] == 'c');
     //~ }
 
-    /* $$$ Not yet working $$$
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
 
@@ -259,7 +259,7 @@ main()
         //~ rule<char const*, std::string()> word = +char_("abc");
         //~ BOOST_TEST(test_attr("ab.bc.ca", *hold[word >> string(".")] >> word, s));
         //~ BOOST_TEST(s == "ab.bc.ca");
-    }*/
+    }
 
 /*
 

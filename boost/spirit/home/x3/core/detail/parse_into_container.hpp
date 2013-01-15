@@ -12,12 +12,10 @@
 #endif
 
 #include <boost/spirit/home/support/traits/container_traits.hpp>
+#include <boost/mpl/has_xxx.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    // Default implementation. Specialize this for specific
-    // parsers as necessary.
-
     template <typename Parser, typename Enable = void>
     struct parse_into_container_impl
     {
@@ -46,6 +44,22 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 return parser.parse(first, last, context, unused);
             }
+        }
+    };
+
+    BOOST_MPL_HAS_XXX_TRAIT_DEF(handles_container_attribute)
+
+    template <typename Parser>
+    struct parse_into_container_impl<Parser,
+        typename enable_if<has_handles_container_attribute<Parser>>::type>
+    {
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr)
+        {
+            return parser.parse(first, last, context, attr);
         }
     };
 

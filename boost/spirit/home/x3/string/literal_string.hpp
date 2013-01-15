@@ -33,6 +33,7 @@ namespace boost { namespace spirit { namespace x3
         typedef Attribute attribute_type;
         static bool const has_attribute =
             !is_same<unused_type, attribute_type>::value;
+        typedef mpl::true_ handles_container_attribute;
 
         literal_string(typename add_reference<String>::type str)
           : str(str)
@@ -57,6 +58,7 @@ namespace boost { namespace spirit { namespace x3
             return literal_string<char const*, char_encoding::standard>(s);
         }
     }
+    using standard::string;
 
     namespace extension
     {

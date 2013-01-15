@@ -24,6 +24,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, kleene<Subject>> base_type;
         typedef typename traits::attribute_of<Subject>::type subject_attribute;
+        typedef mpl::true_ handles_container_attribute;
 
         typedef typename
             traits::build_container<subject_attribute>::type
@@ -52,22 +53,6 @@ namespace boost { namespace spirit { namespace x3
         result_type;
 
         return result_type(as_parser(subject));
-    }
-
-    namespace detail
-    {
-        template <typename Subject>
-        struct parse_into_container_impl<kleene<Subject>>
-        {
-            template <typename Iterator, typename Context, typename Attribute>
-            static bool call(
-                kleene<Subject> const& parser
-              , Iterator& first, Iterator const& last
-              , Context& context, Attribute& attr)
-            {
-                return parser.parse(first, last, context, attr);
-            }
-        };
     }
 }}}
 
