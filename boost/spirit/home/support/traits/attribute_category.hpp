@@ -16,6 +16,7 @@
 #include <boost/fusion/include/copy.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/spirit/home/support/traits/is_variant.hpp>
+#include <boost/spirit/home/support/traits/container_traits.hpp>
 
 namespace boost { namespace spirit
 {
@@ -39,6 +40,10 @@ namespace boost { namespace spirit { namespace traits
     struct attribute_category<unused_type>
         : mpl::identity<unused_attribute> {};
 
+    template <>
+    struct attribute_category<unused_type const>
+        : mpl::identity<unused_attribute> {};
+
     template <typename T>
     struct attribute_category<T,
         typename enable_if<fusion::traits::is_sequence<T>>::type>
@@ -48,6 +53,11 @@ namespace boost { namespace spirit { namespace traits
     struct attribute_category<T,
         typename enable_if<traits::is_variant<T>>::type>
         : mpl::identity<variant_attribute> {};
+
+    template <typename T>
+    struct attribute_category<T,
+        typename enable_if<traits::is_container<T>>::type>
+        : mpl::identity<container_attribute> {};
 
 }}}
 

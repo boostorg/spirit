@@ -283,10 +283,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr)
+      , Context& context, Attribute& attr, traits::container_attribute)
     {
-        return parse_sequence(left, right, first, last, context, attr
-          , typename traits::attribute_category<Attribute>::type());
+        return false;
     }
 
 }}}}

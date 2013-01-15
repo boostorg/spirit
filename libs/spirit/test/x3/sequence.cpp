@@ -152,12 +152,12 @@ main()
         // unused means we don't care about the attribute
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, unused)));
     }
-/*
-    {
-        BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
-        BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
-        BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
-    }
+
+    //~ {
+        //~ BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
+        //~ BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
+        //~ BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
+    //~ }
 
     {
 #ifdef SPIRIT_NO_COMPILE_CHECK
@@ -175,6 +175,7 @@ main()
         BOOST_TEST(v[1] == 'b');
         BOOST_TEST(v[2] == 'c');
     }
+/*
 
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.

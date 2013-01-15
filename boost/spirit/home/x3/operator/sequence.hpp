@@ -43,7 +43,8 @@ namespace boost { namespace spirit { namespace x3
           , Context& context, Attribute& attr) const
         {
             return detail::parse_sequence(
-                this->left, this->right, first, last, context, attr);
+                this->left, this->right, first, last, context, attr
+              , typename traits::attribute_category<Attribute>::type());
             return false;
         }
     };

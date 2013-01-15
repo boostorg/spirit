@@ -15,6 +15,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/support/traits/container_traits.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -31,34 +32,12 @@ namespace boost { namespace spirit { namespace x3
         kleene(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context>
-        bool parse_subject(Iterator& first, Iterator const& last
-          , Context& context, unused_type) const
-        {
-            return this->subject.parse(first, last, context, unused);
-        }
-
-        template <typename Iterator, typename Context, typename Attribute>
-        bool parse_subject(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr) const
-        {
-            // synthesized attribute needs to be default constructed
-            typedef typename traits::container_value<Attribute>::type value_type;
-            value_type val = value_type();
-
-            if (!this->subject.parse(first, last, context, val))
-                return false;
-
-            // push the parsed value into our attribute
-            traits::push_back(attr, val);
-            return true;
-        }
-
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
-            while (parse_subject(first, last, context, attr))
+            while (detail::parse_into_container(
+                this->subject, first, last, context, attr))
                 ;
             return true;
         }
