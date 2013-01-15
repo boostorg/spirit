@@ -15,35 +15,49 @@
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    // Default implementation. Overload this to specialize for
-    // specific parsers
-    template <
-        typename Parser, typename Iterator
+    // Default implementation. Specialize this for specific
+    // parsers as necessary.
+
+    template <typename Parser, typename Enable = void>
+    struct parse_into_container_impl
+    {
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr)
+        {
+            if (Parser::has_attribute)
+            {
+                // synthesized attribute needs to be default constructed
+                typedef typename
+                    traits::container_value<Attribute>::type
+                value_type;
+                value_type val = value_type();
+
+                if (!parser.parse(first, last, context, val))
+                    return false;
+
+                // push the parsed value into our attribute
+                traits::push_back(attr, val);
+                return true;
+            }
+            else
+            {
+                return parser.parse(first, last, context, unused);
+            }
+        }
+    };
+
+    template <typename Parser, typename Iterator
       , typename Context, typename Attribute>
     bool parse_into_container(
         Parser const& parser
       , Iterator& first, Iterator const& last
       , Context& context, Attribute& attr)
     {
-        if (Parser::has_attribute)
-        {
-            // synthesized attribute needs to be default constructed
-            typedef typename
-                traits::container_value<Attribute>::type
-            value_type;
-            value_type val = value_type();
-
-            if (!parser.parse(first, last, context, val))
-                return false;
-
-            // push the parsed value into our attribute
-            traits::push_back(attr, val);
-            return true;
-        }
-        else
-        {
-            return parser.parse(first, last, context, unused);
-        }
+        return parse_into_container_impl<Parser>::call(
+            parser, first, last, context, attr);
     }
 
 }}}}

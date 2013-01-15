@@ -14,7 +14,6 @@
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/support/traits/is_variant.hpp>
-#include <boost/spirit/home/x3/core/detail/get_types.hpp>
 #include <boost/spirit/home/support/traits/assign_to.hpp>
 #include <boost/variant/variant.hpp>
 
@@ -22,6 +21,8 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/joint_view.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

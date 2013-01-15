@@ -15,7 +15,7 @@
 #include <boost/spirit/home/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
-#include <boost/spirit/home/x3/core/detail/get_types.hpp>
+#include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/end.hpp>
@@ -30,6 +30,7 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/vector.hpp>
 
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -45,16 +46,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser>
     struct sequence_size
     {
-        //~ typedef typename traits::attribute_of<Parser>::type attr_type;
-        //~ typedef typename
-            //~ mpl::eval_if<
-                //~ fusion::traits::is_sequence<attr_type>
-              //~ , fusion::result_of::size<attr_type>
-              //~ , mpl::not_<is_same<attr_type, unused_type>>
-            //~ >::type
-        //~ size_type;
-        //~ static int const value = size_type::value;
-
         static int const value = Parser::has_attribute;
     };
 
@@ -105,14 +96,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute_used :
         pass_sequence_attribute_front<Attribute> {};
-
-
-    //~ template <typename Parser, typename Attribute>
-    //~ struct pass_sequence_attribute_used :
-        //~ mpl::if_<
-            //~ traits::is_substitute<Attribute, typename traits::attribute_of<Parser>::type>
-          //~ , pass_through_sequence_attribute<Attribute>
-          //~ , pass_sequence_attribute_front<Attribute>>::type {};
 
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute :
@@ -283,10 +266,36 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
+      , Context& context, Attribute& attr, traits::container_attribute);
+
+    template <typename Left, typename Right
+      , typename Iterator, typename Context, typename Attribute>
+    bool parse_sequence(
+        Left const& left, Right const& right
+      , Iterator& first, Iterator const& last
       , Context& context, Attribute& attr, traits::container_attribute)
     {
+        Iterator save = first;
+        if (parse_into_container(left, first, last, context, attr)
+            && parse_into_container(right, first, last, context, attr))
+            return true;
+        first = save;
         return false;
     }
+
+    template <typename Left, typename Right>
+    struct parse_into_container_impl<sequence<Left, Right>>
+    {
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            sequence<Left, Right> const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr)
+        {
+            return parse_sequence(parser.left, parser.right
+              , first, last, context, attr, traits::container_attribute());
+        }
+    };
 
 }}}}
 

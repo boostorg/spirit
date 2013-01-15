@@ -57,6 +57,22 @@ namespace boost { namespace spirit { namespace x3
 
         return result_type(as_parser(subject));
     }
+
+    namespace detail
+    {
+        template <typename Subject>
+        struct parse_into_container_impl<plus<Subject>>
+        {
+            template <typename Iterator, typename Context, typename Attribute>
+            static bool call(
+                plus<Subject> const& parser
+              , Iterator& first, Iterator const& last
+              , Context& context, Attribute& attr)
+            {
+                return parser.parse(first, last, context, attr);
+            }
+        };
+    }
 }}}
 
 #endif

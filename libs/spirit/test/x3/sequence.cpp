@@ -6,6 +6,8 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/operator/sequence.hpp>
+#include <boost/spirit/home/x3/operator/kleene.hpp>
+#include <boost/spirit/home/x3/operator/plus.hpp>
 #include <boost/spirit/home/x3/nonterminal/rule.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/string.hpp>
@@ -175,7 +177,6 @@ main()
         BOOST_TEST(v[1] == 'b');
         BOOST_TEST(v[2] == 'c');
     }
-/*
 
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
@@ -231,17 +232,19 @@ main()
         BOOST_TEST(v[2] == 'c');
     }
 
-    { // alternative forms of attributes. Allow sequences to take in
-      // stl containers.
+    // $$$ Not yet working $$$
+    //~ { // alternative forms of attributes. Allow sequences to take in
+      //~ // stl containers.
 
-        std::vector<char> v;
-        BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
-        BOOST_TEST(v.size() == 3);
-        BOOST_TEST(v[0] == 'a');
-        BOOST_TEST(v[1] == 'b');
-        BOOST_TEST(v[2] == 'c');
-    }
+        //~ std::vector<char> v;
+        //~ BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
+        //~ BOOST_TEST(v.size() == 3);
+        //~ BOOST_TEST(v[0] == 'a');
+        //~ BOOST_TEST(v[1] == 'b');
+        //~ BOOST_TEST(v[2] == 'c');
+    //~ }
 
+    /* $$$ Not yet working $$$
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
 
@@ -256,7 +259,9 @@ main()
         //~ rule<char const*, std::string()> word = +char_("abc");
         //~ BOOST_TEST(test_attr("ab.bc.ca", *hold[word >> string(".")] >> word, s));
         //~ BOOST_TEST(s == "ab.bc.ca");
-    }
+    }*/
+
+/*
 
     // alternative forms of attributes. Allow sequences to take in
     // stl containers of stl containers.
