@@ -31,6 +31,8 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
 
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -54,6 +56,20 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         static int const value =
             sequence_size<L>::value + sequence_size<R>::value;
+    };
+
+    template <typename Attribute>
+    struct rule_sequence_size
+    {
+        typedef typename
+            mpl::eval_if<
+                fusion::traits::is_sequence<Attribute>
+              , fusion::result_of::size<Attribute>
+              , mpl::identity<mpl::int_<1>>
+            >::type
+        size_type;
+
+        static int const value = size_type::value;
     };
 
     struct pass_sequence_attribute_unused
@@ -83,7 +99,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Attribute>
     struct pass_through_sequence_attribute
     {
-        typedef Attribute type;
+        typedef Attribute& type;
 
         template <typename Attribute_>
         static Attribute_&
@@ -108,7 +124,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct pass_sequence_attribute<sequence<L, R>, Attribute>
       : pass_through_sequence_attribute<Attribute> {};
 
-    template <typename L, typename R, typename Attribute>
+    template <typename L, typename R, typename Attribute, typename Enable = void>
     struct partition_attribute
     {
         static int const l_size = sequence_size<L>::value;
@@ -141,6 +157,46 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return r_range(
                 fusion::advance_c<l_size>(fusion::begin(s))
               , fusion::end(s));
+        }
+    };
+
+    template <typename L, typename R, typename Attribute>
+    struct partition_attribute<L, R, Attribute,
+        typename enable_if_c<(!L::has_attribute)>::type>
+    {
+        typedef unused_type l_range;
+        typedef Attribute& r_range;
+        typedef pass_sequence_attribute_unused l_pass;
+        typedef pass_through_sequence_attribute<Attribute> r_pass;
+
+        static unused_type left(Attribute& s)
+        {
+            return unused;
+        }
+
+        static Attribute& right(Attribute& s)
+        {
+            return s;
+        }
+    };
+
+    template <typename L, typename R, typename Attribute>
+    struct partition_attribute<L, R, Attribute,
+        typename enable_if_c<(!R::has_attribute)>::type>
+    {
+        typedef Attribute& l_range;
+        typedef unused_type r_range;
+        typedef pass_through_sequence_attribute<Attribute> l_pass;
+        typedef pass_sequence_attribute_unused r_pass;
+
+        static Attribute& left(Attribute& s)
+        {
+            return s;
+        }
+
+        static unused_type right(Attribute& s)
+        {
+            return unused;
         }
     };
 

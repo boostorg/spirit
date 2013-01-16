@@ -16,9 +16,27 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/deque.hpp>
 #include <boost/fusion/include/front.hpp>
+#include <boost/fusion/include/size.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
+    template <typename T, typename Attribute>
+    void assign_to(T const& val, Attribute& attr);
+
+    template <typename Attribute>
+    void assign_to(unused_type, Attribute& attr);
+
+    template <typename T>
+    void assign_to(T const& val, unused_type);
+
+    template <typename Iterator, typename Attribute>
+    void
+    assign_to(Iterator const& first, Iterator const& last, Attribute& attr);
+
+    template <typename Iterator>
+    void
+    assign_to(Iterator const& first, Iterator const& last, unused_type);
+
     namespace detail
     {
         template <typename T, typename Attribute>
@@ -39,10 +57,21 @@ namespace boost { namespace spirit { namespace traits
             template <typename A, typename B>
             struct is_same_size_sequence
               : mpl::and_<
-                    fusion::traits::is_sequence<B> // we know that A is a sequence, but not B
+                    fusion::traits::is_sequence<A>
+                  , fusion::traits::is_sequence<B>
                   , mpl::equal_to<
                         fusion::result_of::size<A>
                       , fusion::result_of::size<B>>
+                >
+            {};
+
+            template <typename Seq>
+            struct is_size_one_sequence
+              : mpl::and_<
+                    fusion::traits::is_sequence<Seq>
+                  , mpl::equal_to<
+                        fusion::result_of::size<Seq>
+                      , mpl::int_<1>>
                 >
             {};
         }
@@ -57,16 +86,26 @@ namespace boost { namespace spirit { namespace traits
         }
 
         template <typename T, typename Attribute>
+        inline typename enable_if<
+            detail::is_size_one_sequence<Attribute>
+        >::type
+        assign_to(T const& val, Attribute& attr, tuple_attribute)
+        {
+            traits::assign_to(val, fusion::front(attr));
+        }
+
+        template <typename T, typename Attribute>
         inline void
         assign_to(T const& val, Attribute& attr, variant_attribute)
         {
             attr = val;
         }
 
-        // $$$ JDG $$$ Fixme don't rely on sequences being a deque
         template <typename T, typename Attribute>
-        inline void
-        assign_to(fusion::deque<T> const& val, Attribute& attr, variant_attribute)
+        inline typename enable_if<
+            detail::is_size_one_sequence<T>
+        >::type
+        assign_to(T const& val, Attribute& attr, variant_attribute)
         {
             attr = fusion::front(val);
         }
