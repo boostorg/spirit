@@ -12,13 +12,16 @@
 #endif
 
 #include <boost/spirit/home/support/traits/container_traits.hpp>
-#include <boost/mpl/has_xxx.hpp>
+#include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/support/traits/is_substitute.hpp>
+#include <boost/mpl/and.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Parser, typename Enable = void>
-    struct parse_into_container_impl
+    template <typename Parser>
+    struct parse_into_container_base_impl
     {
+        // Parser has attribute (synthesize)
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
             Parser const& parser
@@ -39,6 +42,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return true;
         }
 
+        // Parser has no attribute (pass unused)
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
             Parser const& parser
@@ -59,19 +63,48 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    BOOST_MPL_HAS_XXX_TRAIT_DEF(handles_container_attribute)
+    template <typename Parser, typename Enable = void>
+    struct parse_into_container_impl : parse_into_container_base_impl<Parser> {};
+
+    template <typename Parser, typename Container>
+    struct parser_attr_is_substitute_for_container_value
+        : traits::is_substitute<
+            typename traits::attribute_of<Parser>::type
+          , typename traits::container_value<Container>::type
+        >
+    {};
 
     template <typename Parser>
     struct parse_into_container_impl<Parser,
-        typename enable_if<has_handles_container_attribute<Parser>>::type>
+        typename enable_if_c<(Parser::handles_container)>::type>
     {
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::true_)
+        {
+            return parse_into_container_base_impl<Parser>::call(
+                parser, first, last, context, attr);
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::false_)
+        {
+            return parser.parse(first, last, context, attr);
+        }
+
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
           , Context& context, Attribute& attr)
         {
-            return parser.parse(first, last, context, attr);
+            return call(parser, first, last, context, attr,
+                parser_attr_is_substitute_for_container_value<Parser, Attribute>());
         }
     };
 

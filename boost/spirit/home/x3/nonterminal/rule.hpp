@@ -60,6 +60,8 @@ namespace boost { namespace spirit { namespace x3
         typedef Attribute attribute_type;
         static bool const has_attribute =
             !is_same<Attribute, unused_type>::value;
+        static bool const handles_container =
+            traits::is_container<Attribute>::value;
 
         rule_definition(RHS rhs)
           : rhs(rhs) {}
@@ -83,6 +85,8 @@ namespace boost { namespace spirit { namespace x3
         typedef Attribute attribute_type;
         static bool const has_attribute =
             !is_same<Attribute, unused_type>::value;
+        static bool const handles_container =
+            traits::is_container<Attribute>::value;
 
         template <typename RHS>
         rule_definition<

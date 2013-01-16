@@ -136,20 +136,18 @@ main()
         BOOST_TEST((at_c<0>(attr) == 'a'));
     }
 
-    // $$$ JDG: not yet working $$$
-    /*
-    {
-        // make sure single element tuples get passed through if the rhs
-        // has a single element tuple as its attribute
+    // $$$ Not yet implemented $$$
+    //~ {
+        //~ // make sure single element tuples get passed through if the rhs
+        //~ // has a single element tuple as its attribute
 
-        typedef vector<char, int> attr_type;
-        attr_type fv;
-        typedef rule<class r, attr_type> r_type;
-        auto r = r_type() = char_ >> ',' >> int_;
-        BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
-            fv == attr_type('x', 1)));
-    }*/
-
+        //~ typedef vector<char, int> attr_type;
+        //~ attr_type fv;
+        //~ typedef rule<class r, attr_type> r_type;
+        //~ auto r = r_type() = char_ >> ',' >> int_;
+        //~ BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
+            //~ fv == attr_type('x', 1)));
+    //~ }
 
     {
         // unused means we don't care about the attribute
@@ -261,8 +259,6 @@ main()
         //~ BOOST_TEST(s == "ab.bc.ca");
     }
 
-/*
-
     // alternative forms of attributes. Allow sequences to take in
     // stl containers of stl containers.
     {
@@ -274,8 +270,12 @@ main()
 
     {
         std::vector<std::string> v;
-        rule<char const*, std::string()> e = *~char_(',');
-        rule<char const*, std::vector<std::string>()> l = e >> *(',' >> e);
+
+        auto e = rule<class e, std::string>()
+            = *~char_(',');
+
+        auto l = rule<class l, std::vector<std::string>>()
+            = e >> *(',' >> e);
 
         BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
         BOOST_TEST(v.size() == 3);
@@ -294,62 +294,69 @@ main()
 
     {
         std::string s;
-        rule<char const*, std::string()> e = *~char_(',');
-        rule<char const*, std::string()> l = e >> *(',' >> e);
+        auto e = rule<class e, std::string>()
+            = *~char_(',');
+
+        auto l = rule<class l, std::string>()
+            = e >> *(',' >> e);
 
         BOOST_TEST(test_attr("abc1,abc2,abc3", l, s));
         BOOST_TEST(s == "abc1abc2abc3");
     }
 
-    {
-        std::vector<char> v;
-        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
-        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+    // $$$ Not yet implemented $$$
+    //~ {
+        //~ std::vector<char> v;
+        //~ BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        //~ BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
 
-        v.clear();
-        BOOST_TEST(test_attr("a", char_ >> -char_, v));
-        BOOST_TEST(v.size() == 1 && v[0] == 'a');
+        //~ v.clear();
+        //~ BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
 
-        v.clear();
-        BOOST_TEST(test_attr("a", char_, v));
-        BOOST_TEST(v.size() == 1 && v[0] == 'a');
-    }
+        //~ v.clear();
+        //~ BOOST_TEST(test_attr("a", char_, v));
+        //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
+    //~ }
 
-    {
-        std::vector<boost::optional<char> > v;
-        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
-        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+    // $$$ Not yet implemented $$$
+    //~ {
+        //~ std::vector<boost::optional<char> > v;
+        //~ BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        //~ BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
 
-        v.clear();
-        BOOST_TEST(test_attr("a", char_ >> -char_, v));
-        BOOST_TEST(v.size() == 2 && v[0] == 'a' && !v[1]);
+        //~ v.clear();
+        //~ BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        //~ BOOST_TEST(v.size() == 2 && v[0] == 'a' && !v[1]);
 
-        v.clear();
-        BOOST_TEST(test_attr("a", char_, v));
-        BOOST_TEST(v.size() == 1 && v[0] == 'a');
-    }
+        //~ v.clear();
+        //~ BOOST_TEST(test_attr("a", char_, v));
+        //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
+    //~ }
 
-    {   // test action
-        using boost::phoenix::ref;
-        char c = 0;
-        int n = 0;
+    // $$$ Not yet implemented $$$
+    //~ {   // test action
+        //~ using boost::phoenix::ref;
+        //~ char c = 0;
+        //~ int n = 0;
 
-        BOOST_TEST(test("x123\"a string\"", (char_ >> int_ >> "\"a string\"")
-            [ref(c) = _1, ref(n) = _2]));
-        BOOST_TEST(c == 'x');
-        BOOST_TEST(n == 123);
-    }
+        //~ BOOST_TEST(test("x123\"a string\"", (char_ >> int_ >> "\"a string\"")
+            //~ [ref(c) = _1, ref(n) = _2]));
+        //~ BOOST_TEST(c == 'x');
+        //~ BOOST_TEST(n == 123);
+    //~ }
 
-    {   // test action
-        using boost::phoenix::ref;
-        char c = 0;
-        int n = 0;
+    // $$$ Not yet implemented $$$
+    //~ {   // test action
+        //~ using boost::phoenix::ref;
+        //~ char c = 0;
+        //~ int n = 0;
 
-        BOOST_TEST(test("x 123 \"a string\"", (char_ >> int_ >> "\"a string\"")
-            [ref(c) = _1, ref(n) = _2], space));
-        BOOST_TEST(c == 'x');
-        BOOST_TEST(n == 123);
-    }
+        //~ BOOST_TEST(test("x 123 \"a string\"", (char_ >> int_ >> "\"a string\"")
+            //~ [ref(c) = _1, ref(n) = _2], space));
+        //~ BOOST_TEST(c == 'x');
+        //~ BOOST_TEST(n == 123);
+    //~ }
 
 //     { // compile check only
 //         using boost::spirit::qi::rule;
@@ -360,7 +367,6 @@ main()
 //         rule<char const*, attr_type()> r2 = r >> *(',' >> r);
 //         //~ rule<char const*, attr_type()> r2 = r % ',';
 //     }
-*/
 
     return boost::report_errors();
 }

@@ -30,6 +30,7 @@ namespace boost { namespace spirit { namespace x3
     struct parser : parser_base
     {
         typedef Derived derived_type;
+        static bool const handles_container = false;
 
         Derived const& derived() const
         {

@@ -24,7 +24,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, plus<Subject>> base_type;
         typedef typename traits::attribute_of<Subject>::type subject_attribute;
-        typedef mpl::true_ handles_container_attribute;
+        static bool const handles_container = true;
 
         typedef typename
             traits::build_container<subject_attribute>::type

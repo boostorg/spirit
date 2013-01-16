@@ -77,24 +77,6 @@ namespace boost { namespace spirit { namespace traits
         {
         }
 
-        //~ template <typename Iterator, typename Attribute>
-        //~ inline void
-        //~ assign_to(Iterator const& first, Iterator const& last, Attribute& attr, plain_attribute)
-        //~ {
-            //~ // $$$ Fixme. This can't be right! $$$
-            //~ if (attr.empty())
-            //~ {
-                //~ attr = Attribute(first, last);
-            //~ }
-            //~ else
-            //~ {
-                //~ // $$$ fixme: use CP traits! $$$
-                //~ attr.reserve(attr.size() + std::distance(first, last));
-                //~ for (Iterator i = first; i != last; ++i)
-                    //~ attr.push_back(*i);
-            //~ }
-        //~ }
-
         template <typename Iterator, typename Attribute>
         inline void
         assign_to(Iterator const& first, Iterator const& last, Attribute& attr, container_attribute)
