@@ -23,27 +23,39 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::true_)
+        {
+            // synthesized attribute needs to be default constructed
+            typedef typename
+                traits::container_value<Attribute>::type
+            value_type;
+            value_type val = value_type();
+
+            if (!parser.parse(first, last, context, val))
+                return false;
+
+            // push the parsed value into our attribute
+            traits::push_back(attr, val);
+            return true;
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::false_)
+        {
+            return parser.parse(first, last, context, unused);
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
           , Context& context, Attribute& attr)
         {
-            if (Parser::has_attribute)
-            {
-                // synthesized attribute needs to be default constructed
-                typedef typename
-                    traits::container_value<Attribute>::type
-                value_type;
-                value_type val = value_type();
-
-                if (!parser.parse(first, last, context, val))
-                    return false;
-
-                // push the parsed value into our attribute
-                traits::push_back(attr, val);
-                return true;
-            }
-            else
-            {
-                return parser.parse(first, last, context, unused);
-            }
+            return call(parser, first, last, context, attr
+              , mpl::bool_<Parser::has_attribute>());
         }
     };
 
