@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename A, typename B>
             struct is_same_size_sequence
               : mpl::and_<
-                    fusion::traits::is_sequence<A> // we know that B is a sequence, but not A
+                    fusion::traits::is_sequence<B> // we know that A is a sequence, but not B
                   , mpl::equal_to<
                         fusion::result_of::size<A>
                       , fusion::result_of::size<B>>
