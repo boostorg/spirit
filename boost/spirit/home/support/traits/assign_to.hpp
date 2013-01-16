@@ -96,18 +96,23 @@ namespace boost { namespace spirit { namespace traits
 
         template <typename T, typename Attribute>
         inline void
-        assign_to(T const& val, Attribute& attr, variant_attribute)
+        assign_to(T const& val, Attribute& attr, variant_attribute, mpl::false_)
         {
             attr = val;
         }
 
         template <typename T, typename Attribute>
-        inline typename enable_if<
-            detail::is_size_one_sequence<T>
-        >::type
-        assign_to(T const& val, Attribute& attr, variant_attribute)
+        inline void
+        assign_to(T const& val, Attribute& attr, variant_attribute, mpl::true_)
         {
             attr = fusion::front(val);
+        }
+
+        template <typename T, typename Attribute>
+        inline void
+        assign_to(T const& val, Attribute& attr, variant_attribute tag)
+        {
+            assign_to(val, attr, tag, detail::is_size_one_sequence<T>());
         }
 
         template <typename Iterator>
