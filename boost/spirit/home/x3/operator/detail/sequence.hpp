@@ -59,20 +59,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             sequence_size<L>::value + sequence_size<R>::value;
     };
 
-    template <typename Attribute>
-    struct rule_sequence_size
-    {
-        typedef typename
-            mpl::eval_if<
-                fusion::traits::is_sequence<Attribute>
-              , fusion::result_of::size<Attribute>
-              , mpl::identity<mpl::int_<1>>
-            >::type
-        size_type;
-
-        static int const value = size_type::value;
-    };
-
     struct pass_sequence_attribute_unused
     {
         typedef unused_type type;
@@ -142,20 +128,20 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef typename fusion::result_of::begin<Attribute>::type l_begin;
         typedef typename fusion::result_of::advance_c<l_begin, l_size>::type l_end;
         typedef typename fusion::result_of::end<Attribute>::type r_end;
-        typedef fusion::iterator_range<l_begin, l_end> l_range;
-        typedef fusion::iterator_range<l_end, r_end> r_range;
-        typedef pass_sequence_attribute<L, l_range> l_pass;
-        typedef pass_sequence_attribute<R, r_range> r_pass;
+        typedef fusion::iterator_range<l_begin, l_end> l_part;
+        typedef fusion::iterator_range<l_end, r_end> r_part;
+        typedef pass_sequence_attribute<L, l_part> l_pass;
+        typedef pass_sequence_attribute<R, r_part> r_pass;
 
-        static l_range left(Attribute& s)
+        static l_part left(Attribute& s)
         {
             auto i = fusion::begin(s);
-            return l_range(i, fusion::advance_c<l_size>(i));
+            return l_part(i, fusion::advance_c<l_size>(i));
         }
 
-        static r_range right(Attribute& s)
+        static r_part right(Attribute& s)
         {
-            return r_range(
+            return r_part(
                 fusion::advance_c<l_size>(fusion::begin(s))
               , fusion::end(s));
         }
@@ -165,8 +151,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct partition_attribute<L, R, Attribute,
         typename enable_if_c<(!L::has_attribute)>::type>
     {
-        typedef unused_type l_range;
-        typedef Attribute& r_range;
+        typedef unused_type l_part;
+        typedef Attribute& r_part;
         typedef pass_sequence_attribute_unused l_pass;
         typedef pass_through_sequence_attribute<Attribute> r_pass;
 
@@ -185,8 +171,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct partition_attribute<L, R, Attribute,
         typename enable_if_c<(!R::has_attribute)>::type>
     {
-        typedef Attribute& l_range;
-        typedef unused_type r_range;
+        typedef Attribute& l_part;
+        typedef unused_type r_part;
         typedef pass_through_sequence_attribute<Attribute> l_pass;
         typedef pass_sequence_attribute_unused r_pass;
 
@@ -282,10 +268,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef typename partition::l_pass l_pass;
         typedef typename partition::r_pass r_pass;
 
-        typename partition::l_range left_seq = partition::left(attr);
-        typename partition::r_range right_seq = partition::right(attr);
-        typename l_pass::type l_attr = l_pass::call(left_seq);
-        typename r_pass::type r_attr = r_pass::call(right_seq);
+        typename partition::l_part l_part = partition::left(attr);
+        typename partition::r_part r_part = partition::right(attr);
+        typename l_pass::type l_attr = l_pass::call(l_part);
+        typename r_pass::type r_attr = r_pass::call(r_part);
 
         Iterator save = first;
         if (left.parse(first, last, context, l_attr)

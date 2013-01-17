@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace x3
     inline void skip_over(
         Iterator& first, Iterator const& last, Context const& context)
     {
-        detail::skip_over(first, last, get<skipper_tag>(context));
+        detail::skip_over(first, last, spirit::get<skipper_tag>(context));
     }
 }}}
 

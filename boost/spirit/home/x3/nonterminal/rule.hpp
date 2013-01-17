@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace x3
           , Context& context, Attribute_& attr) const
         {
             return detail::parse_rule<attribute_type>::call(
-                get<ID>(context).rhs, first, last, context, attr);
+                spirit::get<ID>(context).rhs, first, last, context, attr);
         }
     };
 }}}
