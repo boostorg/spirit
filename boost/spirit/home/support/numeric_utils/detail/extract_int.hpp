@@ -415,7 +415,7 @@ namespace boost { namespace spirit { namespace detail
                 {
                     if (count == 0) // must have at least one digit
                         return false;
-                    traits::move_to(0, attr);
+                    attr = 0;
                     first = it;
                     return true;
                 }

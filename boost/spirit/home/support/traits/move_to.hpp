@@ -21,146 +21,149 @@
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T, typename Attribute>
-    void move_to(T&& val, Attribute& attr);
+    template <typename Source, typename Dest>
+    void move_to(Source& src, Dest& dest);
 
-    template <typename Attribute>
-    inline void move_to(unused_type, Attribute& attr) {}
+    template <typename Dest>
+    inline void move_to(unused_type, Dest& dest) {}
 
-    template <typename T>
-    inline void move_to(T const& val, unused_type) {}
+    template <typename Source>
+    inline void move_to(Source& src, unused_type) {}
 
     inline void move_to(unused_type, unused_type) {}
 
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Dest>
     void
-    move_to(Iterator const& first, Iterator const& last, Attribute& attr);
+    move_to(Iterator first, Iterator last, Dest& dest);
 
     template <typename Iterator>
     inline void
-    move_to(Iterator const& first, Iterator const& last, unused_type) {}
+    move_to(Iterator first, Iterator last, unused_type) {}
 
     namespace detail
     {
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline void
-        move_to(T const& val, Attribute& attr, unused_attribute)
+        move_to(Source& src, Dest& dest, unused_attribute) {}
+
+        template <typename T>
+        inline void
+        move_to(T& src, T& dest, plain_attribute)
         {
+            std::swap(dest, src);
         }
 
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline void
-        move_to(T&& val, Attribute& attr, plain_attribute)
+        move_to(Source& src, Dest& dest, plain_attribute)
         {
-            attr = std::move(val);
+            dest = std::move(src);
         }
 
-        template <typename T, typename Attribute>
-        inline typename enable_if<is_container<T>>::type
-        move_to(T const& val, Attribute& attr, container_attribute)
+        template <typename Source, typename Dest>
+        inline typename enable_if<is_container<Source>>::type
+        move_to(Source& src, Dest& dest, container_attribute)
         {
-            attr.assign(val.begin(), val.end());
+            traits::move_to(src.begin(), src.end(), dest);
         }
 
         template <typename T>
         inline typename enable_if<is_container<T>>::type
-        move_to(T&& val, T& attr, container_attribute)
+        move_to(T& src, T& dest, container_attribute)
         {
-            attr = std::move(val);
+            std::swap(dest, src);
         }
 
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline typename enable_if<
-            is_same_size_sequence<Attribute, T>
+            is_same_size_sequence<Dest, Source>
         >::type
-        move_to(T const& val, Attribute& attr, tuple_attribute)
+        move_to(Source& src, Dest& dest, tuple_attribute)
         {
             // $$$ TODO There should be a fusion::move $$$
-            fusion::copy(val, attr);
+            fusion::copy(src, dest);
         }
 
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline typename enable_if<
-            is_size_one_sequence<Attribute>
+            is_size_one_sequence<Dest>
         >::type
-        move_to(T const& val, Attribute& attr, tuple_attribute)
+        move_to(Source& src, Dest& dest, tuple_attribute)
         {
-            traits::move_to(val, fusion::front(attr));
+            traits::move_to(src, fusion::front(dest));
         }
 
         template <typename T>
         inline void
-        move_to(T&& val, T& attr, tuple_attribute)
+        move_to(T&& src, T& dest, tuple_attribute)
         {
-            attr = std::move(val);
+            std::swap(dest, src);
         }
 
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline void
-        move_to(T const& val, Attribute& attr, variant_attribute, mpl::false_)
+        move_to(Source& src, Dest& dest, variant_attribute, mpl::false_)
         {
-            attr = val;
+            dest = std::move(src);
         }
 
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline void
-        move_to(T const& val, Attribute& attr, variant_attribute, mpl::true_)
+        move_to(Source& src, Dest& dest, variant_attribute, mpl::true_)
         {
-            attr = fusion::front(val);
+            dest = std::move(fusion::front(src));
         }
 
-        template <typename T, typename Attribute>
+        template <typename Source, typename Dest>
         inline void
-        move_to(T const& val, Attribute& attr, variant_attribute tag)
+        move_to(Source& src, Dest& dest, variant_attribute tag)
         {
-            move_to(val, attr, tag, is_size_one_sequence<T>());
+            move_to(src, dest, tag, is_size_one_sequence<Source>());
         }
 
         template <typename T>
         inline void
-        move_to(T&& val, T& attr, variant_attribute tag)
+        move_to(T& src, T& dest, variant_attribute tag)
         {
-            attr = std::move(val);
+            std::swap(dest, src);
         }
 
         template <typename Iterator>
         inline void
-        move_to(Iterator const&, Iterator const&, unused_type, unused_attribute)
-        {
-        }
+        move_to(Iterator, Iterator, unused_type, unused_attribute) {}
 
-        template <typename Iterator, typename Attribute>
+        template <typename Iterator, typename Dest>
         inline void
-        move_to(Iterator const& first, Iterator const& last, Attribute& attr, container_attribute)
+        move_to(Iterator first, Iterator last, Dest& dest, container_attribute)
         {
             // $$$ fixme: use CP traits! $$$
-            if (attr.empty())
+            if (dest.empty())
             {
-                attr = Attribute(first, last);
+                Dest src(first, last);
+                dest.swap(src);
             }
             else
             {
-                attr.reserve(attr.size() + std::distance(first, last));
+                dest.reserve(dest.size() + std::distance(first, last));
                 for (Iterator i = first; i != last; ++i)
-                    attr.push_back(*i);
+                    dest.push_back(std::move(*i));
             }
         }
     }
 
-    template <typename T, typename Attribute>
+    template <typename Source, typename Dest>
     inline void
-    move_to(T&& val, Attribute& attr)
+    move_to(Source& src, Dest& dest)
     {
-        detail::move_to(val, attr, typename attribute_category<Attribute>::type());
+        detail::move_to(src, dest, typename attribute_category<Dest>::type());
     }
 
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Dest>
     inline void
-    move_to(Iterator const& first, Iterator const& last, Attribute& attr)
+    move_to(Iterator first, Iterator last, Dest& dest)
     {
-        detail::move_to(first, last, attr, typename attribute_category<Attribute>::type());
+        detail::move_to(first, last, dest, typename attribute_category<Dest>::type());
     }
-
 }}}
 
 #endif
