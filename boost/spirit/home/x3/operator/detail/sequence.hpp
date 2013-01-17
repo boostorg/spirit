@@ -149,7 +149,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename L, typename R, typename Attribute>
     struct partition_attribute<L, R, Attribute,
-        typename enable_if_c<(!L::has_attribute)>::type>
+        typename enable_if_c<(!L::has_attribute && R::has_attribute)>::type>
     {
         typedef unused_type l_part;
         typedef Attribute& r_part;
@@ -169,7 +169,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename L, typename R, typename Attribute>
     struct partition_attribute<L, R, Attribute,
-        typename enable_if_c<(!R::has_attribute)>::type>
+        typename enable_if_c<(L::has_attribute && !R::has_attribute)>::type>
     {
         typedef Attribute& l_part;
         typedef unused_type r_part;
@@ -179,6 +179,26 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static Attribute& left(Attribute& s)
         {
             return s;
+        }
+
+        static unused_type right(Attribute& s)
+        {
+            return unused;
+        }
+    };
+
+    template <typename L, typename R, typename Attribute>
+    struct partition_attribute<L, R, Attribute,
+        typename enable_if_c<(!L::has_attribute && !R::has_attribute)>::type>
+    {
+        typedef unused_type l_part;
+        typedef unused_type r_part;
+        typedef pass_sequence_attribute_unused l_pass;
+        typedef pass_sequence_attribute_unused r_pass;
+
+        static unused_type left(Attribute& s)
+        {
+            return unused;
         }
 
         static unused_type right(Attribute& s)

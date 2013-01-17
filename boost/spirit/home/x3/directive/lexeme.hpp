@@ -23,10 +23,10 @@ namespace boost { namespace spirit { namespace x3
     template <typename Subject>
     struct lexeme_directive : unary_parser<Subject, lexeme_directive<Subject>>
     {
-        typedef unary_parser<Subject, lexeme_directive<Subject> > base_t;
+        typedef unary_parser<Subject, lexeme_directive<Subject> > base_type;
 
         lexeme_directive(Subject const& subject)
-          : base_t(subject) {}
+          : base_type(subject) {}
 
         typedef typename
             traits::attribute_of<Subject>::type

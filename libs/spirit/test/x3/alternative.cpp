@@ -8,12 +8,18 @@
 #include <boost/detail/lightweight_test.hpp>
 //~ #include <boost/mpl/print.hpp>
 #include <boost/spirit/home/x3/operator/alternative.hpp>
+#include <boost/spirit/home/x3/operator/sequence.hpp>
+#include <boost/spirit/home/x3/operator/plus.hpp>
+#include <boost/spirit/home/x3/operator/kleene.hpp>
+#include <boost/spirit/home/x3/directive/omit.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/numeric.hpp>
 //~ #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant.hpp>
 //~ #include <boost/assert.hpp>
+#include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/at.hpp>
 
 #include <string>
 #include <iostream>
@@ -82,7 +88,7 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
     //~ using boost::spirit::x3::_1;
-    //~ using boost::spirit::x3::omit;
+    using boost::spirit::x3::omit;
 
 
     {
@@ -114,19 +120,18 @@ main()
         BOOST_TEST(boost::get<char>(v) == 'x');
     }
 
-    //~ {   // Make sure that we are using the actual supplied attribute types
-        //~ // from the variant and not the expected type.
-        //~ // $$$ Fixed: <2/19/2011> JDG $$$
-         //~ boost::variant<int, std::string> v;
-         //~ BOOST_TEST((test_attr("12345", int_ | +char_, v)));
-         //~ BOOST_TEST(boost::get<int>(v) == 12345);
+    {   // Make sure that we are using the actual supplied attribute types
+        // from the variant and not the expected type.
+         boost::variant<int, std::string> v;
+         BOOST_TEST((test_attr("12345", int_ | +char_, v)));
+         BOOST_TEST(boost::get<int>(v) == 12345);
 
-         //~ BOOST_TEST((test_attr("abc", int_ | +char_, v)));
-         //~ BOOST_TEST(boost::get<std::string>(v) == "abc");
+         BOOST_TEST((test_attr("abc", int_ | +char_, v)));
+         BOOST_TEST(boost::get<std::string>(v) == "abc");
 
-         //~ BOOST_TEST((test_attr("12345", +char_ | int_, v)));
-         //~ BOOST_TEST(boost::get<std::string>(v) == "12345");
-    //~ }
+         BOOST_TEST((test_attr("12345", +char_ | int_, v)));
+         BOOST_TEST(boost::get<std::string>(v) == "12345");
+    }
 
     //~ {   // test action
 
@@ -144,28 +149,28 @@ main()
         BOOST_TEST((test_attr("rock", lit("rock") | lit('x'), x)));
     }
 
-    //~ {
-        //~ // test if alternatives with all components having unused
-        //~ // attributes have an unused attribute
+    {
+        // test if alternatives with all components having unused
+        // attributes have an unused attribute
 
-        //~ using boost::fusion::vector;
-        //~ using boost::fusion::at_c;
+        using boost::fusion::vector;
+        using boost::fusion::at_c;
 
-        //~ vector<char, char> v;
-        //~ BOOST_TEST((test_attr("abc",
-            //~ char_ >> (omit[char_] | omit[char_]) >> char_, v)));
-        //~ BOOST_TEST((at_c<0>(v) == 'a'));
-        //~ BOOST_TEST((at_c<1>(v) == 'c'));
-    //~ }
+        vector<char, char> v;
+        BOOST_TEST((test_attr("abc",
+            char_ >> (omit[char_] | omit[char_]) >> char_, v)));
+        BOOST_TEST((at_c<0>(v) == 'a'));
+        BOOST_TEST((at_c<1>(v) == 'c'));
+    }
 
-    //~ {
-        //~ // Test that we can still pass a "compatible" attribute to
-        //~ // an alternate even if its "expected" attribute is unused type.
+    {
+        // Test that we can still pass a "compatible" attribute to
+        // an alternate even if its "expected" attribute is unused type.
 
-        //~ std::string s;
-        //~ BOOST_TEST((test_attr("...", *(char_('.') | char_(',')), s)));
-        //~ BOOST_TEST(s == "...");
-    //~ }
+        std::string s;
+        BOOST_TEST((test_attr("...", *(char_('.') | char_(',')), s)));
+        BOOST_TEST(s == "...");
+    }
 
     //~ {   // make sure collapsing eps works as expected
         //~ // (compile check only)
