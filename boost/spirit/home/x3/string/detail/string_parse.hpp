@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -30,7 +30,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             ch = *++str;
         }
 
-        spirit::traits::assign_to(first, i, attr);
+        spirit::traits::move_to(first, i, attr);
         first = i;
         return true;
     }
@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         for (; stri != str_last; ++stri, ++i)
             if (i == last || (*stri != *i))
                 return false;
-        spirit::traits::assign_to(first, i, attr);
+        spirit::traits::move_to(first, i, attr);
         first = i;
         return true;
     }

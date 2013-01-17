@@ -14,7 +14,7 @@
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/support/traits/is_variant.hpp>
-#include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/variant/variant.hpp>
 
@@ -279,7 +279,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         if (p.parse(first, last, context, attr_))
         {
             if (!pass::is_alternative)
-                traits::assign_to(attr_, attr);
+                traits::move_to(attr_, attr);
             return true;
         }
         return false;

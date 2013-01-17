@@ -72,7 +72,8 @@ namespace boost { namespace spirit { namespace x3
         {
             typedef spirit::context<ID, this_type const, Context> our_context_type;
             our_context_type our_context(*this,  context);
-            return detail::parse_rule<attribute_type>::call(rhs, first, last, our_context, attr);
+            return detail::parse_rule<attribute_type>::call(
+                rhs, first, last, our_context, attr);
         }
 
         RHS rhs;

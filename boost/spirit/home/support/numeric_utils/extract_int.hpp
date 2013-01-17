@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 #include <boost/spirit/home/support/numeric_utils/detail/extract_int.hpp>
 #include <boost/assert.hpp>
 
@@ -82,7 +82,7 @@ namespace boost { namespace spirit
             T attr;
             if (call(first, last, attr))
             {
-                traits::assign_to(attr, attr_);
+                traits::move_to(attr, attr_);
                 return true;
             }
             return false;
@@ -136,7 +136,7 @@ namespace boost { namespace spirit
             T attr;
             if (call(first, last, attr))
             {
-                traits::assign_to(attr, attr_);
+                traits::move_to(attr, attr_);
                 return true;
             }
             return false;

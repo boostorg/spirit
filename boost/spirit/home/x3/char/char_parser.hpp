@@ -13,7 +13,7 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
-#include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace x3
 
             if (first != last && this->derived().test(*first, context))
             {
-                spirit::traits::assign_to(*first, attr);
+                spirit::traits::move_to(*first, attr);
                 ++first;
                 return true;
             }

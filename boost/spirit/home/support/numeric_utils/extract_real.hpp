@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/numeric_utils/pow10.hpp>
 #include <boost/spirit/home/support/numeric_utils/sign.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 #include <boost/assert.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
@@ -153,7 +154,7 @@ namespace boost { namespace spirit
                     p.parse_inf(first, last, n))
                 {
                     // If we got a negative sign, negate the number
-                    traits::assign_to(traits::negate(neg, n), attr);
+                    traits::move_to(traits::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return early
                 }
 
@@ -248,13 +249,13 @@ namespace boost { namespace spirit
                     p.parse_inf(first, last, n))
                 {
                     // If we got a negative sign, negate the number
-                    traits::assign_to(traits::negate(neg, n), attr);
+                    traits::move_to(traits::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
             }
 
             // If we got a negative sign, negate the number
-            traits::assign_to(traits::negate(neg, n), attr);
+            traits::move_to(traits::negate(neg, n), attr);
 
             // Success!!!
             return true;

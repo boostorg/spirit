@@ -18,6 +18,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/traits/attribute_type.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/iteration/local.hpp>
@@ -330,7 +331,7 @@ namespace boost { namespace spirit { namespace detail
 
             if (count + leading_zeros >= MinDigits)
             {
-                traits::assign_to(val, attr);
+                traits::move_to(val, attr);
                 first = it;
                 return true;
             }
@@ -414,7 +415,7 @@ namespace boost { namespace spirit { namespace detail
                 {
                     if (count == 0) // must have at least one digit
                         return false;
-                    traits::assign_to(0, attr);
+                    traits::move_to(0, attr);
                     first = it;
                     return true;
                 }
@@ -431,7 +432,7 @@ namespace boost { namespace spirit { namespace detail
             {
                 if (count == 0) // must have at least one digit
                     return false;
-                traits::assign_to(val, attr);
+                traits::move_to(val, attr);
                 first = it;
                 return true;
             }
@@ -445,7 +446,7 @@ namespace boost { namespace spirit { namespace detail
                   , SPIRIT_NUMERIC_INNER_LOOP, _)
             }
 
-            traits::assign_to(val, attr);
+            traits::move_to(val, attr);
             first = it;
             return true;
         }

@@ -15,18 +15,8 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 #include <boost/spirit/home/support/traits/optional_traits.hpp>
-
-//~ #include <boost/spirit/home/support/unused.hpp>
-//~ #include <boost/spirit/home/qi/detail/attributes.hpp>
-//~ #include <boost/spirit/home/support/traits/handles_container.hpp>
-//~ #include <boost/spirit/home/support/traits/container.hpp>
-//~ #include <boost/spirit/home/qi/core/parser.hpp>
-//~ #include <boost/spirit/home/qi/core/compiler.hpp>
-//~ #include <boost/spirit/home/qi/detail/assign_to.hpp>
-//~ #include <boost/optional.hpp>
-//~ #include <vector>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -69,7 +59,7 @@ namespace boost { namespace spirit { namespace x3
             if (this->subject.parse(first, last, context, val))
             {
                 // assign the parsed value into our attribute
-                spirit::traits::assign_to(val, attr);
+                spirit::traits::move_to(val, attr);
             }
             return true;
         }

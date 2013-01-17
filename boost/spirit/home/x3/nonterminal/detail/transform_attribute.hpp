@@ -9,7 +9,7 @@
 #define SPIRIT_X3_DETAIL_ATTRIBUTES_APR_18_2010_0458PM
 
 #include <boost/spirit/home/support/traits/transform_attribute.hpp>
-#include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/support/traits/move_to.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace x3
@@ -23,9 +23,9 @@ namespace boost { namespace spirit { namespace x3
 
         static Transformed pre(Exposed&) { return Transformed(); }
 
-        static void post(Exposed& val, Transformed const& attr)
+        static void post(Exposed& val, Transformed&& attr)
         {
-            traits::assign_to(attr, val);
+            traits::move_to(std::move(attr), val);
         }
     };
 
@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed>
-    void post_transform(Exposed& dest, Transformed const& attr)
+    void post_transform(Exposed& dest, Transformed&& attr)
     {
         return transform_attribute<Exposed, Transformed, x3::parser_id>::post(dest, attr);
     }
