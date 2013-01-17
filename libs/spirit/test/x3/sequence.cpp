@@ -8,6 +8,7 @@
 #include <boost/spirit/home/x3/operator/sequence.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 #include <boost/spirit/home/x3/operator/plus.hpp>
+#include <boost/spirit/home/x3/operator/optional.hpp>
 #include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/nonterminal/rule.hpp>
 #include <boost/spirit/home/x3/char.hpp>
@@ -155,6 +156,7 @@ main()
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, unused)));
     }
 
+    // $$$ no_case not yet implememnted $$$
     //~ {
         //~ BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
         //~ BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
@@ -214,6 +216,7 @@ main()
         v.clear();
         BOOST_TEST(!test_attr("abcd", char_ >> *(char_ >> char_), v));
 
+        // $$$ hold not yet implementd $$$
         //~ v.clear();
         //~ BOOST_TEST(test_attr("abcdef", char_ >> *hold[char_ >> char_] >> char_, v));
         //~ BOOST_TEST(v.size() == 6);
@@ -232,17 +235,16 @@ main()
         BOOST_TEST(v[2] == 'c');
     }
 
-    // $$$ Not yet working $$$
-    //~ { // alternative forms of attributes. Allow sequences to take in
-      //~ // stl containers.
+    { // alternative forms of attributes. Allow sequences to take in
+      // stl containers.
 
-        //~ std::vector<char> v;
-        //~ BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
-        //~ BOOST_TEST(v.size() == 3);
-        //~ BOOST_TEST(v[0] == 'a');
-        //~ BOOST_TEST(v[1] == 'b');
-        //~ BOOST_TEST(v[2] == 'c');
-    //~ }
+        std::vector<char> v;
+        BOOST_TEST(test_attr("abc", char_ >> -(+char_), v));
+        BOOST_TEST(v.size() == 3);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+        BOOST_TEST(v[2] == 'c');
+    }
 
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
@@ -253,6 +255,7 @@ main()
 
         s.clear();
 
+        // $$$ hold not yet implemented $$$
         //~ using boost::spirit::qi::hold;
 
         //~ rule<char const*, std::string()> word = +char_("abc");
@@ -305,35 +308,35 @@ main()
         BOOST_TEST(s == "abc1abc2abc3");
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ std::vector<char> v;
-        //~ BOOST_TEST(test_attr("ab", char_ >> -char_, v));
-        //~ BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+    {
+        std::vector<char> v;
+        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
 
-        //~ v.clear();
-        //~ BOOST_TEST(test_attr("a", char_ >> -char_, v));
-        //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
+        v.clear();
+        BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 1 && v[0] == 'a');
 
-        //~ v.clear();
-        //~ BOOST_TEST(test_attr("a", char_, v));
-        //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
-    //~ }
-
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ std::vector<boost::optional<char> > v;
-        //~ BOOST_TEST(test_attr("ab", char_ >> -char_, v));
-        //~ BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
-
-        //~ v.clear();
-        //~ BOOST_TEST(test_attr("a", char_ >> -char_, v));
-        //~ BOOST_TEST(v.size() == 2 && v[0] == 'a' && !v[1]);
-
+        // $$$ should this be allowed? I don't think so... $$$
         //~ v.clear();
         //~ BOOST_TEST(test_attr("a", char_, v));
         //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
-    //~ }
+    }
+
+    {
+        std::vector<boost::optional<char> > v;
+        BOOST_TEST(test_attr("ab", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
+
+        v.clear();
+        BOOST_TEST(test_attr("a", char_ >> -char_, v));
+        BOOST_TEST(v.size() == 2 && v[0] == 'a' && !v[1]);
+
+        // $$$ should this be allowed? I don't think so... $$$
+        //~ v.clear();
+        //~ BOOST_TEST(test_attr("a", char_, v));
+        //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
+    }
 
     // $$$ Not yet implemented $$$
     //~ {   // test action
