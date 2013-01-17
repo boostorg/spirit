@@ -12,10 +12,12 @@
 #include <boost/spirit/home/x3/operator/plus.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 #include <boost/spirit/home/x3/directive/omit.hpp>
+#include <boost/spirit/home/x3/nonterminal/rule.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/numeric.hpp>
-//~ #include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/spirit/home/x3/auxiliary/eps.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant.hpp>
 //~ #include <boost/assert.hpp>
 #include <boost/fusion/include/vector.hpp>
@@ -55,25 +57,25 @@
     //~ }
 //~ };
 
-//~ struct DIgnore
-//~ {
-	//~ std::string text;
-//~ };
+struct di_ignore
+{
+    std::string text;
+};
 
-//~ struct DInclude
-//~ {
-	//~ std::string FileName;
-//~ };
+struct di_include
+{
+    std::string FileName;
+};
 
-//~ BOOST_FUSION_ADAPT_STRUCT(
-    //~ DIgnore,
-    //~ (std::string, text)
-//~ )
+BOOST_FUSION_ADAPT_STRUCT(
+    di_ignore,
+    (std::string, text)
+)
 
-//~ BOOST_FUSION_ADAPT_STRUCT(
-    //~ DInclude,
-    //~ (std::string, FileName)
-//~ )
+BOOST_FUSION_ADAPT_STRUCT(
+    di_include,
+    (std::string, FileName)
+)
 
 struct undefined {};
 
@@ -87,7 +89,7 @@ main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
-    //~ using boost::spirit::x3::_1;
+    using boost::spirit::x3::unused;
     using boost::spirit::x3::omit;
 
 
@@ -172,20 +174,21 @@ main()
         BOOST_TEST(s == "...");
     }
 
+    // $$$ Not yet implemented
     //~ {   // make sure collapsing eps works as expected
         //~ // (compile check only)
 
         //~ using boost::spirit::x3::rule;
-        //~ using boost::spirit::x3::_val;
-        //~ using boost::spirit::x3::_1;
-        //~ using boost::spirit::eps;
-        //~ rule<const wchar_t*, wchar_t()> r1, r2, r3;
+        //~ using boost::spirit::x3::eps;
+
+        //~ rule<class r1, wchar_t> r1;
+        //~ rule<class r2, wchar_t> r2;
+        //~ rule<class r3, wchar_t> r3;
 
         //~ r3  = ((eps >> r1))[_val += _1];
         //~ r3  = ((r1 ) | r2)[_val += _1];
 
-        //~ r3 %= ((eps >> r1) | r2);
-        //~ r3 = ((eps >> r1) | r2)[_val += _1];
+        //~ r3 = ((eps >> r1) | r2);
     //~ }
 
     //~ // make sure the attribute of an alternative gets properly collapsed
@@ -212,6 +215,7 @@ main()
         //~ BOOST_ASSERT(v[4] == 'z');
     //~ }
 
+    // $$$ Not yet implemented $$$
     //~ {
         //~ using boost::spirit::x3::eps;
 
@@ -246,23 +250,33 @@ main()
         //~ BOOST_TEST(i == 10);
     //~ }
 
-    //~ {
-        //~ //compile test only (bug_march_10_2011_8_35_am)
-        //~ typedef boost::variant<double, std::string> value_type;
+    // $$$ No longer relevant? $$$
+    {
+        //compile test only (bug_march_10_2011_8_35_am)
+        typedef boost::variant<double, std::string> value_type;
 
-        //~ using boost::spirit::x3::rule;
-        //~ using boost::spirit::x3::eps;
-        //~ rule<std::string::const_iterator, value_type()> r1 = r1 | eps;
-    //~ }
+        using boost::spirit::x3::rule;
+        using boost::spirit::x3::eps;
 
-    //~ {
-        //~ using boost::spirit::x3::rule;
-        //~ typedef boost::variant<DIgnore, DInclude> DLine;
+        rule<class r1, value_type> r1;
+        auto r1_ = r1 = r1 | eps; // left recursive!
 
-        //~ rule<char*, DIgnore()> ignore;
-        //~ rule<char*, DInclude()> include;
-        //~ rule<char*, DLine()> line = include | ignore;
-    //~ }
+        unused = r1_; // silence unused local warning
+    }
+
+    {
+        using boost::spirit::x3::rule;
+        typedef boost::variant<di_ignore, di_include> d_line;
+
+        rule<class ignore, di_ignore> ignore;
+        rule<class include, di_include> include;
+        rule<class line, d_line> line;
+
+        auto start =
+            line = include | ignore;
+
+        unused = start; // silence unused local warning
+    }
 
     return boost::report_errors();
 }
