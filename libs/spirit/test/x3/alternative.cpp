@@ -9,7 +9,9 @@
 //~ #include <boost/mpl/print.hpp>
 #include <boost/spirit/home/x3/operator/alternative.hpp>
 #include <boost/spirit/home/x3/operator/sequence.hpp>
+#include <boost/spirit/home/x3/operator/optional.hpp>
 #include <boost/spirit/home/x3/operator/plus.hpp>
+#include <boost/spirit/home/x3/operator/list.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 #include <boost/spirit/home/x3/directive/omit.hpp>
 #include <boost/spirit/home/x3/nonterminal/rule.hpp>
@@ -215,32 +217,40 @@ main()
         //~ BOOST_ASSERT(v[4] == 'z');
     //~ }
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ using boost::spirit::x3::eps;
+    {
+        std::string s;
+        using boost::spirit::x3::eps;
 
-        //~ // testing a sequence taking a container as attribute
-        //~ std::string s;
-        //~ BOOST_TEST( (test_attr("abc,a,b,c",
-            //~ char_ >> char_ >> (char_ % ','), s )) );
-        //~ BOOST_TEST(s == "abcabc");
+        // test having a variant<container, ...>
+        BOOST_TEST( (test_attr("a,b", (char_ % ',') | eps, s )) );
+        BOOST_TEST(s == "ab");
+    }
 
-        //~ // test having an optional<container> inside a sequence
-        //~ s.erase();
-        //~ BOOST_TEST( (test_attr("ab",
-            //~ char_ >> char_ >> -(char_ % ','), s )) );
-        //~ BOOST_TEST(s == "ab");
+    {
+        using boost::spirit::x3::eps;
 
-        //~ // test having a variant<container, ...> inside a sequence
-        //~ s.erase();
-        //~ BOOST_TEST( (test_attr("ab",
-            //~ char_ >> char_ >> ((char_ % ',') | eps), s )) );
-        //~ BOOST_TEST(s == "ab");
-        //~ s.erase();
-        //~ BOOST_TEST( (test_attr("abc",
-            //~ char_ >> char_ >> ((char_ % ',') | eps), s )) );
-        //~ BOOST_TEST(s == "abc");
-    //~ }
+        // testing a sequence taking a container as attribute
+        std::string s;
+        BOOST_TEST( (test_attr("abc,a,b,c",
+            char_ >> char_ >> (char_ % ','), s )) );
+        BOOST_TEST(s == "abcabc");
+
+        // test having an optional<container> inside a sequence
+        s.erase();
+        BOOST_TEST( (test_attr("ab",
+            char_ >> char_ >> -(char_ % ','), s )) );
+        BOOST_TEST(s == "ab");
+
+        // test having a variant<container, ...> inside a sequence
+        s.erase();
+        BOOST_TEST( (test_attr("ab",
+            char_ >> char_ >> ((char_ % ',') | eps), s )) );
+        BOOST_TEST(s == "ab");
+        s.erase();
+        BOOST_TEST( (test_attr("abc",
+            char_ >> char_ >> ((char_ % ',') | eps), s )) );
+        BOOST_TEST(s == "abc");
+    }
 
     //~ {
         //~ using boost::spirit::x3::int_;

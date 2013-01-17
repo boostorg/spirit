@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/support/traits/is_variant.hpp>
 #include <boost/spirit/home/support/traits/assign_to.hpp>
+#include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/variant/variant.hpp>
 
 #include <boost/mpl/copy_if.hpp>
@@ -32,6 +33,34 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
+    template <typename Variant, typename Expected>
+    struct has_substitute_impl
+    {
+        // Find the type from the variant that can be a substitute for Expected.
+        // return true_ if one is found, else false_
+
+        typedef Variant variant_type;
+        typedef typename variant_type::types types;
+        typedef typename mpl::end<types>::type end;
+
+        typedef typename
+            mpl::find_if<types, is_same<mpl::_1, Expected> >::type
+        iter_1;
+
+        typedef typename
+            mpl::eval_if<
+                is_same<iter_1, end>,
+                mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >,
+                mpl::identity<iter_1>
+            >::type
+        iter;
+
+        typedef mpl::not_<is_same<iter, end>> type;
+    };
+
+    template <typename Variant, typename Expected>
+    struct has_substitute : has_substitute_impl<Variant, Expected>::type {};
+
     template <typename Variant, typename Expected>
     struct find_substitute
     {
@@ -248,6 +277,46 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
         return false;
     }
+
+
+    template <typename Left, typename Right>
+    struct parse_into_container_impl<alternative<Left, Right>>
+    {
+        typedef alternative<Left, Right> parser_type;
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::true_)
+        {
+            return parse_alternative(parser, first, last, context, attr);
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::false_)
+        {
+            return parse_into_container_base_impl<parser_type>::call(
+                parser, first, last, context, attr);
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr)
+        {
+            typedef typename
+                traits::attribute_of<parser_type>::type
+            attribute_type;
+
+            return call(parser, first, last, context, attr
+              , has_substitute<attribute_type, Attribute>());
+        }
+    };
 
 }}}}
 

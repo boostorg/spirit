@@ -54,6 +54,13 @@ namespace boost { namespace spirit { namespace traits
             attr = val;
         }
 
+        template <typename T, typename Attribute>
+        inline typename enable_if<is_container<T>>::type
+        assign_to(T const& val, Attribute& attr, container_attribute)
+        {
+            attr.assign(val.begin(), val.end());
+        }
+
         namespace detail
         {
             template <typename A, typename B>

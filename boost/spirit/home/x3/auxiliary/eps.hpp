@@ -11,18 +11,16 @@
 #pragma once
 #endif
 
-//~ #include <boost/spirit/home/x3/core/domain.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
-//~ #include <boost/spirit/home/support/unused.hpp>
-//~ #include <boost/fusion/include/at.hpp>
-//~ #include <boost/type_traits/is_convertible.hpp>
+#include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
     struct semantic_predicate : parser<semantic_predicate>
     {
         typedef unused_type attribute_type;
+        static bool const has_attribute = false;
 
         semantic_predicate(bool predicate)
           : predicate(predicate) {}
@@ -42,6 +40,7 @@ namespace boost { namespace spirit { namespace x3
     struct lazy_semantic_predicate : parser<lazy_semantic_predicate<F>>
     {
         typedef unused_type attribute_type;
+        static bool const has_attribute = false;
 
         lazy_semantic_predicate(F f)
           : f(f) {}
@@ -60,6 +59,7 @@ namespace boost { namespace spirit { namespace x3
     struct eps_parser : parser<eps_parser>
     {
         typedef unused_type attribute_type;
+        static bool const has_attribute = false;
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
