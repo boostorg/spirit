@@ -160,6 +160,7 @@ namespace boost { namespace spirit { namespace traits
     {
         detail::move_to(first, last, attr, typename attribute_category<Attribute>::type());
     }
+
 }}}
 
 #endif
