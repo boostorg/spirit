@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ================================================_==============================*/
-#if !defined(BOOST_SPIRIT_STRING_TRAITS_OCTOBER_2008_1252PM)
-#define BOOST_SPIRIT_STRING_TRAITS_OCTOBER_2008_1252PM
+#if !defined(BOOST_SPIRIT_TUPLE_TRAITS_JANUARY_2012_1132PM)
+#define BOOST_SPIRIT_TUPLE_TRAITS_JANUARY_2012_1132PM
 
 #if defined(_MSC_VER)
 #pragma once
