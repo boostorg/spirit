@@ -6,10 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/x3/char.hpp>
-//~ #include <boost/spirit/include/qi_action.hpp>
-//~ #include <boost/spirit/include/phoenix_core.hpp>
-//~ #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/home/x3.hpp>
 
 #include <iostream>
 #include "test.hpp"

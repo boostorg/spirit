@@ -5,9 +5,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/x3/directive/lexeme.hpp>
-#include <boost/spirit/home/x3/char.hpp>
-#include <boost/spirit/home/x3/operator.hpp>
+#include <boost/spirit/home/x3.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -28,6 +26,7 @@ main()
         BOOST_TEST((test(" 12345", lexeme[+digit], space)));
         BOOST_TEST((test(" 12345  ", lexeme[+digit], space, false)));
 
+        // $$$ Not yet implemented
         //~ rule<char const*, space_type> rr;
         //~ rule<char const*> r;
         //~ r = +digit;

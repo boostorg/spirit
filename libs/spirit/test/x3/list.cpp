@@ -10,12 +10,7 @@
 #include <map>
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/x3/operator/list.hpp>
-#include <boost/spirit/home/x3/operator/plus.hpp>
-#include <boost/spirit/home/x3/operator/sequence.hpp>
-#include <boost/spirit/home/x3/operator/optional.hpp>
-#include <boost/spirit/home/x3/char.hpp>
-#include <boost/spirit/home/x3/numeric.hpp>
+#include <boost/spirit/home/x3.hpp>
 
 #include <string>
 #include <iostream>

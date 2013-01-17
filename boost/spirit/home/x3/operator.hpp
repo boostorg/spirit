@@ -16,11 +16,11 @@
 //~ #include <boost/spirit/home/x3/operator/sequential_or.hpp>
 //~ #include <boost/spirit/home/x3/operator/permutation.hpp>
 //~ #include <boost/spirit/home/x3/operator/difference.hpp>
-//~ #include <boost/spirit/home/x3/operator/list.hpp>
-//~ #include <boost/spirit/home/x3/operator/optional.hpp>
+#include <boost/spirit/home/x3/operator/list.hpp>
+#include <boost/spirit/home/x3/operator/optional.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 #include <boost/spirit/home/x3/operator/plus.hpp>
-//~ #include <boost/spirit/home/x3/operator/and_predicate.hpp>
-//~ #include <boost/spirit/home/x3/operator/not_predicate.hpp>
+#include <boost/spirit/home/x3/operator/and_predicate.hpp>
+#include <boost/spirit/home/x3/operator/not_predicate.hpp>
 
 #endif

@@ -9,11 +9,7 @@
 // boostinspect:noascii
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/x3/nonterminal/rule.hpp>
-#include <boost/spirit/home/x3/char.hpp>
-#include <boost/spirit/home/x3/string.hpp>
-#include <boost/spirit/home/x3/numeric.hpp>
-#include <boost/spirit/home/x3/operator.hpp>
+#include <boost/spirit/home/x3.hpp>
 
 //~ #include <boost/fusion/include/std_pair.hpp>
 

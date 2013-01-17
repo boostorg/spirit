@@ -61,6 +61,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Variant, typename Expected>
     struct has_substitute : has_substitute_impl<Variant, Expected>::type {};
 
+    template <typename Expected>
+    struct has_substitute<unused_type, Expected> : mpl::true_ {};
+
+    template <typename Expected>
+    struct has_substitute<unused_type const, Expected> : mpl::true_ {};
+
+
     template <typename Variant, typename Expected>
     struct find_substitute
     {

@@ -7,18 +7,7 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 //~ #include <boost/mpl/print.hpp>
-#include <boost/spirit/home/x3/operator/alternative.hpp>
-#include <boost/spirit/home/x3/operator/sequence.hpp>
-#include <boost/spirit/home/x3/operator/optional.hpp>
-#include <boost/spirit/home/x3/operator/plus.hpp>
-#include <boost/spirit/home/x3/operator/list.hpp>
-#include <boost/spirit/home/x3/operator/kleene.hpp>
-#include <boost/spirit/home/x3/directive/omit.hpp>
-#include <boost/spirit/home/x3/nonterminal/rule.hpp>
-#include <boost/spirit/home/x3/char.hpp>
-#include <boost/spirit/home/x3/string.hpp>
-#include <boost/spirit/home/x3/numeric.hpp>
-#include <boost/spirit/home/x3/auxiliary/eps.hpp>
+#include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant.hpp>
 //~ #include <boost/assert.hpp>

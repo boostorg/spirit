@@ -8,13 +8,7 @@
 #include <vector>
 
 #include <boost/detail/lightweight_test.hpp>
-
-#include <boost/spirit/home/x3/operator/kleene.hpp>
-#include <boost/spirit/home/x3/operator/plus.hpp>
-#include <boost/spirit/home/x3/numeric.hpp>
-#include <boost/spirit/home/x3/char.hpp>
-#include <boost/spirit/home/x3/string.hpp>
-#include <boost/spirit/home/x3/directive.hpp>
+#include <boost/spirit/home/x3.hpp>
 
 #include <string>
 #include <iostream>
