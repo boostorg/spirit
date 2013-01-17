@@ -136,7 +136,6 @@ main()
         BOOST_TEST((at_c<0>(attr) == 'a'));
     }
 
-    // $$$ Not yet implemented $$$
     {
         // make sure single element tuples get passed through if the rhs
         // has a single element tuple as its attribute

@@ -177,7 +177,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct get_alternative_types<alternative<LL, LR>, R>
     {
         typedef typename
-            mpl::push_front<
+            mpl::push_back<
                 typename get_alternative_types<LL, LR>::type
               , typename traits::attribute_of<R>::type
             >::type
@@ -188,7 +188,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct get_alternative_types<L, alternative<RL, RR>>
     {
         typedef typename
-            mpl::push_back<
+            mpl::push_front<
                 typename get_alternative_types<RL, RR>::type
               , typename traits::attribute_of<L>::type
             >::type

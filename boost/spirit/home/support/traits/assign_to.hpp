@@ -24,18 +24,20 @@ namespace boost { namespace spirit { namespace traits
     void assign_to(T const& val, Attribute& attr);
 
     template <typename Attribute>
-    void assign_to(unused_type, Attribute& attr);
+    inline void assign_to(unused_type, Attribute& attr) {}
 
     template <typename T>
-    void assign_to(T const& val, unused_type);
+    inline void assign_to(T const& val, unused_type) {}
+
+    inline void assign_to(unused_type, unused_type) {}
 
     template <typename Iterator, typename Attribute>
     void
     assign_to(Iterator const& first, Iterator const& last, Attribute& attr);
 
     template <typename Iterator>
-    void
-    assign_to(Iterator const& first, Iterator const& last, unused_type);
+    inline void
+    assign_to(Iterator const& first, Iterator const& last, unused_type) {}
 
     namespace detail
     {
@@ -55,13 +57,24 @@ namespace boost { namespace spirit { namespace traits
         namespace detail
         {
             template <typename A, typename B>
+            struct has_same_size
+              : mpl::bool_<(
+                    fusion::result_of::size<A>::value ==
+                    fusion::result_of::size<B>::value
+                )>
+            {};
+
+            template <typename T, std::size_t N>
+            struct has_size
+              : mpl::bool_<(fusion::result_of::size<T>::value == N)>
+            {};
+
+            template <typename A, typename B>
             struct is_same_size_sequence
               : mpl::and_<
                     fusion::traits::is_sequence<A>
                   , fusion::traits::is_sequence<B>
-                  , mpl::equal_to<
-                        fusion::result_of::size<A>
-                      , fusion::result_of::size<B>>
+                  , has_same_size<A, B>
                 >
             {};
 
@@ -69,9 +82,7 @@ namespace boost { namespace spirit { namespace traits
             struct is_size_one_sequence
               : mpl::and_<
                     fusion::traits::is_sequence<Seq>
-                  , mpl::equal_to<
-                        fusion::result_of::size<Seq>
-                      , mpl::int_<1>>
+                  , has_size<Seq, 1>
                 >
             {};
         }
@@ -146,29 +157,11 @@ namespace boost { namespace spirit { namespace traits
         detail::assign_to(val, attr, typename attribute_category<Attribute>::type());
     }
 
-    template <typename Attribute>
-    inline void
-    assign_to(unused_type, Attribute& attr)
-    {
-    }
-
-    template <typename T>
-    inline void
-    assign_to(T const& val, unused_type)
-    {
-    }
-
     template <typename Iterator, typename Attribute>
     inline void
     assign_to(Iterator const& first, Iterator const& last, Attribute& attr)
     {
         detail::assign_to(first, last, attr, typename attribute_category<Attribute>::type());
-    }
-
-    template <typename Iterator>
-    inline void
-    assign_to(Iterator const& first, Iterator const& last, unused_type)
-    {
     }
 }}}
 

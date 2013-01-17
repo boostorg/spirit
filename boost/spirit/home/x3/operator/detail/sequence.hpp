@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
+#include <boost/spirit/home/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
 #include <boost/fusion/include/begin.hpp>
@@ -215,7 +216,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct get_sequence_types<sequence<LL, LR>, R>
     {
         typedef typename
-            mpl::push_front<
+            mpl::push_back<
                 typename get_sequence_types<LL, LR>::type
               , typename traits::attribute_of<R>::type
             >::type
@@ -226,7 +227,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct get_sequence_types<L, sequence<RL, RR>>
     {
         typedef typename
-            mpl::push_back<
+            mpl::push_front<
                 typename get_sequence_types<RL, RR>::type
               , typename traits::attribute_of<L>::type
             >::type
@@ -342,14 +343,59 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Left, typename Right>
     struct parse_into_container_impl<sequence<Left, Right>>
     {
+        typedef sequence<Left, Right> parser_type;
+        typedef typename
+            traits::attribute_of<parser_type>::type
+        attribute_type;
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            sequence<Left, Right> const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::false_)
+        {
+            return parse_sequence(parser.left, parser.right
+              , first, last, context, attr, traits::container_attribute());
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            sequence<Left, Right> const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::true_)
+        {
+            // synthesized attribute needs to be default constructed
+            typedef typename
+                traits::container_value<Attribute>::type
+            value_type;
+            value_type val = value_type();
+
+            if (!parse_sequence(parser.left, parser.right
+                , first, last, context, val
+                , typename traits::attribute_category<value_type>::type()))
+                return false;
+
+            // push the parsed value into our attribute
+            traits::push_back(attr, val);
+            return true;
+        }
+
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
             sequence<Left, Right> const& parser
           , Iterator& first, Iterator const& last
           , Context& context, Attribute& attr)
         {
-            return parse_sequence(parser.left, parser.right
-              , first, last, context, attr, traits::container_attribute());
+
+            typedef typename traits::container_value<Attribute>::type value_type;
+
+            //~ static_assert(fusion::traits::is_sequence<value_type>::value, "duh!");
+            //~ static_assert(traits::is_substitute<attribute_type, value_type>::value, "duh!");
+            //~ int xxx = attribute_type();
+
+
+            return call(parser, first, last, context, attr
+              , traits::is_substitute<attribute_type, value_type>());
         }
     };
 
