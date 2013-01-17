@@ -30,7 +30,7 @@ namespace boost { namespace spirit { namespace traits
     };
 
     template <>
-    struct push_back_container<x_attr, char>
+    struct push_back_container<x_attr>
     {
         static bool call(x_attr& /*c*/, char /*val*/)
         {

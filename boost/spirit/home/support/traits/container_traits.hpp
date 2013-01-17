@@ -92,22 +92,23 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename T>
-    bool push_back(Container& c, T const& val);
+    bool push_back(Container& c, T&& val);
 
-    template <typename Container, typename T, typename Enable = void>
+    template <typename Container, typename Enable = void>
     struct push_back_container
     {
-        static bool call(Container& c, T const& val)
+        template <typename T>
+        static bool call(Container& c, T&& val)
         {
-            c.insert(c.end(), val);
+            c.insert(c.end(), std::move(val));
             return true;
         }
     };
 
     template <typename Container, typename T>
-    inline bool push_back(Container& c, T const& val)
+    inline bool push_back(Container& c, T&& val)
     {
-        return push_back_container<Container, T>::call(c, val);
+        return push_back_container<Container>::call(c, std::move(val));
     }
 
     template <typename Container>
@@ -125,6 +126,38 @@ namespace boost { namespace spirit { namespace traits
     inline bool push_back(unused_type, unused_type)
     {
         return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename Iterator>
+    bool append(Container& c, Iterator first, Iterator last);
+
+    template <typename Container, typename Enable = void>
+    struct append_container
+    {
+        // Not all containers have "reserve"
+        template <typename Container_>
+        static void reserve(Container_& c, std::size_t size) {}
+
+        template <typename T>
+        static void reserve(std::vector<T>& c, std::size_t size)
+        {
+            c.reserve(size);
+        }
+
+        template <typename Iterator>
+        static bool call(Container& c, Iterator first, Iterator last)
+        {
+            reserve(c, c.size() + std::distance(first, last));
+            c.insert(c.end(), first, last);
+            return true;
+        }
+    };
+
+    template <typename Container, typename Iterator>
+    inline bool append(Container& c, Iterator first, Iterator last)
+    {
+        return append_container<Container>::call(c, first, last);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -136,17 +136,14 @@ namespace boost { namespace spirit { namespace traits
         inline void
         move_to(Iterator first, Iterator last, Dest& dest, container_attribute)
         {
-            // $$$ fixme: use CP traits! $$$
-            if (dest.empty())
+            if (is_empty(dest))
             {
                 Dest src(first, last);
-                dest.swap(src);
+                std::swap(dest, src);
             }
             else
             {
-                dest.reserve(dest.size() + std::distance(first, last));
-                for (Iterator i = first; i != last; ++i)
-                    dest.push_back(std::move(*i));
+                append(dest, first, last);
             }
         }
     }
