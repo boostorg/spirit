@@ -344,13 +344,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct parse_into_container_impl<sequence<Left, Right>>
     {
         typedef sequence<Left, Right> parser_type;
-        typedef typename
-            traits::attribute_of<parser_type>::type
-        attribute_type;
 
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
-            sequence<Left, Right> const& parser
+            parser_type const& parser
           , Iterator& first, Iterator const& last
           , Context& context, Attribute& attr, mpl::false_)
         {
@@ -360,39 +357,27 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
-            sequence<Left, Right> const& parser
+            parser_type const& parser
           , Iterator& first, Iterator const& last
           , Context& context, Attribute& attr, mpl::true_)
         {
-            // synthesized attribute needs to be default constructed
-            typedef typename
-                traits::container_value<Attribute>::type
-            value_type;
-            value_type val = value_type();
-
-            if (!parse_sequence(parser.left, parser.right
-                , first, last, context, val
-                , typename traits::attribute_category<value_type>::type()))
-                return false;
-
-            // push the parsed value into our attribute
-            traits::push_back(attr, val);
-            return true;
+            return parse_into_container_base_impl<parser_type>::call(
+                parser, first, last, context, attr);
         }
 
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
-            sequence<Left, Right> const& parser
+            parser_type const& parser
           , Iterator& first, Iterator const& last
           , Context& context, Attribute& attr)
         {
+            typedef typename
+                traits::attribute_of<parser_type>::type
+            attribute_type;
 
-            typedef typename traits::container_value<Attribute>::type value_type;
-
-            //~ static_assert(fusion::traits::is_sequence<value_type>::value, "duh!");
-            //~ static_assert(traits::is_substitute<attribute_type, value_type>::value, "duh!");
-            //~ int xxx = attribute_type();
-
+            typedef typename
+                traits::container_value<Attribute>::type
+            value_type;
 
             return call(parser, first, last, context, attr
               , traits::is_substitute<attribute_type, value_type>());

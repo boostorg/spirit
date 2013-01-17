@@ -13,7 +13,6 @@
 #endif
 
 #include <boost/spirit/home/support/traits/container_traits.hpp>
-#include <boost/spirit/home/support/traits/optional_traits.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/bool.hpp>
@@ -70,10 +69,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, typename Expected>
     struct is_substitute<optional<T>, optional<Expected>>
       : is_substitute<T, Expected> {};
-
-    template <typename T>
-    struct is_substitute<T, T, typename disable_if<is_optional<T>>::type>
-      : mpl::true_ {};
 }}}
 
 #endif
