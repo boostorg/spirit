@@ -51,6 +51,13 @@ namespace boost { namespace spirit { namespace x3
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    enum class skip_flag
+    {
+        post_skip,      // force post-skipping in phrase_parse()
+        dont_post_skip  // inhibit post-skipping in phrase_parse()
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
     inline bool
     phrase_parse(
@@ -58,7 +65,8 @@ namespace boost { namespace spirit { namespace x3
       , Iterator last
       , Parser const& p
       , Skipper const& s
-      , Attribute& attr)
+      , Attribute& attr
+      , skip_flag post_skip = skip_flag::post_skip)
     {
         // Make sure the iterator is at least a forward_iterator. If you got a
         // compilation error here, then you are using an input_iterator while
@@ -71,7 +79,8 @@ namespace boost { namespace spirit { namespace x3
         // no suitable conversion from p to a parser.
         context<skipper_tag, Skipper const> skipper(as_parser(s));
         bool r = as_parser(p).parse(first, last, skipper, attr);
-        x3::skip_over(first, last, skipper);
+        if (post_skip == skip_flag::post_skip)
+            x3::skip_over(first, last, skipper);
         return r;
     }
 
@@ -82,9 +91,10 @@ namespace boost { namespace spirit { namespace x3
         Iterator& first
       , Iterator last
       , Parser const& p
-      , Skipper const& s)
+      , Skipper const& s
+      , skip_flag post_skip = skip_flag::post_skip)
     {
-        return phrase_parse(first, last, p, s, unused);
+        return phrase_parse(first, last, p, s, unused, post_skip);
     }
 }}}
 

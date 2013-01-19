@@ -34,6 +34,8 @@ main()
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
+    using boost::spirit::x3::phrase_parse;
+    using boost::spirit::x3::skip_flag;
 
     //~ namespace phx = boost::phoenix;
 
@@ -62,6 +64,8 @@ main()
             BOOST_TEST(test("aaaabababaaabba", start, space, false));
         }
     }
+
+        // $$$ NO loner relevant $$$
     //~ { // basic tests with direct initialization
 
         //~ rule<char const*> a ('a');
@@ -99,52 +103,58 @@ main()
         }
     }
 
-/*
-
     { // basic tests w/ skipper but no final post-skip
 
-        rule<char const*, space_type> a, b, c, start;
+        auto a = rule<class a>()
+            = lit('a');
 
-        a = 'a';
-        b = 'b';
-        c = 'c';
+        auto b = rule<class b>()
+            = lit('b');
 
-        a.name("a");
-        b.name("b");
-        c.name("c");
-        start.name("start");
+        auto c = rule<class c>()
+            = lit('c');
 
-        debug(a);
-        debug(b);
-        debug(c);
-        debug(start);
+        // $$$ Not yet implemented $$$
+        //~ a.name("a");
+        //~ b.name("b");
+        //~ c.name("c");
+        //~ start.name("start");
 
-        start = *(a | b) >> c;
+        //~ debug(a);
+        //~ debug(b);
+        //~ debug(c);
+        //~ debug(start);
 
-        using boost::spirit::x3::phrase_parse;
-        using boost::spirit::x3::skip_flag;
         {
+            auto start = rule<class start>() = *(a | b) >> c;
+
             char const *s1 = " a b a a b b a c ... "
               , *const e1 = s1 + std::strlen(s1);
-            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_postskip)
+            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_post_skip)
               && s1 == e1 - 5);
+
         }
 
-        start = (a | b) >> (start | c);
         {
-            char const *s1 = " a a a a b a b a b a a a b b b c "
-              , *const e1 = s1 + std::strlen(s1);
-            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::postskip)
-              && s1 == e1);
-        }
-        {
-            char const *s1 = " a a a a b a b a b a a a b b b c "
-              , *const e1 = s1 + std::strlen(s1);
-            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_postskip)
-              && s1 == e1 - 1);
+            rule<class start> start;
+
+            auto p =
+                start = (a | b) >> (start | c);
+            {
+                char const *s1 = " a a a a b a b a b a a a b b b c "
+                  , *const e1 = s1 + std::strlen(s1);
+                BOOST_TEST(phrase_parse(s1, e1, p, space, skip_flag::post_skip)
+                  && s1 == e1);
+            }
+            {
+                char const *s1 = " a a a a b a b a b a a a b b b c "
+                  , *const e1 = s1 + std::strlen(s1);
+                BOOST_TEST(phrase_parse(s1, e1, p, space, skip_flag::dont_post_skip)
+                  && s1 == e1 - 1);
+            }
         }
     }
-*/
+
     return boost::report_errors();
 }
 
