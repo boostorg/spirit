@@ -212,28 +212,28 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T>
     typename extract_c_string<T*>::char_type const*
-    get_c_string (T* str)
+    get_c_string(T* str)
     {
         return extract_c_string<T*>::call(str);
     }
 
     template <typename T>
     typename extract_c_string<T const*>::char_type const*
-    get_c_string (T const* str)
+    get_c_string(T const* str)
     {
         return extract_c_string<T const*>::call(str);
     }
 
     template <typename String>
     typename extract_c_string<String>::char_type const*
-    get_c_string (String& str)
+    get_c_string(String& str)
     {
         return extract_c_string<String>::call(str);
     }
 
     template <typename String>
     typename extract_c_string<String>::char_type const*
-    get_c_string (String const& str)
+    get_c_string(String const& str)
     {
         return extract_c_string<String>::call(str);
     }

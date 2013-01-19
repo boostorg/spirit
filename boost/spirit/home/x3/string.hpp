@@ -12,6 +12,6 @@
 #endif
 
 #include <boost/spirit/home/x3/string/literal_string.hpp>
-//~ #include <boost/spirit/home/x3/string/symbols.hpp>
+#include <boost/spirit/home/x3/string/symbols.hpp>
 
 #endif
