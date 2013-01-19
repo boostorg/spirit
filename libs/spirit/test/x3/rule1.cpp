@@ -65,7 +65,7 @@ main()
         }
     }
 
-        // $$$ NO loner relevant $$$
+        // $$$ No longer relevant $$$
     //~ { // basic tests with direct initialization
 
         //~ rule<char const*> a ('a');

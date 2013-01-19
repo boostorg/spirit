@@ -186,9 +186,9 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
-    namespace calculator_grammar // $$$ JDG $$$ use int_ for now!
+    namespace calculator_grammar
     {
-        using x3::int_;
+        using x3::uint_;
         using x3::char_;
 
         x3::rule<class expression, ast::program> const expression;
@@ -210,7 +210,7 @@ namespace client
             ;
 
         auto const factor_def =
-                int_
+                uint_
             |   '(' >> expression >> ')'
             |   (char_('-') >> factor)
             |   (char_('+') >> factor)

@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace traits
 
         template <typename T>
         inline void
-        move_to(T&& src, T& dest, tuple_attribute)
+        move_to(T& src, T& dest, tuple_attribute)
         {
             std::swap(dest, src);
         }

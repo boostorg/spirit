@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_INT_APR_17_2006_0830AM)
-#define BOOST_SPIRIT_INT_APR_17_2006_0830AM
+#if !defined(BOOST_SPIRIT_UINT_APR_17_2006_0901AM)
+#define BOOST_SPIRIT_UINT_APR_17_2006_0901AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -24,7 +24,7 @@ namespace boost { namespace spirit { namespace x3
       , unsigned Radix = 10
       , unsigned MinDigits = 1
       , int MaxDigits = -1>
-    struct int_parser : parser<int_parser<T, Radix, MinDigits, MaxDigits>>
+    struct uint_parser : parser<uint_parser<T, Radix, MinDigits, MaxDigits>>
     {
         // check template parameter 'Radix' for validity
         static_assert(
@@ -38,28 +38,40 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
-            typedef extract_int<T, Radix, MinDigits, MaxDigits> extract;
+            typedef extract_uint<T, Radix, MinDigits, MaxDigits> extract;
             x3::skip_over(first, last, context);
             return extract::call(first, last, attr);
         }
     };
 
-#define BOOST_SPIRIT_INT_PARSER(int_type, name)                                 \
-    typedef int_parser<int_type> name##type;                                    \
+#define BOOST_SPIRIT_UINT_PARSER(uint_type, name)                               \
+    typedef uint_parser<uint_type> name##type;                                  \
     name##type const name = name##type();                                       \
     /***/
 
-    BOOST_SPIRIT_INT_PARSER(long, long_)
-    BOOST_SPIRIT_INT_PARSER(short, short_)
-    BOOST_SPIRIT_INT_PARSER(int, int_)
-    BOOST_SPIRIT_INT_PARSER(long long, long_long)
+    BOOST_SPIRIT_UINT_PARSER(unsigned long, ulong_)
+    BOOST_SPIRIT_UINT_PARSER(unsigned short, ushort_)
+    BOOST_SPIRIT_UINT_PARSER(unsigned int, uint_)
+    BOOST_SPIRIT_UINT_PARSER(unsigned long long, ulong_long)
 
-    BOOST_SPIRIT_INT_PARSER(int8_t, int8)
-    BOOST_SPIRIT_INT_PARSER(int16_t, int16)
-    BOOST_SPIRIT_INT_PARSER(int32_t, int32)
-    BOOST_SPIRIT_INT_PARSER(int64_t, int64)
+    BOOST_SPIRIT_UINT_PARSER(uint8_t, uint8)
+    BOOST_SPIRIT_UINT_PARSER(uint16_t, uint16)
+    BOOST_SPIRIT_UINT_PARSER(uint32_t, uint32)
+    BOOST_SPIRIT_UINT_PARSER(uint64_t, uint64)
 
-#undef BOOST_SPIRIT_INT_PARSER
+#undef BOOST_SPIRIT_UINT_PARSER
+
+#define BOOST_SPIRIT_UINT_PARSER(uint_type, radix, name)                        \
+    typedef uint_parser<uint_type, radix> name##type;                           \
+    name##type const name = name##type();                                       \
+    /***/
+
+    BOOST_SPIRIT_UINT_PARSER(unsigned, 2, bin)
+    BOOST_SPIRIT_UINT_PARSER(unsigned, 8, oct)
+    BOOST_SPIRIT_UINT_PARSER(unsigned, 16, hex)
+
+#undef BOOST_SPIRIT_UINT_PARSER
+
 
 }}}
 
