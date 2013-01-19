@@ -110,13 +110,13 @@ main()
     //~ }
 
     // $$$ Not yet implemented $$$
-    { // context (w/locals) tests
+    //~ { // context (w/locals) tests
 
-        rule<char const*, locals<char> > a; // 1 local
-        a = alpha[_a = _1] >> char_(_a);
-        BOOST_TEST(test("aa", a));
-        BOOST_TEST(!test("ax", a));
-    }
+        //~ rule<char const*, locals<char> > a; // 1 local
+        //~ a = alpha[_a = _1] >> char_(_a);
+        //~ BOOST_TEST(test("aa", a));
+        //~ BOOST_TEST(!test("ax", a));
+    //~ }
 
     // $$$ Not yet implemented $$$
     //~ { // context (w/args and locals) tests

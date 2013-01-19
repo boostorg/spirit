@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2011 Jan Frederick Eick
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -28,7 +29,7 @@ namespace boost { namespace spirit { namespace x3
     {
         // check template parameter 'Radix' for validity
         static_assert(
-            (Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16),
+            (Radix >= 2 && Radix <= 36),
             "Error Unsupported Radix");
 
         typedef T attribute_type;

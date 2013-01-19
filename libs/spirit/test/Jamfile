@@ -125,10 +125,10 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run x3/tst.cpp
        #~ $(BOOST_ROOT)/libs/system/build//boost_system
                                    #~ : : : : qi_tst ]
-     #~ [ run x3/uint1.cpp            : : : : qi_uint1 ]
+     [ run x3/uint1.cpp            : : : : qi_uint1 ]
      #~ [ run x3/uint2.cpp            : : : : qi_uint2 ]
      #~ [ run x3/uint3.cpp            : : : : qi_uint3 ]
-     #~ [ run x3/uint_radix.cpp       : : : : qi_uint_radix ]
+     [ run x3/uint_radix.cpp       : : : : qi_uint_radix ]
      #~ [ run x3/utree1.cpp           : : : : qi_utree1 ]
      #~ [ run x3/utree2.cpp           : : : : qi_utree2 ]
      #~ [ run x3/utree3.cpp           : : : : qi_utree3 ]
