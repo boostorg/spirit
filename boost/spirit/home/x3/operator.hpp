@@ -15,7 +15,7 @@
 #include <boost/spirit/home/x3/operator/alternative.hpp>
 //~ #include <boost/spirit/home/x3/operator/sequential_or.hpp>
 //~ #include <boost/spirit/home/x3/operator/permutation.hpp>
-//~ #include <boost/spirit/home/x3/operator/difference.hpp>
+#include <boost/spirit/home/x3/operator/difference.hpp>
 #include <boost/spirit/home/x3/operator/list.hpp>
 #include <boost/spirit/home/x3/operator/optional.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>

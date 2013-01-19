@@ -1,0 +1,69 @@
+/*=============================================================================
+    Copyright (c) 2001-2013 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+=============================================================================*/
+#if !defined(SPIRIT_DIFFERENCE_FEBRUARY_11_2007_1250PM)
+#define SPIRIT_DIFFERENCE_FEBRUARY_11_2007_1250PM
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+#include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/support/traits/attribute_of.hpp>
+
+namespace boost { namespace spirit { namespace x3
+{
+    template <typename Left, typename Right>
+    struct difference : binary_parser<Left, Right, difference<Left, Right>>
+    {
+        typedef binary_parser<Left, Right, difference<Left, Right>> base_type;
+        typedef typename traits::attribute_of<Left>::type attribute_type;
+        static bool const handles_container = Left::handles_container;
+        static bool const has_attribute = Left::has_attribute;
+
+        difference(Left const& left, Right const& right)
+          : base_type(left, right) {}
+
+        template <typename Iterator, typename Context, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr) const
+        {
+            // Try Right first
+            Iterator start = first;
+            if (this->right.parse(first, last, context, unused))
+            {
+                // Right succeeds, we fail.
+                first = start;
+                return false;
+            }
+            // Right fails, now try Left
+            return this->left.parse(first, last, context, attr);
+        }
+
+        template <typename Left_, typename Right_>
+        difference<Left_, Right_>
+        make(Left_ const& left, Right_ const& right) const
+        {
+            return difference<Left_, Right_>(left, right);
+        }
+    };
+
+    template <typename Left, typename Right>
+    inline difference<
+        typename extension::as_parser<Left>::value_type
+      , typename extension::as_parser<Right>::value_type>
+    operator-(Left const& left, Right const& right)
+    {
+        typedef difference<
+            typename extension::as_parser<Left>::value_type
+          , typename extension::as_parser<Right>::value_type>
+        result_type;
+
+        return result_type(as_parser(left), as_parser(right));
+    }
+}}}
+
+#endif
