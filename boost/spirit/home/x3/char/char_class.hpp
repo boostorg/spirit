@@ -17,6 +17,7 @@
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/iso8859_1.hpp>
+#include <boost/spirit/home/support/char_encoding/unicode.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -108,6 +109,7 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_CHAR_CLASSES(standard_wide)
     BOOST_SPIRIT_CHAR_CLASSES(ascii)
     BOOST_SPIRIT_CHAR_CLASSES(iso8859_1)
+    BOOST_SPIRIT_CHAR_CLASSES(unicode)
 
 #undef BOOST_SPIRIT_CHAR_CLASS
 #undef BOOST_SPIRIT_CHAR_CLASSES
@@ -137,6 +139,8 @@ namespace boost { namespace spirit { namespace x3
     using standard::space;
     using standard::blank;
     using standard::upper;
+
+    // $$$ TODO Add more unicode classifiers $$$
 
 }}}
 
