@@ -16,4 +16,8 @@
 #include <boost/spirit/home/x3/char/char.hpp>
 #include <boost/spirit/home/x3/char/char_class.hpp>
 
+#if defined(BOOST_SPIRIT_UNICODE)
+#include <boost/spirit/home/x3/char/unicode.hpp>
+#endif
+
 #endif

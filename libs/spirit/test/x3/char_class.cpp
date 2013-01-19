@@ -192,8 +192,8 @@ main()
         BOOST_TEST(test(L"f", xdigit));
         BOOST_TEST(!test(L"g", xdigit));
 
-        //~ BOOST_TEST(test(L"A", alphabetic));
-        //~ BOOST_TEST(test(L"9", decimal_number));
+        BOOST_TEST(test(L"A", alphabetic));
+        BOOST_TEST(test(L"9", decimal_number));
         // $$$ TODO $$$ Add more unicode tests
 
 // needed for VC7.1 only

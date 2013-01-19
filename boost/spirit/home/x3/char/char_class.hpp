@@ -17,7 +17,6 @@
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/iso8859_1.hpp>
-#include <boost/spirit/home/support/char_encoding/unicode.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -37,15 +36,10 @@ namespace boost { namespace spirit { namespace x3
     struct upper_tag {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Encoding, typename Tag>
-    struct char_class
-      : char_parser<char_class<Encoding, Tag>>
+    template <typename Encoding>
+    struct char_class_base
     {
-        typedef Encoding encoding;
-        typedef Tag tag;
         typedef typename Encoding::char_type char_type;
-        typedef char_type attribute_type;
-        static bool const has_attribute = true;
 
 #define BOOST_SPIRIT_CLASSIFY(name)                                             \
         template <typename Char>                                                \
@@ -73,12 +67,23 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_CLASSIFY(upper)
 
 #undef BOOST_SPIRIT_CLASSIFY
+    };
+
+    template <typename Encoding, typename Tag>
+    struct char_class
+      : char_parser<char_class<Encoding, Tag>>
+    {
+        typedef Encoding encoding;
+        typedef Tag tag;
+        typedef typename Encoding::char_type char_type;
+        typedef char_type attribute_type;
+        static bool const has_attribute = true;
 
         template <typename Char, typename Context>
         bool test(Char ch, Context&) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch))
-                && is(tag(), ch);
+                && char_class_base<Encoding>::is(tag(), ch);
         }
     };
 
@@ -109,7 +114,6 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_CHAR_CLASSES(standard_wide)
     BOOST_SPIRIT_CHAR_CLASSES(ascii)
     BOOST_SPIRIT_CHAR_CLASSES(iso8859_1)
-    BOOST_SPIRIT_CHAR_CLASSES(unicode)
 
 #undef BOOST_SPIRIT_CHAR_CLASS
 #undef BOOST_SPIRIT_CHAR_CLASSES
@@ -139,9 +143,6 @@ namespace boost { namespace spirit { namespace x3
     using standard::space;
     using standard::blank;
     using standard::upper;
-
-    // $$$ TODO Add more unicode classifiers $$$
-
 }}}
 
 #endif
