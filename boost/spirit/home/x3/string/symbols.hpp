@@ -209,8 +209,7 @@ public:
             if (value_type* val_ptr
                 = lookup->find(first, last, Filter()))
             {
-				attribute_type attr_ = *val_ptr;
-                spirit::traits::move_to(attr_, attr);
+                spirit::traits::move_to(*val_ptr, attr);
                 return true;
             }
             return false;

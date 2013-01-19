@@ -119,8 +119,8 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run x3/sequential_or.cpp    : : : : qi_sequential_or ]
      #~ [ run x3/skip.cpp             : : : : qi_skip ]
      #~ [ run x3/stream.cpp           : : : : qi_stream ]
-     #~ [ run x3/symbols1.cpp         : : : : qi_symbols1 ]
-     #~ [ run x3/symbols2.cpp         : : : : qi_symbols2 ]
+     [ run x3/symbols1.cpp         : : : : qi_symbols1 ]
+     [ run x3/symbols2.cpp         : : : : qi_symbols2 ]
      #~ [ run x3/terminal_ex.cpp      : : : : qi_terminal_ex ]
      [ run x3/tst.cpp
        $(BOOST_ROOT)/libs/system/build//boost_system

@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 typename make_attribute::type, Attribute, parser_id>
             transform;
 
-            typename make_attribute::type made_attr = make_attribute::call(attr);
+            typename make_attribute::value_type made_attr = make_attribute::call(attr);
             typename transform::type attr_ = transform::pre(made_attr);
 
             if (rhs.parse(first, last, context, attr_))

@@ -17,6 +17,7 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/size.hpp>
+#include <boost/fusion/include/move.hpp>
 #include <utility>
 
 namespace boost { namespace spirit { namespace traits
@@ -50,7 +51,7 @@ namespace boost { namespace spirit { namespace traits
         inline void
         move_to(T& src, T& dest, plain_attribute)
         {
-            std::swap(dest, src);
+            dest = std::move(src);
         }
 
         template <typename Source, typename Dest>
@@ -71,7 +72,7 @@ namespace boost { namespace spirit { namespace traits
         inline typename enable_if<is_container<T>>::type
         move_to(T& src, T& dest, container_attribute)
         {
-            std::swap(dest, src);
+            dest = std::move(src);
         }
 
         template <typename Source, typename Dest>
@@ -80,8 +81,7 @@ namespace boost { namespace spirit { namespace traits
         >::type
         move_to(Source& src, Dest& dest, tuple_attribute)
         {
-            // $$$ TODO There should be a fusion::move $$$
-            fusion::copy(src, dest);
+            fusion::move(std::move(src), dest);
         }
 
         template <typename Source, typename Dest>
@@ -97,7 +97,7 @@ namespace boost { namespace spirit { namespace traits
         inline void
         move_to(T& src, T& dest, tuple_attribute)
         {
-            std::swap(dest, src);
+            dest = std::move(src);
         }
 
         template <typename Source, typename Dest>
@@ -125,7 +125,7 @@ namespace boost { namespace spirit { namespace traits
         inline void
         move_to(T& src, T& dest, variant_attribute tag)
         {
-            std::swap(dest, src);
+            dest = std::move(src);
         }
 
         template <typename Iterator>
@@ -137,14 +137,9 @@ namespace boost { namespace spirit { namespace traits
         move_to(Iterator first, Iterator last, Dest& dest, container_attribute)
         {
             if (is_empty(dest))
-            {
-                Dest src(first, last);
-                std::swap(dest, src);
-            }
+                dest = Dest(first, last);
             else
-            {
                 append(dest, first, last);
-            }
         }
     }
 
