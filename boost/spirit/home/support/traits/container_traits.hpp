@@ -227,6 +227,73 @@ namespace boost { namespace spirit { namespace traits
         return &unused;
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Enable = void>
+    struct deref_iterator
+    {
+        typedef typename boost::detail::iterator_traits<Iterator>::reference type;
+        static type call(Iterator& it)
+        {
+            return *it;
+        }
+    };
+
+    template <typename Iterator>
+    typename deref_iterator<Iterator>::type
+    deref(Iterator& it)
+    {
+        return deref_iterator<Iterator>::call(it);
+    }
+
+    inline unused_type
+    deref(unused_type const*)
+    {
+        return unused;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Enable = void>
+    struct next_iterator
+    {
+        static void call(Iterator& it)
+        {
+            ++it;
+        }
+    };
+
+    template <typename Iterator>
+    void next(Iterator& it)
+    {
+        next_iterator<Iterator>::call(it);
+    }
+
+    inline void next(unused_type const*)
+    {
+        // do nothing
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Enable = void>
+    struct compare_iterators
+    {
+        static bool call(Iterator const& it1, Iterator const& it2)
+        {
+            return it1 == it2;
+        }
+    };
+
+    template <typename Iterator>
+    bool compare(Iterator& it1, Iterator& it2)
+    {
+        return compare_iterators<Iterator>::call(it1, it2);
+    }
+
+    inline bool compare(unused_type const*, unused_type const*)
+    {
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct build_container : mpl::identity<std::vector<T>> {};
