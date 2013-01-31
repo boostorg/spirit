@@ -30,6 +30,7 @@ main()
     using boost::spirit::x3::rule;
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_2;
+    using boost::spirit::x3::alnum;
 
     using boost::fusion::vector;
     using boost::fusion::at_c;
@@ -328,6 +329,23 @@ main()
         //~ v.clear();
         //~ BOOST_TEST(test_attr("a", char_, v));
         //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
+    }
+
+    {
+        typedef vector<std::string, std::string, int> attr_type;
+        attr_type attr;
+
+        auto node_name = +alnum;
+        auto param_name = +alnum;
+        auto param_value = int_;
+        auto node = node_name >> -('[' >> param_name >> '=' >> param_value >> ']');
+
+        BOOST_TEST(test_attr("xxx[yyy=123]", node, attr));
+
+        std::cout << attr << std::endl;
+
+        BOOST_TEST(attr == attr_type("xxx", "yyy", 123));
+
     }
 
     // $$$ Not yet implemented $$$
