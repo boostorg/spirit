@@ -331,22 +331,22 @@ main()
         //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
     }
 
-    {
-        typedef vector<std::string, std::string, int> attr_type;
-        attr_type attr;
+    //~ {
+        //~ typedef vector<std::string, std::string, int> attr_type;
+        //~ attr_type attr;
 
-        auto node_name = +alnum;
-        auto param_name = +alnum;
-        auto param_value = int_;
-        auto node = node_name >> -('[' >> param_name >> '=' >> param_value >> ']');
+        //~ auto node_name = +alnum;
+        //~ auto param_name = +alnum;
+        //~ auto param_value = int_;
+        //~ auto node = node_name >> -('[' >> param_name >> '=' >> param_value >> ']');
 
-        BOOST_TEST(test_attr("xxx[yyy=123]", node, attr));
+        //~ BOOST_TEST(test_attr("xxx[yyy=123]", node, attr));
 
-        std::cout << attr << std::endl;
+        //~ std::cout << attr << std::endl;
 
-        BOOST_TEST(attr == attr_type("xxx", "yyy", 123));
+        //~ BOOST_TEST(attr == attr_type("xxx", "yyy", 123));
 
-    }
+    //~ }
 
     // $$$ Not yet implemented $$$
     //~ {   // test action
