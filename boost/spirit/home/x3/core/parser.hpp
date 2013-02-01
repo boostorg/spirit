@@ -31,6 +31,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef Derived derived_type;
         static bool const handles_container = false;
+        static bool const is_pass_through_unary = false;
 
         Derived const& derived() const
         {

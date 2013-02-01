@@ -46,11 +46,20 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Parser>
+    template <typename Parser, typename Enable = void>
     struct sequence_size
     {
         static int const value = Parser::has_attribute;
     };
+
+    template <typename Parser>
+    struct sequence_size_subject
+      : sequence_size<typename Parser::subject_type> {};
+
+    template <typename Parser>
+    struct sequence_size<Parser
+      , typename enable_if_c<(Parser::is_pass_through_unary)>::type>
+      : sequence_size_subject<Parser> {};
 
     template <typename L, typename R>
     struct sequence_size<sequence<L, R>>
@@ -100,7 +109,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct pass_sequence_attribute_used :
         pass_sequence_attribute_front<Attribute> {};
 
-    template <typename Parser, typename Attribute>
+    template <typename Parser, typename Attribute, typename Enable = void>
     struct pass_sequence_attribute :
         mpl::if_<
             fusion::result_of::empty<Attribute>
@@ -110,6 +119,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename L, typename R, typename Attribute>
     struct pass_sequence_attribute<sequence<L, R>, Attribute>
       : pass_through_sequence_attribute<Attribute> {};
+
+    template <typename Parser, typename Attribute>
+    struct pass_sequence_attribute_subject :
+        pass_sequence_attribute<typename Parser::subject_type, Attribute> {};
+
+    template <typename Parser, typename Attribute>
+    struct pass_sequence_attribute<Parser, Attribute
+      , typename enable_if_c<(Parser::is_pass_through_unary)>::type>
+      : pass_sequence_attribute_subject<Parser, Attribute> {};
 
     template <typename L, typename R, typename Attribute, typename Enable = void>
     struct partition_attribute

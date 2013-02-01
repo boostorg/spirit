@@ -17,6 +17,7 @@
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/move_to.hpp>
 #include <boost/spirit/home/support/traits/optional_traits.hpp>
+#include <boost/spirit/home/support/traits/attribute_category.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -26,6 +27,7 @@ namespace boost { namespace spirit { namespace x3
         typedef unary_parser<Subject, optional<Subject>> base_type;
         typedef typename traits::attribute_of<Subject>::type subject_attribute;
         static bool const handles_container = true;
+        static bool const is_pass_through_unary = true;
 
         typedef typename
             traits::build_optional<subject_attribute>::type
@@ -34,20 +36,47 @@ namespace boost { namespace spirit { namespace x3
         optional(Subject const& subject)
           : base_type(subject) {}
 
+        // Attribute is a unused_type
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, unused_type, traits::unused_attribute) const
+        {
+            this->subject.parse(first, last, context, unused);
+            return true;
+        }
+
         // Attribute is a container
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_) const
+          , Context& context, Attribute& attr, traits::container_attribute) const
         {
             detail::parse_into_container(
                 this->subject, first, last, context, attr);
             return true;
         }
 
-        // Attribute is not a container
+        // Attribute is a tuple
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::false_) const
+          , Context& context, Attribute& attr, traits::tuple_attribute) const
+        {
+            this->subject.parse(first, last, context, attr);
+            return true;
+        }
+
+        // Attribute is plain
+        template <typename Iterator, typename Context, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, traits::plain_attribute) const
+        {
+            this->subject.parse(first, last, context, attr);
+            return true;
+        }
+
+        // Attribute is an optional
+        template <typename Iterator, typename Context, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, traits::optional_attribute) const
         {
             typedef typename
                 spirit::traits::optional_value<Attribute>::type
@@ -68,12 +97,8 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
-            typedef typename
-                spirit::traits::optional_value<Attribute>::type
-            value_type;
-
             return parse(first, last, context, attr
-              , traits::is_container<value_type>());
+              , typename traits::attribute_category<Attribute>::type());
         }
     };
 

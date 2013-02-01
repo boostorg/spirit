@@ -15,18 +15,19 @@
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/fusion/include/front.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
     template <typename Parser>
     struct parse_into_container_base_impl
     {
-        // Parser has attribute (synthesize)
+        // Parser has attribute (synthesize; Attribute is a container)
         template <typename Iterator, typename Context, typename Attribute>
-        static bool call(
+        static bool call_synthesize(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_)
+          , Context& context, Attribute& attr, mpl::false_)
         {
             // synthesized attribute needs to be default constructed
             typedef typename
@@ -40,6 +41,30 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // push the parsed value into our attribute
             traits::push_back(attr, val);
             return true;
+        }
+
+        // Parser has attribute (synthesize; Attribute is a single element fusion sequence)
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::true_)
+        {
+            static_assert(traits::has_size<Attribute, 1>::value,
+                "Expecting a single element fusion sequence");
+            return call_synthesize(parser, first, last, context,
+                fusion::front(attr), mpl::false_());
+        }
+
+        // Parser has attribute (synthesize)
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context& context, Attribute& attr, mpl::true_)
+        {
+            return call_synthesize(parser, first, last, context, attr
+              , fusion::traits::is_sequence<Attribute>());
         }
 
         // Parser has no attribute (pass unused)
