@@ -24,6 +24,7 @@ namespace boost { namespace spirit { namespace x3
     struct lexeme_directive : unary_parser<Subject, lexeme_directive<Subject>>
     {
         typedef unary_parser<Subject, lexeme_directive<Subject> > base_type;
+        static bool const is_pass_through_unary = true;
 
         lexeme_directive(Subject const& subject)
           : base_type(subject) {}
