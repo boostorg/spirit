@@ -19,11 +19,26 @@
 #include <boost/fusion/include/out.hpp>
 #include <ostream>
 
+//  The stream to use for debug output
+#if !defined(BOOST_SPIRIT_DEBUG_OUT)
+#define BOOST_SPIRIT_DEBUG_OUT std::cerr
+#endif
+
+//  number of tokens to print while debugging
+#if !defined(BOOST_SPIRIT_DEBUG_PRINT_SOME)
+#define BOOST_SPIRIT_DEBUG_PRINT_SOME 20
+#endif
+
+//  number of spaces to indent
+#if !defined(BOOST_SPIRIT_DEBUG_INDENT)
+#define BOOST_SPIRIT_DEBUG_INDENT 2
+#endif
+
 namespace boost { namespace spirit { namespace x3
 {
     namespace detail
     {
-        template<typename Char>
+        template <typename Char>
         inline void token_printer(std::ostream& o, Char c)
         {
             // allow customization of the token printer routine
@@ -83,17 +98,17 @@ namespace boost { namespace spirit { namespace x3
                     print_indent(indent);
                     out
                         << "<attributes>";
-                    traits::print_attribute(
-                        out,
-                        context.attributes
-                    );
+                    //~ traits::print_attribute(
+                        //~ out,
+                        //~ context.attributes
+                    //~ );
                     out
                         << "</attributes>";
-                    if (!fusion::empty(context.locals))
-                        out
-                            << "<locals>"
-                            << context.locals
-                            << "</locals>";
+                    //~ if (!fusion::empty(context.locals))
+                        //~ out
+                            //~ << "<locals>"
+                            //~ << context.locals
+                            //~ << "</locals>";
                     out << std::endl;
                     print_indent(--indent);
                     out
@@ -115,6 +130,20 @@ namespace boost { namespace spirit { namespace x3
         std::ostream& out;
         mutable int indent;
     };
+
+    namespace detail
+    {
+        typedef simple_trace<
+            BOOST_SPIRIT_DEBUG_INDENT, BOOST_SPIRIT_DEBUG_PRINT_SOME>
+        simple_trace_type;
+
+        inline simple_trace_type&
+        get_simple_trace()
+        {
+            static simple_trace_type tracer(BOOST_SPIRIT_DEBUG_OUT);
+            return tracer;
+        }
+    }
 }}}
 
 #endif

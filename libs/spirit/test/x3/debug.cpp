@@ -1,0 +1,121 @@
+/*=============================================================================
+    Copyright (c) 2001-2013 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+=============================================================================*/
+#define BOOST_SPIRIT_DEBUG
+
+#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/home/x3.hpp>
+#include <boost/fusion/include/std_pair.hpp>
+
+#include <string>
+#include <cstring>
+#include <iostream>
+#include "test.hpp"
+
+int
+main()
+{
+    using spirit_test::test_attr;
+    using spirit_test::test;
+
+    using namespace boost::spirit::x3::ascii;
+    //~ using namespace boost::spirit::x3::labels;
+    //~ using boost::spirit::x3::locals;
+    using boost::spirit::x3::rule;
+    using boost::spirit::x3::int_;
+    //~ using boost::spirit::x3::fail;
+    //~ using boost::spirit::x3::on_error;
+    //~ using boost::spirit::x3::debug;
+    using boost::spirit::x3::alpha;
+
+    //~ namespace phx = boost::phoenix;
+
+    { // basic tests
+
+        auto a = rule<class a>("a") = 'a';
+        auto b = rule<class b>("b") = 'b';
+        auto c = rule<class c>("c") = 'c';
+
+        {
+            auto start = *(a | b | c);
+            BOOST_TEST(test("abcabcacb", start));
+        }
+
+        {
+            rule<class start> start("start");
+            auto start_def =
+                start = (a | b) >> (start | b);
+
+            BOOST_TEST(test("aaaabababaaabbb", start_def));
+            BOOST_TEST(test("aaaabababaaabba", start_def, false));
+
+            // ignore the skipper!
+            BOOST_TEST(test("aaaabababaaabba", start_def, space, false));
+        }
+
+    }
+
+    //~ { // basic tests w/ skipper
+
+        //~ rule<char const*, space_type> a, b, c, start;
+
+        //~ a = 'a';
+        //~ b = 'b';
+        //~ c = 'c';
+        //~ // Test the debug-nodes interface:
+        //~ BOOST_SPIRIT_DEBUG_NODES((a)(b)(c));
+
+        //~ start = *(a | b | c);
+        //~ BOOST_SPIRIT_DEBUG_NODE(start);
+        //~ BOOST_TEST(test(" a b c a b c a c b ", start, space));
+
+        //~ start = (a | b) >> (start | b);
+        //~ BOOST_SPIRIT_DEBUG_NODE(start);
+        //~ BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start, space));
+        //~ BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
+    //~ }
+
+    //~ { // std::container attributes
+
+        //~ typedef boost::fusion::vector<int, char> fs;
+        //~ rule<char const*, std::vector<fs>(), space_type> start;
+        //~ start = *(int_ >> alpha);
+
+        //~ BOOST_SPIRIT_DEBUG_NODE(start);
+        //~ BOOST_TEST(test("1 a 2 b 3 c", start, space));
+    //~ }
+
+    //~ { // error handling
+
+        //~ using namespace boost::spirit::x3::ascii;
+        //~ using boost::phoenix::construct;
+        //~ using boost::phoenix::bind;
+
+        //~ rule<char const*> r;
+        //~ r = '(' > int_ > ',' > int_ > ')';
+
+        //~ on_error<fail>
+        //~ (
+            //~ r, std::cout
+                //~ << phx::val("Error! Expecting: ")
+                //~ << _4
+                //~ << phx::val(", got: \"")
+                //~ << construct<std::string>(_3, _2)
+                //~ << phx::val("\"")
+                //~ << std::endl
+        //~ );
+
+        //~ BOOST_SPIRIT_DEBUG_NODE(r);
+        //~ BOOST_TEST(test("(123,456)", r));
+        //~ BOOST_TEST(!test("(abc,def)", r));
+        //~ BOOST_TEST(!test("(123,456]", r));
+        //~ BOOST_TEST(!test("(123;456)", r));
+        //~ BOOST_TEST(!test("[123,456]", r));
+    //~ }
+
+    return boost::report_errors();
+}
+

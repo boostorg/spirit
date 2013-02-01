@@ -29,8 +29,8 @@ namespace boost { namespace spirit { namespace x3
         static bool const handles_container =
             traits::is_container<Attribute>::value;
 
-        rule_definition(RHS rhs)
-          : rhs(rhs) {}
+        rule_definition(RHS rhs, char const* name)
+          : rhs(rhs), name(name) {}
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
@@ -39,10 +39,11 @@ namespace boost { namespace spirit { namespace x3
             typedef spirit::context<ID, this_type const, Context> our_context_type;
             our_context_type our_context(*this,  context);
             return detail::parse_rule<attribute_type>::call(
-                rhs, first, last, our_context, attr);
+                name, rhs, first, last, our_context, attr);
         }
 
         RHS rhs;
+        char const* name;
     };
 
     template <typename ID, typename Attribute = unused_type>
@@ -55,6 +56,8 @@ namespace boost { namespace spirit { namespace x3
         static bool const handles_container =
             traits::is_container<Attribute>::value;
 
+        rule(char const* name = "unnamed") : name(name) {}
+
         template <typename RHS>
         rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute>
@@ -64,7 +67,7 @@ namespace boost { namespace spirit { namespace x3
                 ID, typename extension::as_parser<RHS>::value_type, Attribute>
             result_type;
 
-            return result_type(as_parser(rhs));
+            return result_type(as_parser(rhs), name);
         }
 
         template <typename Iterator, typename Context, typename Attribute_>
@@ -72,8 +75,10 @@ namespace boost { namespace spirit { namespace x3
           , Context& context, Attribute_& attr) const
         {
             return detail::parse_rule<attribute_type>::call(
-                spirit::get<ID>(context).rhs, first, last, context, attr);
+                name, spirit::get<ID>(context).rhs, first, last, context, attr);
         }
+
+        char const* name;
     };
 }}}
 
