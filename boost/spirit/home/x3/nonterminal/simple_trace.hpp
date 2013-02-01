@@ -75,11 +75,11 @@ namespace boost { namespace spirit { namespace x3
             // character entities. $$$
         }
 
-        template <typename Iterator, typename Context, typename State>
+        template <typename Iterator, typename Attribute, typename State>
         void operator()(
             Iterator const& first
           , Iterator const& last
-          , Context const& context
+          , Attribute const& attr
           , State state
           , std::string const& rule_name) const
         {
@@ -95,21 +95,21 @@ namespace boost { namespace spirit { namespace x3
 
                 case successful_parse:
                     print_some("success", first, last);
-                    print_indent(indent);
-                    out
-                        << "<attributes>";
-                    //~ traits::print_attribute(
-                        //~ out,
-                        //~ context.attributes
-                    //~ );
-                    out
-                        << "</attributes>";
+                    if (!is_same<Attribute, unused_type>::value)
+                    {
+                        print_indent(indent);
+                        out
+                            << "<attributes>";
+                        traits::print_attribute(out, attr);
+                        out
+                            << "</attributes>";
+                        out << std::endl;
+                    }
                     //~ if (!fusion::empty(context.locals))
                         //~ out
                             //~ << "<locals>"
                             //~ << context.locals
                             //~ << "</locals>";
-                    out << std::endl;
                     print_indent(--indent);
                     out
                         << "</" << rule_name << '>'

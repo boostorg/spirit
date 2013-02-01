@@ -25,32 +25,32 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct parse_rule
     {
 #if defined(BOOST_SPIRIT_DEBUG)
-        template <typename Iterator, typename Context>
+        template <typename Iterator, typename Attribute_>
         struct context_debug
         {
             context_debug(
                 char const* rule_name
               , Iterator const& first, Iterator const& last
-              , Context& context)
+              , Attribute_ const& attr)
               : fail(true), rule_name(rule_name)
               , first(first), last(last)
-              , context(context)
+              , attr(attr)
               , f(detail::get_simple_trace())
             {
-                f(first, last, context, pre_parse, rule_name);
+                f(first, last, attr, pre_parse, rule_name);
             }
 
             ~context_debug()
             {
                 auto status = fail ? failed_parse : successful_parse;
-                f(first, last, context, status, rule_name);
+                f(first, last, attr, status, rule_name);
             }
 
             bool fail;
             char const* rule_name;
             Iterator const& first;
             Iterator const& last;
-            Context& context;
+            Attribute_ const& attr;
             detail::simple_trace_type& f;
         };
 #endif
@@ -73,7 +73,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typename transform::type attr_ = transform::pre(made_attr);
 
 #if defined(BOOST_SPIRIT_DEBUG)
-            context_debug<Iterator, Context> dbg(rule_name, first, last, context);
+            context_debug<Iterator, typename make_attribute::value_type>
+                dbg(rule_name, first, last, made_attr);
 #endif
             if (rhs.parse(first, last, context, attr_))
             {

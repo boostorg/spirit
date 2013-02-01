@@ -17,7 +17,6 @@
 #include <boost/detail/iterator.hpp>
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/range/iterator_range.hpp>
 #include <vector>
 
 namespace boost { namespace spirit { namespace traits

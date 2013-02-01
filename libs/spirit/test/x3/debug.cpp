@@ -9,7 +9,9 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#include <boost/fusion/include/vector.hpp>
 
+#include <vector>
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -51,42 +53,39 @@ main()
 
             BOOST_TEST(test("aaaabababaaabbb", start_def));
             BOOST_TEST(test("aaaabababaaabba", start_def, false));
-
-            // ignore the skipper!
-            BOOST_TEST(test("aaaabababaaabba", start_def, space, false));
         }
-
     }
 
-    //~ { // basic tests w/ skipper
+    { // basic tests w/ skipper
 
-        //~ rule<char const*, space_type> a, b, c, start;
+        auto a = rule<class a>("a") = 'a';
+        auto b = rule<class b>("b") = 'b';
+        auto c = rule<class c>("c") = 'c';
 
-        //~ a = 'a';
-        //~ b = 'b';
-        //~ c = 'c';
-        //~ // Test the debug-nodes interface:
-        //~ BOOST_SPIRIT_DEBUG_NODES((a)(b)(c));
+        {
+            auto start = *(a | b | c);
+            BOOST_TEST(test(" a b c a b c a c b ", start, space));
+        }
 
-        //~ start = *(a | b | c);
-        //~ BOOST_SPIRIT_DEBUG_NODE(start);
-        //~ BOOST_TEST(test(" a b c a b c a c b ", start, space));
+        {
+            rule<class start> start("start");
+            auto start_def =
+                start = (a | b) >> (start | b);
 
-        //~ start = (a | b) >> (start | b);
-        //~ BOOST_SPIRIT_DEBUG_NODE(start);
-        //~ BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start, space));
-        //~ BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
-    //~ }
+            BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start_def, space));
+            BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start_def, space, false));
+        }
+    }
 
-    //~ { // std::container attributes
+    { // std::container attributes
 
-        //~ typedef boost::fusion::vector<int, char> fs;
-        //~ rule<char const*, std::vector<fs>(), space_type> start;
-        //~ start = *(int_ >> alpha);
+        typedef boost::fusion::vector<int, char> fs;
+        rule<class start, std::vector<fs>> start("start");
+        auto start_def =
+            start = *(int_ >> alpha);
 
-        //~ BOOST_SPIRIT_DEBUG_NODE(start);
-        //~ BOOST_TEST(test("1 a 2 b 3 c", start, space));
-    //~ }
+        BOOST_TEST(test("1 a 2 b 3 c", start_def, space));
+    }
 
     //~ { // error handling
 
