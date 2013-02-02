@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/sequence.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -58,6 +59,20 @@ namespace boost { namespace spirit { namespace x3
         typedef sequence<
             typename extension::as_parser<Left>::value_type
           , typename extension::as_parser<Right>::value_type>
+        result_type;
+
+        return result_type(as_parser(left), as_parser(right));
+    }
+
+    template <typename Left, typename Right>
+    inline sequence<
+        typename extension::as_parser<Left>::value_type
+      , expect_directive<typename extension::as_parser<Right>::value_type>>
+    operator>(Left const& left, Right const& right)
+    {
+        typedef sequence<
+            typename extension::as_parser<Left>::value_type
+          , expect_directive<typename extension::as_parser<Right>::value_type>>
         result_type;
 
         return result_type(as_parser(left), as_parser(right));

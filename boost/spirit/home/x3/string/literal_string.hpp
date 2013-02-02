@@ -17,6 +17,7 @@
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
+#include <boost/spirit/home/support/utility/utf8.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/add_reference.hpp>
@@ -108,6 +109,16 @@ namespace boost { namespace spirit { namespace x3
     {
         return literal_string<char const*, char_encoding::standard, unused_type>(s);
     }
+
+    template <typename String, typename Encoding, typename Attribute>
+    struct get_info<literal_string<String, Encoding, Attribute>>
+    {
+        typedef std::string result_type;
+        std::string operator()(literal_string<String, Encoding, Attribute> const& p) const
+        {
+            return '"' + to_utf8(p.str) + '"';
+        }
+    };
 }}}
 
 #endif

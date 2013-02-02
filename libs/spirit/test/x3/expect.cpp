@@ -40,48 +40,48 @@ main()
         }
     }
 
-    //~ {
-        //~ try
-        //~ {
-            //~ BOOST_TEST((test("aa", char_ > char_)));
-            //~ BOOST_TEST((test("aaa", char_ > char_ > char_('a'))));
-            //~ BOOST_TEST((test("xi", char_('x') > char_('i'))));
-            //~ BOOST_TEST((!test("xi", char_('y') > char_('o')))); // should not throw!
-            //~ BOOST_TEST((test("xin", char_('x') > char_('i') > char_('n'))));
-            //~ BOOST_TEST((!test("xi", char_('x') > char_('o'))));
-        //~ }
-        //~ catch (expectation_failure<char const*> const& x)
-        //~ {
-            //~ std::cout << "expected: " << x.what_;
-            //~ std::cout << " got: \"" << x.first << '"' << std::endl;
-        //~ }
-    //~ }
+    {
+        try
+        {
+            BOOST_TEST((test("aa", char_ > char_)));
+            BOOST_TEST((test("aaa", char_ > char_ > char_('a'))));
+            BOOST_TEST((test("xi", char_('x') > char_('i'))));
+            BOOST_TEST((!test("xi", char_('y') > char_('o')))); // should not throw!
+            BOOST_TEST((test("xin", char_('x') > char_('i') > char_('n'))));
+            BOOST_TEST((!test("xi", char_('x') > char_('o'))));
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: " << x.what_;
+            std::cout << " got: \"" << x.first << '"' << std::endl;
+        }
+    }
 
-    //~ {
-        //~ try
-        //~ {
-            //~ BOOST_TEST((test(" a a", char_ > char_, space)));
-            //~ BOOST_TEST((test(" x i", char_('x') > char_('i'), space)));
-            //~ BOOST_TEST((!test(" x i", char_('x') > char_('o'), space)));
-        //~ }
-        //~ catch (expectation_failure<char const*> const& x)
-        //~ {
-            //~ std::cout << "expected: " << x.what_;
-            //~ std::cout << " got: \"" << x.first << '"' << std::endl;
-        //~ }
-    //~ }
+    {
+        try
+        {
+            BOOST_TEST((test(" a a", char_ > char_, space)));
+            BOOST_TEST((test(" x i", char_('x') > char_('i'), space)));
+            BOOST_TEST((!test(" x i", char_('x') > char_('o'), space)));
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: " << x.what_;
+            std::cout << " got: \"" << x.first << '"' << std::endl;
+        }
+    }
 
-    //~ {
-        //~ try
-        //~ {
-            //~ BOOST_TEST((test("bar", expect[lit("foo")])));
-        //~ }
-        //~ catch (expectation_failure<char const*> const& x)
-        //~ {
-            //~ std::cout << "expected: " << x.what_;
-            //~ std::cout << " got: \"" << x.first << '"' << std::endl;
-        //~ }
-    //~ }
+    {
+        try
+        {
+            BOOST_TEST((test("bar", expect[lit("foo")])));
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: " << x.what_;
+            std::cout << " got: \"" << x.first << '"' << std::endl;
+        }
+    }
 
     //~ {
         //~ try
