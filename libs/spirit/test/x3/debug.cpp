@@ -17,6 +17,23 @@
 #include <iostream>
 #include "test.hpp"
 
+struct my_error_handler
+{
+    template <typename Iterator, typename Exception, typename Context>
+    boost::spirit::x3::error_handler_result
+    operator()(Iterator&, Exception const& x, Context const&) const
+    {
+        std::cout
+            << "Error! Expecting: "
+            << x.what_
+            << ", got: \""
+            << std::string(x.first, x.last)
+            << "\""
+            << std::endl;
+        return boost::spirit::x3::fail;
+    }
+};
+
 int
 main()
 {
@@ -87,33 +104,17 @@ main()
         BOOST_TEST(test("1 a 2 b 3 c", start_def, space));
     }
 
-    //~ { // error handling
+    { // error handling
 
-        //~ using namespace boost::spirit::x3::ascii;
-        //~ using boost::phoenix::construct;
-        //~ using boost::phoenix::bind;
+        auto r_def = '(' > int_ > ',' > int_ > ')';
+        auto r = r_def.on_error(my_error_handler());
 
-        //~ rule<char const*> r;
-        //~ r = '(' > int_ > ',' > int_ > ')';
-
-        //~ on_error<fail>
-        //~ (
-            //~ r, std::cout
-                //~ << phx::val("Error! Expecting: ")
-                //~ << _4
-                //~ << phx::val(", got: \"")
-                //~ << construct<std::string>(_3, _2)
-                //~ << phx::val("\"")
-                //~ << std::endl
-        //~ );
-
-        //~ BOOST_SPIRIT_DEBUG_NODE(r);
-        //~ BOOST_TEST(test("(123,456)", r));
-        //~ BOOST_TEST(!test("(abc,def)", r));
-        //~ BOOST_TEST(!test("(123,456]", r));
-        //~ BOOST_TEST(!test("(123;456)", r));
-        //~ BOOST_TEST(!test("[123,456]", r));
-    //~ }
+        BOOST_TEST(test("(123,456)", r));
+        BOOST_TEST(!test("(abc,def)", r));
+        BOOST_TEST(!test("(123,456]", r));
+        BOOST_TEST(!test("(123;456)", r));
+        BOOST_TEST(!test("[123,456]", r));
+    }
 
     return boost::report_errors();
 }

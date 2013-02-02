@@ -50,8 +50,6 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute& attr) const
         {
-            // flush any multi_pass iterator we might be acting on
-            //~ spirit::traits::clear_queue(first); $$$ FIXME $$$
             bool r = this->subject.parse(first, last, context, attr);
 
             if (!r)

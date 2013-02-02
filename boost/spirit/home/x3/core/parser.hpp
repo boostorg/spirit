@@ -28,6 +28,9 @@ namespace boost { namespace spirit { namespace x3
     template <typename Subject, typename Action>
     struct action;
 
+    template <typename Subject, typename Handler>
+    struct guard;
+
     struct parser_base {};
     struct parser_id;
 
@@ -45,9 +48,16 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Action>
         action<Derived, Action>
-        operator[](Action const& f) const
+        operator[](Action f) const
         {
             return action<Derived, Action>(this->derived(), f);
+        }
+
+        template <typename Handler>
+        guard<Derived, Handler>
+        on_error(Handler f) const
+        {
+            return guard<Derived, Handler>(this->derived(), f);
         }
     };
 
