@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/x3/char/char_parser.hpp>
+#include <boost/spirit/home/support/utility/utf8.hpp>
 #include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -37,6 +38,16 @@ namespace boost { namespace spirit { namespace x3
         }
 
         char_type ch;
+    };
+
+    template <typename Encoding, typename Attribute>
+    struct get_info<literal_char<Encoding, Attribute>>
+    {
+        typedef std::string result_type;
+        std::string operator()(literal_char<Encoding, Attribute> const& p) const
+        {
+            return '\'' + to_utf8(Encoding::toucs4(p.ch)) + '\'';
+        }
     };
 }}}
 

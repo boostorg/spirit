@@ -14,7 +14,7 @@
 //~ #include <boost/spirit/home/x3/directive/as.hpp>
 //~ #include <boost/spirit/home/x3/directive/encoding.hpp>
 //~ #include <boost/spirit/home/x3/directive/hold.hpp>
-//~ #include <boost/spirit/home/x3/directive/expect.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 #include <boost/spirit/home/x3/directive/lexeme.hpp>
 //~ #include <boost/spirit/home/x3/directive/no_skip.hpp>
 //~ #include <boost/spirit/home/x3/directive/matches.hpp>

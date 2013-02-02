@@ -14,6 +14,11 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <string>
+
+#if !defined(BOOST_SPIRIT_NO_RTTI)
+#include <typeinfo>
+#endif
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -82,6 +87,9 @@ namespace boost { namespace spirit { namespace x3
         Right right;
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    // as_parser: convert a type, T, into a parser.
+    ///////////////////////////////////////////////////////////////////////////
     namespace extension
     {
         template <typename T, typename Enable = void>
@@ -134,6 +142,36 @@ namespace boost { namespace spirit { namespace x3
     as_parser(parser<Derived> const& p)
     {
         return p.derived();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The main what function
+    //
+    // Note: unlike Spirit2, spirit parsers are no longer required to have a
+    // "what" member function. In X3, we specialize the get_info struct
+    // below where needed. If a specialization is not provided, the default
+    // below will be used. The default "what" result will be the typeid
+    // name of the parser if BOOST_SPIRIT_NO_RTTI is not defined, otherwise
+    // "undefined"
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Parser, typename Enable = void>
+    struct get_info
+    {
+        typedef std::string result_type;
+        std::string operator()(Parser const&) const
+        {
+#if !defined(BOOST_SPIRIT_NO_RTTI)
+            return typeid(Parser).name();
+#else
+            return "undefined";
+#endif
+        }
+    };
+
+    template <typename Parser>
+    std::string what(Parser const& p)
+    {
+        return get_info<Parser>()(p);
     }
 }}}
 

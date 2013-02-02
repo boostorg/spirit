@@ -15,6 +15,10 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/support/context.hpp>
 
+#if !defined(BOOST_SPIRIT_NO_RTTI)
+#include <typeinfo>
+#endif
+
 namespace boost { namespace spirit { namespace x3
 {
     template <typename ID, typename RHS, typename Attribute>
@@ -56,7 +60,11 @@ namespace boost { namespace spirit { namespace x3
         static bool const handles_container =
             traits::is_container<Attribute>::value;
 
+#if !defined(BOOST_SPIRIT_NO_RTTI)
+        rule(char const* name = typeid(rule).name()) : name(name) {}
+#else
         rule(char const* name = "unnamed") : name(name) {}
+#endif
 
         template <typename RHS>
         rule_definition<
@@ -79,6 +87,26 @@ namespace boost { namespace spirit { namespace x3
         }
 
         char const* name;
+    };
+
+    template <typename ID, typename Attribute>
+    struct get_info<rule<ID, Attribute>>
+    {
+        typedef std::string result_type;
+        std::string operator()(rule<ID, Attribute> const& p) const
+        {
+            return p.name;
+        }
+    };
+
+    template <typename ID, typename Attribute, typename RHS>
+    struct get_info<rule_definition<ID, RHS, Attribute>>
+    {
+        typedef std::string result_type;
+        std::string operator()(rule_definition<ID, RHS, Attribute> const& p) const
+        {
+            return p.name;
+        }
     };
 }}}
 

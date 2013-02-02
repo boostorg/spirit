@@ -15,8 +15,10 @@
 #include <boost/fusion/container/deque.hpp>
 #include <boost/fusion/sequence/intrinsic/front.hpp>
 #include <boost/fusion/algorithm/query/find_if.hpp>
+
 #include <boost/mpl/eval_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+#include <boost/config.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -24,18 +26,6 @@ namespace boost { namespace spirit { namespace x3
     {
         template <typename ID, typename T>
         struct has_rule_id : is_same<typename ID::type, typename T::id> {};
-
-        //~ template <typename ID, typename RHS, typename Attribute>
-        //~ struct has_rule_id<ID, rule_definition<ID, RHS, Attribute>>
-          //~ : mpl::true_ {};
-
-        //~ template <typename Iterator>
-        //~ struct get_rule_definition
-        //~ {
-            //~ typedef typename
-                //~ fusion::result_of::deref<Iterator>::type
-            //~ type;
-        //~ };
     }
 
     template <typename Elements, typename Next>
@@ -102,8 +92,8 @@ namespace boost { namespace spirit { namespace x3
         typedef typename start_rule::attribute_type attribute_type;
         static bool const has_attribute = start_rule::has_attribute;
 
-        grammar_parser(Elements const& elements)
-          : elements(elements) {}
+        grammar_parser(char const* name, Elements const& elements)
+          : name(name), elements(elements) {}
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
@@ -113,25 +103,42 @@ namespace boost { namespace spirit { namespace x3
             return fusion::front(elements).parse(first, last, our_context, attr);
         }
 
+        char const* name;
         Elements elements;
     };
 
-    //~ template <typename ...Elements>
-    //~ grammar_parser<fusion::deque<Elements...>>
-    //~ grammar(Elements const&... elements)
-    //~ {
-        //~ typedef fusion::deque<Elements...> sequence;
-        //~ return grammar_parser<sequence>(sequence(elements...));
-    //~ }
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
+    template <typename ...Elements>
+    grammar_parser<fusion::deque<Elements...>>
+    grammar(char const* name, Elements const&... elements)
+    {
+        typedef fusion::deque<Elements...> sequence;
+        return grammar_parser<sequence>(name, sequence(elements...));
+    }
+
+#else
 
     template <typename A, typename B, typename C>
     grammar_parser<fusion::deque<A, B, C>>
-    grammar(A const& a, B const& b, C const& c)
+    grammar(char const* name, A const& a, B const& b, C const& c)
     {
         typedef fusion::deque<A, B, C> sequence;
-        return grammar_parser<sequence>(sequence(a, b, c));
+        return grammar_parser<sequence>(name, sequence(a, b, c));
     }
+
+#endif
+
+    template <typename Elements>
+    struct get_info<grammar_parser<Elements>>
+    {
+        typedef std::string result_type;
+        std::string operator()(grammar_parser<Elements> const& p) const
+        {
+            return p.name;
+        }
+    };
+
 }}}
 
 #endif
