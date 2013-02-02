@@ -36,6 +36,7 @@ main()
     //~ using boost::spirit::x3::on_error;
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
+    using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_r1;
@@ -44,15 +45,28 @@ main()
 
     //~ namespace phx = boost::phoenix;
 
-    // $$$ Not yet implemented $$$
-    //~ { // synth attribute value-init
+    { // synth attribute value-init
 
-        //~ std::string s;
-        //~ rule<char const*, char()> r;
-        //~ r = alpha[_val += _1];
-        //~ BOOST_TEST(test_attr("abcdef", +r, s));
+    //~ using boost::spirit::x3::get_rule_val;
+
+        std::string s;
+        rule<class r, std::string> r;
+        //~ typedef get_rule_val<class r, std::string> rval;
+
+        //~ typedef decltype(_val(r))
+
+        auto f = [&](decltype(_val(r)) val, char c)
+        {
+            val.get() += c;
+        };
+
+        auto rdef =
+            r = alpha[f];
+        BOOST_TEST(test_attr("abcdef", +rdef, s));
+        std::cout << s << std::endl;
+
         //~ BOOST_TEST(s == "abcdef");
-    //~ }
+    }
 
     // $$$ No longer relevant $$$
     //~ { // auto rules aliasing tests

@@ -123,6 +123,30 @@ namespace boost { namespace spirit { namespace x3
             return p.name;
         }
     };
+
+    template <typename ID, typename Attribute>
+    struct get_rule_val
+    {
+        template <typename Context>
+        get_rule_val(Context& context)
+          : attr_ptr(spirit::get<ID>(context).attr_ptr)
+        {
+            BOOST_ASSERT(attr_ptr);
+        }
+        operator Attribute&() const
+        {
+            return *attr_ptr;
+        }
+        Attribute& get() const
+        {
+            return *attr_ptr;
+        }
+        Attribute* attr_ptr;
+    };
+
+    template <typename ID, typename Attribute>
+    get_rule_val<ID, Attribute>
+    _val(rule<ID, Attribute> const&);
 }}}
 
 #endif
