@@ -58,7 +58,19 @@ main()
         }
     }
 
-    { // Test that attributes work just like sequences
+    {
+        try
+        {
+            BOOST_TEST((!test("ay:a", char_ > char_('x') >> ':' > 'a')));
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: " << x.what_;
+            std::cout << " got: \"" << x.first << '"' << std::endl;
+        }
+    }
+
+    { // Test that attributes with > (sequences) work just like >> (sequences)
 
         using boost::fusion::vector;
         using boost::fusion::at_c;
