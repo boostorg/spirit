@@ -21,6 +21,13 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    template <typename RHS, typename Attribute>
+    struct rule_definition_context
+    {
+        RHS const& rhs;
+        Attribute* attr_ptr;
+    };
+
     template <typename ID, typename RHS, typename Attribute>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute>>
     {
@@ -40,10 +47,18 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute_& attr) const
         {
-            typedef spirit::context<ID, this_type const, Context> our_context_type;
-            our_context_type our_context(*this,  context);
-            return detail::parse_rule<attribute_type>::call(
-                name, rhs, first, last, our_context, attr);
+            typedef
+                rule_definition_context<rhs_type, attribute_type>
+            r_context_type;
+            r_context_type r_context = { rhs, 0 };
+
+            typedef
+                spirit::context<ID, r_context_type, Context>
+            our_context_type;
+            our_context_type our_context(r_context,  context);
+
+            return detail::parse_rule<attribute_type, ID>::call(
+                name, first, last, our_context, attr);
         }
 
         RHS rhs;
@@ -82,8 +97,8 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute_& attr) const
         {
-            return detail::parse_rule<attribute_type>::call(
-                name, spirit::get<ID>(context).rhs, first, last, context, attr);
+            return detail::parse_rule<attribute_type, ID>::call(
+                name, first, last, context, attr);
         }
 
         char const* name;

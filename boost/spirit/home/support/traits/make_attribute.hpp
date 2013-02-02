@@ -31,10 +31,15 @@ namespace boost { namespace spirit { namespace traits
             mpl::if_<
                 is_same<actual_attribute_type, unused_type>
               , attribute_type
+              , ActualAttribute&>::type
+        type;
+
+        typedef typename
+            mpl::if_<
+                is_same<actual_attribute_type, unused_type>
+              , attribute_type
               , ActualAttribute>::type
         value_type;
-
-        typedef typename add_reference<value_type>::type type;
 
         static Attribute call(unused_type)
         {

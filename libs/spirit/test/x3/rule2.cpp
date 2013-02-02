@@ -33,60 +33,14 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
 
-    //~ { // test unassigned rule
-
-        //~ rule<char const*> a;
-        //~ BOOST_TEST(!test("x", a));
-    //~ }
-
-    //~ { // alias tests
-
-        //~ rule<char const*> a, b, c, d, start;
-
-        //~ a = 'a';
-        //~ b = 'b';
-        //~ c = 'c';
-        //~ d = start.alias(); // d will always track start
-
-        //~ start = *(a | b | c);
-        //~ BOOST_TEST(test("abcabcacb", d));
-
-        //~ start = (a | b) >> (start | b);
-        //~ BOOST_TEST(test("aaaabababaaabbb", d));
-    //~ }
-
-    //~ { // copy tests
-
-        //~ rule<char const*> a, b, c, start;
-
-        //~ a = 'a';
-        //~ b = 'b';
-        //~ c = 'c';
-
-        //~ // The FF is the dynamic equivalent of start = *(a | b | c);
-        //~ start = a;
-        //~ start = start.copy() | b;
-        //~ start = start.copy() | c;
-        //~ start = *(start.copy());
-
-        //~ BOOST_TEST(test("abcabcacb", start));
-
-        //~ // The FF is the dynamic equivalent of start = (a | b) >> (start | b);
-        //~ start = b;
-        //~ start = a | start.copy();
-        //~ start = start.copy() >> (start | b);
-
-        //~ BOOST_TEST(test("aaaabababaaabbb", start));
-        //~ BOOST_TEST(test("aaaabababaaabba", start, false));
-    //~ }
-
     { // context tests
 
         char ch;
         auto a = rule<class a, char>() = alpha;
+        auto f = [&](unused_type, char attr){ ch = attr; };
 
-        //~ BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
+        BOOST_TEST(test("x", a[f]));
+        BOOST_TEST(ch == 'x');
 
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
         BOOST_TEST(ch == 'z');
@@ -96,23 +50,21 @@ main()
 
         char ch = '\0';
         auto a = rule<class a, char>() = alpha;
+        auto f = [&](unused_type, char attr){ ch = attr; };
 
-        //~ BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
-        //~ ch = '\0';
+        BOOST_TEST(test("x", a[f]));
+        BOOST_TEST(ch == 'x');
+        ch = '\0';
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
         BOOST_TEST(ch == 'z');
 
-        //~ a = alpha;    // test deduced auto rule behavior
-        //~ ch = '\0';
-        //~ BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
-        //~ ch = '\0';
-        //~ BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
-        //~ BOOST_TEST(ch == 'z');
+        ch = '\0';
+        BOOST_TEST(test("x", a[f]));
+        BOOST_TEST(ch == 'x');
+        ch = '\0';
+        BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
+        BOOST_TEST(ch == 'z');
     }
-
-/*
 
     { // auto rules tests: allow stl containers as attributes to
       // sequences (in cases where attributes of the elements
@@ -121,28 +73,34 @@ main()
       // that is convertible to the value_type of the attribute).
 
         std::string s;
-        rule<char const*, std::string()> r;
-        r %= char_ >> *(',' >> char_);
+        auto f = [&](unused_type, std::string attr){ s = attr; };
 
-        BOOST_TEST(test("a,b,c,d,e,f", r[phx::ref(s) = _1]));
-        BOOST_TEST(s == "abcdef");
+        {
+            auto r = rule<class r, std::string>()
+                = char_ >> *(',' >> char_)
+                ;
 
-        r = char_ >> *(',' >> char_);    // test deduced auto rule behavior
-        s.clear();
-        BOOST_TEST(test("a,b,c,d,e,f", r[phx::ref(s) = _1]));
-        BOOST_TEST(s == "abcdef");
+            BOOST_TEST(test("a,b,c,d,e,f", r[f]));
+            BOOST_TEST(s == "abcdef");
+        }
 
-        r %= char_ >> char_ >> char_ >> char_ >> char_ >> char_;
-        s.clear();
-        BOOST_TEST(test("abcdef", r[phx::ref(s) = _1]));
-        BOOST_TEST(s == "abcdef");
+        {
+            auto r = rule<class r, std::string>()
+                = char_ >> *(',' >> char_);
+            s.clear();
+            BOOST_TEST(test("a,b,c,d,e,f", r[f]));
+            BOOST_TEST(s == "abcdef");
+        }
 
-        r = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
-        s.clear();
-        BOOST_TEST(test("abcdef", r[phx::ref(s) = _1]));
-        BOOST_TEST(s == "abcdef");
+        {
+            auto r = rule<class r, std::string>()
+                = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
+            s.clear();
+            BOOST_TEST(test("abcdef", r[f]));
+            BOOST_TEST(s == "abcdef");
+        }
     }
-*/
+
     return boost::report_errors();
 }
 

@@ -11,8 +11,6 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 
-//~ #include <boost/fusion/include/std_pair.hpp>
-
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -25,19 +23,12 @@ main()
     using spirit_test::test;
 
     using namespace boost::spirit::x3::ascii;
-    //~ using boost::spirit::x3::locals;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
-    //~ using boost::spirit::x3::uint_;
-    //~ using boost::spirit::x3::fail;
-    //~ using boost::spirit::x3::on_error;
-    //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
     using boost::spirit::x3::phrase_parse;
     using boost::spirit::x3::skip_flag;
-
-    //~ namespace phx = boost::phoenix;
 
     { // basic tests
 
@@ -64,21 +55,6 @@ main()
             BOOST_TEST(test("aaaabababaaabba", start, space, false));
         }
     }
-
-        // $$$ No longer relevant $$$
-    //~ { // basic tests with direct initialization
-
-        //~ rule<char const*> a ('a');
-        //~ rule<char const*> b ('b');
-        //~ rule<char const*> c ('c');
-        //~ rule<char const*> start = (a | b) >> (start | b);
-
-        //~ BOOST_TEST(test("aaaabababaaabbb", start));
-        //~ BOOST_TEST(test("aaaabababaaabba", start, false));
-
-        //~ // ignore the skipper!
-        //~ BOOST_TEST(test("aaaabababaaabba", start, space, false));
-    //~ }
 
     { // basic tests w/ skipper
 
@@ -113,17 +89,6 @@ main()
 
         auto c = rule<class c>()
             = lit('c');
-
-        // $$$ Not yet implemented $$$
-        //~ a.name("a");
-        //~ b.name("b");
-        //~ c.name("c");
-        //~ start.name("start");
-
-        //~ debug(a);
-        //~ debug(b);
-        //~ debug(c);
-        //~ debug(start);
 
         {
             auto start = rule<class start>() = *(a | b) >> c;
