@@ -14,6 +14,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
+#include <boost/utility/addressof.hpp>
 
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <boost/spirit/home/x3/nonterminal/simple_trace.hpp>
@@ -78,6 +79,36 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Attribute, typename ID>
     struct parse_rule
     {
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
+          , Context& context, ActualAttribute& attr
+          , mpl::false_)
+        {
+            return rhs.parse(first, last, context, attr);
+        }
+
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
+          , Context& context, ActualAttribute& attr
+          , mpl::true_)
+        {
+            return rhs.parse(first, last, context, unused);
+        }
+
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
+          , Context& context, ActualAttribute& attr)
+        {
+            return parse_rhs(rhs, first, last, context, attr
+              , mpl::bool_<(RHS::has_action)>());
+        }
+
         template <typename Iterator, typename Context, typename ActualAttribute>
         static bool call(
             char const* rule_name
@@ -103,8 +134,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             context_debug<Iterator, typename make_attribute::value_type>
                 dbg(rule_name, first, last, made_attr);
 #endif
-            attr_pointer_scope<value_type> attr_scope(attr_ptr, &made_attr);
-            if (rhs.parse(first, last, context, attr_))
+            attr_pointer_scope<value_type> attr_scope(attr_ptr, boost::addressof(made_attr));
+            if (parse_rhs(rhs, first, last, context, attr_))
             {
                 // do up-stream transformation, this integrates the results
                 // back into the original attribute value, if appropriate

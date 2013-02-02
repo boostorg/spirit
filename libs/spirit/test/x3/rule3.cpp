@@ -47,51 +47,23 @@ main()
 
     { // synth attribute value-init
 
-    //~ using boost::spirit::x3::get_rule_val;
+        using boost::spirit::x3::get_rule_val;
 
         std::string s;
         rule<class r, std::string> r;
-        //~ typedef get_rule_val<class r, std::string> rval;
+        typedef get_rule_val<class r, std::string> rval;
 
-        //~ typedef decltype(_val(r))
+        //~ auto f = [](decltype(_val(r)) val, char c)
 
-        auto f = [&](decltype(_val(r)) val, char c)
+        auto f = [](rval val, char c)
         {
             val.get() += c;
         };
 
-        auto rdef =
-            r = alpha[f];
+        auto rdef = r = alpha[f];
         BOOST_TEST(test_attr("abcdef", +rdef, s));
-        std::cout << s << std::endl;
-
-        //~ BOOST_TEST(s == "abcdef");
+        BOOST_TEST(s == "abcdef");
     }
-
-    // $$$ No longer relevant $$$
-    //~ { // auto rules aliasing tests
-
-        //~ char ch = '\0';
-        //~ rule<char const*, char()> a, b;
-        //~ a %= b;
-        //~ b %= alpha;
-
-        //~ BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
-        //~ ch = '\0';
-        //~ BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
-        //~ BOOST_TEST(ch == 'z');
-
-        //~ a = b;            // test deduced auto rule behavior
-        //~ b = alpha;
-
-        //~ ch = '\0';
-        //~ BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
-        //~ ch = '\0';
-        //~ BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
-        //~ BOOST_TEST(ch == 'z');
-    //~ }
 
     // $$$ Not yet implemented $$$
     //~ { // context (w/arg) tests

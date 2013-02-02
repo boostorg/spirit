@@ -40,6 +40,7 @@ namespace boost { namespace spirit { namespace x3
         typedef Derived derived_type;
         static bool const handles_container = false;
         static bool const is_pass_through_unary = false;
+        static bool const has_action = false;
 
         Derived const& derived() const
         {
@@ -70,6 +71,7 @@ namespace boost { namespace spirit { namespace x3
         typedef unary_category category;
         typedef Subject subject_type;
         static bool const has_attribute = Subject::has_attribute;
+        static bool const has_action = Subject::has_action;
 
         unary_parser(Subject subject)
             : subject(subject) {}
@@ -87,6 +89,8 @@ namespace boost { namespace spirit { namespace x3
         typedef Right right_type;
         static bool const has_attribute =
             left_type::has_attribute || right_type::has_attribute;
+        static bool const has_action =
+            left_type::has_action || right_type::has_action;
 
         binary_parser(Left left, Right right)
             : left(left), right(right) {}

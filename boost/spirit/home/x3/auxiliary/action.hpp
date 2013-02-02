@@ -23,6 +23,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, action<Subject, Action>> base_type;
         static bool const is_pass_through_unary = true;
+        static bool const has_action = true;
 
         action(Subject const& subject, Action f)
           : base_type(subject), f(f) {}

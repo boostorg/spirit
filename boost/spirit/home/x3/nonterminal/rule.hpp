@@ -128,7 +128,7 @@ namespace boost { namespace spirit { namespace x3
     struct get_rule_val
     {
         template <typename Context>
-        get_rule_val(Context& context)
+        get_rule_val(Context const& context)
           : attr_ptr(spirit::get<ID>(context).attr_ptr)
         {
             BOOST_ASSERT(attr_ptr);
