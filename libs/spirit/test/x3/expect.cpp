@@ -21,6 +21,7 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::expect;
     using spirit_test::test;
+    using spirit_test::test_attr;
     using boost::spirit::x3::expectation_failure;
 
     {
@@ -54,6 +55,39 @@ main()
         {
             std::cout << "expected: " << x.what_;
             std::cout << " got: \"" << x.first << '"' << std::endl;
+        }
+    }
+
+    { // Test that attributes work just like sequences
+
+        using boost::fusion::vector;
+        using boost::fusion::at_c;
+
+        {
+            vector<char, char, char> attr;
+            BOOST_TEST((test_attr(" a\n  b\n  c",
+                char_ > char_ > char_, attr, space)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<1>(attr) == 'b'));
+            BOOST_TEST((at_c<2>(attr) == 'c'));
+        }
+
+        {
+            vector<char, char, char> attr;
+            BOOST_TEST((test_attr(" a\n  b\n  c",
+                char_ > char_ >> char_, attr, space)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<1>(attr) == 'b'));
+            BOOST_TEST((at_c<2>(attr) == 'c'));
+        }
+
+        {
+            vector<char, char, char> attr;
+            BOOST_TEST((test_attr(" a, b, c",
+                char_ >> ',' > char_ >> ',' > char_, attr, space)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<1>(attr) == 'b'));
+            BOOST_TEST((at_c<2>(attr) == 'c'));
         }
     }
 
