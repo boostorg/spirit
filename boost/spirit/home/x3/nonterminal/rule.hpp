@@ -54,14 +54,14 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute_& attr) const
         {
-            typedef rule_context<attribute_type> r_context_type;
-            r_context_type r_context = { 0 };
+            rule_context<attribute_type> r_context = { 0 };
+
+            auto this_context =
+                make_context<ID>(*this,
+                    make_context<rule_context_tag>(r_context,  context));
 
             return detail::parse_rule<attribute_type, ID>::call(
-                name, first, last
-              , make_context<ID>(*this,
-                    make_context<rule_context_tag>(r_context,  context))
-              , attr);
+                rhs, name, first, last, this_context, attr);
         }
 
         RHS rhs;

@@ -109,13 +109,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               , mpl::bool_<(RHS::has_action)>());
         }
 
-        template <typename Iterator, typename Context, typename ActualAttribute>
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
         static bool call(
-            char const* rule_name
+            RHS const& rhs
+          , char const* rule_name
           , Iterator& first, Iterator const& last
           , Context const& context, ActualAttribute& attr)
         {
-            auto& rhs = spirit::get<ID>(context).rhs;
             auto& attr_ptr = spirit::get<rule_context_tag>(context).attr_ptr;
 
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
@@ -148,6 +148,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return true;
             }
             return false;
+        }
+
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        static bool call(
+            char const* rule_name
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr)
+        {
+            return call(spirit::get<ID>(context).rhs, rule_name
+              , first, last, context, attr);
         }
     };
 }}}}
