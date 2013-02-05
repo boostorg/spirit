@@ -300,7 +300,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr, traits::tuple_attribute)
+      , Context const& context, Attribute& attr, traits::tuple_attribute)
     {
         typedef detail::partition_attribute<Left, Right, Attribute> partition;
         typedef typename partition::l_pass l_pass;
@@ -324,7 +324,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr, traits::plain_attribute)
+      , Context const& context, Attribute& attr, traits::plain_attribute)
     {
         typedef typename traits::attribute_of<Left>::type l_attr_type;
         typedef typename traits::attribute_of<Right>::type r_attr_type;
@@ -347,14 +347,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr, traits::container_attribute);
+      , Context const& context, Attribute& attr, traits::container_attribute);
 
     template <typename Left, typename Right
       , typename Iterator, typename Context, typename Attribute>
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr, traits::container_attribute)
+      , Context const& context, Attribute& attr, traits::container_attribute)
     {
         Iterator save = first;
         if (parse_into_container(left, first, last, context, attr)
@@ -373,7 +373,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr, mpl::false_)
         {
             return parse_sequence(parser.left, parser.right
               , first, last, context, attr, traits::container_attribute());
@@ -383,7 +383,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_)
+          , Context const& context, Attribute& attr, mpl::true_)
         {
             return parse_into_container_base_impl<parser_type>::call(
                 parser, first, last, context, attr);
@@ -393,7 +393,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr)
+          , Context const& context, Attribute& attr)
         {
             typedef typename
                 traits::attribute_of<parser_type>::type

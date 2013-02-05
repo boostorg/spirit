@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr) const
+          , Context const& context, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
             auto skipper = get<skipper_tag>(context);
@@ -45,10 +45,10 @@ namespace boost { namespace spirit { namespace x3
             unused_skipper_type;
             unused_skipper_type unused_skipper(skipper);
 
-            spirit::context<skipper_tag, unused_skipper_type, Context>
-                lexeme_context(unused_skipper, context);
-
-            return this->subject.parse(first, last, lexeme_context, attr);
+            return this->subject.parse(
+                first, last
+              , make_context<skipper_tag>(unused_skipper, context)
+              , attr);
         }
     };
 

@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace x3
           : ch(static_cast<char_type>(ch)) {}
 
         template <typename Char, typename Context>
-        bool test(Char ch_, Context&) const
+        bool test(Char ch_, Context const&) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
                 && ch == char_type(ch_);

@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& /*attr*/) const
+          , Context const& context, Attribute& /*attr*/) const
         {
             x3::skip_over(first, last, context);
             return predicate;
@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr) const
+          , Context const& context, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
             return f(first, last, context, attr);
@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& /*attr*/) const
+          , Context const& context, Attribute& /*attr*/) const
         {
             x3::skip_over(first, last, context);
             return true;

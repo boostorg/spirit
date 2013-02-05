@@ -271,7 +271,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser, typename Iterator, typename Context, typename Attribute>
     bool parse_alternative(
         Parser const& p, Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr)
+      , Context const& context, Attribute& attr)
     {
         typedef detail::pass_variant_attribute<Parser, Attribute> pass;
 
@@ -295,7 +295,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_)
+          , Context const& context, Attribute& attr, mpl::true_)
         {
             return parse_alternative(parser, first, last, context, attr);
         }
@@ -304,7 +304,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr, mpl::false_)
         {
             return parse_into_container_base_impl<parser_type>::call(
                 parser, first, last, context, attr);
@@ -314,7 +314,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr)
+          , Context const& context, Attribute& attr)
         {
             typedef typename
                 traits::attribute_of<parser_type>::type

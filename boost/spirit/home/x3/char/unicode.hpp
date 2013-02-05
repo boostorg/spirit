@@ -416,7 +416,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const has_attribute = true;
 
         template <typename Char, typename Context>
-        bool test(Char ch, Context&) const
+        bool test(Char ch, Context const&) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch))
                 && unicode_char_class_base::is(tag(), ch);

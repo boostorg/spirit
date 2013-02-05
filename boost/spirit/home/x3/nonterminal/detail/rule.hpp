@@ -83,7 +83,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool parse_rhs(
             RHS const& rhs
           , Iterator& first, Iterator const& last
-          , Context& context, ActualAttribute& attr
+          , Context const& context, ActualAttribute& attr
           , mpl::false_)
         {
             return rhs.parse(first, last, context, attr);
@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool parse_rhs(
             RHS const& rhs
           , Iterator& first, Iterator const& last
-          , Context& context, ActualAttribute& attr
+          , Context const& context, ActualAttribute& attr
           , mpl::true_)
         {
             return rhs.parse(first, last, context, unused);
@@ -103,7 +103,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool parse_rhs(
             RHS const& rhs
           , Iterator& first, Iterator const& last
-          , Context& context, ActualAttribute& attr)
+          , Context const& context, ActualAttribute& attr)
         {
             return parse_rhs(rhs, first, last, context, attr
               , mpl::bool_<(RHS::has_action)>());
@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             char const* rule_name
           , Iterator& first, Iterator const& last
-          , Context& context, ActualAttribute& attr)
+          , Context const& context, ActualAttribute& attr)
         {
             auto& rhs = spirit::get<ID>(context).rhs;
             auto& attr_ptr = spirit::get<ID>(context).attr_ptr;

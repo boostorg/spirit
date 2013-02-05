@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call_synthesize(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr, mpl::false_)
         {
             // synthesized attribute needs to be default constructed
             typedef typename
@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call_synthesize(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_)
+          , Context const& context, Attribute& attr, mpl::true_)
         {
             static_assert(traits::has_size<Attribute, 1>::value,
                 "Expecting a single element fusion sequence");
@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_)
+          , Context const& context, Attribute& attr, mpl::true_)
         {
             return call_synthesize(parser, first, last, context, attr
               , fusion::traits::is_sequence<Attribute>());
@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr, mpl::false_)
         {
             return parser.parse(first, last, context, unused);
         }
@@ -81,7 +81,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr)
+          , Context const& context, Attribute& attr)
         {
             return call(parser, first, last, context, attr
               , mpl::bool_<Parser::has_attribute>());
@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::true_)
+          , Context const& context, Attribute& attr, mpl::true_)
         {
             return parse_into_container_base_impl<Parser>::call(
                 parser, first, last, context, attr);
@@ -117,7 +117,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr, mpl::false_)
         {
             return parser.parse(first, last, context, attr);
         }
@@ -126,7 +126,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr)
+          , Context const& context, Attribute& attr)
         {
             return call(parser, first, last, context, attr,
                 parser_attr_is_substitute_for_container_value<Parser, Attribute>());
@@ -138,7 +138,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_into_container(
         Parser const& parser
       , Iterator& first, Iterator const& last
-      , Context& context, Attribute& attr)
+      , Context const& context, Attribute& attr)
     {
         return parse_into_container_impl<Parser>::call(
             parser, first, last, context, attr);

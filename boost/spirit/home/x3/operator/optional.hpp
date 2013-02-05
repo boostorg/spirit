@@ -40,7 +40,7 @@ namespace boost { namespace spirit { namespace x3
         // Attribute is a container
         template <typename Iterator, typename Context, typename Attribute>
         bool parse_subject(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, traits::container_attribute) const
+          , Context const& context, Attribute& attr, traits::container_attribute) const
         {
             detail::parse_into_container(
                 this->subject, first, last, context, attr);
@@ -50,7 +50,7 @@ namespace boost { namespace spirit { namespace x3
         // Attribute is an optional
         template <typename Iterator, typename Context, typename Attribute>
         bool parse_subject(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr, traits::optional_attribute) const
+          , Context const& context, Attribute& attr, traits::optional_attribute) const
         {
             typedef typename
                 spirit::traits::optional_value<Attribute>::type

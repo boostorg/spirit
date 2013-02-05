@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename Iterator, typename Context>
         bool parse(
             Iterator& first, Iterator const& last
-          , Context& context, unused_type) const
+          , Context const& context, unused_type) const
         {
             Iterator save = first;
             if (this->left.parse(first, last, context, unused)
@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(
             Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr) const
+          , Context const& context, Attribute& attr) const
         {
             return detail::parse_sequence(
                 this->left, this->right, first, last, context, attr

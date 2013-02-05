@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr) const
+          , Context const& context, Attribute& attr) const
         {
             bool r = this->subject.parse(first, last, context, attr);
 

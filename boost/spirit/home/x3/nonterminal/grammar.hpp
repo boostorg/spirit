@@ -97,7 +97,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute_& attr) const
+          , Context const& context, Attribute_& attr) const
         {
             grammar_context<Elements, Context> our_context(elements, context);
             return fusion::front(elements).parse(first, last, our_context, attr);

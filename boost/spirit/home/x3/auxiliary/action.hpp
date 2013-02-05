@@ -34,7 +34,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr) const
+          , Context const& context, Attribute& attr) const
         {
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, unused_type) const
+          , Context const& context, unused_type) const
         {
             typedef traits::make_attribute<attribute_type, unused_type> make_attribute;
             typedef traits::transform_attribute<

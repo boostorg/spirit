@@ -45,20 +45,17 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute_& attr) const
+          , Context const& context, Attribute_& attr) const
         {
             typedef
                 rule_definition_context<rhs_type, attribute_type>
             r_context_type;
             r_context_type r_context = { rhs, 0 };
 
-            typedef
-                spirit::context<ID, r_context_type, Context>
-            our_context_type;
-            our_context_type our_context(r_context,  context);
-
             return detail::parse_rule<attribute_type, ID>::call(
-                name, first, last, our_context, attr);
+                name, first, last
+              , make_context<ID>(r_context,  context)
+              , attr);
         }
 
         RHS rhs;
@@ -74,6 +71,28 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
+
+        struct val
+        {
+            template <typename Context>
+            val(Context const& context)
+              : attr_ptr(spirit::get<ID>(context).attr_ptr)
+            {
+                BOOST_ASSERT(attr_ptr);
+            }
+
+            operator Attribute&() const
+            {
+                return *attr_ptr;
+            }
+
+            Attribute& get() const
+            {
+                return *attr_ptr;
+            }
+
+            Attribute* attr_ptr;
+        };
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)
         rule(char const* name = typeid(rule).name()) : name(name) {}
@@ -95,7 +114,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute_& attr) const
+          , Context const& context, Attribute_& attr) const
         {
             return detail::parse_rule<attribute_type, ID>::call(
                 name, first, last, context, attr);
@@ -123,30 +142,6 @@ namespace boost { namespace spirit { namespace x3
             return p.name;
         }
     };
-
-    template <typename ID, typename Attribute>
-    struct get_rule_val
-    {
-        template <typename Context>
-        get_rule_val(Context const& context)
-          : attr_ptr(spirit::get<ID>(context).attr_ptr)
-        {
-            BOOST_ASSERT(attr_ptr);
-        }
-        operator Attribute&() const
-        {
-            return *attr_ptr;
-        }
-        Attribute& get() const
-        {
-            return *attr_ptr;
-        }
-        Attribute* attr_ptr;
-    };
-
-    template <typename ID, typename Attribute>
-    get_rule_val<ID, Attribute>
-    _val(rule<ID, Attribute> const&);
 }}}
 
 #endif

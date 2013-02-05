@@ -36,7 +36,6 @@ main()
     //~ using boost::spirit::x3::on_error;
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
-    using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_r1;
@@ -47,14 +46,11 @@ main()
 
     { // synth attribute value-init
 
-        using boost::spirit::x3::get_rule_val;
-
         std::string s;
-        rule<class r, std::string> r;
-        typedef get_rule_val<class r, std::string> rval;
+        typedef rule<class r, std::string> rule_type;
+        typedef rule_type::val rval;
 
-        //~ auto f = [](decltype(_val(r)) val, char c)
-
+        rule_type r;
         auto f = [](rval val, char c)
         {
             val.get() += c;

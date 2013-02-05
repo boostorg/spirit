@@ -29,7 +29,7 @@ namespace boost { namespace spirit { namespace x3
           : positive(positive) {}
 
         template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context& context) const
+        bool test(CharParam ch, Context const& context) const
         {
             return !positive.test(ch, context);
         }

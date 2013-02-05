@@ -57,6 +57,9 @@ namespace boost { namespace spirit
         context(T& val)
             : val(val) {}
 
+        context(T& val, unused_type)
+            : val(val) {}
+
         template <typename ID_, typename Unused = void>
         struct get_result
         {
@@ -89,6 +92,18 @@ namespace boost { namespace spirit
     get(Context const& context) -> decltype(context.get(mpl::identity<Tag>()))
     {
         return context.get(mpl::identity<Tag>());
+    }
+
+    template <typename ID, typename T, typename Next>
+    inline context<ID, T, Next> make_context(T& val, Next const& next)
+    {
+        return context<ID, T, Next>(val, next);
+    }
+
+    template <typename ID, typename T>
+    inline context<ID, T> make_context(T& val)
+    {
+        return context<ID, T>(val);
     }
 }}
 
