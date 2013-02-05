@@ -21,12 +21,19 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename RHS, typename Attribute>
-    struct rule_definition_context
+    template <typename Attribute>
+    struct rule_context
     {
-        RHS const& rhs;
+        Attribute& val() const
+        {
+            BOOST_ASSERT(attr_ptr);
+            return *attr_ptr;
+        }
+
         Attribute* attr_ptr;
     };
+
+    struct rule_context_tag;
 
     template <typename ID, typename RHS, typename Attribute>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute>>
@@ -47,14 +54,13 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute_& attr) const
         {
-            typedef
-                rule_definition_context<rhs_type, attribute_type>
-            r_context_type;
-            r_context_type r_context = { rhs, 0 };
+            typedef rule_context<attribute_type> r_context_type;
+            r_context_type r_context = { 0 };
 
             return detail::parse_rule<attribute_type, ID>::call(
                 name, first, last
-              , make_context<ID>(r_context,  context)
+              , make_context<ID>(*this,
+                    make_context<rule_context_tag>(r_context,  context))
               , attr);
         }
 
@@ -71,28 +77,7 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
-
-        struct val
-        {
-            template <typename Context>
-            val(Context const& context)
-              : attr_ptr(spirit::get<ID>(context).attr_ptr)
-            {
-                BOOST_ASSERT(attr_ptr);
-            }
-
-            operator Attribute&() const
-            {
-                return *attr_ptr;
-            }
-
-            Attribute& get() const
-            {
-                return *attr_ptr;
-            }
-
-            Attribute* attr_ptr;
-        };
+        typedef rule_context<Attribute> context;
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)
         rule(char const* name = typeid(rule).name()) : name(name) {}

@@ -48,12 +48,12 @@ main()
 
         std::string s;
         typedef rule<class r, std::string> rule_type;
-        typedef rule_type::val rval;
+        typedef rule_type::context context;
 
         rule_type r;
-        auto f = [](rval val, char c)
+        auto f = [](context ctx, char c)
         {
-            val.get() += c;
+            ctx.val() += c;
         };
 
         auto rdef = r = alpha[f];

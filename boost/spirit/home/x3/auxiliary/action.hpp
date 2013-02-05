@@ -18,6 +18,8 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    struct rule_context_tag;
+
     template <typename Subject, typename Action>
     struct action : unary_parser<Subject, action<Subject, Action>>
     {
@@ -39,8 +41,9 @@ namespace boost { namespace spirit { namespace x3
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                // call the function, passing the attribute and the context.
-                f(context, attr);
+                // call the function ,passing the enclosing rule's context
+                // and the subject's attribute.
+                f(spirit::get<rule_context_tag>(context), attr);
                 return true;
 
                 // reset iterators if semantic action failed the match

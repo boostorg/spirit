@@ -22,7 +22,7 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    struct rule_attribute_tag;
+    struct rule_context_tag;
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -116,7 +116,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, ActualAttribute& attr)
         {
             auto& rhs = spirit::get<ID>(context).rhs;
-            auto& attr_ptr = spirit::get<ID>(context).attr_ptr;
+            auto& attr_ptr = spirit::get<rule_context_tag>(context).attr_ptr;
 
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
 
@@ -134,7 +134,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             context_debug<Iterator, typename make_attribute::value_type>
                 dbg(rule_name, first, last, made_attr);
 #endif
-            attr_pointer_scope<value_type> attr_scope(attr_ptr, boost::addressof(made_attr));
+            attr_pointer_scope<value_type>
+                attr_scope(attr_ptr, boost::addressof(made_attr));
             if (parse_rhs(rhs, first, last, context, attr_))
             {
                 // do up-stream transformation, this integrates the results
