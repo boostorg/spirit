@@ -48,15 +48,12 @@ main()
 
         std::string s;
         typedef rule<class r, std::string> rule_type;
-        typedef rule_type::context context;
+        typedef rule_type::context ctx;
 
-        rule_type r;
-        auto f = [](context ctx, char c)
-        {
-            ctx.val() += c;
-        };
+        auto rdef = rule_type()
+            = alpha                 [[](ctx r, char c){ r.val += c; }]
+            ;
 
-        auto rdef = r = alpha[f];
         BOOST_TEST(test_attr("abcdef", +rdef, s));
         BOOST_TEST(s == "abcdef");
     }

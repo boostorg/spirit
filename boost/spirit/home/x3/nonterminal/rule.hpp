@@ -24,13 +24,10 @@ namespace boost { namespace spirit { namespace x3
     template <typename Attribute>
     struct rule_context
     {
-        Attribute& val() const
-        {
-            BOOST_ASSERT(attr_ptr);
-            return *attr_ptr;
-        }
-
-        Attribute* attr_ptr;
+        template <typename Context>
+        rule_context(Context& ctx)
+          : val(ctx.val()) {}
+        Attribute& val;
     };
 
     struct rule_context_tag;
@@ -50,11 +47,22 @@ namespace boost { namespace spirit { namespace x3
         rule_definition(RHS rhs, char const* name)
           : rhs(rhs), name(name) {}
 
+        struct private_rule_context
+        {
+            Attribute& val() const
+            {
+                BOOST_ASSERT(attr_ptr);
+                return *attr_ptr;
+            }
+
+            Attribute* attr_ptr;
+        };
+
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute_& attr) const
         {
-            rule_context<attribute_type> r_context = { 0 };
+            private_rule_context r_context = { 0 };
 
             auto this_context =
                 make_context<ID>(*this,

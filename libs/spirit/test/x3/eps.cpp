@@ -27,19 +27,17 @@ main()
 
         BOOST_TEST((test("", eps(true))));
         BOOST_TEST((!test("", eps(false))));
-        //~ BOOST_TEST((test("", !eps(false)))); // not predicate $$$ Implement me! $$$
+        BOOST_TEST((test("", !eps(false))));
     }
 
     {   // test lazy semantic predicate
 
-        auto ft = [](unused_type, unused_type, unused_type, unused_type)
-        { return true; };
-        auto ff = [](unused_type, unused_type, unused_type, unused_type)
-        { return false; };
+        auto true_ = [](unused_type) { return true; };
+        auto false_ = [](unused_type) { return false; };
 
-        BOOST_TEST((test("", eps(ft))));
-        BOOST_TEST((!test("", eps(ff))));
-        //~ BOOST_TEST((test("", !eps(val(false))))); // not predicate $$$ Implement me! $$$
+        BOOST_TEST((test("", eps(true_))));
+        BOOST_TEST((!test("", eps(false_))));
+        BOOST_TEST((test("", !eps(false_))));
     }
 
     //~ {   // test lazy semantic predicate

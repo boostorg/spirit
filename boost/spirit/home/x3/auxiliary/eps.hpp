@@ -17,6 +17,8 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    struct rule_context_tag;
+
     struct semantic_predicate : parser<semantic_predicate>
     {
         typedef unused_type attribute_type;
@@ -50,7 +52,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
-            return f(first, last, context, attr);
+            return f(spirit::get<rule_context_tag>(context));
         }
 
         F f;
