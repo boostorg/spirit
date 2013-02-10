@@ -331,6 +331,8 @@ main()
         //~ BOOST_TEST(v.size() == 1 && v[0] == 'a');
     }
 
+    // test from spirit mailing list
+    // "Optional operator causes string attribute concatenation"
     {
         typedef vector<char, char, int> attr_type;
         attr_type attr;
@@ -341,6 +343,8 @@ main()
         BOOST_TEST(attr == attr_type('x', 'y', 123));
     }
 
+    // test from spirit mailing list (variation of above)
+    // "Optional operator causes string attribute concatenation"
     {
         typedef vector<std::string, std::string, int> attr_type;
         attr_type attr;
@@ -349,6 +353,32 @@ main()
 
         BOOST_TEST(test_attr("xxx[yyy=123]", node, attr));
         BOOST_TEST(attr == attr_type("xxx", "yyy", 123));
+    }
+
+    // test from spirit mailing list
+    // "Error with container within sequence"
+    {
+        typedef vector<std::string> attr_type;
+        attr_type attr;
+
+        auto r = *alnum;
+
+        BOOST_TEST(test_attr("abcdef", r, attr));
+        BOOST_TEST(at_c<0>(attr) == "abcdef");
+    }
+
+    // test from spirit mailing list (variation of above)
+    // "Error with container within sequence"
+    {
+        typedef vector<std::vector<int>> attr_type;
+        attr_type attr;
+
+        auto r = *int_;
+
+        BOOST_TEST(test_attr("123 456", r, attr, space));
+        BOOST_TEST(at_c<0>(attr).size() == 2);
+        BOOST_TEST(at_c<0>(attr)[0] == 123);
+        BOOST_TEST(at_c<0>(attr)[1] == 456);
     }
 
     // $$$ Not yet implemented $$$
