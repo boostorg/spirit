@@ -7,6 +7,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include "int.hpp"
+#include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/at.hpp>
 
 int
 main()
@@ -165,6 +167,18 @@ main()
         BOOST_TEST(test_attr("-123456", int_, i));
         int_parser<custom_int, 10, 1, 2> int2;
         BOOST_TEST(test_attr("-12", int2, i));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  single-element fusion vector tests
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::x3::int_;
+        using boost::spirit::x3::int_parser;
+        boost::fusion::vector<int> i;
+
+        BOOST_TEST(test_attr("-123456", int_, i));
+        BOOST_TEST(boost::fusion::at_c<0>(i) == -123456);
     }
 
     return boost::report_errors();
