@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                // call the function ,passing the enclosing rule's context
+                // call the function, passing the enclosing rule's context
                 // and the subject's attribute.
                 f(spirit::get<rule_context_tag>(context), attr);
                 return true;

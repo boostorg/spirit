@@ -25,8 +25,8 @@ namespace boost { namespace spirit { namespace x3
     struct rule_context
     {
         template <typename Context>
-        rule_context(Context& ctx)
-          : val(ctx.val()) {}
+        rule_context(Context& context)
+          : val(context.val()) {}
         Attribute& val;
     };
 

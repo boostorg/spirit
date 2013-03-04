@@ -48,7 +48,9 @@ main()
 
         std::string s;
         typedef rule<class r, std::string> rule_type;
-        typedef rule_type::context ctx;
+
+        // MSVC does not want to have this by value! (MSVC lambda bug)
+        typedef rule_type::context const& ctx;
 
         auto rdef = rule_type()
             = alpha                 [[](ctx r, char c){ r.val += c; }]
