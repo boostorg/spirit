@@ -14,6 +14,7 @@
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/support/traits/is_variant.hpp>
+#include <boost/spirit/home/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/variant/variant.hpp>
@@ -24,6 +25,8 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/joint_view.hpp>
+
+#include <boost/fusion/include/front.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -66,7 +69,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Expected>
     struct has_substitute<unused_type const, Expected> : mpl::true_ {};
-
 
     template <typename Variant, typename Expected>
     struct find_substitute
@@ -164,9 +166,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename Parser, typename Attribute>
-    struct pass_parser_attribute<Parser, Attribute,
-        typename enable_if_c<(!traits::is_variant<Attribute>::value)>::type>
+    // Pass non-varinat attributes as-is
+    template <typename Parser, typename Attribute, typename Enable = void>
+    struct pass_non_variant_attribute
     {
         typedef Attribute& type;
 
@@ -176,6 +178,32 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return attr;
         }
     };
+
+    // Unwrap single element sequences
+    template <typename Parser, typename Attribute>
+    struct pass_non_variant_attribute<Parser, Attribute,
+        typename enable_if<traits::is_size_one_sequence<Attribute>>::type>
+    {
+        typedef typename remove_reference<
+            typename fusion::result_of::front<Attribute>::type>::type
+        attr_type;
+
+        typedef pass_parser_attribute<Parser, attr_type> pass;
+        typedef typename pass::type type;
+
+        template <typename Attribute_>
+        static type
+        call(Attribute_& attr)
+        {
+            return pass::call(fusion::front(attr));
+        }
+    };
+
+    template <typename Parser, typename Attribute>
+    struct pass_parser_attribute<Parser, Attribute,
+        typename enable_if_c<(!traits::is_variant<Attribute>::value)>::type>
+        : pass_non_variant_attribute<Parser, Attribute>
+    {};
 
     template <typename Parser>
     struct pass_parser_attribute<Parser, unused_type> : pass_variant_unused {};

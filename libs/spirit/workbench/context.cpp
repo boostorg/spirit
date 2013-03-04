@@ -29,7 +29,6 @@ void b(Context const& context)
 {
     int bi = 123;
     a(make_context<b_ctx>(bi, context));
-
 }
 
 void c()
@@ -38,13 +37,16 @@ void c()
     b(make_context<c_ctx>(ci));
 }
 
-int
-main()
+void test()
 {
     c();
-    return 0;
 
 //  MSVC generates this code:
 //      mov	DWORD PTR ?bb@@3HA, 123
 //      mov	DWORD PTR ?cc@@3HA, 456
+//
+//  GCC generates this code:
+//      movl    $123,   _bb
+//      movl    $456,   _cc
 }
+

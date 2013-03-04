@@ -209,16 +209,16 @@ main()
         using boost::spirit::x3::int_;
 
         auto const expr = int_;
-        
+
         short i;
         BOOST_TEST(test_attr("1", expr, i) && i == 1); // ok
 
         const rule< class int_rule, int > int_rule( "int_rule" );
         auto const int_rule_def = int_;
-        auto const g = grammar( "g", int_rule = int_rule_def );
-        
+        auto const start  = int_rule = int_rule_def;
+
         short j;
-        BOOST_TEST(test_attr("1", g, j) && j == 1); // error
+        BOOST_TEST(test_attr("1", start, j) && j == 1); // error
     }
 
     return boost::report_errors();

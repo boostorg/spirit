@@ -199,7 +199,7 @@ namespace boost { namespace spirit { namespace x3
     struct unicode_char_class_base
     {
         typedef char_encoding::unicode encoding;
-        typedef typename char_encoding::unicode::char_type char_type;
+        typedef char_encoding::unicode::char_type char_type;
 
 #define BOOST_SPIRIT_BASIC_CLASSIFY(name)                                       \
         template <typename Char>                                                \

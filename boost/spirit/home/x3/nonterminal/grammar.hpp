@@ -119,6 +119,22 @@ namespace boost { namespace spirit { namespace x3
 
 #else
 
+    template <typename A>
+    grammar_parser<fusion::deque<A>>
+    grammar(char const* name, A const& a)
+    {
+        typedef fusion::deque<A> sequence;
+        return grammar_parser<sequence>(name, sequence(a));
+    }
+
+    template <typename A, typename B>
+    grammar_parser<fusion::deque<A, B>>
+    grammar(char const* name, A const& a, B const& b)
+    {
+        typedef fusion::deque<A, B> sequence;
+        return grammar_parser<sequence>(name, sequence(a, b));
+    }
+
     template <typename A, typename B, typename C>
     grammar_parser<fusion::deque<A, B, C>>
     grammar(char const* name, A const& a, B const& b, C const& c)

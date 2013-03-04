@@ -9,6 +9,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/fusion/include/vector.hpp>
 
 //~ #include <boost/phoenix/core.hpp>
 //~ #include <boost/phoenix/operator.hpp>
@@ -125,6 +126,14 @@ main()
         x_attr x;
         test_attr("abcde", +char_, x);
     }
+
+    // single-element fusion vector tests
+    {
+        boost::fusion::vector<std::string> fs;
+        BOOST_TEST((test_attr("12345", +char_, fs))); // ok
+        BOOST_TEST(boost::fusion::at_c<0>(fs) == "12345");
+    }
+
     return boost::report_errors();
 }
 

@@ -127,15 +127,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             transform;
 
             typedef typename make_attribute::value_type value_type;
+            typedef typename transform::type transform_attr;
             value_type made_attr = make_attribute::call(attr);
-            typename transform::type attr_ = transform::pre(made_attr);
+            transform_attr attr_ = transform::pre(made_attr);
 
 #if defined(BOOST_SPIRIT_DEBUG)
             context_debug<Iterator, typename make_attribute::value_type>
                 dbg(rule_name, first, last, made_attr);
 #endif
-            attr_pointer_scope<value_type>
-                attr_scope(attr_ptr, boost::addressof(made_attr));
+            attr_pointer_scope<typename remove_reference<transform_attr>::type>
+                attr_scope(attr_ptr, boost::addressof(attr_));
             if (parse_rhs(rhs, first, last, context, attr_))
             {
                 // do up-stream transformation, this integrates the results

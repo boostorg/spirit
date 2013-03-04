@@ -277,6 +277,17 @@ main()
         unused = start; // silence unused local warning
     }
 
+    // single-element fusion vector tests
+    {
+        boost::fusion::vector<boost::variant<int, std::string>> fv;
+        BOOST_TEST((test_attr("12345", int_ | +char_, fv)));
+        BOOST_TEST(boost::get<int>(boost::fusion::at_c<0>(fv)) == 12345);
+
+        boost::fusion::vector<boost::variant<int, std::string>> fvi;
+        BOOST_TEST((test_attr("12345", int_ | int_, fvi)));
+        BOOST_TEST(boost::get<int>(boost::fusion::at_c<0>(fvi)) == 12345);
+    }
+
     return boost::report_errors();
 }
 
