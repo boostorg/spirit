@@ -17,7 +17,7 @@
 #include <boost/spirit/home/x3/auxiliary/action.hpp>
 //~ #include <boost/spirit/home/x3/auxiliary/lazy.hpp>
 #include <boost/spirit/home/x3/auxiliary/eol.hpp>
-//~ #include <boost/spirit/home/x3/auxiliary/eoi.hpp>
+#include <boost/spirit/home/x3/auxiliary/eoi.hpp>
 //~ #include <boost/spirit/home/x3/auxiliary/attr.hpp>
 //~ #include <boost/spirit/home/x3/auxiliary/attr_cast.hpp>
 
