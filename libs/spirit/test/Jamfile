@@ -70,7 +70,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run x3/difference.cpp       : : : : qi_difference ]
      #~ [ run x3/encoding.cpp         : : : : qi_encoding ]
      #~ [ run x3/eoi.cpp              : : : : qi_eoi ]
-     #~ [ run x3/eol.cpp              : : : : qi_eol ]
+     [ run x3/eol.cpp              : : : : qi_eol ]
      [ run x3/eps.cpp              : : : : qi_eps ]
      #~ [ run x3/expect.cpp           : : : : qi_expect ]
      #~ [ run x3/grammar.cpp          : : : : qi_grammar ]
