@@ -307,6 +307,18 @@ public:
         shared_ptr<Lookup> lookup;
         std::string name_;
     };
+
+    template <typename Char, typename T, typename Lookup, typename Filter>
+    struct get_info<symbols<Char, T, Lookup, Filter>>
+    {
+      typedef std::string result_type;
+      result_type operator()(symbols< Char, T
+                                    , Lookup, Filter
+                                    > const& symbols) const
+      {
+         return symbols.name();
+      }
+    };
 }}}
 
 #if defined(BOOST_MSVC)
