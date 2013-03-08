@@ -415,23 +415,6 @@ main()
 //         //~ rule<char const*, attr_type()> r2 = r % ',';
 //     }
 
-
-    // $$$ JDG: I do not think this should be allowed. $$$
-    // single-element fusion vector tests
-    // "Error with container within sequence"
-    //~ {
-        //~ using boost::spirit::x3::alnum;
-        //~ using boost::spirit::x3::alpha;
-
-        //~ std::string s;
-        //~ BOOST_TEST((test_attr("identifier", (alpha | '_') >> *(alnum | '_'), s))); // ok
-        //~ BOOST_TEST(s == "identifier");
-
-        //~ boost::fusion::vector<std::string> fs;
-        //~ BOOST_TEST((test_attr("identifier", (alpha | '_') >> *(alnum | '_'), fs))); // error
-        //~ BOOST_TEST(boost::fusion::at_c<0>(fs) == "identifier");
-    //~ }
-
     return boost::report_errors();
 }
 
