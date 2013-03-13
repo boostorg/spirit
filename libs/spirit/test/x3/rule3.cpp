@@ -53,7 +53,7 @@ main()
         typedef rule_type::context const& ctx;
 
         auto rdef = rule_type()
-            = alpha                 [[](ctx r, char c){ r.val += c; }]
+            = alpha                 [ [](ctx r, char c){ r.val += c; }]
             ;
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));
