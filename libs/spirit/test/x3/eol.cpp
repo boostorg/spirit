@@ -24,5 +24,9 @@ main()
         BOOST_TEST((!test("", eol)));
     }
 
+    {
+        BOOST_TEST(what(eol) == "eol");
+    }
+
     return boost::report_errors();
 }

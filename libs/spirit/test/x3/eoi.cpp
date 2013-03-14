@@ -21,5 +21,9 @@ main()
         BOOST_TEST(!(test("x", eoi)));
     }
 
+    {
+        BOOST_TEST(what(eoi) == "eoi");
+    }
+
     return boost::report_errors();
 }

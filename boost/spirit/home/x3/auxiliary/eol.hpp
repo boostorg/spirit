@@ -49,6 +49,13 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
+    template<>
+    struct get_info<eol_parser>
+    {
+        typedef std::string result_type;
+        result_type operator()(eol_parser const &) const { return "eol"; }
+    };
+
     eol_parser const eol = eol_parser();
 }}}
 

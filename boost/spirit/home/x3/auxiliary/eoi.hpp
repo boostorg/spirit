@@ -32,6 +32,13 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
+    template<>
+    struct get_info<eoi_parser>
+    {
+        typedef std::string result_type;
+        result_type operator()(eoi_parser const &) const { return "eoi"; }
+    };
+
     eoi_parser const eoi = eoi_parser();
 }}}
 
