@@ -353,16 +353,22 @@ STL. Also, it must supply a static variable called eof which is compared against
 to know whether the input has reached the end. Last but not least the function 
 object must be default constructible. Here is an example: 
 
+    #include <iostream>
+    #include <boost/spirit/home/qi.hpp>
+    #include <boost/spirit/home/support.hpp>
+    #include <boost/spirit/home/support/multi_pass.hpp>
+    #include <boost/spirit/home/support/iterators/detail/functor_input_policy.hpp>
+
     // define the function object
     class iterate_a2m
     {
     public:
         typedef char result_type;
 
-        iterate_a2m() : c('A') {}
+        iterate_a2m() : c_('A') {}
         iterate_a2m(char c) : c_(c) {}
 
-        result_type operator()() const
+        result_type operator()()
         {
             if (c_ == 'M')
                 return eof;
@@ -375,24 +381,31 @@ object must be default constructible. Here is an example:
         char c_;
     };
 
-    iterate_a2m::result_type iterate_a2m::eof = iterate_a2m::result_type('\0');
+    iterate_a2m::result_type iterate_a2m::eof = iterate_a2m::result_type('M');
+
+    using namespace boost::spirit;
 
     // create two iterators using the define function object, one of which is 
     // an end iterator
     typedef multi_pass<iterate_a2m
-      , iterator_policies::functor_input
       , iterator_policies::first_owner
       , iterator_policies::no_check
+      , iterator_policies::functor_input
       , iterator_policies::split_std_deque> 
     functor_multi_pass_type;
 
-    functor_multi_pass_type first = functor_multi_pass_t(iterate_a2m());
-    functor_multi_pass_type last;
+    int main()
+    {
+        functor_multi_pass_type first = functor_multi_pass_type(iterate_a2m());
+        functor_multi_pass_type last;
 
-    // use the iterators: this will print "ABCDEFGHIJKL"
-    while (first != last) {
-        std::cout << *first;
-        ++first;
+        // use the iterators: this will print "ABCDEFGHIJKL"
+        while (first != last) {
+            std::cout << *first;
+            ++first;
+        }
+        std::cout << std::endl;
+        return 0;
     }
 
 [heading How to write policies for use with multi_pass]
