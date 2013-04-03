@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2011 Hartmut Kaiser
+//  Copyright (c) 2001-2013 Hartmut Kaiser
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,12 +10,21 @@
 #pragma once
 #endif
 
-// Allow to work around the MPL problem in BOOST_MPL_ASSERT_MSG generating
-// multiple definition linker errors for certain compilers (VC++)
-#if BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG != 0
+#include <boost/config.hpp>
+
+// Work around the MPL problem in BOOST_MPL_ASSERT_MSG generating
+// multiple definition linker errors for certain compilers (VC++ 8).
+// BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG can also be defined by user.
+#if !defined(BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG)
+# if defined(BOOST_MSVC) && BOOST_MSVC < 1500
+#  define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG 1
+# endif
+#endif
+
+#if !defined(BOOST_NO_CXX11_STATIC_ASSERT) || BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG != 0
 #include <boost/static_assert.hpp>
 #define BOOST_SPIRIT_ASSERT_MSG(Cond, Msg, Types)                             \
-        BOOST_STATIC_ASSERT(Cond)
+        BOOST_STATIC_ASSERT_MSG(Cond, Msg)
 #else
 #include <boost/mpl/assert.hpp>
 #define BOOST_SPIRIT_ASSERT_MSG(Cond, Msg, Types)                             \
