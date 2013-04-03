@@ -24,7 +24,7 @@
 #if !defined(BOOST_NO_CXX11_STATIC_ASSERT) || BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG != 0
 #include <boost/static_assert.hpp>
 #define BOOST_SPIRIT_ASSERT_MSG(Cond, Msg, Types)                             \
-        BOOST_STATIC_ASSERT_MSG(Cond, Msg)
+        BOOST_STATIC_ASSERT_MSG(Cond, # Msg)
 #else
 #include <boost/mpl/assert.hpp>
 #define BOOST_SPIRIT_ASSERT_MSG(Cond, Msg, Types)                             \
