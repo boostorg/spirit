@@ -142,12 +142,15 @@ namespace boost { namespace spirit { namespace karma
             // use existing operator<<()
             typedef typename attribute<Context>::type attribute_type;
 
-            boost::iostreams::stream<sink_device> ostr(sink);
-            ostr << traits::extract_from<attribute_type>(attr, context) << std::flush;
+            {
+                boost::iostreams::stream<sink_device> ostr(sink);
+                ostr << traits::extract_from<attribute_type>(attr, context) << std::flush;
 
-            if (ostr.good()) 
-                return karma::delimit_out(sink, d);   // always do post-delimiting
-            return false;
+                if (!ostr.good())
+                    return false;
+            }
+
+            return karma::delimit_out(sink, d);   // always do post-delimiting
         }
 
         // this is a special overload to detect if the output iterator has been
@@ -175,14 +178,16 @@ namespace boost { namespace spirit { namespace karma
             // use existing operator<<()
             typedef typename attribute<Context>::type attribute_type;
 
-            boost::iostreams::stream<sink_device> ostr(sink);
-            ostr.imbue(sink.get_ostream().getloc());
-            ostr << traits::extract_from<attribute_type>(attr, context) 
-                 << std::flush;
+            {
+                boost::iostreams::stream<sink_device> ostr(sink);
+                ostr.imbue(sink.get_ostream().getloc());
+                ostr << traits::extract_from<attribute_type>(attr, context) 
+                     << std::flush;
+                if (!ostr.good())
+                    return false;
+            }
 
-            if (ostr.good()) 
-                return karma::delimit_out(sink, d);  // always do post-delimiting
-            return false;
+            return karma::delimit_out(sink, d);  // always do post-delimiting
         }
 
         // this any_stream has no parameter attached, it needs to have been
@@ -260,13 +265,16 @@ namespace boost { namespace spirit { namespace karma
                 output_iterator, Char, CharEncoding, Tag
             > sink_device;
 
-            boost::iostreams::stream<sink_device> ostr(sink);
-            ostr.imbue(sink.get_ostream().getloc());
-            ostr << t_ << std::flush;             // use existing operator<<()
+            {
+                boost::iostreams::stream<sink_device> ostr(sink);
+                ostr.imbue(sink.get_ostream().getloc());
+                ostr << t_ << std::flush;             // use existing operator<<()
 
-            if (ostr.good()) 
-                return karma::delimit_out(sink, d); // always do post-delimiting
-            return false;
+                if (!ostr.good())
+                    return false;
+            }
+
+            return karma::delimit_out(sink, d); // always do post-delimiting
         }
 
         template <typename Context>
