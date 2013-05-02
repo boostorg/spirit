@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 #endif
 
-    template <typename Attribute>
+    template <typename Attribute, bool has_action>
     struct attr_pointer_scope
     {
         attr_pointer_scope(Attribute*& ptr, Attribute* set)
@@ -69,11 +69,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         Attribute*& ptr;
     };
 
-    template <>
-    struct attr_pointer_scope<unused_type>
+    template <typename Attribute>
+    struct attr_pointer_scope<Attribute, false>
     {
         attr_pointer_scope(unused_type, unused_type) {}
-        ~attr_pointer_scope() {}
+    };
+
+    template <>
+    struct attr_pointer_scope<unused_type, true>
+    {
+        attr_pointer_scope(unused_type, unused_type) {}
     };
 
     template <typename Attribute, typename ID>
@@ -135,8 +140,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             context_debug<Iterator, typename make_attribute::value_type>
                 dbg(rule_name, first, last, made_attr);
 #endif
-            attr_pointer_scope<typename remove_reference<transform_attr>::type>
-                attr_scope(attr_ptr, boost::addressof(attr_));
+
+            typedef attr_pointer_scope<
+                typename remove_reference<transform_attr>::type
+              , RHS::has_action>
+            attr_pointer_scope;
+
+            attr_pointer_scope attr_scope(attr_ptr, boost::addressof(attr_));
+            (void) attr_scope; // to avoid unused variable warning
+
             if (parse_rhs(rhs, first, last, context, attr_))
             {
                 // do up-stream transformation, this integrates the results
