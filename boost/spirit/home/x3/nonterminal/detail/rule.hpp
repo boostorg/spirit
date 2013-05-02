@@ -22,7 +22,8 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    struct rule_context_tag;
+    template <typename ID>
+    struct rule_context_with_id_tag;
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -58,7 +59,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 #endif
 
-    template <typename Attribute, bool has_action>
+    template <typename Attribute>
     struct attr_pointer_scope
     {
         attr_pointer_scope(Attribute*& ptr, Attribute* set)
@@ -69,16 +70,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         Attribute*& ptr;
     };
 
-    template <typename Attribute>
-    struct attr_pointer_scope<Attribute, false>
-    {
-        attr_pointer_scope(unused_type, unused_type) {}
-    };
-
     template <>
-    struct attr_pointer_scope<unused_type, true>
+    struct attr_pointer_scope<unused_type>
     {
         attr_pointer_scope(unused_type, unused_type) {}
+        ~attr_pointer_scope() {}
     };
 
     template <typename Attribute, typename ID>
@@ -114,15 +110,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               , mpl::bool_<(RHS::has_action)>());
         }
 
-        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
-        static bool call(
+        template <typename RHS, typename Iterator, typename Context
+            , typename ActualAttribute, typename AttributePtr>
+        static bool call_rule_definition(
             RHS const& rhs
           , char const* rule_name
           , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr)
+          , Context const& context, ActualAttribute& attr, AttributePtr*& attr_ptr)
         {
-            auto& attr_ptr = spirit::get<rule_context_tag>(context).attr_ptr;
-
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
 
             // do down-stream transformation, provides attribute for
@@ -140,15 +135,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             context_debug<Iterator, typename make_attribute::value_type>
                 dbg(rule_name, first, last, made_attr);
 #endif
-
-            typedef attr_pointer_scope<
-                typename remove_reference<transform_attr>::type
-              , RHS::has_action>
-            attr_pointer_scope;
-
-            attr_pointer_scope attr_scope(attr_ptr, boost::addressof(attr_));
-            (void) attr_scope; // to avoid unused variable warning
-
+            attr_pointer_scope<typename remove_reference<transform_attr>::type>
+                attr_scope(attr_ptr, boost::addressof(attr_));
             if (parse_rhs(rhs, first, last, context, attr_))
             {
                 // do up-stream transformation, this integrates the results
@@ -163,14 +151,44 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return false;
         }
 
+        template <typename Rule, typename Iterator, typename Context
+            , typename ActualAttribute, typename AttributeContext>
+        static bool call_from_rule(
+            Rule const& rule
+          , char const* rule_name
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr, AttributeContext& attr_ctx)
+        {
+            // This is called when a rule-body has already been established.
+            // The rule body is already established by the rule_definition class,
+            // we will not do it again.
+            return call_rule_definition(
+                rule.rhs, rule_name, first, last, context, attr, attr_ctx.attr_ptr);
+        }
+
+        template <typename Rule, typename Iterator, typename Context
+            , typename ActualAttribute>
+        static bool call_from_rule(
+            Rule const& rule
+          , char const* rule_name
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr, unused_type)
+        {
+            // This is called when a rule-body has *not yet* been established.
+            // The rule body is established by the rule_definition class, so
+            // we call it to parse and establish the rule-body.
+            return rule.parse(first, last, context, attr);
+        }
+
         template <typename Iterator, typename Context, typename ActualAttribute>
-        static bool call(
+        static bool call_from_rule(
             char const* rule_name
           , Iterator& first, Iterator const& last
           , Context const& context, ActualAttribute& attr)
         {
-            return call(spirit::get<ID>(context).rhs, rule_name
-              , first, last, context, attr);
+            return call_from_rule(spirit::get<ID>(context), rule_name
+              , first, last, context, attr
+              , spirit::get<rule_context_with_id_tag<ID>>(context));
         }
     };
 }}}}
