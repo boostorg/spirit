@@ -113,7 +113,9 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute_& attr) const
         {
             return detail::parse_rule<attribute_type, ID>::call_from_rule(
-                name, first, last, context, attr);
+                spirit::get<ID>(context), name
+              , first, last, context, attr
+              , spirit::get<rule_context_with_id_tag<ID>>(context));
         }
 
         char const* name;

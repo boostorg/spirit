@@ -161,7 +161,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             // This is called when a rule-body has already been established.
             // The rule body is already established by the rule_definition class,
-            // we will not do it again.
+            // we will not do it again. We'll simply call the RHS by calling
+            // call_rule_definition.
+
             return call_rule_definition(
                 rule.rhs, rule_name, first, last, context, attr, attr_ctx.attr_ptr);
         }
@@ -177,18 +179,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // This is called when a rule-body has *not yet* been established.
             // The rule body is established by the rule_definition class, so
             // we call it to parse and establish the rule-body.
-            return rule.parse(first, last, context, attr);
-        }
 
-        template <typename Iterator, typename Context, typename ActualAttribute>
-        static bool call_from_rule(
-            char const* rule_name
-          , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr)
-        {
-            return call_from_rule(spirit::get<ID>(context), rule_name
-              , first, last, context, attr
-              , spirit::get<rule_context_with_id_tag<ID>>(context));
+            return rule.parse(first, last, context, attr);
         }
     };
 }}}}
