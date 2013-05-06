@@ -5,162 +5,162 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-   template <typename Derived>
-   struct parser
-   {
-      Derived const& derived() const
-      {
-         return *static_cast<Derived const*>(this);
-      }
-   };
+    template <typename Derived>
+    struct parser
+    {
+        Derived const& derived() const
+        {
+            return *static_cast<Derived const*>(this);
+        }
+    };
 
-   template <typename Char>
-   struct char_parser : parser<char_parser<Char>>
-   {
-      char_parser(Char ch) : ch(ch) {}
+    template <typename Char>
+    struct char_parser : parser<char_parser<Char>>
+    {
+        char_parser(Char ch) : ch(ch) {}
 
-      template <typename Iterator, typename Context>
-      bool parse(Iterator& first, Iterator last, Context const& ctx) const
-      {
-         if (first != last && *first == ch)
-         {
-            ++first;
-            return true;
-         }
-         return false;
-      }
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator last, Context const& ctx) const
+        {
+            if (first != last && *first == ch)
+            {
+                ++first;
+                return true;
+            }
+            return false;
+        }
 
-      Char ch;
-   };
+        Char ch;
+    };
 
-   template <typename Char>
-   inline char_parser<Char> char_(Char ch)
-   {
-      return char_parser<Char>(ch);
-   };
+    template <typename Char>
+    inline char_parser<Char> char_(Char ch)
+    {
+        return char_parser<Char>(ch);
+    };
 
-   template <typename Left, typename Right>
-   struct sequence_parser : parser<sequence_parser<Left, Right>>
-   {
-      sequence_parser(Left left, Right right)
-         : left(left), right(right) {}
+    template <typename Left, typename Right>
+    struct sequence_parser : parser<sequence_parser<Left, Right>>
+    {
+        sequence_parser(Left left, Right right)
+            : left(left), right(right) {}
 
-      template <typename Iterator, typename Context>
-      bool parse(Iterator& first, Iterator last, Context const& ctx) const
-      {
-         return left.parse(first, last, ctx)
-            && right.parse(first, last, ctx);
-      }
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator last, Context const& ctx) const
+        {
+            return left.parse(first, last, ctx)
+                && right.parse(first, last, ctx);
+        }
 
-      Left left;
-      Right right;
-   };
+        Left left;
+        Right right;
+    };
 
-   template <typename Left, typename Right>
-   inline sequence_parser<Left, Right> operator>>(
-      parser<Left> const& left, parser<Right> const& right)
-   {
-      return sequence_parser<Left, Right>(
-         left.derived(), right.derived());
-   }
+    template <typename Left, typename Right>
+    inline sequence_parser<Left, Right> operator>>(
+        parser<Left> const& left, parser<Right> const& right)
+    {
+        return sequence_parser<Left, Right>(
+            left.derived(), right.derived());
+    }
 
-   template <typename Left, typename Right>
-   struct alternative_parser : parser<alternative_parser<Left, Right>>
-   {
-      alternative_parser(Left left, Right right)
-         : left(left), right(right) {}
+    template <typename Left, typename Right>
+    struct alternative_parser : parser<alternative_parser<Left, Right>>
+    {
+        alternative_parser(Left left, Right right)
+            : left(left), right(right) {}
 
-      template <typename Iterator, typename Context>
-      bool parse(Iterator& first, Iterator last, Context const& ctx) const
-      {
-         if (left.parse(first, last, ctx))
-            return true;
-         return right.parse(first, last, ctx);
-      }
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator last, Context const& ctx) const
+        {
+            if (left.parse(first, last, ctx))
+                return true;
+            return right.parse(first, last, ctx);
+        }
 
-      Left left;
-      Right right;
-   };
+        Left left;
+        Right right;
+    };
 
-   template <typename Left, typename Right>
-   inline alternative_parser<Left, Right> operator|(
-      parser<Left> const& left, parser<Right> const& right)
-   {
-      return alternative_parser<Left, Right>(
-         left.derived(), right.derived());
-   }
+    template <typename Left, typename Right>
+    inline alternative_parser<Left, Right> operator|(
+        parser<Left> const& left, parser<Right> const& right)
+    {
+        return alternative_parser<Left, Right>(
+            left.derived(), right.derived());
+    }
 
-   template <typename ID, typename T, typename NextEnv>
-   struct context
-   {
-      context(T const& val, NextEnv const& next_env)
-         : val(val), next_env(next_env) {}
+    template <typename ID, typename T, typename NextContext>
+    struct context
+    {
+        context(T const& val, NextContext const& next_ctx)
+            : val(val), next_ctx(next_ctx) {}
 
-      T const& find(mpl::identity<ID>) const
-      {
-         return val;
-      }
+        T const& find(mpl::identity<ID>) const
+        {
+            return val;
+        }
 
-      template <typename Identity>
-      decltype(std::declval<NextEnv>().find(Identity()))
-      find(Identity id) const
-      {
-         return next_env.find(id);
-      }
+        template <typename Identity>
+        decltype(std::declval<NextContext>().find(Identity()))
+        find(Identity id) const
+        {
+            return next_ctx.find(id);
+        }
 
-      T const& val;
-      NextEnv const& next_env;
-   };
+        T const& val;
+        NextContext const& next_ctx;
+    };
 
-   struct empty_context
-   {
-      struct undefined {};
-      template <typename ID>
-      undefined find(ID) const
-      {
-         return undefined();
-      }
-   };
+    struct empty_context
+    {
+        struct undefined {};
+        template <typename ID>
+        undefined find(ID) const
+        {
+            return undefined();
+        }
+    };
 
-   template <typename ID, typename RHS>
-   struct rule_definition : parser<rule_definition<ID, RHS>>
-   {
-      rule_definition(RHS rhs)
-         : rhs(rhs) {}
+    template <typename ID, typename RHS>
+    struct rule_definition : parser<rule_definition<ID, RHS>>
+    {
+        rule_definition(RHS rhs)
+            : rhs(rhs) {}
 
-      template <typename Iterator, typename Context>
-      bool parse(Iterator& first, Iterator last, Context const& ctx) const
-      {
-         context<ID, RHS, Context> new_env(rhs,  ctx);
-         return rhs.parse(first, last, new_env);
-      }
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator last, Context const& ctx) const
+        {
+            context<ID, RHS, Context> this_ctx(rhs,  ctx);
+            return rhs.parse(first, last, this_ctx);
+        }
 
-      RHS rhs;
-   };
+        RHS rhs;
+    };
 
-   template <typename ID>
-   struct rule : parser<rule<ID>>
-   {
-      template <typename Derived>
-      rule_definition<ID, Derived>
-      operator=(parser<Derived> const& definition) const
-      {
-         return rule_definition<ID, Derived>(definition.derived());
-      }
+    template <typename ID>
+    struct rule : parser<rule<ID>>
+    {
+        template <typename Derived>
+        rule_definition<ID, Derived>
+        operator=(parser<Derived> const& definition) const
+        {
+            return rule_definition<ID, Derived>(definition.derived());
+        }
 
-      template <typename Iterator, typename Context>
-      bool parse(Iterator& first, Iterator last, Context const& ctx) const
-      {
-         return ctx.find(mpl::identity<ID>()).parse(first, last, ctx);
-      }
-   };
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator last, Context const& ctx) const
+        {
+            return ctx.find(mpl::identity<ID>()).parse(first, last, ctx);
+        }
+    };
 
-   template <typename Iterator, typename Derived>
-   inline bool parse(parser<Derived> const& definition, Iterator& first, Iterator last)
-   {
-      empty_context ctx;
-      return definition.derived().parse(first, last, ctx);
-   }
+    template <typename Iterator, typename Derived>
+    inline bool parse(parser<Derived> const& p, Iterator& first, Iterator last)
+    {
+        empty_context ctx;
+        return p.derived().parse(first, last, ctx);
+    }
 
 }}}
 
