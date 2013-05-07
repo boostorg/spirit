@@ -96,16 +96,16 @@ namespace boost { namespace spirit { namespace x3
         context(T const& val, NextContext const& next_ctx)
             : val(val), next_ctx(next_ctx) {}
 
-        T const& find(mpl::identity<ID>) const
+        T const& get(mpl::identity<ID>) const
         {
             return val;
         }
 
         template <typename Identity>
-        decltype(std::declval<NextContext>().find(Identity()))
-        find(Identity id) const
+        decltype(std::declval<NextContext>().get(Identity()))
+        get(Identity id) const
         {
-            return next_ctx.find(id);
+            return next_ctx.get(id);
         }
 
         T const& val;
@@ -116,7 +116,7 @@ namespace boost { namespace spirit { namespace x3
     {
         struct undefined {};
         template <typename ID>
-        undefined find(ID) const
+        undefined get(ID) const
         {
             return undefined();
         }
@@ -151,7 +151,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator last, Context const& ctx) const
         {
-            return ctx.find(mpl::identity<ID>()).parse(first, last, ctx);
+            return ctx.get(mpl::identity<ID>()).parse(first, last, ctx);
         }
     };
 
@@ -170,22 +170,22 @@ namespace boost { namespace spirit { namespace x3
 template <typename Parser>
 bool test_parse(Parser const& p, char const* in)
 {
-   return parse(p, in, in + std::strlen(in));
+    return parse(p, in, in + std::strlen(in));
 }
 
 namespace parser
 {
-   using namespace boost::spirit::x3;
+    using namespace boost::spirit::x3;
 
-   namespace g_definition
-   {
-      rule<class x> const x;
-      auto const ax = char_('a') >> x;
+    namespace g_definition
+    {
+        rule<class x> const x;
+        auto const ax = char_('a') >> x;
 
-      auto const g =
-         x = char_('x') | ax;
-   }
-   using g_definition::g;
+        auto const g =
+            x = char_('x') | ax;
+    }
+    using g_definition::g;
 }
 
 int main()

@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/traits/container_traits.hpp>
+#include <boost/spirit/home/support/traits/value_traits.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/mpl/and.hpp>
@@ -29,11 +30,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, mpl::false_)
         {
-            // synthesized attribute needs to be default constructed
+            // synthesized attribute needs to be value initialized
             typedef typename
                 traits::container_value<Attribute>::type
             value_type;
-            value_type val = value_type();
+            value_type val = traits::value_initialize<value_type>::call();
 
             if (!parser.parse(first, last, context, val))
                 return false;
