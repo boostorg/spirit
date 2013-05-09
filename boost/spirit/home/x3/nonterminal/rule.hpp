@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace x3
     {
         template <typename Context>
         rule_context_proxy(Context& context)
-          : val(context.val()) {}
+          : val(spirit::get<rule_context_tag>(context).val()) {}
         Attribute& val;
     };
 

@@ -214,7 +214,7 @@ int main()
       std::cout << "==========================================" << std::endl;
    }
 
-   { // a grammar (gcc only: see http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3386.html)
+   { // a grammar (gcc only: see http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3582.html)
 
       using namespace boost::spirit::x3;
       auto g = []()

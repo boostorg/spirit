@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace x3
             {
                 // call the function, passing the enclosing rule's context
                 // and the subject's attribute.
-                f(spirit::get<rule_context_tag>(context), attr);
+                f(context, attr);
                 return true;
 
                 // reset iterators if semantic action failed the match

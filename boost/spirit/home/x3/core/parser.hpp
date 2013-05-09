@@ -14,6 +14,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/context.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)
@@ -24,6 +25,7 @@ namespace boost { namespace spirit { namespace x3
 {
     using spirit::unused_type;
     using spirit::unused;
+    using spirit::get;
 
     template <typename Subject, typename Action>
     struct action;
