@@ -151,10 +151,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return false;
         }
 
-        template <typename Rule, typename Iterator, typename Context
+        template <typename RuleDef, typename Iterator, typename Context
             , typename ActualAttribute, typename AttributeContext>
         static bool call_from_rule(
-            Rule const& rule
+            RuleDef const& rule_def
           , char const* rule_name
           , Iterator& first, Iterator const& last
           , Context const& context, ActualAttribute& attr, AttributeContext& attr_ctx)
@@ -165,13 +165,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // call_rule_definition.
 
             return call_rule_definition(
-                rule.rhs, rule_name, first, last, context, attr, attr_ctx.attr_ptr);
+                rule_def.rhs, rule_name, first, last
+              , context, attr, attr_ctx.attr_ptr);
         }
 
-        template <typename Rule, typename Iterator, typename Context
+        template <typename RuleDef, typename Iterator, typename Context
             , typename ActualAttribute>
         static bool call_from_rule(
-            Rule const& rule
+            RuleDef const& rule_def
           , char const* rule_name
           , Iterator& first, Iterator const& last
           , Context const& context, ActualAttribute& attr, unused_type)
@@ -180,7 +181,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // The rule body is established by the rule_definition class, so
             // we call it to parse and establish the rule-body.
 
-            return rule.parse(first, last, context, attr);
+            return rule_def.parse(first, last, context, attr);
         }
     };
 }}}}

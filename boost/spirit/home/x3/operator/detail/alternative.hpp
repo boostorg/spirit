@@ -36,10 +36,10 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Variant, typename Expected>
+    template <typename Variant, typename Attribute>
     struct has_substitute_impl
     {
-        // Find the type from the variant that can be a substitute for Expected.
+        // Find the type from the variant that can be a substitute for Attribute.
         // return true_ if one is found, else false_
 
         typedef Variant variant_type;
@@ -47,13 +47,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef typename mpl::end<types>::type end;
 
         typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Expected> >::type
+            mpl::find_if<types, is_same<mpl::_1, Attribute> >::type
         iter_1;
 
         typedef typename
             mpl::eval_if<
                 is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >,
+                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute> >,
                 mpl::identity<iter_1>
             >::type
         iter;
@@ -61,33 +61,33 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef mpl::not_<is_same<iter, end>> type;
     };
 
-    template <typename Variant, typename Expected>
-    struct has_substitute : has_substitute_impl<Variant, Expected>::type {};
+    template <typename Variant, typename Attribute>
+    struct has_substitute : has_substitute_impl<Variant, Attribute>::type {};
 
-    template <typename Expected>
-    struct has_substitute<unused_type, Expected> : mpl::true_ {};
+    template <typename Attribute>
+    struct has_substitute<unused_type, Attribute> : mpl::true_ {};
 
-    template <typename Expected>
-    struct has_substitute<unused_type const, Expected> : mpl::true_ {};
+    template <typename Attribute>
+    struct has_substitute<unused_type const, Attribute> : mpl::true_ {};
 
-    template <typename Variant, typename Expected>
+    template <typename Variant, typename Attribute>
     struct find_substitute
     {
-        // Get the type from the variant that can be a substitute for Expected.
-        // If none is found, just return Expected
+        // Get the type from the variant that can be a substitute for Attribute.
+        // If none is found, just return Attribute
 
         typedef Variant variant_type;
         typedef typename variant_type::types types;
         typedef typename mpl::end<types>::type end;
 
         typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Expected> >::type
+            mpl::find_if<types, is_same<mpl::_1, Attribute> >::type
         iter_1;
 
         typedef typename
             mpl::eval_if<
                 is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Expected> >,
+                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute> >,
                 mpl::identity<iter_1>
             >::type
         iter;
@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef typename
             mpl::eval_if<
                 is_same<iter, end>,
-                mpl::identity<Expected>,
+                mpl::identity<Attribute>,
                 mpl::deref<iter>
             >::type
         type;
@@ -131,9 +131,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser, typename Attribute, typename Enable = void>
     struct pass_parser_attribute
     {
-        typedef typename traits::attribute_of<Parser>::type expected_type;
+        typedef typename traits::attribute_of<Parser>::type attribute_type;
         typedef typename
-            find_substitute<Attribute, expected_type>::type
+            find_substitute<Attribute, attribute_type>::type
         substitute_type;
 
         typedef typename
@@ -166,7 +166,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    // Pass non-varinat attributes as-is
+    // Pass non-variant attributes as-is
     template <typename Parser, typename Attribute, typename Enable = void>
     struct pass_non_variant_attribute
     {

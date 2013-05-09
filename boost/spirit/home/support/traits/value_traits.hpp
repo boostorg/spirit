@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace traits
     {
         static T call()
         {
-            return boost::initialized_value;
+            return boost::value_initialized<T>();
         }
     };
 }}}

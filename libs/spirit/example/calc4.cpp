@@ -195,12 +195,6 @@ namespace client
         x3::rule<class term, ast::program> const term("term");
         x3::rule<class factor, ast::operand> const factor("factor");
 
-        struct xxxx {};
-        xxxx not_a_parser;
-        using x3::operator*;
-
-        //~ auto const xx = term >> not_a_parser;
-
         auto const expression_def =
             term
             >> *(   (char_('+') >> term)
