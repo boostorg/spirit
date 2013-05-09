@@ -21,19 +21,31 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename Attribute>
-    struct rule_context
-    {
-        template <typename Context>
-        rule_context(Context& context)
-          : val(context.val()) {}
-        Attribute& val;
-    };
-
     struct rule_context_tag;
 
     template <typename ID>
     struct rule_context_with_id_tag;
+
+    template <typename Attribute>
+    struct rule_context
+    {
+        Attribute& val() const
+        {
+            BOOST_ASSERT(attr_ptr);
+            return *attr_ptr;
+        }
+
+        Attribute* attr_ptr;
+    };
+
+    template <typename Attribute>
+    struct rule_context_proxy
+    {
+        template <typename Context>
+        rule_context_proxy(Context& context)
+          : val(context.val()) {}
+        Attribute& val;
+    };
 
     template <typename ID, typename RHS, typename Attribute>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute>>
@@ -50,22 +62,11 @@ namespace boost { namespace spirit { namespace x3
         rule_definition(RHS rhs, char const* name)
           : rhs(rhs), name(name) {}
 
-        struct private_rule_context
-        {
-            Attribute& val() const
-            {
-                BOOST_ASSERT(attr_ptr);
-                return *attr_ptr;
-            }
-
-            Attribute* attr_ptr;
-        };
-
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute_& attr) const
         {
-            private_rule_context r_context = { 0 };
+            rule_context<Attribute> r_context = { 0 };
 
             auto rule_ctx1 = make_context<rule_context_with_id_tag<ID>>(r_context, context);
             auto rule_ctx2 = make_context<rule_context_tag>(r_context, rule_ctx1);
@@ -88,7 +89,7 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
-        typedef rule_context<Attribute> context;
+        typedef rule_context_proxy<Attribute> context;
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)
         rule(char const* name = typeid(rule).name()) : name(name) {}
