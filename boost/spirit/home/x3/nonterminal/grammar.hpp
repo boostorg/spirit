@@ -12,9 +12,9 @@
 #endif
 
 #include <boost/spirit/home/x3/nonterminal/grammar.hpp>
-#include <boost/fusion/container/deque.hpp>
-#include <boost/fusion/sequence/intrinsic/front.hpp>
-#include <boost/fusion/algorithm/query/find_if.hpp>
+#include <boost/fusion/container/map.hpp>
+#include <boost/fusion/sequence/intrinsic/at_key.hpp>
+#include <boost/fusion/sequence/intrinsic/has_key.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -22,12 +22,6 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    namespace detail
-    {
-        template <typename ID, typename T>
-        struct has_rule_id : is_same<typename ID::type, typename T::id> {};
-    }
-
     template <typename Elements, typename Next>
     struct grammar_context
     {
@@ -37,33 +31,25 @@ namespace boost { namespace spirit { namespace x3
         template <typename ID>
         struct get_result
         {
-            typedef typename
-                fusion::result_of::find_if<
-                    Elements const, detail::has_rule_id<ID, mpl::_>>::type
-            iterator_type;
-
-            typedef fusion::result_of::equal_to<
-                    iterator_type
-                  , typename fusion::result_of::end<Elements>::type>
-            id_not_found;
-
+            typedef typename ID::type id_type;
             typedef typename mpl::eval_if<
-                id_not_found
-              , typename Next::template get_result<ID>
-              , fusion::result_of::deref<iterator_type>>::type
+                fusion::result_of::has_key<Elements const, id_type>
+              , fusion::result_of::at_key<Elements const, id_type>
+              , typename Next::template get_result<ID>>::type
             type;
         };
 
         template <typename ID>
         typename get_result<ID>::type
-        get_impl(ID id, mpl::false_) const
+        get_impl(ID id, mpl::true_) const
         {
-            return *fusion::find_if<detail::has_rule_id<ID, mpl::_>>(elements);
+            typedef typename ID::type id_type;
+            return fusion::at_key<id_type>(elements);
         }
 
         template <typename ID>
         typename get_result<ID>::type
-        get_impl(ID id, mpl::true_) const
+        get_impl(ID id, mpl::false_) const
         {
             return next.get(id);
         }
@@ -72,8 +58,9 @@ namespace boost { namespace spirit { namespace x3
         typename get_result<ID>::type
         get(ID id) const
         {
-            typename get_result<ID>::id_not_found id_not_found;
-            return get_impl(id, id_not_found);
+            typedef typename ID::type id_type;
+            typename fusion::result_of::has_key<Elements, id_type> has_key;
+            return get_impl(id, has_key);
         }
 
         Elements const& elements;
@@ -86,7 +73,7 @@ namespace boost { namespace spirit { namespace x3
         typedef typename
             remove_reference<
                 typename fusion::result_of::front<Elements>::type
-            >::type
+            >::type::second_type
         start_rule;
 
         typedef typename start_rule::attribute_type attribute_type;
@@ -100,7 +87,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute_& attr) const
         {
             grammar_context<Elements, Context> our_context(elements, context);
-            return fusion::front(elements).parse(first, last, our_context, attr);
+            return fusion::front(elements).second.parse(first, last, our_context, attr);
         }
 
         char const* name;
@@ -110,36 +97,37 @@ namespace boost { namespace spirit { namespace x3
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
     template <typename ...Elements>
-    grammar_parser<fusion::deque<Elements...>>
+    grammar_parser<fusion::map<fusion::pair<typename Elements::id, Elements>...>>
     grammar(char const* name, Elements const&... elements)
     {
-        typedef fusion::deque<Elements...> sequence;
-        return grammar_parser<sequence>(name, sequence(elements...));
+        typedef fusion::map<fusion::pair<typename Elements::id, Elements>...> sequence;
+        return grammar_parser<sequence>(name,
+            sequence(fusion::make_pair<typename Elements::id>(elements)...));
     }
 
 #else
 
     template <typename A>
-    grammar_parser<fusion::deque<A>>
+    grammar_parser<fusion::map<A>>
     grammar(char const* name, A const& a)
     {
-        typedef fusion::deque<A> sequence;
+        typedef fusion::map<A> sequence;
         return grammar_parser<sequence>(name, sequence(a));
     }
 
     template <typename A, typename B>
-    grammar_parser<fusion::deque<A, B>>
+    grammar_parser<fusion::map<A, B>>
     grammar(char const* name, A const& a, B const& b)
     {
-        typedef fusion::deque<A, B> sequence;
+        typedef fusion::map<A, B> sequence;
         return grammar_parser<sequence>(name, sequence(a, b));
     }
 
     template <typename A, typename B, typename C>
-    grammar_parser<fusion::deque<A, B, C>>
+    grammar_parser<fusion::map<A, B, C>>
     grammar(char const* name, A const& a, B const& b, C const& c)
     {
-        typedef fusion::deque<A, B, C> sequence;
+        typedef fusion::map<A, B, C> sequence;
         return grammar_parser<sequence>(name, sequence(a, b, c));
     }
 
