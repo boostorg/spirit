@@ -181,7 +181,6 @@ namespace client { namespace ast
 namespace client
 {
     namespace x3 = boost::spirit::x3;
-    namespace ascii = boost::spirit::x3::ascii;
 
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
