@@ -79,7 +79,7 @@ namespace boost { namespace spirit
 
         template <typename ID_>
         unused_type
-        get(ID_ id) const
+        get(ID_) const
         {
             return unused;
         }

@@ -26,10 +26,10 @@ namespace boost { namespace spirit { namespace traits
     void move_to(Source& src, Dest& dest);
 
     template <typename Dest>
-    inline void move_to(unused_type, Dest& dest) {}
+    inline void move_to(unused_type, Dest&) {}
 
     template <typename Source>
-    inline void move_to(Source& src, unused_type) {}
+    inline void move_to(Source&, unused_type) {}
 
     inline void move_to(unused_type, unused_type) {}
 
@@ -39,13 +39,13 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Iterator>
     inline void
-    move_to(Iterator first, Iterator last, unused_type) {}
+    move_to(Iterator, Iterator, unused_type) {}
 
     namespace detail
     {
         template <typename Source, typename Dest>
         inline void
-        move_to(Source& src, Dest& dest, unused_attribute) {}
+        move_to(Source&, Dest&, unused_attribute) {}
 
         template <typename T>
         inline void
@@ -123,7 +123,7 @@ namespace boost { namespace spirit { namespace traits
 
         template <typename T>
         inline void
-        move_to(T& src, T& dest, variant_attribute tag)
+        move_to(T& src, T& dest, variant_attribute)
         {
             dest = std::move(src);
         }
