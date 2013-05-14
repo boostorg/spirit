@@ -304,6 +304,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run lex/regression_file_iterator3.cpp : : : : lex_regression_file_iterator3 ]
      [ run lex/regression_file_iterator4.cpp : : : : lex_regression_file_iterator4 ]
      [ run lex/regression_static_wide_6253.cpp : : : : regression_static_wide_6253 ]
+     [ run lex/regression_less_8563.cpp : : : : regression_less_8563 ]
 
     ;
 

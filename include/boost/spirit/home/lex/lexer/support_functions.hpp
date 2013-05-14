@@ -48,8 +48,10 @@ namespace boost { namespace spirit { namespace lex
         struct result
         {
             typedef typename
-                remove_const<
-                    typename mpl::at_c<typename Env::args_type, 4>::type
+                typename remove_reference< 
+                    remove_const<
+                        typename mpl::at_c<typename Env::args_type, 4>::type
+                    >::type
                 >::type
             context_type;
             typedef typename context_type::base_iterator_type type;
