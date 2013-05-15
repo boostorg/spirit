@@ -153,7 +153,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename Attribute_>
         static type
-        call(Attribute_& attr, mpl::false_)
+        call(Attribute_&, mpl::false_)
         {
             return type();
         }

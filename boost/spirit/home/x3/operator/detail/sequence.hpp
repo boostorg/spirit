@@ -174,7 +174,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef pass_sequence_attribute_unused l_pass;
         typedef pass_through_sequence_attribute<Attribute> r_pass;
 
-        static unused_type left(Attribute& s)
+        static unused_type left(Attribute&)
         {
             return unused;
         }
@@ -199,7 +199,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return s;
         }
 
-        static unused_type right(Attribute& s)
+        static unused_type right(Attribute&)
         {
             return unused;
         }
@@ -214,12 +214,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef pass_sequence_attribute_unused l_pass;
         typedef pass_sequence_attribute_unused r_pass;
 
-        static unused_type left(Attribute& s)
+        static unused_type left(Attribute&)
         {
             return unused;
         }
 
-        static unused_type right(Attribute& s)
+        static unused_type right(Attribute&)
         {
             return unused;
         }
