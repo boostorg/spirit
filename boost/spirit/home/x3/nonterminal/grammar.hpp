@@ -32,10 +32,12 @@ namespace boost { namespace spirit { namespace x3
         struct get_result
         {
             typedef typename ID::type id_type;
+            typedef typename Next::template get_result<ID> next_get_result;
+
             typedef typename mpl::eval_if<
                 fusion::result_of::has_key<Elements const, id_type>
               , fusion::result_of::at_key<Elements const, id_type>
-              , typename Next::template get_result<ID>>::type
+              , next_get_result>::type
             type;
         };
 
@@ -107,28 +109,27 @@ namespace boost { namespace spirit { namespace x3
 
 #else
 
-    template <typename A>
-    grammar_parser<fusion::map<A>>
-    grammar(char const* name, A const& a)
+    template <typename T1, typename T2, typename T3>
+    grammar_parser<
+        fusion::map<
+            fusion::pair<typename T1::id, T1>
+          , fusion::pair<typename T2::id, T2>
+          , fusion::pair<typename T3::id, T3>
+        >>
+    grammar(char const* name, T1 const& _1, T2 const& _2, T3 const& _3)
     {
-        typedef fusion::map<A> sequence;
-        return grammar_parser<sequence>(name, sequence(a));
-    }
+        typedef fusion::map<
+            fusion::pair<typename T1::id, T1>
+          , fusion::pair<typename T2::id, T2>
+          , fusion::pair<typename T3::id, T3>>
+        sequence;
 
-    template <typename A, typename B>
-    grammar_parser<fusion::map<A, B>>
-    grammar(char const* name, A const& a, B const& b)
-    {
-        typedef fusion::map<A, B> sequence;
-        return grammar_parser<sequence>(name, sequence(a, b));
-    }
-
-    template <typename A, typename B, typename C>
-    grammar_parser<fusion::map<A, B, C>>
-    grammar(char const* name, A const& a, B const& b, C const& c)
-    {
-        typedef fusion::map<A, B, C> sequence;
-        return grammar_parser<sequence>(name, sequence(a, b, c));
+        return grammar_parser<sequence>(name,
+            sequence(
+                fusion::make_pair<typename T1::id>(_1)
+              , fusion::make_pair<typename T2::id>(_2)
+              , fusion::make_pair<typename T3::id>(_3)
+            ));
     }
 
 #endif
