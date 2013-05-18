@@ -248,8 +248,8 @@ main()
         ast_print print;                    // Prints the program
         ast_eval eval;                      // Evaluates the program
 
-        std::string::const_iterator iter = str.begin();
-        std::string::const_iterator end = str.end();
+        iterator_type iter = str.begin();
+        iterator_type end = str.end();
         boost::spirit::x3::ascii::space_type space;
         bool r = phrase_parse(iter, end, calc, space, program);
 
