@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2013 Agustín Bergé
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,6 +13,9 @@
 #endif
 
 #include <boost/type_traits/is_base_of.hpp>
+#include <boost/type_traits/remove_cv.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+#include <boost/utility/declval.hpp> 
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/context.hpp>
@@ -108,8 +112,35 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     namespace extension
     {
+        namespace detail
+        {
+            namespace as_parser_guard
+            {
+                template<typename T>
+                void as_spirit_parser(T);
+
+                template<typename T, typename R =
+                    decltype(as_spirit_parser(boost::declval<T const&>()))>
+                struct deduce_as_parser {
+                    typedef R type;
+                    typedef typename boost::remove_cv<
+                        typename boost::remove_reference<R>::type
+                    >::type value_type;
+
+                    static type call(T const& v)
+                    {
+                        return as_spirit_parser(v);
+                    }
+                };
+                template<typename T>
+                struct deduce_as_parser<T, void>
+                {};
+            }
+            using as_parser_guard::deduce_as_parser;
+        }
+
         template <typename T, typename Enable = void>
-        struct as_parser {};
+        struct as_parser : detail::deduce_as_parser<T> {};
 
         template <>
         struct as_parser<unused_type>
