@@ -12,6 +12,7 @@
 #pragma once
 #endif
 
+#include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -19,6 +20,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/context.hpp>
+#include <boost/spirit/home/support/utility/sfinae.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)
@@ -190,6 +192,20 @@ namespace boost { namespace spirit { namespace x3
     {
         return p.derived();
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // is_parser<T>: metafunction that evaluates to mpl::true_ if a type T 
+    // can be used as a parser, mpl::false_ otherwise
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable = void>
+    struct is_parser
+      : mpl::false_
+    {};
+    template <typename T>
+    struct is_parser<T, typename disable_if_substitution_failure<
+        typename extension::as_parser<T>::type>::type>
+      : mpl::true_
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // The main what function
