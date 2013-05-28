@@ -194,6 +194,9 @@ main()
 
         BOOST_TEST(test(L"A", alphabetic));
         BOOST_TEST(test(L"9", decimal_number));
+        BOOST_TEST(test(L"\u2800", braille));
+        BOOST_TEST(!test(L" ", braille));
+        BOOST_TEST(test(L" ", ~braille));
         // $$$ TODO $$$ Add more unicode tests
 
 // needed for VC7.1 only
