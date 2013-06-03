@@ -118,8 +118,7 @@ namespace boost { namespace spirit { namespace x3
         {
             namespace as_parser_guard
             {
-                template<typename T>
-                void as_spirit_parser(T);
+                void as_spirit_parser(...);
 
                 template<typename T, typename R =
                     decltype(as_spirit_parser(boost::declval<T const&>()))>
