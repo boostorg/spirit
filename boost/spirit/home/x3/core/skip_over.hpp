@@ -14,6 +14,11 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/traits/attribute_category.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/type_traits/remove_cv.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+#include <boost/utility/declval.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -32,6 +37,31 @@ namespace boost { namespace spirit { namespace x3
 
     namespace detail
     {
+        template <typename Skipper>
+        struct is_unused_skipper
+          : mpl::false_ {};
+
+        template <typename Skipper>
+        struct is_unused_skipper<unused_skipper<Skipper>>
+          : mpl::true_ {};
+
+        template <> 
+        struct is_unused_skipper<unused_type>
+          : mpl::true_ {};
+
+        template <typename Skipper>
+        inline Skipper const&
+        get_unused_skipper(Skipper const& skipper)
+        {
+            return skipper;
+        }
+        template <typename Skipper>
+        inline Skipper const&
+        get_unused_skipper(unused_skipper<Skipper> const& unused_skipper)
+        {
+            return unused_skipper.skipper;
+        }
+
         template <typename Iterator, typename Skipper>
         inline void skip_over(
             Iterator& first, Iterator const& last, Skipper const& skipper)
@@ -54,6 +84,14 @@ namespace boost { namespace spirit { namespace x3
 
     // this tag is used to find the skipper from the context
     struct skipper_tag;
+    
+    template <typename Context>
+    struct has_skipper
+      : mpl::not_<detail::is_unused_skipper<
+            typename remove_cv<typename remove_reference<
+                decltype(spirit::get<skipper_tag>(boost::declval<Context>()))
+            >::type>::type
+        >> {};
 
     template <typename Iterator, typename Context>
     inline void skip_over(

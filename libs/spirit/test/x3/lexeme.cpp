@@ -26,6 +26,11 @@ main()
         BOOST_TEST((test(" 12345", lexeme[+digit], space)));
         BOOST_TEST((test(" 12345  ", lexeme[+digit], space, false)));
 
+        // lexeme collapsing
+        BOOST_TEST((!test(" 1 2 3 4 5", lexeme[lexeme[+digit]], space)));
+        BOOST_TEST((test(" 12345", lexeme[lexeme[+digit]], space)));
+        BOOST_TEST((test(" 12345  ", lexeme[lexeme[+digit]], space, false)));
+
         // $$$ Not yet implemented
         //~ rule<char const*, space_type> rr;
         //~ rule<char const*> r;

@@ -1,11 +1,13 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
+    Copyright (c) 2013 Agustín Bergé
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_LEXEME_MARCH_24_2007_0802AM)
-#define SPIRIT_LEXEME_MARCH_24_2007_0802AM
+#if !defined(SPIRIT_NO_SKIP_JAN_16_2010_0802PM)
+#define SPIRIT_NO_SKIP_JAN_16_2010_0802PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -21,21 +23,21 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    // same as lexeme[], but does not pre-skip
     template <typename Subject>
-    struct lexeme_directive : unary_parser<Subject, lexeme_directive<Subject>>
+    struct no_skip_directive : unary_parser<Subject, no_skip_directive<Subject>>
     {
-        typedef unary_parser<Subject, lexeme_directive<Subject> > base_type;
+        typedef unary_parser<Subject, no_skip_directive<Subject> > base_type;
         static bool const is_pass_through_unary = true;
 
-        lexeme_directive(Subject const& subject)
+        no_skip_directive(Subject const& subject)
           : base_type(subject) {}
-        
+
         template <typename Iterator, typename Context, typename Attribute>
         typename enable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            x3::skip_over(first, last, context);
             auto const& skipper = get<skipper_tag>(context);
 
             typedef unused_skipper<
@@ -48,15 +50,11 @@ namespace boost { namespace spirit { namespace x3
               , make_context<skipper_tag>(unused_skipper, context)
               , attr);
         }
-
         template <typename Iterator, typename Context, typename Attribute>
         typename disable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            //  no need to pre-skip if skipper is unused
-            //- x3::skip_over(first, last, context);
-
             return this->subject.parse(
                 first, last
               , context
@@ -64,27 +62,27 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-    struct lexeme_gen
+    struct no_skip_gen
     {
         template <typename Subject>
-        lexeme_directive<typename extension::as_parser<Subject>::value_type>
+        no_skip_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
             typedef
-                lexeme_directive<typename extension::as_parser<Subject>::value_type>
+                no_skip_directive<typename extension::as_parser<Subject>::value_type>
             result_type;
 
             return result_type(as_parser(subject));
         }
     };
 
-    lexeme_gen const lexeme = lexeme_gen();
+    no_skip_gen const no_skip = no_skip_gen();
 }}}
 
 namespace boost { namespace spirit { namespace traits
 {
     template <typename Subject, typename Context>
-    struct attribute_of<x3::lexeme_directive<Subject>, Context>
+    struct attribute_of<x3::no_skip_directive<Subject>, Context>
         : attribute_of<Subject, Context> {};
 }}}
 
