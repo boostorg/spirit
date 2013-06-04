@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace lex
         {
             typedef typename
                 typename remove_reference< 
-                    remove_const<
+                    typename remove_const<
                         typename mpl::at_c<typename Env::args_type, 4>::type
                     >::type
                 >::type
