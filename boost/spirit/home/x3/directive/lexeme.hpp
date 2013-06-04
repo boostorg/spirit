@@ -29,10 +29,6 @@ namespace boost { namespace spirit { namespace x3
         lexeme_directive(Subject const& subject)
           : base_type(subject) {}
 
-        typedef typename
-            traits::attribute_of<Subject>::type
-        attribute_type;
-
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
@@ -69,6 +65,11 @@ namespace boost { namespace spirit { namespace x3
     lexeme_gen const lexeme = lexeme_gen();
 }}}
 
-
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Context>
+    struct attribute_of<x3::lexeme_directive<Subject>, Context>
+        : attribute_of<Subject, Context> {};
+}}}
 
 #endif

@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/core/parser.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -20,7 +20,6 @@ namespace boost { namespace spirit { namespace x3
     struct difference : binary_parser<Left, Right, difference<Left, Right>>
     {
         typedef binary_parser<Left, Right, difference<Left, Right>> base_type;
-        typedef typename traits::attribute_of<Left>::type attribute_type;
         static bool const handles_container = Left::handles_container;
         static bool const has_attribute = Left::has_attribute;
 
@@ -64,6 +63,13 @@ namespace boost { namespace spirit { namespace x3
 
         return result_type(as_parser(left), as_parser(right));
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Left, typename Right, typename Context>
+    struct attribute_of<x3::difference<Left, Right>, Context>
+        : attribute_of<Left, Context> {};
 }}}
 
 #endif

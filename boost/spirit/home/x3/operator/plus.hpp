@@ -23,12 +23,7 @@ namespace boost { namespace spirit { namespace x3
     struct plus : unary_parser<Subject, plus<Subject>>
     {
         typedef unary_parser<Subject, plus<Subject>> base_type;
-        typedef typename traits::attribute_of<Subject>::type subject_attribute;
         static bool const handles_container = true;
-
-        typedef typename
-            traits::build_container<subject_attribute>::type
-        attribute_type;
 
         plus(Subject const& subject)
           : base_type(subject) {}
@@ -58,6 +53,14 @@ namespace boost { namespace spirit { namespace x3
 
         return result_type(as_parser(subject));
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Context>
+    struct attribute_of<x3::plus<Subject>, Context>
+        : build_container<
+            typename attribute_of<Subject, Context>::type> {};
 }}}
 
 #endif

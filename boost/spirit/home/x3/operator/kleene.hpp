@@ -23,12 +23,7 @@ namespace boost { namespace spirit { namespace x3
     struct kleene : unary_parser<Subject, kleene<Subject>>
     {
         typedef unary_parser<Subject, kleene<Subject>> base_type;
-        typedef typename traits::attribute_of<Subject>::type subject_attribute;
         static bool const handles_container = true;
-
-        typedef typename
-            traits::build_container<subject_attribute>::type
-        attribute_type;
 
         kleene(Subject const& subject)
           : base_type(subject) {}
@@ -54,6 +49,14 @@ namespace boost { namespace spirit { namespace x3
 
         return result_type(as_parser(subject));
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Context>
+    struct attribute_of<x3::kleene<Subject>, Context>
+        : build_container<
+            typename attribute_of<Subject, Context>::type> {};
 }}}
 
 #endif

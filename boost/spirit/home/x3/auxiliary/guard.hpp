@@ -34,10 +34,6 @@ namespace boost { namespace spirit { namespace x3
         guard(Subject const& subject, Handler handler)
           : base_type(subject), handler(handler) {}
 
-        typedef typename
-            traits::attribute_of<Subject>::type
-        attribute_type;
-
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
@@ -72,6 +68,13 @@ namespace boost { namespace spirit { namespace x3
 
         Handler handler;
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Handler, typename Context>
+    struct attribute_of<x3::guard<Subject, Handler>, Context>
+        : attribute_of<Subject, Context> {};
 }}}
 
 #endif

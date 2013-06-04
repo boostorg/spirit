@@ -128,10 +128,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <>
     struct pass_variant_used<unused_type> : pass_variant_unused {};
 
-    template <typename Parser, typename Attribute, typename Enable = void>
+    template <typename Parser, typename Attribute, typename Context
+      , typename Enable = void>
     struct pass_parser_attribute
     {
-        typedef typename traits::attribute_of<Parser>::type attribute_type;
+        typedef typename
+            traits::attribute_of<Parser, Context>::type
+        attribute_type;
         typedef typename
             find_substitute<Attribute, attribute_type>::type
         substitute_type;
@@ -167,7 +170,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 
     // Pass non-variant attributes as-is
-    template <typename Parser, typename Attribute, typename Enable = void>
+    template <typename Parser, typename Attribute, typename Context
+      , typename Enable = void>
     struct pass_non_variant_attribute
     {
         typedef Attribute& type;
@@ -180,15 +184,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 
     // Unwrap single element sequences
-    template <typename Parser, typename Attribute>
-    struct pass_non_variant_attribute<Parser, Attribute,
+    template <typename Parser, typename Attribute, typename Context>
+    struct pass_non_variant_attribute<Parser, Attribute, Context,
         typename enable_if<traits::is_size_one_sequence<Attribute>>::type>
     {
         typedef typename remove_reference<
             typename fusion::result_of::front<Attribute>::type>::type
         attr_type;
 
-        typedef pass_parser_attribute<Parser, attr_type> pass;
+        typedef pass_parser_attribute<Parser, attr_type, Context> pass;
         typedef typename pass::type type;
 
         template <typename Attribute_>
@@ -199,26 +203,27 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename Parser, typename Attribute>
-    struct pass_parser_attribute<Parser, Attribute,
+    template <typename Parser, typename Attribute, typename Context>
+    struct pass_parser_attribute<Parser, Attribute, Context,
         typename enable_if_c<(!traits::is_variant<Attribute>::value)>::type>
-        : pass_non_variant_attribute<Parser, Attribute>
+        : pass_non_variant_attribute<Parser, Attribute, Context>
     {};
 
-    template <typename Parser>
-    struct pass_parser_attribute<Parser, unused_type> : pass_variant_unused {};
+    template <typename Parser, typename Context>
+    struct pass_parser_attribute<Parser, unused_type, Context>
+        : pass_variant_unused {};
 
-    template <typename Parser, typename Attribute>
+    template <typename Parser, typename Attribute, typename Context>
     struct pass_variant_attribute :
         mpl::if_c<Parser::has_attribute
-          , pass_parser_attribute<Parser, Attribute>
+          , pass_parser_attribute<Parser, Attribute, Context>
           , pass_variant_unused>::type
     {
         static bool const is_alternative = false;
     };
 
-    template <typename L, typename R, typename Attribute>
-    struct pass_variant_attribute<alternative<L, R>, Attribute> :
+    template <typename L, typename R, typename Attribute, typename Context>
+    struct pass_variant_attribute<alternative<L, R>, Attribute, Context> :
         mpl::if_c<alternative<L, R>::has_attribute
           , pass_variant_used<Attribute>
           , pass_variant_unused>::type
@@ -226,55 +231,55 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool const is_alternative = true;
     };
 
-    template <typename L, typename R>
+    template <typename L, typename R, typename C>
     struct get_alternative_types
     {
         typedef
             mpl::vector<
-                typename traits::attribute_of<L>::type
-              , typename traits::attribute_of<R>::type
+                typename traits::attribute_of<L, C>::type
+              , typename traits::attribute_of<R, C>::type
             >
         type;
     };
 
-    template <typename LL, typename LR, typename R>
-    struct get_alternative_types<alternative<LL, LR>, R>
+    template <typename LL, typename LR, typename R, typename C>
+    struct get_alternative_types<alternative<LL, LR>, R, C>
     {
         typedef typename
             mpl::push_back<
-                typename get_alternative_types<LL, LR>::type
-              , typename traits::attribute_of<R>::type
+                typename get_alternative_types<LL, LR, C>::type
+              , typename traits::attribute_of<R, C>::type
             >::type
         type;
     };
 
-    template <typename L, typename RL, typename RR>
-    struct get_alternative_types<L, alternative<RL, RR>>
+    template <typename L, typename RL, typename RR, typename C>
+    struct get_alternative_types<L, alternative<RL, RR>, C>
     {
         typedef typename
             mpl::push_front<
-                typename get_alternative_types<RL, RR>::type
-              , typename traits::attribute_of<L>::type
+                typename get_alternative_types<RL, RR, C>::type
+              , typename traits::attribute_of<L, C>::type
             >::type
         type;
     };
 
-    template <typename LL, typename LR, typename RL, typename RR>
-    struct get_alternative_types<alternative<LL, LR>, alternative<RL, RR>>
+    template <typename LL, typename LR, typename RL, typename RR, typename C>
+    struct get_alternative_types<alternative<LL, LR>, alternative<RL, RR>, C>
     {
         typedef
             mpl::joint_view<
-                typename get_alternative_types<LL, LR>::type
-              , typename get_alternative_types<RL, RR>::type
+                typename get_alternative_types<LL, LR, C>::type
+              , typename get_alternative_types<RL, RR, C>::type
             >
         type;
     };
 
-    template <typename L, typename R>
+    template <typename L, typename R, typename C>
     struct attribute_of_alternative
     {
         // Get all alternative attribute types
-        typedef typename get_alternative_types<L, R>::type all_types;
+        typedef typename get_alternative_types<L, R, C>::type all_types;
 
         // Filter all unused_types
         typedef typename
@@ -301,7 +306,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         Parser const& p, Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr)
     {
-        typedef detail::pass_variant_attribute<Parser, Attribute> pass;
+        typedef detail::pass_variant_attribute<Parser, Attribute, Context> pass;
 
         typename pass::type attr_ = pass::call(attr);
         if (p.parse(first, last, context, attr_))
@@ -345,7 +350,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, Attribute& attr)
         {
             typedef typename
-                traits::attribute_of<parser_type>::type
+                traits::attribute_of<parser_type, Context>::type
             attribute_type;
 
             return call(parser, first, last, context, attr

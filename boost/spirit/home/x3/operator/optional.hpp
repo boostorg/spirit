@@ -25,12 +25,7 @@ namespace boost { namespace spirit { namespace x3
     struct optional : proxy<Subject, optional<Subject>>
     {
         typedef proxy<Subject, optional<Subject>> base_type;
-        typedef typename traits::attribute_of<Subject>::type subject_attribute;
         static bool const handles_container = true;
-
-        typedef typename
-            traits::build_optional<subject_attribute>::type
-        attribute_type;
 
         optional(Subject const& subject)
           : base_type(subject) {}
@@ -78,6 +73,14 @@ namespace boost { namespace spirit { namespace x3
 
         return result_type(as_parser(subject));
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Context>
+    struct attribute_of<x3::optional<Subject>, Context>
+        : build_optional<
+            typename attribute_of<Subject, Context>::type> {};
 }}}
 
 #endif

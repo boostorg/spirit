@@ -23,13 +23,8 @@ namespace boost { namespace spirit { namespace x3
     struct list : binary_parser<Left, Right, list<Left, Right>>
     {
         typedef binary_parser<Left, Right, list<Left, Right>> base_type;
-        typedef typename traits::attribute_of<Left>::type left_attribute;
         static bool const handles_container = true;
         static bool const has_attribute = true;
-
-        typedef typename
-            traits::build_container<left_attribute>::type
-        attribute_type;
 
         list(Left const& left, Right const& right)
           : base_type(left, right) {}
@@ -69,6 +64,14 @@ namespace boost { namespace spirit { namespace x3
 
         return result_type(as_parser(left), as_parser(right));
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Left, typename Right, typename Context>
+    struct attribute_of<x3::list<Left, Right>, Context>
+        : traits::build_container<
+            typename attribute_of<Left, Context>::type> {};
 }}}
 
 #endif

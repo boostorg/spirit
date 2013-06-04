@@ -92,10 +92,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser, typename Enable = void>
     struct parse_into_container_impl : parse_into_container_base_impl<Parser> {};
 
-    template <typename Parser, typename Container>
+    template <typename Parser, typename Container, typename Context>
     struct parser_attr_is_substitute_for_container_value
         : traits::is_substitute<
-            typename traits::attribute_of<Parser>::type
+            typename traits::attribute_of<Parser, Context>::type
           , typename traits::container_value<Container>::type
         >
     {};
@@ -130,7 +130,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, Attribute& attr)
         {
             return call(parser, first, last, context, attr,
-                parser_attr_is_substitute_for_container_value<Parser, Attribute>());
+                parser_attr_is_substitute_for_container_value<Parser, Attribute, Context>());
         }
     };
 

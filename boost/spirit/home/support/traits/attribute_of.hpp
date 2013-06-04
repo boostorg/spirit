@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace traits
     // this if such an attribute_type is not readily available (e.g. expensive
     // to compute at compile time).
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Component, typename Enable = void>
+    template <typename Component, typename Context, typename Enable = void>
     struct attribute_of : mpl::identity<typename Component::attribute_type> {};
 
 }}}

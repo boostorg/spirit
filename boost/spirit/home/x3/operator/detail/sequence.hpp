@@ -225,55 +225,55 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename L, typename R>
+    template <typename L, typename R, typename C>
     struct get_sequence_types
     {
         typedef
             mpl::vector<
-                typename traits::attribute_of<L>::type
-              , typename traits::attribute_of<R>::type
+                typename traits::attribute_of<L, C>::type
+              , typename traits::attribute_of<R, C>::type
             >
         type;
     };
 
-    template <typename LL, typename LR, typename R>
-    struct get_sequence_types<sequence<LL, LR>, R>
+    template <typename LL, typename LR, typename R, typename C>
+    struct get_sequence_types<sequence<LL, LR>, R, C>
     {
         typedef typename
             mpl::push_back<
-                typename get_sequence_types<LL, LR>::type
-              , typename traits::attribute_of<R>::type
+                typename get_sequence_types<LL, LR, C>::type
+              , typename traits::attribute_of<R, C>::type
             >::type
         type;
     };
 
-    template <typename L, typename RL, typename RR>
-    struct get_sequence_types<L, sequence<RL, RR>>
+    template <typename L, typename RL, typename RR, typename C>
+    struct get_sequence_types<L, sequence<RL, RR>, C>
     {
         typedef typename
             mpl::push_front<
-                typename get_sequence_types<RL, RR>::type
-              , typename traits::attribute_of<L>::type
+                typename get_sequence_types<RL, RR, C>::type
+              , typename traits::attribute_of<L, C>::type
             >::type
         type;
     };
 
-    template <typename LL, typename LR, typename RL, typename RR>
-    struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>>
+    template <typename LL, typename LR, typename RL, typename RR, typename C>
+    struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>, C>
     {
         typedef
             mpl::joint_view<
-                typename get_sequence_types<LL, LR>::type
-              , typename get_sequence_types<RL, RR>::type
+                typename get_sequence_types<LL, LR, C>::type
+              , typename get_sequence_types<RL, RR, C>::type
             >
         type;
     };
 
-    template <typename L, typename R>
+    template <typename L, typename R, typename C>
     struct attribute_of_sequence
     {
         // Get all sequence attribute types
-        typedef typename get_sequence_types<L, R>::type all_types;
+        typedef typename get_sequence_types<L, R, C>::type all_types;
 
         // Filter all unused_types
         typedef typename
@@ -326,8 +326,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::plain_attribute)
     {
-        typedef typename traits::attribute_of<Left>::type l_attr_type;
-        typedef typename traits::attribute_of<Right>::type r_attr_type;
+        typedef typename traits::attribute_of<Left, Context>::type l_attr_type;
+        typedef typename traits::attribute_of<Right, Context>::type r_attr_type;
         typedef traits::make_attribute<l_attr_type, Attribute> l_make_attribute;
         typedef traits::make_attribute<r_attr_type, Attribute> r_make_attribute;
 
@@ -396,7 +396,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, Attribute& attr)
         {
             typedef typename
-                traits::attribute_of<parser_type>::type
+                traits::attribute_of<parser_type, Context>::type
             attribute_type;
 
             typedef typename

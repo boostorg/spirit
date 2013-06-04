@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/alternative.hpp>
 
@@ -63,9 +64,9 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename Left, typename Right>
-    struct attribute_of<x3::alternative<Left, Right>>
-        : x3::detail::attribute_of_alternative<Left, Right> {};
+    template <typename Left, typename Right, typename Context>
+    struct attribute_of<x3::alternative<Left, Right>, Context>
+        : x3::detail::attribute_of_alternative<Left, Right, Context> {};
 }}}
 
 #endif

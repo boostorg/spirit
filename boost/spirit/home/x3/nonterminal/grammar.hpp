@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/nonterminal/grammar.hpp>
 #include <boost/fusion/container/map.hpp>
 #include <boost/fusion/sequence/intrinsic/at_key.hpp>
@@ -78,7 +79,6 @@ namespace boost { namespace spirit { namespace x3
             >::type::second_type
         start_rule;
 
-        typedef typename start_rule::attribute_type attribute_type;
         static bool const has_attribute = start_rule::has_attribute;
 
         grammar_parser(char const* name, Elements const& elements)
@@ -144,6 +144,14 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Elements, typename Context>
+    struct attribute_of<x3::grammar_parser<Elements>, Context>
+        : attribute_of<
+            typename x3::grammar_parser<Elements>::start_rule, Context> {};
 }}}
 
 #endif

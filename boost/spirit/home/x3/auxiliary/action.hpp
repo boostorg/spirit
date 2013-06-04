@@ -30,10 +30,6 @@ namespace boost { namespace spirit { namespace x3
         action(Subject const& subject, Action f)
           : base_type(subject), f(f) {}
 
-        typedef typename
-            traits::attribute_of<Subject>::type
-        attribute_type;
-
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
@@ -57,6 +53,9 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type) const
         {
+            typedef typename
+                traits::attribute_of<action<Subject, Action>, Context>::type
+            attribute_type;
             typedef traits::make_attribute<attribute_type, unused_type> make_attribute;
             typedef traits::transform_attribute<
                 typename make_attribute::type, attribute_type, parser_id>
@@ -70,6 +69,13 @@ namespace boost { namespace spirit { namespace x3
 
         Action f;
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Action, typename Context>
+    struct attribute_of<x3::action<Subject, Action>, Context>
+        : attribute_of<Subject, Context> {};
 }}}
 
 #endif

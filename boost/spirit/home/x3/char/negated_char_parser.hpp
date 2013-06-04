@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -22,7 +23,6 @@ namespace boost { namespace spirit { namespace x3
     struct negated_char_parser :
         char_parser<negated_char_parser<Positive>>
     {
-        typedef typename Positive::attribute_type attribute_type;
         static bool const has_attribute = Positive::has_attribute;
 
         negated_char_parser(Positive const& positive)
@@ -50,6 +50,13 @@ namespace boost { namespace spirit { namespace x3
     {
         return cp.positive;
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Positive, typename Context>
+    struct attribute_of<x3::negated_char_parser<Positive>, Context>
+        : attribute_of<Positive, Context> {};
 }}}
 
 #endif
