@@ -14,6 +14,7 @@
 #include <boost/spirit/home/support/traits/container_traits.hpp>
 #include <boost/spirit/home/support/traits/value_traits.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/fusion/include/front.hpp>
@@ -85,7 +86,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, Attribute& attr)
         {
             return call(parser, first, last, context, attr
-              , mpl::bool_<Parser::has_attribute>());
+              , mpl::bool_<traits::has_attribute<Parser, Context>::value>());
         }
     };
 

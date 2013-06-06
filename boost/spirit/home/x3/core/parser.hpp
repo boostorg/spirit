@@ -20,6 +20,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/context.hpp>
+#include <boost/spirit/home/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/support/utility/sfinae.hpp>
 #include <string>
 
@@ -78,7 +79,6 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_category category;
         typedef Subject subject_type;
-        static bool const has_attribute = Subject::has_attribute;
         static bool const has_action = Subject::has_action;
 
         unary_parser(Subject subject)
@@ -95,8 +95,6 @@ namespace boost { namespace spirit { namespace x3
         typedef binary_category category;
         typedef Left left_type;
         typedef Right right_type;
-        static bool const has_attribute =
-            left_type::has_attribute || right_type::has_attribute;
         static bool const has_action =
             left_type::has_action || right_type::has_action;
 
@@ -235,6 +233,18 @@ namespace boost { namespace spirit { namespace x3
     {
         return get_info<Parser>()(p);
     }
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Derived, typename Context>
+    struct has_attribute<x3::unary_parser<Subject, Derived>, Context>
+        : has_attribute<Subject, Context> {};
+    
+    template <typename Left, typename Right, typename Derived, typename Context>
+    struct has_attribute<x3::binary_parser<Left, Right, Derived>, Context>
+        : mpl::bool_<has_attribute<Left, Context>::value ||
+                has_attribute<Right, Context>::value> {};
 }}}
 
 #endif

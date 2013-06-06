@@ -14,6 +14,7 @@
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/support/traits/make_attribute.hpp>
+#include <boost/spirit/home/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
@@ -46,26 +47,27 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Parser, typename Enable = void>
+    template <typename Parser, typename Context, typename Enable = void>
     struct sequence_size
     {
-        static int const value = Parser::has_attribute;
+        static int const value = traits::has_attribute<Parser, Context>::value;
     };
 
-    template <typename Parser>
+    template <typename Parser, typename Context>
     struct sequence_size_subject
-      : sequence_size<typename Parser::subject_type> {};
+      : sequence_size<typename Parser::subject_type, Context> {};
 
-    template <typename Parser>
-    struct sequence_size<Parser
+    template <typename Parser, typename Context>
+    struct sequence_size<Parser, Context
       , typename enable_if_c<(Parser::is_pass_through_unary)>::type>
-      : sequence_size_subject<Parser> {};
+      : sequence_size_subject<Parser, Context> {};
 
-    template <typename L, typename R>
-    struct sequence_size<sequence<L, R>>
+    template <typename L, typename R, typename Context>
+    struct sequence_size<sequence<L, R>, Context>
     {
         static int const value =
-            sequence_size<L>::value + sequence_size<R>::value;
+            sequence_size<L, Context>::value +
+            sequence_size<R, Context>::value;
     };
 
     struct pass_sequence_attribute_unused
@@ -129,11 +131,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , typename enable_if_c<(Parser::is_pass_through_unary)>::type>
       : pass_sequence_attribute_subject<Parser, Attribute> {};
 
-    template <typename L, typename R, typename Attribute, typename Enable = void>
+    template <typename L, typename R, typename Attribute, typename Context
+      , typename Enable = void>
     struct partition_attribute
     {
-        static int const l_size = sequence_size<L>::value;
-        static int const r_size = sequence_size<R>::value;
+        static int const l_size = sequence_size<L, Context>::value;
+        static int const r_size = sequence_size<R, Context>::value;
 
         // If you got an error here, then you are trying to pass
         // a fusion sequence with the wrong number of elements
@@ -165,9 +168,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename L, typename R, typename Attribute>
-    struct partition_attribute<L, R, Attribute,
-        typename enable_if_c<(!L::has_attribute && R::has_attribute)>::type>
+    template <typename L, typename R, typename Attribute, typename Context>
+    struct partition_attribute<L, R, Attribute, Context,
+        typename enable_if_c<(!traits::has_attribute<L, Context>::value &&
+            traits::has_attribute<R, Context>::value)>::type>
     {
         typedef unused_type l_part;
         typedef Attribute& r_part;
@@ -185,9 +189,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename L, typename R, typename Attribute>
-    struct partition_attribute<L, R, Attribute,
-        typename enable_if_c<(L::has_attribute && !R::has_attribute)>::type>
+    template <typename L, typename R, typename Attribute, typename Context>
+    struct partition_attribute<L, R, Attribute, Context,
+        typename enable_if_c<(traits::has_attribute<L, Context>::value &&
+            !traits::has_attribute<R, Context>::value)>::type>
     {
         typedef Attribute& l_part;
         typedef unused_type r_part;
@@ -205,9 +210,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename L, typename R, typename Attribute>
-    struct partition_attribute<L, R, Attribute,
-        typename enable_if_c<(!L::has_attribute && !R::has_attribute)>::type>
+    template <typename L, typename R, typename Attribute, typename Context>
+    struct partition_attribute<L, R, Attribute, Context,
+        typename enable_if_c<(!traits::has_attribute<L, Context>::value &&
+            !traits::has_attribute<R, Context>::value)>::type>
     {
         typedef unused_type l_part;
         typedef unused_type r_part;
@@ -302,7 +308,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::tuple_attribute)
     {
-        typedef detail::partition_attribute<Left, Right, Attribute> partition;
+        typedef partition_attribute<Left, Right, Attribute, Context> partition;
         typedef typename partition::l_pass l_pass;
         typedef typename partition::r_pass r_pass;
 

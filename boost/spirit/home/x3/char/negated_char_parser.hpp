@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -23,8 +24,6 @@ namespace boost { namespace spirit { namespace x3
     struct negated_char_parser :
         char_parser<negated_char_parser<Positive>>
     {
-        static bool const has_attribute = Positive::has_attribute;
-
         negated_char_parser(Positive const& positive)
           : positive(positive) {}
 
@@ -57,6 +56,10 @@ namespace boost { namespace spirit { namespace traits
     template <typename Positive, typename Context>
     struct attribute_of<x3::negated_char_parser<Positive>, Context>
         : attribute_of<Positive, Context> {};
+    
+    template <typename Positive, typename Context>
+    struct has_attribute<x3::negated_char_parser<Positive>, Context>
+        : has_attribute<Positive, Context> {};
 }}}
 
 #endif

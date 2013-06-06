@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/support/traits/is_variant.hpp>
 #include <boost/spirit/home/support/traits/tuple_traits.hpp>
@@ -27,6 +28,8 @@
 #include <boost/mpl/joint_view.hpp>
 
 #include <boost/fusion/include/front.hpp>
+
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -215,7 +218,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Attribute, typename Context>
     struct pass_variant_attribute :
-        mpl::if_c<Parser::has_attribute
+        mpl::if_c<traits::has_attribute<Parser, Context>::value
           , pass_parser_attribute<Parser, Attribute, Context>
           , pass_variant_unused>::type
     {
@@ -224,7 +227,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename L, typename R, typename Attribute, typename Context>
     struct pass_variant_attribute<alternative<L, R>, Attribute, Context> :
-        mpl::if_c<alternative<L, R>::has_attribute
+        mpl::if_c<traits::has_attribute<alternative<L, R>, Context>::value
           , pass_variant_used<Attribute>
           , pass_variant_unused>::type
     {
