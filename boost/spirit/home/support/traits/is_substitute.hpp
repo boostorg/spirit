@@ -18,6 +18,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/optional/optional.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {

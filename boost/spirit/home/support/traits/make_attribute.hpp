@@ -15,7 +15,6 @@
 
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/remove_const.hpp>
-#include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 
