@@ -21,6 +21,7 @@
 #endif
 
 #include <boost/config/warning_disable.hpp>
+#include <boost/range/numeric.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
@@ -140,7 +141,7 @@ namespace client { namespace ast
         int operator()(nil) const { BOOST_ASSERT(0); return 0; }
         int operator()(unsigned int n) const { return n; }
 
-        int operator()(operation const& x, int lhs) const
+        int operator()(int lhs, operation const& x) const
         {
             int rhs = boost::apply_visitor(*this, x.operand_);
             switch (x.operator_)
@@ -168,12 +169,9 @@ namespace client { namespace ast
 
         int operator()(program const& x) const
         {
-            int state = boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
-            {
-                state = (*this)(oper, state);
-            }
-            return state;
+            return boost::accumulate( x.rest
+                                    , boost::apply_visitor(*this, x.first)
+                                    , *this);
         }
     };
 }}
