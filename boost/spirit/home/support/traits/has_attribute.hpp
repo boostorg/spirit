@@ -34,19 +34,29 @@ namespace boost { namespace spirit { namespace traits
     // instead. Components may specialize this.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Component, typename Context, typename Enable = void>
-    struct has_attribute : mpl::not_<is_same<unused_type,
-        typename attribute_of<Component, Context>::type>> {};
+    struct has_attribute;
     
-    template <typename Component, typename Context>
-    struct has_attribute<Component, Context,
-        typename disable_if_substitution_failure<
-            mpl::bool_<Component::has_attribute>>::type>
-      : mpl::bool_<Component::has_attribute> {};
+    namespace detail
+    {
+        template <typename Component, typename Context, typename Enable = void>
+        struct default_has_attribute
+          : mpl::not_<is_same<unused_type,
+                typename attribute_of<Component, Context>::type>> {};
+
+        template <typename Component, typename Context>
+        struct default_has_attribute<Component, Context,
+            typename disable_if_substitution_failure<
+                mpl::bool_<Component::has_attribute>>::type>
+          : mpl::bool_<Component::has_attribute> {};
     
-    template <typename Component, typename Context>
-    struct has_attribute<Component, Context,
-        typename enable_if_c<Component::is_pass_through_unary>::type>
-      : has_attribute<typename Component::subject_type, Context> {};
+        template <typename Component, typename Context>
+        struct default_has_attribute<Component, Context,
+            typename enable_if_c<Component::is_pass_through_unary>::type>
+          : has_attribute<typename Component::subject_type, Context> {};
+    }
+    
+    template <typename Component, typename Context, typename Enable>
+    struct has_attribute : detail::default_has_attribute<Component, Context> {};
 
 }}}
 
