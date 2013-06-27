@@ -12,7 +12,6 @@
 #endif
 
 #include <boost/spirit/home/support/context.hpp>
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -68,13 +67,6 @@ namespace boost { namespace spirit { namespace x3
 
         Handler handler;
     };
-}}}
-
-namespace boost { namespace spirit { namespace traits
-{
-    template <typename Subject, typename Handler, typename Context>
-    struct attribute_of<x3::guard<Subject, Handler>, Context>
-        : attribute_of<Subject, Context> {};
 }}}
 
 #endif

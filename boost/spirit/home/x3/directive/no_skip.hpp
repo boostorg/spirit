@@ -15,7 +15,6 @@
 
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -77,13 +76,6 @@ namespace boost { namespace spirit { namespace x3
     };
 
     no_skip_gen const no_skip = no_skip_gen();
-}}}
-
-namespace boost { namespace spirit { namespace traits
-{
-    template <typename Subject, typename Context>
-    struct attribute_of<x3::no_skip_directive<Subject>, Context>
-        : attribute_of<Subject, Context> {};
 }}}
 
 #endif

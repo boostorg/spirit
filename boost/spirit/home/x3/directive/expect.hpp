@@ -12,7 +12,6 @@
 #endif
 
 #include <boost/spirit/home/support/context.hpp>
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/throw_exception.hpp>
 #include <stdexcept>
@@ -73,13 +72,6 @@ namespace boost { namespace spirit { namespace x3
     };
 
     expect_gen const expect = expect_gen();
-}}}
-
-namespace boost { namespace spirit { namespace traits
-{
-    template <typename Subject, typename Context>
-    struct attribute_of<x3::expect_directive<Subject>, Context>
-        : attribute_of<Subject, Context> {};
 }}}
 
 #endif

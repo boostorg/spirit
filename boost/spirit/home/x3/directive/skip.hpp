@@ -14,7 +14,6 @@
 
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -120,17 +119,6 @@ namespace boost { namespace spirit { namespace x3
     };
 
     reskip_gen const skip = reskip_gen();
-}}}
-
-namespace boost { namespace spirit { namespace traits
-{
-    template <typename Subject, typename Context>
-    struct attribute_of<x3::reskip_directive<Subject>, Context>
-        : attribute_of<Subject, Context> {};
-    
-    template <typename Subject, typename Skipper, typename Context>
-    struct attribute_of<x3::skip_directive<Subject, Skipper>, Context>
-        : attribute_of<Subject, Context> {};
 }}}
 
 #endif

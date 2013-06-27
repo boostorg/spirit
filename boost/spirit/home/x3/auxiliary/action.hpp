@@ -71,11 +71,4 @@ namespace boost { namespace spirit { namespace x3
     };
 }}}
 
-namespace boost { namespace spirit { namespace traits
-{
-    template <typename Subject, typename Action, typename Context>
-    struct attribute_of<x3::action<Subject, Action>, Context>
-        : attribute_of<Subject, Context> {};
-}}}
-
 #endif

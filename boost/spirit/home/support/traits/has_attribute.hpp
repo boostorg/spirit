@@ -18,6 +18,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit
 {
@@ -41,6 +42,12 @@ namespace boost { namespace spirit { namespace traits
         typename disable_if_substitution_failure<
             mpl::bool_<Component::has_attribute>>::type>
       : mpl::bool_<Component::has_attribute> {};
+    
+    template <typename Component, typename Context>
+    struct has_attribute<Component, Context,
+        typename enable_if_c<Component::is_pass_through_unary>::type>
+      : has_attribute<typename Component::subject_type, Context> {};
+
 }}}
 
 #endif
