@@ -26,6 +26,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
+    using boost::spirit::unused_type;
+
     {
         using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("1", alnum));
@@ -219,7 +221,7 @@ main()
 
         static_assert(
             boost::is_same<
-                attribute_of<alpha_type>::type
+                attribute_of<alpha_type, unused_type>::type
               , unsigned char>::value
           , "Wrong attribute type!"
         );
