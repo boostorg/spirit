@@ -25,6 +25,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, reskip_directive<Subject>> base_type;
         static bool const is_pass_through_unary = true;
+        static bool const handles_container = Subject::handles_container;
 
         reskip_directive(Subject const& subject)
           : base_type(subject) {}
@@ -59,6 +60,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, skip_directive<Subject, Skipper>> base_type;
         static bool const is_pass_through_unary = true;
+        static bool const handles_container = Subject::handles_container;
 
         skip_directive(Subject const& subject, Skipper const& skipper)
           : base_type(subject)

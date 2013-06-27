@@ -14,6 +14,7 @@
 #include <boost/spirit/home/support/traits/container_traits.hpp>
 #include <boost/spirit/home/support/traits/value_traits.hpp>
 #include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/support/traits/handles_container.hpp>
 #include <boost/spirit/home/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/support/traits/is_substitute.hpp>
 #include <boost/mpl/and.hpp>
@@ -90,7 +91,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename Parser, typename Enable = void>
+    template <typename Parser, typename Context, typename Enable = void>
     struct parse_into_container_impl : parse_into_container_base_impl<Parser> {};
 
     template <typename Parser, typename Container, typename Context>
@@ -101,11 +102,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         >
     {};
 
-    template <typename Parser>
-    struct parse_into_container_impl<Parser,
-        typename enable_if_c<(Parser::handles_container)>::type>
+    template <typename Parser, typename Context>
+    struct parse_into_container_impl<Parser, Context,
+        typename enable_if<traits::handles_container<Parser, Context>>::type>
     {
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
@@ -115,7 +116,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 parser, first, last, context, attr);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
@@ -124,7 +125,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return parser.parse(first, last, context, attr);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last
@@ -142,7 +143,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr)
     {
-        return parse_into_container_impl<Parser>::call(
+        return parse_into_container_impl<Parser, Context>::call(
             parser, first, last, context, attr);
     }
 

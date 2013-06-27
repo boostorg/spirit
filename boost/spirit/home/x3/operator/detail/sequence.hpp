@@ -370,12 +370,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return false;
     }
 
-    template <typename Left, typename Right>
-    struct parse_into_container_impl<sequence<Left, Right>>
+    template <typename Left, typename Right, typename Context>
+    struct parse_into_container_impl<sequence<Left, Right>, Context>
     {
         typedef sequence<Left, Right> parser_type;
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
@@ -385,7 +385,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               , first, last, context, attr, traits::container_attribute());
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
@@ -395,7 +395,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 parser, first, last, context, attr);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last

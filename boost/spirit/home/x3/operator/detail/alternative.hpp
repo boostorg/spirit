@@ -322,12 +322,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     }
 
 
-    template <typename Left, typename Right>
-    struct parse_into_container_impl<alternative<Left, Right>>
+    template <typename Left, typename Right, typename Context>
+    struct parse_into_container_impl<alternative<Left, Right>, Context>
     {
         typedef alternative<Left, Right> parser_type;
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
@@ -336,7 +336,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return parse_alternative(parser, first, last, context, attr);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
@@ -346,7 +346,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 parser, first, last, context, attr);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
