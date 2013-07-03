@@ -47,10 +47,8 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute& attr_) const
         {
-            //~ BUGBUG: no rvalue-ref support in move_to
-            //~ spirit::traits::move_to(value_, attr_);
-            Value copy(value_);
-            traits::move_to(copy, attr_);
+            // $$$ Change to copy_to once we have it $$$
+            traits::move_to(value_, attr_);
             return true;
         }
 
@@ -83,6 +81,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context& context, Attribute& attr_) const
         {
+            // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_ + 0, value_ + N, attr_);
             return true;
         }
