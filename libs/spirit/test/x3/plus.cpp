@@ -51,7 +51,6 @@ main()
     using boost::spirit::x3::upper;
     using boost::spirit::x3::space;
     using boost::spirit::x3::digit;
-    using boost::spirit::x3::digit;
     //~ using boost::spirit::x3::no_case;
     using boost::spirit::x3::int_;
     //~ using boost::spirit::x3::omit;
