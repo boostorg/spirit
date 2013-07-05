@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_POW10_DECEMBER_26_2008_1118AM)
-#define SPIRIT_POW10_DECEMBER_26_2008_1118AM
+#if !defined(BOOST_SPIRIT_POW10_DECEMBER_26_2008_1118AM)
+#define BOOST_SPIRIT_POW10_DECEMBER_26_2008_1118AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -23,11 +23,11 @@
 # pragma warning(disable: 4244)   // conversion from 'double' to 'float', possible loss of data
 #endif
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace traits
 {
     namespace detail
     {
-        template <typename T, typename Enable/* = void*/>
+        template <typename T, typename Enable = void>
         struct pow10_helper
         {
             static T call(unsigned dim)
@@ -107,7 +107,7 @@ namespace boost { namespace spirit
     {
         return detail::pow10_helper<T>::call(dim);
     }
-}}
+}}}
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
 # pragma warning(pop)

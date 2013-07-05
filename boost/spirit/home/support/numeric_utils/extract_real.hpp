@@ -79,19 +79,19 @@ namespace boost { namespace spirit { namespace extension
     inline float
     negate(bool neg, float n)
     {
-        return neg ? spirit::detail::changesign(n) : n;
+        return neg ? spirit::changesign(n) : n;
     }
 
     inline double
     negate(bool neg, double n)
     {
-        return neg ? spirit::detail::changesign(n) : n;
+        return neg ? spirit::changesign(n) : n;
     }
 
     inline long double
     negate(bool neg, long double n)
     {
-        return neg ? spirit::detail::changesign(n) : n;
+        return neg ? spirit::changesign(n) : n;
     }
 
     template <typename T>
@@ -154,7 +154,7 @@ namespace boost { namespace spirit
                     p.parse_inf(first, last, n))
                 {
                     // If we got a negative sign, negate the number
-                    traits::move_to(traits::negate(neg, n), attr);
+                    traits::move_to(extension::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return early
                 }
 
@@ -225,7 +225,7 @@ namespace boost { namespace spirit
                 {
                     // Got the exponent value. Scale the number by
                     // exp-frac_digits.
-                    traits::scale(exp, frac_digits, n);
+                    extension::scale(exp, frac_digits, n);
                 }
                 else
                 {
@@ -237,9 +237,9 @@ namespace boost { namespace spirit
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
-                traits::scale(-frac_digits, n);
+                extension::scale(-frac_digits, n);
             }
-            else if (traits::is_equal_to_one(n))
+            else if (extension::is_equal_to_one(n))
             {
                 // There is a chance of having to parse one of the 1.0#...
                 // styles some implementations use for representing NaN or Inf.
@@ -249,13 +249,13 @@ namespace boost { namespace spirit
                     p.parse_inf(first, last, n))
                 {
                     // If we got a negative sign, negate the number
-                    traits::move_to(traits::negate(neg, n), attr);
+                    traits::move_to(extension::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
             }
 
             // If we got a negative sign, negate the number
-            traits::move_to(traits::negate(neg, n), attr);
+            traits::move_to(extension::negate(neg, n), attr);
 
             // Success!!!
             return true;
