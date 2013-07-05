@@ -19,8 +19,8 @@ main()
     //  signed real number tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::double_;
-        using boost::spirit::qi::parse;
+        using boost::spirit::x3::double_;
+        using boost::spirit::x3::parse;
         double  d;
 
         BOOST_TEST(test("-1234", double_));
@@ -68,7 +68,7 @@ main()
 #endif
 
         using boost::math::fpclassify;
-        using boost::spirit::detail::signbit;   // Boost version is broken
+        using boost::spirit::signbit;   // Boost version is broken
 
         BOOST_TEST(test("-inf", double_));
         BOOST_TEST(test("-infinity", double_));

@@ -15,15 +15,15 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  Custom data type
     ///////////////////////////////////////////////////////////////////////////
     {
         using boost::math::concepts::real_concept;
-        using boost::spirit::qi::real_parser;
-        using boost::spirit::qi::real_policies;
-        using boost::spirit::qi::parse;
+        using boost::spirit::x3::real_parser;
+        using boost::spirit::x3::real_policies;
+        using boost::spirit::x3::parse;
 
         real_parser<real_concept, real_policies<real_concept> > custom_real;
         real_concept d;
@@ -58,12 +58,12 @@ main()
         BOOST_TEST(!test("-1.2e", custom_real));
         BOOST_TEST(!test_attr("-1.2e", custom_real, d));
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  custom real tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::double_;
+        using boost::spirit::x3::double_;
         custom_real n;
 
         BOOST_TEST(test_attr("-123456e6", double_, n));

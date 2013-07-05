@@ -14,15 +14,15 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  strict real number tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::real_parser;
-        using boost::spirit::qi::parse;
-        using boost::spirit::qi::strict_ureal_policies;
-        using boost::spirit::qi::strict_real_policies;
+        using boost::spirit::x3::real_parser;
+        using boost::spirit::x3::parse;
+        using boost::spirit::x3::strict_ureal_policies;
+        using boost::spirit::x3::strict_real_policies;
 
         real_parser<double, strict_ureal_policies<double> > strict_udouble;
         real_parser<double, strict_real_policies<double> > strict_double;
@@ -54,8 +54,8 @@ main()
     //  Special thousands separated numbers
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::real_parser;
-        using boost::spirit::qi::parse;
+        using boost::spirit::x3::real_parser;
+        using boost::spirit::x3::parse;
         real_parser<double, ts_real_policies<double> > ts_real;
         double  d;
 

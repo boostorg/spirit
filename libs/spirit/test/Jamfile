@@ -109,7 +109,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run x3/real2.cpp            : : : : x3_real2 ]
      [ run x3/real3.cpp            : : : : x3_real3 ]
      [ run x3/real4.cpp            : : : : x3_real4 ]
-     [ run x3/real5.cpp            : : : : x3_real5 ]
+     # [ run x3/real5.cpp            : : : : x3_real5 ]
      # [ run x3/repeat.cpp           : : : : x3_repeat ]
      [ run x3/rule1.cpp            : : : : x3_rule1 ]
      [ run x3/rule2.cpp            : : : : x3_rule2 ]
