@@ -41,11 +41,8 @@ namespace boost { namespace spirit { namespace x3
                 ++iter;
             }
 
-            if (!matched)
-                return false;
-
-            first = iter;
-            return true;
+            if (matched) first = iter;
+            return matched;
         }
     };
 
