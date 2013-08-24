@@ -228,7 +228,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     (   (MaxDigits < 0)
                     ||  (MaxDigits > digits_traits<T, Radix>::value)
                     )
-                  && traits::is_integer_wrapping<T>::value
+                  && traits::check_overflow<T>::value
                 >()
             );
         }

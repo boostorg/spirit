@@ -115,17 +115,13 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T, typename Enable = void>
     struct is_infinite;
-
+    
     template <typename T, typename Enable = void>
-    struct is_integer_wrapping : mpl::false_ {};
-
+    struct check_overflow : mpl::false_ {};
+        
     template <typename T>
-    struct is_integer_wrapping_default
-        : mpl::bool_<(static_cast<T>(integer_traits<T>::const_max + 1) == integer_traits<T>::const_min)> {};
-
-    template <typename T>
-    struct is_integer_wrapping<T, typename enable_if_c<integer_traits<T>::is_integral>::type>
-        : is_integer_wrapping_default<T> {};
+    struct check_overflow<T, typename enable_if_c<integer_traits<T>::is_integral>::type>
+        : mpl::true_ {};
 }}}
 
 #endif
