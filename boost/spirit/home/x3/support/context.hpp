@@ -15,7 +15,7 @@
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/mpl/identity.hpp>
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     template <typename ID, typename T, typename Next = unused_type>
     struct context
@@ -105,6 +105,6 @@ namespace boost { namespace spirit
     {
         return context<ID, T>(val);
     }
-}}
+}}}
 
 #endif

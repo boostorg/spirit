@@ -90,8 +90,8 @@ main()
 
 
     //~ {   // single char strings!
-        //~ namespace ascii = boost::spirit::ascii;
-        //~ namespace wide = boost::spirit::standard_wide;
+        //~ namespace ascii = boost::spirit::x3::ascii;
+        //~ namespace wide = boost::spirit::x3::standard_wide;
 
         //~ BOOST_TEST(test("x", "x"));
         //~ BOOST_TEST(test(L"x", L"x"));
@@ -104,8 +104,8 @@ main()
 
     //~ {
         //~ // chsets
-        //~ namespace ascii = boost::spirit::ascii;
-        //~ namespace wide = boost::spirit::standard_wide;
+        //~ namespace ascii = boost::spirit::x3::ascii;
+        //~ namespace wide = boost::spirit::x3::standard_wide;
 
         //~ BOOST_TEST(test("x", ascii::char_("a-z")));
         //~ BOOST_TEST(!test("1", ascii::char_("a-z")));
@@ -125,11 +125,11 @@ main()
 
     //~ {   // lazy chars
 
-        //~ using namespace boost::spirit::ascii;
+        //~ using namespace boost::spirit::x3::ascii;
 
         //~ using boost::phoenix::val;
         //~ using boost::phoenix::ref;
-        //~ using boost::spirit::_1;
+        //~ using boost::spirit::x3::_1;
 
         //~ BOOST_TEST((test("x", char_(val('x')))));
         //~ BOOST_TEST((test("h", char_(val('a'), val('n')))));
@@ -142,9 +142,9 @@ main()
 
     //~ { // testing "what"
 
-        //~ using boost::spirit::qi::what;
-        //~ using boost::spirit::ascii::char_;
-        //~ using boost::spirit::ascii::alpha;
+        //~ using boost::spirit::x3::what;
+        //~ using boost::spirit::x3::ascii::char_;
+        //~ using boost::spirit::x3::ascii::alpha;
 
         //~ print_info(what('x'));
         //~ print_info(what(char_('a','z')));

@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace x3
 
             if (first != last && this->derived().test(*first, context))
             {
-                spirit::traits::move_to(*first, attr);
+                x3::traits::move_to(*first, attr);
                 ++first;
                 return true;
             }

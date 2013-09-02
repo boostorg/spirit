@@ -16,7 +16,7 @@
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     namespace detail
     {
@@ -40,6 +40,6 @@ namespace boost { namespace spirit { namespace traits
     struct is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>>
       : mpl::true_
     {};
-}}}
+}}}}
 
 #endif

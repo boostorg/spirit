@@ -455,7 +455,7 @@ void print_head(Out& out)
         << "==============================================================================*/\n"
         << "#include <boost/cstdint.hpp>\n"
         << "\n"
-        << "namespace boost { namespace spirit { namespace ucd { namespace detail\n"
+        << "namespace boost { namespace spirit { namespace x3 { namespace ucd { namespace detail\n"
         << "{"
         ;
 }
@@ -465,7 +465,7 @@ void print_tail(Out& out)
 {
     out 
         << "\n"
-        << "}}}} // namespace boost::spirit::unicode::detail\n"
+        << "}}}} // namespace boost::spirit::x3::ucd::detail\n"
         ;
 }
 

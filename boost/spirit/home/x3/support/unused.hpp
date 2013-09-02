@@ -22,7 +22,7 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     struct unused_type
     {
@@ -84,7 +84,7 @@ namespace boost { namespace spirit
     {
         return in;
     }
-}}
+}}}
 
 #if defined(BOOST_MSVC)
 # pragma warning(pop)

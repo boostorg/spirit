@@ -51,12 +51,12 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Subject, typename Context>
     struct attribute_of<x3::kleene<Subject>, Context>
         : build_container<
             typename attribute_of<Subject, Context>::type> {};
-}}}
+}}}}
 
 #endif

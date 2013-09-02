@@ -25,8 +25,8 @@
       //~ : last_(last) {}
 
     //~ void operator()(std::vector<char> const& v
-      //~ , boost::spirit::unused_type
-      //~ , boost::spirit::unused_type) const
+      //~ , boost::spirit::x3::unused_type
+      //~ , boost::spirit::x3::unused_type) const
     //~ {
         //~ BOOST_TEST(v.size() == 4 &&
             //~ v[0] == 'a' && v[1] == 'b' && v[2] == '1' && v[3] == last_);
@@ -40,8 +40,8 @@
     //~ typedef std::vector<boost::optional<char> > result_type;
 
     //~ void operator()(result_type const& v
-      //~ , boost::spirit::unused_type
-      //~ , boost::spirit::unused_type) const
+      //~ , boost::spirit::x3::unused_type
+      //~ , boost::spirit::x3::unused_type) const
     //~ {
         //~ BOOST_TEST(v.size() == 5 &&
             //~ !v[0] && v[1] == 'a' && v[2] == 'b' && v[3] == '1' && v[4] == '2');

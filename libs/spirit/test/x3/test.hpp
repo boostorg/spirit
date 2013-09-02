@@ -44,7 +44,7 @@ namespace spirit_test
     //~ {
         //~ // we don't care about the result of the "what" function.
         //~ // we only care that all parsers have it:
-        //~ boost::spirit::qi::what(p);
+        //~ boost::spirit::x3::what(p);
 
         //~ Char const* last = in + size;
         //~ return boost::spirit::qi::parse(in, last, p)
@@ -57,10 +57,10 @@ namespace spirit_test
     //~ {
         //~ // we don't care about the result of the "what" function.
         //~ // we only care that all parsers have it:
-        //~ boost::spirit::qi::what(p);
+        //~ boost::spirit::x3::what(p);
 
         //~ Char const* last = in + size;
-        //~ return boost::spirit::qi::phrase_parse(in, last, p, s)
+        //~ return boost::spirit::x3::phrase_parse(in, last, p, s)
             //~ && (!full_match || (in == last));
     //~ }
 
@@ -92,10 +92,10 @@ namespace spirit_test
     //~ {
         //~ // we don't care about the result of the "what" function.
         //~ // we only care that all parsers have it:
-        //~ boost::spirit::qi::what(p);
+        //~ boost::spirit::x3::what(p);
 
         //~ Char const* last = in + size;
-        //~ return boost::spirit::qi::parse(in, last, p, attr)
+        //~ return boost::spirit::x3::parse(in, last, p, attr)
             //~ && (!full_match || (in == last));
     //~ }
 
@@ -105,16 +105,16 @@ namespace spirit_test
     //~ {
         //~ // we don't care about the result of the "what" function.
         //~ // we only care that all parsers have it:
-        //~ boost::spirit::qi::what(p);
+        //~ boost::spirit::x3::what(p);
 
         //~ Char const* last = in + size;
-        //~ return boost::spirit::qi::phrase_parse(in, last, p, s, attr)
+        //~ return boost::spirit::x3::phrase_parse(in, last, p, s, attr)
             //~ && (!full_match || (in == last));
     //~ }
 
     //~ struct printer
     //~ {
-        //~ typedef boost::spirit::utf8_string string;
+        //~ typedef boost::spirit::x3::utf8_string string;
 
         //~ void element(string const& tag, string const& value, int depth) const
         //~ {
@@ -128,9 +128,9 @@ namespace spirit_test
         //~ }
     //~ };
 
-    //~ void print_info(boost::spirit::info const& what)
+    //~ void print_info(boost::spirit::x3::info const& what)
     //~ {
-        //~ using boost::spirit::basic_info_walker;
+        //~ using boost::spirit::x3::basic_info_walker;
 
         //~ printer pr;
         //~ basic_info_walker<printer> walker(pr, what.tag, 0);

@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace x3
         inline void token_printer(std::ostream& o, Char c)
         {
             // allow customization of the token printer routine
-            spirit::traits::print_token(o, c);
+            x3::traits::print_token(o, c);
         }
     }
 

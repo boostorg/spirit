@@ -34,7 +34,7 @@ struct ts_real_policies : boost::spirit::x3::ureal_policies<T>
     parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr)
     {
         namespace x3 = boost::spirit::x3;
-        return boost::spirit::extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
+        return boost::spirit::x3::extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
     }
 
     //  No exponent

@@ -17,7 +17,7 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/math/special_functions/sign.hpp>
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     template<typename T>
     inline bool (signbit)(T x)
@@ -43,6 +43,6 @@ namespace boost { namespace spirit
 #endif
     }
 
-}}
+}}}
 
 #endif

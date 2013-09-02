@@ -15,7 +15,7 @@
 #include <cctype>
 #include <boost/cstdint.hpp>
 
-namespace boost { namespace spirit { namespace char_encoding
+namespace boost { namespace spirit { namespace x3 { namespace char_encoding
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Test characters for specified conditions (using std functions)
@@ -132,7 +132,7 @@ namespace boost { namespace spirit { namespace char_encoding
             return ch;
         }
     };
-}}}
+}}}}
 
 #endif
 

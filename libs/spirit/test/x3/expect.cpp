@@ -152,7 +152,7 @@ main()
 
     { // test various what results
 
-        //~ using boost::spirit::compile;
+        //~ using boost::spirit::x3::compile;
         //~ BOOST_TEST((x3::what(compile<x3::domain>('a')) == "'a'"));
         //~ BOOST_TEST((x3::what(compile<x3::domain>("hello")) == "\"hello\""));
         //~ BOOST_TEST((x3::what(compile<x3::domain>(x3::space)) == "space"));

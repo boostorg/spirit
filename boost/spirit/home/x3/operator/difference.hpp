@@ -65,7 +65,7 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Left, typename Right, typename Context>
     struct attribute_of<x3::difference<Left, Right>, Context>
@@ -74,6 +74,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename Left, typename Right, typename Context>
     struct has_attribute<x3::difference<Left, Right>, Context>
         : has_attribute<Left, Context> {};
-}}}
+}}}}
 
 #endif

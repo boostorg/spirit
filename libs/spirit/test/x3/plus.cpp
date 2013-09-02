@@ -22,7 +22,7 @@ struct x_attr
 {
 };
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <>
     struct container_value<x_attr>
@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace traits
             return true;
         }
     };
-}}}
+}}}}
 
 int
 main()

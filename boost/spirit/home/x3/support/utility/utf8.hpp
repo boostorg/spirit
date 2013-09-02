@@ -17,7 +17,7 @@
 #include <boost/type_traits/make_unsigned.hpp>
 #include <string>
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     typedef ::boost::uint32_t ucs4_char;
     typedef char utf8_char;
@@ -67,6 +67,6 @@ namespace boost { namespace spirit
         }
         return result;
     }
-}}
+}}}
 
 #endif

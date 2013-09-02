@@ -14,7 +14,7 @@
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Determine if T is a boolean type
@@ -114,6 +114,6 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T, typename Enable = void>
     struct is_infinite;
-}}}
+}}}}
 
 #endif

@@ -18,7 +18,7 @@ struct x_attr
 {
 };
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <>
     struct container_value<x_attr>
@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace traits
             return true;
         }
     };
-}}}
+}}}}
 
 int
 main()
@@ -111,7 +111,7 @@ main()
 /*
     { // actions
         namespace phx = boost::phoenix;
-        using boost::spirit::_1;
+        using boost::spirit::x3::_1;
 
         std::vector<char> v;
         BOOST_TEST(test("bbbb", (*char_)[phx::ref(v) = _1]) && 4 == v.size() &&
@@ -120,7 +120,7 @@ main()
 
     { // more actions
         namespace phx = boost::phoenix;
-        using boost::spirit::_1;
+        using boost::spirit::x3::_1;
 
         std::vector<int> v;
         BOOST_TEST(test("123 456 789", (*int_)[phx::ref(v) = _1], space) && 3 == v.size() &&

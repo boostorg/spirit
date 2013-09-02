@@ -19,7 +19,7 @@
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Out, typename T>
     void print_attribute(Out& out, T const& val);
@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace traits
                     is_first = false;
                 else
                     out << ", ";
-                spirit::traits::print_attribute(out, val);
+                x3::traits::print_attribute(out, val);
             }
 
             Out& out;
@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename T>
             void operator()(T const& val) const
             {
-                spirit::traits::print_attribute(out, val);
+                x3::traits::print_attribute(out, val);
             }
 
             Out& out;
@@ -109,7 +109,7 @@ namespace boost { namespace spirit { namespace traits
                     if (!first)
                         out << ", ";
                     first = false;
-                    spirit::traits::print_attribute(out, traits::deref(i));
+                    x3::traits::print_attribute(out, traits::deref(i));
                 }
             }
             out << ']';
@@ -127,7 +127,7 @@ namespace boost { namespace spirit { namespace traits
         static void call(Out& out, T_ const& val, optional_attribute)
         {
             if (val)
-                spirit::traits::print_attribute(out, *val);
+                x3::traits::print_attribute(out, *val);
             else
                 out << "[empty]";
         }
@@ -145,6 +145,6 @@ namespace boost { namespace spirit { namespace traits
     {
         print_attribute_debug<Out, T>::call(out, val);
     }
-}}}
+}}}}
 
 #endif

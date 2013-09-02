@@ -28,7 +28,7 @@
 #define BOOST_CC_SPACE    0x0040
 #define BOOST_CC_PUNCT    0x0080
 
-namespace boost { namespace spirit { namespace char_encoding
+namespace boost { namespace spirit { namespace x3 { namespace char_encoding
 {
     // The detection of isgraph(), isprint() and isblank() is done programmatically
     // to keep the character type table small. Additionally, these functions are
@@ -295,7 +295,7 @@ namespace boost { namespace spirit { namespace char_encoding
         }
     };
 
-}}}
+}}}}
 
 ///////////////////////////////////////////////////////////////////////////////
 // undefine macros

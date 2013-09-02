@@ -41,7 +41,7 @@
 # define SPIRIT_NUMERICS_LOOP_UNROLL 3
 #endif
 
-namespace boost { namespace spirit { namespace detail
+namespace boost { namespace spirit { namespace x3 { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace detail
         {
             if (Radix <= 10 || (ch >= '0' && ch <= '9'))
                 return ch - '0';
-            return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;
+            return x3::char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
     };
 
@@ -506,6 +506,6 @@ namespace boost { namespace spirit { namespace detail
             return n;
         }
     };
-}}}
+}}}}
 
 #endif

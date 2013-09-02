@@ -28,9 +28,9 @@
 # pragma warning(disable: 4127)   // conditional expression is constant
 #endif
 
-namespace boost { namespace spirit { namespace extension
+namespace boost { namespace spirit { namespace x3 { namespace extension
 {
-    using spirit::traits::pow10;
+    using x3::traits::pow10;
 
     template <typename T>
     inline void
@@ -79,19 +79,19 @@ namespace boost { namespace spirit { namespace extension
     inline float
     negate(bool neg, float n)
     {
-        return neg ? spirit::changesign(n) : n;
+        return neg ? x3::changesign(n) : n;
     }
 
     inline double
     negate(bool neg, double n)
     {
-        return neg ? spirit::changesign(n) : n;
+        return neg ? x3::changesign(n) : n;
     }
 
     inline long double
     negate(bool neg, long double n)
     {
-        return neg ? spirit::changesign(n) : n;
+        return neg ? x3::changesign(n) : n;
     }
 
     template <typename T>
@@ -121,9 +121,9 @@ namespace boost { namespace spirit { namespace extension
         // no-op for unused_type
         return false;
     }
-}}}
+}}}}
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     template <typename T, typename RealPolicies>
     struct extract_real
@@ -266,6 +266,6 @@ namespace boost { namespace spirit
 # pragma warning(pop)
 #endif
 
-}}
+}}}
 
 #endif

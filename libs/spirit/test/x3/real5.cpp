@@ -52,8 +52,8 @@ main()
     //~ //  parameterized unsigned real number tests
     //~ ///////////////////////////////////////////////////////////////////////////
     //~ {
-        //~ using boost::spirit::qi::real_parser;
-        //~ using boost::spirit::qi::ureal_policies;
+        //~ using boost::spirit::x3::real_parser;
+        //~ using boost::spirit::x3::ureal_policies;
         //~ double d;
 
         //~ real_parser<double, ureal_policies<double> > udouble;
@@ -76,8 +76,8 @@ main()
     //~ ///////////////////////////////////////////////////////////////////////////
     //~ {
         //~ using boost::math::concepts::real_concept;
-        //~ using boost::spirit::qi::real_parser;
-        //~ using boost::spirit::qi::real_policies;
+        //~ using boost::spirit::x3::real_parser;
+        //~ using boost::spirit::x3::real_policies;
 
         //~ real_parser<real_concept, real_policies<real_concept> > custom_real;
         //~ real_concept d;
@@ -100,7 +100,7 @@ main()
     //~ ///////////////////////////////////////////////////////////////////////////
     //~ {
         //~ using boost::phoenix::ref;
-        //~ using boost::spirit::qi::double_;
+        //~ using boost::spirit::x3::double_;
         //~ double n = 1.2e3, m = 3.2e1;
 
         //~ BOOST_TEST(test("1.2e3", double_(ref(n))));
@@ -111,7 +111,7 @@ main()
     //~ //  literal real number tests
     //~ ///////////////////////////////////////////////////////////////////////////
     //~ {
-        //~ using boost::spirit::qi::lit;
+        //~ using boost::spirit::x3::lit;
 
         //~ BOOST_TEST(test("+1.2e3", lit(1.2e3)));
         //~ BOOST_TEST(!test("+1.2e3", lit(-1.2e3)));
@@ -125,7 +125,7 @@ main()
     //~ //  literal lazy tests
     //~ ///////////////////////////////////////////////////////////////////////////
     //~ {
-        //~ using boost::spirit::qi::lit;
+        //~ using boost::spirit::x3::lit;
         //~ using boost::phoenix::ref;
         //~ double n = 1.2e3, m = 3.2e1;
 

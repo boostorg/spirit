@@ -20,12 +20,12 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
    struct unused_type;
-}}
+}}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Whether a component has an attribute. By default, this compares the 
@@ -58,6 +58,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename Component, typename Context, typename Enable>
     struct has_attribute : detail::default_has_attribute<Component, Context> {};
 
-}}}
+}}}}
 
 #endif

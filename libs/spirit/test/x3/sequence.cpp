@@ -197,7 +197,7 @@ main()
 
     { // alternative forms of attributes. Allow sequences to take in
       // stl containers.
-        //~ using boost::spirit::qi::hold;
+        //~ using boost::spirit::x3::hold;
 
         std::vector<char> v;
         BOOST_TEST(test_attr("abc", char_ >> *(char_ >> char_), v));
@@ -249,7 +249,7 @@ main()
         s.clear();
 
         // $$$ hold not yet implemented $$$
-        //~ using boost::spirit::qi::hold;
+        //~ using boost::spirit::x3::hold;
 
         //~ rule<char const*, std::string()> word = +char_("abc");
         //~ BOOST_TEST(test_attr("ab.bc.ca", *hold[word >> string(".")] >> word, s));
@@ -406,7 +406,7 @@ main()
     //~ }
 
 //     { // compile check only
-//         using boost::spirit::qi::rule;
+//         using boost::spirit::x3::rule;
 //         typedef boost::fusion::vector<int, double> tuple_type;
 //         typedef std::vector<boost::fusion::vector<int, double> > attr_type;
 //

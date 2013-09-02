@@ -15,7 +15,7 @@
 
 #include <boost/utility/value_init.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename T, typename Enable = void>
     struct value_initialize
@@ -25,6 +25,6 @@ namespace boost { namespace spirit { namespace traits
             return boost::value_initialized<T>();
         }
     };
-}}}
+}}}}
 
 #endif

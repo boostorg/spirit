@@ -23,7 +23,7 @@
 # pragma warning(disable: 4244)   // conversion from 'double' to 'float', possible loss of data
 #endif
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     namespace detail
     {
@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace traits
     {
         return detail::pow10_helper<T>::call(dim);
     }
-}}}
+}}}}
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
 # pragma warning(pop)

@@ -17,7 +17,7 @@
 #include <boost/optional/optional.hpp>
 #include <boost/mpl/identity.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable = void>
@@ -73,6 +73,6 @@ namespace boost { namespace spirit { namespace traits
     struct optional_value<unused_type const>
       : mpl::identity<unused_type> {};
 
-}}}
+}}}}
 
 #endif

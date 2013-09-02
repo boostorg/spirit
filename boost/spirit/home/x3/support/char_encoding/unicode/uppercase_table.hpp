@@ -8,7 +8,7 @@
 ==============================================================================*/
 #include <boost/cstdint.hpp>
 
-namespace boost { namespace spirit { namespace ucd { namespace detail
+namespace boost { namespace spirit { namespace x3 { namespace ucd { namespace detail
 {
     static const ::boost::uint8_t uppercase_stage1[] = {
 
@@ -636,4 +636,4 @@ namespace boost { namespace spirit { namespace ucd { namespace detail
         return uppercase_stage2[block_offset + ch % 256];
     }
 
-}}}} // namespace boost::spirit::unicode::detail
+}}}}} // namespace boost::spirit::x3::ucd::detail

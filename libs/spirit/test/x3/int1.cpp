@@ -129,7 +129,7 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     {
         using boost::spirit::x3::int_parser;
-        using boost::spirit::unused_type;
+        using boost::spirit::x3::unused_type;
         int_parser<unused_type> any_int;
 
         BOOST_TEST(test("123456", any_int));
@@ -143,7 +143,7 @@ main()
     //~ ///////////////////////////////////////////////////////////////////////////
     //~ {
         //~ using boost::phoenix::ref;
-        //~ using boost::spirit::_1;
+        //~ using boost::spirit::x3::_1;
         //~ using boost::spirit::x3::ascii::space;
         //~ using boost::spirit::x3::int_;
         //~ int n, m;

@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute& attr, traits::optional_attribute) const
         {
             typedef typename
-                spirit::traits::optional_value<Attribute>::type
+                x3::traits::optional_value<Attribute>::type
             value_type;
 
             // create a local value
@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace x3
             if (this->subject.parse(first, last, context, val))
             {
                 // assign the parsed value into our attribute
-                spirit::traits::move_to(val, attr);
+                x3::traits::move_to(val, attr);
             }
             return true;
         }
@@ -75,12 +75,12 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Subject, typename Context>
     struct attribute_of<x3::optional<Subject>, Context>
         : build_optional<
             typename attribute_of<Subject, Context>::type> {};
-}}}
+}}}}
 
 #endif

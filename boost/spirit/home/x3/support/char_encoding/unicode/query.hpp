@@ -17,7 +17,7 @@
 # include "lowercase_table.hpp"
 # include "uppercase_table.hpp"
 
-namespace boost { namespace spirit { namespace ucd
+namespace boost { namespace spirit { namespace x3 { namespace ucd
 {
     // This header provides Basic (Level 1) Unicode Support
     // See http://unicode.org/reports/tr18/ for details
@@ -300,6 +300,6 @@ namespace boost { namespace spirit { namespace ucd
         ::boost::uint32_t r = detail::uppercase_lookup(ch);
         return (r == 0)? ch : r;
     }
-}}}
+}}}}
 
 #endif

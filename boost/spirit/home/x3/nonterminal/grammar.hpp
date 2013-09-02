@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace x3
 
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Elements, typename Context>
     struct attribute_of<x3::grammar_parser<Elements>, Context>
@@ -156,6 +156,6 @@ namespace boost { namespace spirit { namespace traits
     struct has_attribute<x3::grammar_parser<Elements>, Context>
         : has_attribute<
             typename x3::grammar_parser<Elements>::start_rule, Context> {};
-}}}
+}}}}
 
 #endif

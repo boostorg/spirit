@@ -26,7 +26,7 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
-    using boost::spirit::unused_type;
+    using boost::spirit::x3::unused_type;
 
     {
         using namespace boost::spirit::x3::ascii;
@@ -215,7 +215,7 @@ main()
     }
 
     {   // test attribute extraction
-        using boost::spirit::traits::attribute_of;
+        using boost::spirit::x3::traits::attribute_of;
         using boost::spirit::x3::iso8859_1::alpha;
         using boost::spirit::x3::iso8859_1::alpha_type;
 
@@ -244,7 +244,7 @@ main()
 
         //~ using namespace boost::spirit::x3::ascii;
         //~ using boost::phoenix::ref;
-        //~ using boost::spirit::_1;
+        //~ using boost::spirit::x3::_1;
         //~ char ch;
 
         //~ BOOST_TEST(test("x", alnum[ref(ch) = _1]));

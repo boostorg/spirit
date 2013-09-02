@@ -21,7 +21,7 @@
 #include <boost/fusion/include/move.hpp>
 #include <utility>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Source, typename Dest>
     void move_to(Source&& src, Dest& dest);
@@ -149,6 +149,6 @@ namespace boost { namespace spirit { namespace traits
         // $$$ Use std::move_iterator when iterator is not a const-iterator $$$
         detail::move_to(first, last, dest, typename attribute_category<Dest>::type());
     }
-}}}
+}}}}
 
 #endif

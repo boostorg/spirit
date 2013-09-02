@@ -16,7 +16,7 @@
 #include <boost/spirit/home/x3/support/numeric_utils/detail/extract_int.hpp>
 #include <boost/assert.hpp>
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Extract the prefix sign (- or +), return true if a '-' was found
@@ -142,6 +142,6 @@ namespace boost { namespace spirit
             return false;
         }
     };
-}}
+}}}
 
 #endif

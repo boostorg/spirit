@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
     template <typename Expr, typename T = void>
     struct disable_if_substitution_failure
@@ -24,6 +24,6 @@ namespace boost { namespace spirit
     {
         typedef typename T::type type;
     };
-}}
+}}}
 
 #endif

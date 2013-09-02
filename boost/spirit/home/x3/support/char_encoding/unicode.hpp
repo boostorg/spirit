@@ -15,7 +15,7 @@
 #include <boost/cstdint.hpp>
 #include <boost/spirit/home/x3/support/char_encoding/unicode/query.hpp>
 
-namespace boost { namespace spirit { namespace char_encoding
+namespace boost { namespace spirit { namespace x3 { namespace char_encoding
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Test characters for specified conditions (using iso8859-1)
@@ -333,7 +333,7 @@ namespace boost { namespace spirit { namespace char_encoding
 
     };
 
-}}}
+}}}}
 
 #endif
 

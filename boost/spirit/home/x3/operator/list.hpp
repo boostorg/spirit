@@ -66,12 +66,12 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Left, typename Right, typename Context>
     struct attribute_of<x3::list<Left, Right>, Context>
         : traits::build_container<
             typename attribute_of<Left, Context>::type> {};
-}}}
+}}}}
 
 #endif

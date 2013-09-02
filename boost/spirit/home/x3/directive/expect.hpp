@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace x3
     struct expectation_failure : std::runtime_error
     {
         expectation_failure(Iterator first, Iterator last, std::string const& what)
-          : std::runtime_error("boost::spirit::qi::expectation_failure")
+          : std::runtime_error("boost::spirit::x3::expectation_failure")
           , first(first), last(last), what_(what)
         {}
         ~expectation_failure() throw() {}

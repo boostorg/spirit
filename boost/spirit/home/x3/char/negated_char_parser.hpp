@@ -51,7 +51,7 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Positive, typename Context>
     struct attribute_of<x3::negated_char_parser<Positive>, Context>
@@ -60,6 +60,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename Positive, typename Context>
     struct has_attribute<x3::negated_char_parser<Positive>, Context>
         : has_attribute<Positive, Context> {};
-}}}
+}}}}
 
 #endif

@@ -19,7 +19,7 @@
 #include <boost/mpl/bool.hpp>
 #include <vector>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     //  This file contains some container utils for stl containers.
@@ -299,6 +299,6 @@ namespace boost { namespace spirit { namespace traits
 
     template <>
     struct build_container<unused_type> : mpl::identity<unused_type> {};
-}}}
+}}}}
 
 #endif

@@ -68,7 +68,7 @@ main()
 #endif
 
         using boost::math::fpclassify;
-        using boost::spirit::signbit;   // Boost version is broken
+        using boost::spirit::x3::signbit;   // Boost version is broken
 
         BOOST_TEST(test("-inf", double_));
         BOOST_TEST(test("-infinity", double_));

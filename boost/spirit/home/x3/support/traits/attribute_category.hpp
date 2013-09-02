@@ -18,12 +18,12 @@
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace x3
 {
    struct unused_type;
-}}
+}}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     struct unused_attribute {};
     struct plain_attribute {};
@@ -59,6 +59,6 @@ namespace boost { namespace spirit { namespace traits
         typename enable_if<traits::is_container<T>>::type>
         : mpl::identity<container_attribute> {};
 
-}}}
+}}}}
 
 #endif

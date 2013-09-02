@@ -14,7 +14,7 @@
 
 #include <boost/mpl/bool.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Whether a component handles container attributes intrinsically
@@ -26,6 +26,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename Component, typename Context, typename Enable = void>
     struct handles_container : mpl::bool_<Component::handles_container> {};
 
-}}}
+}}}}
 
 #endif

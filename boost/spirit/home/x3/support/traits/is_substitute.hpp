@@ -20,7 +20,7 @@
 #include <boost/optional/optional.hpp>
 #include <boost/type_traits/is_same.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Find out if T can be a (strong) substitute for Attribute
@@ -70,6 +70,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename T, typename Attribute>
     struct is_substitute<optional<T>, optional<Attribute>>
       : is_substitute<T, Attribute> {};
-}}}
+}}}}
 
 #endif

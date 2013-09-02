@@ -17,7 +17,7 @@
 #include <boost/type_traits/is_convertible.hpp>
 #include <cctype>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // generate debug output for lookahead token (character) stream
@@ -74,6 +74,6 @@ namespace boost { namespace spirit { namespace traits
         // allow to customize the token printer routine
         token_printer_debug<T>::print(out, val);
     }
-}}}
+}}}}
 
 #endif

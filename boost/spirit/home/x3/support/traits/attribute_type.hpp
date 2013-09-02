@@ -14,7 +14,7 @@
 
 #include <boost/mpl/identity.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Retrieve the attribute type to use from the given type
@@ -25,6 +25,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename Enable = void>
     struct attribute_type : mpl::identity<Attribute> {};
 
-}}}
+}}}}
 
 #endif

@@ -17,7 +17,7 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/utility/enable_if.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Get the attribute type of a component. By default, this gets the 
@@ -54,6 +54,6 @@ namespace boost { namespace spirit { namespace traits
     template <typename Component, typename Context, typename Enable>
     struct attribute_of : detail::default_attribute_of<Component, Context> {};
 
-}}}
+}}}}
 
 #endif

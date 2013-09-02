@@ -15,7 +15,7 @@
 
 #include <boost/mpl/identity.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     //  transform_attribute
@@ -43,6 +43,6 @@ namespace boost { namespace spirit { namespace traits
     {
         return transform_attribute<Exposed const, Transformed, Tag>::pre(attr);
     }
-}}}
+}}}}
 
 #endif

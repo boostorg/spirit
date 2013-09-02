@@ -17,7 +17,7 @@
 
 #include <boost/cstdint.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <std::size_t N>
     struct wchar_t_size
@@ -30,9 +30,9 @@ namespace boost { namespace spirit { namespace traits
     template <> struct wchar_t_size<2> { enum { mask = 0xffff }; };
     template <> struct wchar_t_size<4> { enum { mask = 0xffffffff }; };
 
-}}}
+}}}}
 
-namespace boost { namespace spirit { namespace char_encoding
+namespace boost { namespace spirit { namespace x3 { namespace char_encoding
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Test characters for specified conditions (using std wchar_t functions)
@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace char_encoding
             return ch;
         }
     };
-}}}
+}}}}
 
 #endif
 

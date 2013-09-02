@@ -17,7 +17,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     // Determine if T is a character type
@@ -286,6 +286,6 @@ namespace boost { namespace spirit { namespace traits
     inline typename Str::iterator
     get_string_end(Str& str)
     { return str.end(); }
-}}}
+}}}}
 
 #endif

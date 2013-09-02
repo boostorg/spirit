@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace x3
     {
         template <typename Context>
         rule_context_proxy(Context& context)
-          : val(spirit::get<rule_context_tag>(context).val()) {}
+          : val(x3::get<rule_context_tag>(context).val()) {}
         Attribute& val;
     };
 
@@ -114,9 +114,9 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute_& attr) const
         {
             return detail::parse_rule<attribute_type, ID>::call_from_rule(
-                spirit::get<ID>(context), name
+                x3::get<ID>(context), name
               , first, last, context, attr
-              , spirit::get<rule_context_with_id_tag<ID>>(context));
+              , x3::get<rule_context_with_id_tag<ID>>(context));
         }
 
         char const* name;

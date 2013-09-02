@@ -83,7 +83,7 @@ namespace boost { namespace spirit { namespace x3
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Exposed, typename Transformed>
     struct transform_attribute<Exposed, Transformed, x3::parser_id>
@@ -103,6 +103,6 @@ namespace boost { namespace spirit { namespace traits
     {
         return transform_attribute<Exposed, Transformed, x3::parser_id>::post(dest, attr);
     }
-}}}
+}}}}
 
 #endif

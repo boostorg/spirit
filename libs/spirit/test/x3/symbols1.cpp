@@ -46,7 +46,7 @@ main()
         ;
 
         // $$$ Hat is this??? $$$
-        //~ boost::mpl::true_ f = boost::mpl::bool_<boost::spirit::traits::is_parser<symbols<char, int> >::value>();
+        //~ boost::mpl::true_ f = boost::mpl::bool_<boost::spirit::x3::traits::is_parser<symbols<char, int> >::value>();
 
         // silence stupid compiler warnings
         // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
@@ -164,7 +164,7 @@ main()
 
     //~ { // actions
         //~ namespace phx = boost::phoenix;
-        //~ using boost::spirit::_1;
+        //~ using boost::spirit::x3::_1;
 
         //~ symbols<char, int> sym;
         //~ sym.add

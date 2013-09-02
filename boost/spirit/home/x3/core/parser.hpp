@@ -30,9 +30,9 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    using spirit::unused_type;
-    using spirit::unused;
-    using spirit::get;
+    using x3::unused_type;
+    using x3::unused;
+    using x3::get;
 
     template <typename Subject, typename Action>
     struct action;
@@ -235,7 +235,7 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Subject, typename Derived, typename Context>
     struct has_attribute<x3::unary_parser<Subject, Derived>, Context>
@@ -245,6 +245,6 @@ namespace boost { namespace spirit { namespace traits
     struct has_attribute<x3::binary_parser<Left, Right, Derived>, Context>
         : mpl::bool_<has_attribute<Left, Context>::value ||
                 has_attribute<Right, Context>::value> {};
-}}}
+}}}}
 
 #endif

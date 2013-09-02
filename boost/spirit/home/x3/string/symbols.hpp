@@ -210,7 +210,7 @@ public:
             if (value_type* val_ptr
                 = lookup->find(first, last, Filter()))
             {
-                spirit::traits::move_to(*val_ptr, attr);
+                x3::traits::move_to(*val_ptr, attr);
                 return true;
             }
             return false;

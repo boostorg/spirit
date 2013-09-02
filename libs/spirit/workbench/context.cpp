@@ -7,8 +7,8 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <iostream>
 
-using boost::spirit::make_context;
-using boost::spirit::get;
+using boost::spirit::x3::make_context;
+using boost::spirit::x3::get;
 
 int bb;
 int cc;

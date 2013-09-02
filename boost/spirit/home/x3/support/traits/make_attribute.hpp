@@ -18,7 +18,7 @@
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 
-namespace boost { namespace spirit { namespace traits
+namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Attribute>
     struct make_attribute_base
@@ -70,6 +70,6 @@ namespace boost { namespace spirit { namespace traits
             return unused;
         }
     };
-}}}
+}}}}
 
 #endif
