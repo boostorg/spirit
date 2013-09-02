@@ -19,6 +19,7 @@
 #include <boost/spirit/home/x3/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_type.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/traits/numeric_traits.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/iteration/local.hpp>
@@ -233,7 +234,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                     (   (MaxDigits < 0)
                     ||  (MaxDigits > digits_traits<T, Radix>::value)
                     )
-                  && std::numeric_limits<T>::is_modulo
+                  && traits::check_overflow<T>::value
                 >()
             );
         }
