@@ -12,7 +12,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/bool.hpp>

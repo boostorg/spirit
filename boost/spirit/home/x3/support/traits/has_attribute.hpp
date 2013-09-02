@@ -13,8 +13,8 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/support/utility/sfinae.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/is_same.hpp>

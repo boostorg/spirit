@@ -14,7 +14,7 @@
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 #include <boost/spirit/home/x3/char/char.hpp>
 #include <boost/spirit/home/x3/char/detail/cast_char.hpp>
-#include <boost/spirit/home/support/char_encoding/unicode.hpp>
+#include <boost/spirit/home/x3/support/char_encoding/unicode.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

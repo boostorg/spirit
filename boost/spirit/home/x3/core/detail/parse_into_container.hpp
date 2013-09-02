@@ -11,12 +11,12 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/container_traits.hpp>
-#include <boost/spirit/home/support/traits/value_traits.hpp>
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/support/traits/handles_container.hpp>
-#include <boost/spirit/home/support/traits/has_attribute.hpp>
-#include <boost/spirit/home/support/traits/is_substitute.hpp>
+#include <boost/spirit/home/x3/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/value_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/handles_container.hpp>
+#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
+#include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/fusion/include/front.hpp>
 

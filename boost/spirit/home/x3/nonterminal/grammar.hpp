@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/support/traits/has_attribute.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/nonterminal/grammar.hpp>
 #include <boost/fusion/container/map.hpp>
 #include <boost/fusion/sequence/intrinsic/at_key.hpp>

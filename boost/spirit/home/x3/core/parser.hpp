@@ -18,10 +18,10 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/utility/declval.hpp> 
 #include <boost/utility/enable_if.hpp>
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/context.hpp>
-#include <boost/spirit/home/support/traits/has_attribute.hpp>
-#include <boost/spirit/home/support/utility/sfinae.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/context.hpp>
+#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
+#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)

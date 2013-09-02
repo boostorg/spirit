@@ -12,8 +12,8 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/move_to.hpp>
-#include <boost/spirit/home/support/numeric_utils/detail/extract_int.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/numeric_utils/detail/extract_int.hpp>
 #include <boost/assert.hpp>
 
 namespace boost { namespace spirit

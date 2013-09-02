@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/support/traits/has_attribute.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 
 namespace boost { namespace spirit { namespace x3

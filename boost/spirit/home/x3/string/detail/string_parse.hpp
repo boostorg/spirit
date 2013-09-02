@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {

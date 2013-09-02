@@ -16,8 +16,8 @@
 #include <boost/optional/optional.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/for_each.hpp>
-#include <boost/spirit/home/support/traits/attribute_category.hpp>
-#include <boost/spirit/home/support/traits/is_variant.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {

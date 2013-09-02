@@ -15,10 +15,10 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/char_encoding/ascii.hpp>
-#include <boost/spirit/home/support/traits/attribute_type.hpp>
-#include <boost/spirit/home/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/char_encoding/ascii.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_type.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/iteration/local.hpp>

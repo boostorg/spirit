@@ -8,8 +8,8 @@
 #if !defined(SPIRIT_X3_DETAIL_ATTRIBUTES_APR_18_2010_0458PM)
 #define SPIRIT_X3_DETAIL_ATTRIBUTES_APR_18_2010_0458PM
 
-#include <boost/spirit/home/support/traits/transform_attribute.hpp>
-#include <boost/spirit/home/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/traits/transform_attribute.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace x3

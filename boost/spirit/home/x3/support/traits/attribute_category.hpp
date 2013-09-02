@@ -15,8 +15,8 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/fusion/include/copy.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
-#include <boost/spirit/home/support/traits/is_variant.hpp>
-#include <boost/spirit/home/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/is_variant.hpp>
+#include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 
 namespace boost { namespace spirit
 {

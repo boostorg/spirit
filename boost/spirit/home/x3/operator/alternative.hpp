@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/alternative.hpp>
 

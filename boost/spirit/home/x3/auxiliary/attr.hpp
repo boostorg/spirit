@@ -15,9 +15,9 @@
 #endif
 
 #include <boost/spirit/home/x3/core/parser.hpp>
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/traits/container_traits.hpp>
-#include <boost/spirit/home/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>

@@ -11,9 +11,9 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/context.hpp>
-#include <boost/spirit/home/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/context.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/remove_cv.hpp>

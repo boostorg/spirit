@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 
 namespace boost { namespace spirit { namespace x3

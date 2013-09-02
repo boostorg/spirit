@@ -14,9 +14,9 @@
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/string/tst.hpp>
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/traits/string_traits.hpp>
-#include <boost/spirit/home/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/traits/string_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 
 #include <boost/fusion/include/at.hpp>
 #include <boost/range.hpp>

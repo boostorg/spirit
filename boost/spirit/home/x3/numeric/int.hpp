@@ -13,7 +13,7 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
-#include <boost/spirit/home/support/numeric_utils/extract_int.hpp>
+#include <boost/spirit/home/x3/support/numeric_utils/extract_int.hpp>
 #include <cstdint>
 
 namespace boost { namespace spirit { namespace x3

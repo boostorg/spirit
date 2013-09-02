@@ -12,9 +12,9 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/traits/print_token.hpp>
-#include <boost/spirit/home/support/traits/print_attribute.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/traits/print_token.hpp>
+#include <boost/spirit/home/x3/support/traits/print_attribute.hpp>
 #include <boost/spirit/home/x3/nonterminal/debug_handler_state.hpp>
 #include <boost/fusion/include/out.hpp>
 #include <boost/type_traits/is_same.hpp>

@@ -13,7 +13,7 @@
 #endif
 
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
-#include <boost/spirit/home/support/numeric_utils/extract_int.hpp>
+#include <boost/spirit/home/x3/support/numeric_utils/extract_int.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

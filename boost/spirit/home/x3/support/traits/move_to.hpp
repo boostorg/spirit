@@ -13,8 +13,8 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/traits/attribute_category.hpp>
-#include <boost/spirit/home/support/traits/tuple_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/size.hpp>

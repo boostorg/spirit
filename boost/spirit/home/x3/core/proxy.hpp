@@ -13,7 +13,7 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
-#include <boost/spirit/home/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

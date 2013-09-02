@@ -11,9 +11,9 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/context.hpp>
-#include <boost/spirit/home/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/support/traits/make_attribute.hpp>
+#include <boost/spirit/home/x3/support/context.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 
 namespace boost { namespace spirit { namespace x3

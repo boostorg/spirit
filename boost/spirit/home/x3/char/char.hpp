@@ -12,9 +12,9 @@
 #endif
 
 #include <boost/spirit/home/x3/char/any_char.hpp>
-#include <boost/spirit/home/support/char_encoding/ascii.hpp>
-#include <boost/spirit/home/support/char_encoding/standard.hpp>
-#include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
+#include <boost/spirit/home/x3/support/char_encoding/ascii.hpp>
+#include <boost/spirit/home/x3/support/char_encoding/standard.hpp>
+#include <boost/spirit/home/x3/support/char_encoding/standard_wide.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

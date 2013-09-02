@@ -16,10 +16,10 @@
 #include <cmath>
 #include <boost/limits.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/numeric_utils/pow10.hpp>
-#include <boost/spirit/home/support/numeric_utils/sign.hpp>
-#include <boost/spirit/home/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/numeric_utils/pow10.hpp>
+#include <boost/spirit/home/x3/support/numeric_utils/sign.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/assert.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)

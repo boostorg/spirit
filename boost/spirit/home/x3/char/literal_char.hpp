@@ -12,7 +12,7 @@
 #endif
 
 #include <boost/spirit/home/x3/char/char_parser.hpp>
-#include <boost/spirit/home/support/utility/utf8.hpp>
+#include <boost/spirit/home/x3/support/utility/utf8.hpp>
 #include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3

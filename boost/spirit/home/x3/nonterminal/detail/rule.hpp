@@ -12,7 +12,7 @@
 #endif
 
 #include <boost/spirit/home/x3/core/parser.hpp>
-#include <boost/spirit/home/support/traits/make_attribute.hpp>
+#include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/utility/addressof.hpp>
 

@@ -13,7 +13,7 @@
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/spirit/home/support/context.hpp>
+#include <boost/spirit/home/x3/support/context.hpp>
 
 #if !defined(BOOST_SPIRIT_NO_RTTI)
 #include <typeinfo>

@@ -13,7 +13,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/utility/sfinae.hpp>
+#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/utility/enable_if.hpp>
 

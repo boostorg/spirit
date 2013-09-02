@@ -14,7 +14,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/numeric/real_policies.hpp>
-#include <boost/spirit/home/support/numeric_utils/extract_real.hpp>
+#include <boost/spirit/home/x3/support/numeric_utils/extract_real.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
