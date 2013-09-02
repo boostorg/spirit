@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_ATTRIBUTE_OF_JAN_7_2012_0914AM)
-#define BOOST_SPIRIT_ATTRIBUTE_OF_JAN_7_2012_0914AM
+#if !defined(BOOST_SPIRIT_X3_ATTRIBUTE_OF_JAN_7_2012_0914AM)
+#define BOOST_SPIRIT_X3_ATTRIBUTE_OF_JAN_7_2012_0914AM
 
 #if defined(_MSC_VER)
 #pragma once

@@ -8,8 +8,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_DETAIL_EXTRACT_INT_APRIL_17_2006_0816AM)
-#define BOOST_SPIRIT_DETAIL_EXTRACT_INT_APRIL_17_2006_0816AM
+#if !defined(BOOST_SPIRIT_X3_DETAIL_EXTRACT_INT_APRIL_17_2006_0816AM)
+#define BOOST_SPIRIT_X3_DETAIL_EXTRACT_INT_APRIL_17_2006_0816AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -56,7 +56,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct digits_traits;
 
 // lookup table for log2(x) : 2 <= x <= 36
-#define BOOST_SPIRIT_LOG2 (#error)(#error)                                    \
+#define BOOST_SPIRIT_X3_LOG2 (#error)(#error)                                    \
         (1000000)(1584960)(2000000)(2321920)(2584960)(2807350)                \
         (3000000)(3169920)(3321920)(3459430)(3584960)(3700430)                \
         (3807350)(3906890)(4000000)(4087460)(4169920)(4247920)                \
@@ -71,14 +71,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef std::numeric_limits<T> numeric_limits_type;                   \
         BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                  \
             (numeric_limits_type::digits * 1000000) /                         \
-                BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_LOG2)));                \
+                BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_X3_LOG2)));                \
     };                                                                        \
     /***/
 
 #define BOOST_PP_LOCAL_LIMITS (2, 36)
 #include BOOST_PP_LOCAL_ITERATE()
 
-#undef BOOST_SPIRIT_LOG2
+#undef BOOST_SPIRIT_X3_LOG2
 
     ///////////////////////////////////////////////////////////////////////////
     //

@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_RULE_JAN_08_2012_0326PM)
-#define BOOST_SPIRIT_RULE_JAN_08_2012_0326PM
+#if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
+#define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -15,7 +15,7 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
 
-#if !defined(BOOST_SPIRIT_NO_RTTI)
+#if !defined(BOOST_SPIRIT_X3_NO_RTTI)
 #include <typeinfo>
 #endif
 
@@ -91,7 +91,7 @@ namespace boost { namespace spirit { namespace x3
             traits::is_container<Attribute>::value;
         typedef rule_context_proxy<Attribute> context;
 
-#if !defined(BOOST_SPIRIT_NO_RTTI)
+#if !defined(BOOST_SPIRIT_X3_NO_RTTI)
         rule(char const* name = typeid(rule).name()) : name(name) {}
 #else
         rule(char const* name = "unnamed") : name(name) {}

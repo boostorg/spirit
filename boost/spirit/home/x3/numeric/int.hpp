@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_INT_APR_17_2006_0830AM)
-#define BOOST_SPIRIT_INT_APR_17_2006_0830AM
+#if !defined(BOOST_SPIRIT_X3_INT_APR_17_2006_0830AM)
+#define BOOST_SPIRIT_X3_INT_APR_17_2006_0830AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -44,22 +44,22 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-#define BOOST_SPIRIT_INT_PARSER(int_type, name)                                 \
+#define BOOST_SPIRIT_X3_INT_PARSER(int_type, name)                                 \
     typedef int_parser<int_type> name##type;                                    \
     name##type const name = name##type();                                       \
     /***/
 
-    BOOST_SPIRIT_INT_PARSER(long, long_)
-    BOOST_SPIRIT_INT_PARSER(short, short_)
-    BOOST_SPIRIT_INT_PARSER(int, int_)
-    BOOST_SPIRIT_INT_PARSER(long long, long_long)
+    BOOST_SPIRIT_X3_INT_PARSER(long, long_)
+    BOOST_SPIRIT_X3_INT_PARSER(short, short_)
+    BOOST_SPIRIT_X3_INT_PARSER(int, int_)
+    BOOST_SPIRIT_X3_INT_PARSER(long long, long_long)
 
-    BOOST_SPIRIT_INT_PARSER(int8_t, int8)
-    BOOST_SPIRIT_INT_PARSER(int16_t, int16)
-    BOOST_SPIRIT_INT_PARSER(int32_t, int32)
-    BOOST_SPIRIT_INT_PARSER(int64_t, int64)
+    BOOST_SPIRIT_X3_INT_PARSER(int8_t, int8)
+    BOOST_SPIRIT_X3_INT_PARSER(int16_t, int16)
+    BOOST_SPIRIT_X3_INT_PARSER(int32_t, int32)
+    BOOST_SPIRIT_X3_INT_PARSER(int64_t, int64)
 
-#undef BOOST_SPIRIT_INT_PARSER
+#undef BOOST_SPIRIT_X3_INT_PARSER
 
 }}}
 

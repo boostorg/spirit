@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_SIMPLE_TRACE_DECEMBER_06_2008_1102AM)
-#define BOOST_SPIRIT_SIMPLE_TRACE_DECEMBER_06_2008_1102AM
+#if !defined(BOOST_SPIRIT_X3_SIMPLE_TRACE_DECEMBER_06_2008_1102AM)
+#define BOOST_SPIRIT_X3_SIMPLE_TRACE_DECEMBER_06_2008_1102AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -21,18 +21,18 @@
 #include <ostream>
 
 //  The stream to use for debug output
-#if !defined(BOOST_SPIRIT_DEBUG_OUT)
-#define BOOST_SPIRIT_DEBUG_OUT std::cerr
+#if !defined(BOOST_SPIRIT_X3_DEBUG_OUT)
+#define BOOST_SPIRIT_X3_DEBUG_OUT std::cerr
 #endif
 
 //  number of tokens to print while debugging
-#if !defined(BOOST_SPIRIT_DEBUG_PRINT_SOME)
-#define BOOST_SPIRIT_DEBUG_PRINT_SOME 20
+#if !defined(BOOST_SPIRIT_X3_DEBUG_PRINT_SOME)
+#define BOOST_SPIRIT_X3_DEBUG_PRINT_SOME 20
 #endif
 
 //  number of spaces to indent
-#if !defined(BOOST_SPIRIT_DEBUG_INDENT)
-#define BOOST_SPIRIT_DEBUG_INDENT 2
+#if !defined(BOOST_SPIRIT_X3_DEBUG_INDENT)
+#define BOOST_SPIRIT_X3_DEBUG_INDENT 2
 #endif
 
 namespace boost { namespace spirit { namespace x3
@@ -135,13 +135,13 @@ namespace boost { namespace spirit { namespace x3
     namespace detail
     {
         typedef simple_trace<
-            BOOST_SPIRIT_DEBUG_INDENT, BOOST_SPIRIT_DEBUG_PRINT_SOME>
+            BOOST_SPIRIT_X3_DEBUG_INDENT, BOOST_SPIRIT_X3_DEBUG_PRINT_SOME>
         simple_trace_type;
 
         inline simple_trace_type&
         get_simple_trace()
         {
-            static simple_trace_type tracer(BOOST_SPIRIT_DEBUG_OUT);
+            static simple_trace_type tracer(BOOST_SPIRIT_X3_DEBUG_OUT);
             return tracer;
         }
     }

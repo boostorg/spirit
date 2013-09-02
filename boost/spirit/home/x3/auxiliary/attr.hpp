@@ -7,8 +7,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef BOOST_SPIRIT_ATTR_JUL_23_2008_0956AM
-#define BOOST_SPIRIT_ATTR_JUL_23_2008_0956AM
+#ifndef BOOST_SPIRIT_X3_ATTR_JUL_23_2008_0956AM
+#define BOOST_SPIRIT_X3_ATTR_JUL_23_2008_0956AM
 
 #if defined(_MSC_VER)
 #pragma once

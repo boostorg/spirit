@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_UINT_APR_17_2006_0901AM)
-#define BOOST_SPIRIT_UINT_APR_17_2006_0901AM
+#if !defined(BOOST_SPIRIT_X3_UINT_APR_17_2006_0901AM)
+#define BOOST_SPIRIT_X3_UINT_APR_17_2006_0901AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -45,33 +45,33 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-#define BOOST_SPIRIT_UINT_PARSER(uint_type, name)                               \
+#define BOOST_SPIRIT_X3_UINT_PARSER(uint_type, name)                               \
     typedef uint_parser<uint_type> name##type;                                  \
     name##type const name = name##type();                                       \
     /***/
 
-    BOOST_SPIRIT_UINT_PARSER(unsigned long, ulong_)
-    BOOST_SPIRIT_UINT_PARSER(unsigned short, ushort_)
-    BOOST_SPIRIT_UINT_PARSER(unsigned int, uint_)
-    BOOST_SPIRIT_UINT_PARSER(unsigned long long, ulong_long)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned long, ulong_)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned short, ushort_)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned int, uint_)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned long long, ulong_long)
 
-    BOOST_SPIRIT_UINT_PARSER(uint8_t, uint8)
-    BOOST_SPIRIT_UINT_PARSER(uint16_t, uint16)
-    BOOST_SPIRIT_UINT_PARSER(uint32_t, uint32)
-    BOOST_SPIRIT_UINT_PARSER(uint64_t, uint64)
+    BOOST_SPIRIT_X3_UINT_PARSER(uint8_t, uint8)
+    BOOST_SPIRIT_X3_UINT_PARSER(uint16_t, uint16)
+    BOOST_SPIRIT_X3_UINT_PARSER(uint32_t, uint32)
+    BOOST_SPIRIT_X3_UINT_PARSER(uint64_t, uint64)
 
-#undef BOOST_SPIRIT_UINT_PARSER
+#undef BOOST_SPIRIT_X3_UINT_PARSER
 
-#define BOOST_SPIRIT_UINT_PARSER(uint_type, radix, name)                        \
+#define BOOST_SPIRIT_X3_UINT_PARSER(uint_type, radix, name)                        \
     typedef uint_parser<uint_type, radix> name##type;                           \
     name##type const name = name##type();                                       \
     /***/
 
-    BOOST_SPIRIT_UINT_PARSER(unsigned, 2, bin)
-    BOOST_SPIRIT_UINT_PARSER(unsigned, 8, oct)
-    BOOST_SPIRIT_UINT_PARSER(unsigned, 16, hex)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 2, bin)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 8, oct)
+    BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 16, hex)
 
-#undef BOOST_SPIRIT_UINT_PARSER
+#undef BOOST_SPIRIT_X3_UINT_PARSER
 
 
 }}}

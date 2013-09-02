@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_PARSER_OCTOBER_16_2008_0254PM)
-#define BOOST_SPIRIT_PARSER_OCTOBER_16_2008_0254PM
+#if !defined(BOOST_SPIRIT_X3_PARSER_OCTOBER_16_2008_0254PM)
+#define BOOST_SPIRIT_X3_PARSER_OCTOBER_16_2008_0254PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -24,7 +24,7 @@
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <string>
 
-#if !defined(BOOST_SPIRIT_NO_RTTI)
+#if !defined(BOOST_SPIRIT_X3_NO_RTTI)
 #include <typeinfo>
 #endif
 
@@ -211,7 +211,7 @@ namespace boost { namespace spirit { namespace x3
     // "what" member function. In X3, we specialize the get_info struct
     // below where needed. If a specialization is not provided, the default
     // below will be used. The default "what" result will be the typeid
-    // name of the parser if BOOST_SPIRIT_NO_RTTI is not defined, otherwise
+    // name of the parser if BOOST_SPIRIT_X3_NO_RTTI is not defined, otherwise
     // "undefined"
     ///////////////////////////////////////////////////////////////////////////
     template <typename Parser, typename Enable = void>
@@ -220,7 +220,7 @@ namespace boost { namespace spirit { namespace x3
         typedef std::string result_type;
         std::string operator()(Parser const&) const
         {
-#if !defined(BOOST_SPIRIT_NO_RTTI)
+#if !defined(BOOST_SPIRIT_X3_NO_RTTI)
             return typeid(Parser).name();
 #else
             return "undefined";

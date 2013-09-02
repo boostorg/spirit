@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_CHAR_CLASS_APRIL_16_2006_1051AM)
-#define BOOST_SPIRIT_CHAR_CLASS_APRIL_16_2006_1051AM
+#if !defined(BOOST_SPIRIT_X3_CHAR_CLASS_APRIL_16_2006_1051AM)
+#define BOOST_SPIRIT_X3_CHAR_CLASS_APRIL_16_2006_1051AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef typename Encoding::char_type char_type;
 
-#define BOOST_SPIRIT_CLASSIFY(name)                                             \
+#define BOOST_SPIRIT_X3_CLASSIFY(name)                                             \
         template <typename Char>                                                \
         static bool                                                             \
         is(name##_tag, Char ch)                                                 \
@@ -52,21 +52,21 @@ namespace boost { namespace spirit { namespace x3
         }                                                                       \
         /***/
 
-        BOOST_SPIRIT_CLASSIFY(char)
-        BOOST_SPIRIT_CLASSIFY(alnum)
-        BOOST_SPIRIT_CLASSIFY(alpha)
-        BOOST_SPIRIT_CLASSIFY(digit)
-        BOOST_SPIRIT_CLASSIFY(xdigit)
-        BOOST_SPIRIT_CLASSIFY(cntrl)
-        BOOST_SPIRIT_CLASSIFY(graph)
-        BOOST_SPIRIT_CLASSIFY(lower)
-        BOOST_SPIRIT_CLASSIFY(print)
-        BOOST_SPIRIT_CLASSIFY(punct)
-        BOOST_SPIRIT_CLASSIFY(space)
-        BOOST_SPIRIT_CLASSIFY(blank)
-        BOOST_SPIRIT_CLASSIFY(upper)
+        BOOST_SPIRIT_X3_CLASSIFY(char)
+        BOOST_SPIRIT_X3_CLASSIFY(alnum)
+        BOOST_SPIRIT_X3_CLASSIFY(alpha)
+        BOOST_SPIRIT_X3_CLASSIFY(digit)
+        BOOST_SPIRIT_X3_CLASSIFY(xdigit)
+        BOOST_SPIRIT_X3_CLASSIFY(cntrl)
+        BOOST_SPIRIT_X3_CLASSIFY(graph)
+        BOOST_SPIRIT_X3_CLASSIFY(lower)
+        BOOST_SPIRIT_X3_CLASSIFY(print)
+        BOOST_SPIRIT_X3_CLASSIFY(punct)
+        BOOST_SPIRIT_X3_CLASSIFY(space)
+        BOOST_SPIRIT_X3_CLASSIFY(blank)
+        BOOST_SPIRIT_X3_CLASSIFY(upper)
 
-#undef BOOST_SPIRIT_CLASSIFY
+#undef BOOST_SPIRIT_X3_CLASSIFY
     };
 
     template <typename Encoding, typename Tag>
@@ -87,36 +87,36 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-#define BOOST_SPIRIT_CHAR_CLASS(encoding, name)                                 \
+#define BOOST_SPIRIT_X3_CHAR_CLASS(encoding, name)                                 \
     typedef char_class<char_encoding::encoding, name##_tag> name##_type;        \
     name##_type const name = name##_type();                                     \
     /***/
 
-#define BOOST_SPIRIT_CHAR_CLASSES(encoding)                                     \
+#define BOOST_SPIRIT_X3_CHAR_CLASSES(encoding)                                     \
     namespace encoding                                                          \
     {                                                                           \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, alnum)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, alpha)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, digit)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, xdigit)                               \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, cntrl)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, graph)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, lower)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, print)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, punct)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, space)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, blank)                                \
-        BOOST_SPIRIT_CHAR_CLASS(encoding, upper)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, alnum)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, alpha)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, digit)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, xdigit)                               \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, cntrl)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, graph)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, lower)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, print)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, punct)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, space)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, blank)                                \
+        BOOST_SPIRIT_X3_CHAR_CLASS(encoding, upper)                                \
     }                                                                           \
     /***/
 
-    BOOST_SPIRIT_CHAR_CLASSES(standard)
-    BOOST_SPIRIT_CHAR_CLASSES(standard_wide)
-    BOOST_SPIRIT_CHAR_CLASSES(ascii)
-    BOOST_SPIRIT_CHAR_CLASSES(iso8859_1)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(standard)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(standard_wide)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(ascii)
+    BOOST_SPIRIT_X3_CHAR_CLASSES(iso8859_1)
 
-#undef BOOST_SPIRIT_CHAR_CLASS
-#undef BOOST_SPIRIT_CHAR_CLASSES
+#undef BOOST_SPIRIT_X3_CHAR_CLASS
+#undef BOOST_SPIRIT_X3_CHAR_CLASSES
 
     using standard::alnum_type;
     using standard::alpha_type;

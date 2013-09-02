@@ -9,7 +9,7 @@
 // this file intentionally contains non-ascii characters
 // boostinspect:noascii
 
-#define BOOST_SPIRIT_UNICODE
+#define BOOST_SPIRIT_X3_UNICODE
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>

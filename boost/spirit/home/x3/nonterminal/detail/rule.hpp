@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_DETAIL_RULE_JAN_08_2012_0326PM)
-#define BOOST_SPIRIT_DETAIL_RULE_JAN_08_2012_0326PM
+#if !defined(BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM)
+#define BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -16,7 +16,7 @@
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/utility/addressof.hpp>
 
-#if defined(BOOST_SPIRIT_DEBUG)
+#if defined(BOOST_SPIRIT_X3_DEBUG)
 #include <boost/spirit/home/x3/nonterminal/simple_trace.hpp>
 #endif
 
@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-#if defined(BOOST_SPIRIT_DEBUG)
+#if defined(BOOST_SPIRIT_X3_DEBUG)
     template <typename Iterator, typename Attribute>
     struct context_debug
     {
@@ -131,7 +131,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             value_type made_attr = make_attribute::call(attr);
             transform_attr attr_ = transform::pre(made_attr);
 
-#if defined(BOOST_SPIRIT_DEBUG)
+#if defined(BOOST_SPIRIT_X3_DEBUG)
             context_debug<Iterator, typename make_attribute::value_type>
                 dbg(rule_name, first, last, made_attr);
 #endif
@@ -143,7 +143,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 // back into the original attribute value, if appropriate
                 traits::post_transform(attr, attr_);
 
-#if defined(BOOST_SPIRIT_DEBUG)
+#if defined(BOOST_SPIRIT_X3_DEBUG)
                 dbg.fail = false;
 #endif
                 return true;
