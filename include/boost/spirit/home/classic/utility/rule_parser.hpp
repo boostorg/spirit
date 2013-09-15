@@ -42,7 +42,7 @@
 // 1. Setup
 //
 // Before the rule parser macro (the protagonist of the facility) can be used
-// the the user must define the macro BOOST_SPIRIT__NAMESPACE (note the double
+// the user must define the macro BOOST_SPIRIT__NAMESPACE (note the double
 // underscore characeter) and setup a registration group for Boost.Typeof.
 //
 // Examples:

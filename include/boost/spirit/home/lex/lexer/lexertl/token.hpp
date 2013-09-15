@@ -333,7 +333,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef token<Iterator, lex::omit, HasState, Idtype> base_type;
 
     protected: 
-        //  If no additional token value types are given, the the token will 
+        //  If no additional token value types are given, the token will 
         //  hold the plain pair of iterators pointing to the matched range
         //  in the underlying input sequence. Otherwise the token value is 
         //  stored as a variant and will again hold the pair of iterators but
