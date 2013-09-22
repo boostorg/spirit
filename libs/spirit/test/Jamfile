@@ -121,6 +121,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run x3/stream.cpp           : : : : x3_stream ]
      [ run x3/symbols1.cpp         : : : : x3_symbols1 ]
      [ run x3/symbols2.cpp         : : : : x3_symbols2 ]
+     [ run x3/symbols3.cpp         : : : : x3_symbols3 ]
      #~ [ run x3/terminal_ex.cpp      : : : : x3_terminal_ex ]
      [ run x3/tst.cpp
        $(BOOST_ROOT)/libs/system/build//boost_system

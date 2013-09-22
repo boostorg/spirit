@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2013 Carl Barron
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,6 +24,8 @@
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/shared_ptr.hpp>
+
+#include <initializer_list>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -97,6 +100,32 @@ namespace boost { namespace spirit { namespace x3
             typename range_const_iterator<Data>::type di = boost::begin(data);
             while (si != boost::end(syms))
                 add(*si++, *di++);
+        }
+
+        symbols(std::initializer_list<std::pair<Char const*, T>> syms
+              , std::string const & name="symbols")
+          : add(*this)
+          , remove(*this)
+          , lookup(new Lookup())
+          , name_(name)
+        {
+            typedef std::initializer_list<std::pair<Char const*, T>> symbols_t;
+            typename range_const_iterator<symbols_t>::type si = boost::begin(syms);
+            for (;si != boost::end(syms); ++si)
+                add(si->first, si->second);
+        }
+        
+        symbols(std::initializer_list<Char const*> syms
+              , std::string const &name="symbols")
+          : add(*this)
+          , remove(*this)
+          , lookup(new Lookup())
+          , name_(name)
+        {
+            typedef std::initializer_list<Char const*> symbols_t;
+            typename range_const_iterator<symbols_t>::type si = boost::begin(syms);
+            while (si != boost::end(syms))
+                add(*si++);
         }
 
         symbols&
