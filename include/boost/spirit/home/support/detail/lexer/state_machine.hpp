@@ -29,11 +29,7 @@ public:
     class iterator
     {
     public:
-#if defined _MSC_VER && _MSC_VER <= 1200
-        friend basic_state_machine;
-#else
         friend class basic_state_machine;
-#endif
 
         struct data
         {
@@ -225,11 +221,7 @@ public:
         }
     };
 
-#if defined _MSC_VER && _MSC_VER <= 1200
-    friend iterator;
-#else
     friend class iterator;
-#endif
 
     basic_state_machine ()
     {
