@@ -14,10 +14,10 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
-#include <boost/spirit/home/x3/support/char_encoding/ascii.hpp>
-#include <boost/spirit/home/x3/support/char_encoding/standard.hpp>
-#include <boost/spirit/home/x3/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
+#include <boost/spirit/home/support/char_encoding/ascii.hpp>
+#include <boost/spirit/home/support/char_encoding/standard.hpp>
+#include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/add_reference.hpp>

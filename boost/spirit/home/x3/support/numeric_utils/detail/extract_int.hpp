@@ -16,10 +16,10 @@
 #endif
 
 #include <boost/spirit/home/x3/support/unused.hpp>
-#include <boost/spirit/home/x3/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_type.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/traits/numeric_traits.hpp>
+#include <boost/spirit/home/support/char_encoding/ascii.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/iteration/local.hpp>
@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             if (Radix <= 10 || (ch >= '0' && ch <= '9'))
                 return ch - '0';
-            return x3::char_encoding::ascii::tolower(ch) - 'a' + 10;
+            return char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
     };
 

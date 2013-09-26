@@ -114,7 +114,7 @@ main()
 //~ #endif
     //~ { // specifying the encoding
 
-        //~ typedef boost::spirit::x3::char_encoding::iso8859_1 iso8859_1;
+        //~ typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
         //~ rule<char const*, iso8859_1> r;
 
         //~ r = no_case['á'];
