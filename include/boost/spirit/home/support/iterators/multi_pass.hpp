@@ -38,11 +38,7 @@ namespace boost { namespace spirit
 
         // define the types the standard embedded iterator typedefs are taken
         // from
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-        typedef typename iterator_base_creator<Input, T>::type iterator_type;
-#else
         typedef typename policies_base_type::input_policy iterator_type;
-#endif
 
     public:
         // standard iterator typedefs
