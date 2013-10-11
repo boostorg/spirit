@@ -233,7 +233,6 @@ struct grammar_definition
 #endif
     }
 
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
     template <int N>
     struct call_helper {
 
@@ -244,11 +243,6 @@ struct grammar_definition
             result = def.template get_start_parser<N>()->parse(scan);
         }
     };
-#else
-    //  The grammar_def stuff isn't supported for compilers, which do not
-    //  support partial template specialization
-    template <int N> struct call_helper;
-#endif
 
     template <>
     struct call_helper<0> {
