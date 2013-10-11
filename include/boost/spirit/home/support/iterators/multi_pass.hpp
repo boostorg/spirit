@@ -26,9 +26,6 @@ namespace boost { namespace spirit
       : private boost::base_from_member<
             typename Policies::BOOST_NESTED_TEMPLATE shared<T>*>
       , public Policies::BOOST_NESTED_TEMPLATE unique<T>
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-      , typename iterator_base_creator<T, typename Policies::input_policy>::type
-#endif
     {
     private:
         // unique and shared data types
