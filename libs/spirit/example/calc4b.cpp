@@ -25,7 +25,6 @@
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/foreach.hpp>
 
 #include <iostream>
 #include <string>
@@ -123,7 +122,7 @@ namespace client { namespace ast
         void operator()(program const& x) const
         {
             boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
+            for (operation const& oper: x.rest)
             {
                 std::cout << ' ';
                 (*this)(oper);
