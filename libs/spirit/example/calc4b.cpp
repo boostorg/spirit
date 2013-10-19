@@ -21,16 +21,15 @@
 #endif
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/range/numeric.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/foreach.hpp>
 
 #include <iostream>
 #include <string>
 #include <list>
+#include <numeric>
 
 namespace client { namespace ast
 {
@@ -123,7 +122,7 @@ namespace client { namespace ast
         void operator()(program const& x) const
         {
             boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
+            for (operation const& oper: x.rest)
             {
                 std::cout << ' ';
                 (*this)(oper);
@@ -169,7 +168,7 @@ namespace client { namespace ast
 
         int operator()(program const& x) const
         {
-            return boost::accumulate( x.rest
+            return std::accumulate( x.rest.begin(), x.rest.end()
                                     , boost::apply_visitor(*this, x.first)
                                     , *this);
         }
