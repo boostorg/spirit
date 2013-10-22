@@ -24,8 +24,8 @@ project /ciere/json
 
 
 lib json
-   : [ glob ../src/*.cpp ]
-          /boost//headers
+   : [ glob ../src/*.cpp ] : 
+          <implicit-dependency>/boost//headers
         :
    :
    : <include>..
