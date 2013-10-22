@@ -48,7 +48,10 @@
 //  pages and pages of compiler error messages.
 //
 /////////////////////////////////////////////////////////////////////////////////
-#if     (defined(__BORLANDC__) && (__BORLANDC__ <= 0x570))
+#if     (defined(BOOST_MSVC) && (BOOST_MSVC < 1310))                            \
+    ||  (defined(__BORLANDC__) && (__BORLANDC__ <= 0x570))                      \
+    ||  (defined(__GNUC__) && (__GNUC__ < 3))                                   \
+    ||  (defined(__GNUC__) && (__GNUC__ == 3) && (__GNUC_MINOR__ < 1))
 # error "Compiler not supported. See note in <boost/spirit/core/config.hpp>"
 #else
 // Pass... Compiler supported.
