@@ -242,27 +242,51 @@ namespace boost { namespace spirit { namespace traits
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
+    template <typename Iterator>
+    struct pass_container_base
+    {
+        pass_container_base(Iterator begin, Iterator end)
+          : iter(begin), end(end)
+        {}
+
+        mutable Iterator iter;
+        mutable Iterator end;
+    };
+
+    template <typename Iterator>
+    struct pass_container_base<Iterator&>
+    {
+        pass_container_base(Iterator& begin, Iterator& end)
+          : iter(begin), end(end)
+        {}
+
+        Iterator& iter;
+        Iterator& end;
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     // This function handles the case where the attribute (Attr) given
     // to the sequence is an STL container. This is a wrapper around F.
     // The function F does the actual generating.
     template <typename F, typename Attr, typename Iterator, typename Sequence>
-    struct pass_container
+    struct pass_container : pass_container_base<Iterator>
     {
+        typedef pass_container_base<Iterator> base_type;
         typedef typename F::context_type context_type;
 
         pass_container(F const& f, Iterator begin, Iterator end)
-          : f(f), iter(begin), end(end)
+          : base_type(begin, end)
+          , f(f)
         {}
 
         bool is_at_end() const
         {
-            return traits::compare(iter, end);
+            return traits::compare(this->iter, this->end);
         }
 
         void next()
         {
-            traits::next(iter);
+            traits::next(this->iter);
         }
 
         // this is for the case when the current element expects an attribute
@@ -271,10 +295,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_container(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            if (!is_at_end() && !f(component, traits::deref(iter)))
+            if (!is_at_end() && !f(component, traits::deref(this->iter)))
             {
                 // needs to return false as long as everything is ok
-                traits::next(iter);
+                traits::next(this->iter);
                 return false;
             }
 
@@ -288,7 +312,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_container(Component const& component, mpl::true_) const
         {
-            return f(component, make_iterator_range(iter, end));
+            return f(component, make_iterator_range(this->iter, this->end));
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -338,8 +362,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         F f;
-        mutable Iterator iter;
-        mutable Iterator end;
 
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
