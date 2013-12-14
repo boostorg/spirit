@@ -547,7 +547,6 @@ namespace boost { namespace spirit
 
 }}
 
-#ifdef BOOST_SPIRIT_USE_PHOENIX_V3
 namespace boost { namespace phoenix
 {
     template <typename Tag>
@@ -567,7 +566,6 @@ namespace boost { namespace phoenix
         }
     };
 }}
-#endif
 
 // Define a spirit terminal. This macro may be placed in any namespace.
 // Common placeholders are placed in the main boost::spirit namespace
