@@ -45,11 +45,7 @@ namespace boost { namespace spirit { namespace x3
         omit_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            typedef
-                omit_directive<typename extension::as_parser<Subject>::value_type>
-            result_type;
-
-            return result_type(as_parser(subject));
+            return {as_parser(subject)};
         }
     };
 

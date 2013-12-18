@@ -92,11 +92,7 @@ namespace boost { namespace spirit { namespace x3
             skip_directive<typename extension::as_parser<Subject>::value_type, Skipper>
             operator[](Subject const& subject) const
             {
-                typedef
-                    skip_directive<typename extension::as_parser<Subject>::value_type, Skipper>
-                result_type;
-
-                return result_type(as_parser(subject), skipper_);
+                return {as_parser(subject), skipper_};
             }
 
             Skipper skipper_;
@@ -112,11 +108,7 @@ namespace boost { namespace spirit { namespace x3
         reskip_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            typedef
-                reskip_directive<typename extension::as_parser<Subject>::value_type>
-            result_type;
-
-            return result_type(as_parser(subject));
+            return {as_parser(subject)};
         }
     };
 

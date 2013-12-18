@@ -110,30 +110,20 @@ namespace boost { namespace spirit { namespace x3
             typename remove_reference<Value>::type>::type>
         operator()(Value&& value) const
         {
-            typedef attr_parser<typename remove_cv<
-                typename remove_reference<Value>::type>::type>
-            result_type;
-
-            return result_type(std::forward<Value>(value));
+            return {std::forward<Value>(value)};
         }
         
         template <typename Value, std::size_t N>
         attr_parser<typename remove_cv<Value>::type[N]>
         operator()(Value (&value)[N]) const
         {
-            typedef attr_parser<typename remove_cv<Value>::type[N]>
-            result_type;
-
-            return result_type(value);
+            return {value};
         }
         template <typename Value, std::size_t N>
         attr_parser<typename remove_cv<Value>::type[N]>
         operator()(Value (&&value)[N]) const
         {
-            typedef attr_parser<typename remove_cv<Value>::type[N]>
-            result_type;
-
-            return result_type(value);
+            return {value};
         }
     };
 

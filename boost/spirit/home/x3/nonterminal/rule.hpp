@@ -102,11 +102,7 @@ namespace boost { namespace spirit { namespace x3
             ID, typename extension::as_parser<RHS>::value_type, Attribute>
         operator=(RHS const& rhs) const
         {
-            typedef rule_definition<
-                ID, typename extension::as_parser<RHS>::value_type, Attribute>
-            result_type;
-
-            return result_type(as_parser(rhs), name);
+            return {as_parser(rhs), name};
         }
 
         template <typename Iterator, typename Context, typename Attribute_>
