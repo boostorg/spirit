@@ -198,6 +198,25 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // We pass through the container attribute if at least one of the embedded 
     // types in the variant requires to pass through the attribute
 
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+    template <typename Container, typename ValueType, typename Sequence
+      , typename T>
+    struct pass_through_container<Container, ValueType, boost::variant<T>
+          , Sequence>
+      : pass_through_container<Container, ValueType, T, Sequence>
+    {};
+
+    template <typename Container, typename ValueType, typename Sequence
+      , BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct pass_through_container<Container, ValueType
+          , boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>, Sequence>
+      : mpl::bool_<pass_through_container<
+            Container, ValueType, T0, Sequence
+            >::type::value || pass_through_container<
+                Container, ValueType, boost::variant<TN...>, Sequence
+            >::type::value>
+    {};
+#else
 #define BOOST_SPIRIT_PASS_THROUGH_CONTAINER(z, N, _)                          \
     pass_through_container<Container, ValueType,                              \
         BOOST_PP_CAT(T, N), Sequence>::type::value ||                         \
@@ -219,6 +238,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     {};
 
 #undef BOOST_SPIRIT_PASS_THROUGH_CONTAINER
+#endif
 }}}}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -59,6 +59,19 @@ namespace boost { namespace spirit { namespace traits
       : is_container<T>
     {};
 
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+    template<typename T>
+    struct is_container<boost::variant<T> >
+      : is_container<T>
+    {};
+
+    template<BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct is_container<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+      : mpl::bool_<is_container<T0>::value ||
+            is_container<boost::variant<TN...> >::value>
+    {};
+
+#else
 #define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 \
         is_container<BOOST_PP_CAT(T, N)>::value ||                            \
     /***/
@@ -76,6 +89,7 @@ namespace boost { namespace spirit { namespace traits
     {};
 
 #undef BOOST_SPIRIT_IS_CONTAINER
+#endif
 
     template <typename T, typename Enable/* = void*/>
     struct is_iterator_range

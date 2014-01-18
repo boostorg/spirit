@@ -30,6 +30,8 @@ namespace boost { namespace spirit { namespace detail
     template <int size>
     struct as_variant_impl;
 
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+#else
     template <>
     struct as_variant_impl<0>
     {
@@ -39,6 +41,7 @@ namespace boost { namespace spirit { namespace detail
             typedef variant<> type;
         };
     };
+#endif
 
 #define BOOST_FUSION_NEXT_ITERATOR(z, n, data)                                  \
     typedef typename fusion::result_of::next<BOOST_PP_CAT(I, n)>::type          \
