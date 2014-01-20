@@ -208,8 +208,8 @@ namespace boost { namespace spirit { namespace traits
       : is_weak_substitute<T, Expected>
     {};
 
-    template <BOOST_VARIANT_ENUM_PARAMS(typename T), typename Expected>
-    struct is_weak_substitute<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>,
+    template <typename T0, typename ...TN, typename Expected>
+    struct is_weak_substitute<boost::variant<T0, TN...>,
             Expected>
       : mpl::bool_<is_weak_substitute<T0, Expected>::type::value &&
             is_weak_substitute<boost::variant<TN...>, Expected>::type::value>

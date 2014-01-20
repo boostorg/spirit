@@ -65,8 +65,8 @@ namespace boost { namespace spirit { namespace traits
       : is_container<T>
     {};
 
-    template<BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct is_container<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    template<typename T0, typename ...TN>
+    struct is_container<boost::variant<T0, TN...> >
       : mpl::bool_<is_container<T0>::value ||
             is_container<boost::variant<TN...> >::value>
     {};
