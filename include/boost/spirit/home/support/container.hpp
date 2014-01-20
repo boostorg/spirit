@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace traits
       : is_container<T>
     {};
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
     template<typename T>
     struct is_container<boost::variant<T> >
       : is_container<T>

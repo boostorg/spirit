@@ -198,7 +198,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     // We pass through the container attribute if at least one of the embedded 
     // types in the variant requires to pass through the attribute
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
     template <typename Container, typename ValueType, typename Sequence
       , typename T>
     struct pass_through_container<Container, ValueType, boost::variant<T>
