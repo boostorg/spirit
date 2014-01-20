@@ -202,7 +202,7 @@ namespace boost { namespace spirit { namespace traits
     struct is_weak_substitute<T, optional<Expected> >
       : is_weak_substitute<T, Expected> {};
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
     template <typename T, typename Expected>
     struct is_weak_substitute<boost::variant<T>, Expected>
       : is_weak_substitute<T, Expected>

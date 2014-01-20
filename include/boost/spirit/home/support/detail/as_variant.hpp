@@ -30,7 +30,7 @@ namespace boost { namespace spirit { namespace detail
     template <int size>
     struct as_variant_impl;
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(BOOST_VARIANT_USE_VARIADIC_TEMPLATES)
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
 #else
     template <>
     struct as_variant_impl<0>
