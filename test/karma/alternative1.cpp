@@ -116,10 +116,12 @@ main()
     {
         boost::optional<int> v;
         BOOST_TEST(test("error", int_ | "error" << omit[-int_], v));
-        BOOST_TEST(test("error", int_ | "error" << omit[int_], v));
+        BOOST_TEST(!test("error", int_ | "error" << omit[int_], v));
+        BOOST_TEST(test("error", int_ | "error" << skip[int_], v));
         v = 1;
         BOOST_TEST(test("1", int_ | "error" << omit[-int_], v));
         BOOST_TEST(test("1", int_ | "error" << omit[int_], v));
+        BOOST_TEST(test("1", int_ | "error" << skip[int_], v));
     }
 
     {

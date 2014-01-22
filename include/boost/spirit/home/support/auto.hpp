@@ -20,7 +20,7 @@
 // http://boost-spirit.com/home/articles/qi-example/zero-to-60-mph-in-2-seconds/
 // for more info
 
-#if defined(BOOST_NO_AUTO_DECLARATIONS)
+#if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
 
 #define BOOST_SPIRIT_AUTO(domain_, name, expr)                                  \
     typedef boost::proto::result_of::                                           \

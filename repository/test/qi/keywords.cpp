@@ -259,7 +259,7 @@ main()
 
     { // attribute customization
 
-        x_attr x;
+//        x_attr x;
 //        test_attr("a = b c = d", kwd("a")['=' > char_] / kwd("c")['=' > char_], x);
     }
 
