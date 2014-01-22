@@ -41,19 +41,23 @@ namespace client { namespace parser
         // Main expression grammar
         expr =
                 unary_expr
-                >> *(tokenid_mask(ast::op_binary) > unary_expr)
+            >>  *(tokenid_mask(token_ids::op_binary) > unary_expr)
             ;
 
         unary_expr =
-                primary_expr
-            |   (tokenid_mask(ast::op_unary) > primary_expr)
+                postfix_expr
+            |   (tokenid_mask(token_ids::op_unary) > unary_expr)
+            ;
+
+        postfix_expr =
+                function_call
+            |   primary_expr
             ;
 
         primary_expr =
-                lexer.uint_
-            |   function_call
+                lexer.lit_uint
+            |   lexer.true_or_false
             |   identifier
-            |   lexer.bool_
             |   '(' > expr > ')'
             ;
 
@@ -72,6 +76,7 @@ namespace client { namespace parser
         BOOST_SPIRIT_DEBUG_NODES(
             (expr)
             (unary_expr)
+            (postfix_expr)
             (primary_expr)
             (function_call)
             (argument_list)
@@ -85,7 +90,12 @@ namespace client { namespace parser
                 "Error! Expecting ", _4, _3));
 
         ///////////////////////////////////////////////////////////////////////
-        // Annotation: on success in primary_expr, call annotation.
+        // Annotation: on success in unary_expr, postfix_expr,
+        // and primary_expr call annotation.
+        on_success(unary_expr,
+            annotation_function(error_handler.iters)(_val, _1));
+        on_success(postfix_expr,
+            annotation_function(error_handler.iters)(_val, _1));
         on_success(primary_expr,
             annotation_function(error_handler.iters)(_val, _1));
     }

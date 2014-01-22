@@ -12,12 +12,9 @@
 //  [ JDG April 10, 2007 ]      spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
 //  [ HK June 3, 2011 ]         Adding lexer
+//  [ JDG July 18, 2011 ]       Switching to LLVM backend
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-// Define this to enable debugging
-//#define BOOST_SPIRIT_QI_DEBUG
 
 #include "config.hpp"
 #include "function.hpp"
