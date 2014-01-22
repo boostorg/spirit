@@ -413,13 +413,13 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                         return parser.str;
                 }
 
-                template <typename String, bool no_attribute>
+        template <typename String, bool no_attribute>
                 const typename boost::spirit::qi::no_case_literal_string<String,no_attribute>::string_type &
                         get_string(const boost::spirit::qi::no_case_literal_string<String,no_attribute> &parser) const
                 {
                         return parser.str_lo;
                 }
-
+   
 
 
                 shared_ptr<keywords_type> lookup;

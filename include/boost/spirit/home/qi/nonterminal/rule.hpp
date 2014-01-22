@@ -41,6 +41,7 @@
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4355) // 'this' : used in base member initializer list warning
+# pragma warning(disable: 4127) // conditional expression is constant
 #endif
 
 namespace boost { namespace spirit { namespace qi
@@ -231,7 +232,7 @@ namespace boost { namespace spirit { namespace qi
             return r;
         }
 
-#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if defined(BOOST_NO_RVALUE_REFERENCES)
         // non-const version needed to suppress proto's %= kicking in
         template <typename Expr>
         friend rule& operator%=(rule& r, Expr& expr)
