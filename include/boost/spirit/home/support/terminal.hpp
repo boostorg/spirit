@@ -557,6 +557,10 @@ namespace boost { namespace phoenix
     template <typename Tag>
     struct custom_terminal<Tag, typename Tag::is_spirit_tag>
     {
+#ifndef BOOST_PHOENIX_NO_SPECIALIZE_CUSTOM_TERMINAL
+        typedef void _is_default_custom_terminal; // fix for #7730
+#endif
+
         typedef spirit::terminal<Tag> result_type;
 
         template <typename Context>
