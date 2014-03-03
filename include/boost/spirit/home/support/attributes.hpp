@@ -530,7 +530,7 @@ namespace boost { namespace spirit { namespace traits
         {
             if (!val)
                 return 0;
-            return val.get();
+            return traits::size(val.get());
         }
     };
 
