@@ -387,7 +387,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 return false;
 	         }
-            traits::append(attr, attr_.begin(), attr_.end());
+            traits::append(attr, traits::begin(attr_), traits::end(attr_));
             return true;
         }
 
