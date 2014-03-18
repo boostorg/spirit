@@ -159,6 +159,12 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         return append_container<Container>::call(c, first, last);
     }
 
+    template <typename Iterator>
+    inline bool append(unused_type, Iterator first, Iterator last)
+    {
+        return true;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct is_empty_container
