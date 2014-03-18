@@ -1,0 +1,5 @@
+/bin/
+/.DS_Store
+/*.gitignore
+/test_dfa.hpp
+/test_switch.hpp
