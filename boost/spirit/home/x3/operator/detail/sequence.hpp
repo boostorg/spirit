@@ -381,13 +381,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, mpl::false_)
         {
-	    Attribute attr_;
+            Attribute attr_;
             if (!parse_sequence(parser.left, parser.right
-			       , first, last, context, attr_, traits::container_attribute())) {
-		return false;
-	    }
-	    traits::append(attr, attr_.begin(), attr_.end());
-	    return true;
+			       , first, last, context, attr_, traits::container_attribute()))
+            {
+                return false;
+	         }
+            traits::append(attr, attr_.begin(), attr_.end());
+            return true;
         }
 
         template <typename Iterator, typename Attribute>
