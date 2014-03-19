@@ -18,6 +18,7 @@
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
 #include <vector>
+#include <string>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -305,6 +306,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <>
     struct build_container<unused_type> : mpl::identity<unused_type> {};
+
+    template <>
+    struct build_container<char> : mpl::identity<std::string> {};
+
 }}}}
 
 #endif
