@@ -345,6 +345,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run x3/kleene.cpp           : : : : x3_kleene ]
      #~ [ run x3/lazy.cpp             : : : : x3_lazy ]
      [ run x3/lexeme.cpp           : : : : x3_lexeme ]
+     [ run x3/lit.cpp             : : : : x3_lit ]
      #~ [ run x3/lit1.cpp             : : : : x3_lit1 ]
      #~ [ run x3/lit2.cpp             : : : : x3_lit2 ]
      [ run x3/list.cpp             : : : : x3_list ]
