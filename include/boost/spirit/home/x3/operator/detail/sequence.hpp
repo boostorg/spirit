@@ -370,6 +370,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return false;
     }
 
+    template <typename Left, typename Right
+      , typename Iterator, typename Context, typename Attribute>
+    bool parse_sequence(
+        Left const& left, Right const& right
+      , Iterator& first, Iterator const& last
+      , Context const& context, Attribute& attr, traits::associative_attribute)
+    {
+	return parse_into_container(left >> right, first, last, context, attr);
+    }
+
     template <typename Left, typename Right, typename Context>
     struct parse_into_container_impl<sequence<Left, Right>, Context>
     {
@@ -381,6 +391,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, mpl::false_)
         {
+	    // inform user what went wrong if we jumped here in attempt to
+	    // parse incompatible sequence into fusion::map
+	    static_assert(!is_same< typename traits::attribute_category<Attribute>::type,
+			  traits::associative_attribute>::value,
+			  "To parse directly into fusion::map sequence must produce tuple attribute "
+			  "where type of first element is existing key in fusion::map and second element "
+			  "is value to be stored under that key");
+
             Attribute attr_;
             if (!parse_sequence(parser.left, parser.right
 			       , first, last, context, attr_, traits::container_attribute()))

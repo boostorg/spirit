@@ -14,8 +14,13 @@
 
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
+#include <boost/fusion/include/map.hpp>
+#include <boost/fusion/adapted/mpl.hpp>
+#include <boost/mpl/placeholders.hpp>
 #include <boost/mpl/equal.hpp>
-#include <boost/mpl/bool.hpp>
+#include <boost/mpl/logical.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/count_if.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -63,9 +68,26 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
           : mpl::true_ {};
     }
 
+    // compare fusion::pair to any mpl sequence
+    template <typename Pair, typename T>
+    struct pair_equal
+	: mpl::and_< traits::has_size<T, 2>
+	, is_same<typename Pair::first_type, typename mpl::at_c<T, 0>::type>
+	, is_substitute<typename Pair::second_type, typename mpl::at_c<T, 1>::type>
+	> {};
+
     template <typename T, typename Attribute, typename Enable /*= void*/>
     struct is_substitute
       : detail::is_substitute_impl<T, Attribute> {};
+
+    // 2 element mpl tuple is compatible with fusion::map if:
+    // - it's first element type is existing key in map
+    // - it second element type is compatible to type stored at the key in map
+    template <typename T, typename ...Pair>
+    struct is_substitute<T, fusion::map<Pair...> >
+	: mpl::not_equal_to<
+	mpl::count_if<fusion::map<Pair...>, pair_equal<mpl::_1, T> >
+	, mpl::int_<0> > {};
 
     template <typename T, typename Attribute>
     struct is_substitute<optional<T>, optional<Attribute>>

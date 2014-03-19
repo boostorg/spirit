@@ -11,14 +11,18 @@
 #pragma once
 #endif
 
+#include <type_traits>
+
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/value_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/handles_container.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/fusion/include/front.hpp>
+#include <boost/fusion/include/back.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -57,6 +61,28 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 "Expecting a single element fusion sequence");
             return call_synthesize(parser, first, last, context,
                 fusion::front(attr), mpl::false_());
+        }
+        // Parser has attribute (synthesize; Attribute is fusion map  sequence)
+        template <typename Iterator, typename Context, typename ...Pair>
+        static bool call_synthesize(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+	    , Context const& context, fusion::map<Pair...>& attr, mpl::true_)
+        {
+            using attribute_type = typename traits::attribute_of<Parser, Context>::type;
+            static_assert(traits::has_size<attribute_type, 2>::value,
+                "To parse directly into fusion map parser must produce 2 element attr");
+
+	    // use type of  first element of attribute as key
+	    using key = typename std::remove_reference<
+		typename fusion::result_of::front<attribute_type>::type>::type;
+
+	    attribute_type attr_;
+            if (!parser.parse(first, last, context, attr_))
+                return false;
+
+	   traits::move_to(fusion::back(attr_), fusion::at_key<key>(attr));
+	    return true;
         }
 
         // Parser has attribute (synthesize)
