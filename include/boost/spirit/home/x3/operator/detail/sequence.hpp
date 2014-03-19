@@ -301,13 +301,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         type;
     };
 
-    template <typename Left, typename Right
+    template <typename Parser
       , typename Iterator, typename Context, typename Attribute>
     bool parse_sequence(
-        Left const& left, Right const& right
-      , Iterator& first, Iterator const& last
+        Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::tuple_attribute)
     {
+	typedef typename Parser::left_type Left;
+	typedef typename Parser::right_type Right;
         typedef partition_attribute<Left, Right, Attribute, Context> partition;
         typedef typename partition::l_pass l_pass;
         typedef typename partition::r_pass r_pass;
@@ -318,20 +319,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename r_pass::type r_attr = r_pass::call(r_part);
 
         Iterator save = first;
-        if (left.parse(first, last, context, l_attr)
-            && right.parse(first, last, context, r_attr))
+        if (parser.left.parse(first, last, context, l_attr)
+            && parser.right.parse(first, last, context, r_attr))
             return true;
         first = save;
         return false;
     }
 
-    template <typename Left, typename Right
+    template <typename Parser
       , typename Iterator, typename Context, typename Attribute>
     bool parse_sequence(
-        Left const& left, Right const& right
-      , Iterator& first, Iterator const& last
+        Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::plain_attribute)
     {
+	typedef typename Parser::left_type Left;
+	typedef typename Parser::right_type Right;
         typedef typename traits::attribute_of<Left, Context>::type l_attr_type;
         typedef typename traits::attribute_of<Right, Context>::type r_attr_type;
         typedef traits::make_attribute<l_attr_type, Attribute> l_make_attribute;
@@ -341,8 +343,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename r_make_attribute::type r_attr = r_make_attribute::call(attr);
 
         Iterator save = first;
-        if (left.parse(first, last, context, l_attr)
-            && right.parse(first, last, context, r_attr))
+        if (parser.left.parse(first, last, context, l_attr)
+            && parser.right.parse(first, last, context, r_attr))
             return true;
         first = save;
         return false;
@@ -355,29 +357,27 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::container_attribute);
 
-    template <typename Left, typename Right
+    template <typename Parser
       , typename Iterator, typename Context, typename Attribute>
     bool parse_sequence(
-        Left const& left, Right const& right
-      , Iterator& first, Iterator const& last
+        Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::container_attribute)
     {
         Iterator save = first;
-        if (parse_into_container(left, first, last, context, attr)
-            && parse_into_container(right, first, last, context, attr))
+        if (parse_into_container(parser.left, first, last, context, attr)
+            && parse_into_container(parser.right, first, last, context, attr))
             return true;
         first = save;
         return false;
     }
 
-    template <typename Left, typename Right
+    template <typename Parser
       , typename Iterator, typename Context, typename Attribute>
     bool parse_sequence(
-        Left const& left, Right const& right
-      , Iterator& first, Iterator const& last
+        Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::associative_attribute)
     {
-	return parse_into_container(left >> right, first, last, context, attr);
+	return parse_into_container(parser, first, last, context, attr);
     }
 
     template <typename Left, typename Right, typename Context>
@@ -400,7 +400,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 			  "is value to be stored under that key");
 
             Attribute attr_;
-            if (!parse_sequence(parser.left, parser.right
+            if (!parse_sequence(parser
 			       , first, last, context, attr_, traits::container_attribute()))
             {
                 return false;
