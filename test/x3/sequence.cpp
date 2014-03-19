@@ -381,6 +381,13 @@ main()
         BOOST_TEST(at_c<0>(attr)[1] == 456);
     }
 
+    // test that failing sequence leaves attribute consistent
+    {
+	std::string attr;
+	BOOST_TEST(test_attr("A\nB\nC", *(char_ >> lit("\n")), attr, false));
+	BOOST_TEST(attr == "AB");
+    }
+
     // $$$ Not yet implemented $$$
     //~ {   // test action
         //~ using boost::phoenix::ref;

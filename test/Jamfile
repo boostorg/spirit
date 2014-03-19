@@ -315,6 +315,95 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run support/regression_multi_pass_error_handler.cpp         : : : : regression_multi_pass_error_handler ]
 
     ;
+
+    test-suite spirit_x3/qi :
+     #~ [ run x3/actions.cpp          : : : : x3_actions ]
+     #~ [ run x3/actions2.cpp         : : : : x3_actions2 ]
+     [ run x3/alternative.cpp      : : : : x3_alternative ]
+     [ run x3/and_predicate.cpp    : : : : x3_and_predicate ]
+     [ run x3/attr.cpp             : : : : x3_attr ]
+     #~ [ run x3/attribute1.cpp       : : : : x3_attribute1 ]
+     #~ [ run x3/attribute2.cpp       : : : : x3_attribute2 ]
+     #~ [ run x3/auto.cpp             : : : : x3_auto ]
+     #~ [ run x3/binary.cpp           : : : : x3_binary ]
+     #~ [ run x3/bool1.cpp            : : : : x3_bool1 ]
+     #~ [ run x3/bool2.cpp            : : : : x3_bool2 ]
+     [ run x3/char1.cpp            : : : : x3_char1 ]
+     #~ [ run x3/char2.cpp            : : : : x3_char2 ]
+     [ run x3/char_class.cpp       : : : : x3_char_class ]
+     [ run x3/debug.cpp            : : : : x3_debug ]
+     [ run x3/difference.cpp       : : : : x3_difference ]
+     #~ [ run x3/encoding.cpp         : : : : x3_encoding ]
+     [ run x3/eoi.cpp              : : : : x3_eoi ]
+     [ run x3/eol.cpp              : : : : x3_eol ]
+     [ run x3/eps.cpp              : : : : x3_eps ]
+     [ run x3/expect.cpp           : : : : x3_expect ]
+     #~ [ run x3/grammar.cpp          : : : : x3_grammar ]
+     [ run x3/int1.cpp             : : : : x3_int1 ]
+     #~ [ run x3/int2.cpp             : : : : x3_int2 ]
+     #~ [ run x3/int3.cpp             : : : : x3_int3 ]
+     [ run x3/kleene.cpp           : : : : x3_kleene ]
+     #~ [ run x3/lazy.cpp             : : : : x3_lazy ]
+     [ run x3/lexeme.cpp           : : : : x3_lexeme ]
+     [ run x3/lit.cpp             : : : : x3_lit ]
+     #~ [ run x3/lit1.cpp             : : : : x3_lit1 ]
+     #~ [ run x3/lit2.cpp             : : : : x3_lit2 ]
+     [ run x3/list.cpp             : : : : x3_list ]
+     #~ [ run x3/hold.cpp             : : : : x3_hold ]
+     #~ [ run x3/match_manip1.cpp     : : : : x3_match_manip1 ]
+     #~ [ run x3/match_manip2.cpp     : : : : x3_match_manip2 ]
+     #~ [ run x3/match_manip3.cpp     : : : : x3_match_manip3 ]
+     #~ [ run x3/match_manip_attr.cpp : : : : x3_match_manip_attr ]
+     #~ [ run x3/matches.cpp          : : : : x3_matches ]
+     #~ [ run x3/no_case.cpp          : : : : x3_no_case ]
+     [ run x3/no_skip.cpp          : : : : x3_no_skip ]
+     [ run x3/not_predicate.cpp    : : : : x3_not_predicate ]
+     [ run x3/optional.cpp         : : : : x3_optional ]
+     #~ [ run x3/parse_attr.cpp       : : : : x3_parse_attr ]
+     #~ [ run x3/pass_container1.cpp  : : : : x3_pass_container1 ]
+     #~ [ run x3/pass_container2.cpp  : : : : x3_pass_container2 ]
+     #~ [ run x3/permutation.cpp      : : : : x3_permutation ]
+     [ run x3/plus.cpp             : : : : x3_plus ]
+
+     # $$$ remove this fpermissive flag once lexical_cast is fixed $$$
+     #~ [ run x3/range_run.cpp
+        #~ : : : <toolset>gcc:<cxxflags>-fpermissive
+                                   #~ : x3_range_run ]
+
+     #~ [ run x3/raw.cpp              : : : : x3_raw ]
+     [ run x3/real1.cpp            : : : : x3_real1 ]
+     [ run x3/real2.cpp            : : : : x3_real2 ]
+     [ run x3/real3.cpp            : : : : x3_real3 ]
+     [ run x3/real4.cpp            : : : : x3_real4 ]
+     # [ run x3/real5.cpp            : : : : x3_real5 ]
+     # [ run x3/repeat.cpp           : : : : x3_repeat ]
+     [ run x3/rule1.cpp            : : : : x3_rule1 ]
+     [ run x3/rule2.cpp            : : : : x3_rule2 ]
+     [ run x3/rule3.cpp            : : : : x3_rule3 ]
+     [ run x3/rule4.cpp            : : : : x3_rule4 ]
+     [ run x3/sequence.cpp         : : : : x3_sequence ]
+     #~ [ run x3/sequential_or.cpp    : : : : x3_sequential_or ]
+     [ run x3/skip.cpp             : : : : x3_skip ]
+     #~ [ run x3/stream.cpp           : : : : x3_stream ]
+     [ run x3/symbols1.cpp         : : : : x3_symbols1 ]
+     [ run x3/symbols2.cpp         : : : : x3_symbols2 ]
+     [ run x3/symbols3.cpp         : : : : x3_symbols3 ]
+     #~ [ run x3/terminal_ex.cpp      : : : : x3_terminal_ex ]
+     [ run x3/tst.cpp
+       $(BOOST_ROOT)/libs/system/build//boost_system
+                                   : : : : x3_tst ]
+     [ run x3/uint1.cpp            : : : : x3_uint1 ]
+     #~ [ run x3/uint2.cpp            : : : : x3_uint2 ]
+     #~ [ run x3/uint3.cpp            : : : : x3_uint3 ]
+     [ run x3/uint_radix.cpp       : : : : x3_uint_radix ]
+     #~ [ run x3/utree1.cpp           : : : : x3_utree1 ]
+     #~ [ run x3/utree2.cpp           : : : : x3_utree2 ]
+     #~ [ run x3/utree3.cpp           : : : : x3_utree3 ]
+     #~ [ run x3/utree4.cpp           : : : : x3_utree4 ]
+
+    : <cxxflags>-std=c++11 #<<<< Doesn't work ;(
+
+    ;
 }
 
 # use this alias to build Spirit against Phoenix V3
