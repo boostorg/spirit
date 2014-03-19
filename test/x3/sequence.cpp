@@ -21,6 +21,7 @@ main()
     using boost::spirit::x3::space;
     using boost::spirit::x3::string;
     //~ using boost::spirit::x3::alpha;
+    using boost::spirit::x3::omit;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
     //~ using boost::spirit::x3::no_case;
@@ -379,6 +380,14 @@ main()
         BOOST_TEST(at_c<0>(attr).size() == 2);
         BOOST_TEST(at_c<0>(attr)[0] == 123);
         BOOST_TEST(at_c<0>(attr)[1] == 456);
+    }
+
+    // test that failing sequence leaves attribute consistent
+    {
+	std::string attr;
+	//no need to use omit[], but lit() is buggy ATM
+	BOOST_TEST(test_attr("A\nB\nC", *(char_ >> omit[lit("\n")]), attr, false));
+	BOOST_TEST(attr == "AB");
     }
 
     // $$$ Not yet implemented $$$
