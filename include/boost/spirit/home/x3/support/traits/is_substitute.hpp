@@ -15,9 +15,11 @@
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/map.hpp>
+#include <boost/fusion/include/value_at_key.hpp>
 #include <boost/fusion/adapted/mpl.hpp>
 #include <boost/mpl/placeholders.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/apply.hpp>
 #include <boost/mpl/logical.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/count_if.hpp>
@@ -68,14 +70,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
           : mpl::true_ {};
     }
 
-    // compare fusion::pair to any mpl sequence
-    template <typename Pair, typename T>
-    struct pair_equal
-	: mpl::and_< traits::has_size<T, 2>
-	, is_same<typename Pair::first_type, typename mpl::at_c<T, 0>::type>
-	, is_substitute<typename Pair::second_type, typename mpl::at_c<T, 1>::type>
-	> {};
-
     template <typename T, typename Attribute, typename Enable /*= void*/>
     struct is_substitute
       : detail::is_substitute_impl<T, Attribute> {};
@@ -83,11 +77,28 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     // 2 element mpl tuple is compatible with fusion::map if:
     // - it's first element type is existing key in map
     // - it second element type is compatible to type stored at the key in map
-    template <typename T, typename ...Pair>
-    struct is_substitute<T, fusion::map<Pair...> >
-	: mpl::not_equal_to<
-	mpl::count_if<fusion::map<Pair...>, pair_equal<mpl::_1, T> >
-	, mpl::int_<0> > {};
+    template <typename T, typename Attribute>
+    struct is_substitute<T, Attribute
+	, typename enable_if<
+	      typename mpl::eval_if<
+		  mpl::and_<fusion::traits::is_sequence<T>
+			    , fusion::traits::is_sequence<Attribute> >
+		  , mpl::and_<traits::has_size<T,2>
+			   , fusion::traits::is_associative<Attribute> >
+		  , mpl::false_ >::type >::type >
+
+    {
+	typedef typename mpl::at_c<T, 0>::type p_key;
+	typedef typename mpl::at_c<T, 1>::type p_value;
+
+	typedef typename mpl::eval_if<
+	    fusion::result_of::has_key<Attribute, p_key>
+	    , mpl::apply<is_substitute<
+			   fusion::result_of::value_at_key<mpl::_1, p_key>
+			   , p_value>
+		       , Attribute>
+	    , mpl::false_>::type type;
+    };
 
     template <typename T, typename Attribute>
     struct is_substitute<optional<T>, optional<Attribute>>

@@ -434,7 +434,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             value_type;
 
             return call(parser, first, last, context, attr
-              , traits::is_substitute<attribute_type, value_type>());
+	        , typename traits::is_substitute<attribute_type, value_type>::type());
         }
     };
 

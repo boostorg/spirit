@@ -29,12 +29,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser>
     struct parse_into_container_base_impl
     {
+    private:
         // Parser has attribute (synthesize; Attribute is a container)
         template <typename Iterator, typename Context, typename Attribute>
         static bool call_synthesize(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr)
         {
             // synthesized attribute needs to be value initialized
             typedef typename
@@ -52,22 +53,23 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         // Parser has attribute (synthesize; Attribute is a single element fusion sequence)
         template <typename Iterator, typename Context, typename Attribute>
-        static bool call_synthesize(
+        static bool call_synthesize_into_fusion_seq(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_)
+	  , Context const& context, Attribute& attr, mpl::false_ /* is_associative */)
         {
             static_assert(traits::has_size<Attribute, 1>::value,
                 "Expecting a single element fusion sequence");
             return call_synthesize(parser, first, last, context,
-                fusion::front(attr), mpl::false_());
+                fusion::front(attr));
         }
+
         // Parser has attribute (synthesize; Attribute is fusion map  sequence)
-        template <typename Iterator, typename Context, typename ...Pair>
-        static bool call_synthesize(
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize_into_fusion_seq(
             Parser const& parser
           , Iterator& first, Iterator const& last
-	    , Context const& context, fusion::map<Pair...>& attr, mpl::true_)
+	  , Context const& context, Attribute& attr, mpl::true_ /*is_associative*/)
         {
             using attribute_type = typename traits::attribute_of<Parser, Context>::type;
             static_assert(traits::has_size<attribute_type, 2>::value,
@@ -85,6 +87,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 	    return true;
         }
 
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize_dispatch_by_seq(Parser const& parser
+	    , Iterator& first, Iterator const& last
+	    , Context const& context, Attribute& attr, mpl::true_ /*is_sequence*/) {
+	    return call_synthesize_into_fusion_seq(parser, first, last, context , attr
+						   , fusion::traits::is_associative<Attribute>());
+	}
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize_dispatch_by_seq(Parser const& parser
+	    , Iterator& first, Iterator const& last
+	    , Context const& context, Attribute& attr, mpl::false_ /*is_sequence*/) {
+	    return call_synthesize(parser, first, last, context, attr);
+	}
+
         // Parser has attribute (synthesize)
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
@@ -92,7 +109,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, mpl::true_)
         {
-            return call_synthesize(parser, first, last, context, attr
+            return call_synthesize_dispatch_by_seq(parser, first, last, context, attr
               , fusion::traits::is_sequence<Attribute>());
         }
 
@@ -105,6 +122,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return parser.parse(first, last, context, unused);
         }
+
+    public:
 
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
