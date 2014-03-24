@@ -17,10 +17,13 @@
 int
 main()
 {
+    using boost::spirit::x3::unused_type;
+
     using boost::spirit::x3::char_;
     using boost::spirit::x3::space;
     using boost::spirit::x3::string;
     //~ using boost::spirit::x3::alpha;
+    using boost::spirit::x3::attr;
     using boost::spirit::x3::omit;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
@@ -32,6 +35,8 @@ main()
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_2;
     using boost::spirit::x3::alnum;
+
+    using boost::spirit::x3::traits::attribute_of;
 
     using boost::fusion::vector;
     using boost::fusion::at_c;
@@ -388,6 +393,14 @@ main()
 	//no need to use omit[], but lit() is buggy ATM
 	BOOST_TEST(test_attr("A\nB\nC", *(char_ >> omit[lit("\n")]), attr, false));
 	BOOST_TEST(attr == "AB");
+    }
+
+    // test that sequence with only one parser producing attribute
+    // makes it unwrapped
+    {
+	BOOST_TEST((boost::is_same<
+		    typename attribute_of<decltype(lit("abc") >> attr(long())), unused_type>::type,
+		    long>() ));
     }
 
     // $$$ Not yet implemented $$$
