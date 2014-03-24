@@ -23,9 +23,49 @@
 #include <boost/mpl/and.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/back.hpp>
+#include <boost/variant/apply_visitor.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
+    template <typename Attribute, typename Value>
+    struct saver_visitor;
+
+    // save to associative fusion container where Key is simple type
+    template <typename Key, typename Enable = void>
+    struct save_to_assoc_attr {
+	template <typename Value, typename Attribute>
+	static void call(const Key, Value& value, Attribute& attr) {
+	    traits::move_to(value, fusion::at_key<Key>(attr));
+	}
+    };
+
+	
+    // save to associative fusion container where Key
+    // is variant over possible keys
+    template <typename ...T>
+    struct save_to_assoc_attr<variant<T...> > {
+	typedef variant<T...> variant_t;
+	    
+	template <typename Value, typename Attribute>
+	static void call(const variant_t key, Value& value, Attribute& attr) {
+	    apply_visitor(saver_visitor<Attribute, Value>(attr, value), key);
+	}
+    };
+
+    template <typename Attribute, typename Value>
+    struct saver_visitor  : boost::static_visitor<void> {
+	saver_visitor(Attribute& attr, Value& value)
+	    : attr(attr), value(value) {};
+	Attribute& attr;
+	Value& value;
+		
+	template <typename Key>
+	void operator()(Key) const {
+	    save_to_assoc_attr<Key>::call(Key(), value,attr);
+	}
+    };
+
+
     template <typename Parser>
     struct parse_into_container_base_impl
     {
@@ -83,7 +123,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             if (!parser.parse(first, last, context, attr_))
                 return false;
 
-	   traits::move_to(fusion::back(attr_), fusion::at_key<key>(attr));
+	    save_to_assoc_attr<key>::call(fusion::front(attr_), fusion::back(attr_), attr);
 	    return true;
         }
 
@@ -122,6 +162,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return parser.parse(first, last, context, unused);
         }
+	
 
     public:
 

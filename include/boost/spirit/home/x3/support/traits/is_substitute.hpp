@@ -20,6 +20,8 @@
 #include <boost/mpl/placeholders.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/filter_view.hpp>
+#include <boost/mpl/size.hpp>
 #include <boost/mpl/logical.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/count_if.hpp>
@@ -88,16 +90,40 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 		  , mpl::false_ >::type >::type >
 
     {
+	// checking that "p_key >> p_value" parser can
+	// store it's result in fusion::map attribute
 	typedef typename mpl::at_c<T, 0>::type p_key;
 	typedef typename mpl::at_c<T, 1>::type p_value;
 
-	typedef typename mpl::eval_if<
-	    fusion::result_of::has_key<Attribute, p_key>
-	    , mpl::apply<is_substitute<
-			   fusion::result_of::value_at_key<mpl::_1, p_key>
-			   , p_value>
-		       , Attribute>
-	    , mpl::false_>::type type;
+	// for simple p_key type we just check that
+	// such key can be found in attr and that value under that key
+	// matches p_value
+	template <typename Key, typename Value, typename Map>
+	struct has_kv_in_map
+	    : mpl::eval_if<
+	fusion::result_of::has_key<Map, Key>
+	, mpl::apply<is_substitute<
+			 fusion::result_of::value_at_key<mpl::_1, Key>
+			 , Value>
+		     , Map>
+	, mpl::false_> {};
+	
+	// if p_key is variant over multiple types (as a result of
+	// "(key1|key2|key3) >> p_value" parser) check that all
+	// keys are found in fusion::map attribute and that values
+	// under these keys match p_value
+	template <typename Variant>
+	struct variant_kv 
+	    : mpl::equal_to<
+	    mpl::size< typename Variant::types>,
+	    mpl::size< mpl::filter_view<typename Variant::types
+					, has_kv_in_map<mpl::_1, p_value, Attribute> > >
+	    > {};
+	
+	typedef typename mpl::eval_if<is_variant<p_key>
+				      , variant_kv<p_key>
+				      , has_kv_in_map<p_key, p_value, Attribute>
+				      >::type type;
     };
 
     template <typename T, typename Attribute>
