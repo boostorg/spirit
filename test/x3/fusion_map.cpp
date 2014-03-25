@@ -103,17 +103,24 @@ main()
     }
 
     { // parsing sequence where key is a variant
-	/* NOT IMPLEMENTED
-	auto const key1 = lit("key1") >> attr(key1_attr());
-	auto const key2 = lit("key2") >> attr(key2_attr());
-	auto const keys = key1 | key2;
-	auto const pair = keys >> lit("=") >> +char_;
-	auto attr_ =  fusion::make_map<key1,key2>(std::string(),std::string());
+	namespace x3 = boost::spirit::x3;
+	auto  key1 = lit("key1") >> attr(key1_attr());
+	auto  key2 = lit("key2") >> attr(key2_attr());
+	auto  keys = key1 | key2;
+	auto pair = keys >> lit("=") >> +~char_(';');
 
-	BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ";", attr_));
-	BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
-	BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
-	*/
+	{
+	    auto attr_ =  fusion::make_map<key1_attr,key2_attr>(std::string(),std::string());
+	    BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ';', attr_));
+	    BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
+	    BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
+	}
+	{
+	    AdaptedStruct attr_;
+	    BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ';', attr_));
+	    BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
+	    BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
+	}
     }
 
     return boost::report_errors();
