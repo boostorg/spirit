@@ -295,8 +295,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef typename
             mpl::eval_if<
                 mpl::empty<filtered_types>
-              , mpl::identity<unused_type>
-              , fusion::result_of::as_deque<filtered_types>
+	    , mpl::identity<unused_type>
+	    ,mpl::if_<mpl::equal_to<mpl::size<filtered_types>, mpl::int_<1> >,
+	    typename mpl::front<filtered_types>::type
+		      , typename fusion::result_of::as_deque<filtered_types>::type >
             >::type
         type;
     };

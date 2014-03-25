@@ -17,10 +17,14 @@
 int
 main()
 {
+    using boost::spirit::x3::unused_type;
+
     using boost::spirit::x3::char_;
     using boost::spirit::x3::space;
     using boost::spirit::x3::string;
     //~ using boost::spirit::x3::alpha;
+    using boost::spirit::x3::attr;
+    using boost::spirit::x3::omit;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
     //~ using boost::spirit::x3::no_case;
@@ -31,6 +35,8 @@ main()
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_2;
     using boost::spirit::x3::alnum;
+
+    using boost::spirit::x3::traits::attribute_of;
 
     using boost::fusion::vector;
     using boost::fusion::at_c;
@@ -379,6 +385,22 @@ main()
         BOOST_TEST(at_c<0>(attr).size() == 2);
         BOOST_TEST(at_c<0>(attr)[0] == 123);
         BOOST_TEST(at_c<0>(attr)[1] == 456);
+    }
+
+    // test that failing sequence leaves attribute consistent
+    {
+	std::string attr;
+	//no need to use omit[], but lit() is buggy ATM
+	BOOST_TEST(test_attr("A\nB\nC", *(char_ >> omit[lit("\n")]), attr, false));
+	BOOST_TEST(attr == "AB");
+    }
+
+    // test that sequence with only one parser producing attribute
+    // makes it unwrapped
+    {
+	BOOST_TEST((boost::is_same<
+		    typename attribute_of<decltype(lit("abc") >> attr(long())), unused_type>::type,
+		    long>() ));
     }
 
     // $$$ Not yet implemented $$$
