@@ -46,6 +46,7 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::attr;
     using boost::spirit::x3::char_;
+    using boost::spirit::x3::eps;
     namespace fusion = boost::fusion;
     { // parsing sequence directly into fusion map
 	auto const key1 = lit("key1") >> attr(key1_attr());
@@ -62,6 +63,16 @@ main()
 	    BOOST_TEST(attr_.key1 == "ABC");
 	    BOOST_TEST(attr_.key2 == "");
 	}
+    }
+    { // case when parser handling fusion assoc sequence
+	// is on one side of another sequence
+	auto const key1 = lit("key1") >> attr(key1_attr());
+	auto const kv1 = key1 >> lit("=") >> +~char_(';');
+
+	AdaptedStruct attr_;
+	BOOST_TEST(test_attr("key1=ABC", eps >>  (kv1 % ';') , attr_));
+	BOOST_TEST(attr_.key1 == "ABC");
+	BOOST_TEST(attr_.key2 == "");
     }
     { // parsing repeated sequence directly into fusion map (overwrite)
     	auto const key1 = lit("key1") >> attr(key1_attr());

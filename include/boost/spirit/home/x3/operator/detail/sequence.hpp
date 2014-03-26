@@ -375,11 +375,56 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser
       , typename Iterator, typename Context, typename Attribute>
+    bool parse_sequence_assoc(
+        Parser const& parser , Iterator& first, Iterator const& last
+	, Context const& context, Attribute& attr, mpl::false_ /*should_split*/)
+    {
+	    return parse_into_container(parser, first, last, context, attr);
+    }
+
+    template <typename Parser
+      , typename Iterator, typename Context, typename Attribute>
+    bool parse_sequence_assoc(
+        Parser const& parser , Iterator& first, Iterator const& last
+	, Context const& context, Attribute& attr, mpl::true_ /*should_split*/)
+    {
+        Iterator save = first;
+        if (parser.left.parse( first, last, context, attr)
+            && parser.right.parse(first, last, context, attr))
+            return true;
+        first = save;
+        return false;
+    }
+
+    template <typename Parser
+      , typename Iterator, typename Context, typename Attribute>
     bool parse_sequence(
         Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::associative_attribute)
     {
-	return parse_into_container(parser, first, last, context, attr);
+	// we can come here in 2 cases:
+	// - when sequence is key >> value and therefore must
+	// be parsed with tuple synthesized attribute and then
+	// that tuple is used to save into associative attribute provided here.
+	// Example:  key >> value;
+	//
+	// - when either this->left or this->right provides full key-value
+	// pair (like in case 1) and another one provides nothing.
+	// Example:  eps >> rule<class x; fusion::map<...> >
+	//
+	// first case must be parsed as whole, and second one should
+	// be parsed separately for left and right.
+
+	typedef typename traits::attribute_of<
+	    decltype(parser.left), Context>::type l_attr_type;
+	typedef typename traits::attribute_of<
+	    decltype(parser.right), Context>::type r_attr_type;
+
+	typedef typename mpl::or_<is_same<l_attr_type, unused_type>
+				  , is_same<r_attr_type, unused_type> > should_split;
+
+            return parse_sequence_assoc(parser, first, last, context, attr
+					, should_split());
     }
 
     template <typename Left, typename Right, typename Context>
