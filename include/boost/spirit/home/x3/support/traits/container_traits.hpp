@@ -13,10 +13,12 @@
 #pragma once
 #endif
 
+#include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/detail/iterator.hpp>
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/identity.hpp>
 #include <vector>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
@@ -68,6 +70,18 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename Container>
     struct container_value<Container const> : container_value<Container> {};
+
+    // There is no single container value for fusion maps, but because output
+    // of this metafunc is used to check wheter parser's attribute can be
+    // saved to container, we simply return whole fusion::map as is
+    // so that check can be done in traits::is_substitute specialisation
+    template <typename T>
+    struct container_value<T
+			   , typename enable_if<typename mpl::eval_if <
+						    fusion::traits::is_sequence<T>
+						    , fusion::traits::is_associative<T>
+						    , mpl::false_ >::type >::type>
+    : mpl::identity<T> {};
 
     template <>
     struct container_value<unused_type> : mpl::identity<unused_type> {};

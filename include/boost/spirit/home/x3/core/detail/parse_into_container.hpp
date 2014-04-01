@@ -11,26 +11,71 @@
 #pragma once
 #endif
 
+#include <type_traits>
+
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/value_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/handles_container.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/fusion/include/front.hpp>
+#include <boost/fusion/include/back.hpp>
+#include <boost/variant/apply_visitor.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
+    template <typename Attribute, typename Value>
+    struct saver_visitor;
+
+    // save to associative fusion container where Key is simple type
+    template <typename Key, typename Enable = void>
+    struct save_to_assoc_attr {
+	template <typename Value, typename Attribute>
+	static void call(const Key, Value& value, Attribute& attr) {
+	    traits::move_to(value, fusion::at_key<Key>(attr));
+	}
+    };
+
+	
+    // save to associative fusion container where Key
+    // is variant over possible keys
+    template <typename ...T>
+    struct save_to_assoc_attr<variant<T...> > {
+	typedef variant<T...> variant_t;
+	    
+	template <typename Value, typename Attribute>
+	static void call(const variant_t key, Value& value, Attribute& attr) {
+	    apply_visitor(saver_visitor<Attribute, Value>(attr, value), key);
+	}
+    };
+
+    template <typename Attribute, typename Value>
+    struct saver_visitor  : boost::static_visitor<void> {
+	saver_visitor(Attribute& attr, Value& value)
+	    : attr(attr), value(value) {};
+	Attribute& attr;
+	Value& value;
+		
+	template <typename Key>
+	void operator()(Key) const {
+	    save_to_assoc_attr<Key>::call(Key(), value,attr);
+	}
+    };
+
+
     template <typename Parser>
     struct parse_into_container_base_impl
     {
+    private:
         // Parser has attribute (synthesize; Attribute is a container)
         template <typename Iterator, typename Context, typename Attribute>
         static bool call_synthesize(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_)
+          , Context const& context, Attribute& attr)
         {
             // synthesized attribute needs to be value initialized
             typedef typename
@@ -48,16 +93,54 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         // Parser has attribute (synthesize; Attribute is a single element fusion sequence)
         template <typename Iterator, typename Context, typename Attribute>
-        static bool call_synthesize(
+        static bool call_synthesize_into_fusion_seq(
             Parser const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_)
+	  , Context const& context, Attribute& attr, mpl::false_ /* is_associative */)
         {
             static_assert(traits::has_size<Attribute, 1>::value,
                 "Expecting a single element fusion sequence");
             return call_synthesize(parser, first, last, context,
-                fusion::front(attr), mpl::false_());
+                fusion::front(attr));
         }
+
+        // Parser has attribute (synthesize; Attribute is fusion map  sequence)
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize_into_fusion_seq(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+	  , Context const& context, Attribute& attr, mpl::true_ /*is_associative*/)
+        {
+            using attribute_type = typename traits::attribute_of<Parser, Context>::type;
+            static_assert(traits::has_size<attribute_type, 2>::value,
+                "To parse directly into fusion map parser must produce 2 element attr");
+
+	    // use type of  first element of attribute as key
+	    using key = typename std::remove_reference<
+		typename fusion::result_of::front<attribute_type>::type>::type;
+
+	    attribute_type attr_;
+            if (!parser.parse(first, last, context, attr_))
+                return false;
+
+	    save_to_assoc_attr<key>::call(fusion::front(attr_), fusion::back(attr_), attr);
+	    return true;
+        }
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize_dispatch_by_seq(Parser const& parser
+	    , Iterator& first, Iterator const& last
+	    , Context const& context, Attribute& attr, mpl::true_ /*is_sequence*/) {
+	    return call_synthesize_into_fusion_seq(parser, first, last, context , attr
+						   , fusion::traits::is_associative<Attribute>());
+	}
+
+        template <typename Iterator, typename Context, typename Attribute>
+        static bool call_synthesize_dispatch_by_seq(Parser const& parser
+	    , Iterator& first, Iterator const& last
+	    , Context const& context, Attribute& attr, mpl::false_ /*is_sequence*/) {
+	    return call_synthesize(parser, first, last, context, attr);
+	}
 
         // Parser has attribute (synthesize)
         template <typename Iterator, typename Context, typename Attribute>
@@ -66,7 +149,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, mpl::true_)
         {
-            return call_synthesize(parser, first, last, context, attr
+            return call_synthesize_dispatch_by_seq(parser, first, last, context, attr
               , fusion::traits::is_sequence<Attribute>());
         }
 
@@ -79,6 +162,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return parser.parse(first, last, context, unused);
         }
+	
+
+    public:
 
         template <typename Iterator, typename Context, typename Attribute>
         static bool call(
