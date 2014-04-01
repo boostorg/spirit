@@ -16,10 +16,12 @@
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/detail/iterator.hpp>
+#include <boost/fusion/include/deque.hpp>
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <vector>
+#include <string>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -317,8 +319,15 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     struct build_container : mpl::identity<std::vector<T>> {};
 
+    template <typename T>
+    struct build_container<boost::fusion::deque<T> > : build_container<T> {};
+
     template <>
     struct build_container<unused_type> : mpl::identity<unused_type> {};
+
+    template <>
+    struct build_container<char> : mpl::identity<std::string> {};
+
 }}}}
 
 #endif
