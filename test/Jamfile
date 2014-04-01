@@ -338,6 +338,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run x3/eol.cpp              : : : : x3_eol ]
      [ run x3/eps.cpp              : : : : x3_eps ]
      [ run x3/expect.cpp           : : : : x3_expect ]
+     [ run x3/fusion_map.cpp           : : : : x3_fusion_map ]
      #~ [ run x3/grammar.cpp          : : : : x3_grammar ]
      [ run x3/int1.cpp             : : : : x3_int1 ]
      #~ [ run x3/int2.cpp             : : : : x3_int2 ]
