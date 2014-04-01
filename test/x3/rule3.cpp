@@ -74,9 +74,13 @@ main()
 
         std::string s;
         typedef rule<class r, std::string> rule_type;
-
-        auto rdef = rule_type()
-            = alpha                 [([](auto& r, char c){ _val(r) += c; })]
+       
+        auto rdef = rule_type() =
+            alpha /
+               [](auto& r, char c)
+               {
+                  _val(r) += c;
+               }
             ;
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));
