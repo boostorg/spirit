@@ -19,9 +19,9 @@ project spirit_test
         <include>.
         <toolset>gcc:<cxxflags>-std=c++0x
         <toolset>gcc:<cxxflags>-ftemplate-depth-512
-        <toolset>clang:<cxxflags>-std=c++0x
+        <toolset>clang:<cxxflags>-std=c++1y
         <toolset>clang:<cxxflags>-ftemplate-depth-512
-        <toolset>darwin:<cxxflags>-std=c++0x
+        <toolset>darwin:<cxxflags>-std=c++1y
         <toolset>darwin:<cxxflags>-ftemplate-depth-512
     :
     :

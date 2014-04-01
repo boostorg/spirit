@@ -50,7 +50,7 @@ main()
 
         char ch = '\0';
         auto a = rule<class a, char>() = alpha;
-        auto f = [&](unused_type, char attr){ ch = attr; };
+        auto f = [&](auto&, char attr){ ch = attr; };
 
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
@@ -73,7 +73,7 @@ main()
       // that is convertible to the value_type of the attribute).
 
         std::string s;
-        auto f = [&](unused_type, std::string attr){ s = attr; };
+        auto f = [&](auto&, std::string attr){ s = attr; };
 
         {
             auto r = rule<class r, std::string>()

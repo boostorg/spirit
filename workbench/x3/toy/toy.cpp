@@ -179,7 +179,7 @@ namespace parser
 
     namespace g_definition
     {
-        rule<class x> const x;
+        auto const x = rule<class x>();
         auto const ax = char_('a') >> x;
 
         auto const g =
@@ -203,7 +203,7 @@ int main()
    { // a recursive rule
       using namespace boost::spirit::x3;
 
-      rule<class x> const x;
+      auto const x = rule<class x>();
       auto const ax = char_('a') >> x;
       auto const start = (x = char_('x') | ax);
 
@@ -214,7 +214,7 @@ int main()
       std::cout << "==========================================" << std::endl;
    }
 
-   { // a grammar (gcc only: see http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3582.html)
+   { // a grammar ( gcc and clang only: see http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3582.html )
 
       using namespace boost::spirit::x3;
       auto g = []()
