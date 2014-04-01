@@ -93,6 +93,18 @@ namespace boost { namespace spirit { namespace x3
 
         action(Subject const& subject, Action f)
           : base_type(subject), f(f) {}
+        
+        template <typename Context, typename Attribute>
+        void call_action(Context const& context, Attribute& attr, mpl::false_) const
+        {
+            f(context, attr); // pass in the context and attribute
+        }
+        
+        template <typename Context, typename Attribute>
+        void call_action(Context const& context, Attribute& attr, mpl::true_) const
+        {
+            f(attr); // pass attribute only
+        }
        
         // action wants attribute
         template <typename Iterator, typename Context, typename Attribute>
@@ -102,9 +114,8 @@ namespace boost { namespace spirit { namespace x3
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                // call the function, passing the enclosing rule's context
-                // and the subject's attribute.
-                f(context, attr);
+                typename detail::is_unary<Action, Attribute> is_unary;
+                call_action(context, attr, is_unary);
                 return true;
 
                 // reset iterators if semantic action failed the match
@@ -132,20 +143,8 @@ namespace boost { namespace spirit { namespace x3
             typename transform::type attr = transform::pre(made_attr);
             return parse(first, last, context, attr, mpl::false_());
         }
-        
-        template <typename Context>
-        void call_action(Context const& context, mpl::false_) const
-        {
-            f(context); // pass in the context only
-        }
-        
-        template <typename Context>
-        void call_action(Context const& context, mpl::true_) const
-        {
-            f(); // pass nothing
-        }
 
-        // action does not want attribute
+        // action does not want context and attribute
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, mpl::true_) const
@@ -153,8 +152,7 @@ namespace boost { namespace spirit { namespace x3
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                typename detail::is_nullary<Action> is_nullary;
-                call_action(context, is_nullary);
+                f();
                 return true;
 
                 // reset iterators if semantic action failed the match
@@ -169,11 +167,8 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            typename mpl::or_<
-                detail::is_unary<Action, Context>
-              , detail::is_nullary<Action>>
-            is_nullary_or_unary;
-            return parse(first, last, context, attr, is_nullary_or_unary);
+            typename detail::is_nullary<Action> is_nullary;
+            return parse(first, last, context, attr, is_nullary);
         }
 
         Action f;
