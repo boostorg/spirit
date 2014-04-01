@@ -34,7 +34,7 @@ namespace boost { namespace spirit { namespace x3
         typedef Attribute attribute_type;
         static bool const has_attribute =
             !is_same<unused_type, attribute_type>::value;
-        static bool const handles_container = true;
+        static bool const handles_container = has_attribute;
 
         literal_string(typename add_reference<String>::type str)
           : str(str)
