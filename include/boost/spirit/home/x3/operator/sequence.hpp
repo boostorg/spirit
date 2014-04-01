@@ -44,9 +44,8 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            return detail::parse_sequence(
-                this->left, this->right, first, last, context, attr
-              , typename traits::attribute_category<Attribute>::type());
+            return detail::parse_sequence(*this, first, last, context, attr
+					  , typename traits::attribute_category<Attribute>::type());
         }
     };
 
