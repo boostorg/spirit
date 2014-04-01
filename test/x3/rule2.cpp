@@ -43,15 +43,15 @@ main()
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
        
-        // the semantic action may also not require an attrubute to be passed
+        // the semantic action may optionally not require an attrubute to be passed
         auto f2 = [&](auto&){ ch = 'y'; };
         BOOST_TEST(test("x", a[f2]));
         BOOST_TEST(ch == 'y');
         
-        // the semantic action may also not have any arguments at all
-        //auto f3 = [&]{ ch = 'z'; };
-        //BOOST_TEST(test("x", a[f3]));
-        //BOOST_TEST(ch == 'z');
+        // the semantic action may optionally not have any arguments at all
+        auto f3 = [&]{ ch = 'z'; };
+        BOOST_TEST(test("x", a[f3]));
+        BOOST_TEST(ch == 'z');
 
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
         BOOST_TEST(ch == 'z');

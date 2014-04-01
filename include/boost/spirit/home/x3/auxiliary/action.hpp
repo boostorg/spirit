@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (arg) 2001-2013 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -36,7 +36,7 @@ namespace boost { namespace spirit { namespace x3
 
         type_traits::yes_type is_uncallable(uncallable const&);
         
-        template <typename F, typename C>
+        template <typename F, typename Arg>
         struct is_unary_impl
         {
             template <typename F2>
@@ -48,17 +48,17 @@ namespace boost { namespace spirit { namespace x3
             };
             
             static fwrap<F>& fun;
-            static C& c;
+            static Arg& arg;
 
             static bool const value = (
-                sizeof(type_traits::no_type) == sizeof(is_uncallable( (fun(c), 0) ))
+                sizeof(type_traits::no_type) == sizeof(is_uncallable( (fun(arg), 0) ))
             );
 
             typedef mpl::bool_<value> type;
         };
         
-        template <typename F, typename C>
-        struct is_unary : is_unary_impl<F, C>::type {};
+        template <typename F, typename A>
+        struct is_unary : is_unary_impl<F, A>::type {};
         
         template <typename F>
         struct is_nullary_impl
@@ -133,17 +133,17 @@ namespace boost { namespace spirit { namespace x3
             return parse(first, last, context, attr, mpl::false_());
         }
         
-//        template <typename Context>
-//        void call_action(Context const& context, mpl::false_) const
-//        {
-//            f(context); // pass in the context only
-//        }
-//        
-//        template <typename Context>
-//        void call_action(Context const& context, mpl::true_) const
-//        {
-//            f(); // pass nothing
-//        }
+        template <typename Context>
+        void call_action(Context const& context, mpl::false_) const
+        {
+            f(context); // pass in the context only
+        }
+        
+        template <typename Context>
+        void call_action(Context const& context, mpl::true_) const
+        {
+            f(); // pass nothing
+        }
 
         // action does not want attribute
         template <typename Iterator, typename Context, typename Attribute>
@@ -153,8 +153,8 @@ namespace boost { namespace spirit { namespace x3
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                //typename detail::is_nullary<Action, Context> is_nullary;
-                f(context);
+                typename detail::is_nullary<Action> is_nullary;
+                call_action(context, is_nullary);
                 return true;
 
                 // reset iterators if semantic action failed the match
@@ -169,8 +169,11 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            typename detail::is_unary<Action, Context> is_unary;
-            return parse(first, last, context, attr, is_unary);
+            typename mpl::or_<
+                detail::is_unary<Action, Context>
+              , detail::is_nullary<Action>>
+            is_nullary_or_unary;
+            return parse(first, last, context, attr, is_nullary_or_unary);
         }
 
         Action f;
