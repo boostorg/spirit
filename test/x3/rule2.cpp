@@ -42,12 +42,12 @@ main()
         auto f = [&](auto&, char attr){ ch = attr; };
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
-       
+
         // the semantic action may optionally not require the context to be passed
         auto f2 = [&](char attr){ ch = 'y'; };
         BOOST_TEST(test("x", a[f2]));
         BOOST_TEST(ch == 'y');
-        
+
         // the semantic action may optionally not have any arguments at all
         auto f3 = [&]{ ch = 'z'; };
         BOOST_TEST(test("x", a[f3]));
@@ -114,4 +114,3 @@ main()
 
     return boost::report_errors();
 }
-

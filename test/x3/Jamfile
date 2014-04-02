@@ -54,7 +54,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     ###########################################################################
     test-suite spirit_v3/qi :
 
-     #~ [ run actions.cpp          : : : : x3_actions ]
+     [ run actions.cpp          : : : : x3_actions ]
      #~ [ run actions2.cpp         : : : : x3_actions2 ]
      [ run alternative.cpp      : : : : x3_alternative ]
      [ run and_predicate.cpp    : : : : x3_and_predicate ]

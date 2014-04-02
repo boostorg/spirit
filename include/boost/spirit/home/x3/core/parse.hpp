@@ -21,7 +21,7 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser, typename Attribute>
     inline bool
-    parse(
+    parse_main(
         Iterator& first
       , Iterator last
       , Parser const& p
@@ -40,6 +40,31 @@ namespace boost { namespace spirit { namespace x3
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Attribute>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , Parser const& p
+      , Attribute& attr)
+    {
+        return parse_main(first, last, p, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Attribute>
+    inline bool
+    parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p
+      , Attribute& attr)
+    {
+        Iterator first = first_;
+        return parse_main(first, last, p, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser>
     inline bool
     parse(
@@ -47,7 +72,19 @@ namespace boost { namespace spirit { namespace x3
       , Iterator last
       , Parser const& p)
     {
-        return parse(first, last, p, unused);
+        return parse_main(first, last, p, unused);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser>
+    inline bool
+    parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p)
+    {
+        Iterator first = first_;
+        return parse_main(first, last, p, unused);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -60,7 +97,7 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
     inline bool
-    phrase_parse(
+    phrase_parse_main(
         Iterator& first
       , Iterator last
       , Parser const& p
@@ -85,6 +122,35 @@ namespace boost { namespace spirit { namespace x3
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s
+      , Attribute& attr
+      , skip_flag post_skip = skip_flag::post_skip)
+    {
+        return phrase_parse_main(first, last, p, s, attr, post_skip);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s
+      , Attribute& attr
+      , skip_flag post_skip = skip_flag::post_skip)
+    {
+        Iterator first = first_;
+        return phrase_parse_main(first, last, p, s, attr, post_skip);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser, typename Skipper>
     inline bool
     phrase_parse(
@@ -94,9 +160,22 @@ namespace boost { namespace spirit { namespace x3
       , Skipper const& s
       , skip_flag post_skip = skip_flag::post_skip)
     {
-        return phrase_parse(first, last, p, s, unused, post_skip);
+        return phrase_parse_main(first, last, p, s, unused, post_skip);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s
+      , skip_flag post_skip = skip_flag::post_skip)
+    {
+        Iterator first = first_;
+        return phrase_parse_main(first, last, p, s, unused, post_skip);
     }
 }}}
 
 #endif
-
