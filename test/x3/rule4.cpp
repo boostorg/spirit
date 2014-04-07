@@ -23,6 +23,25 @@
 #include <iostream>
 #include "test.hpp"
 
+namespace x3 = boost::spirit::x3;
+
+struct my_rule;
+
+template <typename Iterator, typename Exception, typename Context>
+x3::error_handler_result
+on_error(x3::identity<my_rule>, Iterator&, Exception const& x, Context const& context)
+{
+    std::cout
+        << "Error! Expecting: "
+        << x.what_
+        << ", got: \""
+        << std::string(x.first, x.last)
+        << "\""
+        << std::endl
+        ;
+    return x3::fail;
+}
+
 int
 main()
 {
@@ -80,32 +99,17 @@ main()
         BOOST_TEST(attr == "x");
     }
 
-    // $$$ Not yet implemented $$$
-    //~ { // error handling $$$ Fixme $$$
+    { // error handling
 
-        //~ using boost::phoenix::construct;
-        //~ using boost::phoenix::bind;
+        auto r = rule<my_rule, char const*>()
+            = '(' > int_ > ',' > int_ > ')';
 
-        //~ rule<char const*> r;
-        //~ r = '(' > int_ > ',' > int_ > ')';
-
-        //~ on_error<fail>
-        //~ (
-            //~ r, std::cout
-                //~ << phx::val("Error! Expecting: ")
-                //~ << _4
-                //~ << phx::val(", got: \"")
-                //~ << construct<std::string>(_3, _2)
-                //~ << phx::val("\"")
-                //~ << std::endl
-        //~ );
-
-        //~ BOOST_TEST(test("(123,456)", r));
-        //~ BOOST_TEST(!test("(abc,def)", r));
-        //~ BOOST_TEST(!test("(123,456]", r));
-        //~ BOOST_TEST(!test("(123;456)", r));
-        //~ BOOST_TEST(!test("[123,456]", r));
-    //~ }
+        BOOST_TEST(test("(123,456)", r));
+        BOOST_TEST(!test("(abc,def)", r));
+        BOOST_TEST(!test("(123,456]", r));
+        BOOST_TEST(!test("(123;456)", r));
+        BOOST_TEST(!test("[123,456]", r));
+    }
 
     // $$$ No longer relevant $$$
 // $$$ Do we support rule encoding? $$$

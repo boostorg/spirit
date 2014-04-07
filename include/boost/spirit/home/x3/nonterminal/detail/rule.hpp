@@ -24,6 +24,10 @@ namespace boost { namespace spirit { namespace x3
 {
     template <typename ID>
     struct rule_context_with_id_tag;
+    
+    template <typename ID>
+    struct identity;
+
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -77,17 +81,80 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         ~attr_pointer_scope() {}
     };
 
+    struct no_exception_handler {};
+
+    template <typename ID, typename Iterator, typename Exception, typename Context>
+    inline no_exception_handler on_error(ID, Iterator&, Exception const&, Context const&)
+    {
+        return no_exception_handler();
+    }
+
     template <typename Attribute, typename ID>
     struct parse_rule
     {
         template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
-        static bool parse_rhs(
+        static bool parse_rhs_main(
             RHS const& rhs
           , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr
-          , mpl::false_)
+          , Context const& context, ActualAttribute& attr, mpl::false_)
+        {
+            for (;;)
+            {
+                try
+                {
+                    Iterator i = first;
+                    bool r = rhs.parse(i, last, context, attr);
+                    if (r)
+                        first = i;
+                    return r;
+                }
+                catch (expectation_failure<Iterator> const& x)
+                {
+                    switch (on_error(identity<ID>(), first, x, context))
+                    {
+                        case fail:
+                            return false;
+                        case retry:
+                            continue;
+                        case accept:
+                            return true;
+                        case rethrow:
+                            throw;
+                    }
+                }
+            }
+        }
+
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs_main(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr, mpl::true_)
         {
             return rhs.parse(first, last, context, attr);
+        }
+
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs_main(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr)
+        {
+            typedef
+                decltype(
+                    on_error(
+                        identity<ID>()
+                      , first
+                      , boost::declval<expectation_failure<Iterator> const&>()
+                      , context
+                    )
+                )
+            on_error_result;
+
+            return parse_rhs_main(
+                rhs, first, last, context, attr
+              , is_same<on_error_result, no_exception_handler>()
+            );
         }
 
         template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
@@ -95,9 +162,19 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, ActualAttribute& attr
+          , mpl::false_)
+        {
+            return parse_rhs_main(rhs, first, last, context, attr);
+        }
+
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute&
           , mpl::true_)
         {
-            return rhs.parse(first, last, context, unused);
+            return parse_rhs_main(rhs, first, last, context, unused);
         }
 
         template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>

@@ -21,6 +21,9 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    template <typename ID>
+    struct identity {};
+
     struct rule_context_tag;
 
     template <typename ID>
@@ -36,15 +39,6 @@ namespace boost { namespace spirit { namespace x3
         }
 
         Attribute* attr_ptr;
-    };
-
-    template <typename Attribute>
-    struct rule_context_proxy
-    {
-        template <typename Context>
-        rule_context_proxy(Context& context)
-          : val(x3::get<rule_context_tag>(context).val()) {}
-        Attribute& val;
     };
 
     template <typename Context>
@@ -97,7 +91,6 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
-        typedef rule_context_proxy<Attribute> context;
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
         rule(char const* name = typeid(rule).name()) : name(name) {}

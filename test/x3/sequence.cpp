@@ -323,7 +323,7 @@ main()
     }
 
     {
-        std::vector<boost::optional<char> > v;
+        std::vector<boost::optional<char>> v;
         BOOST_TEST(test_attr("ab", char_ >> -char_, v));
         BOOST_TEST(v.size() == 2 && v[0] == 'a' && v[1] == 'b');
 
@@ -430,7 +430,7 @@ main()
 //     { // compile check only
 //         using boost::spirit::x3::rule;
 //         typedef boost::fusion::vector<int, double> tuple_type;
-//         typedef std::vector<boost::fusion::vector<int, double> > attr_type;
+//         typedef std::vector<boost::fusion::vector<int, double>> attr_type;
 //
 //         rule<char const*, tuple_type()> r = int_ >> ',' >> double_;
 //         rule<char const*, attr_type()> r2 = r >> *(',' >> r);
@@ -439,4 +439,3 @@ main()
 
     return boost::report_errors();
 }
-
