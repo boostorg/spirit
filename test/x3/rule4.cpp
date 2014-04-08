@@ -60,23 +60,23 @@ main()
 
     //~ namespace phx = boost::phoenix;
 
-    // $$$ Maybe no longer relevant $$$
-    //~ { // show that ra = rb and ra %= rb works as expected
-        //~ rule<char const*, int() > ra, rb;
-        //~ int attr;
+    { // show that ra = rb and ra %= rb works as expected
+        rule<class a, int> ra;
+        rule<class b, int> rb;
+        int attr;
 
-        //~ ra %= int_;
-        //~ BOOST_TEST(test_attr("123", ra, attr));
-        //~ BOOST_TEST(attr == 123);
+        auto ra_def = (ra %= int_);
+        BOOST_TEST(test_attr("123", ra_def, attr));
+        BOOST_TEST(attr == 123);
 
-        //~ rb %= ra;
-        //~ BOOST_TEST(test_attr("123", rb, attr));
-        //~ BOOST_TEST(attr == 123);
+        auto rb_def = (rb %= ra_def);
+        BOOST_TEST(test_attr("123", rb_def, attr));
+        BOOST_TEST(attr == 123);
 
-        //~ rb = ra;
-        //~ BOOST_TEST(test_attr("123", rb, attr));
-        //~ BOOST_TEST(attr == 123);
-    //~ }
+        auto rb_def2 = (rb = ra_def);
+        BOOST_TEST(test_attr("123", rb_def2, attr));
+        BOOST_TEST(attr == 123);
+    }
 
 
     { // std::string as container attribute with auto rules
