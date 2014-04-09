@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -31,14 +31,14 @@ namespace boost { namespace spirit { namespace x3
         forward_ast(forward_ast const& operand)
             : p_(new T( operand.get() )) {}
 
-        forward_ast(T const& operand)
-            : p_(new T(operand)) {}
-
         forward_ast(forward_ast&& operand)
             : p_(operand.p_)
         {
             operand.p_ = 0;
         }
+
+        forward_ast(T const& operand)
+            : p_(new T(operand)) {}
 
         forward_ast(T&& operand)
             : p_(new T(std::move(operand))) {}
@@ -54,17 +54,17 @@ namespace boost { namespace spirit { namespace x3
             return *this;
         }
 
-        forward_ast& operator=(T const& rhs)
-        {
-            assign(rhs);
-            return *this;
-        }
-
         void swap(forward_ast& operand) BOOST_NOEXCEPT
         {
             T* temp = operand.p_;
             operand.p_ = p_;
             p_ = temp;
+        }
+
+        forward_ast& operator=(T const& rhs)
+        {
+            assign(rhs);
+            return *this;
         }
 
         forward_ast& operator=(forward_ast&& rhs) BOOST_NOEXCEPT
@@ -134,18 +134,21 @@ namespace boost { namespace spirit { namespace x3
         ast() : var() {}
 
         template <typename T>
-        ast(T const& var)
-            : var(var) {}
+        ast(T const& rhs)
+            : var(rhs) {}
 
         template <typename T>
-        ast(T&& var)
-            : var(std::forward<T>(var)) {}
+        ast(T&& rhs)
+            : var(std::forward<T>(rhs)) {}
 
         ast(ast const& rhs)
-            : var(var) {}
+            : var(rhs.var) {}
+
+        ast(ast& rhs)
+            : var(rhs.var) {}
 
         ast(ast&& rhs)
-            : var(std::forward<variant_type>(rhs.get())) {}
+            : var(std::forward<variant_type>(rhs.var)) {}
 
         ast& operator=(ast const& rhs)
         {
