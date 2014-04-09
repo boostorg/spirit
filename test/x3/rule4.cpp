@@ -42,6 +42,15 @@ on_error(my_rule_id, Iterator&, Exception const& x, Context const& context)
     return x3::fail;
 }
 
+int got_it = 0;
+
+template <typename Iterator, typename Attribute, typename Context>
+inline void
+on_success(my_rule_id, Iterator const&, Iterator const&, Attribute&, Context const&)
+{
+    ++got_it;
+}
+
 int
 main()
 {
@@ -109,6 +118,8 @@ main()
         BOOST_TEST(!test("(123,456]", r));
         BOOST_TEST(!test("(123;456)", r));
         BOOST_TEST(!test("[123,456]", r));
+
+        BOOST_TEST(got_it == 1);
     }
 
     // $$$ No longer relevant $$$

@@ -28,6 +28,8 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID>
     struct identity;
 
+    struct parse_pass_context_tag;
+
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -84,9 +86,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct no_exception_handler {};
 
     template <typename ID, typename Iterator, typename Exception, typename Context>
-    inline no_exception_handler on_error(ID, Iterator&, Exception const&, Context const&)
+    inline no_exception_handler
+    on_error(ID, Iterator&, Exception const&, Context const&)
     {
         return no_exception_handler();
+    }
+
+    template <typename ID, typename Iterator, typename Attribute, typename Context>
+    inline void
+    on_success(ID, Iterator const&, Iterator const&, Attribute&, Context const&)
+    {
+        // no-op
     }
 
     template <typename ID>
@@ -108,17 +118,38 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool parse_rhs_main(
             RHS const& rhs
           , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr, mpl::true_)
+        {
+            Iterator i = first;
+            bool r = rhs.parse(i, last, context, attr);
+            if (r)
+            {
+                bool pass = true;
+                auto action_context = make_context<parse_pass_context_tag>(pass, context);
+                on_success(
+                    typename make_id<ID>::type()
+                  , first
+                  , i
+                  , attr
+                  , action_context
+                );
+                if (pass)
+                    first = i;
+            }
+            return r;
+        }
+
+        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
+        static bool parse_rhs_main(
+            RHS const& rhs
+          , Iterator& first, Iterator const& last
           , Context const& context, ActualAttribute& attr, mpl::false_)
         {
             for (;;)
             {
                 try
                 {
-                    Iterator i = first;
-                    bool r = rhs.parse(i, last, context, attr);
-                    if (r)
-                        first = i;
-                    return r;
+                    return parse_rhs_main(rhs, first, last, context, attr, mpl::true_());
                 }
                 catch (expectation_failure<Iterator> const& x)
                 {
@@ -135,15 +166,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                     }
                 }
             }
-        }
-
-        template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
-        static bool parse_rhs_main(
-            RHS const& rhs
-          , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr, mpl::true_)
-        {
-            return rhs.parse(first, last, context, attr);
         }
 
         template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
