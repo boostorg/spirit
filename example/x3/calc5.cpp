@@ -212,7 +212,7 @@ namespace client
             << "\""
             << std::endl
             ;
-        return x3::fail;
+        return x3::error_handler_result::fail;
     }
 
     ///////////////////////////////////////////////////////////////////////////////

@@ -155,13 +155,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 {
                     switch (on_error(typename make_id<ID>::type(), first, x, context))
                     {
-                        case fail:
+                        case error_handler_result::fail:
                             return false;
-                        case retry:
+                        case error_handler_result::retry:
                             continue;
-                        case accept:
+                        case error_handler_result::accept:
                             return true;
-                        case rethrow:
+                        case error_handler_result::rethrow:
                             throw;
                     }
                 }

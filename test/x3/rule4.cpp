@@ -39,7 +39,7 @@ on_error(my_rule_id, Iterator&, Exception const& x, Context const& context)
         << "\""
         << std::endl
         ;
-    return x3::fail;
+    return x3::error_handler_result::fail;
 }
 
 int got_it = 0;
