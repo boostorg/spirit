@@ -25,11 +25,11 @@
 
 namespace x3 = boost::spirit::x3;
 
-struct my_rule;
+typedef x3::identity<class my_rule> my_rule_id;
 
 template <typename Iterator, typename Exception, typename Context>
 x3::error_handler_result
-on_error(x3::identity<my_rule>, Iterator&, Exception const& x, Context const& context)
+on_error(my_rule_id, Iterator&, Exception const& x, Context const& context)
 {
     std::cout
         << "Error! Expecting: "
@@ -101,7 +101,7 @@ main()
 
     { // error handling
 
-        auto r = rule<my_rule, char const*>()
+        auto r = rule<my_rule_id, char const*>()
             = '(' > int_ > ',' > int_ > ')';
 
         BOOST_TEST(test("(123,456)", r));
@@ -227,4 +227,3 @@ main()
 
     return boost::report_errors();
 }
-

@@ -89,6 +89,18 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return no_exception_handler();
     }
 
+    template <typename ID>
+    struct make_id
+    {
+        typedef identity<ID> type;
+    };
+
+    template <typename ID>
+    struct make_id<identity<ID>>
+    {
+        typedef identity<ID> type;
+    };
+
     template <typename Attribute, typename ID>
     struct parse_rule
     {
@@ -110,7 +122,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 }
                 catch (expectation_failure<Iterator> const& x)
                 {
-                    switch (on_error(identity<ID>(), first, x, context))
+                    switch (on_error(typename make_id<ID>::type(), first, x, context))
                     {
                         case fail:
                             return false;
@@ -143,7 +155,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef
                 decltype(
                     on_error(
-                        identity<ID>()
+                        typename make_id<ID>::type()
                       , first
                       , boost::declval<expectation_failure<Iterator> const&>()
                       , context
