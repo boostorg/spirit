@@ -34,6 +34,8 @@
 #include <list>
 #include <numeric>
 
+namespace x3 = boost::spirit::x3;
+
 namespace client { namespace ast
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -43,13 +45,33 @@ namespace client { namespace ast
     struct signed_;
     struct program;
 
-    typedef boost::variant<
+    struct operand : x3::ast<
             nil
           , unsigned int
-          , boost::recursive_wrapper<signed_>
-          , boost::recursive_wrapper<program>
+          , x3::forward_ast<signed_>
+          , x3::forward_ast<program>
         >
-    operand;
+    {
+        operand() : base_type() {}
+        operand(unsigned int rhs) : base_type(rhs) {}
+        operand(signed_ const& rhs) : base_type(rhs) {}
+        operand(program const& rhs) : base_type(rhs) {}
+
+        operand(operand const& rhs) : base_type(rhs.get()) {}
+        operand(operand&& rhs) : base_type(std::forward<base_type>(rhs)) {}
+
+        operand& operator=(operand const& rhs)
+        {
+            base_type::operator=(rhs);
+            return *this;
+        }
+
+        operand& operator=(operand&& rhs)
+        {
+            base_type::operator=(std::forward<base_type>(rhs));
+            return *this;
+        }
+    };
 
     struct signed_
     {
@@ -186,8 +208,6 @@ namespace client { namespace ast
 
 namespace client
 {
-    namespace x3 = boost::spirit::x3;
-
     ///////////////////////////////////////////////////////////////////////////////
     // rule IDs
     ///////////////////////////////////////////////////////////////////////////////

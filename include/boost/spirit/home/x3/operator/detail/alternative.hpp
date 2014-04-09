@@ -311,11 +311,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 
     template <>
-    struct move_if_not_alternative<mpl::false_ /*is alternative*/> {
-	template<typename T1, typename T2>
-	static void call(T1& attr_, T2& attr) {
-                traits::move_to(attr_, attr);
-	}
+    struct move_if_not_alternative<mpl::false_ /*is alternative*/>
+    {
+        template<typename T1, typename T2>
+        static void call(T1& attr_, T2& attr)
+        {
+            traits::move_to(attr_, attr);
+        }
     };
 
     template <typename Parser, typename Iterator, typename Context, typename Attribute>
@@ -328,7 +330,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename pass::type attr_ = pass::call(attr);
         if (p.parse(first, last, context, attr_))
         {
-	    move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
+            move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
             return true;
         }
         return false;
