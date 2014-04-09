@@ -12,10 +12,6 @@
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
-//~ #include <boost/phoenix/core.hpp>
-//~ #include <boost/phoenix/operator.hpp>
-//~ #include <boost/phoenix/object.hpp>
-//~ #include <boost/phoenix/bind.hpp>
 //~ #include <boost/fusion/include/std_pair.hpp>
 
 #include <string>
@@ -62,9 +58,6 @@ main()
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
     //~ using boost::spirit::x3::uint_;
-    //~ using boost::spirit::x3::fail;
-    //~ using boost::spirit::x3::on_error;
-    //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
 
     //~ namespace phx = boost::phoenix;
