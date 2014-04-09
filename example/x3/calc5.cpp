@@ -45,7 +45,7 @@ namespace client { namespace ast
     struct signed_;
     struct program;
 
-    typedef x3::ast<
+    typedef x3::variant<
             nil
           , unsigned int
           , x3::forward_ast<signed_>

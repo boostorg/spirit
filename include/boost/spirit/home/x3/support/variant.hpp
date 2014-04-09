@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_AST_AUGUST_6_2011_0859AM)
-#define BOOST_SPIRIT_X3_AST_AUGUST_6_2011_0859AM
+#if !defined(BOOST_SPIRIT_X3_VARIANT_AUGUST_6_2011_0859AM)
+#define BOOST_SPIRIT_X3_VARIANT_AUGUST_6_2011_0859AM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -120,43 +120,41 @@ namespace boost { namespace spirit { namespace x3
     }
 
     template <typename ...Types>
-    struct ast
+    struct variant
     {
         // tell spirit that this is an adapted variant
         struct adapted_variant_tag;
 
-        typedef boost::variant<Types...>
-        variant_type;
-
+        typedef boost::variant<Types...> variant_type;
         typedef mpl::list<typename detail::remove_forward<Types>::type...> types;
-        typedef ast<Types...> base_type;
+        typedef variant<Types...> base_type;
 
-        ast() : var() {}
+        variant() : var() {}
 
         template <typename T>
-        ast(T const& rhs)
+        variant(T const& rhs)
             : var(rhs) {}
 
         template <typename T>
-        ast(T&& rhs)
+        variant(T&& rhs)
             : var(std::forward<T>(rhs)) {}
 
-        ast(ast const& rhs)
+        variant(variant const& rhs)
             : var(rhs.var) {}
 
-        ast(ast& rhs)
+        variant(variant& rhs)
             : var(rhs.var) {}
 
-        ast(ast&& rhs)
+        variant(variant&& rhs)
             : var(std::forward<variant_type>(rhs.var)) {}
 
-        ast& operator=(ast const& rhs)
+        variant& operator=(variant const& rhs)
         {
             var = rhs.get();
             return *this;
         }
 
-        ast& operator=(ast&& rhs)
+        variant& operator=(variant&& rhs)
         {
             var = std::forward<variant_type>(rhs.get());
             return *this;
@@ -204,28 +202,28 @@ namespace boost
 {
     template <typename T, typename ...Types>
     inline T const&
-    get(boost::spirit::x3::ast<Types...> const& x)
+    get(boost::spirit::x3::variant<Types...> const& x)
     {
         return boost::get<T>(x.get());
     }
 
     template <typename T, typename ...Types>
     inline T&
-    get(boost::spirit::x3::ast<Types...>& x)
+    get(boost::spirit::x3::variant<Types...>& x)
     {
         return boost::get<T>(x.get());
     }
 
     template <typename T, typename ...Types>
     inline T const*
-    get(boost::spirit::x3::ast<Types...> const* x)
+    get(boost::spirit::x3::variant<Types...> const* x)
     {
         return boost::get<T>(&x->get());
     }
 
     template <typename T, typename ...Types>
     inline T*
-    get(boost::spirit::x3::ast<Types...>* x)
+    get(boost::spirit::x3::variant<Types...>* x)
     {
         return boost::get<T>(&x->get());
     }
