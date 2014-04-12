@@ -47,6 +47,14 @@ namespace boost { namespace spirit { namespace x3
         Attribute& val;
     };
 
+    template <typename Context>
+    inline auto
+    _val(Context const& context)
+    -> decltype(x3::get<rule_context_tag>(context).val())
+    {
+        return x3::get<rule_context_tag>(context).val();
+    }
+
     template <typename ID, typename RHS, typename Attribute>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute>>
     {

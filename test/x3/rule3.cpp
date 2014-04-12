@@ -48,6 +48,7 @@ main()
     //~ using boost::spirit::x3::on_error;
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
+    using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_r1;
@@ -73,12 +74,13 @@ main()
 
         std::string s;
         typedef rule<class r, std::string> rule_type;
-
-        // MSVC does not want to have this by value! (MSVC lambda bug)
-        typedef rule_type::context const& ctx;
-
-        auto rdef = rule_type()
-            = alpha                 [([](ctx r, char c){ r.val += c; })]
+       
+        auto rdef = rule_type() =
+            alpha /
+               [](auto& r, char c)
+               {
+                  _val(r) += c;
+               }
             ;
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));

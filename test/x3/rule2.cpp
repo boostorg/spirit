@@ -37,10 +37,21 @@ main()
 
         char ch;
         auto a = rule<class a, char>() = alpha;
-        auto f = [&](unused_type, char attr){ ch = attr; };
 
+        // this semantic action requires both the context and attrubute
+        auto f = [&](auto&, char attr){ ch = attr; };
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
+
+        // the semantic action may optionally not require the context to be passed
+        auto f2 = [&](char attr){ ch = 'y'; };
+        BOOST_TEST(test("x", a[f2]));
+        BOOST_TEST(ch == 'y');
+
+        // the semantic action may optionally not have any arguments at all
+        auto f3 = [&]{ ch = 'z'; };
+        BOOST_TEST(test("x", a[f3]));
+        BOOST_TEST(ch == 'z');
 
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
         BOOST_TEST(ch == 'z');
@@ -50,7 +61,7 @@ main()
 
         char ch = '\0';
         auto a = rule<class a, char>() = alpha;
-        auto f = [&](unused_type, char attr){ ch = attr; };
+        auto f = [&](char attr){ ch = attr; };
 
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
@@ -73,7 +84,7 @@ main()
       // that is convertible to the value_type of the attribute).
 
         std::string s;
-        auto f = [&](unused_type, std::string attr){ s = attr; };
+        auto f = [&](std::string attr){ s = attr; };
 
         {
             auto r = rule<class r, std::string>()
@@ -103,4 +114,3 @@ main()
 
     return boost::report_errors();
 }
-

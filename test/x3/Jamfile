@@ -19,9 +19,9 @@ project spirit_test
         <include>.
         <toolset>gcc:<cxxflags>-std=c++0x
         <toolset>gcc:<cxxflags>-ftemplate-depth-512
-        <toolset>clang:<cxxflags>-std=c++0x
+        <toolset>clang:<cxxflags>-std=c++1y
         <toolset>clang:<cxxflags>-ftemplate-depth-512
-        <toolset>darwin:<cxxflags>-std=c++0x
+        <toolset>darwin:<cxxflags>-std=c++1y
         <toolset>darwin:<cxxflags>-ftemplate-depth-512
     :
     :
@@ -54,7 +54,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     ###########################################################################
     test-suite spirit_v3/qi :
 
-     #~ [ run actions.cpp          : : : : x3_actions ]
+     [ run actions.cpp          : : : : x3_actions ]
      #~ [ run actions2.cpp         : : : : x3_actions2 ]
      [ run alternative.cpp      : : : : x3_alternative ]
      [ run and_predicate.cpp    : : : : x3_and_predicate ]
