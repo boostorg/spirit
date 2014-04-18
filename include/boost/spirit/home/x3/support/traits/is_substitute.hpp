@@ -74,7 +74,17 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename T, typename Attribute, typename Enable /*= void*/>
     struct is_substitute
-      : detail::is_substitute_impl<T, Attribute> {};
+        : detail::is_substitute_impl<T, Attribute> {};
+
+    // for reference T
+    template <typename T, typename Attribute, typename Enable>
+    struct is_substitute<T&, Attribute, Enable>
+        : is_substitute<T, Attribute, Enable> {};
+
+    // for reference Attribute
+    template <typename T, typename Attribute, typename Enable>
+    struct is_substitute<T, Attribute&, Enable>
+        : is_substitute<T, Attribute, Enable> {};
 
     // 2 element mpl tuple is compatible with fusion::map if:
     // - it's first element type is existing key in map

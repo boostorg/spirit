@@ -15,7 +15,7 @@
 
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
-#include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
+#include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/size.hpp>
@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         inline void
         move_to(Source&& src, Dest& dest, variant_attribute, mpl::true_)
         {
-            move_to_from_single_element_sequence(src, dest, is_substitute<Source, Dest>());
+            move_to_from_single_element_sequence(src, dest, variant_has_substitute<Dest, Source>());
         }
 
         template <typename Source, typename Dest>
