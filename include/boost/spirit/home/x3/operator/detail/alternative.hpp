@@ -12,11 +12,12 @@
 #endif
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
+#include <boost/spirit/home/x3/support/traits/variant_find_substitute.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/variant/variant.hpp>
 
@@ -39,71 +40,6 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Variant, typename Attribute>
-    struct has_substitute_impl
-    {
-        // Find the type from the variant that can be a substitute for Attribute.
-        // return true_ if one is found, else false_
-
-        typedef Variant variant_type;
-        typedef typename variant_type::types types;
-        typedef typename mpl::end<types>::type end;
-
-        typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Attribute> >::type
-        iter_1;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute> >,
-                mpl::identity<iter_1>
-            >::type
-        iter;
-
-        typedef mpl::not_<is_same<iter, end>> type;
-    };
-
-    template <typename Variant, typename Attribute>
-    struct has_substitute : has_substitute_impl<Variant, Attribute>::type {};
-
-    template <typename Attribute>
-    struct has_substitute<unused_type, Attribute> : mpl::true_ {};
-
-    template <typename Attribute>
-    struct has_substitute<unused_type const, Attribute> : mpl::true_ {};
-
-    template <typename Variant, typename Attribute>
-    struct find_substitute
-    {
-        // Get the type from the variant that can be a substitute for Attribute.
-        // If none is found, just return Attribute
-
-        typedef Variant variant_type;
-        typedef typename variant_type::types types;
-        typedef typename mpl::end<types>::type end;
-
-        typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Attribute> >::type
-        iter_1;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute> >,
-                mpl::identity<iter_1>
-            >::type
-        iter;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<iter, end>,
-                mpl::identity<Attribute>,
-                mpl::deref<iter>
-            >::type
-        type;
-    };
-
     struct pass_variant_unused
     {
         typedef unused_type type;
@@ -139,7 +75,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             traits::attribute_of<Parser, Context>::type
         attribute_type;
         typedef typename
-            find_substitute<Attribute, attribute_type>::type
+            traits::variant_find_substitute<Attribute, attribute_type>::type
         substitute_type;
 
         typedef typename
@@ -303,7 +239,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             >::type
         type;
     };
-    
+
     template<class IsAlternative>
     struct move_if_not_alternative {
 	template<typename T1, typename T2>
@@ -372,7 +308,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             attribute_type;
 
             return call(parser, first, last, context, attr
-              , has_substitute<attribute_type, Attribute>());
+              , traits::variant_has_substitute<attribute_type, Attribute>());
         }
     };
 

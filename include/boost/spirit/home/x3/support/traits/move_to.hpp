@@ -15,6 +15,7 @@
 
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/size.hpp>
@@ -87,12 +88,26 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             dest = std::move(src);
         }
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_from_single_element_sequence(Source&& src, Dest& dest, mpl::false_)
+        {
+            dest = std::move(fusion::front(src));
+        }
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_from_single_element_sequence(Source&& src, Dest& dest, mpl::true_)
+        {
+            dest = std::move(src);
+        }
 
         template <typename Source, typename Dest>
         inline void
         move_to(Source&& src, Dest& dest, variant_attribute, mpl::true_)
         {
-            dest = std::move(fusion::front(src));
+            move_to_from_single_element_sequence(src, dest, is_substitute<Source, Dest>());
         }
 
         template <typename Source, typename Dest>
