@@ -91,15 +91,24 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         
         template <typename Source, typename Dest>
         inline void
-        move_to_from_single_element_sequence(Source&& src, Dest& dest, mpl::false_)
+        move_to_variant_from_single_element_sequence(Source&& src, Dest& dest, mpl::false_)
         {
+            // dest is a variant, src is a single element fusion sequence that the variant
+            // cannot directly hold. We'll try to unwrap the single element fusion sequence.
+            
+            // Make sure that the Dest variant can really hold Source
+            static_assert(variant_has_substitute<Dest, typename fusion::result_of::front<Source>::type>::value,
+                "Error! The destination variant (Dest) cannot hold the source type (Source)");
+            
             dest = std::move(fusion::front(src));
         }
         
         template <typename Source, typename Dest>
         inline void
-        move_to_from_single_element_sequence(Source&& src, Dest& dest, mpl::true_)
+        move_to_variant_from_single_element_sequence(Source&& src, Dest& dest, mpl::true_)
         {
+            // dest is a variant, src is a single element fusion sequence that the variant
+            // *can* directly hold.
             dest = std::move(src);
         }
 
@@ -107,7 +116,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         inline void
         move_to(Source&& src, Dest& dest, variant_attribute, mpl::true_)
         {
-            move_to_from_single_element_sequence(src, dest, variant_has_substitute<Dest, Source>());
+            move_to_variant_from_single_element_sequence(src, dest, variant_has_substitute<Dest, Source>());
         }
 
         template <typename Source, typename Dest>
