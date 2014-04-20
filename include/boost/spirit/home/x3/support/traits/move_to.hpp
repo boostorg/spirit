@@ -20,6 +20,7 @@
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/move.hpp>
+#include <boost/fusion/include/is_sequence.hpp>
 #include <utility>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
@@ -48,12 +49,31 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Source, typename Dest>
         inline void
         move_to(Source&&, Dest&, unused_attribute) {}
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_plain(Source&& src, Dest& dest, mpl::false_) // src is not a single-element tuple
+        {
+            dest = std::move(src);
+        }
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_plain(Source&& src, Dest& dest, mpl::true_) // src is a single-element tuple
+        {
+            dest = std::move(fusion::front(src));
+        }
 
         template <typename Source, typename Dest>
         inline void
         move_to(Source&& src, Dest& dest, plain_attribute)
         {
-            dest = std::move(src);
+            typename mpl::and_<
+                fusion::traits::is_sequence<Source>,
+                is_size_one_sequence<Source> >
+            is_single_element_sequence;
+        
+            move_to_plain(std::move(src), dest, is_single_element_sequence);
         }
 
         template <typename Source, typename Dest>
@@ -65,8 +85,9 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
         template <typename Source, typename Dest>
         inline typename enable_if<
-            mpl::and_<is_same_size_sequence<Dest, Source>,
-		      mpl::not_<is_size_one_sequence<Dest> > >
+            mpl::and_<
+                is_same_size_sequence<Dest, Source>,
+                mpl::not_<is_size_one_sequence<Dest> > >
         >::type
         move_to(Source&& src, Dest& dest, tuple_attribute)
         {

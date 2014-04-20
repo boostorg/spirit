@@ -7,6 +7,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/deque.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/comparison.hpp>
 
@@ -39,6 +40,7 @@ main()
     using boost::spirit::x3::traits::attribute_of;
 
     using boost::fusion::vector;
+    using boost::fusion::deque;
     using boost::fusion::at_c;
 
     using spirit_test::test;
@@ -138,9 +140,14 @@ main()
 
     {
         // make sure single element tuples get passed through if the rhs
-        // has a single element tuple as its attribute
+        // has a single element tuple as its attribute. Edit JDG 2014:
+        // actually he issue here is that if the rhs in this case a rule
+        // (r), it should get it (i.e. the sequence parser should not
+        // unwrap it). It's odd that the RHS (r) does not really have a
+        // single element tuple (it's a deque<char, int>), so the original
+        // comment is not accurate.
 
-        typedef vector<char, int> attr_type;
+        typedef deque<char, int> attr_type;
         attr_type fv;
 
         auto r = rule<class r, attr_type>()
@@ -148,6 +155,21 @@ main()
 
         BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
             fv == attr_type('x', 1)));
+    }
+
+    {
+        // make sure single element tuples get passed through if the rhs
+        // has a single element tuple as its attribute. This is a correction
+        // of the test above.
+
+        typedef deque<int> attr_type;
+        attr_type fv;
+
+        auto r = rule<class r, attr_type>()
+            = int_;
+
+        BOOST_TEST((test_attr("test:1", "test:" >> r, fv) &&
+            fv == attr_type(1)));
     }
 
     {
