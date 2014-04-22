@@ -194,20 +194,6 @@ namespace boost { namespace spirit { namespace x3
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // is_parser<T>: metafunction that evaluates to mpl::true_ if a type T
-    // can be used as a parser, mpl::false_ otherwise
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Enable = void>
-    struct is_parser
-      : mpl::false_
-    {};
-    template <typename T>
-    struct is_parser<T, typename disable_if_substitution_failure<
-        typename extension::as_parser<T>::type>::type>
-      : mpl::true_
-    {};
-
-    ///////////////////////////////////////////////////////////////////////////
     // The main what function
     //
     // Note: unlike Spirit2, spirit parsers are no longer required to have a
