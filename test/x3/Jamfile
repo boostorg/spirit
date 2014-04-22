@@ -58,6 +58,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run actions2.cpp         : : : : x3_actions2 ]
      [ run alternative.cpp      : : : : x3_alternative ]
      [ run and_predicate.cpp    : : : : x3_and_predicate ]
+     [ run any_parser.cpp    : : : : x3_any_parser ]
      [ run attr.cpp             : : : : x3_attr ]
      #~ [ run attribute1.cpp       : : : : x3_attribute1 ]
      #~ [ run attribute2.cpp       : : : : x3_attribute2 ]
