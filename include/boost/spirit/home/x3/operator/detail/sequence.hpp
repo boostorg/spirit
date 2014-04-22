@@ -109,7 +109,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute_used :
-        pass_sequence_attribute_front<Attribute> {};
+        mpl::if_<
+            traits::is_size_one_sequence<Attribute>
+          , pass_sequence_attribute_front<Attribute>
+          , pass_through_sequence_attribute<Attribute>>::type {};
 
     template <typename Parser, typename Attribute, typename Enable = void>
     struct pass_sequence_attribute :
@@ -176,7 +179,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef unused_type l_part;
         typedef Attribute& r_part;
         typedef pass_sequence_attribute_unused l_pass;
-        typedef pass_through_sequence_attribute<Attribute> r_pass;
+        typedef pass_sequence_attribute<R, Attribute> r_pass;
 
         static unused_type left(Attribute&)
         {
@@ -196,7 +199,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         typedef Attribute& l_part;
         typedef unused_type r_part;
-        typedef pass_through_sequence_attribute<Attribute> l_pass;
+        typedef pass_sequence_attribute<L, Attribute> l_pass;
         typedef pass_sequence_attribute_unused r_pass;
 
         static Attribute& left(Attribute& s)
@@ -296,7 +299,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             mpl::eval_if<
                 mpl::empty<filtered_types>
 	    , mpl::identity<unused_type>
-	    ,mpl::if_<mpl::equal_to<mpl::size<filtered_types>, mpl::int_<1> >,
+	    , mpl::if_<mpl::equal_to<mpl::size<filtered_types>, mpl::int_<1> >,
 	    typename mpl::front<filtered_types>::type
 		      , typename fusion::result_of::as_deque<filtered_types>::type >
             >::type
@@ -309,8 +312,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::tuple_attribute)
     {
-	typedef typename Parser::left_type Left;
-	typedef typename Parser::right_type Right;
+        typedef typename Parser::left_type Left;
+        typedef typename Parser::right_type Right;
         typedef partition_attribute<Left, Right, Attribute, Context> partition;
         typedef typename partition::l_pass l_pass;
         typedef typename partition::r_pass r_pass;

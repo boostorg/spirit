@@ -287,7 +287,6 @@ namespace testns
     template <typename T1, typename T>
     void check_type_1(const T& /*t*/)
     {
-        namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
           , typename boost::spirit::terminal<testns::tag::ops>::result<T1>::type >::value ));
     }
@@ -295,7 +294,6 @@ namespace testns
     template <typename T1, typename T2, typename T>
     void check_type_2(const T& /*t*/)
     {
-        namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
           , typename boost::spirit::terminal<testns::tag::ops>::result<T1, T2>::type >::value ));
     }
@@ -303,7 +301,6 @@ namespace testns
     template <typename T1, typename T2, typename T3, typename T>
     void check_type_3(const T& /*t*/)
     {
-        namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
           , typename boost::spirit::terminal<testns::tag::ops>::result<T1, T2, T3>::type >::value ));
     }

@@ -15,10 +15,12 @@
 
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/move.hpp>
+#include <boost/fusion/include/is_sequence.hpp>
 #include <utility>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
@@ -47,12 +49,31 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Source, typename Dest>
         inline void
         move_to(Source&&, Dest&, unused_attribute) {}
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_plain(Source&& src, Dest& dest, mpl::false_) // src is not a single-element tuple
+        {
+            dest = std::move(src);
+        }
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_plain(Source&& src, Dest& dest, mpl::true_) // src is a single-element tuple
+        {
+            dest = std::move(fusion::front(src));
+        }
 
         template <typename Source, typename Dest>
         inline void
         move_to(Source&& src, Dest& dest, plain_attribute)
         {
-            dest = std::move(src);
+            typename mpl::and_<
+                fusion::traits::is_sequence<Source>,
+                is_size_one_sequence<Source> >
+            is_single_element_sequence;
+        
+            move_to_plain(std::move(src), dest, is_single_element_sequence);
         }
 
         template <typename Source, typename Dest>
@@ -64,8 +85,9 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
         template <typename Source, typename Dest>
         inline typename enable_if<
-            mpl::and_<is_same_size_sequence<Dest, Source>,
-		      mpl::not_<is_size_one_sequence<Dest> > >
+            mpl::and_<
+                is_same_size_sequence<Dest, Source>,
+                mpl::not_<is_size_one_sequence<Dest> > >
         >::type
         move_to(Source&& src, Dest& dest, tuple_attribute)
         {
@@ -87,12 +109,35 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             dest = std::move(src);
         }
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_variant_from_single_element_sequence(Source&& src, Dest& dest, mpl::false_)
+        {
+            // dest is a variant, src is a single element fusion sequence that the variant
+            // cannot directly hold. We'll try to unwrap the single element fusion sequence.
+            
+            // Make sure that the Dest variant can really hold Source
+            static_assert(variant_has_substitute<Dest, typename fusion::result_of::front<Source>::type>::value,
+                "Error! The destination variant (Dest) cannot hold the source type (Source)");
+            
+            dest = std::move(fusion::front(src));
+        }
+        
+        template <typename Source, typename Dest>
+        inline void
+        move_to_variant_from_single_element_sequence(Source&& src, Dest& dest, mpl::true_)
+        {
+            // dest is a variant, src is a single element fusion sequence that the variant
+            // *can* directly hold.
+            dest = std::move(src);
+        }
 
         template <typename Source, typename Dest>
         inline void
         move_to(Source&& src, Dest& dest, variant_attribute, mpl::true_)
         {
-            dest = std::move(fusion::front(src));
+            move_to_variant_from_single_element_sequence(src, dest, variant_has_substitute<Dest, Source>());
         }
 
         template <typename Source, typename Dest>

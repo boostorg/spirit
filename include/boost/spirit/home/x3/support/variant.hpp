@@ -29,7 +29,7 @@ namespace boost { namespace spirit { namespace x3
         forward_ast() : p_(new T) {}
 
         forward_ast(forward_ast const& operand)
-            : p_(new T( operand.get() )) {}
+            : p_(new T(operand.get())) {}
 
         forward_ast(forward_ast&& operand)
             : p_(operand.p_)
