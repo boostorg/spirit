@@ -25,12 +25,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         typedef T const(&const_reference)[N];
         
-        array_wrapper(T(&data)[N])
+        array_wrapper(T const(&data)[N])
           : array_wrapper(data, make_index_sequence<N>())
         {}
 
         template<std::size_t... Ns>
-        array_wrapper(T(&data)[N], index_sequence<Ns...>)
+        array_wrapper(T const(&data)[N], index_sequence<Ns...>)
           : data{data[Ns]...}
         {}
         
@@ -64,15 +64,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     
     template <typename Subject, typename... Ts>
     struct transform_params<Subject, typename disable_if_substitution_failure<
-        decltype(Subject::transform_params(declval<Ts&&>...))>::type, Ts...>
+        decltype(Subject::transform_params(declval<Ts>()...))>::type, Ts...>
     {
         struct type
         {
-            type(Ts&& ...ts)
-              : data(Subject::transform_params(std::forward<Ts>(ts)...))
+            template <typename... As>
+            type(As&& ...as)
+              : data(Subject::transform_params(std::forward<As>(as)...))
             {}
 
-            decltype(Subject::transform_params(declval<Ts&&>...)) data;
+            decltype(Subject::transform_params(declval<Ts>()...)) data;
         };
 
         typedef mpl::true_ is_transformed;
