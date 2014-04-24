@@ -30,12 +30,11 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    using x3::unused_type;
-    using x3::unused;
-    using x3::get;
-
     template <typename Subject, typename Action>
     struct action;
+    
+    template <typename Subject, typename... Ts>
+    struct caller;
 
     template <typename Subject, typename Handler>
     struct guard;
@@ -49,6 +48,7 @@ namespace boost { namespace spirit { namespace x3
         typedef Derived derived_type;
         static bool const handles_container = false;
         static bool const is_pass_through_unary = false;
+        static bool const caller_is_pass_through_unary = false;
         static bool const has_action = false;
 
         Derived const& derived() const
@@ -57,17 +57,22 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Action>
-        action<Derived, Action>
-        operator[](Action f) const
+        action<Derived, Action> operator[](Action f) const
         {
-            return action<Derived, Action>(this->derived(), f);
+            return {this->derived(), f};
+        }
+        
+        template <typename... Ts>
+        caller<Derived, typename remove_reference<Ts>::type...>
+        operator()(Ts&&... ts) const
+        {
+            return {this->derived(), std::forward<Ts>(ts)...};
         }
 
         template <typename Handler>
-        guard<Derived, Handler>
-        on_error(Handler f) const
+        guard<Derived, Handler> on_error(Handler f) const
         {
-            return guard<Derived, Handler>(this->derived(), f);
+            return {this->derived(), f};
         }
     };
 
@@ -192,20 +197,6 @@ namespace boost { namespace spirit { namespace x3
     {
         return p.derived();
     }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // is_parser<T>: metafunction that evaluates to mpl::true_ if a type T
-    // can be used as a parser, mpl::false_ otherwise
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Enable = void>
-    struct is_parser
-      : mpl::false_
-    {};
-    template <typename T>
-    struct is_parser<T, typename disable_if_substitution_failure<
-        typename extension::as_parser<T>::type>::type>
-      : mpl::true_
-    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // The main what function
