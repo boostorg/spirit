@@ -153,7 +153,7 @@ namespace boost { namespace spirit { namespace x3
         }
         
         template <typename... Ts>
-        directive_caller<Derived, typename remove_reference<Ts>::type...>
+        directive_caller<Derived, unrefcv<Ts>...>
         operator()(Ts&&... ts) const
         {
             return {derived(), std::forward<Ts>(ts)...};
