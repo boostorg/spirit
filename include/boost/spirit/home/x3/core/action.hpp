@@ -14,94 +14,50 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
+#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/type_traits/is_class.hpp>
+#include <boost/type_traits/is_member_pointer.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/mem_fn.hpp>
+
+
+namespace boost { namespace spirit { namespace x3 { namespace detail
+{
+    template <typename Action, typename Context, typename Attribute>
+    using action_category = typename mpl::eval_if<
+        is_callable<Action(Context, Attribute)>, mpl::int_<2>
+      , mpl::eval_if<is_callable<Action(Attribute)>, mpl::int_<1>
+          , mpl::if_<is_callable<Action()>, mpl::int_<0>, mpl::int_<-1>>>>::type;
+
+    template <typename Action, typename = void>
+    struct wrap_action
+    {
+        typedef Action type;
+
+        static Action&& apply(Action& f)
+        {
+            return std::move(f);
+        }
+    };
+    
+    template <typename Action>
+    struct wrap_action<Action,
+        typename enable_if<is_member_pointer<Action>>::type>
+    {
+        typedef decltype(mem_fn(declval<Action>())) type;
+
+        static type apply(Action f)
+        {
+            return mem_fn(f);
+        }
+    };
+}}}};
 
 namespace boost { namespace spirit { namespace x3
 {
-    struct rule_context_tag;
-
-    namespace detail
-    {
-        // Detect if F accepts only the context and nothing else.
-        // Using technique presented in http://tinyurl.com/ktscp3
-        // by Eric Niebler (Boost Proto)
-
-        struct uncallable
-        {
-            uncallable const &operator,(int) const;
-        };
-
-        template <typename T>
-        type_traits::no_type is_uncallable(T const&);
-
-        type_traits::yes_type is_uncallable(uncallable const&);
-
-        template <typename F, typename Arg>
-        struct is_unary_impl
-        {
-            template <typename F2>
-            struct fwrap : F2
-            {
-                fwrap();
-                typedef uncallable const& (*fptr)(unused_type);
-                operator fptr() const;
-            };
-
-            static fwrap<F>& fun;
-            static Arg& arg;
-
-            static bool const value = (
-                sizeof(type_traits::no_type) == sizeof(is_uncallable( (fun(arg), 0) ))
-            );
-
-            typedef mpl::bool_<value> type;
-        };
-
-        template <typename F, typename A, typename Enable = void>
-        struct is_unary : mpl::false_ {};
-
-        template <typename F, typename A>
-        struct is_unary<F, A, typename enable_if<is_class<F>>::type>
-            : is_unary_impl<F, A>::type {};
-
-        template <typename RT, typename A, typename T>
-        struct is_unary<RT(*)(T), A> : is_convertible<A, T> {};
-
-        template <typename F>
-        struct is_nullary_impl
-        {
-            template <typename F2>
-            struct fwrap : F2
-            {
-                fwrap();
-                typedef uncallable const& (*fptr)(...);
-                operator fptr() const;
-            };
-
-            static fwrap<F>& fun;
-
-            static bool const value = (
-                sizeof(type_traits::no_type) == sizeof(is_uncallable( (fun(), 0) ))
-            );
-
-            typedef mpl::bool_<value> type;
-        };
-
-        template <typename F, typename Enable = void>
-        struct is_nullary : mpl::false_ {};
-
-        template <typename F>
-        struct is_nullary<F, typename enable_if<is_class<F>>::type>
-            : is_nullary_impl<F>::type {};
-
-        template <typename RT>
-        struct is_nullary<RT(*)()> : mpl::true_ {};
-    }
-
     struct parse_pass_context_tag;
-
+    
     template <typename Context>
     inline bool& _pass(Context const& context)
     {
@@ -112,14 +68,16 @@ namespace boost { namespace spirit { namespace x3
     struct action : unary_parser<Subject, action<Subject, Action>>
     {
         typedef unary_parser<Subject, action<Subject, Action>> base_type;
+        typedef detail::wrap_action<Action> wrap_action;
+        typedef typename wrap_action::type action_type;
         static bool const is_pass_through_unary = true;
         static bool const has_action = true;
 
         action(Subject const& subject, Action f)
-          : base_type(subject), f(f) {}
+          : base_type(subject), f(wrap_action::apply(f)) {}
 
         template <typename Context, typename Attribute>
-        bool call_action(Context const& context, Attribute& attr, mpl::false_) const
+        bool call_action(mpl::int_<2>, Context const& context, Attribute& attr) const
         {
             bool pass = true;
             auto action_context = make_context<parse_pass_context_tag>(pass, context);
@@ -128,22 +86,22 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Context, typename Attribute>
-        bool call_action(Context const& context, Attribute& attr, mpl::true_) const
+        bool call_action(mpl::int_<1>, Context const& context, Attribute& attr) const
         {
             f(attr); // pass attribute only
             return true;
         }
 
         // action wants attribute
-        template <typename Iterator, typename Context, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_) const
+        template <int N, typename Iterator, typename Context, typename Attribute>
+        typename enable_if_c<(N > 0), bool>::type
+        parse_impl(mpl::int_<N> tag, Iterator& first, Iterator const& last
+          , Context const& context, Attribute& attr) const
         {
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                typename detail::is_unary<Action, Attribute> is_unary;
-                if (call_action(context, attr, is_unary))
+                if (call_action(tag, context, attr))
                     return true;
 
                 // reset iterators if semantic action failed the match
@@ -154,9 +112,10 @@ namespace boost { namespace spirit { namespace x3
         }
 
         // attr==unused, action wants attribute
-        template <typename Iterator, typename Context>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, mpl::false_) const
+        template <int N, typename Iterator, typename Context>
+        typename enable_if_c<(N > 0), bool>::type
+        parse_impl(mpl::int_<N> tag, Iterator& first, Iterator const& last
+          , Context const& context, unused_type) const
         {
             typedef typename
                 traits::attribute_of<action<Subject, Action>, Context>::type
@@ -169,13 +128,13 @@ namespace boost { namespace spirit { namespace x3
             // synthesize the attribute since one is not supplied
             typename make_attribute::type made_attr = make_attribute::call(unused_type());
             typename transform::type attr = transform::pre(made_attr);
-            return parse(first, last, context, attr, mpl::false_());
+            return parse_impl(tag, first, last, context, attr);
         }
 
         // action does not want context and attribute
         template <typename Iterator, typename Context, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_) const
+        bool parse_impl(mpl::int_<0>, Iterator& first, Iterator const& last
+          , Context const& context, Attribute& attr) const
         {
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
@@ -195,11 +154,16 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            typename detail::is_nullary<Action> is_nullary;
-            return parse(first, last, context, attr, is_nullary);
+            using tag = detail::action_category<
+                action_type const
+              , x3::context<parse_pass_context_tag, bool, Context>
+              , typename traits::attribute_of<Subject, Context>::type>;
+
+            static_assert(tag::value != -1, "invalid action");
+            return parse_impl(tag(), first, last, context, attr);
         }
 
-        Action f;
+        action_type f;
     };
 
     template <typename P, typename Action>
