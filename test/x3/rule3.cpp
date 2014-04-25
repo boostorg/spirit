@@ -10,9 +10,11 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-//~ #include <boost/phoenix/core.hpp>
-//~ #include <boost/phoenix/operator.hpp>
-//~ #include <boost/phoenix/object.hpp>
+#include <boost/spirit/home/x3/support/actor.hpp>
+#include <boost/ref.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/object.hpp>
 //~ #include <boost/phoenix/bind.hpp>
 //~ #include <boost/fusion/include/std_pair.hpp>
 
@@ -23,6 +25,7 @@
 
 using boost::spirit::x3::get;
 using boost::spirit::x3::rule_context_tag;
+namespace x3 = boost::spirit::x3;
 
 struct f
 {
@@ -33,6 +36,26 @@ struct f
     }
 };
 
+struct f1
+{
+    template <typename Context>
+    void operator()(Context const& ctx, char c) const
+    {
+        x3::_val(ctx) = c + std::get<0>(x3::_params(ctx));
+    }
+};
+
+struct f2
+{
+    char& ch;
+    
+    template <typename Context>
+    void operator()(Context const& ctx, char c) const
+    {
+        ch = c;
+    }
+};
+
 int
 main()
 {
@@ -40,7 +63,7 @@ main()
     using spirit_test::test;
 
     using namespace boost::spirit::x3::ascii;
-    //~ using boost::spirit::x3::locals;
+    using boost::spirit::x3::locals;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
     //~ using boost::spirit::x3::uint_;
@@ -49,13 +72,8 @@ main()
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::_val;
-    //~ using boost::spirit::x3::_val;
-    //~ using boost::spirit::x3::_1;
-    //~ using boost::spirit::x3::_r1;
-    //~ using boost::spirit::x3::_r2;
-    //~ using boost::spirit::x3::_a;
 
-    //~ namespace phx = boost::phoenix;
+    namespace phx = boost::phoenix;
 
     { // synth attribute value-init
 
@@ -87,55 +105,56 @@ main()
         BOOST_TEST(s == "abcdef");
     }
 
-    // $$$ Not yet implemented $$$
-    //~ { // context (w/arg) tests
+    { // context (w/arg) tests
+        BOOST_SPIRIT_USE_ACTORS(_val, _1, _r1, _r2)
+        
+        char ch;
+        rule<class A, char(int)> a; // 1 arg
+        auto adef(a = alpha[_val = _1 + _r1]);
 
-        //~ char ch;
-        //~ rule<char const*, char(int)> a; // 1 arg
-        //~ a = alpha[_val = _1 + _r1];
+        BOOST_TEST(test("x", adef(1)[phx::ref(ch) = _1]));
+        BOOST_TEST(ch == 'x' + 1);
 
-        //~ BOOST_TEST(test("x", a(phx::val(1))[phx::ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x' + 1);
+        BOOST_TEST(test_attr("a", adef(1), ch)); // allow scalars as rule args too.
+        BOOST_TEST(ch == 'a' + 1);
 
-        //~ BOOST_TEST(test_attr("a", a(1), ch)); // allow scalars as rule args too.
-        //~ BOOST_TEST(ch == 'a' + 1);
+        rule<class B, char(int, int)> b; // 2 args
+        auto bdef(b = alpha[_val = _1 + _r1 + _r2]);
+        BOOST_TEST(test_attr("a", bdef(1, 2), ch));
+        BOOST_TEST(ch == 'a' + 1 + 2);
+    }
 
-        //~ rule<char const*, char(int, int)> b; // 2 args
-        //~ b = alpha[_val = _1 + _r1 + _r2];
-        //~ BOOST_TEST(test_attr("a", b(1, 2), ch));
-        //~ BOOST_TEST(ch == 'a' + 1 + 2);
-    //~ }
+    { // context (w/ reference arg) tests
+        BOOST_SPIRIT_USE_ACTORS(_1, _r1)
+        
+        char ch;
+        rule<class A, void(char&)> a; // 1 arg (reference)
+        auto adef(a = alpha[_r1 = _1]);
 
-    // $$$ Not yet implemented $$$
-    //~ { // context (w/ reference arg) tests
+        BOOST_TEST(test("x", adef(boost::ref(ch))));
+        BOOST_TEST(ch == 'x');
+    }
+#if 0 // <- wait until I submmit the patch for char
+    { // context (w/locals) tests
+        BOOST_SPIRIT_USE_ACTORS(_1, _a)
+        
+        rule<class A> a; // 1 local
+        auto adef(a = locals<char>()[alpha[_a = _1] >> char_(_a)]);
+        BOOST_TEST(test("aa", adef));
+        BOOST_TEST(!test("ax", adef));
+    }
 
-        //~ char ch;
-        //~ rule<char const*, void(char&)> a; // 1 arg (reference)
-        //~ a = alpha[_r1 = _1];
 
-        //~ BOOST_TEST(test("x", a(phx::ref(ch))));
-        //~ BOOST_TEST(ch == 'x');
-    //~ }
+    { // context (w/args and locals) tests
+        BOOST_SPIRIT_USE_ACTORS(_1, _a, _r1)
 
-    // $$$ Not yet implemented $$$
-    //~ { // context (w/locals) tests
-
-        //~ rule<char const*, locals<char> > a; // 1 local
-        //~ a = alpha[_a = _1] >> char_(_a);
-        //~ BOOST_TEST(test("aa", a));
-        //~ BOOST_TEST(!test("ax", a));
-    //~ }
-
-    // $$$ Not yet implemented $$$
-    //~ { // context (w/args and locals) tests
-
-        //~ rule<char const*, void(int), locals<char> > a; // 1 arg + 1 local
-        //~ a = alpha[_a = _1 + _r1] >> char_(_a);
-        //~ BOOST_TEST(test("ab", a(phx::val(1))));
-        //~ BOOST_TEST(test("xy", a(phx::val(1))));
-        //~ BOOST_TEST(!test("ax", a(phx::val(1))));
-    //~ }
-
+        rule<class A, void(int)> a; // 1 arg + 1 local
+        auto adef(a = locals<char>()[alpha[_a = _1 + _r1] >> char_(_a)]);
+        BOOST_TEST(test("ab", adef(1)));
+        BOOST_TEST(test("xy", adef(1)));
+        BOOST_TEST(!test("ax", adef(1)));
+    }
+#endif
     // $$$ No longer relevant $$$
     //~ { // void() has unused type (void == unused_type)
 

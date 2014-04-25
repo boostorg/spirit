@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef identity<ID> type;
     };
 
-    template <typename Attribute, typename ID>
+    template <typename Attribute, typename Params, typename ID>
     struct parse_rule
     {
         template <typename RHS, typename Iterator, typename Context, typename ActualAttribute>
@@ -213,13 +213,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename RHS, typename Iterator, typename Context
             , typename ActualAttribute, typename AttributePtr
-            , typename ExplicitAttrPropagation>
+            , typename ParamsPtr, typename ExplicitAttrPropagation>
         static bool call_rule_definition(
             RHS const& rhs
           , char const* rule_name
           , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr
-          , AttributePtr*& attr_ptr, ExplicitAttrPropagation)
+          , Context const& context, ActualAttribute& attr, Params params
+          , AttributePtr& attr_ptr, ParamsPtr& params_ptr
+          , ExplicitAttrPropagation)
         {
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
 
@@ -240,6 +241,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 #endif
             attr_pointer_scope<typename remove_reference<transform_attr>::type>
                 attr_scope(attr_ptr, boost::addressof(attr_));
+            attr_pointer_scope<Params> params_scope(params_ptr, &params);
 
             if (parse_rhs(rhs, first, last, context, attr_
               , mpl::bool_<(RHS::has_action && !ExplicitAttrPropagation::value)>()))
@@ -257,12 +259,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
 
         template <typename RuleDef, typename Iterator, typename Context
-            , typename ActualAttribute, typename AttributeContext>
+            , typename ActualAttribute, typename AttributeContext, typename... Ts>
         static bool call_from_rule(
             RuleDef const& rule_def
           , char const* rule_name
           , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr, AttributeContext& attr_ctx)
+          , Context const& context, ActualAttribute& attr
+          , AttributeContext& attr_ctx, Ts&&... ts)
         {
             // This is called when a rule-body has already been established.
             // The rule body is already established by the rule_definition class,
@@ -271,23 +274,25 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             return call_rule_definition(
                 rule_def.rhs, rule_name, first, last
-              , context, attr, attr_ctx.attr_ptr
-              , mpl::bool_<(RuleDef::explicit_attribute_propagation)>());
+              , context, attr, Params(std::forward<Ts>(ts)...)
+              , attr_ctx.attr_ptr, attr_ctx.params_ptr
+              , mpl::bool_<(RuleDef::explicit_attribute_propagation)>()
+              , std::forward<Ts>(ts)...);
         }
 
         template <typename RuleDef, typename Iterator, typename Context
-            , typename ActualAttribute>
+            , typename ActualAttribute, typename... Ts>
         static bool call_from_rule(
             RuleDef const& rule_def
           , char const* rule_name
-          , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr, unused_type)
+          , Iterator& first, Iterator const& last, Context const& context
+          , ActualAttribute& attr, unused_type, Ts&&... ts)
         {
             // This is called when a rule-body has *not yet* been established.
             // The rule body is established by the rule_definition class, so
             // we call it to parse and establish the rule-body.
 
-            return rule_def.parse(first, last, context, attr);
+            return rule_def.parse(first, last, context, attr, std::forward<Ts>(ts)...);
         }
     };
 }}}}
