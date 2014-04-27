@@ -59,16 +59,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         typedef std::tuple<typename wrap_param<Ts>::type...> type;
         typedef mpl::false_ tag;
-        typedef bool no;
     };
     
     template <typename Subject, typename... Ts>
     struct transform_params<Subject, typename disable_if_substitution_failure<
-        decltype(Subject::transform_params(declval<Ts>()...))>::type, Ts...>
+        decltype(declval<Subject const>().transform_params(declval<Ts>()...))>::type, Ts...>
     {
-        typedef decltype(Subject::transform_params(declval<Ts>()...)) type;
+        typedef
+            decltype(declval<Subject const>().transform_params(declval<Ts>()...))
+        type;
         typedef mpl::true_ tag;
-        typedef bool yes;
     };
 }}}}
 

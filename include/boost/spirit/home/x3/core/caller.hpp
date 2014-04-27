@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename... As>
         caller(mpl::true_, Subject const& subject, As&&... as)
           : base_type(subject)
-          , params(Subject::transform_params(std::forward<As>(as)...))
+          , params(subject.transform_params(std::forward<As>(as)...))
         {}
         
         template <typename... As>
@@ -76,17 +76,21 @@ namespace boost { namespace spirit { namespace x3
                 detail::eval<Ts const&>(std::get<Ns>(params), context)...);
         }
         
-        template <typename Iterator, typename Context, typename Attribute, typename... As>
-        typename detail::transform_params<Subject, void, As...>::yes
+        template <typename Iterator, typename Context
+            , typename Attribute, typename... As>
+        typename enable_if_c<detail::transform_params<Subject, void, As...>
+            ::tag::value, bool>::type
         invoke_parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, As&&... as) const
         {
             return this->subject.parse(first, last, context, attr,
-                Subject::transform_params(std::forward<As>(as)...));
+                this->subject.transform_params(std::forward<As>(as)...));
         }
         
-        template <typename Iterator, typename Context, typename Attribute, typename... As>
-        typename detail::transform_params<Subject, void, As...>::no
+        template <typename Iterator, typename Context
+            , typename Attribute, typename... As>
+        typename enable_if_c<!detail::transform_params<Subject, void, As...>
+            ::tag::value, bool>::type
         invoke_parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr, As&&... as) const
         {
@@ -104,11 +108,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Subject, typename... Ts, typename Context>
     struct attribute_of<caller<Subject, Ts...>, Context,
         typename disable_if_substitution_failure<
-            typename Subject::template caller_traits<
-                x3::detail::result_of_eval<Ts, Context>...>::attribute_type>::type>
-      : mpl::identity<typename Subject::template caller_traits<
-            x3::detail::result_of_eval<Ts, Context>...>::attribute_type>
-    {};
+            typename Subject::template caller_traits<x3::detail::
+                result_of_eval<Ts, Context>...>::attribute_type>::type>
+      : mpl::identity<typename Subject::template caller_traits<x3::detail::
+            result_of_eval<Ts, Context>...>::attribute_type> {};
     
     template <typename Subject, typename... Ts, typename Context>
     struct attribute_of<caller<Subject, Ts...>, Context,
@@ -116,28 +119,26 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             typename Subject::template caller_traits<
                 x3::detail::result_of_eval<Ts, Context>...>::
                     template attribute<Context>::type>::type>
-      : mpl::identity<typename Subject::template caller_traits<
-            x3::detail::result_of_eval<Ts, Context>...>::
-                template attribute<Context>::type>
-    {};
+      : Subject::template caller_traits<x3::detail::
+            result_of_eval<Ts, Context>...>::template attribute<Context> {};
     
     // has_attribute
     template <typename Subject, typename... Ts, typename Context>
     struct has_attribute<caller<Subject, Ts...>, Context,
         typename disable_if_substitution_failure<
-            mpl::bool_<Subject::template caller_traits<
-                x3::detail::result_of_eval<Ts, Context>...>::has_attribute>>::type>
-      : mpl::bool_<Subject::template caller_traits<
-            x3::detail::result_of_eval<Ts, Context>...>::has_attribute> {};
+            mpl::bool_<Subject::template caller_traits<x3::detail::
+                result_of_eval<Ts, Context>...>::has_attribute>>::type>
+      : mpl::bool_<Subject::template caller_traits<x3::detail::
+            result_of_eval<Ts, Context>...>::has_attribute> {};
       
     // handles_container
     template <typename Subject, typename... Ts, typename Context>
     struct handles_container<caller<Subject, Ts...>, Context,
         typename disable_if_substitution_failure<
-            mpl::bool_<Subject::template caller_traits<
-                x3::detail::result_of_eval<Ts, Context>...>::handles_container>>::type>
-      : mpl::bool_<Subject::template caller_traits<
-            x3::detail::result_of_eval<Ts, Context>...>::handles_container> {};
+            mpl::bool_<Subject::template caller_traits<x3::detail::
+                result_of_eval<Ts, Context>...>::handles_container>>::type>
+      : mpl::bool_<Subject::template caller_traits<x3::detail::
+            result_of_eval<Ts, Context>...>::handles_container> {};
 }}}}
 
 
