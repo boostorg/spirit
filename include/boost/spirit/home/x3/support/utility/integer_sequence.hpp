@@ -12,6 +12,7 @@
 #endif
 
 #include <cstddef>
+#include <boost/type_traits/integral_constant.hpp>
 
 
 namespace boost { namespace spirit { namespace x3
@@ -23,49 +24,42 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template<class T>
-    struct integer_sequence_builder
+    template<class T, class S1, class S2, T N>
+    struct accum_integer_sequence;
+
+    template<class T, T... N1, T... N2, T N>
+    struct accum_integer_sequence<T, integer_sequence<T, N1...>, integer_sequence<T, N2...>, N>
     {
-        template<class S1, class S2>
-        struct concat;
+        typedef integer_sequence<T, N1..., (N + N2)...> type;
+    };
 
-        template<T... N1, T... N2>
-        struct concat<integer_sequence<T, N1...>, integer_sequence<T, N2...>>
-        {
-            typedef integer_sequence<T, N1..., N2...> type;
-        };
-
-        template<T N, class S>
-        struct offset;
-
-        template<T N, T... Ns>
-        struct offset<N, integer_sequence<T, Ns...>>
-        {
-            typedef integer_sequence<T, (N + Ns)...> type;
-        };
-
-        template<T N, class = void>
-        struct make
-        {
-            static T const m = N / 2;
-            typedef typename make<m>::type part1;
-            typedef typename make<N - m>::type part2;
-            typedef typename
-                concat<part1, typename offset<m, part2>::type>::type
-            type;
-        };
-
-        template<class Dummy>
-        struct make<0, Dummy>
-        {
-            typedef integer_sequence<T> type;
-        };
-        
-        template<class Dummy>
-        struct make<1, Dummy>
-        {
-            typedef integer_sequence<T, 0> type;
-        };
+    template<class N>
+    struct make_integer_sequence_impl
+    {
+        typedef typename N::value_type T;
+        static T const n = N::value;
+        static T const m = n / 2;
+        typedef typename
+            make_integer_sequence_impl<integral_constant<T, m>>::type
+        part1;
+        typedef typename
+            make_integer_sequence_impl<integral_constant<T, n - m>>::type
+        part2;
+        typedef typename
+            accum_integer_sequence<T, part1, part2, m>::type
+        type;
+    };
+    
+    template<class T>
+    struct make_integer_sequence_impl<integral_constant<T, 0>>
+    {
+        typedef integer_sequence<T> type;
+    };
+    
+    template<class T>
+    struct make_integer_sequence_impl<integral_constant<T, 1>>
+    {
+        typedef integer_sequence<T, 0> type;
     };
 }}}}
 
@@ -75,9 +69,8 @@ namespace boost { namespace spirit { namespace x3
     using index_sequence = integer_sequence<std::size_t, Ns...>;
 
     template<class T, T N>
-    using make_integer_sequence =
-        typename detail::integer_sequence_builder<T>::
-            template make<N>::type;
+    using make_integer_sequence = typename detail::make_integer_sequence_impl<
+        integral_constant<T, N>>::type;
 
     template<std::size_t N>
     using make_index_sequence = make_integer_sequence<std::size_t, N>;

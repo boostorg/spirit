@@ -252,7 +252,7 @@ namespace boost { namespace spirit { namespace traits
 
         static bool is_valid(boost::optional<T> const& val)
         {
-            return val;
+            return !!val;
         }
     };
 

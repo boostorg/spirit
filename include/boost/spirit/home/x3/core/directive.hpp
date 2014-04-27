@@ -60,11 +60,24 @@ namespace boost { namespace spirit { namespace x3
     struct directive_caller
     {
         typedef detail::transform_params<Directive, void, Ts...> transform;
+        typedef typename transform::tag transform_tag;
         static bool const is_pass_through_unary =
             detail::caller_is_pass_through_unary<Directive>::value;
         
         template <typename... As>
         directive_caller(Directive const& directive, As&&... as)
+          : directive_caller(transform_tag(),
+                directive, std::forward<As>(as)...)
+        {}
+          
+        template <typename... As>
+        directive_caller(mpl::true_, Directive const& directive, As&&... as)
+          : directive(directive)
+          , params(Directive::transform_params(std::forward<As>(as)...))
+        {}
+          
+        template <typename... As>
+        directive_caller(mpl::false_, Directive const& directive, As&&... as)
           : directive(directive), params(std::forward<As>(as)...) {}
 
         template <typename Subject>
@@ -78,7 +91,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Subject const& subject, Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            typename transform::is_transformed tag;
+            transform_tag tag;
             make_index_sequence<sizeof...(Ts)> indices;
             return parse_impl(tag, indices, subject, first, last, context, attr);
         }
@@ -91,7 +104,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute& attr) const
         {
             return directive.parse(
-                subject, first, last, context, attr, params.data);
+                subject, first, last, context, attr, params);
         }
         
         // no transform_params
@@ -153,7 +166,7 @@ namespace boost { namespace spirit { namespace x3
         }
         
         template <typename... Ts>
-        directive_caller<Derived, typename remove_reference<Ts>::type...>
+        directive_caller<Derived, unrefcv<Ts>...>
         operator()(Ts&&... ts) const
         {
             return {derived(), std::forward<Ts>(ts)...};
