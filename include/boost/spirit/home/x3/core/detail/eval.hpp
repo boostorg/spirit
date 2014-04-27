@@ -13,7 +13,8 @@
 
 #include <boost/type_traits/decay.hpp>
 #include <boost/spirit/home/x3/support/traits/is_parser.hpp>
-#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
+#include <boost/spirit/home/x3/support/utility/unrefcv.hpp>
+#include <boost/spirit/home/x3/support/utility/is_callable.hpp>
 
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -47,8 +48,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     
     template <typename T, typename Context>
     using result_of_eval =
-        typename remove_rvalue_reference<
-            decltype(eval(declval<T>(), declval<Context>()))>::type;
+        unrefcv<decltype(detail::eval(declval<T>(), declval<Context>()))>;
 }}}}
 
 

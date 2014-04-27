@@ -14,7 +14,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
-#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
+#include <boost/spirit/home/x3/support/utility/is_callable.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/type_traits/is_class.hpp>
 #include <boost/type_traits/is_member_pointer.hpp>
@@ -25,12 +25,12 @@
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
     template <typename Action, typename Context, typename Attribute>
-    using action_category = typename mpl::eval_if<
+    using action_arity = typename mpl::eval_if<
         is_callable<Action(Context, Attribute)>, mpl::int_<2>
       , mpl::eval_if<is_callable<Action(Attribute)>, mpl::int_<1>
           , mpl::if_<is_callable<Action()>, mpl::int_<0>, mpl::int_<-1>>>>::type;
 
-    template <typename Action, typename = void>
+    template <typename Action, typename Enable = void>
     struct wrap_action
     {
         typedef Action type;
@@ -42,8 +42,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
     
     template <typename Action>
-    struct wrap_action<Action,
-        typename enable_if<is_member_pointer<Action>>::type>
+    struct wrap_action<Action
+        , typename enable_if<is_member_pointer<Action>>::type>
     {
         typedef decltype(mem_fn(declval<Action>())) type;
 
@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return mem_fn(f);
         }
     };
-}}}};
+}}}}
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -77,16 +77,19 @@ namespace boost { namespace spirit { namespace x3
           : base_type(subject), f(wrap_action::apply(f)) {}
 
         template <typename Context, typename Attribute>
-        bool call_action(mpl::int_<2>, Context const& context, Attribute& attr) const
+        bool call_action(mpl::int_<2> // arity
+            , Context const& context, Attribute& attr) const
         {
             bool pass = true;
-            auto action_context = make_context<parse_pass_context_tag>(pass, context);
+            auto action_context =
+                make_context<parse_pass_context_tag>(pass, context);
             f(action_context, attr); // pass in the context and attribute
             return pass;
         }
 
         template <typename Context, typename Attribute>
-        bool call_action(mpl::int_<1>, Context const& context, Attribute& attr) const
+        bool call_action(mpl::int_<1> // arity
+            , Context const& context, Attribute& attr) const
         {
             f(attr); // pass attribute only
             return true;
@@ -95,13 +98,13 @@ namespace boost { namespace spirit { namespace x3
         // action wants attribute
         template <int N, typename Iterator, typename Context, typename Attribute>
         typename enable_if_c<(N > 0), bool>::type
-        parse_impl(mpl::int_<N> tag, Iterator& first, Iterator const& last
+        parse_impl(mpl::int_<N> arity, Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
             Iterator save = first;
             if (this->subject.parse(first, last, context, attr))
             {
-                if (call_action(tag, context, attr))
+                if (call_action(arity, context, attr))
                     return true;
 
                 // reset iterators if semantic action failed the match
@@ -114,21 +117,24 @@ namespace boost { namespace spirit { namespace x3
         // attr==unused, action wants attribute
         template <int N, typename Iterator, typename Context>
         typename enable_if_c<(N > 0), bool>::type
-        parse_impl(mpl::int_<N> tag, Iterator& first, Iterator const& last
+        parse_impl(mpl::int_<N> arity, Iterator& first, Iterator const& last
           , Context const& context, unused_type) const
         {
             typedef typename
                 traits::attribute_of<action<Subject, Action>, Context>::type
             attribute_type;
-            typedef traits::make_attribute<attribute_type, unused_type> make_attribute;
+            typedef
+                traits::make_attribute<attribute_type, unused_type>
+            make_attribute;
             typedef traits::transform_attribute<
                 typename make_attribute::type, attribute_type, parser_id>
             transform;
 
             // synthesize the attribute since one is not supplied
-            typename make_attribute::type made_attr = make_attribute::call(unused_type());
+            typename make_attribute::type made_attr =
+                make_attribute::call(unused_type());
             typename transform::type attr = transform::pre(made_attr);
-            return parse_impl(tag, first, last, context, attr);
+            return parse_impl(arity, first, last, context, attr);
         }
 
         // action does not want context and attribute
@@ -154,13 +160,12 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            using tag = detail::action_category<
-                action_type const
+            using arity = detail::action_arity<action_type const
               , x3::context<parse_pass_context_tag, bool, Context>
               , typename traits::attribute_of<Subject, Context>::type>;
 
-            static_assert(tag::value != -1, "invalid action");
-            return parse_impl(tag(), first, last, context, attr);
+            static_assert(arity::value != -1, "invalid action");
+            return parse_impl(arity(), first, last, context, attr);
         }
 
         action_type f;

@@ -22,7 +22,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
-#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
+#include <boost/spirit/home/x3/support/utility/unrefcv.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
