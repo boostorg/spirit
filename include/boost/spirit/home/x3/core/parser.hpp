@@ -22,7 +22,6 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
-#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
@@ -42,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
 
     struct parser_base {};
     struct parser_id;
- 
+
     template <typename Derived>
     struct parser : parser_base
     {
@@ -64,7 +63,8 @@ namespace boost { namespace spirit { namespace x3
         }
         
         template <typename... Ts>
-        caller<Derived, unrefcv<Ts>...> operator()(Ts&&... ts) const
+        caller<Derived, typename remove_reference<Ts>::type...>
+        operator()(Ts&&... ts) const
         {
             return {this->derived(), std::forward<Ts>(ts)...};
         }

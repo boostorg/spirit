@@ -12,9 +12,10 @@
 #endif
 
 #include <boost/utility/declval.hpp>
+#include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
-#include <boost/type_traits/remove_cv.hpp>
-#include <boost/type_traits/remove_reference.hpp>
+#include <boost/type_traits/integral_constant.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 
 
@@ -53,10 +54,6 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef T type;
     };
-    
-    template <typename T>
-    using unrefcv = typename remove_cv<
-        typename remove_reference<T>::type>::type;
 }}}
 
 
