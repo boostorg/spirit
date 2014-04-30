@@ -30,11 +30,12 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    using x3::unused_type;
+    using x3::unused;
+    using x3::get;
+
     template <typename Subject, typename Action>
     struct action;
-    
-    template <typename Subject, typename... Ts>
-    struct caller;
 
     template <typename Subject, typename Handler>
     struct guard;
@@ -48,7 +49,6 @@ namespace boost { namespace spirit { namespace x3
         typedef Derived derived_type;
         static bool const handles_container = false;
         static bool const is_pass_through_unary = false;
-        static bool const caller_is_pass_through_unary = false;
         static bool const has_action = false;
 
         Derived const& derived() const
@@ -57,22 +57,17 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Action>
-        action<Derived, Action> operator[](Action f) const
+        action<Derived, Action>
+        operator[](Action f) const
         {
-            return {this->derived(), f};
-        }
-        
-        template <typename... Ts>
-        caller<Derived, typename remove_reference<Ts>::type...>
-        operator()(Ts&&... ts) const
-        {
-            return {this->derived(), std::forward<Ts>(ts)...};
+            return action<Derived, Action>(this->derived(), f);
         }
 
         template <typename Handler>
-        guard<Derived, Handler> on_error(Handler f) const
+        guard<Derived, Handler>
+        on_error(Handler f) const
         {
-            return {this->derived(), f};
+            return guard<Derived, Handler>(this->derived(), f);
         }
     };
 
