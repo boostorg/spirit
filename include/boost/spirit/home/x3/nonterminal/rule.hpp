@@ -132,24 +132,26 @@ namespace boost { namespace spirit { namespace x3
 
         char const* name;
     };
+    
+    namespace traits
+    {
+        template <typename T, typename Enable = void>
+        struct is_rule : mpl::false_ {};
+    
+        template <typename ID, typename Attribute>
+        struct is_rule<rule<ID, Attribute>> : mpl::true_ {};
+        
+        template <typename ID, typename Attribute, typename RHS, bool explicit_attribute_propagation>
+        struct is_rule<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation>> : mpl::true_ {};
+    }
 
-    template <typename ID, typename Attribute>
-    struct get_info<rule<ID, Attribute>>
+    template <typename T>
+    struct get_info<T, typename traits::is_rule<T>::type>
     {
         typedef std::string result_type;
-        std::string operator()(rule<ID, Attribute> const& p) const
+        std::string operator()(T const& r) const
         {
-            return p.name;
-        }
-    };
-
-    template <typename ID, typename Attribute, typename RHS, bool explicit_attribute_propagation>
-    struct get_info<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation>>
-    {
-        typedef std::string result_type;
-        std::string operator()(rule_definition<ID, RHS, Attribute, explicit_attribute_propagation> const& p) const
-        {
-            return p.name;
+            return r.name;
         }
     };
 }}}
