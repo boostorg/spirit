@@ -22,7 +22,6 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
-#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
@@ -31,25 +30,25 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    using x3::unused_type;
+    using x3::unused;
+    using x3::get;
+
     template <typename Subject, typename Action>
     struct action;
-    
-    template <typename Subject, typename... Ts>
-    struct caller;
 
     template <typename Subject, typename Handler>
     struct guard;
 
     struct parser_base {};
     struct parser_id;
- 
+
     template <typename Derived>
     struct parser : parser_base
     {
         typedef Derived derived_type;
         static bool const handles_container = false;
         static bool const is_pass_through_unary = false;
-        static bool const caller_is_pass_through_unary = false;
         static bool const has_action = false;
 
         Derived const& derived() const
@@ -58,21 +57,17 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Action>
-        action<Derived, Action> operator[](Action f) const
+        action<Derived, Action>
+        operator[](Action f) const
         {
-            return {this->derived(), f};
-        }
-        
-        template <typename... Ts>
-        caller<Derived, unrefcv<Ts>...> operator()(Ts&&... ts) const
-        {
-            return {this->derived(), std::forward<Ts>(ts)...};
+            return action<Derived, Action>(this->derived(), f);
         }
 
         template <typename Handler>
-        guard<Derived, Handler> on_error(Handler f) const
+        guard<Derived, Handler>
+        on_error(Handler f) const
         {
-            return {this->derived(), f};
+            return guard<Derived, Handler>(this->derived(), f);
         }
     };
 
