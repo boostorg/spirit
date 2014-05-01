@@ -24,7 +24,4 @@
 #include <boost/spirit/home/x3/string.hpp>
 //~ #include <boost/spirit/home/x3/stream.hpp>
 
-// bring in crucial support stuff
-#include <boost/spirit/home/x3/support/variant.hpp>
-
 #endif
