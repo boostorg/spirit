@@ -17,23 +17,30 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template<class T, T... Ns>
+    template <typename T, T... Ns>
     struct integer_sequence
-    {};
+    {
+        typedef T value_type;
+        
+        static constexpr std::size_t size() noexcept
+        {
+            return sizeof...(Ns);
+        }
+    };
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template<class T, class S1, class S2, T N>
+    template <typename T, typename S1, typename S2, T N>
     struct accum_integer_sequence;
 
-    template<class T, T... N1, T... N2, T N>
+    template <typename T, T... N1, T... N2, T N>
     struct accum_integer_sequence<T, integer_sequence<T, N1...>, integer_sequence<T, N2...>, N>
     {
         typedef integer_sequence<T, N1..., (N + N2)...> type;
     };
 
-    template<class N>
+    template <typename N>
     struct make_integer_sequence_impl
     {
         typedef typename N::value_type T;
@@ -50,13 +57,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         type;
     };
     
-    template<class T>
+    template <typename T>
     struct make_integer_sequence_impl<integral_constant<T, 0>>
     {
         typedef integer_sequence<T> type;
     };
     
-    template<class T>
+    template <typename T>
     struct make_integer_sequence_impl<integral_constant<T, 1>>
     {
         typedef integer_sequence<T, 0> type;
@@ -65,17 +72,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
 namespace boost { namespace spirit { namespace x3
 {
-    template<std::size_t... Ns>
+    template <std::size_t... Ns>
     using index_sequence = integer_sequence<std::size_t, Ns...>;
 
-    template<class T, T N>
+    template <typename T, T N>
     using make_integer_sequence = typename detail::make_integer_sequence_impl<
         integral_constant<T, N>>::type;
 
-    template<std::size_t N>
+    template <std::size_t N>
     using make_index_sequence = make_integer_sequence<std::size_t, N>;
 
-    template<class... T>
+    template <typename... T>
     using index_sequence_for = make_index_sequence<sizeof...(T)>;
 }}}
 

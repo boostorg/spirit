@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_X3_IS_CALLABLE_HPP_INCLUDED
 
 #include <boost/utility/result_of.hpp>
+#include <boost/type_traits/integral_constant.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 
 
