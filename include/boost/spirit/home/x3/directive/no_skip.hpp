@@ -38,7 +38,7 @@ namespace boost { namespace spirit { namespace x3
         parse(Iterator& first, Iterator const& last
           , Context const& context, Attribute& attr) const
         {
-            auto const& skipper = get<skipper_tag>(context);
+            auto const& skipper = x3::get<skipper_tag>(context);
 
             typedef unused_skipper<
                 typename remove_reference<decltype(skipper)>::type>
