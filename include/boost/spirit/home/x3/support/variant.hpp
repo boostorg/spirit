@@ -131,11 +131,11 @@ namespace boost { namespace spirit { namespace x3
 
         variant() : var() {}
 
-        template <typename T>
+        template <typename T, typename disable_if<is_base_of<base_type, T>>::type>
         variant(T const& rhs)
             : var(rhs) {}
 
-        template <typename T>
+        template <typename T, typename disable_if<is_base_of<base_type, T>>::type>
         variant(T&& rhs)
             : var(std::forward<T>(rhs)) {}
 
@@ -157,6 +157,20 @@ namespace boost { namespace spirit { namespace x3
         variant& operator=(variant&& rhs)
         {
             var = std::forward<variant_type>(rhs.get());
+            return *this;
+        }
+
+        template <typename T>
+        variant& operator=(T const& rhs)
+        {
+            var = rhs;
+            return *this;
+        }
+
+        template <typename T>
+        variant& operator=(T&& rhs)
+        {
+            var = std::forward<T>(rhs);
             return *this;
         }
 
