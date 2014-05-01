@@ -42,13 +42,16 @@ namespace client { namespace ast
     struct signed_;
     struct program;
 
-    typedef x3::variant<
+    struct operand : x3::variant<
             nil
           , unsigned int
           , x3::forward_ast<signed_>
           , x3::forward_ast<program>
         >
-    operand;
+    {
+        using base_type::base_type;
+        using base_type::operator=;
+    };
 
     struct signed_
     {
