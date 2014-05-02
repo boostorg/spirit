@@ -23,5 +23,6 @@
 //~ #include <boost/spirit/home/x3/directive/raw.hpp>
 //~ #include <boost/spirit/home/x3/directive/repeat.hpp>
 #include <boost/spirit/home/x3/directive/skip.hpp>
+#include <boost/spirit/home/x3/directive/with.hpp>
 
 #endif
