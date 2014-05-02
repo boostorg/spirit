@@ -33,13 +33,17 @@ main()
 
         client::vmachine mach;              // Our virtual machine
         std::vector<int> code;              // Our VM code
-        auto& calc = client::calculator;    // Our grammar
+//        auto& calc = client::calculator;    // Our grammar
+
+        boost::spirit::x3::ascii::space_type space; // skipper
+        auto calc = client::expression_parser<std::string::const_iterator>(space); // grammar
+
+
         ast_expression expression;          // Our program (AST)
         compiler compile(code);             // Compiles the program
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        boost::spirit::x3::ascii::space_type space;
         bool r = phrase_parse(iter, end, calc, space, expression);
 
         if (r && iter == end)

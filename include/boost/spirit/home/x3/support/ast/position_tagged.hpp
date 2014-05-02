@@ -25,17 +25,19 @@ namespace boost { namespace spirit { namespace x3
     {
     public:
 
+        typedef typename Container::value_type iterator_type;
+
         position_cache(
-          , pos_iterator_type first
-          , pos_iterator_type last)
+            iterator_type first
+          , iterator_type last)
           : first_(first), last_(last) {}
 
         // This will catch all nodes inheriting from position_tagged
-        boost::iterator_range<pos_iterator_type>
+        boost::iterator_range<iterator_type>
         position_of(position_tagged const& ast) const
         {
             return
-                boost::iterator_range<pos_iterator_type>(
+                boost::iterator_range<iterator_type>(
                     positions.at(ast.id_first) // throws if out of range
                   , positions.at(ast.id_last)  // throws if out of range
                 );
@@ -43,25 +45,25 @@ namespace boost { namespace spirit { namespace x3
 
         // This will catch all nodes except those inheriting from position_tagged
         template <typename AST>
-        boost::iterator_range<pos_iterator_type>
+        boost::iterator_range<iterator_type>
         position_of(AST const& ast) const
         {
             // returns an empty position
-            return boost::iterator_range<pos_iterator_type>();
+            return boost::iterator_range<iterator_type>();
         }
 
         // This will catch all nodes inheriting from position_tagged
-        void annotate(position_tagged& ast, Iterator first, Iterator last) const
+        void annotate(position_tagged& ast, iterator_type first, iterator_type last) const
         {
-            x.id_first = positions.size();
+            ast.id_first = positions.size();
             positions.push_back(first);
-            x.id_last =  = positions.size();
+            ast.id_last = positions.size();
             positions.push_back(last);
         }
 
         // This will catch all nodes except those inheriting from position_tagged
         template <typename AST>
-        void annotate(AST& ast, Iterator first, Iterator last) const
+        void annotate(AST& ast, iterator_type first, iterator_type last) const
         {
             // (no-op) no need for tags
         }
@@ -72,14 +74,14 @@ namespace boost { namespace spirit { namespace x3
             return positions;
         }
 
-        pos_iterator_type first() const { return first_; }
-        pos_iterator_type last() const { return last_; }
+        iterator_type first() const { return first_; }
+        iterator_type last() const { return last_; }
 
-    private
+    private:
 
         Container positions;
-        pos_iterator_type first_;
-        pos_iterator_type last_;
+        iterator_type first_;
+        iterator_type last_;
     };
 
 }}}

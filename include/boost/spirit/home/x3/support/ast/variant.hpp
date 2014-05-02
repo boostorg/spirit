@@ -13,6 +13,7 @@
 
 #include <boost/variant.hpp>
 #include <boost/mpl/list.hpp>
+#include <boost/type_traits/is_base_of.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace x3
@@ -161,6 +162,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename T>
+        //typename disable_if<is_base_of<base_type, T>, variant&>::type
         variant& operator=(T const& rhs)
         {
             var = rhs;
@@ -168,6 +170,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename T>
+        //typename disable_if<is_base_of<base_type, T>, variant&>::type
         variant& operator=(T&& rhs)
         {
             var = std::forward<T>(rhs);

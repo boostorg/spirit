@@ -6,14 +6,15 @@
 =============================================================================*/
 #include "expression_def.hpp"
 
-namespace client { namespace parser
+namespace client
 {
-    template <typename Iterator, typename Skipper>
-    auto expression_parser(Skipper const& skipper)
-    -> x3::any_parser<Iterator, ast::expression, decltype(x3::make_context<x3::skipper_tag>(skipper))>
-    {
-        return { expression };
-    }
+    typedef std::string::const_iterator iterator_type;
 
-    auto x = expression_parser<char const*>(x3::space);
-}}
+    typedef x3::ascii::space_type skipper_type;
+    typedef decltype(expression_parser<iterator_type>(x3::ascii::space)) expression_parser_type;
+
+    template expression_parser_type
+    expression_parser<iterator_type, skipper_type>(skipper_type const&);
+}
+
+

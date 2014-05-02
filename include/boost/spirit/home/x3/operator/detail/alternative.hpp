@@ -104,7 +104,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static type
         call(Attribute_& attr)
         {
-            return call(attr, is_same<Attribute_, type>());
+            return call(attr, is_same<Attribute_, typename remove_reference<type>::type>());
         }
     };
 
@@ -240,10 +240,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         type;
     };
 
-    template<class IsAlternative>
-    struct move_if_not_alternative {
-	template<typename T1, typename T2>
-	static void call(T1& attr_, T2& attr) {}
+    template <typename IsAlternative>
+    struct move_if_not_alternative
+    {
+        template<typename T1, typename T2>
+        static void call(T1& attr_, T2& attr) {}
     };
 
     template <>

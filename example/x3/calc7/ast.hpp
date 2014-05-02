@@ -10,30 +10,23 @@
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <boost/fusion/include/io.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <list>
 
 namespace client { namespace ast
 {
+    namespace x3 = boost::spirit::x3;
+
     ///////////////////////////////////////////////////////////////////////////
     //  The AST
     ///////////////////////////////////////////////////////////////////////////
-    namespace x3 = boost::spirit::x3;
-
     struct nil {};
     struct signed_;
     struct expression;
 
-    struct variable : x3::position_tagged
-    {
-        variable(std::string const& name = "") : name(name) {}
-        std::string name;
-    };
-
-    struct operand :
-        x3::variant<
+    struct operand : x3::variant<
             nil
           , unsigned int
-          , variable
           , x3::forward_ast<signed_>
           , x3::forward_ast<expression>
         >
@@ -48,43 +41,38 @@ namespace client { namespace ast
         operand operand_;
     };
 
-    struct operation : x3::position_tagged
+    struct operation
     {
         char operator_;
         operand operand_;
     };
 
-    struct expression : x3::position_tagged
+    struct expression
     {
         operand first;
         std::list<operation> rest;
     };
 
-    struct assignment : x3::position_tagged
-    {
-        variable lhs;
-        expression rhs;
-    };
-
-    struct variable_declaration
-    {
-        assignment assign;
-    };
-
-    struct statement :
-        x3::variant<
-            variable_declaration
-          , assignment>
-    {
-        using base_type::base_type;
-        using base_type::operator=;
-    };
-
-    typedef std::list<statement> statement_list;
-
-    // print functions for debugging
+    // print function for debugging
     inline std::ostream& operator<<(std::ostream& out, nil) { out << "nil"; return out; }
-    inline std::ostream& operator<<(std::ostream& out, variable const& var) { out << var.name; return out; }
 }}
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::signed_,
+    (char, sign)
+    (client::ast::operand, operand_)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::operation,
+    (char, operator_)
+    (client::ast::operand, operand_)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::expression,
+    (client::ast::operand, first)
+    (std::list<client::ast::operation>, rest)
+)
 
 #endif

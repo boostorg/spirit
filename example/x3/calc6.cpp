@@ -217,7 +217,7 @@ namespace client
         void operator()(ast::expression const& x) const
         {
             boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(ast::operation const& oper, x.rest)
+            for (ast::operation const& oper : x.rest)
             {
                 (*this)(oper);
             }

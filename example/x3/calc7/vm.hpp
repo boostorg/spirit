@@ -21,11 +21,7 @@ namespace client
         op_sub,     //  subtract top two stack entries
         op_mul,     //  multiply top two stack entries
         op_div,     //  divide top two stack entries
-
-        op_load,    //  load a variable
-        op_store,   //  store a variable
         op_int,     //  push constant integer into the stack
-        op_stk_adj  //  adjust the stack for local variables
     };
 
     class vmachine
@@ -38,14 +34,15 @@ namespace client
         {
         }
 
+        int top() const { return stack_ptr[-1]; };
         void execute(std::vector<int> const& code);
-        std::vector<int> const& get_stack() const { return stack; };
 
     private:
 
         std::vector<int> stack;
         std::vector<int>::iterator stack_ptr;
     };
+
 }
 
 #endif

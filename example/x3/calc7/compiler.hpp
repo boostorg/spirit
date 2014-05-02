@@ -8,78 +8,61 @@
 #define BOOST_SPIRIT_X3_CALC7_COMPILER_HPP
 
 #include "ast.hpp"
-#include "error_handler.hpp"
-#include <vector>
-#include <map>
-#include <boost/function.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include "vm.hpp"
 
-namespace client { namespace code_gen
+namespace client
 {
-    ///////////////////////////////////////////////////////////////////////////
-    //  The Program
-    ///////////////////////////////////////////////////////////////////////////
-    struct program
-    {
-        void op(int a);
-        void op(int a, int b);
-        void op(int a, int b, int c);
-
-        int& operator[](std::size_t i) { return code[i]; }
-        int const& operator[](std::size_t i) const { return code[i]; }
-        void clear() { code.clear(); variables.clear(); }
-        std::vector<int> const& operator()() const { return code; }
-
-        int nvars() const { return variables.size(); }
-        int const* find_var(std::string const& name) const;
-        void add_var(std::string const& name);
-
-        void print_variables(std::vector<int> const& stack) const;
-        void print_assembler() const;
-
-    private:
-
-        std::map<std::string, int> variables;
-        std::vector<int> code;
-    };
-
     ///////////////////////////////////////////////////////////////////////////
     //  The Compiler
     ///////////////////////////////////////////////////////////////////////////
     struct compiler
     {
-        typedef bool result_type;
+        typedef void result_type;
 
-        template <typename ErrorHandler>
-        compiler(client::code_gen::program& program, ErrorHandler& error_handler_)
-          : program(program)
+        std::vector<int>& code;
+        compiler(std::vector<int>& code)
+          : code(code) {}
+
+        void operator()(ast::nil) const { BOOST_ASSERT(0); }
+        void operator()(unsigned int n) const
         {
-            using namespace boost::phoenix::arg_names;
-            namespace phx = boost::phoenix;
-            using boost::phoenix::function;
-
-            error_handler = function<ErrorHandler>(error_handler_)(
-                "Error! ", _2, phx::cref(error_handler_.iters)[_1]);
+            code.push_back(op_int);
+            code.push_back(n);
         }
 
-        bool operator()(ast::nil) const { BOOST_ASSERT(0); return false; }
-        bool operator()(unsigned int x) const;
-        bool operator()(ast::variable const& x) const;
-        bool operator()(ast::operation const& x) const;
-        bool operator()(ast::signed_ const& x) const;
-        bool operator()(ast::expression const& x) const;
-        bool operator()(ast::assignment const& x) const;
-        bool operator()(ast::variable_declaration const& x) const;
-        bool operator()(ast::statement_list const& x) const;
+        void operator()(ast::operation const& x) const
+        {
+            boost::apply_visitor(*this, x.operand_);
+            switch (x.operator_)
+            {
+                case '+': code.push_back(op_add); break;
+                case '-': code.push_back(op_sub); break;
+                case '*': code.push_back(op_mul); break;
+                case '/': code.push_back(op_div); break;
+                default: BOOST_ASSERT(0); break;
+            }
+        }
 
-        client::code_gen::program& program;
+        void operator()(ast::signed_ const& x) const
+        {
+            boost::apply_visitor(*this, x.operand_);
+            switch (x.sign)
+            {
+                case '-': code.push_back(op_neg); break;
+                case '+': break;
+                default: BOOST_ASSERT(0); break;
+            }
+        }
 
-        boost::function<
-            void(int tag, std::string const& what)>
-        error_handler;
+        void operator()(ast::expression const& x) const
+        {
+            boost::apply_visitor(*this, x.first);
+            for (ast::operation const& oper : x.rest)
+            {
+                (*this)(oper);
+            }
+        }
     };
-}}
+}
 
 #endif
