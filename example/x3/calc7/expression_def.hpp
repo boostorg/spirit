@@ -11,6 +11,41 @@
 
 namespace client { namespace parser
 {
+    namespace expression_grammar
+    {
+
+        additive_expr =
+            multiplicative_expr
+            >> *(   (char_('+') > multiplicative_expr)
+                |   (char_('-') > multiplicative_expr)
+                )
+            ;
+
+        multiplicative_expr =
+            unary_expr
+            >> *(   (char_('*') > unary_expr)
+                |   (char_('/') > unary_expr)
+                )
+            ;
+
+        unary_expr =
+                primary_expr
+            |   (char_('-') > primary_expr)
+            |   (char_('+') > primary_expr)
+            ;
+
+        primary_expr =
+                uint_
+            |   identifier
+            |   '(' > expr > ')'
+            ;
+
+        identifier =
+            raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
+            ;
+    }
+
+
     template <typename Iterator>
     expression<Iterator>::expression(error_handler<Iterator>& error_handler)
       : expression::base_type(expr)
@@ -90,5 +125,3 @@ namespace client { namespace parser
             annotation_function(error_handler.iters)(_val, _1));
     }
 }}
-
-

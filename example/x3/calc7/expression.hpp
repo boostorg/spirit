@@ -7,45 +7,22 @@
 #if !defined(BOOST_SPIRIT_X3_CALC7_EXPRESSION_HPP)
 #define BOOST_SPIRIT_CALC7_X3_EXPRESSION_HPP
 
-///////////////////////////////////////////////////////////////////////////////
-// Spirit v2.5 allows you to suppress automatic generation
-// of predefined terminals to speed up complation. With
-// BOOST_SPIRIT_NO_PREDEFINED_TERMINALS defined, you are
-// responsible in creating instances of the terminals that
-// you need (e.g. see qi::uint_type uint_ below).
-#define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
-///////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-// Uncomment this if you want to enable debugging
-// #define BOOST_SPIRIT_QI_DEBUG
-///////////////////////////////////////////////////////////////////////////////
-
-#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/home/x3.hpp>
 #include "ast.hpp"
-#include "error_handler.hpp"
-#include <vector>
 
 namespace client { namespace parser
 {
-    namespace qi = boost::spirit::qi;
-    namespace ascii = boost::spirit::ascii;
+    namespace x3 = boost::spirit::x3;
 
     ///////////////////////////////////////////////////////////////////////////////
-    //  The expression grammar
+    // rule IDs
     ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator>
-    struct expression : qi::grammar<Iterator, ast::expression(), ascii::space_type>
-    {
-        expression(error_handler<Iterator>& error_handler);
-
-        qi::rule<Iterator, ast::expression(), ascii::space_type> expr;
-        qi::rule<Iterator, ast::expression(), ascii::space_type> additive_expr;
-        qi::rule<Iterator, ast::expression(), ascii::space_type> multiplicative_expr;
-        qi::rule<Iterator, ast::operand(), ascii::space_type> unary_expr;
-        qi::rule<Iterator, ast::operand(), ascii::space_type> primary_expr;
-        qi::rule<Iterator, std::string(), ascii::space_type> identifier;
-    };
+    typedef x3::identity<class expression> expression_id;
+    typedef x3::identity<class additive_expr> additive_expr_id;
+    typedef x3::identity<class multiplicative_expr> multiplicative_expr_id;
+    typedef x3::identity<class unary_expr> unary_expr_id;
+    typedef x3::identity<class primary_expr> primary_expr_id;
+    typedef x3::identity<class identifier> identifier_id;
 }}
 
 #endif

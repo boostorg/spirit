@@ -20,9 +20,6 @@ namespace boost { namespace spirit { namespace x3
         int id_last;
     };
 
-    // this is used to find the position_cache form the context
-    struct position_cache_tag;
-
     template <typename Container>
     class position_cache
     {
