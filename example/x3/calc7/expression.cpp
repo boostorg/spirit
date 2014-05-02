@@ -4,11 +4,16 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if defined(_MSC_VER)
-# pragma warning(disable: 4345)
-#endif
-
 #include "expression_def.hpp"
 
-typedef std::string::const_iterator iterator_type;
-template struct client::parser::expression<iterator_type>;
+namespace client { namespace parser
+{
+    template <typename Iterator, typename Skipper>
+    auto expression_parser(Skipper const& skipper)
+    -> x3::any_parser<Iterator, ast::expression, decltype(x3::make_context<x3::skipper_tag>(skipper))>
+    {
+        return { expression };
+    }
+
+    auto x = expression_parser<char const*>(x3::space);
+}}

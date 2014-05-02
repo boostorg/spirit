@@ -4,23 +4,11 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Now we'll introduce variables and assignment. This time, we'll also
-//  be renaming some of the rules -- a strategy for a grander scheme
-//  to come ;-)
-//
-//  This version also shows off grammar modularization. Here you will
-//  see how expressions and statements are built as modular grammars.
-//
-//  [ JDG April 9, 2007 ]       spirit2
-//  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//
-///////////////////////////////////////////////////////////////////////////////
-
-#include "statement.hpp"
+#include "ast.hpp"
 #include "vm.hpp"
 #include "compiler.hpp"
+#include "expression.hpp"
+#include "error_handler.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -29,71 +17,49 @@ int
 main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Statement parser...\n\n";
+    std::cout << "Expression parser...\n\n";
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Type some statements... ";
-    std::cout << "An empty line ends input, compiles, runs and prints results\n\n";
-    std::cout << "Example:\n\n";
-    std::cout << "    var a = 123;\n";
-    std::cout << "    var b = 456;\n";
-    std::cout << "    var c = a + b * 2;\n\n";
-    std::cout << "-------------------------\n";
-
-    std::string str;
-    std::string source;
-    while (std::getline(std::cin, str))
-    {
-        if (str.empty())
-            break;
-        source += str + '\n';
-    }
+    std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
     typedef std::string::const_iterator iterator_type;
-    iterator_type iter = source.begin();
-    iterator_type end = source.end();
+    typedef client::ast::expression ast_expression;
+    typedef client::compiler compiler;
 
-    client::vmachine vm;                                    // Our virtual machine
-    client::code_gen::program program;                      // Our VM program
-    client::ast::statement_list ast;                        // Our AST
-
-    client::error_handler<iterator_type>
-        error_handler(iter, end);                           // Our error handler
-    client::parser::statement<iterator_type>
-        parser(error_handler);                              // Our parser
-    client::code_gen::compiler
-        compile(program, error_handler);                    // Our compiler
-
-    boost::spirit::ascii::space_type space;
-    bool success = phrase_parse(iter, end, parser, space, ast);
-
-    std::cout << "-------------------------\n";
-
-    if (success && iter == end)
+    std::string str;
+    while (std::getline(std::cin, str))
     {
-        if (compile(ast))
+        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
+            break;
+
+        client::vmachine mach;              // Our virtual machine
+        std::vector<int> code;              // Our VM code
+        auto& calc = client::calculator;    // Our grammar
+        ast_expression expression;          // Our program (AST)
+        compiler compile(code);             // Compiles the program
+
+        std::string::const_iterator iter = str.begin();
+        std::string::const_iterator end = str.end();
+        boost::spirit::x3::ascii::space_type space;
+        bool r = phrase_parse(iter, end, calc, space, expression);
+
+        if (r && iter == end)
         {
-            std::cout << "Success\n";
             std::cout << "-------------------------\n";
-            vm.execute(program());
-
+            std::cout << "Parsing succeeded\n";
+            compile(expression);
+            mach.execute(code);
+            std::cout << "\nResult: " << mach.top() << std::endl;
             std::cout << "-------------------------\n";
-            std::cout << "Assembler----------------\n\n";
-            program.print_assembler();
-
-            std::cout << "-------------------------\n";
-            std::cout << "Results------------------\n\n";
-            program.print_variables(vm.get_stack());
         }
         else
         {
-            std::cout << "Compile failure\n";
+            std::string rest(iter, end);
+            std::cout << "-------------------------\n";
+            std::cout << "Parsing failed\n";
+            std::cout << "-------------------------\n";
         }
     }
-    else
-    {
-        std::cout << "Parse failure\n";
-    }
 
-    std::cout << "-------------------------\n\n";
+    std::cout << "Bye... :-) \n\n";
     return 0;
 }
