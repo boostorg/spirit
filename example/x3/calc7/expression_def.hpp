@@ -62,13 +62,11 @@ namespace client
             );
     }
 
-    using calculator_grammar::calculator;
-
     template <typename Iterator, typename Skipper>
-    inline auto expression_parser(Skipper const& skipper)
-    -> x3::any_parser<Iterator, ast::expression, decltype(x3::make_context<x3::skipper_tag>(skipper))>
+    x3::any_parser<Iterator, ast::expression, x3::context<x3::skipper_tag, Skipper const>>
+    expression()
     {
-        return { calculator };
+        return { calculator_grammar::calculator };
     }
 
 }
