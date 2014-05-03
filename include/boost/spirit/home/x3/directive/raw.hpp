@@ -7,7 +7,9 @@
 #if !defined(SPIRIT_X3_RAW_APRIL_9_2007_0912AM)
 #define SPIRIT_X3_RAW_APRIL_9_2007_0912AM
 
+#include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/range/iterator_range.hpp>
 
 namespace boost { namespace spirit { namespace x3
