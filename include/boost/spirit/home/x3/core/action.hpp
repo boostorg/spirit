@@ -21,6 +21,7 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    struct raw_attribute_type;
     struct rule_context_tag;
 
     namespace detail
@@ -157,7 +158,7 @@ namespace boost { namespace spirit { namespace x3
         // attr==raw_attribute_type, action wants iterator_range (see raw.hpp)
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, raw_attribute_type, mpl::false_) const
+          , Context const& context, raw_attribute_type const&, mpl::false_) const
         {
             boost::iterator_range<Iterator> rng;
             // synthesize the attribute since one is not supplied
