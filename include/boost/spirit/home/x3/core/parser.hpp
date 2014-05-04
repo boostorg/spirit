@@ -16,12 +16,13 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
-#include <boost/utility/declval.hpp> 
+#include <boost/utility/declval.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
+#include <boost/spirit/home/x3/support/utility/type_traits.hpp>
 #include <string>
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
@@ -30,25 +31,25 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    using x3::unused_type;
-    using x3::unused;
-    using x3::get;
-
     template <typename Subject, typename Action>
     struct action;
+    
+    template <typename Subject, typename... Ts>
+    struct caller;
 
     template <typename Subject, typename Handler>
     struct guard;
 
     struct parser_base {};
     struct parser_id;
-
+ 
     template <typename Derived>
     struct parser : parser_base
     {
         typedef Derived derived_type;
         static bool const handles_container = false;
         static bool const is_pass_through_unary = false;
+        static bool const caller_is_pass_through_unary = false;
         static bool const has_action = false;
 
         Derived const& derived() const
@@ -57,17 +58,21 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Action>
-        action<Derived, Action>
-        operator[](Action f) const
+        action<Derived, Action> operator[](Action f) const
         {
-            return action<Derived, Action>(this->derived(), f);
+            return {this->derived(), f};
+        }
+        
+        template <typename... Ts>
+        caller<Derived, unrefcv<Ts>...> operator()(Ts&&... ts) const
+        {
+            return {this->derived(), std::forward<Ts>(ts)...};
         }
 
         template <typename Handler>
-        guard<Derived, Handler>
-        on_error(Handler f) const
+        guard<Derived, Handler> on_error(Handler f) const
         {
-            return guard<Derived, Handler>(this->derived(), f);
+            return {this->derived(), f};
         }
     };
 
@@ -120,11 +125,14 @@ namespace boost { namespace spirit { namespace x3
 
                 template<typename T, typename R =
                     decltype(as_spirit_parser(boost::declval<T const&>()))>
-                struct deduce_as_parser {
+                struct deduce_as_parser
+                {
                     typedef R type;
-                    typedef typename boost::remove_cv<
-                        typename boost::remove_reference<R>::type
-                    >::type value_type;
+                    typedef typename
+                        boost::remove_cv<
+                            typename boost::remove_reference<R>::type
+                        >::type
+                    value_type;
 
                     static type call(T const& v)
                     {
@@ -189,20 +197,6 @@ namespace boost { namespace spirit { namespace x3
     {
         return p.derived();
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // is_parser<T>: metafunction that evaluates to mpl::true_ if a type T 
-    // can be used as a parser, mpl::false_ otherwise
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Enable = void>
-    struct is_parser
-      : mpl::false_
-    {};
-    template <typename T>
-    struct is_parser<T, typename disable_if_substitution_failure<
-        typename extension::as_parser<T>::type>::type>
-      : mpl::true_
-    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // The main what function
@@ -240,7 +234,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Subject, typename Derived, typename Context>
     struct has_attribute<x3::unary_parser<Subject, Derived>, Context>
         : has_attribute<Subject, Context> {};
-    
+
     template <typename Left, typename Right, typename Derived, typename Context>
     struct has_attribute<x3::binary_parser<Left, Right, Derived>, Context>
         : mpl::bool_<has_attribute<Left, Context>::value ||

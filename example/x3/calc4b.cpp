@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -31,6 +31,8 @@
 #include <list>
 #include <numeric>
 
+namespace x3 = boost::spirit::x3;
+
 namespace client { namespace ast
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -40,11 +42,11 @@ namespace client { namespace ast
     struct signed_;
     struct program;
 
-    typedef boost::variant<
+    typedef x3::variant<
             nil
           , unsigned int
-          , boost::recursive_wrapper<signed_>
-          , boost::recursive_wrapper<program>
+          , x3::forward_ast<signed_>
+          , x3::forward_ast<program>
         >
     operand;
 
@@ -177,8 +179,6 @@ namespace client { namespace ast
 
 namespace client
 {
-    namespace x3 = boost::spirit::x3;
-
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
@@ -271,5 +271,3 @@ main()
     std::cout << "Bye... :-) \n\n";
     return 0;
 }
-
-

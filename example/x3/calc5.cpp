@@ -6,15 +6,18 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  A Calculator example demonstrating generation of AST. The AST,
-//  once created, is traversed, 1) To print its contents and
-//  2) To evaluate the result.
+//  Same as Calc4, this time, we'll incorporate debugging support,
+//  plus error handling and reporting.
 //
 //  [ JDG April 28, 2008 ]      For BoostCon 2008
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG January 9, 2013 ]     Spirit X3
+//  [ JDG April 9, 2014 ]       Spirit X3
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// Uncomment this if you want to enable debugging
+//#define BOOST_SPIRIT_X3_DEBUG
 
 #if defined(_MSC_VER)
 # pragma warning(disable: 4345)
@@ -67,6 +70,9 @@ namespace client { namespace ast
         operand first;
         std::list<operation> rest;
     };
+
+    // print function for debugging
+    inline std::ostream& operator<<(std::ostream& out, nil) { out << "nil"; return out; }
 }}
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -124,7 +130,7 @@ namespace client { namespace ast
         void operator()(program const& x) const
         {
             boost::apply_visitor(*this, x.first);
-            for (operation const& oper: x.rest)
+            BOOST_FOREACH(operation const& oper, x.rest)
             {
                 std::cout << ' ';
                 (*this)(oper);
@@ -142,7 +148,7 @@ namespace client { namespace ast
         int operator()(nil) const { BOOST_ASSERT(0); return 0; }
         int operator()(unsigned int n) const { return n; }
 
-        int operator()(int lhs, operation const& x) const
+        int operator()(operation const& x, int lhs) const
         {
             int rhs = boost::apply_visitor(*this, x.operand_);
             switch (x.operator_)
@@ -170,15 +176,45 @@ namespace client { namespace ast
 
         int operator()(program const& x) const
         {
-            return std::accumulate( x.rest.begin(), x.rest.end()
-                                    , boost::apply_visitor(*this, x.first)
-                                    , *this);
+            int state = boost::apply_visitor(*this, x.first);
+            BOOST_FOREACH(operation const& oper, x.rest)
+            {
+                state = (*this)(oper, state);
+            }
+            return state;
         }
     };
 }}
 
 namespace client
 {
+    ///////////////////////////////////////////////////////////////////////////////
+    // rule IDs
+    ///////////////////////////////////////////////////////////////////////////////
+    typedef x3::identity<class expression> expression_id;
+    typedef x3::identity<class term> term_id;
+    typedef x3::identity<class factor> factor_id;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    //  Our error handler
+    ///////////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Exception, typename Context>
+    x3::error_handler_result
+    on_error(
+        expression_id, Iterator&
+      , Exception const& x, Context const& context)
+    {
+        std::cout
+            << "Error! Expecting: "
+            << x.what_
+            << " here: \""
+            << std::string(x.first, x.last)
+            << "\""
+            << std::endl
+            ;
+        return x3::error_handler_result::fail;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
@@ -187,29 +223,29 @@ namespace client
         using x3::uint_;
         using x3::char_;
 
-        x3::rule<class expression, ast::program> const expression("expression");
-        x3::rule<class term, ast::program> const term("term");
-        x3::rule<class factor, ast::operand> const factor("factor");
+        x3::rule<expression_id, ast::program> const expression("expression");
+        x3::rule<term_id, ast::program> const term("term");
+        x3::rule<factor_id, ast::operand> const factor("factor");
 
         auto const expression_def =
             term
-            >> *(   (char_('+') >> term)
-                |   (char_('-') >> term)
+            >> *(   (char_('+') > term)
+                |   (char_('-') > term)
                 )
             ;
 
         auto const term_def =
             factor
-            >> *(   (char_('*') >> factor)
-                |   (char_('/') >> factor)
+            >> *(   (char_('*') > factor)
+                |   (char_('/') > factor)
                 )
             ;
 
         auto const factor_def =
                 uint_
-            |   '(' >> expression >> ')'
-            |   (char_('-') >> factor)
-            |   (char_('+') >> factor)
+            |   '(' > expression > ')'
+            |   (char_('-') > factor)
+            |   (char_('+') > factor)
             ;
 
         auto const calculator = x3::grammar(
@@ -221,7 +257,6 @@ namespace client
     }
 
     using calculator_grammar::calculator;
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -266,10 +301,8 @@ main()
         }
         else
         {
-            std::string rest(iter, end);
             std::cout << "-------------------------\n";
             std::cout << "Parsing failed\n";
-            std::cout << "stopped at: \"" << rest << "\"\n";
             std::cout << "-------------------------\n";
         }
     }

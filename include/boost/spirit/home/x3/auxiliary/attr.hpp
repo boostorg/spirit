@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr_) const
+          , Context const& context, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_, attr_);
@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr_) const
+          , Context const& context, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_ + 0, value_ + N, attr_);

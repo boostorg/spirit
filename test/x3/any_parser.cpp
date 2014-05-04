@@ -1,9 +1,10 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2013-2014 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-=============================================================================*/
+==============================================================================*/
 
 // this file deliberately contains non-ascii characters
 // boostinspect:noascii
@@ -23,25 +24,70 @@ main()
     using spirit_test::test;
 
     using namespace boost::spirit::x3::ascii;
-    //~ using boost::spirit::x3::locals;
-    using boost::spirit::x3::rule;
+    using boost::spirit::x3::any_parser;
     using boost::spirit::x3::int_;
-    //~ using boost::spirit::x3::uint_;
-    //~ using boost::spirit::x3::fail;
-    //~ using boost::spirit::x3::on_error;
-    //~ using boost::spirit::x3::debug;
+    using boost::spirit::x3::make_context;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
+    using boost::spirit::x3::phrase_parse;
+    using boost::spirit::x3::skip_flag;
+    using boost::spirit::x3::skipper_tag;
+
+    typedef char const* iterator_type;
+    typedef decltype(make_context<skipper_tag>(space)) context_type;
+    { // basic tests
+
+        auto a = lit('a');
+        auto b = lit('b');
+        auto c = lit('c');
+
+        {
+            any_parser<iterator_type> start =
+                *(a | b | c);
+
+            BOOST_TEST(test("abcabcacb", start));
+        }
+    }
+
+    { // basic tests w/ skipper
+
+        auto a = lit('a');
+        auto b = lit('b');
+        auto c = lit('c');
+
+        {
+            any_parser<iterator_type, unused_type, context_type> start =
+                *(a | b | c);
+
+            BOOST_TEST(test(" a b c a b c a c b ", start, space));
+        }
+    }
+
+    { // basic tests w/ skipper but no final post-skip
+
+        any_parser<iterator_type, unused_type, context_type> a = lit('a');
+        any_parser<iterator_type, unused_type, context_type> b = lit('b');
+        any_parser<iterator_type, unused_type, context_type> c = lit('c');
+
+        {
+            any_parser<iterator_type, unused_type, context_type> start = *(a | b) >> c;
+
+            char const *s1 = " a b a a b b a c ... "
+              , *const e1 = s1 + std::strlen(s1);
+            BOOST_TEST(phrase_parse(s1, e1, start, space, skip_flag::dont_post_skip)
+              && s1 == e1 - 5);
+        }
+    }
 
     { // context tests
 
         char ch;
-        auto a = rule<class a, char>() = alpha;
+        any_parser<iterator_type, char> a = alpha;
 
-        // this semantic action requires both the context and attrubute
-        auto f = [&](auto&, char attr){ ch = attr; };
-        BOOST_TEST(test("x", a[f]));
-        BOOST_TEST(ch == 'x');
+        // this semantic action requires both the context and attribute
+        //!!auto f = [&](auto&, char attr){ ch = attr; };
+        //!!BOOST_TEST(test("x", a[f]));
+        //!!BOOST_TEST(ch == 'x');
 
         // the semantic action may optionally not require the context to be passed
         auto f2 = [&](char attr){ ch = 'y'; };
@@ -60,7 +106,7 @@ main()
     { // auto rules tests
 
         char ch = '\0';
-        auto a = rule<class a, char>() = alpha;
+        any_parser<iterator_type, char> a = alpha;
         auto f = [&](char attr){ ch = attr; };
 
         BOOST_TEST(test("x", a[f]));
@@ -87,7 +133,7 @@ main()
         auto f = [&](std::string attr){ s = attr; };
 
         {
-            auto r = rule<class r, std::string>()
+            any_parser<iterator_type, std::string> r
                 = char_ >> *(',' >> char_)
                 ;
 
@@ -96,7 +142,7 @@ main()
         }
 
         {
-            auto r = rule<class r, std::string>()
+            any_parser<iterator_type, std::string> r
                 = char_ >> *(',' >> char_);
             s.clear();
             BOOST_TEST(test("a,b,c,d,e,f", r[f]));
@@ -104,7 +150,7 @@ main()
         }
 
         {
-            auto r = rule<class r, std::string>()
+            any_parser<iterator_type, std::string> r
                 = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
             s.clear();
             BOOST_TEST(test("abcdef", r[f]));
@@ -114,3 +160,4 @@ main()
 
     return boost::report_errors();
 }
+

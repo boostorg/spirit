@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2013-2014 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,8 +27,6 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 
-#include <iostream>
-#include <string>
 #include <list>
 #include <numeric>
 
@@ -184,96 +183,15 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////////
     namespace calculator_grammar
     {
-        using x3::uint_;
-        using x3::char_;
+        using parser_type =
+            x3::any_parser<
+                std::string::const_iterator
+              , ast::program
+              , decltype(x3::make_context<x3::skipper_tag>(x3::ascii::space))
+            >;
 
-        x3::rule<class expression, ast::program> const expression("expression");
-        x3::rule<class term, ast::program> const term("term");
-        x3::rule<class factor, ast::operand> const factor("factor");
-
-        auto const expression_def =
-            term
-            >> *(   (char_('+') >> term)
-                |   (char_('-') >> term)
-                )
-            ;
-
-        auto const term_def =
-            factor
-            >> *(   (char_('*') >> factor)
-                |   (char_('/') >> factor)
-                )
-            ;
-
-        auto const factor_def =
-                uint_
-            |   '(' >> expression >> ')'
-            |   (char_('-') >> factor)
-            |   (char_('+') >> factor)
-            ;
-
-        auto const calculator = x3::grammar(
-                "calculator"
-              , expression = expression_def
-              , term = term_def
-              , factor = factor_def
-            );
+        parser_type calculator();
     }
-
-    using calculator_grammar::calculator;
-
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//  Main program
-///////////////////////////////////////////////////////////////////////////////
-int
-main()
-{
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Expression parser...\n\n";
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Type an expression...or [q or Q] to quit\n\n";
-
-    typedef std::string::const_iterator iterator_type;
-    typedef client::ast::program ast_program;
-    typedef client::ast::printer ast_print;
-    typedef client::ast::eval ast_eval;
-
-    std::string str;
-    while (std::getline(std::cin, str))
-    {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
-            break;
-
-        auto& calc = client::calculator;    // Our grammar
-        ast_program program;                // Our program (AST)
-        ast_print print;                    // Prints the program
-        ast_eval eval;                      // Evaluates the program
-
-        iterator_type iter = str.begin();
-        iterator_type end = str.end();
-        boost::spirit::x3::ascii::space_type space;
-        bool r = phrase_parse(iter, end, calc, space, program);
-
-        if (r && iter == end)
-        {
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing succeeded\n";
-            print(program);
-            std::cout << "\nResult: " << eval(program) << std::endl;
-            std::cout << "-------------------------\n";
-        }
-        else
-        {
-            std::string rest(iter, end);
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing failed\n";
-            std::cout << "stopped at: \"" << rest << "\"\n";
-            std::cout << "-------------------------\n";
-        }
-    }
-
-    std::cout << "Bye... :-) \n\n";
-    return 0;
+    
+    auto const calculator = calculator_grammar::calculator();
 }
