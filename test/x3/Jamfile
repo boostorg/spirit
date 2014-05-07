@@ -166,6 +166,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     test-suite spirit_v3/qi/x3_extensions :
 
      [ run extensions/seek.cpp       : : : : x3_seek ]
+     [ run extensions/keyword.cpp    : : : : x3_keyword ]
 
     ;
 
