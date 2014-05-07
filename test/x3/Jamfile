@@ -169,6 +169,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
      [ run extensions/seek.cpp       : : : : x3_seek ]
      [ run extensions/repeat.cpp     : : : : x3_repeat ]
+     [ run extensions/keyword.cpp    : : : : x3_keyword ]
 
     ;
 }
