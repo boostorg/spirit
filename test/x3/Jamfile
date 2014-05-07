@@ -101,14 +101,13 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run pass_container2.cpp  : : : : x3_pass_container2 ]
      #~ [ run permutation.cpp      : : : : x3_permutation ]
      [ run plus.cpp             : : : : x3_plus ]
-     [ run with.cpp             : : : : x3_with ]
 
      # $$$ remove this fpermissive flag once lexical_cast is fixed $$$
      #~ [ run range_run.cpp
         #~ : : : <toolset>gcc:<cxxflags>-fpermissive
                                    #~ : x3_range_run ]
 
-     [ run raw.cpp              : : : : x3_raw ]
+     #~ [ run raw.cpp              : : : : x3_raw ]
      [ run real1.cpp            : : : : x3_real1 ]
      [ run real2.cpp            : : : : x3_real2 ]
      [ run real3.cpp            : : : : x3_real3 ]
@@ -166,10 +165,9 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     test-suite spirit_v3/qi/x3_extensions :
 
      [ run extensions/seek.cpp       : : : : x3_seek ]
+     [ run extensions/repeat.cpp     : : : : x3_repeat ]
 
     ;
-
-
 }
 
 # use this alias to build Spirit against Phoenix V3

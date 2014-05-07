@@ -14,5 +14,6 @@
 #endif
 
 #include <boost/spirit/home/x3/extensions/seek.hpp>
+#include <boost/spirit/home/x3/extensions/repeat.hpp>
 
 #endif
