@@ -30,7 +30,7 @@ struct my_error_handler
             << std::string(x.first, x.last)
             << "\""
             << std::endl;
-        return boost::spirit::x3::fail;
+        return boost::spirit::x3::error_handler_result::fail;
     }
 };
 

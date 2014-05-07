@@ -385,7 +385,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token_value_type& value() { return value_; }
         token_value_type const& value() const { return value_; }
 
-        bool has_value() const { return value_; }
+        bool has_value() const { return !!value_; }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, == 1600)
         // workaround for MSVC10 which has problems copying a default 

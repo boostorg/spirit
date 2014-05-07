@@ -95,8 +95,6 @@ namespace boost { namespace spirit { namespace x3
         Elements elements;
     };
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
-
     template <typename ...Elements>
     grammar_parser<fusion::map<fusion::pair<typename Elements::id, Elements>...>>
     grammar(char const* name, Elements const&... elements)
@@ -105,33 +103,6 @@ namespace boost { namespace spirit { namespace x3
         return grammar_parser<sequence>(name,
             sequence(fusion::make_pair<typename Elements::id>(elements)...));
     }
-
-#else
-
-    template <typename T1, typename T2, typename T3>
-    grammar_parser<
-        fusion::map<
-            fusion::pair<typename T1::id, T1>
-          , fusion::pair<typename T2::id, T2>
-          , fusion::pair<typename T3::id, T3>
-        >>
-    grammar(char const* name, T1 const& _1, T2 const& _2, T3 const& _3)
-    {
-        typedef fusion::map<
-            fusion::pair<typename T1::id, T1>
-          , fusion::pair<typename T2::id, T2>
-          , fusion::pair<typename T3::id, T3>>
-        sequence;
-
-        return grammar_parser<sequence>(name,
-            sequence(
-                fusion::make_pair<typename T1::id>(_1)
-              , fusion::make_pair<typename T2::id>(_2)
-              , fusion::make_pair<typename T3::id>(_3)
-            ));
-    }
-
-#endif
 
     template <typename Elements>
     struct get_info<grammar_parser<Elements>>

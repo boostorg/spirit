@@ -15,6 +15,7 @@
 
 #include <boost/fusion/support/pair.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
+#include <boost/spirit/home/x3/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -27,44 +28,57 @@ namespace boost { namespace spirit { namespace x3
         template <typename Context>
         subcontext(Context const& /*context*/)
         {}
+        
+        template <typename ID_, typename Unused = void>
+        struct get_result
+        {
+            typedef unused_type type;
+        };
+
+        template <typename ID_>
+        unused_type
+        get(ID_) const
+        {
+            return unused;
+        }
     };
 
     template <typename T>
     struct subcontext<T>
-      : boost::spirit::context< 
-            typename T::first_type, typename T::second_type
-        >
+      : context<typename T::first_type, typename T::second_type>
     {
-        typedef boost::spirit::context<
-                typename T::first_type, typename T::second_type
-            > context_type;
+        typedef context<
+            typename T::first_type, typename T::second_type
+        > context_type;
 
         template <typename Context>
         subcontext(Context const& context)
-          : context_type(boost::spirit::get<typename T::first_type>(context))
+          : context_type(x3::get<typename T::first_type>(context))
         {}
+
+        using context_type::get;
     };
 
     template <typename T, typename... Tail>
     struct subcontext<T, Tail...>
       : subcontext<Tail...>
-      , boost::spirit::context<
+      , context<
             typename T::first_type, typename T::second_type
           , subcontext<Tail...>
         >
     {
         typedef subcontext<Tail...> base_type;
-        typedef boost::spirit::context<
-                typename T::first_type, typename T::second_type
-              , base_type
-            > context_type;
+        typedef context<
+            typename T::first_type, typename T::second_type
+          , base_type
+        > context_type;
 
         template <typename Context>
         subcontext(Context const& context)
           : base_type(context)
           , context_type(
-                boost::spirit::get<typename T::first_type>(context)
-              , *static_cast< base_type* >( this ) )
+                x3::get<typename T::first_type>(context)
+              , *static_cast<base_type*>(this))
         {}
 
         using context_type::get;

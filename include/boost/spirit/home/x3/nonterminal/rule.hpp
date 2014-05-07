@@ -21,6 +21,9 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    template <typename ID>
+    struct identity {};
+
     struct rule_context_tag;
 
     template <typename ID>
@@ -38,19 +41,18 @@ namespace boost { namespace spirit { namespace x3
         Attribute* attr_ptr;
     };
 
-    template <typename Attribute>
-    struct rule_context_proxy
+    template <typename Context>
+    inline auto
+    _val(Context const& context)
+    -> decltype(x3::get<rule_context_tag>(context).val())
     {
-        template <typename Context>
-        rule_context_proxy(Context& context)
-          : val(x3::get<rule_context_tag>(context).val()) {}
-        Attribute& val;
-    };
+        return x3::get<rule_context_tag>(context).val();
+    }
 
-    template <typename ID, typename RHS, typename Attribute>
-    struct rule_definition : parser<rule_definition<ID, RHS, Attribute>>
+    template <typename ID, typename RHS, typename Attribute, bool explicit_attribute_propagation_>
+    struct rule_definition : parser<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation_>>
     {
-        typedef rule_definition<ID, RHS, Attribute> this_type;
+        typedef rule_definition<ID, RHS, Attribute, explicit_attribute_propagation_> this_type;
         typedef ID id;
         typedef RHS rhs_type;
         typedef Attribute attribute_type;
@@ -58,6 +60,8 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
+        static bool const explicit_attribute_propagation =
+            explicit_attribute_propagation_;
 
         rule_definition(RHS rhs, char const* name)
           : rhs(rhs), name(name) {}
@@ -72,8 +76,11 @@ namespace boost { namespace spirit { namespace x3
             auto rule_ctx2 = make_context<rule_context_tag>(r_context, rule_ctx1);
             auto this_context = make_context<ID>(*this, rule_ctx2);
 
-            return detail::parse_rule<attribute_type, ID>::call_rule_definition(
-                rhs, name, first, last, this_context, attr, r_context.attr_ptr);
+            return detail::parse_rule<attribute_type, ID>
+                ::call_rule_definition(
+                    rhs, name, first, last, this_context
+                  , attr, r_context.attr_ptr
+                  , mpl::bool_<explicit_attribute_propagation>());
         }
 
         RHS rhs;
@@ -89,7 +96,6 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
-        typedef rule_context_proxy<Attribute> context;
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
         rule(char const* name = typeid(rule).name()) : name(name) {}
@@ -99,11 +105,20 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename RHS>
         rule_definition<
-            ID, typename extension::as_parser<RHS>::value_type, Attribute>
+            ID, typename extension::as_parser<RHS>::value_type, Attribute, false>
         operator=(RHS const& rhs) const
         {
             return {as_parser(rhs), name};
         }
+
+        template <typename RHS>
+        rule_definition<
+            ID, typename extension::as_parser<RHS>::value_type, Attribute, true>
+        operator%=(RHS const& rhs) const
+        {
+            return {as_parser(rhs), name};
+        }
+
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
@@ -117,24 +132,26 @@ namespace boost { namespace spirit { namespace x3
 
         char const* name;
     };
+    
+    namespace traits
+    {
+        template <typename T, typename Enable = void>
+        struct is_rule : mpl::false_ {};
+    
+        template <typename ID, typename Attribute>
+        struct is_rule<rule<ID, Attribute>> : mpl::true_ {};
+        
+        template <typename ID, typename Attribute, typename RHS, bool explicit_attribute_propagation>
+        struct is_rule<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation>> : mpl::true_ {};
+    }
 
-    template <typename ID, typename Attribute>
-    struct get_info<rule<ID, Attribute>>
+    template <typename T>
+    struct get_info<T, typename traits::is_rule<T>::type>
     {
         typedef std::string result_type;
-        std::string operator()(rule<ID, Attribute> const& p) const
+        std::string operator()(T const& r) const
         {
-            return p.name;
-        }
-    };
-
-    template <typename ID, typename Attribute, typename RHS>
-    struct get_info<rule_definition<ID, RHS, Attribute>>
-    {
-        typedef std::string result_type;
-        std::string operator()(rule_definition<ID, RHS, Attribute> const& p) const
-        {
-            return p.name;
+            return r.name;
         }
     };
 }}}

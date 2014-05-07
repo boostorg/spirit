@@ -15,5 +15,6 @@
 //~ #include <boost/spirit/home/x3/core/parse_attr.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
+#include <boost/spirit/home/x3/core/action.hpp>
 
 #endif
