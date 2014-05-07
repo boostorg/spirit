@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       : mpl::false_ {};
 
     template <typename Skipper>
-    struct is_unused_skipper<unused_skipper<Skipper>>
+    struct is_unused_skipper<unused_skipper<Skipper> >
       : mpl::true_ {};
 
     template <>
