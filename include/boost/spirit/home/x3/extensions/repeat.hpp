@@ -12,24 +12,60 @@
 #if defined(_MSC_VER)
 #pragma once
 #endif
-
+#include <boost/function_types/function_type.hpp>
+#include <boost/function_types/parameter_types.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 
+namespace boost { namespace spirit { namespace x3 { namespace detail 
+{
+    template <typename T>
+    struct exact_count // handles repeat(exact)[p]
+    {
+        typedef T type;
+        bool got_max(T i) const { return i >= exact_value; }
+        bool got_min(T i) const { return i >= exact_value; }
+
+        T const exact_value;
+    };
+
+    template <typename T>
+    struct finite_count // handles repeat(min, max)[p]
+    {
+        typedef T type;
+        bool got_max(T i) const { return i >= max_value; }
+        bool got_min(T i) const { return i >= min_value; }
+
+        T const min_value;
+        T const max_value;
+
+    };
+
+    template <typename T>
+    struct infinite_count // handles repeat(min, inf)[p]
+    {
+
+        typedef T type;
+        bool got_max(T /*i*/) const { return false; }
+        bool got_min(T i) const { return i >= min_value; }
+
+        T const min_value;
+
+    };
+}}}}
+
 namespace boost { namespace spirit { namespace x3
 {
-    template<typename Subject, typename RepeatIterator>
-    struct repeat_directive : unary_parser<Subject, repeat_directive<Subject,RepeatIterator>>
+    template<typename Subject, typename RepeatCountLimit>
+    struct repeat_directive : unary_parser<Subject, repeat_directive<Subject,RepeatCountLimit>>
     {
-        typedef unary_parser<Subject, repeat_directive<Subject,RepeatIterator>> base_type;
-        typedef std::function<bool(RepeatIterator const)> range_check_function;
+        typedef unary_parser<Subject, repeat_directive<Subject,RepeatCountLimit>> base_type;
         static bool const is_pass_through_unary = true;
         static bool const handles_container = true;
 
-        repeat_directive(Subject const& subject, range_check_function min_check, range_check_function max_check) :
+        repeat_directive(Subject const& subject, RepeatCountLimit const &repeat_limit_) :
             base_type(subject),
-            got_min(min_check),
-            got_max(max_check)
+            repeat_limit(repeat_limit_)
             {}
 
         template <typename Iterator, typename Context, typename Attribute>
@@ -37,30 +73,27 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, Attribute& attr) const
         {
 
-            RepeatIterator i{};
-            for (/**/; !got_min(i); ++i)
+            Iterator local_iterator = first;
+            typename RepeatCountLimit::type i{};
+            for (/**/; !repeat_limit.got_min(i); ++i)
             {
                 if (!detail::parse_into_container(
-                      this->subject, first, last, context, attr))
+                      this->subject, local_iterator, last, context, attr))
                    return false;
             }
 
+            first = local_iterator;
             // parse some more up to the maximum specified
-            Iterator save = first;
-            for (/**/; !got_max(i); ++i)
+            for (/**/; !repeat_limit.got_max(i); ++i)
             {
                 if (!detail::parse_into_container(
                       this->subject, first, last, context, attr))
                     break;
-                save = first;
             }
-
-            first = save;
             return true;
         }
-
-        range_check_function got_min;
-        range_check_function got_max;
+private:
+        const RepeatCountLimit repeat_limit;
     };
 
     // Infinite loop tag type
@@ -75,43 +108,42 @@ namespace boost { namespace spirit { namespace x3
         {
             return {as_parser(subject)};
         }
-        template <typename RepeatIterator> 
+        template <typename T> 
         struct repeat_gen_lvl1
         {
-                typedef std::function<bool(RepeatIterator const)> range_check_function;
-                repeat_gen_lvl1(range_check_function const& min_check, range_check_function const& max_check) 
-                        : min_check(min_check), max_check(max_check)
+                repeat_gen_lvl1(T && repeat_limit_) 
+                        : repeat_limit(repeat_limit_)
                 {}
-                
+
                 template<typename Subject>
-                repeat_directive< typename extension::as_parser<Subject>::value_type, RepeatIterator>
+                repeat_directive< typename extension::as_parser<Subject>::value_type, T>
                 operator[](Subject const& subject) const
                 {
-                        return {as_parser(subject),min_check,max_check};
+                        return {as_parser(subject),repeat_limit};
                 }
-                range_check_function min_check;
-                range_check_function max_check;
+
+                T repeat_limit;
         };
 
         template <typename T>
-        repeat_gen_lvl1< T >
+        repeat_gen_lvl1<detail::exact_count<T>>
         operator()(T const exact) const
         {
-           return {[=](T const i) { return i>=exact;},[=](T const i) { return i>=exact;}};
+           return {detail::exact_count<T>{exact}};
         }
 
         template <typename T>
-        repeat_gen_lvl1< T >
+        repeat_gen_lvl1<detail::finite_count<T>>
         operator()(T const min_val, T const max_val) const
         {
-           return {[=](T const i) { return i>=min_val;},[=](T const i) { return i>=max_val;}};
+           return {detail::finite_count<T>{min_val,max_val}};
         }
         
         template <typename T>
-        repeat_gen_lvl1< T >
-        operator()(T const min_val, inf_type const &) const
+        repeat_gen_lvl1<detail::infinite_count<T>>
+	operator()(T const min_val, inf_type const &) const
         {
-           return {[=](T const i) { return i>=min_val;},[=](T const i) { return false;}};
+           return {detail::infinite_count<T>{min_val}};
         }
     };
 
@@ -120,8 +152,8 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
-    template <typename Subject, typename RepeatIterator, typename Context>
-    struct attribute_of<x3::repeat_directive<Subject,RepeatIterator>, Context>
+    template <typename Subject, typename RepeatCountLimit, typename Context>
+    struct attribute_of<x3::repeat_directive<Subject,RepeatCountLimit>, Context>
         : build_container<
             typename attribute_of<Subject, Context>::type> {};
 }}}}
