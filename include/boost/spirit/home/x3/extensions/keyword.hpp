@@ -15,6 +15,7 @@
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
+#include <boost/spirit/home/x3/support/utility/unrefcv.hpp>
 #include <boost/spirit/home/x3/support/utility/integer_sequence.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
@@ -165,7 +166,7 @@ namespace boost { namespace spirit { namespace x3 {
 
         static const std::size_t nb_keywords = sizeof...(Keywords);
 
-        keywords_parser(Keywords&& ... keywords)
+        keywords_parser(Keywords ... keywords)
             : keywords(std::forward<Keywords>(keywords)...)
         {
             add_keywords(0,keywords...);
@@ -233,7 +234,7 @@ namespace boost { namespace spirit { namespace x3 {
     };
 
     template <typename ... Keywords>
-        keywords_parser<Keywords...>keywords (Keywords&&... keyword_list) 
+        keywords_parser<Keywords...>keywords (Keywords ... keyword_list) 
         {
             return {std::forward<Keywords>(keyword_list)...};
         }
