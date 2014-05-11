@@ -88,5 +88,10 @@ int main()
         );
     }
 
+    // test failure rollback
+    {
+        BOOST_TEST(test_failure("abcdefg", x3::seek[x3::int_]));
+    }
+
     return boost::report_errors();
 }
