@@ -325,6 +325,7 @@ namespace boost { namespace spirit { namespace x3 {
                 flags_type flags(flags_init);
                 counters_type counters {};
                 Iterator save = first;
+                Iterator local_save = save;
                 x3::skip_over(first, last, context);
                 while(std::size_t *subparser_idx =
                         lookup.find(first,last,tst_pass_through()))
@@ -343,11 +344,20 @@ namespace boost { namespace spirit { namespace x3 {
                         )
                       )
                     {
-                        first = save;
-                        return false;
+                        break;
                     }
-                    save = first;
+                    local_save = first;
                     x3::skip_over(first, last, context);
+                }
+                // Reset to the last successufull parse position inside the keyword set
+                first = local_save;
+                for(bool flag : flags)
+                {
+                   if(!flag)
+                   {
+                       first = save;
+                       return false;
+                   }
                 }
                 return true;
             }

@@ -86,22 +86,23 @@ main()
         boost::fusion::vector<kwds_attribute, int> data;
         BOOST_TEST( test("a=2 10", keywords( kwd("a")[ '=' > char_], kwd("b")[ '=' > char_], kwd("c")['=' > int_]) >> int_  ,  space));
    }
-//~        // Exact
-//~        BOOST_TEST(test("a=a b=b c=1", kwd("a",1)[ '=' > char_] || kwd("b")[ '=' > char_] || kwd("c")['=' > int_], space));
-//~        BOOST_TEST(test("a=a b=c b=e c=1", kwd("a",1)[ '=' > char_] || kwd("b",2)[ '=' > char_] || kwd("c")['=' > int_], space));
-//~        BOOST_TEST(!test("b=c b=e c=1", kwd("a",1)[ '=' > char_] || kwd("b",2)[ '=' > char_] || kwd("c")['=' > int_], space));
-//~
-//~        // Min - Max
-//~        BOOST_TEST(test("a=f b=c b=e c=1", kwd("a",1,2)[ '=' > char_] || kwd("b",0,2)[ '=' > char_] || kwd("c",1,2)['=' > int_], space));
-//~        BOOST_TEST(!test("b=c b=e c=1", kwd("a",1,2)[ '=' > char_] || kwd("b",0,1)[ '=' > char_] || kwd("c",1,2)['=' > int_], space));
-//~        BOOST_TEST(test("a=g a=f b=c b=e c=1", kwd("a",1,2)[ '=' > char_] || kwd("b",0,2)[ '=' > char_] || kwd("c",1,2)['=' > int_], space));
-//~        BOOST_TEST(!test("a=f a=e b=c b=e a=p c=1", kwd("a",1,2)[ '=' > char_] || kwd("b",0,1)[ '=' > char_] || kwd("c",1,2)['=' > int_], space));
-//~
-//~        // Min - inf
-//~        BOOST_TEST(test("a=f b=c b=e c=1", kwd("a",1,inf)[ '=' > char_] || kwd("b",0,inf)[ '=' > char_] || kwd("c",1,inf)['=' > int_], space ));
-//~        BOOST_TEST(!test("b=c b=e c=1", kwd("a",1,inf)[ '=' > char_] || kwd("b",0,inf)[ '=' > char_] || kwd("c",1,inf)['=' > int_], space ));
-//~        BOOST_TEST(test("a=f a=f a=g b=c b=e c=1 a=e", kwd("a",1,inf)[ '=' > char_] || kwd("b",0,inf)[ '=' > char_] || kwd("c",1,inf)['=' > int_], space ));
-//~    }
+   {
+        // Exact
+        BOOST_TEST(test("a=a b=b c=1", keywords( kwd("a",1)[ '=' > char_] , kwd("b")[ '=' > char_] , kwd("c")['=' > int_] ), space));
+        BOOST_TEST(test("a=a b=c b=e c=1", keywords( kwd("a",1)[ '=' > char_] , kwd("b",2)[ '=' > char_] , kwd("c")['=' > int_] ), space));
+        BOOST_TEST(!test("b=c b=e c=1", keywords( kwd("a",1)[ '=' > char_] , kwd("b",2)[ '=' > char_] , kwd("c")['=' > int_] ), space));
+
+        // Min - Max
+        BOOST_TEST(test("a=f b=c b=e c=1", keywords( kwd("a",1,2)[ '=' > char_] , kwd("b",0,2)[ '=' > char_] , kwd("c",1,2)['=' > int_]), space));
+        BOOST_TEST(!test("b=c b=e c=1", keywords( kwd("a",1,2)[ '=' > char_] , kwd("b",0,1)[ '=' > char_] , kwd("c",1,2)['=' > int_]), space));
+        BOOST_TEST(test("a=g a=f b=c b=e c=1", keywords( kwd("a",1,2)[ '=' > char_] , kwd("b",0,2)[ '=' > char_] , kwd("c",1,2)['=' > int_]), space));
+        BOOST_TEST(!test("a=f a=e b=c b=e a=p c=1", keywords( kwd("a",1,2)[ '=' > char_] , kwd("b",0,1)[ '=' > char_] , kwd("c",1,2)['=' > int_]), space));
+
+        // Min - inf
+//~        BOOST_TEST(test("a=f b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
+//~        BOOST_TEST(!test("b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
+//~        BOOST_TEST(test("a=f a=f a=g b=c b=e c=1 a=e", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
+    }
 //~    {   // Single keyword, empty string
 //~        BOOST_TEST(test(" ", lit("aad")->*(char_),space));
 //~        // Single keyword
@@ -140,7 +141,7 @@ main()
 //~
        {
           // iterator restoration
-          BOOST_TEST( test("a=a c=1 ba=d", keywords(kwd("a")[ '=' > char_] , kwd("b")[ '=' > int_] , kwd("c")['=' > int_] ) > lit("ba=") > char_, space));
+          BOOST_TEST( test("a=a c=1 ba=d", keywords(kwd("a")[ '=' >> char_] , kwd("b")[ '=' >> int_] , kwd("c")['=' >> int_] ) > lit("ba=") > char_, space));
 //        BOOST_TEST( test("A=a c=1 ba=d", (ikwd("a")[ '=' > char_] || kwd("b")[ '=' > int_] || kwd("c")['=' > int_] ) > lit("ba=") > char_, space));
        }
 //~    { // actions
