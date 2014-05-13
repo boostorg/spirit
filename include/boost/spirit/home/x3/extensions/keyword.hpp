@@ -198,14 +198,19 @@ namespace boost { namespace spirit { namespace x3 {
                     , Context const& context, Attribute& attr) const
             {
                 bool flag = repeat_limit.flag_init();
+                int counter {};
                 Iterator save = first;
-                if (! key.parse(first, last, context, unused))
+                if (key.parse(first, last, context, unused))
                 {
-                    first = save;
-                    return false;
+                    if(this->subject.parse(first,last,context,attr))
+                    {
+                        return repeat_limit.register_successful_parse(flag,counter);
+                    }
                 }
-                return this->subject.parse(first,last,context,attr);
+                first = save;
+                return flag;
             }
+
         template <typename Iterator, typename Context, typename Attribute>
             bool parse_subject(Iterator& first, Iterator const& last
                     , Context const& context, bool &flag, int &counter, Attribute& attr) const

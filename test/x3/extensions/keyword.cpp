@@ -103,30 +103,30 @@ main()
 //~        BOOST_TEST(!test("b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
 //~        BOOST_TEST(test("a=f a=f a=g b=c b=e c=1 a=e", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
     }
-//~    {   // Single keyword, empty string
-//~        BOOST_TEST(test(" ", lit("aad")->*(char_),space));
-//~        // Single keyword
-//~        BOOST_TEST(test("aad E ", kwd("aad")[char_],space));
-//~        // Single no case keyword
-//~    //    BOOST_TEST(test("AaD E ", ikwd("aad")[char_],space));
-//~
-//~    }
-//~
-//~    {
-//~        // Vector container
-//~        boost::fusion::vector<std::vector<int>,std::vector<int>,std::vector<int> > data;
-//~        BOOST_TEST(test_attr(" a=1 b=2 b=5 c=3",keywords( kwd("a")[ '=' > int_] , kwd("b")[ '=' > int_] , kwd("c")['=' > int_]) , data, space)
-//~                    && (boost::fusion::at_c<0>(data).size()==1)
-//~                    && (boost::fusion::at_c<0>(data)[0]==1)
-//~
-//~                    &&(boost::fusion::at_c<1>(data).size()==2)
-//~                    &&(boost::fusion::at_c<1>(data)[0]==2)
-//~                    &&(boost::fusion::at_c<1>(data)[1]==5)
-//~
-//~                    &&(boost::fusion::at_c<2>(data).size()==1)
-//~                    &&(boost::fusion::at_c<2>(data)[0]==3)
-//~            );
-//~    }
+    {   // Single keyword, empty string
+        BOOST_TEST(test("", kwd("aad")[char_],space));
+        // Single keyword
+        BOOST_TEST(test("aad E ", kwd("aad")[char_],space));
+        // Single no case keyword
+    //    BOOST_TEST(test("AaD E ", ikwd("aad")[char_],space));
+
+    }
+
+    {
+        // Vector container
+        boost::fusion::vector<std::vector<int>,std::vector<int>,std::vector<int> > data;
+        BOOST_TEST(test_attr(" a=1 b=2 b=5 c=3",keywords( kwd("a")[ '=' > int_] , kwd("b")[ '=' > int_] , kwd("c")['=' > int_]) , data, space)
+                    && (boost::fusion::at_c<0>(data).size()==1)
+                    && (boost::fusion::at_c<0>(data)[0]==1)
+
+                    &&(boost::fusion::at_c<1>(data).size()==2)
+                    &&(boost::fusion::at_c<1>(data)[0]==2)
+                    &&(boost::fusion::at_c<1>(data)[1]==5)
+
+                    &&(boost::fusion::at_c<2>(data).size()==1)
+                    &&(boost::fusion::at_c<2>(data)[0]==3)
+            );
+    }
 //~
 //~    {
 //~        // no_case test
@@ -142,7 +142,7 @@ main()
        {
           // iterator restoration
           BOOST_TEST( test("a=a c=1 ba=d", keywords(kwd("a")[ '=' >> char_] , kwd("b")[ '=' >> int_] , kwd("c")['=' >> int_] ) > lit("ba=") > char_, space));
-//        BOOST_TEST( test("A=a c=1 ba=d", (ikwd("a")[ '=' > char_] || kwd("b")[ '=' > int_] || kwd("c")['=' > int_] ) > lit("ba=") > char_, space));
+ //         BOOST_TEST( test("A=a c=1 ba=d", (ikwd("a")[ '=' > char_] || kwd("b")[ '=' > int_] || kwd("c")['=' > int_] ) > lit("ba=") > char_, space));
        }
 //~    { // actions
 //~        std::vector<int> v;
