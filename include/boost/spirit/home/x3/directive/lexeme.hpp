@@ -30,10 +30,11 @@ namespace boost { namespace spirit { namespace x3
         lexeme_directive(Subject const& subject)
           : base_type(subject) {}
         
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         typename enable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
             auto const& skipper = get<skipper_tag>(context);
@@ -46,13 +47,15 @@ namespace boost { namespace spirit { namespace x3
             return this->subject.parse(
                 first, last
               , make_context<skipper_tag>(unused_skipper, context)
+              , rcontext
               , attr);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         typename disable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             //  no need to pre-skip if skipper is unused
             //- x3::skip_over(first, last, context);
@@ -60,6 +63,7 @@ namespace boost { namespace spirit { namespace x3
             return this->subject.parse(
                 first, last
               , context
+              , rcontext
               , attr);
         }
     };

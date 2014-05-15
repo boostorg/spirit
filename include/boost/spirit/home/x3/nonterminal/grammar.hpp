@@ -83,12 +83,14 @@ namespace boost { namespace spirit { namespace x3
         grammar_parser(char const* name, Elements const& elements)
           : name(name), elements(elements) {}
 
-        template <typename Iterator, typename Context, typename Attribute_>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute_& attr) const
+          , Context const& context, RContext& rcontext, Attribute_& attr) const
         {
             grammar_context<Elements, Context> our_context(elements, context);
-            return fusion::front(elements).second.parse(first, last, our_context, attr);
+            return fusion::front(elements).second.parse(
+                first, last, our_context, rcontext, attr);
         }
 
         char const* name;

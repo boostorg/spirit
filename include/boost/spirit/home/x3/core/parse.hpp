@@ -36,7 +36,7 @@ namespace boost { namespace spirit { namespace x3
         // If you get an error no matching function for call to 'as_parser'
         // here, then p is not a parser or there is no suitable conversion
         // from p to a parser.
-        return as_parser(p).parse(first, last, unused, attr);
+        return as_parser(p).parse(first, last, unused, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -114,10 +114,10 @@ namespace boost { namespace spirit { namespace x3
         // If you get an error no matching function for call to 'as_parser'
         // here, for either p or s, then p or s is not a parser or there is
         // no suitable conversion from p to a parser.
-        auto skipper = make_context<skipper_tag>(s);
-        bool r = as_parser(p).parse(first, last, skipper, attr);
+        auto skipper_ctx = make_context<skipper_tag>(s);
+        bool r = as_parser(p).parse(first, last, skipper_ctx, unused, attr);
         if (post_skip == skip_flag::post_skip)
-            x3::skip_over(first, last, skipper);
+            x3::skip_over(first, last, skipper_ctx);
         return r;
     }
 

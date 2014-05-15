@@ -31,11 +31,11 @@ namespace boost { namespace spirit { namespace x3
         omit_directive(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context>
+        template <typename Iterator, typename Context, typename RContext>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type) const
+          , Context const& context, RContext& rcontext, unused_type) const
         {
-            return this->subject.parse(first, last, context, unused);
+            return this->subject.parse(first, last, context, rcontext, unused);
         }
     };
 

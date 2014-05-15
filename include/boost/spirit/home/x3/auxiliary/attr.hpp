@@ -43,9 +43,10 @@ namespace boost { namespace spirit { namespace x3
         attr_parser(Value&& value)
           : value_(std::move(value)) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr_) const
+          , Context const& context, RuleContext&, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_, attr_);
@@ -72,14 +73,16 @@ namespace boost { namespace spirit { namespace x3
         {
             std::copy(value + 0, value + N, value_ + 0);
         }
+
         attr_parser(Value (&&value)[N])
         {
             std::move(value + 0, value + N, value_ + 0);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr_) const
+          , Context const& context, RuleContext&, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_ + 0, value_ + N, attr_);

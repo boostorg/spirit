@@ -41,11 +41,12 @@ namespace boost { namespace spirit { namespace x3
         expect_directive(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            bool r = this->subject.parse(first, last, context, attr);
+            bool r = this->subject.parse(first, last, context, rcontext, attr);
 
             if (!r)
             {

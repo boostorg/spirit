@@ -26,12 +26,13 @@ namespace boost { namespace spirit { namespace x3
         not_predicate(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& /*attr*/) const
+          , Context const& context, RContext& rcontext, Attribute& /*attr*/) const
         {
             Iterator i = first;
-            return !this->subject.parse(i, last, context, unused);
+            return !this->subject.parse(i, last, context, rcontext, unused);
         }
     };
 

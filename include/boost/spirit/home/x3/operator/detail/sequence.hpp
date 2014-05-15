@@ -306,11 +306,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         type;
     };
 
-    template <typename Parser
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
     bool parse_sequence(
-        Parser const& parser , Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr, traits::tuple_attribute)
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::tuple_attribute)
     {
         typedef typename Parser::left_type Left;
         typedef typename Parser::right_type Right;
@@ -324,18 +325,19 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename r_pass::type r_attr = r_pass::call(r_part);
 
         Iterator save = first;
-        if (parser.left.parse(first, last, context, l_attr)
-            && parser.right.parse(first, last, context, r_attr))
+        if (parser.left.parse(first, last, context, rcontext, l_attr)
+            && parser.right.parse(first, last, context, rcontext, r_attr))
             return true;
         first = save;
         return false;
     }
 
-    template <typename Parser
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
     bool parse_sequence(
         Parser const& parser , Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr, traits::plain_attribute)
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::plain_attribute)
     {
 	typedef typename Parser::left_type Left;
 	typedef typename Parser::right_type Right;
@@ -348,90 +350,95 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename r_make_attribute::type r_attr = r_make_attribute::call(attr);
 
         Iterator save = first;
-        if (parser.left.parse(first, last, context, l_attr)
-            && parser.right.parse(first, last, context, r_attr))
+        if (parser.left.parse(first, last, context, rcontext, l_attr)
+            && parser.right.parse(first, last, context, rcontext, r_attr))
             return true;
         first = save;
         return false;
     }
 
-    template <typename Left, typename Right
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Left, typename Right, typename Iterator
+      , typename Context, typename RContext, typename Attribute>
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
       , Context const& context, Attribute& attr, traits::container_attribute);
 
-    template <typename Parser
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
     bool parse_sequence(
         Parser const& parser , Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr, traits::container_attribute)
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::container_attribute)
     {
         Iterator save = first;
-        if (parse_into_container(parser.left, first, last, context, attr)
-            && parse_into_container(parser.right, first, last, context, attr))
+        if (parse_into_container(parser.left, first, last, context, rcontext, attr)
+            && parse_into_container(parser.right, first, last, context, rcontext, attr))
             return true;
         first = save;
         return false;
     }
 
-    template <typename Parser
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
     bool parse_sequence_assoc(
         Parser const& parser , Iterator& first, Iterator const& last
-	, Context const& context, Attribute& attr, mpl::false_ /*should_split*/)
+	  , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_ /*should_split*/)
     {
-	    return parse_into_container(parser, first, last, context, attr);
+	    return parse_into_container(parser, first, last, context, rcontext, attr);
     }
 
-    template <typename Parser
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
     bool parse_sequence_assoc(
         Parser const& parser , Iterator& first, Iterator const& last
-	, Context const& context, Attribute& attr, mpl::true_ /*should_split*/)
+	  , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_ /*should_split*/)
     {
         Iterator save = first;
-        if (parser.left.parse( first, last, context, attr)
-            && parser.right.parse(first, last, context, attr))
+        if (parser.left.parse( first, last, context, rcontext, attr)
+            && parser.right.parse(first, last, context, rcontext, attr))
             return true;
         first = save;
         return false;
     }
 
-    template <typename Parser
-      , typename Iterator, typename Context, typename Attribute>
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
     bool parse_sequence(
-        Parser const& parser , Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr, traits::associative_attribute)
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::associative_attribute)
     {
-	// we can come here in 2 cases:
-	// - when sequence is key >> value and therefore must
-	// be parsed with tuple synthesized attribute and then
-	// that tuple is used to save into associative attribute provided here.
-	// Example:  key >> value;
-	//
-	// - when either this->left or this->right provides full key-value
-	// pair (like in case 1) and another one provides nothing.
-	// Example:  eps >> rule<class x; fusion::map<...> >
-	//
-	// first case must be parsed as whole, and second one should
-	// be parsed separately for left and right.
+        // we can come here in 2 cases:
+        // - when sequence is key >> value and therefore must
+        // be parsed with tuple synthesized attribute and then
+        // that tuple is used to save into associative attribute provided here.
+        // Example:  key >> value;
+        //
+        // - when either this->left or this->right provides full key-value
+        // pair (like in case 1) and another one provides nothing.
+        // Example:  eps >> rule<class x; fusion::map<...> >
+        //
+        // first case must be parsed as whole, and second one should
+        // be parsed separately for left and right.
 
-	typedef typename traits::attribute_of<
-	    decltype(parser.left), Context>::type l_attr_type;
-	typedef typename traits::attribute_of<
-	    decltype(parser.right), Context>::type r_attr_type;
+        typedef typename traits::attribute_of<
+            decltype(parser.left), Context>::type l_attr_type;
+        typedef typename traits::attribute_of<
+            decltype(parser.right), Context>::type r_attr_type;
 
-	typedef typename mpl::or_<is_same<l_attr_type, unused_type>
-				  , is_same<r_attr_type, unused_type> > should_split;
+        typedef typename
+            mpl::or_<
+                is_same<l_attr_type, unused_type>
+              , is_same<r_attr_type, unused_type> >
+        should_split;
 
-            return parse_sequence_assoc(parser, first, last, context, attr
-					, should_split());
+        return parse_sequence_assoc(parser, first, last, context, rcontext, attr
+          , should_split());
     }
 
-    template <typename Left, typename Right, typename Context>
-    struct parse_into_container_impl<sequence<Left, Right>, Context>
+    template <typename Left, typename Right, typename Context, typename RContext>
+    struct parse_into_container_impl<sequence<Left, Right>, Context, RContext>
     {
         typedef sequence<Left, Right> parser_type;
 
@@ -439,7 +446,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
         {
 	    // inform user what went wrong if we jumped here in attempt to
 	    // parse incompatible sequence into fusion::map
@@ -451,10 +458,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             Attribute attr_;
             if (!parse_sequence(parser
-			       , first, last, context, attr_, traits::container_attribute()))
+			       , first, last, context, rcontext, attr_, traits::container_attribute()))
             {
                 return false;
-	         }
+            }
             traits::append(attr, traits::begin(attr_), traits::end(attr_));
             return true;
         }
@@ -463,17 +470,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
         {
             return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, attr);
+                parser, first, last, context, rcontext, attr);
         }
 
         template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr)
+          , Context const& context, RContext& rcontext, Attribute& attr)
         {
             typedef typename
                 traits::attribute_of<parser_type, Context>::type
@@ -483,7 +490,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 traits::container_value<Attribute>::type
             value_type;
 
-            return call(parser, first, last, context, attr
+            return call(parser, first, last, context, rcontext, attr
 	        , typename traits::is_substitute<attribute_type, value_type>::type());
         }
     };

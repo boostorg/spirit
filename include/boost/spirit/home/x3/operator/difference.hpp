@@ -26,20 +26,21 @@ namespace boost { namespace spirit { namespace x3
         difference(Left const& left, Right const& right)
           : base_type(left, right) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             // Try Right first
             Iterator start = first;
-            if (this->right.parse(first, last, context, unused))
+            if (this->right.parse(first, last, context, rcontext, unused))
             {
                 // Right succeeds, we fail.
                 first = start;
                 return false;
             }
             // Right fails, now try Left
-            return this->left.parse(first, last, context, attr);
+            return this->left.parse(first, last, context, rcontext, attr);
         }
 
         template <typename Left_, typename Right_>

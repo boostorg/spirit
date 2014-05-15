@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute_& attr) const
+          , Context const& context, unused_type, Attribute_& attr) const
         {
             rule_context<Attribute> r_context = { 0 };
 
@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute_& attr) const
+          , Context const& context, unused_type, Attribute_& attr) const
         {
             return detail::parse_rule<attribute_type, ID>::call_from_rule(
                 x3::get<ID>(context), name

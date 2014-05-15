@@ -30,10 +30,11 @@ namespace boost { namespace spirit { namespace x3
         reskip_directive(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         typename disable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             auto const& skipper =
                 detail::get_unused_skipper(get<skipper_tag>(context));
@@ -41,16 +42,19 @@ namespace boost { namespace spirit { namespace x3
             return this->subject.parse(
                 first, last
               , make_context<skipper_tag>(skipper, context)
+              , rcontext
               , attr);
         }
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         typename enable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return this->subject.parse(
                 first, last
               , context
+              , rcontext
               , attr);
         }
     };
@@ -67,13 +71,15 @@ namespace boost { namespace spirit { namespace x3
           , skipper(skipper)
         {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return this->subject.parse(
                 first, last
               , make_context<skipper_tag>(skipper, context)
+              , rcontext
               , attr);
         }
 

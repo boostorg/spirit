@@ -20,7 +20,7 @@
 
 #include <boost/spirit/home/x3/extensions/seek.hpp>
 
-#include "test.hpp"
+#include "../test.hpp"
 
 
 ///////////////////////////////////////////////////////////////////////////////

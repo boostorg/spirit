@@ -137,12 +137,13 @@ namespace boost { namespace spirit { namespace x3
         }
 
         // action wants attribute
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_) const
+          , Context const& context, RuleContext& rcontext, Attribute& attr, mpl::false_) const
         {
             Iterator save = first;
-            if (this->subject.parse(first, last, context, attr))
+            if (this->subject.parse(first, last, context, rcontext, attr))
             {
                 typename detail::is_unary<Action, Attribute> is_unary;
                 if (call_action(context, attr, is_unary))
@@ -156,19 +157,19 @@ namespace boost { namespace spirit { namespace x3
         }
         
         // attr==raw_attribute_type, action wants iterator_range (see raw.hpp)
-        template <typename Iterator, typename Context>
+        template <typename Iterator, typename Context, typename RuleContext>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, raw_attribute_type&, mpl::false_) const
+          , Context const& context, RuleContext& rcontext, raw_attribute_type&, mpl::false_) const
         {
             boost::iterator_range<Iterator> rng;
             // synthesize the attribute since one is not supplied
-            return parse(first, last, context, rng, mpl::false_());
+            return parse(first, last, context, rcontext, rng, mpl::false_());
         }
 
         // attr==unused, action wants attribute
-        template <typename Iterator, typename Context>
+        template <typename Iterator, typename Context, typename RuleContext>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, mpl::false_) const
+          , Context const& context, RuleContext& rcontext, unused_type, mpl::false_) const
         {
             typedef typename
                 traits::attribute_of<action<Subject, Action>, Context>::type
@@ -181,16 +182,17 @@ namespace boost { namespace spirit { namespace x3
             // synthesize the attribute since one is not supplied
             typename make_attribute::type made_attr = make_attribute::call(unused_type());
             typename transform::type attr = transform::pre(made_attr);
-            return parse(first, last, context, attr, mpl::false_());
+            return parse(first, last, context, rcontext, attr, mpl::false_());
         }
 
         // action does not want context and attribute
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+            , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_) const
+          , Context const& context, RuleContext& rcontext, Attribute& attr, mpl::true_) const
         {
             Iterator save = first;
-            if (this->subject.parse(first, last, context, attr))
+            if (this->subject.parse(first, last, context, rcontext, attr))
             {
                 f();
                 return true;
@@ -203,12 +205,13 @@ namespace boost { namespace spirit { namespace x3
         }
 
         // main parse function
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+            , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
             typename detail::is_nullary<Action> is_nullary;
-            return parse(first, last, context, attr, is_nullary);
+            return parse(first, last, context, rcontext, attr, is_nullary);
         }
 
         Action f;

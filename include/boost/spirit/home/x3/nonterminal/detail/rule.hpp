@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, ActualAttribute& attr, mpl::true_)
         {
             Iterator i = first;
-            bool r = rhs.parse(i, last, context, attr);
+            bool r = rhs.parse(i, last, context, unused, attr); // $$$ fix this unused rcontext $$$
             if (r)
             {
                 bool pass = true;
@@ -287,7 +287,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // The rule body is established by the rule_definition class, so
             // we call it to parse and establish the rule-body.
 
-            return rule_def.parse(first, last, context, attr);
+            return rule_def.parse(first, last, context, unused, attr); // $$$ fix unused param $$$
         }
     };
 }}}}

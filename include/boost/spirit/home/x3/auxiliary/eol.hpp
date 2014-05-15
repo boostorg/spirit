@@ -20,12 +20,12 @@ namespace boost { namespace spirit { namespace x3
 {
     struct eol_parser : parser<eol_parser>
     {
-        typedef unused_type attribute_type;
+         typedef unused_type attribute_type;
         static bool const has_attribute = false;
 
         template <typename Iterator, typename Context, typename Attribute>
-        bool parse( Iterator& first, Iterator const& last
-                  , Context const& context, Attribute& /*attr*/) const
+        bool parse(Iterator& first, Iterator const& last
+         , Context const& context, unused_type, Attribute& /*attr*/) const
         {
             x3::skip_over(first, last, context);
             Iterator iter = first;

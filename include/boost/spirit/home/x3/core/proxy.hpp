@@ -27,23 +27,23 @@ namespace boost { namespace spirit { namespace x3
 
         // Overload this when appropriate. The proxy parser will pick up
         // the most derived overload.
-        template <
-            typename Iterator, typename Context, typename Attribute
-          , typename Category>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute, typename Category>
         bool parse_subject(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, Category) const
+          , Context const& context, RuleContext& rcontext, Attribute& attr, Category) const
         {
-            this->subject.parse(first, last, context, attr);
+            this->subject.parse(first, last, context, rcontext, attr);
             return true;
         }
 
         // Main entry point.
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
-            return this->derived().parse_subject(first, last, context, attr
-              , typename traits::attribute_category<Attribute>::type());
+            return this->derived().parse_subject(first, last, context, rcontext, attr
+                , typename traits::attribute_category<Attribute>::type());
         }
     };
 

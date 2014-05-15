@@ -29,13 +29,15 @@ namespace boost { namespace spirit { namespace x3
           : base_type(subject)
           , val(val) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return this->subject.parse(
                 first, last
               , make_context<ID>(val, context)
+              , rcontext
               , attr);
         }
     };
