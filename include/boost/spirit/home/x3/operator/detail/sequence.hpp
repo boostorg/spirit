@@ -339,8 +339,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Context const& context, RContext& rcontext, Attribute& attr
       , traits::plain_attribute)
     {
-	typedef typename Parser::left_type Left;
-	typedef typename Parser::right_type Right;
+        typedef typename Parser::left_type Left;
+        typedef typename Parser::right_type Right;
         typedef typename traits::attribute_of<Left, Context>::type l_attr_type;
         typedef typename traits::attribute_of<Right, Context>::type r_attr_type;
         typedef traits::make_attribute<l_attr_type, Attribute> l_make_attribute;
@@ -362,7 +362,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_sequence(
         Left const& left, Right const& right
       , Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr, traits::container_attribute);
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::container_attribute);
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>

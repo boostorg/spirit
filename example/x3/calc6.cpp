@@ -227,29 +227,29 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////////
     // rule IDs
     ///////////////////////////////////////////////////////////////////////////////
-    typedef x3::identity<class expression> expression_id;
-    typedef x3::identity<class term> term_id;
-    typedef x3::identity<class factor> factor_id;
+//    typedef x3::identity<class expression> expression_id;
+//    typedef x3::identity<class term> term_id;
+//    typedef x3::identity<class factor> factor_id;
 
     ///////////////////////////////////////////////////////////////////////////////
     //  Our error handler
     ///////////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result
-    on_error(
-        expression_id, Iterator&
-      , Exception const& x, Context const& context)
-    {
-        std::cout
-            << "Error! Expecting: "
-            << x.what_
-            << " here: \""
-            << std::string(x.first, x.last)
-            << "\""
-            << std::endl
-            ;
-        return x3::error_handler_result::fail;
-    }
+//    template <typename Iterator, typename Exception, typename Context>
+//    x3::error_handler_result
+//    on_error(
+//        x3::identity<class expression>, Iterator&
+//      , Exception const& x, Context const& context)
+//    {
+//        std::cout
+//            << "Error! Expecting: "
+//            << x.what_
+//            << " here: \""
+//            << std::string(x.first, x.last)
+//            << "\""
+//            << std::endl
+//            ;
+//        return x3::error_handler_result::fail;
+//    }
 
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
@@ -259,9 +259,9 @@ namespace client
         using x3::uint_;
         using x3::char_;
 
-        x3::rule<expression_id, ast::expression> const expression("expression");
-        x3::rule<term_id, ast::expression> const term("term");
-        x3::rule<factor_id, ast::operand> const factor("factor");
+        x3::rule<class expression, ast::expression> const expression("expression");
+        x3::rule<class term, ast::expression> const term("term");
+        x3::rule<class factor, ast::operand> const factor("factor");
 
         auto const expression_def =
             term
@@ -284,12 +284,37 @@ namespace client
             |   (char_('+') > factor)
             ;
 
-        auto const calculator = x3::grammar(
-                "calculator"
-              , expression = expression_def
-              , term = term_def
-              , factor = factor_def
-            );
+//        BOOST_SPIRIT_DEFINE(
+//            expression = expression_def
+//          , term = term_def
+//          , factor = factor_def
+//        );
+
+        BOOST_SPIRIT_DEFINE(expression, expression_def);
+        BOOST_SPIRIT_DEFINE(term, term_def);
+        BOOST_SPIRIT_DEFINE(factor, factor_def);
+        
+        ///////////////////////////////////////////////////////////////////////////////
+        //  Our error handler
+        ///////////////////////////////////////////////////////////////////////////////
+        template <typename Iterator, typename Exception, typename Context>
+        x3::error_handler_result
+        on_error(
+            x3::identity<class expression>, Iterator&
+          , Exception const& x, Context const& context)
+        {
+            std::cout
+                << "Error! Expecting: "
+                << x.what_
+                << " here: \""
+                << std::string(x.first, x.last)
+                << "\""
+                << std::endl
+                ;
+            return x3::error_handler_result::fail;
+        }
+        
+        auto calculator = expression;
     }
 
     using calculator_grammar::calculator;
