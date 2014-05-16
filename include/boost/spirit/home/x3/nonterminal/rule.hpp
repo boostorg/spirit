@@ -64,6 +64,17 @@ namespace boost { namespace spirit { namespace x3
         RHS rhs;
         char const* name;
     };
+    
+    // default parse_rule implementation
+    template <typename ID, typename Attribute, typename Iterator
+      , typename Context, typename ActualAttribute>
+    inline bool parse_rule(
+        rule<ID, Attribute> rule_
+      , Iterator& first, Iterator const& last
+      , Context const& context, ActualAttribute& attr)
+    {
+        return get<ID>(context).parse(first, last, context, unused, attr);
+    }
 
     template <typename ID, typename Attribute>
     struct rule : parser<rule<ID, Attribute>>
@@ -130,42 +141,30 @@ namespace boost { namespace spirit { namespace x3
         }
     };
     
-#define BOOST_SPIRIT_DEFINE(id, def)                                            \
-    template <typename Iterator, typename Context                               \
-      , typename Attribute, typename ActualAttribute>                           \
+#define BOOST_SPIRIT_DEFINE_(r, data, def)                                      \
+    template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
-        boost::spirit::x3::rule<class id, Attribute> const& rule_               \
+        decltype(def)::lhs_type rule_                                           \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context, ActualAttribute& attr)                          \
+      , Context const& context, Attribute& attr)                                \
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         auto const& def_ = (def);                                               \
-        return boost::spirit::x3::detail::parse_rule<Attribute, class id>       \
-            ::call_rule_definition(                                             \
-                def_, #id, first, last                                          \
-              , context                                                         \
-              , attr                                                            \
-              , boost::mpl::bool_<false>());                                    \
+        return def_.parse(first, last, context, unused, attr);                  \
     }                                                                           \
     /***/
 
+#define BOOST_SPIRIT_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
+    BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
+    /***/
     
-//#define BOOST_SPIRIT_DEFINE_(r, data, def)                                      \
-//    template <typename Iterator, typename Context, typename Attribute>          \
-//    inline bool parse_rule(                                                     \
-//        decltype(def)::lhs_type const& rule_                                    \
-//      , Iterator& first, Iterator const& last                                   \
-//      , Context const& context, Attribute& attr)                                \
-//    {                                                                           \
-//        using boost::spirit::x3::unused;                                        \
-//        auto const& def_ = (def);                                               \
-//        return def_.parse(first, last, context, unused, attr);                  \
-//    }                                                                           \
-//    /***/
-//
-//#define BOOST_SPIRIT_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
-//    BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
-//    /***/
+#define BOOST_SPIRIT_ONERROR(id, result)                                        \
+        template <typename Iterator, typename Exception, typename Context>      \
+        decltype(result) on_error(                                              \
+            x3::identity<class id>, Iterator&                                   \
+          , Exception const& x, Context const& context)                         \
+    /***/
+
     
 }}}
 

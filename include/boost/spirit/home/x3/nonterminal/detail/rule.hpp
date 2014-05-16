@@ -105,17 +105,23 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , mpl::true_)
         {
             Iterator i = first;
-            bool r = rhs.parse(i, last, context, rcontext, attr);
+            bool r = rhs.parse(
+                i
+              , last
+              , context // make_unique_context<ID>(rhs, context)
+              , rcontext
+              , attr
+            );
+
             if (r)
             {
                 bool pass = true;
-                auto action_context = make_context<parse_pass_context_tag>(pass, context);
                 on_success(
                     typename make_id<ID>::type()
                   , first
                   , i
                   , attr
-                  , action_context
+                  , make_context<parse_pass_context_tag>(pass, context)
                 );
                 if (pass)
                     first = i;

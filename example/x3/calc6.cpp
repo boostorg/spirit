@@ -284,24 +284,15 @@ namespace client
             |   (char_('+') > factor)
             ;
 
-//        BOOST_SPIRIT_DEFINE(
-//            expression = expression_def
-//          , term = term_def
-//          , factor = factor_def
-//        );
-
-        BOOST_SPIRIT_DEFINE(expression, expression_def);
-        BOOST_SPIRIT_DEFINE(term, term_def);
-        BOOST_SPIRIT_DEFINE(factor, factor_def);
+        BOOST_SPIRIT_DEFINE(
+            expression = expression_def
+          , term = term_def
+          , factor = factor_def
+        );
         
-        ///////////////////////////////////////////////////////////////////////////////
-        //  Our error handler
-        ///////////////////////////////////////////////////////////////////////////////
-        template <typename Iterator, typename Exception, typename Context>
-        x3::error_handler_result
-        on_error(
-            x3::identity<class expression>, Iterator&
-          , Exception const& x, Context const& context)
+        // Our error handler
+        using x3::error_handler_result::fail;
+        BOOST_SPIRIT_ONERROR(expression, fail)
         {
             std::cout
                 << "Error! Expecting: "
@@ -311,7 +302,7 @@ namespace client
                 << "\""
                 << std::endl
                 ;
-            return x3::error_handler_result::fail;
+            return fail;
         }
         
         auto calculator = expression;

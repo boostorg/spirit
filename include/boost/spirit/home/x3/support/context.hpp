@@ -105,6 +105,31 @@ namespace boost { namespace spirit { namespace x3
     {
         return context<ID, T>(val);
     }
+    
+    namespace detail
+    {
+        template <typename ID, typename T, typename Next, typename FoundVal>
+        inline Next const&
+        make_unique_context(T& val, Next const& next, FoundVal&)
+        {
+            return next;
+        }
+        
+        template <typename ID, typename T, typename Next>
+        inline context<ID, T, Next>
+        make_unique_context(T& val, Next const& next, unused_type)
+        {
+            return context<ID, T, Next>(val, next);
+        }
+    }
+    
+    template <typename ID, typename T, typename Next>
+    inline auto
+    make_unique_context(T& val, Next const& next)
+    -> decltype(detail::make_unique_context<ID>(val, next, get<ID>(next)))
+    {
+        return detail::make_unique_context<ID>(val, next, get<ID>(next));
+    }
 }}}
 
 #endif
