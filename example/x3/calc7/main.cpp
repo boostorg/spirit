@@ -39,7 +39,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef client::ast::expression ast_expression;
     typedef client::compiler compiler;
-    using client::expression;
+    using client::calculator_grammar::expression_type;
 
     std::string str;
     while (std::getline(std::cin, str))
@@ -53,7 +53,7 @@ main()
 
         client::vmachine mach;                                  // Our virtual machine
         std::vector<int> code;                                  // Our VM code
-        auto calc = expression<iterator_type, skipper_type>();  // grammar
+        expression_type calc;                                   // grammar
 
         ast_expression ast;                                     // Our program (AST)
         compiler compile(code);                                 // Compiles the program

@@ -13,18 +13,18 @@
 namespace client
 {
     namespace x3 = boost::spirit::x3;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // rule IDs
-    ///////////////////////////////////////////////////////////////////////////////
-    typedef x3::identity<class expression> expression_id;
-    typedef x3::identity<class term> term_id;
-    typedef x3::identity<class factor> factor_id;
-
-    template <typename Iterator, typename Skipper>
-    x3::any_parser<Iterator, ast::expression, x3::context<x3::skipper_tag, Skipper const>>
-    expression();
-
+    namespace calculator_grammar
+    {
+        typedef x3::identity<class expression> expression_id;
+        typedef x3::identity<class term> term_id;
+        typedef x3::identity<class factor> factor_id;
+        
+        typedef x3::rule<class expression, ast::expression> const expression_type;
+        typedef x3::rule<class term, ast::expression> const term_type;
+        typedef x3::rule<class factor, ast::operand> const factor_type;
+        
+        BOOST_SPIRIT_DECLARE(expression_type);
+    }
 }
 
 #endif

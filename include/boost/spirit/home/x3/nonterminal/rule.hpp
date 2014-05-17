@@ -141,6 +141,18 @@ namespace boost { namespace spirit { namespace x3
         }
     };
     
+#define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
+    template <typename Iterator, typename Context, typename Attribute>          \
+    bool parse_rule(                                                            \
+        rule_type rule_                                                         \
+      , Iterator& first, Iterator const& last                                   \
+      , Context const& context, Attribute& attr);                               \
+    /***/
+
+#define BOOST_SPIRIT_DECLARE(...) BOOST_PP_SEQ_FOR_EACH(                        \
+    BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
+    /***/
+    
 #define BOOST_SPIRIT_DEFINE_(r, data, def)                                      \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
@@ -163,6 +175,13 @@ namespace boost { namespace spirit { namespace x3
         decltype(result) on_error(                                              \
             x3::identity<class id>, Iterator&                                   \
           , Exception const& x, Context const& context)                         \
+    /***/
+
+#define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
+    template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \
+        rule_type rule_                                                         \
+      , Iterator& first, Iterator const& last                                   \
+      , Context const& context, rule_type::attribute_type& attr);               \
     /***/
 
     
