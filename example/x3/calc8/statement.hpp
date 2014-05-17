@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_CALC8_EXPRESSION_HPP)
-#define BOOST_SPIRIT_X3_CALC8_EXPRESSION_HPP
+#if !defined(BOOST_SPIRIT_X3_CALC8_STATEMENT_HPP)
+#define BOOST_SPIRIT_X3_CALC8_STATEMENT_HPP
 
 #include <boost/spirit/home/x3.hpp>
 #include "ast.hpp"
@@ -15,12 +15,12 @@ namespace client
     namespace x3 = boost::spirit::x3;
     namespace parser
     {
-        typedef x3::rule<class additive_expr, ast::expression> additive_expr_type;
-        typedef additive_expr_type expression_type;
-        BOOST_SPIRIT_DECLARE(additive_expr_type);
+        typedef x3::rule<class statement_list, ast::statement_list> statement_list_type;
+        typedef statement_list_type statement_type;
+        BOOST_SPIRIT_DECLARE(statement_list_type);
     }
     
-    parser::expression_type expression();
+    parser::statement_list_type statement();
 }
 
 #endif

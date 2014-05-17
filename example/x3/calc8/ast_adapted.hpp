@@ -28,4 +28,15 @@ BOOST_FUSION_ADAPT_STRUCT(
     (std::list<client::ast::operation>, rest)
 )
 
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::variable_declaration,
+    (client::ast::assignment, assign)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    client::ast::assignment,
+    (client::ast::variable, lhs)
+    (client::ast::expression, rhs)
+)
+
 #endif

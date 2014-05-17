@@ -64,7 +64,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
-            return detail::parse_rule<attribute_type, ID>
+            return detail::rule_parser<attribute_type, ID>
                 ::call_rule_definition(
                     rhs, name, first, last
                   , context

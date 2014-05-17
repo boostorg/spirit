@@ -13,7 +13,7 @@
 #include "expression.hpp"
 #include "error_handler.hpp"
 
-namespace client { namespace calculator_grammar
+namespace client { namespace parser
 {
     using x3::uint_;
     using x3::char_;
@@ -27,13 +27,13 @@ namespace client { namespace calculator_grammar
     typedef x3::rule<class primary_expr, ast::operand> primary_expr_type;
     typedef x3::rule<class identifier, std::string> identifier_type;
 
-    additive_expr_type const additive_expr("additive_expr");
-    multiplicative_expr_type const multiplicative_expr("multiplicative_expr");
-    unary_expr_type unary_expr("unary_expr");
-    primary_expr_type primary_expr("primary_expr");
-    identifier_type const identifier("identifier");
+    additive_expr_type const additive_expr = "additive_expr";
+    multiplicative_expr_type const multiplicative_expr = "multiplicative_expr";
+    unary_expr_type unary_expr = "unary_expr";
+    primary_expr_type primary_expr = "primary_expr";
+    identifier_type const identifier = "identifier";
     
-    auto expr = additive_expr;
+    auto const expression = additive_expr;
 
     auto const additive_expr_def =
         multiplicative_expr
@@ -58,7 +58,7 @@ namespace client { namespace calculator_grammar
     auto const primary_expr_def =
             uint_
         |   identifier
-        |   '(' > expr > ')'
+        |   '(' > expression > ')'
         ;
     
     auto const identifier_def =
@@ -73,5 +73,13 @@ namespace client { namespace calculator_grammar
       , identifier = identifier_def
     );
 }}
+
+namespace client
+{
+    parser::expression_type expression()
+    {
+        return parser::expression;
+    }
+}
 
 #endif

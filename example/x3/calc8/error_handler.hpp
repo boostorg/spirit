@@ -9,7 +9,7 @@
 
 #include <boost/spirit/home/x3.hpp>
 
-namespace client { namespace calculator_grammar
+namespace client { namespace parser
 {
     ////////////////////////////////////////////////////////////////////////////
     //  Our error handler

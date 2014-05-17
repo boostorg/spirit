@@ -113,25 +113,27 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         typedef identity<ID> type;
     };
+    
+    template <typename RHS, typename Context>
+    Context const&
+    make_rule_context(RHS const& rhs, Context const& context
+      , mpl::false_ /* is_default_parse_rule */)
+    {
+        return context;
+    }
+    
+    template <typename RHS, typename Context>
+    auto
+    make_rule_context(RHS const& rhs, Context const& context
+      , mpl::true_ /* is_default_parse_rule */ )
+    -> decltype(make_unique_context<ID>(rhs, context))
+    {
+        return make_unique_context<ID>(rhs, context);
+    }
 
     template <typename Attribute, typename ID>
-    struct parse_rule
+    struct rule_parser
     {
-        template <typename RHS, typename Context>
-        static Context const&
-        make_rule_context(RHS const& rhs, Context const& context, mpl::false_)
-        {
-            return context;
-        }
-        
-        template <typename RHS, typename Context>
-        static auto
-        make_rule_context(RHS const& rhs, Context const& context, mpl::true_)
-        -> decltype(make_unique_context<ID>(rhs, context))
-        {
-            return make_unique_context<ID>(rhs, context);
-        }
-    
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
         static bool parse_rhs_main(
@@ -140,12 +142,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, RContext& rcontext, ActualAttribute& attr
           , mpl::true_)
         {
+            // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
-                decltype(x3::parse_rule(
+                decltype(parse_rule(
                     rule<ID, Attribute>(), first, last
                   , make_unique_context<ID>(rhs, context), attr))
             parse_rule_result;
 
+            // If there is no BOOST_SPIRIT_DEFINE for this rule,
+            // we'll make a context for this rule tagged by its ID
+            // so we can extract the rule later on in the default
+            // (generic) parse_rule function.
             typedef
                 is_same<parse_rule_result, default_parse_rule_result>
             is_default_parse_rule;
