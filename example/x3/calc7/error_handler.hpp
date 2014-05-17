@@ -9,18 +9,13 @@
 
 #include <boost/spirit/home/x3.hpp>
 
-namespace client
+namespace client { namespace calculator_grammar
 {
-    ///////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     //  Our error handler
-    ///////////////////////////////////////////////////////////////////////////////
-    typedef x3::identity<class expression> expression_id;
-
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result
-    on_error(
-        expression_id, Iterator&
-      , Exception const& x, Context const& context)
+    ////////////////////////////////////////////////////////////////////////////
+    using x3::error_handler_result::fail;
+    BOOST_SPIRIT_ONERROR(expression, fail)
     {
         std::cout
             << "Error! Expecting: "
@@ -30,8 +25,8 @@ namespace client
             << "\""
             << std::endl
             ;
-        return x3::error_handler_result::fail;
+        return fail;
     }
-}
+}}
 
 #endif

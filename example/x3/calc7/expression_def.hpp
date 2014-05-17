@@ -10,6 +10,7 @@
 #include <boost/spirit/home/x3.hpp>
 #include "ast.hpp"
 #include "expression.hpp"
+#include "error_handler.hpp"
 
 namespace client { namespace calculator_grammar
 {
