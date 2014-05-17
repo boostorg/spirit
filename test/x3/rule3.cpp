@@ -21,15 +21,14 @@
 #include <iostream>
 #include "test.hpp"
 
-using boost::spirit::x3::get;
-using boost::spirit::x3::rule_context_tag;
+using boost::spirit::x3::_val;
 
 struct f
 {
     template <typename Context>
     void operator()(Context const& ctx, char c) const
     {
-        get<rule_context_tag>(ctx).val() += c;
+        _val(ctx) += c;
     }
 };
 
@@ -48,7 +47,6 @@ main()
     //~ using boost::spirit::x3::on_error;
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
-    using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_val;
     //~ using boost::spirit::x3::_1;
     //~ using boost::spirit::x3::_r1;

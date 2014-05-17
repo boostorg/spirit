@@ -109,6 +109,15 @@ namespace boost { namespace spirit { namespace x3
     {
         return x3::get<parse_pass_context_tag>(context);
     }
+    
+    struct rule_val_context_tag;
+    template <typename Context>
+
+    inline auto _val(Context const& context)
+    -> decltype(x3::get<rule_val_context_tag>(context))
+    {
+        return x3::get<rule_val_context_tag>(context);
+    }
 
     template <typename Subject, typename Action>
     struct action : unary_parser<Subject, action<Subject, Action>>
@@ -120,17 +129,18 @@ namespace boost { namespace spirit { namespace x3
         action(Subject const& subject, Action f)
           : base_type(subject), f(f) {}
 
-        template <typename Context, typename Attribute>
-        bool call_action(Context const& context, Attribute& attr, mpl::false_) const
+        template <typename Context, typename RuleContext, typename Attribute>
+        bool call_action(Context const& context, RuleContext& rcontext, Attribute& attr, mpl::false_) const
         {
             bool pass = true;
             auto action_context = make_context<parse_pass_context_tag>(pass, context);
-            f(action_context, attr); // pass in the context and attribute
+            auto val_context = make_context<rule_val_context_tag>(rcontext, action_context);
+            f(val_context, attr); // pass in the context and attribute
             return pass;
         }
 
-        template <typename Context, typename Attribute>
-        bool call_action(Context const& context, Attribute& attr, mpl::true_) const
+        template <typename Context, typename RuleContext, typename Attribute>
+        bool call_action(Context const&, RuleContext&, Attribute& attr, mpl::true_) const
         {
             f(attr); // pass attribute only
             return true;
@@ -146,7 +156,7 @@ namespace boost { namespace spirit { namespace x3
             if (this->subject.parse(first, last, context, rcontext, attr))
             {
                 typename detail::is_unary<Action, Attribute> is_unary;
-                if (call_action(context, attr, is_unary))
+                if (call_action(context, rcontext, attr, is_unary))
                     return true;
 
                 // reset iterators if semantic action failed the match
