@@ -54,25 +54,11 @@ namespace client { namespace ast
     };
 
     // print function for debugging
-    inline std::ostream& operator<<(std::ostream& out, nil) { out << "nil"; return out; }
+    inline std::ostream& operator<<(std::ostream& out, nil)
+    {
+        out << "nil";
+        return out;
+    }
 }}
-
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::signed_,
-    (char, sign)
-    (client::ast::operand, operand_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::operation,
-    (char, operator_)
-    (client::ast::operand, operand_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::expression,
-    (client::ast::operand, first)
-    (std::list<client::ast::operation>, rest)
-)
 
 #endif

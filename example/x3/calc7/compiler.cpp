@@ -9,7 +9,10 @@
 
 namespace client
 {
-    void compiler::operator()(ast::nil) const { BOOST_ASSERT(0); }
+    void compiler::operator()(ast::nil) const
+    {
+        BOOST_ASSERT(0);
+    }
 
     void compiler::operator()(unsigned int n) const
     {
