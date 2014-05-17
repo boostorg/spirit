@@ -14,10 +14,12 @@
 
 namespace client { namespace calculator_grammar
 {
-    namespace x3 = boost::spirit::x3;
-
     using x3::uint_;
     using x3::char_;
+    
+    typedef x3::rule<class expression, ast::expression> expression_type;
+    typedef x3::rule<class term, ast::expression> term_type;
+    typedef x3::rule<class factor, ast::operand> factor_type;
 
     expression_type const expression("expression");
     term_type const term("term");
