@@ -23,13 +23,34 @@
 namespace boost { namespace spirit { namespace x3
 {
     template <typename ID>
-    struct rule_context_with_id_tag;
-
-    template <typename ID>
     struct identity;
+    
+    template <typename ID, typename Attribute = unused_type>
+    struct rule;
 
     struct parse_pass_context_tag;
 
+    namespace detail
+    {
+        // we use this so we can detect if the default parse_rule
+        // is the being called.
+        struct default_parse_rule_result
+        {
+            default_parse_rule_result(bool r)
+              : r(r) {}
+            operator bool() const { return r; }
+            bool r;
+        };
+    }
+    
+    // default parse_rule implementation
+    template <typename ID, typename Attribute, typename Iterator
+      , typename Context, typename ActualAttribute>
+    inline detail::default_parse_rule_result
+    parse_rule(
+        rule<ID, Attribute> rule_
+      , Iterator& first, Iterator const& last
+      , Context const& context, ActualAttribute& attr);
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -96,6 +117,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Attribute, typename ID>
     struct parse_rule
     {
+        template <typename RHS, typename Context>
+        static Context const&
+        make_rule_context(RHS const& rhs, Context const& context, mpl::false_)
+        {
+            return context;
+        }
+        
+        template <typename RHS, typename Context>
+        static auto
+        make_rule_context(RHS const& rhs, Context const& context, mpl::true_)
+        -> decltype(make_unique_context<ID>(rhs, context))
+        {
+            return make_unique_context<ID>(rhs, context);
+        }
+    
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
         static bool parse_rhs_main(
@@ -104,11 +140,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, RContext& rcontext, ActualAttribute& attr
           , mpl::true_)
         {
+            typedef
+                decltype(x3::parse_rule(
+                    rule<ID, Attribute>(), first, last
+                  , make_unique_context<ID>(rhs, context), attr))
+            parse_rule_result;
+
+            typedef
+                is_same<parse_rule_result, default_parse_rule_result>
+            is_default_parse_rule;
+
             Iterator i = first;
             bool r = rhs.parse(
                 i
               , last
-              , context // make_unique_context<ID>(rhs, context)
+              , make_rule_context(rhs, context, is_default_parse_rule())
               , rcontext
               , attr
             );

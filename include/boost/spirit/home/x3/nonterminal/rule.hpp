@@ -27,8 +27,19 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID>
     struct identity {};
     
-    template <typename ID, typename Attribute = unused_type>
-    struct rule;
+    // default parse_rule implementation
+    template <typename ID, typename Attribute, typename Iterator
+      , typename Context, typename ActualAttribute>
+    inline detail::default_parse_rule_result
+    parse_rule(
+        rule<ID, Attribute> rule_
+      , Iterator& first, Iterator const& last
+      , Context const& context, ActualAttribute& attr)
+    {
+        static_assert(!is_same<decltype(get<ID>(context)), unused_type>::value,
+            "BOOST_SPIRIT_DEFINE undefined for this rule.");
+        return get<ID>(context).parse(first, last, context, unused, attr);
+    }
 
     template <typename ID, typename RHS, typename Attribute, bool explicit_attribute_propagation_>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation_>>
@@ -64,17 +75,6 @@ namespace boost { namespace spirit { namespace x3
         RHS rhs;
         char const* name;
     };
-    
-    // default parse_rule implementation
-    template <typename ID, typename Attribute, typename Iterator
-      , typename Context, typename ActualAttribute>
-    inline bool parse_rule(
-        rule<ID, Attribute> rule_
-      , Iterator& first, Iterator const& last
-      , Context const& context, ActualAttribute& attr)
-    {
-        return get<ID>(context).parse(first, last, context, unused, attr);
-    }
 
     template <typename ID, typename Attribute>
     struct rule : parser<rule<ID, Attribute>>

@@ -225,33 +225,6 @@ namespace client
     };
 
     ///////////////////////////////////////////////////////////////////////////////
-    // rule IDs
-    ///////////////////////////////////////////////////////////////////////////////
-//    typedef x3::identity<class expression> expression_id;
-//    typedef x3::identity<class term> term_id;
-//    typedef x3::identity<class factor> factor_id;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    //  Our error handler
-    ///////////////////////////////////////////////////////////////////////////////
-//    template <typename Iterator, typename Exception, typename Context>
-//    x3::error_handler_result
-//    on_error(
-//        x3::identity<class expression>, Iterator&
-//      , Exception const& x, Context const& context)
-//    {
-//        std::cout
-//            << "Error! Expecting: "
-//            << x.what_
-//            << " here: \""
-//            << std::string(x.first, x.last)
-//            << "\""
-//            << std::endl
-//            ;
-//        return x3::error_handler_result::fail;
-//    }
-
-    ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
     namespace calculator_grammar
