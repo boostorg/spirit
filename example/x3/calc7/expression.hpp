@@ -18,6 +18,8 @@ namespace client
         typedef x3::rule<class expression, ast::expression> expression_type;
         BOOST_SPIRIT_DECLARE(expression_type);
     }
+    
+    calculator_grammar::expression_type expression();
 }
 
 #endif

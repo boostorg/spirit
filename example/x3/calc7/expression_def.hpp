@@ -54,4 +54,12 @@ namespace client { namespace calculator_grammar
     );
 }}
 
+namespace client
+{
+    calculator_grammar::expression_type expression()
+    {
+        return calculator_grammar::expression;
+    }
+}
+
 #endif
