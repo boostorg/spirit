@@ -12,6 +12,7 @@
 #include "ast_adapted.hpp"
 #include "statement.hpp"
 #include "expression.hpp"
+#include "common.hpp"
 #include "error_handler.hpp"
 
 namespace client { namespace parser
@@ -28,17 +29,12 @@ namespace client { namespace parser
     statement_list_type const statement_list("statement_list");
     variable_declaration_type const variable_declaration("variable_declaration");
     assignment_type const assignment("assignment");
-    identifier_type const identifier("identifier");
-    
+
     // Import the expression rule
     auto const expression = client::expression();
 
     auto const statement_list_def =
         +(variable_declaration | assignment)
-        ;
-
-    auto const identifier_def =
-        raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
         ;
 
     auto const variable_declaration_def =
@@ -55,7 +51,6 @@ namespace client { namespace parser
 
     BOOST_SPIRIT_DEFINE(
         statement_list = statement_list_def
-      , identifier = identifier_def
       , variable_declaration = variable_declaration_def
       , assignment = assignment_def
     );

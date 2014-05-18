@@ -11,6 +11,7 @@
 #include "ast.hpp"
 #include "ast_adapted.hpp"
 #include "expression.hpp"
+#include "common.hpp"
 #include "error_handler.hpp"
 
 namespace client { namespace parser
@@ -25,13 +26,11 @@ namespace client { namespace parser
     typedef x3::rule<class multiplicative_expr, ast::expression> multiplicative_expr_type;
     typedef x3::rule<class unary_expr, ast::operand> unary_expr_type;
     typedef x3::rule<class primary_expr, ast::operand> primary_expr_type;
-    typedef x3::rule<class identifier, std::string> identifier_type;
 
     additive_expr_type const additive_expr = "additive_expr";
     multiplicative_expr_type const multiplicative_expr = "multiplicative_expr";
     unary_expr_type unary_expr = "unary_expr";
     primary_expr_type primary_expr = "primary_expr";
-    identifier_type const identifier = "identifier";
     
     auto const expression = additive_expr;
 
@@ -60,17 +59,12 @@ namespace client { namespace parser
         |   identifier
         |   '(' > expression > ')'
         ;
-    
-    auto const identifier_def =
-        raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
-        ;
 
     BOOST_SPIRIT_DEFINE(
         additive_expr = additive_expr_def
       , multiplicative_expr = multiplicative_expr_def
       , unary_expr = unary_expr_def
       , primary_expr = primary_expr_def
-      , identifier = identifier_def
     );
 }}
 

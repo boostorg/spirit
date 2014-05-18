@@ -21,7 +21,7 @@
 #include "ast.hpp"
 #include "vm.hpp"
 #include "compiler.hpp"
-#include "expression.hpp"
+#include "statement.hpp"
 #include "error_handler.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,53 +31,67 @@ int
 main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Expression parser...\n\n";
+    std::cout << "Statement parser...\n\n";
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Type an expression...or [q or Q] to quit\n\n";
-
-    typedef std::string::const_iterator iterator_type;
-    typedef client::ast::expression ast_expression;
-    typedef client::compiler compiler;
+    std::cout << "Type some statements... ";
+    std::cout << "An empty line ends input, compiles, runs and prints results\n\n";
+    std::cout << "Example:\n\n";
+    std::cout << "    var a = 123;\n";
+    std::cout << "    var b = 456;\n";
+    std::cout << "    var c = a + b * 2;\n\n";
+    std::cout << "-------------------------\n";
 
     std::string str;
+    std::string source;
     while (std::getline(std::cin, str))
     {
-        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
+        if (str.empty())
             break;
+        source += str + '\n';
+    }
 
-        using boost::spirit::x3::ascii::space;
-        typedef boost::spirit::x3::ascii::space_type const skipper_type;
-        typedef std::string::const_iterator iterator_type;
+    typedef std::string::const_iterator iterator_type;
+    iterator_type iter = source.begin();
+    iterator_type end = source.end();
 
-        client::vmachine mach;                          // Our virtual machine
-        std::vector<int> code;                          // Our VM code
-        auto calc = client::expression();               // grammar
+    client::vmachine vm;                                    // Our virtual machine
+    client::code_gen::program program;                      // Our VM program
+    client::ast::statement_list ast;                        // Our AST
 
-        ast_expression ast;                             // Our program (AST)
-        compiler compile(code);                         // Compiles the program
+    client::code_gen::compiler compile(program);            // Our compiler
+    auto const parser = client::statement();                // Our parser
 
-        iterator_type iter = str.begin();
-        iterator_type end = str.end();
-        bool r = phrase_parse(iter, end, calc, space, ast);
+    using boost::spirit::x3::ascii::space;
+    bool success = phrase_parse(iter, end, parser, space, ast);
 
-        if (r && iter == end)
+    std::cout << "-------------------------\n";
+
+    if (success && iter == end)
+    {
+        if (compile(ast))
         {
+            std::cout << "Success\n";
             std::cout << "-------------------------\n";
-            std::cout << "Parsing succeeded\n";
-            compile(ast);
-            mach.execute(code);
-            std::cout << "\nResult: " << mach.top() << std::endl;
+            vm.execute(program());
+
             std::cout << "-------------------------\n";
+            std::cout << "Assembler----------------\n\n";
+            program.print_assembler();
+
+            std::cout << "-------------------------\n";
+            std::cout << "Results------------------\n\n";
+            program.print_variables(vm.get_stack());
         }
         else
         {
-            std::string rest(iter, end);
-            std::cout << "-------------------------\n";
-            std::cout << "Parsing failed\n";
-            std::cout << "-------------------------\n";
+            std::cout << "Compile failure\n";
         }
     }
+    else
+    {
+        std::cout << "Parse failure\n";
+    }
 
-    std::cout << "Bye... :-) \n\n";
+    std::cout << "-------------------------\n\n";
     return 0;
 }

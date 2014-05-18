@@ -114,7 +114,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef identity<ID> type;
     };
     
-    template <typename RHS, typename Context>
+    template <typename ID, typename RHS, typename Context>
     Context const&
     make_rule_context(RHS const& rhs, Context const& context
       , mpl::false_ /* is_default_parse_rule */)
@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return context;
     }
     
-    template <typename RHS, typename Context>
+    template <typename ID, typename RHS, typename Context>
     auto
     make_rule_context(RHS const& rhs, Context const& context
       , mpl::true_ /* is_default_parse_rule */ )
@@ -161,7 +161,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             bool r = rhs.parse(
                 i
               , last
-              , make_rule_context(rhs, context, is_default_parse_rule())
+              , make_rule_context<ID>(rhs, context, is_default_parse_rule())
               , rcontext
               , attr
             );
