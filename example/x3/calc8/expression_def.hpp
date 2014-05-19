@@ -13,6 +13,7 @@
 #include "expression.hpp"
 #include "common.hpp"
 #include "error_handler.hpp"
+#include "annotation.hpp"
 
 namespace client { namespace parser
 {

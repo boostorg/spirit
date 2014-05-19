@@ -9,6 +9,7 @@
 
 #include <map>
 #include "ast.hpp"
+#include <boost/spirit/home/x3/support/ast/lambda_visitor.hpp>
 
 namespace client
 {
@@ -24,23 +25,22 @@ namespace client { namespace parser
     //  for the purpose of subsequent semantic error handling when the
     //  program is being compiled. See x3::position_cache in x3/support/ast
     ///////////////////////////////////////////////////////////////////////////////
-
     template <typename ID, typename Iterator, typename Context>
     inline void
     on_success(ID, Iterator const& first, Iterator const& last
-      , operand& ast, Context const& context)
+      , ast::operand& ast, Context const& context)
     {
-        auto& pos_cache = x3::get<position_cache_tag>(context);
-        auto annotate = [&](auto& node){ pos_cache.annotate(node, first, last); };
-        boost::apply_visitor(annotate, ast);
+        auto& pos_cache = x3::get<position_cache_tag>(context).get();
+        auto annotate = [&](auto& node)->void { pos_cache.annotate(node, first, last); };
+        ast.apply_visitor(x3::make_lambda_visitor<void>(annotate));
     }
 
     template <typename ID, typename Iterator, typename Context>
     inline void
     on_success(ID, Iterator const& first, Iterator const& last
-      , assignment& ast, Context const& context)
+      , ast::assignment& ast, Context const& context)
     {
-        auto& pos_cache = x3::get<position_cache_tag>(context);
+        auto& pos_cache = x3::get<position_cache_tag>(context).get();
         pos_cache.annotate(ast, first, last);
     }
 }}
