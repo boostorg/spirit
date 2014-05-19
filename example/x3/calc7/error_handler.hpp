@@ -14,8 +14,12 @@ namespace client { namespace calculator_grammar
     ////////////////////////////////////////////////////////////////////////////
     //  Our error handler
     ////////////////////////////////////////////////////////////////////////////
-    using x3::error_handler_result::fail;
-    BOOST_SPIRIT_ONERROR(expression, fail)
+    namespace x3 = boost::spirit::x3;
+
+    template <typename Iterator, typename Exception, typename Context>
+    x3::error_handler_result on_error(
+        x3::identity<class expression>, Iterator&
+      , Exception const& x, Context const& context)
     {
         std::cout
             << "Error! Expecting: "
@@ -25,7 +29,7 @@ namespace client { namespace calculator_grammar
             << "\""
             << std::endl
             ;
-        return fail;
+        return x3::error_handler_result::fail;
     }
 }}
 

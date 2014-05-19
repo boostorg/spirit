@@ -169,13 +169,6 @@ namespace boost { namespace spirit { namespace x3
 #define BOOST_SPIRIT_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
     /***/
-    
-#define BOOST_SPIRIT_ONERROR(id, result)                                        \
-        template <typename Iterator, typename Exception, typename Context>      \
-        decltype(result) on_error(                                              \
-            x3::identity<class id>, Iterator&                                   \
-          , Exception const& x, Context const& context)                         \
-    /***/
 
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
     template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \

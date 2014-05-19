@@ -23,6 +23,7 @@
 #include "compiler.hpp"
 #include "statement.hpp"
 #include "error_handler.hpp"
+#include "config.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -59,7 +60,16 @@ main()
     client::ast::statement_list ast;                        // Our AST
 
     client::code_gen::compiler compile(program);            // Our compiler
-    auto const parser = client::statement();                // Our parser
+    
+    using boost::spirit::x3::with;
+    client::parser::position_cache_type
+        position_cache(iter, end);
+
+    auto const parser =                                     // Our parser
+        with<client::position_cache_tag>(std::ref(position_cache))
+        [
+            client::statement()
+        ];
 
     using boost::spirit::x3::ascii::space;
     bool success = phrase_parse(iter, end, parser, space, ast);
