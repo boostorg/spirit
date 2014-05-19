@@ -20,7 +20,7 @@
 
 #include <boost/spirit/home/x3/extensions/seek.hpp>
 
-#include "test.hpp"
+#include "../test.hpp"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -86,6 +86,11 @@ int main()
             test_attr("abcInt:100Int:95Int:44", x3::seek[+("Int:" >> x3::int_)], v)
             && v.size() == 3 && v[0] == 100 && v[1] == 95 && v[2] == 44
         );
+    }
+
+    // test failure rollback
+    {
+        BOOST_TEST(test_failure("abcdefg", x3::seek[x3::int_]));
     }
 
     return boost::report_errors();

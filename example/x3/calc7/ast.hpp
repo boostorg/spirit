@@ -10,7 +10,6 @@
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <boost/fusion/include/io.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
 #include <list>
 
 namespace client { namespace ast
@@ -54,25 +53,11 @@ namespace client { namespace ast
     };
 
     // print function for debugging
-    inline std::ostream& operator<<(std::ostream& out, nil) { out << "nil"; return out; }
+    inline std::ostream& operator<<(std::ostream& out, nil)
+    {
+        out << "nil";
+        return out;
+    }
 }}
-
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::signed_,
-    (char, sign)
-    (client::ast::operand, operand_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::operation,
-    (char, operator_)
-    (client::ast::operand, operand_)
-)
-
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::expression,
-    (client::ast::operand, first)
-    (std::list<client::ast::operation>, rest)
-)
 
 #endif

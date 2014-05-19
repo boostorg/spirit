@@ -15,37 +15,72 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     // with directive injects a value into the context prior to parsing.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename ID, typename T>
-    struct with_directive : unary_parser<Subject, with_directive<Subject, ID, T>>
+    template <typename Subject, typename Derived, typename T>
+    struct with_value_holder
+      : unary_parser<Subject, Derived>
     {
-        typedef unary_parser<Subject, with_directive<Subject, ID, T> > base_type;
+        typedef unary_parser<Subject, Derived> base_type;
+        mutable T val;
+        with_value_holder(Subject const& subject, T const& val)
+          : base_type(subject)
+          , val(val) {}
+    };
+    
+    template <typename Subject, typename Derived, typename T>
+    struct with_value_holder<Subject, Derived, T const>
+      : unary_parser<Subject, Derived>
+    {
+        typedef unary_parser<Subject, Derived> base_type;
+        T val;
+        with_value_holder(Subject const& subject, T const& val)
+          : base_type(subject)
+          , val(val) {}
+    };
+
+    template <typename Subject, typename ID, typename T>
+    struct with_directive
+      : with_value_holder<Subject, with_directive<Subject, ID, T>, T>
+    {
+        typedef with_value_holder<Subject, with_directive<Subject, ID, T>, T> base_type;
         static bool const is_pass_through_unary = true;
         static bool const handles_container = Subject::handles_container;
 
         typedef Subject subject_type;
-        T val;
 
         with_directive(Subject const& subject, T const& val)
-          : base_type(subject)
-          , val(val) {}
+          : base_type(subject, val) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return this->subject.parse(
                 first, last
-              , make_context<ID>(val, context)
+              , make_context<ID>(this->val, context)
+              , rcontext
               , attr);
         }
+    };
+   
+    template <typename ID, typename T, typename NextContext = unused_type>
+    struct with_context
+    {
+        typedef context<ID, T, NextContext> type;
+    };
+    
+    template <typename ID, typename T>
+    struct with_context<ID, T, unused_type>
+    {
+        typedef context<ID, T> const type;
     };
 
     template <typename ID, typename T>
     struct with_gen
     {
-        T val;
+        T& val;
 
-        with_gen(T const& val)
+        with_gen(T& val)
           : val(val) {}
 
         template <typename Subject>
@@ -57,9 +92,15 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename ID, typename T>
-    inline with_gen<ID, T> with(T const& val)
+    inline with_gen<ID, T> with(T& val)
     {
-        return {val};
+        return with_gen<ID, T>{val};
+    }
+    
+    template <typename ID, typename T>
+    inline with_gen<ID, T const> with(T const& val)
+    {
+        return with_gen<ID, T const>{val};
     }
 }}}
 

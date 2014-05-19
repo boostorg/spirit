@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,7 +12,6 @@
 #endif
 
 #include <boost/spirit/home/x3/nonterminal/rule.hpp>
-#include <boost/spirit/home/x3/nonterminal/grammar.hpp>
 //~ #include <boost/spirit/home/x3/nonterminal/error_handler.hpp>
 //~ #include <boost/spirit/home/x3/nonterminal/debug_handler.hpp>
 //~ #include <boost/spirit/home/x3/nonterminal/success_handler.hpp>

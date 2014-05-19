@@ -212,7 +212,6 @@ main()
     //~ }
 
     { // attribute compatibility test
-        using boost::spirit::x3::grammar;
         using boost::spirit::x3::rule;
         using boost::spirit::x3::int_;
 

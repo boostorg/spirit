@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2013 Agustin Berge
 
@@ -33,10 +33,11 @@ namespace boost { namespace spirit { namespace x3
         no_skip_directive(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         typename enable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             auto const& skipper = get<skipper_tag>(context);
 
@@ -48,16 +49,19 @@ namespace boost { namespace spirit { namespace x3
             return this->subject.parse(
                 first, last
               , make_context<skipper_tag>(unused_skipper, context)
+              , rcontext
               , attr);
         }
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         typename disable_if<has_skipper<Context>, bool>::type
         parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return this->subject.parse(
                 first, last
               , context
+              , rcontext
               , attr);
         }
     };
