@@ -89,7 +89,7 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Tag, typename Context>
     inline auto
-    get(Context const& context) -> decltype(context.get(mpl::identity<Tag>()))
+    get(Context const& context)
     {
         return context.get(mpl::identity<Tag>());
     }
@@ -126,7 +126,6 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID, typename T, typename Next>
     inline auto
     make_unique_context(T& val, Next const& next)
-    -> decltype(detail::make_unique_context<ID>(val, next, x3::get<ID>(next)))
     {
         return detail::make_unique_context<ID>(val, next, x3::get<ID>(next));
     }

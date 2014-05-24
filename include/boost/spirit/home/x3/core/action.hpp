@@ -114,7 +114,6 @@ namespace boost { namespace spirit { namespace x3
     template <typename Context>
 
     inline auto _val(Context const& context)
-    -> decltype(x3::get<rule_val_context_tag>(context))
     {
         return x3::get<rule_val_context_tag>(context);
     }

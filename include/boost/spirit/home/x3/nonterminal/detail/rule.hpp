@@ -123,10 +123,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     }
     
     template <typename ID, typename RHS, typename Context>
-    auto
-    make_rule_context(RHS const& rhs, Context const& context
+    auto make_rule_context(RHS const& rhs, Context const& context
       , mpl::true_ /* is_default_parse_rule */ )
-    -> decltype(make_unique_context<ID>(rhs, context))
     {
         return make_unique_context<ID>(rhs, context);
     }

@@ -45,22 +45,10 @@ namespace client { namespace parser
     // tag used to get our error handling from the context
     struct error_handler_tag;
     
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result on_error_main(
-        Iterator& first, Iterator const& last
-      , Exception const& x, Context const& context)
+    template <typename Context>
+    auto get_error_handler(Context const& context)
     {
-        auto& error_handler = x3::get<error_handler_tag>(context).get();
-        error_handler(first, last, x.where(), "Error! Expecting: " + x.which());
-        return x3::error_handler_result::fail;
-    }
-
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result on_error(
-        x3::identity<expression_id>, Iterator& first, Iterator const& last
-      , Exception const& x, Context const& context)
-    {
-        return on_error_main(first, last, x, context);
+        return x3::get<error_handler_tag>(context).get();
     }
     
     template <typename Iterator, typename Exception, typename Context>
@@ -68,7 +56,9 @@ namespace client { namespace parser
         x3::identity<statement_id>, Iterator& first, Iterator const& last
       , Exception const& x, Context const& context)
     {
-        return on_error_main(first, last, x, context);
+        std::string message = "Error! Expecting: " + x.which() + " here:";
+        get_error_handler(context)(first, last, x.where(), message);
+        return x3::error_handler_result::fail;
     }
 }}
 
