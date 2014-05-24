@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename Iterator, typename Exception, typename Context>
     inline no_exception_handler
-    on_error(ID, Iterator&, Exception const&, Context const&)
+    on_error(ID, Iterator&, Iterator const&, Exception const&, Context const&)
     {
         return no_exception_handler();
     }
@@ -199,7 +199,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 }
                 catch (expectation_failure<Iterator> const& x)
                 {
-                    switch (on_error(typename make_id<ID>::type(), first, x, context))
+                    switch (on_error(typename make_id<ID>::type(), first, last, x, context))
                     {
                         case error_handler_result::fail:
                             return false;
@@ -226,6 +226,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                     on_error(
                         typename make_id<ID>::type()
                       , first
+                      , last
                       , boost::declval<expectation_failure<Iterator> const&>()
                       , context
                     )

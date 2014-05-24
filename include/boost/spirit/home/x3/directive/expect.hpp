@@ -21,15 +21,21 @@ namespace boost { namespace spirit { namespace x3
     template <typename Iterator>
     struct expectation_failure : std::runtime_error
     {
-        expectation_failure(Iterator first, Iterator last, std::string const& what)
+    public:
+
+        expectation_failure(Iterator where, std::string const& which)
           : std::runtime_error("boost::spirit::x3::expectation_failure")
-          , first(first), last(last), what_(what)
+          , where_(where), which_(which)
         {}
         ~expectation_failure() throw() {}
+        
+        std::string which() const { return which_; }
+        Iterator const& where() const { return where_; }
+        
+    private:
 
-        Iterator first;
-        Iterator last;
-        std::string what_;
+        Iterator where_;
+        std::string which_;
     };
 
     template <typename Subject>
@@ -52,7 +58,7 @@ namespace boost { namespace spirit { namespace x3
             {
                 boost::throw_exception(
                     expectation_failure<Iterator>(
-                        first, last, what(this->subject)));
+                        first, what(this->subject)));
             }
             return r;
         }
