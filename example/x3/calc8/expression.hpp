@@ -17,10 +17,11 @@ namespace client
     {
         typedef x3::rule<class additive_expr, ast::expression> additive_expr_type;
         typedef additive_expr_type expression_type;
+        typedef expression_type::id expression_id;
         BOOST_SPIRIT_DECLARE(additive_expr_type);
     }
     
-    parser::expression_type expression();
+    parser::expression_type const& expression();
 }
 
 #endif

@@ -87,10 +87,13 @@ namespace boost { namespace spirit { namespace x3
             traits::is_container<Attribute>::value;
 
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
-        rule(char const* name = typeid(rule).name()) : name(name) {}
+        rule() : name(typeid(rule).name()) {}
 #else
-        rule(char const* name = "unnamed") : name(name) {}
+        rule() : name("unnamed") {}
 #endif
+
+        rule(char const* name)
+          : name(name) {}
 
         template <typename RHS>
         rule_definition<
@@ -132,7 +135,7 @@ namespace boost { namespace spirit { namespace x3
     }
 
     template <typename T>
-    struct get_info<T, typename traits::is_rule<T>::type>
+    struct get_info<T, typename enable_if<traits::is_rule<T>>::type>
     {
         typedef std::string result_type;
         std::string operator()(T const& r) const

@@ -51,9 +51,10 @@ main()
         source += str + '\n';
     }
 
-    typedef std::string::const_iterator iterator_type;
-    iterator_type iter = source.begin();
-    iterator_type end = source.end();
+    using client::parser::iterator_type;
+    iterator_type iter(source.begin());
+    iterator_type end(source.end());
+    
 
     client::vmachine vm;                                    // Our virtual machine
     client::code_gen::program program;                      // Our VM program
@@ -62,11 +63,11 @@ main()
     client::code_gen::compiler compile(program);            // Our compiler
     
     using boost::spirit::x3::with;
-    client::parser::position_cache_type
-        position_cache(iter, end);
+    using client::parser::error_handler_type;
+    error_handler_type error_handler(iter, end, std::cerr); // Our error handler
 
     auto const parser =                                     // Our parser
-        with<client::position_cache_tag>(std::ref(position_cache))
+        with<client::parser::error_handler_tag>(std::ref(error_handler))
         [
             client::statement()
         ];

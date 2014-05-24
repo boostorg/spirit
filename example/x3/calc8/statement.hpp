@@ -17,10 +17,11 @@ namespace client
     {
         typedef x3::rule<class statement_list, ast::statement_list> statement_list_type;
         typedef statement_list_type statement_type;
+        typedef statement_type::id statement_id;
         BOOST_SPIRIT_DECLARE(statement_list_type);
     }
     
-    parser::statement_list_type statement();
+    parser::statement_list_type const& statement();
 }
 
 #endif

@@ -33,7 +33,8 @@ namespace client { namespace parser
     unary_expr_type unary_expr = "unary_expr";
     primary_expr_type primary_expr = "primary_expr";
     
-    auto const expression = additive_expr;
+    // expression here is a local alias to additive_expr:
+    namespace { auto const& expression = additive_expr; }
 
     auto const additive_expr_def =
         multiplicative_expr
@@ -71,7 +72,7 @@ namespace client { namespace parser
 
 namespace client
 {
-    parser::expression_type expression()
+    parser::expression_type const& expression()
     {
         return parser::expression;
     }

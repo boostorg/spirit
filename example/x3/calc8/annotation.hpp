@@ -9,13 +9,12 @@
 
 #include <map>
 #include "ast.hpp"
-#include <boost/spirit/home/x3/support/ast/lambda_visitor.hpp>
+#include <boost/spirit/home/x3/support/utility/lambda_visitor.hpp>
 
 namespace client
 {
-    // this id is used to tag the position_cache so we can
-    // access it from the x3 context
-    struct position_cache_tag;
+    // tag used to get our error handling from the context
+    struct error_handler_tag;
 }
 
 namespace client { namespace parser
@@ -30,8 +29,8 @@ namespace client { namespace parser
     on_success(ID, Iterator const& first, Iterator const& last
       , ast::operand& ast, Context const& context)
     {
-        auto& pos_cache = x3::get<position_cache_tag>(context).get();
-        auto annotate = [&](auto& node)->void { pos_cache.annotate(node, first, last); };
+        auto& error_handler = x3::get<error_handler_tag>(context).get();
+        auto annotate = [&](auto& node) { error_handler.annotate(node, first, last); };
         ast.apply_visitor(x3::make_lambda_visitor<void>(annotate));
     }
 
@@ -40,8 +39,8 @@ namespace client { namespace parser
     on_success(ID, Iterator const& first, Iterator const& last
       , ast::assignment& ast, Context const& context)
     {
-        auto& pos_cache = x3::get<position_cache_tag>(context).get();
-        pos_cache.annotate(ast, first, last);
+        auto& error_handler = x3::get<error_handler_tag>(context).get();
+        error_handler.annotate(ast, first, last);
     }
 }}
 

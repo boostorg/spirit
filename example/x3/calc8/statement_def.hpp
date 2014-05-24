@@ -32,7 +32,7 @@ namespace client { namespace parser
     assignment_type const assignment("assignment");
 
     // Import the expression rule
-    auto const expression = client::expression();
+    namespace { auto const& expression = client::expression(); }
 
     auto const statement_list_def =
         +(variable_declaration | assignment)
@@ -59,7 +59,7 @@ namespace client { namespace parser
 
 namespace client
 {
-    parser::statement_list_type statement()
+    parser::statement_list_type const& statement()
     {
         return parser::statement_list;
     }

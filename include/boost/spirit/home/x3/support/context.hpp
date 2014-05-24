@@ -126,9 +126,9 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID, typename T, typename Next>
     inline auto
     make_unique_context(T& val, Next const& next)
-    -> decltype(detail::make_unique_context<ID>(val, next, get<ID>(next)))
+    -> decltype(detail::make_unique_context<ID>(val, next, x3::get<ID>(next)))
     {
-        return detail::make_unique_context<ID>(val, next, get<ID>(next));
+        return detail::make_unique_context<ID>(val, next, x3::get<ID>(next));
     }
 }}}
 
