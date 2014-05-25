@@ -25,13 +25,13 @@ typedef x3::identity<class my_rule> my_rule_id;
 
 template <typename Iterator, typename Exception, typename Context>
 x3::error_handler_result
-on_error(my_rule_id, Iterator&, Exception const& x, Context const& context)
+on_error(my_rule_id, Iterator&, Iterator const& last, Exception const& x, Context const& context)
 {
     std::cout
         << "Error! Expecting: "
-        << x.what_
+        << x.which()
         << ", got: \""
-        << std::string(x.first, x.last)
+        << std::string(x.where(), last)
         << "\""
         << std::endl
         ;

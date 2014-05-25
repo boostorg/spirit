@@ -90,6 +90,7 @@ namespace boost { namespace spirit { namespace x3
     template <typename Tag, typename Context>
     inline auto
     get(Context const& context)
+        -> decltype(context.get(mpl::identity<Tag>()))
     {
         return context.get(mpl::identity<Tag>());
     }
