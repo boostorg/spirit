@@ -262,22 +262,24 @@ namespace client
           , term = term_def
           , factor = factor_def
         );
-        
+
         // Our error handler
-        using x3::error_handler_result::fail;
-        BOOST_SPIRIT_ONERROR(expression, fail)
+        template <typename Iterator, typename Exception, typename Context>
+        x3::error_handler_result on_error(
+            x3::identity<class expression>, Iterator&, Iterator const& last
+          , Exception const& x, Context const& context)
         {
             std::cout
                 << "Error! Expecting: "
-                << x.what_
+                << x.which()
                 << " here: \""
-                << std::string(x.first, x.last)
+                << std::string(x.where(), last)
                 << "\""
                 << std::endl
                 ;
-            return fail;
+            return x3::error_handler_result::fail;
         }
-        
+
         auto calculator = expression;
     }
 

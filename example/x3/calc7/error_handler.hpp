@@ -18,14 +18,14 @@ namespace client { namespace calculator_grammar
 
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result on_error(
-        x3::identity<class expression>, Iterator&
+        x3::identity<class expression>, Iterator&, Iterator const& last
       , Exception const& x, Context const& context)
     {
         std::cout
             << "Error! Expecting: "
-            << x.what_
+            << x.which()
             << " here: \""
-            << std::string(x.first, x.last)
+            << std::string(x.where(), last)
             << "\""
             << std::endl
             ;
