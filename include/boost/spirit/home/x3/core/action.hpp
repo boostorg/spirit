@@ -14,6 +14,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
+#include <boost/spirit/home/x3/support/utility/is_callable.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/type_traits/is_class.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -23,85 +24,6 @@ namespace boost { namespace spirit { namespace x3
 {
     struct raw_attribute_type;
     struct rule_context_tag;
-
-    namespace detail
-    {
-        // Detect if F accepts only the context and nothing else.
-        // Using technique presented in http://tinyurl.com/ktscp3
-        // by Eric Niebler (Boost Proto)
-
-        struct uncallable
-        {
-            uncallable const &operator,(int) const;
-        };
-
-        template <typename T>
-        type_traits::no_type is_uncallable(T const&);
-
-        type_traits::yes_type is_uncallable(uncallable const&);
-
-        template <typename F, typename Arg>
-        struct is_unary_impl
-        {
-            template <typename F2>
-            struct fwrap : F2
-            {
-                fwrap();
-                typedef uncallable const& (*fptr)(unused_type);
-                operator fptr() const;
-            };
-
-            static fwrap<F>& fun;
-            static Arg& arg;
-
-            static bool const value = (
-                sizeof(type_traits::no_type) == sizeof(is_uncallable( (fun(arg), 0) ))
-            );
-
-            typedef mpl::bool_<value> type;
-        };
-
-        template <typename F, typename A, typename Enable = void>
-        struct is_unary : mpl::false_ {};
-
-        template <typename F, typename A>
-        struct is_unary<F, A, typename enable_if<is_class<F>>::type>
-            : is_unary_impl<F, A>::type {};
-
-        template <typename RT, typename A, typename T>
-        struct is_unary<RT(*)(T), A> : is_convertible<A, T> {};
-
-        template <typename F>
-        struct is_nullary_impl
-        {
-            template <typename F2>
-            struct fwrap : F2
-            {
-                fwrap();
-                typedef uncallable const& (*fptr)(...);
-                operator fptr() const;
-            };
-
-            static fwrap<F>& fun;
-
-            static bool const value = (
-                sizeof(type_traits::no_type) == sizeof(is_uncallable( (fun(), 0) ))
-            );
-
-            typedef mpl::bool_<value> type;
-        };
-
-        template <typename F, typename Enable = void>
-        struct is_nullary : mpl::false_ {};
-
-        template <typename F>
-        struct is_nullary<F, typename enable_if<is_class<F>>::type>
-            : is_nullary_impl<F>::type {};
-
-        template <typename RT>
-        struct is_nullary<RT(*)()> : mpl::true_ {};
-    }
-
     struct parse_pass_context_tag;
 
     template <typename Context>
@@ -155,8 +77,7 @@ namespace boost { namespace spirit { namespace x3
             Iterator save = first;
             if (this->subject.parse(first, last, context, rcontext, attr))
             {
-                typename detail::is_unary<Action, Attribute> is_unary;
-                if (call_action(context, rcontext, attr, is_unary))
+                if (call_action(context, rcontext, attr, is_callable<Action(Attribute&)>()))
                     return true;
 
                 // reset iterators if semantic action failed the match
@@ -220,8 +141,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
-            typename detail::is_nullary<Action> is_nullary;
-            return parse(first, last, context, rcontext, attr, is_nullary);
+            return parse(first, last, context, rcontext, attr, is_callable<Action()>());
         }
 
         Action f;
