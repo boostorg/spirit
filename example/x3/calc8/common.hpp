@@ -16,7 +16,8 @@ namespace client { namespace parser
     using x3::alpha;
     using x3::alnum;
 
-    typedef x3::rule<class identifier, std::string> identifier_type;
+    struct identifier_class;
+    typedef x3::rule<identifier_class, std::string> identifier_type;
     identifier_type const identifier = "identifier";
 
     BOOST_SPIRIT_DEFINE(

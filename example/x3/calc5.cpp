@@ -197,10 +197,14 @@ namespace client
     {
         using x3::uint_;
         using x3::char_;
+        
+        struct expression_class;
+        struct term_class;
+        struct factor_class;
 
-        x3::rule<class expression, ast::program> const expression("expression");
-        x3::rule<class term, ast::program> const term("term");
-        x3::rule<class factor, ast::operand> const factor("factor");
+        x3::rule<expression_class, ast::program> const expression("expression");
+        x3::rule<term_class, ast::program> const term("term");
+        x3::rule<factor_class, ast::operand> const factor("factor");
 
         auto const expression_def =
             term
@@ -228,24 +232,25 @@ namespace client
           , term = term_def
           , factor = factor_def
         );
-        
-        //  Our error handler
-        template <typename Iterator, typename Exception, typename Context>
-        x3::error_handler_result
-        on_error(
-            x3::identity<class expression>, Iterator&, Iterator const& last
-          , Exception const& x, Context const& context)
+
+        struct expression_class
         {
-            std::cout
-                << "Error! Expecting: "
-                << x.which()
-                << " here: \""
-                << std::string(x.where(), last)
-                << "\""
-                << std::endl
-                ;
-            return x3::error_handler_result::fail;
-        }
+            //  Our error handler
+            template <typename Iterator, typename Exception, typename Context>
+            x3::error_handler_result
+            on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+            {
+                std::cout
+                    << "Error! Expecting: "
+                    << x.which()
+                    << " here: \""
+                    << std::string(x.where(), last)
+                    << "\""
+                    << std::endl
+                    ;
+                return x3::error_handler_result::fail;
+            }
+        };
 
         auto calculator = expression;
     }

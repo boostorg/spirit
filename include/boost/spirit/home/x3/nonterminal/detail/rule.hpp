@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
+#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/utility/addressof.hpp>
 
@@ -86,21 +87,30 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 #endif
 
-    struct no_exception_handler {};
-
-    template <typename ID, typename Iterator, typename Exception, typename Context>
-    inline no_exception_handler
-    on_error(ID, Iterator&, Iterator const&, Exception const&, Context const&)
-    {
-        return no_exception_handler();
-    }
-
     template <typename ID, typename Iterator, typename Attribute, typename Context>
     inline void
     on_success(ID, Iterator const&, Iterator const&, Attribute&, Context const&)
     {
         // no-op
     }
+    
+    template <typename ID, typename Iterator, typename Context, typename Enable = void>
+    struct has_on_error : mpl::false_ {};
+
+    template <typename ID, typename Iterator, typename Context>
+    struct has_on_error<ID, Iterator, Context,
+        typename disable_if_substitution_failure<
+            decltype(
+                std::declval<ID>().on_error(
+                    std::declval<Iterator&>()
+                  , std::declval<Iterator>()
+                  , std::declval<expectation_failure<Iterator>>()
+                  , std::declval<Context>()
+                )
+            )>::type
+        >
+      : mpl::true_
+    {};
 
     template <typename ID>
     struct make_id
@@ -138,7 +148,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr
-          , mpl::true_)
+          , mpl::false_)
         {
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
@@ -186,18 +196,18 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr
-          , mpl::false_ /* on_error is found by ADL */)
+          , mpl::true_ /* on_error is found */)
         {
             for (;;)
             {
                 try
                 {
                     return parse_rhs_main(
-                        rhs, first, last, context, rcontext, attr, mpl::true_());
+                        rhs, first, last, context, rcontext, attr, mpl::false_());
                 }
                 catch (expectation_failure<Iterator> const& x)
                 {
-                    switch (on_error(typename make_id<ID>::type(), first, last, x, context))
+                    switch (ID().on_error(first, last, x, context))
                     {
                         case error_handler_result::fail:
                             return false;
@@ -219,21 +229,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr)
         {
-            typedef
-                decltype(
-                    on_error(
-                        typename make_id<ID>::type()
-                      , first
-                      , last
-                      , boost::declval<expectation_failure<Iterator> const&>()
-                      , context
-                    )
-                )
-            on_error_result;
-
             return parse_rhs_main(
                 rhs, first, last, context, rcontext, attr
-              , is_same<on_error_result, no_exception_handler>()
+              , has_on_error<ID, Iterator, Context>()
             );
         }
 

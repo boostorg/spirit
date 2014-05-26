@@ -17,10 +17,14 @@ namespace client { namespace calculator_grammar
 {
     using x3::uint_;
     using x3::char_;
+    
+    struct expression_class;
+    struct term_class;
+    struct factor_class;
 
-    typedef x3::rule<class expression, ast::expression> expression_type;
-    typedef x3::rule<class term, ast::expression> term_type;
-    typedef x3::rule<class factor, ast::operand> factor_type;
+    typedef x3::rule<expression_class, ast::expression> expression_type;
+    typedef x3::rule<term_class, ast::expression> term_type;
+    typedef x3::rule<factor_class, ast::operand> factor_type;
 
     expression_type const expression = "expression";
     term_type const term = "term";
@@ -52,6 +56,8 @@ namespace client { namespace calculator_grammar
       , term = term_def
       , factor = factor_def
     );
+    
+    struct expression_class : error_handler {};
 }}
 
 namespace client

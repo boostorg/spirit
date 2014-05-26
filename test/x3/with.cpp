@@ -10,20 +10,22 @@
 
 namespace x3 = boost::spirit::x3;
 
-typedef x3::identity<class my_rule> my_rule_id;
 struct my_tag;
 
-template <typename Iterator, typename Exception, typename Context>
-x3::error_handler_result
-on_error(my_rule_id, Iterator&, Iterator const&, Exception const& x, Context const& context)
+struct my_rule_class
 {
-    x3::get<my_tag>(context)++;
-    return x3::error_handler_result::fail;
-}
+    template <typename Iterator, typename Exception, typename Context>
+    x3::error_handler_result
+    on_error(Iterator&, Iterator const&, Exception const& x, Context const& context)
+    {
+        x3::get<my_tag>(context)++;
+        return x3::error_handler_result::fail;
+    }
+};
 
 template <typename Iterator, typename Attribute, typename Context>
 inline void
-on_success(my_rule_id, Iterator const&, Iterator const&, Attribute&, Context const& context)
+on_success(x3::identity<my_rule_class>, Iterator const&, Iterator const&, Attribute&, Context const& context)
 {
     x3::get<my_tag>(context)++;
 }
@@ -41,7 +43,7 @@ main()
     { // injecting data into the context in the grammar
 
         int val = 0;
-        auto r = rule<my_rule_id, char const*>() =
+        auto r = rule<my_rule_class, char const*>() =
             '(' > int_ > ',' > int_ > ')'
             ;
         

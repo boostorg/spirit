@@ -15,10 +15,10 @@ namespace client
     namespace x3 = boost::spirit::x3;
     namespace parser
     {
-        typedef x3::rule<class additive_expr, ast::expression> additive_expr_type;
-        typedef additive_expr_type expression_type;
+        struct expression_class;
+        typedef x3::rule<expression_class, ast::expression> expression_type;
         typedef expression_type::id expression_id;
-        BOOST_SPIRIT_DECLARE(additive_expr_type);
+        BOOST_SPIRIT_DECLARE(expression_type);
     }
     
     parser::expression_type const& expression();
