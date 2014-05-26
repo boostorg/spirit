@@ -8,9 +8,10 @@
 #define BOOST_SPIRIT_X3_ERROR_REPORTING_MAY_19_2014_00405PM
 
 #include <boost/filesystem/path.hpp>
+#include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <ostream>
 
-// Some error handling utilities
+// Clang-style error handling utilities
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -21,27 +22,33 @@ namespace boost { namespace spirit { namespace x3
 
         typedef Iterator iterator_type;
 
-        error_handler(std::ostream& err_out, std::string file = "", int tabs = 4)
+        error_handler(
+            Iterator first, Iterator last, std::ostream& err_out
+          , std::string file = "", int tabs = 4)
           : err_out(err_out)
           , file(file)
-          , tabs(tabs) {}
+          , tabs(tabs)
+          , pos_cache(first, last) {}
 
         typedef void result_type;
 
-        void operator()(
-            Iterator first
-          , Iterator last
-          , Iterator err_pos
-          , std::string const& error_message
-        ) const;
+        void operator()(Iterator err_pos, std::string const& error_message) const;
+        void operator()(Iterator err_first, Iterator err_last, std::string const& error_message) const;
+        void operator()(position_tagged pos, std::string const& message) const
+        {
+            auto where = pos_cache.position_of(pos);
+            (*this)(
+                where.begin()
+              , where.end()
+              , message
+            );
+        }
 
-        void operator()(
-            Iterator first
-          , Iterator last
-          , Iterator err_first
-          , Iterator err_last
-          , std::string const& error_message
-        ) const;
+        template <typename AST>
+        void tag(AST& ast, Iterator first, Iterator last)
+        {
+            return pos_cache.annotate(ast, first, last);
+        }
 //
 //        void operator()(
 //            Iterator first
@@ -65,6 +72,7 @@ namespace boost { namespace spirit { namespace x3
         std::ostream& err_out;
         std::string file;
         int tabs;
+        position_cache<std::vector<Iterator>> pos_cache;
     };
 
     template <typename Iterator>
@@ -157,12 +165,11 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Iterator>
     void error_handler<Iterator>::operator()(
-        Iterator first
-      , Iterator last
-      , Iterator err_pos
-      , std::string const& error_message
-    ) const
+        Iterator err_pos, std::string const& error_message) const
     {
+        Iterator first = pos_cache.first();
+        Iterator last = pos_cache.last();
+
         // make sure err_pos does not point to white space
         skip_whitespace(err_pos, last);
 
@@ -180,13 +187,11 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Iterator>
     void error_handler<Iterator>::operator()(
-        Iterator first
-      , Iterator last
-      , Iterator err_first
-      , Iterator err_last
-      , std::string const& error_message
-    ) const
+        Iterator err_first, Iterator err_last, std::string const& error_message) const
     {
+        Iterator first = pos_cache.first();
+        Iterator last = pos_cache.last();
+
         // make sure err_pos does not point to white space
         skip_whitespace(err_first, last);
 
