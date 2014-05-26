@@ -35,13 +35,13 @@ namespace boost { namespace spirit { namespace x3
           , std::string const& error_message
         ) const;
 
-//        void operator()(
-//            Iterator first
-//          , Iterator last
-//          , Iterator err_first
-//          , Iterator err_last
-//          , std::string const& error_message
-//        ) const;
+        void operator()(
+            Iterator first
+          , Iterator last
+          , Iterator err_first
+          , Iterator err_last
+          , std::string const& error_message
+        ) const;
 //
 //        void operator()(
 //            Iterator first
@@ -178,30 +178,30 @@ namespace boost { namespace spirit { namespace x3
         err_out << "^_" << std::endl;
     }
 
-//    template <typename Iterator>
-//    void error_handler<Iterator>::operator()(
-//        Iterator first
-//      , Iterator last
-//      , Iterator err_first
-//      , Iterator err_last
-//      , std::string const& error_message
-//    ) const
-//    {
-//        // make sure err_pos does not point to white space
-//        skip_whitespace(err_first, last);
-//
-//        print_file_line(position(err_pos));
-//        err_out << error_message << std::endl;
-//
-//        Iterator start = get_line_start(first, err_first);
-//        if (start != first)
-//            ++start;
-//        Iterator i = start;
-//        print_line(i, last);
-//        print_indicator(start, err_first, ' ');
-//        print_indicator(start, err_last, '~');
-//        err_out << " <<-- Here" << std::endl;
-//    }
+    template <typename Iterator>
+    void error_handler<Iterator>::operator()(
+        Iterator first
+      , Iterator last
+      , Iterator err_first
+      , Iterator err_last
+      , std::string const& error_message
+    ) const
+    {
+        // make sure err_pos does not point to white space
+        skip_whitespace(err_first, last);
+
+        print_file_line(position(err_first));
+        err_out << error_message << std::endl;
+
+        Iterator start = get_line_start(first, err_first);
+        if (start != first)
+            ++start;
+        Iterator i = start;
+        print_line(i, last);
+        print_indicator(start, err_first, ' ');
+        print_indicator(start, err_last, '~');
+        err_out << " <<-- Here" << std::endl;
+    }
 //
 //    template <typename Iterator>
 //    void error_handler<Iterator>::operator()(

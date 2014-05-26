@@ -74,6 +74,10 @@ namespace client { namespace parser
       , unary_expr = unary_expr_def
       , primary_expr = primary_expr_def
     );
+    
+    struct unary_expr_class : annotation_base {};
+    struct primary_expr_class : annotation_base {};
+
 }}
 
 namespace client

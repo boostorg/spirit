@@ -26,6 +26,7 @@ namespace client { namespace parser
     public:
     
         typedef x3::error_handler<Iterator> base_type;
+        using base_type::operator();
     
         error_handler(
             Iterator first, Iterator last, std::ostream& err_out
@@ -37,6 +38,18 @@ namespace client { namespace parser
         void annotate(AST& ast, Iterator first, Iterator last)
         {
             return pos_cache.annotate(ast, first, last);
+        }
+        
+        void operator()(x3::position_tagged pos, std::string const& message) const
+        {
+            auto where = pos_cache.position_of(pos);
+            base_type::operator()(
+                pos_cache.first()
+              , pos_cache.last()
+              , where.begin()
+              , where.end()
+              , message
+            );
         }
         
     private:

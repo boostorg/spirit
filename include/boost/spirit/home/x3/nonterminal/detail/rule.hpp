@@ -212,7 +212,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             if (r)
             {
-                r = call_on_success(first, last, context, attr
+                auto first_ = first;
+                x3::skip_over(first_, last, context);
+                r = call_on_success(first_, i, context, attr
                   , has_on_success<ID, Iterator, Context, ActualAttribute>());
             }
             

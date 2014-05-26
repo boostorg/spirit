@@ -26,18 +26,19 @@ namespace client { namespace parser
     struct statement_list_class;
     struct variable_declaration_class;
     struct assignment_class;
-    struct identifier_class;
+    struct variable_class;
     
     typedef x3::rule<statement_class, ast::statement_list> statement_type;
     typedef x3::rule<statement_list_class, ast::statement_list> statement_list_type;
     typedef x3::rule<variable_declaration_class, ast::variable_declaration> variable_declaration_type;
     typedef x3::rule<assignment_class, ast::assignment> assignment_type;
-    typedef x3::rule<identifier_class, std::string> identifier_type;
+    typedef x3::rule<variable_class, ast::variable> variable_type;
     
     statement_type const statement("statement");
     statement_list_type const statement_list("statement_list");
     variable_declaration_type const variable_declaration("variable_declaration");
     assignment_type const assignment("assignment");
+    variable_type const variable("variable");
 
     // Import the expression rule
     namespace { auto const& expression = client::expression(); }
@@ -52,7 +53,7 @@ namespace client { namespace parser
         ;
 
     auto const assignment_def =
-            identifier
+            variable
         >   '='
         >   expression
         >   ';'
@@ -63,9 +64,12 @@ namespace client { namespace parser
       , statement_list = statement_list_def
       , variable_declaration = variable_declaration_def
       , assignment = assignment_def
+      , variable = identifier
     );
 
     struct statement_class : error_handler_base, annotation_base {};
+    struct assignment_class : annotation_base {};
+    struct variable_class : annotation_base {};
 }}
 
 namespace client

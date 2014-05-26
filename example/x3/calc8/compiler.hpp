@@ -41,15 +41,26 @@ namespace client { namespace code_gen
         std::vector<int> code;
     };
 
-    ///////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     //  The Compiler
-    ///////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     struct compiler
     {
         typedef bool result_type;
+        typedef std::function<
+            void(x3::position_tagged, std::string const&)>
+        error_handler_type;
 
-        compiler(client::code_gen::program& program)
-          : program(program) {}
+        template <typename ErrorHandler>
+        compiler(
+            client::code_gen::program& program
+          , ErrorHandler const& error_handler)
+          : program(program)
+          , error_handler(
+                [&](x3::position_tagged pos, std::string const& msg)
+                { error_handler(pos, msg); }
+            )
+        {}
 
         bool operator()(ast::nil) const { BOOST_ASSERT(0); return false; }
         bool operator()(unsigned int x) const;
@@ -62,6 +73,7 @@ namespace client { namespace code_gen
         bool operator()(ast::statement_list const& x) const;
 
         client::code_gen::program& program;
+        error_handler_type error_handler;
     };
 }}
 

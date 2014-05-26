@@ -60,13 +60,15 @@ main()
     client::code_gen::program program;                      // Our VM program
     client::ast::statement_list ast;                        // Our AST
 
-    client::code_gen::compiler compile(program);            // Our compiler
-    
     using boost::spirit::x3::with;
     using client::parser::error_handler_type;
     error_handler_type error_handler(iter, end, std::cerr); // Our error handler
 
-    auto const parser =                                     // Our parser
+    // Our compiler
+    client::code_gen::compiler compile(program, error_handler);
+
+    // Our parser
+    auto const parser =
         with<client::parser::error_handler_tag>(std::ref(error_handler))
         [
             client::statement()
