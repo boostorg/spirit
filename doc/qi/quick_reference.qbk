@@ -236,7 +236,7 @@ See here for more information about [qi_auto Auto Parsers].
 
 [table
     [[Expression]           [Attribute]                 [Description]]
-    [[[link spirit.qi.reference.operator.and_predicate `!a`]]
+    [[[link spirit.qi.reference.operator.not_predicate `!a`]]
                             [`Unused`]                  [Not predicate. If the predicate `a` matches,
                                                         fail. Otherwise, return a zero length match.]]
     [[[link spirit.qi.reference.operator.and_predicate `&a`]]
