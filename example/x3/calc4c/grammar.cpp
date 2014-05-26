@@ -32,30 +32,33 @@ namespace client
         x3::rule<class expression, ast::program> const expression("expression");
         x3::rule<class term, ast::program> const term("term");
         x3::rule<class factor, ast::operand> const factor("factor");
+        
+        BOOST_SPIRIT_DEFINE(
+            expression =
+                term
+                >> *(   (char_('+') >> term)
+                    |   (char_('-') >> term)
+                    )
+                ,
+
+            term =
+                factor
+                >> *(   (char_('*') >> factor)
+                    |   (char_('/') >> factor)
+                    )
+                ,
+
+            factor =
+                    uint_
+                |   '(' >> expression >> ')'
+                |   (char_('-') >> factor)
+                |   (char_('+') >> factor)
+            
+        );
 
         parser_type calculator()
         {
-            return x3::grammar("calculator",
-                expression =
-                    term
-                    >> *(   (char_('+') >> term)
-                        |   (char_('-') >> term)
-                        )
-                    ,
-
-                term =
-                    factor
-                    >> *(   (char_('*') >> factor)
-                        |   (char_('/') >> factor)
-                        )
-                    ,
-
-                factor =
-                        uint_
-                    |   '(' >> expression >> ')'
-                    |   (char_('-') >> factor)
-                    |   (char_('+') >> factor)
-                );
+            return expression;
         }
     }
 }
