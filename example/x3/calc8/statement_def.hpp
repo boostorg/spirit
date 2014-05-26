@@ -65,7 +65,7 @@ namespace client { namespace parser
       , assignment = assignment_def
     );
 
-    struct statement_class : error_handler_base {};
+    struct statement_class : error_handler_base, annotation_base {};
 }}
 
 namespace client

@@ -13,35 +13,40 @@
 
 namespace client
 {
-    // tag used to get our error handling from the context
+    // tag used to get our error handler from the context
     struct error_handler_tag;
 }
 
 namespace client { namespace parser
 {
-    ///////////////////////////////////////////////////////////////////////////////
-    //  The on_success handler links the AST to a vector of iterator positions
-    //  for the purpose of subsequent semantic error handling when the
-    //  program is being compiled. See x3::position_cache in x3/support/ast
-    ///////////////////////////////////////////////////////////////////////////////
-    template <typename ID, typename Iterator, typename Context>
-    inline void
-    on_success(ID, Iterator const& first, Iterator const& last
-      , ast::operand& ast, Context const& context)
+    struct annotation_base
     {
-        auto& error_handler = x3::get<error_handler_tag>(context).get();
-        auto annotate = [&](auto& node) { error_handler.annotate(node, first, last); };
-        ast.apply_visitor(x3::make_lambda_visitor<void>(annotate));
-    }
+        ////////////////////////////////////////////////////////////////////////
+        //  The on_success handler links the AST to a vector of iterator
+        //  positions for the purpose of subsequent semantic error handling
+        //  when the program is being compiled. See x3::position_cache in
+        //  x3/support/ast
+        ////////////////////////////////////////////////////////////////////////
 
-    template <typename ID, typename Iterator, typename Context>
-    inline void
-    on_success(ID, Iterator const& first, Iterator const& last
-      , ast::assignment& ast, Context const& context)
-    {
-        auto& error_handler = x3::get<error_handler_tag>(context).get();
-        error_handler.annotate(ast, first, last);
-    }
+        template <typename Iterator, typename Context>
+        inline void
+        on_success(Iterator const& first, Iterator const& last
+          , ast::operand& ast, Context const& context)
+        {
+            auto& error_handler = x3::get<error_handler_tag>(context).get();
+            auto annotate = [&](auto& node) { error_handler.annotate(node, first, last); };
+            ast.apply_visitor(x3::make_lambda_visitor<void>(annotate));
+        }
+
+        template <typename Iterator, typename Context>
+        inline void
+        on_success(Iterator const& first, Iterator const& last
+          , ast::assignment& ast, Context const& context)
+        {
+            auto& error_handler = x3::get<error_handler_tag>(context).get();
+            error_handler.annotate(ast, first, last);
+        }
+    };
 }}
 
 #endif

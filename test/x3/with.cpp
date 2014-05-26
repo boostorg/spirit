@@ -21,14 +21,14 @@ struct my_rule_class
         x3::get<my_tag>(context)++;
         return x3::error_handler_result::fail;
     }
+    
+    template <typename Iterator, typename Attribute, typename Context>
+    inline void
+    on_success(Iterator const&, Iterator const&, Attribute&, Context const& context)
+    {
+        x3::get<my_tag>(context)++;
+    }
 };
-
-template <typename Iterator, typename Attribute, typename Context>
-inline void
-on_success(x3::identity<my_rule_class>, Iterator const&, Iterator const&, Attribute&, Context const& context)
-{
-    x3::get<my_tag>(context)++;
-}
 
 int
 main()

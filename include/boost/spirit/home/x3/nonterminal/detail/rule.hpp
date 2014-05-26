@@ -86,13 +86,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         detail::simple_trace_type& f;
     };
 #endif
-
-    template <typename ID, typename Iterator, typename Attribute, typename Context>
-    inline void
-    on_success(ID, Iterator const&, Iterator const&, Attribute&, Context const&)
-    {
-        // no-op
-    }
     
     template <typename ID, typename Iterator, typename Context, typename Enable = void>
     struct has_on_error : mpl::false_ {};
@@ -105,6 +98,24 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                     std::declval<Iterator&>()
                   , std::declval<Iterator>()
                   , std::declval<expectation_failure<Iterator>>()
+                  , std::declval<Context>()
+                )
+            )>::type
+        >
+      : mpl::true_
+    {};
+    
+    template <typename ID, typename Iterator, typename Attribute, typename Context, typename Enable = void>
+    struct has_on_success : mpl::false_ {};
+
+    template <typename ID, typename Iterator, typename Attribute, typename Context>
+    struct has_on_success<ID, Iterator, Context, Attribute,
+        typename disable_if_substitution_failure<
+            decltype(
+                std::declval<ID>().on_success(
+                    std::declval<Iterator&>()
+                  , std::declval<Iterator>()
+                  , std::declval<Attribute&>()
                   , std::declval<Context>()
                 )
             )>::type
@@ -142,6 +153,31 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Attribute, typename ID>
     struct rule_parser
     {
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        static bool call_on_success(
+            Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr
+          , mpl::false_ /* No on_success handler */ )
+        {
+            return true;
+        }
+        
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        static bool call_on_success(
+            Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr
+          , mpl::true_ /* Has on_success handler */)
+        {
+            bool pass = true;
+            ID().on_success(
+                first
+              , last
+              , attr
+              , make_context<parse_pass_context_tag>(pass, context)
+            );
+            return pass;
+        }
+        
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
         static bool parse_rhs_main(
@@ -176,17 +212,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             if (r)
             {
-                bool pass = true;
-                on_success(
-                    typename make_id<ID>::type()
-                  , first
-                  , i
-                  , attr
-                  , make_context<parse_pass_context_tag>(pass, context)
-                );
-                if (pass)
-                    first = i;
+                r = call_on_success(first, last, context, attr
+                  , has_on_success<ID, Iterator, Context, ActualAttribute>());
             }
+            
+            if (r)
+                first = i;
             return r;
         }
 

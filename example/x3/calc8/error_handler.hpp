@@ -27,7 +27,9 @@ namespace client { namespace parser
     
         typedef x3::error_handler<Iterator> base_type;
     
-        error_handler(Iterator first, Iterator last, std::ostream& err_out, std::string file = "", int tabs = 4)
+        error_handler(
+            Iterator first, Iterator last, std::ostream& err_out
+          , std::string file = "", int tabs = 4)
           : base_type(err_out, file, tabs)
           , pos_cache(first, last) {}
         
@@ -42,7 +44,7 @@ namespace client { namespace parser
         x3::position_cache<std::vector<Iterator>> pos_cache;
     };
     
-    // tag used to get our error handling from the context
+    // tag used to get our error handler from the context
     struct error_handler_tag;
     
     template <typename Context>

@@ -21,6 +21,8 @@
 
 namespace x3 = boost::spirit::x3;
 
+int got_it = 0;
+
 struct my_rule_class
 {
     template <typename Iterator, typename Exception, typename Context>
@@ -37,16 +39,14 @@ struct my_rule_class
             ;
         return x3::error_handler_result::fail;
     }
+
+    template <typename Iterator, typename Attribute, typename Context>
+    inline void
+    on_success(Iterator const&, Iterator const&, Attribute&, Context const&)
+    {
+        ++got_it;
+    }
 };
-
-int got_it = 0;
-
-template <typename Iterator, typename Attribute, typename Context>
-inline void
-on_success(x3::identity<my_rule_class>, Iterator const&, Iterator const&, Attribute&, Context const&)
-{
-    ++got_it;
-}
 
 int
 main()
