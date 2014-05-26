@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_CALC7_ANNOTATION_HPP)
-#define BOOST_SPIRIT_X3_CALC7_ANNOTATION_HPP
+#if !defined(BOOST_SPIRIT_X3_CALC8_ANNOTATION_HPP)
+#define BOOST_SPIRIT_X3_CALC8_ANNOTATION_HPP
 
 #include <map>
 #include "ast.hpp"
@@ -41,19 +41,10 @@ namespace client { namespace parser
             ast.apply_visitor(x3::make_lambda_visitor<void>(annotate));
         }
 
-        template <typename Iterator, typename Context>
+        template <typename T, typename Iterator, typename Context>
         inline void
         on_success(Iterator const& first, Iterator const& last
-          , ast::assignment& ast, Context const& context)
-        {
-            auto& error_handler = x3::get<error_handler_tag>(context).get();
-            error_handler.tag(ast, first, last);
-        }
-        
-        template <typename Iterator, typename Context>
-        inline void
-        on_success(Iterator const& first, Iterator const& last
-          , ast::variable& ast, Context const& context)
+          , T& ast, Context const& context)
         {
             auto& error_handler = x3::get<error_handler_tag>(context).get();
             error_handler.tag(ast, first, last);
