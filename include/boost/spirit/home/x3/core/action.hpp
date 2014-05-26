@@ -14,7 +14,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
-#include <boost/spirit/home/x3/support/utility/is_callable.hpp>
+#include <boost/spirit/home/x3/core/call.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/type_traits/is_class.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -23,22 +23,12 @@
 namespace boost { namespace spirit { namespace x3
 {
     struct raw_attribute_type;
-    struct rule_context_tag;
     struct parse_pass_context_tag;
 
     template <typename Context>
     inline bool& _pass(Context const& context)
     {
         return x3::get<parse_pass_context_tag>(context);
-    }
-    
-    struct rule_val_context_tag;
-    template <typename Context>
-
-    inline auto _val(Context const& context)
-        -> decltype(x3::get<rule_val_context_tag>(context))
-    {
-        return x3::get<rule_val_context_tag>(context);
     }
 
     template <typename Subject, typename Action>
@@ -51,33 +41,26 @@ namespace boost { namespace spirit { namespace x3
         action(Subject const& subject, Action f)
           : base_type(subject), f(f) {}
 
-        template <typename Context, typename RuleContext, typename Attribute>
-        bool call_action(Context const& context, RuleContext& rcontext, Attribute& attr, mpl::false_) const
+        template <typename Iterator, typename Context, typename RuleContext, typename Attribute>
+        bool call_action(
+            Iterator& first, Iterator const& last
+          , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
             bool pass = true;
             auto action_context = make_context<parse_pass_context_tag>(pass, context);
-            auto val_context = make_context<rule_val_context_tag>(rcontext, action_context);
-            f(val_context, attr); // pass in the context and attribute
+            call(f, first, last, action_context, rcontext, attr);
             return pass;
         }
 
-        template <typename Context, typename RuleContext, typename Attribute>
-        bool call_action(Context const&, RuleContext&, Attribute& attr, mpl::true_) const
-        {
-            f(attr); // pass attribute only
-            return true;
-        }
-
-        // action wants attribute
         template <typename Iterator, typename Context
           , typename RuleContext, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, Attribute& attr, mpl::false_) const
+        bool parse_main(Iterator& first, Iterator const& last
+          , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
             Iterator save = first;
             if (this->subject.parse(first, last, context, rcontext, attr))
             {
-                if (call_action(context, rcontext, attr, is_callable<Action(Attribute&)>()))
+                if (call_action(first, last, context, rcontext, attr))
                     return true;
 
                 // reset iterators if semantic action failed the match
@@ -89,18 +72,18 @@ namespace boost { namespace spirit { namespace x3
         
         // attr==raw_attribute_type, action wants iterator_range (see raw.hpp)
         template <typename Iterator, typename Context, typename RuleContext>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, raw_attribute_type&, mpl::false_) const
+        bool parse_main(Iterator& first, Iterator const& last
+          , Context const& context, RuleContext& rcontext, raw_attribute_type&) const
         {
             boost::iterator_range<Iterator> rng;
             // synthesize the attribute since one is not supplied
-            return parse(first, last, context, rcontext, rng, mpl::false_());
+            return parse_main(first, last, context, rcontext, rng);
         }
 
         // attr==unused, action wants attribute
         template <typename Iterator, typename Context, typename RuleContext>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, unused_type, mpl::false_) const
+          , Context const& context, RuleContext& rcontext, unused_type) const
         {
             typedef typename
                 traits::attribute_of<action<Subject, Action>, Context>::type
@@ -113,35 +96,16 @@ namespace boost { namespace spirit { namespace x3
             // synthesize the attribute since one is not supplied
             typename make_attribute::type made_attr = make_attribute::call(unused_type());
             typename transform::type attr = transform::pre(made_attr);
-            return parse(first, last, context, rcontext, attr, mpl::false_());
+            return parse_main(first, last, context, rcontext, attr);
         }
-
-        // action does not want context and attribute
-        template <typename Iterator, typename Context
-            , typename RuleContext, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext& rcontext, Attribute& attr, mpl::true_) const
-        {
-            Iterator save = first;
-            if (this->subject.parse(first, last, context, rcontext, attr))
-            {
-                f();
-                return true;
-
-                // reset iterators if semantic action failed the match
-                // retrospectively
-                first = save;
-            }
-            return false;
-        }
-
+        
         // main parse function
         template <typename Iterator, typename Context
             , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
-            return parse(first, last, context, rcontext, attr, is_callable<Action()>());
+            return parse_main(first, last, context, rcontext, attr);
         }
 
         Action f;

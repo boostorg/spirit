@@ -26,9 +26,9 @@ using boost::spirit::x3::_val;
 struct f
 {
     template <typename Context>
-    void operator()(Context const& ctx, char c) const
+    void operator()(Context const& ctx) const
     {
-        _val(ctx) += c;
+        _val(ctx) += _attr(ctx);
     }
 };
 
@@ -75,9 +75,9 @@ main()
        
         auto rdef = rule_type() =
             alpha /
-               [](auto& r, char c)
+               [](auto& ctx)
                {
-                  _val(r) += c;
+                  _val(ctx) += _attr(ctx);
                }
             ;
 

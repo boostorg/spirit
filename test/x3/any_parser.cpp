@@ -32,6 +32,7 @@ main()
     using boost::spirit::x3::phrase_parse;
     using boost::spirit::x3::skip_flag;
     using boost::spirit::x3::skipper_tag;
+    using boost::spirit::x3::_attr;
 
     typedef char const* iterator_type;
     typedef decltype(make_context<skipper_tag>(space)) context_type;
@@ -89,8 +90,8 @@ main()
         //!!BOOST_TEST(test("x", a[f]));
         //!!BOOST_TEST(ch == 'x');
 
-        // the semantic action may optionally not require the context to be passed
-        auto f2 = [&](char attr){ ch = 'y'; };
+        // the semantic action may have the context passed
+        auto f2 = [&](auto&){ ch = 'y'; };
         BOOST_TEST(test("x", a[f2]));
         BOOST_TEST(ch == 'y');
 
@@ -107,7 +108,7 @@ main()
 
         char ch = '\0';
         any_parser<iterator_type, char> a = alpha;
-        auto f = [&](char attr){ ch = attr; };
+        auto f = [&](auto& ctx){ ch = _attr(ctx); };
 
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
@@ -130,7 +131,7 @@ main()
       // that is convertible to the value_type of the attribute).
 
         std::string s;
-        auto f = [&](std::string attr){ s = attr; };
+        auto f = [&](auto& ctx){ s = _attr(ctx); };
 
         {
             any_parser<iterator_type, std::string> r

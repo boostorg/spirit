@@ -13,21 +13,24 @@ namespace x3 = boost::spirit::x3;
 
 int x = 0;
 
-void fun1(int i)
-{
-    x += i;
-}
+auto fun1 =
+    [](auto& ctx)
+    {
+        x += x3::_attr(ctx);
+    }
+;
 
 struct fun_action
 {
-    void operator()(int i) const
+    template <typename Context>
+    void operator()(Context const& ctx) const
     {
-        x += i;
+        x += x3::_attr(ctx);
     }
 };
 
 auto fail =
-    [](auto& ctx, int attr)
+    [](auto& ctx)
     {
         x3::_pass(ctx) = false;
     }
@@ -37,9 +40,10 @@ struct setnext
 {
     setnext(char& next) : next(next) {}
 
-    void operator()(char c) const
+    template <typename Context>
+    void operator()(Context const& ctx) const
     {
-        next = c;
+        next = x3::_attr(ctx);
     }
 
     char& next;
@@ -48,16 +52,6 @@ struct setnext
 int main()
 {
     using x3::int_;
-
-    {
-        char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        x3::parse(s1, e1, '{' >> int_[&fun1] >> '}');
-    }
-
-    {
-        char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        x3::parse(s1, e1, '{' >> int_[&fun1] >> '}');
-    }
 
     {
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
@@ -73,10 +67,10 @@ int main()
     {
         using namespace std::placeholders;
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        x3::parse(s1, e1, '{' >> int_[std::bind(&fun1, _1)] >> '}');
+        x3::parse(s1, e1, '{' >> int_[std::bind(fun_action(), _1)] >> '}');
     }
 
-    BOOST_TEST(x == (42*5));
+    BOOST_TEST(x == (42*3));
 
     {
        std::string input("1234 6543");

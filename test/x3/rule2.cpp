@@ -32,19 +32,20 @@ main()
     //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
+    using boost::spirit::x3::_attr;
 
     { // context tests
 
         char ch;
         auto a = rule<class a, char>() = alpha;
 
-        // this semantic action requires both the context and attrubute
-        auto f = [&](auto&, char attr){ ch = attr; };
+        // this semantic action requires the context
+        auto f = [&](auto& ctx){ ch = _attr(ctx); };
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
 
-        // the semantic action may optionally not require the context to be passed
-        auto f2 = [&](char attr){ ch = 'y'; };
+        // this semantic action requires the (unused) context
+        auto f2 = [&](auto&){ ch = 'y'; };
         BOOST_TEST(test("x", a[f2]));
         BOOST_TEST(ch == 'y');
 
@@ -61,7 +62,7 @@ main()
 
         char ch = '\0';
         auto a = rule<class a, char>() = alpha;
-        auto f = [&](char attr){ ch = attr; };
+        auto f = [&](auto& ctx){ ch = _attr(ctx); };
 
         BOOST_TEST(test("x", a[f]));
         BOOST_TEST(ch == 'x');
@@ -84,7 +85,7 @@ main()
       // that is convertible to the value_type of the attribute).
 
         std::string s;
-        auto f = [&](std::string attr){ s = attr; };
+        auto f = [&](auto& ctx){ s = _attr(ctx); };
 
         {
             auto r = rule<class r, std::string>()
