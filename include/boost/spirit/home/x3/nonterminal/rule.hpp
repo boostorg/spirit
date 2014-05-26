@@ -41,10 +41,10 @@ namespace boost { namespace spirit { namespace x3
         return get<ID>(context).parse(first, last, context, unused, attr);
     }
 
-    template <typename ID, typename RHS, typename Attribute, bool explicit_attribute_propagation_>
-    struct rule_definition : parser<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation_>>
+    template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
+    struct rule_definition : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
     {
-        typedef rule_definition<ID, RHS, Attribute, explicit_attribute_propagation_> this_type;
+        typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
         typedef ID id;
         typedef RHS rhs_type;
         typedef rule<ID, Attribute> lhs_type;
@@ -54,8 +54,8 @@ namespace boost { namespace spirit { namespace x3
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
-        static bool const explicit_attribute_propagation =
-            explicit_attribute_propagation_;
+        static bool const force_attribute =
+            force_attribute_;
 
         rule_definition(RHS rhs, char const* name)
           : rhs(rhs), name(name) {}
@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace x3
                     rhs, name, first, last
                   , context
                   , attr
-                  , mpl::bool_<explicit_attribute_propagation>());
+                  , mpl::bool_<force_attribute>());
         }
 
         RHS rhs;
@@ -130,8 +130,8 @@ namespace boost { namespace spirit { namespace x3
         template <typename ID, typename Attribute>
         struct is_rule<rule<ID, Attribute>> : mpl::true_ {};
         
-        template <typename ID, typename Attribute, typename RHS, bool explicit_attribute_propagation>
-        struct is_rule<rule_definition<ID, RHS, Attribute, explicit_attribute_propagation>> : mpl::true_ {};
+        template <typename ID, typename Attribute, typename RHS, bool force_attribute>
+        struct is_rule<rule_definition<ID, RHS, Attribute, force_attribute>> : mpl::true_ {};
     }
 
     template <typename T>
