@@ -30,13 +30,14 @@ namespace boost { namespace spirit { namespace x3
         raw_directive(Subject const& subject)
           : base_type(subject) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+            , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
             Iterator i = first;
-            if (this->subject.parse(i, last, context, unused))
+            if (this->subject.parse(i, last, context, rcontext, unused))
             {
                 traits::move_to(first, i, attr);
                 first = i;
@@ -45,11 +46,11 @@ namespace boost { namespace spirit { namespace x3
             return false;
         }
 
-        template <typename Iterator, typename Context>
+        template <typename Iterator, typename Context, typename RContext>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type) const
+          , Context const& context, RContext& rcontext, unused_type) const
         {
-            return this->subject.parse(first, last, context, unused);
+            return this->subject.parse(first, last, context, rcontext, unused);
         }
     };
 

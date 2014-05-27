@@ -36,8 +36,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what_;
-            std::cout << " got: \"" << x.first << '"' << std::endl;
+            std::cout << "expected: " << x.which();
+            std::cout << " got: \"" << x.where() << '"' << std::endl;
         }
     }
 
@@ -53,8 +53,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what_;
-            std::cout << " got: \"" << x.first << '"' << std::endl;
+            std::cout << "expected: " << x.which();
+            std::cout << " got: \"" << x.where() << '"' << std::endl;
         }
     }
 
@@ -65,8 +65,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what_;
-            std::cout << " got: \"" << x.first << '"' << std::endl;
+            std::cout << "expected: " << x.which();
+            std::cout << " got: \"" << x.where() << '"' << std::endl;
         }
     }
 
@@ -112,8 +112,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what_;
-            std::cout << " got: \"" << x.first << '"' << std::endl;
+            std::cout << "expected: " << x.which();
+            std::cout << " got: \"" << x.where() << '"' << std::endl;
         }
     }
 
@@ -124,8 +124,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what_;
-            std::cout << " got: \"" << x.first << '"' << std::endl;
+            std::cout << "expected: " << x.which();
+            std::cout << " got: \"" << x.where() << '"' << std::endl;
         }
     }
 
@@ -138,8 +138,8 @@ main()
         //~ }
         //~ catch (expectation_failure<char const*> const& x)
         //~ {
-            //~ std::cout << "expected: " << x.what_;
-            //~ std::cout << " got: \"" << x.first << '"' << std::endl;
+            //~ std::cout << "expected: " << x.which();
+            //~ std::cout << " got: \"" << x.where() << '"' << std::endl;
         //~ }
     //~ }
 

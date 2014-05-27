@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -257,15 +257,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename Parser, typename Iterator, typename Context, typename Attribute>
-    bool parse_alternative(
-        Parser const& p, Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr)
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_alternative(Parser const& p, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr)
     {
         typedef detail::pass_variant_attribute<Parser, Attribute, Context> pass;
 
         typename pass::type attr_ = pass::call(attr);
-        if (p.parse(first, last, context, attr_))
+        if (p.parse(first, last, context, rcontext, attr_))
         {
             move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
             return true;
@@ -274,8 +274,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     }
 
 
-    template <typename Left, typename Right, typename Context>
-    struct parse_into_container_impl<alternative<Left, Right>, Context>
+    template <typename Left, typename Right, typename Context, typename RContext>
+    struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>
     {
         typedef alternative<Left, Right> parser_type;
 
@@ -283,33 +283,33 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
         {
-            return parse_alternative(parser, first, last, context, attr);
+            return parse_alternative(parser, first, last, context, rcontext, attr);
         }
 
         template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
         {
             return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, attr);
+                parser, first, last, context, rcontext, attr);
         }
 
         template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr)
+          , Context const& context, RContext& rcontext, Attribute& attr)
         {
             typedef typename
                 traits::attribute_of<parser_type, Context>::type
             attribute_type;
 
-            return call(parser, first, last, context, attr
-              , traits::variant_has_substitute<attribute_type, Attribute>());
+            return call(parser, first, last, context, rcontext, attr
+                , traits::variant_has_substitute<attribute_type, Attribute>());
         }
     };
 

@@ -133,11 +133,11 @@ namespace boost { namespace spirit { namespace x3
         variant() : var() {}
 
         template <typename T, typename disable_if<is_base_of<base_type, T>>::type>
-        variant(T const& rhs)
+        explicit variant(T const& rhs)
             : var(rhs) {}
 
         template <typename T, typename disable_if<is_base_of<base_type, T>>::type>
-        variant(T&& rhs)
+        explicit variant(T&& rhs)
             : var(std::forward<T>(rhs)) {}
 
         variant(variant const& rhs)

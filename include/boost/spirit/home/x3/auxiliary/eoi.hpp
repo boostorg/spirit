@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -24,8 +24,8 @@ namespace boost { namespace spirit { namespace x3
         static bool const has_attribute = false;
 
         template <typename Iterator, typename Context, typename Attribute>
-        bool parse( Iterator& first, Iterator const& last
-                  , Context const& context, Attribute& /*attr*/) const
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, unused_type, Attribute&) const
         {
             x3::skip_over(first, last, context);
             return first == last;

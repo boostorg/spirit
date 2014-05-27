@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,7 +29,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& /*attr*/) const
+          , Context const& context, unused_type, Attribute&) const
         {
             x3::skip_over(first, last, context);
             return predicate;
@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, unused_type, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
             return f(x3::get<rule_context_tag>(context));
@@ -63,9 +63,10 @@ namespace boost { namespace spirit { namespace x3
         typedef unused_type attribute_type;
         static bool const has_attribute = false;
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& /*attr*/) const
+          , Context const& context, RuleContext&, Attribute&) const
         {
             x3::skip_over(first, last, context);
             return true;

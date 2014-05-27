@@ -26,24 +26,31 @@ namespace boost { namespace spirit { namespace x3
         seek_directive(Subject const& subject) :
             base_type(subject) {}
 
-        template<typename Iterator, typename Context, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-                   , Context const& context, Attribute& attr) const
+        template<typename Iterator, typename Context
+          , typename RContext, typename Attribute>
+        bool parse(
+            Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            for (Iterator current(first);; ++current)
+            Iterator current(first);
+            for (/**/; current != last; ++current)
             {
-                if (this->subject.parse(current, last, context, attr))
+                if (this->subject.parse(current, last, context, rcontext, attr))
                 {
                     first = current;
                     return true;
                 }
-
-                // fail only after subject fails & no input
-                if (current == last)
-                {
-                    return false;
-                }
             }
+
+            // Test for when subjects match on input empty. Example:
+            //     comment = "//" >> seek[eol | eoi]
+            if (this->subject.parse(current, last, context, rcontext, attr))
+            {
+                first = current;
+                return true;
+            }
+
+            return false;
         }
     };
 

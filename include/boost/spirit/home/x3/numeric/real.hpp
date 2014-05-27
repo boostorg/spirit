@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, T& attr_) const
+          , Context& context, unused_type, T& attr_) const
         {
             x3::skip_over(first, last, context);
             return extract_real<T, RealPolicies>::parse(first, last, attr_, policies);
@@ -40,11 +40,11 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr_param) const
+          , Context& context, unused_type, Attribute& attr_param) const
         {
             // this case is called when Attribute is not T
             T attr_;
-            if (parse(first, last, context, attr_))
+            if (parse(first, last, context, unused, attr_))
             {
                 traits::move_to(attr_, attr_param);
                 return true;

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2012 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2011 Jan Frederick Eick
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying

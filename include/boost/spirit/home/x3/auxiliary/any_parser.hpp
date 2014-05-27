@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator_, typename Context_>
         bool parse(Iterator_& first, Iterator_ const& last
-          , Context_ const& context, Attribute& attr) const
+          , Context_ const& context, unused_type, Attribute& attr) const
         {
             BOOST_STATIC_ASSERT_MSG(
                 (is_same<Iterator, Iterator_>::value)
@@ -79,10 +79,10 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator_, typename Context_, typename Attribute_>
         bool parse(Iterator_& first, Iterator_ const& last
-          , Context_ const& context, Attribute_& attr_) const
+          , Context_ const& context, unused_type, Attribute_& attr_) const
         {
             Attribute attr;
-            if(parse(first, last, context, attr))
+            if (parse(first, last, context, unused, attr))
             {
                 traits::move_to(attr, attr_);
                 return true;
@@ -96,6 +96,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
     private:
+
         struct placeholder
         {
             virtual placeholder* clone() const = 0;
@@ -124,7 +125,7 @@ namespace boost { namespace spirit { namespace x3
             bool parse(Iterator& first, Iterator const& last
               , Context const& context, Attribute& attr) const override
             {
-                return _parser.parse(first, last, context, attr);
+                return _parser.parse(first, last, context, unused, attr);
             }
 
             std::string get_info() const override

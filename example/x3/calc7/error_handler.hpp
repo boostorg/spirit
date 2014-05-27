@@ -9,29 +9,31 @@
 
 #include <boost/spirit/home/x3.hpp>
 
-namespace client
+namespace client { namespace calculator_grammar
 {
-    ///////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     //  Our error handler
-    ///////////////////////////////////////////////////////////////////////////////
-    typedef x3::identity<class expression> expression_id;
+    ////////////////////////////////////////////////////////////////////////////
+    namespace x3 = boost::spirit::x3;
 
-    template <typename Iterator, typename Exception, typename Context>
-    x3::error_handler_result
-    on_error(
-        expression_id, Iterator&
-      , Exception const& x, Context const& context)
+    struct error_handler
     {
-        std::cout
-            << "Error! Expecting: "
-            << x.what_
-            << " here: \""
-            << std::string(x.first, x.last)
-            << "\""
-            << std::endl
-            ;
-        return x3::error_handler_result::fail;
-    }
-}
+        //  Our error handler
+        template <typename Iterator, typename Exception, typename Context>
+        x3::error_handler_result
+        on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+        {
+            std::cout
+                << "Error! Expecting: "
+                << x.which()
+                << " here: \""
+                << std::string(x.where(), last)
+                << "\""
+                << std::endl
+                ;
+            return x3::error_handler_result::fail;
+        }
+    };
+}}
 
 #endif

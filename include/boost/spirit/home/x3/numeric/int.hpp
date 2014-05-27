@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -36,7 +36,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, unused_type, Attribute& attr) const
         {
             typedef extract_int<T, Radix, MinDigits, MaxDigits> extract;
             x3::skip_over(first, last, context);
@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-#define BOOST_SPIRIT_X3_INT_PARSER(int_type, name)                                 \
+#define BOOST_SPIRIT_X3_INT_PARSER(int_type, name)                              \
     typedef int_parser<int_type> name##type;                                    \
     name##type const name = name##type();                                       \
     /***/

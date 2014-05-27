@@ -7,15 +7,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Same as calc6, but this version also shows off grammar modularization.
-//  Here you will see how expressions and statements are built as modular
-//  grammars.
+//  Here you will see how expressions is built as a modular grammars.
 //
 //  [ JDG Sometime 2000 ]       pre-boost
 //  [ JDG September 18, 2002 ]  spirit1
 //  [ JDG April 8, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
 //  [ JDG April 9, 2014 ]       Spirit X3
-//  [ JDG May 2, 2014 ]         Modular grammar using any_parser.
+//  [ JDG May 2, 2014 ]         Modular grammar using BOOST_SPIRIT_DEFINE.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -39,7 +38,6 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef client::ast::expression ast_expression;
     typedef client::compiler compiler;
-    using client::expression;
 
     std::string str;
     while (std::getline(std::cin, str))
@@ -51,12 +49,12 @@ main()
         typedef boost::spirit::x3::ascii::space_type const skipper_type;
         typedef std::string::const_iterator iterator_type;
 
-        client::vmachine mach;                                  // Our virtual machine
-        std::vector<int> code;                                  // Our VM code
-        auto calc = expression<iterator_type, skipper_type>();  // grammar
+        client::vmachine mach;                          // Our virtual machine
+        std::vector<int> code;                          // Our VM code
+        auto calc = client::expression();               // grammar
 
-        ast_expression ast;                                     // Our program (AST)
-        compiler compile(code);                                 // Compiles the program
+        ast_expression ast;                             // Our program (AST)
+        compiler compile(code);                         // Compiles the program
 
         iterator_type iter = str.begin();
         iterator_type end = str.end();

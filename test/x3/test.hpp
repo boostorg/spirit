@@ -38,6 +38,17 @@ namespace spirit_test
             && (!full_match || (in == last));
     }
 
+    template <typename Char, typename Parser>
+    bool test_failure(Char const* in, Parser const& p)
+    {
+        char const * const start = in;
+        Char const* last = in;
+        while (*last)
+            last++;
+
+        return !boost::spirit::x3::parse(in, last, p) && (in == start);
+    }
+
     //~ template <typename Char, typename Parser>
     //~ bool binary_test(Char const* in, std::size_t size, Parser const& p,
         //~ bool full_match = true)

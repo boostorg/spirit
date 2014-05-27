@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2013 Carl Barron
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -214,7 +214,7 @@ namespace boost { namespace spirit { namespace x3
                 , traits::get_string_end<Char>(str));
         }
 
-private:
+    private:
         template <typename Iterator>
         value_type* find_impl(Iterator begin, Iterator end)
         {
@@ -229,10 +229,10 @@ private:
             return begin == end ? r : 0;
         }
 
-public:
+    public:
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, unused_type, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
 
