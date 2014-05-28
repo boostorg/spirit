@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2013 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -16,7 +16,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
-#include <boost/utility/declval.hpp> 
+#include <boost/utility/declval.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
@@ -120,11 +120,14 @@ namespace boost { namespace spirit { namespace x3
 
                 template<typename T, typename R =
                     decltype(as_spirit_parser(boost::declval<T const&>()))>
-                struct deduce_as_parser {
+                struct deduce_as_parser
+                {
                     typedef R type;
-                    typedef typename boost::remove_cv<
-                        typename boost::remove_reference<R>::type
-                    >::type value_type;
+                    typedef typename
+                        boost::remove_cv<
+                            typename boost::remove_reference<R>::type
+                        >::type
+                    value_type;
 
                     static type call(T const& v)
                     {
@@ -189,20 +192,6 @@ namespace boost { namespace spirit { namespace x3
     {
         return p.derived();
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // is_parser<T>: metafunction that evaluates to mpl::true_ if a type T 
-    // can be used as a parser, mpl::false_ otherwise
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Enable = void>
-    struct is_parser
-      : mpl::false_
-    {};
-    template <typename T>
-    struct is_parser<T, typename disable_if_substitution_failure<
-        typename extension::as_parser<T>::type>::type>
-      : mpl::true_
-    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // The main what function
@@ -240,7 +229,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Subject, typename Derived, typename Context>
     struct has_attribute<x3::unary_parser<Subject, Derived>, Context>
         : has_attribute<Subject, Context> {};
-    
+
     template <typename Left, typename Right, typename Derived, typename Context>
     struct has_attribute<x3::binary_parser<Left, Right, Derived>, Context>
         : mpl::bool_<has_attribute<Left, Context>::value ||

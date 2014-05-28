@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,14 +22,15 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
-#include <boost/variant/recursive_variant.hpp>
-#include <boost/variant/apply_visitor.hpp>
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 
 #include <iostream>
 #include <string>
 #include <list>
 #include <numeric>
+
+namespace x3 = boost::spirit::x3;
 
 namespace client { namespace ast
 {
@@ -40,13 +41,16 @@ namespace client { namespace ast
     struct signed_;
     struct program;
 
-    typedef boost::variant<
+    struct operand : x3::variant<
             nil
           , unsigned int
-          , boost::recursive_wrapper<signed_>
-          , boost::recursive_wrapper<program>
+          , x3::forward_ast<signed_>
+          , x3::forward_ast<program>
         >
-    operand;
+    {
+        using base_type::base_type;
+        using base_type::operator=;
+    };
 
     struct signed_
     {
@@ -168,17 +172,16 @@ namespace client { namespace ast
 
         int operator()(program const& x) const
         {
-            return std::accumulate( x.rest.begin(), x.rest.end()
-                                    , boost::apply_visitor(*this, x.first)
-                                    , *this);
+            return std::accumulate(
+                x.rest.begin(), x.rest.end()
+              , boost::apply_visitor(*this, x.first)
+              , *this);
         }
     };
 }}
 
 namespace client
 {
-    namespace x3 = boost::spirit::x3;
-
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
@@ -212,12 +215,13 @@ namespace client
             |   (char_('+') >> factor)
             ;
 
-        auto const calculator = x3::grammar(
-                "calculator"
-              , expression = expression_def
-              , term = term_def
-              , factor = factor_def
-            );
+        BOOST_SPIRIT_DEFINE(
+            expression = expression_def
+          , term = term_def
+          , factor = factor_def
+        );
+        
+        auto calculator = expression;
     }
 
     using calculator_grammar::calculator;
@@ -277,5 +281,3 @@ main()
     std::cout << "Bye... :-) \n\n";
     return 0;
 }
-
-

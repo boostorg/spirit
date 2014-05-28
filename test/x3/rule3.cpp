@@ -21,15 +21,14 @@
 #include <iostream>
 #include "test.hpp"
 
-using boost::spirit::x3::get;
-using boost::spirit::x3::rule_context_tag;
+using boost::spirit::x3::_val;
 
 struct f
 {
     template <typename Context>
-    void operator()(Context const& ctx, char c) const
+    void operator()(Context const& ctx) const
     {
-        get<rule_context_tag>(ctx).val() += c;
+        _val(ctx) += _attr(ctx);
     }
 };
 
@@ -73,12 +72,13 @@ main()
 
         std::string s;
         typedef rule<class r, std::string> rule_type;
-
-        // MSVC does not want to have this by value! (MSVC lambda bug)
-        typedef rule_type::context const& ctx;
-
-        auto rdef = rule_type()
-            = alpha                 [([](ctx r, char c){ r.val += c; })]
+       
+        auto rdef = rule_type() =
+            alpha /
+               [](auto& ctx)
+               {
+                  _val(ctx) += _attr(ctx);
+               }
             ;
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));

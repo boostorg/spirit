@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -25,23 +25,24 @@ namespace boost { namespace spirit { namespace x3
         alternative(Left left, Right right)
             : base_type(left, right) {}
 
-        template <typename Iterator, typename Context>
+        template <typename Iterator, typename Context, typename RContext>
         bool parse(
             Iterator& first, Iterator const& last
-          , Context const& context, unused_type) const
+          , Context const& context, RContext& rcontext, unused_type) const
         {
-            return this->left.parse(first, last, context, unused)
-               || this->right.parse(first, last, context, unused);
+            return this->left.parse(first, last, context, rcontext, unused)
+               || this->right.parse(first, last, context, rcontext, unused);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(
             Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            if (detail::parse_alternative(this->left, first, last, context, attr))
+            if (detail::parse_alternative(this->left, first, last, context, rcontext, attr))
                 return true;
-            if (detail::parse_alternative(this->right, first, last, context, attr))
+            if (detail::parse_alternative(this->right, first, last, context, rcontext, attr))
                 return true;
             return false;
         }

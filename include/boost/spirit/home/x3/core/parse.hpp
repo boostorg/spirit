@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +21,7 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser, typename Attribute>
     inline bool
-    parse(
+    parse_main(
         Iterator& first
       , Iterator last
       , Parser const& p
@@ -36,7 +36,32 @@ namespace boost { namespace spirit { namespace x3
         // If you get an error no matching function for call to 'as_parser'
         // here, then p is not a parser or there is no suitable conversion
         // from p to a parser.
-        return as_parser(p).parse(first, last, unused, attr);
+        return as_parser(p).parse(first, last, unused, unused, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Attribute>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , Parser const& p
+      , Attribute& attr)
+    {
+        return parse_main(first, last, p, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Attribute>
+    inline bool
+    parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p
+      , Attribute& attr)
+    {
+        Iterator first = first_;
+        return parse_main(first, last, p, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -47,7 +72,19 @@ namespace boost { namespace spirit { namespace x3
       , Iterator last
       , Parser const& p)
     {
-        return parse(first, last, p, unused);
+        return parse_main(first, last, p, unused);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser>
+    inline bool
+    parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p)
+    {
+        Iterator first = first_;
+        return parse_main(first, last, p, unused);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -60,7 +97,7 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
     inline bool
-    phrase_parse(
+    phrase_parse_main(
         Iterator& first
       , Iterator last
       , Parser const& p
@@ -77,11 +114,40 @@ namespace boost { namespace spirit { namespace x3
         // If you get an error no matching function for call to 'as_parser'
         // here, for either p or s, then p or s is not a parser or there is
         // no suitable conversion from p to a parser.
-        context<skipper_tag, Skipper const> skipper(as_parser(s));
-        bool r = as_parser(p).parse(first, last, skipper, attr);
+        auto skipper_ctx = make_context<skipper_tag>(as_parser(s));
+        bool r = as_parser(p).parse(first, last, skipper_ctx, unused, attr);
         if (post_skip == skip_flag::post_skip)
-            x3::skip_over(first, last, skipper);
+            x3::skip_over(first, last, skipper_ctx);
         return r;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s
+      , Attribute& attr
+      , skip_flag post_skip = skip_flag::post_skip)
+    {
+        return phrase_parse_main(first, last, p, s, attr, post_skip);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper, typename Attribute>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s
+      , Attribute& attr
+      , skip_flag post_skip = skip_flag::post_skip)
+    {
+        Iterator first = first_;
+        return phrase_parse_main(first, last, p, s, attr, post_skip);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -94,9 +160,31 @@ namespace boost { namespace spirit { namespace x3
       , Skipper const& s
       , skip_flag post_skip = skip_flag::post_skip)
     {
-        return phrase_parse(first, last, p, s, unused, post_skip);
+        return phrase_parse_main(first, last, p, s, unused, post_skip);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Parser, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator const& first_
+      , Iterator last
+      , Parser const& p
+      , Skipper const& s
+      , skip_flag post_skip = skip_flag::post_skip)
+    {
+        Iterator first = first_;
+        return phrase_parse_main(first, last, p, s, unused, post_skip);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Skipper>
+    struct phrase_parse_context
+    {
+        typedef decltype(
+            make_context<skipper_tag>(as_parser(std::declval<Skipper>())))
+        type;
+    };
 }}}
 
 #endif
-

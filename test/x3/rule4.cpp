@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2012 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,16 +12,41 @@
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
-//~ #include <boost/phoenix/core.hpp>
-//~ #include <boost/phoenix/operator.hpp>
-//~ #include <boost/phoenix/object.hpp>
-//~ #include <boost/phoenix/bind.hpp>
 //~ #include <boost/fusion/include/std_pair.hpp>
 
 #include <string>
 #include <cstring>
 #include <iostream>
 #include "test.hpp"
+
+namespace x3 = boost::spirit::x3;
+
+int got_it = 0;
+
+struct my_rule_class
+{
+    template <typename Iterator, typename Exception, typename Context>
+    x3::error_handler_result
+    on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+    {
+        std::cout
+            << "Error! Expecting: "
+            << x.which()
+            << ", got: \""
+            << std::string(x.where(), last)
+            << "\""
+            << std::endl
+            ;
+        return x3::error_handler_result::fail;
+    }
+
+    template <typename Iterator, typename Attribute, typename Context>
+    inline void
+    on_success(Iterator const&, Iterator const&, Attribute&, Context const&)
+    {
+        ++got_it;
+    }
+};
 
 int
 main()
@@ -34,30 +59,27 @@ main()
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
     //~ using boost::spirit::x3::uint_;
-    //~ using boost::spirit::x3::fail;
-    //~ using boost::spirit::x3::on_error;
-    //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
 
     //~ namespace phx = boost::phoenix;
 
-    // $$$ Maybe no longer relevant $$$
-    //~ { // show that ra = rb and ra %= rb works as expected
-        //~ rule<char const*, int() > ra, rb;
-        //~ int attr;
+    { // show that ra = rb and ra %= rb works as expected
+        rule<class a, int> ra;
+        rule<class b, int> rb;
+        int attr;
 
-        //~ ra %= int_;
-        //~ BOOST_TEST(test_attr("123", ra, attr));
-        //~ BOOST_TEST(attr == 123);
+        auto ra_def = (ra %= int_);
+        BOOST_TEST(test_attr("123", ra_def, attr));
+        BOOST_TEST(attr == 123);
 
-        //~ rb %= ra;
-        //~ BOOST_TEST(test_attr("123", rb, attr));
-        //~ BOOST_TEST(attr == 123);
+        auto rb_def = (rb %= ra_def);
+        BOOST_TEST(test_attr("123", rb_def, attr));
+        BOOST_TEST(attr == 123);
 
-        //~ rb = ra;
-        //~ BOOST_TEST(test_attr("123", rb, attr));
-        //~ BOOST_TEST(attr == 123);
-    //~ }
+        auto rb_def2 = (rb = ra_def);
+        BOOST_TEST(test_attr("123", rb_def2, attr));
+        BOOST_TEST(attr == 123);
+    }
 
 
     { // std::string as container attribute with auto rules
@@ -80,32 +102,19 @@ main()
         BOOST_TEST(attr == "x");
     }
 
-    // $$$ Not yet implemented $$$
-    //~ { // error handling $$$ Fixme $$$
+    { // error handling
 
-        //~ using boost::phoenix::construct;
-        //~ using boost::phoenix::bind;
+        auto r = rule<my_rule_class, char const*>()
+            = '(' > int_ > ',' > int_ > ')';
 
-        //~ rule<char const*> r;
-        //~ r = '(' > int_ > ',' > int_ > ')';
+        BOOST_TEST(test("(123,456)", r));
+        BOOST_TEST(!test("(abc,def)", r));
+        BOOST_TEST(!test("(123,456]", r));
+        BOOST_TEST(!test("(123;456)", r));
+        BOOST_TEST(!test("[123,456]", r));
 
-        //~ on_error<fail>
-        //~ (
-            //~ r, std::cout
-                //~ << phx::val("Error! Expecting: ")
-                //~ << _4
-                //~ << phx::val(", got: \"")
-                //~ << construct<std::string>(_3, _2)
-                //~ << phx::val("\"")
-                //~ << std::endl
-        //~ );
-
-        //~ BOOST_TEST(test("(123,456)", r));
-        //~ BOOST_TEST(!test("(abc,def)", r));
-        //~ BOOST_TEST(!test("(123,456]", r));
-        //~ BOOST_TEST(!test("(123;456)", r));
-        //~ BOOST_TEST(!test("[123,456]", r));
-    //~ }
+        BOOST_TEST(got_it == 1);
+    }
 
     // $$$ No longer relevant $$$
 // $$$ Do we support rule encoding? $$$
@@ -204,7 +213,6 @@ main()
     //~ }
 
     { // attribute compatibility test
-        using boost::spirit::x3::grammar;
         using boost::spirit::x3::rule;
         using boost::spirit::x3::int_;
 
@@ -223,4 +231,3 @@ main()
 
     return boost::report_errors();
 }
-

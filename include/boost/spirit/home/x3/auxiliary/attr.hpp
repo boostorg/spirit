@@ -1,12 +1,11 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Hartmut Kaiser
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2013 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-
 #ifndef BOOST_SPIRIT_X3_ATTR_JUL_23_2008_0956AM
 #define BOOST_SPIRIT_X3_ATTR_JUL_23_2008_0956AM
 
@@ -43,9 +42,10 @@ namespace boost { namespace spirit { namespace x3
         attr_parser(Value&& value)
           : value_(std::move(value)) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr_) const
+          , Context const& context, RuleContext&, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_, attr_);
@@ -72,14 +72,16 @@ namespace boost { namespace spirit { namespace x3
         {
             std::copy(value + 0, value + N, value_ + 0);
         }
+
         attr_parser(Value (&&value)[N])
         {
             std::move(value + 0, value + N, value_ + 0);
         }
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Attribute& attr_) const
+          , Context const& context, RuleContext&, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_ + 0, value_ + N, attr_);

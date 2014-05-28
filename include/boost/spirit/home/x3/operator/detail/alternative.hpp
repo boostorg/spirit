@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,11 +12,12 @@
 #endif
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
-#include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
+#include <boost/spirit/home/x3/support/traits/variant_find_substitute.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/variant/variant.hpp>
 
@@ -39,71 +40,6 @@ namespace boost { namespace spirit { namespace x3
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Variant, typename Attribute>
-    struct has_substitute_impl
-    {
-        // Find the type from the variant that can be a substitute for Attribute.
-        // return true_ if one is found, else false_
-
-        typedef Variant variant_type;
-        typedef typename variant_type::types types;
-        typedef typename mpl::end<types>::type end;
-
-        typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Attribute> >::type
-        iter_1;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute> >,
-                mpl::identity<iter_1>
-            >::type
-        iter;
-
-        typedef mpl::not_<is_same<iter, end>> type;
-    };
-
-    template <typename Variant, typename Attribute>
-    struct has_substitute : has_substitute_impl<Variant, Attribute>::type {};
-
-    template <typename Attribute>
-    struct has_substitute<unused_type, Attribute> : mpl::true_ {};
-
-    template <typename Attribute>
-    struct has_substitute<unused_type const, Attribute> : mpl::true_ {};
-
-    template <typename Variant, typename Attribute>
-    struct find_substitute
-    {
-        // Get the type from the variant that can be a substitute for Attribute.
-        // If none is found, just return Attribute
-
-        typedef Variant variant_type;
-        typedef typename variant_type::types types;
-        typedef typename mpl::end<types>::type end;
-
-        typedef typename
-            mpl::find_if<types, is_same<mpl::_1, Attribute> >::type
-        iter_1;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<iter_1, end>,
-                mpl::find_if<types, traits::is_substitute<mpl::_1, Attribute> >,
-                mpl::identity<iter_1>
-            >::type
-        iter;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<iter, end>,
-                mpl::identity<Attribute>,
-                mpl::deref<iter>
-            >::type
-        type;
-    };
-
     struct pass_variant_unused
     {
         typedef unused_type type;
@@ -139,7 +75,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             traits::attribute_of<Parser, Context>::type
         attribute_type;
         typedef typename
-            find_substitute<Attribute, attribute_type>::type
+            traits::variant_find_substitute<Attribute, attribute_type>::type
         substitute_type;
 
         typedef typename
@@ -168,7 +104,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static type
         call(Attribute_& attr)
         {
-            return call(attr, is_same<Attribute_, type>());
+            return call(attr, is_same<Attribute_, typename remove_reference<type>::type>());
         }
     };
 
@@ -222,7 +158,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_parser_attribute<Parser, Attribute, Context>
           , pass_variant_unused>::type
     {
-        static bool const is_alternative = false;
+        typedef typename mpl::false_ is_alternative;
     };
 
     template <typename L, typename R, typename Attribute, typename Context>
@@ -231,7 +167,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_variant_used<Attribute>
           , pass_variant_unused>::type
     {
-        static bool const is_alternative = true;
+        typedef typename mpl::true_ is_alternative;
     };
 
     template <typename L, typename R, typename C>
@@ -304,26 +240,42 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         type;
     };
 
-    template <typename Parser, typename Iterator, typename Context, typename Attribute>
-    bool parse_alternative(
-        Parser const& p, Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr)
+    template <typename IsAlternative>
+    struct move_if_not_alternative
+    {
+        template<typename T1, typename T2>
+        static void call(T1& attr_, T2& attr) {}
+    };
+
+    template <>
+    struct move_if_not_alternative<mpl::false_ /*is alternative*/>
+    {
+        template<typename T1, typename T2>
+        static void call(T1& attr_, T2& attr)
+        {
+            traits::move_to(attr_, attr);
+        }
+    };
+
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_alternative(Parser const& p, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr)
     {
         typedef detail::pass_variant_attribute<Parser, Attribute, Context> pass;
 
         typename pass::type attr_ = pass::call(attr);
-        if (p.parse(first, last, context, attr_))
+        if (p.parse(first, last, context, rcontext, attr_))
         {
-            if (!pass::is_alternative)
-                traits::move_to(attr_, attr);
+            move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
             return true;
         }
         return false;
     }
 
 
-    template <typename Left, typename Right, typename Context>
-    struct parse_into_container_impl<alternative<Left, Right>, Context>
+    template <typename Left, typename Right, typename Context, typename RContext>
+    struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>
     {
         typedef alternative<Left, Right> parser_type;
 
@@ -331,33 +283,33 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::true_)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
         {
-            return parse_alternative(parser, first, last, context, attr);
+            return parse_alternative(parser, first, last, context, rcontext, attr);
         }
 
         template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr, mpl::false_)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
         {
             return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, attr);
+                parser, first, last, context, rcontext, attr);
         }
 
         template <typename Iterator, typename Attribute>
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr)
+          , Context const& context, RContext& rcontext, Attribute& attr)
         {
             typedef typename
                 traits::attribute_of<parser_type, Context>::type
             attribute_type;
 
-            return call(parser, first, last, context, attr
-              , has_substitute<attribute_type, Attribute>());
+            return call(parser, first, last, context, rcontext, attr
+                , traits::variant_has_substitute<attribute_type, Attribute>());
         }
     };
 

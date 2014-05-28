@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2012 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -12,9 +12,9 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/x3/auxiliary/any_parser.hpp>
 #include <boost/spirit/home/x3/auxiliary/eps.hpp>
 #include <boost/spirit/home/x3/auxiliary/guard.hpp>
-#include <boost/spirit/home/x3/auxiliary/action.hpp>
 //~ #include <boost/spirit/home/x3/auxiliary/lazy.hpp>
 #include <boost/spirit/home/x3/auxiliary/eol.hpp>
 #include <boost/spirit/home/x3/auxiliary/eoi.hpp>

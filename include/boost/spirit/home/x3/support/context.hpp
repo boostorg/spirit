@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -89,7 +89,8 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Tag, typename Context>
     inline auto
-    get(Context const& context) -> decltype(context.get(mpl::identity<Tag>()))
+    get(Context const& context)
+        -> decltype(context.get(mpl::identity<Tag>()))
     {
         return context.get(mpl::identity<Tag>());
     }
@@ -104,6 +105,30 @@ namespace boost { namespace spirit { namespace x3
     inline context<ID, T> make_context(T& val)
     {
         return context<ID, T>(val);
+    }
+    
+    namespace detail
+    {
+        template <typename ID, typename T, typename Next, typename FoundVal>
+        inline Next const&
+        make_unique_context(T& val, Next const& next, FoundVal&)
+        {
+            return next;
+        }
+        
+        template <typename ID, typename T, typename Next>
+        inline context<ID, T, Next>
+        make_unique_context(T& val, Next const& next, unused_type)
+        {
+            return context<ID, T, Next>(val, next);
+        }
+    }
+    
+    template <typename ID, typename T, typename Next>
+    inline auto
+    make_unique_context(T& val, Next const& next)
+    {
+        return detail::make_unique_context<ID>(val, next, x3::get<ID>(next));
     }
 }}}
 

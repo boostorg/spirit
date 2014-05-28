@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -29,19 +29,20 @@ namespace boost { namespace spirit { namespace x3
         list(Left const& left, Right const& right)
           : base_type(left, right) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             // in order to succeed we need to match at least one element
             if (!detail::parse_into_container(
-                this->left, first, last, context, attr))
+                this->left, first, last, context, rcontext, attr))
                 return false;
 
             Iterator save = first;
-            while (this->right.parse(first, last, context, unused)
+            while (this->right.parse(first, last, context, rcontext, unused)
                 && detail::parse_into_container(
-                    this->left, first, last, context, attr))
+                    this->left, first, last, context, rcontext, attr))
             {
                 save = first;
             }

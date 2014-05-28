@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2012 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -62,6 +62,17 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename ActualAttribute>
     struct make_attribute<unused_type, ActualAttribute>
+    {
+        typedef unused_type type;
+        typedef unused_type value_type;
+        static unused_type call(unused_type)
+        {
+            return unused;
+        }
+    };
+    
+    template <>
+    struct make_attribute<unused_type, unused_type>
     {
         typedef unused_type type;
         typedef unused_type value_type;

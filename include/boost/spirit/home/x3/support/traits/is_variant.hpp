@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         // which is an mpl sequence of the contained types.
         //
         // This is an intrusive interface. For a non-intrusive interface,
-        // use the not_is_variant trait.
+        // use the is_variant trait.
         BOOST_MPL_HAS_XXX_TRAIT_DEF(adapted_variant_tag)
     }
 

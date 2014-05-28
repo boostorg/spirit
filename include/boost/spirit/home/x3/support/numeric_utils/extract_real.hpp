@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2012 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     http://spirit.sourceforge.net/
 

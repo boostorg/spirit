@@ -21,16 +21,16 @@ struct my_error_handler
 {
     template <typename Iterator, typename Exception, typename Context>
     boost::spirit::x3::error_handler_result
-    operator()(Iterator&, Exception const& x, Context const&) const
+    operator()(Iterator&, Iterator const& last, Exception const& x, Context const&) const
     {
         std::cout
             << "Error! Expecting: "
-            << x.what_
+            << x.which()
             << ", got: \""
-            << std::string(x.first, x.last)
+            << std::string(x.where(), last)
             << "\""
             << std::endl;
-        return boost::spirit::x3::fail;
+        return boost::spirit::x3::error_handler_result::fail;
     }
 };
 

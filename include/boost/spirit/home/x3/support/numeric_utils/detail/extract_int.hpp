@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2012 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2011 Jan Frederick Eick
     Copyright (c) 2011 Christopher Jefferson
@@ -57,23 +57,23 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     struct digits_traits;
 
 // lookup table for log2(x) : 2 <= x <= 36
-#define BOOST_SPIRIT_X3_LOG2 (#error)(#error)                                    \
-        (1000000)(1584960)(2000000)(2321920)(2584960)(2807350)                \
-        (3000000)(3169920)(3321920)(3459430)(3584960)(3700430)                \
-        (3807350)(3906890)(4000000)(4087460)(4169920)(4247920)                \
-        (4321920)(4392310)(4459430)(4523560)(4584960)(4643850)                \
-        (4700430)(4754880)(4807350)(4857980)(4906890)(4954190)                \
-        (5000000)(5044390)(5087460)(5129280)(5169925)                         \
+#define BOOST_SPIRIT_X3_LOG2 (#error)(#error)                                   \
+        (1000000)(1584960)(2000000)(2321920)(2584960)(2807350)                  \
+        (3000000)(3169920)(3321920)(3459430)(3584960)(3700430)                  \
+        (3807350)(3906890)(4000000)(4087460)(4169920)(4247920)                  \
+        (4321920)(4392310)(4459430)(4523560)(4584960)(4643850)                  \
+        (4700430)(4754880)(4807350)(4857980)(4906890)(4954190)                  \
+        (5000000)(5044390)(5087460)(5129280)(5169925)                           \
     /***/
 
-#define BOOST_PP_LOCAL_MACRO(Radix)                                           \
-    template <typename T> struct digits_traits<T, Radix>                      \
-    {                                                                         \
-        typedef std::numeric_limits<T> numeric_limits_type;                   \
-        BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                  \
-            (numeric_limits_type::digits * 1000000) /                         \
-                BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_X3_LOG2)));                \
-    };                                                                        \
+#define BOOST_PP_LOCAL_MACRO(Radix)                                             \
+    template <typename T> struct digits_traits<T, Radix>                        \
+    {                                                                           \
+        typedef std::numeric_limits<T> numeric_limits_type;                     \
+        BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                    \
+            (numeric_limits_type::digits * 1000000) /                           \
+                BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_X3_LOG2)));               \
+    };                                                                          \
     /***/
 
 #define BOOST_PP_LOCAL_LIMITS (2, 36)
@@ -268,15 +268,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     //  extract_int: main code for extracting integers
     ///////////////////////////////////////////////////////////////////////////
-#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                 \
-        if (!check_max_digits<MaxDigits>::call(count + leading_zeros)         \
-            || it == last)                                                    \
-            break;                                                            \
-        ch = *it;                                                             \
-        if (!radix_check::is_valid(ch) || !extractor::call(ch, count, val))   \
-            break;                                                            \
-        ++it;                                                                 \
-        ++count;                                                              \
+#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                   \
+        if (!check_max_digits<MaxDigits>::call(count + leading_zeros)           \
+            || it == last)                                                      \
+            break;                                                              \
+        ch = *it;                                                               \
+        if (!radix_check::is_valid(ch) || !extractor::call(ch, count, val))     \
+            break;                                                              \
+        ++it;                                                                   \
+        ++count;                                                                \
     /**/
 
     template <
@@ -369,16 +369,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     //  extract_int: main code for extracting integers
     //  common case where MinDigits == 1 and MaxDigits = -1
     ///////////////////////////////////////////////////////////////////////////
-#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                 \
-        if (it == last)                                                       \
-            break;                                                            \
-        ch = *it;                                                             \
-        if (!radix_check::is_valid(ch))                                       \
-            break;                                                            \
-        if (!extractor::call(ch, count, val))                                 \
-            return false;                                                     \
-        ++it;                                                                 \
-        ++count;                                                              \
+#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                   \
+        if (it == last)                                                         \
+            break;                                                              \
+        ch = *it;                                                               \
+        if (!radix_check::is_valid(ch))                                         \
+            break;                                                              \
+        if (!extractor::call(ch, count, val))                                   \
+            return false;                                                       \
+        ++it;                                                                   \
+        ++count;                                                                \
     /**/
 
     template <typename T, unsigned Radix, typename Accumulator, bool Accumulate>

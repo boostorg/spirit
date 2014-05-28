@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +16,7 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    enum error_handler_result
+    enum class error_handler_result
     {
         fail
       , retry
@@ -33,31 +33,32 @@ namespace boost { namespace spirit { namespace x3
         guard(Subject const& subject, Handler handler)
           : base_type(subject), handler(handler) {}
 
-        template <typename Iterator, typename Context, typename Attribute>
+        template <typename Iterator, typename Context
+          , typename RuleContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+          , Context const& context, RuleContext& rcontext, Attribute& attr) const
         {
             for (;;)
             {
                 try
                 {
                     Iterator i = first;
-                    bool r = this->subject.parse(i, last, context, attr);
+                    bool r = this->subject.parse(i, last, context, rcontext, attr);
                     if (r)
                         first = i;
                     return r;
                 }
                 catch (expectation_failure<Iterator> const& x)
                 {
-                    switch (handler(first, x, context))
+                    switch (handler(first, last, x, context))
                     {
-                        case fail:
+                        case error_handler_result::fail:
                             return false;
-                        case retry:
+                        case error_handler_result::retry:
                             continue;
-                        case accept:
+                        case error_handler_result::accept:
                             return true;
-                        case rethrow:
+                        case error_handler_result::rethrow:
                             throw;
                     }
                 }

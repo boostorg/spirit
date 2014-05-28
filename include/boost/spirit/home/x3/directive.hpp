@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,8 +20,9 @@
 //~ #include <boost/spirit/home/x3/directive/matches.hpp>
 //~ #include <boost/spirit/home/x3/directive/no_case.hpp>
 #include <boost/spirit/home/x3/directive/omit.hpp>
-//~ #include <boost/spirit/home/x3/directive/raw.hpp>
+#include <boost/spirit/home/x3/directive/raw.hpp>
 //~ #include <boost/spirit/home/x3/directive/repeat.hpp>
 #include <boost/spirit/home/x3/directive/skip.hpp>
+#include <boost/spirit/home/x3/directive/with.hpp>
 
 #endif

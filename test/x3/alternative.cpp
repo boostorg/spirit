@@ -76,6 +76,7 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
+    using boost::spirit::x3::attr;
     using boost::spirit::x3::char_;
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lit;
@@ -286,6 +287,20 @@ main()
         boost::fusion::vector<boost::variant<int, std::string>> fvi;
         BOOST_TEST((test_attr("12345", int_ | int_, fvi)));
         BOOST_TEST(boost::get<int>(boost::fusion::at_c<0>(fvi)) == 12345);
+    }
+
+    // alternative over single element sequences as part of another sequence
+    {
+	auto  key1 = lit("long") >> attr(long());
+	auto  key2 = lit("char") >> attr(char());
+	auto  keys = key1 | key2;
+	auto pair = keys >> lit("=") >> +char_;
+
+	boost::fusion::deque<boost::variant<long, char>, std::string> attr_;
+
+	BOOST_TEST(test_attr("long=ABC", pair, attr_));
+	BOOST_TEST(boost::get<long>(&boost::fusion::front(attr_)) != nullptr);
+	BOOST_TEST(boost::get<char>(&boost::fusion::front(attr_)) == nullptr);
     }
 
     return boost::report_errors();
