@@ -16,9 +16,7 @@
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/core/call.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
-#include <boost/type_traits/is_class.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
