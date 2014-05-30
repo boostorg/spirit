@@ -38,19 +38,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         T const min_value;
         T const max_value;
-
     };
 
     template <typename T>
     struct infinite_count // handles repeat(min, inf)[p]
     {
-
         typedef T type;
         bool got_max(T /*i*/) const { return false; }
         bool got_min(T i) const { return i >= min_value; }
 
         T const min_value;
-
     };
 }}}}
 
@@ -63,14 +60,16 @@ namespace boost { namespace spirit { namespace x3
         static bool const is_pass_through_unary = true;
         static bool const handles_container = true;
 
-        repeat_directive(Subject const& subject, RepeatCountLimit const &repeat_limit_) :
-            base_type(subject),
-            repeat_limit(repeat_limit_)
-            {}
+        repeat_directive(Subject const& subject, RepeatCountLimit const &repeat_limit_)
+          : base_type(subject)
+          , repeat_limit(repeat_limit_)
+        {}
 
-        template <typename Iterator, typename Context, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, Attribute& attr) const
+        template<typename Iterator, typename Context
+          , typename RContext, typename Attribute>
+        bool parse(
+            Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr) const
         {
 
             Iterator local_iterator = first;
@@ -78,7 +77,7 @@ namespace boost { namespace spirit { namespace x3
             for (/**/; !repeat_limit.got_min(i); ++i)
             {
                 if (!detail::parse_into_container(
-                      this->subject, local_iterator, last, context, attr))
+                      this->subject, local_iterator, last, context, rcontext, attr))
                    return false;
             }
 
@@ -87,12 +86,12 @@ namespace boost { namespace spirit { namespace x3
             for (/**/; !repeat_limit.got_max(i); ++i)
             {
                 if (!detail::parse_into_container(
-                      this->subject, first, last, context, attr))
+                      this->subject, first, last, context, rcontext, attr))
                     break;
             }
             return true;
         }
-private:
+
         const RepeatCountLimit repeat_limit;
     };
 
@@ -141,7 +140,7 @@ private:
         
         template <typename T>
         repeat_gen_lvl1<detail::infinite_count<T>>
-	operator()(T const min_val, inf_type const &) const
+        operator()(T const min_val, inf_type const &) const
         {
            return {detail::infinite_count<T>{min_val}};
         }
