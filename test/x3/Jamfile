@@ -170,6 +170,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run extensions/confix.cpp       : : : : x3_confix ]
      [ run extensions/repeat.cpp     : : : : x3_repeat ]
      [ run extensions/seek.cpp       : : : : x3_seek ]
+     [ run extensions/keyword.cpp    : : : : x3_keyword ]
 
     ;
 }
