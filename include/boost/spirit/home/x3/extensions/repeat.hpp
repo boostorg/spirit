@@ -17,7 +17,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 
-namespace boost { namespace spirit { namespace x3 { namespace detail 
+namespace boost { namespace spirit { namespace x3 { namespace detail
 {
     template <typename T>
     struct exact_count // handles repeat(exact)[p]
@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const is_pass_through_unary = true;
         static bool const handles_container = true;
 
-        repeat_directive(Subject const& subject, RepeatCountLimit const &repeat_limit_)
+        repeat_directive(Subject const& subject, RepeatCountLimit const& repeat_limit_)
           : base_type(subject)
           , repeat_limit(repeat_limit_)
         {}
@@ -71,14 +71,13 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-
             Iterator local_iterator = first;
             typename RepeatCountLimit::type i{};
             for (/**/; !repeat_limit.got_min(i); ++i)
             {
                 if (!detail::parse_into_container(
                       this->subject, local_iterator, last, context, rcontext, attr))
-                   return false;
+                    return false;
             }
 
             first = local_iterator;
@@ -92,7 +91,7 @@ namespace boost { namespace spirit { namespace x3
             return true;
         }
 
-        const RepeatCountLimit repeat_limit;
+        RepeatCountLimit repeat_limit;
     };
 
     // Infinite loop tag type
@@ -107,42 +106,43 @@ namespace boost { namespace spirit { namespace x3
         {
             return {as_parser(subject)};
         }
-        template <typename T> 
+
+        template <typename T>
         struct repeat_gen_lvl1
         {
-                repeat_gen_lvl1(T && repeat_limit_) 
-                        : repeat_limit(repeat_limit_)
-                {}
+            repeat_gen_lvl1(T&& repeat_limit_)
+              : repeat_limit(repeat_limit_)
+            {}
 
-                template<typename Subject>
-                repeat_directive< typename extension::as_parser<Subject>::value_type, T>
-                operator[](Subject const& subject) const
-                {
-                        return {as_parser(subject),repeat_limit};
-                }
+            template<typename Subject>
+            repeat_directive< typename extension::as_parser<Subject>::value_type, T>
+            operator[](Subject const& subject) const
+            {
+                return {as_parser(subject),repeat_limit};
+            }
 
-                T repeat_limit;
+            T repeat_limit;
         };
 
         template <typename T>
         repeat_gen_lvl1<detail::exact_count<T>>
         operator()(T const exact) const
         {
-           return {detail::exact_count<T>{exact}};
+            return {detail::exact_count<T>{exact}};
         }
 
         template <typename T>
         repeat_gen_lvl1<detail::finite_count<T>>
         operator()(T const min_val, T const max_val) const
         {
-           return {detail::finite_count<T>{min_val,max_val}};
+            return {detail::finite_count<T>{min_val,max_val}};
         }
-        
+
         template <typename T>
         repeat_gen_lvl1<detail::infinite_count<T>>
         operator()(T const min_val, inf_type const &) const
         {
-           return {detail::infinite_count<T>{min_val}};
+            return {detail::infinite_count<T>{min_val}};
         }
     };
 
@@ -153,8 +153,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Subject, typename RepeatCountLimit, typename Context>
     struct attribute_of<x3::repeat_directive<Subject,RepeatCountLimit>, Context>
-        : build_container<
-            typename attribute_of<Subject, Context>::type> {};
+      : build_container<typename attribute_of<Subject, Context>::type> {};
 }}}}
 
 
