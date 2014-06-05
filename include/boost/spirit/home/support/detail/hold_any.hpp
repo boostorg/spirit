@@ -299,6 +299,12 @@ namespace boost { namespace spirit
 
         // assignment operator
         template <typename T>
+        basic_hold_any& operator=(T& x)
+        {
+            return assign(x);
+        }
+
+        template <typename T>
         basic_hold_any& operator=(T const& x)
         {
             return assign(x);
