@@ -183,7 +183,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     {};
 
     // If both, the containers value type and the exposed attribute type are
-    // optionals we are allowed to pass through the the container only if the
+    // optionals we are allowed to pass through the container only if the
     // embedded types of those optionals are not compatible.
     template <typename Container, typename ValueType, typename Attribute
       , typename Sequence>

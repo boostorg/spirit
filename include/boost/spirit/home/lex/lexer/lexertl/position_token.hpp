@@ -533,7 +533,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             base_type;
 
     protected: 
-        //  If no additional token value types are given, the the token will 
+        //  If no additional token value types are given, the token will 
         //  hold no token value at all as the base class already has the 
         //  iterator pair of the matched range in the underlying input sequence. 
         //  Otherwise the token value is stored as a variant and will 

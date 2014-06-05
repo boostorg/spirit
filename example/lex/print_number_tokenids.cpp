@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     print_numbers_tokenids<lexer_type> print_tokens;  // Our lexer
     print_numbers_grammar<iterator_type> print;       // Our parser 
 
-    // Parsing is done based on the the token stream, not the character 
+    // Parsing is done based on the token stream, not the character 
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "print_numbers.input" : argv[1]));
     base_iterator_type first = str.begin();
