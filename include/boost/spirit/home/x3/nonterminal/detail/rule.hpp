@@ -131,24 +131,36 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             value_type made_attr = make_attribute::call(attr);
             transform_attr attr_ = transform::pre(made_attr);
 
-#if defined(BOOST_SPIRIT_X3_DEBUG)
-            context_debug<Iterator, typename make_attribute::value_type>
-                dbg(rule_name, first, last, made_attr);
-#endif
             attr_pointer_scope<typename remove_reference<transform_attr>::type>
                 attr_scope(attr_ptr, boost::addressof(attr_));
-            if (parse_rhs(rhs, first, last, context, attr_))
+            bool ok_parse
+              //Creates a place to hold the result of parse_rhs
+              //called inside the following scope.
+              ;
+            {
+             //Create a scope to cause the dbg variable below (within
+             //the #if...#endif) to call it's DTOR before any
+             //modifications are made to the attribute, attr_ passed
+             //to parse_rhs (such as might be done in
+             //traits::post_transform when, for example,
+             //ActualAttribute is a recursive variant).
+#if defined(BOOST_SPIRIT_X3_DEBUG)
+                  context_debug<Iterator, typename make_attribute::value_type>
+                dbg(rule_name, first, last, attr_);
+#endif
+                ok_parse=parse_rhs(rhs, first, last, context, attr_);
+
+#if defined(BOOST_SPIRIT_X3_DEBUG)
+                dbg.fail = !ok_parse;
+#endif
+            }
+            if(ok_parse)
             {
                 // do up-stream transformation, this integrates the results
                 // back into the original attribute value, if appropriate
                 traits::post_transform(attr, attr_);
-
-#if defined(BOOST_SPIRIT_X3_DEBUG)
-                dbg.fail = false;
-#endif
-                return true;
             }
-            return false;
+            return ok_parse;
         }
 
         template <typename RuleDef, typename Iterator, typename Context
