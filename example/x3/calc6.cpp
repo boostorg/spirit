@@ -14,7 +14,7 @@
 //  [ JDG September 18, 2002 ]  spirit1
 //  [ JDG April 8, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG April 9, 2014 ]       Spirit X3
+//  [ JDG April 9, 2014 ]       Spirit X3 (from qi calc6)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -231,7 +231,7 @@ namespace client
     {
         using x3::uint_;
         using x3::char_;
-        
+
         struct expression_class;
         struct term_class;
         struct factor_class;

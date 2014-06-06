@@ -6,15 +6,16 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Same as calc6, but this version also shows off grammar modularization.
-//  Here you will see how expressions is built as a modular grammars.
+//  Now we'll introduce variables and assignment. This time, we'll also
+//  be renaming some of the rules -- a strategy for a grander scheme
+//  to come ;-)
 //
-//  [ JDG Sometime 2000 ]       pre-boost
-//  [ JDG September 18, 2002 ]  spirit1
-//  [ JDG April 8, 2007 ]       spirit2
+//  This version also shows off grammar modularization. Here you will
+//  see how expressions and statements are built as modular grammars.
+//
+//  [ JDG April 9, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG April 9, 2014 ]       Spirit X3
-//  [ JDG May 2, 2014 ]         Modular grammar using BOOST_SPIRIT_DEFINE.
+//  [ JDG May 17, 2014 ]        Ported from qi calc7 example.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
