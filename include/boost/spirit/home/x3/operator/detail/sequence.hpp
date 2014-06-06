@@ -449,13 +449,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
         {
-	    // inform user what went wrong if we jumped here in attempt to
-	    // parse incompatible sequence into fusion::map
-	    static_assert(!is_same< typename traits::attribute_category<Attribute>::type,
-			  traits::associative_attribute>::value,
-			  "To parse directly into fusion::map sequence must produce tuple attribute "
-			  "where type of first element is existing key in fusion::map and second element "
-			  "is value to be stored under that key");
+            // inform user what went wrong if we jumped here in attempt to
+            // parse incompatible sequence into fusion::map
+            static_assert(!is_same< typename traits::attribute_category<Attribute>::type,
+                  traits::associative_attribute>::value,
+                  "To parse directly into fusion::map sequence must produce tuple attribute "
+                  "where type of first element is existing key in fusion::map and second element "
+                  "is value to be stored under that key");
 
             Attribute attr_;
             if (!parse_sequence(parser

@@ -1,26 +1,80 @@
 /*=============================================================================
     Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2013-2014 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  A Calculator example demonstrating generation of AST. The AST,
-//  once created, is traversed, 1) To print its contents and
-//  2) To evaluate the result.
+//  Plain calculator example demonstrating the grammar. The parser is a
+//  syntax checker only and does not do any semantic evaluation.
 //
-//  [ JDG April 28, 2008 ]      For BoostCon 2008
-//  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG January 9, 2013 ]     Spirit X3
+//  [ JDG May 10, 2002 ]        spirit 1
+//  [ JDG March 4, 2007 ]       spirit 2
+//  [ JDG February 21, 2011 ]   spirit 2.5
+//  [ JDG June 6, 2014 ]        spirit x3
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "grammar.hpp"
+#include <boost/config/warning_disable.hpp>
+#include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 
 #include <iostream>
 #include <string>
+#include <list>
+#include <numeric>
+
+namespace x3 = boost::spirit::x3;
+
+namespace client
+{
+    ///////////////////////////////////////////////////////////////////////////////
+    //  The calculator grammar
+    ///////////////////////////////////////////////////////////////////////////////
+    namespace calculator_grammar
+    {
+        using x3::uint_;
+        using x3::char_;
+
+        x3::rule<class expression> const expression("expression");
+        x3::rule<class term> const term("term");
+        x3::rule<class factor> const factor("factor");
+
+        auto const expression_def =
+            term
+            >> *(   ('+' >> term)
+                |   ('-' >> term)
+                )
+            ;
+
+        auto const term_def =
+            factor
+            >> *(   ('*' >> factor)
+                |   ('/' >> factor)
+                )
+            ;
+
+        auto const factor_def =
+                uint_
+            |   '(' >> expression >> ')'
+            |   ('-' >> factor)
+            |   ('+' >> factor)
+            ;
+
+        BOOST_SPIRIT_DEFINE(
+            expression = expression_def
+          , term = term_def
+          , factor = factor_def
+        );
+
+        auto calculator = expression;
+    }
+
+    using calculator_grammar::calculator;
+
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -34,9 +88,6 @@ main()
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
     typedef std::string::const_iterator iterator_type;
-    typedef client::ast::program ast_program;
-    typedef client::ast::printer ast_print;
-    typedef client::ast::eval ast_eval;
 
     std::string str;
     while (std::getline(std::cin, str))
@@ -45,21 +96,16 @@ main()
             break;
 
         auto& calc = client::calculator;    // Our grammar
-        ast_program program;                // Our program (AST)
-        ast_print print;                    // Prints the program
-        ast_eval eval;                      // Evaluates the program
 
         iterator_type iter = str.begin();
         iterator_type end = str.end();
         boost::spirit::x3::ascii::space_type space;
-        bool r = phrase_parse(iter, end, calc, space, program);
+        bool r = phrase_parse(iter, end, calc, space);
 
         if (r && iter == end)
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
-            print(program);
-            std::cout << "\nResult: " << eval(program) << std::endl;
             std::cout << "-------------------------\n";
         }
         else

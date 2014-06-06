@@ -16,10 +16,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER)
-# pragma warning(disable: 4345)
-#endif
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
@@ -220,7 +216,7 @@ namespace client
           , term = term_def
           , factor = factor_def
         );
-        
+
         auto calculator = expression;
     }
 
