@@ -19,7 +19,7 @@ namespace client { namespace parser
 {
     using x3::uint_;
     using x3::char_;
-    //using x3::bool_;
+    using x3::bool_;
     using x3::raw;
     using x3::lexeme;
     using namespace x3::ascii;
@@ -149,8 +149,8 @@ namespace client { namespace parser
 
     auto const primary_expr_def =
             uint_
-        |   identifier
-        //|   bool_
+        |   bool_
+        |   (!keywords >> identifier)
         |   '(' > expression > ')'
         ;
 

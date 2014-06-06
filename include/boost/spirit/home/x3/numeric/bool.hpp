@@ -1,37 +1,38 @@
 /*=============================================================================
-    Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2009  Hartmut Kaiser
+    Copyright (c) 2014  Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_REAL_APRIL_18_2006_0850AM)
-#define BOOST_SPIRIT_X3_REAL_APRIL_18_2006_0850AM
+#if !defined(SPIRIT_X3_BOOL_SEP_29_2009_0709AM)
+#define SPIRIT_X3_BOOL_SEP_29_2009_0709AM
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
-#include <boost/spirit/home/x3/numeric/real_policies.hpp>
-#include <boost/spirit/home/x3/support/numeric_utils/extract_real.hpp>
+#include <boost/spirit/home/x3/numeric/bool_policies.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename T, typename RealPolicies = real_policies<T> >
-    struct real_parser : parser<real_parser<T, RealPolicies> >
+    template <typename T, typename BoolPolicies = bool_policies<T>>
+    struct bool_parser : parser<bool_parser<T, BoolPolicies>>
     {
         typedef T attribute_type;
         static bool const has_attribute = true;
 
-        real_parser()
+        bool_parser()
         	: policies() {}
 
-        real_parser(RealPolicies const& policies)
+        bool_parser(BoolPolicies const& policies)
         	: policies(policies) {}
 
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, unused_type, T& attr_) const
+          , Context& context, unused_type, T& attr) const
         {
             x3::skip_over(first, last, context);
-            return extract_real<T, RealPolicies>::parse(first, last, attr_, policies);
+            return policies.parse_true(first, last, attr)
+                || policies.parse_false(first, last, attr);
         }
 
         template <typename Iterator, typename Context, typename Attribute>
@@ -48,14 +49,11 @@ namespace boost { namespace spirit { namespace x3
             return false;
         }
 
-        RealPolicies policies;
+        BoolPolicies policies;
     };
 
-    typedef real_parser<float> float_type;
-    float_type const float_ = {};
-
-    typedef real_parser<double> double_type;
-    double_type const double_ = {};
+    typedef bool_parser<bool> bool_type;
+    bool_type const bool_ = {};
 
 }}}
 

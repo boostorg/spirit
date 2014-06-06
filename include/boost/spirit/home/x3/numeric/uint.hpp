@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_X3_UINT_PARSER(uint_type, name)                            \
     typedef uint_parser<uint_type> name##type;                                  \
-    name##type const name = name##type();                                       \
+    name##type const name = {};                                                 \
     /***/
 
     BOOST_SPIRIT_X3_UINT_PARSER(unsigned long, ulong_)
