@@ -46,6 +46,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             >::type
         type;
     };
+    
+    template <typename Variant>
+    struct variant_find_substitute<Variant, Variant>
+        : mpl::identity<Variant> {};
 
 }}}}
 
