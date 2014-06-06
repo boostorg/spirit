@@ -298,6 +298,13 @@ namespace boost { namespace spirit
         }
 
         // assignment operator
+#ifdef BOOST_HAS_RVALUE_REFS
+        template <typename T>
+        basic_hold_any& operator=(T&& x)
+        {
+            return assign(std::forward<T>(x));
+        }
+#else
         template <typename T>
         basic_hold_any& operator=(T& x)
         {
@@ -309,6 +316,7 @@ namespace boost { namespace spirit
         {
             return assign(x);
         }
+#endif
 
         // utility functions
         basic_hold_any& swap(basic_hold_any& x)
