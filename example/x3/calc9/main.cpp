@@ -80,7 +80,7 @@ main()
 
     if (success && iter == end)
     {
-        if (compile(ast))
+        if (compile.start(ast))
         {
             std::cout << "Success\n";
             std::cout << "-------------------------\n";
