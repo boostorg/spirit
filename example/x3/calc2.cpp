@@ -6,13 +6,14 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Plain calculator example demonstrating the grammar. The parser is a
-//  syntax checker only and does not do any semantic evaluation.
+//  A Calculator example demonstrating the grammar and semantic actions
+//  using lambda functions. The parser prints code suitable for a stack
+//  based virtual machine.
 //
 //  [ JDG May 10, 2002 ]        spirit 1
 //  [ JDG March 4, 2007 ]       spirit 2
 //  [ JDG February 21, 2011 ]   spirit 2.5
-//  [ JDG June 6, 2014 ]        spirit x3
+//  [ JDG June 6, 2014 ]        spirit x3 (from qi calc2, but using lambda functions)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -31,6 +32,21 @@ namespace x3 = boost::spirit::x3;
 namespace client
 {
     ///////////////////////////////////////////////////////////////////////////////
+    //  Semantic actions
+    ////////////////////////////////////////////////////////1///////////////////////
+    namespace
+    {
+        using x3::_attr;
+
+        auto do_int     = [](auto& ctx) { std::cout << "push " << _attr(ctx) << std::endl; };
+        auto do_add     = []{ std::cout << "add\n"; };
+        auto do_subt    = []{ std::cout << "subtract\n"; };
+        auto do_mult    = []{ std::cout << "mult\n"; };
+        auto do_div     = []{ std::cout << "divide\n"; };
+        auto do_neg     = []{ std::cout << "negate\n"; };
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
     namespace calculator_grammar
@@ -44,22 +60,22 @@ namespace client
 
         auto const expression_def =
             term
-            >> *(   ('+' >> term)
-                |   ('-' >> term)
+            >> *(   ('+' >> term            [do_add])
+                |   ('-' >> term            [do_subt])
                 )
             ;
 
         auto const term_def =
             factor
-            >> *(   ('*' >> factor)
-                |   ('/' >> factor)
+            >> *(   ('*' >> factor          [do_mult])
+                |   ('/' >> factor          [do_div])
                 )
             ;
 
         auto const factor_def =
-                uint_
+                uint_                       [do_int]
             |   '(' >> expression >> ')'
-            |   ('-' >> factor)
+            |   ('-' >> factor              [do_neg])
             |   ('+' >> factor)
             ;
 
@@ -68,7 +84,7 @@ namespace client
           , term = term_def
           , factor = factor_def
         );
-
+        
         auto calculator = expression;
     }
 
