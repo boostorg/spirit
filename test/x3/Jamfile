@@ -103,6 +103,8 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run plus.cpp             : : : : x3_plus ]
      [ run with.cpp             : : : : x3_with ]
 
+
+
      # $$$ remove this fpermissive flag once lexical_cast is fixed $$$
      #~ [ run range_run.cpp
         #~ : : : <toolset>gcc:<cxxflags>-fpermissive
@@ -166,10 +168,9 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     test-suite spirit_v3/qi/x3_extensions :
 
      [ run extensions/seek.cpp       : : : : x3_seek ]
+     [ run extensions/repeat.cpp     : : : : x3_repeat ]
 
     ;
-
-
 }
 
 # use this alias to build Spirit against Phoenix V3
