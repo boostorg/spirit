@@ -63,10 +63,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         context_debug(
             char const* rule_name
           , Iterator const& first, Iterator const& last
-          , Attribute const& attr
-          , bool const& ok_parse //was parse successful?
-          )
-          : ok_parse(ok_parse), rule_name(rule_name)
+          , Attribute const& attr)
+          : fail(true), rule_name(rule_name)
           , first(first), last(last)
           , attr(attr)
           , f(detail::get_simple_trace())
@@ -76,11 +74,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         ~context_debug()
         {
-            auto status = ok_parse ? successful_parse : failed_parse ;
+            auto status = fail ? failed_parse : successful_parse;
             f(first, last, attr, status, rule_name);
         }
 
-        bool const& ok_parse;
+        bool fail;
         char const* rule_name;
         Iterator const& first;
         Iterator const& last;
@@ -314,36 +312,27 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             value_type made_attr = make_attribute::call(attr);
             transform_attr attr_ = transform::pre(made_attr);
 
-            bool ok_parse
-              //Creates a place to hold the result of parse_rhs
-              //called inside the following scope.
-              ;
-            {
-             //Create a scope to cause the dbg variable below (within
-             //the #if...#endif) to call it's DTOR before any
-             //modifications are made to the attribute, attr_ passed
-             //to parse_rhs (such as might be done in
-             //traits::post_transform when, for example,
-             //ActualAttribute is a recursive variant).
 #if defined(BOOST_SPIRIT_X3_DEBUG)
-                  context_debug<Iterator, typename make_attribute::value_type>
-                dbg(rule_name, first, last, attr_, ok_parse);
+            context_debug<Iterator, typename make_attribute::value_type>
+                dbg(rule_name, first, last, made_attr);
 #endif
-                ok_parse=parse_rhs(rhs, first, last, context, attr_, attr_
-                   , mpl::bool_
-                     < (  RHS::has_action 
-                       && !ExplicitAttrPropagation::value
-                       )
-                     >()
-                  );
-            }
-            if(ok_parse)
+
+            // $$$ currently rcontext is just attr_. Later, we'll have
+            // the inherited attributes and local variables as well $$$
+
+            if (parse_rhs(rhs, first, last, context, attr_, attr_
+              , mpl::bool_<(RHS::has_action && !ExplicitAttrPropagation::value)>()))
             {
                 // do up-stream transformation, this integrates the results
                 // back into the original attribute value, if appropriate
                 traits::post_transform(attr, attr_);
+
+#if defined(BOOST_SPIRIT_X3_DEBUG)
+                dbg.fail = false;
+#endif
+                return true;
             }
-            return ok_parse;
+            return false;
         }
 
 //        template <typename RuleDef, typename Iterator, typename Context

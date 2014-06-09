@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace traits
         , typename Iterator>
     struct handles_container<qi::raw_directive<Subject>, Attribute
         , Context, Iterator>
-    : boost::mpl::true_ {};
+      : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 }}}
 
 #endif
