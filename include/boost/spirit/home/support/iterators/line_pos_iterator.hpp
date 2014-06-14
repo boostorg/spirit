@@ -67,8 +67,8 @@ namespace boost { namespace spirit
 
         // cover LF,CR+LF,CR,LF+RF.
         //  but get_line() may return something unexpected if iterator is on '\n' or '\r'
-        if((prev != '\n' and ref == '\r') or
-           (prev != '\r' and ref == '\n')){
+        if((prev != '\n' && ref == '\r') ||
+           (prev != '\r' && ref == '\n')){
            ++line;
         }
 
@@ -128,7 +128,7 @@ namespace boost { namespace spirit
             if(prev_was_newline){
                 latest = i;
             }
-            prev_was_newline = (*i == '\r') or (*i == '\n');
+            prev_was_newline = (*i == '\r') || (*i == '\n');
         }
         if(prev_was_newline){
             latest = current;
@@ -139,7 +139,7 @@ namespace boost { namespace spirit
     inline Iterator get_line_end(Iterator current,Iterator upper_bound){
         // if current is at '\r' or '\n',may return something unexpected.
         for(Iterator i=current;i!=upper_bound;++i){
-            if((*i == '\n') or (*i == '\r')){
+            if((*i == '\n') || (*i == '\r')){
                 return i;
             }
         }
@@ -174,7 +174,7 @@ namespace boost { namespace spirit
         }
         return column;
     }
-}} // namespace boost::spirit
+}}
 
 #endif // BOOST_SPIRIT_SUPPORT_LINE_POS_ITERATOR
 
