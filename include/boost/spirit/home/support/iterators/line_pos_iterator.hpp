@@ -58,26 +58,20 @@ namespace boost { namespace spirit
     {
         return line;
     }
- 
+
     template<class Iterator>
     void line_pos_iterator<Iterator>::increment()
     {
         typename std::iterator_traits<Iterator>::reference
           ref = *(this->base());
-      
-        switch (ref) {
-          case '\r':
-            if (prev != '\n')
-              ++line;
-            break;
-          case '\n':
-            if (prev != '\r')
-              ++line;
-            break;
-          default:
-            break;
+
+        // cover LF,CR+LF,CR,LF+RF.
+        //  but get_line() may return something unexpected if iterator is on '\n' or '\r'
+        if((prev != '\n' and ref == '\r') or
+           (prev != '\r' and ref == '\n')){
+           ++line;
         }
-      
+
         prev = ref;
         ++this->base_reference();
     }
@@ -115,66 +109,72 @@ namespace boost { namespace spirit
     {
         return -1;
     }
-    
+
     template <class Iterator>
     inline std::size_t get_line(line_pos_iterator<Iterator> i)
     {
         return i.position();
     }
-    
+
     template <class Iterator>
     inline Iterator get_line_start(Iterator lower_bound, Iterator current)
     {
+        // cover LF,CR+LF,CR,LF+RF.
+        // but if *current == '\r' or *current == '\n',
+        //          result will be something worng.
         Iterator latest = lower_bound;
-      
-        for (Iterator i = lower_bound; i != current; ++i) {
-          switch (*i) {
-            case '\r':
-            case '\n':
-              latest = i;
-          }
+        bool prev_was_newline = false;
+        for(Iterator i=lower_bound;i!=current;++i){
+            if(prev_was_newline){
+                latest = i;
+            }
+            prev_was_newline = (*i == '\r') or (*i == '\n');
         }
-      
+        if(prev_was_newline){
+            latest = current;
+        }
         return latest;
     }
-    
+    template <class Iterator>
+    inline Iterator get_line_end(Iterator current,Iterator upper_bound){
+        // if current is at '\r' or '\n',may return something unexpected.
+        for(Iterator i=current;i!=upper_bound;++i){
+            if((*i == '\n') or (*i == '\r')){
+                return i;
+            }
+        }
+        return upper_bound;
+    }
+
     template <class Iterator>
     inline iterator_range<Iterator>
     get_current_line(Iterator lower_bound,
                      Iterator current,
                      Iterator upper_bound)
     {
-        Iterator first = get_line_start(lower_bound, current);
-        Iterator last = get_line_start(current, upper_bound);
-      
-        if (last == current)
-          last = upper_bound;
-      
-        return iterator_range<Iterator>(first, last);
+        // if *current is '\r' or '\n', result will something unexpected.
+        Iterator first = get_line_start(lower_bound,current);
+        Iterator last = get_line_end(current,upper_bound);
+        return iterator_range<Iterator>(first,last);
     }
-    
+
     template <class Iterator>
     inline std::size_t get_column(Iterator lower_bound,
                                   Iterator current,
                                   std::size_t tabs)
     {
         std::size_t column = 1;
-        Iterator first = get_line_start(lower_bound, current);
-      
-        for (Iterator i = first; i != current; ++i) {
-          switch (*i) {
-            case '\t':
-              column += tabs - (column - 1) % tabs;
-              break;
-            default:
-              ++column;
-          }
+        Iterator line_start = get_line_start(lower_bound,current);
+        for(Iterator i=line_start;i!=current;++i){
+            if(*i == '\t'){
+                column += tabs - (column - 1) % tabs;
+            }else{
+                column += 1;
+            }
         }
-      
         return column;
     }
-
-}}
+}} // namespace boost::spirit
 
 #endif // BOOST_SPIRIT_SUPPORT_LINE_POS_ITERATOR
 
