@@ -27,17 +27,17 @@ int main()
             int line = n / 3 + 1;
             int column = n % 3 + 1;
 
-            BOOST_TEST(line == get_line(iter) &&
-                       column == get_column(begin,iter));
+            BOOST_TEST_EQ(line,get_line(iter));
+            BOOST_TEST_EQ(column,get_column(begin,iter));
 
             iterator_range range = get_current_line(begin,iter,end);
             std::string current_line(range.begin(),range.end());
             if (line == 1) {
-                BOOST_TEST(current_line == "012");
+                BOOST_TEST_EQ(current_line,"012");
             } else if(line == 2) {
-                BOOST_TEST(current_line == "345");
+                BOOST_TEST_EQ(current_line,"345");
             } else {
-                BOOST_TEST(current_line == "678");
+                BOOST_TEST_EQ(current_line,"678");
             }
         }
     }
