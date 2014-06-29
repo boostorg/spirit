@@ -316,6 +316,8 @@ namespace boost { namespace spirit { namespace x3 {
         template <typename keywordType, typename ... rest>
             void add_keywords(int index, keywordType const &keyword, rest const&... keywords)
             {
+                // If you get an error here you are probably mixing
+                // wide characters with normal characters in you keywords
                 detail::keyword_string::add(lookup, keyword, index);
                 flags_init[index]=keyword.repeat_limit.flag_init();
                 add_keywords(index+1, keywords ...);
