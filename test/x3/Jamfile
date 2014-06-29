@@ -64,7 +64,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run attribute2.cpp       : : : : x3_attribute2 ]
      #~ [ run auto.cpp             : : : : x3_auto ]
      #~ [ run binary.cpp           : : : : x3_binary ]
-     #~ [ run bool1.cpp            : : : : x3_bool1 ]
+     [ run bool.cpp             : : : : x3_bool ]
      #~ [ run bool2.cpp            : : : : x3_bool2 ]
      [ run char1.cpp            : : : : x3_char1 ]
      #~ [ run char2.cpp            : : : : x3_char2 ]
@@ -102,6 +102,8 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run permutation.cpp      : : : : x3_permutation ]
      [ run plus.cpp             : : : : x3_plus ]
      [ run with.cpp             : : : : x3_with ]
+
+
 
      # $$$ remove this fpermissive flag once lexical_cast is fixed $$$
      #~ [ run range_run.cpp
@@ -167,10 +169,9 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
      [ run extensions/seek.cpp       : : : : x3_seek ]
      [ run extensions/keyword.cpp    : : : : x3_keyword ]
+     [ run extensions/repeat.cpp     : : : : x3_repeat ]
 
     ;
-
-
 }
 
 # use this alias to build Spirit against Phoenix V3

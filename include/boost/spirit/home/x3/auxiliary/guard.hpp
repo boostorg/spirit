@@ -50,7 +50,7 @@ namespace boost { namespace spirit { namespace x3
                 }
                 catch (expectation_failure<Iterator> const& x)
                 {
-                    switch (handler(first, x, context))
+                    switch (handler(first, last, x, context))
                     {
                         case error_handler_result::fail:
                             return false;

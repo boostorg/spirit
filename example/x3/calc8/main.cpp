@@ -6,15 +6,16 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Same as calc6, but this version also shows off grammar modularization.
-//  Here you will see how expressions is built as a modular grammars.
+//  Now we'll introduce variables and assignment. This time, we'll also
+//  be renaming some of the rules -- a strategy for a grander scheme
+//  to come ;-)
 //
-//  [ JDG Sometime 2000 ]       pre-boost
-//  [ JDG September 18, 2002 ]  spirit1
-//  [ JDG April 8, 2007 ]       spirit2
+//  This version also shows off grammar modularization. Here you will
+//  see how expressions and statements are built as modular grammars.
+//
+//  [ JDG April 9, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG April 9, 2014 ]       Spirit X3
-//  [ JDG May 2, 2014 ]         Modular grammar using BOOST_SPIRIT_DEFINE.
+//  [ JDG May 17, 2014 ]        Ported from qi calc7 example.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -51,22 +52,27 @@ main()
         source += str + '\n';
     }
 
-    typedef std::string::const_iterator iterator_type;
-    iterator_type iter = source.begin();
-    iterator_type end = source.end();
+    using client::parser::iterator_type;
+    iterator_type iter(source.begin());
+    iterator_type end(source.end());
+    
 
     client::vmachine vm;                                    // Our virtual machine
     client::code_gen::program program;                      // Our VM program
     client::ast::statement_list ast;                        // Our AST
 
-    client::code_gen::compiler compile(program);            // Our compiler
-    
     using boost::spirit::x3::with;
-    client::parser::position_cache_type
-        position_cache(iter, end);
+    using client::parser::error_handler_type;
+    error_handler_type error_handler(iter, end, std::cerr); // Our error handler
 
-    auto const parser =                                     // Our parser
-        with<client::position_cache_tag>(std::ref(position_cache))
+    // Our compiler
+    client::code_gen::compiler compile(program, error_handler);
+
+    // Our parser
+    auto const parser =
+        // we pass our error handler to the parser so we can access
+        // it later on in our on_error and on_sucess handlers
+        with<client::parser::error_handler_tag>(std::ref(error_handler))
         [
             client::statement()
         ];

@@ -23,17 +23,23 @@ namespace client { namespace parser
     using x3::lexeme;
     using namespace x3::ascii;
     
-    typedef x3::rule<class additive_expr, ast::expression> additive_expr_type;
-    typedef x3::rule<class multiplicative_expr, ast::expression> multiplicative_expr_type;
-    typedef x3::rule<class unary_expr, ast::operand> unary_expr_type;
-    typedef x3::rule<class primary_expr, ast::operand> primary_expr_type;
+    struct expression_class;
+    struct additive_expr_class;
+    struct multiplicative_expr_class;
+    struct unary_expr_class;
+    struct primary_expr_class;
+    
+    typedef x3::rule<expression_class, ast::expression> expression_type;
+    typedef x3::rule<additive_expr_class, ast::expression> additive_expr_type;
+    typedef x3::rule<multiplicative_expr_class, ast::expression> multiplicative_expr_type;
+    typedef x3::rule<unary_expr_class, ast::operand> unary_expr_type;
+    typedef x3::rule<primary_expr_class, ast::operand> primary_expr_type;
 
+    expression_type const expression = "expression";
     additive_expr_type const additive_expr = "additive_expr";
     multiplicative_expr_type const multiplicative_expr = "multiplicative_expr";
     unary_expr_type unary_expr = "unary_expr";
     primary_expr_type primary_expr = "primary_expr";
-    
-    auto const expression = additive_expr;
 
     auto const additive_expr_def =
         multiplicative_expr
@@ -62,16 +68,21 @@ namespace client { namespace parser
         ;
 
     BOOST_SPIRIT_DEFINE(
-        additive_expr = additive_expr_def
+        expression = additive_expr
+      , additive_expr = additive_expr_def
       , multiplicative_expr = multiplicative_expr_def
       , unary_expr = unary_expr_def
       , primary_expr = primary_expr_def
     );
+    
+    struct unary_expr_class : annotation_base {};
+    struct primary_expr_class : annotation_base {};
+
 }}
 
 namespace client
 {
-    parser::expression_type expression()
+    parser::expression_type const& expression()
     {
         return parser::expression;
     }

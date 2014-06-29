@@ -15,12 +15,13 @@ namespace client
     namespace x3 = boost::spirit::x3;
     namespace parser
     {
-        typedef x3::rule<class statement_list, ast::statement_list> statement_list_type;
-        typedef statement_list_type statement_type;
-        BOOST_SPIRIT_DECLARE(statement_list_type);
+        struct statement_class;
+        typedef x3::rule<statement_class, ast::statement_list> statement_type;
+        typedef statement_type::id statement_id;
+        BOOST_SPIRIT_DECLARE(statement_type);
     }
     
-    parser::statement_list_type statement();
+    parser::statement_type const& statement();
 }
 
 #endif

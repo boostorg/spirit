@@ -14,7 +14,7 @@
 //  [ JDG September 18, 2002 ]  spirit1
 //  [ JDG April 8, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG April 9, 2014 ]       Spirit X3
+//  [ JDG April 9, 2014 ]       Spirit X3 (from qi calc6)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -232,9 +232,13 @@ namespace client
         using x3::uint_;
         using x3::char_;
 
-        x3::rule<class expression, ast::expression> const expression("expression");
-        x3::rule<class term, ast::expression> const term("term");
-        x3::rule<class factor, ast::operand> const factor("factor");
+        struct expression_class;
+        struct term_class;
+        struct factor_class;
+
+        x3::rule<expression_class, ast::expression> const expression("expression");
+        x3::rule<term_class, ast::expression> const term("term");
+        x3::rule<factor_class, ast::operand> const factor("factor");
 
         auto const expression_def =
             term
@@ -262,22 +266,26 @@ namespace client
           , term = term_def
           , factor = factor_def
         );
-        
-        // Our error handler
-        using x3::error_handler_result::fail;
-        BOOST_SPIRIT_ONERROR(expression, fail)
+
+        struct expression_class
         {
-            std::cout
-                << "Error! Expecting: "
-                << x.what_
-                << " here: \""
-                << std::string(x.first, x.last)
-                << "\""
-                << std::endl
-                ;
-            return fail;
-        }
-        
+            //  Our error handler
+            template <typename Iterator, typename Exception, typename Context>
+            x3::error_handler_result
+            on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+            {
+                std::cout
+                    << "Error! Expecting: "
+                    << x.which()
+                    << " here: \""
+                    << std::string(x.where(), last)
+                    << "\""
+                    << std::endl
+                    ;
+                return x3::error_handler_result::fail;
+            }
+        };
+
         auto calculator = expression;
     }
 

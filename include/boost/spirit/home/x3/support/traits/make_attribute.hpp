@@ -70,6 +70,17 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             return unused;
         }
     };
+    
+    template <>
+    struct make_attribute<unused_type, unused_type>
+    {
+        typedef unused_type type;
+        typedef unused_type value_type;
+        static unused_type call(unused_type)
+        {
+            return unused;
+        }
+    };
 }}}}
 
 #endif

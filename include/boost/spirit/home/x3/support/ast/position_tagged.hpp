@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_X3_POSITION_TAGGED_MAY_01_2014_0321PM
 
 #include <boost/range.hpp>
+#include <boost/type_traits/is_base_of.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -16,8 +17,8 @@ namespace boost { namespace spirit { namespace x3
         // Use this to annotate an AST with the iterator position.
         // These ids are used as a key to the position_cache (below)
         // and marks the start and end of an AST node.
-        int id_first;
-        int id_last;
+        int id_first = -1;
+        int id_last = -1;
     };
 
     template <typename Container>
@@ -51,21 +52,27 @@ namespace boost { namespace spirit { namespace x3
             // returns an empty position
             return boost::iterator_range<iterator_type>();
         }
+        
+        // This will catch all nodes except those inheriting from position_tagged
+        template <typename AST>
+        void annotate(AST& ast, iterator_type first, iterator_type last, mpl::false_)
+        {
+            // (no-op) no need for tags
+        }
 
         // This will catch all nodes inheriting from position_tagged
-        void annotate(position_tagged& ast, iterator_type first, iterator_type last) const
+        void annotate(position_tagged& ast, iterator_type first, iterator_type last, mpl::true_)
         {
-            ast.id_first = positions.size();
+            ast.id_first = int(positions.size());
             positions.push_back(first);
-            ast.id_last = positions.size();
+            ast.id_last = int(positions.size());
             positions.push_back(last);
         }
 
-        // This will catch all nodes except those inheriting from position_tagged
         template <typename AST>
-        void annotate(AST& ast, iterator_type first, iterator_type last) const
+        void annotate(AST& ast, iterator_type first, iterator_type last)
         {
-            // (no-op) no need for tags
+            annotate(ast, first, last, is_base_of<position_tagged, AST>());
         }
 
         Container const&

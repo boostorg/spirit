@@ -172,9 +172,10 @@ namespace client { namespace ast
 
         int operator()(program const& x) const
         {
-            return std::accumulate( x.rest.begin(), x.rest.end()
-                                    , boost::apply_visitor(*this, x.first)
-                                    , *this);
+            return std::accumulate(
+                x.rest.begin(), x.rest.end()
+              , boost::apply_visitor(*this, x.first)
+              , *this);
         }
     };
 }}
@@ -193,7 +194,7 @@ namespace client
         x3::rule<class term, ast::program> const term("term");
         x3::rule<class factor, ast::operand> const factor("factor");
 
-        auto const calculator = x3::grammar("calculator",
+        BOOST_SPIRIT_DEFINE(
             expression =
                 term
                 >> *(   (char_('+') >> term)
@@ -213,7 +214,9 @@ namespace client
                 |   '(' >> expression >> ')'
                 |   (char_('-') >> factor)
                 |   (char_('+') >> factor)
-            );
+        );
+        
+        auto calculator = expression;
     }
 
     using calculator_grammar::calculator;

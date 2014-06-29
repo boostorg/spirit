@@ -15,7 +15,8 @@ namespace client
     namespace x3 = boost::spirit::x3;
     namespace calculator_grammar
     {
-        typedef x3::rule<class expression, ast::expression> expression_type;
+        struct expression_class;
+        typedef x3::rule<expression_class, ast::expression> expression_type;
         BOOST_SPIRIT_DECLARE(expression_type);
     }
     

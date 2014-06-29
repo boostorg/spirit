@@ -21,31 +21,32 @@
 
 namespace x3 = boost::spirit::x3;
 
-typedef x3::identity<class my_rule> my_rule_id;
-
-template <typename Iterator, typename Exception, typename Context>
-x3::error_handler_result
-on_error(my_rule_id, Iterator&, Exception const& x, Context const& context)
-{
-    std::cout
-        << "Error! Expecting: "
-        << x.what_
-        << ", got: \""
-        << std::string(x.first, x.last)
-        << "\""
-        << std::endl
-        ;
-    return x3::error_handler_result::fail;
-}
-
 int got_it = 0;
 
-template <typename Iterator, typename Attribute, typename Context>
-inline void
-on_success(my_rule_id, Iterator const&, Iterator const&, Attribute&, Context const&)
+struct my_rule_class
 {
-    ++got_it;
-}
+    template <typename Iterator, typename Exception, typename Context>
+    x3::error_handler_result
+    on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+    {
+        std::cout
+            << "Error! Expecting: "
+            << x.which()
+            << ", got: \""
+            << std::string(x.where(), last)
+            << "\""
+            << std::endl
+            ;
+        return x3::error_handler_result::fail;
+    }
+
+    template <typename Iterator, typename Attribute, typename Context>
+    inline void
+    on_success(Iterator const&, Iterator const&, Attribute&, Context const&)
+    {
+        ++got_it;
+    }
+};
 
 int
 main()
@@ -103,7 +104,7 @@ main()
 
     { // error handling
 
-        auto r = rule<my_rule_id, char const*>()
+        auto r = rule<my_rule_class, char const*>()
             = '(' > int_ > ',' > int_ > ')';
 
         BOOST_TEST(test("(123,456)", r));

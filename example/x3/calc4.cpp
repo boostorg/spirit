@@ -16,10 +16,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER)
-# pragma warning(disable: 4345)
-#endif
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
@@ -172,9 +168,10 @@ namespace client { namespace ast
 
         int operator()(program const& x) const
         {
-            return std::accumulate( x.rest.begin(), x.rest.end()
-                                    , boost::apply_visitor(*this, x.first)
-                                    , *this);
+            return std::accumulate(
+                x.rest.begin(), x.rest.end()
+              , boost::apply_visitor(*this, x.first)
+              , *this);
         }
     };
 }}
@@ -214,12 +211,13 @@ namespace client
             |   (char_('+') >> factor)
             ;
 
-        auto const calculator = x3::grammar(
-                "calculator"
-              , expression = expression_def
-              , term = term_def
-              , factor = factor_def
-            );
+        BOOST_SPIRIT_DEFINE(
+            expression = expression_def
+          , term = term_def
+          , factor = factor_def
+        );
+
+        auto calculator = expression;
     }
 
     using calculator_grammar::calculator;

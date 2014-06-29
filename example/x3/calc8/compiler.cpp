@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2014 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -117,12 +117,11 @@ namespace client { namespace code_gen
     bool compiler::operator()(ast::variable const& x) const
     {
         int const* p = program.find_var(x.name);
-//        if (p == 0) /// $$$ TODO $$$
-//        {
-//            std::cout << x.id << std::endl;
-//            error_handler(x.id, "Undeclared variable: " + x.name);
-//            return false;
-//        }
+        if (p == 0)
+        {
+            error_handler(x, "Undeclared variable: " + x.name);
+            return false;
+        }
         program.op(op_load, *p);
         return true;
     }
@@ -172,12 +171,11 @@ namespace client { namespace code_gen
         if (!(*this)(x.rhs))
             return false;
         int const* p = program.find_var(x.lhs.name);
-//        if (p == 0) /// $$$ TODO $$$
-//        {
-//            std::cout << x.lhs.id << std::endl;
-//            error_handler(x.lhs.id, "Undeclared variable: " + x.lhs.name);
-//            return false;
-//        }
+        if (p == 0)
+        {
+            error_handler(x.lhs, "Undeclared variable: " + x.lhs.name);
+            return false;
+        }
         program.op(op_store, *p);
         return true;
     }
@@ -185,12 +183,11 @@ namespace client { namespace code_gen
     bool compiler::operator()(ast::variable_declaration const& x) const
     {
         int const* p = program.find_var(x.assign.lhs.name);
-//        if (p != 0) /// $$$ TODO $$$
-//        {
-//            std::cout << x.assign.lhs.id << std::endl;
-//            error_handler(x.assign.lhs.id, "Duplicate variable: " + x.assign.lhs.name);
-//            return false;
-//        }
+        if (p != 0)
+        {
+            error_handler(x.assign.lhs, "Duplicate variable: " + x.assign.lhs.name);
+            return false;
+        }
         bool r = (*this)(x.assign.rhs);
         if (r) // don't add the variable if the RHS fails
         {
@@ -218,4 +215,3 @@ namespace client { namespace code_gen
         return true;
     }
 }}
-
