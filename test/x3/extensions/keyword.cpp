@@ -32,6 +32,7 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::lexeme;
     using boost::spirit::x3::kwd;
+    using boost::spirit::x3::inf;
     using boost::spirit::x3::keywords;
     {
       boost::fusion::vector<int,int,int> data;
@@ -99,9 +100,9 @@ main()
         BOOST_TEST(!test("a=f a=e b=c b=e a=p c=1", keywords( kwd("a",1,2)[ '=' > char_] , kwd("b",0,1)[ '=' > char_] , kwd("c",1,2)['=' > int_]), space));
 
         // Min - inf
-//~        BOOST_TEST(test("a=f b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
-//~        BOOST_TEST(!test("b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
-//~        BOOST_TEST(test("a=f a=f a=g b=c b=e c=1 a=e", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
+        BOOST_TEST(test("a=f b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
+        BOOST_TEST(!test("b=c b=e c=1", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
+        BOOST_TEST(test("a=f a=f a=g b=c b=e c=1 a=e", keywords( kwd("a",1,inf)[ '=' > char_] , kwd("b",0,inf)[ '=' > char_] , kwd("c",1,inf)['=' > int_]), space ));
     }
     {   // Single keyword, empty string
         BOOST_TEST(test("", kwd("aad")[char_],space));
