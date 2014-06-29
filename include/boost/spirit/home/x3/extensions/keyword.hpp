@@ -21,6 +21,7 @@
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/x3/string/symbols.hpp>
+#include <boost/spirit/home/x3/extensions/infinite_tag.hpp>
 
 #include <boost/array.hpp>
 
@@ -277,7 +278,7 @@ namespace boost { namespace spirit { namespace x3 {
     // Handle kwd("key", min, inf)[p]
     template <typename Key, typename T>
         kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_infinite_count<T> >
-        kwd(Key const &key, T const min_value, inf const )
+        kwd(Key const &key, T const min_value, inf_type const )
         {
             return {as_parser(key), detail::kwd_infinite_count<T>{min_value}};
         }
@@ -290,7 +291,7 @@ namespace boost { namespace spirit { namespace x3 {
 
         typedef parser< keywords_parser< Keywords... > > base_type;
 
-        typedef typename get_char_type< Keywords... >::type char_type;
+        typedef typename detail::get_char_type< Keywords... >::type char_type;
 
         static const std::size_t nb_keywords = sizeof...(Keywords);
 
