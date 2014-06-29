@@ -16,6 +16,7 @@
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
+#include <boost/spirit/home/x3/extensions/infinite_tag.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail 
 {
@@ -94,10 +95,6 @@ namespace boost { namespace spirit { namespace x3
 
         const RepeatCountLimit repeat_limit;
     };
-
-    // Infinite loop tag type
-    struct inf_type {};
-    const inf_type inf = inf_type();
 
     struct repeat_gen
     {
