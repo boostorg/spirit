@@ -98,7 +98,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
                         index);
             }
     };
-    
+
+    // Helper to get the character type from the first keyword in the list
+    template <typename Keyword, typename ...Keywords>
+    struct get_char_type
+    {
+        typedef typename Keyword::char_type type;
+    };
     // Occurence checking classes 
 
 
@@ -159,19 +165,19 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
         T const max_value;
     };
 
-//~    template <typename T>
-//~    struct kwd_infinite_count // handles kwd(min, inf)[p]
-//~    {
-//~
-//~        typedef T type;
-//~        bool flag_init() const { return min_value==0; }
-//~        bool register_successful_parse(bool &flag, T &i) const {
-//~            i++;
-//~            flag = i>=min_value;
-//~            return true;
-//~        }
-//~        T const min_value;
-//~    };
+    template <typename T>
+    struct kwd_infinite_count // handles kwd(min, inf)[p]
+    {
+
+        typedef T type;
+        bool flag_init() const { return min_value==0; }
+        bool register_successful_parse(bool &flag, T &i) const {
+            i++;
+            flag = i>=min_value;
+            return true;
+        }
+        T const min_value;
+    };
 
 
 }}}}
@@ -184,6 +190,8 @@ namespace boost { namespace spirit { namespace x3 {
         struct keyword_parser : unary_parser<Subject, keyword_parser<Key, RepeatCountLimit, Subject> >
     {
         typedef unary_parser<Subject, keyword_parser<Key, RepeatCountLimit, Subject> > base_type;
+        
+        typedef typename Key::char_type char_type;
 
         static const bool is_pass_through_unary =true;
 
@@ -266,13 +274,13 @@ namespace boost { namespace spirit { namespace x3 {
             return {as_parser(key), detail::kwd_finite_count<T>{min_value, max_value}};
         }
 
-    // Handle kwd("key", min, max)[p]
-//~    template <typename Key, typename T>
-//~        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_infinite_count<T> >
-//~        kwd(Key const &key, T const min_value, inf const )
-//~        {
-//~            return {as_parser(key), detail::kwd_infinite_count<T>{min_value}};
-//~        }
+    // Handle kwd("key", min, inf)[p]
+    template <typename Key, typename T>
+        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_infinite_count<T> >
+        kwd(Key const &key, T const min_value, inf const )
+        {
+            return {as_parser(key), detail::kwd_infinite_count<T>{min_value}};
+        }
 
     // keywords parser 
 
@@ -280,7 +288,9 @@ namespace boost { namespace spirit { namespace x3 {
         struct keywords_parser : parser< keywords_parser< Keywords ...> >
     {             
 
-        typedef parser< keywords_parser< Keywords...> > base_type;
+        typedef parser< keywords_parser< Keywords... > > base_type;
+
+        typedef typename get_char_type< Keywords... >::type char_type;
 
         static const std::size_t nb_keywords = sizeof...(Keywords);
 
@@ -385,7 +395,7 @@ namespace boost { namespace spirit { namespace x3 {
                         );
             }
 
-        tst<char, std::size_t> lookup;
+        tst<char_type, std::size_t> lookup;
         flags_type flags_init;
         std::tuple<Keywords ...> keywords;
     };
