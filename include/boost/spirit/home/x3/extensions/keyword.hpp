@@ -23,45 +23,44 @@
 #include <boost/spirit/home/x3/string/symbols.hpp>
 #include <boost/spirit/home/x3/extensions/infinite_tag.hpp>
 
-#include <boost/array.hpp>
-
+#include <array>
 #include <string>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail {
 
     // Helper to filter out unused attributes
-    template <int... Is>
+    template <std::size_t... Is>
         struct attribute_index {};
 
-    template <typename Context, typename Keywords, int AttrIdx, int ParserIdx, int N, int ... Is>
+    template <typename Context, typename Keywords, std::size_t AttrIdx, std::size_t ParserIdx, std::size_t N, std::size_t ... Is>
         struct gen_attribute_seq;
 
-    template <typename Context, typename Keywords, int AttrIdx, int ParserIdx, int N, bool HasAttr, int ... Is>
+    template <typename Context, typename Keywords, std::size_t AttrIdx, std::size_t ParserIdx, std::size_t N, bool HasAttr, std::size_t ... Is>
         struct gen_attribute_seq_detail : 
             gen_attribute_seq< Context, Keywords, AttrIdx+1, ParserIdx +1, N-1, Is ..., AttrIdx> {};
 
-    template <typename Context, typename Keywords, int AttrIdx, int ParserIdx, int N, int ... Is>
+    template <typename Context, typename Keywords, std::size_t AttrIdx, std::size_t ParserIdx, std::size_t N, std::size_t ... Is>
         struct gen_attribute_seq_detail<Context, Keywords, AttrIdx, ParserIdx, N, false, Is...> :
-            gen_attribute_seq< Context, Keywords, AttrIdx, ParserIdx +1, N-1, Is..., -1 > {};
+            gen_attribute_seq< Context, Keywords, AttrIdx, ParserIdx +1, N-1, Is..., std::numeric_limits<std::size_t>::max() > {};
 
-    template <typename Context, typename Keywords, int AttrIdx, int ParserIdx, int N, int ... Is>
+    template <typename Context, typename Keywords, std::size_t AttrIdx, std::size_t ParserIdx, std::size_t N, std::size_t ... Is>
         struct gen_attribute_seq : 
             gen_attribute_seq_detail<Context, Keywords, AttrIdx, ParserIdx, N, 
                 traits::has_attribute< typename std::tuple_element<ParserIdx, Keywords>::type, Context >::value, Is...
                 > {};
 
-    template <typename Context, typename Keywords, int AttrIdx, int ParserIdx, int ... Is>
+    template <typename Context, typename Keywords, std::size_t AttrIdx, std::size_t ParserIdx, std::size_t ... Is>
         struct gen_attribute_seq<Context, Keywords, AttrIdx, ParserIdx, 0, Is...> : 
             attribute_index<Is...> {};
 
-    template <int N, int... Is>
-        struct gen_unused_attribute_seq : gen_unused_attribute_seq<N - 1, - 1, Is...> {};
+    template <std::size_t N, std::size_t... Is>
+        struct gen_unused_attribute_seq : gen_unused_attribute_seq<N - 1, std::numeric_limits<std::size_t>::max(), Is...> {};
 
-    template <int... Is>
+    template <std::size_t... Is>
         struct gen_unused_attribute_seq<0, Is...> : attribute_index<Is...> {};
 
     // Helper to get the attribute at a given index
-    template <typename Attribute, int Index>
+    template <typename Attribute, std::size_t Index>
         struct get_attribute
         {
             typedef typename fusion::result_of::at_c<Attribute, Index>::type type;
@@ -73,7 +72,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
         };
 
     template <typename Attribute>
-        struct get_attribute<Attribute, -1 >
+        struct get_attribute<Attribute, std::numeric_limits<std::size_t>::max() >
         {
             static unused_type& call(Attribute &s)
             {
@@ -85,14 +84,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
     struct keyword_string
     {
         template <typename Lookup, typename Keyword>
-            static void add(Lookup &lookup, Keyword const &parser, int index)
+            static void add(Lookup &lookup, Keyword const &parser, std::size_t index)
             {
                 lookup.add(traits::get_string_begin<char>(parser.key.str),
                         traits::get_string_end<char>(parser.key.str),
                         index);
             }
         template <typename Lookup, typename Keyword, typename Action>
-            static void add(Lookup &lookup, action<Keyword, Action> const &parser, int index)
+            static void add(Lookup &lookup, action<Keyword, Action> const &parser, std::size_t index)
             {
                 lookup.add(traits::get_string_begin<char>(parser.subject.key.str),
                         traits::get_string_end<char>(parser.subject.key.str),
@@ -119,12 +118,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
         }
     };
 
-    template <typename T>
     struct kwd_exact_count // handles kwd(exact)[p]
     {
-        typedef T type;
         bool flag_init() const { return false; }
-        bool register_successful_parse(bool &flag, T &i) const {
+        bool register_successful_parse(bool &flag, std::size_t &i) const {
             i++;
             if(i<exact)
             {
@@ -140,15 +137,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
                 return flag=false;
 
         }
-        T const exact;
+        std::size_t const exact;
     };
 
-    template <typename T>
     struct kwd_finite_count // handles kwd(min, max)[p]
     {
-        typedef T type;
         bool flag_init() const { return min_value==0; }
-        bool register_successful_parse(bool &flag, T &i) const {
+        bool register_successful_parse(bool &flag, std::size_t &i) const {
             i++;
             if(i<min_value)
             {
@@ -162,22 +157,19 @@ namespace boost { namespace spirit { namespace x3 { namespace detail {
             else
                 return flag=false;
         }
-        T const min_value;
-        T const max_value;
+        std::size_t const min_value;
+        std::size_t const max_value;
     };
 
-    template <typename T>
     struct kwd_infinite_count // handles kwd(min, inf)[p]
     {
-
-        typedef T type;
         bool flag_init() const { return min_value==0; }
-        bool register_successful_parse(bool &flag, T &i) const {
+        bool register_successful_parse(bool &flag, std::size_t &i) const {
             i++;
             flag = i>=min_value;
             return true;
         }
-        T const min_value;
+        std::size_t const min_value;
     };
 
 
@@ -207,7 +199,7 @@ namespace boost { namespace spirit { namespace x3 {
                     , Context const& context, RContext &rcontext, Attribute& attr) const
             {
                 bool flag = repeat_limit.flag_init();
-                int counter {};
+                std::size_t counter {};
                 Iterator save = first;
                 if (key.parse(first, last, context, rcontext, unused))
                 {
@@ -223,7 +215,7 @@ namespace boost { namespace spirit { namespace x3 {
         template <typename Iterator, typename Context, typename RContext, typename Attribute>
             bool parse_subject(Iterator& first, Iterator const& last
                     , Context const& context, RContext & rcontext
-                    , bool &flag, int &counter, Attribute& attr) const
+                    , bool &flag, std::size_t &counter, Attribute& attr) const
             {
                 if(this->subject.parse(first, last, context, rcontext, attr))
                     return repeat_limit.register_successful_parse(flag, counter);
@@ -261,26 +253,26 @@ namespace boost { namespace spirit { namespace x3 {
         }
 
     // Handle kwd("key", exact)[p]
-    template <typename Key, typename T>
-        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_exact_count<T> >
-        kwd(Key const &key, T const exact)
+    template <typename Key>
+        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_exact_count >
+        kwd(Key const &key, std::size_t const exact)
         {
-            return {as_parser(key), detail::kwd_exact_count<T>{exact}};
+            return {as_parser(key), detail::kwd_exact_count{exact}};
         }
     // Handle kwd("key", min, max)[p]
-    template <typename Key, typename T>
-        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_finite_count<T> >
-        kwd(Key const &key, T const min_value, T const max_value)
+    template <typename Key>
+        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_finite_count >
+        kwd(Key const &key, std::size_t const min_value, std::size_t const max_value)
         {
-            return {as_parser(key), detail::kwd_finite_count<T>{min_value, max_value}};
+            return {as_parser(key), detail::kwd_finite_count{min_value, max_value}};
         }
 
     // Handle kwd("key", min, inf)[p]
-    template <typename Key, typename T>
-        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_infinite_count<T> >
-        kwd(Key const &key, T const min_value, inf_type const )
+    template <typename Key>
+        kwd_level_1<typename extension::as_parser<Key>::value_type, detail::kwd_infinite_count >
+        kwd(Key const &key, std::size_t const min_value, inf_type const )
         {
-            return {as_parser(key), detail::kwd_infinite_count<T>{min_value}};
+            return {as_parser(key), detail::kwd_infinite_count{min_value}};
         }
 
     // keywords parser 
@@ -298,11 +290,11 @@ namespace boost { namespace spirit { namespace x3 {
         // build a bool array and an integer array which will be used to
         // check that the repetition constraints of the kwd parsers are
         // met and bail out a soon as possible
-        typedef boost::array<bool, nb_keywords> flags_type;
-        typedef boost::array<int, nb_keywords> counters_type;
+        typedef std::array<bool, nb_keywords> flags_type;
+        typedef std::array<std::size_t, nb_keywords> counters_type;
 
 
-        keywords_parser(Keywords ... keywords)
+        keywords_parser(Keywords && ... keywords)
             : keywords(std::forward<Keywords>(keywords)...)
         {
             add_keywords(0, keywords...);
@@ -314,7 +306,7 @@ namespace boost { namespace spirit { namespace x3 {
         }
 
         template <typename keywordType, typename ... rest>
-            void add_keywords(int index, keywordType const &keyword, rest const&... keywords)
+            void add_keywords(std::size_t index, keywordType const &keyword, rest const&... keywords)
             {
                 // If you get an error here you are probably mixing
                 // wide characters with normal characters in you keywords
@@ -324,19 +316,19 @@ namespace boost { namespace spirit { namespace x3 {
             }
 
         // Subject parser calling function
-        template <int ParserIdx, typename GetAttribute, typename Iterator, typename Context, typename RContext, typename Attribute>
+        template <size_t ParserIdx, typename GetAttribute, typename Iterator, typename Context, typename RContext, typename Attribute>
             bool parse_subject(Iterator& first, Iterator const& last
-                    , Context const& context, RContext &rcontext, bool &flag, int & counter, Attribute& attr) const
+                    , Context const& context, RContext &rcontext, bool &flag, std::size_t & counter, Attribute& attr) const
             {
                 return std::get<ParserIdx>(keywords).parse_subject(first, last, context, rcontext, flag, counter, GetAttribute::call(attr));
             }
         // Internal dispatching function used to call the correct parser depending on the keyword
-        template <typename Iterator, typename Context, typename RContext, typename Attribute, std::size_t... Is, int... As>
+        template <typename Iterator, typename Context, typename RContext, typename Attribute, std::size_t... Is, std::size_t... As>
             bool parse_internal(Iterator& first, Iterator const& last
                     , Context const& context, RContext &rcontext, Attribute& attr, index_sequence<Is...>, detail::attribute_index<As...> ) const
             {
-                typedef bool (keywords_parser::* subject_caller) (Iterator &, Iterator const&, Context const&, RContext &, bool &, int &, Attribute &) const;
-                static subject_caller parse_functions[nb_keywords] =
+                typedef bool (keywords_parser::* subject_caller) (Iterator &, Iterator const&, Context const&, RContext &, bool &, std::size_t &, Attribute &) const;
+                static const subject_caller parse_functions[nb_keywords] =
                 {
                     &keywords_parser::parse_subject<Is, detail::get_attribute<Attribute, As>, Iterator, Context, RContext, Attribute>...
                 };
@@ -391,9 +383,9 @@ namespace boost { namespace spirit { namespace x3 {
                         first, last, context, rcontext, attr,
                         make_index_sequence<nb_keywords>{},
                         typename std::conditional< 
-                        std::is_same< typename std::remove_const<Attribute>::type, unused_type >::value, 
-                        detail::gen_unused_attribute_seq<nb_keywords>,
-                        detail::gen_attribute_seq<Context, std::tuple<Keywords...>, 0, 0, nb_keywords> 
+                            std::is_same< typename std::remove_const<Attribute>::type, unused_type >::value, 
+                            detail::gen_unused_attribute_seq<nb_keywords>,
+                            detail::gen_attribute_seq<Context, std::tuple<Keywords...>, 0, 0, nb_keywords> 
                         >::type{}
                         );
             }
@@ -404,7 +396,7 @@ namespace boost { namespace spirit { namespace x3 {
     };
 
     template <typename ... Keywords>
-        keywords_parser<Keywords...>keywords (Keywords ... keyword_list) 
+        keywords_parser<Keywords...> keywords (Keywords && ... keyword_list) 
         {
             return {std::forward<Keywords>(keyword_list)...};
         }
