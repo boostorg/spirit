@@ -186,7 +186,7 @@ namespace boost { namespace spirit { namespace x3 {
         
         typedef typename Key::char_type char_type;
 
-        static const bool is_pass_through_unary =true;
+        static const bool is_pass_through_unary=true;
 
         keyword_parser(Key const &key, RepeatCountLimit const &repeat_limit, Subject const& subject)
             : base_type(subject)
@@ -301,7 +301,7 @@ namespace boost { namespace spirit { namespace x3 {
         }
 
         // construct the lookup table
-        void add_keywords(int index)
+        void add_keywords(std::size_t index)
         {
         }
 
