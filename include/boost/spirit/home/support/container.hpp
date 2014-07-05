@@ -65,10 +65,10 @@ namespace boost { namespace spirit { namespace traits
       : is_container<T>
     {};
 
-    template<typename T0, typename ...TN>
-    struct is_container<boost::variant<T0, TN...> >
+    template<typename T0, typename T1, typename ...TN>
+    struct is_container<boost::variant<T0, T1, TN...> >
       : mpl::bool_<is_container<T0>::value ||
-            is_container<boost::variant<TN...> >::value>
+            is_container<boost::variant<T1, TN...> >::value>
     {};
 
 #else

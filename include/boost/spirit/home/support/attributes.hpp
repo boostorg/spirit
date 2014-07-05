@@ -208,11 +208,11 @@ namespace boost { namespace spirit { namespace traits
       : is_weak_substitute<T, Expected>
     {};
 
-    template <typename T0, typename ...TN, typename Expected>
-    struct is_weak_substitute<boost::variant<T0, TN...>,
+    template <typename T0, typename T1, typename ...TN, typename Expected>
+    struct is_weak_substitute<boost::variant<T0, T1, TN...>,
             Expected>
       : mpl::bool_<is_weak_substitute<T0, Expected>::type::value &&
-            is_weak_substitute<boost::variant<TN...>, Expected>::type::value>
+            is_weak_substitute<boost::variant<T1, TN...>, Expected>::type::value>
     {};
 #else
 #define BOOST_SPIRIT_IS_WEAK_SUBSTITUTE(z, N, _)                              \
