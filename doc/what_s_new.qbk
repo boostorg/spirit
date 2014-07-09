@@ -9,6 +9,18 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_3 Spirit V2.5.3]
+
+[heading What's changed from V2.5.2 (Boost V1.49.0) to V2.5.3 (Boost V1.50.0)]
+
+* The support of __boost_phoenix__ (V3) is now mature. To enable it you need to
+define the following preprocessor constant for your builds (before including
+any of Spirit's include files):
+
+    #define BOOST_SPIRIT_USE_PHOENIX_V3 1
+
+[endsect]
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_2 Spirit V2.5.2]
 
 [heading What's changed from V2.5.1 (Boost V1.48.0) to V2.5.2 (Boost V1.49.0)]
