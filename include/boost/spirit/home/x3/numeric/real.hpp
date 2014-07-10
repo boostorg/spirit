@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_REAL_APRIL_18_2006_0850AM)
 #define BOOST_SPIRIT_X3_REAL_APRIL_18_2006_0850AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/numeric/real_policies.hpp>
@@ -23,7 +19,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef T attribute_type;
         static bool const has_attribute = true;
-        
+
         real_parser()
         	: policies() {}
 
@@ -51,15 +47,15 @@ namespace boost { namespace spirit { namespace x3
             }
             return false;
         }
-        
+
         RealPolicies policies;
     };
 
-    typedef real_parser<float> float_type;                                    
-    float_type const float_ = float_type();    
-                                       
-    typedef real_parser<double> double_type;                                    
-    double_type const double_ = double_type();                                       
+    typedef real_parser<float> float_type;
+    float_type const float_ = {};
+
+    typedef real_parser<double> double_type;
+    double_type const double_ = {};
 
 }}}
 

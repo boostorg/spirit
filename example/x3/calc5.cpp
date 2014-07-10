@@ -19,10 +19,6 @@
 // Uncomment this if you want to enable debugging
 //#define BOOST_SPIRIT_X3_DEBUG
 
-#if defined(_MSC_VER)
-# pragma warning(disable: 4345)
-#endif
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
@@ -197,7 +193,7 @@ namespace client
     {
         using x3::uint_;
         using x3::char_;
-        
+
         struct expression_class;
         struct term_class;
         struct factor_class;

@@ -13,7 +13,7 @@
 //  [ JDG September 18, 2002 ]  spirit1
 //  [ JDG April 8, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG April 9, 2014 ]       Spirit X3
+//  [ JDG April 9, 2014 ]       Spirit X3 (from qi calc6)
 //  [ JDG May 2, 2014 ]         Modular grammar using BOOST_SPIRIT_DEFINE.
 //
 ///////////////////////////////////////////////////////////////////////////////

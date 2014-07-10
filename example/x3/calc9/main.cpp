@@ -6,16 +6,12 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Now we'll introduce variables and assignment. This time, we'll also
-//  be renaming some of the rules -- a strategy for a grander scheme
-//  to come ;-)
-//
-//  This version also shows off grammar modularization. Here you will
-//  see how expressions and statements are built as modular grammars.
+//  Now we'll introduce boolean expressions and control structures.
+//  Is it obvious now what we are up to? ;-)
 //
 //  [ JDG April 9, 2007 ]       spirit2
 //  [ JDG February 18, 2011 ]   Pure attributes. No semantic actions.
-//  [ JDG May 17, 2014 ]        Ported from qi calc7 example.
+//  [ JDG June 6, 2014 ]        Ported from qi calc8 example.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -84,7 +80,7 @@ main()
 
     if (success && iter == end)
     {
-        if (compile(ast))
+        if (compile.start(ast))
         {
             std::cout << "Success\n";
             std::cout << "-------------------------\n";
