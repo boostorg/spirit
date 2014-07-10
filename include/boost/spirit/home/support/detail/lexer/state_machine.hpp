@@ -357,7 +357,7 @@ private:
             {
                 const std::size_t col_ = lu_->at (alpha_index_);
 
-                if (col_ != dead_state_index)
+                if (col_ != static_cast<std::size_t>(dead_state_index))
                 {
                     chars_[col_ - dfa_offset] += static_cast<CharT>
                         (alpha_index_);
