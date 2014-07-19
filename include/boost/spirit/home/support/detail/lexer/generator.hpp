@@ -561,7 +561,12 @@ protected:
 
         if (token_._negated)
         {
-            CharT curr_char_ = (std::numeric_limits<CharT>::min)();
+            // $$$ FIXME JDG July 2014 $$$
+            // this code is problematic on platforms where wchar_t is signed
+            // with min generating negative numbers. This crashes with BAD_ACCESS
+            // because of the vector index below:
+            //  ptr_[static_cast<typename Traits::index_type>(curr_char_)]
+            CharT curr_char_ = 0; // (std::numeric_limits<CharT>::min)();
             std::size_t i_ = 0;
 
             while (curr_ < chars_end_)
