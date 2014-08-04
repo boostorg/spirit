@@ -32,6 +32,11 @@
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 #if !defined(SPIRIT_NUMERICS_LOOP_UNROLL)
 # define SPIRIT_NUMERICS_LOOP_UNROLL 3
 #endif
@@ -502,5 +507,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
     };
 }}}}
+
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 
 #endif
