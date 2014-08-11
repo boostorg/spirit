@@ -728,7 +728,7 @@ corresponds to the following grammar:
         =   -sign >>
             (       nan
                 |   inf
-                |   fractional_constant >> !exponent_part
+                |   fractional_constant >> -exponent_part
                 |  +digit >> exponent_part
             )
         ;
