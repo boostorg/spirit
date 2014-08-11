@@ -168,6 +168,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             }
 
             bool e_hit = false;
+            Iterator e_pos;
             int frac_digits = 0;
 
             // Try to parse the dot ('.' decimal point)
@@ -195,6 +196,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 }
 
                 // Now, let's see if we can parse the exponent prefix
+                e_pos = first;
                 e_hit = p.parse_exp(first, last);
             }
             else
@@ -208,6 +210,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
 
                 // If we must expect a dot and we didn't see an exponent
                 // prefix, return no-match.
+                e_pos = first;
                 e_hit = p.parse_exp(first, last);
                 if (p.expect_dot && !e_hit)
                 {
@@ -229,9 +232,8 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 }
                 else
                 {
-                    // Oops, no exponent, return no-match.
-                    first = save;
-                    return false;
+                    // Oops, no exponent, disregard the exponent.
+                    first = e_pos;
                 }
             }
             else if (frac_digits)
