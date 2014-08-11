@@ -222,7 +222,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             if (e_hit)
             {
                 // We got the exponent prefix. Now we will try to parse the
-                // actual exponent. It is an error if it is not there.
+                // actual exponent.
                 int exp = 0;
                 if (p.parse_exp_n(first, last, exp))
                 {
@@ -232,7 +232,8 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 }
                 else
                 {
-                    // Oops, no exponent, disregard the exponent.
+                    // If there is no number, disregard the exponent altogether.
+                    // by resetting 'first' prior to the exponent prefix (e|E)
                     first = e_pos;
                 }
             }
