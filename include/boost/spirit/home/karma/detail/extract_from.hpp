@@ -18,6 +18,7 @@
 
 #include <boost/ref.hpp>
 #include <boost/optional.hpp>
+#include <boost/variant/recursive_wrapper.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
@@ -111,6 +112,19 @@ namespace boost { namespace spirit { namespace traits
 
         template <typename Context>
         static type call(reference_wrapper<Attribute> const& attr, Context& ctx)
+        {
+            return extract_from<Exposed>(attr.get(), ctx);
+        }
+    };
+
+    // This handles recursive variants.
+    template <typename Attribute, typename Exposed>
+    struct extract_from_attribute<recursive_wrapper<Attribute>, Exposed>
+    {
+        typedef Attribute const& type;
+
+        template <typename Context>
+        static type call(recursive_wrapper<Attribute> const& attr, Context& ctx)
         {
             return extract_from<Exposed>(attr.get(), ctx);
         }
