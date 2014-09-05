@@ -53,7 +53,7 @@ main()
         BOOST_TEST(!test("-1.2e", double_));
         BOOST_TEST(!test_attr("-1.2e", double_, d));
 
-#if defined(BOOST_SPIRIT_TEST_REAL_PRECISION)
+//#if defined(BOOST_SPIRIT_TEST_REAL_PRECISION)
         BOOST_TEST(test_attr("-5.7222349715140557e+307", double_, d));
         BOOST_TEST(d == -5.7222349715140557e+307); // exact!
 
@@ -65,7 +65,20 @@ main()
 
         BOOST_TEST(test_attr("2.0332938517515416e307", double_, d));
         BOOST_TEST(d == 2.0332938517515416e307); // exact!
-#endif
+
+        BOOST_TEST(test_attr("1.7976931348623157e+308", double_, d));   // DBL_MAX
+        BOOST_TEST(d == 1.7976931348623157e+308); // exact!
+
+        BOOST_TEST(test_attr("2.2204460492503131e-16", double_, d));    // DBL_EPSILON
+        BOOST_TEST(d == 2.2204460492503131e-16); // exact!
+
+        BOOST_TEST(test_attr("2.2250738585072014e-308", double_, d));   // DBL_MIN
+        BOOST_TEST(d == 2.2250738585072014e-308); // exact!
+
+        BOOST_TEST(test_attr("4.9406564584124654e-324", double_, d));   // DBL_DENORM_MIN
+        BOOST_TEST(d == 4.9406564584124654e-324); // exact!
+
+//#endif
 
         using boost::math::fpclassify;
         using boost::spirit::detail::signbit;   // Boost version is broken
