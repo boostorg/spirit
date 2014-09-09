@@ -172,6 +172,10 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run extensions/seek.cpp       : : : : x3_seek ]
 
     ;
+
+
+     test-suite spirit_v3/work :
+     [ run no_case.cpp          : : : : work ] ;
 }
 
 # use this alias to build Spirit against Phoenix V3

@@ -20,10 +20,11 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using boost::spirit::qi::lit;
+    using boost::spirit::x3::lit;
+    using boost::spirit::x3::no_case;
 
     {
-        using namespace boost::spirit::ascii;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("x", no_case[char_]));
         BOOST_TEST(test("X", no_case[char_('x')]));
         BOOST_TEST(test("X", no_case[char_('X')]));
