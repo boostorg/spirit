@@ -10,6 +10,7 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
+#include <iostream>
 #include <set>
 
 namespace client { namespace code_gen
