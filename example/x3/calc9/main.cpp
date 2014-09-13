@@ -21,6 +21,7 @@
 #include "statement.hpp"
 #include "error_handler.hpp"
 #include "config.hpp"
+#include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
