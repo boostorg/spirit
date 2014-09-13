@@ -23,13 +23,11 @@ namespace client { namespace parser
     using x3::lexeme;
     using namespace x3::ascii;
     
-    struct expression_class;
     struct additive_expr_class;
     struct multiplicative_expr_class;
     struct unary_expr_class;
     struct primary_expr_class;
     
-    typedef x3::rule<expression_class, ast::expression> expression_type;
     typedef x3::rule<additive_expr_class, ast::expression> additive_expr_type;
     typedef x3::rule<multiplicative_expr_class, ast::expression> multiplicative_expr_type;
     typedef x3::rule<unary_expr_class, ast::operand> unary_expr_type;

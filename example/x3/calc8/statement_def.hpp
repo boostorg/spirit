@@ -22,13 +22,11 @@ namespace client { namespace parser
     using x3::lexeme;
     using namespace x3::ascii;
     
-    struct statement_class;
     struct statement_list_class;
     struct variable_declaration_class;
     struct assignment_class;
     struct variable_class;
     
-    typedef x3::rule<statement_class, ast::statement_list> statement_type;
     typedef x3::rule<statement_list_class, ast::statement_list> statement_list_type;
     typedef x3::rule<variable_declaration_class, ast::variable_declaration> variable_declaration_type;
     typedef x3::rule<assignment_class, ast::assignment> assignment_type;
