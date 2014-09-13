@@ -41,7 +41,7 @@ main()
 
     //~ using boost::spirit::x3::_1;
     using boost::spirit::x3::int_;
-    //~ using boost::spirit::x3::omit;
+    using boost::spirit::x3::omit;
     using boost::spirit::x3::ascii::char_;
 
     {
@@ -54,14 +54,14 @@ main()
         using boost::fusion::vector;
 
         vector<char, char> v;
-        //~ BOOST_TEST((test_attr("a1234c", char_ >> -omit[int_] >> char_, v)));
-        //~ BOOST_TEST((at_c<0>(v) == 'a'));
-        //~ BOOST_TEST((at_c<1>(v) == 'c'));
+        BOOST_TEST((test_attr("a1234c", char_ >> -omit[int_] >> char_, v)));
+        BOOST_TEST((at_c<0>(v) == 'a'));
+        BOOST_TEST((at_c<1>(v) == 'c'));
 
         v = boost::fusion::vector<char, char>();
-        //~ BOOST_TEST((test_attr("a1234c", char_ >> omit[-int_] >> char_, v)));
-        //~ BOOST_TEST((at_c<0>(v) == 'a'));
-        //~ BOOST_TEST((at_c<1>(v) == 'c'));
+        BOOST_TEST((test_attr("a1234c", char_ >> omit[-int_] >> char_, v)));
+        BOOST_TEST((at_c<0>(v) == 'a'));
+        BOOST_TEST((at_c<1>(v) == 'c'));
 
         char ch;
         BOOST_TEST((test_attr(",c", -(',' >> char_), ch)));
