@@ -15,6 +15,7 @@
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
 #include <boost/spirit/home/x3/directive/no_case.hpp>
+#include <boost/spirit/home/x3/string/detail/no_case_string_parse.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
@@ -26,6 +27,11 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    template <typename Context>
+    struct has_no_case : 
+        is_same< decltype(x3::get<x3::no_case_tag>(boost::declval<Context>())), x3::no_case_tag>::type
+    {};
+
     template <typename String, typename Encoding,
         typename Attribute = std::basic_string<typename Encoding::char_type>>
     struct literal_string : parser<literal_string<String, Encoding, Attribute>>
@@ -56,21 +62,10 @@ namespace boost { namespace spirit { namespace x3
         parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
-            static String lower(str);
-            static String upper(str);
-
-            typename string_type::iterator loi = lower.begin();
-            typename string_type::iterator upi = upper.begin();
-
-            for (; loi != lower.end(); ++loi, ++upi)
-            {
-                typedef typename CharEncoding::char_type encoded_char_type;
-
-                *loi = static_cast<char_type>(encoding.tolower(encoded_char_type(*loi)));
-                *upi = static_cast<char_type>(encoding.toupper(encoded_char_type(*upi)));
-            }
+            static detail::no_case_string<char_type, encoding> literal(str);
+            
             x3::skip_over(first, last, context);
-            return detail::string_parse(lower, upper, first, last, attr);
+            return detail::no_case_string_parse(literal, first, last, attr);
         }
 
         String str;

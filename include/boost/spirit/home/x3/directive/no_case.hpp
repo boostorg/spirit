@@ -6,8 +6,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_NO_SKIP_JAN_16_2010_0802PM)
-#define SPIRIT_NO_SKIP_JAN_16_2010_0802PM
+#if !defined(SPIRIT_NO_CASE_SEPT_16_2014_0912PM)
+#define SPIRIT_NO_CASE_SEPT_16_2014_0912PM
 
 #if defined(_MSC_VER)
 #pragma once
@@ -19,7 +19,7 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    struct no_case_tag;
+    struct no_case_tag {};
 
     // propagate no_case information through the context
     template <typename Subject>
@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return this->subject.parse(
                 first, last
-              , make_context<no_case_tag>(unused(), context)
+              , make_context<no_case_tag>(unused, context)
               , rcontext
               , attr);
         }

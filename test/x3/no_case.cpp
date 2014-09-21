@@ -32,10 +32,10 @@ main()
         BOOST_TEST(test("x", no_case[char_('x')]));
         BOOST_TEST(!test("z", no_case[char_('X')]));
         BOOST_TEST(!test("z", no_case[char_('x')]));
-        BOOST_TEST(test("x", no_case[char_('a', 'z')]));
-        BOOST_TEST(test("X", no_case[char_('a', 'z')]));
-        BOOST_TEST(!test("a", no_case[char_('b', 'z')]));
-        BOOST_TEST(!test("z", no_case[char_('a', 'y')]));
+        //BOOST_TEST(test("x", no_case[char_('a', 'z')]));
+        //BOOST_TEST(test("X", no_case[char_('a', 'z')]));
+        //BOOST_TEST(!test("a", no_case[char_('b', 'z')]));
+        //BOOST_TEST(!test("z", no_case[char_('a', 'y')]));
     }
 #if 0
     {
