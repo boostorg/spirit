@@ -14,7 +14,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
-#include <boost/spirit/home/x3/directive/no_case.hpp>
+#include <boost/spirit/home/x3/support/no_case.hpp>
 #include <boost/spirit/home/x3/string/detail/no_case_string_parse.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
@@ -27,11 +27,6 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename Context>
-    struct has_no_case : 
-        is_same< decltype(x3::get<x3::no_case_tag>(boost::declval<Context>())), x3::no_case_tag>::type
-    {};
-
     template <typename String, typename Encoding,
         typename Attribute = std::basic_string<typename Encoding::char_type>>
     struct literal_string : parser<literal_string<String, Encoding, Attribute>>

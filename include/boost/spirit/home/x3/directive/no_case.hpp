@@ -1,6 +1,4 @@
 /*=============================================================================
-    Copyright (c) 2001-2014 Joel de Guzman
-    Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2014 Thomas Bernard
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -15,12 +13,12 @@
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/no_case.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
-    struct no_case_tag {};
-
+    
     // propagate no_case information through the context
     template <typename Subject>
     struct no_case_directive : unary_parser<Subject, no_case_directive<Subject>>
