@@ -15,17 +15,17 @@
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Char, typename Iterator, typename Attribute>
+    template <typename Char, typename Iterator, typename Attribute, typename CaseCompareFunc, typename Encoding>
     inline bool string_parse(
         Char const* str
-      , Iterator& first, Iterator const& last, Attribute& attr)
+      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare, Encoding const&) 
     {
         Iterator i = first;
         Char ch = *str;
 
         for (; !!ch; ++i)
         {
-            if (i == last || (ch != *i))
+            if (i == last || !compare.equal<Encoding>(ch, *i))
                 return false;
             ch = *++str;
         }
@@ -35,23 +35,23 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return true;
     }
 
-    template <typename String, typename Iterator, typename Attribute>
+    template <typename String, typename Iterator, typename Attribute, typename CaseCompareFunc, typename Encoding>
     inline bool string_parse(
         String const& str
-      , Iterator& first, Iterator const& last, Attribute& attr)
+      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare, Encoding const&)
     {
         Iterator i = first;
         typename String::const_iterator stri = str.begin();
         typename String::const_iterator str_last = str.end();
 
         for (; stri != str_last; ++stri, ++i)
-            if (i == last || (*stri != *i))
+            if (i == last || !compare.equal<Encoding>(*stri != *i))
                 return false;
         x3::traits::move_to(first, i, attr);
         first = i;
         return true;
     }
-
+/*
     template <typename Char, typename Iterator, typename Attribute>
     inline bool string_parse(
         Char const* uc_i, Char const* lc_i
@@ -83,7 +83,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         x3::traits::move_to(first, i, attr);
         first = i;
         return true;
-    }
+    }*/
 }}}}
 
 #endif

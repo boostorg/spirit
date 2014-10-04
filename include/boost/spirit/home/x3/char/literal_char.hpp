@@ -31,12 +31,12 @@ namespace boost { namespace spirit { namespace x3
           : ch(static_cast<char_type>(ch)) {}
 
         template <typename Char, typename Context>
-        bool test(Char ch_, Context const&) const
+        bool test(Char ch_, Context const& context) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-                && ch == char_type(ch_);
+                && x3::get<no_case_tag>(context).equal<encoding>(ch, char_type(ch_));
         }
-
+        
         char_type ch;
     };
 

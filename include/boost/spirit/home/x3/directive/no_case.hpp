@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return this->subject.parse(
                 first, last
-              , make_context<no_case_tag>(unused, context)
+              , make_context<no_case_tag>(no_case_compare_, context)
               , rcontext
               , attr);
         }

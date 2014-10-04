@@ -43,24 +43,11 @@ namespace boost { namespace spirit { namespace x3
         {}
 
         template <typename Iterator, typename Context, typename Attribute_>
-        typename disable_if<has_no_case<Context>, bool>::type
-        parse(Iterator& first, Iterator const& last
+        bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
             x3::skip_over(first, last, context);
-            return detail::string_parse(str, first, last, attr);
-        }
-
-
-        template <typename Iterator, typename Context, typename Attribute_>
-        typename enable_if<has_no_case<Context>, bool>::type
-        parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, Attribute_& attr) const
-        {
-            static detail::no_case_string<char_type, encoding> literal(str);
-            
-            x3::skip_over(first, last, context);
-            return detail::no_case_string_parse(literal, first, last, attr);
+            return detail::string_parse(str, first, last, attr, x3::get<no_case_tag>(context), encoding());
         }
 
         String str;

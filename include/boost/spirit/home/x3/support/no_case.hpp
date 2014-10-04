@@ -15,11 +15,26 @@ namespace boost { namespace spirit { namespace x3
 {
     struct no_case_tag {};
 
-    template <typename Context>
-    struct has_no_case : 
-        is_same< decltype( x3::get<x3::no_case_tag>(boost::declval<Context>()))
-               , x3::no_case_tag >::type
-    {};
+    struct case_compare
+    {
+        template <typename Encoding>
+        bool equal(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
+        {
+            return lc == rc;
+        }
+    };
+
+    struct no_case_compare
+    {
+        template <typename Encoding>
+        bool equal(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
+        {
+            return lc == rc || ((Encoding::islower(lc) ? Encoding::toupper(lc) : Encoding::tolower(lc)) == rc);
+        }
+    };
+
+    case_compare const case_compare_ = case_compare();
+    no_case_compare const no_case_compare_ = no_case_compare();
 
 }}}
 
