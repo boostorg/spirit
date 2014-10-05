@@ -37,9 +37,8 @@ main()
         //BOOST_TEST(!test("a", no_case[char_('b', 'z')]));
         //BOOST_TEST(!test("z", no_case[char_('a', 'y')]));
     }
-#if 0
     {
-        using namespace boost::spirit::ascii;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("X", no_case['x']));
         BOOST_TEST(test("X", no_case['X']));
         BOOST_TEST(test("x", no_case['X']));
@@ -48,43 +47,43 @@ main()
         BOOST_TEST(!test("z", no_case['x']));
     }
 
-    {
-        using namespace boost::spirit::iso8859_1;
-        BOOST_TEST(test("¡", no_case[char_('·')]));
-    }
+//~    {
+//~        using namespace boost::spirit::x3::iso8859_1;
+//~        BOOST_TEST(test("¡", no_case[char_('·')]));
+//~    }
+
+//~    {
+//~        using namespace boost::spirit::x3::iso8859_1;
+//~        BOOST_TEST(test("X", no_case[char_("a-z")]));
+//~        BOOST_TEST(!test("1", no_case[char_("a-z")]));
+//~
+//~        BOOST_TEST(test("…", no_case[char_("Â-Ô")]));
+//~        BOOST_TEST(!test("ˇ", no_case[char_("Â-Ô")]));
+//~    }
 
     {
-        using namespace boost::spirit::iso8859_1;
-        BOOST_TEST(test("X", no_case[char_("a-z")]));
-        BOOST_TEST(!test("1", no_case[char_("a-z")]));
-
-        BOOST_TEST(test("…", no_case[char_("Â-Ô")]));
-        BOOST_TEST(!test("ˇ", no_case[char_("Â-Ô")]));
-    }
-
-    {
-        using namespace boost::spirit::ascii;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("Bochi Bochi", no_case[lit("bochi bochi")]));
         BOOST_TEST(test("BOCHI BOCHI", no_case[lit("bochi bochi")]));
         BOOST_TEST(!test("Vavoo", no_case[lit("bochi bochi")]));
     }
 
-    {
-        using namespace boost::spirit::iso8859_1;
-        BOOST_TEST(test("¡·", no_case[lit("·¡")]));
-        BOOST_TEST(test("··", no_case[no_case[lit("·¡")]]));
-    }
+//~    {
+//~        using namespace boost::spirit::x3::iso8859_1;
+//~        BOOST_TEST(test(u8"¡·", no_case[lit(u8"·¡")]));
+//~        BOOST_TEST(test(u8"··", no_case[no_case[lit(u8"·¡")]]));
+//~    }
 
     {
         // should work!
-        using namespace boost::spirit::ascii;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("x", no_case[no_case[char_]]));
         BOOST_TEST(test("x", no_case[no_case[char_('x')]]));
         BOOST_TEST(test("yabadabadoo", no_case[no_case[lit("Yabadabadoo")]]));
     }
 
     {
-        using namespace boost::spirit::ascii;
+        using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("X", no_case[alnum]));
         BOOST_TEST(test("6", no_case[alnum]));
         BOOST_TEST(!test(":", no_case[alnum]));
@@ -98,7 +97,7 @@ main()
     }
 
     {
-        using namespace boost::spirit::iso8859_1;
+        using namespace boost::spirit::x3::iso8859_1;
         BOOST_TEST(test("X", no_case[alnum]));
         BOOST_TEST(test("6", no_case[alnum]));
         BOOST_TEST(!test(":", no_case[alnum]));
@@ -112,7 +111,7 @@ main()
     }
 
     {
-        using namespace boost::spirit::standard;
+        using namespace boost::spirit::x3::standard;
         BOOST_TEST(test("X", no_case[alnum]));
         BOOST_TEST(test("6", no_case[alnum]));
         BOOST_TEST(!test(":", no_case[alnum]));
@@ -125,52 +124,51 @@ main()
         BOOST_TEST(!test(":", no_case[upper]));
     }
 
-    {
-        // chsets
-        namespace standard = boost::spirit::standard;
-        namespace standard_wide = boost::spirit::standard_wide;
+//~    {
+//~        // chsets
+//~        namespace standard = boost::spirit::x3::standard;
+//~        namespace standard_wide = boost::spirit::x3::standard_wide;
+//~
+//~        BOOST_TEST(test("x", no_case[standard::char_("a-z")]));
+//~        BOOST_TEST(test("X", no_case[standard::char_("a-z")]));
+//~        BOOST_TEST(test(L"X", no_case[standard_wide::char_(L"a-z")]));
+//~        BOOST_TEST(test(L"X", no_case[standard_wide::char_(L"X")]));
+//~    }
 
-        BOOST_TEST(test("x", standard::no_case[standard::char_("a-z")]));
-        BOOST_TEST(test("X", standard::no_case[standard::char_("a-z")]));
-        BOOST_TEST(test(L"X", standard_wide::no_case[standard_wide::char_(L"a-z")]));
-        BOOST_TEST(test(L"X", standard_wide::no_case[standard_wide::char_(L"X")]));
-    }
-
     {
-        using namespace boost::spirit::standard;
+        using namespace boost::spirit::x3::standard;
         std::string s("bochi bochi");
         BOOST_TEST(test("Bochi Bochi", no_case[lit(s.c_str())]));
-        BOOST_TEST(test("Bochi Bochi", no_case[lit(s)]));
+//        BOOST_TEST(test("Bochi Bochi", no_case[lit(s)]));
         BOOST_TEST(test("Bochi Bochi", no_case[s.c_str()]));
-        BOOST_TEST(test("Bochi Bochi", no_case[s]));
+//        BOOST_TEST(test("Bochi Bochi", no_case[s]));
     }
 
-    {   // lazy no_case chars
-
-        using namespace boost::spirit::ascii;
-
-        using boost::phoenix::val;
-        using boost::phoenix::ref;
-        using boost::spirit::_1;
-
-        BOOST_TEST((test("X", no_case[val('x')])));
-        BOOST_TEST((test("h", no_case[char_(val('a'), val('n'))])));
-        BOOST_TEST(test("0", no_case[char_(val("a-z0-9"))]));
-
-        char ch; // make sure lazy chars have an attribute
-        BOOST_TEST(test("x", no_case[char_(val('x'))][ref(ch) = _1]));
-        BOOST_TEST(ch == 'x');
-    }
-
-    {   // lazy no_case lits
-
-        using namespace boost::spirit::ascii;
-        using boost::phoenix::val;
-
-        BOOST_TEST(test("Bochi Bochi", no_case[val("bochi bochi")]));
-        BOOST_TEST(test("BOCHI BOCHI", no_case[val("bochi bochi")]));
-        BOOST_TEST(!test("Vavoo", no_case[val("bochi bochi")]));
-    }
-#endif
+//~    {   // lazy no_case chars
+//~
+//~        using namespace boost::spirit::x3::ascii;
+//~
+//~        using boost::phoenix::val;
+//~        using boost::phoenix::ref;
+//~        using boost::spirit::_1;
+//~
+//~        BOOST_TEST((test("X", no_case[val('x')])));
+//~        BOOST_TEST((test("h", no_case[char_(val('a'), val('n'))])));
+//~        BOOST_TEST(test("0", no_case[char_(val("a-z0-9"))]));
+//~
+//~        char ch; // make sure lazy chars have an attribute
+//~        BOOST_TEST(test("x", no_case[char_(val('x'))][ref(ch) = _1]));
+//~        BOOST_TEST(ch == 'x');
+//~    }
+//~
+//~    {   // lazy no_case lits
+//~
+//~        using namespace boost::spirit::x3::ascii;
+//~        using boost::phoenix::val;
+//~
+//~        BOOST_TEST(test("Bochi Bochi", no_case[val("bochi bochi")]));
+//~        BOOST_TEST(test("BOCHI BOCHI", no_case[val("bochi bochi")]));
+//~        BOOST_TEST(!test("Vavoo", no_case[val("bochi bochi")]));
+//~    }
     return boost::report_errors();
 }

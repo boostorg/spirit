@@ -102,9 +102,22 @@ namespace boost { namespace spirit { namespace x3
 
         template <int N>
         struct as_parser<wchar_t const[N]> : as_parser<wchar_t[N]> {};
-    }
 
-    using standard::string;
+        template <>
+        struct as_parser<char const*>
+        {
+           typedef literal_string< 
+                       char const*, char_encoding::standard, unused_type>
+           type;
+           
+           typedef type value_type;
+
+           static type call(char const* s)
+           {
+                return type(s);
+           }
+        };
+    }
 
     inline literal_string<char const*, char_encoding::standard, unused_type>
     lit(char const* s)

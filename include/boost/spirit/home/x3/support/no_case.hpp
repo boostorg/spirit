@@ -11,6 +11,8 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/x3/char/char_class_tags.hpp>
+
 namespace boost { namespace spirit { namespace x3
 {
     struct no_case_tag {};
@@ -22,6 +24,11 @@ namespace boost { namespace spirit { namespace x3
         {
             return lc == rc;
         }
+        template <typename CharClassTag>
+        CharClassTag get_char_class_tag(CharClassTag tag) const
+        {
+            return tag;
+        }
     };
 
     struct no_case_compare
@@ -31,6 +38,23 @@ namespace boost { namespace spirit { namespace x3
         {
             return lc == rc || ((Encoding::islower(lc) ? Encoding::toupper(lc) : Encoding::tolower(lc)) == rc);
         }
+
+        template <typename CharClassTag>
+        CharClassTag get_char_class_tag(CharClassTag tag) const
+        {
+            return tag;
+        }
+        
+        alpha_tag get_char_class_tag(lower_tag ) const
+        {
+            return alpha_tag();
+        }
+        
+        alpha_tag get_char_class_tag(upper_tag ) const
+        {
+            return alpha_tag();
+        }
+
     };
 
     case_compare const case_compare_ = case_compare();
