@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         for (; !!ch; ++i)
         {
-            if (i == last || !compare.equal<Encoding>(ch, *i))
+            if (i == last || !compare.template equal<Encoding>(ch, *i))
                 return false;
             ch = *++str;
         }
@@ -45,13 +45,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename String::const_iterator str_last = str.end();
 
         for (; stri != str_last; ++stri, ++i)
-            if (i == last || !compare.equal<Encoding>(*stri != *i))
+            if (i == last || !compare.template equal<Encoding>(*stri != *i))
                 return false;
         x3::traits::move_to(first, i, attr);
         first = i;
         return true;
     }
-/*
+
     template <typename Char, typename Iterator, typename Attribute>
     inline bool string_parse(
         Char const* uc_i, Char const* lc_i
@@ -83,7 +83,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         x3::traits::move_to(first, i, attr);
         first = i;
         return true;
-    }*/
+    }
 }}}}
 
 #endif
