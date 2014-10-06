@@ -32,10 +32,13 @@ main()
     using boost::spirit::x3::phrase_parse;
     using boost::spirit::x3::skip_flag;
     using boost::spirit::x3::skipper_tag;
+    using boost::spirit::x3::no_case_tag;
+    using boost::spirit::x3::case_compare_;
     using boost::spirit::x3::_attr;
 
     typedef char const* iterator_type;
-    typedef decltype(make_context<skipper_tag>(space)) context_type;
+    typedef decltype(make_context<skipper_tag>(space,make_context<no_case_tag>(case_compare_))) context_type;
+    typedef decltype(make_context<no_case_tag>(case_compare_)) no_skip_context_type;
     { // basic tests
 
         auto a = lit('a');
@@ -43,7 +46,7 @@ main()
         auto c = lit('c');
 
         {
-            any_parser<iterator_type> start =
+            any_parser<iterator_type,unused_type, no_skip_context_type> start =
                 *(a | b | c);
 
             BOOST_TEST(test("abcabcacb", start));
@@ -83,7 +86,7 @@ main()
     { // context tests
 
         char ch;
-        any_parser<iterator_type, char> a = alpha;
+        any_parser<iterator_type, char, no_skip_context_type> a = alpha;
 
         // this semantic action requires both the context and attribute
         //!!auto f = [&](auto&, char attr){ ch = attr; };
@@ -107,7 +110,7 @@ main()
     { // auto rules tests
 
         char ch = '\0';
-        any_parser<iterator_type, char> a = alpha;
+        any_parser<iterator_type, char, no_skip_context_type> a = alpha;
         auto f = [&](auto& ctx){ ch = _attr(ctx); };
 
         BOOST_TEST(test("x", a[f]));
@@ -134,7 +137,7 @@ main()
         auto f = [&](auto& ctx){ s = _attr(ctx); };
 
         {
-            any_parser<iterator_type, std::string> r
+            any_parser<iterator_type, std::string, no_skip_context_type> r
                 = char_ >> *(',' >> char_)
                 ;
 
@@ -143,7 +146,7 @@ main()
         }
 
         {
-            any_parser<iterator_type, std::string> r
+            any_parser<iterator_type, std::string, no_skip_context_type> r
                 = char_ >> *(',' >> char_);
             s.clear();
             BOOST_TEST(test("a,b,c,d,e,f", r[f]));
@@ -151,7 +154,7 @@ main()
         }
 
         {
-            any_parser<iterator_type, std::string> r
+            any_parser<iterator_type, std::string, no_skip_context_type> r
                 = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
             s.clear();
             BOOST_TEST(test("abcdef", r[f]));
