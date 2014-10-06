@@ -14,12 +14,12 @@
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/support/no_case.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/utility/declval.hpp>
-
 namespace boost { namespace spirit { namespace x3
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace x3
         inline void skip_over(
             Iterator& first, Iterator const& last, Skipper const& skipper)
         {
-            while (first != last && skipper.parse(first, last, unused, unused, unused))
+            while (first != last && skipper.parse(first, last, make_context<no_case_tag>(case_compare_), unused, unused))
                 /***/;
         }
 
