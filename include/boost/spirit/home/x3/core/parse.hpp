@@ -33,11 +33,10 @@ namespace boost { namespace spirit { namespace x3
         // instead.
         BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
 
-        auto case_ctx = make_context<no_case_tag>(case_compare_);
         // If you get an error no matching function for call to 'as_parser'
         // here, then p is not a parser or there is no suitable conversion
         // from p to a parser.
-        return as_parser(p).parse(first, last, case_ctx, unused, attr);
+        return as_parser(p).parse(first, last, unused, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -112,11 +111,10 @@ namespace boost { namespace spirit { namespace x3
         // instead.
         BOOST_CONCEPT_ASSERT((ForwardIterator<Iterator>));
 
-        auto case_ctx = make_context<no_case_tag>(case_compare_);
         // If you get an error no matching function for call to 'as_parser'
         // here, for either p or s, then p or s is not a parser or there is
         // no suitable conversion from p to a parser.
-        auto skipper_ctx = make_context<skipper_tag>(as_parser(s),case_ctx);
+        auto skipper_ctx = make_context<skipper_tag>(as_parser(s));
         bool r = as_parser(p).parse(first, last, skipper_ctx, unused, attr);
         if (post_skip == skip_flag::post_skip)
             x3::skip_over(first, last, skipper_ctx);

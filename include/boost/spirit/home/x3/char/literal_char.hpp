@@ -34,7 +34,7 @@ namespace boost { namespace spirit { namespace x3
         bool test(Char ch_, Context const& context) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-                && x3::get<no_case_tag>(context).template equal<encoding>(ch, char_type(ch_));
+                && get_case_compare(context).template equal<encoding>(ch, char_type(ch_));
         }
         
         char_type ch;

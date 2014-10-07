@@ -57,7 +57,22 @@ namespace boost { namespace spirit { namespace x3
 
     };
 
-    case_compare const case_compare_ = case_compare();
+    inline case_compare get_case_compare_impl(unused_type const&)
+    {
+        return case_compare();
+    }
+
+    inline no_case_compare get_case_compare_impl(no_case_compare const& comp)
+    {
+        return comp;
+    }
+
+    template <typename Context>
+    inline auto get_case_compare(Context const& context)
+        ->decltype(get_case_compare_impl(x3::get<no_case_tag>(context)))
+    {
+        return get_case_compare_impl(x3::get<no_case_tag>(context));
+    }
     no_case_compare const no_case_compare_ = no_case_compare();
 
 }}}
