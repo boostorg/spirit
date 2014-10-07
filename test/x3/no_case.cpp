@@ -47,10 +47,10 @@ main()
         BOOST_TEST(!test("z", no_case['x']));
     }
 
-//~    {
-//~        using namespace boost::spirit::x3::iso8859_1;
-//~        BOOST_TEST(test("Á", no_case[char_('á')]));
-//~    }
+    {
+        using namespace boost::spirit::x3::iso8859_1;
+        BOOST_TEST(test("Á", no_case[char_('á')]));
+    }
 
 //~    {
 //~        using namespace boost::spirit::x3::iso8859_1;
