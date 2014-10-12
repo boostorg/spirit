@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename Iterator, typename CaseCompare>
         static T*
-        find(tst_node* start, Iterator& first, Iterator last, CaseCompare caseCompare)
+        find(tst_node* start, Iterator& first, Iterator last, CaseCompare comp)
         {
             if (first == last)
                 return 0;
@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             while (p && i != last)
             {
-                int32_t c = caseCompare.comp(*i,p->id);
+                int32_t c = comp(*i,p->id);
                 if (c == 0)
                 {
                     if (p->data)

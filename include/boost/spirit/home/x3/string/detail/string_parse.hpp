@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         for (; !!ch; ++i)
         {
-            if (i == last || !compare.equal(ch, *i))
+            if (i == last || (compare(ch, *i) != 0))
                 return false;
             ch = *++str;
         }
@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename String::const_iterator str_last = str.end();
 
         for (; stri != str_last; ++stri, ++i)
-            if (i == last || !compare.equal(*stri != *i))
+            if (i == last || (compare(*stri, *i) != 0))
                 return false;
         x3::traits::move_to(first, i, attr);
         first = i;

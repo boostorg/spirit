@@ -21,11 +21,7 @@ namespace boost { namespace spirit { namespace x3
     template <typename Encoding>
     struct case_compare
     {
-        bool equal(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
-        {
-            return lc == rc;
-        }
-        int32_t comp(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
+        int32_t operator()(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
         {
             return lc - rc;
         }
@@ -41,12 +37,7 @@ namespace boost { namespace spirit { namespace x3
     template <typename Encoding>
     struct no_case_compare
     {
-        bool equal(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
-        {
-            return lc == rc || ((Encoding::islower(lc) ? Encoding::toupper(lc) : Encoding::tolower(lc)) == rc);
-        }
-
-        int32_t comp(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
+        int32_t operator()(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
         {
             return Encoding::islower(rc) ? Encoding::tolower(lc) - rc : Encoding::toupper(lc) - rc;
         }
