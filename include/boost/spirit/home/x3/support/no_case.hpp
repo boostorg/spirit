@@ -10,20 +10,27 @@
 #if defined(_MSC_VER)
 #pragma once
 #endif
-
+#include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/char/char_class_tags.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
     struct no_case_tag {};
 
+    template <typename Encoding>
     struct case_compare
     {
-        template <typename Encoding>
         bool equal(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
         {
             return lc == rc;
         }
+        int32_t comp(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
+        {
+            return lc - rc;
+        }
+
+
         template <typename CharClassTag>
         CharClassTag get_char_class_tag(CharClassTag tag) const
         {
@@ -31,14 +38,19 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
+    template <typename Encoding>
     struct no_case_compare
     {
-        template <typename Encoding>
         bool equal(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
         {
             return lc == rc || ((Encoding::islower(lc) ? Encoding::toupper(lc) : Encoding::tolower(lc)) == rc);
         }
 
+        int32_t comp(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
+        {
+            return Encoding::islower(rc) ? Encoding::tolower(lc) - rc : Encoding::toupper(lc) - rc;
+        }
+        
         template <typename CharClassTag>
         CharClassTag get_char_class_tag(CharClassTag tag) const
         {
@@ -57,23 +69,25 @@ namespace boost { namespace spirit { namespace x3
 
     };
 
-    inline case_compare get_case_compare_impl(unused_type const&)
+    template <typename Encoding>
+    case_compare<Encoding> get_case_compare_impl(unused_type const&)
     {
-        return case_compare();
+        return case_compare<Encoding>();
     }
 
-    inline no_case_compare get_case_compare_impl(no_case_compare const& comp)
+    template <typename Encoding>
+    no_case_compare<Encoding> get_case_compare_impl(no_case_tag const&)
     {
-        return comp;
+        return no_case_compare<Encoding>();
     }
 
-    template <typename Context>
+    template <typename Encoding, typename Context>
     inline auto get_case_compare(Context const& context)
-        ->decltype(get_case_compare_impl(x3::get<no_case_tag>(context)))
+        ->decltype(get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context)))
     {
-        return get_case_compare_impl(x3::get<no_case_tag>(context));
+        return get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context));
     }
-    no_case_compare const no_case_compare_ = no_case_compare();
+    no_case_tag const no_case_compare_ = no_case_tag();
 
 }}}
 

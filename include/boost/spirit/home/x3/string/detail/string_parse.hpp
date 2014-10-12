@@ -15,17 +15,17 @@
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
-    template <typename Char, typename Iterator, typename Attribute, typename CaseCompareFunc, typename Encoding>
+    template <typename Char, typename Iterator, typename Attribute, typename CaseCompareFunc>
     inline bool string_parse(
         Char const* str
-      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare, Encoding const&) 
+      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare) 
     {
         Iterator i = first;
         Char ch = *str;
 
         for (; !!ch; ++i)
         {
-            if (i == last || !compare.template equal<Encoding>(ch, *i))
+            if (i == last || !compare.equal(ch, *i))
                 return false;
             ch = *++str;
         }
@@ -35,17 +35,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return true;
     }
 
-    template <typename String, typename Iterator, typename Attribute, typename CaseCompareFunc, typename Encoding>
+    template <typename String, typename Iterator, typename Attribute, typename CaseCompareFunc>
     inline bool string_parse(
         String const& str
-      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare, Encoding const&)
+      , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare)
     {
         Iterator i = first;
         typename String::const_iterator stri = str.begin();
         typename String::const_iterator str_last = str.end();
 
         for (; stri != str_last; ++stri, ++i)
-            if (i == last || !compare.template equal<Encoding>(*stri != *i))
+            if (i == last || !compare.equal(*stri != *i))
                 return false;
         x3::traits::move_to(first, i, attr);
         first = i;

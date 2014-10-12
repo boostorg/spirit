@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch))
                 && char_class_base<Encoding>::is(
-                    get_case_compare(context).get_char_class_tag(tag()), ch);
+                    get_case_compare<Encoding>(context).get_char_class_tag(tag()), ch);
         }
     };
 

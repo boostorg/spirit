@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, unused_type, Attribute_& attr) const
         {
             x3::skip_over(first, last, context);
-            return detail::string_parse(str, first, last, attr, get_case_compare(context), encoding());
+            return detail::string_parse(str, first, last, attr, get_case_compare<encoding>(context));
         }
 
         String str;
