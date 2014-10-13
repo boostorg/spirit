@@ -38,10 +38,25 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename Char>
+        literal_char<Encoding>
+        operator()(Char *ch) const
+        {
+            return literal_char<Encoding>(ch[0]);
+        }
+
+
+        template <typename Char>
         char_range<Encoding>
         operator()(Char from, Char to) const
         {
             return char_range<Encoding>(from,to);
+        }
+
+        template <typename Char>
+        char_range<Encoding>
+        operator()(Char *from, Char *to) const
+        {
+            return char_range<Encoding>(from[0],to[0]);
         }
 
 
