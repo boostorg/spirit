@@ -123,7 +123,7 @@ namespace boost { namespace spirit { namespace x3
         };
 
         template <>
-        struct as_parser<char const(&)[2]>
+        struct as_parser<char [2]>
         {
             typedef literal_char<
                 char_encoding::standard, unused_type>
@@ -131,14 +131,14 @@ namespace boost { namespace spirit { namespace x3
 
             typedef type value_type;
 
-            static type call(char const *ch)
+            static type call(char const ch[])
             {
                 return type(ch[0]);
             }
         };
 
         template <>
-        struct as_parser<wchar_t const(&)[2]>
+        struct as_parser<wchar_t [2]>
         {
             typedef literal_char<
                 char_encoding::standard_wide, unused_type>
@@ -146,7 +146,7 @@ namespace boost { namespace spirit { namespace x3
 
             typedef type value_type;
 
-            static type call(wchar_t const *ch )
+            static type call(wchar_t const ch[] )
             {
                 return type(ch[0]);
             }

@@ -90,18 +90,18 @@ main()
     }
 
 
-    //~ {   // single char strings!
-        //~ namespace ascii = boost::spirit::x3::ascii;
-        //~ namespace wide = boost::spirit::x3::standard_wide;
+    {   // single char strings!
+        namespace ascii = boost::spirit::x3::ascii;
+         namespace wide = boost::spirit::x3::standard_wide;
 
         BOOST_TEST(test("x", "x"));
         BOOST_TEST(test(L"x", L"x"));
-        //~ BOOST_TEST(test("x", ascii::char_("x")));
-        //~ BOOST_TEST(test(L"x", wide::char_(L"x")));
+        BOOST_TEST(test("x", ascii::char_("x")));
+        BOOST_TEST(test(L"x", wide::char_(L"x")));
 
-        //~ BOOST_TEST(test("x", ascii::char_("a", "z")));
-        //~ BOOST_TEST(test(L"x", ascii::char_(L"a", L"z")));
-    //~ }
+        BOOST_TEST(test("x", ascii::char_("a", "z")));
+        BOOST_TEST(test(L"x", ascii::char_(L"a", L"z")));
+    }
 
     //~ {
         //~ // chsets
