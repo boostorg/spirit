@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/type_traits/extent.hpp>
 #include <boost/spirit/home/x3/char/literal_char.hpp>
 #include <boost/spirit/home/x3/char/char_set.hpp>
 
@@ -39,9 +40,16 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Char>
         literal_char<Encoding>
-        operator()(Char *ch) const
+        operator()(const Char (&ch)[2]) const
         {
             return literal_char<Encoding>(ch[0]);
+        }
+
+        template <typename Char, std::size_t N>
+        char_set<Encoding>
+        operator()(const Char (&ch)[N]) const
+        {
+            return char_set<Encoding>(ch);
         }
 
 
@@ -54,7 +62,7 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Char>
         char_range<Encoding>
-        operator()(Char *from, Char *to) const
+        operator()(Char (&from)[2], Char (&to)[2]) const
         {
             return char_range<Encoding>(from[0],to[0]);
         }

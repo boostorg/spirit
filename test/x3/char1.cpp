@@ -103,26 +103,26 @@ main()
         BOOST_TEST(test(L"x", ascii::char_(L"a", L"z")));
     }
 
-    //~ {
-        //~ // chsets
-        //~ namespace ascii = boost::spirit::x3::ascii;
-        //~ namespace wide = boost::spirit::x3::standard_wide;
+    {
+        // chsets
+        namespace ascii = boost::spirit::x3::ascii;
+        namespace wide = boost::spirit::x3::standard_wide;
 
-        //~ BOOST_TEST(test("x", ascii::char_("a-z")));
-        //~ BOOST_TEST(!test("1", ascii::char_("a-z")));
-        //~ BOOST_TEST(test("1", ascii::char_("a-z0-9")));
+        BOOST_TEST(test("x", ascii::char_("a-z")));
+        BOOST_TEST(!test("1", ascii::char_("a-z")));
+        BOOST_TEST(test("1", ascii::char_("a-z0-9")));
 
-        //~ BOOST_TEST(test("x", wide::char_(L"a-z")));
-        //~ BOOST_TEST(!test("1", wide::char_(L"a-z")));
-        //~ BOOST_TEST(test("1", wide::char_(L"a-z0-9")));
+        BOOST_TEST(test("x", wide::char_(L"a-z")));
+        BOOST_TEST(!test("1", wide::char_(L"a-z")));
+        BOOST_TEST(test("1", wide::char_(L"a-z0-9")));
 
-        //~ std::string set = "a-z0-9";
-        //~ BOOST_TEST(test("x", ascii::char_(set)));
+        std::string set = "a-z0-9";
+        BOOST_TEST(test("x", ascii::char_(set)));
 
-//~ #ifdef SPIRIT_NO_COMPILE_CHECK
-        //~ test("", ascii::char_(L"a-z0-9"));
-//~ #endif
-    //~ }
+#ifdef SPIRIT_NO_COMPILE_CHECK
+        test("", ascii::char_(L"a-z0-9"));
+#endif
+    }
 
     //~ {   // lazy chars
 
