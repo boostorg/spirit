@@ -121,6 +121,37 @@ namespace boost { namespace spirit { namespace x3
                 return type(ch);
             }
         };
+
+        template <>
+        struct as_parser<char [2]>
+        {
+            typedef literal_char<
+                char_encoding::standard, unused_type>
+            type;
+
+            typedef type value_type;
+
+            static type call(char const ch[])
+            {
+                return type(ch[0]);
+            }
+        };
+
+        template <>
+        struct as_parser<wchar_t [2]>
+        {
+            typedef literal_char<
+                char_encoding::standard_wide, unused_type>
+            type;
+
+            typedef type value_type;
+
+            static type call(wchar_t const ch[] )
+            {
+                return type(ch[0]);
+            }
+        };
+
     }
 
 }}}
