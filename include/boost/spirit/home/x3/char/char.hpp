@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
+#include <boost/spirit/home/support/char_encoding/iso8859_1.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -22,21 +23,71 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef any_char<char_encoding::standard> char_type;
         char_type const char_ = char_type();
+
+        inline literal_char<char_encoding::standard, unused_type>
+        lit(char ch)
+        {
+            return literal_char<char_encoding::standard, unused_type>(ch);
+        }
+
+        inline literal_char<char_encoding::standard, unused_type>
+        lit(wchar_t ch)
+        {
+            return literal_char<char_encoding::standard, unused_type>(ch);
+        }
+
     }
 
     using standard::char_type;
     using standard::char_;
+    using standard::lit;
 
     namespace standard_wide
     {
         typedef any_char<char_encoding::standard_wide> char_type;
         char_type const char_ = char_type();
+
+        inline literal_char<char_encoding::standard_wide, unused_type>
+        lit(wchar_t ch)
+        {
+            return literal_char<char_encoding::standard_wide, unused_type>(ch);
+        }
     }
 
     namespace ascii
     {
         typedef any_char<char_encoding::ascii> char_type;
         char_type const char_ = char_type();
+
+        inline literal_char<char_encoding::ascii, unused_type>
+        lit(char ch)
+        {
+            return literal_char<char_encoding::ascii, unused_type>(ch);
+        }
+        
+        inline literal_char<char_encoding::ascii, unused_type>
+        lit(wchar_t ch)
+        {
+            return literal_char<char_encoding::ascii, unused_type>(ch);
+        }
+    }
+
+    namespace iso8859_1
+    {
+        typedef any_char<char_encoding::iso8859_1> char_type;
+        char_type const char_ = char_type();
+
+        inline literal_char<char_encoding::iso8859_1, unused_type>
+        lit(char ch)
+        {
+            return literal_char<char_encoding::iso8859_1, unused_type>(ch);
+        }
+        
+        inline literal_char<char_encoding::iso8859_1, unused_type>
+        lit(wchar_t ch)
+        {
+            return literal_char<char_encoding::iso8859_1, unused_type>(ch);
+        }
     }
 
     namespace extension
@@ -72,17 +123,6 @@ namespace boost { namespace spirit { namespace x3
         };
     }
 
-    inline literal_char<char_encoding::standard, unused_type>
-    lit(char ch)
-    {
-        return literal_char<char_encoding::standard, unused_type>(ch);
-    }
-
-    inline literal_char<char_encoding::standard_wide, unused_type>
-    lit(wchar_t ch)
-    {
-        return literal_char<char_encoding::standard_wide, unused_type>(ch);
-    }
 }}}
 
 #endif
