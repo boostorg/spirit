@@ -21,6 +21,12 @@ namespace boost { namespace spirit { namespace x3
     template <typename Encoding>
     struct case_compare
     {
+        template < template <typename> class basic_charset>
+        typename Encoding::char_type in_set(typename Encoding::char_type const ch, basic_charset<typename Encoding::char_type> const &set)
+        {
+            return set.test(ch);
+        }
+
         int32_t operator()(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
         {
             return lc - rc;
@@ -37,6 +43,12 @@ namespace boost { namespace spirit { namespace x3
     template <typename Encoding>
     struct no_case_compare
     {
+        template < template <typename> class basic_charset>
+        typename Encoding::char_type in_set(typename Encoding::char_type const ch, basic_charset<typename Encoding::char_type> const &set)
+        {
+            return set.test(ch) || set.test(Encoding::islower(ch) ? Encoding::toupper(ch) : Encoding::tolower(ch));
+        }
+
         int32_t operator()(typename Encoding::char_type const lc, typename Encoding::char_type const rc) const
         {
             return Encoding::islower(rc) ? Encoding::tolower(lc) - rc : Encoding::toupper(lc) - rc;

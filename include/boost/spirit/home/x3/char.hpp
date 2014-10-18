@@ -15,6 +15,7 @@
 #include <boost/spirit/home/x3/char/negated_char_parser.hpp>
 #include <boost/spirit/home/x3/char/char.hpp>
 #include <boost/spirit/home/x3/char/char_class.hpp>
+#include <boost/spirit/home/x3/char/char_set.hpp>
 
 #if defined(BOOST_SPIRIT_X3_UNICODE)
 #include <boost/spirit/home/x3/char/unicode.hpp>
