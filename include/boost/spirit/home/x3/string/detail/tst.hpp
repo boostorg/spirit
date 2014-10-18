@@ -61,9 +61,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return 0;
         }
 
-        template <typename Iterator, typename Filter>
+        template <typename Iterator, typename CaseCompare>
         static T*
-        find(tst_node* start, Iterator& first, Iterator last, Filter filter)
+        find(tst_node* start, Iterator& first, Iterator last, CaseCompare comp)
         {
             if (first == last)
                 return 0;
@@ -75,11 +75,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             while (p && i != last)
             {
-                typename
-                    boost::detail::iterator_traits<Iterator>::value_type
-                c = filter(*i); // filter only the input
-
-                if (c == p->id)
+                int32_t c = comp(*i,p->id);
+                if (c == 0)
                 {
                     if (p->data)
                     {
@@ -89,7 +86,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                     p = p->eq;
                     i++;
                 }
-                else if (c < p->id)
+                else if (c < 0)
                 {
                     p = p->lt;
                 }

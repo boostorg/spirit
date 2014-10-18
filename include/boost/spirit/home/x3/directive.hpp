@@ -18,7 +18,7 @@
 #include <boost/spirit/home/x3/directive/lexeme.hpp>
 #include <boost/spirit/home/x3/directive/no_skip.hpp>
 //~ #include <boost/spirit/home/x3/directive/matches.hpp>
-//~ #include <boost/spirit/home/x3/directive/no_case.hpp>
+#include <boost/spirit/home/x3/directive/no_case.hpp>
 #include <boost/spirit/home/x3/directive/omit.hpp>
 #include <boost/spirit/home/x3/directive/raw.hpp>
 //~ #include <boost/spirit/home/x3/directive/repeat.hpp>

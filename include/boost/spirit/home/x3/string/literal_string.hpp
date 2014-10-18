@@ -14,6 +14,8 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
+#include <boost/spirit/home/x3/support/no_case.hpp>
+#include <boost/spirit/home/x3/string/detail/no_case_string_parse.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
@@ -45,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, unused_type, Attribute_& attr) const
         {
             x3::skip_over(first, last, context);
-            return detail::string_parse(str, first, last, attr);
+            return detail::string_parse(str, first, last, attr, get_case_compare<encoding>(context));
         }
 
         String str;
@@ -207,6 +209,21 @@ namespace boost { namespace spirit { namespace x3
         template <int N>
         struct as_parser<wchar_t const[N]> : as_parser<wchar_t[N]> {};
 
+        template <>
+        struct as_parser<char const*>
+        {
+           typedef literal_string< 
+                       char const*, char_encoding::standard, unused_type>
+           type;
+           
+           typedef type value_type;
+
+           static type call(char const* s)
+           {
+                return type(s);
+           }
+        };
+        
         template <typename Char>
         struct as_parser< std::basic_string<Char> >
         {
@@ -222,8 +239,6 @@ namespace boost { namespace spirit { namespace x3
             }
         };
     }
-
-    
 
 
     template <typename String, typename Encoding, typename Attribute>

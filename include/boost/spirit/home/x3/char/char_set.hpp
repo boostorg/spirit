@@ -14,8 +14,10 @@
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 #include <boost/spirit/home/x3/char/detail/cast_char.hpp>
 #include <boost/spirit/home/x3/support/traits/string_traits.hpp>
-#include <boost/spirit/home/support/char_set/basic_chset.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
+#include <boost/spirit/home/x3/support/no_case.hpp>
+#include <boost/spirit/home/support/char_set/basic_chset.hpp>
+
 #include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -39,12 +41,13 @@ namespace boost { namespace spirit { namespace x3
           : from(from_), to(to_) {}
 
         template <typename Char, typename Context>
-        bool test(Char ch_, Context&) const
+        bool test(Char ch_, Context& context) const
         {
 
             char_type ch = char_type(ch_);  // optimize for token based parsing
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-            && !(ch < from) && !(to < ch);
+                        && (get_case_compare<encoding>(context)(ch, from) > 0 )
+                        && (get_case_compare<encoding>(context)(ch , to) < 0 );
         }
 
         char_type from, to;
@@ -100,13 +103,13 @@ namespace boost { namespace spirit { namespace x3
                 }
                 ch = next;
             }
-        } 
+        }
 
         template <typename Char, typename Context>
-        bool test(Char ch_, Context const&) const
+        bool test(Char ch_, Context const& context) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-                && chset.test(ch_);
+                && get_case_compare<encoding>(context).in_set(ch_,chset);
         }
 
         support::detail::basic_chset<char_type> chset;

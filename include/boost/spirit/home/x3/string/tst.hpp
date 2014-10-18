@@ -52,17 +52,17 @@ namespace boost { namespace spirit { namespace x3
             return assign(rhs);
         }
 
-        template <typename Iterator, typename Filter>
-        T* find(Iterator& first, Iterator last, Filter filter) const
+        template <typename Iterator, typename CaseCompare>
+        T* find(Iterator& first, Iterator last, CaseCompare caseCompare) const
         {
-            return node::find(root, first, last, filter);
+            return node::find(root, first, last, caseCompare);
         }
 
-        template <typename Iterator>
+        /*template <typename Iterator>
         T* find(Iterator& first, Iterator last) const
         {
-            return find(first, last, tst_pass_through());
-        }
+            return find(first, last, case_compare<tst_pass_through());
+        }*/
 
         template <typename Iterator>
         T* add(
