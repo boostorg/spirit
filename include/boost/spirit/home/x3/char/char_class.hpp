@@ -17,24 +17,9 @@
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/spirit/home/support/char_encoding/iso8859_1.hpp>
-
+#include <boost/spirit/home/x3/char/char_class_tags.hpp>
 namespace boost { namespace spirit { namespace x3
 {
-    ///////////////////////////////////////////////////////////////////////////
-    struct char_tag {};
-    struct alnum_tag {};
-    struct alpha_tag {};
-    struct blank_tag {};
-    struct cntrl_tag {};
-    struct digit_tag {};
-    struct graph_tag {};
-    struct print_tag {};
-    struct punct_tag {};
-    struct space_tag {};
-    struct xdigit_tag {};
-    struct lower_tag {};
-    struct upper_tag {};
-
     ///////////////////////////////////////////////////////////////////////////
     template <typename Encoding>
     struct char_class_base
@@ -80,10 +65,11 @@ namespace boost { namespace spirit { namespace x3
         static bool const has_attribute = true;
 
         template <typename Char, typename Context>
-        bool test(Char ch, Context const&) const
+        bool test(Char ch, Context const& context) const
         {
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch))
-                && char_class_base<Encoding>::is(tag(), ch);
+                && char_class_base<Encoding>::is(
+                    get_case_compare<Encoding>(context).get_char_class_tag(tag()), ch);
         }
     };
 
