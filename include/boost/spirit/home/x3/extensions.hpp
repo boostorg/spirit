@@ -13,6 +13,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/x3/extensions/confix.hpp>
 #include <boost/spirit/home/x3/extensions/seek.hpp>
 
 #endif

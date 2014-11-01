@@ -181,14 +181,14 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     inline void move_to(T& src, T& dest)
     {
-        if (&src != &dest)
+        if (boost::addressof(src) != boost::addressof(dest))
             dest = std::move(src);
     }
 
     template <typename T>
     inline void move_to(T const& src, T& dest)
     {
-        if (&src != &dest)
+        if (boost::addressof(src) != boost::addressof(dest))
             dest = std::move(src);
     }
 

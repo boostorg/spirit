@@ -14,9 +14,10 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename T, typename BoolPolicies = bool_policies<T>>
-    struct bool_parser : parser<bool_parser<T, BoolPolicies>>
+    template <typename T, typename Encoding, typename BoolPolicies = bool_policies<T>>
+    struct bool_parser : parser<bool_parser<T, Encoding, BoolPolicies>>
     {
+        typedef Encoding encoding;
         typedef T attribute_type;
         static bool const has_attribute = true;
 
@@ -28,16 +29,16 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, unused_type, T& attr) const
+          , Context const& context, unused_type, T& attr) const
         {
             x3::skip_over(first, last, context);
-            return policies.parse_true(first, last, attr)
-                || policies.parse_false(first, last, attr);
+            return policies.parse_true(first, last, attr, get_case_compare<encoding>(context))
+                || policies.parse_false(first, last, attr, get_case_compare<encoding>(context));
         }
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, unused_type, Attribute& attr_param) const
+          , Context const& context, unused_type, Attribute& attr_param) const
         {
             // this case is called when Attribute is not T
             T attr_;
@@ -52,10 +53,11 @@ namespace boost { namespace spirit { namespace x3
         BoolPolicies policies;
     };
 
-    template <typename T, typename BoolPolicies = bool_policies<T>>
-    struct literal_bool_parser : parser<bool_parser<T, BoolPolicies>>
+    template <typename T, typename Encoding, typename BoolPolicies = bool_policies<T>>
+    struct literal_bool_parser : parser<bool_parser<T, Encoding, BoolPolicies>>
     {
-        typedef T attribute_type;
+        typedef Encoding encoding;
+        typedef T attribute_type;       
         static bool const has_attribute = true;
 
         template <typename Value>
@@ -71,13 +73,13 @@ namespace boost { namespace spirit { namespace x3
           , Context& context, unused_type, T& attr) const
         {
             x3::skip_over(first, last, context);
-            return (n_ && policies.parse_true(first, last, attr))
-                || (!n_ && policies.parse_false(first, last, attr));
+            return (n_ && policies.parse_true(first, last, attr, get_case_compare<encoding>(context)))
+                || (!n_ && policies.parse_false(first, last, attr, get_case_compare<encoding>(context)));
         }
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, unused_type, Attribute& attr_param) const
+          , Context const& context, unused_type, Attribute& attr_param) const
         {
             // this case is called when Attribute is not T
             T attr_;
@@ -93,14 +95,58 @@ namespace boost { namespace spirit { namespace x3
         T n_;
     };
 
-    typedef bool_parser<bool> bool_type;
-    bool_type const bool_ = {};
+    namespace standard
+    {
+        typedef bool_parser<bool, char_encoding::standard> bool_type;
+        bool_type const bool_ = {};
 
-    typedef literal_bool_parser<bool> true_type;
-    true_type const true_ = { true };
+        typedef literal_bool_parser<bool, char_encoding::standard> true_type;
+        true_type const true_ = { true };
 
-    typedef literal_bool_parser<bool> false_type;
-    false_type const false_ = { false };
-}}}
+        typedef literal_bool_parser<bool, char_encoding::standard> false_type;
+        false_type const false_ = { false };
+    }
+
+    namespace standard_wide
+    {
+        typedef bool_parser<bool, char_encoding::standard_wide> bool_type;
+        bool_type const bool_ = {};
+
+        typedef literal_bool_parser<bool, char_encoding::standard_wide> true_type;
+        true_type const true_ = { true };
+
+        typedef literal_bool_parser<bool, char_encoding::standard_wide> false_type;
+        false_type const false_ = { false };
+    }
+
+    namespace ascii
+    {
+        typedef bool_parser<bool, char_encoding::ascii> bool_type;
+        bool_type const bool_ = {};
+
+        typedef literal_bool_parser<bool, char_encoding::ascii> true_type;
+        true_type const true_ = { true };
+
+        typedef literal_bool_parser<bool, char_encoding::ascii> false_type;
+        false_type const false_ = { false };
+    }
+
+    namespace iso8859_1
+    {
+        typedef bool_parser<bool, char_encoding::iso8859_1> bool_type;
+        bool_type const bool_ = {};
+
+        typedef literal_bool_parser<bool, char_encoding::iso8859_1> true_type;
+        true_type const true_ = { true };
+
+        typedef literal_bool_parser<bool, char_encoding::iso8859_1> false_type;
+        false_type const false_ = { false };
+    }
+
+    using standard::bool_;
+    using standard::true_;
+    using standard::false_;
+
+    }}}
 
 #endif

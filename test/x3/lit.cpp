@@ -24,5 +24,30 @@ main()
 	BOOST_TEST(test_attr("A\n", p, attr));
 	BOOST_TEST(attr == "A");
     }
+
+    {
+    using namespace boost::spirit::x3::ascii;
+	std::string attr;
+	auto p = char_ >> lit("\n");
+	BOOST_TEST(test_attr("A\n", p, attr));
+	BOOST_TEST(attr == "A");
+    }
+
+    {
+    using namespace boost::spirit::x3::iso8859_1;
+	std::string attr;
+	auto p = char_ >> lit("\n");
+	BOOST_TEST(test_attr("É\n", p, attr));
+	BOOST_TEST(attr == "É");
+    }
+
+    {
+    using namespace boost::spirit::x3::standard_wide;
+	std::wstring attr;
+	auto p = char_ >> lit("\n");
+	BOOST_TEST(test_attr(l"É\n", p, attr));
+	BOOST_TEST(attr == "A");
+    }
+
     return boost::report_errors();
 }
