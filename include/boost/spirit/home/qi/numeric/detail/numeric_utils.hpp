@@ -2,7 +2,7 @@
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2011 Jan Frederick Eick
-    Copyright (c) 2011 Christopher Jefferson 
+    Copyright (c) 2011 Christopher Jefferson
     Copyright (c) 2006 Stephen Nutt
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -272,8 +272,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             || it == last)                                                    \
             break;                                                            \
         ch = *it;                                                             \
-        if (!radix_check::is_valid(ch) || !extractor::call(ch, count, val))   \
+        if (!radix_check::is_valid(ch))                                       \
             break;                                                            \
+        if (!extractor::call(ch, count, val))                                 \
+            return false;                                                     \
         ++it;                                                                 \
         ++count;                                                              \
     /**/
