@@ -64,9 +64,9 @@ namespace client
             ;
 
         BOOST_SPIRIT_DEFINE(
-            expression = expression_def
-          , term = term_def
-          , factor = factor_def
+            expression <= expression_def
+          , term <= term_def
+          , factor <= factor_def
         );
 
         auto calculator = expression;
