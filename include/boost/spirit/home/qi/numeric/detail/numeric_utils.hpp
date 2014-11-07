@@ -137,6 +137,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // Ensure n *= Radix will not overflow
             static T const max = (std::numeric_limits<T>::max)();
             static T const val = max / Radix;
+
             if (n > val)
                 return false;
 
@@ -186,7 +187,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     //  Common code for extract_int::parse specializations
     ///////////////////////////////////////////////////////////////////////////
-    template <unsigned Radix, typename Accumulator, int MaxDigits>
+    template <unsigned Radix, typename Accumulator, int MaxDigits, bool AlwaysCheckOverflow>
     struct int_extractor
     {
         template <typename Char, typename T>
@@ -196,7 +197,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             static std::size_t const
                 overflow_free = digits_traits<T, Radix>::value - 1;
 
-            if (count < overflow_free)
+            if (!AlwaysCheckOverflow && (count < overflow_free))
             {
                 Accumulator::add(n, ch, mpl::false_());
             }
@@ -275,7 +276,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         if (!radix_check::is_valid(ch))                                       \
             break;                                                            \
         if (!extractor::call(ch, count, val))                                 \
-            return false;                                                     \
+        {                                                                     \
+            if (IgnoreOverflowDigits)                                         \
+                first = it;                                                   \
+            traits::assign_to(val, attr);                                     \
+            return IgnoreOverflowDigits;                                      \
+        }                                                                     \
         ++it;                                                                 \
         ++count;                                                              \
     /**/
@@ -284,6 +290,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
       , typename Accumulator = positive_accumulator<Radix>
       , bool Accumulate = false
+      , bool IgnoreOverflowDigits = false
     >
     struct extract_int
     {
@@ -299,7 +306,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
           , Attribute& attr)
         {
             typedef radix_traits<Radix> radix_check;
-            typedef int_extractor<Radix, Accumulator, MaxDigits> extractor;
+            typedef int_extractor<Radix, Accumulator, MaxDigits, Accumulate> extractor;
             typedef typename
                 boost::detail::iterator_traits<Iterator>::value_type
             char_type;
@@ -377,7 +384,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         if (!radix_check::is_valid(ch))                                       \
             break;                                                            \
         if (!extractor::call(ch, count, val))                                 \
+        {                                                                     \
+            traits::assign_to(val, attr);                                     \
             return false;                                                     \
+        }                                                                     \
         ++it;                                                                 \
         ++count;                                                              \
     /**/
@@ -397,7 +407,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
           , Attribute& attr)
         {
             typedef radix_traits<Radix> radix_check;
-            typedef int_extractor<Radix, Accumulator, -1> extractor;
+            typedef int_extractor<Radix, Accumulator, -1, Accumulate> extractor;
             typedef typename
                 boost::detail::iterator_traits<Iterator>::value_type
             char_type;
@@ -439,7 +449,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 return true;
             }
 
-            count = 0;
+            // count = 0; $$$ verify: I think this is wrong $$$
             ++it;
             while (true)
             {

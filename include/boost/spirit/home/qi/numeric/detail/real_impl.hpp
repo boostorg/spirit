@@ -20,6 +20,7 @@
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/detail/pow10.hpp>
 #include <boost/spirit/home/support/detail/sign.hpp>
+#include <boost/integer.hpp>
 #include <boost/assert.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
@@ -32,42 +33,47 @@ namespace boost { namespace spirit { namespace traits
 {
     using spirit::traits::pow10;
 
-    template <typename T>
+    template <typename T, typename AccT>
     inline void
-    scale(int exp, T& n)
+    scale(int exp, T& n, AccT acc_n)
     {
         if (exp >= 0)
         {
             // $$$ Why is this failing for boost.math.concepts ? $$$
             //~ int nn = std::numeric_limits<T>::max_exponent10;
             //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
-            n *= pow10<T>(exp);
+            n = acc_n * pow10<T>(exp);
         }
         else
         {
             if (exp < std::numeric_limits<T>::min_exponent10)
             {
+                // at the lowest extremes, we compensate for floating point
+                // roundoff errors by doing imprecise computation using T
+                int const comp = 10;
+                n = T((acc_n / comp) * comp);
+                n += T(acc_n % comp);
                 n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
                 n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
             }
             else
             {
-                n /= pow10<T>(-exp);
+                n = T(acc_n) / pow10<T>(-exp);
             }
         }
     }
 
     inline void
-    scale(int /*exp*/, unused_type /*n*/)
+    scale(int /*exp*/, unused_type /*n*/, unused_type /*acc_n*/)
     {
         // no-op for unused_type
     }
 
-    template <typename T>
+    template <typename T, typename AccT>
     inline void
-    scale(int exp, int frac, T& n)
+    scale(int exp, int frac, T& n, AccT acc_n)
     {
-        scale(exp - frac, n);
+        scale(exp - frac, n, acc_n);
     }
 
     inline void
@@ -121,6 +127,15 @@ namespace boost { namespace spirit { namespace traits
         // no-op for unused_type
         return false;
     }
+
+    template <typename T>
+    struct real_accumulator : mpl::identity<T> {};
+
+    template <>
+    struct real_accumulator<float> : mpl::identity<uint_t<(sizeof(float)*CHAR_BIT)>::least> {};
+
+    template <>
+    struct real_accumulator<double> : mpl::identity<uint_t<(sizeof(double)*CHAR_BIT)>::least> {};
 }}}
 
 namespace boost { namespace spirit { namespace qi  { namespace detail
@@ -142,8 +157,10 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             bool neg = p.parse_sign(first, last);
 
             // Now attempt to parse an integer
-            T n = 0;
-            bool got_a_number = p.parse_n(first, last, n);
+            T n;
+
+            typename traits::real_accumulator<T>::type acc_n = 0;
+            bool got_a_number = p.parse_n(first, last, acc_n);
 
             // If we did not get a number it might be a NaN, Inf or a leading
             // dot.
@@ -177,14 +194,8 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 // We got the decimal point. Now we will try to parse
                 // the fraction if it is there. If not, it defaults
                 // to zero (0) only if we already got a number.
-                Iterator savef = first;
-                if (p.parse_frac_n(first, last, n))
+                if (p.parse_frac_n(first, last, acc_n, frac_digits))
                 {
-                    // Optimization note: don't compute frac_digits if T is
-                    // an unused_type. This should be optimized away by the compiler.
-                    if (!is_same<T, unused_type>::value)
-                        frac_digits =
-                            static_cast<int>(std::distance(savef, first));
                 }
                 else if (!got_a_number || !p.allow_trailing_dot)
                 {
@@ -228,7 +239,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 {
                     // Got the exponent value. Scale the number by
                     // exp-frac_digits.
-                    traits::scale(exp, frac_digits, n);
+                    traits::scale(exp, frac_digits, n, acc_n);
                 }
                 else
                 {
@@ -240,7 +251,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
-                traits::scale(-frac_digits, n);
+                traits::scale(-frac_digits, n, acc_n);
             }
             else if (traits::is_equal_to_one(n))
             {
@@ -255,6 +266,10 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     traits::assign_to(traits::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
+            }
+            else
+            {
+                n = acc_n;
             }
 
             // If we got a negative sign, negate the number

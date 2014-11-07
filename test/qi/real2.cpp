@@ -20,8 +20,10 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     {
         using boost::spirit::qi::double_;
+        using boost::spirit::qi::float_;
         using boost::spirit::qi::parse;
         double  d;
+        float f;
 
         BOOST_TEST(test("-1234", double_));
         BOOST_TEST(test_attr("-1234", double_, d) && compare(d, -1234));
@@ -53,7 +55,6 @@ main()
         BOOST_TEST(!test("-1.2e", double_));
         BOOST_TEST(!test_attr("-1.2e", double_, d));
 
-//#if defined(BOOST_SPIRIT_TEST_REAL_PRECISION)
         BOOST_TEST(test_attr("-5.7222349715140557e+307", double_, d));
         BOOST_TEST(d == -5.7222349715140557e+307); // exact!
 
@@ -77,8 +78,35 @@ main()
 
         BOOST_TEST(test_attr("4.9406564584124654e-324", double_, d));   // DBL_DENORM_MIN
         BOOST_TEST(d == 4.9406564584124654e-324); // exact!
+        
+        BOOST_TEST(test_attr("219721.03839999999", double_, d));
+        BOOST_TEST(d == 219721.03839999999); // exact!
 
-//#endif
+        BOOST_TEST(test_attr("-5.7222349715140557e+307", double_, d));
+        BOOST_TEST(d == -5.7222349715140557e+307); // exact!
+
+        BOOST_TEST(test_attr("2.2204460492503131e-16", double_, d));
+        BOOST_TEST(d == 2.2204460492503131e-16); // exact!
+
+        // floats...
+
+        BOOST_TEST(test_attr("3.402823466e+38", float_, f));            // FLT_MAX
+        BOOST_TEST(f == 3.402823466e+38F); // exact!
+
+        BOOST_TEST(test_attr("1.192092896e-07", float_, f));            // FLT_EPSILON
+        BOOST_TEST(f == 1.192092896e-07F); // exact!
+
+        BOOST_TEST(test_attr("1.175494351e-38", float_, f));            // FLT_MIN
+        BOOST_TEST(f == 1.175494351e-38F); // exact!
+
+        BOOST_TEST(test_attr("219721.03839999999", float_, f));
+        BOOST_TEST(f == 219721.03839999999f); // inexact
+        
+        BOOST_TEST(test_attr("2.2204460492503131e-16", float_, f));
+        BOOST_TEST(f == 2.2204460492503131e-16f); // inexact
+        
+        // big exponents!
+        BOOST_TEST(test_attr("123e1234000000", double_, d));
 
         using boost::math::fpclassify;
         using boost::spirit::detail::signbit;   // Boost version is broken
