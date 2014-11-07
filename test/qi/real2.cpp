@@ -108,6 +108,7 @@ main()
         // big exponents!
         // fail, but do not assert!
         BOOST_TEST(!test_attr("123e1234000000", double_, d));
+        BOOST_TEST(!test_attr("123e-1234000000", double_, d));
 
         using boost::math::fpclassify;
         using boost::spirit::detail::signbit;   // Boost version is broken

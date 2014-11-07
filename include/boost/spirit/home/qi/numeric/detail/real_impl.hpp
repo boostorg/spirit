@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace traits
             std::size_t max_exp = std::numeric_limits<T>::max_exponent10;
             
             // return false if exp exceeds the max_exp
-            // do this check only for primiive types!
+            // do this check only for primitive types!
             if (is_floating_point<T>() && exp > max_exp)
                 return false;
             n = acc_n * pow10<T>(exp);
@@ -77,9 +77,16 @@ namespace boost { namespace spirit { namespace traits
         {
             if (exp < std::numeric_limits<T>::min_exponent10)
             {
+                int min_exp = std::numeric_limits<T>::min_exponent10;
                 detail::compensate_roundoff(n, acc_n);
-                n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
-                n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
+                n /= pow10<T>(-min_exp);
+                
+                // return false if (-exp + min_exp) exceeds the -min_exp
+                // do this check only for primitive types!
+                if (is_floating_point<T>() && (-exp + min_exp) > -min_exp)
+                    return false;
+
+                n /= pow10<T>(-exp + min_exp);
             }
             else
             {
