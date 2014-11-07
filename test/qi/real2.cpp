@@ -106,7 +106,8 @@ main()
         BOOST_TEST(f == 2.2204460492503131e-16f); // inexact
         
         // big exponents!
-        BOOST_TEST(test_attr("123e1234000000", double_, d));
+        // fail, but do not assert!
+        BOOST_TEST(!test_attr("123e1234000000", double_, d));
 
         using boost::math::fpclassify;
         using boost::spirit::detail::signbit;   // Boost version is broken

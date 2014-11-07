@@ -32,27 +32,52 @@
 namespace boost { namespace spirit { namespace traits
 {
     using spirit::traits::pow10;
+    
+    namespace detail
+    {
+        template <typename T, typename AccT>
+        void compensate_roundoff(T& n, AccT acc_n, mpl::true_)
+        {
+            // at the lowest extremes, we compensate for floating point
+            // roundoff errors by doing imprecise computation using T
+            int const comp = 10;
+            n = T((acc_n / comp) * comp);
+            n += T(acc_n % comp);
+        }
+        
+        template <typename T, typename AccT>
+        void compensate_roundoff(T& n, AccT acc_n, mpl::false_)
+        {
+            // no need to compensate
+            n = acc_n;
+        }
+        
+        template <typename T, typename AccT>
+        void compensate_roundoff(T& n, AccT acc_n)
+        {
+            compensate_roundoff(n, acc_n, is_integral<AccT>());
+        }
+    }
 
     template <typename T, typename AccT>
-    inline void
+    inline bool
     scale(int exp, T& n, AccT acc_n)
     {
         if (exp >= 0)
         {
-            // $$$ Why is this failing for boost.math.concepts ? $$$
-            //~ int nn = std::numeric_limits<T>::max_exponent10;
-            //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
+            std::size_t max_exp = std::numeric_limits<T>::max_exponent10;
+            
+            // return false if exp exceeds the max_exp
+            // do this check only for primiive types!
+            if (is_floating_point<T>() && exp > max_exp)
+                return false;
             n = acc_n * pow10<T>(exp);
         }
         else
         {
             if (exp < std::numeric_limits<T>::min_exponent10)
             {
-                // at the lowest extremes, we compensate for floating point
-                // roundoff errors by doing imprecise computation using T
-                int const comp = 10;
-                n = T((acc_n / comp) * comp);
-                n += T(acc_n % comp);
+                detail::compensate_roundoff(n, acc_n);
                 n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
                 n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
             }
@@ -61,25 +86,28 @@ namespace boost { namespace spirit { namespace traits
                 n = T(acc_n) / pow10<T>(-exp);
             }
         }
+        return true;
     }
 
-    inline void
+    inline bool
     scale(int /*exp*/, unused_type /*n*/, unused_type /*acc_n*/)
     {
         // no-op for unused_type
+        return true;
     }
 
     template <typename T, typename AccT>
-    inline void
+    inline bool
     scale(int exp, int frac, T& n, AccT acc_n)
     {
-        scale(exp - frac, n, acc_n);
+        return scale(exp - frac, n, acc_n);
     }
 
-    inline void
+    inline bool
     scale(int /*exp*/, int /*frac*/, unused_type /*n*/)
     {
         // no-op for unused_type
+        return true;
     }
 
     inline float
@@ -132,10 +160,12 @@ namespace boost { namespace spirit { namespace traits
     struct real_accumulator : mpl::identity<T> {};
 
     template <>
-    struct real_accumulator<float> : mpl::identity<uint_t<(sizeof(float)*CHAR_BIT)>::least> {};
+    struct real_accumulator<float>
+        : mpl::identity<uint_t<(sizeof(float)*CHAR_BIT)>::least> {};
 
     template <>
-    struct real_accumulator<double> : mpl::identity<uint_t<(sizeof(double)*CHAR_BIT)>::least> {};
+    struct real_accumulator<double>
+        : mpl::identity<uint_t<(sizeof(double)*CHAR_BIT)>::least> {};
 }}}
 
 namespace boost { namespace spirit { namespace qi  { namespace detail
@@ -239,13 +269,15 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 {
                     // Got the exponent value. Scale the number by
                     // exp-frac_digits.
-                    traits::scale(exp, frac_digits, n, acc_n);
+                    if (!traits::scale(exp, frac_digits, n, acc_n))
+                        return false;
                 }
                 else
                 {
                     // If there is no number, disregard the exponent altogether.
                     // by resetting 'first' prior to the exponent prefix (e|E)
                     first = e_pos;
+                    n = acc_n;
                 }
             }
             else if (frac_digits)
