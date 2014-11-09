@@ -119,15 +119,15 @@ namespace boost { namespace spirit { namespace karma
                 karma::domain, template_params>::type
         delimiter_type;
 
-        // The rule's signature
-        typedef typename
-            spirit::detail::extract_sig<template_params>::type
-        sig_type;
-
         // The rule's encoding type
         typedef typename
             spirit::detail::extract_encoding<template_params>::type
         encoding_type;
+
+        // The rule's signature
+        typedef typename
+            spirit::detail::extract_sig<template_params, locals_type, encoding_type, karma::domain>::type
+        sig_type;
 
         // This is the rule's attribute type
         typedef typename
