@@ -15,7 +15,7 @@
 //  [ JDG June 6, 2014 ]        spirit x3
 //
 ///////////////////////////////////////////////////////////////////////////////
-
+#define BOOST_SPIRIT_x3_RULE_ASSIGN_FUNC assign
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
