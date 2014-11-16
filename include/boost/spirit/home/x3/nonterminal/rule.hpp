@@ -106,7 +106,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename RHS>
         rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, false>
-        operator<=(RHS const& rhs) const
+        assign(RHS const& rhs) const
         {
             return {as_parser(rhs), name};
         }
