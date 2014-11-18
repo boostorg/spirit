@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace x3
             return literal_string<char const*, char_encoding::standard>(s);
         }
 
-        literal_string<std::basic_string<char>, char_encoding::standard>
+        inline literal_string<std::basic_string<char>, char_encoding::standard>
         string(std::basic_string<char> const& s)
         {
             return literal_string<std::basic_string<char>, char_encoding::standard>(s);
@@ -89,7 +89,7 @@ namespace boost { namespace spirit { namespace x3
             return literal_string<wchar_t const*, char_encoding::standard_wide>(s);
         }
 
-        literal_string<std::basic_string<wchar_t>, char_encoding::standard_wide>
+        inline literal_string<std::basic_string<wchar_t>, char_encoding::standard_wide>
         string(std::basic_string<wchar_t> const& s)
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::standard_wide>(s);
@@ -101,7 +101,7 @@ namespace boost { namespace spirit { namespace x3
             return literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>(s);
         }
 
-        literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>
+        inline literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>
         lit(std::basic_string<wchar_t> const& s)
         {
             return literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>(s.c_str());
@@ -116,7 +116,7 @@ namespace boost { namespace spirit { namespace x3
             return literal_string<wchar_t const*, char_encoding::ascii>(s);
         }
 
-        literal_string<std::basic_string<wchar_t>, char_encoding::ascii>
+        inline literal_string<std::basic_string<wchar_t>, char_encoding::ascii>
         string(std::basic_string<wchar_t> const& s)
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::ascii>(s);
@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>
-        string(std::basic_string<wchar_t> const& s)
+        inline string(std::basic_string<wchar_t> const& s)
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>(s);
         }
