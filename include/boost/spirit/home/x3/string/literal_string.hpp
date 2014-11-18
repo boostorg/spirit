@@ -144,8 +144,8 @@ namespace boost { namespace spirit { namespace x3
             return literal_string<wchar_t const*, char_encoding::iso8859_1>(s);
         }
 
-        literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>
-        inline string(std::basic_string<wchar_t> const& s)
+        inline literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>
+        string(std::basic_string<wchar_t> const& s)
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>(s);
         }
