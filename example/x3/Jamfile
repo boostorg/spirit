@@ -17,21 +17,21 @@ project spirit-x3-example
     :
     ;
 
-exe calc1 : calc1.cpp ;
-exe calc2 : calc2.cpp ;
-exe calc3 : calc4.cpp ;
-exe calc4 : calc4b.cpp ;
-exe calc5 : calc5.cpp ;
-exe calc6 : calc6.cpp ;
+exe x3_calc1 : calc1.cpp ;
+exe x3_calc2 : calc2.cpp ;
+exe x3_calc3 : calc4.cpp ;
+exe x3_calc4 : calc4b.cpp ;
+exe x3_calc5 : calc5.cpp ;
+exe x3_calc6 : calc6.cpp ;
 
-exe calc7 :
+exe x3_calc7 :
     calc7/vm.cpp
     calc7/compiler.cpp
     calc7/expression.cpp
     calc7/main.cpp
 ;
 
-exe calc8 :
+exe x3_calc8 :
     /boost//system
     /boost//filesystem
     calc8/vm.cpp
@@ -41,7 +41,7 @@ exe calc8 :
     calc8/main.cpp
 ;
 
-exe calc9 :
+exe x3_calc9 :
     /boost//system
     /boost//filesystem
     calc9/vm.cpp
