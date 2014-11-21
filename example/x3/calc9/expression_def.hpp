@@ -90,7 +90,6 @@ namespace client { namespace parser
     // Main expression grammar
     ////////////////////////////////////////////////////////////////////////////
     
-    struct expression_class;
     struct equality_expr_class;
     struct relational_expr_class;
     struct logical_expr_class;
@@ -99,7 +98,6 @@ namespace client { namespace parser
     struct unary_expr_class;
     struct primary_expr_class;
     
-    typedef x3::rule<expression_class, ast::expression> expression_type;
     typedef x3::rule<equality_expr_class, ast::expression> equality_expr_type;
     typedef x3::rule<relational_expr_class, ast::expression> relational_expr_type;
     typedef x3::rule<logical_expr_class, ast::expression> logical_expr_type;
