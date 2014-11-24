@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#define BOOST_SPIRIT_x3_RULE_ASSIGN_FUNC assign
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
@@ -80,9 +81,9 @@ namespace client
             ;
 
         BOOST_SPIRIT_DEFINE(
-            expression = expression_def
-          , term = term_def
-          , factor = factor_def
+            expression.assign(expression_def)
+          , term.assign(term_def)
+          , factor.assign(factor_def)
         );
         
         auto calculator = expression;

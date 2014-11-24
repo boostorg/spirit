@@ -22,6 +22,15 @@
 #include <typeinfo>
 #endif
 
+#if !defined(BOOST_SPIRIT_X3_RULE_ASSIGN_FUNC)
+#define BOOST_SPIRIT_X3_RULE_ASSIGN_FUNC operator=
+#endif
+
+#if !defined(BOOST_SPIRIT_X3_RULE_ASSIGN_FORCE_FUNC)
+#define BOOST_SPIRIT_X3_RULE_ASSIGN_FORCE_FUNC operator%=
+#endif
+
+
 namespace boost { namespace spirit { namespace x3
 {
     template <typename ID>
@@ -98,7 +107,15 @@ namespace boost { namespace spirit { namespace x3
         template <typename RHS>
         rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, false>
-        operator=(RHS const& rhs) const
+        BOOST_SPIRIT_X3_RULE_ASSIGN_FUNC(RHS const& rhs) const
+        {
+            return {as_parser(rhs), name};
+        }
+
+        template <typename RHS>
+        rule_definition<
+            ID, typename extension::as_parser<RHS>::value_type, Attribute, false>
+        assign(RHS const& rhs) const
         {
             return {as_parser(rhs), name};
         }
@@ -106,7 +123,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename RHS>
         rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, true>
-        operator%=(RHS const& rhs) const
+        BOOST_SPIRIT_X3_RULE_ASSIGN_FORCE_FUNC(RHS const& rhs) const
         {
             return {as_parser(rhs), name};
         }
@@ -143,7 +160,7 @@ namespace boost { namespace spirit { namespace x3
             return r.name;
         }
     };
-    
+
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
     template <typename Iterator, typename Context, typename Attribute>          \
     bool parse_rule(                                                            \
