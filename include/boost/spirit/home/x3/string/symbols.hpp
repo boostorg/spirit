@@ -41,7 +41,7 @@
 namespace boost { namespace spirit { namespace x3
 {
     template <
-        typename Encoding 
+        typename Encoding
       , typename T = unused_type
       , typename Lookup = tst<typename Encoding::char_type, T> >
     struct symbols_parser : parser<symbols_parser<Encoding, T, Lookup>>
@@ -110,7 +110,7 @@ namespace boost { namespace spirit { namespace x3
             for (;si != boost::end(syms); ++si)
                 add(si->first, si->second);
         }
-        
+
         symbols_parser(std::initializer_list<char_type const*> syms
               , std::string const &name="symbols")
           : add(*this)
@@ -340,7 +340,7 @@ namespace boost { namespace spirit { namespace x3
     namespace standard
     {
         template <typename T = unused_type>
-        using symbols = symbols_parser<char_encoding::standard,T>;
+        using symbols = symbols_parser<char_encoding::standard, T>;
     }
 
     using standard::symbols;
@@ -348,19 +348,19 @@ namespace boost { namespace spirit { namespace x3
     namespace standard_wide
     {
         template <typename T = unused_type>
-        using symbols = symbols_parser<char_encoding::standard_wide,T>;
+        using symbols = symbols_parser<char_encoding::standard_wide, T>;
     }
 
     namespace ascii
     {
         template <typename T = unused_type>
-        using symbols = symbols_parser<char_encoding::ascii,T>;
+        using symbols = symbols_parser<char_encoding::ascii, T>;
     }
 
     namespace iso8859_1
     {
         template <typename T = unused_type>
-        using symbols = symbols_parser<char_encoding::iso8859_1,T>;
+        using symbols = symbols_parser<char_encoding::iso8859_1, T>;
     }
 
 }}}

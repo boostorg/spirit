@@ -23,19 +23,19 @@ namespace client { namespace parser
     using x3::raw;
     using x3::lexeme;
     using namespace x3::ascii;
-    
+
     ////////////////////////////////////////////////////////////////////////////
     // Tokens
     ////////////////////////////////////////////////////////////////////////////
 
-    x3::symbols<char, ast::optoken> equality_op;
-    x3::symbols<char, ast::optoken> relational_op;
-    x3::symbols<char, ast::optoken> logical_op;
-    x3::symbols<char, ast::optoken> additive_op;
-    x3::symbols<char, ast::optoken> multiplicative_op;
-    x3::symbols<char, ast::optoken> unary_op;
-    x3::symbols<char> keywords;
-    
+    x3::symbols<ast::optoken> equality_op;
+    x3::symbols<ast::optoken> relational_op;
+    x3::symbols<ast::optoken> logical_op;
+    x3::symbols<ast::optoken> additive_op;
+    x3::symbols<ast::optoken> multiplicative_op;
+    x3::symbols<ast::optoken> unary_op;
+    x3::symbols<> keywords;
+
     void add_keywords()
     {
         static bool once = false;
@@ -85,11 +85,11 @@ namespace client { namespace parser
             ("while")
             ;
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////
     // Main expression grammar
     ////////////////////////////////////////////////////////////////////////////
-    
+
     struct equality_expr_class;
     struct relational_expr_class;
     struct logical_expr_class;
@@ -97,7 +97,7 @@ namespace client { namespace parser
     struct multiplicative_expr_class;
     struct unary_expr_class;
     struct primary_expr_class;
-    
+
     typedef x3::rule<equality_expr_class, ast::expression> equality_expr_type;
     typedef x3::rule<relational_expr_class, ast::expression> relational_expr_type;
     typedef x3::rule<logical_expr_class, ast::expression> logical_expr_type;
@@ -162,7 +162,7 @@ namespace client { namespace parser
       , unary_expr = unary_expr_def
       , primary_expr = primary_expr_def
     );
-    
+
     struct unary_expr_class : annotation_base {};
     struct primary_expr_class : annotation_base {};
 
