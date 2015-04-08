@@ -63,6 +63,9 @@ namespace client
             |   ('+' >> factor)
             ;
 
+        template <typename T>
+        struct p_type;
+
         BOOST_SPIRIT_DEFINE(
             expression = expression_def
           , term = term_def
