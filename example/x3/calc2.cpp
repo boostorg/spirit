@@ -45,7 +45,7 @@ namespace client
         auto do_div     = []{ std::cout << "divide\n"; };
         auto do_neg     = []{ std::cout << "negate\n"; };
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     //  The calculator grammar
     ///////////////////////////////////////////////////////////////////////////////
@@ -80,11 +80,11 @@ namespace client
             ;
 
         BOOST_SPIRIT_DEFINE(
-            expression = expression_def
-          , term = term_def
-          , factor = factor_def
+            expression
+          , term
+          , factor
         );
-        
+
         auto calculator = expression;
     }
 

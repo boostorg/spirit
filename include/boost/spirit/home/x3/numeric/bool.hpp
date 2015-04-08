@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace x3
     struct literal_bool_parser : parser<bool_parser<T, Encoding, BoolPolicies>>
     {
         typedef Encoding encoding;
-        typedef T attribute_type;       
+        typedef T attribute_type;
         static bool const has_attribute = true;
 
         template <typename Value>
@@ -69,12 +69,19 @@ namespace boost { namespace spirit { namespace x3
         	: policies(policies), n_(n) {}
 
         template <typename Iterator, typename Context>
-        bool parse(Iterator& first, Iterator const& last
-          , Context& context, unused_type, T& attr) const
+        bool parse_main(Iterator& first, Iterator const& last
+          , Context& context, T& attr) const
         {
             x3::skip_over(first, last, context);
             return (n_ && policies.parse_true(first, last, attr, get_case_compare<encoding>(context)))
                 || (!n_ && policies.parse_false(first, last, attr, get_case_compare<encoding>(context)));
+        }
+
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, unused_type, T& attr) const
+        {
+            return parse_main(first, last, context, attr);
         }
 
         template <typename Iterator, typename Context, typename Attribute>
@@ -83,7 +90,7 @@ namespace boost { namespace spirit { namespace x3
         {
             // this case is called when Attribute is not T
             T attr_;
-            if (parse(first, last, context, unused, attr_))
+            if (parse_main(first, last, context, attr_))
             {
                 traits::move_to(attr_, attr_param);
                 return true;

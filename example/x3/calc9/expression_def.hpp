@@ -152,15 +152,17 @@ namespace client { namespace parser
         |   '(' > expression > ')'
         ;
 
+    auto const expression_def = logical_expr;
+
     BOOST_SPIRIT_DEFINE(
-        expression = logical_expr
-      , logical_expr = logical_expr_def
-      , equality_expr = equality_expr_def
-      , relational_expr = relational_expr_def
-      , additive_expr = additive_expr_def
-      , multiplicative_expr = multiplicative_expr_def
-      , unary_expr = unary_expr_def
-      , primary_expr = primary_expr_def
+        expression
+      , logical_expr
+      , equality_expr
+      , relational_expr
+      , additive_expr
+      , multiplicative_expr
+      , unary_expr
+      , primary_expr
     );
 
     struct unary_expr_class : annotation_base {};

@@ -22,12 +22,12 @@ namespace client { namespace parser
     using x3::raw;
     using x3::lexeme;
     using namespace x3::ascii;
-    
+
     struct additive_expr_class;
     struct multiplicative_expr_class;
     struct unary_expr_class;
     struct primary_expr_class;
-    
+
     typedef x3::rule<additive_expr_class, ast::expression> additive_expr_type;
     typedef x3::rule<multiplicative_expr_class, ast::expression> multiplicative_expr_type;
     typedef x3::rule<unary_expr_class, ast::operand> unary_expr_type;
@@ -52,7 +52,7 @@ namespace client { namespace parser
             |   (char_('/') > unary_expr)
             )
         ;
-    
+
     auto const unary_expr_def =
             primary_expr
         |   (char_('-') > primary_expr)
@@ -65,14 +65,16 @@ namespace client { namespace parser
         |   '(' > expression > ')'
         ;
 
+    auto const expression_def = additive_expr;
+
     BOOST_SPIRIT_DEFINE(
-        expression = additive_expr
-      , additive_expr = additive_expr_def
-      , multiplicative_expr = multiplicative_expr_def
-      , unary_expr = unary_expr_def
-      , primary_expr = primary_expr_def
+        expression
+      , additive_expr
+      , multiplicative_expr
+      , unary_expr
+      , primary_expr
     );
-    
+
     struct unary_expr_class : annotation_base {};
     struct primary_expr_class : annotation_base {};
 

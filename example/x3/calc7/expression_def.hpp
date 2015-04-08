@@ -17,7 +17,7 @@ namespace client { namespace calculator_grammar
 {
     using x3::uint_;
     using x3::char_;
-    
+
     struct expression_class;
     struct term_class;
     struct factor_class;
@@ -52,11 +52,11 @@ namespace client { namespace calculator_grammar
         ;
 
     BOOST_SPIRIT_DEFINE(
-        expression = expression_def
-      , term = term_def
-      , factor = factor_def
+        expression
+      , term
+      , factor
     );
-    
+
     struct expression_class : error_handler {};
 }}
 
