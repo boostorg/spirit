@@ -80,6 +80,21 @@ main()
         BOOST_TEST(test_attr("123", rb_def2, attr));
         BOOST_TEST(attr == 123);
     }
+    
+    { // show that ra %= rb works as expected with semantic actions
+        rule<class a, int> ra;
+        rule<class b, int> rb;
+        int attr;
+
+        auto f = [](auto c){};
+        auto ra_def = (ra %= int_[f]);
+        BOOST_TEST(test_attr("123", ra_def, attr));
+        BOOST_TEST(attr == 123);
+        
+        auto ra_def2 = (rb = (ra %= int_[f]));
+        BOOST_TEST(test_attr("123", ra_def2, attr));
+        BOOST_TEST(attr == 123);
+    }
 
 
     { // std::string as container attribute with auto rules
