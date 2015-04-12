@@ -102,9 +102,17 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             if (Radix <= 10)
                 return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1));
+#ifdef BOOST_GCC
+            // GCC warns the condition, 'always false', if Radix is 10.
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wlogical-op"
+#endif
             return (ch >= '0' && ch <= '9')
                 || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
                 || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
+#ifdef BOOST_GCC
+# pragma GCC diagnostic pop
+#endif
         }
 
         template <typename Char>
