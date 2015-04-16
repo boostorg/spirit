@@ -20,8 +20,12 @@
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
+
 #include <vector>
+#include <map>
 #include <string>
+#include <iterator>
+#include <algorithm>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -112,10 +116,22 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct push_back_container
     {
+        template <typename Key, typename Value, typename Compare, typename Allocator, typename T>
+        static void push_back(std::map<Key, Value, Compare, Allocator>& c, T&& val)
+        {
+            c.insert(std::move(val));
+        }
+       
+        template <typename Container_, typename T>
+        static void push_back(Container_& c, T&& val)
+        {
+            c.push_back(std::move(val));
+        }
+       
         template <typename T>
         static bool call(Container& c, T&& val)
         {
-            c.insert(c.end(), std::move(val));
+            push_back(c, std::move(val));
             return true;
         }
     };
@@ -154,17 +170,23 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Container_>
         static void reserve(Container_& c, std::size_t size) {}
 
-        template <typename T>
-        static void reserve(std::vector<T>& c, std::size_t size)
+        template <typename T, typename Allocator>
+        static void reserve(std::vector<T, Allocator>& c, std::size_t size)
         {
             c.reserve(size);
+        }
+       
+        template <typename Container_, typename Iterator>
+        static void insert(Container_& c, Iterator first, Iterator last)
+        {
+            std::copy(first, last, std::inserter(c, c.end()));
         }
 
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
             reserve(c, c.size() + std::distance(first, last));
-            c.insert(c.end(), first, last);
+            insert(c, first, last);
             return true;
         }
     };
