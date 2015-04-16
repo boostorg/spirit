@@ -80,13 +80,13 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
 	// return the current line in the output
-	std::size_t get_out_line() const
+	std::size_t get_line() const
 	{
 	    return track_position_data.get_line();
 	}
 
 	// return the current column in the output
-	std::size_t get_out_column() const
+	std::size_t get_column() const
 	{
 	    return track_position_data.get_column();
 	}
