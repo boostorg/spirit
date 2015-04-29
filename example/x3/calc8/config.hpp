@@ -7,13 +7,12 @@
 #if !defined(BOOST_SPIRIT_X3_CALC8_CONFIG_HPP)
 #define BOOST_SPIRIT_X3_CALC8_CONFIG_HPP
 
-#include <boost/spirit/home/support/iterators/line_pos_iterator.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include "error_handler.hpp"
 
 namespace client { namespace parser
 {
-    typedef boost::spirit::line_pos_iterator<std::string::const_iterator> iterator_type;
+    typedef std::string::const_iterator iterator_type;
     typedef x3::phrase_parse_context<x3::ascii::space_type>::type phrase_context_type;
     typedef error_handler<iterator_type> error_handler_type;
 

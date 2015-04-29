@@ -21,6 +21,7 @@
 #include "statement.hpp"
 #include "error_handler.hpp"
 #include "config.hpp"
+#include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -51,7 +52,7 @@ main()
     using client::parser::iterator_type;
     iterator_type iter(source.begin());
     iterator_type end(source.end());
-    
+
 
     client::vmachine vm;                                    // Our virtual machine
     client::code_gen::program program;                      // Our VM program

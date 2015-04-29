@@ -21,19 +21,17 @@ namespace client { namespace parser
     using x3::raw;
     using x3::lexeme;
     using namespace x3::ascii;
-    
-    struct statement_class;
+
     struct statement_list_class;
     struct variable_declaration_class;
     struct assignment_class;
     struct variable_class;
-    
-    typedef x3::rule<statement_class, ast::statement_list> statement_type;
+
     typedef x3::rule<statement_list_class, ast::statement_list> statement_list_type;
     typedef x3::rule<variable_declaration_class, ast::variable_declaration> variable_declaration_type;
     typedef x3::rule<assignment_class, ast::assignment> assignment_type;
     typedef x3::rule<variable_class, ast::variable> variable_type;
-    
+
     statement_type const statement("statement");
     statement_list_type const statement_list("statement_list");
     variable_declaration_type const variable_declaration("variable_declaration");
@@ -59,12 +57,15 @@ namespace client { namespace parser
         >   ';'
         ;
 
+    auto const variable_def = identifier;
+    auto const statement_def = statement_list;
+
     BOOST_SPIRIT_DEFINE(
-        statement = statement_list
-      , statement_list = statement_list_def
-      , variable_declaration = variable_declaration_def
-      , assignment = assignment_def
-      , variable = identifier
+        statement
+      , statement_list
+      , variable_declaration
+      , assignment
+      , variable
     );
 
     struct statement_class : error_handler_base, annotation_base {};

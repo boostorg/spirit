@@ -30,10 +30,11 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
     using boost::spirit::x3::symbols;
+    using boost::spirit::x3::no_case;
     //~ using boost::spirit::x3::lazy;
 
     { // basics
-        symbols<char, int> sym;
+        symbols<int> sym;
 
         sym.add
             ("Joel")
@@ -62,7 +63,7 @@ main()
         BOOST_TEST((!test("XXX", sym)));
 
         // test copy
-        symbols<char, int> sym2;
+        symbols<int> sym2;
         sym2 = sym;
         BOOST_TEST((test("Joel", sym2)));
         BOOST_TEST((test("Ruby", sym2)));
@@ -85,7 +86,7 @@ main()
     }
 
     { // comma syntax
-        symbols<char, int> sym;
+        symbols<int> sym;
         sym += "Joel", "Ruby", "Tenji", "Tutit", "Kim", "Joey";
 
         BOOST_TEST((test("Joel", sym)));
@@ -103,33 +104,33 @@ main()
     }
 
     /// $$$ Not yet implemented $$$
-    //~ { // no-case handling
-        //~ using namespace boost::spirit::x3::ascii;
+    { // no-case handling
+        using namespace boost::spirit::x3::ascii;
 
-        //~ symbols<char, int> sym;
-        //~ // NOTE: make sure all entries are in lower-case!!!
-        //~ sym = "joel", "ruby", "tenji", "tutit", "kim", "joey";
+        symbols<int> sym;
+        // NOTE: make sure all entries are in lower-case!!!
+        sym = "joel", "ruby", "tenji", "tutit", "kim", "joey";
 
-        //~ BOOST_TEST((test("joel", no_case[sym])));
-        //~ BOOST_TEST((test("ruby", no_case[sym])));
-        //~ BOOST_TEST((test("tenji", no_case[sym])));
-        //~ BOOST_TEST((test("tutit", no_case[sym])));
-        //~ BOOST_TEST((test("kim", no_case[sym])));
-        //~ BOOST_TEST((test("joey", no_case[sym])));
+        BOOST_TEST((test("joel", no_case[sym])));
+        BOOST_TEST((test("ruby", no_case[sym])));
+        BOOST_TEST((test("tenji", no_case[sym])));
+        BOOST_TEST((test("tutit", no_case[sym])));
+        BOOST_TEST((test("kim", no_case[sym])));
+        BOOST_TEST((test("joey", no_case[sym])));
 
-        //~ BOOST_TEST((test("JOEL", no_case[sym])));
-        //~ BOOST_TEST((test("RUBY", no_case[sym])));
-        //~ BOOST_TEST((test("TENJI", no_case[sym])));
-        //~ BOOST_TEST((test("TUTIT", no_case[sym])));
-        //~ BOOST_TEST((test("KIM", no_case[sym])));
-        //~ BOOST_TEST((test("JOEY", no_case[sym])));
+        BOOST_TEST((test("JOEL", no_case[sym])));
+        BOOST_TEST((test("RUBY", no_case[sym])));
+        BOOST_TEST((test("TENJI", no_case[sym])));
+        BOOST_TEST((test("TUTIT", no_case[sym])));
+        BOOST_TEST((test("KIM", no_case[sym])));
+        BOOST_TEST((test("JOEY", no_case[sym])));
 
-        //~ // make sure it plays well with other parsers
-        //~ BOOST_TEST((test("Joelyo", no_case[sym] >> "yo")));
-    //~ }
+        // make sure it plays well with other parsers
+        BOOST_TEST((test("Joelyo", no_case[sym] >> "yo")));
+    }
 
     { // attributes
-        symbols<char, int> sym;
+        symbols<int> sym;
 
         sym.add
             ("Joel", 1)

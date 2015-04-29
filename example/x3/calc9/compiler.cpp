@@ -10,7 +10,9 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
+#include <iostream>
 #include <set>
+#include <iostream>
 
 namespace client { namespace code_gen
 {
@@ -206,7 +208,7 @@ namespace client { namespace code_gen
         program.op(op_int, x);
         return true;
     }
-    
+
     bool compiler::operator()(bool x) const
     {
         program.op(x ? op_true : op_false);
@@ -321,7 +323,7 @@ namespace client { namespace code_gen
         }
         return true;
     }
-    
+
     bool compiler::operator()(ast::if_statement const& x) const
     {
         if (!(*this)(x.condition))
@@ -375,4 +377,3 @@ namespace client { namespace code_gen
         return true;
     }
 }}
-

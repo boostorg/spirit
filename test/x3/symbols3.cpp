@@ -45,19 +45,19 @@ main()
     using boost::spirit::x3::symbols;
 
     { // construction from initializer-list
-        symbols<char, int> const ones =
+        symbols<int> const ones =
         {
             {"I", 1}, {"II", 2}, {"III", 3}, {"IV", 4},
             {"V", 5}, {"VI", 6}, {"VII", 7}, {"VIII", 8},
             {"IX", 9}
         };
-        symbols<char, int> const tens =
+        symbols<int> const tens =
         {
             {"X", 10}, {"XX", 20}, {"XXX", 30}, {"XL", 40},
             {"L", 50}, {"LX", 60}, {"LXX", 70}, {"LXXX", 80},
             {"XC", 90}
         };
-        symbols<char, int> const hundreds
+        symbols<int> const hundreds
         {
             {"C", 100}, {"CC", 200}, {"CCC", 300}, {"CD", 400},
             {"D", 500}, {"DC", 600}, {"DCC", 700}, {"DCCC", 800},
@@ -72,13 +72,13 @@ main()
     }
 
     { // construction from initializer-list without attribute
-        symbols<char> foo = {"a1", "a2", "a3"};
+        symbols<> foo = {"a1", "a2", "a3"};
         
         BOOST_TEST((test("a3", foo)));
     }
 
     { // assignment from initializer-list
-        symbols<char> foo;
+        symbols<> foo;
         foo = {"a1", "a2", "a3"};
         
         BOOST_TEST((test("a3", foo)));

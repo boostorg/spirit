@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_X3_CALC7_ERROR_HANDLER_HPP
 
 #include <boost/spirit/home/x3.hpp>
+#include <iostream>
 
 namespace client { namespace calculator_grammar
 {

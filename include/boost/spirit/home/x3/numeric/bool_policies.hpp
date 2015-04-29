@@ -23,11 +23,11 @@ namespace boost { namespace spirit { namespace x3
     template <typename T = bool>
     struct bool_policies
     {
-        template <typename Iterator, typename Attribute>
+        template <typename Iterator, typename Attribute, typename CaseCompare>
         static bool
-        parse_true(Iterator& first, Iterator const& last, Attribute& attr_)
+        parse_true(Iterator& first, Iterator const& last, Attribute& attr_, CaseCompare const& case_compare)
         {
-            if (detail::string_parse("true", first, last, unused))
+            if (detail::string_parse("true", first, last, unused, case_compare))
             {
                 traits::move_to(T(true), attr_);    // result is true
                 return true;
@@ -35,11 +35,11 @@ namespace boost { namespace spirit { namespace x3
             return false;
         }
 
-        template <typename Iterator, typename Attribute>
+        template <typename Iterator, typename Attribute, typename CaseCompare>
         static bool
-        parse_false(Iterator& first, Iterator const& last, Attribute& attr_)
+        parse_false(Iterator& first, Iterator const& last, Attribute& attr_, CaseCompare const& case_compare)
         {
-            if (detail::string_parse("false", first, last, unused))
+            if (detail::string_parse("false", first, last, unused, case_compare))
             {
                 traits::move_to(T(false), attr_);   // result is false
                 return true;

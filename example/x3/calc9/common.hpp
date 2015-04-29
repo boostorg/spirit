@@ -20,9 +20,9 @@ namespace client { namespace parser
     typedef x3::rule<identifier_class, std::string> identifier_type;
     identifier_type const identifier = "identifier";
 
-    BOOST_SPIRIT_DEFINE(
-        identifier = raw[lexeme[(alpha | '_') >> *(alnum | '_')]]
-    );
+    auto const identifier_def = raw[lexeme[(alpha | '_') >> *(alnum | '_')]];
+
+    BOOST_SPIRIT_DEFINE(identifier);
 }}
 
 #endif
