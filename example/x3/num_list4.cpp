@@ -7,18 +7,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  This sample demontrates a parser for a comma separated list of numbers.
-//  The numbers are inserted in a vector using phoenix.
+//  This time, the numbers are automatically collected into the attribute by
+//  the parser itself using the full power of attribute grammars.
 //
 //  [ JDG May 10, 2002 ]    spirit1
 //  [ JDG March 24, 2007 ]  spirit2
+//  [ JDG May 12, 2015 ]    spirit X3
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/spirit/home/x3.hpp>
 
 #include <iostream>
 #include <string>
@@ -26,8 +25,8 @@
 
 namespace client
 {
-    namespace qi = boost::spirit::qi;
-    namespace ascii = boost::spirit::ascii;
+    namespace x3 = boost::spirit::x3;
+    namespace ascii = boost::spirit::x3::ascii;
 
     ///////////////////////////////////////////////////////////////////////////
     //  Our number list compiler
@@ -36,9 +35,9 @@ namespace client
     template <typename Iterator>
     bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
     {
-        using qi::double_;
-        using qi::phrase_parse;
-        using qi::_1;
+        using x3::double_;
+        using x3::phrase_parse;
+        using x3::_attr;
         using ascii::space;
 
         bool r = phrase_parse(first, last,
@@ -102,5 +101,3 @@ main()
     std::cout << "Bye... :-) \n\n";
     return 0;
 }
-
-

@@ -6,10 +6,9 @@
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  This sample demontrates a parser for a comma separated list of numbers.
-//  No semantic actions.
+//  A parser for summing a comma-separated list of numbers using phoenix.
 //
-//  [ JDG May 10, 2002 ]    spirit1
+//  [ JDG June 28, 2002 ]   spirit1
 //  [ JDG March 24, 2007 ]  spirit2
 //  [ JDG May 12, 2015 ]    spirit X3
 //
@@ -17,32 +16,39 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
-
 #include <iostream>
 #include <string>
-#include <vector>
 
 namespace client
 {
     namespace x3 = boost::spirit::x3;
     namespace ascii = boost::spirit::x3::ascii;
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Our number list parser
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator>
-    bool parse_numbers(Iterator first, Iterator last)
-    {
-        using x3::double_;
-        using x3::phrase_parse;
-        using ascii::space;
+    using x3::double_;
+    using ascii::space;
+    using x3::_attr;
 
-        bool r = phrase_parse(
-            first,                          // Start Iterator
-            last,                           // End Iterator
-            double_ >> *(',' >> double_),   // The Parser
-            space                           // The Skip-Parser
-        );
+    ///////////////////////////////////////////////////////////////////////////
+    //  Our adder
+    ///////////////////////////////////////////////////////////////////////////
+
+    template <typename Iterator>
+    bool adder(Iterator first, Iterator last, double& n)
+    {
+        auto assign = [&](auto& ctx){ n = _attr(ctx); };
+        auto add = [&](auto& ctx){ n += _attr(ctx); };
+
+        bool r = x3::phrase_parse(first, last,
+
+            //  Begin grammar
+            (
+                double_[assign] >> *(',' >> double_[add])
+            )
+            ,
+            //  End grammar
+
+            space);
+
         if (first != last) // fail if we did not get a full match
             return false;
         return r;
@@ -56,10 +62,11 @@ int
 main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "\t\tA comma separated list parser for Spirit...\n\n";
+    std::cout << "\t\tA parser for summing a list of numbers...\n\n";
     std::cout << "/////////////////////////////////////////////////////////\n\n";
 
     std::cout << "Give me a comma separated list of numbers.\n";
+    std::cout << "The numbers are added using Phoenix.\n";
     std::cout << "Type [q or Q] to quit\n\n";
 
     std::string str;
@@ -68,11 +75,15 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        if (client::parse_numbers(str.begin(), str.end()))
+        double n;
+        if (client::adder(str.begin(), str.end(), n))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
             std::cout << str << " Parses OK: " << std::endl;
+
+            std::cout << "sum = " << n;
+            std::cout << "\n-------------------------\n";
         }
         else
         {
