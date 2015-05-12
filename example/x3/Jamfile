@@ -18,9 +18,8 @@ project spirit-x3-example
     ;
 
 exe x3_num_list1 : num_list1.cpp ;
-
 exe x3_actions : actions.cpp ;
-
+exe x3_complex_number : complex_number.cpp ;
 
 exe x3_calc1 : calc1.cpp ;
 exe x3_calc2 : calc2.cpp ;

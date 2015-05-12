@@ -84,7 +84,7 @@ __version__).
 [include        tutorial_intro.qbk]
 [include        warming_up.qbk]
 [include        actions.qbk]
-[/ include        complex.qbk]
+[include        complex.qbk]
 [/ include        sum_tutorial.qbk]
 [/ include        num_list2.qbk]
 [/ include        num_list3.qbk]
