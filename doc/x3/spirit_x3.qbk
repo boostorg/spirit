@@ -1,0 +1,93 @@
+[/==============================================================================
+    Copyright (C) 2001-2015 Joel de Guzman
+    Copyright (C) 2001-2011 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[article Spirit
+    [quickbook 1.5]
+    [version 3.0.0]
+    [authors [de Guzman, Joel], [Kaiser, Hartmut]]
+    [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 Joel de Guzman, Hartmut Kaiser]
+    [/ purpose Parser Library]
+    [license
+        Distributed under the Boost Software License, Version 1.0.
+        (See accompanying file LICENSE_1_0.txt or copy at
+        [@http://www.boost.org/LICENSE_1_0.txt])
+    ]
+]
+
+[/ May 12, 2015 ]
+
+[/==============================================================================
+    Some links and defines
+===============================================================================/]
+
+[def __version__                V3.0.0]
+
+[def __spirit__                 [@http://boost-spirit.com Spirit]]
+[def __spirit_list__            [@https://lists.sourceforge.net/lists/listinfo/spirit-general Spirit Mailing List]]
+[def __spirit_general__         [@news://news.gmane.org/gmane.comp.spirit.general Spirit General NNTP news portal]]
+[def __gmane__                  [@http://www.gmane.org Gmane]]
+[def __mlist_archive__          [@http://news.gmane.org/gmane.comp.parsers.spirit.general]]
+[def __boost_tools__            [@http://www.boost.org/tools/index.html Boost Tools]]
+[def __fusion__                 [@boost:/libs/fusion/doc/html/index.html Boost.Fusion]]
+[def __boost_variant__          [@http://www.boost.org/doc/html/variant.html Boost.Variant]]
+
+[/ Some images ]
+
+[def __note__                   [$./images/note.png]]
+[def __tip__                    [$./images/tip.png]]
+[def __important__              [$./images/important.png]]
+[def __caution__                [$./images/caution.png]]
+[def __danger__                 [$./images/alert.png]]
+
+[def __x3__                     /Spirit.X3/]
+
+[def __sd_start_stop__          [$./images/start_stop.png]]
+[def __sd_terminals__           [$./images/terminal.png]]
+[def __sd_non_terminals__       [$./images/non-terminal.png]]
+[def __sd_sequence__            [$./images/sequence.png]]
+[def __sd_choice__              [$./images/alternative.png]]
+[def __sd_optional__            [$./images/optional.png]]
+[def __sd_plus__                [$./images/plus.png]]
+[def __sd_kleene__              [$./images/kleene.png]]
+[def __sd_predicate__           [$./images/predicate.png]]
+[def __sd_and_predicate__       [$./images/and_predicate.png]]
+[def __sd_not_predicate__       [$./images/not_predicate.png]]
+[def __pascal_string__          [$./images/pascal_string.png]]
+
+[def __rd__                     Recursive Descent] [/$$$ TODO: link me $$$]
+[def __syntax_diagrams__        [link spirit.abstracts.syntax_diagrams Syntax Diagram]]
+[def __peg__                    [link spirit.abstracts.parsing_expression_grammar Parsing Expression Grammar]]
+[def __ast__                    Abstract Syntax Tree] [/$$$ TODO: link me $$$]
+
+[def __sec_x3_reference__       [link spirit.x3.reference X3 Reference]]
+[def __sec_x3_primitive__       [link spirit.x3.quick_reference.x3_parsers X3 Parsers]]
+[def __sec_x3_compound__        [link spirit.x3.quick_reference.compound_attribute_rules Parser Compound Attribute Rules]]
+
+[/==============================================================================
+    Documentation Start
+===============================================================================/]
+
+This is the documentation of the newest version of __spirit__ (currently,
+__version__).
+
+[include preface.qbk]
+[include introduction.qbk]
+[include include.qbk]
+[include abstracts.qbk]
+[/ include x3.qbk]
+[/ include karma.qbk]
+[/ include lex.qbk]
+[/ include advanced.qbk]
+[/ include support.qbk]
+[/ include faq.qbk]
+[/ include notes.qbk]
+[/ include rationale.qbk]
+[/ include repository.qbk]
+[/ include acknowledgments.qbk]
+[/ include references.qbk]
+
