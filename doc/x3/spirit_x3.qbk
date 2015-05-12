@@ -27,6 +27,7 @@
 
 [def __version__                V3.0.0]
 
+[def __boost__                  [@http://www.boost.org/ Boost]]
 [def __spirit__                 [@http://boost-spirit.com Spirit]]
 [def __spirit_list__            [@https://lists.sourceforge.net/lists/listinfo/spirit-general Spirit Mailing List]]
 [def __spirit_general__         [@news://news.gmane.org/gmane.comp.spirit.general Spirit General NNTP news portal]]
@@ -89,8 +90,8 @@ __version__).
 [include        num_list2.qbk]
 [include        num_list3.qbk]
 [include        num_list4.qbk]
-[/ include        roman.qbk]
-[/ include        employee.qbk]
+[include        roman.qbk]
+[include        employee.qbk]
 [/ include        mini_xml.qbk]
 [/ include        error_handling.qbk]
 [endsect]
@@ -127,4 +128,3 @@ __version__).
 [/ include repository.qbk]
 [/ include acknowledgments.qbk]
 [/ include references.qbk]
-
