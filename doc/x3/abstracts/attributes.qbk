@@ -40,7 +40,7 @@ __x3__ implement well defined attribute type propagation rules for all compound
 parsers, such as sequences, alternatives, Kleene star, etc. The main attribute
 propagation rule for a sequences is for instance:
 
-    a: A, b: B --> (a >> b): tuple<A, B>`
+    a: A, b: B --> (a >> b): tuple<A, B>
 
 which reads as:
 
@@ -170,7 +170,7 @@ type safe placeholders for the attribute values.
 
 Let's take a look at this from a more formal perspective:
 
-    `a: A, b: Unused --> (a >> b): A`
+    a: A, b: Unused --> (a >> b): A
 
 which reads as:
 
