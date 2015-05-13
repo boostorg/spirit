@@ -68,11 +68,11 @@ namespace client
         using x3::lexeme;
         using ascii::char_;
 
-        x3::rule<class employee, ast::employee> employee = "employee";
+        x3::rule<class employee, ast::employee> const employee = "employee";
 
-        auto quoted_string = lexeme['"' >> +(char_ - '"') >> '"'];
+        auto const quoted_string = lexeme['"' >> +(char_ - '"') >> '"'];
 
-        auto employee_def =
+        auto const employee_def =
             lit("employee")
             >> '{'
             >>  int_ >> ','

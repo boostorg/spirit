@@ -134,9 +134,8 @@ pages and pages of reference documentation.
     [[[x3_lit_string `lit(str)`]]     [`Unused`]    [Matches `str`]]
     [[[x3_lit_string `string(str)`]]  [`Str`]       [Matches `str`]]
 
-    [[__x3_symbols__]       [N/A]                       [Declare a symbol table, `sym`. `Ch` is the
-                                                        underlying char type of the symbol table keys.
-                                                        `T` is the data type associated with each key.]]
+    [[__x3_symbols__]       [N/A]                       [Declare a symbol table, `sym`. `T` is the
+                                                        data type associated with each key.]]
     [[
 ``
     sym.add
@@ -328,14 +327,6 @@ a: Unused, b: B --> (a % b): Unused``]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[__x3_sequential_or__ (`a || b`)]
-[``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
-a: A, b: Unused --> (a || b): optional<A>
-a: Unused, b: B --> (a || b): optional<B>
-a: Unused, b: Unused --> (a || b): Unused
-
-a: A, b: A --> (a || b): vector<optional<A> >``]]
-
     [[__x3_optional__ (`-a`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
@@ -343,11 +334,6 @@ a: Unused --> -a: Unused``]]
     [[`&a`]  [`a: A --> &a: Unused`]]
     [[`!b`]  [`a: A --> !a: Unused`]]
 
-    [[__x3_permutation__ (`a ^ b`)]
-[``a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >
-a: A, b: Unused --> (a ^ b): optional<A>
-a: Unused, b: B --> (a ^ b): optional<B>
-a: Unused, b: Unused --> (a ^ b): Unused``]]
 ]
 
 [endsect]
@@ -355,67 +341,24 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 [section:non_terminals Nonterminals]
 
 [variablelist Notation
-    [[`RT`]                     [Synthesized attribute. The rule or grammar's return type.]]
-    [[`Arg1`, `Arg2`, `ArgN`]   [Inherited attributes. Zero or more arguments.]]
-    [[`L1`, `L2`, `LN`]         [Zero or more local variables.]]
+    [[`Attr`]                   [Synthesized attribute. The rule return type.]]
+    [[`ID`]                     [The rule ID]]
     [[`r, r2`]                  [Rules]]
-    [[`g`]                      [A grammar]]
+    [[`r_def, r2_def`]          [A rule definition. By convention a rule named `r` should
+                                have corresponding rule definition named `r_def`]]
     [[`p`]                      [A parser expression]]
-    [[`my_grammar`]             [A user defined grammar]]
-]
-
-[variablelist Terminology
-    [[Signature]                [`RT(Arg1, Arg2 ... ,ArgN)`. The signature specifies
-                                the synthesized (return value) and inherited (arguments)
-                                attributes.]]
-    [[Locals]                   [`locals<L1, L2 ..., LN>`. The local variables.]]
-    [[Skipper]                  [The skip-parser type]]
-]
-
-[variablelist Template Arguments
-    [[`Iterator`]               [The iterator type you will use for parsing.]]
-    [[`A1`, `A2`, `A3`]         [Can be one of 1) Signature 2) Locals 3) Skipper.]]
 ]
 
 [table
     [[Expression]                               [Description]]
-    [[`rule<Iterator, A1, A2, A3> r(name);`]    [Rule declaration. `Iterator` is required.
-                                                `A1, A2, A3` are optional and can be specified in any order.
+    [[`rule<ID, Attr> const r = name;`]         [Rule declaration. `ID` is required.
+                                                `Attr` is optional and defaults to __unused_type__.
                                                 `name` is an optional string that gives the rule
                                                 its name, useful for debugging and error handling.]]
-    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
-    [[`r = r2;`]                                [Assign rule `r2` to `r`.]]
-    [[`r.alias()`]                              [return an alias of `r`. The alias is a parser that
-                                                holds a reference to `r`. Reference semantics.]]
-    [[`r.copy()`]                               [Get a copy of `r`.]]
-    [[`r.name(name)`]                           [Naming a rule]]
     [[`r.name()`]                               [Getting the name of a rule]]
-    [[debug(r)]                                 [Debug rule `r`]]
-    [[`r = p;`]                                 [Rule definition]]
-    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` should be
-                                                compatible with the synthesized attribute of `r`. When `p`
-                                                is successful, its attribute is automatically propagated
-                                                to `r`'s synthesized attribute.]]
-
-    [[
-``
-    template <typename Iterator>
-    struct my_grammar : grammar<Iterator, A1, A2, A3>
-    {
-        my_grammar() : my_grammar::base_type(start, name)
-        {
-            // Rule definitions
-            start = /* ... */;
-        }
-
-        rule<Iterator, A1, A2, A3> start;
-        // more rule declarations...
-    };
-``
-    ]                                           [Grammar definition. `name` is an optional string that gives the
-                                                grammar its name, useful for debugging and error handling.]]
-    [[`g.name(name)`]                           [Naming a grammar]]
-    [[`g.name()`]                               [Getting the name of a grammar]]
+    [[`auto const r_def = p;`]                  [Rule definition]]
+    [[`BOOST_SPIRIT_DEFINE(r, r2, ...)`]        [Links one or more rules (`r, r2, ...`)  with
+                                                their definitions (`r_def, r2_def, ...`)]]
 ]
 
 [endsect]
@@ -427,19 +370,7 @@ Has the form:
 
 where `f` is a function with the signatures:
 
-    void f(Attrib const&);
-    void f(Attrib const&, Context&);
-    void f(Attrib const&, Context&, bool&);
-
-You can use __boost_bind__ to bind member functions. For function
-objects, the allowed signatures are:
-
-    void operator()(Attrib const&, unused_type, unused_type) const;
-    void operator()(Attrib const&, Context&, unused_type) const;
-    void operator()(Attrib const&, Context&, bool&) const;
-
-The `unused_type` is used in the signatures above to signify 'don't
-care'.
+    void f(Context&);
 
 [/ $$$ TODO $$$ Fix this link: For more detailed information about semantic actions see:]
 

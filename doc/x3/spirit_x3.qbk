@@ -73,9 +73,9 @@
 [def __peg__                    [link spirit.abstracts.parsing_expression_grammar Parsing Expression Grammar]]
 [def __ast__                    Abstract Syntax Tree] [/$$$ TODO: link me $$$]
 
-[def __sec_x3_reference__       [[/ link spirit.x3.reference] X3 Reference]]
-[def __sec_x3_primitive__       [[/ link spirit.x3.quick_reference.x3_parsers] X3 Parsers]]
-[def __sec_x3_compound__        [[/ link spirit.x3.quick_reference.compound_attribute_rules] Parser Compound Attribute Rules]]
+[def __sec_x3_reference__       [/ link spirit.x3.reference] X3 Reference]
+[def __sec_x3_primitive__       [/ link spirit.x3.quick_reference.x3_parsers] X3 Parsers]
+[def __sec_x3_compound__        [/ link spirit.x3.quick_reference.compound_attribute_rules] Parser Compound Attribute Rules]
 
 [/ support]
 [def __info__                   `info`] [/ TODO Link Me]
@@ -84,49 +84,48 @@
 [def __unused__                 `unused`] [/$$$ TODO: link me $$$]
 [def __char_class_types__       Character Class Types] [/$$$ TODO: link me $$$]
 
-
 [/ quick-ref]
 [def __x3_quickref__                [link spirit.x3.quick_reference X3 Quick Reference]]
 [def __x3_comp_attr_notation__      [link spirit.x3.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
 
 [/ concepts]
-[def __parser_concept__             [[/ link spirit.x3.reference.parser_concepts.parser] `Parser`]]
-[def __primitive_parser_concept__   [[/ link spirit.x3.reference.parser_concepts.primitiveparser] `PrimitiveParser`]]
-[def __unary_parser_concept__       [[/ link spirit.x3.reference.parser_concepts.unaryparser] `UnaryParser`]]
-[def __binary_parser_concept__      [[/ link spirit.x3.reference.parser_concepts.binaryparser] `BinaryParser`]]
-[def __nary_parser_concept__        [[/ link spirit.x3.reference.parser_concepts.naryparser] `NaryParser`]]
-[def __x3_nonterminal__             [[/ link spirit.x3.reference.parser_concepts.nonterminal] `Nonterminal`]]
-[def __x3_nonterminal_attribute__   [[/ link spirit.x3.reference.parser_concepts.nonterminal.attributes] `Attribute`]]
+[def __parser_concept__             [/ link spirit.x3.reference.parser_concepts.parser] `Parser`]
+[def __primitive_parser_concept__   [/ link spirit.x3.reference.parser_concepts.primitiveparser] `PrimitiveParser`]
+[def __unary_parser_concept__       [/ link spirit.x3.reference.parser_concepts.unaryparser] `UnaryParser`]
+[def __binary_parser_concept__      [/ link spirit.x3.reference.parser_concepts.binaryparser] `BinaryParser`]
+[def __nary_parser_concept__        [/ link spirit.x3.reference.parser_concepts.naryparser] `NaryParser`]
+[def __x3_nonterminal__             [/ link spirit.x3.reference.parser_concepts.nonterminal] `Nonterminal`]
+[def __x3_nonterminal_attribute__   [/ link spirit.x3.reference.parser_concepts.nonterminal.attributes] `Attribute`]
 
 [/ basics]
-[def __x3_lazy_argument__           [[/ link spirit.x3.reference.basics.lazy_argument] Lazy Argument]]
-[def __x3_lazy_arguments__          [[/ link spirit.x3.reference.basics.lazy_argument] Lazy Arguments]]
-[def __char_encoding_namespace__    [[/ link spirit.x3.reference.basics.character_encoding_namespace] Character Encoding Namespace]]
-[def __x3_basics_examples__         [[/ link spirit.x3.reference.basics.examples] Basics Examples]]
+[def __x3_lazy_argument__           [/ link spirit.x3.reference.basics.lazy_argument] Lazy Argument]
+[def __x3_lazy_arguments__          [/ link spirit.x3.reference.basics.lazy_argument] Lazy Arguments]
+[def __char_encoding_namespace__    [/ link spirit.x3.reference.basics.character_encoding_namespace] Character Encoding Namespace]
+[def __x3_basics_examples__         [/ link spirit.x3.reference.basics.examples] Basics Examples]
 
 [/ string]
 [template x3_lit_string[str]        [[/ link spirit.x3.reference.string.string] str]]
 [def __string__                     [/ link spirit.x3.reference.basics.string] String]
-[def __x3_symbols__                 [/ link spirit.x3.reference.string.symbols] `symbols<>`]
+[def __x3_symbols__                 [/ link spirit.x3.reference.string.symbols] `symbols<T>`]
 
 [/ action]
 [def __x3_semantic_actions__        Semantic Actions] [/ TODO Link Me]
 
 [/ char]
-[template x3_char[str]              [[/ link spirit.x3.reference.char.char] str]]
-[template x3_char_class[str]        [[/ link spirit.x3.reference.char.char_class] str]]
-[template x3_lit_char[char]         [[/ link spirit.x3.reference.char.char] char]]
+[template x3_char[str]              [/ link spirit.x3.reference.char.char] [str]]
+[template x3_char_class[str]        [/ link spirit.x3.reference.char.char_class] [str]]
+[template x3_lit_char[char]         [/ link spirit.x3.reference.char.char] [char]]
 
 [/ numerics]
-[template x3_signed_int[str]        [[/ link spirit.x3.reference.numeric.int] str]]
-[template x3_unsigned_int[str]      [[/ link spirit.x3.reference.numeric.uint] str]]
-[template x3_real_number[str]       [[/ link spirit.x3.reference.numeric.real] str]]
-[template x3_boolean[str]           [[/ link spirit.x3.reference.numeric.boolean] str]]
+[template x3_signed_int[str]        [/ link spirit.x3.reference.numeric.int] [str]]
+[template x3_unsigned_int[str]      [/ link spirit.x3.reference.numeric.uint] [str]]
+[template x3_real_number[str]       [/ link spirit.x3.reference.numeric.real] [str]]
+[template x3_boolean[str]           [/ link spirit.x3.reference.numeric.boolean] [str]]
 
 [/ binary]
-[template x3_native_binary[str]     [[/ link spirit.x3.reference.binary.binary_native] str]]
-[template x3_little_binary[str]     [[/ link spirit.x3.reference.binary.binary_little] str]]
-[template x3_big_binary[str]        [[/ link spirit.x3.reference.binary.binary_big] str]]
+[template x3_native_binary[str]     [/ link spirit.x3.reference.binary.binary_native] [str]]
+[template x3_little_binary[str]     [/ link spirit.x3.reference.binary.binary_little] [str]]
+[template x3_big_binary[str]        [/ link spirit.x3.reference.binary.binary_big] [str]]
 
 [/ auxiliary]
 [def __x3_attr__                    [/ link spirit.x3.reference.auxiliary.attr] `attr(attrib)`]
@@ -163,7 +162,7 @@
 [def __x3_plus__                    [/ link spirit.x3.reference.operator.plus] `+a`]
 [def __x3_sequence__                [/ link spirit.x3.reference.operator.sequence] `a >> b`]
 
-[def __x3_stream__                  [[/ link spirit.x3.reference.stream.stream] `stream`]]
+[def __x3_stream__                  [/ link spirit.x3.reference.stream.stream] `stream`]
 
 [/ nonterminal]
 [def __x3_rule__                    [/ link spirit.x3.reference.nonterminal.rule] rule]
@@ -172,11 +171,11 @@
 [def __x3_grammars__                [/ link spirit.x3.reference.nonterminal.grammar] grammars]
 
 [/ stream]
-[template x3_match[str]             [[/ link spirit.x3.reference.parse_api.stream_api] str]]
-[template x3_auto[str]              [[/ link spirit.x3.reference.auto] str]]
-[def __create_parser__              [[/ link spirit.x3.reference.parse_api.create_parser] `create_parser`]]
+[template x3_match[str]             [/ link spirit.x3.reference.parse_api.stream_api] str]
+[template x3_auto[str]              [/ link spirit.x3.reference.auto] str]
+[def __create_parser__              [/ link spirit.x3.reference.parse_api.create_parser] `create_parser`]
 
-[def __parse_api__                  [[/ link spirit.x3.reference.parse_api] The Parse API]]
+[def __parse_api__                  [/ link spirit.x3.reference.parse_api] The Parse API]
 
 [/==============================================================================
     Documentation Start

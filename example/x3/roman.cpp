@@ -116,7 +116,7 @@ namespace client
 
         x3::rule<class roman, unsigned> const roman = "roman";
 
-        auto roman_def =
+        auto const roman_def =
             eps                 [set_zero]
             >>
             (

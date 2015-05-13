@@ -10,8 +10,8 @@
 
 This example demonstrates:
 
-* symbol table
-* rule
+* The Symbol Table
+* Non-terminal rules
 
 [heading Symbol Table]
 
@@ -118,17 +118,20 @@ name them, and refer to them from other parser expressions by name.
 A parser expression can be assigned to what is called a "rule". There are
 various ways to declare rules. The simplest form is:
 
-    rule<ID> r;
+    rule<ID> const r = "some-name";
 
 At the very least, the rule needs an identification tag. This ID can be any
 struct or class type and need not be defined. Forward declaration would suffice.
+The name is optional, but is useful for debugging and error handling, as we'll
+see later. Notice that rule `r` is declared `const`. Rules are immutable and are
+best declared as `const`.
 
 [note Unlike Qi (Spirit V2), X3 rules can be used with both `phrase_parse` and
 `parse` without having to specify the skip parser]
 
 For our next example, there's one more rule form you should know about:
 
-    rule<ID, Attribute> r;
+    rule<ID, Attribute> const r = "some-name";
 
 The Attribute specifies the attributes of the rule. You've seen that our parsers
 can have an attribute. Recall that the `double_` parser has an attribute of
@@ -137,12 +140,17 @@ can have an attribute. Recall that the `double_` parser has an attribute of
 
 After having declared a rule, you need a definition for the rule. Example:
 
-    auto r_def = double_ >> *(',' >> double_);
+    auto const r_def = double_ >> *(',' >> double_);
 
-By convention, rule definitions have a _def suffix. Then we can tie the rule
-with a rule definition:
+By convention, rule definitions have a _def suffix. Like rules, rule definitions
+are immutable and are best declared as `const`. Now that we have a rule and its
+definition, we tie the rule with a rule definition using the
+`BOOST_SPIRIT_DEFINE` macro:
 
     BOOST_SPIRIT_DEFINE(r);
+
+[note `BOOST_SPIRIT_DEFINE` is variadic and may be used for one or more rules.
+Example: `BOOST_SPIRIT_DEFINE(r1, r2, r3);`]
 
 [heading Grammars]
 
@@ -164,9 +172,9 @@ The roman numeral grammar is a very nice and simple example of a grammar:
         auto add1000 = [&](auto& ctx){ _val(ctx) += 1000; };
         auto add = [&](auto& ctx){ _val(ctx) += _attr(ctx); };
 
-        x3::rule<class roman, unsigned> const roman("roman");
+        x3::rule<class roman, unsigned> const roman = "roman";
 
-        auto roman_def =
+        auto const roman_def =
             eps                 [set_zero]
             >>
             (
@@ -193,6 +201,8 @@ Things to take notice of:
   attribute, to zero before anything else. The actual parser starts at
   `+lit('M')`, parsing roman thousands. Using `eps` this way is good
   for doing pre and post initializations.
+
+* The rule `roman` and the definition `roman_def` are const objects.
 
 [heading Let's Parse!]
 
