@@ -68,7 +68,7 @@ namespace client
         using x3::lexeme;
         using ascii::char_;
 
-        x3::rule<class employee, ast::employee> employee("employee");
+        x3::rule<class employee, ast::employee> employee = "employee";
 
         auto quoted_string = lexeme['"' >> +(char_ - '"') >> '"'];
 

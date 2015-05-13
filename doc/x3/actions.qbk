@@ -86,3 +86,5 @@ Attaching semantic actions is the first hurdle one has to tackle when getting
 started with parsing with Spirit. Familiarize yourself with this task.
 
 The examples above can be found here: [@../../../example/x3/actions.cpp]
+
+[endsect]
