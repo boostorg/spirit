@@ -123,28 +123,11 @@ main()
         BOOST_TEST(test(" a a aaa aa", repeat(7)[char_], space));
         BOOST_TEST(test("12345 678 9", repeat(9)[digit], space));
     }
-    {
-//~        BOOST_TEST(test("aBcdeFGH", no_case[repeat(8)[lower]]));
-//~        BOOST_TEST(test("a B cde FGH", no_case[repeat(8)[lower]], space));
-    }
+
     {
         std::vector<std::string> v;
         BOOST_TEST(test_attr("a b c d", repeat(4)[lexeme[+alpha]], v, space) && 4 == v.size() &&
             v[0] == "a" && v[1] == "b" && v[2] == "c" &&  v[3] == "d");
-    }
-    {
-//~        std::string s;
-//~        BOOST_TEST(test_attr("bbbb", repeat(4)[char_], s) && s == "bbbb");
-//~
-//~        s.clear();
-//~        BOOST_TEST(test_attr("b b b b", repeat(4)[char_], s, space) && s == "bbbb");
-//~
-//~        // The following 2 tests show that omit does not inhibit explicit attributes
-//~        s.clear();
-//~        BOOST_TEST(test_attr("bbbb", omit[repeat(4)[char_('b')]], s) && s == "bbbb");
-//~
-//~        s.clear();
-//~        BOOST_TEST(test_attr("b b b b", omit[repeat(4)[char_('b')]], s, space) && s == "bbbb");
     }
     {
         BOOST_TEST(test("1 2 3", int_ >> repeat(2)[int_], space));
@@ -158,60 +141,5 @@ main()
 
         BOOST_TEST(!test("1 2", int_ >> repeat(2)[int_], space));
     }
-
-//~    { // actions
-//~        std::vector<char> v;
-//~        BOOST_TEST(test("bbbb", repeat(4)[char_]/ [&v]( auto &ctx, const std::vector<char> &attr) { v = attr; }) && 4 == v.size() &&
-//~            v[0] == 'b' && v[1] == 'b' && v[2] == 'b' &&  v[3] == 'b');
-//~    }
-//~    { // more actions
-//~        namespace phx = boost::phoenix;
-//~
-//~        std::vector<int> v;
-//~        BOOST_TEST(test("123 456 789", repeat(3)[int_][phx::ref(v) = _1], space) && 3 == v.size() &&
-//~            v[0] == 123 && v[1] == 456 && v[2] == 789);
-//~    }
-//~
-//~    { // lazy repeats
-//~        using boost::phoenix::val;
-//~
-//~        BOOST_TEST(test("aaaaaaaa", repeat(val(8))[char_]));
-//~        BOOST_TEST(!test("aa", repeat(val(3))[char_]));
-//~
-//~        BOOST_TEST(test("aaa", repeat(val(3), val(5))[char_]));
-//~        BOOST_TEST(test("aaaaa", repeat(val(3), val(5))[char_]));
-//~        BOOST_TEST(!test("aaaaaa", repeat(val(3), val(5))[char_]));
-//~        BOOST_TEST(!test("aa", repeat(val(3), val(5))[char_]));
-//~
-//~        BOOST_TEST(test("aaa", repeat(val(3), val(inf))[char_]));
-//~        BOOST_TEST(test("aaaaa", repeat(val(3), val(inf))[char_]));
-//~        BOOST_TEST(test("aaaaaa", repeat(val(3), val(inf))[char_]));
-//~        BOOST_TEST(!test("aa", repeat(val(3), val(inf))[char_]));
-//~    }
-//~
-//~    { // more lazy repeats
-//~        using boost::phoenix::val;
-//~
-//~        BOOST_TEST(test("aaa", repeat(3, val(5))[char_]));
-//~        BOOST_TEST(test("aaaaa", repeat(val(3), 5)[char_]));
-//~        BOOST_TEST(!test("aaaaaa", repeat(3, val(5))[char_]));
-//~        BOOST_TEST(!test("aa", repeat(val(3), 5)[char_]));
-//~
-//~//#warning "testcase commented out"
-//~        BOOST_TEST(test("aaa", repeat(val(3), inf)[char_]));
-//~        BOOST_TEST(test("aaaaa", repeat(3, val(inf))[char_]));
-//~        BOOST_TEST(test("aaaaaa", repeat(val(3), inf)[char_]));
-//~        BOOST_TEST(!test("aa", repeat(3, val(inf))[char_]));
-//~    }
-//~    
-//~    { // attribute customization
-//~        
-//~        x_attr x;
-//~        test_attr("abcde", repeat[char_], x);
-//~        test_attr("abcde", repeat(5)[char_], x);
-//~        test_attr("abcde", repeat(1, 5)[char_], x);
-//~        test_attr("abcde", repeat(1, inf)[char_], x);
-//~    }
     return boost::report_errors();
 }
-

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -36,8 +36,6 @@ main()
     using spirit_test::test_attr;
     using boost::spirit::x3::symbols;
     using boost::spirit::x3::rule;
-    //~ using boost::spirit::x3::lazy;
-    //~ using boost::spirit::x3::_r1;
 
     { // construction from symbol array
         char const* syms[] = {"Joel","Ruby","Tenji","Tutit","Kim","Joey"};
@@ -103,27 +101,6 @@ main()
         BOOST_TEST((!test("z", sym)));
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ namespace phx = boost::phoenix;
-
-        //~ symbols<char, int> sym;
-        //~ sym.add
-            //~ ("a", 1)
-            //~ ("b", 2)
-        //~ ;
-
-        //~ rule<char const*, int(symbols<char, int>&)> r;
-        //~ r %= lazy(_r1);
-
-        //~ int i = 0;
-        //~ BOOST_TEST(test_attr("a", r(phx::ref(sym)), i));
-        //~ BOOST_TEST(i == 1);
-        //~ BOOST_TEST(test_attr("b", r(phx::ref(sym)), i));
-        //~ BOOST_TEST(i == 2);
-        //~ BOOST_TEST(!test("c", r(phx::ref(sym))));
-    //~ }
-
     { // find
 
         symbols<int> sym;
@@ -183,21 +160,21 @@ main()
         BOOST_TEST(!sym.find("foot"));
         BOOST_TEST(!sym.find("afoot"));
 
-//~        char const *str, *first, *last;
-//~        str = "foolish"; first = str; last = str + 7;
-//~        BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
-//~
-//~        first = str; last = str + 4;
-//~        BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
-//~
-//~        str = "food"; first = str; last = str + 4;
-//~        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str + 3);
-//~
-//~        first = str; last = str + 3;
-//~        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str + 3);
-//~
-//~        first = str; last = str + 2;
-//~        BOOST_TEST(!sym.prefix_find(first, last) && first == str);
+        char const *str, *first, *last;
+        str = "foolish"; first = str; last = str + 7;
+        BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
+
+        first = str; last = str + 4;
+        BOOST_TEST(*sym.prefix_find(first, last) == 2 && first == str + 4);
+
+        str = "food"; first = str; last = str + 4;
+        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str + 3);
+
+        first = str; last = str + 3;
+        BOOST_TEST(*sym.prefix_find(first, last) == 1 && first == str + 3);
+
+        first = str; last = str + 2;
+        BOOST_TEST(!sym.prefix_find(first, last) && first == str);
     }
 
     {

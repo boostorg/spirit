@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2013 Carl Barron
+    Copyright (c) 2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -65,7 +66,7 @@ main()
         };
 
         auto number = -hundreds >> -tens >> -ones;
-        
+
         roman r;
         BOOST_TEST((test_attr("CDXLII", number, r)));
         BOOST_TEST(eval(r) == 442);
@@ -73,14 +74,14 @@ main()
 
     { // construction from initializer-list without attribute
         symbols<> foo = {"a1", "a2", "a3"};
-        
+
         BOOST_TEST((test("a3", foo)));
     }
 
     { // assignment from initializer-list
         symbols<> foo;
         foo = {"a1", "a2", "a3"};
-        
+
         BOOST_TEST((test("a3", foo)));
     }
 

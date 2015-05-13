@@ -41,21 +41,24 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-	
+/*	$$$ clang reports: warning: class template partial specialization contains
+ *	a template parameter that can not be deduced; this partial specialization
+ *	will never be used $$$
+ *
     // save to associative fusion container where Key
     // is variant over possible keys
     template <typename ...T>
     struct save_to_assoc_attr<variant<T...> >
     {
         typedef variant<T...> variant_t;
-            
+
         template <typename Value, typename Attribute>
         static void call(const variant_t key, Value& value, Attribute& attr)
         {
             apply_visitor(saver_visitor<Attribute, Value>(attr, value), key);
         }
     };
-
+*/
     template <typename Attribute, typename Value>
     struct saver_visitor  : boost::static_visitor<void>
     {
@@ -64,7 +67,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         Attribute& attr;
         Value& value;
-            
+
         template <typename Key>
         void operator()(Key) const
         {
@@ -173,7 +176,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return parser.parse(first, last, context, rcontext, unused);
         }
-	
+
 
     public:
 

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -73,18 +73,6 @@ main()
         BOOST_TEST((test_attr("x", string("x"), s)));
         BOOST_TEST(s == "x");
     }
-/*
-    {   // lazy string
-
-        using namespace boost::spirit::ascii;
-        namespace phx = boost::phoenix;
-
-        BOOST_TEST((test("x", string(phx::val("x")))));
-
-        std::string str; // make sure lazy lits have an attribute
-        BOOST_TEST(test("x", string(phx::val("x"))[phx::ref(str) = _1]));
-        BOOST_TEST(str == "x");
-    }*/
 
     return boost::report_errors();
 }

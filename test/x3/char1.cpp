@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -16,8 +16,6 @@ int
 main()
 {
     using spirit_test::test;
-    //~ using spirit_test::test_attr;
-    //~ using spirit_test::print_info;
 
     {
         using namespace boost::spirit::x3::ascii;
@@ -123,34 +121,6 @@ main()
         test("", ascii::char_(L"a-z0-9"));
 #endif
     }
-
-    //~ {   // lazy chars
-
-        //~ using namespace boost::spirit::x3::ascii;
-
-        //~ using boost::phoenix::val;
-        //~ using boost::phoenix::ref;
-        //~ using boost::spirit::x3::_1;
-
-        //~ BOOST_TEST((test("x", char_(val('x')))));
-        //~ BOOST_TEST((test("h", char_(val('a'), val('n')))));
-        //~ BOOST_TEST(test("0", char_(val("a-z0-9"))));
-
-        //~ char ch; // make sure lazy chars have an attribute
-        //~ BOOST_TEST(test("x", char_(val('x'))[ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
-    //~ }
-
-    //~ { // testing "what"
-
-        //~ using boost::spirit::x3::what;
-        //~ using boost::spirit::x3::ascii::char_;
-        //~ using boost::spirit::x3::ascii::alpha;
-
-        //~ print_info(what('x'));
-        //~ print_info(what(char_('a','z')));
-        //~ print_info(what(alpha));
-    //~ }
 
     return boost::report_errors();
 }

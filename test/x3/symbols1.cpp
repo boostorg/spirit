@@ -1,13 +1,11 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-#include <boost/phoenix/core.hpp>
-#include <boost/phoenix/operator.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -31,7 +29,6 @@ main()
     using spirit_test::test_attr;
     using boost::spirit::x3::symbols;
     using boost::spirit::x3::no_case;
-    //~ using boost::spirit::x3::lazy;
 
     { // basics
         symbols<int> sym;
@@ -45,13 +42,6 @@ main()
             ("Joey")
             ("Joeyboy")
         ;
-
-        // $$$ Hat is this??? $$$
-        //~ boost::mpl::true_ f = boost::mpl::bool_<boost::spirit::x3::traits::is_parser<symbols<char, int> >::value>();
-
-        // silence stupid compiler warnings
-        // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
-        //~ BOOST_TEST((f.value));
 
         BOOST_TEST((test("Joel", sym)));
         BOOST_TEST((test("Ruby", sym)));
@@ -103,7 +93,6 @@ main()
         BOOST_TEST((!test("Ruby", sym)));
     }
 
-    /// $$$ Not yet implemented $$$
     { // no-case handling
         using namespace boost::spirit::x3::ascii;
 
@@ -163,35 +152,36 @@ main()
         BOOST_TEST(i == 1);
     }
 
-    //~ { // actions
-        //~ namespace phx = boost::phoenix;
-        //~ using boost::spirit::x3::_1;
+    { // actions
+        using boost::spirit::x3::_attr;
 
-        //~ symbols<char, int> sym;
-        //~ sym.add
-            //~ ("Joel", 1)
-            //~ ("Ruby", 2)
-            //~ ("Tenji", 3)
-            //~ ("Tutit", 4)
-            //~ ("Kim", 5)
-            //~ ("Joey", 6)
-        //~ ;
+        symbols<int> sym;
+        sym.add
+            ("Joel", 1)
+            ("Ruby", 2)
+            ("Tenji", 3)
+            ("Tutit", 4)
+            ("Kim", 5)
+            ("Joey", 6)
+        ;
 
-        //~ int i;
-        //~ BOOST_TEST((test("Joel", sym[phx::ref(i) = _1])));
-        //~ BOOST_TEST(i == 1);
-        //~ BOOST_TEST((test("Ruby", sym[phx::ref(i) = _1])));
-        //~ BOOST_TEST(i == 2);
-        //~ BOOST_TEST((test("Tenji", sym[phx::ref(i) = _1])));
-        //~ BOOST_TEST(i == 3);
-        //~ BOOST_TEST((test("Tutit", sym[phx::ref(i) = _1])));
-        //~ BOOST_TEST(i == 4);
-        //~ BOOST_TEST((test("Kim", sym[phx::ref(i) = _1])));
-        //~ BOOST_TEST(i == 5);
-        //~ BOOST_TEST((test("Joey", sym[phx::ref(i) = _1])));
-        //~ BOOST_TEST(i == 6);
-        //~ BOOST_TEST((!test("XXX", sym[phx::ref(i) = _1])));
-    //~ }
+        int i;
+        auto f = [&](auto& ctx){ i = _attr(ctx); };
+
+        BOOST_TEST((test("Joel", sym[f])));
+        BOOST_TEST(i == 1);
+        BOOST_TEST((test("Ruby", sym[f])));
+        BOOST_TEST(i == 2);
+        BOOST_TEST((test("Tenji", sym[f])));
+        BOOST_TEST(i == 3);
+        BOOST_TEST((test("Tutit", sym[f])));
+        BOOST_TEST(i == 4);
+        BOOST_TEST((test("Kim", sym[f])));
+        BOOST_TEST(i == 5);
+        BOOST_TEST((test("Joey", sym[f])));
+        BOOST_TEST(i == 6);
+        BOOST_TEST((!test("XXX", sym[f])));
+    }
 
     return boost::report_errors();
 }
