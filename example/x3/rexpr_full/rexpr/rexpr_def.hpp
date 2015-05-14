@@ -58,12 +58,13 @@ namespace rexpr { namespace parser
 
     BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_inner, rexpr_key_value);
 
+    // We want these to be annotated with the iterator position (see annotation.hpp)
     class rexpr_value_class : annotation_base {};
     class rexpr_key_value_class : annotation_base {};
     class rexpr_inner_class : annotation_base {};
 
     // We want error-handling only for the start (outermost) rexpr
-    // rexpr is the same as rexpr_inner but without error-handling
+    // rexpr is the same as rexpr_inner but without error-handling (see error_handling.hpp)
     class rexpr_class :
         annotation_base, error_handler_base {};
 }}

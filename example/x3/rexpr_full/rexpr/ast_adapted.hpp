@@ -18,10 +18,4 @@ BOOST_FUSION_ADAPT_STRUCT(
     (rexpr::ast::rexpr_map, entries)
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    rexpr::ast::rexpr_key_value,
-    (std::string, key)
-    (rexpr::ast::rexpr_value, value)
-)
-
 #endif

@@ -14,6 +14,7 @@ namespace rexpr
 {
     namespace x3 = boost::spirit::x3;
 
+    // The public interface
     namespace parser
     {
         class rexpr_class;
