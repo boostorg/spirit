@@ -1,0 +1,35 @@
+#
+#   Copyright (C) 2015 Michael Caisse, ciere.com
+#
+#   Distributed under the Boost Software License, Version 1.0. (See accompanying
+#   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+
+import os ;
+
+local BOOST_ROOT = [ os.environ BOOST_ROOT ] ;
+
+if $(BOOST_ROOT)
+{
+   use-project /boost : $(BOOST_ROOT) ;
+}
+
+project
+   : requirements
+      <toolset>gcc:<cxxflags>-std=c++14
+      <toolset>gcc:<cxxflags>-ftemplate-depth-512
+      <toolset>clang:<cxxflags>-std=c++1y
+      <toolset>clang:<cxxflags>-ftemplate-depth-512
+      <toolset>darwin:<cxxflags>-std=c++14
+      <toolset>darwin:<cxxflags>-ftemplate-depth-512
+      <toolset>darwin:<cxxflags>-ftemplate-depth-512
+      <use>/boost//headers
+      <include>.
+      <include>./rexpr
+   ;
+
+lib rexpr
+   : [ glob src/*.cpp ]
+   ;
+
+build-project test ;
