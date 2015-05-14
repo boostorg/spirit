@@ -25,10 +25,18 @@ namespace rexpr { namespace parser
     using ascii::char_;
     using ascii::string;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Rule IDs
+    ///////////////////////////////////////////////////////////////////////////
+
     struct rexpr_value_class;
     struct rexpr_key_value_class;
     struct rexpr_inner_class;
     struct rexpr_class;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Rules
+    ///////////////////////////////////////////////////////////////////////////
 
     x3::rule<rexpr_value_class, ast::rexpr_value>
         rexpr_value = "rexpr_value";
@@ -41,6 +49,10 @@ namespace rexpr { namespace parser
 
     x3::rule<rexpr_class, ast::rexpr>
         rexpr = "rexpr";
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Grammar
+    ///////////////////////////////////////////////////////////////////////////
 
     auto const quoted_string =
         '"' >> *(char_ - '"') >> '"';
@@ -58,13 +70,17 @@ namespace rexpr { namespace parser
 
     BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_inner, rexpr_key_value);
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Annotation and Error handling
+    ///////////////////////////////////////////////////////////////////////////
+
     // We want these to be annotated with the iterator position (see annotation.hpp)
     struct rexpr_value_class : annotation_base {};
     struct rexpr_key_value_class : annotation_base {};
     struct rexpr_inner_class : annotation_base {};
 
     // We want error-handling only for the start (outermost) rexpr
-    // rexpr is the same as rexpr_inner but without error-handling (see error_handling.hpp)
+    // rexpr is the same as rexpr_inner but without error-handling (see error_handler.hpp)
     struct rexpr_class :
         annotation_base, error_handler_base {};
 }}
