@@ -72,6 +72,7 @@ int main(int argc, char* argv[])
        return -1;
     }
 
-    test::for_each_file(fs::path(argv[1]), compare);
-    return 0;
+    std::cout << "Testing: " << fs::absolute(fs::path(argv[1])) << std::endl;
+
+    return test::for_each_file(fs::path(argv[1]), compare);
 }

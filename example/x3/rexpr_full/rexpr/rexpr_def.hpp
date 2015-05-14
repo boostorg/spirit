@@ -25,10 +25,10 @@ namespace rexpr { namespace parser
     using ascii::char_;
     using ascii::string;
 
-    class rexpr_value_class;
-    class rexpr_key_value_class;
-    class rexpr_inner_class;
-    class rexpr_class;
+    struct rexpr_value_class;
+    struct rexpr_key_value_class;
+    struct rexpr_inner_class;
+    struct rexpr_class;
 
     x3::rule<rexpr_value_class, ast::rexpr_value>
         rexpr_value = "rexpr_value";
@@ -59,13 +59,13 @@ namespace rexpr { namespace parser
     BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_inner, rexpr_key_value);
 
     // We want these to be annotated with the iterator position (see annotation.hpp)
-    class rexpr_value_class : annotation_base {};
-    class rexpr_key_value_class : annotation_base {};
-    class rexpr_inner_class : annotation_base {};
+    struct rexpr_value_class : annotation_base {};
+    struct rexpr_key_value_class : annotation_base {};
+    struct rexpr_inner_class : annotation_base {};
 
     // We want error-handling only for the start (outermost) rexpr
     // rexpr is the same as rexpr_inner but without error-handling (see error_handling.hpp)
-    class rexpr_class :
+    struct rexpr_class :
         annotation_base, error_handler_base {};
 }}
 

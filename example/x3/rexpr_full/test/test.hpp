@@ -73,7 +73,7 @@ namespace test
     //      call the function f, passing in the *.input and *.expect paths.
     ////////////////////////////////////////////////////////////////////////////
     template <typename F>
-    void for_each_file(fs::path p, F f);
+    int for_each_file(fs::path p, F f);
 
     ////////////////////////////////////////////////////////////////////////////
     // load_file
@@ -177,7 +177,7 @@ namespace test
    }
 
     template <typename F>
-    inline void for_each_file(fs::path p, F f)
+    inline int for_each_file(fs::path p, F f)
     {
         try
         {
@@ -195,12 +195,19 @@ namespace test
                    }
                 }
             }
+            else
+            {
+                std::cerr << "Directory: " << fs::absolute(p) << " does not exist." << std::endl;
+                return 1;
+            }
         }
 
         catch (const fs::filesystem_error& ex)
         {
-            std::cout << ex.what() << '\n';
+            std::cerr << ex.what() << '\n';
+            return 1;
         }
+        return 0;
     }
 
     inline std::string load(fs::path p)

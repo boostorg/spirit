@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return literal_string<std::basic_string<char>, char_encoding::standard>(s);
         }
- 
+
         inline literal_string<char const*, char_encoding::standard, unused_type>
         lit(char const* s)
         {
@@ -94,7 +94,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::standard_wide>(s);
         }
- 
+
         inline literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>
         lit(wchar_t const* s)
         {
@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::ascii>(s);
         }
- 
+
         inline literal_string<char const*, char_encoding::ascii, unused_type>
         lit(char const* s)
         {
@@ -149,7 +149,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>(s);
         }
- 
+
         inline literal_string<char const*, char_encoding::iso8859_1, unused_type>
         lit(char const* s)
         {
@@ -174,9 +174,8 @@ namespace boost { namespace spirit { namespace x3
         template <int N>
         struct as_parser<char[N]>
         {
-            typedef
-                literal_string<
-                    char const*, char_encoding::standard, unused_type>
+            typedef literal_string<
+                char const*, char_encoding::standard, unused_type>
             type;
 
             typedef type value_type;
@@ -193,9 +192,8 @@ namespace boost { namespace spirit { namespace x3
         template <int N>
         struct as_parser<wchar_t[N]>
         {
-            typedef
-                literal_string<
-                    wchar_t const*, char_encoding::standard_wide, unused_type>
+            typedef literal_string<
+                wchar_t const*, char_encoding::standard_wide, unused_type>
             type;
 
             typedef type value_type;
@@ -212,18 +210,18 @@ namespace boost { namespace spirit { namespace x3
         template <>
         struct as_parser<char const*>
         {
-           typedef literal_string< 
-                       char const*, char_encoding::standard, unused_type>
-           type;
-           
-           typedef type value_type;
+            typedef literal_string<
+                char const*, char_encoding::standard, unused_type>
+            type;
 
-           static type call(char const* s)
-           {
+            typedef type value_type;
+
+            static type call(char const* s)
+            {
                 return type(s);
-           }
+            }
         };
-        
+
         template <typename Char>
         struct as_parser< std::basic_string<Char> >
         {
@@ -239,7 +237,6 @@ namespace boost { namespace spirit { namespace x3
             }
         };
     }
-
 
     template <typename String, typename Encoding, typename Attribute>
     struct get_info<literal_string<String, Encoding, Attribute>>

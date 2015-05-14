@@ -17,7 +17,7 @@ namespace rexpr
     // The public interface
     namespace parser
     {
-        class rexpr_class;
+        struct rexpr_class;
         typedef
             x3::rule<rexpr_class, ast::rexpr>
         rexpr_type;
