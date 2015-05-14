@@ -15,9 +15,10 @@
 #include "../rexpr/config.hpp"
 #include "../rexpr/printer.hpp"
 
-#include "test.hpp"
+#include <boost/spirit/home/x3/support/utility/testing.hpp>
 
 namespace fs = boost::filesystem;
+namespace testing = boost::spirit::x3::testing;
 
 auto parse = [](std::string const& source, fs::path input_path)-> std::string
 {
@@ -59,9 +60,11 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
     return out.str();
 };
 
+int num_files_tested = 0;
 auto compare = [](fs::path input_path, fs::path expect_path)
 {
-   test::compare(input_path, expect_path, parse);
+   testing::compare(input_path, expect_path, parse);
+   ++num_files_tested;
 };
 
 int main(int argc, char* argv[])
@@ -72,7 +75,11 @@ int main(int argc, char* argv[])
        return -1;
     }
 
+    std::cout << "===================================================================================================" << std::endl;
     std::cout << "Testing: " << fs::absolute(fs::path(argv[1])) << std::endl;
-
-    return test::for_each_file(fs::path(argv[1]), compare);
+    int r = testing::for_each_file(fs::path(argv[1]), compare);
+    if (r == 0)
+        std::cout << num_files_tested << " files tested." << std::endl;
+    std::cout << "===================================================================================================" << std::endl;
+    return r;
 }
