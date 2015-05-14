@@ -52,15 +52,6 @@ namespace boost { namespace spirit { namespace x3
         {
             return pos_cache.annotate(ast, first, last);
         }
-//
-//        void operator()(
-//            Iterator first
-//          , Iterator last
-//          , Iterator err_op
-//          , Iterator err_first
-//          , Iterator err_last
-//          , std::string const& error_message
-//        ) const;
 
     private:
 
@@ -81,15 +72,19 @@ namespace boost { namespace spirit { namespace x3
     template <typename Iterator>
     void error_handler<Iterator>::print_file_line(std::size_t line) const
     {
-        if (file != ""){
+        if (file != "")
+        {
 #ifdef BOOST_SPIRIT_X3_NO_FILESYSTEM
             err_out << "In file " << file << ", ";
 #else
             namespace fs = boost::filesystem;
             err_out << "In file " << fs::path(file).generic_string() << ", ";
 #endif
-        } else 
+        }
+        else
+        {
             err_out << "In ";
+        }
 
         err_out << "line " << line << ':' << std::endl;
     }
@@ -176,7 +171,7 @@ namespace boost { namespace spirit { namespace x3
                 break;
             case '\r':
                 if (prev != '\n') ++line;
-                break;            
+                break;
             default:
                 break;
             }
@@ -228,33 +223,6 @@ namespace boost { namespace spirit { namespace x3
         print_indicator(start, err_last, '~');
         err_out << " <<-- Here" << std::endl;
     }
-//
-//    template <typename Iterator>
-//    void error_handler<Iterator>::operator()(
-//        Iterator first
-//      , Iterator last
-//      , Iterator err_op
-//      , Iterator err_first
-//      , Iterator err_last
-//      , std::string const& error_message
-//    ) const
-//    {
-//        // make sure err_pos does not point to white space
-//        skip_whitespace(err_first, last);
-//
-//        print_file_line(position(err_pos));
-//        err_out << error_message << std::endl;
-//
-//        Iterator start = get_line_start(first, err_first);
-//        if (start != first)
-//            ++start;
-//        print_line(start, last);
-//        print_indicator(start, err_first, ' ');
-//        print_indicator(start, err_op, '~');
-//        err_out << '^';
-//        print_indicator(++start, err_last, '~');
-//        err_out << " <<-- Here" << std::endl;
-//    }
 
 }}}
 
