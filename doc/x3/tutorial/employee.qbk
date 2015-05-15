@@ -67,7 +67,7 @@ Here goes:
         using x3::lexeme;
         using ascii::char_;
 
-        x3::rule<class employee, ast::employee> const employee("employee");
+        x3::rule<class employee, ast::employee> const employee = "employee";
 
         auto const quoted_string = lexeme['"' >> +(char_ - '"') >> '"'];
 

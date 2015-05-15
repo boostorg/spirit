@@ -116,46 +116,43 @@ namespace client { namespace ast
     };
 }}
 
-namespace client
+///////////////////////////////////////////////////////////////////////////////
+//  Our rexpr grammar
+///////////////////////////////////////////////////////////////////////////////
+namespace client { namespace parser
 {
-    ///////////////////////////////////////////////////////////////////////////
-    //  Our rexpr grammar
-    ///////////////////////////////////////////////////////////////////////////
-    namespace parser
-    {
-        namespace x3 = boost::spirit::x3;
-        namespace ascii = boost::spirit::x3::ascii;
+    namespace x3 = boost::spirit::x3;
+    namespace ascii = boost::spirit::x3::ascii;
 
-        using x3::lit;
-        using x3::lexeme;
+    using x3::lit;
+    using x3::lexeme;
 
-        using ascii::char_;
-        using ascii::string;
+    using ascii::char_;
+    using ascii::string;
 
-        x3::rule<class rexpr_value, ast::rexpr_value>
-            rexpr_value = "rexpr_value";
+    x3::rule<class rexpr_value, ast::rexpr_value>
+        rexpr_value = "rexpr_value";
 
-        x3::rule<class rexpr, ast::rexpr>
-            rexpr = "rexpr";
+    x3::rule<class rexpr, ast::rexpr>
+        rexpr = "rexpr";
 
-        x3::rule<class rexpr_key_value, ast::rexpr_key_value>
-            rexpr_key_value = "rexpr_key_value";
+    x3::rule<class rexpr_key_value, ast::rexpr_key_value>
+        rexpr_key_value = "rexpr_key_value";
 
-        auto const quoted_string =
-            '"' >> *(char_ - '"') >> '"';
+    auto const quoted_string =
+        lexeme['"' >> *(char_ - '"') >> '"'];
 
-        auto const rexpr_value_def =
-            quoted_string | rexpr;
+    auto const rexpr_value_def =
+        quoted_string | rexpr;
 
-        auto const rexpr_key_value_def =
-            quoted_string >> '=' >> rexpr_value;
+    auto const rexpr_key_value_def =
+        quoted_string >> '=' >> rexpr_value;
 
-        auto const rexpr_def =
-            '{' >> *rexpr_key_value >> '}';
+    auto const rexpr_def =
+        '{' >> *rexpr_key_value >> '}';
 
-        BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_key_value);
-    }
-}
+    BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_key_value);
+}}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program

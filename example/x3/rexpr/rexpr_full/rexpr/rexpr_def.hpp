@@ -55,7 +55,7 @@ namespace rexpr { namespace parser
     ///////////////////////////////////////////////////////////////////////////
 
     auto const quoted_string =
-        '"' >> *(char_ - '"') >> '"';
+        lexeme['"' >> *(char_ - '"') >> '"'];
 
     auto const rexpr_value_def =
         quoted_string | rexpr_inner;
