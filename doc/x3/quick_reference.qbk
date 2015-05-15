@@ -41,8 +41,6 @@ pages and pages of reference documentation.
 ]
 
 [endsect]
-[section:x3_parsers X3 Parsers]
-
 [section:char Character Parsers]
 
 [table
@@ -244,7 +242,6 @@ pages and pages of reference documentation.
 ]
 
 [endsect]
-[endsect]
 [section Compound Attribute Rules]
 
 [heading Notation]
@@ -375,4 +372,3 @@ where `f` is a function with the signatures:
 [/ $$$ TODO $$$ Fix this link: For more detailed information about semantic actions see:]
 
 [endsect]
-

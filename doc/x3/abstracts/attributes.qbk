@@ -6,8 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:attributes Attributes]
-
 [/////////////////////////////////////////////////////////////////////////////]
 [section:primitive_attributes Attributes of Primitive Components]
 
@@ -209,4 +207,3 @@ defining the particular nonterminal. Example (ignore ID for now):
 
 [endsect]
 
-[endsect]  [/ Attributes]
