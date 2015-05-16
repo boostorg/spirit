@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2015 Joel de Guzman
+    Copyright (c) 2015 Ahmed Charles
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -110,9 +111,9 @@ namespace client
         using x3::_attr;
         using ascii::char_;
 
-        auto set_zero = [&](auto& ctx){ _val(ctx) = 0; };
-        auto add1000 = [&](auto& ctx){ _val(ctx) += 1000; };
-        auto add = [&](auto& ctx){ _val(ctx) += _attr(ctx); };
+        auto set_zero = [](auto& ctx){ _val(ctx) = 0; };
+        auto add1000 = [](auto& ctx){ _val(ctx) += 1000; };
+        auto add = [](auto& ctx){ _val(ctx) += _attr(ctx); };
 
         x3::rule<class roman, unsigned> const roman = "roman";
 
