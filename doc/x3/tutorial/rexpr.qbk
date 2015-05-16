@@ -34,9 +34,9 @@ Here's an Example:
         }
     }
 
-This simple parser for X3 intended as a minimal starting point. It is minimal, yet
-complete with all things necessary parts that make up rules (and grammars),
-except error handling and reporting.
+This simple parser for X3 is intended as a minimal starting point. It is
+minimal, yet complete with all things necessary parts that make up rules (and
+grammars), except error handling and reporting.
 
 The example can be found here: [@../../../example/x3/rexpr/rexpr_min/rexpr.cpp]
 
@@ -45,6 +45,9 @@ organization, separate compilation of grammars, and a full test harness, can
 be found in this directory:
 
 [@../../../example/x3/rexpr/rexpr_full/]
+
+[note rexpr_full is the canonical structure proposed as best practice on how
+parsers are written using Spirit X3.]
 
 [heading The AST]
 
@@ -75,8 +78,8 @@ Here's the AST:
     }}
 
 `x3::variant` is a support utility in Spirit X3 that extends __boost_variant__.
-Typically, you use __boost_variant__ as it is and refer to a particular template
-instantiation using a typedef. For example:
+Typically, you use __boost_variant__ right out of the box and refer to a
+particular template instantiation using a typedef. For example:
 
     typedef boost::variant<std::string, int> my_variant;
 
@@ -88,8 +91,8 @@ functionality.
 
 `rexpr_value` has two variant elements. It can either be a `std::string` or a
 `rexpr`. Since `rexpr` recursively contains a `rexpr_value`, it has to be
-forward declared. This recursive data structure requires it to be wrapped in
-a `x3::forward_ast` as shown in the declaration.
+forward declared. This recursive data structure requires `rexpr` to be wrapped
+in a `x3::forward_ast` as shown in the declaration.
 
 We need to tell fusion about our `rexpr` struct to make it a first-class fusion
 citizen:
@@ -143,11 +146,11 @@ We add a utility to print out the AST:
     };
 
 Traversing the AST is a recursive excercise. `rexpr_printer` is a function
-object and main entry point is `void operator()(rexpr const& ast)`. Notice how
-it recursively calls an instance of itself for each of the key value pairs,
-using `boost::apply_visitor`. Before and after iterating through all the key
-value pairs in the map, the braces are printed to delimit the entire body,
-taking care of correct indentation at each point in the recursive traversal.
+object and the main entry point is `void operator()(rexpr const& ast)`. Notice
+how it recursively calls an instance of itself for each of the key value pairs,
+using `boost::apply_visitor`. Before and after iterating through all the
+elements in the map, the braces are printed to surround the entire body, taking
+care of correct indentation at each point in the recursive traversal.
 
 The `operator()` for `std::string` should be self explanatory. It simply prints
 the text inside double quotes.
@@ -190,8 +193,8 @@ the text inside double quotes.
     }}
 
 We declare three rules `rexpr_value`, `rexpr` and `rexpr_key_value`. Same deal
-as before. The attributes decalred for each rule is the same structures we declared
-in our AST above. These are the structures our rules will produce.
+as before. The attributes declared for each rule are the same structures we
+declared in our AST above. These are the structures our rules will produce.
 
 So, going top-down (from the start rule), `rexpr` is defined as zero or more
 `rexpr_key_value`s enclosed inside the curly braces. That's the kleene star in
@@ -200,12 +203,13 @@ action there: `*rexpr_key_value`.
 [note Take note of the convention: we use `rexpr` name as the rule name and
 `rexpr_def` as the rule definition name.]
 
-To make the grammar clean, we capture the `quoted_string` using
-`auto`.
+To make the grammar clean, we capture the `quoted_string` production using
+C++ `auto`.
 
 `rexpr_value` is a `quoted_string` followed by the assignment operator `'='`,
 followed by a `rexpr_value`. `rexpr_value` is a `quoted_string` /OR/ a `rexpr`.
-This uses the alternative operator `|` that maps nicely to the variant AST.
+This uses the alternative operator `|`, and maps nicely to the variant AST the
+rule is associated with.
 
 Finally, we associate the rules and their definitions:
 
