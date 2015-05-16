@@ -28,7 +28,7 @@ exe x3_sum : sum.cpp ;
 exe x3_roman : roman.cpp ;
 exe x3_employee : employee.cpp ;
 
-exe x3_rexpr : rexpr/rexpr.cpp ;
+exe x3_rexpr : rexpr/rexpr_min/rexpr.cpp ;
 
 exe x3_calc1 : calc/calc1.cpp ;
 exe x3_calc2 : calc/calc2.cpp ;
