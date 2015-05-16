@@ -7,10 +7,9 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_AST_HPP)
 #define BOOST_SPIRIT_X3_REPR_AST_HPP
 
-#include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
-#include <boost/fusion/include/io.hpp>
-#include <boost/fusion/include/std_pair.hpp>
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
+
 #include <map>
 
 namespace rexpr { namespace ast

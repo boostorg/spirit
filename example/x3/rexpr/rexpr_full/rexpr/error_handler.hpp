@@ -7,10 +7,11 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_ERROR_HANDLER_HPP)
 #define BOOST_SPIRIT_X3_REPR_ERROR_HANDLER_HPP
 
-#include <boost/spirit/home/x3.hpp>
-#include <boost/spirit/home/x3/support/utility/error_reporting.hpp>
-#include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include "rexpr.hpp"
+
+#include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
+#include <boost/spirit/home/x3/support/utility/error_reporting.hpp>
+
 #include <map>
 
 namespace rexpr { namespace parser
