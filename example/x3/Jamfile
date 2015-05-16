@@ -30,6 +30,8 @@ exe x3_employee : employee.cpp ;
 
 exe x3_rexpr : rexpr/rexpr_min/rexpr.cpp ;
 
+build-project rexpr/rexpr_full ;
+
 exe x3_calc1 : calc/calc1.cpp ;
 exe x3_calc2 : calc/calc2.cpp ;
 exe x3_calc4 : calc/calc4.cpp ;

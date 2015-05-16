@@ -7,12 +7,13 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_REXPR_DEF_HPP)
 #define BOOST_SPIRIT_X3_REPR_REXPR_DEF_HPP
 
-#include <boost/spirit/home/x3.hpp>
+#include "annotation.hpp"
 #include "ast.hpp"
 #include "ast_adapted.hpp"
-#include "rexpr.hpp"
 #include "error_handler.hpp"
-#include "annotation.hpp"
+#include "rexpr.hpp"
+
+#include <boost/spirit/home/x3.hpp>
 
 namespace rexpr { namespace parser
 {

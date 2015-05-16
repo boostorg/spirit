@@ -7,8 +7,9 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_PRINTER_HPP)
 #define BOOST_SPIRIT_X3_REPR_PRINTER_HPP
 
-#include <ostream>
 #include "ast.hpp"
+
+#include <ostream>
 
 namespace rexpr { namespace ast
 {

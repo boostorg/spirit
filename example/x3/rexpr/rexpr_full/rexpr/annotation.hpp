@@ -7,15 +7,13 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_ANNOTATION_HPP)
 #define BOOST_SPIRIT_X3_REPR_ANNOTATION_HPP
 
-#include <map>
 #include "ast.hpp"
+#include "error_handler.hpp"
+
+#include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/utility/lambda_visitor.hpp>
 
-namespace fun
-{
-    // tag used to get our error handler from the context
-    struct error_handler_tag;
-}
+#include <map>
 
 namespace rexpr { namespace parser
 {

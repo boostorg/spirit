@@ -7,8 +7,9 @@
 #if !defined(BOOST_SPIRIT_X3_REPR_CONFIG_HPP)
 #define BOOST_SPIRIT_X3_REPR_CONFIG_HPP
 
-#include <boost/spirit/home/x3.hpp>
 #include "error_handler.hpp"
+
+#include <boost/spirit/home/x3.hpp>
 
 namespace rexpr { namespace parser
 {
