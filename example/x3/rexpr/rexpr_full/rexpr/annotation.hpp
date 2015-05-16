@@ -11,12 +11,6 @@
 #include "ast.hpp"
 #include <boost/spirit/home/x3/support/utility/lambda_visitor.hpp>
 
-namespace fun
-{
-    // tag used to get our error handler from the context
-    struct error_handler_tag;
-}
-
 namespace rexpr { namespace parser
 {
     ///////////////////////////////////////////////////////////////////////////
