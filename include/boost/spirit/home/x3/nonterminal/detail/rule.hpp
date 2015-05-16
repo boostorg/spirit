@@ -11,7 +11,10 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/x3/auxiliary/guard.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/core/skip_over.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>

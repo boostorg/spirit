@@ -7,8 +7,9 @@
 #if !defined(BOOST_SPIRIT_X3_REXPR_HPP)
 #define BOOST_SPIRIT_X3_REXPR_HPP
 
-#include <boost/spirit/home/x3.hpp>
 #include "ast.hpp"
+
+#include <boost/spirit/home/x3.hpp>
 
 namespace rexpr
 {
