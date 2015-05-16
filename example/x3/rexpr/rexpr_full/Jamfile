@@ -5,16 +5,7 @@
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-import os ;
-
-local BOOST_ROOT = [ os.environ BOOST_ROOT ] ;
-
-if $(BOOST_ROOT)
-{
-   use-project /boost : $(BOOST_ROOT) ;
-}
-
-project
+project spirit-x3-example-rexpr
    : requirements
       <toolset>gcc:<cxxflags>-std=c++14
       <toolset>gcc:<cxxflags>-ftemplate-depth-512
@@ -25,11 +16,10 @@ project
       <toolset>darwin:<cxxflags>-ftemplate-depth-512
       <use>/boost//headers
       <include>.
-      <include>./rexpr
    ;
 
 lib rexpr
-   : [ glob src/*.cpp ]
+   : [ glob src/*.cpp ] /boost//system
    ;
 
 build-project test ;
