@@ -205,11 +205,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename LL, typename LR, typename RL, typename RR, typename C>
     struct get_alternative_types<alternative<LL, LR>, alternative<RL, RR>, C>
     {
-        typedef
-            mpl::joint_view<
-                typename get_alternative_types<LL, LR, C>::type
-              , typename get_alternative_types<RL, RR, C>::type
-            >
+        typedef typename get_alternative_types<LL, LR, C>::type left;
+        typedef typename get_alternative_types<RL, RR, C>::type right;
+        typedef typename
+            mpl::insert_range<left, typename mpl::end<left>::type, right>::type
         type;
     };
 
