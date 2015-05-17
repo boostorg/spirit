@@ -11,6 +11,7 @@
 #include <boost/filesystem/path.hpp>
 #endif
 
+#include <boost/locale/encoding_utf.hpp>
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <ostream>
 
@@ -40,11 +41,7 @@ namespace boost { namespace spirit { namespace x3
         void operator()(position_tagged pos, std::string const& message) const
         {
             auto where = pos_cache.position_of(pos);
-            (*this)(
-                where.begin()
-              , where.end()
-              , message
-            );
+            (*this)(where.begin(), where.end(), message);
         }
 
         template <typename AST>
@@ -92,16 +89,19 @@ namespace boost { namespace spirit { namespace x3
     template <typename Iterator>
     void error_handler<Iterator>::print_line(Iterator start, Iterator last) const
     {
-        for (; start != last; ++start)
+        auto end = start;
+        while (end != last)
         {
-            auto c = *start;
+            auto c = *end;
             if (c == '\r' || c == '\n')
                 break;
             else
-                err_out << c;
+                ++end;
         }
-        err_out << std::endl;
-   }
+        typedef typename std::iterator_traits<Iterator>::value_type char_type;
+        std::basic_string<char_type> line{start, end};
+        err_out << locale::conv::utf_to_utf<char>(line) << std::endl;
+    }
 
     template <typename Iterator>
     void error_handler<Iterator>::print_indicator(Iterator& start, Iterator last, char ind) const
