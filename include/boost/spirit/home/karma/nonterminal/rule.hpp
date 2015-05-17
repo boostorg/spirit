@@ -126,7 +126,7 @@ namespace boost { namespace spirit { namespace karma
 
         // The rule's signature
         typedef typename
-            spirit::detail::extract_sig<template_params, locals_type, encoding_type, karma::domain>::type
+            spirit::detail::extract_sig<template_params, encoding_type, karma::domain>::type
         sig_type;
 
         // This is the rule's attribute type

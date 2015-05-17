@@ -84,7 +84,7 @@ namespace boost { namespace spirit { namespace detail
     struct make_function_type : mpl::identity<T()> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Types, typename Locals, typename Encoding, typename Domain>
+    template <typename Types, typename Encoding, typename Domain>
     struct extract_sig
     {
         typedef typename
@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace detail
               , mpl::or_<
                     function_types::is_function<mpl::_>
                   , mpl::and_<
-                        mpl::not_<is_same<mpl::_, Locals> >
+                        mpl::not_<is_locals<mpl::_> >
                       , mpl::not_<is_same<mpl::_, Encoding> >
                       , mpl::not_<traits::matches<Domain, mpl::_> >
                       , mpl::not_<is_same<mpl::_, unused_type> >
