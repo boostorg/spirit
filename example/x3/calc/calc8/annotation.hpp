@@ -33,12 +33,10 @@ namespace client { namespace parser
         on_success(Iterator const& first, Iterator const& last
           , ast::operand& ast, Context const& context)
         {
-            auto& error_handler = x3::get<error_handler_tag>(context).get();
-            auto annotate = [&](auto& node)
+            ast.apply_visitor(x3::make_lambda_visitor<void>([&](auto& node)
             {
-                error_handler.tag(node, first, last);
-            };
-            ast.apply_visitor(x3::make_lambda_visitor<void>(annotate));
+                this->on_success(first, last, node, context);
+            }));
         }
 
         template <typename T, typename Iterator, typename Context>
