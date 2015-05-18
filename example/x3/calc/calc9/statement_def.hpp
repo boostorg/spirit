@@ -8,13 +8,13 @@
 #define BOOST_SPIRIT_X3_CALC9_STATEMENT_DEF_HPP
 
 #include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
 #include "ast.hpp"
 #include "ast_adapted.hpp"
 #include "statement.hpp"
 #include "expression.hpp"
 #include "common.hpp"
 #include "error_handler.hpp"
-#include "annotation.hpp"
 
 namespace client { namespace parser
 {
@@ -68,9 +68,9 @@ namespace client { namespace parser
       , variable
     );
 
-    struct statement_class : error_handler_base, annotation_base {};
-    struct assignment_class : annotation_base {};
-    struct variable_class : annotation_base {};
+    struct statement_class : error_handler_base, x3::annotate_on_success {};
+    struct assignment_class : x3::annotate_on_success {};
+    struct variable_class : x3::annotate_on_success {};
 }}
 
 namespace client

@@ -19,6 +19,9 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    // tag used to get our error handler from the context
+    struct error_handler_tag;
+
     template <typename Iterator>
     class error_handler
     {
