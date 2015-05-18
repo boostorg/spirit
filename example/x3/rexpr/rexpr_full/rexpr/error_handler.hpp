@@ -26,7 +26,7 @@ namespace rexpr { namespace parser
     using error_handler = x3::error_handler<Iterator>;
 
     // tag used to get our error handler from the context
-    struct error_handler_tag;
+    using error_handler_tag = x3::error_handler_tag;
 
     struct error_handler_base
     {
