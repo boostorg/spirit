@@ -28,6 +28,7 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
     using boost::spirit::x3::int_;
+    using boost::spirit::x3::no_case;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::alnum;
 
@@ -171,12 +172,11 @@ main()
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, unused)));
     }
 
-    // $$$ no_case not yet implememnted $$$
-    //~ {
-        //~ BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
-        //~ BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
-        //~ BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
-    //~ }
+    {
+        BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
+        BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
+        BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
+    }
 
     {
 #ifdef SPIRIT_NO_COMPILE_CHECK
