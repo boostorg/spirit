@@ -47,8 +47,7 @@ namespace rexpr { namespace parser
     x3::rule<rexpr_inner_class, ast::rexpr> const
         rexpr_inner = "rexpr";
 
-    x3::rule<rexpr_class, ast::rexpr>
-        rexpr = "rexpr";
+    rexpr_type const rexpr = "rexpr";
 
     ///////////////////////////////////////////////////////////////////////////
     // Grammar
