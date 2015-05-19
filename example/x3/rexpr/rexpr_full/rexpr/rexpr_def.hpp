@@ -33,7 +33,6 @@ namespace rexpr { namespace parser
     struct rexpr_value_class;
     struct rexpr_key_value_class;
     struct rexpr_inner_class;
-    struct rexpr_class;
 
     ///////////////////////////////////////////////////////////////////////////
     // Rules
