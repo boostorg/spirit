@@ -191,7 +191,6 @@ namespace client { namespace code_gen
         }
 
         std::cout << "start:" << std::endl;
-        typedef std::pair<std::size_t, std::string> line_info;
         for (auto const& l : lines)
         {
             std::size_t pos = l.first;

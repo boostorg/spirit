@@ -46,8 +46,6 @@ main()
             break;
 
         using boost::spirit::x3::ascii::space;
-        typedef boost::spirit::x3::ascii::space_type const skipper_type;
-        typedef std::string::const_iterator iterator_type;
 
         client::vmachine mach;                          // Our virtual machine
         std::vector<int> code;                          // Our VM code
@@ -57,7 +55,7 @@ main()
         compiler compile(code);                         // Compiles the program
 
         iterator_type iter = str.begin();
-        iterator_type end = str.end();
+        iterator_type const end = str.end();
         bool r = phrase_parse(iter, end, calc, space, ast);
 
         if (r && iter == end)

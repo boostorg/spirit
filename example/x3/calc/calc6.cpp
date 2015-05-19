@@ -319,8 +319,8 @@ main()
         ast_expression expression;          // Our program (AST)
         compiler compile(code);             // Compiles the program
 
-        std::string::const_iterator iter = str.begin();
-        std::string::const_iterator end = str.end();
+        iterator_type iter = str.begin();
+        iterator_type const end = str.end();
         boost::spirit::x3::ascii::space_type space;
         bool r = phrase_parse(iter, end, calc, space, expression);
 
