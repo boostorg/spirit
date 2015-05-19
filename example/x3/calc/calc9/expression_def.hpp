@@ -112,8 +112,8 @@ namespace client { namespace parser
     logical_expr_type const logical_expr = "logical_expr";
     additive_expr_type const additive_expr = "additive_expr";
     multiplicative_expr_type const multiplicative_expr = "multiplicative_expr";
-    unary_expr_type unary_expr = "unary_expr";
-    primary_expr_type primary_expr = "primary_expr";
+    unary_expr_type const unary_expr = "unary_expr";
+    primary_expr_type const primary_expr = "primary_expr";
 
     auto const logical_expr_def =
             equality_expr

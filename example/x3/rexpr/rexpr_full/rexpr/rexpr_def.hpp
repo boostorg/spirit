@@ -39,13 +39,13 @@ namespace rexpr { namespace parser
     // Rules
     ///////////////////////////////////////////////////////////////////////////
 
-    x3::rule<rexpr_value_class, ast::rexpr_value>
+    x3::rule<rexpr_value_class, ast::rexpr_value> const
         rexpr_value = "rexpr_value";
 
-    x3::rule<rexpr_key_value_class, ast::rexpr_key_value>
+    x3::rule<rexpr_key_value_class, ast::rexpr_key_value> const
         rexpr_key_value = "rexpr_key_value";
 
-    x3::rule<rexpr_inner_class, ast::rexpr>
+    x3::rule<rexpr_inner_class, ast::rexpr> const
         rexpr_inner = "rexpr";
 
     x3::rule<rexpr_class, ast::rexpr>
