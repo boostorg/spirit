@@ -111,8 +111,8 @@ main()
             break;
 
         client::ast::employee emp;
-        std::string::const_iterator iter = str.begin();
-        std::string::const_iterator end = str.end();
+        iterator_type iter = str.begin();
+        iterator_type const end = str.end();
         bool r = phrase_parse(iter, end, employee, space, emp);
 
         if (r && iter == end)

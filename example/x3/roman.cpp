@@ -153,8 +153,8 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        std::string::const_iterator iter = str.begin();
-        std::string::const_iterator end = str.end();
+        iterator_type iter = str.begin();
+        iterator_type const end = str.end();
         bool r = parse(iter, end, roman, result);
 
         if (r && iter == end)
