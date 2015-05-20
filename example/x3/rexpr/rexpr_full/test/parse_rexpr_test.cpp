@@ -26,7 +26,7 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
 
     using rexpr::parser::iterator_type;
     iterator_type iter(source.begin());
-    iterator_type end(source.end());
+    iterator_type const end(source.end());
 
     // Our AST
     rexpr::ast::rexpr ast;
@@ -53,9 +53,9 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
     if (success)
     {
         if (iter != end)
-            return "Error! Expecting end of input here: " + std::string(iter, end) + '\n';
-        rexpr::ast::rexpr_printer printer{out};
-        printer(ast);
+            error_handler(iter, "Error! Expecting end of input here: ");
+        else
+            rexpr::ast::rexpr_printer{out}(ast);
     }
 
     return out.str();
