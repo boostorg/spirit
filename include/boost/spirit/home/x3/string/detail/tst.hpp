@@ -13,7 +13,6 @@
 
 #include <boost/call_traits.hpp>
 #include <boost/detail/iterator.hpp>
-#include <boost/foreach.hpp>
 #include <boost/assert.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -114,7 +113,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return 0;
 
             tst_node** pp = &start;
-            for(;;)
+            for (;;)
             {
                 typename
                     boost::detail::iterator_traits<Iterator>::value_type
