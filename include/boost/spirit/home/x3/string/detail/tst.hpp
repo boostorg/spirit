@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return 0;
 
             tst_node** pp = &start;
-            for(;;)
+            for (;;)
             {
                 typename
                     boost::detail::iterator_traits<Iterator>::value_type

@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace x3
         insert_iter out_iter(result);
         utf8_output_iterator<insert_iter> utf8_iter(out_iter);
         typedef typename make_unsigned<Char>::type UChar;
-        for(Char ch : str)
+        for (Char ch : str)
         {
             *utf8_iter++ = (UChar)ch;
         }

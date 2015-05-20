@@ -129,7 +129,7 @@ namespace boost { namespace spirit { namespace x3
 
         void clear()
         {
-            for(typename map_type::value_type& x : map)
+            for (typename map_type::value_type& x : map)
             {
                 node::destruct_node(x.second.root, this);
                 if (x.second.data)
@@ -141,7 +141,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename F>
         void for_each(F f) const
         {
-            for(typename map_type::value_type const& x : map)
+            for (typename map_type::value_type const& x : map)
             {
                 std::basic_string<Char> s(1, x.first);
                 node::for_each(x.second.root, s, f);
@@ -164,7 +164,7 @@ namespace boost { namespace spirit { namespace x3
 
         void copy(tst_map const& rhs)
         {
-            for(typename map_type::value_type const& x : rhs.map)
+            for (typename map_type::value_type const& x : rhs.map)
             {
                 map_data xx = {node::clone_node(x.second.root, this), 0};
                 if (x.second.data)
@@ -177,7 +177,7 @@ namespace boost { namespace spirit { namespace x3
         {
             if (this != &rhs)
             {
-                for(typename map_type::value_type& x : map)
+                for (typename map_type::value_type& x : map)
                 {
                     node::destruct_node(x.second.root, this);
                 }
