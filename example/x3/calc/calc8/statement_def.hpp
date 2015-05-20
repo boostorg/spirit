@@ -32,11 +32,11 @@ namespace client { namespace parser
     typedef x3::rule<assignment_class, ast::assignment> assignment_type;
     typedef x3::rule<variable_class, ast::variable> variable_type;
 
-    statement_type const statement("statement");
-    statement_list_type const statement_list("statement_list");
-    variable_declaration_type const variable_declaration("variable_declaration");
-    assignment_type const assignment("assignment");
-    variable_type const variable("variable");
+    statement_type const statement = "statement";
+    statement_list_type const statement_list = "statement_list";
+    variable_declaration_type const variable_declaration = "variable_declaration";
+    assignment_type const assignment = "assignment";
+    variable_type const variable = "variable";
 
     // Import the expression rule
     namespace { auto const& expression = client::expression(); }
