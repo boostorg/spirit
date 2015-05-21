@@ -91,7 +91,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run match_manip2.cpp     : : : : x3_match_manip2 ]
      #~ [ run match_manip3.cpp     : : : : x3_match_manip3 ]
      #~ [ run match_manip_attr.cpp : : : : x3_match_manip_attr ]
-     #~ [ run matches.cpp          : : : : x3_matches ]
+     [ run matches.cpp          : : : : x3_matches ]
      [ run no_case.cpp          : : : : x3_no_case ]
      [ run no_skip.cpp          : : : : x3_no_skip ]
      [ run not_predicate.cpp    : : : : x3_not_predicate ]
