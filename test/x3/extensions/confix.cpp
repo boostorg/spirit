@@ -13,7 +13,7 @@
 #include <boost/spirit/home/x3/numeric.hpp>
 #include <boost/spirit/home/x3/operator.hpp>
 #include <boost/spirit/home/x3/string.hpp>
-#include <boost/spirit/home/x3/extensions/confix.hpp>
+#include <boost/spirit/home/x3/directive/confix.hpp>
 
 #include "../test.hpp"
 
