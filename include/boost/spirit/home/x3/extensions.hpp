@@ -14,6 +14,7 @@
 #endif
 
 #include <boost/spirit/home/x3/extensions/confix.hpp>
+#include <boost/spirit/home/x3/extensions/matches.hpp>
 #include <boost/spirit/home/x3/extensions/seek.hpp>
 
 #endif
