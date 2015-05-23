@@ -63,7 +63,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run attribute1.cpp       : : : : x3_attribute1 ]
      #~ [ run attribute2.cpp       : : : : x3_attribute2 ]
      #~ [ run auto.cpp             : : : : x3_auto ]
-     #~ [ run binary.cpp           : : : : x3_binary ]
+     [ run binary.cpp           : : : : x3_binary ]
      [ run bool.cpp             : : : : x3_bool ]
      #~ [ run bool2.cpp            : : : : x3_bool2 ]
      [ run char1.cpp            : : : : x3_char1 ]
