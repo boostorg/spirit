@@ -8,10 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_SEEK_APRIL_13_2014_1920PM)
 #define BOOST_SPIRIT_X3_SEEK_APRIL_13_2014_1920PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/core/parser.hpp>
 
 namespace boost { namespace spirit { namespace x3

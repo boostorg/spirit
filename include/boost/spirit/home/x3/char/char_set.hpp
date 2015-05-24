@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_CHAR_SET_OCT_12_2014_1051AM)
 #define BOOST_SPIRIT_X3_CHAR_SET_OCT_12_2014_1051AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 #include <boost/spirit/home/x3/char/detail/cast_char.hpp>
 #include <boost/spirit/home/x3/support/traits/string_traits.hpp>

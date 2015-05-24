@@ -8,10 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_UNUSED_APRIL_16_2006_0616PM)
 #define BOOST_SPIRIT_X3_UNUSED_APRIL_16_2006_0616PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <ostream>
 #include <istream>
 #include <boost/mpl/identity.hpp>

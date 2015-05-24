@@ -8,10 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_SYMBOLS_MARCH_11_2007_1055AM)
 #define BOOST_SPIRIT_X3_SYMBOLS_MARCH_11_2007_1055AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/string/tst.hpp>

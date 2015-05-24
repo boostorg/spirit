@@ -7,10 +7,6 @@
 #if !defined(SPIRIT_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM)
 #define SPIRIT_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>

@@ -7,10 +7,6 @@
 #if !defined(SPIRIT_OMIT_MARCH_24_2007_0802AM)
 #define SPIRIT_OMIT_MARCH_24_2007_0802AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 

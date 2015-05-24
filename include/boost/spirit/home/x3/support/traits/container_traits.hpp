@@ -9,10 +9,6 @@
 #if !defined(BOOST_SPIRIT_X3_CONTAINER_FEBRUARY_06_2007_1001AM)
 #define BOOST_SPIRIT_X3_CONTAINER_FEBRUARY_06_2007_1001AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/detail/iterator.hpp>

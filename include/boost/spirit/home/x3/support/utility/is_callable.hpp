@@ -7,10 +7,6 @@
 #ifndef BOOST_SPIRIT_X3_IS_CALLABLE_HPP_INCLUDED
 #define BOOST_SPIRIT_X3_IS_CALLABLE_HPP_INCLUDED
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/utility/result_of.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>

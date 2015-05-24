@@ -7,10 +7,6 @@
 #if !defined(SPIRIT_ALTERNATIVE_JAN_07_2013_1131AM)
 #define SPIRIT_ALTERNATIVE_JAN_07_2013_1131AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/alternative.hpp>

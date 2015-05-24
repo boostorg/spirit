@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_DIRECTIVE_FEBRUARY_05_2007_0313PM)
 #define BOOST_SPIRIT_X3_DIRECTIVE_FEBRUARY_05_2007_0313PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 //~ #include <boost/spirit/home/x3/directive/as.hpp>
 #include <boost/spirit/home/x3/directive/confix.hpp>
 //~ #include <boost/spirit/home/x3/directive/encoding.hpp>

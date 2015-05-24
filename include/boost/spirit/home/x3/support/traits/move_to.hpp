@@ -9,10 +9,6 @@
 #if !defined(BOOST_SPIRIT_X3_MOVE_TO_JAN_17_2013_0859PM)
 #define BOOST_SPIRIT_X3_MOVE_TO_JAN_17_2013_0859PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>

@@ -8,10 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_SFINAE_MAY_20_2013_0840AM)
 #define BOOST_SPIRIT_X3_SFINAE_MAY_20_2013_0840AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Expr, typename T = void>

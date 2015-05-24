@@ -8,10 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_PARSER_OCTOBER_16_2008_0254PM)
 #define BOOST_SPIRIT_X3_PARSER_OCTOBER_16_2008_0254PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/remove_cv.hpp>

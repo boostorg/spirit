@@ -7,10 +7,6 @@
 #if !defined(SPIRIT_EXPECT_MARCH_16_2012_1024PM)
 #define SPIRIT_EXPECT_MARCH_16_2012_1024PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/throw_exception.hpp>

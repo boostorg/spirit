@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_VARIANT_AUGUST_6_2011_0859AM)
 #define BOOST_SPIRIT_X3_VARIANT_AUGUST_6_2011_0859AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/variant.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/type_traits/is_base_of.hpp>

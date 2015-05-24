@@ -7,10 +7,6 @@
 #if !defined(SPIRIT_NO_CASE_SEPT_16_2014_0912PM)
 #define SPIRIT_NO_CASE_SEPT_16_2014_0912PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/no_case.hpp>

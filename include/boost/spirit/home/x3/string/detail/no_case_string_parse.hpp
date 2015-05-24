@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_NO_CASE_STRING_PARSE_APR_18_2014_1125PM)
 #define BOOST_SPIRIT_X3_NO_CASE_STRING_PARSE_APR_18_2014_1125PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/char/char.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 

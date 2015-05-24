@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_CHAR_PARSER_APR_16_2006_0906AM)
 #define BOOST_SPIRIT_X3_CHAR_PARSER_APR_16_2006_0906AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>

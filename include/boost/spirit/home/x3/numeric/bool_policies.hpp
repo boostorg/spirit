@@ -8,10 +8,6 @@
 #if !defined(SPIRIT_QI_BOOL_POLICIES_SEP_29_2009_0710AM)
 #define SPIRIT_QI_BOOL_POLICIES_SEP_29_2009_0710AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 

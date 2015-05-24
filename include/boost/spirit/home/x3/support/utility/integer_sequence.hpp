@@ -7,10 +7,6 @@
 #ifndef BOOST_SPIRIT_X3_INTEGER_SEQUENCE_HPP_INCLUDED
 #define BOOST_SPIRIT_X3_INTEGER_SEQUENCE_HPP_INCLUDED
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <cstddef>
 #include <boost/type_traits/integral_constant.hpp>
 

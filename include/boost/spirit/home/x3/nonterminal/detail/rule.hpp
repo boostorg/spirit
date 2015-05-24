@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/auxiliary/guard.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
@@ -348,40 +344,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             }
             return ok_parse;
         }
-
-//        template <typename RuleDef, typename Iterator, typename Context
-//            , typename ActualAttribute, typename AttributeContext>
-//        static bool call_from_rule(
-//            RuleDef const& rule_def
-//          , char const* rule_name
-//          , Iterator& first, Iterator const& last
-//          , Context const& context, ActualAttribute& attr, AttributeContext& attr_ctx)
-//        {
-//            // This is called when a rule-body has already been established.
-//            // The rule body is already established by the rule_definition class,
-//            // we will not do it again. We'll simply call the RHS by calling
-//            // call_rule_definition.
-//
-//            return call_rule_definition(
-//                rule_def.rhs, rule_name, first, last
-//              , context, attr, attr_ctx.attr_ptr
-//              , mpl::bool_<(RuleDef::explicit_attribute_propagation)>());
-//        }
-//
-//        template <typename RuleDef, typename Iterator, typename Context
-//            , typename ActualAttribute>
-//        static bool call_from_rule(
-//            RuleDef const& rule_def
-//          , char const* rule_name
-//          , Iterator& first, Iterator const& last
-//          , Context const& context, ActualAttribute& attr, unused_type)
-//        {
-//            // This is called when a rule-body has *not yet* been established.
-//            // The rule body is established by the rule_definition class, so
-//            // we call it to parse and establish the rule-body.
-//
-//            return rule_def.parse(first, last, context, unused, attr); // $$$ fix unused param $$$
-//        }
     };
 }}}}
 

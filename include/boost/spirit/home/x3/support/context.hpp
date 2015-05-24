@@ -8,10 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM)
 #define BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/mpl/identity.hpp>
 

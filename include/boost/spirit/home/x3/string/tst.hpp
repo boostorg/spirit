@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_TST_JUNE_03_2007_1031AM)
 #define BOOST_SPIRIT_X3_TST_JUNE_03_2007_1031AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/string/detail/tst.hpp>
 
 namespace boost { namespace spirit { namespace x3

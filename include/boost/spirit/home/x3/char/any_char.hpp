@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_ANY_CHAR_APRIL_16_2006_1051AM)
 #define BOOST_SPIRIT_X3_ANY_CHAR_APRIL_16_2006_1051AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/type_traits/extent.hpp>
 #include <boost/spirit/home/x3/char/literal_char.hpp>
 #include <boost/spirit/home/x3/char/char_set.hpp>

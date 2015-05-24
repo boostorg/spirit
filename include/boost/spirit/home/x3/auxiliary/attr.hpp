@@ -9,10 +9,6 @@
 #ifndef BOOST_SPIRIT_X3_ATTR_JUL_23_2008_0956AM
 #define BOOST_SPIRIT_X3_ATTR_JUL_23_2008_0956AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>

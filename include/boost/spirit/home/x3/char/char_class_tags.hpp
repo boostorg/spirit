@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_CHAR_CLASS_TAGS_APRIL_16_2006_1051AM)
 #define BOOST_SPIRIT_X3_CHAR_CLASS_TAGS_APRIL_16_2006_1051AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 
 namespace boost { namespace spirit { namespace x3
 {

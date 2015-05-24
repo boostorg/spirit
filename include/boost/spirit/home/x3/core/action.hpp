@@ -7,10 +7,6 @@
 #if !defined(SPIRIT_ACTION_JANUARY_07_2007_1128AM)
 #define SPIRIT_ACTION_JANUARY_07_2007_1128AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
