@@ -54,7 +54,7 @@ namespace boost { namespace spirit { namespace x3
       , typename extension::as_parser<Right>::value_type>
     operator%(Left const& left, Right const& right)
     {
-        return {as_parser(left), as_parser(right)};
+        return { as_parser(left), as_parser(right) };
     }
 }}}
 

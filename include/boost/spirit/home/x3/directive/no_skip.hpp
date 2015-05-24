@@ -68,11 +68,11 @@ namespace boost { namespace spirit { namespace x3
         no_skip_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    no_skip_gen const no_skip = no_skip_gen();
+    auto const no_skip = no_skip_gen{};
 }}}
 
 #endif

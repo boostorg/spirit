@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace x3
     struct case_compare
     {
         template < template <typename> class basic_charset>
-        typename Encoding::char_type 
+        typename Encoding::char_type
         in_set( typename Encoding::char_type const ch
               , basic_charset<typename Encoding::char_type> const &set)
         {
@@ -48,11 +48,11 @@ namespace boost { namespace spirit { namespace x3
     struct no_case_compare
     {
         template < template <typename> class basic_charset>
-        typename Encoding::char_type 
+        typename Encoding::char_type
         in_set( typename Encoding::char_type const ch
               , basic_charset<typename Encoding::char_type> const &set)
         {
-            return set.test(ch) 
+            return set.test(ch)
                 || set.test(Encoding::islower(ch) ? Encoding::toupper(ch) : Encoding::tolower(ch));
         }
 
@@ -62,21 +62,21 @@ namespace boost { namespace spirit { namespace x3
         {
             return Encoding::islower(rc) ? Encoding::tolower(lc) - rc : Encoding::toupper(lc) - rc;
         }
-        
+
         template <typename CharClassTag>
         CharClassTag get_char_class_tag(CharClassTag tag) const
         {
             return tag;
         }
-        
+
         alpha_tag get_char_class_tag(lower_tag ) const
         {
-            return alpha_tag();
+            return {};
         }
-        
+
         alpha_tag get_char_class_tag(upper_tag ) const
         {
-            return alpha_tag();
+            return {};
         }
 
     };
@@ -84,13 +84,13 @@ namespace boost { namespace spirit { namespace x3
     template <typename Encoding>
     case_compare<Encoding> get_case_compare_impl(unused_type const&)
     {
-        return case_compare<Encoding>();
+        return {};
     }
 
     template <typename Encoding>
     no_case_compare<Encoding> get_case_compare_impl(no_case_tag const&)
     {
-        return no_case_compare<Encoding>();
+        return {};
     }
 
     template <typename Encoding, typename Context>
@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace x3
     {
         return get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context));
     }
-    no_case_tag const no_case_compare_ = no_case_tag();
+    auto const no_case_compare_ = no_case_tag{};
 
 }}}
 

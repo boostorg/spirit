@@ -14,7 +14,6 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    
     // propagate no_case information through the context
     template <typename Subject>
     struct no_case_directive : unary_parser<Subject, no_case_directive<Subject>>
@@ -45,11 +44,11 @@ namespace boost { namespace spirit { namespace x3
         no_case_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    no_case_gen const no_case = no_case_gen();
+    auto const no_case = no_case_gen{};
 }}}
 
 #endif

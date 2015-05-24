@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace x3
 
         lexeme_directive(Subject const& subject)
           : base_type(subject) {}
-        
+
         template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
         typename enable_if<has_skipper<Context>, bool>::type
@@ -54,8 +54,6 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             //  no need to pre-skip if skipper is unused
-            //- x3::skip_over(first, last, context);
-
             return this->subject.parse(
                 first, last
               , context
@@ -70,11 +68,11 @@ namespace boost { namespace spirit { namespace x3
         lexeme_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    lexeme_gen const lexeme = lexeme_gen();
+    auto const lexeme = lexeme_gen{};
 }}}
 
 #endif

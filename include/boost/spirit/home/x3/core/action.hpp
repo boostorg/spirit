@@ -109,7 +109,7 @@ namespace boost { namespace spirit { namespace x3
     inline action<typename extension::as_parser<P>::value_type, Action>
     operator/(P const& p, Action f)
     {
-        return {as_parser(p), f};
+        return { as_parser(p), f };
     }
 }}}
 

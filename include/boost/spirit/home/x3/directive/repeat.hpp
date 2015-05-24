@@ -104,7 +104,7 @@ namespace boost { namespace spirit { namespace x3
         kleene<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
 
         template <typename T>
@@ -118,7 +118,7 @@ namespace boost { namespace spirit { namespace x3
             repeat_directive< typename extension::as_parser<Subject>::value_type, T>
             operator[](Subject const& subject) const
             {
-                return {as_parser(subject),repeat_limit};
+                return { as_parser(subject),repeat_limit };
             }
 
             T repeat_limit;
@@ -128,25 +128,25 @@ namespace boost { namespace spirit { namespace x3
         repeat_gen_lvl1<detail::exact_count<T>>
         operator()(T const exact) const
         {
-            return {detail::exact_count<T>{exact}};
+            return { detail::exact_count<T>{exact} };
         }
 
         template <typename T>
         repeat_gen_lvl1<detail::finite_count<T>>
         operator()(T const min_val, T const max_val) const
         {
-            return {detail::finite_count<T>{min_val,max_val}};
+            return { detail::finite_count<T>{min_val,max_val} };
         }
 
         template <typename T>
         repeat_gen_lvl1<detail::infinite_count<T>>
         operator()(T const min_val, inf_type const &) const
         {
-            return {detail::infinite_count<T>{min_val}};
+            return { detail::infinite_count<T>{min_val} };
         }
     };
 
-    repeat_gen const repeat = repeat_gen();
+    auto const repeat = repeat_gen{};
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace traits

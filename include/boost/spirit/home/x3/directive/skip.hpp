@@ -87,34 +87,34 @@ namespace boost { namespace spirit { namespace x3
         template <typename Skipper>
         struct skip_gen
         {
-            explicit skip_gen(Skipper const& skipper)
+            skip_gen(Skipper const& skipper)
               : skipper_(skipper) {}
 
             template <typename Subject>
             skip_directive<typename extension::as_parser<Subject>::value_type, Skipper>
             operator[](Subject const& subject) const
             {
-                return {as_parser(subject), skipper_};
+                return { as_parser(subject), skipper_ };
             }
 
             Skipper skipper_;
         };
-        
+
         template <typename Skipper>
         skip_gen<Skipper> const operator()(Skipper const& skipper) const
         {
-            return skip_gen<Skipper>(skipper);
+            return { skipper };
         }
 
         template <typename Subject>
         reskip_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    reskip_gen const skip = reskip_gen();
+    auto const skip = reskip_gen{};
 }}}
 
 #endif

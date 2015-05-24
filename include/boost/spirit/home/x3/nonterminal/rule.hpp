@@ -97,7 +97,7 @@ namespace boost { namespace spirit { namespace x3
             ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute_>
         operator=(RHS const& rhs) const
         {
-            return {as_parser(rhs), name};
+            return { as_parser(rhs), name };
         }
 
         template <typename RHS>
@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace x3
             ID, typename extension::as_parser<RHS>::value_type, Attribute, true>
         operator%=(RHS const& rhs) const
         {
-            return {as_parser(rhs), name};
+            return { as_parser(rhs), name };
         }
 
 

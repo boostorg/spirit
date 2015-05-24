@@ -56,11 +56,11 @@ namespace boost { namespace spirit { namespace x3
         seek_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    seek_gen const seek = seek_gen();
+    auto const seek = seek_gen{};
 }}}
 
 #endif

@@ -66,11 +66,11 @@ namespace boost { namespace spirit { namespace x3
         expect_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    expect_gen const expect = expect_gen();
+    auto const expect = expect_gen{};
 }}}
 
 #endif

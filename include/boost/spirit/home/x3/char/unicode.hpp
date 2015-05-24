@@ -427,7 +427,7 @@ namespace boost { namespace spirit { namespace x3
     namespace unicode
     {
         typedef any_char<char_encoding::unicode> char_type;
-        char_type const char_ = char_type();
+        auto const char_ = char_type{};
 
     ///////////////////////////////////////////////////////////////////////////
     //  Unicode Major Categories

@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace x3
             Prefix, typename extension::as_parser<Subject>::value_type, Postfix>
         operator[](Subject const& subject) const
         {
-            return {prefix, as_parser(subject), postfix};
+            return { prefix, as_parser(subject), postfix };
         }
 
         Prefix prefix;
@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace x3
                typename extension::as_parser<Postfix>::value_type>
     confix(Prefix const& prefix, Postfix const& postfix)
     {
-        return {as_parser(prefix), as_parser(postfix)};
+        return { as_parser(prefix), as_parser(postfix) };
     }
 
 }}}

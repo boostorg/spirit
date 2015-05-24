@@ -41,11 +41,11 @@ namespace boost { namespace spirit { namespace x3
         omit_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject)};
+            return { as_parser(subject) };
         }
     };
 
-    omit_gen const omit = omit_gen();
+    auto const omit = omit_gen{};
 }}}
 
 #endif

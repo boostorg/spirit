@@ -78,11 +78,11 @@ namespace boost { namespace spirit { namespace x3
         lazy_semantic_predicate<F>
         operator()(F f) const
         {
-            return lazy_semantic_predicate<F>(f);
+            return { f };
         }
     };
 
-    eps_parser const eps = eps_parser();
+    auto const eps = eps_parser{};
 }}}
 
 #endif

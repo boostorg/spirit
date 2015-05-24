@@ -65,11 +65,11 @@ namespace boost { namespace spirit { namespace x3
         template <typename ID>
         unused_type get(ID) const
         {
-            return unused_type();
+            return {};
         }
     };
 
-    unused_type const unused = unused_type();
+    auto const unused = unused_type{};
 
     inline std::ostream& operator<<(std::ostream& out, unused_type const&)
     {

@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace x3
         with_directive<typename extension::as_parser<Subject>::value_type, ID, T>
         operator[](Subject const& subject) const
         {
-            return {as_parser(subject), val};
+            return { as_parser(subject), val };
         }
     };
 

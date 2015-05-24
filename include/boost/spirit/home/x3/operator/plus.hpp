@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace x3
     inline plus<typename extension::as_parser<Subject>::value_type>
     operator+(Subject const& subject)
     {
-        return {as_parser(subject)};
+        return { as_parser(subject) };
     }
 }}}
 
