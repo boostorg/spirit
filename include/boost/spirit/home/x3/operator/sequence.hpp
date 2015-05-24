@@ -7,9 +7,6 @@
 #if !defined(SPIRIT_SEQUENCE_JAN_06_2013_1015AM)
 #define SPIRIT_SEQUENCE_JAN_06_2013_1015AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>

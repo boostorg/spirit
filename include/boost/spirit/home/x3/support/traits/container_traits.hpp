@@ -9,9 +9,6 @@
 #if !defined(BOOST_SPIRIT_X3_CONTAINER_FEBRUARY_06_2007_1001AM)
 #define BOOST_SPIRIT_X3_CONTAINER_FEBRUARY_06_2007_1001AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
@@ -121,13 +118,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             c.insert(std::move(val));
         }
-       
+
         template <typename Container_, typename T>
         static void push_back(Container_& c, T&& val)
         {
             c.push_back(std::move(val));
         }
-       
+
         template <typename T>
         static bool call(Container& c, T&& val)
         {
@@ -175,7 +172,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             c.reserve(size);
         }
-       
+
         template <typename Container_, typename Iterator>
         static void insert(Container_& c, Iterator first, Iterator last)
         {

@@ -9,9 +9,6 @@
 #if !defined(BOOST_SPIRIT_X3_MAKE_ATTRIBUTE_JAN_8_2012_0721PM)
 #define BOOST_SPIRIT_X3_MAKE_ATTRIBUTE_JAN_8_2012_0721PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/remove_const.hpp>
@@ -70,7 +67,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             return unused;
         }
     };
-    
+
     template <>
     struct make_attribute<unused_type, unused_type>
     {

@@ -9,9 +9,6 @@
 #if !defined(SPIRIT_NO_SKIP_JAN_16_2010_0802PM)
 #define SPIRIT_NO_SKIP_JAN_16_2010_0802PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>

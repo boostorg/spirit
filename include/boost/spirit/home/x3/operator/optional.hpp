@@ -8,9 +8,6 @@
 #if !defined(SPIRIT_OPTIONAL_MARCH_23_2007_1117PM)
 #define SPIRIT_OPTIONAL_MARCH_23_2007_1117PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/core/proxy.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>

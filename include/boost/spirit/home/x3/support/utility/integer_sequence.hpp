@@ -7,9 +7,6 @@
 #ifndef BOOST_SPIRIT_X3_INTEGER_SEQUENCE_HPP_INCLUDED
 #define BOOST_SPIRIT_X3_INTEGER_SEQUENCE_HPP_INCLUDED
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <cstddef>
 #include <boost/type_traits/integral_constant.hpp>
@@ -24,7 +21,7 @@ namespace boost { namespace spirit { namespace x3
     struct integer_sequence
     {
         typedef T value_type;
-        
+
         static constexpr std::size_t size() noexcept
         {
             return sizeof...(Ns);
@@ -59,13 +56,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             accum_integer_sequence<T, part1, part2, m>::type
         type;
     };
-    
+
     template <typename T>
     struct make_integer_sequence_impl<integral_constant<T, 0>>
     {
         typedef integer_sequence<T> type;
     };
-    
+
     template <typename T>
     struct make_integer_sequence_impl<integral_constant<T, 1>>
     {

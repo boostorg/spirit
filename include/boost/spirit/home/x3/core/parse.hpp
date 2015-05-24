@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_PARSE_APRIL_16_2006_0442PM)
 #define BOOST_SPIRIT_X3_PARSE_APRIL_16_2006_0442PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
@@ -176,7 +173,7 @@ namespace boost { namespace spirit { namespace x3
         Iterator first = first_;
         return phrase_parse_main(first, last, p, s, unused, post_skip);
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Skipper>
     struct phrase_parse_context

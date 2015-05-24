@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_NEGATED_CHAR_PARSER_APR_16_2006_0906AM)
 #define BOOST_SPIRIT_X3_NEGATED_CHAR_PARSER_APR_16_2006_0906AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
@@ -56,7 +53,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Positive, typename Context>
     struct attribute_of<x3::negated_char_parser<Positive>, Context>
         : attribute_of<Positive, Context> {};
-    
+
     template <typename Positive, typename Context>
     struct has_attribute<x3::negated_char_parser<Positive>, Context>
         : has_attribute<Positive, Context> {};

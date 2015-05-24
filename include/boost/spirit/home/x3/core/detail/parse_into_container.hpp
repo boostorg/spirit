@@ -7,9 +7,6 @@
 #if !defined(SPIRIT_PARSE_INTO_CONTAINER_JAN_15_2013_0957PM)
 #define SPIRIT_PARSE_INTO_CONTAINER_JAN_15_2013_0957PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <type_traits>
 

@@ -8,9 +8,6 @@
 #if !defined(SPIRIT_SKIP_JANUARY_26_2008_0422PM)
 #define SPIRIT_SKIP_JANUARY_26_2008_0422PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
@@ -103,7 +100,7 @@ namespace boost { namespace spirit { namespace x3
 
             Skipper skipper_;
         };
-        
+
         template <typename Skipper>
         skip_gen<Skipper> const operator()(Skipper const& skipper) const
         {

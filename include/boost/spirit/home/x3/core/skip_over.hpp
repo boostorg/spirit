@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_SKIP_APRIL_16_2006_0625PM)
 #define BOOST_SPIRIT_X3_SKIP_APRIL_16_2006_0625PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
@@ -45,7 +42,7 @@ namespace boost { namespace spirit { namespace x3
         struct is_unused_skipper<unused_skipper<Skipper>>
           : mpl::true_ {};
 
-        template <> 
+        template <>
         struct is_unused_skipper<unused_type>
           : mpl::true_ {};
 
@@ -84,7 +81,7 @@ namespace boost { namespace spirit { namespace x3
 
     // this tag is used to find the skipper from the context
     struct skipper_tag;
-    
+
     template <typename Context>
     struct has_skipper
       : mpl::not_<detail::is_unused_skipper<

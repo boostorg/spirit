@@ -7,9 +7,6 @@
 #if !defined(SPIRIT_EXPECT_MARCH_16_2012_1024PM)
 #define SPIRIT_EXPECT_MARCH_16_2012_1024PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
@@ -28,10 +25,10 @@ namespace boost { namespace spirit { namespace x3
           , where_(where), which_(which)
         {}
         ~expectation_failure() throw() {}
-        
+
         std::string which() const { return which_; }
         Iterator const& where() const { return where_; }
-        
+
     private:
 
         Iterator where_;

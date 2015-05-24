@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_TST_MAP_JUNE_03_2007_1143AM)
 #define BOOST_SPIRIT_X3_TST_MAP_JUNE_03_2007_1143AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/string/detail/tst.hpp>
 #include <unordered_map>

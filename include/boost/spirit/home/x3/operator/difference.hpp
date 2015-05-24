@@ -7,9 +7,6 @@
 #if !defined(SPIRIT_DIFFERENCE_FEBRUARY_11_2007_1250PM)
 #define SPIRIT_DIFFERENCE_FEBRUARY_11_2007_1250PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>

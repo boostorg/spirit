@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_UC_TYPES_NOVEMBER_23_2008_0840PM)
 #define BOOST_SPIRIT_X3_UC_TYPES_NOVEMBER_23_2008_0840PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/cstdint.hpp>
 #include <boost/regex/pending/unicode_iterator.hpp>

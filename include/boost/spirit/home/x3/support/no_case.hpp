@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_SUPPORT_NO_CASE_SEPT_24_2014_1125PM)
 #define BOOST_SPIRIT_X3_SUPPORT_NO_CASE_SEPT_24_2014_1125PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/char/char_class_tags.hpp>
@@ -22,7 +19,7 @@ namespace boost { namespace spirit { namespace x3
     struct case_compare
     {
         template < template <typename> class basic_charset>
-        typename Encoding::char_type 
+        typename Encoding::char_type
         in_set( typename Encoding::char_type const ch
               , basic_charset<typename Encoding::char_type> const &set)
         {
@@ -48,11 +45,11 @@ namespace boost { namespace spirit { namespace x3
     struct no_case_compare
     {
         template < template <typename> class basic_charset>
-        typename Encoding::char_type 
+        typename Encoding::char_type
         in_set( typename Encoding::char_type const ch
               , basic_charset<typename Encoding::char_type> const &set)
         {
-            return set.test(ch) 
+            return set.test(ch)
                 || set.test(Encoding::islower(ch) ? Encoding::toupper(ch) : Encoding::tolower(ch));
         }
 
@@ -62,18 +59,18 @@ namespace boost { namespace spirit { namespace x3
         {
             return Encoding::islower(rc) ? Encoding::tolower(lc) - rc : Encoding::toupper(lc) - rc;
         }
-        
+
         template <typename CharClassTag>
         CharClassTag get_char_class_tag(CharClassTag tag) const
         {
             return tag;
         }
-        
+
         alpha_tag get_char_class_tag(lower_tag ) const
         {
             return alpha_tag();
         }
-        
+
         alpha_tag get_char_class_tag(upper_tag ) const
         {
             return alpha_tag();

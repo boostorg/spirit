@@ -9,9 +9,6 @@
 #if !defined(BOOST_SPIRIT_X3_ATTRIBUTE_OF_JAN_7_2012_0914AM)
 #define BOOST_SPIRIT_X3_ATTRIBUTE_OF_JAN_7_2012_0914AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/mpl/identity.hpp>
@@ -20,8 +17,8 @@
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    // Get the attribute type of a component. By default, this gets the 
-    // Component's attribute_type typedef or instantiates a nested attribute 
+    // Get the attribute type of a component. By default, this gets the
+    // Component's attribute_type typedef or instantiates a nested attribute
     // metafunction. Components may specialize this if such an attribute_type
     // is not readily available (e.g. expensive to compute at compile time).
     ///////////////////////////////////////////////////////////////////////////
@@ -32,25 +29,25 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         template <typename Component, typename Context, typename Enable = void>
         struct default_attribute_of;
-        
+
         template <typename Component, typename Context>
-        struct default_attribute_of<Component, Context, 
+        struct default_attribute_of<Component, Context,
             typename disable_if_substitution_failure<
                 typename Component::attribute_type>::type>
           : mpl::identity<typename Component::attribute_type> {};
-        
+
         template <typename Component, typename Context>
-        struct default_attribute_of<Component, Context, 
+        struct default_attribute_of<Component, Context,
             typename disable_if_substitution_failure<
                 typename Component::template attribute<Context>::type>::type>
           : Component::template attribute<Context> {};
-        
+
         template <typename Component, typename Context>
         struct default_attribute_of<Component, Context,
             typename enable_if_c<Component::is_pass_through_unary>::type>
           : attribute_of<typename Component::subject_type, Context>{};
     }
-    
+
     template <typename Component, typename Context, typename Enable>
     struct attribute_of : detail::default_attribute_of<Component, Context> {};
 

@@ -9,9 +9,6 @@
 #if !defined(BOOST_SPIRIT_X3_MOVE_TO_JAN_17_2013_0859PM)
 #define BOOST_SPIRIT_X3_MOVE_TO_JAN_17_2013_0859PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
@@ -50,14 +47,14 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Source, typename Dest>
         inline void
         move_to(Source&&, Dest&, unused_attribute) {}
-        
+
         template <typename Source, typename Dest>
         inline void
         move_to_plain(Source&& src, Dest& dest, mpl::false_) // src is not a single-element tuple
         {
             dest = std::move(src);
         }
-        
+
         template <typename Source, typename Dest>
         inline void
         move_to_plain(Source&& src, Dest& dest, mpl::true_) // src is a single-element tuple
@@ -73,7 +70,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
                 fusion::traits::is_sequence<Source>,
                 is_size_one_sequence<Source> >
             is_single_element_sequence;
-        
+
             move_to_plain(std::move(src), dest, is_single_element_sequence);
         }
 
@@ -110,21 +107,21 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             dest = std::move(src);
         }
-        
+
         template <typename Source, typename Dest>
         inline void
         move_to_variant_from_single_element_sequence(Source&& src, Dest& dest, mpl::false_)
         {
             // dest is a variant, src is a single element fusion sequence that the variant
             // cannot directly hold. We'll try to unwrap the single element fusion sequence.
-            
+
             // Make sure that the Dest variant can really hold Source
             static_assert(variant_has_substitute<Dest, typename fusion::result_of::front<Source>::type>::value,
                 "Error! The destination variant (Dest) cannot hold the source type (Source)");
-            
+
             dest = std::move(fusion::front(src));
         }
-        
+
         template <typename Source, typename Dest>
         inline void
         move_to_variant_from_single_element_sequence(Source&& src, Dest& dest, mpl::true_)
@@ -161,7 +158,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             else
                 append(dest, first, last);
         }
-        
+
         template <typename Iterator>
         inline void
         move_to(Iterator first, Iterator last, boost::iterator_range<Iterator>& rng, container_attribute)

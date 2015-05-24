@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/auxiliary/guard.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>

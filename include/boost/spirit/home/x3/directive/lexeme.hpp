@@ -7,9 +7,6 @@
 #if !defined(SPIRIT_LEXEME_MARCH_24_2007_0802AM)
 #define SPIRIT_LEXEME_MARCH_24_2007_0802AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
@@ -29,7 +26,7 @@ namespace boost { namespace spirit { namespace x3
 
         lexeme_directive(Subject const& subject)
           : base_type(subject) {}
-        
+
         template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
         typename enable_if<has_skipper<Context>, bool>::type

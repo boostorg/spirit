@@ -7,9 +7,6 @@
 #if !defined(SPIRIT_NO_CASE_SEPT_16_2014_0912PM)
 #define SPIRIT_NO_CASE_SEPT_16_2014_0912PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
@@ -18,7 +15,7 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    
+
     // propagate no_case information through the context
     template <typename Subject>
     struct no_case_directive : unary_parser<Subject, no_case_directive<Subject>>

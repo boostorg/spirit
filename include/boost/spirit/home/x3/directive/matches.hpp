@@ -8,9 +8,6 @@
 #if !defined(BOOST_SPIRIT_HOME_X3_EXTENSIONS_MATCHES_HPP)
 #define BOOST_SPIRIT_HOME_X3_EXTENSIONS_MATCHES_HPP
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>

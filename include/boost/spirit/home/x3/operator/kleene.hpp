@@ -8,9 +8,6 @@
 #if !defined(SPIRIT_KLEENE_JANUARY_07_2007_0818AM)
 #define SPIRIT_KLEENE_JANUARY_07_2007_0818AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>

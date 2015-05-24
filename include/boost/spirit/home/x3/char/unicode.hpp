@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_UNICODE_JAN_20_2012_1218AM)
 #define BOOST_SPIRIT_X3_UNICODE_JAN_20_2012_1218AM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 
 #include <boost/spirit/home/x3/char/char_parser.hpp>
 #include <boost/spirit/home/x3/char/char.hpp>
