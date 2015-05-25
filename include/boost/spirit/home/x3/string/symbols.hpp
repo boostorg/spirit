@@ -36,11 +36,22 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    template < typename Encoding >
+    struct get_default_symbol_filter
+    {
+        template <typename Context>
+        static auto get(Context const& context) -> decltype(get_case_compare<Encoding>(context))
+        {
+            return {};
+        }
+    };
+
     template <
         typename Encoding
       , typename T = unused_type
+      , typename GetFilter = get_default_symbol_filter<Encoding>
       , typename Lookup = tst<typename Encoding::char_type, T> >
-    struct symbols_parser : parser<symbols_parser<Encoding, T, Lookup>>
+    struct symbols_parser : parser<symbols_parser<Encoding, T, GetFilter, Lookup>>
     {
         typedef typename Encoding::char_type char_type; // the character type
         typedef Encoding encoding;
@@ -220,7 +231,7 @@ namespace boost { namespace spirit { namespace x3
             x3::skip_over(first, last, context);
 
             if (value_type* val_ptr
-                = lookup->find(first, last, get_case_compare<Encoding>(context)))
+                = lookup->find(first, last, GetFilter::get(context)))
             {
                 x3::traits::move_to(*val_ptr, attr);
                 return true;
