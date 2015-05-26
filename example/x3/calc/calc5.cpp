@@ -128,7 +128,7 @@ namespace client { namespace ast
         void operator()(program const& x) const
         {
             boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
+            for (operation const& oper : x.rest)
             {
                 std::cout << ' ';
                 (*this)(oper);
@@ -175,7 +175,7 @@ namespace client { namespace ast
         int operator()(program const& x) const
         {
             int state = boost::apply_visitor(*this, x.first);
-            BOOST_FOREACH(operation const& oper, x.rest)
+            for (operation const& oper : x.rest)
             {
                 state = (*this)(oper, state);
             }
