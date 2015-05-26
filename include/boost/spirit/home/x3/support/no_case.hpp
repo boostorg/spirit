@@ -7,9 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_SUPPORT_NO_CASE_SEPT_24_2014_1125PM)
 #define BOOST_SPIRIT_X3_SUPPORT_NO_CASE_SEPT_24_2014_1125PM
 
-#if defined(_MSC_VER)
-#pragma once
-#endif
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/char/char_class_tags.hpp>
