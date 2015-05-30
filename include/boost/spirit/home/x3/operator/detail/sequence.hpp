@@ -266,11 +266,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename LL, typename LR, typename RL, typename RR, typename C>
     struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>, C>
     {
-        typedef
-            mpl::joint_view<
-                typename get_sequence_types<LL, LR, C>::type
-              , typename get_sequence_types<RL, RR, C>::type
-            >
+        typedef typename get_sequence_types<LL, LR, C>::type left;
+        typedef typename get_sequence_types<RL, RR, C>::type right;
+        typedef typename
+            mpl::insert_range<left, typename mpl::end<left>::type, right>::type
         type;
     };
 
