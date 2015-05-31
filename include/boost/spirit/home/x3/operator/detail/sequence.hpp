@@ -27,9 +27,9 @@
 #include <boost/mpl/copy_if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include <boost/type_traits/add_reference.hpp>
@@ -266,11 +266,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename LL, typename LR, typename RL, typename RR, typename C>
     struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>, C>
     {
-        typedef
-            mpl::joint_view<
-                typename get_sequence_types<LL, LR, C>::type
-              , typename get_sequence_types<RL, RR, C>::type
-            >
+        typedef typename get_sequence_types<LL, LR, C>::type left;
+        typedef typename get_sequence_types<RL, RR, C>::type right;
+        typedef typename
+            mpl::insert_range<left, typename mpl::end<left>::type, right>::type
         type;
     };
 
