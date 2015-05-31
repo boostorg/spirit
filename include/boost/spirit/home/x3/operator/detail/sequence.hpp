@@ -27,9 +27,9 @@
 #include <boost/mpl/copy_if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include <boost/type_traits/add_reference.hpp>
