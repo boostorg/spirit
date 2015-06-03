@@ -278,6 +278,15 @@ main()
         //~ BOOST_TEST(s == "ab.bc.ca");
     }
 
+    // Make sure get_sequence_types works for sequences of sequences.
+    {
+        std::vector<char> v;
+        BOOST_TEST(test_attr(" a b", (' ' >> char_) >> (' ' >> char_), v));
+        BOOST_TEST(v.size() == 2);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
+    }
+
     // alternative forms of attributes. Allow sequences to take in
     // stl containers of stl containers.
     {
