@@ -18,7 +18,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef binary_parser<Left, Right, alternative<Left, Right>> base_type;
 
-        alternative(Left left, Right right)
+        alternative(Left const& left, Right const& right)
             : base_type(left, right) {}
 
         template <typename Iterator, typename Context, typename RContext>
