@@ -19,7 +19,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef binary_parser<Left, Right, sequence<Left, Right>> base_type;
 
-        sequence(Left left, Right right)
+        sequence(Left const& left, Right const& right)
             : base_type(left, right) {}
 
         template <typename Iterator, typename Context, typename RContext>
