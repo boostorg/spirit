@@ -36,11 +36,8 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            if (detail::parse_alternative(this->left, first, last, context, rcontext, attr))
-                return true;
-            if (detail::parse_alternative(this->right, first, last, context, rcontext, attr))
-                return true;
-            return false;
+            return detail::parse_alternative(this->left, first, last, context, rcontext, attr)
+               || detail::parse_alternative(this->right, first, last, context, rcontext, attr);
         }
     };
 
