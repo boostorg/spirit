@@ -99,7 +99,7 @@ citizen:
 
     BOOST_FUSION_ADAPT_STRUCT(
         client::ast::rexpr,
-        (client::ast::rexpr_map, entries)
+        entries
     )
 
 So essentially, a `rexpr_value` value is either a `std::string` or a

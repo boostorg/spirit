@@ -44,10 +44,7 @@ to be a fully conforming fusion tuple:
 
     BOOST_FUSION_ADAPT_STRUCT(
         client::ast::employee,
-        (int, age)
-        (std::string, surname)
-        (std::string, forename)
-        (double, salary)
+        age, surname, forename, salary
     )
 
 Now we'll write a parser for our employee. Inputs will be of the form:

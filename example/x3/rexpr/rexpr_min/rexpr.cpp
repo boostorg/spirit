@@ -66,9 +66,8 @@ namespace client { namespace ast
 
 // We need to tell fusion about our rexpr struct
 // to make it a first-class fusion citizen
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::rexpr,
-    (client::ast::rexpr_map, entries)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::rexpr,
+    entries
 )
 
 ///////////////////////////////////////////////////////////////////////////////
