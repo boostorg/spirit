@@ -43,12 +43,8 @@ namespace client { namespace ast
 // to make it a first-class fusion citizen. This has to
 // be in global scope.
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::employee,
-    (int, age)
-    (std::string, surname)
-    (std::string, forename)
-    (double, salary)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::employee,
+    age, surname, forename, salary
 )
 
 namespace client

@@ -27,14 +27,12 @@ struct di_include
     std::string FileName;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(
-    di_ignore,
-    (std::string, text)
+BOOST_FUSION_ADAPT_STRUCT(di_ignore,
+    text
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    di_include,
-    (std::string, FileName)
+BOOST_FUSION_ADAPT_STRUCT(di_include,
+    FileName
 )
 
 struct undefined {};

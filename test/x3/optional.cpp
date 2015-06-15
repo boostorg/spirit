@@ -18,10 +18,8 @@ struct adata
     boost::optional<int> b;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(
-    adata,
-    (int, a)
-    (boost::optional<int>, b)
+BOOST_FUSION_ADAPT_STRUCT(adata,
+    a, b
 )
 
 struct test_attribute_type

@@ -10,46 +10,32 @@
 #include "ast.hpp"
 #include <boost/fusion/include/adapt_struct.hpp>
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::unary,
-    (client::ast::optoken, operator_)
-    (client::ast::operand, operand_)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::unary,
+    operator_, operand_
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::operation,
-    (client::ast::optoken, operator_)
-    (client::ast::operand, operand_)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::operation,
+    operator_, operand_
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::expression,
-    (client::ast::operand, first)
-    (std::list<client::ast::operation>, rest)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::expression,
+    first, rest
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::variable_declaration,
-    (client::ast::assignment, assign)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::variable_declaration,
+    assign
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::assignment,
-    (client::ast::variable, lhs)
-    (client::ast::expression, rhs)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::assignment,
+    lhs, rhs
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::if_statement,
-    (client::ast::expression, condition)
-    (client::ast::statement, then)
-    (boost::optional<client::ast::statement>, else_)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::if_statement,
+    condition, then, else_
 )
 
-BOOST_FUSION_ADAPT_STRUCT(
-    client::ast::while_statement,
-    (client::ast::expression, condition)
-    (client::ast::statement, body)
+BOOST_FUSION_ADAPT_STRUCT(client::ast::while_statement,
+    condition, body
 )
 
 #endif

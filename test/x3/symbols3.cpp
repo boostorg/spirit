@@ -26,12 +26,9 @@ struct roman
     boost::optional<int> c;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(
-    roman,
-    (boost::optional<int>, a)
-    (boost::optional<int>, b)
-    (boost::optional<int>, c)
- );
+BOOST_FUSION_ADAPT_STRUCT(roman,
+    a, b, c
+);
 
 int eval(roman const & c)
 {
