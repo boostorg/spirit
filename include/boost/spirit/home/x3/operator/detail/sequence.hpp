@@ -243,25 +243,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename LL, typename LR, typename R, typename C>
     struct get_sequence_types<sequence<LL, LR>, R, C>
-    {
-        typedef typename
-            mpl::push_back<
-                typename get_sequence_types<LL, LR, C>::type
-              , typename traits::attribute_of<R, C>::type
-            >::type
-        type;
-    };
+        : mpl::push_back< typename get_sequence_types<LL, LR, C>::type
+                        , typename traits::attribute_of<R, C>::type> {};
 
     template <typename L, typename RL, typename RR, typename C>
     struct get_sequence_types<L, sequence<RL, RR>, C>
-    {
-        typedef typename
-            mpl::push_front<
-                typename get_sequence_types<RL, RR, C>::type
-              , typename traits::attribute_of<L, C>::type
-            >::type
-        type;
-    };
+        : mpl::push_front< typename get_sequence_types<RL, RR, C>::type
+                         , typename traits::attribute_of<L, C>::type> {};
 
     template <typename LL, typename LR, typename RL, typename RR, typename C>
     struct get_sequence_types<sequence<LL, LR>, sequence<RL, RR>, C>
