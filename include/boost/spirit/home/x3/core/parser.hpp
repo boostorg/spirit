@@ -26,10 +26,6 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    using x3::unused_type;
-    using x3::unused;
-    using x3::get;
-
     template <typename Subject, typename Action>
     struct action;
 
