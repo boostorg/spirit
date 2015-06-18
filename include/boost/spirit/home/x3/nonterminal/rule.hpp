@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const force_attribute =
             force_attribute_;
 
-        rule_definition(RHS rhs, char const* name)
+        rule_definition(RHS const& rhs, char const* name)
           : rhs(rhs), name(name) {}
 
         template <typename Iterator, typename Context, typename Attribute_>
