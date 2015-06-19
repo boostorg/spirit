@@ -25,12 +25,6 @@ namespace boost { namespace spirit { namespace x3
         subcontext(Context const& /*context*/)
         {}
         
-        template <typename ID_, typename Unused = void>
-        struct get_result
-        {
-            typedef unused_type type;
-        };
-
         template <typename ID_>
         unused_type
         get(ID_) const
