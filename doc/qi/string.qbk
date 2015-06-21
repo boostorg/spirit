@@ -87,7 +87,7 @@ not defined in __primitive_parser_concept__.
     [[Expression]       [Attribute]]
     [[`s`]              [__unused__]]
     [[`lit(s)`]         [__unused__]]
-    [[`ns::string(s)`]  [`std::basic_string<T>` where `T`
+    [[`ns::string(s)`]  [`std::vector<T>` where `T`
                         is the underlying character type
                         of `s`.]]
 ]
