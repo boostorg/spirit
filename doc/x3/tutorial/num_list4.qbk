@@ -41,8 +41,8 @@ Our parser now is further simplified to:
     template <typename Iterator>
     bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
     {
-        using qi::double_;
-        using qi::phrase_parse;
+        using x3::double_;
+        using x3::phrase_parse;
         using x3::_attr;
         using ascii::space;
 
@@ -62,7 +62,7 @@ Our parser now is further simplified to:
         return r;
     }
 
-The full cpp file for this example can be found here: [@../../../example/x3/num_list4.cpp]
+The full cpp file for this example can be found here: [@../../../example/x3/num_list/num_list4.cpp]
 
 [*Hey, no more actions!!!] Now we're entering the realm of attribute grammars.
 Cool eh?
