@@ -68,15 +68,13 @@ namespace boost { namespace spirit { namespace x3
             return true;
         }
 
-        semantic_predicate
-        operator()(bool predicate) const
+        inline semantic_predicate operator()(bool predicate) const
         {
-            return semantic_predicate(predicate);
+            return { predicate };
         }
 
         template <typename F>
-        lazy_semantic_predicate<F>
-        operator()(F f) const
+        lazy_semantic_predicate<F> operator()(F f) const
         {
             return { f };
         }

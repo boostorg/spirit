@@ -54,26 +54,26 @@ namespace boost { namespace spirit { namespace x3
         inline literal_string<char const*, char_encoding::standard>
         string(char const* s)
         {
-            return literal_string<char const*, char_encoding::standard>(s);
+            return { s };
         }
 
         inline literal_string<std::basic_string<char>, char_encoding::standard>
         string(std::basic_string<char> const& s)
         {
-            return literal_string<std::basic_string<char>, char_encoding::standard>(s);
+            return { s };
         }
 
         inline literal_string<char const*, char_encoding::standard, unused_type>
         lit(char const* s)
         {
-            return literal_string<char const*, char_encoding::standard, unused_type>(s);
+            return { s };
         }
 
         template <typename Char>
         literal_string<Char const*, char_encoding::standard, unused_type>
         lit(std::basic_string<Char> const& s)
         {
-            return literal_string<Char const*, char_encoding::standard, unused_type>(s.c_str());
+            return { s.c_str() };
         }
     }
 
@@ -82,25 +82,25 @@ namespace boost { namespace spirit { namespace x3
         inline literal_string<wchar_t const*, char_encoding::standard_wide>
         string(wchar_t const* s)
         {
-            return literal_string<wchar_t const*, char_encoding::standard_wide>(s);
+            return { s };
         }
 
         inline literal_string<std::basic_string<wchar_t>, char_encoding::standard_wide>
         string(std::basic_string<wchar_t> const& s)
         {
-            return literal_string<std::basic_string<wchar_t>, char_encoding::standard_wide>(s);
+            return { s };
         }
 
         inline literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>
         lit(wchar_t const* s)
         {
-            return literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>(s);
+            return { s };
         }
 
         inline literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>
         lit(std::basic_string<wchar_t> const& s)
         {
-            return literal_string<wchar_t const*, char_encoding::standard_wide, unused_type>(s.c_str());
+            return { s.c_str() };
         }
     }
 
@@ -109,26 +109,26 @@ namespace boost { namespace spirit { namespace x3
         inline literal_string<wchar_t const*, char_encoding::ascii>
         string(wchar_t const* s)
         {
-            return literal_string<wchar_t const*, char_encoding::ascii>(s);
+            return { s };
         }
 
         inline literal_string<std::basic_string<wchar_t>, char_encoding::ascii>
         string(std::basic_string<wchar_t> const& s)
         {
-            return literal_string<std::basic_string<wchar_t>, char_encoding::ascii>(s);
+            return { s };
         }
 
         inline literal_string<char const*, char_encoding::ascii, unused_type>
         lit(char const* s)
         {
-            return literal_string<char const*, char_encoding::ascii, unused_type>(s);
+            return { s };
         }
 
         template <typename Char>
         literal_string<Char const*, char_encoding::ascii, unused_type>
         lit(std::basic_string<Char> const& s)
         {
-            return literal_string<Char const*, char_encoding::ascii, unused_type>(s.c_str());
+            return { s.c_str() };
         }
     }
 
@@ -137,26 +137,26 @@ namespace boost { namespace spirit { namespace x3
         inline literal_string<wchar_t const*, char_encoding::iso8859_1>
         string(wchar_t const* s)
         {
-            return literal_string<wchar_t const*, char_encoding::iso8859_1>(s);
+            return { s };
         }
 
         inline literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>
         string(std::basic_string<wchar_t> const& s)
         {
-            return literal_string<std::basic_string<wchar_t>, char_encoding::iso8859_1>(s);
+            return { s };
         }
 
         inline literal_string<char const*, char_encoding::iso8859_1, unused_type>
         lit(char const* s)
         {
-            return literal_string<char const*, char_encoding::iso8859_1, unused_type>(s);
+            return { s };
         }
 
         template <typename Char>
         literal_string<Char const*, char_encoding::iso8859_1, unused_type>
         lit(std::basic_string<Char> const& s)
         {
-            return literal_string<Char const*, char_encoding::iso8859_1, unused_type>(s.c_str());
+            return { s.c_str() };
         }
     }
 
