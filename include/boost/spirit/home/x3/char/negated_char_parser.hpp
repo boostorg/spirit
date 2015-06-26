@@ -36,7 +36,7 @@ namespace boost { namespace spirit { namespace x3
     inline negated_char_parser<Positive>
     operator~(char_parser<Positive> const& cp)
     {
-        return negated_char_parser<Positive>(cp.derived());
+        return { cp.derived() };
     }
 
     template <typename Positive>

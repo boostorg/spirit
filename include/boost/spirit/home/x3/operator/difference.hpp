@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace x3
         difference<Left_, Right_>
         make(Left_ const& left, Right_ const& right) const
         {
-            return difference<Left_, Right_>(left, right);
+            return { left, right };
         }
     };
 

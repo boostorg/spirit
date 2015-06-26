@@ -94,13 +94,13 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID, typename T>
     inline with_gen<ID, T> with(T& val)
     {
-        return with_gen<ID, T>{val};
+        return { val };
     }
     
     template <typename ID, typename T>
     inline with_gen<ID, T const> with(T const& val)
     {
-        return with_gen<ID, T const>{val};
+        return { val };
     }
 }}}
 
