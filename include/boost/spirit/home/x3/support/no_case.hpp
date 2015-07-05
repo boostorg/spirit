@@ -91,8 +91,7 @@ namespace boost { namespace spirit { namespace x3
     }
 
     template <typename Encoding, typename Context>
-    inline auto get_case_compare(Context const& context)
-        ->decltype(get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context)))
+    inline decltype(auto) get_case_compare(Context const& context)
     {
         return get_case_compare_impl<Encoding>(x3::get<no_case_tag>(context));
     }
