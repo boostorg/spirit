@@ -317,10 +317,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>
-    bool parse_sequence(
-        Parser const& parser , Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::plain_attribute)
+    bool parse_sequence_plain(
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr)
     {
         typedef typename Parser::left_type Left;
         typedef typename Parser::right_type Right;
@@ -338,6 +337,26 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return true;
         first = save;
         return false;
+    }
+
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_sequence(
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::plain_attribute)
+    {
+        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
+    }
+
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_sequence(
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::variant_attribute)
+    {
+        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
     }
 
     template <typename Left, typename Right, typename Iterator

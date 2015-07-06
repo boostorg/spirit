@@ -28,6 +28,7 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
     using boost::spirit::x3::int_;
+    using boost::spirit::x3::float_;
     using boost::spirit::x3::no_case;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::alnum;
@@ -410,6 +411,14 @@ main()
         BOOST_TEST(at_c<0>(attr).size() == 2);
         BOOST_TEST(at_c<0>(attr)[0] == 123);
         BOOST_TEST(at_c<0>(attr)[1] == 456);
+    }
+
+    {
+        using Attr = boost::variant<int, float>;
+        Attr attr;
+        auto const term = rule<class term, Attr>("term") = int_ | float_;
+        auto const expr = rule<class expr, Attr>("expr") = term | ('(' > term > ')');
+        BOOST_TEST((test_attr("(1)", expr, attr, space)));
     }
 
     // test that failing sequence leaves attribute consistent
