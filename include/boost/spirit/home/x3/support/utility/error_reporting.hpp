@@ -53,6 +53,11 @@ namespace boost { namespace spirit { namespace x3
             return pos_cache.annotate(ast, first, last);
         }
 
+        boost::iterator_range<Iterator> position_of(position_tagged pos) const
+        {
+            return pos_cache.position_of(pos);
+        }
+
     private:
 
         void print_file_line(std::size_t line) const;
