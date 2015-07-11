@@ -29,7 +29,7 @@ aliasing_tests()
     rule<>  b = ch_p('b');
     rule<>  c = ch_p('c');
 
-    std::cout << "sizeof(rule<>): " << sizeof(rule<>) << endl;
+    std::cout << "sizeof(rule<>): " << sizeof(rule<>) << std::endl;
 
     BOOST_SPIRIT_DEBUG_RULE(a);
     BOOST_SPIRIT_DEBUG_RULE(b);
@@ -217,7 +217,7 @@ stored_rule_dynamic_tests()
     start = start.copy() | c;
     start = *(start.copy());
 
-    std::cout << "sizeof(stored_rule<>): " << sizeof(stored_rule<>) << endl;
+    std::cout << "sizeof(stored_rule<>): " << sizeof(stored_rule<>) << std::endl;
 
     BOOST_SPIRIT_DEBUG_RULE(start);
 
