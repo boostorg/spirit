@@ -137,7 +137,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         {
             {
 #ifdef BOOST_SPIRIT_THREADSAFE
+#ifndef BOOST_THREAD_PROVIDES_ONCE_CXX11
                 static boost::once_flag been_here = BOOST_ONCE_INIT;
+#else
+                static boost::once_flag been_here;
+#endif
                 boost::call_once(been_here, mutex_init);
                 boost::mutex &mutex = mutex_instance();
                 boost::unique_lock<boost::mutex> lock(mutex);
