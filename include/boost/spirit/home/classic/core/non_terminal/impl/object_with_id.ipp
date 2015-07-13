@@ -15,6 +15,7 @@
 
 #ifdef BOOST_SPIRIT_THREADSAFE
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/lock_types.hpp>
 #include <boost/thread/once.hpp>
 #endif
 
@@ -99,7 +100,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         object_with_id_base_supply<IdT>::acquire()
         {
 #ifdef BOOST_SPIRIT_THREADSAFE
-            boost::mutex::scoped_lock lock(mutex);
+            boost::unique_lock<boost::mutex> lock(mutex);
 #endif
             if (free_ids.size())
             {
@@ -121,7 +122,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         object_with_id_base_supply<IdT>::release(IdT id)
         {
 #ifdef BOOST_SPIRIT_THREADSAFE
-            boost::mutex::scoped_lock lock(mutex);
+            boost::unique_lock<boost::mutex> lock(mutex);
 #endif
             if (max_id == id)
                 max_id--;
@@ -139,7 +140,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                 static boost::once_flag been_here = BOOST_ONCE_INIT;
                 boost::call_once(been_here, mutex_init);
                 boost::mutex &mutex = mutex_instance();
-                boost::mutex::scoped_lock lock(mutex);
+                boost::unique_lock<boost::mutex> lock(mutex);
 #endif
                 static boost::shared_ptr<object_with_id_base_supply<IdT> >
                     static_supply;
