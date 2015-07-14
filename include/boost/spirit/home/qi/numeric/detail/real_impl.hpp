@@ -65,7 +65,7 @@ namespace boost { namespace spirit { namespace traits
     {
         if (exp >= 0)
         {
-            std::size_t max_exp = std::numeric_limits<T>::max_exponent10;
+            int max_exp = std::numeric_limits<T>::max_exponent10;
             
             // return false if exp exceeds the max_exp
             // do this check only for primitive types!
