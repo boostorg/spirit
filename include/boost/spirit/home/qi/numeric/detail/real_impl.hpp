@@ -292,7 +292,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 // No exponent found. Scale the number by -frac_digits.
                 traits::scale(-frac_digits, n, acc_n);
             }
-            else if (traits::is_equal_to_one(n))
+            else if (traits::is_equal_to_one(acc_n))
             {
                 // There is a chance of having to parse one of the 1.0#...
                 // styles some implementations use for representing NaN or Inf.
@@ -305,6 +305,8 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     traits::assign_to(traits::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
+
+                n = acc_n;
             }
             else
             {
