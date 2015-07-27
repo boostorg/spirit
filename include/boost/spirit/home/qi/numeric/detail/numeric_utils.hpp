@@ -316,7 +316,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (!Accumulate)
             {
                 // skip leading zeros
-                while (it != last && *it == '0' && leading_zeros < MaxDigits)
+                while (it != last && *it == '0' && (MaxDigits < 0 || leading_zeros < static_cast< std::size_t >(MaxDigits)))
                 {
                     ++it;
                     ++leading_zeros;
