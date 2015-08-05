@@ -135,8 +135,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
+            // Not reusing max static variable to avoid race condition on old compilers
             static T const max = (std::numeric_limits<T>::max)();
-            static T const val = max / Radix;
+            static T const val = (std::numeric_limits<T>::max)() / Radix;
 
             if (n > val)
                 return false;
@@ -167,8 +168,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
+            // Not reusing min static variable to avoid race condition on old compilers
             static T const min = (std::numeric_limits<T>::min)();
-            static T const val = (min + 1) / T(Radix);
+            static T const val = ((std::numeric_limits<T>::min)() + 1) / T(Radix);
             if (n < val)
                 return false;
 
