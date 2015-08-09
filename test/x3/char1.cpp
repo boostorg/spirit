@@ -31,6 +31,11 @@ main()
         BOOST_TEST(test("x", char_('a', 'z')));
         BOOST_TEST(!test("x", char_('0', '9')));
 
+        BOOST_TEST(test("0", char_('0', '9')));
+        BOOST_TEST(test("9", char_('0', '9')));
+        BOOST_TEST(!test("0", ~char_('0', '9')));
+        BOOST_TEST(!test("9", ~char_('0', '9')));
+
         BOOST_TEST(!test("x", ~char_));
         BOOST_TEST(!test("x", ~char_('x')));
         BOOST_TEST(test(" ", ~char_('x')));
