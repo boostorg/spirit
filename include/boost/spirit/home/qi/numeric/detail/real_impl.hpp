@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace traits
             
             // return false if exp exceeds the max_exp
             // do this check only for primitive types!
-            if (is_floating_point<T>() && exp > max_exp)
+            if (is_floating_point<T>() && exp > static_cast<int>(max_exp))
                 return false;
             n = acc_n * pow10<T>(exp);
         }
@@ -284,7 +284,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     // If there is no number, disregard the exponent altogether.
                     // by resetting 'first' prior to the exponent prefix (e|E)
                     first = e_pos;
-                    n = acc_n;
+                    n = T(acc_n);
                 }
             }
             else if (frac_digits)
@@ -306,11 +306,11 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     return true;    // got a NaN or Inf, return immediately
                 }
 
-                n = acc_n;
+                n = T(acc_n);
             }
             else
             {
-                n = acc_n;
+                n = T(acc_n);
             }
 
             // If we got a negative sign, negate the number
