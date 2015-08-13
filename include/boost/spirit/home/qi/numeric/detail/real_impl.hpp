@@ -284,7 +284,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     // If there is no number, disregard the exponent altogether.
                     // by resetting 'first' prior to the exponent prefix (e|E)
                     first = e_pos;
-                    n = acc_n;
+                    n = T(acc_n);
                 }
             }
             else if (frac_digits)
@@ -306,11 +306,11 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     return true;    // got a NaN or Inf, return immediately
                 }
 
-                n = acc_n;
+                n = T(acc_n);
             }
             else
             {
-                n = acc_n;
+                n = T(acc_n);
             }
 
             // If we got a negative sign, negate the number
