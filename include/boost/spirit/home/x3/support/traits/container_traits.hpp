@@ -164,7 +164,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         // Not all containers have "reserve"
         template <typename Container_>
-        static void reserve(Container_& c, std::size_t size) {}
+        static void reserve(Container_&, std::size_t) {}
 
         template <typename T, typename Allocator>
         static void reserve(std::vector<T, Allocator>& c, std::size_t size)
@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename Iterator>
-    inline bool append(unused_type, Iterator first, Iterator last)
+    inline bool append(unused_type, Iterator, Iterator)
     {
         return true;
     }

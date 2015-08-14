@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace x3
     {
         template <typename ID, typename T, typename Next, typename FoundVal>
         inline Next const&
-        make_unique_context(T& val, Next const& next, FoundVal&)
+        make_unique_context(T&, Next const& next, FoundVal&)
         {
             return next;
         }
