@@ -138,7 +138,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename RHS, typename Context>
     Context const&
-    make_rule_context(RHS const&, Context const& context
+    make_rule_context(RHS const& /*rhs*/, Context const& context
       , mpl::false_ /* is_default_parse_rule */)
     {
         return context;
@@ -156,8 +156,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         template <typename Iterator, typename Context, typename ActualAttribute>
         static bool call_on_success(
-            Iterator& , Iterator const&
-          , Context const&, ActualAttribute&
+            Iterator& /*first*/, Iterator const& /*last*/
+          , Context const& /*context*/, ActualAttribute& /*attr*/
           , mpl::false_ /* No on_success handler */ )
         {
             return true;
@@ -285,7 +285,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool parse_rhs(
             RHS const& rhs
           , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, ActualAttribute&
+          , Context const& context, RContext& rcontext, ActualAttribute& /*attr*/
           , mpl::true_)
         {
             return parse_rhs_main(rhs, first, last, context, rcontext, unused);

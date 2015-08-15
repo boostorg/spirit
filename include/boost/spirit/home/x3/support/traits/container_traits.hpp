@@ -79,10 +79,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     // so that check can be done in traits::is_substitute specialisation
     template <typename T>
     struct container_value<T
-			   , typename enable_if<typename mpl::eval_if <
-						    fusion::traits::is_sequence<T>
-						    , fusion::traits::is_associative<T>
-						    , mpl::false_ >::type >::type>
+      , typename enable_if<typename mpl::eval_if <
+                fusion::traits::is_sequence<T>
+              , fusion::traits::is_associative<T>
+              , mpl::false_ >::type >::type>
     : mpl::identity<T> {};
 
     template <>
@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename Container>
     struct container_iterator<Container const>
-         : mpl::identity<typename Container::const_iterator> {};
+        : mpl::identity<typename Container::const_iterator> {};
 
     template <>
     struct container_iterator<unused_type>
@@ -117,13 +117,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             c.insert(std::move(val));
         }
-       
+
         template <typename Container_, typename T>
         static void push_back(Container_& c, T&& val)
         {
             c.push_back(std::move(val));
         }
-       
+
         template <typename T>
         static bool call(Container& c, T&& val)
         {
@@ -164,14 +164,14 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         // Not all containers have "reserve"
         template <typename Container_>
-        static void reserve(Container_&, std::size_t) {}
+        static void reserve(Container_& /*c*/, std::size_t /*size*/) {}
 
         template <typename T, typename Allocator>
         static void reserve(std::vector<T, Allocator>& c, std::size_t size)
         {
             c.reserve(size);
         }
-       
+
         template <typename Container_, typename Iterator>
         static void insert(Container_& c, Iterator first, Iterator last)
         {
@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename Iterator>
-    inline bool append(unused_type, Iterator, Iterator)
+    inline bool append(unused_type, Iterator /*first*/, Iterator /*last*/)
     {
         return true;
     }
