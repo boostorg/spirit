@@ -101,6 +101,13 @@ main()
             BOOST_TEST((at_c<1>(attr) == 'b'));
             BOOST_TEST((at_c<2>(attr) == 'c'));
         }
+
+        {
+            std::string attr;
+            BOOST_TEST((test_attr("'azaaz'",
+                "'" > *(char_("a") | char_("z")) > "'", attr, space)));
+            BOOST_TEST(attr == "azaaz");
+        }
     }
 
     {
