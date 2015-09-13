@@ -208,7 +208,7 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_value<fusion::extension::adt_attribute_proxy<Attribute, N, Const>, T>
     {
         static void
-        call(typename T const& val, typename fusion::extension::adt_attribute_proxy<Attribute, N, Const>& attr)
+        call(T const& val, typename fusion::extension::adt_attribute_proxy<Attribute, N, Const>& attr)
         {
             attr = val;
         }
