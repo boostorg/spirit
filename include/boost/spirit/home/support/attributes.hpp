@@ -1154,7 +1154,7 @@ namespace boost { namespace spirit { namespace traits
         static void call(boost::optional<T>& val)
         {
             if (val)
-                val = none_t();   // leave optional uninitialized
+                val = none;   // leave optional uninitialized
         }
     };
 
