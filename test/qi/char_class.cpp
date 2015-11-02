@@ -54,6 +54,9 @@ main()
         BOOST_TEST(test("0", xdigit));
         BOOST_TEST(test("f", xdigit));
         BOOST_TEST(!test("g", xdigit));
+
+        // should fail, not assert!
+        BOOST_TEST(!test("\265", space));
     }
 
     {
