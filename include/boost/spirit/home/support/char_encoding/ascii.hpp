@@ -182,7 +182,8 @@ namespace boost { namespace spirit { namespace char_encoding
     ///////////////////////////////////////////////////////////////////////////
     struct ascii
     {
-        typedef char char_type;
+        // we now take in unsigned char, but use onlly the high bits
+        typedef unsigned char char_type;
 
         static bool
         isascii_(int ch)
