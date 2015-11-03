@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
     inline bool
     is_equal_to_one(T const& value)
     {
-        return value == 1.0;
+        return value == T(1);
     }
 
     inline bool
