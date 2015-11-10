@@ -110,10 +110,6 @@ main()
         BOOST_TEST(test("0", xdigit));
         BOOST_TEST(test("f", xdigit));
         BOOST_TEST(!test("g", xdigit));
-        
-        // should not assert!
-        BOOST_TEST(!test("\265", space));
-
 
 // needed for VC7.1 only
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
