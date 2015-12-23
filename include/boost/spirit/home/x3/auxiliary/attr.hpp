@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace x3
             !is_same<unused_type, attribute_type>::value;
         static bool const handles_container =
             traits::is_container<attribute_type>::value;
-        
+
         attr_parser(Value const& value)
           : value_(value) {}
         attr_parser(Value&& value)
@@ -40,8 +40,8 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context
           , typename RuleContext, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext&, Attribute& attr_) const
+        bool parse(Iterator& /*first*/, Iterator const& /*last*/
+          , Context const& /*context*/, RuleContext&, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_, attr_);
@@ -54,7 +54,7 @@ namespace boost { namespace spirit { namespace x3
         // silence MSVC warning C4512: assignment operator could not be generated
         attr_parser& operator= (attr_parser const&);
     };
-    
+
     template <typename Value, std::size_t N>
     struct attr_parser<Value[N]> : parser<attr_parser<Value[N]>>
     {
@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const has_attribute =
             !is_same<unused_type, attribute_type>::value;
         static bool const handles_container = true;
-        
+
         attr_parser(Value const (&value)[N])
         {
             std::copy(value + 0, value + N, value_ + 0);
@@ -76,8 +76,8 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context
           , typename RuleContext, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, RuleContext&, Attribute& attr_) const
+        bool parse(Iterator& /*first*/, Iterator const& /*last*/
+          , Context const& /*context*/, RuleContext&, Attribute& attr_) const
         {
             // $$$ Change to copy_to once we have it $$$
             traits::move_to(value_ + 0, value_ + N, attr_);
@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace x3
         // silence MSVC warning C4512: assignment operator could not be generated
         attr_parser& operator= (attr_parser const&);
     };
-    
+
     template <typename Value>
     struct get_info<attr_parser<Value>>
     {

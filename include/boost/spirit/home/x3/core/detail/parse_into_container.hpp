@@ -202,7 +202,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             Parser const& parser
           , Iterator& first, Iterator const& last, Context const& context
-          , RContext& rcontext, Attribute& attr, mpl::false_)
+          , RContext& rcontext, Attribute& /*attr*/, mpl::false_)
         {
             return parser.parse(first, last, context, rcontext, unused);
         }
