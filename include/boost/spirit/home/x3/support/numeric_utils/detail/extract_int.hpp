@@ -416,7 +416,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 {
                     if (count == 0) // must have at least one digit
                         return false;
-                    attr = 0;
+                    attr = Attribute(0);
                     first = it;
                     return true;
                 }
