@@ -19,7 +19,7 @@ project spirit-x3-example-rexpr
    ;
 
 lib rexpr
-   : [ glob src/*.cpp ] /boost//system
+   : [ glob src/*.cpp ] /boost//system /boost//filesystem
    ;
 
 build-project test ;
