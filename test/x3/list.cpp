@@ -89,10 +89,8 @@ main()
     }
 
     { // actions
-        using boost::spirit::x3::_attr;
-
         std::string s;
-        auto f = [&](auto& ctx){ s = std::string(_attr(ctx).begin(), _attr(ctx).end()); };
+        auto f = [&](auto& ctx){ s = std::string(boost::spirit::x3::_attr(ctx).begin(), boost::spirit::x3::_attr(ctx).end()); };
 
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[f]));
         BOOST_TEST(s == "abcdefgh");
