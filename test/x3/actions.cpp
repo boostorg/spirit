@@ -4,6 +4,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include <boost/bind.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <cstring>
@@ -22,6 +23,7 @@ auto fun1 =
 
 struct fun_action
 {
+    using result_type = void;
     template <typename Context>
     void operator()(Context const& ctx) const
     {
@@ -65,9 +67,9 @@ int main()
     }
 
     {
-        using namespace std::placeholders;
+        using namespace boost::placeholders;
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        x3::parse(s1, e1, '{' >> int_[std::bind(fun_action(), _1)] >> '}');
+        x3::parse(s1, e1, '{' >> int_[boost::bind(fun_action(), _1)] >> '}');
     }
 
     BOOST_TEST(x == (42*3));
