@@ -10,6 +10,11 @@
 
 namespace boost { namespace spirit { namespace x3
 {
+    struct low_priority
+    {
+        low_priority(int) { }
+    };
+
     template <typename Expr, typename T = void>
     struct disable_if_substitution_failure
     {
