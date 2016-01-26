@@ -18,8 +18,6 @@
 #include <boost/mpl/identity.hpp>
 
 #include <vector>
-#include <map>
-#include <unordered_map>
 #include <string>
 #include <iterator>
 #include <algorithm>
@@ -113,34 +111,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct push_back_container
     {
-        template <typename Key, typename Value, typename Compare, typename Allocator, typename T>
-        static void push_back(std::map<Key, Value, Compare, Allocator>& c, T&& val)
+        template <typename T>
+        static void push_back(Container& c, T&& val)
         {
-            c.insert(std::move(val));
-        }
-       
-        template <typename Key, typename Value, typename Compare, typename Allocator, typename T>
-        static void push_back(std::multimap<Key, Value, Compare, Allocator>& c, T&& val)
-        {
-            c.insert(std::move(val));
-        }
-
-        template <typename Key, typename Value, typename Hash, typename KeyEqual, typename Allocator, typename T>
-        static void push_back(std::unordered_map<Key, Value, Hash, KeyEqual, Allocator>& c, T&& val)
-        {
-            c.insert(std::move(val));
-        }
-
-        template <typename Key, typename Value, typename Hash, typename KeyEqual, typename Allocator, typename T>
-        static void push_back(std::unordered_multimap<Key, Value, Hash, KeyEqual, Allocator>& c, T&& val)
-        {
-            c.insert(std::move(val));
-        }
-
-        template <typename Container_, typename T>
-        static void push_back(Container_& c, T&& val)
-        {
-            c.push_back(std::move(val));
+            c.insert(c.end(), std::move(val));
         }
        
         template <typename T>
