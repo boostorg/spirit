@@ -114,7 +114,7 @@ void test_multimap_support(const auto& rule)
 }
 
 template <typename Container>
-void test_container_support(const auto& rule)
+void test_sequence_support(const auto& rule)
 {
     using spirit_test::test_attr;
 
@@ -180,9 +180,9 @@ main()
 	test_multimap_support<std::unordered_multimap<std::string,std::string>>(std_unordered_multimap_rule);
 	test_multimap_support<boost::unordered_multimap<std::string,std::string>>(boost_unordered_multimap_rule);
 
-	test_container_support<std::vector<std::string>>(std_vector_rule);
-	test_container_support<std::list<std::string>>(std_list_rule);
-	test_container_support<std::deque<std::string>>(std_deque_rule);
+	test_sequence_support<std::vector<std::string>>(std_vector_rule);
+	test_sequence_support<std::list<std::string>>(std_list_rule);
+	test_sequence_support<std::deque<std::string>>(std_deque_rule);
 
 	test_set_support<std::set<std::string>>(std_set_rule);
 	test_set_support<std::unordered_set<std::string>>(std_unordered_set_rule);
