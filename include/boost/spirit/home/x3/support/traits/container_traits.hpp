@@ -149,9 +149,26 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct append_container
     {
+        // Not all containers have "reserve"
+        template <typename Container_>
+        static void reserve(Container_& c, std::size_t size) {}
+
+        template <typename T, typename Allocator>
+        static void reserve(std::vector<T, Allocator>& c, std::size_t size)
+        {
+            c.reserve(size);
+        }
+
+        template <typename T, typename Traits, typename Allocator>
+        static void reserve(std::basic_string<T, Traits, Allocator>& c, std::size_t size)
+        {
+            c.reserve(size);
+        }
+
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
+        	reserve(c, c.size() + std::distance(first, last));
         	c.insert(c.end(), first, last);
             return true;
         }
