@@ -112,15 +112,9 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     struct push_back_container
     {
         template <typename T>
-        static void push_back(Container& c, T&& val)
-        {
-            c.insert(c.end(), std::move(val));
-        }
-       
-        template <typename T>
         static bool call(Container& c, T&& val)
         {
-            push_back(c, std::move(val));
+            c.insert(c.end(), std::move(val));
             return true;
         }
     };
@@ -155,27 +149,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct append_container
     {
-        // Not all containers have "reserve"
-        template <typename Container_>
-        static void reserve(Container_& c, std::size_t size) {}
-
-        template <typename T, typename Allocator>
-        static void reserve(std::vector<T, Allocator>& c, std::size_t size)
-        {
-            c.reserve(size);
-        }
-       
-        template <typename Container_, typename Iterator>
-        static void insert(Container_& c, Iterator first, Iterator last)
-        {
-            std::copy(first, last, std::inserter(c, c.end()));
-        }
-
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-            reserve(c, c.size() + std::distance(first, last));
-            insert(c, first, last);
+        	c.insert(c.end(), first, last);
             return true;
         }
     };
