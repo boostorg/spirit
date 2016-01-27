@@ -61,6 +61,22 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             typedef typename remove_value_const<S>::type second_type;
             typedef std::pair<first_type, second_type> type;
         };
+
+    	template <class Container>
+    	struct has_reserve_method
+    	{
+    	    template <class T>
+    	    static std::true_type test_signature(void (T::*)(std::size_t));
+
+    	    template <class T>
+    	    static decltype(test_signature(&T::reserve)) test(std::nullptr_t);
+
+    	    template <class T>
+    	    static std::false_type test(...);
+
+    	    using type = decltype(test<Container>(nullptr));
+    	    static const bool value = type::value;
+    	};
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -149,18 +165,12 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct append_container
     {
-        // Not all containers have "reserve"
-        template <typename Container_>
-        static void reserve(Container_& c, std::size_t size) {}
-
-        template <typename T, typename Allocator>
-        static void reserve(std::vector<T, Allocator>& c, std::size_t size)
+        static void reserve(Container& c, std::size_t size, std::false_type)
         {
-            c.reserve(size);
+            // Not all containers have "reserve"
         }
 
-        template <typename T, typename Traits, typename Allocator>
-        static void reserve(std::basic_string<T, Traits, Allocator>& c, std::size_t size)
+        static void reserve(Container& c, std::size_t size, std::true_type)
         {
             c.reserve(size);
         }
@@ -168,7 +178,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-        	reserve(c, c.size() + std::distance(first, last));
+        	reserve(c, c.size() + std::distance(first, last), std::integral_constant<bool, detail::has_reserve_method<Container>::value>());
         	c.insert(c.end(), first, last);
             return true;
         }
