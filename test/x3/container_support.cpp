@@ -169,6 +169,24 @@ void test_string_support(const auto& rule)
     BOOST_TEST(container == compare);
 }
 
+static_assert(typename x3::traits::detail::has_reserve_method<std::vector<int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<std::string>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<std::unordered_set<int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<boost::unordered_set<int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<std::unordered_multiset<int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<boost::unordered_multiset<int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<std::unordered_map<int,int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<boost::unordered_map<int,int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<std::unordered_multimap<int,int>>::type{}, "reserve problem");
+static_assert(typename x3::traits::detail::has_reserve_method<boost::unordered_multimap<int,int>>::type{}, "reserve problem");
+
+static_assert(!typename x3::traits::detail::has_reserve_method<std::deque<int>>::type{}, "reserve problem");
+static_assert(!typename x3::traits::detail::has_reserve_method<std::list<int>>::type{}, "reserve problem");
+static_assert(!typename x3::traits::detail::has_reserve_method<std::set<int>>::type{}, "reserve problem");
+static_assert(!typename x3::traits::detail::has_reserve_method<std::multiset<int>>::type{}, "reserve problem");
+static_assert(!typename x3::traits::detail::has_reserve_method<std::map<int,int>>::type{}, "reserve problem");
+static_assert(!typename x3::traits::detail::has_reserve_method<std::multimap<int,int>>::type{}, "reserve problem");
+
 int
 main()
 {
