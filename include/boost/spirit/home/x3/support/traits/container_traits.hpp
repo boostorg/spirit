@@ -75,7 +75,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     	    static std::false_type test(...);
 
     	    using type = decltype(test<Container>(nullptr));
-    	    static const bool value = type::value;
     	};
     }
 
@@ -130,7 +129,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename T>
         static bool call(Container& c, T&& val)
         {
-            c.insert(c.end(), std::move(val));
+            c.insert(c.cend(), std::move(val));
             return true;
         }
     };
@@ -178,8 +177,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-        	reserve(c, c.size() + std::distance(first, last), std::integral_constant<bool, detail::has_reserve_method<Container>::value>());
-        	c.insert(c.end(), first, last);
+        	reserve(c, c.size() + std::distance(first, last), typename detail::has_reserve_method<Container>::type{});
+        	c.insert(c.cend(), first, last);
             return true;
         }
     };
