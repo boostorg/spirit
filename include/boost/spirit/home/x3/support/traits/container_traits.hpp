@@ -129,7 +129,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename T>
         static bool call(Container& c, T&& val)
         {
-            c.insert(c.cend(), std::move(val));
+            c.insert(c.end(), std::move(val));
             return true;
         }
     };
@@ -180,7 +180,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         static bool call(Container& c, Iterator first, Iterator last)
         {
         	reserve(c, first, last, typename detail::has_reserve_method<Container>::type{});
-        	c.insert(c.cend(), first, last);
+        	c.insert(c.end(), first, last);
             return true;
         }
     };
