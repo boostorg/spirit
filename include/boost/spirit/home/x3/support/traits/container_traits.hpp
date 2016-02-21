@@ -61,6 +61,21 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             typedef typename remove_value_const<S>::type second_type;
             typedef std::pair<first_type, second_type> type;
         };
+
+    	template <class Container>
+    	struct has_reserve_method
+    	{
+    	    template <class T>
+    	    static std::true_type test_signature(void (T::*)(std::size_t));
+
+    	    template <class T>
+    	    static decltype(test_signature(&T::reserve)) test(std::nullptr_t);
+
+    	    template <class T>
+    	    static std::false_type test(...);
+
+    	    using type = decltype(test<Container>(nullptr));
+    	};
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -112,15 +127,9 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     struct push_back_container
     {
         template <typename T>
-        static void push_back(Container& c, T&& val)
-        {
-            c.insert(c.end(), std::move(val));
-        }
-       
-        template <typename T>
         static bool call(Container& c, T&& val)
         {
-            push_back(c, std::move(val));
+            c.insert(c.end(), std::move(val));
             return true;
         }
     };
@@ -138,7 +147,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename T>
-    inline bool push_back(unused_type, T const&)
+    inline bool push_back(unused_type, T&&)
     {
         return true;
     }
@@ -155,27 +164,23 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct append_container
     {
-        // Not all containers have "reserve"
-        template <typename Container_>
-        static void reserve(Container_& c, std::size_t size) {}
-
-        template <typename T, typename Allocator>
-        static void reserve(std::vector<T, Allocator>& c, std::size_t size)
+        template <typename Iterator>
+        static void reserve(Container& c, Iterator first, Iterator last, std::false_type)
         {
-            c.reserve(size);
+            // Not all containers have "reserve"
         }
-       
-        template <typename Container_, typename Iterator>
-        static void insert(Container_& c, Iterator first, Iterator last)
+
+        template <typename Iterator>
+        static void reserve(Container& c, Iterator first, Iterator last, std::true_type)
         {
-            std::copy(first, last, std::inserter(c, c.end()));
+            c.reserve(c.size() + std::distance(first, last));
         }
 
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-            reserve(c, c.size() + std::distance(first, last));
-            insert(c, first, last);
+        	reserve(c, first, last, typename detail::has_reserve_method<Container>::type{});
+        	c.insert(c.end(), first, last);
             return true;
         }
     };
