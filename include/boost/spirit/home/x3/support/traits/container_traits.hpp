@@ -147,7 +147,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename T>
-    inline bool push_back(unused_type, T const&)
+    inline bool push_back(unused_type, T&&)
     {
         return true;
     }
