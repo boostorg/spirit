@@ -126,6 +126,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run symbols1.cpp         : : : : x3_symbols1 ]
      [ run symbols2.cpp         : : : : x3_symbols2 ]
      [ run symbols3.cpp         : : : : x3_symbols3 ]
+     [ run symbols4.cpp         : : : : x3_symbols4 ]
      #~ [ run terminal_ex.cpp      : : : : x3_terminal_ex ]
      [ run tst.cpp
        $(BOOST_ROOT)/libs/system/build//boost_system
