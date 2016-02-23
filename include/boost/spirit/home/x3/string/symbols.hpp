@@ -44,11 +44,11 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef typename Encoding::char_type char_type; // the character type
         typedef Encoding encoding;
-        typedef T value_type; // the value associated with each entry
+        typedef typename std::add_const<T>::type value_type; // the value associated with each entry
         typedef value_type attribute_type;
 
         static bool const has_attribute =
-            !is_same<unused_type, attribute_type>::value;
+            !is_same<unused_type const, attribute_type>::value;
         static bool const handles_container =
             traits::is_container<attribute_type>::value;
 
@@ -198,7 +198,6 @@ namespace boost { namespace spirit { namespace x3
         }
 
     private:
-
         template <typename Iterator>
         value_type* find_impl(Iterator begin, Iterator end)
         {
@@ -214,14 +213,13 @@ namespace boost { namespace spirit { namespace x3
         }
 
     public:
-
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute& attr) const
         {
             x3::skip_over(first, last, context);
 
-            if (value_type const* val_ptr
+            if (value_type* val_ptr
                 = lookup->find(first, last, get_case_compare<Encoding>(context)))
             {
                 x3::traits::move_to(*val_ptr, attr);
