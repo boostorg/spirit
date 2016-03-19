@@ -11,6 +11,7 @@
 
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/detail/iterator.hpp>
 #include <boost/fusion/include/deque.hpp>
 #include <boost/mpl/has_xxx.hpp>
@@ -62,20 +63,20 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             typedef std::pair<first_type, second_type> type;
         };
 
-    	template <class Container>
-    	struct has_reserve_method
-    	{
-    	    template <class T>
-    	    static std::true_type test_signature(void (T::*)(std::size_t));
+        template <class Container>
+        struct has_reserve_method
+        {
+            template <class T>
+            static std::true_type test_signature(void (T::*)(std::size_t));
 
-    	    template <class T>
-    	    static decltype(test_signature(&T::reserve)) test(std::nullptr_t);
+            template <class T>
+            static decltype(test_signature(&T::reserve)) test(std::nullptr_t);
 
-    	    template <class T>
-    	    static std::false_type test(...);
+            template <class T>
+            static std::false_type test(...);
 
-    	    using type = decltype(test<Container>(nullptr));
-    	};
+            using type = decltype(test<Container>(nullptr));
+        };
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -91,13 +92,22 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     // of this metafunc is used to check wheter parser's attribute can be
     // saved to container, we simply return whole fusion::map as is
     // so that check can be done in traits::is_substitute specialisation
-    template <typename T>
-    struct container_value<T
-			   , typename enable_if<typename mpl::eval_if <
-						    fusion::traits::is_sequence<T>
-						    , fusion::traits::is_associative<T>
-						    , mpl::false_ >::type >::type>
-    : mpl::identity<T> {};
+    template <typename Container>
+    struct container_value<Container
+        , typename enable_if<typename mpl::eval_if <
+                fusion::traits::is_sequence<Container>
+                , fusion::traits::is_associative<Container>
+                , mpl::false_ >::type >::type>
+    : mpl::identity<Container> {};
+
+    template <typename Container>
+    struct container_value<Container
+        , typename enable_if<typename mpl::eval_if <
+                fusion::traits::is_sequence<Container>
+                , is_size_one_sequence<Container>
+                , mpl::false_ >::type >::type>
+    : container_value<std::remove_reference_t<
+        typename fusion::result_of::front<Container>::type>> {};
 
     template <>
     struct container_value<unused_type> : mpl::identity<unused_type> {};
@@ -179,8 +189,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-        	reserve(c, first, last, typename detail::has_reserve_method<Container>::type{});
-        	c.insert(c.end(), first, last);
+            reserve(c, first, last, typename detail::has_reserve_method<Container>::type{});
+            c.insert(c.end(), first, last);
             return true;
         }
     };
