@@ -78,7 +78,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
                 is_size_one_sequence<Source> >
             is_single_element_sequence;
         
-            move_to_plain(std::move(src), dest, is_single_element_sequence);
+            move_to_plain(std::forward<Source>(src), dest, is_single_element_sequence);
         }
 
         template <typename Source, typename Dest>
@@ -96,7 +96,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         >::type
         move_to(Source&& src, Dest& dest, tuple_attribute)
         {
-            fusion::move(std::move(src), dest);
+            fusion::move(std::forward<Source>(src), dest);
         }
 
         template <typename Source, typename Dest>
@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         >::type
         move_to(Source&& src, Dest& dest, tuple_attribute)
         {
-            traits::move_to(std::move(src), fusion::front(dest));
+            traits::move_to(std::forward<Source>(src), fusion::front(dest));
         }
 
         template <typename Source, typename Dest>
