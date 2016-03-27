@@ -10,7 +10,7 @@
 #include <type_traits>
 
 #include <boost/spirit/home/x3/support/context.hpp>
-#include <boost/spirit/home/x3/support/utility/is_callable.hpp>
+#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/range/iterator_range.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -46,13 +46,13 @@ namespace boost { namespace spirit { namespace x3
     namespace detail
     {
         template <typename F, typename Context>
-        auto call(F f, Context const& context, mpl::true_)
+        auto call(int, F f, Context const& context) -> decltype(f(context))
         {
             return f(context);
         }
 
         template <typename F, typename Context>
-        auto call(F f, Context const& context, mpl::false_)
+        auto call(low_priority, F f, Context const& /*context*/) -> decltype(f())
         {
             return f();
         }
@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace x3
         auto val_context = make_context<rule_val_context_tag>(rcontext, context);
         auto where_context = make_context<where_context_tag>(rng, val_context);
         auto attr_context = make_context<attr_context_tag>(attr, where_context);
-        return detail::call(f, attr_context, is_callable<F(decltype(attr_context) const&)>());
+        return detail::call(0, f, attr_context);
     }
 }}}
 

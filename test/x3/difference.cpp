@@ -43,20 +43,18 @@ main()
     }
 
     {
-        using boost::spirit::x3::_attr;
-
         std::string s;
 
         BOOST_TEST(test(
             "/*abcdefghijk*/"
-          , "/*" >> *(char_ - "*/")[([&](auto& ctx){ s += _attr(ctx); })] >> "*/"
+          , "/*" >> *(char_ - "*/")[([&](auto& ctx){ s += boost::spirit::x3::_attr(ctx); })] >> "*/"
         ));
         BOOST_TEST(s == "abcdefghijk");
         s.clear();
 
         BOOST_TEST(test(
             "    /*abcdefghijk*/"
-          , "/*" >> *(char_ - "*/")[([&](auto& ctx){ s += _attr(ctx); })] >> "*/"
+          , "/*" >> *(char_ - "*/")[([&](auto& ctx){ s += boost::spirit::x3::_attr(ctx); })] >> "*/"
           , space
         ));
         BOOST_TEST(s == "abcdefghijk");

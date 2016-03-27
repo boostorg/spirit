@@ -37,7 +37,7 @@ int main()
             BOOST_TEST(value == 123);
 
             value = 0;
-            const auto lambda = [&value](auto& ctx ){ value = x3::_attr(ctx) + 1; };
+            const auto lambda = [&value](auto& ctx ){ value = boost::spirit::x3::_attr(ctx) + 1; };
             BOOST_TEST(test_attr("/*123*/", comment[x3::uint_][lambda], value));
             BOOST_TEST(value == 124);
         }

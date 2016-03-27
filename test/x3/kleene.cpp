@@ -90,20 +90,16 @@ main()
     }
 
     { // actions
-        using boost::spirit::x3::_attr;
-
         std::string v;
-        auto f = [&](auto& ctx){ v = _attr(ctx); };
+        auto f = [&](auto& ctx){ v = boost::spirit::x3::_attr(ctx); };
 
         BOOST_TEST(test("bbbb", (*char_)[f]) && 4 == v.size() &&
             v[0] == 'b' && v[1] == 'b' && v[2] == 'b' &&  v[3] == 'b');
     }
 
     { // more actions
-        using boost::spirit::x3::_attr;
-
         std::vector<int> v;
-        auto f = [&](auto& ctx){ v = _attr(ctx); };
+        auto f = [&](auto& ctx){ v = boost::spirit::x3::_attr(ctx); };
 
         BOOST_TEST(test("123 456 789", (*int_)[f], space) && 3 == v.size() &&
             v[0] == 123 && v[1] == 456 && v[2] == 789);

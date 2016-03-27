@@ -18,7 +18,6 @@ int main()
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::raw;
     using boost::spirit::x3::eps;
-    using boost::spirit::x3::_attr;
 
     {
         boost::iterator_range<char const*> range;
@@ -43,7 +42,7 @@ int main()
 
     {
         boost::iterator_range<char const*> range;
-        BOOST_TEST((test("x", raw[alpha][ ([&](auto& ctx){ range = _attr(ctx); }) ])));
+        BOOST_TEST((test("x", raw[alpha][ ([&](auto& ctx){ range = boost::spirit::x3::_attr(ctx); }) ])));
         BOOST_TEST(range.size() == 1 && *range.begin() == 'x');
     }
 
