@@ -154,9 +154,10 @@ namespace boost { namespace spirit { namespace x3
     /***/
 
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
+    using BOOST_PP_CAT(rule_name, _synonym) = decltype(rule_name);              \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
-        decltype(rule_name) rule_                                               \
+        BOOST_PP_CAT(rule_name, _synonym) rule_                                 \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, Attribute& attr)                                \
     {                                                                           \

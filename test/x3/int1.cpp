@@ -142,12 +142,11 @@ main()
     //  action tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::x3::_attr;
         using boost::spirit::x3::ascii::space;
         using boost::spirit::x3::int_;
         int n, m;
 
-        auto f = [&](auto& ctx){ n = _attr(ctx); };
+        auto f = [&](auto& ctx){ n = boost::spirit::x3::_attr(ctx); };
 
         BOOST_TEST(test("123", int_[f]));
         BOOST_TEST(n == 123);

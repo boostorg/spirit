@@ -239,9 +239,8 @@ main()
 
     {   // test action
         using namespace boost::spirit::x3::ascii;
-        using boost::spirit::x3::_attr;
         char ch;
-        auto f = [&](auto& ctx){ ch = _attr(ctx); };
+        auto f = [&](auto& ctx){ ch = boost::spirit::x3::_attr(ctx); };
 
         BOOST_TEST(test("x", alnum[f]));
         BOOST_TEST(ch == 'x');

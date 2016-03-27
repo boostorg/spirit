@@ -15,12 +15,23 @@ int
 main()
 {
     using spirit_test::test;
+    using spirit_test::test_attr;
+    using boost::spirit::x3::alpha;
     using boost::spirit::x3::int_;
+    using boost::spirit::x3::lexeme;
 
     {
         BOOST_TEST((!test("1234", !int_)));
         BOOST_TEST((test("abcd", !int_, false)));
         BOOST_TEST((!test("abcd", !!int_, false)));
+    }
+
+    // Test attributes
+    {
+        std::string attr1, attr2;
+        BOOST_TEST(test_attr("abc", !int_ >> lexeme[alpha >> *alpha], attr1));
+        BOOST_TEST(test_attr("abc", lexeme[alpha >> *alpha]  -  int_, attr2));
+        BOOST_TEST_EQ(attr1, attr2);
     }
 
     return boost::report_errors();
