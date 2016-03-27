@@ -325,7 +325,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
              // traits::post_transform when, for example,
              // ActualAttribute is a recursive variant).
 #if defined(BOOST_SPIRIT_X3_DEBUG)
-                typedef typename make_attribute::value_type dbg_attribute_type;
+                typedef typename make_attribute::type dbg_attribute_type;
                 context_debug<Iterator, dbg_attribute_type>
                 dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
 #endif
