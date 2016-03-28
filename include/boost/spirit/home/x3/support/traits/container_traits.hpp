@@ -35,8 +35,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         BOOST_TTI_HAS_TYPE(iterator)
         BOOST_TTI_HAS_TYPE(size_type)
         BOOST_TTI_HAS_TYPE(reference)
-		BOOST_TTI_HAS_TYPE(key_type)
-		BOOST_TTI_HAS_MEMBER_FUNCTION(reserve)
+        BOOST_TTI_HAS_TYPE(key_type)
+        BOOST_TTI_HAS_MEMBER_FUNCTION(reserve)
     }
 
     template <typename T, typename Enable = void>
@@ -49,16 +49,14 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {};
 
     template <typename T, typename Enable = void>
-    struct is_reservable_container
+    struct is_reservable
       : mpl::bool_<
-            is_container<T>::value &&
             detail::has_member_function_reserve<T, void, boost::mpl::vector<size_t>>::value>
     {};
 
     template <typename T, typename Enable = void>
-    struct is_associative_container
+    struct is_associative
       : mpl::bool_<
-            is_container<T>::value &&
   	        detail::has_type_key_type<T>::value>
     {};
 
@@ -193,8 +191,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-            reserve(c, first, last, typename is_reservable_container<Container>::type{});
-            insert(c, first, last, typename is_associative_container<Container>::type{});
+            reserve(c, first, last, typename is_reservable<Container>::type{});
+            insert(c, first, last, typename is_associative<Container>::type{});
             return true;
         }
     };

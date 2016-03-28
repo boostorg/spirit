@@ -144,46 +144,46 @@ void test_string_support(Container&& container)
 int
 main()
 {
-	using x3::traits::is_reservable_container;
-	using x3::traits::is_associative_container;
+	using x3::traits::is_reservable;
+	using x3::traits::is_associative;
 
-	static_assert(is_reservable_container<std::vector<int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<std::string>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<std::unordered_set<int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<boost::unordered_set<int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<std::unordered_multiset<int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<boost::unordered_multiset<int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<std::unordered_map<int,int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<boost::unordered_map<int,int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<std::unordered_multimap<int,int>>::value, "is_reservable_container problem");
-	static_assert(is_reservable_container<boost::unordered_multimap<int,int>>::value, "is_reservable_container problem");
+	static_assert(is_reservable<std::vector<int>>::value, "is_reservable problem");
+	static_assert(is_reservable<std::string>::value, "is_reservable problem");
+	static_assert(is_reservable<std::unordered_set<int>>::value, "is_reservable problem");
+	static_assert(is_reservable<boost::unordered_set<int>>::value, "is_reservable problem");
+	static_assert(is_reservable<std::unordered_multiset<int>>::value, "is_reservable problem");
+	static_assert(is_reservable<boost::unordered_multiset<int>>::value, "is_reservable problem");
+	static_assert(is_reservable<std::unordered_map<int,int>>::value, "is_reservable problem");
+	static_assert(is_reservable<boost::unordered_map<int,int>>::value, "is_reservable problem");
+	static_assert(is_reservable<std::unordered_multimap<int,int>>::value, "is_reservable problem");
+	static_assert(is_reservable<boost::unordered_multimap<int,int>>::value, "is_reservable problem");
 
-	static_assert(!is_reservable_container<std::deque<int>>::value, "is_reservable_container problem");
-	static_assert(!is_reservable_container<std::list<int>>::value, "is_reservable_container problem");
-	static_assert(!is_reservable_container<std::set<int>>::value, "is_reservable_container problem");
-	static_assert(!is_reservable_container<std::multiset<int>>::value, "is_reservable_container problem");
-	static_assert(!is_reservable_container<std::map<int,int>>::value, "is_reservable_container problem");
-	static_assert(!is_reservable_container<std::multimap<int,int>>::value, "is_reservable_container problem");
+	static_assert(!is_reservable<std::deque<int>>::value, "is_reservable problem");
+	static_assert(!is_reservable<std::list<int>>::value, "is_reservable problem");
+	static_assert(!is_reservable<std::set<int>>::value, "is_reservable problem");
+	static_assert(!is_reservable<std::multiset<int>>::value, "is_reservable problem");
+	static_assert(!is_reservable<std::map<int,int>>::value, "is_reservable problem");
+	static_assert(!is_reservable<std::multimap<int,int>>::value, "is_reservable problem");
 
 	// ------------------------------------------------------------------
 
-	static_assert(is_associative_container<std::set<int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::unordered_set<int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<boost::unordered_set<int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::multiset<int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::unordered_multiset<int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<boost::unordered_multiset<int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::map<int,int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::unordered_map<int,int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<boost::unordered_map<int,int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::multimap<int,int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<std::unordered_multimap<int,int>>::value, "is_associative_container problem");
-	static_assert(is_associative_container<boost::unordered_multimap<int,int>>::value, "is_associative_container problem");
+	static_assert(is_associative<std::set<int>>::value, "is_associative problem");
+	static_assert(is_associative<std::unordered_set<int>>::value, "is_associative problem");
+	static_assert(is_associative<boost::unordered_set<int>>::value, "is_associative problem");
+	static_assert(is_associative<std::multiset<int>>::value, "is_associative problem");
+	static_assert(is_associative<std::unordered_multiset<int>>::value, "is_associative problem");
+	static_assert(is_associative<boost::unordered_multiset<int>>::value, "is_associative problem");
+	static_assert(is_associative<std::map<int,int>>::value, "is_associative problem");
+	static_assert(is_associative<std::unordered_map<int,int>>::value, "is_associative problem");
+	static_assert(is_associative<boost::unordered_map<int,int>>::value, "is_associative problem");
+	static_assert(is_associative<std::multimap<int,int>>::value, "is_associative problem");
+	static_assert(is_associative<std::unordered_multimap<int,int>>::value, "is_associative problem");
+	static_assert(is_associative<boost::unordered_multimap<int,int>>::value, "is_associative problem");
 
-	static_assert(!is_associative_container<std::vector<int>>::value, "is_associative_container problem");
-	static_assert(!is_associative_container<std::string>::value, "is_associative_container problem");
-	static_assert(!is_associative_container<std::deque<int>>::value, "is_associative_container problem");
-	static_assert(!is_associative_container<std::list<int>>::value, "is_associative_container problem");
+	static_assert(!is_associative<std::vector<int>>::value, "is_associative problem");
+	static_assert(!is_associative<std::string>::value, "is_associative problem");
+	static_assert(!is_associative<std::deque<int>>::value, "is_associative problem");
+	static_assert(!is_associative<std::list<int>>::value, "is_associative problem");
 
 	// ------------------------------------------------------------------
 
