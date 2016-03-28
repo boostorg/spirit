@@ -76,6 +76,21 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     	    using type = decltype(test<Container>(nullptr));
     	};
+
+        template <class Container>
+        struct has_key
+        {
+            template <class T>
+            struct true_type { using type = std::true_type; };
+
+            template <class T>
+            static typename true_type<typename T::key_type>::type test(std::nullptr_t);
+
+            template <class T>
+            static std::false_type test(...);
+
+            using type = decltype(test<Container>(nullptr));
+        };
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -177,10 +192,22 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         }
 
         template <typename Iterator>
+        static void insert(Container& c, Iterator first, Iterator last, std::false_type)
+        {
+            c.insert(c.end(), first, last);
+        }
+
+        template <typename Iterator>
+        static void insert(Container& c, Iterator first, Iterator last, std::true_type)
+        {
+            c.insert(first, last);
+        }
+
+        template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-        	reserve(c, first, last, typename detail::has_reserve_method<Container>::type{});
-        	c.insert(c.end(), first, last);
+            reserve(c, first, last, typename detail::has_reserve_method<Container>::type{});
+            insert(c, first, last, typename detail::has_key<Container>::type{});
             return true;
         }
     };
