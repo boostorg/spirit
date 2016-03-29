@@ -13,7 +13,6 @@
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/detail/iterator.hpp>
 #include <boost/fusion/include/deque.hpp>
-#include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/tti/has_type.hpp>
 #include <boost/tti/has_member_function.hpp>
@@ -158,6 +157,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename Enable = void>
     struct append_container
     {
+    private:
         template <typename Iterator>
         static void reserve(Container& c, Iterator first, Iterator last, std::false_type)
         {
@@ -182,6 +182,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             c.insert(first, last);
         }
 
+    public:
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
