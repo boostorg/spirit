@@ -5,7 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/std_pair.hpp>
@@ -36,15 +35,15 @@ BOOST_SPIRIT_DEFINE(pair_rule, string_rule);
 template <typename Container>
 void test_map_support(Container&& container)
 {
-	using spirit_test::test_attr;
+    using spirit_test::test_attr;
 
-	Container const compare {{"k1", "v1"}, {"k2", "v2"}};
-	auto const rule = pair_rule % x3::lit(',');
+    Container const compare {{"k1", "v1"}, {"k2", "v2"}};
+    auto const rule = pair_rule % x3::lit(',');
 
-	BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", rule, container));
-	BOOST_TEST(container.size() == 2);
-	BOOST_TEST(container == compare);
-    
+    BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", rule, container));
+    BOOST_TEST(container.size() == 2);
+    BOOST_TEST(container == compare);
+
     // test sequences parsing into containers
     auto const seq_rule = pair_rule >> ',' >> pair_rule >> ',' >> pair_rule;
     container.clear();
@@ -57,12 +56,12 @@ void test_multimap_support(Container&& container)
     using spirit_test::test_attr;
 
     Container const compare {{"k1", "v1"}, {"k2", "v2"}, {"k2", "v3"}};
-	auto const rule = pair_rule % x3::lit(',');
+    auto const rule = pair_rule % x3::lit(',');
 
     BOOST_TEST(test_attr("k1=v1,k2=v2,k2=v3", rule, container));
     BOOST_TEST(container.size() == 3);
     BOOST_TEST(container == compare);
-    
+
     // test sequences parsing into containers
     auto const seq_rule = pair_rule >> ',' >> pair_rule >> ',' >> pair_rule;
     container.clear();
@@ -80,7 +79,7 @@ void test_sequence_support(Container&& container)
     BOOST_TEST(test_attr("e1,e2,e2", rule, container));
     BOOST_TEST(container.size() == 3);
     BOOST_TEST(container == compare);
-    
+
     // test sequences parsing into containers
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
@@ -98,7 +97,7 @@ void test_set_support(Container&& container)
     BOOST_TEST(test_attr("e1,e2,e2", rule, container));
     BOOST_TEST(container.size() == 2);
     BOOST_TEST(container == compare);
-    
+
     // test sequences parsing into containers
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
@@ -116,7 +115,7 @@ void test_multiset_support(Container&& container)
     BOOST_TEST(test_attr("e1,e2,e2", rule, container));
     BOOST_TEST(container.size() == 3);
     BOOST_TEST(container == compare);
-    
+
     // test sequences parsing into containers
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
@@ -134,7 +133,7 @@ void test_string_support(Container&& container)
     BOOST_TEST(test_attr("e1,e2,e2", rule, container));
     BOOST_TEST(container.size() == 6);
     BOOST_TEST(container == compare);
-    
+
     // test sequences parsing into containers
     auto const seq_rule = string_rule >> ',' >> string_rule >> ',' >> string_rule;
     container.clear();
@@ -144,49 +143,49 @@ void test_string_support(Container&& container)
 int
 main()
 {
-	using x3::traits::detail::has_reserve_method;
+    using x3::traits::detail::has_reserve_method;
 
-	static_assert(typename has_reserve_method<std::vector<int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<std::string>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<std::unordered_set<int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<boost::unordered_set<int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<std::unordered_multiset<int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<boost::unordered_multiset<int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<std::unordered_map<int,int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<boost::unordered_map<int,int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<std::unordered_multimap<int,int>>::type{}, "reserve problem");
-	static_assert(typename has_reserve_method<boost::unordered_multimap<int,int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<std::vector<int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<std::string>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<std::unordered_set<int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<boost::unordered_set<int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<std::unordered_multiset<int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<boost::unordered_multiset<int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<std::unordered_map<int,int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<boost::unordered_map<int,int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<std::unordered_multimap<int,int>>::type{}, "reserve problem");
+    static_assert(typename has_reserve_method<boost::unordered_multimap<int,int>>::type{}, "reserve problem");
 
-	static_assert(!typename has_reserve_method<std::deque<int>>::type{}, "reserve problem");
-	static_assert(!typename has_reserve_method<std::list<int>>::type{}, "reserve problem");
-	static_assert(!typename has_reserve_method<std::set<int>>::type{}, "reserve problem");
-	static_assert(!typename has_reserve_method<std::multiset<int>>::type{}, "reserve problem");
-	static_assert(!typename has_reserve_method<std::map<int,int>>::type{}, "reserve problem");
-	static_assert(!typename has_reserve_method<std::multimap<int,int>>::type{}, "reserve problem");
+    static_assert(!typename has_reserve_method<std::deque<int>>::type{}, "reserve problem");
+    static_assert(!typename has_reserve_method<std::list<int>>::type{}, "reserve problem");
+    static_assert(!typename has_reserve_method<std::set<int>>::type{}, "reserve problem");
+    static_assert(!typename has_reserve_method<std::multiset<int>>::type{}, "reserve problem");
+    static_assert(!typename has_reserve_method<std::map<int,int>>::type{}, "reserve problem");
+    static_assert(!typename has_reserve_method<std::multimap<int,int>>::type{}, "reserve problem");
 
-	// ------------------------------------------------------------------
+    // ------------------------------------------------------------------
 
-	test_string_support(std::string());
+    test_string_support(std::string());
 
-	test_sequence_support(std::vector<std::string>());
-	test_sequence_support(std::list<std::string>());
-	test_sequence_support(std::deque<std::string>());
+    test_sequence_support(std::vector<std::string>());
+    test_sequence_support(std::list<std::string>());
+    test_sequence_support(std::deque<std::string>());
 
-	test_set_support(std::set<std::string>());
-	test_set_support(std::unordered_set<std::string>());
-	test_set_support(boost::unordered_set<std::string>());
+    test_set_support(std::set<std::string>());
+    test_set_support(std::unordered_set<std::string>());
+    test_set_support(boost::unordered_set<std::string>());
 
-	test_multiset_support(std::multiset<std::string>());
-	test_multiset_support(std::unordered_multiset<std::string>());
-	test_multiset_support(boost::unordered_multiset<std::string>());
+    test_multiset_support(std::multiset<std::string>());
+    test_multiset_support(std::unordered_multiset<std::string>());
+    test_multiset_support(boost::unordered_multiset<std::string>());
 
-	test_map_support(std::map<std::string,std::string>());
-	test_map_support(std::unordered_map<std::string,std::string>());
-	test_map_support(boost::unordered_map<std::string,std::string>());
+    test_map_support(std::map<std::string,std::string>());
+    test_map_support(std::unordered_map<std::string,std::string>());
+    test_map_support(boost::unordered_map<std::string,std::string>());
 
-	test_multimap_support(std::multimap<std::string,std::string>());
-	test_multimap_support(std::unordered_multimap<std::string,std::string>());
-	test_multimap_support(boost::unordered_multimap<std::string,std::string>());
+    test_multimap_support(std::multimap<std::string,std::string>());
+    test_multimap_support(std::unordered_multimap<std::string,std::string>());
+    test_multimap_support(boost::unordered_multimap<std::string,std::string>());
 
     return boost::report_errors();
 }

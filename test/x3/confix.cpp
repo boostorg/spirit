@@ -5,7 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/home/x3/char.hpp>
@@ -15,7 +14,7 @@
 #include <boost/spirit/home/x3/string.hpp>
 #include <boost/spirit/home/x3/directive/confix.hpp>
 
-#include "../test.hpp"
+#include "test.hpp"
 
 int main()
 {
@@ -47,13 +46,13 @@ int main()
 
         {
             std::vector<unsigned> values;
-            
+
             BOOST_TEST(test("[0,2,4,6,8]", array[x3::uint_ % ',']));
             BOOST_TEST(test_attr("[0,2,4,6,8]", array[x3::uint_ % ','], values));
             BOOST_TEST(
-                values.size() == 5 && 
-                values[0] == 0 && 
-                values[1] == 2 && 
+                values.size() == 5 &&
+                values[0] == 0 &&
+                values[1] == 2 &&
                 values[2] == 4 &&
                 values[3] == 6 &&
                 values[4] == 8);
@@ -64,7 +63,7 @@ int main()
                 test("[[1,3,5],[0,2,4]]", array[array[x3::uint_ % ','] % ',']));
             BOOST_TEST(
                 test_attr(
-                    "[[1,3,5],[0,2,4]]", 
+                    "[[1,3,5],[0,2,4]]",
                     array[array[x3::uint_ % ','] % ','],
                     values));
             BOOST_TEST(

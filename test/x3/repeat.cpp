@@ -13,7 +13,7 @@
 #include <boost/spirit/home/x3.hpp>
 #include <string>
 #include <iostream>
-#include "../test.hpp"
+#include "test.hpp"
 
 int
 main()
