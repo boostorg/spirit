@@ -39,26 +39,20 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         BOOST_TTI_HAS_MEMBER_FUNCTION(reserve)
     }
 
-    template <typename T, typename Enable = void>
-    struct is_container
-      : mpl::bool_<
+    template <typename T>
+    using is_container = std::integral_constant<bool,
             detail::has_type_value_type<T>::value &&
             detail::has_type_iterator<T>::value &&
             detail::has_type_size_type<T>::value &&
-            detail::has_type_reference<T>::value>
-    {};
+            detail::has_type_reference<T>::value>;
 
-    template <typename T, typename Enable = void>
-    struct is_reservable
-      : mpl::bool_<
-            detail::has_member_function_reserve<T, void, boost::mpl::vector<size_t>>::value>
-    {};
+    template <typename T>
+    using is_reservable = std::integral_constant<bool,
+            detail::has_member_function_reserve<T, void, boost::mpl::vector<size_t>>::value>;
 
-    template <typename T, typename Enable = void>
-    struct is_associative
-      : mpl::bool_<
-  	        detail::has_type_key_type<T>::value>
-    {};
+    template <typename T>
+    using is_associative = std::integral_constant<bool,
+    		detail::has_type_key_type<T>::value>;
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -165,25 +159,25 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     struct append_container
     {
         template <typename Iterator>
-        static void reserve(Container& c, Iterator first, Iterator last, boost::mpl::false_)
+        static void reserve(Container& c, Iterator first, Iterator last, std::false_type)
         {
             // Not all containers have "reserve"
         }
 
         template <typename Iterator>
-        static void reserve(Container& c, Iterator first, Iterator last, boost::mpl::true_)
+        static void reserve(Container& c, Iterator first, Iterator last, std::true_type)
         {
             c.reserve(c.size() + std::distance(first, last));
         }
 
         template <typename Iterator>
-        static void insert(Container& c, Iterator first, Iterator last, boost::mpl::false_)
+        static void insert(Container& c, Iterator first, Iterator last, std::false_type)
         {
             c.insert(c.end(), first, last);
         }
 
         template <typename Iterator>
-        static void insert(Container& c, Iterator first, Iterator last, boost::mpl::true_)
+        static void insert(Container& c, Iterator first, Iterator last, std::true_type)
         {
             c.insert(first, last);
         }
@@ -191,8 +185,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-            reserve(c, first, last, typename is_reservable<Container>::type{});
-            insert(c, first, last, typename is_associative<Container>::type{});
+            reserve(c, first, last, is_reservable<Container>{});
+            insert(c, first, last, is_associative<Container>{});
             return true;
         }
     };
