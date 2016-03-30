@@ -107,6 +107,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run repeat.cpp           : : : : x3_repeat ]
      [ run seek.cpp             : : : : x3_seek ]
 
+     [ run x3_variant.cpp       : : : : x3_variant ]
+
     ;
 }
-
