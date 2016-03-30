@@ -39,18 +39,18 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename T>
-    using is_container = std::integral_constant<bool,
+    using is_container = mpl::bool_<
             detail::has_type_value_type<T>::value &&
             detail::has_type_iterator<T>::value &&
             detail::has_type_size_type<T>::value &&
             detail::has_type_reference<T>::value>;
 
     template <typename T>
-    using is_reservable = std::integral_constant<bool,
+    using is_reservable = mpl::bool_<
             detail::has_member_function_reserve<T, void, boost::mpl::vector<size_t>>::value>;
 
     template <typename T>
-    using is_associative = std::integral_constant<bool,
+    using is_associative = mpl::bool_<
     		detail::has_type_key_type<T>::value>;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -159,25 +159,25 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
     private:
         template <typename Iterator>
-        static void reserve(Container& c, Iterator first, Iterator last, std::false_type)
+        static void reserve(Container& c, Iterator first, Iterator last, mpl::false_)
         {
             // Not all containers have "reserve"
         }
 
         template <typename Iterator>
-        static void reserve(Container& c, Iterator first, Iterator last, std::true_type)
+        static void reserve(Container& c, Iterator first, Iterator last, mpl::true_)
         {
             c.reserve(c.size() + std::distance(first, last));
         }
 
         template <typename Iterator>
-        static void insert(Container& c, Iterator first, Iterator last, std::false_type)
+        static void insert(Container& c, Iterator first, Iterator last, mpl::false_)
         {
             c.insert(c.end(), first, last);
         }
 
         template <typename Iterator>
-        static void insert(Container& c, Iterator first, Iterator last, std::true_type)
+        static void insert(Container& c, Iterator first, Iterator last, mpl::true_)
         {
             c.insert(first, last);
         }
