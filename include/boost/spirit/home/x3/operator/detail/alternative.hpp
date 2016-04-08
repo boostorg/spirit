@@ -17,10 +17,16 @@
 #include <boost/variant/variant.hpp>
 
 #include <boost/mpl/copy_if.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/empty.hpp>
+#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/front.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/mpl/size.hpp>
+#include <boost/mpl/unique.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <boost/fusion/include/front.hpp>
@@ -211,13 +217,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             >::type
         filtered_types;
 
-        // Build a variant if filtered_types is not empty,
-        // else just return unused_type
+        // remove duplicate types and normalize to a 1+ element mpl sequence
         typedef typename
             mpl::eval_if<
                 mpl::empty<filtered_types>
-              , mpl::identity<unused_type>
-              , make_variant_over<filtered_types>
+              , mpl::vector<unused_type>
+              , mpl::unique<filtered_types, is_same<mpl::_1, mpl::_2>>
+            >::type
+        unique_types;
+
+        // build a variant if there is more than one unique type
+        typedef typename
+            mpl::eval_if<
+                mpl::equal_to<mpl::size<unique_types>, mpl::int_<1>>
+                , mpl::front<unique_types>
+                , make_variant_over<unique_types>
             >::type
         type;
     };
@@ -254,46 +268,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
         return false;
     }
-
-
-    template <typename Left, typename Right, typename Context, typename RContext>
-    struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>
-    {
-        typedef alternative<Left, Right> parser_type;
-
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
-        {
-            return parse_alternative(parser, first, last, context, rcontext, attr);
-        }
-
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
-        {
-            return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, rcontext, attr);
-        }
-
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr)
-        {
-            typedef typename
-                traits::attribute_of<parser_type, Context>::type
-            attribute_type;
-
-            return call(parser, first, last, context, rcontext, attr
-                , traits::variant_has_substitute<attribute_type, Attribute>());
-        }
-    };
 
 }}}}
 
