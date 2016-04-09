@@ -75,30 +75,4 @@ namespace boost { namespace spirit { namespace x3
     auto const expect = expect_gen{};
 }}}
 
-namespace boost { namespace spirit { namespace x3 { namespace detail
-{
-    // Special case handling for expect expressions.
-    template <typename Subject, typename Context, typename RContext>
-    struct parse_into_container_impl<expect_directive<Subject>, Context, RContext>
-    {
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            expect_directive<Subject> const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr)
-        {
-            bool r = parse_into_container(
-                parser.subject, first, last, context, rcontext, attr);
-
-            if (!r)
-            {
-                boost::throw_exception(
-                    expectation_failure<Iterator>(
-                        first, what(parser.subject)));
-            }
-            return r;
-        }
-    };
-}}}}
-
 #endif

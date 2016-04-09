@@ -133,7 +133,7 @@ main()
         rule<class r1, wchar_t> r1;
         rule<class r2, wchar_t> r2;
         rule<class r3, wchar_t> r3;
-        
+
         auto f = [&](auto& ctx){ _val(ctx) = _attr(ctx); };
 
         r3  = ((eps >> r1))[f];
@@ -226,6 +226,33 @@ main()
         BOOST_TEST(test_attr("long=ABC", pair, attr_));
         BOOST_TEST(boost::get<long>(&boost::fusion::front(attr_)) != nullptr);
         BOOST_TEST(boost::get<char>(&boost::fusion::front(attr_)) == nullptr);
+    }
+    // from boost bug 12094
+    {
+        const auto r =
+            boost::spirit::x3::rule<class r, std::string>{} = +char_;
+
+        std::string output;
+        BOOST_TEST(test_attr("abcd", 'a' > (r | r), output));
+        BOOST_TEST(output == "bcd");
+    }
+    {
+        const auto r =
+            int_ >> (
+                (" :left: " >> int_ >> " :right: ") |
+                (" :right: " >> int_ >> " :left: ")
+            ) >> int_;
+
+        boost::fusion::vector<int, int, int> out;
+        BOOST_TEST(test_attr("100 :left: 101 :right: 102", r, out));
+        BOOST_TEST(boost::fusion::at_c<0>(out) == 100);
+        BOOST_TEST(boost::fusion::at_c<1>(out) == 101);
+        BOOST_TEST(boost::fusion::at_c<2>(out) == 102);
+
+        BOOST_TEST(test_attr("200 :right: 201 :left: 202", r, out));
+        BOOST_TEST(boost::fusion::at_c<0>(out) == 200);
+        BOOST_TEST(boost::fusion::at_c<1>(out) == 201);
+        BOOST_TEST(boost::fusion::at_c<2>(out) == 202);
     }
 
     return boost::report_errors();
