@@ -8,6 +8,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/optional.hpp>
 #include <boost/variant.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -253,6 +254,17 @@ main()
         BOOST_TEST(boost::fusion::at_c<0>(out) == 200);
         BOOST_TEST(boost::fusion::at_c<1>(out) == 201);
         BOOST_TEST(boost::fusion::at_c<2>(out) == 202);
+    }
+    {
+        std::vector<boost::optional<char>> out;
+        BOOST_TEST(test_attr("x,y,z", *(',' | char_), out));
+
+        BOOST_TEST(out.size() == 5);
+        BOOST_TEST(out[0] && *(out[0]) == 'x');
+        BOOST_TEST(!out[1]);
+        BOOST_TEST(out[2] && *(out[2]) == 'y');
+        BOOST_TEST(!out[3]);
+        BOOST_TEST(out[4] && *(out[4]) == 'z');
     }
 
     return boost::report_errors();
