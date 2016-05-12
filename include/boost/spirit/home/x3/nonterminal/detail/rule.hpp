@@ -7,6 +7,7 @@
 #if !defined(BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_DETAIL_RULE_JAN_08_2012_0326PM
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/spirit/home/x3/auxiliary/guard.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
@@ -300,6 +301,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, ActualAttribute& attr
           , ExplicitAttrPropagation)
         {
+            boost::ignore_unused(rule_name);
+
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
 
             // do down-stream transformation, provides attribute for
@@ -328,9 +331,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 typedef typename make_attribute::type dbg_attribute_type;
                 context_debug<Iterator, dbg_attribute_type>
                 dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
-#else
-                // supress unused parameter warning
-                (void)rule_name;
 #endif
                 ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
                    , mpl::bool_
