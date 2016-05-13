@@ -139,7 +139,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename RHS, typename Context>
     Context const&
-    make_rule_context(RHS const& /* rhs */, Context const& /* context */
+    make_rule_context(RHS const& /* rhs */, Context const& context
       , mpl::false_ /* is_default_parse_rule */)
     {
         return context;
