@@ -5,19 +5,11 @@
 
 // A series of simple tests for the istream_iterator
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <vector>
-#include <istream>
 #include <sstream>
-#include <iostream>
 
-#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/support_istream_iterator.hpp>
-
-namespace qi = boost::spirit::qi;
-namespace ascii = boost::spirit::ascii;
 
 int main()
 {
