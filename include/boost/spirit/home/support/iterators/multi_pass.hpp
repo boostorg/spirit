@@ -152,15 +152,15 @@ namespace boost { namespace spirit
         {
             return !(*this == y);
         }
-        bool operator>(multi_pass const& y)
+        bool operator>(multi_pass const& y) const
         {
             return y < *this;
         }
-        bool operator>=(multi_pass const& y)
+        bool operator>=(multi_pass const& y) const
         {
             return !(*this < y);
         }
-        bool operator<=(multi_pass const& y)
+        bool operator<=(multi_pass const& y) const
         {
             return !(y < *this);
         }
