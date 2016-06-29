@@ -30,6 +30,7 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
+#ifndef ANDROID
 //#if !defined(PHOENIX_NO_STD_NAMESPACE)
 namespace PHOENIX_STD
 {
@@ -40,6 +41,7 @@ namespace PHOENIX_STD
 //#if !defined(PHOENIX_NO_STD_NAMESPACE)
 }
 //#endif
+#endif // ANDROID
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace phoenix
