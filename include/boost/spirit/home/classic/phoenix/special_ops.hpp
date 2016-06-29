@@ -30,20 +30,6 @@
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef ANDROID
-//#if !defined(PHOENIX_NO_STD_NAMESPACE)
-namespace PHOENIX_STD
-{
-//#endif
-
-    template<typename T> class complex;
-
-//#if !defined(PHOENIX_NO_STD_NAMESPACE)
-}
-//#endif
-#endif // ANDROID
-
-///////////////////////////////////////////////////////////////////////////////
 namespace phoenix
 {
 
