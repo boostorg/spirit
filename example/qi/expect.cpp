@@ -87,6 +87,7 @@ namespace grammars {
     }
 }
 
+int main() {
 
     grammars::ident<iterator_type> id;
 
