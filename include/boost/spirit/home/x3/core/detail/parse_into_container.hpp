@@ -251,7 +251,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
         {
-            return parser.parse(first, last, context, rcontext, attr);
+            if (attr.empty())
+                return parser.parse(first, last, context, rcontext, attr);
+            Attribute rest;
+            bool r = parser.parse(first, last, context, rcontext, rest);
+            if (r)
+                attr.insert(attr.end(), rest.begin(), rest.end());
+            return r;
         }
 
         template <typename Iterator, typename Attribute>
