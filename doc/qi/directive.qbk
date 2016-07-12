@@ -859,7 +859,7 @@ Simple usage of `as<T>`, `as_string` and `as_wstring`:
 
 [endsect]
 [/------------------------------------------------------------------------------]
-[section:expect Expectation Parser (`expect[a]`)]
+[section:expect Expectation Directive (`expect[]`)]
 
 [heading Description]
 
@@ -867,23 +867,32 @@ There are occasions in which it is expected that the input must match a
 particular parser or the input is invalid. Such cases generally arise
 after matching a portion of a grammar, such that the context is fully
 known. In such a situation, failure to match should result in an
-exception. For example, when parsing an e-mail address, after matching a
-name and "@" there must be a domain name or the address is invalid.
+exception. For example, when parsing an e-mail address, a name, an "@" 
+and a domain name must be matched or the address is invalid.
 
 The expect directive requires that the argument parser matches
 the input or an exception is emitted. Using on_error(), that exception
 can be handled by calling a handler with the context at which the
 parsing failed can be reported.
 
-The expect directive parses an operand which may be a single parser or
-a complex parser expression like 
+The expect directive parses an operand parser expression which may be a 
+single parser or a complex parser expression like  a sequence.
+
+Single parser: 
+
+	expect[a]
+
+Parser expression:
 
     expect[a >> b >> ...]
 
-However, while the plain __qi_sequence__ simply returns a no-match
+In the latter case while the plain __qi_sequence__ simply returns a no-match
 (returns `false`) when one of the elements fail, the expect directive
-throws an __qi_expectation_failure__`<Iter>` when the argument parser
-(even the first parser of a complex parser expression) fails to match.
+throws an __qi_expectation_failure__`<Iter>` if any of the parsers
+(even the first parser of a sequence) fails to match.
+
+[note Spirit provides two ways to handle expectation failures by throwing an expectation exception.
+Use the __qi_expect__ if you do not need an exception to be thrown when the first parser of a sequence fails. ]
 
 [heading Header]
 
@@ -937,7 +946,7 @@ a: Unused --> expect[a] : Unused``]]
 [heading Complexity]
 
 [:The overall complexity of the expectation parser is defined by the 
-complexity of it's argument parser.]
+complexity of it's argument parser. The complexity of the expect directive itself is O(1).]
 
 [heading Example]
 
@@ -946,10 +955,10 @@ __qi_basics_examples__ section.]
 
 Some using declarations:
 
-[reference_using_declarations_expect]
+[reference_using_declarations_expectd]
 
-[reference_expect]
+[reference_expectd]
 
-[endsect] [/ Expectation]
+[endsect]
 
 [endsect]

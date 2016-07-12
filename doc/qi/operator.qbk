@@ -244,7 +244,7 @@ __qi_basics_examples__ section.]
 [endsect] [/ Difference]
 
 [/------------------------------------------------------------------------------]
-[section:expect Expectation Parser (`a > b`)]
+[section:expect Expectation Operator (`a > b`)]
 
 [heading Description]
 
@@ -313,6 +313,8 @@ defined in __nary_parser_concept__.
     [[`a > b`]          [Match `a` followed by `b`. If `a` fails, no-match.
                         If `b` fails, throw an `expectation_failure<Iter>`]]
 ]
+
+[note If you need an exception to be thrown if `a` fails, use the __qi_expectd__ directive instead of the expectation operator.]
 
 [heading Attributes]
 
