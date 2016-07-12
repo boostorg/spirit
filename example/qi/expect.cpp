@@ -80,8 +80,8 @@ namespace grammars {
             << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl
             << "Error! Expecting "
             << qi::_4
-            << " here: '"
-            << phx::construct<std::string>(qi::_3, qi::_2)
+            << " here: "
+            << phx::construct<std::string>(qi::_3, qi::_2) << std::endl
             << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl
             );
     }
