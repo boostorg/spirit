@@ -4,8 +4,8 @@ Copyright (c) 2016 Frank Hein, maxence business consulting gmbh
 Distributed under the Boost Software License, Version 1.0. (See accompanying
 file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined (SPIRIT_EXPECTD_JULY_2016)
-#define SPIRIT_EXPECTD_JULY_2016
+#if !defined (SPIRIT_EXPECT_JULY_13_2016)
+#define SPIRIT_EXPECT_JULY_13_2016
 
 #if defined(_MSC_VER)
 #pragma once

@@ -897,7 +897,7 @@ Use the __qi_expect__ if you do not need an exception to be thrown when the firs
 [heading Header]
 
     // forwards to <boost/spirit/home/qi/directive/expect.hpp>
-    #include <boost/spirit/include/qi_expectd.hpp>
+    #include <boost/spirit/include/qi_expect.hpp>
 
 Also, see __include_structure__.
 
