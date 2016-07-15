@@ -15,8 +15,8 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 namespace qi = boost::spirit::qi;
 
-using iterator_type = std::string::const_iterator;
-using result_type = std::string;
+typedef std::string::const_iterator iterator_type;
+typedef std::string result_type;
 
 template<typename Parser>
 void parse(const std::string message, const std::string& input, const std::string& rule, const Parser& parser) {

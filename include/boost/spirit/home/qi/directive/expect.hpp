@@ -40,14 +40,13 @@ namespace boost { namespace spirit { namespace qi {
     template <typename Subject>
     struct expect_directive : unary_parser<expect_directive<Subject> >
     {
-        using subject_type 
-            = result_of::compile<domain, Subject>;
+        typedef result_of::compile<domain, Subject> subject_type;
 
         template <typename Context, typename Iterator>
         struct attribute
         {
-            using type 
-                = traits::attribute_of<subject_type, Context, Iterator>;
+            typedef traits::attribute_of<subject_type, Context, Iterator>
+                type;
         };
 
         expect_directive(Subject const& subject_) : subject(subject_) {}
@@ -58,7 +57,7 @@ namespace boost { namespace spirit { namespace qi {
             , Context& context, Skipper const& skipper
             , Attribute& attr_) const
         {
-            using exception = expectation_failure<Iterator>;
+            typedef expectation_failure<Iterator> exception;
 
             if (!subject.parse(first, last, context, skipper, attr_))
             {
@@ -86,7 +85,7 @@ namespace boost { namespace spirit { namespace qi {
     template <typename Subject, typename Modifiers>
     struct make_directive<tag::expect, Subject, Modifiers>
     {
-        using result_type = expect_directive<Subject>;
+        typedef expect_directive<Subject> result_type;
         
         result_type operator()
             (unused_type, Subject const& subject, unused_type) const
