@@ -51,12 +51,12 @@ namespace boost { namespace spirit { namespace qi
     };
 
     template <typename Elements>
-    struct expect : sequence_base<expect<Elements>, Elements>
+    struct expect_operator : sequence_base<expect_operator<Elements>, Elements>
     {
-        friend struct sequence_base<expect<Elements>, Elements>;
+        friend struct sequence_base<expect_operator<Elements>, Elements>;
 
-        expect(Elements const& elements)
-          : sequence_base<expect<Elements>, Elements>(elements) {}
+        expect_operator(Elements const& elements)
+          : sequence_base<expect_operator<Elements>, Elements>(elements) {}
 
     private:
 
@@ -73,7 +73,7 @@ namespace boost { namespace spirit { namespace qi
                 (first, last, context, skipper);
         }
 
-        std::string id() const { return "expect"; }
+        std::string id() const { return "expect_operator"; }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     template <typename Elements, typename Modifiers>
     struct make_composite<proto::tag::greater, Elements, Modifiers>
-      : make_nary_composite<Elements, expect>
+      : make_nary_composite<Elements, expect_operator>
     {};
 }}}
 
@@ -89,13 +89,13 @@ namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
     template <typename Elements>
-    struct has_semantic_action<qi::expect<Elements> >
+    struct has_semantic_action<qi::expect_operator<Elements> >
       : nary_has_semantic_action<Elements> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Elements, typename Attribute, typename Context
       , typename Iterator>
-    struct handles_container<qi::expect<Elements>, Attribute, Context
+    struct handles_container<qi::expect_operator<Elements>, Attribute, Context
           , Iterator>
       : mpl::true_ {};
 }}}
