@@ -14,6 +14,7 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
+#include <boost/spirit/home/qi/detail/expectation_failure.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/unused.hpp>

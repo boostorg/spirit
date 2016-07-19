@@ -14,6 +14,7 @@
 
 #include <boost/spirit/home/qi/operator/sequence_base.hpp>
 #include <boost/spirit/home/qi/detail/expect_function.hpp>
+#include <boost/spirit/home/qi/detail/expectation_failure.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/handles_container.hpp>
@@ -36,20 +37,6 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
-    template <typename Iterator>
-    struct expectation_failure : std::runtime_error
-    {
-        expectation_failure(Iterator first_, Iterator last_, info const& what)
-          : std::runtime_error("boost::spirit::qi::expectation_failure")
-          , first(first_), last(last_), what_(what)
-        {}
-        ~expectation_failure() throw() {}
-
-        Iterator first;
-        Iterator last;
-        info what_;
-    };
-
     template <typename Elements>
     struct expect_operator : sequence_base<expect_operator<Elements>, Elements>
     {
