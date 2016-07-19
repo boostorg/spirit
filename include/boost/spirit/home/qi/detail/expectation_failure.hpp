@@ -11,6 +11,8 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #pragma once
 #endif
 
+#include <stdexcept>
+
 namespace boost { namespace spirit { namespace qi {
     template <typename Iterator>
     struct expectation_failure : std::runtime_error
