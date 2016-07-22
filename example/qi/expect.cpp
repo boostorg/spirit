@@ -9,7 +9,6 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <map>
 
 #include <boost/spirit/home/qi.hpp>
-#include <boost/spirit/home/qi/directive/expect.hpp>
 #include <boost/spirit/home/qi/nonterminal/grammar.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
