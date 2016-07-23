@@ -19,7 +19,6 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
-#include <boost/spirit/home/qi/operator/expect.hpp>
 
 namespace boost { namespace spirit {
     ///////////////////////////////////////////////////////////////////////////
