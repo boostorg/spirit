@@ -1,5 +1,9 @@
 /*=============================================================================
   Copyright (c) 2001-2011 Joel de Guzman
+
+  Function style n-ary operator support:
+  Copyright (c) 2016 Frank Hein, maxence business consulting gmbh
+
   http://spirit.sourceforge.net/
 
   Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -225,7 +229,7 @@ namespace boost { namespace spirit { namespace detail
     };
 
     template <typename Grammar>
-    struct make_binary_helper : proto::transform<make_binary_helper<Grammar> >
+    struct make_nary_helper : proto::transform<make_nary_helper<Grammar> >
     {
         template<typename Expr, typename State, typename Data>
         struct impl : proto::transform_impl<Expr, State, Data>
@@ -259,7 +263,7 @@ namespace boost { namespace spirit { namespace detail
                 proto::reverse_fold_tree<
                     proto::_
                   , proto::make<fusion::nil_>
-                  , make_binary_helper<Grammar>
+                  , make_nary_helper<Grammar>
                 >::template impl<Expr, State, Data>
             reverse_fold_tree;
 
@@ -279,6 +283,39 @@ namespace boost { namespace spirit { namespace detail
             {
                 return make_component_()(
                     reverse_fold_tree()(expr, state, data), data);
+            }
+        };
+    };
+
+    template <typename Domain, typename Grammar>
+    struct make_function : proto::transform<make_function<Domain, Grammar> >
+    {
+        template<typename Expr, typename State, typename Data>
+        struct impl : proto::transform_impl<Expr, State, Data>
+        {
+            typedef typename
+                proto::reverse_fold<
+                proto::_
+                , proto::make<fusion::nil_>
+                , make_nary_helper<Grammar>
+            >::template impl<Expr, State, Data>
+                reverse_fold;
+
+            typedef typename reverse_fold::result_type elements;
+            typedef make_component<Domain, proto::tag::function> make_component_;
+
+            typedef typename
+                make_component_::template
+                result<make_component_(elements, Data)>::type
+                result_type;
+
+            result_type operator()(
+                typename impl::expr_param expr
+                , typename impl::state_param state
+                , typename impl::data_param data
+                ) const
+            {
+                return make_component_()(reverse_fold()(expr, state, data), data);
             }
         };
     };
@@ -445,3 +482,4 @@ namespace boost { namespace spirit { namespace detail
 }}}
 
 #endif
+

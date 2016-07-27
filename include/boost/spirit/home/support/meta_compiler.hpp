@@ -1,5 +1,9 @@
 /*=============================================================================
   Copyright (c) 2001-2011 Joel de Guzman
+  
+  Function support:
+  Copyright (c) 2016 Frank Hein, maxence business consulting gmbh
+  
   http://spirit.sourceforge.net/
 
   Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -120,6 +124,29 @@ namespace boost { namespace spirit
                     >
                 >
             {};
+
+            ///////////////////////////////////////////////////////////////////
+            // #FHE support for function style operators
+            ///////////////////////////////////////////////////////////////////
+            template <typename Enable>
+            struct case_<proto::tag::function, Enable>
+                :
+            ///////////////////////////////////////////////////////////////////
+            // functions
+            ///////////////////////////////////////////////////////////////////
+                proto::when <proto::function<
+                    proto::and_<
+                        proto::terminal<proto::_>
+                        , proto::if_<use_function<Domain, proto::_value>()> >
+                        , proto::vararg<meta_grammar>
+                    >
+                    , detail::make_function<Domain, meta_grammar>
+                >
+            {};
+            ///////////////////////////////////////////////////////////////////
+            // end #FHE
+            ///////////////////////////////////////////////////////////////////
+
         };
 #else
         // this part actually constitutes invalid C++ code, but it allows us to
@@ -186,6 +213,28 @@ namespace boost { namespace spirit
                     >
                 >
             {};
+
+            ///////////////////////////////////////////////////////////////////
+            // #FHE support for function style operators
+            ///////////////////////////////////////////////////////////////////
+            template <typename Enable>
+            struct case_<proto::tag::function, Enable>
+                :
+            ///////////////////////////////////////////////////////////////////
+            // functions
+            ///////////////////////////////////////////////////////////////////
+                proto::when <proto::function<
+                    proto::and_<
+                    proto::terminal<proto::_>
+                        , proto::if_<use_function<Domain, proto::_value>()> >
+                        , proto::vararg<meta_grammar>
+                    >
+                    , detail::make_function<Domain, meta_grammar>
+                >
+            {};
+            ///////////////////////////////////////////////////////////////////
+            // end #FHE
+            ///////////////////////////////////////////////////////////////////
         };
 #endif
 

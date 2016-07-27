@@ -129,6 +129,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run qi/utree2.cpp           : : : : qi_utree2 ]
      [ run qi/utree3.cpp           : : : : qi_utree3 ]
      [ run qi/utree4.cpp           : : : : qi_utree4 ]
+	 [ run qi/function.cpp		   : : : : qi_function ]
 
     ;
 
