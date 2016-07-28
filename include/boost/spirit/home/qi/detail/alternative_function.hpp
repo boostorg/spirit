@@ -147,7 +147,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool call_unused(Component const& component, mpl::true_) const
         {
             // return true if the parser succeeds
-            //BOOST_STATIC_ASSERT_MSG(spirit::traits::not_is_variant<Attribute, qi::domain>::value, "Optional");
             return call(component,
                 mpl::and_<
                     spirit::traits::not_is_variant<Attribute, qi::domain>,
