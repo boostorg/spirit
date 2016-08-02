@@ -153,10 +153,16 @@ int main() {
         }
     };
 
+    // condition matches, if-parser matches
+    // test lazy instantiation
     std::string s;
+    BOOST_TEST(test_attr("I if", qi::lazy(boost::phoenix::val(if_(qi::char_('I'), qi::string("if"), qi::lit('E') >> qi::string("else")))), s, qi::space));
+    BOOST_TEST(s == "if");
+
 
     // condition matches, if-parser matches
     // test if condition parser attr gets omitted
+    s.clear();
     BOOST_TEST(test_attr("I if", if_(qi::char_('I'), qi::string("if"), qi::lit('E') >> qi::string("else")), s, qi::space));
     BOOST_TEST(s == "if");
 
@@ -166,7 +172,7 @@ int main() {
     BOOST_TEST(test_attr("I if", g, s, qi::space));
     BOOST_TEST(s == "if");
 
-    //same test using grammar
+    //same test using rule
     s.clear();
     BOOST_TEST(test_attr("I if", g.r, s, qi::space));
     BOOST_TEST(s == "if");
