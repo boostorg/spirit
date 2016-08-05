@@ -269,6 +269,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run lex/token_moretypes.cpp           : : : : lex_token_moretypes ]
      [ run lex/token_omit.cpp                : : : : lex_token_omit ]
      [ run lex/token_onetype.cpp             : : : : lex_token_onetype ]
+     [ run lex/plain_token.cpp               : : : : plain_token ]
 
     ;
 
