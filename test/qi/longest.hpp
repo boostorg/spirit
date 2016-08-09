@@ -11,6 +11,9 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 // The implementation shows how to implement a variadic operator
 // which lives in a user's namespace (here mxc::qitoo).
+//
+// This is for demonstration only. A real implementation should obviously have
+// to care about the input consumed by the skipper.
 ///////////////////////////////////////////////////////////////////////////
 
 #if !defined(BOOST_SPIRIT_TEST_LONGEST_FUNCTION)
@@ -42,11 +45,15 @@ namespace mxc {
         using boost::tuples::get;
 
         namespace detail {
-            template <typename Iterator, typename Context, typename Skipper, typename Result>
+
+            // to hold            max length, max length idx, current idx
+            typedef boost::tuple< int,        int,            int> longest_data;
+
+            template <typename Iterator, typename Context, typename Skipper>
             struct find_longest_function
             {
                 find_longest_function(Iterator& first, Iterator const& last
-                    , Context& context, Skipper const& skipper, Result& result)
+                    , Context& context, Skipper const& skipper, longest_data& result)
                     : first(first), last(last), context(context), skipper(skipper), result(result)
                 {}
 
@@ -57,42 +64,45 @@ namespace mxc {
                     if (component.parse(f, last, context, skipper, qi::unused))
                     {
                         int l = std::distance(first, f);
+                        // if current length is > then stored max length 
+                        // taking zero lenght matches in account
                         if (l > get<0>(result)) {
-                            get<0>(result) = l;
-                            get<1>(result) = get<2>(result);
+                            get<0>(result) = l;                 // update max lenght
+                            get<1>(result) = get<2>(result);    // update target index accordingly
                         }
                     }
-                    get<2>(result)++;
+                    get<2>(result)++;                           // increment cursor
                 }
 
-                Result& result;
+                longest_data& result;
                 Iterator& first;
                 Iterator const& last;
                 Context& context;
                 Skipper const& skipper;
             };
 
-            template <typename Iterator, typename Context, typename Skipper, typename Attribute, typename Result>
+            template <typename Iterator, typename Context, typename Skipper, typename Attribute>
             struct longest_function
             {
                 longest_function(Iterator& first, Iterator const& last
-                    , Context& context, Skipper const& skipper, Attribute& attr, Result& result)
+                    , Context& context, Skipper const& skipper, Attribute& attr, longest_data& result)
                     : first(first), last(last), context(context), skipper(skipper), attr(attr), result(result)
                 {}
 
                 template<typename Component>
                 bool operator()(Component& component) const
                 {
+                    // return false while target index != current index
                     if (get<1>(result) != get<2>(result)) {
                         get<2>(result)++;
                         return false;
                     }
-                    // if current index == target index
+                    // current index == target index
                     return component.parse(first, last, context, skipper, attr);
                 }
 
                 Attribute& attr;
-                Result& result;
+                longest_data& result;
                 Iterator& first;
                 Iterator const& last;
                 Context& context;
@@ -112,9 +122,6 @@ namespace mxc {
                 : elements(elements)
             {}
 
-            // to hold max length, max length idx, current idx
-            typedef boost::tuple<int, int, int> result_type;
-
             template <typename Context, typename Iterator>
             struct attribute
             {
@@ -126,18 +133,21 @@ namespace mxc {
                 , Context& context, Skipper const& skipper
                 , Attribute& attr_) const
             {
-                spirit::traits::make_container(attr_);
-                result_type result(-1, 0, 0);
 
-                detail::find_longest_function<Iterator, Context, Skipper, result_type>
+                spirit::traits::make_container(attr_);
+                detail::longest_data result(-1, 0, 0);
+
+                detail::find_longest_function<Iterator, Context, Skipper>
                     find_longest(first, last, context, skipper, result);
 
 
                 fusion::for_each(elements, find_longest);
-                if (get<0>(result) != -1) {
-                    get<2>(result) = 0;                    // reset current index
+                // if any of the parsers succeeded, the length of input consumed
+                // is > -1
+                if (get<0>(result) != -1) { 
+                    get<2>(result) = 0;       // reset current index (cursor)
 
-                    detail::longest_function<Iterator, Context, Skipper, Attribute, result_type>
+                    detail::longest_function<Iterator, Context, Skipper, Attribute>
                         longest(first, last, context, skipper, attr_, result);
 
                     return fusion::any(elements, longest); // always true
