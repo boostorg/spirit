@@ -16,119 +16,10 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <string>
 #include <iostream>
 #include <vector>
+#include "if.hpp"
+#include "longest.hpp"
 #include "test.hpp"
 
-///////////////////////////////////////////////////////////////////////////
-// Implementation of a ternary conditional operator if_ for test and
-// demonstration purposes.
-//
-// The implementation shows how to implement an operator
-// which lives in a user's namespace (here mxc::qitoo).
-///////////////////////////////////////////////////////////////////////////
-
-namespace mxc { namespace qitoo {
-    BOOST_SPIRIT_TERMINAL(if_)
-}}
-
-namespace boost { namespace spirit {
-    template <>
-    struct use_function<qi::domain, mxc::qitoo::tag::if_>
-        : mpl::true_ {};
-}}
-
-namespace mxc {  namespace qitoo {
-     namespace fusion = boost::fusion;
-     namespace spirit = boost::spirit;
-     namespace qi = spirit::qi;
-
-    template <typename Elements>
-    struct if_parser : qi::nary_parser<if_parser<Elements>>
-    {
-        if_parser(Elements elements) : elements(elements) {}
-
-        template <typename Context, typename Iterator>
-        struct attribute
-        {
-            typedef typename fusion::result_of::pop_front<Elements>::type optionals;
-            typedef typename spirit::traits::build_variant<optionals>::type type;
-        };
-
-        template <typename F>
-        bool parse_container(F f) const
-        {
-            // the condition parser does not contribute to the attribute
-            if (fusion::at_c<0>(elements)
-                .parse(f.f.first, f.f.last, f.f.context, f.f.skipper, qi::unused)) 
-            {
-                return !f(fusion::at_c<1>(elements));
-            }
-            else {
-                return !f(fusion::at_c<2>(elements));
-            }
-        }
-
-        template <typename Iterator, typename Context, typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-            , Context& context, Skipper const& skipper
-            , Attribute& attr_) const
-        {
-            spirit::traits::make_container(attr_);
-
-            qi::detail::fail_function<Iterator, Context, Skipper>
-                f(first, last, context, skipper);
-
-            if (!parse_container(qi::detail::make_pass_container(f, attr_)))
-                return false;
-
-            return true;
-        }
-
-        template <typename Context>
-        qi::info what(Context& context) const
-        {
-            qi::info result("if_");
-            fusion::for_each(elements,
-                spirit::detail::what_function<Context>(result, context));
-
-            return result;
-        }
-
-        Elements elements;
-    };
-}}
-
-namespace boost { namespace spirit { 
-    
-    namespace qi {
-        ///////////////////////////////////////////////////////////////////////////
-        // Parser generator: make_xxx function (objects)
-        ///////////////////////////////////////////////////////////////////////////
-        template <typename Expr, typename Modifiers>
-        struct make_composite<mxc::qitoo::tag::if_, Expr, Modifiers>
-            : make_nary_composite<Expr, mxc::qitoo::if_parser>
-        {
-            BOOST_STATIC_ASSERT_MSG(fusion::result_of::size<Expr>::value == boost::mpl::int_<3>::value,
-                "qitoo::if_: Invalid number of arguments. Usage qitoo::if_(expr, expr, expr).");
-        };
-    }
-
-    namespace traits {
-        ///////////////////////////////////////////////////////////////////////////
-        template <typename Elements>
-        struct has_semantic_action<mxc::qitoo::if_parser<Elements> >
-            : nary_has_semantic_action<Elements> {};
-
-        ///////////////////////////////////////////////////////////////////////////
-        template <typename Elements, typename Attribute, typename Context
-            , typename Iterator>
-            struct handles_container<mxc::qitoo::if_parser<Elements>, Attribute, Context
-            , Iterator>
-            : mpl::true_ {};
-    }
-}}
-///////////////////////////////////////////////////////////////////////////
-// End of test parser implementation
-///////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
 // Test implementation
@@ -138,6 +29,7 @@ namespace boost { namespace spirit {
 int main() {
 
     using mxc::qitoo::if_;
+    using mxc::qitoo::longest;
     namespace qi = boost::spirit::qi;
     using namespace boost::spirit::qi;
     using spirit_test::test;
@@ -153,9 +45,22 @@ int main() {
         }
     };
 
+
+    // this an example to illustrate the longest n-ary operator parser
+    std::string s;
+    BOOST_TEST(test_attr("abcdefghijk",
+        longest(
+            char_('a') >> char_('b')                                                // match
+            , char_('a') >> char_('b') >> char_('c') >> char_('e') >> char_('e')    // fail
+            , char_('a') >> char_('b') >> char_('c') >> char_('d')                  // match, longer -> expected winner
+            , char_('i') >> char_('j') >> char_('k')                                // fail
+        )
+    , s, false));
+    BOOST_TEST(s == "abcd");
+
     // condition matches, if-parser matches
     // test lazy instantiation
-    std::string s;
+    s.clear();
     BOOST_TEST(test_attr("I if", qi::lazy(boost::phoenix::val(if_(qi::char_('I'), qi::string("if"), qi::lit('E') >> qi::string("else")))), s, qi::space));
     BOOST_TEST(s == "if");
 
