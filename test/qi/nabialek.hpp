@@ -62,23 +62,23 @@ namespace mxc {
             template<typename F>
             struct nabialek_function
             {
-                nabialek_function(F const& f, nabialek_data& result)
-                    : f(f), result(result)
+                nabialek_function(F const& f, nabialek_data& idx)
+                    : f(f), idx(idx)
                 {}
 
                 template<typename Component>
                 bool operator()(Component& component) const
                 {
                     // return false while target index != current index
-                    if (result.first != result.second) {
-                        result.second++;
+                    if (idx.first != idx.second) {
+                        idx.second++;
                         return false;
                     }
                     // current index == target index
                     return !f(component);
                 }
                 F const& f;
-                nabialek_data& result;
+                nabialek_data& idx;
             };
 
         }
