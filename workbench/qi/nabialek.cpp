@@ -23,7 +23,7 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 // enable this define to activate asserts to check
 // if the parsers succeed and (first == last)
 
-#define CHECK_RESULT
+//#define CHECK_RESULT
 
 namespace
 {
