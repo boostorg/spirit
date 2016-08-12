@@ -5,10 +5,10 @@ Distributed under the Boost Software License, Version 1.0. (See accompanying
 file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-// it may be ugly, but it's deprecated :)
+
 // without that kwd and / operator don't work
 #define BOOST_RESULT_OF_USE_TR1
-// this one does not work
+// this one does not do the trick 
 //#define BOOST_RESULT_OF_USE_DECLTYPE_WITH_TR1_FALLBACK
 
 #include "../measure.hpp"
@@ -34,6 +34,47 @@ namespace
     namespace qi = boost::spirit::qi;
     namespace repo = boost::spirit::repository::qi;
     using mxc::qitoo::nabialek;
+
+    ///////////////////////////////////////////////////////////////////////////
+    struct tg5 : qi::grammar<iterator_type, qi::locals<qi::rule<iterator_type, qi::space_type>>
+        , qi::space_type>
+    {
+        qi::rule<iterator_type, qi::space_type> name;
+        qi::rule<iterator_type, qi::space_type> age;
+        qi::rule<iterator_type, qi::space_type> sex;
+        qi::rule<iterator_type, qi::locals<qi::rule<iterator_type, qi::space_type>>, qi::space_type > start;
+        qi::symbols<char, qi::rule<iterator_type, qi::space_type>> keywords;
+
+
+        tg5() : tg5::base_type(start)
+        {
+            using qi::_1;
+            using qi::_a;
+
+            name = qi::lit('=') >> qi::lexeme[+qi::alpha];
+            age = qi::lit('=') >> qi::int_;
+            sex = qi::lit('=') >> qi::char_("mf");
+
+            keywords.add("name", name)("age", age)("sex", sex);
+
+            start = +(keywords[_a = _1] >> qi::lazy(_a));
+        }
+    };
+
+    tg5 g5;
+
+    struct nabialek_trick_org : test::base
+    {
+        void benchmark()
+        {
+            iterator_type first = source.begin();
+            iterator_type last = source.end();
+            bool success = qi::phrase_parse(first, last, g5.start, qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     struct tg0 : qi::grammar<iterator_type, qi::locals<qi::rule<iterator_type, qi::space_type>*>
@@ -65,7 +106,7 @@ namespace
 
     tg0 g0;
 
-    struct nabialek_trick : test::base
+    struct nabialek_trick_ptr : test::base
     {
         void benchmark()
         {
@@ -331,7 +372,8 @@ int main(int argc, char **argv)
 
     BOOST_SPIRIT_TEST_BENCHMARK(
         10000000,     // This is the maximum repetitions to execute
-         (nabialek_trick)               // orginal nabialek trick with pointers to parsers
+         (nabialek_trick_org)           // orginal nabialek trick with pointers to parsers
+         (nabialek_trick_ptr)           // orginal nabialek trick with pointers to parsers
          (keyword_slash_rule)           // kwd directice with divide operator using rules as argument parsers
          (keyword_slash_direct)         // kwd directive using parser expressions directly
          (nab_direct)                   // direct instantiation of nabialek and all arguments
