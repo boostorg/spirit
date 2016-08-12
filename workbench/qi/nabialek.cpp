@@ -372,7 +372,7 @@ int main(int argc, char **argv)
 
     BOOST_SPIRIT_TEST_BENCHMARK(
         10000000,     // This is the maximum repetitions to execute
-         (nabialek_trick_org)           // orginal nabialek trick with pointers to parsers
+         (nabialek_trick_org)           // orginal nabialek trick 
          (nabialek_trick_ptr)           // orginal nabialek trick with pointers to parsers
          (keyword_slash_rule)           // kwd directice with divide operator using rules as argument parsers
          (keyword_slash_direct)         // kwd directive using parser expressions directly
