@@ -4,6 +4,13 @@ Copyright (c) 2016  Frank Hein, maxence business consulting gmbh
 Distributed under the Boost Software License, Version 1.0. (See accompanying
 file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+
+// it may be ugly, but it's deprecated :)
+// without that kwd and / operator don't work
+#define BOOST_RESULT_OF_USE_TR1
+// this one does not work
+//#define BOOST_RESULT_OF_USE_DECLTYPE_WITH_TR1_FALLBACK
+
 #include "../measure.hpp"
 #include <boost/spirit/home/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -16,7 +23,7 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 // enable this define to activate asserts to check
 // if the parsers succeed and (first == last)
 
-//#define CHECK_RESULT
+#define CHECK_RESULT
 
 namespace
 {
@@ -35,6 +42,7 @@ namespace
         qi::rule<iterator_type,  qi::space_type> name;
         qi::rule<iterator_type,  qi::space_type> age;
         qi::rule<iterator_type,  qi::space_type> sex;
+        qi::rule<iterator_type, qi::space_type> kwd;
         qi::rule<iterator_type,  qi::locals<qi::rule<iterator_type, qi::space_type>*>, qi::space_type > start;
         qi::symbols<char, qi::rule<iterator_type, qi::space_type>*> keywords;
 
@@ -51,6 +59,7 @@ namespace
             keywords.add("name", &name)("age", &age)("sex", &sex);
 
             start = +( keywords[_a = _1] >> qi::lazy(*_a));
+            kwd = repo::kwd("name")[name] / repo::kwd("age")[age] / repo::kwd("sex")[sex];
         }
     };
 
@@ -63,6 +72,32 @@ namespace
             iterator_type first = source.begin();
             iterator_type last = source.end();
             bool success = qi::phrase_parse(first, last, g0.start, qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
+
+    struct keyword_slash_rule : test::base
+    {
+        void benchmark()
+        {
+            iterator_type first = source.begin();
+            iterator_type last = source.end();
+            bool success = qi::phrase_parse(first, last, g0.kwd, qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
+
+    struct keyword_slash_direct : test::base
+    {
+        void benchmark()
+        {
+            iterator_type first = source.begin();
+            iterator_type last = source.end();
+            bool success = qi::phrase_parse(first, last, repo::kwd("name")[qi::lit('=') >> qi::lexeme[+qi::alpha]] / repo::kwd("age")[qi::lit('=') >> qi::int_] / repo::kwd("sex")[qi::lit('=') >> qi::char_("mf")], qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
@@ -288,7 +323,8 @@ namespace
 int main(int argc, char **argv)
 {
     std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
-    std::cout << "// Benchmarking example nabialek operator against nabialek trick" << std::endl;
+    std::cout << "// Benchmark" << std::endl;
+    std::cout << "// Example nabialek operator vs nabialek trick vs kwd and / combination" << std::endl;
     std::cout << "//" << std::endl;
     std::cout << "// Please have a look at main() for an explanation of the test cases" << std::endl;
     std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
@@ -296,6 +332,8 @@ int main(int argc, char **argv)
     BOOST_SPIRIT_TEST_BENCHMARK(
         10000000,     // This is the maximum repetitions to execute
          (nabialek_trick)               // orginal nabialek trick with pointers to parsers
+         (keyword_slash_rule)           // kwd directice with divide operator using rules as argument parsers
+         (keyword_slash_direct)         // kwd directive using parser expressions directly
          (nab_direct)                   // direct instantiation of nabialek and all arguments
          (nab_rules)                    // direct instantiation of nabialek with rule arguments
          (nab_rules_ni)                 // same as nab_rules but using a start rule defining op and args
