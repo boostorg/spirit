@@ -20,56 +20,96 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/spirit/repository/include/qi_keywords.hpp>
 
 
-// enable this define to activate asserts to check
-// if the parsers succeed and (first == last)
-
+// enable this define to activate asserts which check if the parsers 
+// and parse the whole input (for debugging)
 //#define CHECK_RESULT
+
+// change this define to set the number max number of runs of the
+// benchmark
+#define NABIALEK_MAX_BENCHMARK 10000000
+
 
 namespace
 {
-    typedef std::string::const_iterator iterator_type;
-
-    std::string source("name = Tom age = 27 sex = m age = 32 sex = f name = Sue");
+    char* source = "name = Tom age = 27 sex = m age = 32 sex = f name = Sue";
+    char* last;
 
     namespace qi = boost::spirit::qi;
     namespace repo = boost::spirit::repository::qi;
     using mxc::qitoo::nabialek;
 
     ///////////////////////////////////////////////////////////////////////////
-    struct tg5 : qi::grammar<iterator_type, qi::locals<qi::rule<iterator_type, qi::space_type>>
-        , qi::space_type>
+    // rule container
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // rule container
+    struct tg 
     {
-        qi::rule<iterator_type, qi::space_type> name;
-        qi::rule<iterator_type, qi::space_type> age;
-        qi::rule<iterator_type, qi::space_type> sex;
-        qi::rule<iterator_type, qi::locals<qi::rule<iterator_type, qi::space_type>>, qi::space_type > start;
-        qi::symbols<char, qi::rule<iterator_type, qi::space_type>> keywords;
+        qi::rule<char*, qi::locals<qi::rule<char*, qi::space_type>>, qi::space_type > ntrick_org;
+        qi::rule<char*, qi::locals<qi::rule<char*, qi::space_type>*>, qi::space_type > ntrick_ptr;
 
+        std::vector<qi::rule<char*, qi::space_type>> rules;
+        qi::rule<char*, qi::space_type> name, age, sex;
 
-        tg5() : tg5::base_type(start)
-        {
+        qi::rule<char*, qi::space_type> 
+            alternatives_r, alternatives_ni, kwd_r, kwd_ni, nabialek_r, nabialek_ni;
+
+        qi::symbols<char, qi::rule<char *, qi::space_type>>  sym1;
+        qi::symbols<char, qi::rule<char*, qi::space_type>*> sym2;
+        qi::symbols<char, int>                                      sym3;
+
+        tg() { 
             using qi::_1;
             using qi::_a;
+
 
             name = qi::lit('=') >> qi::lexeme[+qi::alpha];
             age = qi::lit('=') >> qi::int_;
             sex = qi::lit('=') >> qi::char_("mf");
 
-            keywords.add("name", name)("age", age)("sex", sex);
+            // for _ni test cases
+            kwd_ni = repo::kwd("name")[name] / repo::kwd("age")[age] / repo::kwd("sex")[sex];
+            nabialek_ni = +nabialek(sym3, name, age, sex);
+            alternatives_ni = +(("name" >> name) | ("age" >> age) | ("sex" >> sex));
 
-            start = +(keywords[_a = _1] >> qi::lazy(_a));
+            // for _r test cases
+            kwd_r = repo::kwd("name")[qi::lit('=') >> qi::lexeme[+qi::alpha]] / repo::kwd("age")[qi::lit('=') >> qi::int_] / repo::kwd("sex")[qi::lit('=') >> qi::char_("mf")];
+            alternatives_r = +(("name" >> qi::lit('=') >> qi::lexeme[+qi::alpha]) | ("age" >> qi::lit('=') >> qi::int_) | ("sex" >> qi::lit('=') >> qi::char_("mf")));
+            nabialek_r = +nabialek(sym3, qi::lit('=') >> qi::lexeme[+qi::alpha], qi::lit('=') >> qi::int_, qi::lit('=') >> qi::char_("mf"));
+
+            sym2.add("name", &name)("age", &age)("sex", &sex);
+            sym1.add("name", name)("age", age)("sex", sex);
+            sym3.add("name", 1)("age", 2)("sex", 3);
+
+            ntrick_org = +(sym1[_a = _1] >> qi::lazy(_a));
+            ntrick_ptr = +(sym2[_a = _1] >> qi::lazy(*_a));
         }
+
     };
 
-    tg5 g5;
+    tg g;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // nabialek trick
     struct nabialek_trick_org : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g5.start, qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.ntrick_org, qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
+
+    struct nabialek_trick_ptr : test::base
+    {
+        void benchmark()
+        {
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.ntrick_ptr, qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
@@ -77,67 +117,62 @@ namespace
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    struct tg0 : qi::grammar<iterator_type, qi::locals<qi::rule<iterator_type, qi::space_type>*>
-        ,qi::space_type>
-    {
-        qi::rule<iterator_type,  qi::space_type> name;
-        qi::rule<iterator_type,  qi::space_type> age;
-        qi::rule<iterator_type,  qi::space_type> sex;
-        qi::rule<iterator_type, qi::space_type> kwd;
-        qi::rule<iterator_type,  qi::locals<qi::rule<iterator_type, qi::space_type>*>, qi::space_type > start;
-        qi::symbols<char, qi::rule<iterator_type, qi::space_type>*> keywords;
-
-
-        tg0() : tg0::base_type(start)
-        {
-            using qi::_1;
-            using qi::_a;
-
-            name = qi::lit('=') >> qi::lexeme[+qi::alpha];
-            age = qi::lit('=') >> qi::int_;
-            sex = qi::lit('=') >> qi::char_("mf");
-
-            keywords.add("name", &name)("age", &age)("sex", &sex);
-
-            start = +( keywords[_a = _1] >> qi::lazy(*_a));
-            kwd = repo::kwd("name")[name] / repo::kwd("age")[age] / repo::kwd("sex")[sex];
-        }
-    };
-
-    tg0 g0;
-
-    struct nabialek_trick_ptr : test::base
+    // qi alternative
+    struct alternative_d : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g0.start, qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, +(("name" >> qi::lit('=') >> qi::lexeme[+qi::alpha]) | ("age" >> qi::lit('=') >> qi::int_) | ("sex" >> qi::lit('=') >> qi::char_("mf"))), qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
 
-    struct keyword_slash_rule : test::base
+    struct alternative_rr : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g0.kwd, qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, +(("name" >> g.name) | ("age" >> g.age) | ("sex" >> g.sex)), qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
 
-    struct keyword_slash_direct : test::base
+    struct alternative_ni : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.alternatives_ni, qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
+
+    struct alternative_r : test::base
+    {
+        void benchmark()
+        {
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.alternatives_r, qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // kwd directive
+    struct keyword_d : test::base
+    {
+        void benchmark()
+        {
+            char* first = &source[0];
             bool success = qi::phrase_parse(first, last, repo::kwd("name")[qi::lit('=') >> qi::lexeme[+qi::alpha]] / repo::kwd("age")[qi::lit('=') >> qi::int_] / repo::kwd("sex")[qi::lit('=') >> qi::char_("mf")], qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
@@ -145,49 +180,36 @@ namespace
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    struct tg1 : qi::grammar<iterator_type, qi::space_type >
-    {
-        qi::rule<iterator_type,  qi::space_type> name;
-        qi::rule<iterator_type,  qi::space_type> age;
-        qi::rule<iterator_type,  qi::space_type> sex;
-        qi::rule<iterator_type,  qi::space_type> start;
-        qi::symbols<char, int> keywords;
-
-        tg1() : tg1::base_type(start)
-        {
-            keywords.add("name", 1)("age", 2)("sex", 3);
-
-            name = qi::lit('=') >> qi::lexeme[+qi::alpha];
-            age = qi::lit('=') >> qi::int_;
-            sex = qi::lit('=') >> qi::char_("mf");
-
-            start = +nabialek(keywords, name, age, sex);
-        }
-    };
-
-    tg1 g1;
-
-    struct nab_rules : test::base
+    struct keyword_ni : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, +nabialek(g1.keywords, g1.name, g1.age, g1.sex), qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.kwd_ni, qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
 
-    struct nab_rules_ni : test::base
+    struct keyword_rr : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g1.start, qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, repo::kwd("name")[g.name] / repo::kwd("age")[g.age] / repo::kwd("sex")[g.sex], qi::space);
+#ifdef CHECK_RESULT
+            BOOST_ASSERT(success && (first == last));
+#endif
+        }
+    };
+
+    struct keyword_r : test::base
+    {
+        void benchmark()
+        {
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.kwd_r, qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
@@ -195,14 +217,21 @@ namespace
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    struct nab_direct : test::base
+    struct nabialek_d : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
+            char* first = &source[0];
+
+            // alternative and keyword don't have a choice but to build their "symbol table"
+            // within the benchmark, so it's fair to let the nabialek operator create it's
+            // symbol table here (although users usually would create that once and use it
+            // often)
+            qi::symbols<char, int> sym;
+            sym.add("name", 1)("age", 2)("sex", 3);
+
             bool success = qi::phrase_parse(first, last,
-                +nabialek(g1.keywords,
+                +nabialek(sym,
                     qi::lit('=') >> qi::lexeme[+qi::alpha],
                     qi::lit('=') >> qi::int_,
                     qi::lit('=') >> qi::char_("mf"))
@@ -214,146 +243,75 @@ namespace
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    struct tg2 : qi::grammar<iterator_type, qi::space_type >
-    {
-        qi::rule<iterator_type, qi::space_type> name;
-        qi::rule<iterator_type, qi::space_type> age;
-        qi::rule<iterator_type, qi::space_type> sex;
-        qi::rule<iterator_type, qi::space_type> start;
-        qi::symbols<char, int> keywords;
-
-        tg2() : tg2::base_type(start)
-        {
-            keywords.add("name", 1)("age", 2)("sex", 3);
-
-            name %= qi::lit('=') >> qi::lexeme[+qi::alpha];
-            age %= qi::lit('=') >> qi::int_;
-            sex %= qi::lit('=') >> qi::char_("mf");
-
-            start = +nabialek(keywords, name, age, sex);
-        }
-    };
-
-    tg2 g2;
-
-    struct nab_rules_me : test::base
+    struct nabialek_dd : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, +nabialek(g2.keywords, g2.name, g2.age, g2.sex), qi::space);
+            char* first = &source[0];
+
+            // Opposite to than nabialek_d we use a predefined symbol table here
+            bool success = qi::phrase_parse(first, last,
+                +nabialek(g.sym3,
+                    qi::lit('=') >> qi::lexeme[+qi::alpha],
+                    qi::lit('=') >> qi::int_,
+                    qi::lit('=') >> qi::char_("mf"))
+                , qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
 
-    struct nab_rules_me_ni : test::base
+    struct nabialek_rr : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g2.start, qi::space);
+            char* first = &source[0];
+
+            // alternative and keyword don't have a choice but to build their "symbol table"
+            // within the benchmark, so it's fair to let the nabialek operator create it's
+            // symbol table here (although users usually would create that once and use it
+            // often)
+
+            qi::symbols<char, int> sym;
+            sym.add("name", 1)("age", 2)("sex", 3);
+            bool success = qi::phrase_parse(first, last, +nabialek(sym, g.name, g.age, g.sex), qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    struct tg3 : qi::grammar<iterator_type, qi::space_type >
-    {
-        qi::rule<iterator_type,  qi::space_type> name;
-        qi::rule<iterator_type,  qi::space_type> age;
-        qi::rule<iterator_type,  qi::space_type> sex;
-        qi::rule<iterator_type,  qi::space_type> start;
-        qi::symbols<char, int> keywords;
-
-        tg3() : tg3::base_type(start)
-        {
-            keywords.add("name", 1)("age", 2)("sex", 3);
-
-            name = qi::lit('=') > qi::lexeme[+qi::alpha];
-            age = qi::lit('=') > qi::int_;
-            sex = qi::lit('=') > qi::char_("mf");
-
-            start = +nabialek(keywords, name, age, sex);
-        }
-    };
-
-    tg3 g3;
-
-    struct nab_rules_expect : test::base
+    struct nabialek_rrr : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, +nabialek(g3.keywords, g3.name, g3.age, g3.sex), qi::space);
+            char* first = &source[0];
+            // Opposite to than nabialek_rr we use a predefined symbol table here
+            bool success = qi::phrase_parse(first, last, +nabialek(g.sym3, g.name, g.age, g.sex), qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
 
-    struct nab_rules_expect_ni : test::base
+    struct nabialek_ni : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g3.start, qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.nabialek_ni, qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
         }
     };
-
-    ///////////////////////////////////////////////////////////////////////////
-    struct tg4 : qi::grammar<iterator_type, qi::space_type >
-    {
-        qi::rule<iterator_type, qi::space_type> name;
-        qi::rule<iterator_type, qi::space_type> age;
-        qi::rule<iterator_type, qi::space_type> sex;
-        qi::rule<iterator_type, qi::space_type> start;
-        qi::symbols<char, int> keywords;
-
-        tg4() : tg4::base_type(start)
-        {
-            keywords.add("name", 1)("age", 2)("sex", 3);
-            
-            name %= qi::lit('=') > qi::lexeme[+qi::alpha];
-            age %= qi::lit('=') > qi::int_;
-            sex %= qi::lit('=') > qi::char_("mf");
-
-            start = +nabialek(keywords, name, age, sex);
-        }
-    };
-
-    tg4 g4;
-
-    struct nab_rules_expect_me : test::base
+    struct nabialek_r : test::base
     {
         void benchmark()
         {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, +nabialek(g4.keywords, g4.name, g4.age, g4.sex), qi::space);
-#ifdef CHECK_RESULT
-            BOOST_ASSERT(success && (first == last));
-#endif
-        }
-    };
-
-    struct nab_rules_expect_me_ni : test::base
-    {
-        void benchmark()
-        {
-            iterator_type first = source.begin();
-            iterator_type last = source.end();
-            bool success = qi::phrase_parse(first, last, g4.start, qi::space);
+            char* first = &source[0];
+            bool success = qi::phrase_parse(first, last, g.nabialek_r, qi::space);
 #ifdef CHECK_RESULT
             BOOST_ASSERT(success && (first == last));
 #endif
@@ -361,38 +319,104 @@ namespace
     };
 }
 
+
 int main(int argc, char **argv)
 {
-    std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
-    std::cout << "// Benchmark" << std::endl;
-    std::cout << "// Example nabialek operator vs nabialek trick vs kwd and / combination" << std::endl;
-    std::cout << "//" << std::endl;
-    std::cout << "// Please have a look at main() for an explanation of the test cases" << std::endl;
-    std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+//    srand(int(time(0)));
+    char* last = &source[strlen(source)];
 
-    BOOST_SPIRIT_TEST_BENCHMARK(
-        10000000,     // This is the maximum repetitions to execute
-         (nabialek_trick_org)           // orginal nabialek trick 
-         (nabialek_trick_ptr)           // orginal nabialek trick with pointers to parsers
-         (keyword_slash_rule)           // kwd directice with divide operator using rules as argument parsers
-         (keyword_slash_direct)         // kwd directive using parser expressions directly
-         (nab_direct)                   // direct instantiation of nabialek and all arguments
-         (nab_rules)                    // direct instantiation of nabialek with rule arguments
-         (nab_rules_ni)                 // same as nab_rules but using a start rule defining op and args
-         (nab_rules_expect)             // same as nab_rules but rules use expect instead of sequence
-         (nab_rules_expect_ni)          // same as nab_rules_expect but using as start rule defining op and args
-
-        // No test does attribute handling. Attribute handling slows things down significantly on all 
-        // tested parsers. The _me test cases are not relevant without attribute handling and therefore
-        // commented out.
-
-//         (nab_rules_me)                 // same as nab_rules but rules use %= instead of =
-//         (nab_rules_me_ni)              // same as nab_rules_me but using a start rule defining op and args 
-//         (nab_rules_expect_me)          // same as nab_rules_expect and rules use %= instead of =
-//         (nab_rules_expect_me_ni)       // same as nab_rules_expect_me but using start rule defining op and args
-    )
-
-        // This is ultimately responsible for preventing all the test code
+    {
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << "// Benchmark" << std::endl;
+        std::cout << "//   nabialek_trick_org: nabialek trick with rules" << std::endl;
+        std::cout << "//   nabialek_trick_ptr: nabialek trick with pointers to rules" << std::endl;
+        std::cout << "// " << std::endl;
+        std::cout << "// In both cases the nabialek trick is defined as a rule contained by " << std::endl;
+        std::cout << "// a grammar." << std::endl;
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << std::endl;
+        BOOST_SPIRIT_TEST_BENCHMARK(
+            NABIALEK_MAX_BENCHMARK,     
+            (nabialek_trick_org)(nabialek_trick_ptr)
+        )
+    }
+    std::cout << std::endl;
+    {
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << "// Benchmark" << std::endl;
+        std::cout << "//    qi alternative      : alternative " << std::endl;
+        std::cout << "//    qi::repo::kwd       : keyword " << std::endl;
+        std::cout << "//    nabialek operator   : nabialek " << std::endl;
+        std::cout << "//" << std::endl;
+        std::cout << "// In this sequence the tested expression is written explicitly to" << std::endl;
+        std::cout << "// the phrase_parse statement." << std::endl;
+        std::cout << "// Because kwd and alternative must create their symbol table upon execution," << std::endl;
+        std::cout << "// the nabialek operator direct test also creates the symbol table while " << std::endl;
+        std::cout << "// executing to be comparable." << std::endl;
+        std::cout << "// An additional direct test (_dd) shows the nabialek operator with" << std::endl;     
+        std::cout << "// predefined symbol table (which is the more common use case)." << std::endl;
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << std::endl;
+        BOOST_SPIRIT_TEST_BENCHMARK(
+            NABIALEK_MAX_BENCHMARK, (alternative_d) (keyword_d) (nabialek_d) (nabialek_dd)
+        )
+    }
+    std::cout << std::endl;
+    {
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << "// Benchmark" << std::endl;
+        std::cout << "//    qi alternative      : alternative " << std::endl;
+        std::cout << "//    qi::repo::kwd       : keyword " << std::endl;
+        std::cout << "//    nabialek operator   : nabialek " << std::endl;
+        std::cout << "//" << std::endl;
+        std::cout << "// In this sequence the tested expression is taken from the container." << std::endl;
+        std::cout << "// The rule explicitly defines the whole expression." << std::endl;
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << std::endl;
+        BOOST_SPIRIT_TEST_BENCHMARK(
+            NABIALEK_MAX_BENCHMARK, (alternative_r) (keyword_r) (nabialek_r)      
+        )
+    }
+    std::cout << std::endl;
+    {
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << "// Benchmark" << std::endl;
+        std::cout << "//    qi alternative      : alternative " << std::endl;
+        std::cout << "//    qi::repo::kwd       : keyword " << std::endl;
+        std::cout << "//    nabialek operator   : nabialek " << std::endl;
+        std::cout << "//" << std::endl;
+        std::cout << "// In this sequence the tested expression is written to" << std::endl;
+        std::cout << "// the phrase_parse statement, but the conditional parsers are taken" << std::endl;
+        std::cout << "// from the container." << std::endl;
+        std::cout << "// Because kwd and alternative must create their symbol table upon execution," << std::endl;
+        std::cout << "// the nabialek operator direct test also creates the symbol table while " << std::endl;
+        std::cout << "// executing to be comparable." << std::endl;
+        std::cout << "// An additional direct test (_rrr) shows the nabialek operator with" << std::endl;
+        std::cout << "// predefined symbol table (which is the more common use case)." << std::endl;
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << std::endl;
+        BOOST_SPIRIT_TEST_BENCHMARK(
+            NABIALEK_MAX_BENCHMARK, (alternative_rr) (keyword_rr) (nabialek_rr)(nabialek_rrr)
+        )
+    }
+    std::cout << std::endl;
+    {
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << "// Benchmark" << std::endl;
+        std::cout << "//    qi alternative      : alternative " << std::endl;
+        std::cout << "//    qi::repo::kwd       : keyword " << std::endl;
+        std::cout << "//    nabialek operator   : nabialek " << std::endl;
+        std::cout << "//" << std::endl;
+        std::cout << "// In this sequence the tested expression is taken from rule container." << std::endl;
+        std::cout << "// The rule references other rules of the container for the conditional" << std::endl;
+        std::cout << "// parsers." << std::endl;
+        std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+        std::cout << std::endl;
+        BOOST_SPIRIT_TEST_BENCHMARK(
+            NABIALEK_MAX_BENCHMARK, (alternative_ni) (keyword_ni) (nabialek_ni)   
+        )
+    }
+    // This is ultimately responsible for preventing all the test code
         // from being optimized away.  Change this to return 0 and you
         // unplug the whole test's life support system.
         return test::live_code != 0;
