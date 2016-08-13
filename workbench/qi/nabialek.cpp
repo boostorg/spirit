@@ -69,12 +69,12 @@ namespace
             sex = qi::lit('=') >> qi::char_("mf");
 
             // for _ni test cases
-            kwd_ni = repo::kwd("name")[name] / repo::kwd("age")[age] / repo::kwd("sex")[sex];
+            kwd_ni = (repo::kwd("name")[name]) / (repo::kwd("age")[age]) / (repo::kwd("sex")[sex]);
             nabialek_ni = +nabialek(sym3, name, age, sex);
             alternatives_ni = +(("name" >> name) | ("age" >> age) | ("sex" >> sex));
 
             // for _r test cases
-            kwd_r = repo::kwd("name")[qi::lit('=') >> qi::lexeme[+qi::alpha]] / repo::kwd("age")[qi::lit('=') >> qi::int_] / repo::kwd("sex")[qi::lit('=') >> qi::char_("mf")];
+            kwd_r = (repo::kwd("name")[qi::lit('=') >> qi::lexeme[+qi::alpha]]) / (repo::kwd("age")[qi::lit('=') >> qi::int_]) / (repo::kwd("sex")[qi::lit('=') >> qi::char_("mf")]);
             alternatives_r = +(("name" >> qi::lit('=') >> qi::lexeme[+qi::alpha]) | ("age" >> qi::lit('=') >> qi::int_) | ("sex" >> qi::lit('=') >> qi::char_("mf")));
             nabialek_r = +nabialek(sym3, qi::lit('=') >> qi::lexeme[+qi::alpha], qi::lit('=') >> qi::int_, qi::lit('=') >> qi::char_("mf"));
 
@@ -332,7 +332,7 @@ int main(int argc, char **argv)
         std::cout << "//   nabialek_trick_ptr: nabialek trick with pointers to rules" << std::endl;
         std::cout << "// " << std::endl;
         std::cout << "// In both cases the nabialek trick is defined as a rule contained by " << std::endl;
-        std::cout << "// a grammar." << std::endl;
+        std::cout << "// a container struct." << std::endl;
         std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
         std::cout << std::endl;
         BOOST_SPIRIT_TEST_BENCHMARK(
