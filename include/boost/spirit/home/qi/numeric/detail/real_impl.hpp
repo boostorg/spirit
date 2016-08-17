@@ -31,8 +31,6 @@
 
 namespace boost { namespace spirit { namespace traits
 {
-    using spirit::traits::pow10;
-    
     namespace detail
     {
         template <typename T, typename AccT>
