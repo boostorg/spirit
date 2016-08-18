@@ -15,8 +15,6 @@
 
 * Introduced the new expect parser directive (see __qi_expectd__) in addition to 
   the expecation operator (see __qi_expect__).
-* Added support for named n-ary operators using function style syntax.
-  See test/function.cpp for an implementation example.
 
 [endsect]
 
