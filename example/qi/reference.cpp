@@ -1032,6 +1032,7 @@ main()
     {
         //[reference_using_declarations_expectd
         using boost::spirit::ascii::char_;
+        using boost::spirit::qi::expect;
         using boost::spirit::qi::expectation_failure;
         //]
 
