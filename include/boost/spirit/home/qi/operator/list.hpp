@@ -62,13 +62,16 @@ namespace boost { namespace spirit { namespace qi
         bool parse_container(F f) const
         {
             // in order to succeed we need to match at least one element 
-            if (f (left))
+            if (f(left))
                 return false;
 
             typename F::iterator_type save = f.f.first;
-            while (right.parse(f.f.first, f.f.last, f.f.context, f.f.skipper, unused)
-              && !f (left))
+            while (right.parse(f.f.first, f.f.last, f.f.context, f.f.skipper, qi::unused)
+                && left.parse(f.f.first, f.f.last, f.f.context, f.f.skipper, qi::unused))
             {
+                f.f.first = save;
+                f(right);
+                f(left);
                 save = f.f.first;
             }
 
