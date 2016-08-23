@@ -446,9 +446,14 @@ not defined in __binary_parser_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`a % b`]          [Match a list of one or more repetitions of `a`
-                        separated by occurrences of `b`. This is equivalent
-                        to `a >> *(b >> a)`.]]
+                        separated by occurrences of `b`. This is 
+                        equivalent to `a >> *(omit[b] >> a)`.]]
 ]
+
+[note The list operator `a % b` omits the attribute of parser `b`. If you need 
+      `b` to contribute to the result attribute choose `a >> *(b >> a)` over 
+      the list operator `a % b`.]
+
 
 [heading Attributes]
 
