@@ -140,7 +140,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             // fix for alternative.cpp test case, FHE 2016-07-28
             return call_optional_or_variant(
-                component, mpl::not_<spirit::traits::not_is_optional<Attribute, qi::domain>>());
+                component, mpl::not_<spirit::traits::not_is_optional<Attribute, qi::domain> >());
         }
 
         template <typename Component>
