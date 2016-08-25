@@ -35,7 +35,7 @@ enum tokenids
 ///////////////////////////////////////////////////////////////////////////////
 struct test_data
 {
-    int tokenid;
+    tokenids     tokenid;
     wstring_type value;
 };
 
@@ -78,9 +78,9 @@ struct test_impl
         ++sequence_counter;
     }
 
-    static int sequence_counter;
+    static std::size_t sequence_counter;
 };
-int test_impl::sequence_counter = 0;
+std::size_t test_impl::sequence_counter = 0;
 
 phoenix::function<test_impl> const test = test_impl();
 
@@ -105,10 +105,10 @@ struct mega_tokens : lex::lexer<Lexer>
         ;
     }
 
-    lex::token_def<wchar_t, wchar_t> operation;
-    lex::token_def<wstring_type, wchar_t> identifier;
-    lex::token_def<double, wchar_t> constant;
-    lex::token_def<wchar_t, wchar_t> bracket;
+    lex::token_def<wstring_type, wchar_t, tokenids> identifier;
+    lex::token_def<double, wchar_t, tokenids> constant;
+    lex::token_def<wchar_t, wchar_t, tokenids> operation;
+    lex::token_def<wchar_t, wchar_t, tokenids> bracket;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -117,9 +117,9 @@ int main()
     typedef wstring_type::iterator base_iterator;
     typedef lex::lexertl::token<
         base_iterator, boost::mpl::vector<wchar_t, wstring_type, double>
+      , boost::mpl::true_, tokenids
     > token_type;
     typedef lex::lexertl::actor_lexer<token_type> lexer_type;
-    typedef mega_tokens<lexer_type>::iterator_type iterator_type;
 
     mega_tokens<lexer_type> mega_lexer;
 
