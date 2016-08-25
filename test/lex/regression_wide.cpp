@@ -119,7 +119,6 @@ int main()
         base_iterator, boost::mpl::vector<wchar_t, wstring_type, double>
     > token_type;
     typedef lex::lexertl::actor_lexer<token_type> lexer_type;
-    typedef mega_tokens<lexer_type>::iterator_type iterator_type;
 
     mega_tokens<lexer_type> mega_lexer;
 
