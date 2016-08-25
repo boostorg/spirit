@@ -117,7 +117,7 @@ int main()
 
         bool b = false;
         BOOST_TEST(test("false", bool_, phoenix::ref(b)));
-        BOOST_TEST(test("true", bool_, ++phoenix::ref(b)));
+        BOOST_TEST(test("true", bool_, !phoenix::ref(b)));
     }
 #endif
 
