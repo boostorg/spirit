@@ -78,9 +78,9 @@ struct test_impl
         ++sequence_counter;
     }
 
-    static int sequence_counter;
+    static std::size_t sequence_counter;
 };
-int test_impl::sequence_counter = 0;
+std::size_t test_impl::sequence_counter = 0;
 
 phoenix::function<test_impl> const test = test_impl();
 
