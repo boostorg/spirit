@@ -20,9 +20,6 @@
 
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename ID>
-    struct identity {};
-
     // default parse_rule implementation
     template <typename ID, typename Attribute, typename Iterator
       , typename Context, typename ActualAttribute>
