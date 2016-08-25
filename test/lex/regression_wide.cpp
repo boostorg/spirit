@@ -105,9 +105,9 @@ struct mega_tokens : lex::lexer<Lexer>
         ;
     }
 
-    lex::token_def<wchar_t, wchar_t> operation;
     lex::token_def<wstring_type, wchar_t> identifier;
     lex::token_def<double, wchar_t> constant;
+    lex::token_def<wchar_t, wchar_t> operation;
     lex::token_def<wchar_t, wchar_t> bracket;
 };
 
