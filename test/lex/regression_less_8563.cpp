@@ -27,7 +27,7 @@ struct test_lexer : boost::spirit::lex::lexer<BaseLexer>
     }
 };
 
-int main(int argc, char* argv[])
+int main()
 {
     typedef lex::lexertl::token<char const*> token_type;
     typedef lex::lexertl::actor_lexer<token_type> lexer_type;
