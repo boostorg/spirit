@@ -48,7 +48,7 @@ main()
 
     {
         using namespace boost::spirit::x3::iso8859_1;
-        BOOST_TEST(test("¡", no_case[char_('·')]));
+        BOOST_TEST(test("\xC1", no_case[char_('\xE1')]));
     }
 
     {
@@ -56,8 +56,8 @@ main()
         BOOST_TEST(test("X", no_case[char_("a-z")]));
         BOOST_TEST(!test("1", no_case[char_("a-z")]));
 
-        BOOST_TEST(test("…", no_case[char_("Â-Ô")]));
-        BOOST_TEST(!test("ˇ", no_case[char_("Â-Ô")]));
+        BOOST_TEST(test("\xC9", no_case[char_("\xE5-\xEF")]));
+        BOOST_TEST(!test("\xFF", no_case[char_("\xE5-\xEF")]));
     }
 
     {
@@ -69,8 +69,8 @@ main()
 
     {
         using namespace boost::spirit::x3::iso8859_1;
-        BOOST_TEST(test("¡·", no_case[lit("·¡")]));
-        BOOST_TEST(test("··", no_case[no_case[lit("·¡")]]));
+        BOOST_TEST(test("\xC1\xE1", no_case[lit("\xE1\xC1")]));
+        BOOST_TEST(test("\xE1\xE1", no_case[no_case[lit("\xE1\xC1")]]));
     }
 
     {
