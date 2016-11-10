@@ -237,6 +237,48 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////
     template <typename T, typename Enable/* = void*/>
+    struct is_subnormal
+    {
+        static bool call(T)
+        {
+            return false;
+        }
+    };
+
+    template <>
+    struct is_subnormal<float>
+    {
+        static bool call(float n)
+        {
+            return (math::fpclassify)(n) == FP_SUBNORMAL;
+        }
+    };
+
+    template <>
+    struct is_subnormal<double>
+    {
+        static bool call(double n)
+        {
+            return (math::fpclassify)(n) == FP_SUBNORMAL;
+        }
+    };
+
+    template <>
+    struct is_subnormal<long double>
+    {
+        static bool call(long double n)
+        {
+            return (math::fpclassify)(n) == FP_SUBNORMAL;
+        }
+    };
+
+    template <typename T>
+    inline bool test_subnormal(T n)
+    {
+        return is_subnormal<T>::call(n);
+    }
+    ///////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
     struct is_nan
     {
         static bool call(T n)

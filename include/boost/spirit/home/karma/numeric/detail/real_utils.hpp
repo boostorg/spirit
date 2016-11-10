@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace karma
             using namespace std;
 
             U dim = 0;
-            if (0 == (Policies::fmtflags::fixed & flags) && !traits::test_zero(n))
+            if (0 == (Policies::fmtflags::fixed & flags) && !traits::test_zero(n) && !traits::test_subnormal(n))
             {
                 dim = log10(n);
                 if (dim > 0) 
