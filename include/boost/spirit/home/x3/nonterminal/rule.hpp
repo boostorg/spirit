@@ -133,7 +133,7 @@ namespace boost { namespace spirit { namespace x3
               , first
               , last
               , context
-              , extract_rule_attr(attr)
+              , extract_rule_attr<Attribute>(attr)
               );
         }
 
