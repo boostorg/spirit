@@ -131,8 +131,11 @@ namespace boost { namespace spirit { namespace x3
         extract_rule_attr
           ( boost::spirit::x3::variant<Types...>& attr
           )
-          { auto&fwd_attr=boost::get<forward_ast<attribute_type>>(attr);
-            return fwd_attr.get();
+          { 
+            forward_ast<attribute_type> fwd_attr_v;
+            attr=fwd_attr_v;
+            auto&fwd_attr_r=boost::get<forward_ast<attribute_type>>(attr);
+            return fwd_attr_r.get();
           }
       #endif  
         template <typename Iterator, typename Context, typename Attribute_>
