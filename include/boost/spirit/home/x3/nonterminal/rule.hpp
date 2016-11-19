@@ -124,20 +124,22 @@ namespace boost { namespace spirit { namespace x3
           )
           { return boost::fusion::deref(attr.first);
           }
+     #if 1
           template< typename... Types>
             static
           attribute_type& 
         extract_rule_attr
           ( boost::spirit::x3::variant<Types...>& attr
           )
-          { return get<attribute_type>(attr);
+          { auto&fwd_attr=boost::get<forward_ast<attribute_type>>(attr);
+            return fwd_attr.get();
           }
-        
+      #endif  
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
-            auto& e_attr=extract_rule_attr(attr);
+            attribute_type& e_attr=extract_rule_attr(attr);
             return parse_rule(*this, first, last, context, e_attr);
         }
 
