@@ -108,17 +108,16 @@ namespace boost { namespace spirit { namespace x3
             return { as_parser(rhs), name };
         }
 
-        template<typename RuleAttr>
             static
-          RuleAttr& 
+          attribute_type& 
         extract_rule_attr
-          ( RuleAttr& attr
+          ( attribute_type& attr
           )
           { return attr;
           }
-        template<typename RuleAttr, typename First, typename Last>
+        template< typename First, typename Last>
             static
-          RuleAttr& 
+          attribute_type& 
         extract_rule_attr
           ( boost::fusion::iterator_range<First,Last>& attr
           )
@@ -129,14 +128,8 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
-            return 
-              parse_rule
-              ( *this
-              , first
-              , last
-              , context
-              , extract_rule_attr(attr)
-              );
+            auto& e_attr=extract_rule_attr(attr);
+            return parse_rule(*this, first, last, context, e_attr);
         }
 
         char const* name;
