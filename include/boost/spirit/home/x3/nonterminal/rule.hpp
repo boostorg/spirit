@@ -10,6 +10,7 @@
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/preprocessor/variadic/to_seq.hpp>
 #include <boost/preprocessor/variadic/elem.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
@@ -115,13 +116,21 @@ namespace boost { namespace spirit { namespace x3
           )
           { return attr;
           }
-        template< typename First, typename Last>
+          template< typename First, typename Last>
             static
           attribute_type& 
         extract_rule_attr
           ( boost::fusion::iterator_range<First,Last>& attr
           )
           { return boost::fusion::deref(attr.first);
+          }
+          template< typename... Types>
+            static
+          attribute_type& 
+        extract_rule_attr
+          ( boost::spirit::x3::variant<Types...>& attr
+          )
+          { return get<attribute_type>(attr);
           }
         
         template <typename Iterator, typename Context, typename Attribute_>
