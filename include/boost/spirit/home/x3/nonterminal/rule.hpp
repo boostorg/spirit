@@ -109,6 +109,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template<typename RuleAttr>
+            static
           RuleAttr& 
         extract_rule_attr
           ( RuleAttr& attr
@@ -116,6 +117,7 @@ namespace boost { namespace spirit { namespace x3
           { return attr;
           }
         template<typename RuleAttr, typename First, typename Last>
+            static
           RuleAttr& 
         extract_rule_attr
           ( boost::fusion::iterator_range<First,Last>& attr
@@ -133,7 +135,7 @@ namespace boost { namespace spirit { namespace x3
               , first
               , last
               , context
-              , extract_rule_attr<Attribute>(attr)
+              , extract_rule_attr(attr)
               );
         }
 
