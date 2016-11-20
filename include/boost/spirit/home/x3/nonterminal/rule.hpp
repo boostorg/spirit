@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace x3
     struct rule : parser<rule<ID, Attribute>>
     {
         typedef ID id;
-        typedef Attribute rule_attribute;
+        typedef Attribute attribute_type;
         static bool const has_attribute =
             !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
@@ -110,15 +110,15 @@ namespace boost { namespace spirit { namespace x3
         }
 
             static
-          rule_attribute& 
+          attribute_type& 
         extract_rule_attr
-          ( rule_attribute& attr
+          ( attribute_type& attr
           )
           { return attr;
           }
           template< typename First, typename Last>
             static
-          rule_attribute& 
+          attribute_type& 
         extract_rule_attr
           ( boost::fusion::iterator_range<First,Last>& attr
           )
@@ -127,14 +127,14 @@ namespace boost { namespace spirit { namespace x3
      #if 1
           template< typename... Types>
             static
-          rule_attribute& 
+          attribute_type& 
         extract_rule_attr
           ( boost::spirit::x3::variant<Types...>& attr
           )
           { 
-            forward_ast<rule_attribute> fwd_attr_v;
+            forward_ast<attribute_type> fwd_attr_v;
             attr=fwd_attr_v;
-            auto&fwd_attr_r=boost::get<forward_ast<rule_attribute>>(attr);
+            auto&fwd_attr_r=boost::get<forward_ast<attribute_type>>(attr);
             return fwd_attr_r.get();
           }
       #endif  
@@ -142,7 +142,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
-            rule_attribute& e_attr=extract_rule_attr(attr);
+            attribute_type& e_attr=extract_rule_attr(attr);
             return parse_rule(*this, first, last, context, e_attr);
         }
 
@@ -201,10 +201,10 @@ namespace boost { namespace spirit { namespace x3
     /***/
 
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
-    template bool parse_rule<Iterator, Context, rule_type::rule_attribute>(     \
+    template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \
         rule_type rule_                                                         \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context, rule_type::rule_attribute& attr);               \
+      , Context const& context, rule_type::attribute_type& attr);               \
     /***/
 
 
