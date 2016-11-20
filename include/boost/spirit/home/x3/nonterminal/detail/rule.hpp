@@ -151,7 +151,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return make_unique_context<ID>(rhs, context);
     }
 
-    template <typename Attribute, typename ID>
+      template 
+      < typename RuleAttribute
+      , typename ID
+      >
+      /**@brief
+       *  RuleAttribute is the rule attribute for rule with id=Id.
+       *  IOW, for rule<ID,RuleAttribute,bool force_attribute>
+       *  in ../rule.hpp.
+       */
     struct rule_parser
     {
         template <typename Iterator, typename Context, typename ActualAttribute>
@@ -190,7 +198,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
                 decltype(parse_rule(
-                    rule<ID, Attribute>(), first, last
+                    rule<ID, RuleAttribute>(), first, last
                   , make_unique_context<ID>(rhs, context), attr))
             parse_rule_result;
 
@@ -297,15 +305,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             RHS const& rhs
           , char const* rule_name
           , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr
+          , Context const& context
+          , ActualAttribute& attr //May be different than RuleAttribute
           , ExplicitAttrPropagation)
         {
-            typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
+            typedef traits::make_attribute<RuleAttribute, ActualAttribute> make_attribute;
 
             // do down-stream transformation, provides attribute for
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, Attribute, parser_id>
+                typename make_attribute::type, RuleAttribute, parser_id>
             transform;
 
             typedef typename make_attribute::value_type value_type;
