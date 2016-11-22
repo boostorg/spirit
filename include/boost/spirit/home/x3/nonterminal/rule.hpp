@@ -103,6 +103,9 @@ namespace boost { namespace spirit { namespace x3
 
         rule(char const* name)
           : name(name) {}
+          
+        rule(rule const&r):name(r.name){}
+        rule& operator=(rule const&r){name=r.name; return *this;}
 
         template <typename RHS>
         rule_definition<
@@ -198,8 +201,11 @@ namespace boost { namespace spirit { namespace x3
              // traits::post_transform when, for example,
              // ActualAttribute is a recursive variant).
 #if defined(BOOST_SPIRIT_X3_DEBUG)
-                char const* rule_name=name;
-                if(!rule_name) rule_name="unknown";
+               char const* rule_name=name;
+                if(!rule_name) 
+                { //why does this happen?  
+                  rule_name="***unknown***";
+                }
                 typedef typename make_attribute::type dbg_attribute_type;
                 detail::context_debug<Iterator, dbg_attribute_type>
                 dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
