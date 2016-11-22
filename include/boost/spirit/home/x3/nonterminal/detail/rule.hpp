@@ -306,11 +306,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , char const* rule_name
           , Iterator& first, Iterator const& last
           , Context const& context
-          , ActualAttribute& attr //May be different than RuleAttribute
+          , ActualAttribute& attr
           , ExplicitAttrPropagation)
         {
           #ifdef EXAGON_ATTR_XFORM_IN_RULE
-            auto&attr_=attr;
+            bool ok_parse = parse_rhs(rhs, first, last, context, attr, attr
+                   , mpl::bool_
+                     < (  RHS::has_action
+                       && !ExplicitAttrPropagation::value
+                       )
+                     >()
+                  );
           #else
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
 
@@ -324,7 +330,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef typename transform::type transform_attr;
             value_type made_attr = make_attribute::call(attr);
             transform_attr attr_ = transform::pre(made_attr);
-          #endif//EXAGON_ATTR_XFORM_IN_RULE
             bool ok_parse
               //Creates a place to hold the result of parse_rhs
               //called inside the following scope.
@@ -355,6 +360,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 // back into the original attribute value, if appropriate
                 traits::post_transform(attr, std::forward<transform_attr>(attr_));
             }
+          #endif//EXAGON_ATTR_XFORM_IN_RULE
             return ok_parse;
         }
     };
