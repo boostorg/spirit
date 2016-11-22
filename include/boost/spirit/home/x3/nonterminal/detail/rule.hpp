@@ -309,19 +309,22 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , ActualAttribute& attr //May be different than RuleAttribute
           , ExplicitAttrPropagation)
         {
-            typedef traits::make_attribute<RuleAttribute, ActualAttribute> make_attribute;
+          #ifdef EXAGON_ATTR_XFORM_IN_RULE
+            auto&attr_=attr;
+          #else
+            typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
 
             // do down-stream transformation, provides attribute for
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, RuleAttribute, parser_id>
+                typename make_attribute::type, Attribute, parser_id>
             transform;
 
             typedef typename make_attribute::value_type value_type;
             typedef typename transform::type transform_attr;
             value_type made_attr = make_attribute::call(attr);
             transform_attr attr_ = transform::pre(made_attr);
-
+          #endif//EXAGON_ATTR_XFORM_IN_RULE
             bool ok_parse
               //Creates a place to hold the result of parse_rhs
               //called inside the following scope.
