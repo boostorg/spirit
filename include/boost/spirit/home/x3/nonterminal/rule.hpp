@@ -7,6 +7,17 @@
 #if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
+#define EXAGON_ATTR_XFORM_IN_RULE
+#ifdef EXAGON_ATTR_XFORM_IN_RULE
+  #pragma message "yesdef(EXAGON_ATTR_XFORM_IN_RULE)"
+  //attribute transform that was in detail/rule.hpp
+  //in the rule_parser<...>::call_rule_definition<...> 
+  //is moved into the rule<...>::extract_rule_attr 
+  //funtion below.
+#else
+  #pragma message "notdef(EXAGON_ATTR_XFORM_IN_RULE)"
+#endif//EXAGON_ATTR_XFORM_IN_RULE
+
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
@@ -109,6 +120,31 @@ namespace boost { namespace spirit { namespace x3
             return { as_parser(rhs), name };
         }
 
+      #ifdef EXAGON_ATTR_XFORM_IN_RULE
+          template
+          < typename ActualAttribute
+          >
+            static
+          attribute_type& 
+        extract_rule_attr
+          ( ActualAttribute& attr
+          )
+          {
+            typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
+
+            // do down-stream transformation, provides attribute for
+            // rhs parser
+            typedef traits::transform_attribute<
+                typename make_attribute::type, Attribute, parser_id>
+            transform;
+
+            typedef typename make_attribute::value_type value_type;
+            typedef typename transform::type transform_attr;
+            value_type made_attr = make_attribute::call(attr);
+            transform_attr attr_ = transform::pre(made_attr);
+            return attr_;
+          }
+      #else
             static
           attribute_type& 
         extract_rule_attr
@@ -154,6 +190,7 @@ namespace boost { namespace spirit { namespace x3
           { 
             return extract_rule_attr(boost::fusion::front(attr));
           }
+      #endif
         template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
