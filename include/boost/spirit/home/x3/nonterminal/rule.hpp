@@ -6,6 +6,10 @@
 ==============================================================================*/
 #if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
+#define RULE_HPP_IOSTREAM
+#ifdef RULE_HPP_IOSTREAM
+#include <iostream>
+#endif
 
 #define EXAGON_ATTR_XFORM_IN_RULE
 #ifdef EXAGON_ATTR_XFORM_IN_RULE
@@ -49,19 +53,19 @@ namespace boost { namespace spirit { namespace x3
         return get<ID>(context).parse(first, last, context, unused, attr);
     }
 
-    template <typename ID, typename RHS, typename RuleAttribute, bool force_attribute_>
-    struct rule_definition : parser<rule_definition<ID, RHS, RuleAttribute, force_attribute_>>
+    template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
+    struct rule_definition : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
     {
-        typedef rule_definition<ID, RHS, RuleAttribute, force_attribute_> this_type;
+        typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
         typedef ID id;
         typedef RHS rhs_type;
-        typedef rule<ID, RuleAttribute> lhs_type;
-        typedef RuleAttribute rule_attribute;
+        typedef rule<ID, Attribute, force_attribute_> lhs_type;
+        typedef Attribute attribute_type;
 
         static bool const has_attribute =
-            !is_same<RuleAttribute, unused_type>::value;
+            !is_same<Attribute, unused_type>::value;
         static bool const handles_container =
-            traits::is_container<RuleAttribute>::value;
+            traits::is_container<Attribute>::value;
         static bool const force_attribute =
             force_attribute_;
 
@@ -72,7 +76,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, ActualAttribute& attr) const
         {
-            return detail::rule_parser<rule_attribute, ID>
+            return detail::rule_parser<attribute_type, ID>
                 ::call_rule_definition(
                     rhs, name, first, last
                   , context
@@ -102,11 +106,34 @@ namespace boost { namespace spirit { namespace x3
 #endif
 
         rule(char const* name)
-          : name(name) {}
-          
-        rule(rule const&r):name(r.name){}
-        rule& operator=(rule const&r){name=r.name; return *this;}
-
+          : name(name) 
+          {  assert(name);
+          }
+     #if 0
+        //The following CTOR's were an attempt
+        //to figure out where name was getting
+        //null  value.  However,
+        //so far ( 2016-11-22), no success.
+        rule(rule const&r)
+          : name(r.name)
+          {  assert(name);
+          }
+        rule(rule&& r)
+          : name(r.name)
+          {  assert(name);
+          }
+        rule& operator=(char const* r_name)
+          {  name=r_name; 
+             assert(name);
+             std::cout<<__func__<<":name="<<name<<"\n";
+             return *this;
+          }
+        rule& operator=(rule const&r)
+          {  name=r.name; 
+             assert(name);
+             return *this;
+          }
+      #endif
         template <typename RHS>
         rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute_>
@@ -266,6 +293,27 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
     /***/
 
+#if 1
+  //WHAT:
+  //  The following #define coped from:
+  //    https://github.com/boostorg/spirit/blob/x3-devel/include/boost/spirit/home/x3/nonterminal/rule.hpp#L159
+  //WHY:
+  //  Overcome a problem with using function call as value of rule_name:
+  //    The BOOST_PP_CAT doesn't work.
+#define BOOST_SPIRIT_DEFINE_(r, data, def)                                      \
+    template <typename Iterator, typename Context, typename Attribute>          \
+    bool parse_rule(                                                            \
+        typename decltype(def)::lhs_type rule_                                  \
+      , Iterator& first, Iterator const& last                                   \
+      , Context const& context, Attribute& attr)                                \
+    {                                                                           \
+        using boost::spirit::x3::unused;                                        \
+        auto const& def_ = (def);                                               \
+        return def_.parse(first, last, context, unused, attr);                  \
+    }                                                                           \
+    /***/
+
+#else    
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
@@ -278,6 +326,7 @@ namespace boost { namespace spirit { namespace x3
         return def_.parse(first, last, context, unused, attr);                  \
     }                                                                           \
     /***/
+#endif
 
 #define BOOST_SPIRIT_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
