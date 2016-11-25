@@ -152,12 +152,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     }
 
       template 
-      < typename RuleAttribute
+      < typename Attribute
       , typename ID
       >
       /**@brief
-       *  RuleAttribute is the rule attribute for rule with id=Id.
-       *  IOW, for rule<ID,RuleAttribute,bool force_attribute>
+       *  Attribute is the rule attribute for rule with id=Id.
+       *  IOW, for rule<ID,Attribute,bool force_attribute>
        *  in ../rule.hpp.
        */
     struct rule_parser
@@ -198,7 +198,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
                 decltype(parse_rule(
-                    rule<ID, RuleAttribute>(), first, last
+                    rule<ID, Attribute>(), first, last
                   , make_unique_context<ID>(rhs, context), attr))
             parse_rule_result;
 
@@ -310,7 +310,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , ExplicitAttrPropagation)
         {
           #ifdef EXAGON_ATTR_XFORM_IN_RULE
-            bool ok_parse = parse_rhs(rhs, first, last, context, attr, attr
+            ActualAttribute& attr_=attr;
+            bool ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
                    , mpl::bool_
                      < (  RHS::has_action
                        && !ExplicitAttrPropagation::value

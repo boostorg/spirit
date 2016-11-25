@@ -6,18 +6,14 @@
 ==============================================================================*/
 #if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
-#define RULE_HPP_IOSTREAM
-#ifdef RULE_HPP_IOSTREAM
-#include <iostream>
-#endif
 
 #define EXAGON_ATTR_XFORM_IN_RULE
 #ifdef EXAGON_ATTR_XFORM_IN_RULE
   #pragma message "yesdef(EXAGON_ATTR_XFORM_IN_RULE)"
   //attribute transform that was in detail/rule.hpp
   //in the rule_parser<...>::call_rule_definition<...> 
-  //is moved into the rule<...>::extract_rule_attr 
-  //funtion below.
+  //is moved into the rule<...>::parse
+  //function below.
 #else
   #pragma message "notdef(EXAGON_ATTR_XFORM_IN_RULE)"
 #endif//EXAGON_ATTR_XFORM_IN_RULE
@@ -59,7 +55,7 @@ namespace boost { namespace spirit { namespace x3
         typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
         typedef ID id;
         typedef RHS rhs_type;
-        typedef rule<ID, Attribute, force_attribute_> lhs_type;
+        typedef rule<ID, Attribute> lhs_type;
         typedef Attribute attribute_type;
 
         static bool const has_attribute =
@@ -228,7 +224,7 @@ namespace boost { namespace spirit { namespace x3
              // traits::post_transform when, for example,
              // ActualAttribute is a recursive variant).
 #if defined(BOOST_SPIRIT_X3_DEBUG)
-               char const* rule_name=name;
+                char const* rule_name=name;
                 if(!rule_name) 
                 { //why does this happen?  
                   rule_name="***unknown***";
@@ -293,27 +289,6 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
     /***/
 
-#if 1
-  //WHAT:
-  //  The following #define coped from:
-  //    https://github.com/boostorg/spirit/blob/x3-devel/include/boost/spirit/home/x3/nonterminal/rule.hpp#L159
-  //WHY:
-  //  Overcome a problem with using function call as value of rule_name:
-  //    The BOOST_PP_CAT doesn't work.
-#define BOOST_SPIRIT_DEFINE_(r, data, def)                                      \
-    template <typename Iterator, typename Context, typename Attribute>          \
-    bool parse_rule(                                                            \
-        typename decltype(def)::lhs_type rule_                                  \
-      , Iterator& first, Iterator const& last                                   \
-      , Context const& context, Attribute& attr)                                \
-    {                                                                           \
-        using boost::spirit::x3::unused;                                        \
-        auto const& def_ = (def);                                               \
-        return def_.parse(first, last, context, unused, attr);                  \
-    }                                                                           \
-    /***/
-
-#else    
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
@@ -326,7 +301,6 @@ namespace boost { namespace spirit { namespace x3
         return def_.parse(first, last, context, unused, attr);                  \
     }                                                                           \
     /***/
-#endif
 
 #define BOOST_SPIRIT_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
