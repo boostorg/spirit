@@ -108,6 +108,8 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run seek.cpp             : : : : x3_seek ]
 
      [ run x3_variant.cpp       : : : : x3_variant ]
+     [ run container_support.cpp       : : : : container_support ]
+     [ run [ glob linker_error_example/*.cpp ]  : : : : linker_error_example ]
 
     ;
 }
