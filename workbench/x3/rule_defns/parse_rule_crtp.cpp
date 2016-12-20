@@ -111,7 +111,7 @@ void test_parse(Parser const& p, char const* in, Context ctx=Context())
 
 namespace simple_gram
 {
-#define SIMPLE_GRAM
+//#define SIMPLE_GRAM
 #if defined(SIMPLE_GRAM)
   struct gram_deriv: gram_base<gram_deriv>
   {
@@ -156,8 +156,19 @@ namespace calc1_gram
 #define CALC1_GRAM
 #if defined(CALC1_GRAM)
 //The following is pretty much copied from [calc1]:
-  struct gram_deriv: gram_base<gram_deriv>
+    template
+    < typename Ops
+    >
+  struct gram_deriv
+  : gram_base<gram_deriv<Ops>>
+  , Ops
   {
+    using base_t=gram_base<gram_deriv<Ops>>;
+    template <typename ID>
+    using rule = typename base_t::template rule<ID>;
+    using Ops::plus;
+    using Ops::times;
+    
     class expr_rul{};
     rule<expr_rul> const expr;
     class fact_rul{};
@@ -165,15 +176,15 @@ namespace calc1_gram
     class term_rul{};
     rule<term_rul> const term;
 
-    BOOST_SPIRIT_DEFINE(
-        ( expr=
+    BOOST_SPIRIT_DEFINE
+      ( ( expr=
             term
-            >> *( char_('+') >> term
+            >> *( plus() >> term
                 )
         )
       , ( term=
             fact
-            >> *( char_('*') >> fact
+            >> *( times() >> fact
                 )
         )
       , ( fact=
@@ -182,12 +193,17 @@ namespace calc1_gram
             |   char_('(') >> expr >> char_(')')
             //For simplicity, no unary + operator.
         )
-    )
+      )
   };//gram_deriv
+    struct ops
+    {
+      static auto plus(){ return char_('+');}
+      static auto times(){ return char_('*');}
+    };
   void run()
   {
     trace_scope ts("calc1_gram");
-    gram_deriv g;
+    gram_deriv<ops> g;
 //    test_parse(g.expr, "1", ctx) ;
 //    test_parse(g.expr, "1+0", ctx) ;
 //    test_parse(g.expr, "1+0+1*0*0*0", ctx) ;
