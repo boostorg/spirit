@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace x3
       , typename Context, typename ActualAttribute>
     inline detail::default_parse_rule_result
     parse_rule(
-        rule<ID, Attribute> rule_
+        rule<ID, Attribute> /* rule_ */
       , Iterator& first, Iterator const& last
       , Context const& context, ActualAttribute& attr)
     {
@@ -156,7 +156,7 @@ namespace boost { namespace spirit { namespace x3
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
-        decltype(rule_name) rule_                                               \
+        decltype(rule_name) /* rule_ */                                         \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, Attribute& attr)                                \
     {                                                                           \

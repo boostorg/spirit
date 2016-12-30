@@ -303,6 +303,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
 
      [ run support/utree.cpp                  : : : : support_utree ]
      [ run support/utree_debug.cpp            : : : : support_utree_debug ]
+     [ run support/istream_iterator_basic.cpp : : : : istream_iterator_basic ]
 
     ;
 
