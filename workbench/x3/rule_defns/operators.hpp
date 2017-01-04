@@ -16,7 +16,7 @@ using namespace boost;
     template <typename Char>
     struct char_parser : parser<char_parser<Char>>
     {
-        char_parser(Char ch) : ch(ch) {}
+        char_parser(Char ch) : _ch(ch) {}
 
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator last, Context const& ctx) const
@@ -41,7 +41,7 @@ using namespace boost;
           #ifdef USE_TRACING
 	    std::cout<<":*first="<<nxt_chr<<"\n";
           #endif
-	    if(nxt_chr==ch)
+	    if(nxt_chr==_ch)
 	    {
               ++first;
               result=true;
@@ -53,7 +53,7 @@ using namespace boost;
           return result;
         }
 
-        Char ch;
+        Char _ch;
 	
           friend std::ostream&
         operator<<
@@ -61,7 +61,7 @@ using namespace boost;
 	  , char_parser<Char> const&p
 	  )
           {
-	    os<<"char_('"<<p.ch<<"')";
+	    os<<"char_('"<<p._ch<<"')";
 	    return os;
 	  }
     };
@@ -70,6 +70,60 @@ using namespace boost;
     inline char_parser<Char> char_(Char ch)
     {
         return char_parser<Char>(ch);
+    };
+
+    struct string_parser : parser<string_parser>
+    {
+        using String=char const*;
+        string_parser(String str) : _str(str) {}
+
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator last, Context const& ctx) const
+        {
+	  bool result=true;
+        #ifdef USE_TRACING
+	  std::ostringstream os;
+	  os<<"("<<*this<<")";
+	  os<<"::parse";
+	  std::string str=os.str();
+	  trace_scope ts(str);
+        #endif
+          char const* i_str=_str;
+          Iterator i_inp = first;
+          char ch = *i_str;
+
+          for (; !!ch; ++i_inp)
+          {
+              if ( (i_inp == last) || (ch != *i_inp) )
+              {
+                  result=false;
+                  break;
+              }
+              ch = *++i_str;
+          }
+          if(result)first=i_inp;
+        #ifdef USE_TRACING
+	  std::cout<<":result="<<result<<"\n";
+        #endif
+          return result;
+        }
+
+        String _str;
+	
+          friend std::ostream&
+        operator<<
+	  ( std::ostream& os
+	  , string_parser const&p
+	  )
+          {
+	    os<<"string_(\""<<p._str<<"\")";
+	    return os;
+	  }
+    };
+
+    inline string_parser string_(char const* str)
+    {
+        return string_parser(str);
     };
 
     template <typename Left, typename Right>
