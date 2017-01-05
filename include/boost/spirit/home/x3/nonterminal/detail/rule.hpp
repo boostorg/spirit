@@ -189,7 +189,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
-        static bool parse_rhs_main(
+        static bool parse_rhs_main_is_error(
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr
@@ -234,7 +234,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
-        static bool parse_rhs_main(
+        static bool parse_rhs_main_is_error(
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr
@@ -271,7 +271,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr)
         {
-            return parse_rhs_main(
+            return parse_rhs_main_is_error(
                 rhs, first, last, context, rcontext, attr
               , has_on_error<ID, Iterator, Context>()
             );
