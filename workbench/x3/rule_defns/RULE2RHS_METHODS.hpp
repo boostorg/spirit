@@ -55,7 +55,7 @@
 #define RULE2RHS_SIZE (1+RULE2RHS_GET_RHS_CRTP)
 //The number of RULE2RHS methods.
 #ifndef RULE2RHS_WHICH
-  #define RULE2RHS_WHICH RULE2RHS_GET_RHS_REC
+  #define RULE2RHS_WHICH RULE2RHS_CTX_LIST
 #endif
 char const*const rule2rhs_name[RULE2RHS_SIZE]=
   { RULE2RHS_0

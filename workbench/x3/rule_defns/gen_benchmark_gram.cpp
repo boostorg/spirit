@@ -91,6 +91,12 @@ rhs(int ndx_rule,int num_rules)
   else
     return "char_('_')|char_('[')>>"+r_(num_rules-1)+">>char_(']')";
 }
+  void
+rule_decls( osi&gfi, int num_rules)
+{
+  for(int i_rule=0; i_rule<num_rules; ++i_rule)
+    gfi()<<"rule_b<id<"<<i_rule<<">> const "<<r_(i_rule)<<";\n";
+}
 int main(int argc, char *argv[])
 {
   int num_rules=DEFAULT_NUM_RULES;
@@ -110,8 +116,11 @@ int main(int argc, char *argv[])
     //The following output pretty much follows the pattern
     //in the rule_defns_benchmark.hpp in the #else part of
     //the #ifdef USE_GRAM_FILE...#endif.
-    for(i_rule=0; i_rule<num_rules; ++i_rule)
-      gfi()<<"rule<id<"<<i_rule<<">> const "<<r_(i_rule)<<";\n";
+    gfi()<<"#if RULE2RHS_WHICH != RULE2RHS_GET_RHS_CRTP\n";
+    ++gfi;
+      rule_decls( gfi, num_rules);
+    --gfi;
+    gfi()<<"#endif//RULE2RHS_WHICH != RULE2RHS_GET_RHS_CRTP\n";
     gfi()<<"#if USE_RHS_DEF"<<"\n";
     ++gfi;
       for(i_rule=0;i_rule<num_rules; ++i_rule)
@@ -136,7 +145,7 @@ int main(int argc, char *argv[])
         --gfi;
       gfi()<<"#endif //RULE2RHS_WHICH == RULE2RHS_CTX_MI_REC\n";
     --gfi;
-    gfi()<<"#else//!USE_RHS_DEF"<<"\n";
+    gfi()<<"#elif RULE2RHS_WHICH != RULE2RHS_GET_RHS_CRTP\n";
     ++gfi;
       for(i_rule=0;i_rule<num_rules; ++i_rule)
         gfi()<<r_lhs<def>(i_rule)+"="+rhs<rul>(i_rule,num_rules)+";\n";
@@ -174,7 +183,40 @@ int main(int argc, char *argv[])
         --gfi;
       gfi()<<"#endif //RULE2RHS_WHICH == RULE2RHS_CTX_MI_ALL\n";
     --gfi;
-    gfi()<<"#endif//end:USE_RHS_DEF"<<"\n";
+    gfi()<<"#else//RULE2RHS_GET_RHS_CRTP\n";
+    ++gfi;
+      gfi()<<"struct gram_deriv: gram_base<gram_deriv>\n";
+      gfi()<<"{\n";
+      ++gfi;
+        rule_decls( gfi, num_rules);
+        gfi()<<"BOOST_SPIRIT_GET_RHS\n";
+        ++gfi;
+          gfi()<<"(\n";
+          ++gfi;
+          for(i_rule=0; i_rule<num_rules; ++i_rule)
+          {
+            if(i_rule>0) 
+            {
+              --gfi; 
+              gfi()<<",\n";
+              ++gfi;
+            }
+            gfi()<<"(\n";
+            ++gfi;
+              gfi()<<r_lhs<rul>(i_rule)<<"="<<rhs<rul>(i_rule,num_rules)<<"\n";
+            --gfi;
+            gfi()<<")\n";
+          }
+          --gfi;
+          gfi()<<")\n";
+        --gfi;
+      --gfi;
+      gfi()<<"};\n";
+      gfi()<<"gram_deriv g;\n";
+      gfi()<<"auto const& start=g.get_rhs(id<"<<num_rules-1<<">{});\n";
+      gfi()<<"auto const& ctx = empty_context();\n";
+    --gfi;
+    gfi()<<"#endif//end:USE_RHS_DEF\n";
   }
   gf.close();
   return 0;

@@ -2,8 +2,8 @@ SHELL := /bin/bash
 PATH := $(USER)/bin:$(PATH)
 MAIN=rule_defns
 MAIN=rule_defns_bench
-RULE2RHS_WHICH:=3
-rule_defns_bench.opts_compile.cmd:=-DRULE2RHS_WHICH=$(RULE2RHS_WHICH)
+RULE2RHS_WHICH:=0
+#rule_defns_bench.opts_compile.cmd:=-DRULE2RHS_WHICH=$(RULE2RHS_WHICH)
 #MAIN=parse_rule_def
 #MAIN=parse_rule_crtp
 HOW=clangxx3_8_pkg
@@ -15,7 +15,7 @@ include $(DIR.root)/root.imk
 
 INCS:= -I$(nonvartmpl.root) $(INCS)
 .PHONY: MACRO_INCLUDE.imk bench_analyze check_bench_compiles clang_cmd gen_cmds
-.ONESHELL:
+#.ONESHELL:
 
 MACRO_INCLUDE.imk:
 	echo "#generated from Makefile with target:$@.">$@
@@ -52,8 +52,8 @@ BENCH_COMPILE.o:=-c
 BENCH_COMPILE.exe:=
 BENCH_COMPILE.cmd := $(COMPILER.$(HOW)) $(BENCH_COMPILE.$(BENCH_EXT)) $(CXX_STD) $(BENCH_PROG).cpp -o $(BENCH_PROG).$(BENCH_EXT)
 
-NUM_RULES=4 8 12
-METHODS=0 1 2 3 4
+NUM_RULES=8 12 14
+METHODS=0 1 2 3 4 5
 DELIM:="\t"
 TIME.fmt:=$(DELIM)"%U"$(DELIM)"%S"$(DELIM)"%e"
 GUAGECMD:=/usr/bin/time --format=$(TIME.fmt)
