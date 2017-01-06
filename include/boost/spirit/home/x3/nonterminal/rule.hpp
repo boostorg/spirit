@@ -206,7 +206,6 @@ namespace boost { namespace spirit { namespace x3
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, Attribute& attr);                               \
     /***/
-
 #define BOOST_SPIRIT_DECLARE(...) BOOST_PP_SEQ_FOR_EACH(                        \
     BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
     /***/
@@ -235,6 +234,77 @@ namespace boost { namespace spirit { namespace x3
       , Context const& context, rule_type::attribute_type& attr);               \
     /***/
 
+  #ifdef BOOST_SPIRIT_GET_RHS_CRTP
+
+      template
+      < typename GramDeriv
+      >      
+    struct gram_base
+      {
+        template <typename ID, typename Attribute=unused_type>
+        struct rule_b : parser<rule_b<ID, Attribute>>
+          {
+            typedef ID id;
+            typedef Attribute attribute_type;
+            static bool const has_attribute =
+                !is_same<Attribute, unused_type>::value;
+            static bool const handles_container =
+                traits::is_container<Attribute>::value;
+            static bool const force_attribute = false;
+        
+            rule_b() : name("unnamed") {}
+            rule_b(char const* name)
+              : name(name) 
+              {
+              }
+            
+            template <typename RHS>
+            rule_definition<
+              ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute>
+            operator=(RHS const& rhs) const
+            {
+              return { as_parser(rhs), name };
+            }
+    
+              template 
+              < typename Iterator
+              , typename Context
+              , typename ActualAttribute
+              >
+              bool 
+            parse
+              ( Iterator& first
+              , Iterator last
+              , Context const& ctx
+              , unused_type
+              , ActualAttribute& attr
+              ) const
+              {
+                auto def=GramDeriv().get_rhs(ID{});
+                bool ok_parse=def.parse(first, last, ctx, unused, attr);
+                return ok_parse;
+              }
+            
+            char const* name;
+          };
+
+      };
+      
+#define BOOST_SPIRIT_GET_RHS_(r, data, rule_def) \
+      auto const&                                \
+    get_rhs                                      \
+      ( typename decltype(rule_def)::id          \
+      )                                          \
+    {                                            \
+        static auto const def(rule_def);         \
+        return def;                              \
+    }                                            \
+    /***/
+#define BOOST_SPIRIT_GET_RHS(...) BOOST_PP_SEQ_FOR_EACH(                         \
+    BOOST_SPIRIT_GET_RHS_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
+    /***/
+    
+  #endif//BOOST_SPIRIT_GET_RHS_CRTP
 
 }}}
 
