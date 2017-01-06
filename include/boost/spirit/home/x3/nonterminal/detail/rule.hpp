@@ -189,7 +189,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
-        static bool parse_rhs_main_is_error(
+        static bool parse_rhs_have_on_error(
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr
@@ -209,12 +209,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef
                 is_same<parse_rule_result, default_parse_rule_result>
             is_default_parse_rule;
+            auto ctx=make_rule_context<ID>(rhs, context, is_default_parse_rule());
 
             Iterator i = first;
             bool r = rhs.parse(
                 i
               , last
-              , make_rule_context<ID>(rhs, context, is_default_parse_rule())
+              , ctx
               , rcontext
               , attr
             );
@@ -234,7 +235,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename RHS, typename Iterator, typename Context
           , typename RContext, typename ActualAttribute>
-        static bool parse_rhs_main_is_error(
+        static bool parse_rhs_have_on_error(
             RHS const& rhs
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr
@@ -244,7 +245,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 try
                 {
-                    return parse_rhs_main(
+                    return parse_rhs_have_on_error(
                         rhs, first, last, context, rcontext, attr, mpl::false_());
                 }
                 catch (expectation_failure<Iterator> const& x)
@@ -271,7 +272,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, ActualAttribute& attr)
         {
-            return parse_rhs_main_is_error(
+            return parse_rhs_have_on_error(
                 rhs, first, last, context, rcontext, attr
               , has_on_error<ID, Iterator, Context>()
             );
@@ -309,14 +310,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , ActualAttribute& attr
           , ExplicitAttrPropagation)
         {
+          auto const parse_flag=
+            mpl::bool_
+            < (  RHS::has_action
+              && !ExplicitAttrPropagation::value
+              )
+            >();
           #ifdef EXAGON_ATTR_XFORM_IN_RULE
             ActualAttribute& attr_=attr;
             bool ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
-                   , mpl::bool_
-                     < (  RHS::has_action
-                       && !ExplicitAttrPropagation::value
-                       )
-                     >()
+                   , parse_flag
                   );
           #else
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
@@ -348,11 +351,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
 #endif
                 ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
-                   , mpl::bool_
-                     < (  RHS::has_action
-                       && !ExplicitAttrPropagation::value
-                       )
-                     >()
+                   , parse_flag
                   );
             }
             if (ok_parse)
