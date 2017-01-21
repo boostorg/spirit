@@ -21,7 +21,7 @@ BOOST_SPIRIT_INSTANTIATE(class_type_type, iterator_type, context_type);
   //to be used.
 #endif
 //#define SEHE_TYPES_DEF_HPP_PASTE
-//#define EXPLICT_SPECIALIZATION_FROM_LINKER_ERROR_MSG
+//#define EXPLICIT_SPECIALIZATION_FROM_LINKER_ERROR_MSG
 #if defined(SEHE_TYPES_DEF_HPP_PASTE)
 #pragma message "yesdef(SEHE_TYPES_DEF_HPP_PASTE)"
 //Source:
@@ -103,8 +103,8 @@ template
       }
     #endif
 
-#elif defined(EXPLICT_SPECIALIZATION_FROM_LINKER_ERROR_MSG)
-#pragma message "yesdef(EXPLICT_SPECIALIZATION_FROM_LINKER_ERROR_MSG)"
+#elif defined(EXPLICIT_SPECIALIZATION_FROM_LINKER_ERROR_MSG)
+#pragma message "yesdef(EXPLICIT_SPECIALIZATION_FROM_LINKER_ERROR_MSG)"
 template
   #ifdef PARSE_RULE_BODY
     <> 
@@ -211,7 +211,7 @@ template
 #endif//PARSE_RULE_BODY
 #else
 #pragma message "notdef(SEHE_TYPES_DEF_HPP_PASTE)"
-#pragma message "notdef(EXPLICT_SPECIALIZATION_FROM_LINKER_ERROR_MSG)"
+#pragma message "notdef(EXPLICIT_SPECIALIZATION_FROM_LINKER_ERROR_MSG)"
 #endif//(SEHE_TYPES_DEF_HPP_PASTE)
 }}
 

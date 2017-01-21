@@ -7,16 +7,22 @@
 #if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
-#define EXAGON_ATTR_XFORM_IN_RULE
-#ifdef EXAGON_ATTR_XFORM_IN_RULE
-//  #pragma message "yesdef(EXAGON_ATTR_XFORM_IN_RULE)"
+#ifndef BOOST_SPIRIT_GET_RHS_CRTP
+  #define BOOST_SPIRIT_GET_RHS_CRTP 0
+#endif
+#ifndef BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+  #define BOOST_SPIRIT_ATTR_XFORM_IN_RULE 0
+#endif  
+#define BOOST_SPIRIT_CRTP_XFORM_IN_RULE (BOOST_SPIRIT_GET_RHS_CRTP || BOOST_SPIRIT_ATTR_XFORM_IN_RULE)
+#if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+  #pragma message "yes(BOOST_SPIRIT_CRTP_XFORM_IN_RULE)"
   //attribute transform that was in detail/rule.hpp
   //in the rule_parser<...>::call_rule_definition<...> 
   //is moved into the rule<...>::parse
   //function below.
 #else
-  #pragma message "notdef(EXAGON_ATTR_XFORM_IN_RULE)"
-#endif//EXAGON_ATTR_XFORM_IN_RULE
+  //#pragma message "not(BOOST_SPIRIT_CRTP_XFORM_IN_RULE)"
+#endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -34,8 +40,8 @@ namespace boost { namespace spirit { namespace x3
 {
     template <typename ID>
     struct identity {};
-
     // default parse_rule implementation
+  #if !BOOST_SPIRIT_GET_RHS_CRTP
     template <typename ID, typename Attribute, typename Iterator
       , typename Context, typename ActualAttribute>
     inline detail::default_parse_rule_result
@@ -48,9 +54,78 @@ namespace boost { namespace spirit { namespace x3
             "BOOST_SPIRIT_DEFINE undefined for this rule.");
         return get<ID>(context).parse(first, last, context, unused, attr);
     }
-
+  #else
+    /*!
+     * @brief
+     *   Only used to avoid firing the static_assert in
+     *   default parse_rule below when the
+     *   BOOST_SPIRIT_DEFINE *has* been called to define the rule.
+     */
+    template <typename ID>
+    struct always_false
+    {
+        static constexpr bool value=false;
+    };
+    
+    template <typename ID, typename Attribute, typename Iterator
+      , typename Context, typename ActualAttribute>
+    bool
+    parse_rule(
+        rule<ID, Attribute> rule_
+      , Iterator& first, Iterator const& last
+      , Context const& context, ActualAttribute& attr)
+    {
+        static_assert
+          ( always_false<ID>::value
+            //Using just false in the above causes assert to
+            //always fire.  Using the above template
+            //metafunction call avoids that.
+          , "Undefined rule.  Use BOOST_SPIRIT_DEFINE to define rule."
+          );
+        return false;
+    }
+    struct rule_undefined
+    /**@brief
+     *  Tag value indicating a rule has not been defined.
+     */
+    {
+        template <typename Iterator>
+        bool parse(Iterator& first, Iterator last) const
+        /*! \brief 
+         *    Prevent redundant compiletime error in default get_rhs
+         *    when static_assert fires.
+         */
+        {
+            assert(false);
+            return false;
+        }
+    };
+    
+    template<typename ID>struct rule_id{};
+    
+    //default get_rhs.
+    template< typename ID>
+    auto const& get_rhs(rule_id<ID>)
+    {
+        static_assert
+          ( always_false<ID>::value
+            //Using just false in the above causes assert to
+            //always fire.  Using the above template
+            //metafunction call avoids that.
+          , "Undefined rule.  Use BOOST_SPIRIT_DEFINE to define rule."
+          );
+        static rule_undefined const result;
+        return result;
+    }
+  #endif//!BOOST_SPIRIT_GET_RHS_CRTP
     template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
-    struct rule_definition : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
+    struct rule_definition 
+    #if 1 || !BOOST_SPIRIT_GET_RHS_CRTP
+      : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
+    #else
+      //Don't allow rule_definition on rhs of rule definition.
+      //Instead, must use rule itself.
+    #endif
     {
         typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
         typedef ID id;
@@ -125,19 +200,11 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, ActualAttribute& attr) const
         {
-          #ifdef EXAGON_ATTR_XFORM_IN_RULE
-            typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
-
-            // do down-stream transformation, provides attribute for
-            // rhs parser
-            typedef traits::transform_attribute<
-                typename make_attribute::type, Attribute, parser_id>
-            transform;
-
-            typedef typename make_attribute::value_type value_type;
-            typedef typename transform::type transform_attr;
-            value_type made_attr = make_attribute::call(attr);
-            transform_attr attr_ = transform::pre(made_attr);
+          #if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+            using rat_t=typename detail::rule_parser<Attribute,ID>
+                    ::template rule_attr_transform<ActualAttribute>;
+            rat_t rat_v(attr);
+            auto attr_ = rat_v.pre();
             
             bool ok_parse
               //Creates a place to hold the result of parse_rhs
@@ -162,15 +229,10 @@ namespace boost { namespace spirit { namespace x3
 #endif
                 ok_parse = parse_rule(*this, first, last, context, attr_);
             }
-            if (ok_parse)
-            {
-                // do up-stream transformation, this integrates the results
-                // back into the original attribute value, if appropriate
-                traits::post_transform(attr, std::forward<transform_attr>(attr_));
-            }
+            rat_v.post(ok_parse,attr,attr_);
           #else
-            bool ok_parse=parse_rule(*this, first, last, context, attr);
-          #endif//EXAGON_ATTR_XFORM_IN_RULE
+              bool ok_parse = parse_rule(*this, first, last, context, attr);
+          #endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
             return ok_parse;
         }
 
@@ -233,8 +295,8 @@ namespace boost { namespace spirit { namespace x3
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, rule_type::attribute_type& attr);               \
     /***/
-
-  #ifdef BOOST_SPIRIT_GET_RHS_CRTP
+    
+#if BOOST_SPIRIT_GET_RHS_CRTP
 
       template
       < typename GramDeriv
@@ -280,7 +342,7 @@ namespace boost { namespace spirit { namespace x3
               , ActualAttribute& attr
               ) const
               {
-                auto def=GramDeriv().get_rhs(ID{});
+                auto const& def=GramDeriv().get_rhs(rule_id<ID>{});
                 bool ok_parse=def.parse(first, last, ctx, unused, attr);
                 return ok_parse;
               }
@@ -290,21 +352,64 @@ namespace boost { namespace spirit { namespace x3
 
       };
       
-#define BOOST_SPIRIT_GET_RHS_(r, data, rule_def) \
-      auto const&                                \
-    get_rhs                                      \
-      ( typename decltype(rule_def)::id          \
-      )                                          \
-    {                                            \
-        static auto const def(rule_def);         \
-        return def;                              \
-    }                                            \
+#define BOOST_SPIRIT_DER_DECLARE_(r, data, rule_name) \
+    template <typename Iterator, typename Context, typename Attribute> \
+    bool parse_rule(                                  \
+        typename decltype(rule_name)::rule_id         \
+      , Iterator& first, Iterator const& last         \
+      , Context const& context, Attribute& attr);     \
     /***/
-#define BOOST_SPIRIT_GET_RHS(...) BOOST_PP_SEQ_FOR_EACH(                         \
-    BOOST_SPIRIT_GET_RHS_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
+#define BOOST_SPIRIT_DER_INLINE_(r, data, rule_def) \
+    template <typename Iterator, typename Context, typename Attribute>  \
+      inline                                        \
+      bool                                          \
+    parse_rule(                                     \
+        typename decltype(rule_def)::rule_id        \
+      , Iterator& first, Iterator const& last       \
+      , Context const& context, Attribute& attr)    \
+    {                                               \
+        static auto const def(rule_def);            \
+        return def.parse(first,last,context, attr); \
+    }                                               \
     /***/
     
-  #endif//BOOST_SPIRIT_GET_RHS_CRTP
+#define BOOST_SPIRIT_DER_OUTLINE(scope, rule_nmrhs) \
+    BOOST_PP_SEQ_ELEM(0,scope)                      \
+    template <typename Iterator, typename Context>  \
+      bool                                          \
+      BOOST_PP_SEQ_ELEM(1,scope)::                  \
+    parse_rule(                                     \
+        typename decltype                           \
+          ( BOOST_PP_SEQ_ELEM(0,rule_nmrhs)         \
+          )::rule_id                                \
+      , Iterator& first, Iterator const& last       \
+      , Context const& context)                     \
+    {                                               \
+        static auto const def                       \
+          ( BOOST_PP_SEQ_ELEM(0,rule_nmrhs)         \
+          = BOOST_PP_SEQ_ELEM(1,rule_nmrhs)         \
+          );                                        \
+        return def.parse(first,last,context);       \
+    }                                               \
+    /***/
+#define BOOST_SPIRIT_DER_INSTANTIATE(scope, rule_nm, Iterator, Context) \
+    template bool scope::parse_rule<Iterator, Context>(                 \
+        typename decltype                                               \
+          ( scope::rule_nm                                              \
+          )::rule_id                                                    \
+        rule_id                                                         \
+      , Iterator& first, Iterator const& last                           \
+      , Context const& context);                                        \
+    /***/
+    
+#define BOOST_SPIRIT_DER_DECLARE(...) BOOST_PP_SEQ_FOR_EACH(                         \
+    BOOST_SPIRIT_DER_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
+    /***/
+#define BOOST_SPIRIT_DER_INLINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
+    BOOST_SPIRIT_DER_INLINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
+    /***/
+      
+#endif//BOOST_SPIRIT_GET_RHS_CRTP
 
 }}}
 

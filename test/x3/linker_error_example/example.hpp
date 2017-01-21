@@ -14,7 +14,6 @@ typedef x3::rule<var_dec_class, ast::VariableDec> var_dec_type;
 
 BOOST_SPIRIT_DECLARE(var_dec_type)
 
-
 }}
 
 namespace client {

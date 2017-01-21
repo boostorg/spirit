@@ -136,6 +136,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef identity<ID> type;
     };
 
+  #if !BOOST_SPIRIT_GET_RHS_CRTP
     template <typename ID, typename RHS, typename Context>
     Context const&
     make_rule_context(RHS const& rhs, Context const& context
@@ -150,6 +151,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         return make_unique_context<ID>(rhs, context);
     }
+  #endif// !BOOST_SPIRIT_GET_RHS_CRTP
 
       template 
       < typename Attribute
@@ -195,6 +197,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, RContext& rcontext, ActualAttribute& attr
           , mpl::false_)
         {
+          #if !BOOST_SPIRIT_GET_RHS_CRTP
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
                 decltype(parse_rule(
@@ -210,6 +213,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 is_same<parse_rule_result, default_parse_rule_result>
             is_default_parse_rule;
             auto ctx=make_rule_context<ID>(rhs, context, is_default_parse_rule());
+          #else
+            auto&ctx=context;
+          #endif
 
             Iterator i = first;
             bool r = rhs.parse(
@@ -300,6 +306,44 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return parse_rhs_main(rhs, first, last, context, rcontext, unused);
         }
 
+        template<typename ActualAttribute>
+        struct rule_attr_transform
+        /**@brief
+         *  pair of functions for pre/post tranform
+         *  of rule attribute.
+         */
+        { 
+          typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
+        
+          // do down-stream transformation, provides attribute for
+          // rhs parser
+          typedef traits::transform_attribute<
+              typename make_attribute::type, Attribute, parser_id>
+          transform;
+        
+          typedef typename make_attribute::value_type value_type;
+          typedef typename transform::type transform_attr;
+          value_type made_attr;
+          rule_attr_transform(ActualAttribute& attr)
+            : made_attr{make_attribute::call(attr)}
+            {}
+          transform_attr pre()
+            // do down-stream transformation, provides attribute for
+            // rhs parser
+            {
+              return transform::pre(made_attr);
+            }
+          void post(bool ok_parse, ActualAttribute& attr, transform_attr& attr_)
+            // do up-stream transformation, this integrates the results
+            // back into the original attribute value, if appropriate
+            {
+              if(ok_parse)
+              {
+                traits::post_transform(attr, std::forward<transform_attr>(attr_));
+              }
+            }
+        };//rule_attr_transform
+  
         template <typename RHS, typename Iterator, typename Context
           , typename ActualAttribute, typename ExplicitAttrPropagation>
         static bool call_rule_definition(
@@ -316,24 +360,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               && !ExplicitAttrPropagation::value
               )
             >();
-          #ifdef EXAGON_ATTR_XFORM_IN_RULE
+          #if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+            //xform already done in rule before call to here.
             ActualAttribute& attr_=attr;
             bool ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
                    , parse_flag
                   );
           #else
-            typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
-
-            // do down-stream transformation, provides attribute for
-            // rhs parser
-            typedef traits::transform_attribute<
-                typename make_attribute::type, Attribute, parser_id>
-            transform;
-
-            typedef typename make_attribute::value_type value_type;
-            typedef typename transform::type transform_attr;
-            value_type made_attr = make_attribute::call(attr);
-            transform_attr attr_ = transform::pre(made_attr);
+            using rat_t=rule_attr_transform<ActualAttribute>;
+            rat_t rat_v(attr);
+            auto attr_ = rat_v.pre();
             bool ok_parse
               //Creates a place to hold the result of parse_rhs
               //called inside the following scope.
@@ -354,13 +390,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                    , parse_flag
                   );
             }
-            if (ok_parse)
-            {
-                // do up-stream transformation, this integrates the results
-                // back into the original attribute value, if appropriate
-                traits::post_transform(attr, std::forward<transform_attr>(attr_));
-            }
-          #endif//EXAGON_ATTR_XFORM_IN_RULE
+            rat_v.post(ok_parse,attr,attr_);
+          #endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
             return ok_parse;
         }
     };
