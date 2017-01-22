@@ -134,7 +134,8 @@ namespace boost { namespace spirit { namespace x3
         typedef std::string result_type;
         std::string operator()(T const& r) const
         {
-            return r.name;
+            BOOST_ASSERT_MSG(r.name, "uninitialized rule"); // static initialization order fiasco
+            return r.name? r.name : "uninitialized";
         }
     };
 
