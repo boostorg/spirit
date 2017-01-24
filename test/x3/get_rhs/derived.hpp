@@ -32,14 +32,9 @@ struct derived:gram_base<derived>
     {}
   
   BOOST_SPIRIT_DER_DECLARE(derived,x)
-#if 0  
   BOOST_SPIRIT_DER_DEFINE
     ((y=x>>x)
     ,(z=c)
     )
-#else
-  BOOST_SPIRIT_DER_DEFINE_(_,_,(y=x>>x))
-  BOOST_SPIRIT_DER_DEFINE_(_,_,(z=c))
-#endif    
-};
+};//derived struct
 #endif//GET_RHS_DERIVED_HPP_INCLUDED_2017_01_23_0847CST

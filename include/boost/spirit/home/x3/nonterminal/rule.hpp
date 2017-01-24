@@ -367,15 +367,16 @@ namespace boost { namespace spirit { namespace x3
           { 
             template<typename Iterator, typename Context, typename Attribute> 
             bool 
-            parse(Iterator&first, Iterator last, Context&, unused_type, Attribute&)const 
+            parse(Iterator&first, Iterator last, Context const&, unused_type, Attribute&)const 
             ; 
           }; 
       };
       
 #define BOOST_SPIRIT_DER_DECLARE_(r, scope, rule_name)                    \
     inline auto get_rhs( get_id<typename decltype(rule_name)::id>)const   \
-    { using rule_id=typename decltype(rule_name)::id    ;                 \
-      return gram_base<scope>::template rule_declaration_crtp<rule_id>{}; \
+    { using rule_id=typename decltype(rule_name)::id;                     \
+      static const gram_base<scope>::template rule_declaration_crtp<rule_id> def; \
+      return def; \
     } \
     /***/
 #define BOOST_SPIRIT_DER_DEFINE_(r, data, rule_def)               \
@@ -393,15 +394,15 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DER_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
     /***/
       
-#define BOOST_SPIRIT_DER_INSTANTIATE(rule_name,rule_value,scope,Iterator,Context)\
+#define BOOST_SPIRIT_DER_INSTANTIATE(rule_name,rule_value,scope,Iterator,Context,Attribute) \
 template<>/*base*/\
   template<>/*rule_declaration_crtp*/\
     template<>/*parse*/\
     bool \
 gram_base<scope>::rule_declaration_crtp<typename decltype(scope::rule_name)::id>:: \
-    parse(Iterator&first, Iterator last, Context const& context, unused_type \
-      , typename decltype(scope::rule_name)::attribute_type& attr)const \
-    { static auto const def=scope::rule_name=(rule_value); \
+    parse(Iterator&first, Iterator last, Context context, unused_type \
+      , Attribute attr)const \
+    { static auto const def=(rule_name=(rule_value)); \
       return def.parse(first, last, context, unused, attr); \
     } \
   /***/

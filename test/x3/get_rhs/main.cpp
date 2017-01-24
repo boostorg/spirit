@@ -16,7 +16,7 @@ bool test(const std::string& str)
     unused_type attr;
     derived g;
 
-    bool ret = boost::spirit::x3::phrase_parse(in, end, g.x, boost::spirit::x3::ascii::space, attr);
+    bool ret = boost::spirit::x3::phrase_parse(in, end, g.y, boost::spirit::x3::ascii::space, attr);
     ret &= (in == end);
     return ret;
 }
@@ -25,7 +25,7 @@ bool test(const std::string& str)
 int main()
 {
     derived g;
-    bool result=test("xx");
+    bool result=test("xxxx");
     BOOST_TEST(result);
     return boost::report_errors();
 }
