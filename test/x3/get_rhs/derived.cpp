@@ -18,4 +18,4 @@ using context_type=
 using attribute_type=
   typename decltype(derived::x)::attribute_type;  
 
-BOOST_SPIRIT_DER_INSTANTIATE(x,(z>>z),derived,iterator_type,context_type const&,attribute_type const&)
+BOOST_SPIRIT_DER_INSTANTIATE(x,(z>>z),derived,iterator_type,context_type const&,attribute_type&)

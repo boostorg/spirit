@@ -243,7 +243,7 @@ namespace boost { namespace spirit { namespace x3
             }
             rat_v.post(ok_parse,attr,attr_);
           #else
-              bool ok_parse = parse_rule(*this, first, last, context, attr);
+            bool ok_parse = parse_rule(*this, first, last, context, attr);
           #endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
             return ok_parse;
         }
@@ -355,7 +355,16 @@ namespace boost { namespace spirit { namespace x3
               ) const
               {
                 auto const& def=GramDeriv().get_rhs(get_id<ID>{});
+              #if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+                using rat_t=typename detail::rule_parser<Attribute,ID>
+                        ::template rule_attr_transform<ActualAttribute>;
+                rat_t rat_v(attr);
+                auto attr_ = rat_v.pre();
+                bool ok_parse=def.parse(first, last, ctx, unused, attr_);
+                rat_v.post(ok_parse,attr,attr_);
+              #else
                 bool ok_parse=def.parse(first, last, ctx, unused, attr);
+              #endif
                 return ok_parse;
               }
             
