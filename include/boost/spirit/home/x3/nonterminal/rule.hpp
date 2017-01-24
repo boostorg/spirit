@@ -21,7 +21,12 @@
   //is moved into the rule<...>::parse
   //function below.
 #else
-  //#pragma message "not(BOOST_SPIRIT_CRTP_XFORM_IN_RULE)"
+  #pragma message "not(BOOST_SPIRIT_CRTP_XFORM_IN_RULE)"
+#endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+#if BOOST_SPIRIT_GET_RHS_CRTP
+  #pragma message "yes(BOOST_SPIRIT_GET_RHS_CRTP)"
+#else
+  #pragma message "not(BOOST_SPIRIT_GET_RHS_CRTP)"
 #endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
@@ -101,11 +106,18 @@ namespace boost { namespace spirit { namespace x3
         }
     };
     
-    template<typename ID>struct rule_id{};
+    template<typename ID>
+    struct get_id
+    /*! \brief
+     *  Thin wrapper about ID to handle case where
+     *  ID is not define.
+     *  Used to overload operator for get_rhs function below.
+     */
+    {};
     
     //default get_rhs.
     template< typename ID>
-    auto const& get_rhs(rule_id<ID>)
+    auto const& get_rhs(get_id<ID>)
     {
         static_assert
           ( always_false<ID>::value
@@ -314,8 +326,8 @@ namespace boost { namespace spirit { namespace x3
                 traits::is_container<Attribute>::value;
             static bool const force_attribute = false;
         
-            rule_b() : name("unnamed") {}
-            rule_b(char const* name)
+            constexpr rule_b() : name("unnamed") {}
+            constexpr rule_b(char const* name)
               : name(name) 
               {
               }
@@ -342,7 +354,7 @@ namespace boost { namespace spirit { namespace x3
               , ActualAttribute& attr
               ) const
               {
-                auto const& def=GramDeriv().get_rhs(rule_id<ID>{});
+                auto const& def=GramDeriv().get_rhs(get_id<ID>{});
                 bool ok_parse=def.parse(first, last, ctx, unused, attr);
                 return ok_parse;
               }
@@ -350,65 +362,49 @@ namespace boost { namespace spirit { namespace x3
             char const* name;
           };
 
+        template<typename ID> 
+        struct rule_declaration_crtp : GramDeriv
+          { 
+            template<typename Iterator, typename Context, typename Attribute> 
+            bool 
+            parse(Iterator&first, Iterator last, Context&, unused_type, Attribute&)const 
+            ; 
+          }; 
       };
       
-#define BOOST_SPIRIT_DER_DECLARE_(r, data, rule_name) \
-    template <typename Iterator, typename Context, typename Attribute> \
-    bool parse_rule(                                  \
-        typename decltype(rule_name)::rule_id         \
-      , Iterator& first, Iterator const& last         \
-      , Context const& context, Attribute& attr);     \
+#define BOOST_SPIRIT_DER_DECLARE_(r, scope, rule_name)                    \
+    inline auto get_rhs( get_id<typename decltype(rule_name)::id>)const   \
+    { using rule_id=typename decltype(rule_name)::id    ;                 \
+      return gram_base<scope>::template rule_declaration_crtp<rule_id>{}; \
+    } \
     /***/
-#define BOOST_SPIRIT_DER_INLINE_(r, data, rule_def) \
-    template <typename Iterator, typename Context, typename Attribute>  \
-      inline                                        \
-      bool                                          \
-    parse_rule(                                     \
-        typename decltype(rule_def)::rule_id        \
-      , Iterator& first, Iterator const& last       \
-      , Context const& context, Attribute& attr)    \
-    {                                               \
-        static auto const def(rule_def);            \
-        return def.parse(first,last,context, attr); \
-    }                                               \
+#define BOOST_SPIRIT_DER_DEFINE_(r, data, rule_def)               \
+    inline auto get_rhs( get_id<typename decltype(rule_def)::id>)const \
+    {                                                             \
+        static auto const def(rule_def);                          \
+        return def;                                               \
+    }                                                             \
     /***/
     
-#define BOOST_SPIRIT_DER_OUTLINE(scope, rule_nmrhs) \
-    BOOST_PP_SEQ_ELEM(0,scope)                      \
-    template <typename Iterator, typename Context>  \
-      bool                                          \
-      BOOST_PP_SEQ_ELEM(1,scope)::                  \
-    parse_rule(                                     \
-        typename decltype                           \
-          ( BOOST_PP_SEQ_ELEM(0,rule_nmrhs)         \
-          )::rule_id                                \
-      , Iterator& first, Iterator const& last       \
-      , Context const& context)                     \
-    {                                               \
-        static auto const def                       \
-          ( BOOST_PP_SEQ_ELEM(0,rule_nmrhs)         \
-          = BOOST_PP_SEQ_ELEM(1,rule_nmrhs)         \
-          );                                        \
-        return def.parse(first,last,context);       \
-    }                                               \
+#define BOOST_SPIRIT_DER_DECLARE(scope,...) BOOST_PP_SEQ_FOR_EACH(            \
+    BOOST_SPIRIT_DER_DECLARE_, scope, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))  \
     /***/
-#define BOOST_SPIRIT_DER_INSTANTIATE(scope, rule_nm, Iterator, Context) \
-    template bool scope::parse_rule<Iterator, Context>(                 \
-        typename decltype                                               \
-          ( scope::rule_nm                                              \
-          )::rule_id                                                    \
-        rule_id                                                         \
-      , Iterator& first, Iterator const& last                           \
-      , Context const& context);                                        \
-    /***/
-    
-#define BOOST_SPIRIT_DER_DECLARE(...) BOOST_PP_SEQ_FOR_EACH(                         \
-    BOOST_SPIRIT_DER_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
-    /***/
-#define BOOST_SPIRIT_DER_INLINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
-    BOOST_SPIRIT_DER_INLINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
+#define BOOST_SPIRIT_DER_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(             \
+    BOOST_SPIRIT_DER_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
     /***/
       
+#define BOOST_SPIRIT_DER_INSTANTIATE(rule_name,rule_value,scope,Iterator,Context)\
+template<>/*base*/\
+  template<>/*rule_declaration_crtp*/\
+    template<>/*parse*/\
+    bool \
+gram_base<scope>::rule_declaration_crtp<typename decltype(scope::rule_name)::id>:: \
+    parse(Iterator&first, Iterator last, Context const& context, unused_type \
+      , typename decltype(scope::rule_name)::attribute_type& attr)const \
+    { static auto const def=scope::rule_name=(rule_value); \
+      return def.parse(first, last, context, unused, attr); \
+    } \
+  /***/
 #endif//BOOST_SPIRIT_GET_RHS_CRTP
 
 }}}
