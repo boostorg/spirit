@@ -1,0 +1,8 @@
+main_qi.spirit.GET0.XRULE0.run:mean: 390.103 ns, lb 389.867 ns, ub 390.787 ns, ci 0.95
+main_x3_crtp.fork.GET1.XRULE0.run:mean: 804.61 μs, lb 804.347 μs, ub 804.902 μs, ci 0.95
+main_x3_crtp.fork.GET1.XRULE1.run:mean: 770.175 μs, lb 769.604 μs, ub 772.253 μs, ci 0.95
+main_x3_ns.fork.GET0.XRULE0.run:mean: 781.314 μs, lb 778.427 μs, ub 788.602 μs, ci 0.95
+main_x3_ns.fork.GET0.XRULE1.run:mean: 224.296 ns, lb 223.373 ns, ub 225.763 ns, ci 0.95
+main_x3_ns.fork.GET1.XRULE0.run:mean: 760.016 μs, lb 759.471 μs, ub 761.9 μs, ci 0.95
+main_x3_ns.fork.GET1.XRULE1.run:mean: 190.899 ns, lb 190.819 ns, ub 190.992 ns, ci 0.95
+main_x3_ns.spirit.GET0.XRULE0.run:mean: 674.857 μs, lb 674.535 μs, ub 675.214 μs, ci 0.95

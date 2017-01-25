@@ -1,0 +1,54 @@
+#ifndef NONIUS_QI_HPP_INCLUDED_2017_01_22_1801
+#define NONIUS_QI_HPP_INCLUDED_2017_01_22_1801
+//OriginalSouce:
+//  The gist mentioned in post to spirit user's ml:
+//    https://sourceforge.net/p/spirit/mailman/message/35549390/
+//==============================
+
+#include <iostream>
+#include <list>
+#include <chrono>
+
+#include <boost/spirit/include/qi.hpp>
+
+#include <boost/exception/diagnostic_information.hpp>
+#include <boost/exception_ptr.hpp>
+
+template <typename It>
+class CsvParser : public boost::spirit::qi::grammar<It, CsvFileInformation()> {
+  public:
+    CsvParser(const std::string &m_fieldSep) : CsvParser::base_type(m_file, "file") {
+        using namespace boost::spirit::qi;
+        m_unescaped = *(~char_("\"\r\n") - m_fieldSep);
+        m_escaped   = *('"' >> char_('"') | ~char_('"'));
+
+        m_quoted    = '"' > m_escaped > '"';
+        m_field     = (*lit(' ') >> m_quoted >> *lit(' ')) // the order is important
+                    | m_unescaped; // because unescaped ID can consume zero characters
+
+        m_record    = m_field % m_fieldSep;
+
+        m_file      = ((!eoi > m_record) % m_lineBreak) > -m_lineBreak > eoi;
+
+        // error handling removed
+    }
+
+  private:
+    boost::spirit::qi::eol_type m_lineBreak;
+    boost::spirit::qi::rule<It, CsvString()> m_unescaped, m_escaped, m_quoted, m_field;
+    boost::spirit::qi::rule<It, CsvRecordInformation()> m_record;
+    boost::spirit::qi::rule<It, CsvFileInformation()> m_file;
+};
+
+#include <boost/preprocessor/stringize.hpp>
+NONIUS_BENCHMARK(BOOST_PP_STRINGIZE(BENCH_NAME)"-qi", [](nonius::chronometer cm) {
+    const CsvParser<std::string::const_iterator> csvParser(",");
+    try {
+        bench(csvParser, cm);
+    } catch(std::exception& e) {
+        std::cerr << e.what() << "\n";
+    }
+});
+
+
+#endif//NONIUS_QI_HPP_INCLUDED_2017_01_22_1801
