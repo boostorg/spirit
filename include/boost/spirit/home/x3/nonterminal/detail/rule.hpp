@@ -360,7 +360,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               && !ExplicitAttrPropagation::value
               )
             >();
-          #if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+          #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
             //xform already done in rule before call to here.
             ActualAttribute& attr_=attr;
             bool ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
@@ -391,7 +391,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                   );
             }
             rat_v.post(ok_parse,attr,attr_);
-          #endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+          #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
             return ok_parse;
         }
     };

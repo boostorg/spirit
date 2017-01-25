@@ -13,26 +13,24 @@
 #ifndef BOOST_SPIRIT_ATTR_XFORM_IN_RULE
   #define BOOST_SPIRIT_ATTR_XFORM_IN_RULE 0
 #endif  
-#define BOOST_SPIRIT_CRTP_XFORM_IN_RULE (BOOST_SPIRIT_GET_RHS_CRTP || BOOST_SPIRIT_ATTR_XFORM_IN_RULE)
-#if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
-  #pragma message "yes(BOOST_SPIRIT_CRTP_XFORM_IN_RULE)"
+#if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+  #pragma message "yes(BOOST_SPIRIT_ATTR_XFORM_IN_RULE)"
   //attribute transform that was in detail/rule.hpp
   //in the rule_parser<...>::call_rule_definition<...> 
   //is moved into the rule<...>::parse
   //function below.
 #else
-  #pragma message "not(BOOST_SPIRIT_CRTP_XFORM_IN_RULE)"
-#endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+  #pragma message "not(BOOST_SPIRIT_ATTR_XFORM_IN_RULE)"
+#endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
 #if BOOST_SPIRIT_GET_RHS_CRTP
   #pragma message "yes(BOOST_SPIRIT_GET_RHS_CRTP)"
 #else
   #pragma message "not(BOOST_SPIRIT_GET_RHS_CRTP)"
-#endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+#endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/x3/support/context.hpp>
-#include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/preprocessor/variadic/to_seq.hpp>
 #include <boost/preprocessor/variadic/elem.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
@@ -212,7 +210,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, ActualAttribute& attr) const
         {
-          #if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+          #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
             using rat_t=typename detail::rule_parser<Attribute,ID>
                     ::template rule_attr_transform<ActualAttribute>;
             rat_t rat_v(attr);
@@ -235,6 +233,7 @@ namespace boost { namespace spirit { namespace x3
                 { //why does this happen?  
                   rule_name="***unknown***";
                 }
+                using make_attribute=traits::make_attribute<Attribute,ActualAttribute>;
                 typedef typename make_attribute::type dbg_attribute_type;
                 detail::context_debug<Iterator, dbg_attribute_type>
                 dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
@@ -244,7 +243,7 @@ namespace boost { namespace spirit { namespace x3
             rat_v.post(ok_parse,attr,attr_);
           #else
             bool ok_parse = parse_rule(*this, first, last, context, attr);
-          #endif//BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+          #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
             return ok_parse;
         }
 
@@ -329,8 +328,7 @@ namespace boost { namespace spirit { namespace x3
             constexpr rule_b() : name("unnamed") {}
             constexpr rule_b(char const* name)
               : name(name) 
-              {
-              }
+              {}
             
             template <typename RHS>
             rule_definition<
@@ -355,12 +353,36 @@ namespace boost { namespace spirit { namespace x3
               ) const
               {
                 auto const& def=GramDeriv().get_rhs(get_id<ID>{});
-              #if BOOST_SPIRIT_CRTP_XFORM_IN_RULE
+              #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
                 using rat_t=typename detail::rule_parser<Attribute,ID>
                         ::template rule_attr_transform<ActualAttribute>;
                 rat_t rat_v(attr);
                 auto attr_ = rat_v.pre();
-                bool ok_parse=def.parse(first, last, ctx, unused, attr_);
+                
+                bool ok_parse
+                  //Creates a place to hold the result of parse_rhs
+                  //called inside the following scope.
+                  ;
+                {
+                 // Create a scope to cause the dbg variable below (within
+                 // the #if...#endif) to call it's DTOR before any
+                 // modifications are made to the attribute, attr_ passed
+                 // to parse_rhs (such as might be done in
+                 // traits::post_transform when, for example,
+                 // ActualAttribute is a recursive variant).
+                #if defined(BOOST_SPIRIT_X3_DEBUG)
+                    char const* rule_name=name;
+                    if(!rule_name) 
+                    { //why does this happen?  
+                      rule_name="***unknown***";
+                    }
+                    using make_attribute=traits::make_attribute<Attribute,ActualAttribute>;
+                    typedef typename make_attribute::type dbg_attribute_type;
+                    detail::context_debug<Iterator, dbg_attribute_type>
+                    dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
+                #endif
+                    ok_parse=def.parse(first, last, ctx, unused, attr_);
+                }
                 rat_v.post(ok_parse,attr,attr_);
               #else
                 bool ok_parse=def.parse(first, last, ctx, unused, attr);
