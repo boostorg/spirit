@@ -40,8 +40,7 @@ class CsvParser : public boost::spirit::qi::grammar<It, CsvFileInformation()> {
     boost::spirit::qi::rule<It, CsvFileInformation()> m_file;
 };
 
-#include <boost/preprocessor/stringize.hpp>
-NONIUS_BENCHMARK(BOOST_PP_STRINGIZE(BENCH_NAME)"-qi", [](nonius::chronometer cm) {
+NONIUS_BENCHMARK(__FILE__, [](nonius::chronometer cm) {
     const CsvParser<std::string::const_iterator> csvParser(",");
     try {
         bench(csvParser, cm);

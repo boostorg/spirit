@@ -45,40 +45,58 @@ OPTS.spirit=$(INCS)
 OPTS.fork=-I$(boost.spirit.fork) $(INCS)
 
 define bench_make
-$(1).$(2).GET$(3).XRULE$(4).exe: $(1).cpp
+nonius.$(1).$(2).GET$(3).XRULE$(4).run.exe: nonius.cpp $(1).hpp
 	$(COMPILER.$(HOW)) -std=c++1z $(OPTS.optim) \
-	  -DBENCH_NAME="$(1).$(2)" \
+	  -DBENCH_INC=$(1).hpp \
 	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
 	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
-	  $(OPTS.$(2)) $(LINK.opts) $(1).cpp -o $$@
-$(1).$(2).GET$(3).XRULE$(4).run: $(1).$(2).GET$(3).XRULE$(4).exe
+	  $(OPTS.$(2)) $(LINK.opts) nonius.cpp -o $$@
+nonius.$(1).$(2).GET$(3).XRULE$(4).run.out: nonius.$(1).$(2).GET$(3).XRULE$(4).run.exe
 	./$$< -o $$@
 	cat $$@
+nonius.$(1).$(2).GET$(3).XRULE$(4).prof.exe: nonius.cpp $(1).hpp
+	$(COMPILER.$(HOW)) -std=c++1z -g -O0 \
+	  -DBENCH_INC=$(1).hpp \
+	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
+	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
+	  $(OPTS.$(2)) $(LINK.opts) nonius.cpp -o $$@
+nonius.$(1).$(2).GET$(3).XRULE$(4).prof.out: nonius.$(1).$(2).GET$(3).XRULE$(4).prof.exe
+	perf record ./$$<
+	perf report > $@
+	#valgrind --tool=callgrind ./$$<
 endef
 
-BENCH_MAINS:=main_x3_ns main_x3_crtp main_qi
+BENCH_INCS:=qi x3_ns_rdef x3_crtp
 VERSIONS:=spirit fork
 GET_RHS:=0 1
 XFORM_IN_RULE:=0 1
-$(foreach main,$(BENCH_MAINS),\
+$(foreach inc,$(BENCH_INCS),\
 $(foreach ver,$(VERSIONS),\
 $(foreach get,$(GET_RHS),\
 $(foreach xrule,$(XFORM_IN_RULE),\
-$(eval $(call bench_make,$(main),$(ver),$(get),$(xrule)))))))
+$(eval $(call bench_make,$(inc),$(ver),$(get),$(xrule)))))))
 
 RUNS=\
-  main_qi.spirit.GET0.XRULE0.run\
-  main_x3_ns.spirit.GET0.XRULE0.run\
-  main_x3_ns.fork.GET0.XRULE0.run\
-  main_x3_ns.fork.GET0.XRULE1.run\
-  main_x3_ns.fork.GET1.XRULE0.run\
-  main_x3_ns.fork.GET1.XRULE1.run\
-  main_x3_crtp.fork.GET1.XRULE0.run\
-  main_x3_crtp.fork.GET1.XRULE1.run\
+  nonius.qi.spirit.GET0.XRULE0.run.out\
+  nonius.x3_ns_rdef.spirit.GET0.XRULE0.run.out\
+  nonius.x3_ns_rdef.fork.GET0.XRULE0.run.out\
+  nonius.x3_ns_rdef.fork.GET0.XRULE1.run.out\
+  nonius.x3_ns_rdef.fork.GET1.XRULE0.run.out\
+  nonius.x3_ns_rdef.fork.GET1.XRULE1.run.out\
+  nonius.x3_crtp.fork.GET1.XRULE0.run.out\
+  nonius.x3_crtp.fork.GET1.XRULE1.run.out\
   ###
+#RUNS=nonius.x3_ns_rdef.fork.GET1.XRULE0.run.out
 runs: $(RUNS)
 
+PROFS=nonius.x3_ns_rdef.fork.GET0.XRULE0.prof.out
+profs: $(PROFS)
+
+
 means: $(RUNS)
-	grep -e '^mean: ' main_*.run > means.out
+	grep -e '^mean: ' nonius.*.run.out > means.out
 	cat means.out
 
+test:
+	$(COMPILER.$(HOW)) -DBENCH_INC=test.hpp test.cpp -o test.exe
+	./test.exe

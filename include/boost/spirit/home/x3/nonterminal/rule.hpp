@@ -357,7 +357,7 @@ namespace boost { namespace spirit { namespace x3
                 using rat_t=typename detail::rule_parser<Attribute,ID>
                         ::template rule_attr_transform<ActualAttribute>;
                 rat_t rat_v(attr);
-                auto attr_ = rat_v.pre();
+                auto& attr_ = rat_v.pre();
                 
                 bool ok_parse
                   //Creates a place to hold the result of parse_rhs
@@ -383,7 +383,7 @@ namespace boost { namespace spirit { namespace x3
                 #endif
                     ok_parse=def.parse(first, last, ctx, unused, attr_);
                 }
-                rat_v.post(ok_parse,attr,attr_);
+                rat_v.post(ok_parse,attr);
               #else
                 bool ok_parse=def.parse(first, last, ctx, unused, attr);
               #endif
