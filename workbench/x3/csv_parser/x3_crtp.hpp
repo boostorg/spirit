@@ -62,14 +62,8 @@ class CsvParser : public gram_base<CsvParser>
     )
 };
 }//x3_crtp namespace
-#include <boost/preprocessor/stringize.hpp>
-NONIUS_BENCHMARK(BOOST_PP_STRINGIZE(BENCH_NAME)"-x3_crtp", [](nonius::chronometer cm) {
-    const x3_crtp::CsvParser csvParser(',');
-    try {
-        bench(csvParser.start(), cm);
-    } catch(std::exception& e) {
-        std::cerr << e.what() << "\n";
-    }
-});
 
+const x3_crtp::CsvParser csv_parser(',');
+auto bench_parser=csv_parser.start();
+ 
 #endif//NONIUS_X3_CRTP_HPP_INCLUDED_2017_01_22_1801

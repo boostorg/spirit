@@ -3,6 +3,8 @@
 //OriginalSouce:
 //  The gist mentioned in post to spirit user's ml:
 //    https://sourceforge.net/p/spirit/mailman/message/35549390/
+//Method:
+//  Just use rule_definition::parse functions.
 //==============================
 #include <iostream>
 //#define BOOST_SPIRIT_X3_DEBUG
@@ -33,14 +35,6 @@ namespace csv {
     };
 }
 
-namespace csv_fixed_separator_no_semantic_actions {
-    using namespace boost::spirit::x3;
-    auto static const file = csv::make_csv_parser(ascii::lit(',')); // just making a point
-}
-
-#include <boost/preprocessor/stringize.hpp>
-NONIUS_BENCHMARK(BOOST_PP_STRINGIZE(BENCH_NAME)"-x3_ns", [](nonius::chronometer cm) { 
-    bench(csv::make_csv_parser(','), cm); 
-});
+auto bench_parser=csv::make_csv_parser(',');
 
 #endif//NONIUS_X3_NS_HPP_INCLUDED_2017_01_22_1801
