@@ -40,14 +40,6 @@ class CsvParser : public boost::spirit::qi::grammar<It, CsvFileInformation()> {
     boost::spirit::qi::rule<It, CsvFileInformation()> m_file;
 };
 
-NONIUS_BENCHMARK(__FILE__, [](nonius::chronometer cm) {
-    const CsvParser<std::string::const_iterator> csvParser(",");
-    try {
-        bench(csvParser, cm);
-    } catch(std::exception& e) {
-        std::cerr << e.what() << "\n";
-    }
-});
-
+const CsvParser<std::string::const_iterator> bench_parser(",");
 
 #endif//NONIUS_QI_HPP_INCLUDED_2017_01_22_1801
