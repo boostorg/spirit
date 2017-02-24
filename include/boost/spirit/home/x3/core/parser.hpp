@@ -18,6 +18,7 @@
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/utility/sfinae.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/assert.hpp>
 #include <string>
 
@@ -67,6 +68,8 @@ namespace boost { namespace spirit { namespace x3
     namespace detail {
         template <typename Parser>
         static void assert_initialized_rule(Parser const& p) {
+            boost::ignore_unused(p);
+
             // Assert that we are not copying an unitialized static rule. If
             // the static is in another TU, it may be initialized after we copy
             // it. If so, its name member will be nullptr.
