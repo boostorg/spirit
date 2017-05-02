@@ -1,0 +1,123 @@
+//OriginalSource:
+//  http://boost.2283326.n4.nabble.com/file/n4693813/rec_ex_orig.cc
+//Purpose:
+//  See if rm'ing attributes still produces same problem.
+//Result:
+//  2017-05-01.2054
+//    Works, when -DBOOST_SPIRIT_GET_RHS_CRTP=1.
+//    However, still trying to minimize grammar to isolate
+//    what is causing infinite recursion when -DBOOST_SPIRIT_GET_RHS_CRTP=0.
+//======================
+#include <iostream>
+#include <boost/spirit/home/x3.hpp>
+
+namespace x3 = boost::spirit::x3;
+
+namespace grammar {
+  // Bring in the spirit parsers
+  using x3::lexeme;
+  using x3::alpha;
+  using x3::alnum;
+  using x3::ascii::char_;
+  using x3::ascii::string;
+  using x3::lit;
+  using x3::ascii::digit;
+  using x3::int_;
+  using x3::uint_;
+  using x3::double_;
+  enum rid
+  { nc_single
+  , nc_double
+  , eq_op
+  , and_kleene
+  , or_kleene
+  };
+  template<rid Id>
+  struct rule_id
+  {};
+//#define AS_WITH_ID
+  template<rid Id>
+  auto as = [](auto p) 
+    {
+    #ifdef AS_WITH_ID
+      return x3::rule<rule_id<Id>>{} = as_parser(p); 
+    #else
+      return p;
+    #endif
+    };
+
+  auto str_ = [](const char* lit) { return x3::string(lit); };
+
+  x3::rule<class path_expr> path_expr = "path-expr";
+
+  auto ncname = x3::rule<class ncname>{"ncname"}
+              = x3::lexeme[+(char_ - ':')]
+              ;
+
+  auto qname = x3::rule<class qname>{"qname"}
+             = as<nc_double>(ncname >> char_(':') >> ncname)
+             | as<nc_single>(ncname)
+             ;
+
+  auto union_expr = x3::rule<class union_expr>{"union-expr"}
+                  = path_expr % '/'
+                  ;
+
+  auto unary_expr = x3::rule<class unary_expr>{"unary-expr"}
+                  = -x3::lit('-') >> union_expr
+                  ;
+
+  auto equality_expr = x3::rule<class eq_expr>{"equality-expr"}
+                     =  unary_expr
+                     >> *(as<eq_op>
+                          ( (str_("=") | str_("!=")) > unary_expr )
+                         )
+                     ;
+
+  auto and_expr = x3::rule<class and_expr>{"and-expr"}
+                =  equality_expr
+                >> *(as<and_kleene>
+                     ( str_("and") > equality_expr )
+                    )
+                ;
+
+  auto or_expr = x3::rule<class or_expr>{"or-expr"}
+               =  and_expr 
+               >> *(as<or_kleene>
+                    ( str_("or") >> and_expr )
+                   )
+               ;
+
+  auto prim_expr = x3::rule<class prim_expr>{"prim-expr"}
+                 = ('$' > qname)
+                 | ('(' > or_expr > ')')
+                 ;
+
+
+  auto path_expr_def = prim_expr
+                     ;
+#define USE_DEFINE_PATH
+#ifdef USE_DEFINE_PATH
+  BOOST_SPIRIT_DEFINE (path_expr);
+#endif  
+}
+
+int main() {
+  using x3::space;
+  using grammar::or_expr;
+
+  std::string input = "$ab/$cd or $ef";
+
+  bool res = phrase_parse(input.begin(),
+                          input.end(),
+                          or_expr,
+                          space
+                          );
+
+  if (!res) {
+    std::cout << "Parsing failed miserably!\n";
+    return 1;
+  }
+  std::cout << "Parsing passed superbly :))\n";
+  return 0;
+}
