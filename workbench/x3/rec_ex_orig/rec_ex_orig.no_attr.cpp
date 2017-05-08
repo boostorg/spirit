@@ -18,15 +18,13 @@ namespace grammar {
   // Bring in the spirit parsers
   using x3::lexeme;
   using x3::alpha;
-  using x3::lit;
 
   enum rid
-  { nc_single
-  , nc_double
-  , eq_kleene
+  { eq_kleene
   , and_kleene
   , or_kleene
   };
+  
   template<rid Id>
   struct rule_id
   {};
@@ -72,14 +70,24 @@ namespace grammar {
             = x3::lexeme[+alpha]
             ;
 
+  auto function_call = x3::rule<class func_call>{"func-call"}
+                     = name > '(' > (or_expr % ',') > ')'
+                     ;
+
   auto prim_expr = x3::rule<class prim_expr>{"prim-expr"}
                  = name
                  | ('(' > or_expr > ')')
+                 | function_call
                  ;
 
+  auto predicate = '[' > or_expr > ']';
 
-  auto path_expr_def = prim_expr
-                     ;
+  auto filter_expr = x3::rule<class filter_expr>{"filter-expr"}
+                   = prim_expr >> *(predicate)
+                   ;
+
+  auto path_expr_def = filter_expr >> prim_expr;
+
 #define USE_DEFINE_PATH
 #ifdef USE_DEFINE_PATH
   BOOST_SPIRIT_DEFINE (path_expr);
