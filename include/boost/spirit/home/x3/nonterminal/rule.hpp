@@ -240,7 +240,7 @@ namespace boost { namespace spirit { namespace x3
 #endif
                 ok_parse = parse_rule(*this, first, last, context, attr_);
             }
-            rat_v.post(ok_parse,attr,attr_);
+            rat_v.post(ok_parse,attr);
           #else
             bool ok_parse = parse_rule(*this, first, last, context, attr);
           #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
