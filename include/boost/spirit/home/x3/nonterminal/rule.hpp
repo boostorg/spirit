@@ -8,24 +8,18 @@
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
 #ifndef BOOST_SPIRIT_GET_RHS_CRTP
-  #define BOOST_SPIRIT_GET_RHS_CRTP 0
+  #define BOOST_SPIRIT_GET_RHS_CRTP 1
 #endif
 #ifndef BOOST_SPIRIT_ATTR_XFORM_IN_RULE
-  #define BOOST_SPIRIT_ATTR_XFORM_IN_RULE 0
+  #define BOOST_SPIRIT_ATTR_XFORM_IN_RULE 1
 #endif  
 #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
-  #pragma message "yes(BOOST_SPIRIT_ATTR_XFORM_IN_RULE)"
-  //attribute transform that was in detail/rule.hpp
-  //in the rule_parser<...>::call_rule_definition<...> 
-  //is moved into the rule<...>::parse
-  //function below.
 #else
-  #pragma message "not(BOOST_SPIRIT_ATTR_XFORM_IN_RULE)"
+  #pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
 #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
 #if BOOST_SPIRIT_GET_RHS_CRTP
-  #pragma message "yes(BOOST_SPIRIT_GET_RHS_CRTP)"
 #else
-  #pragma message "not(BOOST_SPIRIT_GET_RHS_CRTP)"
+  #pragma message "deprecated.  May cause excessive compile times when many rules."
 #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
