@@ -79,8 +79,6 @@ int main()
 
     // copy tests
     {
-        typedef variant<char, int, double> var_type;
-
         karma::rule<outiter_type> a, b, c, start;
 
         a = 'a';
@@ -97,8 +95,6 @@ int main()
     }
 
     {
-        typedef variant<char, int, double> var_type;
-
         karma::rule<outiter_type, space_type> a, b, c, start;
 
         a = 'a';

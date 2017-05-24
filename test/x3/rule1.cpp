@@ -43,7 +43,7 @@ main()
 
             BOOST_TEST(test("abcabcacb", start));
         }
-
+      #if !BOOST_SPIRIT_GET_RHS_CRTP
         {
             auto start =
                 r = (a | b) >> (r | b);
@@ -54,6 +54,7 @@ main()
             // ignore the skipper!
             BOOST_TEST(test("aaaabababaaabba", start, space, false));
         }
+      #endif//!BOOST_SPIRIT_GET_RHS_CRTP
     }
 
     { // basic tests w/ skipper
@@ -69,7 +70,7 @@ main()
 
             BOOST_TEST(test(" a b c a b c a c b ", start, space));
         }
-
+      #if !BOOST_SPIRIT_GET_RHS_CRTP
         {
             auto start =
                 r = (a | b) >> (r | b);
@@ -77,6 +78,7 @@ main()
             BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start, space));
             BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
         }
+      #endif//!BOOST_SPIRIT_GET_RHS_CRTP
     }
 
     { // basic tests w/ skipper but no final post-skip
@@ -100,6 +102,7 @@ main()
 
         }
 
+      #if !BOOST_SPIRIT_GET_RHS_CRTP
         {
             rule<class start> start;
 
@@ -118,6 +121,7 @@ main()
                   && s1 == e1 - 1);
             }
         }
+      #endif//!BOOST_SPIRIT_GET_RHS_CRTP
     }
 
     return boost::report_errors();
