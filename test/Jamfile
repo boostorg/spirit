@@ -17,9 +17,8 @@ import feature ;
 project spirit_v2x/test
     : requirements
         <include>.
-        <toolset>gcc:<cxxflags>-ftemplate-depth-512
-        <toolset>darwin:<cxxflags>-ftemplate-depth-512
-        <toolset>clang:<cxxflags>-ftemplate-depth=512
+        <include>../../../include
+        <cxxflags>-ftemplate-depth-512
     :
     :
     ;

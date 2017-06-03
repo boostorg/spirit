@@ -12,7 +12,7 @@ const var_dec_type& var_dec_rule()
 }
 const auto var_dec=var_dec_rule();
 
-#define EXAMPLE_DEF_LINK_ERR
+//#define EXAMPLE_DEF_LINK_ERR
 #if defined(EXAMPLE_DEF_LINK_ERR)
 #pragma message "yesdef(EXAMPLE_DEF_LINK_ERR)"
 #else
