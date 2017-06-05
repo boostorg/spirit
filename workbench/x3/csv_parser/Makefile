@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PATH := $(USER)/bin:$(PATH)
+PATH := $(HOME)/bin:$(PATH)
 HOW=clangxx3_9_pkg
 ifdef USE_MACRO_INCLUDE
 #invoke make with something like:
@@ -9,13 +9,15 @@ include MACRO_INCLUDE.imk
 else
 DIR.root := $(shell dirup_dir_file.pl $(PWD) root.imk)
 include $(DIR.root)/root.imk
+#^defines(among others):
+#  nonius.inc
 
 MACRO_INCLUDE.imk:
 	echo "#Generated from Makefile with target:$@.">$@
 	echo "#  Change values as appropriate for your environment.">>$@
 	echo "COMPILER.$(HOW):=$(COMPILER.$(HOW))">>$@
 	echo "boost.root:=$(boost.root)">>$@
-	echo "nonius:=$(nonius)">>$@
+	echo "nonius.inc:=$(nonius.inc)">>$@
 	echo "boost.spirit.fork:=$(boost.spirit.fork)">>$@
 endif
 LINK.opts=-L /lib64 -l pthread
@@ -24,14 +26,14 @@ LINK.opts=-L /lib64 -l pthread
 #to solve problem when previous version of this Makefile run.
 INCS:= \
  -I$(boost.root) \
- -I$(nonius) \
+ -I$(nonius.inc) \
   $(INCS) \
   ###
 
 .PHONY: show help compiler runs means
 
 show:
-	@echo $(INCS)
+	@echo $(HOME)
 help:
 	$(COMPILE.$(HOW)) -help
 
