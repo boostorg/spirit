@@ -97,7 +97,7 @@ namespace boost { namespace spirit { namespace x3
                         print_indent(indent);
                         out
                             << "<attributes>";
-                        traits::print_attribute(out, attr);
+                        //traits::print_attribute(out, attr);
                         out
                             << "</attributes>";
                         out << std::endl;
