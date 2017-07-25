@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace x3
 
             return this->subject.parse(
                 first, last
-              , make_context<skipper_tag>(skipper, context)
+              , make_unique_context<skipper_tag>(skipper, context)
               , rcontext
               , attr);
         }
@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return this->subject.parse(
                 first, last
-              , make_context<skipper_tag>(skipper, context)
+              , make_unique_context<skipper_tag>(skipper, context)
               , rcontext
               , attr);
         }
