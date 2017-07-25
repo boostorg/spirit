@@ -1,9 +1,8 @@
+#include "bench_run.hpp"
 #include <nonius/benchmark.h++>
-#include "input.hpp"
-#include BOOST_PP_STRINGIZE(BENCH_INC)
 
-NONIUS_BENCHMARK(BOOST_PP_STRINGIZE(BENCH_INC), [] {
-    return bench(bench_parser);
+NONIUS_BENCHMARK(BOOST_PP_STRINGIZE(HOW_INC), [] {
+    return bench_run();
 });
 
 #define NONIUS_RUNNER

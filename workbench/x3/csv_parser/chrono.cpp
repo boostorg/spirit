@@ -9,22 +9,17 @@
 http://boost.2283326.n4.nabble.com/Design-structure-X3-parser-more-like-Qi-parser-tp4690205p4690362.html
  */
 //==========================
-#include "input.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BENCH_INC)
+#include "bench_repeat.hpp"
 #include <iostream>
 #include <chrono>
 
-#define ITERATIONS 1000
-int main(int argc, char** argv)
+int main()
 {
     std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
-    for (unsigned int i=0; i<ITERATIONS; ++i)
-    {
-        bench(bench_parser);
-    }
+    bool result=bench_repeat();
     std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
     auto total_time=std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-    std::cout << "mean: " << (double(total_time)/ITERATIONS) << "ms" << std::endl;
-    return EXIT_SUCCESS;
+    double mean_time=double(total_time)/ITERATIONS;
+    std::cout << "mean: " << mean_time << "ms" << std::endl;
+    return int(!result);
 }

@@ -230,7 +230,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , typename traits::container_value<Container>::type
         >
     {};
-
+    
     template <typename Parser, typename Context, typename RContext>
     struct parse_into_container_impl<Parser, Context, RContext,
         typename enable_if<traits::handles_container<Parser, Context>>::type>

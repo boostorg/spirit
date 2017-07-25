@@ -1,5 +1,5 @@
-#ifndef NONIUS_X3_CRTP_HPP_INCLUDED_2017_01_22_1801
-#define NONIUS_X3_CRTP_HPP_INCLUDED_2017_01_22_1801
+#ifndef X3_CRTP_CSV_HPP_INCLUDED_2017_01_22_1801
+#define X3_CRTP_CSV_HPP_INCLUDED_2017_01_22_1801
 //OriginalSouce:
 //  The gist mentioned in post to spirit user's ml:
 //    https://sourceforge.net/p/spirit/mailman/message/35549390/
@@ -9,6 +9,7 @@
 #include <iostream>
 //#define BOOST_SPIRIT_X3_DEBUG
 #include <boost/spirit/home/x3.hpp>
+#include "input-csv.hpp"
 namespace x3_crtp {
 using namespace boost::spirit::x3;
 enum rule_enum
