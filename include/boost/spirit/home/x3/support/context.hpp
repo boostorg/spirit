@@ -13,14 +13,14 @@
 #endif
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
 #else
-  #pragma message "deprecated.  May cause infinite templaterecursion when using x3::skip(skipper)[some recursive rule]."
+  #pragma message "deprecated.  May cause infinite template recursion when using x3::skip(skipper)[some recursive rule]."
   //For example, see 
   /*
     https://stackoverflow.com/questions/45282293/spirit-not-able-to-use-x3skipskippersome-recursive-rule-in-its-rule-defin
    */
-  //However, it's not clear what solution is, based on:
+  //Mailing list discussion includes:
   /*
-    https://sourceforge.net/p/spirit/mailman/message/35963822/
+    https://sourceforge.net/p/spirit/mailman/message/35965692/
    */
 #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
 

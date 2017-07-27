@@ -4,10 +4,10 @@
 //  See if rm'ing attributes still produces same problem.
 //Result:
 //  2017-05-01.2054
-//    Works, when -DBOOST_SPIRIT_GET_RHS_CRTP=1.
+//    Works, when -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=1.
 //    However, still trying to minimize grammar to isolate
 //    what is causing infinite template recursion 
-//    when -DBOOST_SPIRIT_GET_RHS_CRTP=0.
+//    when -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=0.
 //======================
 #include <iostream>
 #include <boost/spirit/home/x3.hpp>

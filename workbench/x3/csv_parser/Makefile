@@ -64,7 +64,7 @@ INCS:= \
 .PHONY: benchs.chrono summary.chrono benchs.nonius summary.nonius
 
 show:
-	@echo $(BENCHS.nonius)
+	@echo $(BENCHS.stem)
 	@echo $(BENCHS.chrono)
 help:
 	$(COMPILE.$(HOW)) -help
@@ -81,15 +81,15 @@ define targets_gen
 #  Generate various targets dependent on parameters:
 #    $(1) : the include file prefix for rule recursion method.
 #    $(2) : -I flags for spirit fork to use.
-#    $(3) : macro BOOST_SPIRIT_GET_RHS_CRTP value.
-#    $(4) : macro BOOST_SPIRIT_ATTR_XFORM_IN_RULE value.
+#    $(3) : macro BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP value.
+#    $(4) : macro BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE value.
 #    $(5) : other compile flags (e.g. optimization level).
 
 nonius-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe: nonius.cpp $(target_deps)
 	$(COMPILER.$(HOW)) -std=c++1z -$(5) \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
-	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
-	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
 	  $(OPTS.$(2)) -I$(nonius.inc) $(LINK.nonius.opts) $$< -o $$@
 nonius-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).out: nonius-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe
 	./$$< -o $$@
@@ -97,8 +97,8 @@ nonius-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).out: nonius-$(GRAM)-$(
 chrono-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe: chrono.cpp $(target_repeat_deps)
 	$(COMPILER.$(HOW)) -std=c++1z -$(5) \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
-	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
-	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
 	  $(OPTS.$(2)) $$< -o $$@
 	@echo $(target_deps)
 chrono-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).out: chrono-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe
@@ -107,8 +107,8 @@ chrono-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).out: chrono-$(GRAM)-$(
 gprof-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe: bench_repeat.cpp $(target_repeat_deps)
 	$(COMPILER.$(HOW)) -std=c++1z $(COMPILE.gprof) -$(5) \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
-	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
-	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
 	  $(OPTS.$(2)) $$< -o $$@
 gprof-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).gmon: gprof-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe
 	./$$<
@@ -120,8 +120,8 @@ gprof-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).flat_graph: gprof-$(GRA
 pprof-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe: pprof.cpp $(target_repeat_deps)
 	$(COMPILER.$(HOW)) -std=c++1z -$(5) \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
-	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
-	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
 	  -I$(pprof.install)/include \
 	  -L $(pprof.install)/lib -l profiler \
 	  $(OPTS.$(2)) $$< -o $$@
@@ -138,8 +138,8 @@ gcov-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).dir: bench_repeat.cpp gc
 	cd $$@ ; \
 	$(COMPILER.$(HOW)) -std=c++1z -fprofile-arcs -ftest-coverage -$(5) \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
-	  -DBOOST_SPIRIT_GET_RHS_CRTP=$(3) \
-	  -DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=$(4) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
+	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
 	  $(OPTS.$(2)) ../$$< -o bench_repeat.exe; \
 	./bench_repeat.exe ; \
 	gcov --demangled-names --object-file bench_repeat.exe ../$$< ; \
@@ -182,10 +182,11 @@ BENCHS.stem=\
   $(GRAM)-x3_ns_rdef-spirit-GET0-XRULE0-OptO1-$(HOW)\
   $(GRAM)-x3_ns_rdef-spirit-GET0-XRULE0-OptO2-$(HOW)\
   ###
-#BENCHS.short=yes
+BENCHS.short=yes
 ifdef BENCHS.short
 BENCHS.stem=\
-  $(GRAM)-qi-spirit-GET0-XRULE0-OptO0-$(HOW)\
+  $(GRAM)-qi-spirit-GET0-XRULE1-OptO0-$(HOW)\
+  $(GRAM)-qi-spirit-GET1-XRULE0-OptO0-$(HOW)\
   ###
 endif
 
@@ -240,6 +241,3 @@ test:
 
 prof_grep:
 	perl filt_gprof_flat.pl < nonius-$(GRAM)-x3_ns_rdef.spirit.GET0.XRULE0-OptO0-$(HOW).gprof.out
-
-
-

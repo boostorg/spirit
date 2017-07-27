@@ -137,7 +137,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef identity<ID> type;
     };
 
-  #if !BOOST_SPIRIT_GET_RHS_CRTP
+  #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
     template <typename ID, typename RHS, typename Context>
     Context const&
     make_rule_context(RHS const& /* rhs */, Context const& context
@@ -152,7 +152,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         return make_unique_context<ID>(rhs, context);
     }
-  #endif// !BOOST_SPIRIT_GET_RHS_CRTP
+  #endif// !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
 
       template 
       < typename Attribute
@@ -198,7 +198,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, RContext& rcontext, ActualAttribute& attr
           , mpl::false_)
         {
-          #if !BOOST_SPIRIT_GET_RHS_CRTP
+          #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
                 decltype(parse_rule(
@@ -314,10 +314,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
          *  of rule attribute.
          */
         { 
-        #ifndef BOOST_SPIRIT_DISABLE_RULE_ATTR_XFORM
-          #define BOOST_SPIRIT_DISABLE_RULE_ATTR_XFORM 0
+        #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_DISABLE_RULE_ATTR_XFORM
+          #define BOOST_SPIRIT_X3_EXPERIMENTAL_DISABLE_RULE_ATTR_XFORM 0
         #endif
-        #if BOOST_SPIRIT_DISABLE_RULE_ATTR_XFORM==1
+        #if BOOST_SPIRIT_X3_EXPERIMENTAL_DISABLE_RULE_ATTR_XFORM==1
           using transform_attr=ActualAttribute;
           transform_attr& x_attr;
           rule_attr_transform(ActualAttribute& attr)
@@ -381,7 +381,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               && !ExplicitAttrPropagation::value
               )
             >();
-          #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+          #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
             //xform already done in rule before call to here.
             ActualAttribute& attr_=attr;
             bool ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
@@ -411,7 +411,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                   );
             }
             rat_v.post(ok_parse,attr);
-          #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+          #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
             return ok_parse;
         }
     };

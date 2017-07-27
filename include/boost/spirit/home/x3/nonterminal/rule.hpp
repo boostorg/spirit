@@ -7,20 +7,20 @@
 #if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
-#ifndef BOOST_SPIRIT_GET_RHS_CRTP
-  #define BOOST_SPIRIT_GET_RHS_CRTP 1
+#ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP 1
 #endif
-#ifndef BOOST_SPIRIT_ATTR_XFORM_IN_RULE
-  #define BOOST_SPIRIT_ATTR_XFORM_IN_RULE 1
+#ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE 1
 #endif  
-#if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 #else
   #pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
-#endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
-#if BOOST_SPIRIT_GET_RHS_CRTP
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
 #else
   #pragma message "deprecated.  May cause excessive compile times when many rules."
-#endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -36,7 +36,7 @@
 namespace boost { namespace spirit { namespace x3
 {
     // default parse_rule implementation
-  #if !BOOST_SPIRIT_GET_RHS_CRTP
+  #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
     template <typename ID, typename Attribute, typename Iterator
       , typename Context, typename ActualAttribute>
     inline detail::default_parse_rule_result
@@ -119,10 +119,10 @@ namespace boost { namespace spirit { namespace x3
         static rule_undefined const result;
         return result;
     }
-  #endif//!BOOST_SPIRIT_GET_RHS_CRTP
+  #endif//!BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
     template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
     struct rule_definition 
-    #if 1 || !BOOST_SPIRIT_GET_RHS_CRTP
+    #if 1 || !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
       : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
     #else
       //Don't allow rule_definition on rhs of rule definition.
@@ -202,7 +202,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, ActualAttribute& attr) const
         {
-          #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+          #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
             using rat_t=typename detail::rule_parser<Attribute,ID>
                     ::template rule_attr_transform<ActualAttribute>;
             rat_t rat_v(attr);
@@ -235,7 +235,7 @@ namespace boost { namespace spirit { namespace x3
             rat_v.post(ok_parse,attr);
           #else
             bool ok_parse = parse_rule(*this, first, last, context, attr);
-          #endif//BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+          #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
             return ok_parse;
         }
 
@@ -300,7 +300,7 @@ namespace boost { namespace spirit { namespace x3
       , Context const& context, rule_type::attribute_type& attr);               \
     /***/
     
-#if BOOST_SPIRIT_GET_RHS_CRTP
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
 
       template
       < typename GramDeriv
@@ -346,7 +346,7 @@ namespace boost { namespace spirit { namespace x3
               ) const
               {
                 auto const& def=GramDeriv().get_rhs(get_id<ID>{});
-              #if BOOST_SPIRIT_ATTR_XFORM_IN_RULE
+              #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
                 using rat_t=typename detail::rule_parser<Attribute,ID>
                         ::template rule_attr_transform<ActualAttribute>;
                 rat_t rat_v(attr);
@@ -430,7 +430,7 @@ gram_base<scope>::rule_declaration_crtp<typename decltype(scope::rule_name)::id>
       return def.parse(first, last, context, unused, attr); \
     } \
   /***/
-#endif//BOOST_SPIRIT_GET_RHS_CRTP
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
 
 }}}
 
