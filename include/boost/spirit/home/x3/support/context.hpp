@@ -8,6 +8,22 @@
 #if !defined(BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM)
 #define BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM
 
+#ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE 1
+#endif
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
+#else
+  #pragma message "deprecated.  May cause infinite templaterecursion when using x3::skip(skipper)[some recursive rule]."
+  //For example, see 
+  /*
+    https://stackoverflow.com/questions/45282293/spirit-not-able-to-use-x3skipskippersome-recursive-rule-in-its-rule-defin
+   */
+  //However, it's not clear what solution is, based on:
+  /*
+    https://sourceforge.net/p/spirit/mailman/message/35963822/
+   */
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
+
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/mpl/identity.hpp>
 
@@ -77,16 +93,34 @@ namespace boost { namespace spirit { namespace x3
 
     namespace detail
     {
+      #if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
         template <typename ID, typename T, typename Next, typename FoundVal>
+        inline context<ID, T, Next>
+        make_unique_context(T& val, Next const& next, FoundVal&)
+        //T != FoundVal; so append val to existing context.
+        {
+            return { val, next};
+        }
+        template <typename ID, typename T, typename Next>
         inline Next const&
-        make_unique_context(T& /* val */, Next const& next, FoundVal&)
+        make_unique_context(T& /* val */, Next const& next, T&)
+        //T == decltype(x3::get<ID>(next)); so return old context.
         {
             return next;
         }
-        
+      #else
+        template <typename ID, typename T, typename Next, typename FoundVal>
+        inline Next const&
+        make_unique_context(T& /* val */, Next const& next, FoundVal&fv)
+        //x3::get<ID>(next)==fv; so return old context
+        {
+            return next;
+        }
+      #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE  
         template <typename ID, typename T, typename Next>
         inline context<ID, T, Next>
         make_unique_context(T& val, Next const& next, unused_type)
+        //ID not found in next; so append val to existing context.
         {
             return { val, next };
         }

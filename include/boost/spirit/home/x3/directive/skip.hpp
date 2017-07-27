@@ -8,21 +8,6 @@
 #if !defined(SPIRIT_SKIP_JANUARY_26_2008_0422PM)
 #define SPIRIT_SKIP_JANUARY_26_2008_0422PM
 
-#ifndef BOOST_SPIRIT_X3_SKIP_MAKE_UNIQUE
-  #define BOOST_SPIRIT_X3_SKIP_MAKE_UNIQUE 1
-#endif
-#if BOOST_SPIRIT_X3_SKIP_MAKE_UNIQUE
-#else
-  #pragma message "deprecated.  May cause infinite recursion when x3::skip used recursively."
-  //For example, see 
-  /*
-    https://stackoverflow.com/questions/45282293/spirit-not-able-to-use-x3skipskippersome-recursive-rule-in-its-rule-defin
-   */
-  //However, it's not clear what solution is, based on:
-  /*
-    https://sourceforge.net/p/spirit/mailman/message/35963822/
-   */
-#endif//BOOST_SPIRIT_X3_SKIP_MAKE_UNIQUE
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
@@ -82,40 +67,6 @@ namespace boost { namespace spirit { namespace x3
           , skipper(skipper)
         {}
 
-      #if BOOST_SPIRIT_X3_SKIP_MAKE_UNIQUE
-        
-        template <typename ID, typename T, typename Next, typename FoundVal>
-        static inline context<ID, T, Next>
-        detail_unique_val_context(T& val, Next const& next, FoundVal&)
-        //T != FoundVal; so return new context
-        {
-            return { val, next};
-        }
-        
-        template <typename ID, typename T, typename Next>
-        static inline Next const&
-        detail_unique_val_context(T& /* val */, Next const& next, T&)
-        //T == FoundVal; so return old context.
-        {
-            return next;
-        }
-        
-        template <typename ID, typename T, typename Next>
-        static inline context<ID, T, Next>
-        detail_unique_val_context(T& val, Next const& next, unused_type)
-        //ID not found in context; so append val to existing context.
-        {
-            return { val, next };
-        }
-        
-        template <typename ID, typename T, typename Next>
-        static inline auto
-        make_unique_val_context(T& val, Next const& next)
-        {
-            return detail_unique_val_context<ID>(val, next, x3::get<ID>(next));
-        }
-      #endif 
-            
        template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
@@ -123,8 +74,8 @@ namespace boost { namespace spirit { namespace x3
         {
             return this->subject.parse(
                 first, last
-            #if BOOST_SPIRIT_X3_SKIP_MAKE_UNIQUE
-              , make_unique_val_context<skipper_tag>(skipper, context)
+            #if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
+              , make_unique_context<skipper_tag>(skipper, context)
             #else
               , make_context<skipper_tag>(skipper, context)
             #endif 
