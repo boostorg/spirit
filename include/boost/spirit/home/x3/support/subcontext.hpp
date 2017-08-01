@@ -24,13 +24,6 @@ namespace boost { namespace spirit { namespace x3
         template <typename Context>
         subcontext(Context const& /*context*/)
         {}
-        
-        template <typename ID_>
-        unused_type
-        get(ID_) const
-        {
-            return unused;
-        }
     };
 
     template <typename T>
@@ -43,10 +36,8 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Context>
         subcontext(Context const& context)
-          : context_type(x3::get<typename T::first_type>(context))
+          : context_type{x3::get<typename T::first_type>(context), unused}
         {}
-
-        using context_type::get;
     };
 
     template <typename T, typename... Tail>
@@ -54,24 +45,22 @@ namespace boost { namespace spirit { namespace x3
       : subcontext<Tail...>
       , context<
             typename T::first_type, typename T::second_type
-          , subcontext<Tail...>
+          , subcontext<Tail...> const&
         >
     {
         typedef subcontext<Tail...> base_type;
         typedef context<
             typename T::first_type, typename T::second_type
-          , base_type
+          , base_type const&
         > context_type;
 
         template <typename Context>
         subcontext(Context const& context)
           : base_type(context)
-          , context_type(
+          , context_type{
                 x3::get<typename T::first_type>(context)
-              , *static_cast<base_type*>(this))
+              , *static_cast<base_type*>(this)}
         {}
-
-        using context_type::get;
     };
 
 }}}
