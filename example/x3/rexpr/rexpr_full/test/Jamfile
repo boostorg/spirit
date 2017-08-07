@@ -19,5 +19,5 @@ project
 
 unit-test parse_rexpr_test
    : parse_rexpr_test.cpp
-   : <testing.arg>"test/test_files"
+   : <testing.arg>"test_files"
    ;
