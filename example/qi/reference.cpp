@@ -1028,6 +1028,38 @@ main()
         //]
     }
 
+    // expectd
+    {
+        //[reference_using_declarations_expectd
+        using boost::spirit::ascii::char_;
+        using boost::spirit::qi::expect;
+        using boost::spirit::qi::expectation_failure;
+        //]
+
+        //[reference_expectd
+        /*`The code below uses an expectation operator to throw an __qi_expectation_failure__
+            with a deliberate parsing error when `"o"` is expected and `"x"` is what is
+            found in the input. The `catch` block prints the information related to the
+            error. Note: This is low level code that demonstrates the /bare-metal/. Typically,
+            you use an __qi_error_handler__ to deal with the error.
+         */
+        try
+        {
+            test_parser("xi", expect[char_('o')]); // should throw an exception
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: "; print_info(x.what_);
+            std::cout << "got: \"" << std::string(x.first, x.last) << '"' << std::endl;
+        }
+        /*`The code above will print:[teletype]
+
+                expected: tag: literal-char, value: o
+                got: "x"``[c++]``
+         */
+        //]
+    }
+	
     // and-predicate
     {
         //[reference_and_predicate

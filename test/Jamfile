@@ -71,6 +71,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run qi/end.cpp              : : : : qi_end ]
      [ run qi/eps.cpp              : : : : qi_eps ]
      [ run qi/expect.cpp           : : : : qi_expect ]
+     [ run qi/expectd.cpp          : : : : qi_expectd ]
      [ run qi/grammar.cpp          : : : : qi_grammar ]
      [ run qi/int1.cpp             : : : : qi_int1 ]
      [ run qi/int2.cpp             : : : : qi_int2 ]
@@ -268,6 +269,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run lex/token_moretypes.cpp           : : : : lex_token_moretypes ]
      [ run lex/token_omit.cpp                : : : : lex_token_omit ]
      [ run lex/token_onetype.cpp             : : : : lex_token_onetype ]
+     [ run lex/plain_token.cpp               : : : : plain_token ]
 
     ;
 
@@ -303,6 +305,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
 
      [ run support/utree.cpp                  : : : : support_utree ]
      [ run support/utree_debug.cpp            : : : : support_utree_debug ]
+     [ run support/istream_iterator_basic.cpp : : : : istream_iterator_basic ]
 
     ;
 
