@@ -85,7 +85,7 @@ sequence:
 	done ;\
 	cat $(BENCH_TMP)
 
-check_bench_compiles: gen_benchmark_gram.exe
+check_bench_compiles: gram_file.hpp
 	./gen_benchmark_gram.exe 3
 	for rule2rhs_which in $(METHODS) ;\
 	do \
