@@ -15,40 +15,21 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     // with directive injects a value into the context prior to parsing.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Subject, typename Derived, typename T>
-    struct with_value_holder
-      : unary_parser<Subject, Derived>
-    {
-        typedef unary_parser<Subject, Derived> base_type;
-        mutable T val;
-        with_value_holder(Subject const& subject, T const& val)
-          : base_type(subject)
-          , val(val) {}
-    };
-    
-    template <typename Subject, typename Derived, typename T>
-    struct with_value_holder<Subject, Derived, T const>
-      : unary_parser<Subject, Derived>
-    {
-        typedef unary_parser<Subject, Derived> base_type;
-        T val;
-        with_value_holder(Subject const& subject, T const& val)
-          : base_type(subject)
-          , val(val) {}
-    };
-
     template <typename Subject, typename ID, typename T>
     struct with_directive
-      : with_value_holder<Subject, with_directive<Subject, ID, T>, T>
+      : unary_parser<Subject, with_directive<Subject, ID, T>>
     {
-        typedef with_value_holder<Subject, with_directive<Subject, ID, T>, T> base_type;
+        typedef unary_parser<Subject, with_directive<Subject, ID, T>> base_type;
         static bool const is_pass_through_unary = true;
         static bool const handles_container = Subject::handles_container;
 
         typedef Subject subject_type;
 
-        with_directive(Subject const& subject, T const& val)
-          : base_type(subject, val) {}
+        T val;
+
+        with_directive(Subject const& subject, T&& val)
+          : base_type(subject)
+          , val(std::forward<T>(val)) {}
 
         template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
@@ -63,44 +44,23 @@ namespace boost { namespace spirit { namespace x3
         }
     };
    
-    template <typename ID, typename T, typename NextContext = unused_type>
-    struct with_context
-    {
-        typedef context<ID, T, NextContext> type;
-    };
-    
-    template <typename ID, typename T>
-    struct with_context<ID, T, unused_type>
-    {
-        typedef context<ID, T> type;
-    };
-
     template <typename ID, typename T>
     struct with_gen
     {
-        T& val;
-
-        with_gen(T& val)
-          : val(val) {}
+        T&& val;
 
         template <typename Subject>
         with_directive<typename extension::as_parser<Subject>::value_type, ID, T>
         operator[](Subject const& subject) const
         {
-            return { as_parser(subject), val };
+            return { as_parser(subject), std::forward<T>(val) };
         }
     };
 
     template <typename ID, typename T>
-    inline with_gen<ID, T> with(T& val)
+    inline with_gen<ID, T> with(T&& val)
     {
-        return { val };
-    }
-    
-    template <typename ID, typename T>
-    inline with_gen<ID, T const> with(T const& val)
-    {
-        return { val };
+        return { std::forward<T>(val) };
     }
 }}}
 
