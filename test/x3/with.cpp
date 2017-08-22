@@ -65,6 +65,19 @@ main()
         BOOST_TEST(579 == val);
     }
 
+    { // injecting rvalue into the context
+        auto const r1 = int_[([](auto& ctx){
+            x3::get<my_tag>(ctx) += x3::_attr(ctx);
+        })];
+        auto const r2 = rule<struct my_rvalue_rule_class, int>() =
+            x3::lit('(') >> (r1 % ',') >> x3::lit(')')[([](auto& ctx){
+                x3::_val(ctx) = x3::get<my_tag>(ctx);
+            })];
+        int attr = 0;
+        BOOST_TEST(test_attr("(1,2,3)", with<my_tag>(100)[r2], attr));
+        BOOST_TEST(106 == attr);
+    }
+
     { // injecting const/non-const lvalue and rvalue into the context
         struct functor {
             int operator()(int& val) {
@@ -93,8 +106,8 @@ main()
         attr = 0;
 
         BOOST_TEST(test_attr("5", with<my_tag>(10)[r], attr));
-        // x3::get returns const ref to member variable of with_directive
-        BOOST_TEST(15 == attr);
+        // x3::get returns ref to member variable of with_directive
+        BOOST_TEST(105 == attr);
     }
 
     return boost::report_errors();

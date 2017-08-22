@@ -15,21 +15,40 @@ namespace boost { namespace spirit { namespace x3
     ///////////////////////////////////////////////////////////////////////////
     // with directive injects a value into the context prior to parsing.
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Derived, typename T>
+    struct with_value_holder
+      : unary_parser<Subject, Derived>
+    {
+        typedef unary_parser<Subject, Derived> base_type;
+        mutable T val;
+        with_value_holder(Subject const& subject, T&& val)
+          : base_type(subject)
+          , val(std::forward<T>(val)) {}
+    };
+    
+    template <typename Subject, typename Derived, typename T>
+    struct with_value_holder<Subject, Derived, T&>
+      : unary_parser<Subject, Derived>
+    {
+        typedef unary_parser<Subject, Derived> base_type;
+        T& val;
+        with_value_holder(Subject const& subject, T& val)
+          : base_type(subject)
+          , val(val) {}
+    };
+
     template <typename Subject, typename ID, typename T>
     struct with_directive
-      : unary_parser<Subject, with_directive<Subject, ID, T>>
+      : with_value_holder<Subject, with_directive<Subject, ID, T>, T>
     {
-        typedef unary_parser<Subject, with_directive<Subject, ID, T>> base_type;
+        typedef with_value_holder<Subject, with_directive<Subject, ID, T>, T> base_type;
         static bool const is_pass_through_unary = true;
         static bool const handles_container = Subject::handles_container;
 
         typedef Subject subject_type;
 
-        T val;
-
         with_directive(Subject const& subject, T&& val)
-          : base_type(subject)
-          , val(std::forward<T>(val)) {}
+          : base_type(subject, std::forward<T>(val)) {}
 
         template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
