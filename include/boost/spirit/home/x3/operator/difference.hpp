@@ -10,6 +10,7 @@
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -29,7 +30,8 @@ namespace boost { namespace spirit { namespace x3
         {
             // Try Right first
             Iterator start = first;
-            if (this->right.parse(first, last, context, rcontext, unused))
+            if (this->right.parse(first, last, context, rcontext, unused)
+              || has_expectation_failure(context))
             {
                 // Right succeeds, we fail.
                 first = start;

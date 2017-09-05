@@ -235,25 +235,29 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             for (;;)
             {
-                try
+                if (parse_rhs_main(
+                    rhs, first, last, context, rcontext, attr, mpl::false_()))
                 {
-                    return parse_rhs_main(
-                        rhs, first, last, context, rcontext, attr, mpl::false_());
+                    return true;
                 }
-                catch (expectation_failure<Iterator> const& x)
+                else if(has_expectation_failure(context))
                 {
-                    switch (ID().on_error(first, last, x, context))
+                    auto const& failure =
+                        get_expectation_failure(first, context);
+                    switch (ID().on_error(first, last, failure, context))
                     {
                         case error_handler_result::fail:
+                            reset_expectation_failure(context);
                             return false;
                         case error_handler_result::retry:
                             continue;
                         case error_handler_result::accept:
                             return true;
                         case error_handler_result::rethrow:
-                            throw;
+                            return false;
                     }
                 }
+                return false;
             }
         }
 

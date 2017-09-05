@@ -36,28 +36,30 @@ namespace boost { namespace spirit { namespace x3
         {
             for (;;)
             {
-                try
+                Iterator i = first;
+                if (this->subject.parse(i, last, context, rcontext, attr))
                 {
-                    Iterator i = first;
-                    bool r = this->subject.parse(i, last, context, rcontext, attr);
-                    if (r)
-                        first = i;
-                    return r;
+                    first = i;
+                    return true;
                 }
-                catch (expectation_failure<Iterator> const& x)
+                else if (has_expectation_failure(context))
                 {
-                    switch (handler(first, last, x, context))
+                    auto const& failure = 
+                        get_expectation_failure(first, context);
+                    switch (handler(first, last, failure, context))
                     {
                         case error_handler_result::fail:
+                            reset_expectation_failure(context);
                             return false;
                         case error_handler_result::retry:
                             continue;
                         case error_handler_result::accept:
                             return true;
                         case error_handler_result::rethrow:
-                            throw;
+                            return false;
                     }
                 }
+                return false;
             }
             return false;
         }

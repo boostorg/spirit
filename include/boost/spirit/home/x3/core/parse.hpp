@@ -32,7 +32,9 @@ namespace boost { namespace spirit { namespace x3
         // If you get an error no matching function for call to 'as_parser'
         // here, then p is not a parser or there is no suitable conversion
         // from p to a parser.
-        return as_parser(p).parse(first, last, unused, unused, attr);
+        boost::optional<expectation_failure<Iterator>> failure;
+        return as_parser(p).parse(first, last,
+            make_context<expectation_failure_tag>(failure), unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -114,7 +116,10 @@ namespace boost { namespace spirit { namespace x3
         // here, for either p or s, then p or s is not a parser or there is
         // no suitable conversion from p to a parser.
         auto skipper_ctx = make_context<skipper_tag>(as_parser(s));
-        bool r = as_parser(p).parse(first, last, skipper_ctx, unused, attr);
+        boost::optional<expectation_failure<Iterator>> failure;
+        bool r = as_parser(p).parse(first, last,
+            make_context<expectation_failure_tag>(failure, skipper_ctx),
+            unused, attr);
         if (post_skip == skip_flag::post_skip)
             x3::skip_over(first, last, skipper_ctx);
         return r;
@@ -177,11 +182,17 @@ namespace boost { namespace spirit { namespace x3
     }
     
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Skipper>
+    template <typename Iterator, typename Skipper>
     struct phrase_parse_context
     {
         typedef decltype(
-            make_context<skipper_tag>(as_parser(std::declval<Skipper>())))
+            make_context<expectation_failure_tag>(
+                std::declval<
+                    boost::optional<expectation_failure<Iterator>>&
+                >(),
+                make_context<skipper_tag>(as_parser(std::declval<Skipper>()))
+            )
+        )
         type;
     };
 }}}

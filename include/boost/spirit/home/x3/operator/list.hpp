@@ -12,6 +12,7 @@
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -44,7 +45,7 @@ namespace boost { namespace spirit { namespace x3
             }
 
             first = save;
-            return true;
+            return !has_expectation_failure(context);
         }
     };
 

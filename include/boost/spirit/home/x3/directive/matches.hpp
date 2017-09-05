@@ -11,6 +11,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -30,6 +31,8 @@ namespace boost { namespace spirit { namespace x3
         {
             bool const result = this->subject.parse(
                     first, last, context, rcontext, unused);
+            if (has_expectation_failure(context))
+                return false;
             traits::move_to(result, attr);
             return true;
         }

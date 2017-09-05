@@ -10,6 +10,7 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -29,7 +30,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RuleContext& rcontext, Attribute& attr, Category) const
         {
             this->subject.parse(first, last, context, rcontext, attr);
-            return true;
+            return !has_expectation_failure(context);
         }
 
         // Main entry point.

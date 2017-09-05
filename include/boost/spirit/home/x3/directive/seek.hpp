@@ -9,6 +9,7 @@
 #define BOOST_SPIRIT_X3_SEEK_APRIL_13_2014_1920PM
 
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -35,6 +36,10 @@ namespace boost { namespace spirit { namespace x3
                 {
                     first = current;
                     return true;
+                }
+                else if (has_expectation_failure(context))
+                {
+                    return false;
                 }
             }
 

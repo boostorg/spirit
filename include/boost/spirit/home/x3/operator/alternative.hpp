@@ -10,6 +10,7 @@
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/alternative.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -27,7 +28,8 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RContext& rcontext, unused_type) const
         {
             return this->left.parse(first, last, context, rcontext, unused)
-               || this->right.parse(first, last, context, rcontext, unused);
+               || (!has_expectation_failure(context)
+                   && this->right.parse(first, last, context, rcontext, unused));
         }
 
         template <typename Iterator, typename Context
@@ -37,7 +39,8 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return detail::parse_alternative(this->left, first, last, context, rcontext, attr)
-               || detail::parse_alternative(this->right, first, last, context, rcontext, attr);
+               || (!has_expectation_failure(context)
+                    && detail::parse_alternative(this->right, first, last, context, rcontext, attr));
         }
     };
 

@@ -8,6 +8,7 @@
 #define SPIRIT_NOT_PREDICATE_MARCH_23_2007_0618PM
 
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -28,7 +29,8 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RContext& rcontext, Attribute& /*attr*/) const
         {
             Iterator i = first;
-            return !this->subject.parse(i, last, context, rcontext, unused);
+            return !this->subject.parse(i, last, context, rcontext, unused)
+              && !has_expectation_failure(context);
         }
     };
 
