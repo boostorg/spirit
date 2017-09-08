@@ -46,7 +46,7 @@ type_name()
       template 
       < typename ID
       >
-      auto const&
+      inline auto const&
     parse_rule
       ( ID
       )
@@ -56,7 +56,7 @@ type_name()
         return def;
       }
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_def)  \
-      auto const&                                \
+      inline auto const&                         \
     parse_rule                                   \
       ( typename decltype(rule_def)::rule_id     \
       )                                          \
@@ -86,7 +86,7 @@ type_name()
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator last, Context const& ctx) const
         {
-          auto def=parse_rule(ID{});
+          auto const& def=parse_rule(ID{});
           bool result=def.parse(first, last, ctx);
     	  return result;
         }
