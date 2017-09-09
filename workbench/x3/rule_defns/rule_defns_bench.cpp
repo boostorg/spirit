@@ -105,7 +105,6 @@ type_name()
                 return false;
             }
         };
-        
     
     }//detail_rule namespace
     
@@ -211,7 +210,8 @@ type_name()
             <<":context_size="<<context_size(ctx)<<"\n";
         #endif
         #if RULE2RHS_GET_RHS_ANY
-          auto const&def=get_rhs(ID{});
+          ID id;
+          auto const&def=get_rhs(id);
           bool result=def.parse(first, last, ctx);
         #elif RULE2RHS_CTX_MI_ANY
           auto const&def=get<ID>(ctx);
@@ -418,7 +418,7 @@ namespace gram_bench
       BOOST_SPIRIT_DEFINE
         ( r_0_def
         , r_1_def
-        , r_2_def
+        //, r_2_def
         );
     #endif//endif:RULE2RHS_CTX_MI_ALL
   #else//RULE2RHS_GET_RHS_CRTP
