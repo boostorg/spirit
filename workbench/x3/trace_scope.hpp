@@ -1,7 +1,7 @@
 #ifndef TRACE_SCOPE_HPP_INCLUDED
 #define TRACE_SCOPE_HPP_INCLUDED
 #include "iostreams_utility.hpp"
-#define USE_TRACING  //if defined(USE_TRACING), trace output is produced.
+//#define USE_TRACING  //if defined(USE_TRACING), trace output is produced.
 #include <string>
 namespace boost
 {
@@ -12,16 +12,17 @@ namespace boost
   class
 indent_scope
   //Purpose:
-  //  Indicate on a std::ostream when a scope entered and exited.
+  //  Indicate on a std::ostream, 
+  //  when a scope entered and exited.
   {
   public:
     indent_scope
-      ( Enter a_enter=""
-      , Exit a_exit=""
+      ( Enter a_enter="" //entry "tag"
+      , Exit a_exit=""   //exit "tag"
       , std::ostream& a_strm=std::cout
       )
-      : my_exit(a_exit)
-      , my_strm(a_strm)
+      : my_exit(a_exit)//save for DTOR.
+      , my_strm(a_strm)//save for DTOR.
       {
       ; my_strm<<a_enter
       ; my_strm<<indent_buf_in
@@ -44,7 +45,11 @@ indent_scope
   class
 trace_scope
   //Purpose:
-  //  Indicate on a std::ostream when a scope entered and exited.
+  //  Indicate on a std::ostream, 
+  //  when a scope entered and exited.
+  //  Supply non-default values for
+  //  entry and exit tags
+  //  as function of a_scopeName.
   : indent_scope<>
   {
   public:

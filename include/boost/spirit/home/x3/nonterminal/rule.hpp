@@ -84,6 +84,8 @@ namespace boost { namespace spirit { namespace x3
      *  Tag value indicating a rule has not been defined.
      */
     {
+        rule_undefined(){}
+        
         template <typename Iterator>
         bool parse(Iterator& first, Iterator last) const
         /*! \brief 

@@ -19,31 +19,8 @@ https://sourceforge.net/p/spirit/mailman/message/35963822/
 #endif  
 */ 
 //================
-#include <boost/spirit/home/x3.hpp>
+#include "main.altcomment.blocks.hpp"
 #include <iostream>
-
-namespace x3 = boost::spirit::x3;
-
-namespace Parser {
-    x3::rule<struct BlockId> const ruleBlock;
-    
-    auto const ruleComment1 
-      = x3::lit("/*1") >> *(x3::char_ - "*/") >> "*/" | x3::space;
-    auto const ruleComment2 
-      = x3::lit("/*2") >> *(x3::char_ - "*/") >> "*/" | x3::space;
-    auto const ruleBlock_def 
-      = x3::lit("{") 
-      >> *( ruleBlock
-          |    "skip1" 
-            >> x3::skip(ruleComment1)[ruleBlock]
-          |    "skip2" 
-            >> x3::skip(ruleComment2)[ruleBlock]
-          ) 
-      >> "}";
-    BOOST_SPIRIT_DEFINE(ruleBlock)
-      
-}
-
 struct tester {
   unsigned ntests;
   bool all_pass;

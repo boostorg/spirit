@@ -418,7 +418,7 @@ namespace gram_bench
       BOOST_SPIRIT_DEFINE
         ( r_0_def
         , r_1_def
-        //, r_2_def
+        , r_2_def
         );
     #endif//endif:RULE2RHS_CTX_MI_ALL
   #else//RULE2RHS_GET_RHS_CRTP

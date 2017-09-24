@@ -1,6 +1,6 @@
 #ifndef OPERATORS_HPP_INCLUDED
 #define OPERATORS_HPP_INCLUDED
-#include "trace_scope.hpp"
+#include "../trace_scope.hpp"
 #include <sstream>
 using namespace boost;
 

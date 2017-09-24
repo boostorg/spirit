@@ -1,19 +1,21 @@
 SHELL := /bin/bash
 PATH := $(USER)/bin:$(PATH)
+PWD.real := `realpath $(PWD)`
+
 MAIN=rule_defns
 MAIN=rule_defns_bench
-RULE2RHS_WHICH:=0
+RULE2RHS_WHICH:=3
 #rule_defns_bench.opts_compile.cmd:=-DRULE2RHS_WHICH=$(RULE2RHS_WHICH)
 #MAIN=parse_rule_def
 #MAIN=parse_rule_crtp
-HOW=clangxx3_8_pkg
+HOW=clangxx3_9_pkg
 ifdef USE_MACRO_INCLUDE
 include MACRO_INCLUDE.imk
 else
-DIR.root := $(shell dirup_dir_file.pl $(PWD) root.imk)
+DIR.root := $(shell dirup_dir_file.pl $(PWD.real) root.imk)
 include $(DIR.root)/root.imk
 
-INCS:= -I$(nonvartmpl.root) $(INCS)
+INCS:= -I$(nonvartmpl.root) -I$(boost.root) -DRULE2RHS_WHICH=$(RULE2RHS_WHICH) $(INCS)
 .PHONY: MACRO_INCLUDE.imk bench_analyze check_bench_compiles clang_cmd gen_cmds
 #.ONESHELL:
 
