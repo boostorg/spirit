@@ -168,7 +168,7 @@ namespace y3
     auto const fail = fail_parser{};
 
       template
-      < typename Skipper
+      < typename SkipperThis
       >
     struct scanner
       : public input_iter
@@ -176,50 +176,50 @@ namespace y3
             explicit
           scanner
             ( input_stream_t const&inp_strm
-            , Skipper const&skip
+            , SkipperThis const&skip
             )
             : input_iter(inp_strm)
             , _skip(skip)
             {
             }
             template
-            < typename OtherSkipper
+            < typename SkipperOther
             >
             explicit 
           scanner
-            ( scanner<OtherSkipper>&scan
-            , Skipper const&skip
+            ( scanner<SkipperOther>&scan
+            , SkipperThis const&skip
             )
             : input_iter(scan)
             , _skip(skip)
             {}
             template
-            < typename OtherSkipper
+            < typename SkipperOther
             >
             scanner&
-          operator=(scanner<OtherSkipper>& inp)
+          operator=(scanner<SkipperOther>& inp)
             { input_iter::operator=(inp);
               return *this;
             }
-            template< typename OtherSkipper>
+            template< typename SkipperOther>
             auto
-          rebind_skipper(OtherSkipper const&s)
+          rebind_skipper(SkipperOther const&s)
             {
               scanner&self_v=*this;
-              return scanner< OtherSkipper>{self_v,s};
+              return scanner< SkipperOther>{self_v,s};
             }
             template<typename Context>
             void
           skip( Context const& ctx)
             {
-              auto new_first=this->rebind_skipper(fail);
+              auto new_first=this->rebind_skipper(fail);//no skipping in skip_.
               while(!at_end() && _skip.parse( new_first, ctx))
               {  //nothing
               }
               this->operator=(new_first);
             }
        private:
-            Skipper const&
+            SkipperThis const&
           _skip
             ;
       };
@@ -949,25 +949,5 @@ namespace y3
   //}phrase_parse
   
 }//exit y3 namespace
-
-struct tester 
-{
-  unsigned ntests;
-  bool all_pass;
-  tester():ntests(0),all_pass(true){}
-  template< typename Parser>
-  void operator()( std::string const input, Parser const& p, bool expected=true) 
-  {
-    std::cout 
-      << "Input["<<ntests<<"]:\n"<<input
-      << "\n";
-    bool const this_pass=y3::phrase_parse(input, p); 
-    std::cout << "Parsed["<<ntests<<"]:"
-      << std::boolalpha << this_pass
-      << "\n";
-    ++ntests;
-    all_pass=all_pass&&(this_pass==expected);
-   }
-};
 
 #endif//WORKBENCH_Y3_SCANNER_HPP_INCLUDED

@@ -41,6 +41,7 @@ https://sourceforge.net/p/spirit/mailman/message/35963822/
           return result && (first==last);
         }
   }
+#endif//USE_Y3
 struct tester 
 {
   unsigned ntests;
@@ -64,7 +65,6 @@ struct tester
     all_pass=all_pass&&(this_pass==expected);
    }
 };
-#endif//USE_Y3
 
 namespace lit_parser 
 {
