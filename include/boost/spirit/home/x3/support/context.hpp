@@ -8,11 +8,6 @@
 #if !defined(BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM)
 #define BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM
 
-#ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
-  #define BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE 1
-#endif
-#if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
-#else
   #pragma message "deprecated.  May cause infinite template recursion when using x3::skip(skipper)[some recursive rule]."
   //For example, see 
   /*
@@ -22,7 +17,10 @@
   /*
     https://sourceforge.net/p/spirit/mailman/message/35965692/
    */
-#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
+  //Solution in PR237
+  /*
+    https://github.com/boostorg/spirit/pull/237
+   */
 
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/mpl/identity.hpp>
@@ -93,22 +91,6 @@ namespace boost { namespace spirit { namespace x3
 
     namespace detail
     {
-      #if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
-        template <typename ID, typename T, typename Next, typename FoundVal>
-        inline context<ID, T, Next>
-        make_unique_context(T& val, Next const& next, FoundVal&)
-        //T != FoundVal; so append val to existing context.
-        {
-            return { val, next};
-        }
-        template <typename ID, typename T, typename Next>
-        inline Next const&
-        make_unique_context(T& /* val */, Next const& next, T&)
-        //T == decltype(x3::get<ID>(next)); so return old context.
-        {
-            return next;
-        }
-      #else
         template <typename ID, typename T, typename Next, typename FoundVal>
         inline Next const&
         make_unique_context(T& /* val */, Next const& next, FoundVal&fv)
@@ -116,7 +98,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return next;
         }
-      #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE  
+
         template <typename ID, typename T, typename Next>
         inline context<ID, T, Next>
         make_unique_context(T& val, Next const& next, unused_type)

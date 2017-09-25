@@ -710,16 +710,16 @@ namespace y3
 	  }
     };
     
-    template <typename Subject>
-    inline 
+      template <typename Subject>
+      inline 
       typename enable_if
       < is_parser<Subject>
       , kleene_parser<Subject>
       >::type
     operator*(Subject const& subject)
-    {
+      {
         return kleene_parser<Subject>(subject.derived());
-    }
+      }
   //}operator/*.hpp
 
   //{rule.hpp

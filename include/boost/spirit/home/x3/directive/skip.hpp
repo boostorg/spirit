@@ -74,11 +74,7 @@ namespace boost { namespace spirit { namespace x3
         {
             return this->subject.parse(
                 first, last
-            #if BOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE
-              , make_unique_context<skipper_tag>(skipper, context)
-            #else
               , make_context<skipper_tag>(skipper, context)
-            #endif 
               , rcontext
               , attr);
         }

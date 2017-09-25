@@ -337,32 +337,6 @@ int main()
   << "not"
 #endif  
   <<"\n";
-//#define CHECK_MAKE_CTX
-#ifdef CHECK_MAKE_CTX
-  {
-    std::cout<<"CHECK_MAKE_CTX:\n";
-    struct test_tag{};
-    int val=5;
-    auto ctx_v=y3::make_ctx<test_tag>(val);
-    using ctx_t=decltype(ctx_v);
-    auto context_v=x3::make_context<test_tag>(val);
-    using context_t=decltype(context_v);
-    std::cout<<"ctx_t="<<type_name<ctx_t>()<<"\n";
-    std::cout<<"context_t="<<type_name<context_t>()<<"\n";
-    static_assert(boost::is_same<ctx_t,context_t>::value,
-      "ctx_t!=x3::context_t");
-    auto ctx_next_v=y3::make_ctx<test_tag>(val,ctx_v);
-    using ctx_next_t=decltype(ctx_next_v);
-    auto context_next_v=x3::make_context<test_tag>(val,context_v);
-    using context_next_t=decltype(context_next_v);
-    std::cout<<"ctx_next_t="<<type_name<ctx_next_t>()<<"\n";
-    std::cout<<"context_next_t="<<type_name<context_next_t>()<<"\n";
-  #if 0
-    static_assert(boost::is_same<ctx_next_t,context_next_t>::value,
-      "ctx_next_t!=x3::context_next_t");
-  #endif
-  }
-#endif//CHECK_MAKE_CTX  
   bool all_pass=true;
   {
     boost::trace_scope ts("tests");
