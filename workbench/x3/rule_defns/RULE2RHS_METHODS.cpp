@@ -1,3 +1,4 @@
+//Print names of RULE2RHS methods indicated by argv[].
 #include "RULE2RHS_METHODS.hpp"
 #include <iostream>
 #include <string>
