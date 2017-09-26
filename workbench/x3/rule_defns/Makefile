@@ -67,6 +67,7 @@ STRIP_NL:=perl -pe "chomp;"
 show:
 	echo "TIME.fmt=$(TIME.fmt)"
 	echo "GUAGECMD=$(GUAGECMD)"
+	echo "BENCH_COMPILE.cmd=$(BENCH_COMPILE.cmd)"
 
 strip_nl:
 	printf "line1.\nline2.\nline3.\n">$(BENCH_TMP)
