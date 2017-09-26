@@ -9,6 +9,7 @@ RULE2RHS_WHICH:=3
 #MAIN=parse_rule_def
 #MAIN=parse_rule_crtp
 HOW=clangxx3_9_pkg
+HOW=clangxx5_0_pkg
 ifdef USE_MACRO_INCLUDE
 include MACRO_INCLUDE.imk
 else
@@ -48,7 +49,7 @@ rule2rhs: RULE2RHS_METHODS.exe
 BENCH_PROG=rule_defns_bench
 BENCH_NOW:=bench:$(HOW).$(shell date --iso-8601=seconds).log
 BENCH_TMP:=bench.tmp
-CXX_STD:=--std=c++14
+CXX_STD:=--std=c++17
 BENCH_EXT:=exe
 BENCH_COMPILE.o:=-c
 BENCH_COMPILE.exe:=
