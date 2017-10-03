@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace traits
             typedef unsignedtype type;                                        \
             static type call(signedtype n)                                    \
             {                                                                 \
-                return static_cast<unsignedtype>((n >= 0) ? n : -n);          \
+                return (n >= 0) ? static_cast<type>(n) : static_cast<type>(-static_cast<type>(n)); \
             }                                                                 \
         }                                                                     \
     /**/
