@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace x3
     struct get_id
     /*! \brief
      *  Thin wrapper about ID to handle case where
-     *  ID is not define.
+     *  ID is not defined.
      *  Used to overload operator for get_rhs function below.
      */
     {};
