@@ -152,6 +152,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             move_to(src, dest, tag, is_size_one_sequence<Source>());
         }
 
+        template <typename Source, typename Dest>
+        inline void
+        move_to(Source&& src, Dest& dest, optional_attribute tag)
+        {
+            dest=std::forward<Source>(src);
+        }
+
         template <typename Iterator>
         inline void
         move_to(Iterator, Iterator, unused_type, unused_attribute) {}

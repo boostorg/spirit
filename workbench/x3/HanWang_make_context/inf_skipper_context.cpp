@@ -66,41 +66,12 @@ struct tester
    }
 };
 
-namespace lit_parser 
-{
-//#define LIT_PARSER
-#ifdef LIT_PARSER
-    auto const lit_def = z3::lit("{}") | z3::lit("()");
-    bool tests()
-    {
-        boost::trace_scope ts("lit_parser");
-        tester test;
-        test( "  {}  ", lit_def );
-        test( "  ()  ", lit_def );
-        std::cout<<"all_pass="<<std::boolalpha<<test.all_pass<<"\n";
-        return test.all_pass;
-    }
-#else
-    bool tests()
-    {
-        return true;
-    }
-#endif
-}
-
 namespace list1_parser 
 {
-#define LIST1_PARSER
-#ifdef LIST1_PARSER
-    template<unsigned Id>
-    struct lsti{};
-    template<unsigned Id>
-    struct comi{};
+    struct id0{};
+    z3::rule< id0 > const lst0;
     
-    z3::rule< comi<0> > const com0;
-    z3::rule< lsti<0> > const lst0;
-    
-    auto const com0_def = z3::lit(":0") | z3::space;
+    auto const com0 = z3::lit(":0") | z3::space;
     auto const lst0_def
       =     z3::lit("a") 
          >> 
@@ -113,7 +84,6 @@ namespace list1_parser
       ;
     BOOST_SPIRIT_DEFINE
     ( lst0
-    , com0
     )
 
     bool tests()
@@ -126,197 +96,7 @@ namespace list1_parser
         std::cout<<"all_pass="<<std::boolalpha<<test.all_pass<<"\n";
         return test.all_pass;
     }
-#else
-    bool tests()
-    {
-        return true;
-    }
-#endif//list1_parser
 }//list1_parser namespace
-
-namespace block1_parser 
-{
-#define BLOCK1_PARSER
-#ifdef BLOCK1_PARSER
-    template<unsigned Id>
-    struct blki{};
-    
-    auto const com0 = z3::lit("/**/") | z3::space;
-    z3::rule< blki<0> > const blk0;
-    auto const blk0_def
-      =  z3::lit("{") 
-      >> *(  blk0 
-          | z3::lit("skip0") >> z3::skip(com0)[blk0]
-          ) 
-      >> z3::lit("}")
-      ;
-    BOOST_SPIRIT_DEFINE
-    ( blk0
-    )
-
-    bool tests()
-    {
-        boost::trace_scope ts("block1_parser");
-        tester test;
-        test( "  { skip0 { /**/ } }  ", blk0 );
-        std::cout<<"all_pass="<<std::boolalpha<<test.all_pass<<"\n";
-        return test.all_pass;
-    }
-#else
-    bool tests()
-    {
-        return true;
-    }
-#endif//block1_parser
-}//block1_parser namespace
-
-namespace blockn_parser
-{
-#define BLOCKN_PARSER
-#ifdef BLOCKN_PARSER
-    template<unsigned Id>
-    struct blki{};
-    
-    z3::rule<blki<0>> const blk0_ru;
-    z3::rule<blki<1>> const blk1_ru;
-    z3::rule<blki<2>> const blk2_ru;
-    
-    template<unsigned Id>
-    struct comi{};
-    
-    z3::rule<comi<0>> const com0_ru;
-    z3::rule<comi<1>> const com1_ru;
-    z3::rule<comi<2>> const com2_ru;
-    
-    auto const com0_ru_def = z3::space;
-    auto const com1_ru_def = z3::lit("/*1*/") | z3::space;
-    auto const com2_ru_def = z3::lit("/*2*/") | z3::space;
-    
-    auto const blk0_ru_def 
-      = z3::lit("{0") 
-      >> *( blk0_ru
-          |    z3::lit("skip1")
-            >> z3::skip(com1_ru)[blk1_ru]
-          ) 
-      >> z3::lit("0}");
-    auto const blk1_ru_def 
-      = z3::lit("{1") 
-      >> *( blk1_ru
-          |    z3::lit("skip2") 
-            >> z3::skip(com2_ru)[blk2_ru]
-          ) 
-      >> z3::lit("1}");
-    auto const blk2_ru_def 
-      = z3::lit("{2") 
-      >> *( blk2_ru
-          |    z3::lit("skip0") 
-            >> z3::skip(com0_ru)[blk0_ru]
-          ) 
-      >> z3::lit("2}");
-      
-    BOOST_SPIRIT_DEFINE
-    ( blk0_ru
-    , blk1_ru
-    , blk2_ru
-    , com0_ru
-    , com1_ru
-    , com2_ru
-    )
-
-    bool tests()
-    {
-        boost::trace_scope ts("blockn_parser");
-        tester test;
-#if 1       
-        test
-        (
-    R"({0
-       0})"
-        , blk0_ru
-        );
-#endif        
-        test
-        (
-    R"({0
-         skip1{1
-         1}
-       0})"
-        , blk0_ru
-        );    
-        test
-        (
-    R"({0
-         skip1
-         {1
-           /*1*/ 
-         1}
-       0})"
-        , blk0_ru
-        );    
-        test
-        (
-    R"({0
-         {0 0}
-         {0
-    	skip1
-            {1
-              {1 1} /*1*/ 
-    	      {1 /*1*/ 1} 
-            1}
-         0}
-       0})"
-        , blk0_ru
-        );
-    #if 1   
-        test
-        (
-    R"({0
-         skip2
-         {2
-           /*2*/
-         2}
-       0})"
-        , blk0_ru
-        , false //because skip1 instead of skip2 required.
-        );
-        test
-        (
-    R"({0
-         skip1
-         {1 /*1*/
-           skip2
-           {2 /*2*/ 
-           2} 
-         1}
-       0})"
-        , blk0_ru
-        );
-    #endif    
-        test
-        (
-    R"({0
-         skip1
-         {1 /*1*/
-            skip2
-            {2 /*2*/
-               skip0{0 0}
-               /*2*/
-            2}
-            /*1*/
-         1}
-       0})"
-        , blk0_ru
-        );
-        std::cout<<"all_pass="<<std::boolalpha<<test.all_pass<<"\n";
-        return test.all_pass;
-    }//tests
-#else
-    bool tests()
-    {
-        return true;
-    }
-#endif//BLOCKN_PARSER
-}//blockn_parser namespace
 
 int main()
 {
@@ -340,10 +120,7 @@ int main()
   bool all_pass=true;
   {
     boost::trace_scope ts("tests");
-    all_pass=all_pass && lit_parser::tests();
     all_pass=all_pass && list1_parser::tests();
-    all_pass=all_pass && block1_parser::tests();
-    all_pass=all_pass && blockn_parser::tests();
   }
   std::cout<<"tests::all_pass="<<std::boolalpha<<all_pass<<"\n";
   return 0;

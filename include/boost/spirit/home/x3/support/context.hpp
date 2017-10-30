@@ -7,7 +7,7 @@
 =============================================================================*/
 #if !defined(BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM)
 #define BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM
-
+#if 0
   #pragma message "deprecated.  May cause infinite template recursion when using x3::skip(skipper)[some recursive rule]."
   //For example, see 
   /*
@@ -21,7 +21,7 @@
   /*
     https://github.com/boostorg/spirit/pull/237
    */
-
+#endif
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/mpl/identity.hpp>
 

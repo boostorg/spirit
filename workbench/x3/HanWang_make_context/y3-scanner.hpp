@@ -6,9 +6,13 @@
 //  The alternive places skipper in the 
 //  'first' (the iterator) argument to
 //  parse function.
-//AlternativeAdvantages:
+//AlternativeCons:
+//  Breaks existing code by replacing the signature
+//  of all parse functions to take a range iterator
+//  instead of a pair of iterators named, first and last.
+//AlternativePros:
 //  The advantages of putting the skipper into
-//  the iterator argument are:
+//  a range iterator argument are:
 //    * Modularity:
 //      The wiki article:
 //        https://en.wikipedia.org/wiki/Modular_programming

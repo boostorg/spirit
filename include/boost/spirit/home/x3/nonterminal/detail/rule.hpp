@@ -81,7 +81,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
 
         bool const& ok_parse;
-        char const* rule_name;
+        std::string const rule_name;
         Iterator const& first;
         Iterator const& last;
         Attribute const& attr;
@@ -137,7 +137,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typedef identity<ID> type;
     };
 
-  #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+  #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
     template <typename ID, typename RHS, typename Context>
     Context const&
     make_rule_context(RHS const& /* rhs */, Context const& context
@@ -152,14 +152,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         return make_unique_context<ID>(rhs, context);
     }
-  #endif// !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+  #endif// !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
 
       template 
       < typename Attribute
       , typename ID
       >
       /**@brief
-       *  Attribute is the rule attribute for rule with id=Id.
+       *  Attribute is the rule attribute for rule with id=ID.
        *  IOW, for rule<ID,Attribute,bool force_attribute>
        *  in ../rule.hpp.
        */
@@ -181,12 +181,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , mpl::true_ /* Has on_success handler */)
         {
             bool pass = true;
-            ID().on_success(
-                first
+            ID().on_success
+              ( first
               , last
               , attr
               , make_context<parse_pass_context_tag>(pass, context)
-            );
+              );
             return pass;
         }
 
@@ -198,7 +198,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Context const& context, RContext& rcontext, ActualAttribute& attr
           , mpl::false_)
         {
-          #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+          #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
             // see if the user has a BOOST_SPIRIT_DEFINE for this rule
             typedef
                 decltype(parse_rule(
@@ -219,13 +219,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           #endif
 
             Iterator i = first;
-            bool r = rhs.parse(
-                i
+            bool r = 
+              rhs.parse
+              ( i
               , last
               , ctx
               , rcontext
               , attr
-            );
+              );
 
             if (r)
             {
@@ -306,64 +307,57 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return parse_rhs_main(rhs, first, last, context, rcontext, unused);
         }
-
-        template<typename ActualAttribute>
-        struct rule_attr_transform
-        /**@brief
-         *  pair of functions for pre/post tranform
-         *  of rule attribute.
-         */
+          template
+          < typename Iterator
+          , typename ActualAttribute
+          , typename Parser
+          >
+          static bool 
+        rule_attr_transform_f
+          ( char const* rule_name 
+          , Iterator& first
+          , Iterator const& last
+          , ActualAttribute& attr
+          , Parser parser
+          )
         { 
-        #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_DISABLE_RULE_ATTR_XFORM
-          #define BOOST_SPIRIT_X3_EXPERIMENTAL_DISABLE_RULE_ATTR_XFORM 0
-        #endif
-        #if BOOST_SPIRIT_X3_EXPERIMENTAL_DISABLE_RULE_ATTR_XFORM==1
-          using transform_attr=ActualAttribute;
-          transform_attr& x_attr;
-          rule_attr_transform(ActualAttribute& attr)
-            : x_attr{attr}
-            {}
-          transform_attr& pre()
-            {
-              return x_attr;
-            }
-          void post(bool ok_parse, ActualAttribute& attr)
-            {
-            }
-        #else
-          typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
+          using make_attribute=traits::make_attribute<Attribute, ActualAttribute>;
         
           // do down-stream transformation, provides attribute for
           // rhs parser
-          typedef traits::transform_attribute<
-              typename make_attribute::type, Attribute, parser_id>
-          transform;
-        
-          typedef typename make_attribute::value_type value_type;
-          typedef typename transform::type transform_attr;
-          value_type made_attr;
-          transform_attr x_attr;
-          rule_attr_transform(ActualAttribute& attr)
-            : made_attr{make_attribute::call(attr)}
-            , x_attr(transform::pre(made_attr))
-            {}
-          transform_attr& pre()
-            // do down-stream transformation, provides attribute for
-            // rhs parser
-            {
-              return x_attr;
-            }
-          void post(bool ok_parse, ActualAttribute& attr)
-            // do up-stream transformation, this integrates the results
-            // back into the original attribute value, if appropriate
-            {
-              if(ok_parse)
-              {
-                traits::post_transform(attr, std::forward<transform_attr>(x_attr));
-              }
-            }
-        #endif
-        };//rule_attr_transform
+          using transform
+            = traits::transform_attribute
+              < typename make_attribute::type, Attribute, parser_id
+              >;
+          using value_type=typename make_attribute::value_type;
+          using transform_attr=typename transform::type;
+          value_type made_attr{make_attribute::call(attr)};
+          transform_attr attr_(transform::pre(made_attr));
+          bool ok_parse
+            //Creates a place to hold the result of parse_rhs
+            //called inside the following scope.
+            ;
+          {
+           // Create a scope to cause the dbg variable below (within
+           // the #if...#endif) to call it's DTOR before any
+           // modifications are made to the attribute, attr_ passed
+           // to parse_rhs (such as might be done in
+           // traits::post_transform when, for example,
+           // ActualAttribute is a recursive variant).
+#if defined(BOOST_SPIRIT_X3_DEBUG)
+                context_debug<Iterator, transform_attr>
+              dbg(rule_name, first, last, attr_, ok_parse);
+#endif
+              ok_parse = parser(first, last, attr_);
+          }
+          // do up-stream transformation, this integrates the results
+          // back into the original attribute value, if appropriate
+          if(ok_parse)
+          {
+            traits::post_transform(attr, std::forward<transform_attr>(attr_));
+          }
+          return ok_parse;
+        };//rule_attr_transform_f
   
         template <typename RHS, typename Iterator, typename Context
           , typename ActualAttribute, typename ExplicitAttrPropagation>
@@ -382,35 +376,29 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
               )
             >();
           #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
-            //xform already done in rule before call to here.
-            ActualAttribute& attr_=attr;
-            bool ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
+            //rule_attr_transform already done in
+            //either rule<...>::parse or rule_definition<...>::parse
+            //; hence, don't repeat here.
+            bool ok_parse=parse_rhs(rhs, first, last, context, attr, attr
                    , parse_flag
                   );
           #else
-            using rat_t=rule_attr_transform<ActualAttribute>;
-            rat_t rat_v(attr);
-            auto& attr_ = rat_v.pre();
-            bool ok_parse
-              //Creates a place to hold the result of parse_rhs
-              //called inside the following scope.
-              ;
-            {
-             // Create a scope to cause the dbg variable below (within
-             // the #if...#endif) to call it's DTOR before any
-             // modifications are made to the attribute, attr_ passed
-             // to parse_rhs (such as might be done in
-             // traits::post_transform when, for example,
-             // ActualAttribute is a recursive variant).
-#if defined(BOOST_SPIRIT_X3_DEBUG)
-                context_debug<Iterator, transform_attr>
-                dbg(rule_name, first, last, attr_, ok_parse);
-#endif
-                ok_parse = parse_rhs(rhs, first, last, context, attr_, attr_
-                   , parse_flag
-                  );
-            }
-            rat_v.post(ok_parse,attr);
+            auto parser_f=[&]
+              ( Iterator& f_first, Iterator const& f_last
+              , auto&_attr
+              )
+              {  return 
+                   parse_rhs(rhs, f_first, f_last, context, _attr, _attr
+                     , parse_flag
+                   );
+              };
+            bool ok_parse=
+              rule_attr_transform_f
+              ( rule_name
+              , first, last
+              , attr
+              , parser_f
+              );
           #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
             return ok_parse;
         }

@@ -9,7 +9,7 @@
 #include <iostream>
 //#define BOOST_SPIRIT_X3_DEBUG
 #include <boost/spirit/home/x3.hpp>
-#include "input-csv.hpp"
+#include "csv_attributes.hpp"
 namespace x3_crtp {
 using namespace boost::spirit::x3;
 enum rule_enum
@@ -21,7 +21,7 @@ enum rule_enum
 , e_file
 };
 template<rule_enum ID>
-struct id;
+struct id{};
 
 class CsvParser : public gram_base<CsvParser> 
 {

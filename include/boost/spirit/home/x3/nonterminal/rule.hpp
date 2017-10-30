@@ -7,19 +7,34 @@
 #if !defined(BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM)
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
+#ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS 1
+  //^Disable storage of rule_definition<ID,...> in context with ID key.
+  //Instead, only use BOOST_SPIRIT_DEFINE to connect the
+  //rule with it's rhs (i.e. rule_definition) using overloads
+  //of parse_rule.
+#endif
 #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
   #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP 1
+  //^Like BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS, but instead
+  //of using BOOST_SPIRIT_DEFINE, use BOOST_SPIRIT_DER_DEFINE
+  //with the crtp design pattern:
+  //  https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern
+  //to connect the rule with it's rhs.
 #endif
+#define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT (BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS||BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP)
+  //^Disables putting rule_definition in context.
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
+#else
+  #pragma message "deprecated.  May cause excessive compile times with many rule_definition's on rhs."
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
 #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
   #define BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE 1
 #endif  
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+  //#pragma message "ATTR_XFORM_IN_RULE."
 #else
-  #pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
-#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
-#if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
-#else
-  #pragma message "deprecated.  May cause excessive compile times when many rules."
+  //#pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
 #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
@@ -36,7 +51,7 @@
 namespace boost { namespace spirit { namespace x3
 {
     // default parse_rule implementation
-  #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+  #if !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
     template <typename ID, typename Attribute, typename Iterator
       , typename Context, typename ActualAttribute>
     inline detail::default_parse_rule_result
@@ -121,20 +136,14 @@ namespace boost { namespace spirit { namespace x3
         static rule_undefined const result;
         return result;
     }
-  #endif//!BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+  #endif//!BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
     template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
     struct rule_definition 
-    #if 1 || !BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
       : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
-    #else
-      //Don't allow rule_definition on rhs of rule definition.
-      //Instead, must use rule itself.
-    #endif
     {
         typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
         typedef ID id;
         typedef RHS rhs_type;
-        typedef rule<ID, Attribute> lhs_type;
         typedef Attribute attribute_type;
 
         static bool const has_attribute =
@@ -147,6 +156,53 @@ namespace boost { namespace spirit { namespace x3
         rule_definition(RHS const& rhs, char const* name)
           : rhs(rhs), name(name) {}
 
+      #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        bool parse_no_xform(Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr) const
+        /**@brief
+         *  *only* called from BOOST_SPIRIT_DEFINE_; hence,
+         *  the attribute transform has already been done in the
+         *  rule<...>::parse function; hence, no need to repeat
+         *  it here.
+         */
+        {
+            return detail::rule_parser<attribute_type, ID>
+                ::call_rule_definition(
+                    rhs, name, first, last
+                  , context
+                  , attr
+                  , mpl::bool_<force_attribute>());
+        }
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, unused_type, ActualAttribute& attr) const
+        /**@brief
+         *  *not* called from BOOST_SPIRIT_DEFINE_; hence,
+         *  the attribute transform must be done to avoid the error
+         *  reported here:
+         *    https://sourceforge.net/p/spirit/mailman/message/36093142/
+         *  *and* also solve the link problem mentioned elsewhere in
+         *  that same post:
+         *    https://stackoverflow.com/questions/43791079/x3-linker-error-with-separate-tu
+         */
+        {
+            auto parser_f=[&]
+              ( Iterator& f_first, Iterator const& f_last
+              , auto&_attr
+              )
+              {  return  this->parse_no_xform( f_first, f_last, context, _attr);
+              };
+            bool ok_parse=
+              detail::rule_parser<Attribute,ID>::rule_attr_transform_f
+              ( name
+              , first, last
+              , attr
+              , parser_f
+              );
+            return ok_parse;
+        }
+      #else
         template <typename Iterator, typename Context, typename ActualAttribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, ActualAttribute& attr) const
@@ -158,6 +214,7 @@ namespace boost { namespace spirit { namespace x3
                   , attr
                   , mpl::bool_<force_attribute>());
         }
+      #endif
 
         RHS rhs;
         char const* name;
@@ -205,36 +262,19 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, unused_type, ActualAttribute& attr) const
         {
           #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
-            using rat_t=typename detail::rule_parser<Attribute,ID>
-                    ::template rule_attr_transform<ActualAttribute>;
-            rat_t rat_v(attr);
-            auto attr_ = rat_v.pre();
-            
-            bool ok_parse
-              //Creates a place to hold the result of parse_rhs
-              //called inside the following scope.
-              ;
-            {
-             // Create a scope to cause the dbg variable below (within
-             // the #if...#endif) to call it's DTOR before any
-             // modifications are made to the attribute, attr_ passed
-             // to parse_rhs (such as might be done in
-             // traits::post_transform when, for example,
-             // ActualAttribute is a recursive variant).
-#if defined(BOOST_SPIRIT_X3_DEBUG)
-                char const* rule_name=name;
-                if(!rule_name) 
-                { //why does this happen?  
-                  rule_name="***unknown***";
-                }
-                using make_attribute=traits::make_attribute<Attribute,ActualAttribute>;
-                typedef typename make_attribute::type dbg_attribute_type;
-                detail::context_debug<Iterator, dbg_attribute_type>
-                dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
-#endif
-                ok_parse = parse_rule(*this, first, last, context, attr_);
-            }
-            rat_v.post(ok_parse,attr);
+            auto parser_f=[&]
+              ( Iterator& f_first, Iterator const& f_last
+              , auto&_attr
+              )
+              {  return  parse_rule(*this, f_first, f_last, context, _attr);
+              };
+            bool ok_parse=
+              detail::rule_parser<Attribute,ID>::rule_attr_transform_f
+              ( name
+              , first, last
+              , attr
+              , parser_f
+              );
           #else
             bool ok_parse = parse_rule(*this, first, last, context, attr);
           #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
@@ -278,6 +318,38 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
     /***/
 
+/*!
+  \def BOOST_SPIRIT_DEFINE_(r, data, rule_name)
+    \a r is ignored.
+    \a data is ignored.
+    \a rule_name is the variable name of a variable
+       with type, rule<ID,RuleAttribute,...>.
+    This macro generates an instance of parse_rule
+    specialized on decltype(rule_name) as 1st arg.  
+    The body just returns this variable.  
+    Of course this  means rule_name must be defined 
+    before this macro is executed.  For example, given:
+      rule_name = x
+    then, something like:
+      auto const& x_def = x = rhs;
+    must occur in the scope in which this macro is invoked.
+    Then, this macro is called as:
+      BOOST_SPIRIT_DEFINE_(_,_,x)
+*/
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+#define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
+    template <typename Iterator, typename Context, typename Attribute>          \
+    inline bool parse_rule(                                                     \
+        decltype(rule_name) /* rule_ */                                         \
+      , Iterator& first, Iterator const& last                                   \
+      , Context const& context, Attribute& attr)                                \
+    {                                                                           \
+        using boost::spirit::x3::unused;                                        \
+        static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
+        return def_.parse_no_xform(first, last, context, attr);                 \
+    }                                                                           \
+    /***/
+#else
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
@@ -290,7 +362,12 @@ namespace boost { namespace spirit { namespace x3
         return def_.parse(first, last, context, unused, attr);                  \
     }                                                                           \
     /***/
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 
+/*!
+  \def BOOST_SPIRIT_DEFINE(r1,r2,...rn)
+    call BOOST_SPIRIT_DEFINE_(_,_,r) for each r in r1,r2,...rn.
+*/    
 #define BOOST_SPIRIT_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(                         \
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
     /***/
@@ -308,6 +385,10 @@ namespace boost { namespace spirit { namespace x3
       < typename GramDeriv
       >      
     struct gram_base
+      /**Base class for CRTP pattern.
+       * Derived class actually defines the grammar
+       * and supplies the 
+       */
       {
         template <typename ID, typename Attribute=unused_type>
         struct rule_b : parser<rule_b<ID, Attribute>>

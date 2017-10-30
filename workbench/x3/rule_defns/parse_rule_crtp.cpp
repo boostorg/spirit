@@ -9,17 +9,8 @@
 //  seem using a namespace instead of a crtp class
 //  would be simpler and just as powerful.
 //==================================================
+#include "../type_name.hpp"
 #include "operators.hpp"
-#include <boost/core/demangle.hpp>
-#include <typeinfo>
-  template
-  < typename Type
-  >
-  std::string
-type_name()
-  {
-    return boost::core::demangle(typeid(Type).name());
-  }  
 
       template 
       < typename ID

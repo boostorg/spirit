@@ -1,8 +1,8 @@
 #Purpose:
 
-* Understand *how* spirit-x3 "ties the recursive knot":
+* Understand *how* spirit-x3 "ties the recursive knot".
 
-  [Tying_the_Knot](https://wiki.haskell.org/Tying_the_Knot)
+  [Tying_the_knot](https://wiki.haskell.org/Tying_the_Knot)
   
 * Explore alternative methods to do the same.
 
@@ -10,9 +10,9 @@
 
   * [compilation never finishes](https://sourceforge.net/p/spirit/mailman/message/35799862/)
 
-    This solves the compile-time problem by avoiding storing
-    the rule_definition's in the context argument to the
-    parse functions.
+    This solves the compile-time problem by avoiding the
+    compile-time cost of storing the rule_definition's in
+    the context argument to the parse functions.
     
   * [emulate qi](https://sourceforge.net/p/spirit/mailman/message/35561750/)
    
@@ -37,3 +37,39 @@
   
 #Support Additions:
 
+  Most the files in this directory help explain the
+  solution:
+  
+    * [operators.hpp](operators.hpp)
+      Rewrite of several normal spirit operators without
+      attributes. Attributes were nonessential for
+      comparing different methods to "tie the knot".
+      
+    * [rule_defns.cpp](rule_defne.cpp)
+      This was original prototype which demonstrated various
+      ways to "tie the knot"
+      
+    * [rule_defns.benchmark.cpp](rule_defns.benchmark.cpp)
+      Benchmark code for comparing methods to "tie the knot".
+      
+    * [Makefile](Makefile)
+      When run with target `benchmark`, times various
+      methods to "tie the knot".  The results are stored in
+      $(BENCH_TMP).
+      
+#Conclusion:
+
+  Judging from the $(BENCH_TMP) file, the fastest
+  compile-time method is the one using the
+  BOOST_SPIRIT_DEFINE macros, followed closely by the
+  multiple inheritance method, and then followed, at a great
+  distance, by the context method.  Hence, it's a mystery
+  why the context method was chosen over the multiple
+  inheritance method, which, apparently it was, according
+  to:
+  
+[mi-vs-context](http://boost.2283326.n4.nabble.com/compare-of-2-existing-methods-to-implement-grammar-recursion-tt4687574.html#a4687690)
+
+  
+    
+      

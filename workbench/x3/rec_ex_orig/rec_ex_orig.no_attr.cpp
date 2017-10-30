@@ -28,7 +28,7 @@ namespace grammar {
   template<rid Id>
   struct rule_id
   {};
-#define AS_WITH_ID
+//#define AS_WITH_ID
   template<rid Id>
   auto as = [](auto p) 
     {
@@ -95,6 +95,15 @@ namespace grammar {
 }
 
 int main() {
+#if 0
+  std::cout<<"BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT=";
+#if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
+  std::cout<<"1";
+#else
+  std::cout<<"0";
+#endif
+  std::cout<<"\n";
+#endif  
   using x3::space;
   using grammar::or_expr;
 

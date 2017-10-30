@@ -9,6 +9,9 @@
 http://boost.2283326.n4.nabble.com/Design-structure-X3-parser-more-like-Qi-parser-tp4690205p4690362.html
  */
 //==========================
+#define TRACE_PARSE_INTO_CONTAINER
+#ifdef TRACE_PARSE_INTO_CONTAINER
+#endif//TRACE_PARSE_INTO_CONTAINER
 #include "bench_repeat.hpp"
 #include <iostream>
 #include <chrono>

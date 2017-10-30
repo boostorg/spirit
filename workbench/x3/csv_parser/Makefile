@@ -8,11 +8,15 @@ SHELL := /bin/bash
 PATH := $(HOME)/bin:$(PATH)
 REALPWD := $(shell realpath $(PWD))
 #Specify compiler to use:
-  HOW=clangxx3_9_pkg
-  HOW=gcc6_20151018
+  HOW=clangxx5_0_pkg
+  #HOW=gcc6_20151018
+#Specify the grammar complexity and corresponding test data
+  COMPLEXITY=complex
+  #COMPLEXITY=simple
 #Specify the grammar to use:
-  GRAM=csv
-  #GRAM=csv_simple
+  GRAM=csv_$(COMPLEXITY)
+#Specify the test data
+  TEST_DATA=csv_$(COMPLEXITY)
 ifdef USE_MACRO_INCLUDE
 #invoke make with something like:
 #  make USE_MACRO_INCLUDE=1
@@ -63,9 +67,6 @@ INCS:= \
 .PHONY: test flat_graphs annots pprofs runs profs gcovs gcovs.force
 .PHONY: benchs.chrono summary.chrono benchs.nonius summary.nonius
 
-show:
-	@echo $(BENCHS.stem)
-	@echo $(BENCHS.chrono)
 help:
 	$(COMPILE.$(HOW)) -help
 
@@ -77,6 +78,9 @@ OPTS.fork=-I$(boost.spirit.fork) $(OPTS.spirit) #use fork library in preference 
 target_deps=$(1)-$(GRAM).hpp input-$(GRAM).hpp bench_run.hpp trace_attr-csv.hpp
 target_repeat_deps=$(target_deps) bench_repeat.hpp ITERATIONS.hpp
 
+show:
+	@echo $(target_deps)
+
 define targets_gen
 #  Generate various targets dependent on parameters:
 #    $(1) : the include file prefix for rule recursion method.
@@ -87,6 +91,7 @@ define targets_gen
 
 nonius-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe: nonius.cpp $(target_deps)
 	$(COMPILER.$(HOW)) -std=c++1z -$(5) \
+	  -DTEST_DATA=input-$(TEST_DATA).hpp \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
 	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
 	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
@@ -96,6 +101,7 @@ nonius-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).out: nonius-$(GRAM)-$(
 	cat $$@
 chrono-$(GRAM)-$(1)-$(2)-GET$(3)-XRULE$(4)-Opt$(5)-$(HOW).exe: chrono.cpp $(target_repeat_deps)
 	$(COMPILER.$(HOW)) -std=c++1z -$(5) \
+	  -DTEST_DATA=input-$(TEST_DATA).hpp \
 	  -DHOW_INC=$(1)-$(GRAM).hpp \
 	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=$(3) \
 	  -DBOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=$(4) \
@@ -175,14 +181,12 @@ $(eval $(call targets_gen,$(inc),$(ver),$(get),$(xrule),$(optim))))))))
 
 #Specify which targets are actually created:
 BENCHS.stem=\
-  $(GRAM)-qi-spirit-GET0-XRULE0-OptO0-$(HOW)\
-  $(GRAM)-qi-spirit-GET0-XRULE0-OptO1-$(HOW)\
-  $(GRAM)-qi-spirit-GET0-XRULE0-OptO2-$(HOW)\
-  $(GRAM)-x3_ns_rdef-spirit-GET0-XRULE0-OptO0-$(HOW)\
-  $(GRAM)-x3_ns_rdef-spirit-GET0-XRULE0-OptO1-$(HOW)\
-  $(GRAM)-x3_ns_rdef-spirit-GET0-XRULE0-OptO2-$(HOW)\
+  $(GRAM)-x3_ns_rdef-fork-GET1-XRULE0-OptO0-$(HOW)\
+  $(GRAM)-x3_ns_rdef-fork-GET1-XRULE0-OptO2-$(HOW)\
+  $(GRAM)-qi-fork-GET1-XRULE0-OptO0-$(HOW)\
+  $(GRAM)-qi-fork-GET1-XRULE0-OptO2-$(HOW)\
   ###
-BENCHS.short=yes
+#BENCHS.short=yes
 ifdef BENCHS.short
 BENCHS.stem=\
   $(GRAM)-qi-spirit-GET0-XRULE1-OptO0-$(HOW)\

@@ -9,7 +9,7 @@
 #include <iostream>
 //#define BOOST_SPIRIT_X3_DEBUG
 #include <boost/spirit/home/x3.hpp>
-#include "input-csv.hpp"
+#include "csv_attributes.hpp"
 
 namespace csv {
     template <typename Sep>
