@@ -351,13 +351,20 @@ namespace boost { namespace spirit { namespace repository { namespace karma
 
         typedef mpl::vector<T1, T2> template_params;
 
-        // locals_type is a sequence of types to be used as local variables
+        // The subrule's locals_type: a sequence of types to be used as local variables
         typedef typename
             spirit::detail::extract_locals<template_params>::type
         locals_type;
 
+        // The subrule's encoding type
         typedef typename
-            spirit::detail::extract_sig<template_params>::type
+            spirit::detail::extract_encoding<template_params>::type
+        encoding_type;
+
+        // The subrule's signature
+        typedef typename
+            spirit::detail::extract_sig<template_params, encoding_type
+              , spirit::karma::domain>::type
         sig_type;
 
         // This is the subrule's attribute type
