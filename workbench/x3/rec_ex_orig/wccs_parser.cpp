@@ -200,6 +200,18 @@ int main() {
 
      std::string strs[]=
      {
+        "0",
+        "(0)",
+        "<act,4>.0",
+        "<act!,0>.0",
+        "0 + 0",
+        "(0) + 0",
+        "0 + <act,4>.0",
+        "Name",
+        "<act,2>.Name",
+        "0 + Name + <foo,1>.<bar,2>.NameB",
+        "0 | (P+Q)\\{a,b}",
+        "(<act,4>.0) [act => foo, bar => baz]"
      };
      bool all_ok=true;
      for(std::string str : strs)
