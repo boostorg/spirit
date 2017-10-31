@@ -1,9 +1,6 @@
 //Purpose:
-//  Reproduce the link problem reported in post:
-/*
-http://boost.2283326.n4.nabble.com/Linking-error-when-changing-gt-to-gt-gt-tc4689820.html
- */
-//    
+//  Test the BOOST_SPIRIT_DER_* macros in:
+//    x3/nonterminal/rule.hpp
 //===========================================
 #include <boost/detail/lightweight_test.hpp>
 #include <iostream>

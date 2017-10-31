@@ -1,7 +1,7 @@
 #include "derived.hpp"
 using context_type=
 #if 1
-  //simple copy&past&reformt from linker error msg
+  //simple copy&past&reformat from linker error msg
   //produced if using the #else part fails to link.
   boost::spirit::x3::context
   < boost::spirit::x3::skipper_tag

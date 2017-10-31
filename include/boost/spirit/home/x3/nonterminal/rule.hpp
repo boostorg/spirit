@@ -34,7 +34,7 @@
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
   //#pragma message "ATTR_XFORM_IN_RULE."
 #else
-  //#pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
+  #pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
 #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
@@ -430,36 +430,19 @@ namespace boost { namespace spirit { namespace x3
               {
                 auto const& def=GramDeriv().get_rhs(get_id<ID>{});
               #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
-                using rat_t=typename detail::rule_parser<Attribute,ID>
-                        ::template rule_attr_transform<ActualAttribute>;
-                rat_t rat_v(attr);
-                auto& attr_ = rat_v.pre();
-                
-                bool ok_parse
-                  //Creates a place to hold the result of parse_rhs
-                  //called inside the following scope.
-                  ;
-                {
-                 // Create a scope to cause the dbg variable below (within
-                 // the #if...#endif) to call it's DTOR before any
-                 // modifications are made to the attribute, attr_ passed
-                 // to parse_rhs (such as might be done in
-                 // traits::post_transform when, for example,
-                 // ActualAttribute is a recursive variant).
-                #if defined(BOOST_SPIRIT_X3_DEBUG)
-                    char const* rule_name=name;
-                    if(!rule_name) 
-                    { //why does this happen?  
-                      rule_name="***unknown***";
-                    }
-                    using make_attribute=traits::make_attribute<Attribute,ActualAttribute>;
-                    typedef typename make_attribute::type dbg_attribute_type;
-                    detail::context_debug<Iterator, dbg_attribute_type>
-                    dbg(rule_name, first, last, dbg_attribute_type(attr_), ok_parse);
-                #endif
-                    ok_parse=def.parse(first, last, ctx, unused, attr_);
-                }
-                rat_v.post(ok_parse,attr);
+                auto parser_f=[&]
+                  ( Iterator& f_first, Iterator const& f_last
+                  , auto&_attr
+                  )
+                  {  return  def.parse( f_first, f_last, ctx, unused, _attr);
+                  };
+                bool ok_parse=
+                  detail::rule_parser<Attribute,ID>::rule_attr_transform_f
+                  ( name
+                  , first, last
+                  , attr
+                  , parser_f
+                  );
               #else
                 bool ok_parse=def.parse(first, last, ctx, unused, attr);
               #endif

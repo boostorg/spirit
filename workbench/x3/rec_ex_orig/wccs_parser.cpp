@@ -214,6 +214,9 @@ int main() {
         "(<act,4>.0) [act => foo, bar => baz]"
      };
      bool all_ok=true;
+   #ifndef TRACE_PARSES
+     #define TRACE_PARSES 1
+   #endif
      for(std::string str : strs)
      {
          wccs_parser::AstAnyProcess root;
@@ -221,6 +224,7 @@ int main() {
          auto end = str.end();
          bool r = parse(iter, end, wccs_parser::entry, root);
          all_ok=all_ok && r;
+       #if TRACE_PARSES
          if (r)
          {
              std::cout << str << std::endl << std::endl << " Parses OK: " << std::endl;
@@ -233,7 +237,10 @@ int main() {
          }
 
          if (iter != end) std::cout << "Partial match" << std::endl;
+       #endif
      }
+   #if TRACE_PARSES
      std::cout<<"all_ok="<<all_ok<<"\n";
-     return 0;
+   #endif
+     return !all_ok;
 }
