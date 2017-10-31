@@ -164,9 +164,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                             };
 
                         // never called, but needed for decltype-based result_of (C++0x)
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
                         template <typename Element>
                             typename result<element_char_type(Element)>::type
-                            operator()(Element&) const;
+                            operator()(Element&&) const;
+#endif
                     };
 
                     // Compute the list of character types of the child kwd directives
@@ -264,9 +266,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                             };
 
                         // never called, but needed for decltype-based result_of (C++0x)
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
                         template <typename Element>
                             typename result<element_case_type(Element)>::type
-                            operator()(Element&) const;
+                            operator()(Element&&) const;
+#endif
                     };
 
                     // Compute the list of character types of the child kwd directives
