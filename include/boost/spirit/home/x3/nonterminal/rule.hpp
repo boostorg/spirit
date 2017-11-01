@@ -387,7 +387,9 @@ namespace boost { namespace spirit { namespace x3
     struct gram_base
       /**Base class for CRTP pattern.
        * Derived class actually defines the grammar
-       * and supplies the 
+       * and supplies the get_rhs member function,
+       * possibly by using the BOOST_SPIRIT_DER_*
+       * macros (see below).
        */
       {
         template <typename ID, typename Attribute=unused_type>

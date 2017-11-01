@@ -1,4 +1,4 @@
-#Purpose:
+# Purpose:
 
 * Understand *how* spirit-x3 "ties the recursive knot".
 
@@ -20,22 +20,22 @@
     [CRTP-pattern](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern)
     where the super-class of the concrete grammar class is
     here:
-    [CRTP-impl](https://github.com/cppljevans/spirit/blob/develop/include/boost/spirit/home/x3/nonterminal/rule.hpp#L313)
+    [CRTP-impl](https://github.com/cppljevans/spirit/blob/get_rhs/include/boost/spirit/home/x3/nonterminal/rule.hpp#L387)
  
-#Include Modifications:
+# Include Modifications:
 
 * Macro: BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
 
   Defined here:
   
-  * [#define](https://github.com/cppljevans/spirit/blob/develop/include/boost/spirit/home/x3/nonterminal/rule.hpp#L10)
+  * [CRTP-define](https://github.com/cppljevans/spirit/blob/get_rhs/include/boost/spirit/home/x3/nonterminal/rule.hpp#L18)
   
   Selects the source code here:
   
   * [rule.hpp](https://github.com/cppljevans/spirit/blob/develop/include/boost/spirit/home/x3/nonterminal/rule.hpp)
   * [detail/rule.hpp](https://github.com/cppljevans/spirit/blob/develop/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp)
   
-#Support Additions:
+# Support Additions:
 
   Most the files in this directory help explain the
   solution:
@@ -57,7 +57,7 @@
       methods to "tie the knot".  The results are stored in
       $(BENCH_TMP).
       
-#Conclusion:
+# Conclusion:
 
   Judging from the $(BENCH_TMP) file, the fastest
   compile-time method is the one using the
