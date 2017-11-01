@@ -26,7 +26,7 @@
   //^Disables putting rule_definition in context.
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
 #else
-  #pragma message "deprecated.  May cause excessive compile times with many rule_definition's on rhs."
+  //#pragma message "deprecated.  May cause excessive compile times with many rule_definition's on rhs."
 #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
 #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
   #define BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE 1
@@ -34,7 +34,7 @@
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
   //#pragma message "ATTR_XFORM_IN_RULE."
 #else
-  #pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
+  //#pragma message "deprecated.  May cause link error when using BOOST_SPIRIT_INSTANTIATE."
 #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 
 #include <boost/spirit/home/x3/nonterminal/detail/rule.hpp>
@@ -463,18 +463,21 @@ namespace boost { namespace spirit { namespace x3
       };
       
 #define BOOST_SPIRIT_DER_DECLARE_(r, scope, rule_name)                    \
-    inline auto get_rhs( get_id<typename decltype(rule_name)::id>)const   \
+    inline auto get_rhs                                                   \
+    ( ::boost::spirit::x3::get_id<typename decltype(rule_name)::id>)const \
     { using rule_id=typename decltype(rule_name)::id;                     \
-      static const gram_base<scope>::template rule_declaration_crtp<rule_id> def; \
-      return def; \
-    } \
+        static const gram_base<scope>::template                           \
+      rule_declaration_crtp<rule_id> def;                                 \
+      return def;                                                         \
+    }                                                                     \
     /***/
-#define BOOST_SPIRIT_DER_DEFINE_(r, data, rule_def)               \
-    inline auto get_rhs( get_id<typename decltype(rule_def)::id>)const \
-    {                                                             \
-        static auto const def(rule_def);                          \
-        return def;                                               \
-    }                                                             \
+#define BOOST_SPIRIT_DER_DEFINE_(r, data, rule_def)                      \
+    inline auto get_rhs                                                  \
+    ( ::boost::spirit::x3::get_id<typename decltype(rule_def)::id>)const \
+    {                                                                    \
+        static auto const def(rule_def);                                 \
+        return def;                                                      \
+    }                                                                    \
     /***/
     
 #define BOOST_SPIRIT_DER_DECLARE(scope,...) BOOST_PP_SEQ_FOR_EACH(            \

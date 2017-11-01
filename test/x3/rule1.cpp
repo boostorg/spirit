@@ -123,6 +123,18 @@ main()
       #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
         {
             recur_tests(recur_lit::r_def);
+          #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+            struct derived:x3::gram_base<derived>
+            {
+              struct r_id{};
+              const rule_b<r_id> r;
+              derived():r{"r_rule"}{}
+              
+              BOOST_SPIRIT_DER_DEFINE(r = (a | b) >> (r | b))            
+            };
+            derived d;
+            recur_tests(d.r);
+          #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
         }
       #else
         {
