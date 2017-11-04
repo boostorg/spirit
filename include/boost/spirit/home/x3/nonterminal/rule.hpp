@@ -306,7 +306,30 @@ namespace boost { namespace spirit { namespace x3
             return r.name? r.name : "uninitialized";
         }
     };
+    
+/** @defgroup BOOST_SPIRIT_NS_RECUR BOOST_SPIRIT_* macros
+ *
+ *  Macros for connecting the lhs with rhs of a production
+ *  in namespace scope.
+ *  @{
+ */    
 
+/*!
+  \def BOOST_SPIRIT_DEFINE_(r, data, rule_type)
+    \a r is ignored.
+    \a data is ignored.
+    \a rule_type is a type, rule<ID,RuleAttribute,...>.
+    
+    This generates a *declaration* of a parse_rule function
+    specialized on rule_type as 1st arg. 
+    The companion macro, BOOST_SPIRIT_INSTANTIATE, actually
+    instantiates this declaration.  The INSTANTIATE macro should be
+    called within a separate .cpp file which then allows separate
+    compilation of the instantiation from the declaration; thereby,
+    saving some overall compilation time (in theory ;).
+    **IN ADDITION* the BOOST_SPIRIT_DEFINE_ macro should be called
+    in the same .cpp file to provide the actual definition.
+*/
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
     template <typename Iterator, typename Context, typename Attribute>          \
     bool parse_rule(                                                            \
@@ -323,11 +346,15 @@ namespace boost { namespace spirit { namespace x3
     \a r is ignored.
     \a data is ignored.
     \a rule_name is the variable name of a variable
-       with type, rule<ID,RuleAttribute,...>.
-    This macro generates an instance of parse_rule
-    specialized on decltype(rule_name) as 1st arg.  
-    The body just returns this variable.  
-    Of course this  means rule_name must be defined 
+       with type, rule<ID,RuleAttribute,...>,
+       for some typename's ID and RuleAttriute.
+       
+    This generates a *definition* of a parse_rule function
+    specialized on decltype(rule_name) as 1st arg.
+    This specialized parse_rule will then be the one
+    called in the rule<...>::parse function above. 
+    The body creates a static instance of rule_name##_def.  
+    Of course this  means rule_name##_def must be defined 
     before this macro is executed.  For example, given:
       rule_name = x
     then, something like:
@@ -335,6 +362,9 @@ namespace boost { namespace spirit { namespace x3
     must occur in the scope in which this macro is invoked.
     Then, this macro is called as:
       BOOST_SPIRIT_DEFINE_(_,_,x)
+      
+    Using this obviates the need for calling the combination of
+    BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_INSTANTIATE.
 */
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
@@ -372,24 +402,36 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
     /***/
 
+/*!
+  \def BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)
+    Instantiates the parse_rule function specialization
+    declared by the BOOST_SPIRIT_DECLARE_ macro.
+    
+    DESIGN_QUESTION:2017-11-04:
+      Why shouldn't the BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_DEFINE_ macros
+      hardcode rule_type::attribute_type also as the type of the attr argument
+      instead of making it a template parameter?
+ */    
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
     template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \
         rule_type rule_                                                         \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, rule_type::attribute_type& attr);               \
     /***/
+/** @}*/
     
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
-
+    
       template
       < typename GramDeriv
       >      
     struct gram_base
       /**Base class for CRTP pattern.
        * Derived class actually defines the grammar
+       * and contains instances of the nested rule_b's
        * and supplies the get_rhs member function,
-       * possibly by using the BOOST_SPIRIT_DER_*
-       * macros (see below).
+       * preferably by using the BOOST_SPIRIT_CRTP_*
+       * macros below.
        */
       {
         template <typename ID, typename Attribute=unused_type>
@@ -430,7 +472,12 @@ namespace boost { namespace spirit { namespace x3
               , ActualAttribute& attr
               ) const
               {
-                auto const& def=GramDeriv().get_rhs(get_id<ID>{});
+                  auto const& 
+                def=GramDeriv().get_rhs(get_id<ID>{})
+                  //Retrieve the rhs of this rule_b from a
+                  //GramDeriv which contains an instance
+                  //of this rule_b.
+                  ;
               #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
                 auto parser_f=[&]
                   ( Iterator& f_first, Iterator const& f_last
@@ -455,52 +502,101 @@ namespace boost { namespace spirit { namespace x3
           };
 
         template<typename ID> 
-        struct rule_declaration_crtp : GramDeriv
+        struct rule_declaration_crtp 
+          : GramDeriv 
+            //^Avoids compiler diagnostic about undeclared identifiers
+            //when BOOST_SPIRIT_CRTP_INSTANTIATE macro is used.  The
+            //undeclared identifiers are found in the 
+            //rule_name and rule_value args to that macro and are
+            //instance variables of GramDeriv; hence, the use
+            //of GramDeriv as superclass brings those variables
+            //in scope.
           { 
-            template<typename Iterator, typename Context, typename Attribute> 
-            bool 
+              template<typename Iterator, typename Context, typename Attribute> 
+              bool 
             parse(Iterator&first, Iterator last, Context const&, unused_type, Attribute&)const 
-            ; 
+              //Definition provided with help of
+              //BOOST_SPIRIT_CRTP_INSTANTIATE.
+              ; 
           }; 
-      };
+      };//gram_base<GramDeriv> struct
       
-#define BOOST_SPIRIT_DER_DECLARE_(r, scope, rule_name)                    \
+/** @defgroup BOOST_SPIRIT_CRTP_RECUR BOOST_SPIRIT_CRTP* macros
+ *
+ *  Macros for connecting the lhs with rhs of a production
+ *  in a class derived from gram_base using the
+ *  CRTP design pattern.
+ *
+ *  The BOOST_SPIRIT_CRTP_* macros perform a similar function to the
+ *  corresponding the BOOST_SPIRIT_* macros.
+ *  @{
+ */    
+ 
+/*!
+  \def BOOST_SPIRIT_CRTP_DEFINE_(r, scope, rule_name)
+    \a r is ignored.
+    \a scope is some typename argument to gram_base template class.
+    \a rule_name is the variable name of a variable
+       with type, gram_base<scope>::rule_b<ID,RuleAttribute,...>,
+       for some typename's, ID and RuleAttriute.
+       
+    This generates a *definition* of a get_rhs(ID) function, which
+    returns a static instance of rule_declaration_crtp<ID> defined in
+    gram_base but with only a *declared* parse function.  This declared
+    rule_declaration_crtp<ID>::parse function should be instantiated 
+    using the companion BOOST_SPIRIT_CRTP_INSTANTIATE macro (see below).
+*/ 
+#define BOOST_SPIRIT_CRTP_DECLARE_(r, scope, rule_name)                   \
     inline auto get_rhs                                                   \
-    ( ::boost::spirit::x3::get_id<typename decltype(rule_name)::id>)const \
+    ( ::boost::spirit::x3::get_id<typename decltype(rule_name)::id>)      \
     { using rule_id=typename decltype(rule_name)::id;                     \
         static const gram_base<scope>::template                           \
       rule_declaration_crtp<rule_id> def;                                 \
       return def;                                                         \
     }                                                                     \
     /***/
-#define BOOST_SPIRIT_DER_DEFINE_(r, data, rule_def)                      \
+#define BOOST_SPIRIT_CRTP_DEFINE_(r, data, rule_def)                     \
     inline auto get_rhs                                                  \
-    ( ::boost::spirit::x3::get_id<typename decltype(rule_def)::id>)const \
+    ( ::boost::spirit::x3::get_id<typename decltype(rule_def)::id>)      \
     {                                                                    \
         static auto const def(rule_def);                                 \
         return def;                                                      \
     }                                                                    \
     /***/
     
-#define BOOST_SPIRIT_DER_DECLARE(scope,...) BOOST_PP_SEQ_FOR_EACH(            \
-    BOOST_SPIRIT_DER_DECLARE_, scope, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))  \
+#define BOOST_SPIRIT_CRTP_DECLARE(scope,...) BOOST_PP_SEQ_FOR_EACH(            \
+    BOOST_SPIRIT_CRTP_DECLARE_, scope, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))  \
     /***/
-#define BOOST_SPIRIT_DER_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(             \
-    BOOST_SPIRIT_DER_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
+#define BOOST_SPIRIT_CRTP_DEFINE(...) BOOST_PP_SEQ_FOR_EACH(             \
+    BOOST_SPIRIT_CRTP_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
     /***/
       
-#define BOOST_SPIRIT_DER_INSTANTIATE(rule_name,rule_value,scope,Iterator,Context,Attribute) \
-template<>/*base*/\
+/*!
+  \def BOOST_SPIRIT_CRTP_INSTANTIATE(rule_name,rule_value,scope,Iterator,Context,Attribute)
+    \a rule_name variable declared as rule_b<ID,Attribute>.
+    \a rule_value expression for value of rule_name.
+    \a scope is class where rule_name is declared.
+    \a Iterator concrete type for iterator arg to parse function.
+    \a Context concrete type for context arg to parse function.
+    \a Attribute concrete type for attribute arg to parse function.
+       
+    This instantiates the rule_declaraion_crtp::parse function used by the
+    get_rhs function generated by the BOOST_SPIRIT_CRTP_DECLARE macro.
+*/ 
+#define BOOST_SPIRIT_CRTP_INSTANTIATE(rule_name,rule_value,scope,Iterator,Context,Attribute) \
+template<>/*gram_base*/\
   template<>/*rule_declaration_crtp*/\
     template<>/*parse*/\
     bool \
-gram_base<scope>::rule_declaration_crtp<typename decltype(scope::rule_name)::id>:: \
+gram_base<scope>::\
+  rule_declaration_crtp<typename decltype(scope::rule_name)::id>::\
     parse(Iterator&first, Iterator last, Context context, unused_type \
       , Attribute attr)const \
     { static auto const def=(rule_name=(rule_value)); \
       return def.parse(first, last, context, unused, attr); \
     } \
   /***/
+/** @}*/
 #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
 
 }}}

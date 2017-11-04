@@ -33,28 +33,16 @@ rule run ( sources + : args * : input-files * : requirements * : target-name ? :
 {
     target-name ?= $(sources[1]:D=:S=) ;
     tests += [ testing.run $(sources) : $(args)
-      : $(input-files) : $(requirements) : $(target-name)-p3 : $(default-build) ] ;
-}
-
-rule compile ( sources + : requirements * : target-name ? )
-{
-    target-name ?= $(sources[1]:D=:S=) ;
-    tests += [ testing.compile $(sources) : $(requirements) : $(target-name)-p3 ] ;
-}
-
-rule compile-fail ( sources + : requirements * : target-name ? )
-{
-    target-name ?= $(sources[1]:D=:S=) ;
-    tests += [ testing.compile-fail $(sources) : $(requirements) : $(target-name)-p3 ] ;
-}
+      : $(input-files) : $(requirements) : $(target-name) : $(default-build) ] ;
+    }
 
 ###############################################################################
 
 {
     ###########################################################################
-    test-suite spirit_v3/qi :
+    test-suite spirit_v3/x3 :
 
-     [ run [ glob *.cpp ]  : : : : get_rhs ]
-
+     [ run main.cpp derived.cpp : : : : get_rhs_declare ]
+     [ run main.cpp : : : <define>USE_DEFINE_ONLY=1 : get_rhs_define ]
     ;
 }

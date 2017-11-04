@@ -16,6 +16,6 @@ using context_type=
 #endif  
   ;
 using attribute_type=
-  typename decltype(derived::x)::attribute_type;  
+  typename decltype(derived::x)::attribute_type;
 
-BOOST_SPIRIT_DER_INSTANTIATE(x,(z>>z),derived,iterator_type,context_type const&,attribute_type&)
+BOOST_SPIRIT_CRTP_INSTANTIATE(x,(z>>z),derived,iterator_type,context_type const&,attribute_type&)

@@ -32,8 +32,8 @@
   
   Selects the source code here:
   
-  * [rule.hpp](https://github.com/cppljevans/spirit/blob/develop/include/boost/spirit/home/x3/nonterminal/rule.hpp)
-  * [detail/rule.hpp](https://github.com/cppljevans/spirit/blob/develop/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp)
+  * [rule.hpp](https://github.com/cppljevans/spirit/blob/get_rhs/include/boost/spirit/home/x3/nonterminal/rule.hpp)
+  * [detail/rule.hpp](https://github.com/cppljevans/spirit/blob/get_rhs/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp)
   
 # Support Additions:
 

@@ -30,9 +30,17 @@ struct derived:gram_base<derived>
     , z{"rule z"}
     , c{c}
     {}
-  
-  BOOST_SPIRIT_DER_DECLARE(derived,x)
-  BOOST_SPIRIT_DER_DEFINE
+//#define USE_DEFINE_ONLY 1   
+#if USE_DEFINE_ONLY==1
+  //Only use DEFINE (IOW, don't compile&link) derived.cpp)
+  BOOST_SPIRIT_CRTP_DEFINE
+    ((x=z>>z)
+    )
+#else  
+  //use DECLARE and INSTANTIATE (in derived.cpp)
+  BOOST_SPIRIT_CRTP_DECLARE(derived,x)
+#endif  
+  BOOST_SPIRIT_CRTP_DEFINE
     ((y=x>>x)
     ,(z=c)
     )
