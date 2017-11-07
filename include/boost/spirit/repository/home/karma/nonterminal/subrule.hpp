@@ -357,7 +357,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         locals_type;
 
         typedef typename
-            spirit::detail::extract_sig<template_params>::type
+            spirit::detail::extract_sig<template_params, locals_type, karma::domain>::type
         sig_type;
 
         // This is the subrule's attribute type
