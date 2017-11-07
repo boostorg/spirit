@@ -770,7 +770,7 @@ main()
         test_parser("Hello", lazy(val(string("Hello"))));
 
         //` The above is equivalent to:
-        test_parser("Hello", val(string("Hello")));
+        test_parser("Hello", string("Hello"));
         //]
     }
 
