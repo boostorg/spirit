@@ -47,6 +47,11 @@ int main()
         std::string s;
         BOOST_TEST(test_attr("s", "s" >> attr(std::string("123")), s) &&
             s == "123");
+
+        s.clear();
+        using boost::spirit::x3::string;
+        BOOST_TEST(test_attr("123", string("123") >> attr(std::string("456")), s) &&
+            s == "123456");
     }
 
     return boost::report_errors();
