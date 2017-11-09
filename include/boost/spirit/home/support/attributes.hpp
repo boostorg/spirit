@@ -279,11 +279,6 @@ namespace boost { namespace spirit { namespace traits
       : mpl::false_
     {};
 
-    template <typename T, typename Domain>
-    struct not_is_variant<boost::optional<T>, Domain>
-      : not_is_variant<T, Domain>
-    {};
-
     // we treat every type as if it where the variant (as this meta function is
     // invoked for variant types only)
     template <typename T>
@@ -294,6 +289,11 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     struct variant_type<boost::optional<T> >
       : variant_type<T>
+    {};
+
+    template <typename T, typename Domain>
+    struct not_is_variant_or_variant_in_optional
+      : not_is_variant<typename variant_type<T>::type, Domain>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -339,7 +339,7 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Variant, typename Expected>
     struct compute_compatible_component_variant<Variant, Expected, mpl::false_
-      , typename enable_if<detail::has_types<Variant> >::type>
+      , typename enable_if<detail::has_types<typename variant_type<Variant>::type> >::type>
     {
         typedef typename traits::variant_type<Variant>::type variant_type;
         typedef typename variant_type::types types;
@@ -372,7 +372,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Expected, typename Attribute, typename Domain>
     struct compute_compatible_component
       : compute_compatible_component_variant<Attribute, Expected
-          , typename spirit::traits::not_is_variant<Attribute, Domain>::type> {};
+          , typename not_is_variant_or_variant_in_optional<Attribute, Domain>::type> {};
 
     template <typename Expected, typename Domain>
     struct compute_compatible_component<Expected, unused_type, Domain>
