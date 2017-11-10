@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace detail
     template <typename Iterator>
     inline void fast_string::construct(Iterator f, Iterator l)
     {
-        unsigned const size = l-f;
+        typename iterator_difference<Iterator>::type const size = l-f;
         char* str;
         if (size < max_string_len)
         {
