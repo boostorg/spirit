@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                 bool call_subject_unused(
                         Subject const &subject, Iterator &first, Iterator const &last
                         , Context& context, Skipper const& skipper
-                        , Index& idx ) const
+                        , Index& /*idx*/ ) const
                 {
                     Iterator save = first;
                     skipper_keyword_marker<Skipper,NoCasePass>
@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                 bool call_subject(
                         Subject const &subject, Iterator &first, Iterator const &last
                         , Context& context, Skipper const& skipper
-                        , Index& idx ) const
+                        , Index& /*idx*/ ) const
                 {
 
                     Iterator save = first;
@@ -444,7 +444,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                         Iterator &first,
                         const Iterator &last,
                         const ParseVisitor &parse_visitor,
-                        const Skipper &skipper) const
+                        const Skipper &/*skipper*/) const
                 {
                     if(parser_index_type* val_ptr =
                             lookup->find(first,last,first_pass_filter_type()))
@@ -463,7 +463,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                         const Iterator &last,
                         const ParseVisitor &parse_visitor,
                         const NoCaseParseVisitor &no_case_parse_visitor,
-                        const Skipper &skipper) const
+                        const Skipper &/*skipper*/) const
                 {
                     Iterator saved_first = first;
                     if(parser_index_type* val_ptr =
@@ -518,16 +518,16 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
 
         template <typename Iterator,typename ParseVisitor, typename Skipper>
                 bool parse(
-                        Iterator &first,
-                        const Iterator &last,
-                        const ParseVisitor &parse_visitor,
-                        const Skipper &skipper) const
+                        Iterator &/*first*/,
+                        const Iterator &/*last*/,
+                        const ParseVisitor &/*parse_visitor*/,
+                        const Skipper &/*skipper*/) const
                 {
                     return false;
                 }
 
         template <typename ParseFunction>
-        bool parse( ParseFunction &function ) const
+        bool parse( ParseFunction &/*function*/ ) const
                 {
                    return false;
                 }
@@ -554,7 +554,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     }
 
                 template <typename T, typename Position, typename Action>
-                    int call(const spirit::qi::action<T,Action> &parser, const Position position ) const
+                    int call(const spirit::qi::action<T,Action> &parser, const Position /*position*/ ) const
                     {
                         // Get the initial state of the flags array and store it in the flags initializer
                         flags[Position::value]=parser.subject.iter.flag_init();
@@ -562,7 +562,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     }
 
                 template <typename T, typename Position>
-                    int call( const T & parser, const Position position) const
+                    int call( const T & parser, const Position /*position*/) const
                     {
                         // Get the initial state of the flags array and store it in the flags initializer
                         flags[Position::value]=parser.iter.flag_init();
