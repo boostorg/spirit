@@ -132,8 +132,6 @@ private:
 bool test(wchar_t const *text)
 {
     typedef std::basic_string<wchar_t>::iterator iterator_t; 
-    typedef tree_match<iterator_t> parse_tree_match_t; 
-    typedef parse_tree_match_t::tree_iterator iter_t; 
 
     std::basic_string<wchar_t> input(text); 
     calculator calc; 
@@ -153,8 +151,6 @@ bool test(wchar_t const *text)
 bool test(char const *text)
 {
     typedef std::string::iterator iterator_t; 
-    typedef tree_match<iterator_t> parse_tree_match_t; 
-    typedef parse_tree_match_t::tree_iterator iter_t; 
 
     std::string input(text); 
     calculator calc; 
