@@ -94,7 +94,7 @@ public:
                 static_cast<std::streamsize>(container_.size() - pos_);
             std::streamsize result = (std::min)(n, amt);
             std::copy(s, s + result, container_.begin() + pos_);
-            pos_ += result;
+            pos_ += static_cast<size_type>(result);
         }
         if (result < n) {
             container_.insert(container_.end(), s, s + n);
