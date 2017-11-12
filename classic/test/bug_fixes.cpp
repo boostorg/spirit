@@ -318,13 +318,15 @@ void sf_bug_742038()
     position_iterator<std::string::iterator> e;
     test_assign(b, e);
 
-    std::fstream f(tmpfilename, std::ios::out);
-    f << src;
-    f.close();
+    {
+        std::fstream f(tmpfilename, std::ios::out);
+        f << src;
+        f.close();
 
-    file_iterator<> b1(tmpfilename);
-    file_iterator<> e1(b1.make_end());
-    test_assign(b1, e1);
+        file_iterator<> b1(tmpfilename);
+        file_iterator<> e1(b1.make_end());
+        test_assign(b1, e1);
+    }
 
     ::remove(tmpfilename);
 }

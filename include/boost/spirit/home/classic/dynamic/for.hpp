@@ -114,7 +114,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                 typename ScannerT::iterator_t save(scan.first);
 
                 std::size_t length = 0;
-                int eval_length = 0;
+                std::ptrdiff_t eval_length = 0;
 
                 this->init();
                 while ((eval_length = this->evaluate(scan))>=0)

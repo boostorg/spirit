@@ -226,9 +226,9 @@ void
 parser_extraction_tests()
 {
     typedef chlit<char> plain_t;
-    typedef optional<chlit<char> > unary_t;
-    typedef action<chlit<char>, assign_actor> action_t;
-    typedef sequence<chlit<char>, anychar_parser> binary_t;
+    typedef optional<plain_t> unary_t;
+    typedef action<plain_t, assign_actor> action_t;
+    typedef sequence<plain_t, anychar_parser> binary_t;
 
 // parser type extraction templates
     BOOST_STATIC_ASSERT((

@@ -18,14 +18,6 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_multi_pass.hpp>
 
-#if defined(BOOST_HAS_UNISTD_H)
-#include <unistd.h>    // unlink()
-#endif
-
-#if defined(__MINGW32__)
-#include <io.h>    // unlink()
-#endif
-
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace std;
 
@@ -64,8 +56,6 @@ int main ()
         result = !m ? 1 : 0;
     }
 
-#if !defined(__COMO_VERSION__)
-    unlink("./input_file.txt");
-#endif
+    std::remove("./input_file.txt");
     return result;
 }
