@@ -301,6 +301,22 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             return result_type(fusion::as_map(fusion::join(defs, other.defs)));
         }
 
+        // non-const versions needed to suppress proto's comma op kicking in
+        template <typename Defs2>
+        friend subrule_group<
+            typename fusion::result_of::as_map<
+                typename fusion::result_of::join<
+                    Defs const, Defs2 const>::type>::type>
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        operator,(subrule_group&& left, subrule_group<Defs2>&& other)
+#else
+        operator,(subrule_group& left, subrule_group<Defs2>& other)
+#endif
+        {
+            return static_cast<subrule_group const&>(left)
+                .operator,(static_cast<subrule_group<Defs2> const&>(other));
+        }
+
         // bring in the operator() overloads
         this_type const& get_parameterized_subject() const { return *this; }
         typedef this_type parameterized_subject_type;
@@ -378,13 +394,20 @@ namespace boost { namespace spirit { namespace repository { namespace qi
 
         typedef mpl::vector<T1, T2> template_params;
 
-        // locals_type is a sequence of types to be used as local variables
+        // The subrule's locals_type: a sequence of types to be used as local variables
         typedef typename
             spirit::detail::extract_locals<template_params>::type
         locals_type;
 
+        // The subrule's encoding type
         typedef typename
-            spirit::detail::extract_sig<template_params>::type
+            spirit::detail::extract_encoding<template_params>::type
+        encoding_type;
+
+        // The subrule's signature
+        typedef typename
+            spirit::detail::extract_sig<template_params, encoding_type
+              , spirit::qi::domain>::type
         sig_type;
 
         // This is the subrule's attribute type
@@ -473,6 +496,16 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         }
 
         // non-const versions needed to suppress proto's %= kicking in
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        template <typename Expr>
+        friend typename group_type_helper<Expr, true>::type
+        operator%=(subrule const& sr, Expr&& expr)
+        {
+            return operator%=(
+                sr
+              , static_cast<Expr const&>(expr));
+        }
+#endif
         template <typename Expr>
         friend typename group_type_helper<Expr, true>::type
         operator%=(subrule const& sr, Expr& expr)
@@ -481,6 +514,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 sr
               , static_cast<Expr const&>(expr));
         }
+        //
         template <typename Expr>
         friend typename group_type_helper<Expr, true>::type
         operator%=(subrule& sr, Expr const& expr)
@@ -489,6 +523,16 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 static_cast<subrule const&>(sr)
               , expr);
         }
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        template <typename Expr>
+        friend typename group_type_helper<Expr, true>::type
+        operator%=(subrule& sr, Expr&& expr)
+        {
+            return operator%=(
+                static_cast<subrule const&>(sr)
+              , static_cast<Expr const&>(expr));
+        }
+#endif
         template <typename Expr>
         friend typename group_type_helper<Expr, true>::type
         operator%=(subrule& sr, Expr& expr)
@@ -497,6 +541,33 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 static_cast<subrule const&>(sr)
               , static_cast<Expr const&>(expr));
         }
+        //
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        template <typename Expr>
+        friend typename group_type_helper<Expr, true>::type
+        operator%=(subrule&& sr, Expr const& expr)
+        {
+            return operator%=(
+                static_cast<subrule const&>(sr)
+              , static_cast<Expr const&>(expr));
+        }
+        template <typename Expr>
+        friend typename group_type_helper<Expr, true>::type
+        operator%=(subrule&& sr, Expr&& expr)
+        {
+            return operator%=(
+                static_cast<subrule const&>(sr)
+              , static_cast<Expr const&>(expr));
+        }
+        template <typename Expr>
+        friend typename group_type_helper<Expr, true>::type
+        operator%=(subrule&& sr, Expr& expr)
+        {
+            return operator%=(
+                static_cast<subrule const&>(sr)
+              , static_cast<Expr const&>(expr));
+        }
+#endif
 
         std::string const& name() const
         {
