@@ -52,7 +52,7 @@ struct handle_whitespace
     template <typename Iterator>
     unsigned int get_indent(Iterator& start, Iterator& end)
     {
-        return std::distance(start, end);
+        return static_cast<unsigned int>(std::distance(start, end));
     }
 
     template <typename Iterator>
