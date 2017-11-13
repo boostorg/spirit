@@ -507,11 +507,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
 
         template <typename Iterator,typename ParseVisitor, typename NoCaseParseVisitor,typename Skipper>
         bool parse(
-                        Iterator &first,
-                        const Iterator &last,
-                        const ParseVisitor &parse_visitor,
-                        const NoCaseParseVisitor &no_case_parse_visitor,
-                        const Skipper &skipper) const
+                        Iterator &/*first*/,
+                        const Iterator &/*last*/,
+                        const ParseVisitor &/*parse_visitor*/,
+                        const NoCaseParseVisitor &/*no_case_parse_visitor*/,
+                        const Skipper &/*skipper*/) const
                 {
                         return false;
                 }
@@ -570,7 +570,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     }
 
                 template <typename T, typename Position>
-                    int call( const spirit::qi::hold_directive<T> & parser, const Position position) const
+                    int call( const spirit::qi::hold_directive<T> & parser, const Position /*position*/) const
                     {
                         // Get the initial state of the flags array and store it in the flags initializer
                         flags[Position::value]=parser.subject.iter.flag_init();

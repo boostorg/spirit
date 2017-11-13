@@ -896,7 +896,7 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Terminal>
         result_type operator()(
-            Terminal const& term, Subject const& subject, Modifiers const& modifiers) const
+            Terminal const& term, Subject const& subject, Modifiers const& /*modifiers*/) const
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
@@ -919,7 +919,7 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Terminal>
         result_type operator()(
-            Terminal const& term, Subject const& subject, Modifiers const& modifiers) const
+            Terminal const& term, Subject const& subject, Modifiers const& /*modifiers*/) const
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
