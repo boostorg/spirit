@@ -328,8 +328,8 @@ struct compound_case_parser
             case_chain<self_t>::depth < BOOST_SPIRIT_SWITCH_CASE_LIMIT
         );
 
-        typedef case_parser<N1, ParserT1, IsDefault1> right_t;
-        return compound_case_parser<self_t, right_t, IsDefault1>(*this, p);
+        typedef case_parser<N1, ParserT1, IsDefault1> rhs_t;
+        return compound_case_parser<self_t, rhs_t, IsDefault1>(*this, p);
     }
 };
 
