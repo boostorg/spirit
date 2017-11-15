@@ -484,90 +484,34 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 def_type(compile<spirit::qi::domain>(expr), name_)));
         }
 
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule const& sr, Expr const& expr)
-        {
-            typedef group_type_helper<Expr, true> helper;
-            typedef typename helper::def_type def_type;
-            typedef typename helper::type result_type;
-            return result_type(fusion::make_map<id_type>(
-                def_type(compile<spirit::qi::domain>(expr), sr.name_)));
-        }
+#define SUBRULE_MODULUS_ASSIGN_OPERATOR(lhs_ref, rhs_ref)                     \
+        template <typename Expr>                                              \
+        friend typename group_type_helper<Expr, true>::type                   \
+        operator%=(subrule lhs_ref sr, Expr rhs_ref expr)                     \
+        {                                                                     \
+            typedef group_type_helper<Expr, true> helper;                     \
+            typedef typename helper::def_type def_type;                       \
+            typedef typename helper::type result_type;                        \
+            return result_type(fusion::make_map<id_type>(                     \
+                def_type(compile<spirit::qi::domain>(expr), sr.name_)));      \
+        }                                                                     \
+        /**/
 
         // non-const versions needed to suppress proto's %= kicking in
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, const&)
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule const& sr, Expr&& expr)
-        {
-            return operator%=(
-                sr
-              , static_cast<Expr const&>(expr));
-        }
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &&)
+#else
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &)
 #endif
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule const& sr, Expr& expr)
-        {
-            return operator%=(
-                sr
-              , static_cast<Expr const&>(expr));
-        }
-        //
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule& sr, Expr const& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , expr);
-        }
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, const&)
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule& sr, Expr&& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , static_cast<Expr const&>(expr));
-        }
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &&)
+#else
+        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &)
 #endif
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule& sr, Expr& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , static_cast<Expr const&>(expr));
-        }
-        //
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule&& sr, Expr const& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , static_cast<Expr const&>(expr));
-        }
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule&& sr, Expr&& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , static_cast<Expr const&>(expr));
-        }
-        template <typename Expr>
-        friend typename group_type_helper<Expr, true>::type
-        operator%=(subrule&& sr, Expr& expr)
-        {
-            return operator%=(
-                static_cast<subrule const&>(sr)
-              , static_cast<Expr const&>(expr));
-        }
-#endif
+
+#undef SUBRULE_MODULUS_ASSIGN_OPERATOR
 
         std::string const& name() const
         {
