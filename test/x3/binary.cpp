@@ -44,8 +44,8 @@ int main()
 #ifdef BOOST_HAS_LONG_LONG
     boost::uint64_t ul;
 #endif
-    float f;
-    double d;
+//    float f;
+//    double d;
 
     {   // test native endian binaries
 #ifdef BOOST_LITTLE_ENDIAN
