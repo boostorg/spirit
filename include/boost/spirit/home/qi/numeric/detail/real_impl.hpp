@@ -108,6 +108,8 @@ namespace boost { namespace spirit { namespace traits
     inline bool
     scale(int exp, int frac, T& n, AccT acc_n)
     {
+        if (exp < std::numeric_limits<int>::min() + frac)
+            return false;
         return scale(exp - frac, n, acc_n);
     }
 
