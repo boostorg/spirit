@@ -54,55 +54,24 @@
 namespace boost { namespace spirit { namespace repository { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
-    // subrule_group:
+    // subrule_group_generator:
     // - generator representing a group of subrule definitions (one or more),
     //   invokes first subrule on entry,
-    // - also a Proto terminal, so that a group behaves like any Spirit
-    //   expression.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Defs>
-    struct subrule_group
-      : proto::extends<
-            typename proto::terminal<
-                spirit::karma::reference<subrule_group<Defs> const>
-            >::type
-          , subrule_group<Defs>
-        >
-      , spirit::karma::generator<subrule_group<Defs> >
+    struct subrule_group_generator
+      : spirit::karma::generator<subrule_group_generator<Defs> >
     {
-        struct properties
-            // Forward to first subrule.
-          : remove_reference<
-                typename fusion::result_of::front<Defs>::type
-            >::type::second_type::subject_type::properties {};
-
         // Fusion associative sequence, associating each subrule ID in this
         // group (as an MPL integral constant) with its definition
         typedef Defs defs_type;
 
-        typedef subrule_group<Defs> this_type;
-        typedef spirit::karma::reference<this_type const> reference_;
-        typedef typename proto::terminal<reference_>::type terminal;
-        typedef proto::extends<terminal, this_type> base_type;
+        typedef subrule_group_generator<Defs> this_type;
 
-        static size_t const params_size =
-            // Forward to first subrule.
-            remove_reference<
-                typename fusion::result_of::front<Defs>::type
-            >::type::second_type::params_size;
-
-        subrule_group(subrule_group const& rhs)
-          : base_type(terminal::make(reference_(*this)))
-          , defs(rhs.defs)
+        explicit subrule_group_generator(Defs const& defs)
+          : defs(defs)
         {
         }
-
-        explicit subrule_group(Defs const& defs)
-          : base_type(terminal::make(reference_(*this)))
-          , defs(defs)
-        {
-        }
-
         // from a subrule ID, get the type of a reference to its definition
         template <int ID>
         struct def_type
@@ -255,6 +224,47 @@ namespace boost { namespace spirit { namespace repository { namespace karma
             return fusion::front(defs).second.binder.g.what(context);
         }
 
+        Defs defs;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // subrule_group:
+    // - a Proto terminal, so that a group behaves like any Spirit
+    //   expression.
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Defs>
+    struct subrule_group
+      : proto::extends<
+            typename proto::terminal<
+                subrule_group_generator<Defs>
+            >::type
+          , subrule_group<Defs>
+        >
+    {
+        typedef subrule_group_generator<Defs> generator_type;
+        typedef typename proto::terminal<generator_type>::type terminal;
+
+        struct properties
+            // Forward to first subrule.
+          : remove_reference<
+                typename fusion::result_of::front<Defs>::type
+            >::type::second_type::subject_type::properties {};
+
+        static size_t const params_size =
+            // Forward to first subrule.
+            remove_reference<
+                typename fusion::result_of::front<Defs>::type
+            >::type::second_type::params_size;
+
+        explicit subrule_group(Defs const& defs)
+          : subrule_group::proto_extends(terminal::make(generator_type(defs)))
+        {
+        }
+
+        generator_type const& generator() const { return proto::value(*this); }
+
+        Defs const& defs() const { return generator().defs; }
+
         template <typename Defs2>
         subrule_group<
             typename fusion::result_of::as_map<
@@ -266,7 +276,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
                 typename fusion::result_of::as_map<
                     typename fusion::result_of::join<
                         Defs const, Defs2 const>::type>::type> result_type;
-            return result_type(fusion::as_map(fusion::join(defs, other.defs)));
+            return result_type(fusion::as_map(fusion::join(defs(), other.defs())));
         }
 
         // non-const versions needed to suppress proto's comma op kicking in
@@ -286,11 +296,9 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         }
 
         // bring in the operator() overloads
-        this_type const& get_parameterized_subject() const { return *this; }
-        typedef this_type parameterized_subject_type;
+        generator_type const& get_parameterized_subject() const { return generator(); }
+        typedef generator_type parameterized_subject_type;
         #include <boost/spirit/home/karma/nonterminal/detail/fcall.hpp>
-
-        Defs defs;
     };
 
     ///////////////////////////////////////////////////////////////////////////
