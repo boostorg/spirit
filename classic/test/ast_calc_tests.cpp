@@ -124,8 +124,8 @@ struct dyn_calculator : public grammar<dyn_calculator>
 using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
-typedef char const*                         iterator_t;
-typedef tree_match<iterator_t>              parse_tree_match_t;
+typedef char const*                         parser_iterator_t;
+typedef tree_match<parser_iterator_t>       parse_tree_match_t;
 typedef parse_tree_match_t::tree_iterator   iter_t;
 
 ////////////////////////////////////////////////////////////////////////////

@@ -38,14 +38,14 @@ int main ()
         typedef char char_t;
         typedef multi_pass<istreambuf_iterator<char_t> > iterator_t;
 
-        typedef skip_parser_iteration_policy<space_parser> iter_policy_t;
-        typedef scanner_policies<iter_policy_t> scanner_policies_t;
-        typedef scanner<iterator_t, scanner_policies_t> scanner_t;
+        typedef skip_parser_iteration_policy<space_parser> it_policy_t;
+        typedef scanner_policies<it_policy_t> scan_policies_t;
+        typedef scanner<iterator_t, scan_policies_t> scanner_t;
 
         typedef rule<scanner_t> rule_t;
 
-        iter_policy_t iter_policy(space_p);
-        scanner_policies_t policies(iter_policy);
+        it_policy_t iter_policy(space_p);
+        scan_policies_t policies(iter_policy);
         iterator_t first(make_multi_pass(std::istreambuf_iterator<char_t>(in)));
         scanner_t scan(first, make_multi_pass(std::istreambuf_iterator<char_t>()),
             policies);
