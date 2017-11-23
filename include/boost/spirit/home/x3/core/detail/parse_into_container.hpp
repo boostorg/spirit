@@ -265,7 +265,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             Attribute rest;
             bool r = parser.parse(first, last, context, rcontext, rest);
             if (r)
-                attr.insert(attr.end(), rest.begin(), rest.end());
+            	traits::append(attr, rest.begin(), rest.end());
             return r;
         }
 
