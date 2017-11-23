@@ -245,6 +245,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 parser, first, last, context, rcontext, attr);
         }
 
+        template <typename Iterator>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, unused_type attr, mpl::true_)
+        {
+            return parser.parse(first, last, context, rcontext, attr);
+        }
+
         template <typename Iterator, typename Attribute>
         static bool call(
             Parser const& parser

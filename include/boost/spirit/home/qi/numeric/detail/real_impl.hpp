@@ -81,12 +81,13 @@ namespace boost { namespace spirit { namespace traits
                 detail::compensate_roundoff(n, acc_n);
                 n /= pow10<T>(-min_exp);
 
-                // return false if (-exp + min_exp) exceeds the -min_exp
+                // return false if exp still exceeds the min_exp
                 // do this check only for primitive types!
-                if (is_floating_point<T>() && (-exp + min_exp) > -min_exp)
+                exp += -min_exp;
+                if (is_floating_point<T>() && exp < min_exp)
                     return false;
 
-                n /= pow10<T>(-exp + min_exp);
+                n /= pow10<T>(-exp);
             }
             else
             {

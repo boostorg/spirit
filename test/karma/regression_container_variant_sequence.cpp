@@ -64,7 +64,7 @@ namespace generator
 BOOST_FUSION_ADAPT_STRUCT(generator::Enum,
     (std::string, enumName)
     (std::vector<std::string>, enumEntries)
-);
+)
 
 int main()
 {
