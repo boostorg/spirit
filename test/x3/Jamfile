@@ -63,6 +63,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run bool.cpp             : : : : x3_bool ]
      [ run char1.cpp            : : : : x3_char1 ]
      [ run char_class.cpp       : : : : x3_char_class ]
+     [ run container_support.cpp : : : : x3_container_support ]
      [ run debug.cpp            : : : : x3_debug ]
      [ run difference.cpp       : : : : x3_difference ]
      [ run eoi.cpp              : : : : x3_eoi ]
