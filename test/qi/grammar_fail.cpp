@@ -32,7 +32,7 @@ int main()
     char const* end = &input[strlen(input)+1];
 
     num_list g;
-    bool r = qi::phrase_parse(input, end, g,
+    qi::phrase_parse(input, end, g,
         qi::space | ('%' >> *~qi::char_('\n') >> '\n'));
 
     return 0;
