@@ -24,7 +24,7 @@ int main()
     rule<char const*, rule<char const*> > def;
     def = int_ >> *(',' >> int_);
 
-    bool r = phrase_parse(input, end, def,
+    phrase_parse(input, end, def,
         qi::space | ('%' >> *~char_('\n') >> '\n'));
 
     return 0;
