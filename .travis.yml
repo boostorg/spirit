@@ -6,19 +6,19 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-trusty-5.0
+#      - llvm-toolchain-trusty-5.0
     packages:
       - g++-7
-      - clang-5.0
+#      - clang-5.0
 
 matrix:
   include:
     - os: linux
       compiler: g++-7
-      script: b2 -j3 libs/spirit/test/x3 toolset=gcc cxxstd=14
+      script: b2 -j3 libs/spirit/test/x3 toolset=gcc-7 cxxstd=14
 
     - os: linux
-      compiler: clang++-5.0
+      compiler: clang++
       script: b2 -j3 libs/spirit/test/x3 toolset=clang cxxstd=14
 
 install:
