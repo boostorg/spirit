@@ -10,9 +10,10 @@ matrix:
           packages:
             - g++-7
           sources:
-            - ubuntu-toolchain-r-test
+            sourceline: 'ppa:ubuntu-toolchain-r/test'
+            key_url: 'https://dl2.hhvm.com/conf/hhvm.gpg.key'
       compiler: g++-7
-      script: b2 -j3 libs/spirit/test/x3 toolset=gcc-7 cxxstd=14
+      script: b2 -j3 libs/spirit/test toolset=gcc-7 cxxstd=14
 
     - os: linux
       addons:
@@ -23,11 +24,11 @@ matrix:
           sources:
             - llvm-toolchain-trusty-5.0
       compiler: clang++-5.0
-      script: b2 -j3 libs/spirit/test/x3 toolset=clang-5.0 cxxstd=14 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
+      script: b2 -j3 libs/spirit/test toolset=clang-5.0 cxxstd=14 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
 
     - os: osx
       compiler: clang++
-      script: b2 -j3 libs/spirit/test/x3 toolset=clang cxxstd=14
+      script: b2 -j3 libs/spirit/test toolset=clang cxxstd=14
 
 install:
   - cd ..
@@ -37,20 +38,28 @@ install:
   - export PATH="`pwd`":$PATH
 
   - git submodule update --init tools/build
+  - git submodule update --init libs/algorithm
   - git submodule update --init libs/array
   - git submodule update --init libs/assert
+  - git submodule update --init libs/assign
   - git submodule update --init libs/bind
   - git submodule update --init libs/concept_check
   - git submodule update --init libs/config
   - git submodule update --init libs/container
   - git submodule update --init libs/core
   - git submodule update --init libs/detail
+  - git submodule update --init libs/dynamic_bitset
   - git submodule update --init libs/endian
+  - git submodule update --init libs/foreach
+  - git submodule update --init libs/function
   - git submodule update --init libs/functional
   - git submodule update --init libs/function_types
   - git submodule update --init libs/fusion
   - git submodule update --init libs/integer
+  - git submodule update --init libs/io
+  - git submodule update --init libs/iostreams
   - git submodule update --init libs/iterator
+  - git submodule update --init libs/lambda
   - git submodule update --init libs/lexical_cast
   - git submodule update --init libs/math
   - git submodule update --init libs/move
@@ -62,6 +71,7 @@ install:
   - git submodule update --init libs/predef
   - git submodule update --init libs/preprocessor
   - git submodule update --init libs/proto
+  - git submodule update --init libs/random
   - git submodule update --init libs/range
   - git submodule update --init libs/regex
   - git submodule update --init libs/smart_ptr
