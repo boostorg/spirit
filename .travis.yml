@@ -10,8 +10,7 @@ matrix:
           packages:
             - g++-7
           sources:
-            sourceline: 'ppa:ubuntu-toolchain-r/test'
-            key_url: 'https://dl2.hhvm.com/conf/hhvm.gpg.key'
+            - ubuntu-toolchain-r/test
       compiler: g++-7
       script: b2 -j3 libs/spirit/test toolset=gcc-7 cxxstd=14
 
