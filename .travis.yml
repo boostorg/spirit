@@ -29,6 +29,9 @@ matrix:
       compiler: clang++
       script: b2 -j3 libs/spirit/test/x3 toolset=clang cxxstd=14
 
+before_install:
+  - sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xB4112585D386EB94
+
 install:
   - cd ..
   - git clone -b develop --depth 1 https://github.com/boostorg/boost.git boost-root
