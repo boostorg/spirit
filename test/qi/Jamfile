@@ -1,0 +1,120 @@
+#==============================================================================
+#   Copyright (c) 2001-2011 Joel de Guzman
+#   Copyright (c) 2001-2012 Hartmut Kaiser
+#   Copyright (c)      2011 Bryce Lelbach
+#
+#   Use, modification and distribution is subject to the Boost Software
+#   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+
+import testing ; # bring in rules for testing
+
+project spirit-qi
+    : requirements
+        <include>.
+        <c++-template-depth>512
+    ;
+
+###############################################################################
+alias spirit-qi
+    :
+
+    [ compile-fail grammar_fail.cpp         : : qi_grammar_fail ]
+    [ compile-fail rule_fail.cpp            : : qi_rule_fail ]
+    [ run actions.cpp                   : : : : qi_actions ]
+    [ run actions2.cpp                  : : : : qi_actions2 ]
+    [ run alternative.cpp               : : : : qi_alternative ]
+    [ run attr.cpp                      : : : : qi_attr ]
+    [ run attribute1.cpp                : : : : qi_attribute1 ]
+    [ run attribute2.cpp                : : : : qi_attribute2 ]
+    [ run and_predicate.cpp             : : : : qi_and_predicate ]
+    [ run auto.cpp                      : : : : qi_auto ]
+    [ run binary.cpp                    : : : : qi_binary ]
+    [ run bool1.cpp                     : : : : qi_bool1 ]
+    [ run bool2.cpp                     : : : : qi_bool2 ]
+    [ run char1.cpp                     : : : : qi_char1 ]
+    [ run char2.cpp                     : : : : qi_char2 ]
+    [ run char_class.cpp                : : : : qi_char_class ]
+    [ run debug.cpp                     : : : : qi_debug ]
+    [ run difference.cpp                : : : : qi_difference ]
+    [ run encoding.cpp                  : : : : qi_encoding ]
+    [ run end.cpp                       : : : : qi_end ]
+    [ run eps.cpp                       : : : : qi_eps ]
+    [ run expect.cpp                    : : : : qi_expect ]
+    [ run expectd.cpp                   : : : : qi_expectd ]
+    [ run grammar.cpp                   : : : : qi_grammar ]
+    [ run int1.cpp                      : : : : qi_int1 ]
+    [ run int2.cpp                      : : : : qi_int2 ]
+    [ run int3.cpp                      : : : : qi_int3 ]
+    [ run kleene.cpp                    : : : : qi_kleene ]
+    [ run lazy.cpp                      : : : : qi_lazy ]
+    [ run lexeme.cpp                    : : : : qi_lexeme ]
+    [ run lit1.cpp                      : : : : qi_lit1 ]
+    [ run lit2.cpp                      : : : : qi_lit2 ]
+    [ run list.cpp                      : : : : qi_list ]
+    [ run hold.cpp                      : : : : qi_hold ]
+    [ run match_manip1.cpp              : : : : qi_match_manip1 ]
+    [ run match_manip2.cpp              : : : : qi_match_manip2 ]
+    [ run match_manip3.cpp              : : : : qi_match_manip3 ]
+    [ run match_manip_attr.cpp          : : : : qi_match_manip_attr ]
+    [ run matches.cpp                   : : : : qi_matches ]
+    [ run no_case.cpp                   : : : : qi_no_case ]
+    [ run no_skip.cpp                   : : : : qi_no_skip ]
+    [ run not_predicate.cpp             : : : : qi_not_predicate ]
+    [ run omit.cpp                      : : : : qi_omit ]
+    [ run optional.cpp                  : : : : qi_optional ]
+    [ run parse_attr.cpp                : : : : qi_parse_attr ]
+    [ run pass_container1.cpp           : : : : qi_pass_container1 ]
+    [ run pass_container2.cpp           : : : : qi_pass_container2 ]
+    [ run permutation.cpp               : : : : qi_permutation ]
+    [ run plus.cpp                      : : : : qi_plus ]
+    [ run range_run.cpp                 : : : : qi_range_run ]
+    [ run raw.cpp                       : : : : qi_raw ]
+    [ run real1.cpp                     : : : : qi_real1 ]
+    [ run real2.cpp                     : : : : qi_real2 ]
+    [ run real3.cpp                     : : : : qi_real3 ]
+    [ run real4.cpp                     : : : : qi_real4 ]
+    [ run real5.cpp                     : : : : qi_real5 ]
+    [ run repeat.cpp                    : : : : qi_repeat ]
+    [ run rule1.cpp                     : : : : qi_rule1 ]
+    [ run rule2.cpp                     : : : : qi_rule2 ]
+    [ run rule3.cpp                     : : : : qi_rule3 ]
+    [ run rule4.cpp                     : : : : qi_rule4 ]
+    [ run sequence.cpp                  : : : : qi_sequence ]
+    [ run sequential_or.cpp             : : : : qi_sequential_or ]
+    [ run skip.cpp                      : : : : qi_skip ]
+    [ run stream.cpp                    : : : : qi_stream ]
+    [ run symbols1.cpp                  : : : : qi_symbols1 ]
+    [ run symbols2.cpp                  : : : : qi_symbols2 ]
+    [ run terminal_ex.cpp               : : : : qi_terminal_ex ]
+    [ run tst.cpp                       : : : : qi_tst ]
+    [ run uint1.cpp                     : : : : qi_uint1 ]
+    [ run uint2.cpp                     : : : : qi_uint2 ]
+    [ run uint3.cpp                     : : : : qi_uint3 ]
+    [ run uint_radix.cpp                : : : : qi_uint_radix ]
+    [ run utree1.cpp                    : : : : qi_utree1 ]
+    [ run utree2.cpp                    : : : : qi_utree2 ]
+    [ run utree3.cpp                    : : : : qi_utree3 ]
+    [ run utree4.cpp                    : : : : qi_utree4 ]
+
+    [ compile pass_container3.cpp                                 : : qi_pass_container3 ]
+    [ compile regression_attr_with_action.cpp                     : : qi_regression_attr_with_action ]
+    [ compile regression_container_attribute.cpp                  : : qi_regression_container_attribute ]
+    [ compile regression_debug_optional.cpp                       : : qi_regression_debug_optional ]
+    [ compile regression_fusion_proto_spirit.cpp                  : : qi_regression_fusion_proto_spirit ]
+    [ compile regression_one_element_fusion_sequence.cpp          : : qi_regression_one_element_fusion_sequence ]
+    [ compile regression_one_element_sequence_attribute.cpp       : : qi_regression_one_element_sequence_attribute ]
+
+    [ run regression_adapt_adt.cpp                            : : : : qi_regression_adapt_adt ]
+    [ run regression_clear.cpp                                : : : : qi_regression_clear ]
+    #[ run regression_float_fraction.cpp                      : : : : qi_regression_float_fraction ]
+    [ run regression_lazy_repeat.cpp                          : : : : qi_regression_lazy_repeat ]
+    [ run regression_numeric_alternatives.cpp                 : : : : qi_regression_numeric_alternatives ]
+    [ run regression_reorder.cpp                              : : : : qi_regression_reorder ]
+    [ run regression_repeat.cpp                               : : : : qi_regression_repeat ]
+    [ run regression_transform_assignment.cpp                 : : : : qi_regression_transform_assignment ]
+    [ run regression_binary_action.cpp                        : : : : qi_regression_binary_action ]
+    [ run regression_stream_eof.cpp                           : : : : qi_regression_stream_eof ]
+
+    ;
