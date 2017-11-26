@@ -46,7 +46,7 @@ install:
   - git submodule update --init libs/math
   - git submodule update --init libs/move
   - git submodule update --init libs/mpl
-  - git submodule update --init libs/numeric (conversion)
+  - git submodule update --init libs/numeric
   - git submodule update --init libs/optional
   - git submodule update --init libs/phoenix
   - git submodule update --init libs/pool
