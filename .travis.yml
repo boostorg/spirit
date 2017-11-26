@@ -19,10 +19,11 @@ matrix:
         apt:
           packages:
             - clang++-5.0
+            - libc++-dev
           sources:
             - llvm-toolchain-trusty-5.0
       compiler: clang++-5.0
-      script: b2 -j3 libs/spirit/test/x3 toolset=clang-5.0 cxxstd=14
+      script: b2 -j3 libs/spirit/test/x3 toolset=clang-5.0 cxxstd=14 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
 
     - os: osx
       compiler: clang++
