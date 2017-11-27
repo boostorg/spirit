@@ -1,0 +1,57 @@
+sudo: false
+
+language: cpp
+
+addons:
+  apt:
+    sources: &toolchains
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-trusty-5.0
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          packages:
+            - g++-7
+          sources:
+            - *toolchains
+      compiler: g++-7
+      script:
+        - b2 -j3 libs/spirit/test toolset=gcc-7
+        - b2 -j3 libs/spirit/test/x3 toolset=gcc-7
+
+    - os: linux
+      addons:
+        apt:
+          packages:
+            - clang++-5.0
+            - libc++-dev
+          sources:
+            - *toolchains
+      compiler: clang++-5.0
+      script:
+        - b2 -j3 libs/spirit/test toolset=clang-5.0 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
+        - b2 -j3 libs/spirit/test/x3 toolset=clang-5.0 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
+
+    - os: osx
+      compiler: clang++
+      script:
+        - b2 -j3 libs/spirit/test toolset=clang
+        - b2 -j3 libs/spirit/test/x3 toolset=clang
+
+install:
+  - export SELF=`basename $TRAVIS_BUILD_DIR`
+  - cd ..
+  - git clone -b develop --depth 1 https://github.com/boostorg/boost.git boost-root
+  - cd boost-root
+  - git submodule update -q --init tools/boostdep
+  - git submodule update -q --init tools/build
+  - git submodule update -q --init tools/inspect
+  - cp -r $TRAVIS_BUILD_DIR/* libs/$SELF
+  - export BOOST_ROOT="`pwd`"
+  - export PATH="`pwd`":$PATH 
+  - python tools/boostdep/depinst/depinst.py $SELF
+  - ./bootstrap.sh
+  - ./b2 headers

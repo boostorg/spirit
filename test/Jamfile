@@ -116,11 +116,7 @@ path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
      [ run qi/symbols1.cpp         : : : : qi_symbols1 ]
      [ run qi/symbols2.cpp         : : : : qi_symbols2 ]
      [ run qi/terminal_ex.cpp      : : : : qi_terminal_ex ]
-     [
-         run qi/tst.cpp
-         /boost//system
-         : : : : qi_tst
-     ]
+     [ run qi/tst.cpp              : : : : qi_tst ]
      [ run qi/uint1.cpp            : : : : qi_uint1 ]
      [ run qi/uint2.cpp            : : : : qi_uint2 ]
      [ run qi/uint3.cpp            : : : : qi_uint3 ]

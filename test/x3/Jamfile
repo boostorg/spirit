@@ -98,9 +98,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run symbols1.cpp         : : : : x3_symbols1 ]
      [ run symbols2.cpp         : : : : x3_symbols2 ]
      [ run symbols3.cpp         : : : : x3_symbols3 ]
-     [ run tst.cpp
-       $(BOOST_ROOT)/libs/system/build//boost_system
-                                   : : : : x3_tst ]
+     [ run tst.cpp              : : : : x3_tst ]
      [ run uint1.cpp            : : : : x3_uint1 ]
      [ run uint_radix.cpp       : : : : x3_uint_radix ]
 
