@@ -10,4 +10,4 @@ executable.
 
 Branch             | Linux/OSX        | Windows           |Coverage          
 -------------------|------------------|-------------------|------------------
-travis_integration | [![Build Status](https://travis-ci.org/octopus-prime/spirit.svg?branch=travis_integration)](https://travis-ci.org/octopus-prime/spirit.svg?branch=travis_integration) | |
+travis_integration | [![Build Status](https://travis-ci.org/octopus-prime/spirit.svg?branch=travis_integration)](https://travis-ci.org/octopus-prime/spirit.svg?branch=travis_integration) | [![Build status](https://ci.appveyor.com/api/projects/status/fixjy7iuw4u3tstdkgwb/branch/travis_integration?svg=true)](https://ci.appveyor.com/project/octopus-prime/spirit/branch/travis_integration) |
