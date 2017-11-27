@@ -18,7 +18,9 @@ matrix:
           sources:
             - *toolchains
       compiler: g++-7
-      script: b2 -j3 libs/spirit/test toolset=gcc-7 cxxstd=14
+      script:
+        - b2 -j3 libs/spirit/test toolset=gcc-7
+        - b2 -j3 libs/spirit/test/x3 toolset=gcc-7
 
     - os: linux
       addons:
@@ -29,11 +31,15 @@ matrix:
           sources:
             - *toolchains
       compiler: clang++-5.0
-      script: b2 -j3 libs/spirit/test toolset=clang-5.0 cxxstd=14 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
+      script:
+        - b2 -j3 libs/spirit/test toolset=clang-5.0 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
+        - b2 -j3 libs/spirit/test/x3 toolset=clang-5.0 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
 
     - os: osx
       compiler: clang++
-      script: b2 -j3 libs/spirit/test toolset=clang cxxstd=14
+      script:
+        - b2 -j3 libs/spirit/test toolset=clang
+        - b2 -j3 libs/spirit/test/x3 toolset=clang
 
 install:
   - cd ..
