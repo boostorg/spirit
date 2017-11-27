@@ -1,5 +1,5 @@
 #==============================================================================
-#   Copyright (c) 2001-2013 Joel de Guzman
+#   Copyright (c) 2001-2011 Joel de Guzman
 #   Copyright (c) 2001-2012 Hartmut Kaiser
 #   Copyright (c)      2011 Bryce Lelbach
 #
@@ -8,24 +8,19 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-import modules ;
-import feature ;
 import testing ;
 
 ###############################################################################
 
-project spirit-x3
+project spirit-qi
     : requirements
         <include>.
         <c++-template-depth>512
-        <toolset>gcc:<cxxflags>-std=c++1y
-        <toolset>clang:<cxxflags>-std=c++1y
-        <toolset>darwin:<cxxflags>-std=c++1y
     ;
 
 ###############################################################################
 
-local subproject-name = x3 ;
+local subproject-name = qi ;
 
 rule run ( sources + : args * : input-files *
          : requirements * : target-name ? : default-build * )
@@ -51,56 +46,99 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 ###############################################################################
 
+compile-fail grammar_fail.cpp ;
+compile-fail rule_fail.cpp ;
 run actions.cpp ;
+run actions2.cpp ;
 run alternative.cpp ;
-run and_predicate.cpp ;
-run any_parser.cpp ;
 run attr.cpp ;
+run attribute1.cpp ;
+run attribute2.cpp ;
+run and_predicate.cpp ;
+run auto.cpp ;
 run binary.cpp ;
-run bool.cpp ;
+run bool1.cpp ;
+run bool2.cpp ;
 run char1.cpp ;
+run char2.cpp ;
 run char_class.cpp ;
 run debug.cpp ;
 run difference.cpp ;
-run eoi.cpp ;
-run eol.cpp ;
+run encoding.cpp ;
+run end.cpp ;
 run eps.cpp ;
 run expect.cpp ;
+run expectd.cpp ;
+run grammar.cpp ;
 run int1.cpp ;
+run int2.cpp ;
+run int3.cpp ;
 run kleene.cpp ;
+run lazy.cpp ;
 run lexeme.cpp ;
 run lit1.cpp ;
 run lit2.cpp ;
 run list.cpp ;
+run hold.cpp ;
+run match_manip1.cpp ;
+run match_manip2.cpp ;
+run match_manip3.cpp ;
+run match_manip_attr.cpp ;
 run matches.cpp ;
 run no_case.cpp ;
 run no_skip.cpp ;
 run not_predicate.cpp ;
+run omit.cpp ;
 run optional.cpp ;
+run parse_attr.cpp ;
+run pass_container1.cpp ;
+run pass_container2.cpp ;
+run permutation.cpp ;
 run plus.cpp ;
-run with.cpp ;
-
+run range_run.cpp ;
 run raw.cpp ;
 run real1.cpp ;
 run real2.cpp ;
 run real3.cpp ;
 run real4.cpp ;
+run real5.cpp ;
+run repeat.cpp ;
 run rule1.cpp ;
 run rule2.cpp ;
 run rule3.cpp ;
 run rule4.cpp ;
 run sequence.cpp ;
+run sequential_or.cpp ;
 run skip.cpp ;
+run stream.cpp ;
 run symbols1.cpp ;
 run symbols2.cpp ;
-run symbols3.cpp ;
+run terminal_ex.cpp ;
 run tst.cpp /boost//system ;
-
 run uint1.cpp ;
+run uint2.cpp ;
+run uint3.cpp ;
 run uint_radix.cpp ;
+run utree1.cpp ;
+run utree2.cpp ;
+run utree3.cpp ;
+run utree4.cpp ;
 
-run confix.cpp ;
-run repeat.cpp ;
-run seek.cpp ;
+compile pass_container3.cpp ;
+compile regression_attr_with_action.cpp ;
+compile regression_container_attribute.cpp ;
+compile regression_debug_optional.cpp ;
+compile regression_fusion_proto_spirit.cpp ;
+compile regression_one_element_fusion_sequence.cpp ;
+compile regression_one_element_sequence_attribute.cpp ;
 
-run x3_variant.cpp ;
+run regression_adapt_adt.cpp ;
+run regression_clear.cpp ;
+#run regression_float_fraction.cpp ;
+run regression_lazy_repeat.cpp ;
+run regression_numeric_alternatives.cpp ;
+run regression_reorder.cpp ;
+run regression_repeat.cpp ;
+run regression_transform_assignment.cpp ;
+run regression_binary_action.cpp ;
+run regression_stream_eof.cpp ;
