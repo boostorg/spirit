@@ -178,14 +178,23 @@ main()
 
     static_assert(is_reservable<std::vector<int>>::value, "is_reservable problem");
     static_assert(is_reservable<std::string>::value, "is_reservable problem");
-    static_assert(is_reservable<std::unordered_set<int>>::value, "is_reservable problem");
     static_assert(is_reservable<boost::unordered_set<int>>::value, "is_reservable problem");
-    static_assert(is_reservable<std::unordered_multiset<int>>::value, "is_reservable problem");
     static_assert(is_reservable<boost::unordered_multiset<int>>::value, "is_reservable problem");
-    static_assert(is_reservable<std::unordered_map<int,int>>::value, "is_reservable problem");
     static_assert(is_reservable<boost::unordered_map<int,int>>::value, "is_reservable problem");
-    static_assert(is_reservable<std::unordered_multimap<int,int>>::value, "is_reservable problem");
     static_assert(is_reservable<boost::unordered_multimap<int,int>>::value, "is_reservable problem");
+
+#ifdef _WIN32
+    static_assert(!is_reservable<std::unordered_set<int>>::value, "is_reservable problem");
+    static_assert(!is_reservable<std::unordered_multiset<int>>::value, "is_reservable problem");
+    static_assert(!is_reservable<std::unordered_map<int,int>>::value, "is_reservable problem");
+    static_assert(!is_reservable<std::unordered_multimap<int,int>>::value, "is_reservable problem");
+#else
+    static_assert(is_reservable<std::unordered_set<int>>::value, "is_reservable problem");
+    static_assert(is_reservable<std::unordered_multiset<int>>::value, "is_reservable problem");
+    static_assert(is_reservable<std::unordered_map<int,int>>::value, "is_reservable problem");
+    static_assert(is_reservable<std::unordered_multimap<int,int>>::value, "is_reservable problem");
+#endif
+
 
     static_assert(!is_reservable<std::deque<int>>::value, "is_reservable problem");
     static_assert(!is_reservable<std::list<int>>::value, "is_reservable problem");
