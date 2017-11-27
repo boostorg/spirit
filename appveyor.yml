@@ -1,0 +1,102 @@
+# Copyright 2016, 2017 Peter Dimov
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+
+# When copying this to a new library, be sure to update the name of the library
+# in two places (once each at the top of install: and test_script:)
+
+version: 1.0.{build}-{branch}
+
+shallow_clone: true
+
+#branches:
+#  only:
+#    - develop
+#    - master
+
+matrix:
+  allow_failures:
+    - MAYFAIL: true
+
+environment:
+  global:
+    # see: http://www.boost.org/build/doc/html/bbv2/overview/invocation.html#bbv2.overview.invocation.properties
+    # to use the default for a given environment, comment it out; recommend you build debug and release however..
+    # on Windows it is important to exercise all the possibilities, especially shared vs static
+    # B2_ADDRESS_MODEL: address-model=64,32
+#    B2_LINK: link=shared,static
+#    B2_THREADING: threading=multi,single
+#    B2_VARIANT: variant=release,debug
+
+    B2_ADDRESS_MODEL: address-model=64
+    B2_LINK: link=shared
+    B2_THREADING: threading=multi
+    B2_VARIANT: variant=release
+
+  matrix:
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+#      TOOLSET: msvc-10.0
+#      COMMENT: Visual Studio 2010
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+  #   TOOLSET: msvc-11.0
+  #   COMMENT: Visual Studio 2012
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+  #   TOOLSET: msvc-12.0
+  #   COMMENT: Visual Studio 2013
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+  #   TOOLSET: msvc-14.0
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      TOOLSET: msvc-14.1
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+#      ADDPATH: C:\cygwin\bin;
+#      TOOLSET: gcc
+#      CXXFLAGS: cxxflags=-std=c++03
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+  #   ADDPATH: C:\cygwin\bin;
+  #   TOOLSET: gcc
+  #   CXXFLAGS: cxxflags=-std=c++11
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+  #   ADDPATH: C:\mingw\bin;
+  #   TOOLSET: gcc
+  #   CXXFLAGS: cxxflags=-std=c++03
+  #   MAYFAIL: true
+  #   COMMENT: serialization and mingw compatibility issues
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+  #   ADDPATH: C:\mingw\bin;
+  #   TOOLSET: gcc
+  #   CXXFLAGS: cxxflags=-std=c++11
+  #   MAYFAIL: true
+  #   COMMENT: serialization and mingw compatibility issues
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+#      ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
+#      TOOLSET: gcc
+#      CXXFLAGS: cxxflags=-std=c++03
+#      MAYFAIL: true
+#      COMMENT: serialization and mingw compatibility issues
+  # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+  #   ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
+  #   TOOLSET: gcc
+  #   CXXFLAGS: cxxflags=-std=c++11
+  #   MAYFAIL: true
+  #   COMMENT: serialization and mingw compatibility issues
+
+install:
+  - set SELF=spirit
+  - cd ..
+  - git clone -b develop --depth 1 https://github.com/boostorg/boost.git boost-root
+  - cd boost-root
+  - git submodule update --init tools/boostdep
+  - git submodule update --init tools/build
+  - git submodule update --init tools/inspect
+  - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\%SELF%
+  - python tools/boostdep/depinst/depinst.py %SELF%
+  - cmd /c bootstrap
+  - b2 headers
+
+build: off
+
+test_script:
+  - set SELF=spirit
+  - PATH=%ADDPATH%%PATH%
+  - b2 libs/%SELF%/test toolset=%TOOLSET% %CXXFLAGS% %B2_ADDRESS_MODEL% %B2_LINK% %B2_THREADING% %B2_VARIANT% -j3
+  - b2 libs/%SELF%/test/x3 toolset=%TOOLSET% %CXXFLAGS% %B2_ADDRESS_MODEL% %B2_LINK% %B2_THREADING% %B2_VARIANT% -j3
