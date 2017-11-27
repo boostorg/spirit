@@ -2,6 +2,12 @@ sudo: false
 
 language: cpp
 
+addons:
+  apt:
+    sources: &toolchains
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-trusty-5.0
+
 matrix:
   include:
     - os: linux
@@ -10,7 +16,7 @@ matrix:
           packages:
             - g++-7
           sources:
-            - ubuntu-toolchain-r/test
+            - *toolchains
       compiler: g++-7
       script: b2 -j3 libs/spirit/test toolset=gcc-7 cxxstd=14
 
@@ -21,7 +27,7 @@ matrix:
             - clang++-5.0
             - libc++-dev
           sources:
-            - llvm-toolchain-trusty-5.0
+            - *toolchains
       compiler: clang++-5.0
       script: b2 -j3 libs/spirit/test toolset=clang-5.0 cxxstd=14 cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"
 
