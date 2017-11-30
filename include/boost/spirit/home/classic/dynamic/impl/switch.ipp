@@ -12,6 +12,7 @@
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/inc.hpp>
@@ -445,7 +446,7 @@ inline typename parser_result<
 compound_case_parser<LeftT, RightT, IsDefault>::
     parse(ScannerT const& scan, CondT const &cond) const
 {
-    scan.at_end();    // allow skipper to take effect
+    ignore_unused(scan.at_end());    // allow skipper to take effect
     return parse_switch<value, case_chain<self_t>::depth, is_default>::
         do_(*this, scan, cond(scan), scan.first);
 }
