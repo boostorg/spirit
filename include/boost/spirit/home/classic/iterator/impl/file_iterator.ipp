@@ -130,7 +130,7 @@ public:
 
     void advance(std::ptrdiff_t n)
     {
-        m_pos += n * sizeof(CharT);
+        m_pos += static_cast<long>(n) * sizeof(CharT);
         update_char();
     }
 
