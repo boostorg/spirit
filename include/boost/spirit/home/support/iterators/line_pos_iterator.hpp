@@ -126,9 +126,6 @@ namespace boost { namespace spirit
     template <class Iterator>
     inline Iterator get_line_start(Iterator lower_bound, Iterator current)
     {
-        // cover LF,CR+LF,CR,LF+RF.
-        // but if *current == '\r' or *current == '\n',
-        //          result will be something worng.
         Iterator latest = lower_bound;
         bool prev_was_newline = false;
         for (Iterator i = lower_bound; i != current; ++i) {
@@ -146,7 +143,6 @@ namespace boost { namespace spirit
     template <class Iterator>
     inline Iterator get_line_end(Iterator current, Iterator upper_bound)
     {
-        // if current is at '\r' or '\n',may return something unexpected.
         for (Iterator i = current; i != upper_bound; ++i) {
             if ((*i == '\n') || (*i == '\r')) {
                 return i;
@@ -162,7 +158,6 @@ namespace boost { namespace spirit
                      Iterator current,
                      Iterator upper_bound)
     {
-        // if *current is '\r' or '\n', result will something unexpected.
         Iterator first = get_line_start(lower_bound, current);
         Iterator last = get_line_end(current, upper_bound);
         return iterator_range<Iterator>(first, last);
