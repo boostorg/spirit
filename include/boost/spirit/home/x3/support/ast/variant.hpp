@@ -143,7 +143,7 @@ namespace boost { namespace spirit { namespace x3
             : var(rhs) {}
 
         template <typename T, class = non_self_t<T>>
-        explicit variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>{}))
+        explicit variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))  // `::value` is a workaround for the VS2015 bug
             : var(std::forward<T>(rhs)) {}
 
         variant(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_constructible<variant_type>{})
@@ -175,7 +175,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename T, class = non_self_t<T>>
-        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>{}))
+        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))  // `::value` is a workaround for the VS2015 bug
         {
             var = std::forward<T>(rhs);
             return *this;
