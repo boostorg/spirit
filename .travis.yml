@@ -1,0 +1,181 @@
+#==============================================================================
+#   Copyright (c) 2016-2017 Nikita Kniazev
+#
+#   Use, modification and distribution is subject to the Boost Software
+#   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+
+language: cpp
+
+sudo: false
+
+addon_shortcuts:
+  clang50: &clang50
+    apt:
+      sources:
+        - llvm-toolchain-trusty-5.0
+      packages:
+        - clang-5.0
+        - libc++-dev
+
+  gcc6: &gcc6
+    apt:
+      sources:
+        - ubuntu-toolchain-r-test
+      packages:
+        - gcc-6
+        - g++-6
+
+  # GCC 7 installs three times slower than GCC 6
+  gcc7: &gcc7
+    apt:
+      sources:
+        - ubuntu-toolchain-r-test
+      packages:
+        - gcc-7
+        - g++-7
+
+os: linux
+dist: trusty
+
+env:
+  global:
+    - PROJECT=libs/spirit
+    - BOOST_ROOT=$HOME/boost
+    - BOOST_BUILD_PATH=$HOME/build-boost
+    - TEST_LINK_DEPS=date_time,filesystem,regex,system
+
+matrix:
+  include:
+    ### Spirit 3
+    - { env: 'STD=14  JOB=test/x3          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=14  JOB=test/x3          TOOLSET=gcc-7', compiler: gcc-7, addons: *gcc7 }
+    ### Spirit 2
+    ## Clang
+    # 11
+    - { env: 'STD=11  JOB=test/qi          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=11  JOB=test/karma       TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=11  JOB=test/lex         TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=11  JOB=test/support     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=11  JOB=repository/test  TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    # 03
+    - { env: 'STD=03  JOB=test/qi          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03  JOB=test/karma       TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03  JOB=test/lex         TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03  JOB=test/support     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03  JOB=repository/test  TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    ## GCC
+    # 11
+    - { env: 'STD=11  JOB=test/qi          TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=11  JOB=test/karma       TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=11  JOB=test/lex         TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=11  JOB=test/support     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=11  JOB=repository/test  TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    # 03
+    - { env: 'STD=03  JOB=test/qi          TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03  JOB=test/karma       TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03  JOB=test/lex         TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03  JOB=test/support     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03  JOB=repository/test  TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    ### Spirit 1
+    - { env: 'STD=03  JOB=classic/test     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03  JOB=classic/test     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+
+cache: ccache
+
+before_install:
+  - export CACHE_NAME=$TRAVIS_OS_NAME-$TOOLSET-$STD-$JOB
+  - export PATH=$BOOST_ROOT:$PATH
+  - if [[ "$TOOLSET" =~ ^clang- ]]; then export STDLIB=stdlib=libc++ ; fi
+  - |
+    # Creating ~/user-config.jam file
+    sed 's/^  //' > ~/user-config.jam << 'EOF'
+
+    import common ;
+    import feature ;
+    import os ;
+    import regex ;
+    import toolset ;
+
+
+    # Ccache
+    local CCACHE = [ common.find-tool ccache ] ;
+    local TOOLSET = [ os.environ TOOLSET ] ;
+    local toolset-parts = [ regex.split $(TOOLSET) "-" ] ;
+    local toolset-name = $(toolset-parts[1]) ;
+    local toolset-feature = $(toolset-parts[2-]:J="-") ;
+
+    local cxx ;
+    switch $(toolset-name) {
+        case gcc   : cxx ?= [ regex.replace $(TOOLSET) "gcc" "g++" ] ;
+        case clang : cxx ?= [ regex.replace $(TOOLSET) "clang" "clang++" ] ;
+        case *     : EXIT "user-config: Unsupported toolset $(toolset-name)" ;
+    }
+
+    using $(toolset-name) : $(toolset-feature) : $(CCACHE) $(cxx) ;
+
+
+    # Extend stdlib with libc++
+    feature.extend stdlib : libc++ ;
+    feature.compose <stdlib>libc++ : <cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++ ;
+
+
+    # Ignore some warnings
+    feature.feature known-warnings : suppress : optional incidental propagated ;
+    toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
+        -Wno-uninitialized -Wno-bool-operation -Wno-sign-compare : unchecked ;
+    toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
+        -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
+        -Wno-nested-anon-types # Boost.Random
+        -Wno-uninitialized -Wno-invalid-source-encoding : unchecked ;
+
+  - |
+    # Determining the root branch
+    if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      export BRANCH=$TRAVIS_BRANCH
+    else
+      # It is a pull request. Retrieve the base branch from GitHub
+      GH_PR_API=https://api.github.com/repos/$TRAVIS_REPO_SLUG/pulls/$TRAVIS_PULL_REQUEST
+      export BRANCH=`curl -s $GH_PR_API | jq -r .head.ref`;
+    fi
+    if [[ ! "$BRANCH" =~ ^(master|develop)$ ]]; then
+      # Travis has been triggered not from our main branches.
+      # Find out the base branch from the git history
+      # TODO: Not implemented yet, but in most cases it will be develop branch
+      export BRANCH=develop
+    fi
+    echo Root branch is $BRANCH
+
+  # Dump environment variables
+  - env
+
+  # Sadly git's --shallow-submodules has hardcoded depth of 1 commit
+  # Patch the git binary with a little more depth to deal with boost-commitbot's lag
+  - sed 's/--depth=1/--depth=9/g' `which git` > ~/git && chmod +x ~/git
+
+  # Checkout Boost
+  - ~/git clone -j10 --branch=$BRANCH --depth=1 --quiet
+      --recurse-submodules=":(exclude)$PROJECT" --shallow-submodules
+      https://github.com/boostorg/boost.git $BOOST_ROOT
+  - pushd $BOOST_ROOT
+  # Remove the empty folder
+  - rm -rf $PROJECT
+  - ./bootstrap.sh --with-toolset=clang --with-libraries=$TEST_LINK_DEPS
+    || ( echo === bootstrap.log === ; cat bootstrap.log ; exit 1 ; )
+  - ./b2 headers
+  - ./b2 -j`nproc` link=shared threading=multi variant=release
+      toolset=$TOOLSET cxxstd=${STD#*,} $STDLIB
+      warnings=off
+
+  # Move the repository to boost/libs and make a link to previous place
+  - mv $TRAVIS_BUILD_DIR $PROJECT
+  - ln -s $PROJECT $TRAVIS_BUILD_DIR
+
+  - cd $PROJECT
+  - cd $JOB
+
+script:
+  - b2 -j`nproc` link=shared threading=multi variant=release
+      toolset=$TOOLSET cxxstd=$STD $STDLIB
+      warnings=on known-warnings=suppress warnings-as-errors=on

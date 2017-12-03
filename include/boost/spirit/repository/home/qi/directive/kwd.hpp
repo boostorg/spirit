@@ -160,7 +160,7 @@ template <typename T>
     {
         kwd_pass_iterator() {}
         bool flag_init() const { return true; }
-        bool register_successful_parse(bool &flag,T &i) const {
+        bool register_successful_parse(bool &flag,T &/*i*/) const {
             flag=true;
             return true;
         }
@@ -650,7 +650,7 @@ namespace boost { namespace spirit { namespace qi
                         );
         }
         template <typename Terminal>
-        result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& modifiers, boost::mpl::true_ ) const
+        result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& /*modifiers*/, boost::mpl::true_ ) const
         {
            return create_kwd_string(term,subject,no_case());
         }
@@ -721,7 +721,7 @@ namespace boost { namespace spirit { namespace qi
                         );
         }
         template <typename Terminal>
-        result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& modifiers, boost::mpl::true_ ) const
+        result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& /*modifiers*/, boost::mpl::true_ ) const
         {
            return create_kwd_string(term,subject,no_case());
         }
@@ -896,7 +896,7 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Terminal>
         result_type operator()(
-            Terminal const& term, Subject const& subject, Modifiers const& modifiers) const
+            Terminal const& term, Subject const& subject, Modifiers const& /*modifiers*/) const
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
@@ -919,7 +919,7 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Terminal>
         result_type operator()(
-            Terminal const& term, Subject const& subject, Modifiers const& modifiers) const
+            Terminal const& term, Subject const& subject, Modifiers const& /*modifiers*/) const
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;

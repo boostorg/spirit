@@ -130,7 +130,7 @@ main()
               const rule_b<r_id> r;
               derived():r{"r_rule"}{}
               
-              BOOST_SPIRIT_DER_DEFINE(r = (a | b) >> (r | b))            
+              BOOST_SPIRIT_CRTP_DEFINE(r = (a | b) >> (r | b))            
             };
             derived d;
             recur_tests(d.r);

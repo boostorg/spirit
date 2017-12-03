@@ -123,10 +123,19 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     //  2 decimal places Max
     template <typename Iterator, typename Attribute>
     static bool
-    parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr,
+                 int& frac_digits)
     {
-        return boost::spirit::qi::
+        Iterator savef = first;
+        bool r = boost::spirit::qi::
             extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
+        if (r) {
+            // Optimization note: don't compute frac_digits if T is
+            // an unused_type. This should be optimized away by the compiler.
+            if (!boost::is_same<T, boost::spirit::unused_type>::value)
+                frac_digits = static_cast<int>(std::distance(savef, first));
+        }
+        return r;
     }
 
     //  No exponent
@@ -761,7 +770,7 @@ main()
         test_parser("Hello", lazy(val(string("Hello"))));
 
         //` The above is equivalent to:
-        test_parser("Hello", val(string("Hello")));
+        test_parser("Hello", string("Hello"));
         //]
     }
 

@@ -17,7 +17,7 @@
 #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
   #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP 1
   //^Like BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS, but instead
-  //of using BOOST_SPIRIT_DEFINE, use BOOST_SPIRIT_DER_DEFINE
+  //of using BOOST_SPIRIT_DEFINE, use BOOST_SPIRIT_CRTP_DEFINE
   //with the crtp design pattern:
   //  https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern
   //to connect the rule with it's rhs.

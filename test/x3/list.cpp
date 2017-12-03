@@ -5,11 +5,12 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <string>
-#include <vector>
-#include <set>
-#include <map>
 
 #include <boost/detail/lightweight_test.hpp>
+#define LJE_DEBUG_CONTAINER_OF_OPTIONALS
+#ifdef LJE_DEBUG_CONTAINER_OF_OPTIONALS
+#include "../../workbench/x3/type_name.hpp"
+#endif
 #include <boost/spirit/home/x3.hpp>
 
 #include <string>
@@ -22,7 +23,7 @@ int
 main()
 {
     using namespace boost::spirit::x3::ascii;
-
+  #ifndef LJE_DEBUG_CONTAINER_OF_OPTIONALS
     {
         BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ','));
         BOOST_TEST(test("a,b,c,d,e,f,g,h,", char_ % ',', false));
@@ -76,7 +77,7 @@ main()
         BOOST_TEST(4 == v.size() && "a" == v[0] && "b" == v[1]
             && "c" == v[2] && "d" == v[3]);
     }
-
+  #endif//LJE_DEBUG_CONTAINER_OF_OPTIONALS
     {
         std::vector<boost::optional<char> > v;
         BOOST_TEST(test_attr("#a,#", ('#' >> -alpha) % ',', v));
@@ -87,7 +88,7 @@ main()
         BOOST_TEST(test_attr("#a,#", ('#' >> -alpha) % ',', v2));
         BOOST_TEST(1 == v2.size() && 'a' == v2[0]);
     }
-
+  #ifndef LJE_DEBUG_CONTAINER_OF_OPTIONALS
     { // actions
         using boost::spirit::x3::_attr;
 
@@ -97,6 +98,6 @@ main()
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[f]));
         BOOST_TEST(s == "abcdefgh");
     }
-
+  #endif//LJE_DEBUG_CONTAINER_OF_OPTIONALS
     return boost::report_errors();
 }

@@ -97,12 +97,18 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 traits::container_value<Attribute>::type
             value_type;
             value_type val = traits::value_initialize<value_type>::call();
-
+          #if defined(LJE_DEBUG_CONTAINER_OF_OPTIONALS) && BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+            std::cout<<__func__<<"\n";
+            std::cout<<":type_name<Parser>="<<type_name<Parser>()<<"\n";
+            std::cout<<":type_name<value_type>="<<type_name<value_type>()<<"\n";
+            return parser.parse(first, last, context, rcontext, unused);
+          #else
             if (!parser.parse(first, last, context, rcontext, val))
                 return false;
 
             // push the parsed value into our attribute
             traits::push_back(attr, val);
+          #endif
             return true;
         }
 
@@ -245,6 +251,15 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 parser, first, last, context, rcontext, attr);
         }
 
+        template <typename Iterator>
+        static bool call(
+            Parser const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, unused_type attr, mpl::true_)
+        {
+            return parser.parse(first, last, context, rcontext, attr);
+        }
+
         template <typename Iterator, typename Attribute>
         static bool call(
             Parser const& parser
@@ -256,7 +271,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             Attribute rest;
             bool r = parser.parse(first, last, context, rcontext, rest);
             if (r)
-                attr.insert(attr.end(), rest.begin(), rest.end());
+                traits::append(attr, rest.begin(), rest.end());
             return r;
         }
 
