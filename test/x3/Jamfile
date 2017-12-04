@@ -116,4 +116,4 @@ run repeat.cpp ;
 run seek.cpp ;
 
 run x3_variant.cpp ;
-run error_handler.cpp /boost//system ;
+run error_handler.cpp /boost//system /boost//filesystem ;
