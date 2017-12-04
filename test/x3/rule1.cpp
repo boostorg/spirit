@@ -37,6 +37,8 @@ namespace rules
         = lit('c');
 }
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
+//Can't use context to connect rhs to lhs of rule;
+//hence, must use namespace and BOOST_SPIRIT_DEFINE.
 namespace recur_lit
 {
         using x3::rule;

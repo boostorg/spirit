@@ -54,6 +54,13 @@ struct my_attribute
     }
 };
 
+namespace rule_defs
+{
+    using boost::spirit::x3::rule;
+    auto a = rule<class a>() = 'a';
+    auto b = rule<class b>() = 'b';
+    auto c = rule<class c>() = 'c';
+}
 int
 main()
 {
@@ -67,12 +74,10 @@ main()
     using boost::spirit::x3::alpha;
 
     //~ namespace phx = boost::phoenix;
+    
+    using namespace rule_defs;
 
     { // basic tests
-
-        auto a = rule<class a>("a") = 'a';
-        auto b = rule<class b>("b") = 'b';
-        auto c = rule<class c>("c") = 'c';
 
         {
             auto start = *(a | b | c);
@@ -80,34 +85,53 @@ main()
         }
 
         {
+            auto recur_tests_not_space=[](auto start)
+            {
+                BOOST_TEST(test("aaaabababaaabbb", start));
+                BOOST_TEST(test("aaaabababaaabba", start, false));
+            };
+            auto recur_tests_yes_space=[](auto start)
+            {
+                BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start, space));
+                BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
+            };
+          #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
+            #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+              struct derived:boost::spirit::x3::gram_base<derived>
+              {
+                struct r_id{};
+                const rule_b<r_id> r;
+                derived():r{"r_rule"}{}
+                  
+                BOOST_SPIRIT_CRTP_DEFINE(r = (a | b) >> (r | b))            
+              };
+              derived d;
+              recur_tests_not_space(d.r);
+              recur_tests_yes_space(d.r);
+            #else
+              //Can't use context to store connection between
+              //rhs and lhs of rule; and namespace is not
+              //provided to enable use of BOOST_SPIRIT_DEFINE
+              //to do the connection; so, must do nothing.
+            #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
+          #else
             rule<class start> start("start");
             auto start_def =
                 start = (a | b) >> (start | b);
+            recur_tests_not_space(start_def);                
+            recur_tests_yes_space(start_def);                
+          #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
 
-            BOOST_TEST(test("aaaabababaaabbb", start_def));
-            BOOST_TEST(test("aaaabababaaabba", start_def, false));
         }
     }
 
     { // basic tests w/ skipper
-
-        auto a = rule<class a>("a") = 'a';
-        auto b = rule<class b>("b") = 'b';
-        auto c = rule<class c>("c") = 'c';
 
         {
             auto start = *(a | b | c);
             BOOST_TEST(test(" a b c a b c a c b ", start, space));
         }
 
-        {
-            rule<class start> start("start");
-            auto start_def =
-                start = (a | b) >> (start | b);
-
-            BOOST_TEST(test(" a a a a b a b a b a a a b b b ", start_def, space));
-            BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start_def, space, false));
-        }
     }
 
     { // std::container attributes

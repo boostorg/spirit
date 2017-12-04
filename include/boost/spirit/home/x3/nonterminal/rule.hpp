@@ -79,7 +79,7 @@ namespace boost { namespace spirit { namespace x3
     
     template <typename ID, typename Attribute, typename Iterator
       , typename Context, typename ActualAttribute>
-    bool
+    inline detail::default_parse_rule_result
     parse_rule(
         rule<ID, Attribute> rule_
       , Iterator& first, Iterator const& last

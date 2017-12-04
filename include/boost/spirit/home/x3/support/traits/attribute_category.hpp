@@ -17,6 +17,7 @@
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/optional_traits.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -70,7 +71,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         : mpl::identity<variant_attribute> {};
 
     template <typename T>
-    struct attribute_category<boost::optional<T>>
+    struct attribute_category<T,
+        typename enable_if<traits::is_optional<T>>::type>
         : mpl::identity<optional_attribute> {};
 
     template <typename T>

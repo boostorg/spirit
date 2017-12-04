@@ -30,7 +30,7 @@ namespace boost { namespace spirit { namespace x3
     struct rule;
 
     struct parse_pass_context_tag;
-
+    
     namespace detail
     {
         // we use this so we can detect if the default parse_rule
@@ -52,6 +52,7 @@ namespace boost { namespace spirit { namespace x3
         rule<ID, Attribute> rule_
       , Iterator& first, Iterator const& last
       , Context const& context, ActualAttribute& attr);
+      
 }}}
 
 namespace boost { namespace spirit { namespace x3 { namespace detail

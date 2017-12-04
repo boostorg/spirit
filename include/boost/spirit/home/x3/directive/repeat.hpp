@@ -98,10 +98,9 @@ namespace boost { namespace spirit { namespace x3
     struct repeat_gen
     {
         template<typename Subject>
-        kleene<typename extension::as_parser<Subject>::value_type>
-        operator[](Subject const& subject) const
+        auto operator[](Subject const& subject) const
         {
-            return { as_parser(subject) };
+            return *as_parser(subject);
         }
 
         template <typename T>
