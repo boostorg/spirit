@@ -118,3 +118,5 @@ run seek.cpp ;
 run x3_variant.cpp ;
 run container_support.cpp ;
 run [ glob linker_error_example/*.cpp ] ;
+run error_handler.cpp /boost//system /boost//filesystem ;
+

@@ -367,16 +367,23 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_INSTANTIATE.
 */
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE parse_no_xform
+#else
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE parse
+#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE  
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1910)
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
+    using BOOST_PP_CAT(rule_name, _synonym) = decltype(rule_name);              \
     template <typename Iterator, typename Context, typename Attribute>          \
     inline bool parse_rule(                                                     \
-        decltype(rule_name) /* rule_ */                                         \
+        BOOST_PP_CAT(rule_name, _synonym) /* rule_ */                           \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, Attribute& attr)                                \
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
-        return def_.parse_no_xform(first, last, context, attr);                 \
+        return def_.                                                            \
+          BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE(first, last, context, attr);  \
     }                                                                           \
     /***/
 #else
@@ -389,11 +396,12 @@ namespace boost { namespace spirit { namespace x3
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
-        return def_.parse(first, last, context, unused, attr);                  \
+        return def_.                                                            \
+          BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE(first, last, context, attr);  \
     }                                                                           \
     /***/
-#endif//BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
-
+#endif
+#undef BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE
 /*!
   \def BOOST_SPIRIT_DEFINE(r1,r2,...rn)
     call BOOST_SPIRIT_DEFINE_(_,_,r) for each r in r1,r2,...rn.
