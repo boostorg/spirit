@@ -16,6 +16,7 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/spirit/home/qi/operator/kleene.hpp>
+#include <boost/spirit/home/qi/string/lit.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/qi/detail/fail_function.hpp>
