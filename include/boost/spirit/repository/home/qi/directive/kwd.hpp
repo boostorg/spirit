@@ -16,6 +16,7 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/spirit/home/qi/operator/kleene.hpp>
+#include <boost/spirit/home/qi/string/lit.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/qi/detail/fail_function.hpp>
@@ -148,11 +149,17 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using repository::kwd;
     using repository::ikwd;
     using repository::dkwd;
     using repository::idkwd;
     using spirit::inf;
+#endif
+    using repository::kwd_type;
+    using repository::ikwd_type;
+    using repository::dkwd_type;
+    using repository::idkwd_type;
     using spirit::inf_type;
 
 template <typename T>
