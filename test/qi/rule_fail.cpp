@@ -13,7 +13,6 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
 
 // this test must fail compiling
 int main()
