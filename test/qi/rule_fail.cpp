@@ -18,7 +18,7 @@ using namespace boost::spirit::qi;
 int main()
 {
     char const* input = "some input, it doesn't matter";
-    char const* end = &input[strlen(input)+1];
+    char const* end = &input[strlen(input)];
 
     rule<char const*, rule<char const*> > def;
     def = int_ >> *(',' >> int_);
