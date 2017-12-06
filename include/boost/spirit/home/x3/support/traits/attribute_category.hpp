@@ -15,6 +15,7 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
+#include <boost/spirit/home/x3/support/traits/is_range.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/optional_traits.hpp>
 
@@ -32,6 +33,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     struct associative_attribute {};
     struct variant_attribute {};
     struct optional_attribute {};
+    struct range_attribute {};
 
     template <typename T, typename Enable = void>
     struct attribute_category
@@ -47,21 +49,21 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename T>
     struct attribute_category< T
-	, typename enable_if<
-	      typename mpl::eval_if< 
-		  fusion::traits::is_sequence<T>
-		  , fusion::traits::is_associative<T>
-		  , mpl::false_
-		  >::type >::type >
+    , typename enable_if<
+          typename mpl::eval_if<
+          fusion::traits::is_sequence<T>
+          , fusion::traits::is_associative<T>
+          , mpl::false_
+          >::type >::type >
         : mpl::identity<associative_attribute> {};
 
     template <typename T>
     struct attribute_category< T
-	, typename enable_if<
-	      mpl::and_<
-		  fusion::traits::is_sequence<T>
-		  , mpl::not_<fusion::traits::is_associative<T> > 
-		  > >::type >
+    , typename enable_if<
+          mpl::and_<
+          fusion::traits::is_sequence<T>
+          , mpl::not_<fusion::traits::is_associative<T> >
+          > >::type >
         : mpl::identity<tuple_attribute> {};
 
     template <typename T>
@@ -76,7 +78,16 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename T>
     struct attribute_category<T,
-        typename enable_if<traits::is_container<T>>::type>
+        typename enable_if<traits::is_range<T>>::type>
+        : mpl::identity<range_attribute> {};
+
+    template <typename T>
+    struct attribute_category< T
+    , typename enable_if<
+          mpl::and_<
+          traits::is_container<T>
+          , mpl::not_<traits::is_range<T> >
+          > >::type >
         : mpl::identity<container_attribute> {};
 
 }}}}

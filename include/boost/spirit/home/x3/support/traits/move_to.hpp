@@ -17,7 +17,6 @@
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/move.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
-#include <boost/range/iterator_range.hpp>
 #include <utility>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
@@ -175,7 +174,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         
         template <typename Iterator>
         inline void
-        move_to(Iterator first, Iterator last, boost::iterator_range<Iterator>& rng, container_attribute)
+        move_to(Iterator first, Iterator last, boost::iterator_range<Iterator>& rng, range_attribute)
         {
             rng = {first, last};
         }
