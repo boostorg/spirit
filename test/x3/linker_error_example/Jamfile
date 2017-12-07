@@ -20,8 +20,8 @@ project linker_error_example
         <cxxflags>-v
         <cxxflags>-ftemplate-depth-512
         <cxxflags>-std=c++1y
-        <cxxflags>-DBOOST_SPIRIT_ATTR_XFORM_IN_RULE=1
-        <cxxflags>-DBOOST_SPIRIT_GET_RHS_CRTP=1
+        <define>BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS=1
+        <define>BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=1
         <linkflags>-v
     :
     :
@@ -52,7 +52,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 {
     ###########################################################################
-    test-suite spirit_v3/qi :
+    test-suite spirit_v3/x3 :
 
      [ run [ glob *.cpp ]  : : : : linker_error_example ]
 

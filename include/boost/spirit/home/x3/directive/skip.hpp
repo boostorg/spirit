@@ -67,7 +67,7 @@ namespace boost { namespace spirit { namespace x3
           , skipper(skipper)
         {}
 
-       template <typename Iterator, typename Context
+        template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const

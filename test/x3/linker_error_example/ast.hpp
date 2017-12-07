@@ -7,20 +7,28 @@
 
 #include <boost/fusion/adapted/struct.hpp>
 //#define BOOST_SPIRIT_X3_DEBUG
+//#define PRAGMA_X3_DEBUG
+#ifdef PRAGMA_X3_DEBUG
 #ifdef BOOST_SPIRIT_X3_DEBUG
     #pragma message "yesdef(BOOST_SPIRIT_X3_DEBUG)"
 #else
     #pragma message "notdef(BOOST_SPIRIT_X3_DEBUG)"
 #endif
+#endif//PRAGMA_X3_DEBUG
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #define VARIABLE_DEC_OPTIONAL
+  //The reason for this macro is apparent
+  //in example_def.hpp
+//#define PRAGMA_VARIABLE_OPTIONAL
+#ifdef PRAGMA_VARIABLE_OPTIONAL
 #ifdef VARIABLE_DEC_OPTIONAL
     #pragma message "yesdef(VARIABLE_DEC_OPTIONAL)"
     #include <boost/optional/optional_io.hpp>//in response to compile-time err msg.
 #else
     #pragma message "notdef(VARIABLE_DEC_OPTIONAL)"
 #endif
+#endif//PRAGMA_VARIABLE_OPTIONAL
 
 #include <vector>
 #include <string>

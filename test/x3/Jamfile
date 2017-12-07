@@ -116,7 +116,10 @@ run repeat.cpp ;
 run seek.cpp ;
 
 run x3_variant.cpp ;
+run error_handler.cpp /boost//system /boost//filesystem ;
 run container_support.cpp ;
 run [ glob linker_error_example/*.cpp ] ;
-run error_handler.cpp /boost//system /boost//filesystem ;
+run [ glob get_rhs/*.cpp ] : : : <define>USE_DEFINE_ONLY=1 : get_rhs_declare ;
+run get_rhs/main.cpp : : : <define>USE_DEFINE_ONLY=1 : get_rhs_define ;
+compile-fail get_rhs/main.cpp : <define>USE_DEFINE_ONLY=1 <define>SKIP_DEFINE_X=1 : get_rhs_fail ;
 

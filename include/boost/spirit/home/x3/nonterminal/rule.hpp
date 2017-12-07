@@ -8,7 +8,7 @@
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
 #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
-  #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS 1
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS 0
   //^Disable storage of rule_definition<ID,...> in context with ID key.
   //Instead, only use BOOST_SPIRIT_DEFINE to connect the
   //rule with it's rhs (i.e. rule_definition) using overloads
@@ -64,6 +64,7 @@ namespace boost { namespace spirit { namespace x3
             "BOOST_SPIRIT_DEFINE undefined for this rule.");
         return get<ID>(context).parse(first, last, context, unused, attr);
     }
+
   #else
     /*!
      * @brief
@@ -101,8 +102,9 @@ namespace boost { namespace spirit { namespace x3
     {
         rule_undefined(){}
         
-        template <typename Iterator>
-        bool parse(Iterator& first, Iterator last) const
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr) const
         /*! \brief 
          *    Prevent redundant compiletime error in default get_rhs
          *    when static_assert fires.
@@ -122,6 +124,18 @@ namespace boost { namespace spirit { namespace x3
      */
     {};
     
+  #ifdef BOOST_SPIRIT_X3_EXPERIMENTAL_DEFAULT_NS_GET_RHS
+    //TODO:
+    //  Placeholder for future modifications.
+    //  The purpose of this is to allow similar logic
+    //  to be used both for BOOST_SPIRIT_DEFINE*
+    //  and BOOST_SPIRIT_CRTP_DEFINE* code.
+    //  IOW, instead of the parse_rule function, 
+    //  defined above, use get_rhs function, as
+    //  shown in the gram_base<GramDeriv> template
+    //  below.
+    //
+    
     //default get_rhs.
     template< typename ID>
     auto const& get_rhs(get_id<ID>)
@@ -131,11 +145,12 @@ namespace boost { namespace spirit { namespace x3
             //Using just false in the above causes assert to
             //always fire.  Using the above template
             //metafunction call avoids that.
-          , "Undefined rule.  Use BOOST_SPIRIT_DEFINE to define rule."
+          , "Undefined rule. Use BOOST_SPIRIT_DEFINE to define rule."
           );
         static rule_undefined const result;
         return result;
     }
+  #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_DEFAULT_NS_GET_RHS
   #endif//!BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
     template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
     struct rule_definition 
@@ -178,8 +193,11 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, ActualAttribute& attr) const
         /**@brief
-         *  *not* called from BOOST_SPIRIT_DEFINE_; hence,
-         *  the attribute transform must be done to avoid the error
+         *  *this appears in rhs of some grammar expression; hence,
+         *  this parse function is *not* called from the rule::parse function
+         *  (indirectly throught the parse_rule function generated
+         *  by the BOOST_SPIRIT_DEFINE_ macro); 
+         *  hence, rule_attr_transform_f must be called to avoid the error
          *  reported here:
          *    https://sourceforge.net/p/spirit/mailman/message/36093142/
          *  *and* also solve the link problem mentioned elsewhere in
@@ -401,7 +419,12 @@ namespace boost { namespace spirit { namespace x3
     }                                                                           \
     /***/
 #endif
-#undef BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE
+//#undef BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE
+//MAINTENANCE_NOTE:2017-12-06:
+//  ^can't do the above #undef because it causes compile failure
+//   in the test/x3/rule1.cpp.
+//
+
 /*!
   \def BOOST_SPIRIT_DEFINE(r1,r2,...rn)
     call BOOST_SPIRIT_DEFINE_(_,_,r) for each r in r1,r2,...rn.
@@ -509,6 +532,27 @@ namespace boost { namespace spirit { namespace x3
             char const* name;
           };
 
+        //default get_rhs
+        //
+        //(should cause compile time failure with *slighly*
+        //more informative error msg).
+        //To be useful, there should be a using declaration:
+        //  using gram_base<GramDerived>::get_rhs;
+        //in GramDerived.
+        template< typename ID>
+        auto const& get_rhs(get_id<ID> id)
+          {
+            static_assert
+              ( always_false<ID>::value
+                //Using just false in the above causes assert to
+                //always fire.  Using the above template
+                //metafunction call avoids that.
+              , "Undefined rule. Use BOOST_SPIRIT_CRTP_DEFINE to define rule."
+              );
+            static rule_undefined const result;
+            return result;
+          }
+        
         template<typename ID> 
         struct rule_declaration_crtp 
           : GramDeriv 

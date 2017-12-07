@@ -1,5 +1,5 @@
 //Purpose:
-//  Test the BOOST_SPIRIT_DER_* macros in:
+//  Test the BOOST_SPIRIT_CRPT_* macros in:
 //    x3/nonterminal/rule.hpp
 //===========================================
 #include <boost/detail/lightweight_test.hpp>

@@ -6,16 +6,7 @@
 //  Yes.
 //==================================================
 #include "operators.hpp"
-#include <boost/core/demangle.hpp>
-#include <typeinfo>
-  template
-  < typename Type
-  >
-  std::string
-type_name()
-  {
-    return boost::core::demangle(typeid(Type).name());
-  }  
+#include "../type_name.hpp"
 
       template<bool Result>
     struct always_parser
@@ -122,7 +113,7 @@ void test_parse(Parser const& p, char const* in, Context ctx=Context())
 
 namespace simple_gram
 {
-//efine SIMPLE_GRAM
+//#define SIMPLE_GRAM
 #if defined(SIMPLE_GRAM)
   class x_rul{};
   rule<x_rul> const x;

@@ -110,7 +110,7 @@ main()
               recur_tests_yes_space(d.r);
             #else
               //Can't use context to store connection between
-              //rhs and lhs of rule; and namespace is not
+              //rhs and lhs of rule; and a namespace is not
               //provided to enable use of BOOST_SPIRIT_DEFINE
               //to do the connection; so, must do nothing.
             #endif//BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
@@ -159,7 +159,7 @@ main()
     {
         symbols<my_attribute> a{{{ "a", my_attribute{} }}};
 
-        auto b = rule<struct b, my_attribute>("b") = a;
+        auto b = rule<struct b_id, my_attribute>("b") = a;
 
         my_attribute attr;
 

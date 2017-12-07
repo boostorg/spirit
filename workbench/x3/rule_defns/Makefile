@@ -4,12 +4,13 @@ PWD.real := `realpath $(PWD)`
 
 MAIN=rule_defns
 MAIN=rule_defns_bench
+MAIN=static_assert_template
 RULE2RHS_WHICH:=3
 #rule_defns_bench.opts_compile.cmd:=-DRULE2RHS_WHICH=$(RULE2RHS_WHICH)
 #MAIN=parse_rule_def
 #MAIN=parse_rule_crtp
-HOW=clangxx3_9_pkg
 HOW=clangxx5_0_pkg
+HOW=gcc6_20151018
 ifdef USE_MACRO_INCLUDE
 include MACRO_INCLUDE.imk
 else
