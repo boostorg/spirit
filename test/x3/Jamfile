@@ -91,6 +91,7 @@ run not_predicate.cpp ;
 run optional.cpp ;
 run plus.cpp ;
 run with.cpp ;
+<<<<<<< HEAD
 
 run raw.cpp ;
 run real1.cpp ;
@@ -122,4 +123,3 @@ run [ glob linker_error_example/*.cpp ] ;
 run [ glob get_rhs/*.cpp ] : : : <define>USE_DEFINE_ONLY=1 : get_rhs_declare ;
 run get_rhs/main.cpp : : : <define>USE_DEFINE_ONLY=1 : get_rhs_define ;
 compile-fail get_rhs/main.cpp : <define>USE_DEFINE_ONLY=1 <define>SKIP_DEFINE_X=1 : get_rhs_fail ;
-

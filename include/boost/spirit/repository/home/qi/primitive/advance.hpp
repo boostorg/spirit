@@ -6,6 +6,7 @@
 #if !defined(BOOST_SPIRIT_REPOSITORY_QI_ADVANCE_JAN_23_2011_1203PM)
 #define BOOST_SPIRIT_REPOSITORY_QI_ADVANCE_JAN_23_2011_1203PM
 
+#include <boost/spirit/home/support/terminal.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -55,4 +55,3 @@ compile regression_multi_pass_position_iterator.cpp ;
 run regression_multi_pass_error_handler.cpp ;
 run regression_multi_pass_parse.cpp ;
 run regression_line_pos_iterator.cpp ;
-

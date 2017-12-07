@@ -4,9 +4,10 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-#include <boost/spirit/home/x3/support/utility/error_reporting.hpp>
+#include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
 #include <string>
 #include <sstream>
 
@@ -17,7 +18,7 @@ struct error_handler_base
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result on_error(
         Iterator& first, Iterator const& last
-      , Exception const& x, Context const& context)
+      , Exception const& x, Context const& context) const
     {
         std::string message = "Error! Expecting: " + x.which() + " here:";
         auto& error_handler = x3::get<x3::error_handler_tag>(context).get();
@@ -26,14 +27,12 @@ struct error_handler_base
     }
 };
 
-struct test_rule_class;
+struct test_rule_class : x3::annotate_on_success, error_handler_base {};
 
 x3::rule<test_rule_class> const test_rule;
 auto const test_rule_def = x3::lit("foo") > x3::lit("bar") > x3::lit("git");
 
 BOOST_SPIRIT_DEFINE(test_rule);
-
-struct test_rule_class : error_handler_base {};
 
 void test(std::string const& line_break) {
     std::string const input("foo" + line_break + "  foo" + line_break + "git");
@@ -41,7 +40,7 @@ void test(std::string const& line_break) {
     auto const end = std::end(input);
 
     std::stringstream stream;
-    x3::error_handler<std::string::const_iterator> const error_handler{begin, end, stream};
+    x3::error_handler<std::string::const_iterator> error_handler{begin, end, stream};
 
     auto const parser = x3::with<x3::error_handler_tag>(std::ref(error_handler))[test_rule];
     x3::phrase_parse(begin, end, parser, x3::space);
