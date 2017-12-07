@@ -91,7 +91,6 @@ run not_predicate.cpp ;
 run optional.cpp ;
 run plus.cpp ;
 run with.cpp ;
-<<<<<<< HEAD
 
 run raw.cpp ;
 run real1.cpp ;
