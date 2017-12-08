@@ -438,7 +438,7 @@ namespace boost { namespace spirit { namespace x3
     Instantiates the parse_rule function specialization
     declared by the BOOST_SPIRIT_DECLARE_ macro.
     
-    DESIGN_QUESTION:2017-11-04:
+   \design DESIGN_QUESTION:2017-11-04:
       Why shouldn't the BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_DEFINE_ macros
       hardcode rule_type::attribute_type also as the type of the attr argument
       instead of making it a template parameter?
