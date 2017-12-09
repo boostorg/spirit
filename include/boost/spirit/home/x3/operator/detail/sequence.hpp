@@ -369,6 +369,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return parse_sequence_plain(parser, first, last, context, rcontext, attr);
     }
 
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_sequence(
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr
+      , traits::range_attribute)
+    {
+        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
+    }
+
     template <typename Left, typename Right, typename Iterator
       , typename Context, typename RContext, typename Attribute>
     bool parse_sequence(
