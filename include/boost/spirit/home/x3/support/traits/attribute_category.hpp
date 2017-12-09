@@ -86,6 +86,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     , typename enable_if<
           mpl::and_<
           traits::is_container<T>
+          , mpl::not_<fusion::traits::is_sequence<T> >
           , mpl::not_<traits::is_range<T> >
           > >::type >
         : mpl::identity<container_attribute> {};
