@@ -117,3 +117,4 @@ run seek.cpp ;
 
 run x3_variant.cpp ;
 run error_handler.cpp /boost//system /boost//filesystem ;
+run iterator_check.cpp ;
