@@ -8,7 +8,7 @@
 #define BOOST_SPIRIT_X3_RULE_JAN_08_2012_0326PM
 
 #ifndef BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
-  #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS 0
+  #define BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS 1
   //^Disable storage of rule_definition<ID,...> in context with ID key.
   //Instead, only use BOOST_SPIRIT_DEFINE to connect the
   //rule with it's rhs (i.e. rule_definition) using overloads
@@ -174,7 +174,7 @@ namespace boost { namespace spirit { namespace x3
       #if BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
         template <typename Iterator, typename Context, typename ActualAttribute>
         bool parse_no_xform(Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr) const
+          , Context const& context, unused_type, ActualAttribute& attr) const
         /**@brief
          *  *only* called from BOOST_SPIRIT_DEFINE_; hence,
          *  the attribute transform has already been done in the
@@ -209,7 +209,7 @@ namespace boost { namespace spirit { namespace x3
               ( Iterator& f_first, Iterator const& f_last
               , auto&_attr
               )
-              {  return  this->parse_no_xform( f_first, f_last, context, _attr);
+              {  return  this->parse_no_xform( f_first, f_last, context, unused, _attr);
               };
             bool ok_parse=
               detail::rule_parser<Attribute,ID>::rule_attr_transform_f
@@ -401,7 +401,7 @@ namespace boost { namespace spirit { namespace x3
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
         return def_.                                                            \
-          BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE(first, last, context, attr);  \
+          BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE(first, last, context, unused, attr);  \
     }                                                                           \
     /***/
 #else
@@ -415,7 +415,7 @@ namespace boost { namespace spirit { namespace x3
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
         return def_.                                                            \
-          BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE(first, last, context, attr);  \
+          BOOST_SPIRIT_X3_EXPERIMENTAL_RDEF_PARSE(first, last, context, unused, attr);  \
     }                                                                           \
     /***/
 #endif

@@ -3,11 +3,15 @@
 //Purpose:
 //  See if rm'ing attributes still produces same problem.
 //Result:
-//  2017-05-01.2054
-//    Works, when -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=1.
+//  2017-05-01.2054:
+//    Works, when -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS=1.
 //    However, still trying to minimize grammar to isolate
 //    what is causing infinite template recursion 
 //    when -DBOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP=0.
+//  2017-12-10.1828:
+//    compare with on/off values for *_GET_RHS_NS shows
+//    the off value compiles almost 2 times slower 
+//    than the on value ( 3.214s vs. 1.731s).
 //======================
 #include <iostream>
 #include <boost/spirit/home/x3.hpp>
@@ -88,14 +92,17 @@ namespace grammar {
 
   auto path_expr_def = filter_expr >> prim_expr;
 
-#define USE_DEFINE_PATH
-#ifdef USE_DEFINE_PATH
+#ifndef USE_DEFINE_PATH                     
+  #define USE_DEFINE_PATH 1
+#endif  
+#if USE_DEFINE_PATH
   BOOST_SPIRIT_DEFINE (path_expr);
 #endif  
 }
 
 int main() {
-#if 0
+//#define PRINT_GET_RHS_NO_CONTEXT
+#ifdef PRINT_GET_RHS_NO_CONTEXT
   std::cout<<"BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT=";
 #if BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NO_CONTEXT
   std::cout<<"1";
@@ -103,11 +110,11 @@ int main() {
   std::cout<<"0";
 #endif
   std::cout<<"\n";
-#endif  
+#endif//PRINT_GET_RHS_NO_CONTEXT
   using x3::space;
   using grammar::or_expr;
 
-  std::string input = "$ab/$cd or $ef";
+  std::string input = "ab cd | ef gh";
 
   bool res = phrase_parse(input.begin(),
                           input.end(),
