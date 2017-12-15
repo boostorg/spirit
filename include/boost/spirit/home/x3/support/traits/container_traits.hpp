@@ -51,7 +51,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     struct is_reservable : mpl::false_ {};
 
     template<typename T>
-    struct is_reservable<T, decltype(std::declval<T&>().reserve(size_t{}))>
+    struct is_reservable<T, decltype(std::declval<T&>().reserve(0))>
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
