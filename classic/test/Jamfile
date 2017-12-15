@@ -143,6 +143,7 @@ local multi-threading = <library>/boost/thread//boost_thread
     test-suite "spirit.classic.utility.support"
         # This test doesn't actually use multiple threads
         : [ spirit-run scoped_lock_tests.cpp : : : $(multi-threading) ]
+          [ compile threads_disabled_compile.cpp ]
         ;
 
     test-suite "spirit.classic.iterator"
