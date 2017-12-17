@@ -179,7 +179,6 @@ int main()
     {
         BOOST_TEST(test("4.941e-324", double_, std::numeric_limits<double>::denorm_min()));
     }
-
     return boost::report_errors();
 }
 
