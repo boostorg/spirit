@@ -36,13 +36,8 @@ namespace client { namespace parser
     x3::symbols<ast::optoken> unary_op;
     x3::symbols<> keywords;
 
-    void add_keywords()
+    void add_keywords_()
     {
-        static bool once = false;
-        if (once)
-            return;
-        once = true;
-
         logical_op.add
             ("&&", ast::op_and)
             ("||", ast::op_or)
@@ -84,6 +79,56 @@ namespace client { namespace parser
             ("else")
             ("while")
             ;
+    }
+
+    namespace {
+        struct add_keywords
+        {
+            add_keywords() {
+                logical_op.add
+                    ("&&", ast::op_and)
+                    ("||", ast::op_or)
+                    ;
+
+                equality_op.add
+                    ("==", ast::op_equal)
+                    ("!=", ast::op_not_equal)
+                    ;
+
+                relational_op.add
+                    ("<", ast::op_less)
+                    ("<=", ast::op_less_equal)
+                    (">", ast::op_greater)
+                    (">=", ast::op_greater_equal)
+                    ;
+
+                additive_op.add
+                    ("+", ast::op_plus)
+                    ("-", ast::op_minus)
+                    ;
+
+                multiplicative_op.add
+                    ("*", ast::op_times)
+                    ("/", ast::op_divide)
+                    ;
+
+                unary_op.add
+                    ("+", ast::op_positive)
+                    ("-", ast::op_negative)
+                    ("!", ast::op_not)
+                    ;
+
+                keywords.add
+                    ("var")
+                    ("true")
+                    ("false")
+                    ("if")
+                    ("else")
+                    ("while")
+                    ;
+            }
+            
+        } init_helper;
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -172,10 +217,9 @@ namespace client { namespace parser
 
 namespace client
 {
-    parser::expression_type const& expression()
+    parser::expression_type expression()
     {
-        parser::add_keywords();
-        return parser::expression;
+        return {"expression"};
     }
 }
 
