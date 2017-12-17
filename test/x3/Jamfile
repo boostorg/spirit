@@ -72,6 +72,7 @@ run binary.cpp ;
 run bool.cpp ;
 run char1.cpp ;
 run char_class.cpp ;
+run container_support.cpp ;
 run debug.cpp ;
 run difference.cpp ;
 run eoi.cpp ;
