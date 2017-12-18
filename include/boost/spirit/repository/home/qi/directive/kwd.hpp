@@ -23,7 +23,6 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/repository/home/support/kwd.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/foreach.hpp>
 #include <vector>
 
 namespace boost { namespace spirit
