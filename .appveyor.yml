@@ -6,8 +6,9 @@ environment:
     TEST_LINK_DEPS: date_time,filesystem,regex,system
     APPVEYOR_SAVE_CACHE_ON_ERROR: true
     CLCACHE_HARDLINK: 1
+    APPVEYOR_CACHE_ENTRY_ZIP_ARGS: "-t7z -m0=lzma2 -mx=3 -md=32m -ms=on"
     CLCACHE_CACHESIZE: 2123123123  # Appveyor allows us to store 1Gb of 7zipped cache but
-                                   # object files could be compressed 10:1 using fastest mode
+                                   # object files compress ratio is 20:1 in our case
 
   matrix:
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2017', ADDRMDL: 64, TOOLSET: 'msvc-14.1' }
