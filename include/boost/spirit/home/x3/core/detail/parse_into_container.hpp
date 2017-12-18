@@ -17,6 +17,7 @@
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/fusion/include/at_key.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/back.hpp>
 #include <boost/variant/apply_visitor.hpp>
@@ -37,10 +38,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-/*	$$$ clang reports: warning: class template partial specialization contains
- *	a template parameter that can not be deduced; this partial specialization
- *	will never be used $$$
- *
     // save to associative fusion container where Key
     // is variant over possible keys
     template <typename ...T>
@@ -54,7 +51,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             apply_visitor(saver_visitor<Attribute, Value>(attr, value), key);
         }
     };
-*/
+
     template <typename Attribute, typename Value>
     struct saver_visitor  : boost::static_visitor<void>
     {
