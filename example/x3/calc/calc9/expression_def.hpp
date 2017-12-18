@@ -36,7 +36,8 @@ namespace client { namespace parser
     x3::symbols<ast::optoken> unary_op;
     x3::symbols<> keywords;
 
-    namespace {
+    namespace
+    {
         struct add_keywords
         {
             add_keywords() {
