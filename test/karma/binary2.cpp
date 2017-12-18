@@ -106,27 +106,27 @@ main()
 
 #ifdef BOOST_LITTLE_ENDIAN
 
-        BOOST_TEST(!binary_test("", 1, byte_, v8));
-        BOOST_TEST(!binary_test("", 2, word, v16));
-        BOOST_TEST(!binary_test("", 4, dword, v32));
+        BOOST_TEST(!binary_test("", 0, byte_, v8));
+        BOOST_TEST(!binary_test("", 0, word, v16));
+        BOOST_TEST(!binary_test("", 0, dword, v32));
 #ifdef BOOST_HAS_LONG_LONG
         boost::optional<boost::uint64_t> v64;
-        BOOST_TEST(!binary_test("", 8, qword, v64));
+        BOOST_TEST(!binary_test("", 0, qword, v64));
 #endif
-        BOOST_TEST(!binary_test("", 4, bin_float, vf));
-        BOOST_TEST(!binary_test("", 8, bin_double, vd));
+        BOOST_TEST(!binary_test("", 0, bin_float, vf));
+        BOOST_TEST(!binary_test("", 0, bin_double, vd));
 
 #else // BOOST_LITTLE_ENDIAN
 
-        BOOST_TEST(!binary_test("", 1, byte_, v8));
-        BOOST_TEST(!binary_test("", 2, word, v16));
-        BOOST_TEST(!binary_test("", 4, dword, v32));
+        BOOST_TEST(!binary_test("", 0, byte_, v8));
+        BOOST_TEST(!binary_test("", 0, word, v16));
+        BOOST_TEST(!binary_test("", 0, dword, v32));
 #ifdef BOOST_HAS_LONG_LONG
         boost::optional<boost::uint64_t> v64;
-        BOOST_TEST(!binary_test("", 8, qword, v64));
+        BOOST_TEST(!binary_test("", 0, qword, v64));
 #endif
-        BOOST_TEST(!binary_test("", 4, bin_float, vf));
-        BOOST_TEST(!binary_test("", 8, bin_double, vd));
+        BOOST_TEST(!binary_test("", 0, bin_float, vf));
+        BOOST_TEST(!binary_test("", 0, bin_double, vd));
 
 #endif
     }
