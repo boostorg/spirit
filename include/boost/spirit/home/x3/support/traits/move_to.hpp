@@ -171,6 +171,15 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             else
                 append(dest, first, last);
         }
+
+        template <typename Iterator, typename Dest>
+        inline typename enable_if<
+            is_size_one_sequence<Dest>
+        >::type
+        move_to(Iterator first, Iterator last, Dest& dest, tuple_attribute)
+        {
+            traits::move_to(first, last, fusion::front(dest));
+        }
         
         template <typename Iterator>
         inline void
