@@ -89,6 +89,7 @@ run matches.cpp ;
 run no_case.cpp ;
 run no_skip.cpp ;
 run not_predicate.cpp ;
+run omit.cpp ;
 run optional.cpp ;
 run plus.cpp ;
 run with.cpp ;
