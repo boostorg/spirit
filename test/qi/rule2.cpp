@@ -162,24 +162,6 @@ main()
         typedef rule<char const*, V(), space_type> R;
         V val;
         R r;
-        r %= int_ >> int_;
-        BOOST_TEST((test_attr("1 5", r, val, space) && val == V(1, 5)));
-    }
-
-    {
-        typedef boost::fusion::vector<int, int> V;
-        typedef rule<char const*, V(), space_type> R;
-        V val;
-        R r;
-        r %= int_ >> int_[_1];
-        BOOST_TEST((test_attr("1 5", r, val, space) && val == V(1, 5)));
-    }
-
-    {
-        typedef boost::fusion::vector<int, int> V;
-        typedef rule<char const*, V(), space_type> R;
-        V val;
-        R r;
         r %= (int_ >> int_)[_1];
         BOOST_TEST((test_attr("1 5", r, val, space) && val == V(1, 5)));
     }
