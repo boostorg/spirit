@@ -1,7 +1,6 @@
-﻿spirit::get_rhs-branch
-======================
+# ﻿spirit::get_rhs-branch
 
-#Purpose
+## Purpose
 
 The code in this branch should solve the problems enumerated
 in the next section.  The code solving each problem is
@@ -47,9 +46,9 @@ In each section below, there's a listing of:
     
   * test code links
   
-##Problems solved:
+### Problems solved:
 
-###Excessive compile times when BOOST_SPIRIT_DEFINE not used.
+#### Excessive compile times when BOOST_SPIRIT_DEFINE not used.
   * Guard Macro: BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
   * Problem:
       The attachment to:
@@ -126,7 +125,7 @@ In each section below, there's a listing of:
   
       [RULE2RHS_METHODS.hpp](https://github.com/cppljevans/spirit-experiments/blob/get_rhs/workbench/x3/rule_defns/RULE2RHS_METHODS.hpp)
         
-###x3 like qi-better encapsulaton
+#### x3 like qi-better encapsulaton
 
   * Guard Macro: BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
   * Problem:
@@ -176,7 +175,7 @@ In each section below, there's a listing of:
     this method, the one with the `RULE2RHS_GET_RHS_CRTP`
     tag, is *marginally* slower than the fasted method.
             
-###BOOST_SPIRIT_INSTANTIATE link error
+#### BOOST_SPIRIT_INSTANTIATE link error
 
   * Guard Macro: BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE
   * Problem:
