@@ -104,7 +104,7 @@ namespace boost { namespace spirit { namespace x3
         
         template <typename Iterator, typename Context, typename ActualAttribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr) const
+          , Context const& context, unused_type, ActualAttribute& attr) const
         /*! \brief 
          *    Prevent redundant compiletime error in default get_rhs
          *    when static_assert fires.
@@ -191,7 +191,7 @@ namespace boost { namespace spirit { namespace x3
         }
         template <typename Iterator, typename Context, typename ActualAttribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, ActualAttribute& attr) const
+          , Context const& context, unused_type rcontext, ActualAttribute& attr) const
         /**@brief
          *  *this appears in rhs of some grammar expression; hence,
          *  this parse function is *not* called from the rule::parse function
@@ -209,7 +209,7 @@ namespace boost { namespace spirit { namespace x3
               ( Iterator& f_first, Iterator const& f_last
               , auto&_attr
               )
-              {  return  this->parse_no_xform( f_first, f_last, context, unused, _attr);
+              {  return  this->parse_no_xform( f_first, f_last, context, rcontext, _attr);
               };
             bool ok_parse=
               detail::rule_parser<Attribute,ID>::rule_attr_transform_f
