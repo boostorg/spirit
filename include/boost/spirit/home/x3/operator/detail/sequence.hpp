@@ -13,11 +13,13 @@
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
 #include <boost/fusion/include/begin.hpp>
 #include <boost/fusion/include/end.hpp>
 #include <boost/fusion/include/advance.hpp>
+#include <boost/fusion/include/deref.hpp>
 #include <boost/fusion/include/empty.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/iterator_range.hpp>
@@ -79,14 +81,16 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 
     template <typename Attribute>
-    struct pass_sequence_attribute_front
+    struct pass_sequence_attribute_size_one_view
     {
-        typedef typename fusion::result_of::front<Attribute>::type type;
+        typedef typename fusion::result_of::deref<
+            typename fusion::result_of::begin<Attribute>::type
+        >::type type;
 
         static typename add_reference<type>::type
         call(Attribute& attr)
         {
-            return fusion::front(attr);
+            return fusion::deref(fusion::begin(attr));
         }
     };
 
@@ -106,8 +110,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename Parser, typename Attribute>
     struct pass_sequence_attribute_used :
         mpl::if_<
-            traits::is_size_one_sequence<Attribute>
-          , pass_sequence_attribute_front<Attribute>
+            traits::is_size_one_view<Attribute>
+          , pass_sequence_attribute_size_one_view<Attribute>
           , pass_through_sequence_attribute<Attribute>>::type {};
 
     template <typename Parser, typename Attribute, typename Enable = void>
