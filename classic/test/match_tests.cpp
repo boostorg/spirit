@@ -22,7 +22,7 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 ///////////////////////////////////////////////////////////////////////////////
 struct X {};
 struct Y { Y(int) {} }; // not default constructible
-struct Z { Z(double n):n(n){} double n; }; // implicitly convertible from double
+struct Z { Z(double n_):n(n_){} double n; }; // implicitly convertible from double
 
 void
 match_tests()

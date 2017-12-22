@@ -102,13 +102,13 @@ public:
     {
         typedef typename ScannerT::iterator_t iterator_t;
         iterator_t first = scan.first;
-        typename SetT::search_info result = SetT::find(scan);
+        typename SetT::search_info search_result = SetT::find(scan);
 
-        if (result.data)
+        if (search_result.data)
             return scan.
                 create_match(
-                    result.length,
-                    symbol_ref_t(*result.data),
+                    search_result.length,
+                    symbol_ref_t(*search_result.data),
                     first,
                     scan.first);
         else

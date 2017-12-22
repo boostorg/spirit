@@ -563,8 +563,8 @@ public:
         trees.push_back(node_t(n)); 
     }
 
-    tree_match(std::size_t length_, param_type val, parse_node_t const& n)
-    : match<T>(length_, val), trees()
+    tree_match(std::size_t length_, param_type val_, parse_node_t const& n)
+    : match<T>(length_, val_), trees()
     {
 #if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
         trees.reserve(10); // this is more or less an arbitrary number...
@@ -579,8 +579,8 @@ public:
         impl::cp_swap(trees, c);
     }
 
-    tree_match(std::size_t length_, param_type val, container_t& c)
-    : match<T>(length_, val), trees()
+    tree_match(std::size_t length_, param_type val_, container_t& c)
+    : match<T>(length_, val_), trees()
     {
         impl::cp_swap(trees, c);
     }

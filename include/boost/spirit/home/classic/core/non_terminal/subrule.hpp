@@ -213,7 +213,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             subrule_list<
                 subrule_parser<ID2, DefT2, ContextT2>,
                 nil_t> >
-        operator,(subrule_parser<ID2, DefT2, ContextT2> const& rhs) const
+        operator,(subrule_parser<ID2, DefT2, ContextT2> const& rhs_) const
         {
             return subrule_list<
                 self_t,
@@ -223,7 +223,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                         *this,
                         subrule_list<
                             subrule_parser<ID2, DefT2, ContextT2>, nil_t>(
-                                rhs, nil_t()));
+                                rhs_, nil_t()));
         }
 
         typename DefT::embed_t rhs;

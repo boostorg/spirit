@@ -126,8 +126,8 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         typedef unary<ParserT, parser<self_t> >         base_t;
         typedef unary_parser_category                   parser_category_t;
 
-        assertive_parser(ParserT const& parser, ErrorDescrT descriptor_)
-        : base_t(parser), descriptor(descriptor_) {}
+        assertive_parser(ParserT const& parser_, ErrorDescrT descriptor_)
+        : base_t(parser_), descriptor(descriptor_) {}
 
         template <typename ScannerT>
         struct result
@@ -189,9 +189,9 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
         template <typename ParserT>
         assertive_parser<ErrorDescrT, ParserT>
-        operator()(ParserT const& parser) const
+        operator()(ParserT const& parser_) const
         {
-            return assertive_parser<ErrorDescrT, ParserT>(parser, descriptor);
+            return assertive_parser<ErrorDescrT, ParserT>(parser_, descriptor);
         }
 
         ErrorDescrT descriptor;
@@ -269,8 +269,8 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         typedef unary_parser_category
             parser_category_t;
 
-        fallback_parser(ParserT const& parser, HandlerT const& handler_)
-        : base_t(parser), handler(handler_) {}
+        fallback_parser(ParserT const& parser_, HandlerT const& handler_)
+        : base_t(parser_), handler(handler_) {}
 
         template <typename ScannerT>
         struct result
@@ -342,16 +342,16 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
         template <typename ParserT>
         static guard_gen<ErrorDescrT, ParserT>
-        generate(ParserT const& parser)
+        generate(ParserT const& parser_)
         {
-            return guard_gen<ErrorDescrT, ParserT>(parser);
+            return guard_gen<ErrorDescrT, ParserT>(parser_);
         }
 
         template <typename ParserT>
         guard_gen<ErrorDescrT, ParserT>
-        operator()(ParserT const& parser) const
+        operator()(ParserT const& parser_) const
         {
-            return guard_gen<ErrorDescrT, ParserT>(parser);
+            return guard_gen<ErrorDescrT, ParserT>(parser_);
         }
     };
 

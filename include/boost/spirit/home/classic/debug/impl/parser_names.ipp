@@ -395,13 +395,13 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             }
 
             bool register_node(void const *r, char const *name_to_register,
-                bool trace_node)
+                bool trace)
             {
                 if (infos.find(r) != infos.end())
                     return false;
 
                 return infos.insert(rule_infos::value_type(r,
-                    rule_info(std::string(name_to_register), trace_node))
+                    rule_info(std::string(name_to_register), trace))
                 ).second;
             }
 

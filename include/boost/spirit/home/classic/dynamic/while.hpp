@@ -46,8 +46,8 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
         //////////////////////////////
         // constructor, saves condition and body parser
-        while_parser(ParsableT const &body, CondT const &cond)
-            : eval_t(cond_as_parser_t::convert(cond))
+        while_parser(ParsableT const &body, CondT const &cond_)
+            : eval_t(cond_as_parser_t::convert(cond_))
             , base_t(as_parser_t::convert(body))
         {}
 

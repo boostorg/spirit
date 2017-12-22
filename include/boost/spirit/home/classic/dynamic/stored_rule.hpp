@@ -107,8 +107,8 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             return ptr.get();
         }
 
-        stored_rule(shared_ptr<abstract_parser_t> const& ptr)
-        : ptr(ptr) {}
+        stored_rule(shared_ptr<abstract_parser_t> const& ptr_)
+        : ptr(ptr_) {}
 
         shared_ptr<abstract_parser_t> ptr;
     };

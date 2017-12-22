@@ -475,8 +475,8 @@ struct cond_functor {
         typedef typename parser_result<ParserT, ScannerT>::type result_t;
         typedef typename result_t::attr_t attr_t;
 
-        result_t result(p.parse(scan));
-        return !result ? attr_t() : result.value();
+        result_t parse_result(p.parse(scan));
+        return !parse_result ? attr_t() : parse_result.value();
     }
 
     typename ParserT::embed_t p;

@@ -222,18 +222,18 @@ struct while_composite {
     template <typename TupleT>
     struct result { typedef void type; };
 
-    while_composite(CondT const& cond_, DoT const& do__)
-    :   cond(cond_), do_(do__) {}
+    while_composite(CondT const& cond_, DoT const& do___)
+    :   cond(cond_), do__(do___) {}
 
     template <typename TupleT>
     void eval(TupleT const& args) const
     {
         while (cond.eval(args))
-            do_.eval(args);
+            do__.eval(args);
     }
 
     CondT cond;
-    DoT do_;
+    DoT do__;
 };
 
 //////////////////////////////////
@@ -247,7 +247,7 @@ struct while_gen {
     actor<while_composite<
         typename as_actor<CondT>::type,
         typename as_actor<DoT>::type> >
-    operator[](DoT const& do_) const
+    operator[](DoT const& do__) const
     {
         typedef while_composite<
             typename as_actor<CondT>::type,
@@ -256,7 +256,7 @@ struct while_gen {
 
         return result(
             as_actor<CondT>::convert(cond),
-            as_actor<DoT>::convert(do_));
+            as_actor<DoT>::convert(do__));
     }
 
     CondT cond;
@@ -297,18 +297,18 @@ struct do_composite {
     template <typename TupleT>
     struct result { typedef void type; };
 
-    do_composite(DoT const& do__, CondT const& cond_)
-    :   do_(do__), cond(cond_) {}
+    do_composite(DoT const& do___, CondT const& cond_)
+    :   do__(do___), cond(cond_) {}
 
     template <typename TupleT>
     void eval(TupleT const& args) const
     {
         do
-            do_.eval(args);
+            do__.eval(args);
         while (cond.eval(args));
     }
 
-    DoT do_;
+    DoT do__;
     CondT cond;
 };
 
@@ -316,8 +316,8 @@ struct do_composite {
 template <typename DoT>
 struct do_gen2 {
 
-    do_gen2(DoT const& do__)
-    :   do_(do__) {}
+    do_gen2(DoT const& do___)
+    :   do__(do___) {}
 
     template <typename CondT>
     actor<do_composite<
@@ -331,11 +331,11 @@ struct do_gen2 {
         result;
 
         return result(
-            as_actor<DoT>::convert(do_),
+            as_actor<DoT>::convert(do__),
             as_actor<CondT>::convert(cond));
     }
 
-    DoT do_;
+    DoT do__;
 };
 
 ////////////////////////////////////
@@ -343,9 +343,9 @@ struct do_gen {
 
     template <typename DoT>
     do_gen2<DoT>
-    operator[](DoT const& do_) const
+    operator[](DoT const& do__) const
     {
-        return do_gen2<DoT>(do_);
+        return do_gen2<DoT>(do__);
     }
 };
 
@@ -381,18 +381,18 @@ struct for_composite {
         InitT const& init_,
         CondT const& cond_,
         StepT const& step_,
-        DoT const& do__)
-    :   init(init_), cond(cond_), step(step_), do_(do__) {}
+        DoT const& do___)
+    :   init(init_), cond(cond_), step(step_), do__(do___) {}
 
     template <typename TupleT>
     void
     eval(TupleT const& args) const
     {
         for (init.eval(args); cond.eval(args); step.eval(args))
-            do_.eval(args);
+            do__.eval(args);
     }
 
-    InitT init; CondT cond; StepT step; DoT do_; //  actors
+    InitT init; CondT cond; StepT step; DoT do__; //  actors
 };
 
 //////////////////////////////////
@@ -411,7 +411,7 @@ struct for_gen {
         typename as_actor<CondT>::type,
         typename as_actor<StepT>::type,
         typename as_actor<DoT>::type> >
-    operator[](DoT const& do_) const
+    operator[](DoT const& do__) const
     {
         typedef for_composite<
             typename as_actor<InitT>::type,
@@ -424,7 +424,7 @@ struct for_gen {
             as_actor<InitT>::convert(init),
             as_actor<CondT>::convert(cond),
             as_actor<StepT>::convert(step),
-            as_actor<DoT>::convert(do_));
+            as_actor<DoT>::convert(do__));
     }
 
     InitT init; CondT cond; StepT step;
