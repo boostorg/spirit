@@ -4,7 +4,8 @@ environment:
   global:
     PROJECT: libs\spirit
     TEST_LINK_DEPS: date_time,filesystem,regex,system,thread
-    APPVEYOR_SAVE_CACHE_ON_ERROR: true
+    APPVEYOR_CACHE_SKIP_RESTORE: true  # do not restore cache on warning elimination branch
+    APPVEYOR_CACHE_SKIP_SAVE: true     # do not save cache on warning elimination branch
     CLCACHE_HARDLINK: 1
     APPVEYOR_CACHE_ENTRY_ZIP_ARGS: "-t7z -m0=lzma2 -mx=3 -md=32m -ms=on"
     CLCACHE_CACHESIZE: 2123123123  # Appveyor allows us to store 1Gb of 7zipped cache but
@@ -50,7 +51,6 @@ before_build:
           -wd4521  # x3/support/ast/variant.hpp(224): multiple copy constructors defined
           -wd4003  # Fusion adapt_adt: not enough actual parameters for macro
           -wd4127  # conditional expression is constant
-          -wd4459  # declaration of 'varname' hides global declaration
         : unchecked ;
       
       '@ | sc "$env:USERPROFILE/user-config.jam"
@@ -108,5 +108,3 @@ test_script:
   - set B2_ARGS=%B2_ARGS% warnings=on known-warnings=suppress warnings-as-errors=on
   - echo B2 argumets %B2_ARGS%
   - b2 %B2_ARGS% %PROJECT%\classic\test
-  - b2 %B2_ARGS% %PROJECT%\repository\test
-  - b2 %B2_ARGS% %PROJECT%\test

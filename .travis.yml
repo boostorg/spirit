@@ -48,41 +48,13 @@ env:
 
 matrix:
   include:
-    ### Spirit 3
-    - { env: 'STD=14  JOB=test/x3          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=14  JOB=test/x3          TOOLSET=gcc-7', compiler: gcc-7, addons: *gcc7 }
-    ### Spirit 2
-    ## Clang
-    # 11
-    - { env: 'STD=11  JOB=test/qi          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=test/karma       TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=test/lex         TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=test/support     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=repository/test  TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    # 03
-    - { env: 'STD=03  JOB=test/qi          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=test/karma       TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=test/lex         TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=test/support     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=repository/test  TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    ## GCC
-    # 11
-    - { env: 'STD=11  JOB=test/qi          TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=test/karma       TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=test/lex         TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=test/support     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=repository/test  TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    # 03
-    - { env: 'STD=03  JOB=test/qi          TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=test/karma       TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=test/lex         TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=test/support     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=repository/test  TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
     ### Spirit 1
-    - { env: 'STD=03  JOB=classic/test     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=classic/test     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03     JOB=classic/test     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03     JOB=classic/test     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=17     JOB=classic/test     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=17     JOB=classic/test     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
 
-cache: ccache
+cache: false
 
 before_install:
   - export CACHE_NAME=$TRAVIS_OS_NAME-$TOOLSET-$STD-$JOB
@@ -129,6 +101,12 @@ before_install:
         -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
         -Wno-nested-anon-types # Boost.Random
         -Wno-uninitialized -Wno-invalid-source-encoding : unchecked ;
+
+    feature.feature shadow-warnings : off on all : optional incidental propagated ;
+    toolset.flags gcc.compile         OPTIONS <shadow-warnings>on : -Wshadow : unchecked ;
+    toolset.flags clang-linux.compile OPTIONS <shadow-warnings>on : -Wshadow : unchecked ;
+    toolset.flags gcc.compile         OPTIONS <shadow-warnings>all : -Wshadow-compatible-local : unchecked ;
+    toolset.flags clang-linux.compile OPTIONS <shadow-warnings>all : -Wshadow-all : unchecked ;
 
   - |
     # Determining the root branch
@@ -178,4 +156,4 @@ before_install:
 script:
   - b2 -j`nproc` link=shared threading=multi variant=release
       toolset=$TOOLSET cxxstd=$STD $STDLIB
-      warnings=on known-warnings=suppress warnings-as-errors=on
+      warnings=on known-warnings=suppress warnings-as-errors=on shadow-warnings=all
