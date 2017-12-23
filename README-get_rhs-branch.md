@@ -10,13 +10,13 @@ delimited by "Guard" macros of the form:
 
 where `<tail>` is one of:
 
-  * `GET_RHS_NS`
-  * `GET_RHS_CRTP`
-  * `ATTR_XFORM_IN_RULE`
+  * GET_RHS_NS
+  * GET_RHS_CRTP
+  * ATTR_XFORM_IN_RULE
   
 These "Guard" macros for a particular problem can be switched 
 on or off by setting the values of `0` (for off) or `1` (for
-one).  This allows:
+on).  This allows:
 
   * Reviewers to clearly see which code is intended to solve
     which problem.
@@ -38,61 +38,70 @@ In each section below, there's a listing of:
   
   * The problem the change solves.
   
-  * An abstract of how the problem was solved.
+  * An abstract of how the `get_rhs` branch solves problem.
   
-  * Interest in solution.  This includes references to the
+  * Interest in solution.  This may include references to the
     mailing list posts where the problem is reported or
     discussed.
     
-  * test code links
+  * Optionally, examples.
+    
+  * test/benchmark code links
   
 ### Problems solved:
 
 #### Excessive compile times when BOOST_SPIRIT_DEFINE not used.
   * Guard Macro: BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS
   * Problem:
-      The attachment to:
+  
+    The existing `spirit` uses 2 methods to "associate" the `rule<ID,Attribute>`
+    `LHS`(left-hand-side) with the rule `RHS`(right-hand-side):
       
-      [rule2rhs-context-complexity](https://sourceforge.net/p/spirit/mailman/message/35355552/)
-      
-    describes the problem, in particular the part which
-    says:
-      
-      >To summarize, if BOOST_SPIRIT_DEFINE method were the only
-      >one allowed, then that would allow several lines of code to
-      >be removed from detail/rule.hpp.  In particular, there would
-      >be no need for: make_rule_context since there would be no
-      >need to change the context.  Also, with this method, the
-      >context is not modified, leading, probably, to some
-      >compile-time as well as run-time speedup. 
-
-    In particular, the part about `make_rule_context`.
-    Calls to that function are the cause of the excessive
-    compile times mentioned in the posts under the `Interest
-    in solution` item below.
+      * BOOST_SPIRIT_DEFINE macros:
+        These macros are defined starting here:
+        [rule.hpp macros](https://github.com/boostorg/spirit/blob/master/include/boost/spirit/home/x3/nonterminal/rule.hpp#L142)
+      * make_rule_context method:
+        If the `BOOST_SPIRIT_DEFINE macro` method is not
+        used and a `rule_definition` appears on the `RHS` of
+        some rule, then the `LHS -> RHS` association is
+        stored in the context
+        argument to the `parse` function.  This is done by
+        calling, indirectly,
+        [make_rule_context](https://github.com/boostorg/spirit/blob/master/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp#L149),
+        from `rule_definition::parse`.
+          
+    The `make_rule_context method` causes the excessive
+    compile times mentioned in the posts
+    under the `Interest in solution` item below.  The reason
+    is probably that template meta-programming is known to
+    tax the compiler and the `make_rule_context` does
+    template meta-programming.  Benchmark code mentioned
+    below supports this conclusion.
         
   * get_rhs solution.
   
-    Get_rhs simply removes the connection between rhs and
-    lhs in the context by removing use of the
-    `make_rule_context` function, leaving only the
-    `BOOST_SPIRIT_DEFINE` method for connecting the rules
-    rhs with it's lhs.
+    Get_rhs simply eliminates `make_rule_context method` to
+    associate the rule's `LHS` with it's `RHS`.
     
       * Pro's
       
-        Compile time does not increase nearly as fast.
+        Compile time does not increase nearly as fast as the
+        number of rules increases.
         
       * Con's
       
-        Breaks some existing code.
+        Breaks code relying on `make_rule_context` to
+        associate the rule's `LHS` with its `RHS`.  However,
+        at some inconvenience, such code can be fixed by
+        simply using the macro method and placing the rule
+        definitions in a namespace.
             
   * Interest in solution.
    
       * [Arun.compilation never finishes](https://sourceforge.net/p/spirit/mailman/message/35799862/)
       * [Soren.wccs_parser](https://sourceforge.net/p/spirit/mailman/message/36091645/)
             
-  * demo code:
+  * example code:
       * [rec_ex_org.no_attr](https://github.com/cppljevans/spirit/blob/get_rhs/workbench/x3/rec_ex_orig/rec_ex_orig.no_attr.cpp)
       * [wccs_parser](https://github.com/cppljevans/spirit/blob/get_rhs/workbench/x3/rec_ex_orig/wccs_parser.cpp)
   * test code:
@@ -102,7 +111,6 @@ In each section below, there's a listing of:
       Benchmark results are produced by
       
       [bench_make](https://github.com/cppljevans/spirit-experiments/blob/get_rhs/workbench/x3/rule_defns/Makefile#L102)
-      
       This Makefile target benchmarks a *prototype* of the
       `get_rhs` code.  This prototype code does not use
       attributes (since the purpose is to measure
@@ -114,11 +122,11 @@ In each section below, there's a listing of:
       [bench_results][bench_ref]
         
       clearly show that as the number of rules increases,
-      the compile time, using the current `spirit` method
-      (designated with the `RULE2RHS_CTX_LIST` tag in the
-      results) for connecting the rhs to lhs of a
-      production, gets much slower relative to *all* the
-      other methods.
+      the compile time, using the current `spirit` context
+      method (designated with the `RULE2RHS_CTX_LIST` tag in
+      the results) for associating the `LHS` to the `RHS` of
+      a rule, gets much slower relative to *all* the other
+      methods.
       
       The descriptions for all the methods in [bench_results][bench_ref]
       are in the comments in:
@@ -130,13 +138,13 @@ In each section below, there's a listing of:
   * Guard Macro: BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_CRTP
   * Problem:
       Using BOOST_SPIRIT_DEFINE requires rule definitions in
-      some namespace.  OTOH, Qi encapsulates rule
-      definitions in class.  x3 should be more like qi to
+      some namespace.  In contrast, `Qi` encapsulates rule
+      definitions in class.  `X3` should be more like `Qi` to
       enable better grammar encapsulation.
       
   * get_rhs solution.
   
-    Get_rhs solves this problem using the
+    Get_rhs solves this using the
     [crtp](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern#General_form)
     design pattern.  The base class, `gram_base`, of this
     pattern contains a nested template class, `rule_b`,
@@ -157,10 +165,9 @@ In each section below, there's a listing of:
     `nonterminal/rule.hpp`.
       
   * Interest in solution.
-      * posts  
-        [Pirkweiser.Design X3 like Qi parser](http://boost.2283326.n4.nabble.com/Design-structure-X3-parser-more-like-Qi-parser-td4690205i20.html)
+      * [Pirkweiser.Design X3 like Qi parser](http://boost.2283326.n4.nabble.com/Design-structure-X3-parser-more-like-Qi-parser-td4690205i20.html)
         
-  * demo code:
+  * example code:
       * [wb3/parse_rule_crtp](https://github.com/cppljevans/spirit-experiments/blob/get_rhs/workbench/x3/rule_defns/parse_rule_crtp.hpp#L145)
       * [wb3/bench](https://github.com/cppljevans/spirit-experiments/blob/get_rhs/workbench/x3/rule_defns/rule_defns_bench.cpp#L235)
         
@@ -196,37 +203,58 @@ In each section below, there's a listing of:
       `Attribute != ActualAttribute`, the link error occurs.
       
   * Interest in solution.
-      * posts.
-          * [Exagon.linking-error-when](http://boost.2283326.n4.nabble.com/Linking-error-when-changing-to-tp4689820.html)
-          * [OlafPeter.linkerr-separate-tu](https://stackoverflow.com/questions/43791079/x3-linker-error-with-separate-tu)
-          * [Halvorsen.instant-linkerr](http://boost.2283326.n4.nabble.com/X3-declare-define-instantiate-linker-error-tp4694282.html)
+      * [Exagon.linking-error-when](http://boost.2283326.n4.nabble.com/Linking-error-when-changing-to-tp4689820.html)
+      * [OlafPeter.linkerr-separate-tu](https://stackoverflow.com/questions/43791079/x3-linker-error-with-separate-tu)
+      * [Halvorsen.instant-linkerr](http://boost.2283326.n4.nabble.com/X3-declare-define-instantiate-linker-error-tp4694282.html)
 
   * Method of solution.
   
     In the current `spirit` method, the `ActualAttribute&
-    attr` passed to the `parse_rule` function called by
-    `rule<ID,Attribute>::parse` is transformed, after a few
-    intervening function calls, into `Attribute& _attr` by
-    the `rule_attr_transform_f` call within the:
+    attr` that is passed to the `parse_rule` function that
+    is called by `rule<ID,Attribute>::parse` is transformed,
+    after a few intervening function calls, into `Attribute&
+    _attr` by code at the beginning of the:
     
-      > `detail::rule_parser<Attribute,ID>::call_rule_definition` 
-
-    function in `nonterminal/detail/rule.hpp`.
+      > `detail::rule_parser<...>::call_rule_definition` 
     
-    The link problem is solved by moving the
-    `rule_attr_transform_f` to the `rule<...>::parse
-    function just before the call to `parse_rule`.  However,
-    without this transformation called from within,
+    function.  This `attribute transform code` extends
+    [from here](https://github.com/boostorg/spirit/blob/master/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp#L306)
+    [to here](https://github.com/boostorg/spirit/blob/master/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp#L347), 
+    execept for the `parsing/debugging code` actually doing the
+    parsing.  This `parsing/debugging code` extends
+    [from here](https://github.com/boostorg/spirit/blob/master/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp#L319)
+    [to here](https://github.com/boostorg/spirit/blob/master/include/boost/spirit/home/x3/nonterminal/detail/rule.hpp#L341)
+    and separates the `attribute pre-transform code` from
+    the `attribute post-transform code`.
+      
+    The link problem solution requires doing the attribute
+    transformation in different places.
+    To avoid code duplicaton, the combination of the `attribute transform code`
+    and the `parsing/debugging code` mentioned in the
+    previous paragraph has been replaced by the
+    `rule_attr_transform_f` function in `detail/rule.hpp`.
+    The `parsing` part of the `parsing/debugging code`
+    mentioned in the previous paragraph is passed to this
+    function by the `parser` argument.
+    
+    The link problem is solved by calling the
+    `rule_attr_transform_f` in `rule<...>::parse` instead of
+    calling `parse_rule` and removing it from
+    `detail::rule_parser<...>::call_rule_definition`.
+    However, without this transformation called from within,
     indirectly, `rule_definition<...>::parse`, using an
     instance of `rule_definition<...>` on the rhs of a
     grammar expression would result in no attribute
     transformation, which of course would be invalid.  But
     the transformation cannot be put in
-    `rule_definition<...>::parse` because would duplicate
-    the transformation in `rule<...>::parse.  The solution
-    is to have `parse_rule` new function
-    `rule_definition<...>::parse_na_xform` which does no
-    attribute transform.
+    `rule_definition<...>::parse` because that would
+    duplicate the transformation in `rule<...>::parse` when
+    it calls, indirectly, the `rule_definition<...>::parse`
+    via the `parse_rule` generated by the
+    `BOOST_SPIRIT_DEFINE` macro.  The solution is to have
+    this generated `parse_rule` call instead the new
+    function `rule_definition<...>::parse_no_xform` which
+    does no attribute transform.
     
   * test code:
       * [test3/linker_error_example](https://github.com/cppljevans/spirit-experiments/blob/get_rhs/test/x3/linker_error_example/)
