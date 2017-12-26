@@ -198,6 +198,7 @@ test_token_values(boost::optional<T> const* values, std::vector<Token> const& to
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
+    using boost::none;
     typedef std::string::iterator base_iterator_type;
     std::string input(" 01 1.2 -2 03  2.3e6 -3.4");
     int ids[] = { ID_INT, ID_DOUBLE, ID_INT, ID_INT, ID_DOUBLE, ID_DOUBLE, -1 };
@@ -208,14 +209,14 @@ int main()
         { std::size_t(-1), std::size_t(-1) }
     };
     boost::optional<int> ivalues[] = { 
-        { 1 }, { }, { -2 }, 
-        { 3 }, { }, { }, 
-        { 0 }
+        1, none, -2, 
+        3, none, none, 
+        0
     };
     boost::optional<double> dvalues[] = { 
-        { }, { 1.2 }, { }, 
-        { }, { 2.3e6 }, { -3.4 }, 
-        { 0.0 }
+        none, 1.2, none, 
+        none, 2.3e6, -3.4, 
+        0.0
     };
 
     // token type: token id, iterator_pair as token value, no state
