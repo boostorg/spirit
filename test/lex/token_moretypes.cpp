@@ -173,33 +173,26 @@ test_token_positions(Iterator begin, position_type const* positions,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T>
-struct value 
-{
-    bool valid;
-    T val;
-};
-
 template <typename T, typename Token>
 inline bool 
-test_token_values(value<T> const* values, std::vector<Token> const& tokens)
+test_token_values(boost::optional<T> const* values, std::vector<Token> const& tokens)
 {
     BOOST_FOREACH(Token const& t, tokens)
     {
-        if (values->valid && values->val == 0)
+        if (values->is_initialized() && values->get() == 0)
             return false;               // reached end of expected data
 
-        if (values->valid) {
+        if (values->is_initialized()) {
             T val;
             spirit::traits::assign_to(t, val);
-            if (val != values->val)     // token value must match
+            if (val != values->get())   // token value must match
                 return false;
         }
 
         ++values;
     }
 
-    return (values->valid && values->val == 0) ? true : false;
+    return (values->is_initialized() && values->get() == 0) ? true : false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -214,15 +207,15 @@ int main()
         { 1, 3 }, { 4, 7 }, { 8, 10 }, { 11, 13 }, { 15, 20 }, { 21, 25 }, 
         { std::size_t(-1), std::size_t(-1) }
     };
-    value<int> ivalues[] = { 
-        { true, 1 }, { false }, { true, -2 }, 
-        { true, 3 }, { false }, { false }, 
-        { true, 0 }
+    boost::optional<int> ivalues[] = { 
+        { 1 }, { }, { -2 }, 
+        { 3 }, { }, { }, 
+        { 0 }
     };
-    value<double> dvalues[] = { 
-        { false }, { true, 1.2 }, { false }, 
-        { false }, { true, 2.3e6 }, { true, -3.4 }, 
-        { true, 0.0 }
+    boost::optional<double> dvalues[] = { 
+        { }, { 1.2 }, { }, 
+        { }, { 2.3e6 }, { -3.4 }, 
+        { 0.0 }
     };
 
     // token type: token id, iterator_pair as token value, no state
