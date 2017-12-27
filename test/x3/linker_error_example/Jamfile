@@ -1,0 +1,60 @@
+#==============================================================================
+#   Copyright (c) 2001-2013 Joel de Guzman
+#   Copyright (c) 2001-2012 Hartmut Kaiser
+#   Copyright (c)      2011 Bryce Lelbach
+#
+#   Use, modification and distribution is subject to the Boost Software
+#   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+
+# bring in rules for testing
+import testing ;
+import modules ;
+import feature ;
+
+###############################################################################
+project linker_error_example
+    : requirements
+        <include>..
+        <cxxflags>-v
+        <cxxflags>-ftemplate-depth-512
+        <cxxflags>-std=c++1y
+        <define>BOOST_SPIRIT_X3_EXPERIMENTAL_GET_RHS_NS=1
+        <define>BOOST_SPIRIT_X3_EXPERIMENTAL_ATTR_XFORM_IN_RULE=1
+        <linkflags>-v
+    :
+    :
+    ;
+
+tests = ;
+
+rule run ( sources + : args * : input-files * : requirements * : target-name ? :  default-build * )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    tests += [ testing.run $(sources) : $(args)
+      : $(input-files) : $(requirements) : $(target-name)-p3 : $(default-build) ] ;
+}
+
+rule compile ( sources + : requirements * : target-name ? )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    tests += [ testing.compile $(sources) : $(requirements) : $(target-name)-p3 ] ;
+}
+
+rule compile-fail ( sources + : requirements * : target-name ? )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    tests += [ testing.compile-fail $(sources) : $(requirements) : $(target-name)-p3 ] ;
+}
+
+###############################################################################
+
+{
+    ###########################################################################
+    test-suite spirit_v3/x3 :
+
+     [ run [ glob *.cpp ]  : : : : linker_error_example ]
+
+    ;
+}

@@ -121,3 +121,8 @@ run fusion_map.cpp ;
 run x3_variant.cpp ;
 run error_handler.cpp /boost//system /boost//filesystem ;
 run iterator_check.cpp ;
+run [ glob linker_error_example/*.cpp ] : : : : linker_error ;
+run [ glob get_rhs/*.cpp ] : : : <define>USE_DEFINE_ONLY=1 : get_rhs_declare ;
+run get_rhs/main.cpp : : : <define>USE_DEFINE_ONLY=1 : get_rhs_define ;
+compile-fail get_rhs/main.cpp : <define>USE_DEFINE_ONLY=1 <define>SKIP_DEFINE_X=1 : get_rhs_fail ;
+

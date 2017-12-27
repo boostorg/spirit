@@ -1,0 +1,211 @@
+-*- mode: compilation; default-directory: "~/prog_dev/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/" -*-
+Compilation started at Fri Aug 11 09:33:07
+
+make -k time
+install -d /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context
+/home/evansl/dwnlds/gcc/6-20151018/install/bin/g++ -c -O0    -O0 -gdwarf-2 -std=c++17 -Wall -Wno-deprecated -Wstrict-overflow -ftemplate-depth-200  -Wno-unused-local-typedefs -Wno-unused-but-set-variable  --version #show which compiler used.
+g++ (GCC) 6.0.0 20151018 (experimental)
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+/home/evansl/dwnlds/gcc/6-20151018/install/bin/g++ -c -O0    -O0 -gdwarf-2 -std=c++17 -Wall -Wno-deprecated -Wstrict-overflow -ftemplate-depth-200  -Wno-unused-local-typedefs -Wno-unused-but-set-variable  -ftime-report -c -std=c++14 -ftemplate-depth=200 -I/home/evansl/prog_dev/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/include -I/home/evansl/prog_dev/boost/releases/ro/boost_1_64_0 -DBOOST_SPIRIT_X3_EXPERIMENTAL_SKIP_MAKE_UNIQUE=1 main.altcomment.cpp -o /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_lje.o
+
+Execution times (seconds)
+ phase setup             :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall    1298 kB ( 0%) ggc
+ phase parsing           :   1.32 (81%) usr   0.44 (86%) sys   1.76 (82%) wall  267496 kB (87%) ggc
+ phase lang. deferred    :   0.10 ( 6%) usr   0.02 ( 4%) sys   0.12 ( 6%) wall   15896 kB ( 5%) ggc
+ phase opt and generate  :   0.19 (12%) usr   0.05 (10%) sys   0.24 (11%) wall   22972 kB ( 7%) ggc
+ phase last asm          :   0.02 ( 1%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall     514 kB ( 0%) ggc
+ |name lookup            :   0.15 ( 9%) usr   0.04 ( 8%) sys   0.17 ( 8%) wall   17064 kB ( 6%) ggc
+ |overload resolution    :   0.08 ( 5%) usr   0.01 ( 2%) sys   0.14 ( 7%) wall   10184 kB ( 3%) ggc
+ dump files              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall       0 kB ( 0%) ggc
+ callgraph construction  :   0.04 ( 2%) usr   0.00 ( 0%) sys   0.04 ( 2%) wall    4808 kB ( 2%) ggc
+ callgraph optimization  :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall     575 kB ( 0%) ggc
+ ipa inlining heuristics :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall       0 kB ( 0%) ggc
+ df scan insns           :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall      33 kB ( 0%) ggc
+ df live regs            :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall       0 kB ( 0%) ggc
+ preprocessing           :   0.55 (34%) usr   0.23 (45%) sys   0.73 (34%) wall   76889 kB (25%) ggc
+ parser (global)         :   0.17 (10%) usr   0.08 (16%) sys   0.32 (15%) wall   94174 kB (31%) ggc
+ parser struct body      :   0.29 (18%) usr   0.02 ( 4%) sys   0.27 (13%) wall   40988 kB (13%) ggc
+ parser function body    :   0.04 ( 2%) usr   0.02 ( 4%) sys   0.06 ( 3%) wall    3467 kB ( 1%) ggc
+ parser inl. func. body  :   0.02 ( 1%) usr   0.01 ( 2%) sys   0.05 ( 2%) wall    3778 kB ( 1%) ggc
+ parser inl. meth. body  :   0.08 ( 5%) usr   0.04 ( 8%) sys   0.12 ( 6%) wall   11855 kB ( 4%) ggc
+ template instantiation  :   0.25 (15%) usr   0.05 (10%) sys   0.30 (14%) wall   41964 kB (14%) ggc
+ tree eh                 :   0.01 ( 1%) usr   0.01 ( 2%) sys   0.00 ( 0%) wall     309 kB ( 0%) ggc
+ tree SSA other          :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall      55 kB ( 0%) ggc
+ out of ssa              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall      37 kB ( 0%) ggc
+ expand vars             :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.01 ( 0%) wall     114 kB ( 0%) ggc
+ expand                  :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.01 ( 0%) wall    1796 kB ( 1%) ggc
+ post expand cleanups    :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall     189 kB ( 0%) ggc
+ varconst                :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall      15 kB ( 0%) ggc
+ loop init               :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.00 ( 0%) wall     129 kB ( 0%) ggc
+ integrated RA           :   0.03 ( 2%) usr   0.00 ( 0%) sys   0.03 ( 1%) wall    8858 kB ( 3%) ggc
+ LRA non-specific        :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall      65 kB ( 0%) ggc
+ shorten branches        :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall       0 kB ( 0%) ggc
+ final                   :   0.05 ( 3%) usr   0.00 ( 0%) sys   0.03 ( 1%) wall     890 kB ( 0%) ggc
+ symout                  :   0.04 ( 2%) usr   0.01 ( 2%) sys   0.04 ( 2%) wall   11112 kB ( 4%) ggc
+ rest of compilation     :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.03 ( 1%) wall     904 kB ( 0%) ggc
+ unaccounted todo        :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.00 ( 0%) wall       3 kB ( 0%) ggc
+ TOTAL                 :   1.63             0.51             2.14             308187 kB
+/home/evansl/dwnlds/gcc/6-20151018/install/bin/g++ -Wl,--library-path=/home/evansl/dwnlds/gcc/6-20151018/install/lib64 -Wl,-rpath=/home/evansl/dwnlds/gcc/6-20151018/install/lib64  /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_lje.o -o /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_lje.exe
+/tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_lje.exe
+Input[0]:
+{
+   }
+Parsed[0]:true
+Input[1]:
+{
+		skip1{
+		}
+   }
+Parsed[1]:true
+Input[2]:
+{
+		skip1{
+			/*1comments*/ 
+		}
+   }
+Parsed[2]:true
+Input[3]:
+{
+	{}
+	{
+		skip1{
+			{} /*1comments*/ 
+			{ /*1comments*/ } 
+		}
+	}
+   }
+Parsed[3]:true
+Input[4]:
+{
+	skip2{
+           /*2comments*/
+	}
+   }
+Parsed[4]:true
+Input[5]:
+{
+     skip1
+     { /*1comments*/
+       skip2{ /*2comments*/ } 
+       skip1{ /*1comments*/ }
+     }
+   }
+Parsed[5]:false
+Input[6]:
+{
+     skip1
+     {  /*1comments*/
+        skip2
+        { /*2comments*/
+          skip1{ /*1comments*/ }
+        }
+        /*1comments*/
+     }
+   }
+Parsed[6]:false
+all_pass=false
+/home/evansl/dwnlds/gcc/6-20151018/install/bin/g++ -c -O0    -O0 -gdwarf-2 -std=c++17 -Wall -Wno-deprecated -Wstrict-overflow -ftemplate-depth-200  -Wno-unused-local-typedefs -Wno-unused-but-set-variable  -ftime-report -c -std=c++14 -ftemplate-depth=200 -I/home/evansl/prog_dev/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/togermer/spirit/include -I/home/evansl/prog_dev/boost/releases/ro/boost_1_64_0 main.altcomment.cpp -o /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_togermer.o
+
+Execution times (seconds)
+ phase setup             :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall    1298 kB ( 0%) ggc
+ phase parsing           :   1.31 (81%) usr   0.42 (86%) sys   1.74 (82%) wall  267422 kB (87%) ggc
+ phase lang. deferred    :   0.08 ( 5%) usr   0.03 ( 6%) sys   0.11 ( 5%) wall   16053 kB ( 5%) ggc
+ phase opt and generate  :   0.20 (12%) usr   0.04 ( 8%) sys   0.24 (11%) wall   22969 kB ( 7%) ggc
+ phase last asm          :   0.02 ( 1%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall     513 kB ( 0%) ggc
+ |name lookup            :   0.14 ( 9%) usr   0.05 (10%) sys   0.15 ( 7%) wall   17119 kB ( 6%) ggc
+ |overload resolution    :   0.05 ( 3%) usr   0.01 ( 2%) sys   0.13 ( 6%) wall   10178 kB ( 3%) ggc
+ dump files              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall       0 kB ( 0%) ggc
+ callgraph construction  :   0.04 ( 2%) usr   0.00 ( 0%) sys   0.04 ( 2%) wall    4831 kB ( 2%) ggc
+ callgraph optimization  :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall     575 kB ( 0%) ggc
+ cfg cleanup             :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall       9 kB ( 0%) ggc
+ trivially dead code     :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.00 ( 0%) wall       0 kB ( 0%) ggc
+ df scan insns           :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall      33 kB ( 0%) ggc
+ df reg dead/unused notes:   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall     136 kB ( 0%) ggc
+ register information    :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall       0 kB ( 0%) ggc
+ preprocessing           :   0.52 (32%) usr   0.16 (33%) sys   0.75 (36%) wall   76879 kB (25%) ggc
+ parser (global)         :   0.21 (13%) usr   0.12 (24%) sys   0.23 (11%) wall   94213 kB (31%) ggc
+ parser struct body      :   0.29 (18%) usr   0.08 (16%) sys   0.26 (12%) wall   40950 kB (13%) ggc
+ parser function body    :   0.05 ( 3%) usr   0.00 ( 0%) sys   0.05 ( 2%) wall    3468 kB ( 1%) ggc
+ parser inl. func. body  :   0.05 ( 3%) usr   0.00 ( 0%) sys   0.05 ( 2%) wall    3782 kB ( 1%) ggc
+ parser inl. meth. body  :   0.04 ( 2%) usr   0.02 ( 4%) sys   0.18 ( 9%) wall   11885 kB ( 4%) ggc
+ template instantiation  :   0.21 (13%) usr   0.07 (14%) sys   0.31 (15%) wall   42020 kB (14%) ggc
+ tree gimplify           :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall     732 kB ( 0%) ggc
+ tree CFG cleanup        :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall       0 kB ( 0%) ggc
+ tree PHI insertion      :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.00 ( 0%) wall      67 kB ( 0%) ggc
+ out of ssa              :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall      38 kB ( 0%) ggc
+ expand vars             :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall     115 kB ( 0%) ggc
+ expand                  :   0.02 ( 1%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall    1794 kB ( 1%) ggc
+ post expand cleanups    :   0.00 ( 0%) usr   0.01 ( 2%) sys   0.00 ( 0%) wall     190 kB ( 0%) ggc
+ integrated RA           :   0.04 ( 2%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall    8832 kB ( 3%) ggc
+ LRA non-specific        :   0.02 ( 1%) usr   0.01 ( 2%) sys   0.02 ( 1%) wall      65 kB ( 0%) ggc
+ LRA create live ranges  :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall      13 kB ( 0%) ggc
+ shorten branches        :   0.00 ( 0%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall       0 kB ( 0%) ggc
+ final                   :   0.01 ( 1%) usr   0.00 ( 0%) sys   0.01 ( 0%) wall     894 kB ( 0%) ggc
+ symout                  :   0.05 ( 3%) usr   0.00 ( 0%) sys   0.05 ( 2%) wall   11110 kB ( 4%) ggc
+ rest of compilation     :   0.02 ( 1%) usr   0.00 ( 0%) sys   0.00 ( 0%) wall     901 kB ( 0%) ggc
+ unaccounted todo        :   0.02 ( 1%) usr   0.00 ( 0%) sys   0.02 ( 1%) wall       3 kB ( 0%) ggc
+ TOTAL                 :   1.61             0.49             2.11             308267 kB
+/home/evansl/dwnlds/gcc/6-20151018/install/bin/g++ -Wl,--library-path=/home/evansl/dwnlds/gcc/6-20151018/install/lib64 -Wl,-rpath=/home/evansl/dwnlds/gcc/6-20151018/install/lib64  /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_togermer.o -o /tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_togermer.exe
+/tmp/build/gcc6_20151018/boost/releases/ro/boost_1_64_0/sandbox/pull_requests/context_debug_fix.fork/spirit/workbench/x3/HanWang_make_context/main.altcomment_togermer.exe
+Input[0]:
+{
+   }
+Parsed[0]:true
+Input[1]:
+{
+		skip1{
+		}
+   }
+Parsed[1]:true
+Input[2]:
+{
+		skip1{
+			/*1comments*/ 
+		}
+   }
+Parsed[2]:true
+Input[3]:
+{
+	{}
+	{
+		skip1{
+			{} /*1comments*/ 
+			{ /*1comments*/ } 
+		}
+	}
+   }
+Parsed[3]:true
+Input[4]:
+{
+	skip2{
+           /*2comments*/
+	}
+   }
+Parsed[4]:true
+Input[5]:
+{
+     skip1
+     { /*1comments*/
+       skip2{ /*2comments*/ } 
+       skip1{ /*1comments*/ }
+     }
+   }
+Parsed[5]:true
+Input[6]:
+{
+     skip1
+     {  /*1comments*/
+        skip2
+        { /*2comments*/
+          skip1{ /*1comments*/ }
+        }
+        /*1comments*/
+     }
+   }
+Parsed[6]:true
+all_pass=true
+
+Compilation finished at Fri Aug 11 09:33:11

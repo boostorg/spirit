@@ -1,0 +1,48 @@
+#==============================================================================
+#   Copyright (c) 2001-2013 Joel de Guzman
+#   Copyright (c) 2001-2012 Hartmut Kaiser
+#   Copyright (c)      2011 Bryce Lelbach
+#
+#   Use, modification and distribution is subject to the Boost Software
+#   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+
+# bring in rules for testing
+import testing ;
+import modules ;
+import feature ;
+
+###############################################################################
+project get_rhs
+    : requirements
+        <include>.
+        <toolset>gcc:<cxxflags>-std=c++1y
+        <toolset>gcc:<cxxflags>-ftemplate-depth-512
+        <toolset>clang:<cxxflags>-std=c++1y
+        <toolset>clang:<cxxflags>-ftemplate-depth-512
+        <toolset>darwin:<cxxflags>-std=c++1y
+        <toolset>darwin:<cxxflags>-ftemplate-depth-512
+    :
+    :
+    ;
+
+tests = ;
+
+rule run ( sources + : args * : input-files * : requirements * : target-name ? :  default-build * )
+{
+    target-name ?= $(sources[1]:D=:S=) ;
+    tests += [ testing.run $(sources) : $(args)
+      : $(input-files) : $(requirements) : $(target-name) : $(default-build) ] ;
+    }
+
+###############################################################################
+
+{
+    ###########################################################################
+    test-suite spirit_v3/x3 :
+
+     [ run main.cpp derived.cpp : : : : get_rhs_declare ]
+     [ run main.cpp : : : <define>USE_DEFINE_ONLY=1 : get_rhs_define ]
+    ;
+}

@@ -123,7 +123,10 @@ run utree1.cpp ;
 run utree2.cpp ;
 run utree3.cpp ;
 run utree4.cpp ;
+<<<<<<< HEAD
+=======
 run iterator_check.cpp ;
+>>>>>>> 620d5494b61ba3415d5750cdfde2c4abab44bdda
 
 compile pass_container3.cpp ;
 compile regression_attr_with_action.cpp ;

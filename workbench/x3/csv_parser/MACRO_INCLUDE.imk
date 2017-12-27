@@ -1,0 +1,6 @@
+#Generated from Makefile with target:MACRO_INCLUDE.imk.
+#  Change values as appropriate for your environment.
+COMPILER.clangxx3_9_pkg:=/home/evansl/dwnlds/llvm/3.9/prebuilt/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++
+boost.root:=/home/evansl/prog_dev/boost/releases/ro/boost_1_63_0
+nonius:=/home/evansl/prog_dev/github/nonius/nonius/include
+boost.spirit.fork:=/home/evansl/prog_dev/boost/releases/ro/boost_1_63_0/sandbox/pull_requests/context_debug_fix.fork/spirit/include

@@ -7,7 +7,21 @@
 =============================================================================*/
 #if !defined(BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM)
 #define BOOST_SPIRIT_X3_CONTEXT_JAN_4_2012_1215PM
-
+#if 0
+  #pragma message "deprecated.  May cause infinite template recursion when using x3::skip(skipper)[some recursive rule]."
+  //For example, see 
+  /*
+    https://stackoverflow.com/questions/45282293/spirit-not-able-to-use-x3skipskippersome-recursive-rule-in-its-rule-defin
+   */
+  //Mailing list discussion includes:
+  /*
+    https://sourceforge.net/p/spirit/mailman/message/35965692/
+   */
+  //Solution in PR237
+  /*
+    https://github.com/boostorg/spirit/pull/237
+   */
+#endif
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/mpl/identity.hpp>
 
@@ -79,14 +93,16 @@ namespace boost { namespace spirit { namespace x3
     {
         template <typename ID, typename T, typename Next, typename FoundVal>
         inline Next const&
-        make_unique_context(T& /* val */, Next const& next, FoundVal&)
+        make_unique_context(T& /* val */, Next const& next, FoundVal&fv)
+        //x3::get<ID>(next)==fv; so return old context
         {
             return next;
         }
-        
+
         template <typename ID, typename T, typename Next>
         inline context<ID, T, Next>
         make_unique_context(T& val, Next const& next, unused_type)
+        //ID not found in next; so append val to existing context.
         {
             return { val, next };
         }
