@@ -18,7 +18,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         static T call()
         {
-            return boost::value_initialized<T>();
+            return boost::value_initialized<T>().data();
         }
     };
 }}}}
