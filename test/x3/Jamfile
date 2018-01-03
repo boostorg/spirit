@@ -89,6 +89,7 @@ run matches.cpp ;
 run no_case.cpp ;
 run no_skip.cpp ;
 run not_predicate.cpp ;
+run omit.cpp ;
 run optional.cpp ;
 run plus.cpp ;
 run with.cpp ;
@@ -116,6 +117,7 @@ run confix.cpp ;
 run repeat.cpp ;
 run seek.cpp ;
 
+run attribute_type_check.cpp ;
 run fusion_map.cpp ;
 run x3_variant.cpp ;
 run error_handler.cpp /boost//system /boost//filesystem ;
