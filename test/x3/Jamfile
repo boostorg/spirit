@@ -120,3 +120,4 @@ run fusion_map.cpp ;
 run x3_variant.cpp ;
 run error_handler.cpp /boost//system /boost//filesystem ;
 run iterator_check.cpp ;
+run [ glob linker_error_test/*.cpp ] : : : : linker_error ;

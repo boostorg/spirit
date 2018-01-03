@@ -53,9 +53,15 @@ namespace boost { namespace spirit { namespace x3
         rule_definition(RHS const& rhs, char const* name)
           : rhs(rhs), name(name) {}
 
-        template <typename Iterator, typename Context, typename Attribute_>
-        bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, Attribute_& attr) const
+        /**@brief
+         *  *only* called from BOOST_SPIRIT_DEFINE_; hence,
+         *  the rule_attr_transform_f has already been done in the
+         *  rule<...>::parse function; hence, no need to repeat
+         *  it here.
+         */
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        bool parse_no_xform(Iterator& first, Iterator const& last
+          , Context const& context, unused_type, ActualAttribute& attr) const
         {
             return detail::rule_parser<attribute_type, ID>
                 ::call_rule_definition(
@@ -63,6 +69,34 @@ namespace boost { namespace spirit { namespace x3
                   , context
                   , attr
                   , mpl::bool_<force_attribute>());
+        }
+        
+        /**@brief
+         *  *this appears in rhs of some grammar expression; hence,
+         *  this parse function is *not* called from the rule::parse function
+         *  (i.e. indirectly through the parse_rule function generated
+         *  by the BOOST_SPIRIT_DEFINE_ macro); 
+         *  hence, rule_attr_transform_f must be called to avoid the error
+         *  reported here:
+         *    https://sourceforge.net/p/spirit/mailman/message/36093142/
+         *  *and* also solve the link problem mentioned elsewhere in
+         *  that same post:
+         *    https://stackoverflow.com/questions/43791079/x3-linker-error-with-separate-tu
+         */
+        template <typename Iterator, typename Context, typename ActualAttribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, unused_type, ActualAttribute& attr) const
+        {
+            auto parser_f=[&]( Iterator& f_first, Iterator const& f_last, auto& f_attr)
+              {  return  this->parse_no_xform( f_first, f_last, context, unused, f_attr);
+              };
+            bool ok_parse=
+              detail::rule_parser<Attribute,ID>::rule_attr_transform_f(
+                name
+              , first, last
+              , attr
+              , parser_f);
+            return ok_parse;
         }
 
         RHS rhs;
@@ -106,11 +140,20 @@ namespace boost { namespace spirit { namespace x3
         }
 
 
-        template <typename Iterator, typename Context, typename Attribute_>
+        template <typename Iterator, typename Context, typename ActualAttribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, Attribute_& attr) const
+          , Context const& context, unused_type, ActualAttribute& attr) const
         {
-            return parse_rule(*this, first, last, context, attr);
+            auto parser_f=[&]( Iterator& f_first, Iterator const& f_last, auto& f_attr)
+              {  return  parse_rule(*this, f_first, f_last, context, f_attr);
+              };
+            bool ok_parse=
+              detail::rule_parser<Attribute,ID>::rule_attr_transform_f(
+                name
+              , first, last
+              , attr
+              , parser_f);
+            return ok_parse;
         }
 
         char const* name;
@@ -139,6 +182,29 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
+/** @defgroup BOOST_SPIRIT_NS_RECUR BOOST_SPIRIT_* macros
+ *
+ *  Macros for connecting a rule in namespace scope
+ *  with its rule_definition.
+ *  @{
+ */    
+
+/*!
+  \def BOOST_SPIRIT_DECLARE_(r, data, rule_type)
+    \a r is ignored.
+    \a data is ignored.
+    \a rule_type is a type, rule<ID,RuleAttribute,...>.
+    
+    This generates a *declaration* of a parse_rule function
+    specialized on rule_type as 1st arg. 
+    The companion macro, BOOST_SPIRIT_INSTANTIATE, actually
+    instantiates this declaration.  The INSTANTIATE macro should be
+    called within a separate .cpp file which then allows separate
+    compilation of the instantiation from the declaration; thereby,
+    saving some overall compilation time (in theory ;).
+    **IN ADDITION* the BOOST_SPIRIT_DEFINE_ macro should be called
+    in the same .cpp file to provide the actual definition.
+*/
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
     template <typename Iterator, typename Context, typename Attribute>          \
     bool parse_rule(                                                            \
@@ -151,6 +217,31 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
     /***/
 
+/*!
+  \def BOOST_SPIRIT_DEFINE_(r, data, rule_name)
+    \a r is ignored.
+    \a data is ignored.
+    \a rule_name is the variable name of a variable
+       with type, rule<ID,RuleAttribute,...>,
+       for some typename's ID and RuleAttriute.
+       
+    This generates a *definition* of a parse_rule function
+    specialized on decltype(rule_name) as 1st arg.
+    This specialized parse_rule will then be the one
+    called in the rule<...>::parse function above. 
+    The body creates a static instance of rule_name##_def.  
+    Of course this  means rule_name##_def must be defined 
+    before this macro is executed.  For example, given:
+      rule_name = x
+    then, something like:
+      auto const& x_def = x = rhs;
+    must occur in the scope in which this macro is invoked.
+    Then, this macro is called as:
+      BOOST_SPIRIT_DEFINE_(_,_,x)
+      
+    Using this obviates the need for calling the combination of
+    BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_INSTANTIATE.
+*/
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1910)
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     using BOOST_PP_CAT(rule_name, _synonym) = decltype(rule_name);              \
@@ -162,7 +253,7 @@ namespace boost { namespace spirit { namespace x3
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
-        return def_.parse(first, last, context, unused, attr);                  \
+        return def_.parse_no_xform(first, last, context, unused, attr);         \
     }                                                                           \
     /***/
 #else
@@ -175,7 +266,7 @@ namespace boost { namespace spirit { namespace x3
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
-        return def_.parse(first, last, context, unused, attr);                  \
+        return def_.parse_no_xform(first, last, context, unused, attr);         \
     }                                                                           \
     /***/
 #endif
@@ -184,6 +275,16 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
     /***/
 
+/*!
+  \def BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)
+    Instantiates the parse_rule function specialization
+    declared by the BOOST_SPIRIT_DECLARE_ macro.
+    
+   \design DESIGN_QUESTION:2017-11-04:
+      Why shouldn't the BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_DEFINE_ macros
+      hardcode rule_type::attribute_type also as the type of the attr argument
+      instead of making it a template parameter?
+ */    
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
     template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \
         rule_type rule_                                                         \
@@ -191,6 +292,7 @@ namespace boost { namespace spirit { namespace x3
       , Context const& context, rule_type::attribute_type& attr);               \
     /***/
 
+/** @}*/    
 
 }}}
 
