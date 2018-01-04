@@ -52,10 +52,10 @@
 #   error Platforms with CHAR_BIT != 8 are not supported
 # endif
 
-# define BOOST_ENDIAN_DEFAULT_CONSTRUCT {}          // C++03
+# define BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT {}          // C++03
 
-# if defined(BOOST_ENDIAN_FORCE_PODNESS)
-#   define BOOST_ENDIAN_NO_CTORS
+# if defined(BOOST_ENDIAN_NO_CTORS) || defined(BOOST_ENDIAN_FORCE_PODNESS)
+#   define BOOST_SPIRIT_ENDIAN_NO_CTORS
 # endif
 
 
@@ -315,8 +315,8 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
       public:
         typedef T value_type;
-#     ifndef BOOST_ENDIAN_NO_CTORS
-        endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+#     ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
         explicit endian(T val)
         {
 #       ifdef BOOST_ENDIAN_LOG
@@ -347,8 +347,8 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
       public:
         typedef T value_type;
-#     ifndef BOOST_ENDIAN_NO_CTORS
-        endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+#     ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
         explicit endian(T val)
         {
 #       ifdef BOOST_ENDIAN_LOG
@@ -379,8 +379,8 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
       public:
         typedef T value_type;
-#   ifndef BOOST_ENDIAN_NO_CTORS
-        endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+#   ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
 #     if BOOST_ENDIAN_BIG_BYTE
         explicit endian(T val)    { detail::store_big_endian<T, n_bits/8>(m_value, val); }
 #     else
@@ -410,8 +410,8 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( sizeof(T) == n_bits/8 );
       public:
         typedef T value_type;
-#   ifndef BOOST_ENDIAN_NO_CTORS
-        endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+#   ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
 #     if BOOST_ENDIAN_BIG_BYTE
         endian(T val) : m_value(val) { }
 #     else
@@ -438,8 +438,8 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( sizeof(T) == n_bits/8 );
       public:
         typedef T value_type;
-#   ifndef BOOST_ENDIAN_NO_CTORS
-        endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+#   ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
 #     if BOOST_ENDIAN_LITTLE_BYTE
         endian(T val) : m_value(val) { }
 #     else
