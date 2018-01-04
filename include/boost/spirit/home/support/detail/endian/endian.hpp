@@ -35,8 +35,12 @@
 
 #include <boost/config.hpp>
 #include <boost/predef/other/endian.h>
+#ifndef BOOST_MINIMAL_INTEGER_COVER_OPERATORS
 #define BOOST_MINIMAL_INTEGER_COVER_OPERATORS
+#endif
+#ifndef BOOST_NO_IO_COVER_OPERATORS
 #define BOOST_NO_IO_COVER_OPERATORS
+#endif
 #include <boost/spirit/home/support/detail/endian/cover_operators.hpp>
 #undef  BOOST_NO_IO_COVER_OPERATORS
 #undef  BOOST_MINIMAL_INTEGER_COVER_OPERATORS
