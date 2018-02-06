@@ -11,30 +11,101 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
-#include <boost/throw_exception.hpp>
-#include <stdexcept>
-
 namespace boost { namespace spirit { namespace x3
 {
-    template <typename Iterator>
-    struct expectation_failure : std::runtime_error
-    {
-    public:
+    namespace detail {
+        inline bool has_expectation_failure_impl(bool& failure) {
+            return failure;
+        }
 
-        expectation_failure(Iterator where, std::string const& which)
-          : std::runtime_error("boost::spirit::x3::expectation_failure")
-          , where_(where), which_(which)
-        {}
-        ~expectation_failure() throw() {}
+        template <typename Iterator>
+        bool has_expectation_failure_impl(
+            boost::optional<expectation_failure<Iterator>>& failure
+        ) {
+            return static_cast<bool>(failure);
+        }
 
-        std::string which() const { return which_; }
-        Iterator const& where() const { return where_; }
+        template <typename Iterator, typename Subject>
+        void set_expectation_failure_impl(
+            Iterator const& where,
+            Subject const& subject,
+            bool& failure
+        ) {
+            failure = true;
+        }
 
-    private:
+        template <typename Iterator, typename Subject>
+        void set_expectation_failure_impl(
+            Iterator const& where,
+            Subject const& subject,
+            boost::optional<expectation_failure<Iterator>>& failure
+        ) {
+            failure = expectation_failure<Iterator>{
+                where,
+                what(subject)
+            };
+        }
 
-        Iterator where_;
-        std::string which_;
-    };
+        template <typename Iterator>
+        expectation_failure<Iterator> get_expectation_failure_impl(
+            Iterator const& where, bool& failure
+        ) {
+            return {where, {}};
+        }
+
+        template <typename Iterator>
+        auto const& get_expectation_failure_impl(
+            Iterator const&,
+            boost::optional<expectation_failure<Iterator>>& failure
+        ) {
+            return *failure;
+        }
+
+        template <typename Iterator>
+        void reset_expectation_failure_impl(bool& failure) {
+            failure = false;
+        }
+
+        template <typename Iterator>
+        void reset_expectation_failure_impl(
+            boost::optional<expectation_failure<Iterator>>& failure) {
+            failure = boost::none;
+        }
+    }
+
+    template <typename Context> 
+    bool has_expectation_failure(Context const& context) {
+        return detail::has_expectation_failure_impl(
+            x3::get<expectation_failure_tag>(context));
+    }
+
+    template <typename Iterator, typename Subject, typename Context>
+    void set_expectation_failure(
+        Iterator const& where,
+        Subject const& subject,
+        Context const& context
+    ) {
+        detail::set_expectation_failure_impl(
+            where,
+            subject,
+            x3::get<expectation_failure_tag>(context)
+        );
+    }
+
+    template <typename Iterator, typename Context>
+    decltype(auto) get_expectation_failure(
+        Iterator const& where,
+        Context const& context
+    ) {
+        return detail::get_expectation_failure_impl(
+            where, x3::get<expectation_failure_tag>(context));
+    }
+
+    template <typename Context>
+    void reset_expectation_failure(Context const& context) {
+        detail::reset_expectation_failure_impl(
+            x3::get<expectation_failure_tag>(context));
+    }
 
     template <typename Subject>
     struct expect_directive : unary_parser<Subject, expect_directive<Subject>>
@@ -50,13 +121,16 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
+            Iterator save = first;
             bool r = this->subject.parse(first, last, context, rcontext, attr);
 
             if (!r)
             {
-                boost::throw_exception(
-                    expectation_failure<Iterator>(
-                        first, what(this->subject)));
+                if(!has_expectation_failure(context))
+                {
+                    set_expectation_failure(first, this->subject, context);
+                }
+                first = save;
             }
             return r;
         }
@@ -87,14 +161,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr)
         {
+            Iterator save = first;
             bool r = parse_into_container(
                 parser.subject, first, last, context, rcontext, attr);
 
             if (!r)
             {
-                boost::throw_exception(
-                    expectation_failure<Iterator>(
-                        first, what(parser.subject)));
+                if (!has_expectation_failure(context))
+                {
+                    set_expectation_failure(first, parser.subject, context);
+                }
+                first = save;
             }
             return r;
         }

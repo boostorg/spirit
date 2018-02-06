@@ -15,6 +15,7 @@
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/utility/declval.hpp>
+#include <boost/optional.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -29,6 +30,26 @@ namespace boost { namespace spirit { namespace x3
         unused_skipper(Skipper const& skipper)
           : skipper(skipper) {}
         Skipper const& skipper;
+    };
+
+    struct expectation_failure_tag;
+
+    template <typename Iterator>
+    struct expectation_failure
+    {
+    public:
+
+        expectation_failure(Iterator where, std::string which)
+          : where_(where), which_(std::move(which))
+        {}
+
+        std::string which() const { return which_; }
+        Iterator const& where() const { return where_; }
+
+    private:
+
+        Iterator where_;
+        std::string which_;
     };
 
     namespace detail
@@ -62,7 +83,8 @@ namespace boost { namespace spirit { namespace x3
         inline void skip_over(
             Iterator& first, Iterator const& last, Skipper const& skipper)
         {
-            while (first != last && skipper.parse(first, last, unused, unused, unused))
+            boost::optional<expectation_failure<Iterator>> failure;
+            while (first != last && skipper.parse(first, last, make_context<expectation_failure_tag>(failure), unused, unused))
                 /***/;
         }
 

@@ -33,9 +33,18 @@ main()
     using boost::spirit::x3::skip_flag;
     using boost::spirit::x3::skipper_tag;
     using boost::spirit::x3::_attr;
+    using boost::spirit::x3::phrase_parse_context;
+    using boost::spirit::x3::expectation_failure;
+    using boost::spirit::x3::expectation_failure_tag;
 
     typedef char const* iterator_type;
-    typedef decltype(make_context<skipper_tag>(space)) context_type;
+
+    typedef decltype(make_context<expectation_failure_tag>(
+        std::declval<boost::optional<expectation_failure<iterator_type>>&>()
+    )) default_context_type;
+
+    typedef phrase_parse_context<iterator_type, decltype(space)>::type context_type;
+
     { // basic tests
 
         auto a = lit('a');
@@ -43,8 +52,9 @@ main()
         auto c = lit('c');
 
         {
-            any_parser<iterator_type> start =
-                *(a | b | c);
+            any_parser<
+                iterator_type, unused_type, default_context_type
+            > start = *(a | b | c);
 
             BOOST_TEST(test("abcabcacb", start));
         }
@@ -57,8 +67,7 @@ main()
         auto c = lit('c');
 
         {
-            any_parser<iterator_type, unused_type, context_type> start =
-                *(a | b | c);
+            any_parser<iterator_type, unused_type, context_type> start = *(a | b | c);
 
             BOOST_TEST(test(" a b c a b c a c b ", start, space));
         }
@@ -83,7 +92,7 @@ main()
     { // context tests
 
         char ch;
-        any_parser<iterator_type, char> a = alpha;
+        any_parser<iterator_type, char, default_context_type> a = alpha;
 
         // this semantic action requires both the context and attribute
         //!!auto f = [&](auto&, char attr){ ch = attr; };
@@ -107,7 +116,7 @@ main()
     { // auto rules tests
 
         char ch = '\0';
-        any_parser<iterator_type, char> a = alpha;
+        any_parser<iterator_type, char, default_context_type> a = alpha;
         auto f = [&](auto& ctx){ ch = _attr(ctx); };
 
         BOOST_TEST(test("x", a[f]));
@@ -134,7 +143,7 @@ main()
         auto f = [&](auto& ctx){ s = _attr(ctx); };
 
         {
-            any_parser<iterator_type, std::string> r
+            any_parser<iterator_type, std::string, default_context_type> r
                 = char_ >> *(',' >> char_)
                 ;
 
@@ -143,7 +152,7 @@ main()
         }
 
         {
-            any_parser<iterator_type, std::string> r
+            any_parser<iterator_type, std::string, default_context_type> r
                 = char_ >> *(',' >> char_);
             s.clear();
             BOOST_TEST(test("a,b,c,d,e,f", r[f]));
@@ -151,7 +160,7 @@ main()
         }
 
         {
-            any_parser<iterator_type, std::string> r
+            any_parser<iterator_type, std::string, default_context_type> r
                 = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
             s.clear();
             BOOST_TEST(test("abcdef", r[f]));

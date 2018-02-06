@@ -14,6 +14,7 @@
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
 #include <boost/spirit/home/x3/support/traits/optional_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -37,7 +38,7 @@ namespace boost { namespace spirit { namespace x3
         {
             detail::parse_into_container(
                 this->subject, first, last, context, rcontext, attr);
-            return true;
+            return !has_expectation_failure(context);
         }
 
         // Attribute is an optional
@@ -59,7 +60,7 @@ namespace boost { namespace spirit { namespace x3
                 // assign the parsed value into our attribute
                 x3::traits::move_to(val, attr);
             }
-            return true;
+            return !has_expectation_failure(context);
         }
     };
 

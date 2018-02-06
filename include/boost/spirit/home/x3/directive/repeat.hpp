@@ -11,6 +11,7 @@
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
+#include <boost/spirit/home/x3/directive/expect.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -83,7 +84,7 @@ namespace boost { namespace spirit { namespace x3
                       this->subject, first, last, context, rcontext, attr))
                     break;
             }
-            return true;
+            return !has_expectation_failure(context);
         }
 
         RepeatCountLimit repeat_limit;

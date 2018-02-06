@@ -224,7 +224,8 @@ pages and pages of reference documentation.
     [[__x3_sequence__]      [`tuple<A, B>`]             [Sequence. Parse `a` followed by `b`]]
     [[__x3_expect__]        [`tuple<A, B>`]             [Expect. Parse `a` followed by `b`. `b` is
                                                         expected to match when `a` matches, otherwise,
-                                                        an `expectation_failure` is thrown.]]
+                                                        the whole parser fails. The failure can be
+                                                        handled by error handler, such as on_error().]]
     [[__x3_difference__]    [`A`]                       [Difference. Parse `a` but not `b`]]
     [[__x3_list__]          [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
 ]

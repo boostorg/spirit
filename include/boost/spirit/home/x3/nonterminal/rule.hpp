@@ -29,9 +29,9 @@ namespace boost { namespace spirit { namespace x3
       , Iterator& first, Iterator const& last
       , Context const& context, ActualAttribute& attr)
     {
-        static_assert(!is_same<decltype(get<ID>(context)), unused_type>::value,
+        static_assert(!is_same<decltype(x3::get<ID>(context)), unused_type>::value,
             "BOOST_SPIRIT_DEFINE undefined for this rule.");
-        return get<ID>(context).parse(first, last, context, unused, attr);
+        return x3::get<ID>(context).parse(first, last, context, unused, attr);
     }
 
     template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
