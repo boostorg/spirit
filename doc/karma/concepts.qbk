@@ -329,22 +329,22 @@ word "recursive" in recursive descent generation.
 
 [heading Signature]
 
-Rules can have both consumed and inherited attributes. The rule's
-/Signature/ specifies both the consumed and inherited attributes. The
-specification uses the function declarator syntax: 
+Nonterminals can have both consumed and inherited attributes. The
+Nonterminal's /Signature/ specifies both the consumed and inherited
+attributes. The specification uses the function declarator syntax: 
 
     RT(A0, A1, A2, ..., AN)
 
-where `RT` is the rule's consumed attribute and `A0` ... `AN` are the
-rule's inherited attributes.
+where `RT` is the Nonterminal's consumed attribute and `A0` ... `AN`
+are the Nonterminal's inherited attributes.
 
 [heading Attributes]
 
-The rule models a C++ function. The rule's consumed attribute is
-analogous to the function return value as it is the type -exposed- by the rule. 
-Its inherited attributes are analogous to function arguments. The inherited 
-attributes (arguments) can be passed in just like any __karma_lazy_argument__, 
-e.g.:
+The Nonterminal models a C++ function. The Nonterminal's consumed attribute is
+analogous to the function return value as it is the type -exposed- by the
+Nonterminal. Its inherited attributes are analogous to function arguments.
+The inherited attributes (arguments) can be passed in just like any
+__karma_lazy_argument__, e.g.:
 
     r(expr) // Evaluate expr at parse time and pass the result to the Nonterminal r
 
