@@ -338,6 +338,8 @@ attributes. The specification uses the function declarator syntax:
 where `RT` is the Nonterminal's consumed attribute and `A0` ... `AN`
 are the Nonterminal's inherited attributes.
 
+The default value is `void()` (no consumed and inherited attributes).
+
 [heading Attributes]
 
 The Nonterminal models a C++ function. The Nonterminal's consumed attribute is
