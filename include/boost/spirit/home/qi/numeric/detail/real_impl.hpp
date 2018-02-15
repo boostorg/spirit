@@ -234,6 +234,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 // to zero (0) only if we already got a number.
                 if (p.parse_frac_n(first, last, acc_n, frac_digits))
                 {
+                    BOOST_ASSERT(frac_digits >= 0);
                 }
                 else if (!got_a_number || !p.allow_trailing_dot)
                 {
@@ -286,13 +287,15 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     // by resetting 'first' prior to the exponent prefix (e|E)
                     first = e_pos;
                     // Scale the number by -frac_digits.
-                    traits::scale(-frac_digits, n, acc_n);
+                    bool r = traits::scale(-frac_digits, n, acc_n);
+                    BOOST_VERIFY(r);
                 }
             }
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
-                traits::scale(-frac_digits, n, acc_n);
+                bool r = traits::scale(-frac_digits, n, acc_n);
+                BOOST_VERIFY(r);
             }
             else if (traits::is_equal_to_one(acc_n))
             {
