@@ -56,5 +56,10 @@ boostbook spirit2
 ###############################################################################
 alias boostdoc ;
 explicit boostdoc ;
-alias boostrelease : spirit2 ;
+alias boostrelease
+    :
+        spirit2
+        ../repository/doc//spirit2_repository
+        x3//spirit_x3
+    ;
 explicit boostrelease ;
