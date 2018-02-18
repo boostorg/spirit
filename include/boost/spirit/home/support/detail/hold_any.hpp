@@ -327,6 +327,11 @@ namespace boost { namespace spirit
             return assign(x);
         }
 #endif
+        // copy assignment operator
+        basic_hold_any& operator=(basic_hold_any const& x)
+        {
+            return assign(x);
+        }
 
         // utility functions
         basic_hold_any& swap(basic_hold_any& x)
