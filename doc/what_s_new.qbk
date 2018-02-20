@@ -9,6 +9,49 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_5 Spirit V2.5.5]
+
+[heading What's changed from V2.5.4 (Boost V1.66.0) to V2.5.5 (Boost V1.67.0)]
+
+There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
+
+[heading Bug Fixes in Qi or Karma]
+* Fixed keyword directives compilation on C++11 PR#256 #11493.
+* Fixed subrules compilation PR#279 PR#259.
+* Fixed subrules use after scope bug PR#284 #5270.
+* Fixed undefined behavior in sequential or operator. Underlying parsers
+  order of execution was dependent on compiler PR#310.
+* Spirit was accidentally relaying on `types` typedef of `boost::optional`.
+  The typedef was removed in the new optional implementation PR#271 #12349.
+* Fixed problems with `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` (`attr_cast`,
+  `confix`, `distinct`, `keywords`, and `flush_multi_pass`) PR#314 #13311.
+* Added missing copy assignment operator to `hold_any` PR#361 #8268.
+
+[heading Bug Fixes in Qi]
+* Fixed alternate operator PR#201 PR#271 #12349.
+* Fixed signed integer overflow in real parser #245.
+* Fixed overflow problem in `uint_parser<signed T>` PR#297.
+* Fixed `get_current_line`, `get_line_start`, and added `get_line_end` PR#304.
+* Permutations parser were always initializing optionals PR#319 #12473.
+* Changed iterator concept static assert from `ForwardIterator` to
+  `ReadableIteratorConcept` && `ForwardTraversalConcept` PR#320.
+* Added assertations to real parsers to ensure that the `parse_frac_n` from
+  user defined real policy does not return negative values and also to prevent
+  static analyzers false-positives PR#358.
+
+[heading Bug Fixes in Karma]
+* Fixed alternate operator PR#271.
+* Fixed `no_buffering_policy` missing copy constructor PR#261.
+* The `ostream_iterator` was inheriting `std::iterator` which is deprecated
+  in C++17 PR#345.
+
+[heading Bug Fixes in Lex]
+* Store id as promoted type to allow out-of-enum values PR#247.
+* Fixed C2001 'newline in constant' warning in generated lexers PR#324 #11540.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_4 Spirit V2.5.4]
 
 [heading What's changed from V2.5.3 (Boost V1.50.0) to V2.5.4 (Boost V1.61.0)]
