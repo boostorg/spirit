@@ -54,6 +54,12 @@ main()
         BOOST_TEST((!test("cca", char_('a') ^ char_('b') ^ char_('c'))));
     }
 
+    {   // test optional must stay uninitialized
+        optional<int> i;
+        BOOST_TEST((test_attr("", -int_ ^ int_, i)));
+        BOOST_TEST(!i);
+    }
+
     {
         vector<optional<int>, optional<char> > attr;
 

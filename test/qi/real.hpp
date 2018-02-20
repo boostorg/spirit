@@ -67,11 +67,12 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
         uint_parser<unsigned, 10, 1, 3> uint3;
         uint_parser<unsigned, 10, 3, 3> uint3_3;
 
-        T result = 0;
+        typedef typename boost::spirit::traits::real_accumulator<T>::type acc_type;
+        acc_type result = 0;
         if (parse(first, last, uint3, result))
         {
             bool hit = false;
-            T n;
+            acc_type n;
             Iterator save = first;
 
             while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))

@@ -42,7 +42,7 @@ BOOST_FUSION_ADAPT_ADT(
     data1,
     (int, int const&, obj.width(),  obj.set_width(val))
     (int, int const&, obj.height(), obj.set_height(val))
-);
+)
 
 ///////////////////////////////////////////////////////////////////////////////
 class data2
@@ -66,7 +66,7 @@ public:
 BOOST_FUSION_ADAPT_ADT(
     data2, 
     (std::string, std::string const&, obj.data(), obj.set_data(val))
-);
+)
 
 ///////////////////////////////////////////////////////////////////////////////
 class data3
@@ -86,7 +86,7 @@ public:
 BOOST_FUSION_ADAPT_ADT(
     data3,
     (double, double const&, obj.data(), obj.set_data(val))
-);
+)
 
 ///////////////////////////////////////////////////////////////////////////////
 class data4 
@@ -107,7 +107,7 @@ BOOST_FUSION_ADAPT_ADT(
     (boost::optional<int>, boost::optional<int> const&, obj.a(), /**/)
     (boost::optional<double>, boost::optional<double> const&, obj.b(), /**/)
     (boost::optional<std::string>, boost::optional<std::string> const&, obj.c(), /**/)
-);
+)
 
 ///////////////////////////////////////////////////////////////////////////////
 int main () 

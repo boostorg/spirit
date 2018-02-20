@@ -8,7 +8,7 @@
 
 [article Spirit
     [quickbook 1.5]
-    [version 2.5.4]
+    [version 2.5.5]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser and Generator Library]
@@ -23,12 +23,11 @@
 
 [/ Some links ]
 
-[def __version__                V2.5.4]
+[def __version__                V2.5.5]
 
 [def __spirit__                 [@http://boost-spirit.com Spirit]]
 [def __spirit_list__            [@http://www.nabble.com/The-Spirit-Parser-Library-f3430.html Spirit General List]]
-[def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
-[def __boost_phoenix__          [@boost:/libs/phoenix/doc/html/index.html Boost.Phoenix]]
+[def __phoenix__                [@boost:/libs/phoenix/doc/html/index.html Boost.Phoenix]]
 [def __fusion__                 [@boost:/libs/fusion/doc/html/index.html Boost.Fusion]]
 [def __mpl__                    [@http://www.boost.org/libs/mpl/index.html Boost.Mpl]]
 [def __stl__                    [@http://www.sgi.com/tech/stl/ STL]]
@@ -67,6 +66,7 @@
 [def __qi__                     /Spirit.Qi/]
 [def __karma__                  /Spirit.Karma/]
 [def __lex__                    /Spirit.Lex/]
+[def __x3__                     [@boost:/libs/spirit/doc/x3/html/index.html /Spirit.X3/]]
 
 [def __mpl_boolean_constant__   [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Boolean Constant]]
 [def __mpl_int_constant__       [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Integral Constant]]
@@ -456,9 +456,12 @@ For now, I'll put my stuff here ad-hoc (JDG). $$$]
 
 [/ Here we go ]
 
-This is the documentation of the newest version of __spirit__ (currently,
-__version__). If you're looking for the documentation of Spirit's previous version
-(formerly Spirit V1.8), see __classic__.
+[def __LTS__                        [@https://en.wikipedia.org/wiki/Long-term_support LTS]]
+
+This is the documentation of the latest __LTS__ (C++03) version of
+__spirit__ (currently, __version__). For the newest (C++14) version, please
+follow to __x3__. If you're looking for the documentation of Spirit's first
+generation version (formerly Spirit V1.8), see __classic__.
 
 [include preface.qbk]
 [include what_s_new.qbk]
@@ -476,4 +479,3 @@ __version__). If you're looking for the documentation of Spirit's previous versi
 [include repository.qbk]
 [include acknowledgments.qbk]
 [include references.qbk]
-

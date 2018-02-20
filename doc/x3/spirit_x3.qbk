@@ -8,7 +8,7 @@
 
 [article Spirit
     [quickbook 1.5]
-    [version 3.0.0]
+    [version 3.0.1]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser Library]
@@ -25,7 +25,7 @@
     Some links and defines
 ===============================================================================/]
 
-[def __version__                V3.0.0]
+[def __version__                V3.0.1]
 
 [/ external]
 
@@ -145,9 +145,6 @@
 [def __x3_skip__                    [/ link spirit.x3.reference.directive.skip] `skip`]
 [template x3_no_skip[str]           [[/ link spirit.x3.reference.directive.no_skip] str]]
 [def __x3_hold__                    [/ link spirit.x3.reference.directive.hold] `hold`]
-[def __x3_as__                      [/ link spirit.x3.reference.directive.as] `as<T>[]`]
-[def __x3_as_string__               [/ link spirit.x3.reference.directive.as] `as_string[]`]
-[def __x3_as_wstring__              [/ link spirit.x3.reference.directive.as] `as_wstring[]`]
 
 [/ operator]
 [def __x3_alternative__             [/ link spirit.x3.reference.operator.alternative] `a | b`]
@@ -233,5 +230,6 @@ __version__).
 [/ include notes.qbk]
 [/ include rationale.qbk]
 [/ include repository.qbk]
+[include changelog.qbk]
 [/ include acknowledgments.qbk]
 [/ include references.qbk]
