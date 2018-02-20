@@ -12,6 +12,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/attributes_fwd.hpp>
@@ -736,6 +737,13 @@ namespace boost { namespace spirit { namespace traits
         typedef typename
             filter_unused_attributes<Sequence>::type
         filtered_attributes;
+
+#ifndef BOOST_FUSION_HAS_VARIADIC_VECTOR
+        // Fire an error message if we don't fit into fusion vector limits
+        BOOST_SPIRIT_ASSERT_MSG(
+            fusion::result_of::size<filtered_attributes>::value <= FUSION_MAX_VECTOR_SIZE
+          , FUSION_MAX_VECTOR_SIZE_limit_is_too_low, ());
+#endif
 
         // Build a fusion vector from a fusion sequence (Sequence),
         // But *only if* the sequence is not empty. i.e. if the
