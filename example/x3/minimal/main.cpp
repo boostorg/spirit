@@ -37,7 +37,7 @@ main()
 
     std::cout
         << "Give me an employee of the form :"
-        << "employee{age, \"surname\", \"forename\", salary } \n";
+        << "employee{age, \"forename\", \"surname\", salary } \n";
     std::cout << "Type [q or Q] to quit\n\n";
 
     using boost::spirit::x3::ascii::space;

@@ -7,12 +7,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Based on the employee parser (see employee.cpp), this example shows how
-//  to implement error handling. This example also shows how to "inject" client
+//  to annotate the AST with the iterator positions for access to the source
+//  code when post processing. This example also shows how to "inject" client
 //  data, using the "with" directive, that the handlers can access.
 //
 //  [ JDG May 9, 2007 ]
 //  [ JDG May 13, 2015 ]    spirit X3
-//  [ JDG Feb 19, 2018 ]    Error handling for spirit X3
+//  [ JDG Feb 22, 2018 ]    Parser annotations for spirit X3
 //
 //    I would like to thank Rainbowverse, llc (https://primeorbial.com/)
 //    for sponsoring this work and donating it to the community.
@@ -22,8 +23,6 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
-#include <boost/spirit/home/x3/support/utility/error_reporting.hpp>
-#include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
 
@@ -80,25 +79,20 @@ namespace client
         namespace ascii = boost::spirit::x3::ascii;
 
         ///////////////////////////////////////////////////////////////////////
-        //  Our error handler
+        //  Our annotation handler
         ///////////////////////////////////////////////////////////////////////
-        template <typename Iterator>
-        using error_handler = x3::error_handler<Iterator>;
 
-        // tag used to get our error handler from the context
-        using error_handler_tag = x3::error_handler_tag;
+        // tag used to get the position cache from the context
+        struct position_cache_tag;
 
-        struct error_handler_base
+        struct annotate_position
         {
-            template <typename Iterator, typename Exception, typename Context>
-            x3::error_handler_result on_error(
-                Iterator& first, Iterator const& last
-              , Exception const& x, Context const& context)
+            template <typename T, typename Iterator, typename Context>
+            inline void on_success(Iterator const& first, Iterator const& last
+            , T& ast, Context const& context)
             {
-                std::string message = "Error! Expecting: " + x.which() + " here:";
-                auto& error_handler = x3::get<error_handler_tag>(context).get();
-                error_handler(x.where(), message);
-                return x3::error_handler_result::fail;
+                auto& position_cache = x3::get<position_cache_tag>(context).get();
+                position_cache.annotate(ast, first, last);
             }
         };
 
@@ -120,14 +114,14 @@ namespace client
         x3::rule<employee_class, ast::employee> const employee = "employee";
 
         auto const quoted_string_def = lexeme['"' >> +(char_ - '"') >> '"'];
-        auto const person_def = quoted_string > ',' > quoted_string;
+        auto const person_def = quoted_string >> ',' >> quoted_string;
 
         auto const employee_def =
                 '{'
-            >   int_ > ','
-            >   person > ','
-            >   double_
-            >   '}'
+            >>  int_ >> ','
+            >>  person >> ','
+            >>  double_
+            >>  '}'
             ;
 
         auto const employees = employee >> *(',' >> employee);
@@ -135,8 +129,8 @@ namespace client
         BOOST_SPIRIT_DEFINE(quoted_string, person, employee);
 
         struct quoted_string_class {};
-        struct person_class : x3::annotate_on_success {};
-        struct employee_class : error_handler_base, x3::annotate_on_success {};
+        struct person_class : annotate_position {};
+        struct employee_class : annotate_position {};
     }
 }
 
@@ -148,28 +142,28 @@ namespace client
 // Our main parse entry point
 ///////////////////////////////////////////////////////////////////////////////
 
-void parse(std::string const& input)
+typedef std::string::const_iterator iterator_type;
+using position_cache = boost::spirit::x3::position_cache<std::vector<iterator_type>>;
+
+std::vector<client::ast::employee>
+parse(std::string const& input, position_cache& positions)
 {
     using boost::spirit::x3::ascii::space;
-    typedef std::string::const_iterator iterator_type;
 
     std::vector<client::ast::employee> ast;
     iterator_type iter = input.begin();
     iterator_type const end = input.end();
 
     using boost::spirit::x3::with;
-    using error_handler_type = client::parser::error_handler<iterator_type>;
-    using client::parser::error_handler_tag;
-
-    // Our error handler
-    error_handler_type error_handler(iter, end, std::cerr);
 
     // Our parser
     using client::parser::employees;
+    using client::parser::position_cache_tag;
+
     auto const parser =
-        // we pass our error handler to the parser so we can access
-        // it later in our on_error and on_sucess handlers
-        with<error_handler_tag>(std::ref(error_handler))
+        // we pass our position_cache to the parser so we can access
+        // it later in our on_sucess handlers
+        with<position_cache_tag>(std::ref(positions))
         [
             employees
         ];
@@ -199,11 +193,12 @@ void parse(std::string const& input)
         std::cout << "-------------------------\n";
         ast.clear();
     }
+    return ast;
 }
 
-// Good sample:
+// Sample input:
 
-std::string good_input = R"(
+std::string input = R"(
 {
     23,
     "Amanda",
@@ -236,48 +231,16 @@ std::string good_input = R"(
 }
 )";
 
-// Input sample with error:
-
-std::string bad_input = R"(
-{
-    23,
-    "Amanda",
-    "Stefanski",
-    1000.99
-},
-{
-    35,
-    "Angie",
-    "Chilcote",
-    2000.99
-},
-{
-    43,
-    'I am not a person!'    <--- this should be a person
-    3000.99
-},
-{
-    22,
-    "Dorene",
-    "Dole",
-    2500.99
-},
-{
-    38,
-    "Rossana",
-    "Rafferty",
-    5000.99
-}
-)";
-
 int
 main()
 {
-    // Good input
-    parse(good_input);
+    position_cache positions{input.begin(), input.end()};
+    auto ast = parse(input, positions);
 
-   // Bad input
-    std::cout << "Now we have some errors" << std::endl;
-    parse(bad_input);
+    // Get the source of the 2nd employee and print it
+    auto pos = positions.position_of(ast[1]); // zero based of course!
+    std::cout << "Here's the 2nd employee:" << std::endl;
+    std::cout << std::string(pos.begin(), pos.end()) << std::endl;
+    std::cout << "-------------------------\n";
     return 0;
 }

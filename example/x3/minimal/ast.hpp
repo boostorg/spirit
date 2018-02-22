@@ -20,8 +20,8 @@ namespace client { namespace ast
     struct employee
     {
         int age;
-        std::string surname;
         std::string forename;
+        std::string surname;
         double salary;
     };
 

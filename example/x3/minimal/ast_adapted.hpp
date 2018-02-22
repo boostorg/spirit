@@ -15,7 +15,7 @@
 // be in global scope.
 
 BOOST_FUSION_ADAPT_STRUCT(client::ast::employee,
-    age, surname, forename, salary
+    age, forename, surname, salary
 )
 
 #endif
