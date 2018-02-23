@@ -68,6 +68,9 @@ namespace boost { namespace spirit { namespace traits
             typedef unsignedtype type;                                        \
             static type call(signedtype n)                                    \
             {                                                                 \
+                /* implementation is well-defined for one's complement, */    \
+                /* two's complement, and signed magnitude architectures */    \
+                /* by the C++ Standard. [conv.integral] [expr.unary.op] */    \
                 return (n >= 0) ?  static_cast<type>(n)                       \
                                 : -static_cast<type>(n);                      \
             }                                                                 \
