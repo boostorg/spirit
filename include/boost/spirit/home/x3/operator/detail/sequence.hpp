@@ -391,6 +391,32 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Context const& context, RContext& rcontext, Attribute& attr
       , traits::container_attribute);
 
+    template <typename Parser, typename Context>
+    constexpr bool pass_sequence_container_attribute
+        = sequence_size<Parser, Context>::value > 1;
+
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    typename enable_if_c<pass_sequence_container_attribute<Parser, Context>, bool>::type
+    parse_sequence_container(
+        Parser const& parser
+      , Iterator& first, Iterator const& last, Context const& context
+      , RContext& rcontext, Attribute& attr)
+    {
+        return parser.parse(first, last, context, rcontext, attr);
+    }
+
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    typename disable_if_c<pass_sequence_container_attribute<Parser, Context>, bool>::type
+    parse_sequence_container(
+        Parser const& parser
+      , Iterator& first, Iterator const& last, Context const& context
+      , RContext& rcontext, Attribute& attr)
+    {
+        return parse_into_container(parser, first, last, context, rcontext, attr);
+    }
+
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>
     bool parse_sequence(
@@ -399,8 +425,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , traits::container_attribute)
     {
         Iterator save = first;
-        if (parse_into_container(parser.left, first, last, context, rcontext, attr)
-            && parse_into_container(parser.right, first, last, context, rcontext, attr))
+        if (parse_sequence_container(parser.left, first, last, context, rcontext, attr)
+            && parse_sequence_container(parser.right, first, last, context, rcontext, attr))
             return true;
         first = save;
         return false;
