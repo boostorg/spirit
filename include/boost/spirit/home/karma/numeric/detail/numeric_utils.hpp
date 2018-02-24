@@ -88,6 +88,11 @@ namespace boost { namespace spirit { namespace traits
         }                                                                     \
     /**/
 
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+// unary minus operator applied to unsigned type, result still unsigned
+# pragma warning(disable: 4146)
+#endif
     BOOST_SPIRIT_ABSOLUTE_VALUE(signed char, unsigned char);
     BOOST_SPIRIT_ABSOLUTE_VALUE(char, unsigned char);
     BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
@@ -100,6 +105,9 @@ namespace boost { namespace spirit { namespace traits
 #ifdef BOOST_HAS_LONG_LONG
     BOOST_SPIRIT_ABSOLUTE_VALUE(boost::long_long_type, boost::ulong_long_type);
     BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(boost::ulong_long_type);
+#endif
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
 #endif
 
 #undef BOOST_SPIRIT_ABSOLUTE_VALUE
