@@ -141,12 +141,19 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static int const l_size = sequence_size<L, Context>::value;
         static int const r_size = sequence_size<R, Context>::value;
 
+        static int constexpr actual_size = fusion::result_of::size<Attribute>::value;
+        static int constexpr expected_size = l_size + r_size;
+
         // If you got an error here, then you are trying to pass
         // a fusion sequence with the wrong number of elements
         // as that expected by the (sequence) parser.
         static_assert(
-            fusion::result_of::size<Attribute>::value == (l_size + r_size)
-          , "Attribute does not have the expected size."
+            actual_size >= expected_size
+          , "Size of the passed attribute is less than expected."
+        );
+        static_assert(
+            actual_size <= expected_size
+          , "Size of the passed attribute is bigger than expected."
         );
 
         typedef typename fusion::result_of::begin<Attribute>::type l_begin;
