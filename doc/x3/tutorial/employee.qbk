@@ -27,8 +27,8 @@ First, let's create a struct representing an employee:
         struct employee
         {
             int age;
-            std::string surname;
             std::string forename;
+            std::string surname;
             double salary;
         };
     }}
@@ -44,12 +44,12 @@ to be a fully conforming fusion tuple:
 
     BOOST_FUSION_ADAPT_STRUCT(
         client::ast::employee,
-        age, surname, forename, salary
+        age, forename, surname, salary
     )
 
 Now we'll write a parser for our employee. Inputs will be of the form:
 
-    employee{ age, "surname", "forename", salary }
+    employee{ age, "forename", "surname", salary }
 
 Here goes:
 

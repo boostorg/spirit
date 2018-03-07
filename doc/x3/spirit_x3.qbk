@@ -197,6 +197,7 @@ __version__).
 [include        tutorial/num_list4.qbk]
 [include        tutorial/roman.qbk]
 [include        tutorial/employee.qbk]
+[include        tutorial/annotation.qbk]
 [include        tutorial/rexpr.qbk]
 [endsect]
 

@@ -142,7 +142,7 @@ namespace client
 // Our main parse entry point
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef std::string::const_iterator iterator_type;
+using iterator_type = std::string::const_iterator;
 using position_cache = boost::spirit::x3::position_cache<std::vector<iterator_type>>;
 
 std::vector<client::ast::employee>

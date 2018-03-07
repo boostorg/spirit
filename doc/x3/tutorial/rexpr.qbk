@@ -5,19 +5,11 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:rexpr RExpressions - ASTs!]
+[section:rexpr RExpressions - Recursive ASTs!]
 
-Stop and think about it... We're actually generating ASTs (abstract
-syntax trees) in our previoius examples. We parsed a single structure and
-generated an in-memory representation of it in the form of a struct: the struct
-employee. If we changed the implementation to parse one or more employees, the
-result would be a std::vector<employee>. We can go on and add more hierarchy:
-teams, departments, corporations. Then we'll have an AST representation of it
-all.
-
-In this example, we'll explore more on how to create ASTs. We will parse a
-minimalistic JSON-like language and compile the results into our data structures
-in the form of a tree.
+In this example, we'll explore more on how to create heierarchical ASTs.
+We will parse a minimalistic JSON-like language and compile the results
+into our data structures in the form of a tree.
 
 /rexpr/ is a parser for RExpressions, a language resembling a minimal subset
 of json, limited to a dictionary (composed of key=value pairs) where the value
