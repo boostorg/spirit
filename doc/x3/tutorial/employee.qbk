@@ -82,7 +82,8 @@ Here goes:
         BOOST_SPIRIT_DEFINE(employee);
     }
 
-The full cpp file for this example can be found here: [@../../../example/x3/employee.cpp]
+The full cpp file for this example can be found here:
+[@../../../example/x3/employee.cpp employee.cpp]
 
 Let's walk through this one step at a time (not necessarily from top to bottom).
 

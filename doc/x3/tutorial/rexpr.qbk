@@ -30,13 +30,14 @@ This simple parser for X3 is intended as a minimal starting point. It is
 minimal, yet complete with all things necessary parts that make up rules (and
 grammars), except error handling and reporting.
 
-The example can be found here: [@../../../example/x3/rexpr/rexpr_min/rexpr.cpp]
+The example can be found here:
+[@../../../example/x3/rexpr/rexpr_min/rexpr.cpp rexpr.cpp]
 
 The same parser, but complete with error handling and reporting, better file
 organization, separate compilation of grammars, and a full test harness, can
 be found in this directory:
 
-[@../../../example/x3/rexpr/rexpr_full/]
+[@../../../example/x3/rexpr/rexpr_full/ rexpr/rexpr_full/]
 
 [note rexpr_full is the canonical structure proposed as best practice on how
 parsers are written using Spirit X3.]

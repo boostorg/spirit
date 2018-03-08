@@ -10,16 +10,13 @@
 
 [section Error Handling]
 
-As a prerequisite in understanding this tutorial, please review the previous
+This tutorial wouldn't be complete without touching on error handling. As a
+prerequisite in understanding this tutorial, please review the previous
 [tutorial_employee employee] and [tutorial_annotation annotations] examples.
 This example builds on top of these previous examples.
 
-This tutorial wouldn't be complete without touching on error handling. for
-this example, we will continue and expand on the [tutorial_employee employee
-example].
-
 The full cpp file for this example can be found here:
-[@../../../example/x3/error_handling.cpp]
+[@../../../example/x3/error_handling.cpp error_handling.cpp]
 
 Please review the previous [tutorial_annotation annotations example]. The
 information there will be very helpful in understanding error handling.
@@ -327,7 +324,7 @@ Now, if we give the parser an erroneous input:
     }
     )";
 
-The parser will compplain as expected:
+The parser will complain as expected:
 
 [pre
 -------------------------

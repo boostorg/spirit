@@ -174,7 +174,7 @@
     Better Links (March 7, 2018)
 =============================================================================/]
 
-[/ external --------------------]
+[/ external ------------------------------------------------------------------]
 
 [def __boost__                      [@http://www.boost.org/ Boost]]
 [def __spirit__                     [@http://boost-spirit.com Spirit]]
@@ -183,16 +183,18 @@
 [def __clang__                      [@https://clang.llvm.org/ Clang]]
 [def __rd__                         [@https://en.wikipedia.org/wiki/Recursive_descent_parser Recursive Descent]]
 
-[/ Sections --------------------]
+[/ Sections ------------------------------------------------------------------]
 
-[/ Tutorials -------------------]
+[/ Tutorials -----------------------------------------------------------------]
 
-[template tutorial_employee[str]    [link spirit_x3.tutorials.employee [str]]]
-[template tutorial_annotation[str]  [link spirit_x3.tutorials.annotation [str]]]
+[template tutorial_employee[str]        [link spirit_x3.tutorials.employee [str]]]
+[template tutorial_annotation[str]      [link spirit_x3.tutorials.annotation [str]]]
+[template tutorial_error_handling[str]  [link spirit_x3.tutorials.error_handling [str]]]
+[template tutorial_minimal[str]         [link spirit_x3.tutorials.minimal [str]]]
 
-[/ support ---------------------]
+[/ support -------------------------------------------------------------------]
 
-[def __x3_error_handler__           [/ link fix.me] error_handler]
+[def __x3_error_handler__               [/ link fix.me] error_handler]
 
 [/=============================================================================
     Documentation Start
@@ -203,7 +205,7 @@ __version__).
 
 [include preface.qbk]
 [include introduction.qbk]
-[include include.qbk]
+[include include.qbk]s
 [include abstracts.qbk]
 
 [section    Tutorials]
@@ -217,6 +219,7 @@ __version__).
 [include        tutorial/num_list4.qbk]
 [include        tutorial/roman.qbk]
 [include        tutorial/employee.qbk]
+[include        tutorial/minimal.qbk]
 [include        tutorial/annotation.qbk]
 [include        tutorial/rexpr.qbk]
 [include        tutorial/error_handling.qbk]

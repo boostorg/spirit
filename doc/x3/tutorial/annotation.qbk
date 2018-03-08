@@ -32,7 +32,7 @@ In addition, This example also shows how to "inject" client data, using the
 within the parse traversal through the parser's context.
 
 The full cpp file for this example can be found here:
-[@../../../example/x3/annotation.cpp]
+[@../../../example/x3/annotation.cpp annotation.cpp]
 
 [heading The AST]
 
