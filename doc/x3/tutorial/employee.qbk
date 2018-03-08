@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Employee - Parsing into structs]
+[section:employee Employee - Parsing into structs]
 
 It's a common question in the __spirit_list__: How do I parse and place
 the results into a C++ struct? Of course, at this point, you already
@@ -51,6 +51,7 @@ Now we'll write a parser for our employee. Inputs will be of the form:
 
     employee{ age, "forename", "surname", salary }
 
+[#__tutorial_employee_parser__]
 Here goes:
 
     namespace parser

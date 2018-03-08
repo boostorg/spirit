@@ -1,6 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2015 Joel de Guzman
-    Copyright (C) 2001-2011 Hartmut Kaiser
+    Copyright (C) 2001-2018 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -9,34 +8,39 @@
     for sponsoring this work and donating it to the community.
 ===============================================================================/]
 
-[section Annotations - Decorating the ASTs]
+[section:annotation Annotations - Decorating the ASTs]
 
-Stop and think about it... We're actually generating ASTs (abstract
-syntax trees) in our previoius examples. We parsed a single structure and
-generated an in-memory representation of it in the form of a struct: the
-struct employee. If we changed the implementation to parse one or more
-employees, the result would be a std::vector<employee>. We can go on and
-add more hierarchy: teams, departments, corporations. Then we'll have an
-AST representation of it all.
+As a prerequisite in understanding this tutorial, please review the previous
+[tutorial_employee employee example]. This example builds on top of that
+example.
 
-This example shows how to annotate the AST with the iterator positions
-for access to the source code when post processing using a client supplied
-`on_success` handler. The example will show how to get the position in
-input source stream that corresponds to a given element in the AST.
+Stop and think about it... We're actually generating ASTs (abstract syntax
+trees) in our previoius examples. We parsed a single structure and generated
+an in-memory representation of it in the form of a struct: the struct
+employee. If we changed the implementation to parse one or more employees,
+the result would be a std::vector<employee>. We can go on and add more
+hierarchy: teams, departments, corporations, etc. We can have an AST
+representation of it all.
 
-In addition, This example also shows how to "inject" client data, using
-the "with" directive, that the `on_success` handler can access as it is
-called within the parse traversal through the parser's context.
+This example shows how to annotate the AST with the iterator positions for
+access to the source code when post processing using a client supplied
+`on_success` handler. The example will show how to get the position in input
+source stream that corresponds to a given element in the AST.
 
-The full cpp file for this example can be found here: [@../../../example/x3/annotation.cpp]
+In addition, This example also shows how to "inject" client data, using the
+"with" directive, that the `on_success` handler can access as it is called
+within the parse traversal through the parser's context.
+
+The full cpp file for this example can be found here:
+[@../../../example/x3/annotation.cpp]
 
 [heading The AST]
 
-First, we'll update our previous employee struct, this time separating
-the person into its own struct. So now, we have two structs, the `person`
-and the `employee`. Take note too that we now inherit `person` and `employee`
-from `x3::position_tagged` which provides positional information that we
-can use to tell the AST's position in the input stream anytime.
+First, we'll update our previous employee struct, this time separating the
+person into its own struct. So now, we have two structs, the `person` and the
+`employee`. Take note too that we now inherit `person` and `employee` from
+`x3::position_tagged` which provides positional information that we can use
+to tell the AST's position in the input stream anytime.
 
     namespace client { namespace ast
     {
@@ -61,8 +65,8 @@ can use to tell the AST's position in the input stream anytime.
         };
     }}
 
-Like before, we need to tell __fusion__ about our structs to make them first-class
-fusion citizens that the grammar can utilize:
+Like before, we need to tell __fusion__ about our structs to make them
+first-class fusion citizens that the grammar can utilize:
 
     BOOST_FUSION_ADAPT_STRUCT(client::ast::person,
         first_name, last_name
@@ -74,40 +78,41 @@ fusion citizens that the grammar can utilize:
 
 [heading x3::position_cache]
 
-Before we proceed, let me introduce a helper class called the `position_cache`.
-It is a simple class that collects iterator ranges that point to where each
-element in the AST are located in the input stream. Given an AST, you can
-ask the position_cache about its position. For example:
+Before we proceed, let me introduce a helper class called the
+`position_cache`. It is a simple class that collects iterator ranges that
+point to where each element in the AST are located in the input stream. Given
+an AST, you can query the position_cache about AST's position. For example:
 
     auto pos = positions.position_of(my_ast);
 
-Where `my_ast` is the AST, `positions` and is the `position_cache`, `position_of`
-returns an iterator range that points to the start and end (`pos.begin()`
-and `pos.end()`) positions where the AST was parsed from. `positions.begin()`
-and `positions.end()` points to the start and end of the entire input stream.
+Where `my_ast` is the AST, `positions` and is the `position_cache`,
+`position_of` returns an iterator range that points to the start and end
+(`pos.begin()` and `pos.end()`) positions where the AST was parsed from.
+`positions.begin()` and `positions.end()` points to the start and end of the
+entire input stream.
 
 [heading on_success]
 
 The `on_success` gives you everything you want from semantic actions without
 the visual clutter. Declarative code can and should be free from imperative
-code. `on_success` as a concept and mechanism is an important departure
-from how things are done in Spirit's previous version: Qi.
+code. `on_success` as a concept and mechanism is an important departure from
+how things are done in Spirit's previous version: Qi.
 
-As demonstrated in the previous employee example, the preferred way to
-extract data from an input source is by having the parser collect the data
-for us into C++ structs as it traverses the input stream. Ideally, Spirit
-X3 grammars are fully attributed and declared in such a way that you do
-not have to add any imperative code and there should be no need for semantic
-actions at all. The parser simply works as declared and you get your data
-back as a result.
+As demonstrated in the previous [tutorial_employee employee example], the
+preferred way to extract data from an input source is by having the parser
+collect the data for us into C++ structs as it traverses the input stream.
+Ideally, Spirit X3 grammars are fully attributed and declared in such a way
+that you do not have to add any imperative code and there should be no need
+for semantic actions at all. The parser simply works as declared and you get
+your data back as a result.
 
 However, there are certain cases where there's no way to avoid introducing
-imperative code. Yet, if we want to keep our code clean and free from semantic
-actions that messes up our clean declarative grammars, `on_success` handlers
-are alternative means to provide hooks to client code that is executed by the
-parser upon successful parse without polluting the grammar. Like semantic
-actions, `on_success` handlers also have access to the AST, the iterators,
-and context. But, unlike semantic actions, `on_success` handlers are cleanly
+imperative code. But semantic actions messes up our clean declarative
+grammars. If we care to keep our code clean, `on_success` handlers are
+alternative callback hooks to client code that are executed by the parser
+after a successful parse without polluting the grammar. Like semantic
+actions, `on_success` handlers have access to the AST, the iterators, and
+context. But, unlike semantic actions, `on_success` handlers are cleanly
 separated from the actual grammar.
 
 [heading Annotation Handler]
@@ -133,18 +138,19 @@ our `on_success` handler:
 actual `position_cache`, client data that we will inject at very start, when
 we call parse. More on that later.
 
-Our `on_success` handler gets a reference to the actual `position_cache`
-and calls its `annotate` member function, passing in the AST and the iterators.
-`position_cache.annotate(ast, first, last)` annotates the AST with information
-required by `x3::position_tagged`.
+Our `on_success` handler gets a reference to the actual `position_cache` and
+calls its `annotate` member function, passing in the AST and the iterators.
+`position_cache.annotate(ast, first, last)` annotates the AST with
+information required by `x3::position_tagged`.
 
 [heading The Parser]
 
-Now we'll write a parser for our employee. Like before, inputs will
-be of the form:
+Now we'll write a parser for our employee. To simplify, inputs will be of the
+form:
 
-    employee{ age, "forename", "surname", salary }
+    { age, "forename", "surname", salary }
 
+[#__tutorial_annotated_employee_parser__]
 Here we go:
 
     namespace parser
@@ -178,9 +184,6 @@ Here we go:
         BOOST_SPIRIT_DEFINE(quoted_string, person, employee);
     }
 
-Take a step back and look at the previous Employee example. We are incrementally
-building on top of that.
-
 [heading Rule Declarations]
 
     struct quoted_string_class;
@@ -191,6 +194,7 @@ building on top of that.
     x3::rule<person_class, ast::person> const person = "person";
     x3::rule<employee_class, ast::employee> const employee = "employee";
 
+Go back and review the original [link __tutorial_employee_parser__ employee parser].
 What has changed?
 
 * We split the single employee rule into three smaller rules: `quoted_string`,
@@ -200,35 +204,34 @@ What has changed?
 
 [heading Rule Classes]
 
-In this example, the rule classes, `quoted_string_class`, `person_class`, and
-`employee_class` provide statically known IDs for the rules required by X3 to
-perform its tasks. In addition from that, the rule class can also be extended
-to have some user-defined customization hooks that are called:
+Like before, in this example, the rule classes, `quoted_string_class`,
+`person_class`, and `employee_class` provide statically known IDs for the
+rules required by X3 to perform its tasks. In addition to that, the rule
+class can also be extended to have some user-defined customization hooks that
+are called:
 
 * On success: After a rule sucessfully parses an input.
 * On Error: After a rule fails to parse.
 
-By subclassing the rule class from a client supplied handler such as
-our our `annotate_position` handler above:
+By subclassing the rule class from a client supplied handler such as our
+`annotate_position` handler above:
 
     struct person_class : annotate_position {};
     struct employee_class : annotate_position {};
 
-The code above tells X3 to check the rule class if it has an `on_success`
-or `on_error` member functions and calls appropriately calls them on
-such events.
+The code above tells X3 to check the rule class if it has an `on_success` or
+`on_error` member functions and appropriately calls them on such events.
 
+[#__tutorial_with_directive__]
 [heading The with Directive]
 
-With any parser `'p`, one can inject any data into that the that semantic
-actions and handlers can access later on when they are called. The general
-syntax is:
+For any parser `p`, one can inject supplementary data that semantic actions
+and handlers can access later on when they are called. The general syntax is:
 
     with<tag>(data)[p]
 
-For our particular example, we use to inject the `position_cache` into
-the parse for our `annotate_position` on_success handler to have access
-to:
+For our particular example, we use to inject the `position_cache` into the
+parse for our `annotate_position` on_success handler to have access to:
 
     auto const parser =
         // we pass our position_cache to the parser so we can access
@@ -239,16 +242,16 @@ to:
         ];
 
 Typically this is done just before calling `x3::parse` or `x3::phrase_parse`.
-`with` is a very lightwight operation. It is possible to inject as much
-data as you want, even multiple `with` directives:
+`with` is a very lightwight operation. It is possible to inject as much data
+as you want, even multiple `with` directives:
 
     with<tag1>(data1)
     [
         with<tag2>(data2)[p]
     ]
 
-Multiple `with` directives can (perhaps not obviously) be injected from the
-outside caller function. Here's an outline:
+Multiple `with` directives can (perhaps not obviously) be injected from
+outside the called function. Here's an outline:
 
     template <typename Parser>
     void bar(Parser const& p)
@@ -267,7 +270,7 @@ outside caller function. Here's an outline:
 
 [heading Let's Parse]
 
-Now we have the complete parse mechanism:
+Now we have the complete parse mechanism with support for annotations:
 
     using iterator_type = std::string::const_iterator;
     using position_cache = boost::spirit::x3::position_cache<std::vector<iterator_type>>;
@@ -305,15 +308,15 @@ Now we have the complete parse mechanism:
 Let's walk through the code.
 
 First, we have some typedefs for 1) The iterator type we are using for the
-parser, `iterator_type` and 2) For the `position_cache` type. The latter
-is a template that accepts the type of container it will hold. In this case,
-a `std::vector<iterator_type>`.
+parser, `iterator_type` and 2) For the `position_cache` type. The latter is a
+template that accepts the type of container it will hold. In this case, a
+`std::vector<iterator_type>`.
 
-The main parse function accepts an input, a std::string and a reference
-to a position_cache, and retuns an AST: `std::vector<client::ast::employee>`.
+The main parse function accepts an input, a std::string and a reference to a
+position_cache, and retuns an AST: `std::vector<client::ast::employee>`.
 
-Inside the parse function, we first create an AST where parsed data will
-be stored:
+Inside the parse function, we first create an AST where parsed data will be
+stored:
 
     std::vector<client::ast::employee> ast;
 
@@ -338,8 +341,8 @@ On successful parse, the AST, `ast`, will contain the actual parsed data.
 [heading Getting The Source Positions]
 
 Now that we have our main parse function, let's have an example sourcefile to
-parse and show how we can obtain the position of an AST element, returned on
-a successful parse.
+parse and show how we can obtain the position of an AST element, returned
+after a successful parse.
 
 Given this input:
 
@@ -376,18 +379,18 @@ Given this input:
     }
     )";
 
-We call our parse function after instantiating a `position_cache` object
-that will hold the source stream positions:
+We call our parse function after instantiating a `position_cache` object that
+will hold the source stream positions:
 
     position_cache positions{input.begin(), input.end()};
     auto ast = parse(input, positions);
 
-We now have an AST, `ast`, that contains the parsed results. Let us get
-the source positions of the 2nd employee:
+We now have an AST, `ast`, that contains the parsed results. Let us get the
+source positions of the 2nd employee:
 
     auto pos = positions.position_of(ast[1]); // zero based of course!
 
-`pos` is an iterator range that contians iterators to the start and
-end of `ast[1]` in the input stream.
+`pos` is an iterator range that contians iterators to the start and end of
+`ast[1]` in the input stream.
 
 [endsect]

@@ -82,21 +82,15 @@ namespace client
         ///////////////////////////////////////////////////////////////////////
         //  Our error handler
         ///////////////////////////////////////////////////////////////////////
-        template <typename Iterator>
-        using error_handler = x3::error_handler<Iterator>;
-
-        // tag used to get our error handler from the context
-        using error_handler_tag = x3::error_handler_tag;
-
-        struct error_handler_base
+        struct error_handler
         {
             template <typename Iterator, typename Exception, typename Context>
             x3::error_handler_result on_error(
                 Iterator& first, Iterator const& last
               , Exception const& x, Context const& context)
             {
+                auto& error_handler = x3::get<x3::error_handler_tag>(context).get();
                 std::string message = "Error! Expecting: " + x.which() + " here:";
-                auto& error_handler = x3::get<error_handler_tag>(context).get();
                 error_handler(x.where(), message);
                 return x3::error_handler_result::fail;
             }
@@ -136,7 +130,7 @@ namespace client
 
         struct quoted_string_class {};
         struct person_class : x3::annotate_on_success {};
-        struct employee_class : error_handler_base, x3::annotate_on_success {};
+        struct employee_class : error_handler, x3::annotate_on_success {};
     }
 }
 
@@ -158,8 +152,8 @@ void parse(std::string const& input)
     iterator_type const end = input.end();
 
     using boost::spirit::x3::with;
-    using error_handler_type = client::parser::error_handler<iterator_type>;
-    using client::parser::error_handler_tag;
+    using boost::spirit::x3::error_handler_tag;
+    using error_handler_type = boost::spirit::x3::error_handler<iterator_type>;
 
     // Our error handler
     error_handler_type error_handler(iter, end, std::cerr);
