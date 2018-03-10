@@ -68,15 +68,14 @@ struct ts_real_policies : boost::spirit::x3::ureal_policies<T>
         if (parse(first, last, uint3, result))
         {
             T n;
-            Iterator save = first;
+            Iterator iter = first;
 
-            while (x3::parse(first, last, ',') && x3::parse(first, last, uint3_3, n))
+            while (x3::parse(iter, last, ',') && x3::parse(iter, last, uint3_3, n))
             {
                 result = result * 1000 + n;
-                save = first;
+                first = iter;
             }
 
-            first = save;
             attr = result;
             return true;
         }

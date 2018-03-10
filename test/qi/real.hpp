@@ -72,15 +72,14 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
         if (parse(first, last, uint3, result))
         {
             acc_type n;
-            Iterator save = first;
+            Iterator iter = first;
 
-            while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))
+            while (qi::parse(iter, last, ',') && qi::parse(iter, last, uint3_3, n))
             {
                 result = result * 1000 + n;
-                save = first;
+                first = iter;
             }
 
-            first = save;
             attr = result;
             return true;
         }
