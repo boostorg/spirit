@@ -35,7 +35,7 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
     using boost::spirit::x3::with;
     using rexpr::parser::error_handler_type;
     using rexpr::parser::error_handler_tag;
-    error_handler_type error_handler(iter, end, out, input_path.c_str()); // Our error handler
+    error_handler_type error_handler(iter, end, out, input_path.string()); // Our error handler
 
     // Our parser
     auto const parser =
