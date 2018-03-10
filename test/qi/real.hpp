@@ -71,7 +71,6 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
         acc_type result = 0;
         if (parse(first, last, uint3, result))
         {
-            bool hit = false;
             acc_type n;
             Iterator save = first;
 
@@ -79,13 +78,11 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
             {
                 result = result * 1000 + n;
                 save = first;
-                hit = true;
             }
 
             first = save;
-            if (hit)
-                attr = result;
-            return hit;
+            attr = result;
+            return true;
         }
         return false;
     }
