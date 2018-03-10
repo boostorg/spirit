@@ -405,7 +405,7 @@ supplement the context like this:
 
     typedef x3::context<
         error_handler_tag
-      , std::reference_wrapper<position_cache> const
+      , std::reference_wrapper<position_cache>
       , phrase_context_type>
     context_type;
 
