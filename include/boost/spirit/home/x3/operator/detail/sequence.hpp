@@ -87,8 +87,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typename fusion::result_of::begin<Attribute>::type
         >::type type;
 
-        static typename add_reference<type>::type
-        call(Attribute& attr)
+        static type call(Attribute& attr)
         {
             return fusion::deref(fusion::begin(attr));
         }
