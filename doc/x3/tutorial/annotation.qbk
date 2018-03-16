@@ -393,4 +393,20 @@ source positions of the 2nd employee:
 `pos` is an iterator range that contians iterators to the start and end of
 `ast[1]` in the input stream.
 
+[heading Config]
+
+If you read the previous [tutorial_minimal Program Structure] tutorial where
+we separated various logical modules of the parser into separate cpp and
+header files, and you are wondering how to provide the context configuration
+information (see [link tutorial_configuration Config Section]), we need to
+supplement the context like this:
+
+    using phrase_context_type = x3::phrase_parse_context<x3::ascii::space_type>::type;
+
+    typedef x3::context<
+        error_handler_tag
+      , std::reference_wrapper<position_cache> const
+      , phrase_context_type>
+    context_type;
+
 [endsect]
