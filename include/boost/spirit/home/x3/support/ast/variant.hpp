@@ -149,9 +149,6 @@ namespace boost { namespace spirit { namespace x3
         variant(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_constructible<variant_type>{})
             : var(rhs.var) {}
 
-        variant(variant& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, variant_type&>{}))
-            : var(rhs.var) {}
-
         variant(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_constructible<variant_type>{})
             : var(std::move(rhs.var)) {}
 
