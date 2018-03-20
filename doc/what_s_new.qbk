@@ -29,7 +29,7 @@ There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
 
 [heading Bug Fixes in Qi]
 * Fixed alternate operator PR#201 PR#271 #12349.
-* Fixed signed integer overflow in real parser #245.
+* Fixed signed integer overflow in real parser PR#245.
 * Fixed overflow problem in `uint_parser<signed T>` PR#297.
 * Fixed `get_current_line`, `get_line_start`, and added `get_line_end` PR#304.
 * Permutations parser were always initializing optionals PR#319 #12473.
