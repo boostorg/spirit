@@ -139,10 +139,6 @@ namespace boost { namespace spirit { namespace x3
         variant() = default;
 
         template <typename T, class = non_self_t<T>>
-        variant(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T const&>::value))
-            : var(rhs) {}
-
-        template <typename T, class = non_self_t<T>>
         variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))
             : var(std::forward<T>(rhs)) {}
 
