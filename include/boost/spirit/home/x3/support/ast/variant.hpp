@@ -128,21 +128,13 @@ namespace boost { namespace spirit { namespace x3
         using types        = mpl::list<typename detail::remove_forward<Types>::type...>;
         using base_type    = variant; // The current instantiation
 
-        template<typename T>
-        using non_self_t // used only for SFINAE checks below
-            = std::enable_if_t<!(std::is_base_of<base_type
-                                                ,std::remove_reference_t<T>
-                                                >
-                                                ::value)
-                              >;
-
         variant() = default;
 
-        template <typename T, class = non_self_t<T>>
+        template <typename T, typename = std::enable_if_t<std::is_convertible<T&&, variant_type>::value>>
         variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))
             : var(std::forward<T>(rhs)) {}
 
-        template <typename T, class = non_self_t<T>>
+        template <typename T, typename = std::enable_if_t<std::is_assignable<variant_type&, T&&>::value>>
         variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))
         {
             var = std::forward<T>(rhs);
