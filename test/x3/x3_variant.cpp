@@ -153,6 +153,12 @@ main()
         BOOST_TEST_EQ(checker.copy_count, 0);
         BOOST_TEST_EQ(boost::get<init_checker>(v).how_initialized, how_initialized::move_constructed);
     }
+    { // swap
+        variant v1 = 123, v2 = "asd"s;
+        boost::swap(v1, v2);
+        BOOST_TEST(boost::get<std::string>(v1) == "asd");
+        BOOST_TEST(boost::get<int>(v2) == 123);
+    }
 
     {
         ast v{123};
