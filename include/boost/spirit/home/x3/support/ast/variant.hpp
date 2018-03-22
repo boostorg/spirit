@@ -142,19 +142,19 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename F>
-        decltype(auto) apply_visitor(F&& v) const& BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
+        decltype(auto) apply_visitor(F&& v) const& BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(std::declval<variant const&>().apply_visitor(std::forward<F>(v))))
         {
             return var.apply_visitor(std::forward<F>(v));
         }
 
         template <typename F>
-        decltype(auto) apply_visitor(F&& v) & BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
+        decltype(auto) apply_visitor(F&& v) & BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(std::declval<variant&>().apply_visitor(std::forward<F>(v))))
         {
             return var.apply_visitor(std::forward<F>(v));
         }
 
         template <typename F>
-        decltype(auto) apply_visitor(F&& v) && BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
+        decltype(auto) apply_visitor(F&& v) && BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(std::declval<variant&&>().apply_visitor(std::forward<F>(v))))
         {
             return var.apply_visitor(std::forward<F>(v));
         }
