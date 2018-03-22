@@ -142,27 +142,15 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename F>
-        typename F::result_type apply_visitor(F const& v)
+        decltype(auto) apply_visitor(F&& v)
         {
-            return var.apply_visitor(v);
+            return var.apply_visitor(std::forward<F>(v));
         }
 
         template <typename F>
-        typename F::result_type apply_visitor(F const& v) const
+        decltype(auto) apply_visitor(F&& v) const
         {
-            return var.apply_visitor(v);
-        }
-
-        template <typename F>
-        typename F::result_type apply_visitor(F& v)
-        {
-            return var.apply_visitor(v);
-        }
-
-        template <typename F>
-        typename F::result_type apply_visitor(F& v) const
-        {
-            return var.apply_visitor(v);
+            return var.apply_visitor(std::forward<F>(v));
         }
 
         variant_type const& get() const BOOST_NOEXCEPT
