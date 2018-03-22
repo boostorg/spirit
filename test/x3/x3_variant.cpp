@@ -157,6 +157,31 @@ main()
         BOOST_TEST(boost::get<std::string>(v1) == "asd");
         BOOST_TEST(boost::get<int>(v2) == 123);
     }
+    { // get lvalue
+        variant v1(init_checker{});
+        static_assert(std::is_lvalue_reference<decltype(v1.get())>::value, "");
+        auto v2 = v1.get();
+        BOOST_TEST_EQ(boost::get<init_checker>(v1).copy_count, 1);
+        BOOST_TEST_NE(boost::get<init_checker>(v1).state, init_checker::moved_out);
+        BOOST_TEST_EQ(boost::get<init_checker>(v2).state, init_checker::copy_constructed);
+    }
+    { // get lvalue const
+        variant const v1(init_checker{});
+        using get_return_type = decltype(v1.get());
+        static_assert(std::is_lvalue_reference<get_return_type>::value, "");
+        static_assert(std::is_const<std::remove_reference<get_return_type>::type>::value, "");
+        auto v2 = v1.get();
+        BOOST_TEST_EQ(boost::get<init_checker>(v1).copy_count, 1);
+        BOOST_TEST_NE(boost::get<init_checker>(v1).state, init_checker::moved_out);
+        BOOST_TEST_EQ(boost::get<init_checker>(v2).state, init_checker::copy_constructed);
+    }
+    { // get rvalue
+        variant v1(init_checker{});
+        static_assert(std::is_rvalue_reference<decltype(std::move(v1).get())>::value, "");
+        auto v2 = std::move(v1).get();
+        BOOST_TEST_EQ(boost::get<init_checker>(v1).state, init_checker::moved_out);
+        BOOST_TEST_EQ(boost::get<init_checker>(v2).state, init_checker::move_constructed);
+    }
 
     {
         ast v{123};

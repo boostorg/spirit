@@ -142,25 +142,36 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename F>
-        decltype(auto) apply_visitor(F&& v) BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
+        decltype(auto) apply_visitor(F&& v) const& BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
         {
             return var.apply_visitor(std::forward<F>(v));
         }
 
         template <typename F>
-        decltype(auto) apply_visitor(F&& v) const BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
+        decltype(auto) apply_visitor(F&& v) & BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
         {
             return var.apply_visitor(std::forward<F>(v));
         }
 
-        variant_type const& get() const BOOST_NOEXCEPT
+        template <typename F>
+        decltype(auto) apply_visitor(F&& v) && BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(this->var.apply_visitor(std::forward<F>(v))))
+        {
+            return var.apply_visitor(std::forward<F>(v));
+        }
+
+        variant_type const& get() const& BOOST_NOEXCEPT
         {
             return var;
         }
 
-        variant_type& get() BOOST_NOEXCEPT
+        variant_type& get() & BOOST_NOEXCEPT
         {
             return var;
+        }
+
+        variant_type&& get() && BOOST_NOEXCEPT
+        {
+            return std::move(var);
         }
 
         void swap(variant& rhs) BOOST_NOEXCEPT
@@ -186,6 +197,13 @@ namespace boost
     get(boost::spirit::x3::variant<Types...>& x) BOOST_NOEXCEPT
     {
         return boost::get<T>(x.get());
+    }
+
+    template <typename T, typename ...Types>
+    inline T&&
+    get(boost::spirit::x3::variant<Types...>&& x) BOOST_NOEXCEPT
+    {
+        return boost::get<T>(std::move(x).get());
     }
 
     template <typename T, typename ...Types>
