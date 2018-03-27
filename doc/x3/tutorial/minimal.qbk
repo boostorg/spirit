@@ -217,7 +217,7 @@ employee parser ([@../../../example/x3/minimal/employee.hpp employee.hpp])
 everywhere.
 
 But how do you do that. Remember that our parser definitions are also placed
-in its oen header file for flexibility, so we have the freedom to instantiate
+in its own header file for flexibility, so we have the freedom to instantiate
 the parser with different iterator types.
 
 What we need to do is explicitly instantiate the `parse_rule` function we
