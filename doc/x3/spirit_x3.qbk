@@ -187,6 +187,7 @@
 
 [/ Tutorials -----------------------------------------------------------------]
 
+[template tutorial_roman[str]           [link spirit_x3.tutorials.roman [str]]]
 [template tutorial_employee[str]        [link spirit_x3.tutorials.employee [str]]]
 [template tutorial_annotation[str]      [link spirit_x3.tutorials.annotation [str]]]
 [template tutorial_error_handling[str]  [link spirit_x3.tutorials.error_handling [str]]]
