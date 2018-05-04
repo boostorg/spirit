@@ -128,91 +128,50 @@ namespace boost { namespace spirit { namespace x3
         using types        = mpl::list<typename detail::remove_forward<Types>::type...>;
         using base_type    = variant; // The current instantiation
 
-        template<typename T>
-        using non_self_t // used only for SFINAE checks below
-            = std::enable_if_t<!(std::is_base_of<base_type
-                                                ,std::remove_reference_t<T>
-                                                >
-                                                ::value)
-                              >;
+        variant() = default;
 
-        variant() BOOST_NOEXCEPT_IF(std::is_nothrow_default_constructible<variant_type>{}) : var() {}
-
-        template <typename T, class = non_self_t<T>>
-        explicit variant(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T const&>{}))
-            : var(rhs) {}
-
-        template <typename T, class = non_self_t<T>>
-        explicit variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))  // `::value` is a workaround for the VS2015 bug
+        template <typename T, typename = std::enable_if_t<std::is_convertible<T&&, variant_type>::value>>
+        variant(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, T&&>::value))
             : var(std::forward<T>(rhs)) {}
 
-        variant(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_constructible<variant_type>{})
-            : var(rhs.var) {}
-
-        variant(variant& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_constructible<variant_type, variant_type&>{}))
-            : var(rhs.var) {}
-
-        variant(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_constructible<variant_type>{})
-            : var(std::move(rhs.var)) {}
-
-        variant& operator=(variant const& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_copy_assignable<variant_type>{})
-        {
-            var = rhs.get();
-            return *this;
-        }
-
-        variant& operator=(variant&& rhs) BOOST_NOEXCEPT_IF(std::is_nothrow_move_assignable<variant_type>{})
-        {
-            var = std::move(rhs.get());
-            return *this;
-        }
-
-        template <typename T, class = non_self_t<T>>
-        variant& operator=(T const& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T const&>{}))
-        {
-            var = rhs;
-            return *this;
-        }
-
-        template <typename T, class = non_self_t<T>>
-        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))  // `::value` is a workaround for the VS2015 bug
+        template <typename T, typename = std::enable_if_t<std::is_assignable<variant_type&, T&&>::value>>
+        variant& operator=(T&& rhs) BOOST_NOEXCEPT_IF((std::is_nothrow_assignable<variant_type, T&&>::value))
         {
             var = std::forward<T>(rhs);
             return *this;
         }
 
         template <typename F>
-        typename F::result_type apply_visitor(F const& v)
+        decltype(auto) apply_visitor(F&& v) const& BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(std::declval<variant const&>().apply_visitor(std::forward<F>(v))))
         {
-            return var.apply_visitor(v);
+            return var.apply_visitor(std::forward<F>(v));
         }
 
         template <typename F>
-        typename F::result_type apply_visitor(F const& v) const
+        decltype(auto) apply_visitor(F&& v) & BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(std::declval<variant&>().apply_visitor(std::forward<F>(v))))
         {
-            return var.apply_visitor(v);
+            return var.apply_visitor(std::forward<F>(v));
         }
 
         template <typename F>
-        typename F::result_type apply_visitor(F& v)
+        decltype(auto) apply_visitor(F&& v) && BOOST_NOEXCEPT_IF(BOOST_NOEXCEPT_EXPR(std::declval<variant&&>().apply_visitor(std::forward<F>(v))))
         {
-            return var.apply_visitor(v);
+            return var.apply_visitor(std::forward<F>(v));
         }
 
-        template <typename F>
-        typename F::result_type apply_visitor(F& v) const
-        {
-            return var.apply_visitor(v);
-        }
-
-        variant_type const& get() const BOOST_NOEXCEPT
+        variant_type const& get() const& BOOST_NOEXCEPT
         {
             return var;
         }
 
-        variant_type& get() BOOST_NOEXCEPT
+        variant_type& get() & BOOST_NOEXCEPT
         {
             return var;
+        }
+
+        variant_type&& get() && BOOST_NOEXCEPT
+        {
+            return std::move(var);
         }
 
         void swap(variant& rhs) BOOST_NOEXCEPT
@@ -238,6 +197,13 @@ namespace boost
     get(boost::spirit::x3::variant<Types...>& x) BOOST_NOEXCEPT
     {
         return boost::get<T>(x.get());
+    }
+
+    template <typename T, typename ...Types>
+    inline T&&
+    get(boost::spirit::x3::variant<Types...>&& x) BOOST_NOEXCEPT
+    {
+        return boost::get<T>(std::move(x).get());
     }
 
     template <typename T, typename ...Types>
