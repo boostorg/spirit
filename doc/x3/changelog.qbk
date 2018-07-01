@@ -20,6 +20,8 @@
 * Fixed calc4b example compilation PR#384.
 * Minor code improvements: PR#374.
 
+[endsect]
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_1 Spirit V3.0.1 (Boost V1.67.0)]
 

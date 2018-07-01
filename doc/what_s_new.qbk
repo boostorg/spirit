@@ -22,6 +22,8 @@
 * Fixed UB in `get_absolute_value` function PR#246.
 * Fixed use after scope bug if ADT getter returns by value PR#375 #6126.
 
+[endsect]
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_5 Spirit V2.5.5]
 
