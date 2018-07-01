@@ -31,8 +31,8 @@ public:
       : width_(width), height_(height) 
     {}
 
-    int const& width() const { return width_;}
-    int const& height() const { return height_;}
+    int width() const { return width_;}
+    int height() const { return height_;}
 
     void set_width(int width) { width_ = width;}
     void set_height(int height) { height_ = height;}
@@ -40,8 +40,8 @@ public:
 
 BOOST_FUSION_ADAPT_ADT(
     data1,
-    (int, int const&, obj.width(),  obj.set_width(val))
-    (int, int const&, obj.height(), obj.set_height(val))
+    (int, int, obj.width(),  obj.set_width(val))
+    (int, int, obj.height(), obj.set_height(val))
 )
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,13 +79,13 @@ public:
       : data_(data) 
     {}
 
-    double const& data() const { return data_;}
+    double data() const { return data_;}
     void set_data(double data) { data_ = data;}
 };
 
 BOOST_FUSION_ADAPT_ADT(
     data3,
-    (double, double const&, obj.data(), obj.set_data(val))
+    (double, double, obj.data(), obj.set_data(val))
 )
 
 ///////////////////////////////////////////////////////////////////////////////
