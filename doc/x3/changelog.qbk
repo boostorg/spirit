@@ -9,6 +9,18 @@
 [section Changelog]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_2 Spirit V3.0.2 (Boost V1.68.0)]
+
+* Small list parser optimization PR#368.
+* Pass container attributes through sequence parser or unary
+  ending down to a sequence parser PR#370 #12085.
+* More fine grained sequence attribute check message PR#371.
+* Removed redundant check in `skip_over` PR#373.
+* Workaround constexpr in noexcept VS2015 bug in entire x3::variant PR#379.
+* Fixed calc4b example compilation PR#384.
+* Minor code improvements: PR#374.
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_1 Spirit V3.0.1 (Boost V1.67.0)]
 
 There was no version bump and changelog for Boost V1.56.0-1.66.0 releases.

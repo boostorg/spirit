@@ -9,6 +9,20 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_6 Spirit V2.5.6]
+
+[heading What's changed from V2.5.5 (Boost V1.67.0) to V2.5.6 (Boost V1.68.0)]
+
+[heading Bug Fixes in Qi]
+* Fixed ADT support by permutation and sequence_or operator PR#376.
+* Specialize iterator_source for random access PR#383.
+* Removed redundant check in `skip_over` PR#373.
+
+[heading Bug Fixes in Karma]
+* Fixed UB in `get_absolute_value` function PR#246.
+* Fixed use after scope bug if ADT getter returns by value PR#375 #6126.
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_5 Spirit V2.5.5]
 
 [heading What's changed from V2.5.4 (Boost V1.66.0) to V2.5.5 (Boost V1.67.0)]
