@@ -10,7 +10,6 @@
 
 #include <ostream>
 #include <istream>
-#include <boost/mpl/identity.hpp>
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
