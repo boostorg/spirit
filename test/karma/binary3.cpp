@@ -14,6 +14,8 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 
+#include <boost/predef/other/endian.h>
+
 #include "test.hpp"
 
 using namespace spirit_test;
@@ -27,7 +29,7 @@ main()
 
     {   // test optional attributes
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         boost::optional<boost::uint8_t> v8 (0x01);
         BOOST_TEST(binary_test("\x01", 1, byte_, v8));
         boost::optional<boost::uint16_t> v16 (0x0201);
@@ -44,7 +46,7 @@ main()
         BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\xf0\x3f", 8,
             bin_double, vd));
 
-#else // BOOST_LITTLE_ENDIAN
+#else // BOOST_ENDIAN_LITTLE_BYTE
 
         boost::optional<boost::uint8_t> v8 (0x01);
         BOOST_TEST(binary_test("\x01", 1, byte_, v8));
@@ -71,7 +73,7 @@ main()
         // karma_phoenix_attributes.hpp is included
         namespace phoenix = boost::phoenix;
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(binary_test("\x01", 1, byte_, phoenix::val(0x01)));
         BOOST_TEST(binary_test("\x01\x02", 2, word, phoenix::val(0x0201)));
         BOOST_TEST(binary_test("\x01\x02\x03\x04", 4, dword, 
@@ -115,7 +117,7 @@ main()
         BOOST_TEST(binary_test("\x00\x00\x00\x00\x00\x00\x00\x40", 8,
             bin_double, ++phoenix::ref(vd)));
 
-#else // BOOST_LITTLE_ENDIAN
+#else // BOOST_ENDIAN_LITTLE_BYTE
 
         BOOST_TEST(binary_test("\x01", 1, byte_, phoenix::val(0x01)));
         BOOST_TEST(binary_test("\x01\x02", 2, word, phoenix::val(0x0102)));

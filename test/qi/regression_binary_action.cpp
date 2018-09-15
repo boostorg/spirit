@@ -10,12 +10,13 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/predef/other/endian.h>
 #include "test.hpp"
 
 int main()
 {
 // This test assumes a little endian architecture
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
     using spirit_test::test_attr;
     using boost::spirit::qi::rule;
     using boost::spirit::qi::locals;

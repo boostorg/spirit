@@ -14,6 +14,8 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 
+#include <boost/predef/other/endian.h>
+
 #include "test.hpp"
 
 using namespace spirit_test;
@@ -104,7 +106,7 @@ main()
         boost::optional<float> vf;
         boost::optional<double> vd;
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
 
         BOOST_TEST(!binary_test("", 0, byte_, v8));
         BOOST_TEST(!binary_test("", 0, word, v16));
@@ -116,7 +118,7 @@ main()
         BOOST_TEST(!binary_test("", 0, bin_float, vf));
         BOOST_TEST(!binary_test("", 0, bin_double, vd));
 
-#else // BOOST_LITTLE_ENDIAN
+#else // BOOST_ENDIAN_LITTLE_BYTE
 
         BOOST_TEST(!binary_test("", 0, byte_, v8));
         BOOST_TEST(!binary_test("", 0, word, v16));

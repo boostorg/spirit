@@ -17,6 +17,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/assert.hpp>
+#include <boost/predef/other/endian.h>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -1270,7 +1271,7 @@ main()
 //<-
 #endif
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
 //->
         //`Basic usage of the native binary parsers for little endian platforms:
         test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);
