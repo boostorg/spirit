@@ -82,7 +82,7 @@ before_build:
   - mklink /J %APPVEYOR_BUILD_FOLDER% %PROJECT%
 
   # Install clcache
-  - pip install git+https://github.com/frerich/clcache.git
+  - pip install clcache
   - clcache -M %CLCACHE_CACHESIZE%
   # Run clcache-server
   - set CLCACHE_SERVER=1
