@@ -8,11 +8,8 @@
 
 #include <boost/spirit/include/karma_binary.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
-#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/predef/other/endian.h>
 
 #include "test.hpp"
 
@@ -23,7 +20,6 @@ int
 main()
 {
     using namespace boost::spirit;
-    using namespace boost::phoenix;
 
     {   // test big endian binaries
         BOOST_TEST(binary_test("\x01\x82", 2, big_word, 0x0182));
@@ -104,7 +100,7 @@ main()
         boost::optional<float> vf;
         boost::optional<double> vd;
 
-#ifdef BOOST_LITTLE_ENDIAN
+#if BOOST_ENDIAN_LITTLE_BYTE
 
         BOOST_TEST(!binary_test("", 0, byte_, v8));
         BOOST_TEST(!binary_test("", 0, word, v16));
@@ -116,7 +112,7 @@ main()
         BOOST_TEST(!binary_test("", 0, bin_float, vf));
         BOOST_TEST(!binary_test("", 0, bin_double, vd));
 
-#else // BOOST_LITTLE_ENDIAN
+#else // BOOST_ENDIAN_LITTLE_BYTE
 
         BOOST_TEST(!binary_test("", 0, byte_, v8));
         BOOST_TEST(!binary_test("", 0, word, v16));

@@ -11,7 +11,6 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/functional/hash.hpp>
-#include <boost/spirit/include/phoenix.hpp>
 #include <boost/spirit/include/support_utree.hpp>
 
 #include <iostream>

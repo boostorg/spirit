@@ -181,7 +181,7 @@ long eval_expression(iter_t const& i)
                     eval_expression(i->children.begin()+1);
             }
             else
-                BOOST_TEST(0);
+                std::abort();
         }
 
         case calculator::expressionID:
@@ -199,11 +199,11 @@ long eval_expression(iter_t const& i)
                     eval_expression(i->children.begin()+1);
             }
             else
-                BOOST_TEST(0);
+                std::abort();
         }
 
         default:
-            BOOST_TEST(0); // error
+            std::abort(); // error
     }
 
     return 0;
