@@ -13,11 +13,12 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/spirit/home/support/info.hpp>
 
+#include <boost/config.hpp> // for BOOST_SYMBOL_VISIBLE
 #include <stdexcept>
 
 namespace boost { namespace spirit { namespace qi {
     template <typename Iterator>
-    struct expectation_failure : std::runtime_error
+    struct BOOST_SYMBOL_VISIBLE expectation_failure : std::runtime_error
     {
         expectation_failure(Iterator first_, Iterator last_, info const& what)
             : std::runtime_error("boost::spirit::qi::expectation_failure")
