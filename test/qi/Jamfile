@@ -143,3 +143,5 @@ run regression_repeat.cpp ;
 run regression_transform_assignment.cpp ;
 run regression_binary_action.cpp ;
 run regression_stream_eof.cpp ;
+
+run to_utf8.cpp ;
