@@ -34,7 +34,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
     //      to allow a single catch handler to catch all exceptions.
     //
     ///////////////////////////////////////////////////////////////////////////
-    class parser_error_base : public std::exception
+    class BOOST_SYMBOL_VISIBLE parser_error_base : public std::exception
     {
     protected:
 

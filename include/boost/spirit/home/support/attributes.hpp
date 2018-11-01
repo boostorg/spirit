@@ -923,6 +923,14 @@ namespace boost { namespace spirit { namespace traits
         type;
     };
 
+    namespace detail {
+        // Domain-agnostic class template partial specializations and
+        // type agnostic domain partial specializations are ambious.
+        // To resolve the ambiguity type agnostic domain partial
+        // specializations are dispatched via intermediate type.
+        template <typename Exposed, typename Transformed, typename Domain>
+        struct transform_attribute_base;
+    }
     ///////////////////////////////////////////////////////////////////////////
     //  transform_attribute
     //
@@ -933,7 +941,9 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed, typename Domain
       , typename Enable/* = void*/>
-    struct transform_attribute;
+    struct transform_attribute
+      : detail::transform_attribute_base<Exposed, Transformed, Domain>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Domain, typename Transformed, typename Exposed>
