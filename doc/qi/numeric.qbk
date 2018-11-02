@@ -682,10 +682,6 @@ imposed by custom policies.
                                             [Negate `n` if `b` is `true`. Default implementation
                                             is provided for `float`, `double` and `long double`.]]
 
-    [[`boost::spirit::traits::is_equal_to_one(n)`]
-                                            [Return `true` if `n` is equal to `1.0`. Default implementation
-                                            is provided for `float`, `double` and `long double`.]]
-
 ]
 
 [note The additional spirit real number traits above are provided to
@@ -716,7 +712,7 @@ corresponds to the following grammar:
         ;
 
     nan
-        =   -lit("1.0#") >> no_case["nan"]
+        =   no_case["nan"]
             >> -('(' >> *(char_ - ')') >> ')')
         ;
 
@@ -791,20 +787,9 @@ For models of `RealPolicies` the following expressions must be valid:
                                             If successful, place the result into `n`.]]
 ]
 
-The `parse_nan` and `parse_inf` functions get called whenever:
-
-[:a number to parse does not start with a digit (after having
-successfully parsed an optional sign)]
-
-or
-
-[:after a real number of the value 1 (having no exponential
-part and a fractional part value of 0) has been parsed.]
-
-The first call recognizes representations of NaN or Inf starting with a
-non-digit character (such as NaN, Inf, QNaN etc.). The second call
-recognizes representation formats starting with a `1.0` (such as
-`"1.0#NAN"` or `"1.0#INF"` etc.).
+The `parse_nan` and `parse_inf` functions get called whenever
+a number to parse does not start with a digit (after having
+successfully parsed an optional sign).
 
 The functions should return true if a Nan or Inf has been found. In this
 case the attribute `n` should be set to the matched value (NaN or Inf).
