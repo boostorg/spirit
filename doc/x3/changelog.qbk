@@ -9,6 +9,15 @@
 [section Changelog]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_3 Spirit V3.0.3 (Boost V1.69.0)]
+
+* Drop own FP routines in favor of `boost::math` PR#392 #13531
+* Missing visibility mark on exception types PR#409
+* to_utf8: Fixed wchar_t handling on Windows PR#413 GH#395
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_2 Spirit V3.0.2 (Boost V1.68.0)]
 
 * Small list parser optimization PR#368.

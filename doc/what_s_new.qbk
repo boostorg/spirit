@@ -9,6 +9,18 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_7 Spirit V2.5.7]
+
+[heading What's changed from V2.5.6 (Boost V1.68.0) to V2.5.7 (Boost V1.69.0)]
+
+* Drop own FP routines in favor of `boost::math` PR#392 #13531
+* Missing visibility mark on exception types PR#409
+* Fixed transform_attribute ambiguity PR#407 GH#396
+* to_utf8: Fixed wchar_t handling on Windows PR#413 GH#395
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_6 Spirit V2.5.6]
 
 [heading What's changed from V2.5.5 (Boost V1.67.0) to V2.5.6 (Boost V1.68.0)]
