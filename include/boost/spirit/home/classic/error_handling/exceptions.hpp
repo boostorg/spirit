@@ -39,7 +39,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
     protected:
 
         parser_error_base() {}
-        virtual ~parser_error_base() throw() {}
+        virtual ~parser_error_base() BOOST_NOEXCEPT_OR_NOTHROW {}
 
     public:
 
@@ -87,10 +87,10 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         }
 
         virtual
-        ~parser_error() throw() {}
+        ~parser_error() BOOST_NOEXCEPT_OR_NOTHROW {}
 
         virtual const char*
-        what() const throw()
+        what() const BOOST_NOEXCEPT_OR_NOTHROW
         {
             return "BOOST_SPIRIT_CLASSIC_NS::parser_error";
         }

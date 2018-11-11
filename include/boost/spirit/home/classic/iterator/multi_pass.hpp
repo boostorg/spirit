@@ -150,11 +150,11 @@ class BOOST_SYMBOL_VISIBLE illegal_backtracking : public std::exception
 {
 public:
 
-    illegal_backtracking() throw() {}
-    ~illegal_backtracking() throw() {}
+    illegal_backtracking() BOOST_NOEXCEPT_OR_NOTHROW {}
+    ~illegal_backtracking() BOOST_NOEXCEPT_OR_NOTHROW {}
 
     virtual const char*
-    what() const throw()
+    what() const BOOST_NOEXCEPT_OR_NOTHROW
     { return "BOOST_SPIRIT_CLASSIC_NS::illegal_backtracking"; }
 };
 

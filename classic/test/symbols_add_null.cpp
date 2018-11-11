@@ -13,6 +13,7 @@
 #  undef NDEBUG  
 #endif  
 
+#include <boost/config.hpp>
 #include <stdexcept>
 
 #define BOOST_SPIRIT_ASSERT_EXCEPTION ::spirit_exception
@@ -23,9 +24,9 @@ struct spirit_exception : std::exception
         : message(msg)
     {
     }
-    ~spirit_exception() throw() {}
+    ~spirit_exception() BOOST_NOEXCEPT_OR_NOTHROW {}
 
-    char const* what() const throw() { return message; }
+    char const* what() const BOOST_NOEXCEPT_OR_NOTHROW { return message; }
 
     char const * message;
 };
