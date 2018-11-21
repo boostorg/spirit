@@ -376,8 +376,16 @@ namespace boost { namespace spirit { namespace lex
         typedef detail::lexer_def_<lexer> lexer_def;
         typedef std::basic_string<char_type> string_type;
 
-        lexer(unsigned int flags = match_flags::match_default
-            , id_type first_id = id_type(min_token_id)) 
+        // if `id_type` was specified but `first_id` is not provided
+        // the `min_token_id` value may be out of range for `id_type`,
+        // but it will be a problem only if unique ids feature is in use.
+        lexer(unsigned int flags = match_flags::match_default)
+          : lexer_type(flags)
+          , next_token_id(min_token_id)
+          , self(this_(), lexer_type::initial_state())
+        {}
+
+        lexer(unsigned int flags, id_type first_id)
           : lexer_type(flags)
           , next_token_id(first_id)
           , self(this_(), lexer_type::initial_state()) 
