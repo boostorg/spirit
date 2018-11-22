@@ -165,7 +165,7 @@ namespace client
 
               , end_tag %=
                         "</"
-                    >>  string(_r1)
+                    >>  lit(_r1)
                     >>  '>'
             );
         }
