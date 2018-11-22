@@ -237,7 +237,7 @@ int main(int argc, char **argv)
         std::string context(iter, (some>end)?end:some);
         std::cout << "-------------------------\n";
         std::cout << "Parsing failed\n";
-        std::cout << "stopped at: \": " << context << "...\"\n";
+        std::cout << "stopped at: \"" << context << "...\"\n";
         std::cout << "-------------------------\n";
         return 1;
     }
