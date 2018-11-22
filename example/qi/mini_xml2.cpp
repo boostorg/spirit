@@ -224,7 +224,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::string::const_iterator some = iter+30;
+        std::string::const_iterator some = iter + std::min(30, int(end - iter));
         std::string context(iter, (some>end)?end:some);
         std::cout << "-------------------------\n";
         std::cout << "Parsing failed\n";
