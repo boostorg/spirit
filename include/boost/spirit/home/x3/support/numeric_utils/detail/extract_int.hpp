@@ -132,8 +132,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
-            static T const max = (std::numeric_limits<T>::max)();
-            static T const val = max / Radix;
+            T constexpr max = (std::numeric_limits<T>::max)();
+            T constexpr val = max / Radix;
             if (n > val)
                 return false;
 
@@ -163,8 +163,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
-            static T const min = (std::numeric_limits<T>::min)();
-            static T const val = (min + 1) / T(Radix);
+            T constexpr min = (std::numeric_limits<T>::min)();
+            T constexpr val = (min + 1) / T(Radix);
             if (n < val)
                 return false;
 
@@ -190,7 +190,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool
         call(Char ch, std::size_t count, T& n, mpl::true_)
         {
-            static std::size_t const
+            std::size_t constexpr
                 overflow_free = digits_traits<T, Radix>::value - 1;
 
             if (count < overflow_free)
