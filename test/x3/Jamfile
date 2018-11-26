@@ -31,7 +31,7 @@ project spirit-x3
             #cxx14_aggregate_nsdmi
             cxx14_return_type_deduction         # grep -Er "auto[^\\(=\\)]+\(" *
             #cxx14_std_exchange                  # grep -r "exchange" *
-            #cxx14_variable_templates
+            cxx14_variable_templates
         ]
     ;
 
