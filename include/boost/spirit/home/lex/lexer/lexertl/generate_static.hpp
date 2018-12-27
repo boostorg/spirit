@@ -19,7 +19,6 @@
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/static_version.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/scoped_array.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -156,9 +155,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "struct lexer" << suffix << "\n{\n";
         os_ << "    // version number and feature-set of compatible static lexer engine\n";
         os_ << "    enum\n";
-        os_ << "    {\n        static_version = "
-            << boost::lexical_cast<std::basic_string<Char> >(SPIRIT_STATIC_LEXER_VERSION)
-            << ",\n";
+        os_ << "    {\n        static_version = " << SPIRIT_STATIC_LEXER_VERSION << ",\n";
         os_ << "        supports_bol = " << std::boolalpha << bol << ",\n";
         os_ << "        supports_eol = " << std::boolalpha << eol << "\n";
         os_ << "    };\n\n";
