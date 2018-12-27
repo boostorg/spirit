@@ -13,7 +13,6 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/assert.hpp>
-#include <boost/lexical_cast.hpp>
 #include <set>
 
 namespace client { namespace code_gen
