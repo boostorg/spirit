@@ -8,8 +8,8 @@
 #define BOOST_SPIRIT_X3_TST_MARCH_09_2007_0905AM
 
 #include <boost/call_traits.hpp>
-#include <boost/detail/iterator.hpp>
 #include <boost/assert.hpp>
+#include <iterator> // for std::iterator_traits
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             for (;;)
             {
                 typename
-                    boost::detail::iterator_traits<Iterator>::value_type
+                    std::iterator_traits<Iterator>::value_type
                 c = *first;
 
                 if (*pp == 0)
@@ -148,7 +148,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return;
 
             typename
-                boost::detail::iterator_traits<Iterator>::value_type
+                std::iterator_traits<Iterator>::value_type
             c = *first;
 
             if (c == p->id)
