@@ -24,7 +24,6 @@ main()
 
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
-    using boost::spirit::x3::int_;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
     using boost::spirit::x3::phrase_parse;

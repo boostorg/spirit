@@ -23,7 +23,6 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
-    using boost::spirit::x3::uint_;
     using boost::spirit::x3::uint_parser;
 
     ///////////////////////////////////////////////////////////////////////////
