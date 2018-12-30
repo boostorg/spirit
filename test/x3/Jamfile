@@ -108,7 +108,7 @@ run skip.cpp ;
 run symbols1.cpp ;
 run symbols2.cpp ;
 run symbols3.cpp ;
-run tst.cpp /boost//system ;
+run tst.cpp ;
 
 run uint1.cpp ;
 run uint_radix.cpp ;
@@ -120,7 +120,7 @@ run seek.cpp ;
 run attribute_type_check.cpp ;
 run fusion_map.cpp ;
 run x3_variant.cpp ;
-run error_handler.cpp /boost//system /boost//filesystem ;
+run error_handler.cpp /boost//filesystem ;
 run iterator_check.cpp ;
 
 run to_utf8.cpp ;

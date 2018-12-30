@@ -114,7 +114,7 @@ run stream.cpp ;
 run symbols1.cpp ;
 run symbols2.cpp ;
 run terminal_ex.cpp ;
-run tst.cpp /boost//system ;
+run tst.cpp ;
 run uint1.cpp ;
 run uint2.cpp ;
 run uint3.cpp ;

@@ -12,7 +12,6 @@ project
       <source>..//rexpr
       <source>/boost//regex
       <source>/boost//filesystem
-      <source>/boost//system
       <c++-template-depth>300
    ;
 
