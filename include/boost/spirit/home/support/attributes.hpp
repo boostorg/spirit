@@ -45,6 +45,7 @@
 #include <boost/variant.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/config.hpp>
+#include <iterator> // for std::iterator_traits, std::distance
 #include <vector>
 #include <utility>
 #include <ios>
@@ -559,12 +560,12 @@ namespace boost { namespace spirit { namespace traits
     template <typename Iterator>
     struct attribute_size<iterator_range<Iterator> >
     {
-        typedef typename boost::detail::iterator_traits<Iterator>::
+        typedef typename std::iterator_traits<Iterator>::
             difference_type type;
 
         static type call(iterator_range<Iterator> const& r)
         {
-            return boost::detail::distance(r.begin(), r.end());
+            return std::distance(r.begin(), r.end());
         }
     };
 

@@ -12,7 +12,7 @@
 #endif
 
 #include <boost/iostreams/stream.hpp>
-#include <boost/detail/iterator.hpp>
+#include <iterator> // for std::iterator_traits, std::distance
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace qi { namespace detail
@@ -21,9 +21,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <typename Iterator>
     struct base_iterator_source
     {
-        typedef typename
-            boost::detail::iterator_traits<Iterator>::value_type
-        char_type;
+        typedef typename std::iterator_traits<Iterator>::value_type char_type;
         typedef boost::iostreams::seekable_device_tag category;
 
         base_iterator_source (Iterator const& first_, Iterator const& last_)
@@ -90,7 +88,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     struct iterator_source<
             Iterator, 
             typename boost::enable_if_c<boost::is_convertible<
-                typename boost::detail::iterator_traits<Iterator>::iterator_category, std::random_access_iterator_tag>::value>::type
+                typename std::iterator_traits<Iterator>::iterator_category, std::random_access_iterator_tag>::value>::type
         > : base_iterator_source<Iterator>
     {
         typedef base_iterator_source<Iterator> base_type;

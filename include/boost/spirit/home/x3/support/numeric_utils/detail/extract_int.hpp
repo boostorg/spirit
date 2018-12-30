@@ -23,7 +23,6 @@
 #include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/seq/elem.hpp>
 
-#include <boost/detail/iterator.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/type_traits/is_integral.hpp>
@@ -33,6 +32,8 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
+
+#include <iterator> // for std::iterator_traits
 
 #if !defined(SPIRIT_NUMERICS_LOOP_UNROLL)
 # define SPIRIT_NUMERICS_LOOP_UNROLL 3
@@ -296,7 +297,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, MaxDigits> extractor;
             typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
+                std::iterator_traits<Iterator>::value_type
             char_type;
 
             Iterator it = first;
@@ -394,7 +395,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, -1> extractor;
             typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
+                std::iterator_traits<Iterator>::value_type
             char_type;
 
             Iterator it = first;

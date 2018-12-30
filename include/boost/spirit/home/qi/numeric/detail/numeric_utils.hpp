@@ -15,7 +15,6 @@
 #pragma once
 #endif
 
-#include <boost/detail/iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
@@ -32,6 +31,7 @@
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
 #include <boost/integer_traits.hpp>
+#include <iterator> // for std::iterator_traits
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -318,9 +318,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, MaxDigits, Accumulate> extractor;
-            typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
-            char_type;
+            typedef typename std::iterator_traits<Iterator>::value_type char_type;
 
             Iterator it = first;
             std::size_t leading_zeros = 0;
@@ -423,9 +421,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, -1, Accumulate> extractor;
-            typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
-            char_type;
+            typedef typename std::iterator_traits<Iterator>::value_type char_type;
 
             Iterator it = first;
             std::size_t count = 0;

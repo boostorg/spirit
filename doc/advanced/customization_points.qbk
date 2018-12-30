@@ -2113,7 +2113,7 @@ types returned by the embedded typedef `type`:
 [table
     [[Template Parameters]     [Semantics]]
     [[`Iterator`]              [The metafunction result `type` evaluates to 
-              `boost::detail::iterator_traits<Iterator>::reference` and the 
+              `std::iterator_traits<Iterator>::reference` and the 
               function `call()` returns `*it`.]]
     [[__unused_type__` const*`][The metafunction result `type` evaluates to 
               __unused_type__ and the function `call()` returns `unused`.]]

@@ -20,10 +20,10 @@
 #include <boost/spirit/home/lex/lexer/token_def.hpp>
 #include <boost/assert.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/detail/iterator.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/range/iterator_range.hpp>
+#include <iterator> // for std::iterator_traits
 #include <string>
 
 namespace boost { namespace spirit { namespace lex
@@ -83,7 +83,7 @@ namespace boost { namespace spirit { namespace lex
 
                 if (first != last) {
                     typedef typename 
-                        boost::detail::iterator_traits<Iterator>::value_type 
+                        std::iterator_traits<Iterator>::value_type 
                     token_type;
 
                     token_type const& t = *first;
