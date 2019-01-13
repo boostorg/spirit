@@ -133,8 +133,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
-            T constexpr max = (std::numeric_limits<T>::max)();
-            T constexpr val = max / Radix;
+            T const max = (std::numeric_limits<T>::max)();
+            T const val = max / Radix;
             if (n > val)
                 return false;
 
@@ -164,8 +164,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
-            T constexpr min = (std::numeric_limits<T>::min)();
-            T constexpr val = (min + 1) / T(Radix);
+            T const min = (std::numeric_limits<T>::min)();
+            T const val = (min + 1) / T(Radix);
             if (n < val)
                 return false;
 

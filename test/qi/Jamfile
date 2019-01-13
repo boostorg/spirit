@@ -69,6 +69,7 @@ run end.cpp ;
 run eps.cpp ;
 run expect.cpp ;
 run expectd.cpp ;
+run extract_int.cpp ;
 run grammar.cpp ;
 run int1.cpp ;
 run int2.cpp ;
