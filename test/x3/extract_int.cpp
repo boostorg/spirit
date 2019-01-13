@@ -53,8 +53,10 @@ private:
     int value_;
 };
 
+namespace std {
+
 template <>
-class std::numeric_limits<custom_int> : public std::numeric_limits<int>
+class numeric_limits<custom_int> : public numeric_limits<int>
 {
 public:
     static constexpr custom_int max() noexcept { return custom_int::max; }
@@ -63,6 +65,8 @@ public:
     static constexpr int digits = 4;
     static constexpr int digits10 = 1;
 };
+
+}
 
 int main()
 {
