@@ -125,3 +125,6 @@ run error_handler.cpp /boost//filesystem ;
 run iterator_check.cpp ;
 
 run to_utf8.cpp ;
+
+obj rule_separate_tu_grammar : rule_separate_tu_grammar.cpp ;
+run rule_separate_tu.cpp rule_separate_tu_grammar ;
