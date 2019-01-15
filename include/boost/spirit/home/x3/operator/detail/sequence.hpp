@@ -106,19 +106,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename Parser, typename Attribute>
-    struct pass_sequence_attribute_used :
+    template <typename Parser, typename Attribute, typename Enable = void>
+    struct pass_sequence_attribute :
         mpl::if_<
             traits::is_size_one_view<Attribute>
           , pass_sequence_attribute_size_one_view<Attribute>
           , pass_through_sequence_attribute<Attribute>>::type {};
-
-    template <typename Parser, typename Attribute, typename Enable = void>
-    struct pass_sequence_attribute :
-        mpl::if_<
-            fusion::result_of::empty<Attribute>
-          , pass_sequence_attribute_unused
-          , pass_sequence_attribute_used<Parser, Attribute>>::type {};
 
     template <typename L, typename R, typename Attribute>
     struct pass_sequence_attribute<sequence<L, R>, Attribute>
