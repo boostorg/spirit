@@ -243,5 +243,18 @@ int main()
         BOOST_TEST(test_rule("1 2.0", p, qi::space));
     }
 
+    {
+        // test literal char interference
+        using spirit_test::test;
+        BOOST_TEST(test("x", 'x'));
+        BOOST_TEST(test("x", 'x', qi::space));
+        BOOST_TEST(!test("y", 'x'));
+        BOOST_TEST(!test("y", 'x', qi::space));
+        BOOST_TEST(test(L"x", L'x'));
+        BOOST_TEST(test(L"x", L'x', qi::space));
+        BOOST_TEST(!test(L"y", L'x'));
+        BOOST_TEST(!test(L"y", L'x', qi::space));
+    }
+
     return boost::report_errors();
 }
