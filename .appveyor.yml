@@ -35,7 +35,7 @@ before_build:
       # Creating %USERPROFILE%/user-config.jam file
       @'
       
-      import feature os regex toolset ;
+      import feature os regex toolset pch ;
       
       # clcache
       local toolset = [ regex.split [ os.environ TOOLSET ] "-" ] ;
@@ -52,6 +52,9 @@ before_build:
           -wd4127  # conditional expression is constant
           -wd4459  # declaration of 'varname' hides global declaration
         : unchecked ;
+      
+      # A subfeature that tells Spirit tests to use PCH
+      feature.subfeature pch on : version : spirit : optional propagated incidental ;
       
       '@ | sc "$env:USERPROFILE/user-config.jam"
 
@@ -107,6 +110,6 @@ build_script:
 test_script:
   - set B2_ARGS=%B2_ARGS% warnings=on known-warnings=suppress warnings-as-errors=on
   - echo B2 argumets %B2_ARGS%
-  - b2 %B2_ARGS% %PROJECT%\classic\test
-  - b2 %B2_ARGS% %PROJECT%\repository\test
-  - b2 %B2_ARGS% %PROJECT%\test
+  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\classic\test
+  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\repository\test
+  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\test

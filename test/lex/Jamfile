@@ -2,6 +2,7 @@
 #   Copyright (c) 2001-2011 Joel de Guzman
 #   Copyright (c) 2001-2012 Hartmut Kaiser
 #   Copyright (c)      2011 Bryce Lelbach
+#   Copyright (c) 2016-2019 Nikita Kniazev
 #
 #   Use, modification and distribution is subject to the Boost Software
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -22,6 +23,12 @@ project spirit-lex
 
 ###############################################################################
 
+cpp-pch pch : pch.hpp : : : <include>. <toolset>msvc:<cxxflags>"/FIpch.hpp" ;
+
+explicit pch ;
+
+###############################################################################
+
 local subproject-name = lex ;
 
 rule run ( sources + : args * : input-files *
@@ -29,21 +36,21 @@ rule run ( sources + : args * : input-files *
 {
     target-name ?= $(subproject-name)_$(sources[1]:D=:S=) ;
     return [ testing.run $(sources) : $(args) : $(input-files)
-           : $(requirements) : $(target-name) : $(default-build) ] ;
+           : $(requirements) <pch>on-spirit:<source>pch : $(target-name) : $(default-build) ] ;
 }
 
 rule compile ( sources + : requirements * : target-name ? )
 {
     target-name ?= $(subproject-name)_$(sources[1]:D=:S=) ;
     return [ testing.compile $(sources)
-           : $(requirements) : $(target-name) ] ;
+           : $(requirements) <pch>on-spirit:<source>pch : $(target-name) ] ;
 }
 
 rule compile-fail ( sources + : requirements * : target-name ? )
 {
     target-name ?= $(subproject-name)_$(sources[1]:D=:S=) ;
     return [ testing.compile-fail $(sources)
-           : $(requirements) : $(target-name) ] ;
+           : $(requirements) <pch>on-spirit:<source>pch : $(target-name) ] ;
 }
 
 ###############################################################################
@@ -79,16 +86,22 @@ run plain_token.cpp ;
 
 run regression_basic_lexer.cpp ;
 run regression_matlib_dynamic.cpp ;
+# matlib_static needs a generated header from matlib_generate target but
+# with PCH enabled <dependency> does something strange that leads to having
+# two matlib_generate targets with different requirements. I tried to replace
+# it with <use> but it does not make a dependency between targets (the docs
+# says that <use> is extended version of <dependency> that applies usage
+# requirements). So I ended with using check-target-builds.
 run regression_matlib_generate.cpp         : [ location matlib_static.h ] ;
-run regression_matlib_static.cpp           : : : <dependency>lex_regression_matlib_generate ;
+run regression_matlib_static.cpp           : : : [ check-target-builds lex_regression_matlib_generate ] ;
 run regression_matlib_generate_switch.cpp  : [ location matlib_static_switch.h ] ;
-run regression_matlib_switch.cpp           : : : <dependency>lex_regression_matlib_generate_switch ;
+run regression_matlib_switch.cpp           : : : [ check-target-builds lex_regression_matlib_generate_switch ] ;
 run regression_word_count.cpp ;
 run regression_syntax_error.cpp ;
 run regression_wide.cpp ;
 run regression_file_iterator1.cpp ;
 run regression_file_iterator2.cpp ;
-run regression_file_iterator3.cpp ;
+run regression_file_iterator3.cpp : : : <pch>off ;
 run regression_file_iterator4.cpp ;
 run regression_static_wide_6253.cpp ;
 run regression_less_8563.cpp ;

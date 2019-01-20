@@ -10,12 +10,8 @@
 // Tests for spirit::for_p
 // [13-Jan-2003]
 ////////////////////////////////////////////////////////////////////////////////
-#define qDebug 0
 #include <iostream>
 #include <cstring>
-#if qDebug
-#define SPIRIT_DEBUG
-#endif
 #include <string>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
