@@ -13,7 +13,7 @@
 namespace spirit_test
 {
     template <typename Char, typename Parser, typename Lexer>
-    bool test_parser(Char const* in, Parser const& p, Lexer& lex, 
+    inline bool test_parser(Char const* in, Parser const& p, Lexer& lex, 
         bool full_match = true)
     {
         // we don't care about the result of the "what" function.
@@ -34,7 +34,7 @@ namespace spirit_test
     }
 
     template <typename Char, typename Parser, typename Lexer, typename Skipper>
-    bool test_parser(Char const* in, Parser const& p, Lexer& lex,
+    inline bool test_parser(Char const* in, Parser const& p, Lexer& lex,
           Skipper const& s, bool full_match = true)
     {
         // we don't care about the result of the "what" function.

@@ -8,8 +8,6 @@
 // if a token matched at the beginning of a line is discarded using 
 // lex::pass_fail.
 
-// #define BOOST_SPIRIT_LEXERTL_DEBUG 1
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
