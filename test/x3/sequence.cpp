@@ -483,5 +483,13 @@ main()
         BOOST_TEST(n == 123);
     }
 
+    {
+#ifdef SPIRIT_NO_COMPILE_CHECK
+        char const* const s = "";
+        int i;
+        parse(s, s, int_ >> int_, i);
+#endif
+    }
+
     return boost::report_errors();
 }
