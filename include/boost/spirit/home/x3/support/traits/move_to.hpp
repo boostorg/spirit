@@ -14,7 +14,6 @@
 #include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
-#include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/move.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <utility>
