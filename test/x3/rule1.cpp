@@ -25,9 +25,18 @@ main()
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::lit;
+    using boost::spirit::x3::int_;
     using boost::spirit::x3::unused_type;
     using boost::spirit::x3::phrase_parse;
     using boost::spirit::x3::skip_flag;
+    using boost::spirit::x3::traits::has_attribute;
+
+    // check attribute advertising
+    static_assert( has_attribute<rule<class r, int>, /*Context=*/unused_type>::value, "");
+    static_assert(!has_attribute<rule<class r     >, /*Context=*/unused_type>::value, "");
+    static_assert( has_attribute<decltype(rule<class r, int>{} = int_), /*Context=*/unused_type>::value, "");
+    static_assert(!has_attribute<decltype(rule<class r     >{} = int_), /*Context=*/unused_type>::value, "");
+
 
     { // basic tests
 
