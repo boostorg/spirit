@@ -86,16 +86,10 @@ run plain_token.cpp ;
 
 run regression_basic_lexer.cpp ;
 run regression_matlib_dynamic.cpp ;
-# matlib_static needs a generated header from matlib_generate target but
-# with PCH enabled <dependency> does something strange that leads to having
-# two matlib_generate targets with different requirements. I tried to replace
-# it with <use> but it does not make a dependency between targets (the docs
-# says that <use> is extended version of <dependency> that applies usage
-# requirements). So I ended with using check-target-builds.
 run regression_matlib_generate.cpp         : [ location matlib_static.h ] ;
-run regression_matlib_static.cpp           : : : [ check-target-builds lex_regression_matlib_generate ] ;
+run regression_matlib_static.cpp           : : : <dependency>lex_regression_matlib_generate ;
 run regression_matlib_generate_switch.cpp  : [ location matlib_static_switch.h ] ;
-run regression_matlib_switch.cpp           : : : [ check-target-builds lex_regression_matlib_generate_switch ] ;
+run regression_matlib_switch.cpp           : : : <dependency>lex_regression_matlib_generate_switch ;
 run regression_word_count.cpp ;
 run regression_syntax_error.cpp ;
 run regression_wide.cpp ;
