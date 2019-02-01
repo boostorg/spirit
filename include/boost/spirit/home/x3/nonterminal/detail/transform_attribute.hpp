@@ -10,6 +10,7 @@
 
 #include <boost/spirit/home/x3/support/traits/transform_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
+#include <boost/spirit/home/x3/support/traits/value_traits.hpp>
 #include <utility>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,7 +23,10 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef Transformed type;
 
-        static Transformed pre(Exposed&) { return Transformed(); }
+        static Transformed pre(Exposed&)
+        {
+            return traits::value_initialize<Transformed>::call();
+        }
 
         static void post(Exposed& val, Transformed&& attr)
         {
