@@ -23,10 +23,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef Transformed type;
 
-        static Transformed pre(Exposed&)
-        {
-            return traits::value_initialize<Transformed>::call();
-        }
+        static Transformed pre(Exposed&) { return Transformed(); }
 
         static void post(Exposed& val, Transformed&& attr)
         {
@@ -70,13 +67,19 @@ namespace boost { namespace spirit { namespace x3
     struct transform_attribute<unused_type const, unused_type>
       : transform_attribute<unused_type, unused_type> {};
 
+    // case where user did not provide any attribute
+    // create object of desired attribute then
     template <typename Attribute>
     struct transform_attribute<unused_type, Attribute>
-      : transform_attribute<unused_type, unused_type> {};
+    {
+        typedef Attribute type;
+        static Attribute pre(unused_type) { return Attribute(); }
+        static void post(unused_type, const Attribute&) {}
+    };
 
     template <typename Attribute>
     struct transform_attribute<unused_type const, Attribute>
-      : transform_attribute<unused_type, unused_type> {};
+      : transform_attribute<unused_type, Attribute> {};
 
     template <typename Attribute>
     struct transform_attribute<Attribute, unused_type>
