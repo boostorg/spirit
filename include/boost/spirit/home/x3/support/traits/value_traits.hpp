@@ -9,6 +9,8 @@
 #if !defined(BOOST_SPIRIT_X3_VALUE_TRAITS_MAY_07_2013_0203PM)
 #define BOOST_SPIRIT_X3_VALUE_TRAITS_MAY_07_2013_0203PM
 
+#include <boost/utility/value_init.hpp>
+
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename T, typename Enable = void>
@@ -16,7 +18,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         static T call()
         {
-            return {};
+            return boost::value_initialized<T>();
         }
     };
 }}}}

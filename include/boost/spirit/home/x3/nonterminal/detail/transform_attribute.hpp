@@ -10,7 +10,6 @@
 
 #include <boost/spirit/home/x3/support/traits/transform_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
-#include <boost/spirit/home/x3/support/traits/value_traits.hpp>
 #include <utility>
 
 ///////////////////////////////////////////////////////////////////////////////
