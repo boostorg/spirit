@@ -105,39 +105,14 @@ namespace boost { namespace spirit { namespace qi
     };
 
     // unused_type needs some special handling as well
-    template <>
-    struct transform_attribute<unused_type, unused_type>
+    template <typename Attribute>
+    struct transform_attribute<Attribute, unused_type>
     {
         typedef unused_type type;
         static unused_type pre(unused_type) { return unused; }
         static void post(unused_type, unused_type) {}
         static void fail(unused_type) {}
     };
-
-    template <>
-    struct transform_attribute<unused_type const, unused_type>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type const, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute, unused_type>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const, unused_type>
-      : transform_attribute<unused_type, unused_type>
-    {};
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////

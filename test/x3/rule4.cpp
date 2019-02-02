@@ -108,7 +108,7 @@ main()
 
     { // error handling
 
-        auto r = rule<my_rule_class, char const*>()
+        auto r = rule<my_rule_class>()
             = '(' > int_ > ',' > int_ > ')';
 
         BOOST_TEST(test("(123,456)", r));

@@ -43,7 +43,7 @@ main()
     { // injecting data into the context in the grammar
 
         int val = 0;
-        auto r = rule<my_rule_class, char const*>() =
+        auto r = rule<my_rule_class>() =
             '(' > int_ > ',' > int_ > ')'
             ;
 

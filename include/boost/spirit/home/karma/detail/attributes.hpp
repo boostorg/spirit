@@ -14,8 +14,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename Exposed, typename Transformed, typename Enable = void>
-    struct transform_attribute
+    template <typename Exposed, typename Transformed>
+    struct default_transform_attribute
     {
         typedef Transformed type;
         static Transformed pre(Exposed& val) 
@@ -24,6 +24,12 @@ namespace boost { namespace spirit { namespace karma
         }
         // Karma only, no post() and no fail() required
     };
+
+    // main specialization for Karma
+    template <typename Exposed, typename Transformed, typename Enable = void>
+    struct transform_attribute
+      : default_transform_attribute<Exposed, Transformed>
+    {};
 
     template <typename Exposed, typename Transformed>
     struct transform_attribute<boost::optional<Exposed> const, Transformed
@@ -37,7 +43,7 @@ namespace boost { namespace spirit { namespace karma
     };
 
     template <typename Attribute>
-    struct transform_attribute<Attribute const, Attribute>
+    struct default_transform_attribute<Attribute const, Attribute>
     {
         typedef Attribute const& type;
         static Attribute const& pre(Attribute const& val) { return val; }
@@ -61,37 +67,12 @@ namespace boost { namespace spirit { namespace karma
     {};
 
     // unused_type needs some special handling as well
-    template <>
-    struct transform_attribute<unused_type, unused_type>
+    template <typename Attribute>
+    struct transform_attribute<Attribute, unused_type>
     {
         typedef unused_type type;
         static unused_type pre(unused_type) { return unused; }
     };
-
-    template <>
-    struct transform_attribute<unused_type const, unused_type>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type const, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute, unused_type>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const, unused_type>
-      : transform_attribute<unused_type, unused_type>
-    {};
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////
