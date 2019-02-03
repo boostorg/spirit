@@ -8,9 +8,8 @@
 #if !defined(BOOST_SPIRIT_X3_UNUSED_APRIL_16_2006_0616PM)
 #define BOOST_SPIRIT_X3_UNUSED_APRIL_16_2006_0616PM
 
-#include <ostream>
-#include <istream>
 #include <boost/mpl/identity.hpp>
+#include <iosfwd>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace x3
