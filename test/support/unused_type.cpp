@@ -10,10 +10,16 @@
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+#if !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) || \
+    !defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
+#include <type_traits>
+static_assert(std::is_trivial<boost::spirit::unused_type>::value, "");
+#endif
+
 template <typename Expected, typename T>
 void test(T&)
 {
-    BOOST_STATIC_ASSERT((boost::is_same<T&, Expected>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<T, Expected>::value));
 }
 
 int main()
@@ -22,12 +28,12 @@ int main()
     using boost::spirit::unused_type;
 
     unused_type unused_mut;
-    test<unused_type const&>(unused);
-    test<unused_type&>(unused_mut);
-    test<unused_type const&>(unused = 123);
-    test<unused_type const&>(unused = unused);
-    test<unused_type const&>(unused = unused_mut);
-    test<unused_type&>(unused_mut = 123);
-    test<unused_type&>(unused_mut = unused);
-    test<unused_type&>(unused_mut = unused_mut);
+    test<unused_type const>(unused);
+    test<unused_type>(unused_mut);
+    test<unused_type const>(unused = 123);
+    test<unused_type const>(unused = unused);
+    test<unused_type const>(unused = unused_mut);
+    test<unused_type>(unused_mut = 123);
+    test<unused_type>(unused_mut = unused);
+    test<unused_type>(unused_mut = unused_mut);
 }

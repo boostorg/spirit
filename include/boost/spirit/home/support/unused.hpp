@@ -15,11 +15,6 @@
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
 
-#if defined(BOOST_MSVC)
-# pragma warning(push)
-# pragma warning(disable: 4522) // multiple assignment operators specified warning
-#endif
-
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
 {
@@ -31,60 +26,46 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     struct unused_type
     {
-        unused_type()
+        BOOST_DEFAULTED_FUNCTION(unused_type() BOOST_NOEXCEPT, {})
+
+        template <typename T>
+        BOOST_CONSTEXPR unused_type(T const&) BOOST_NOEXCEPT
         {
         }
 
         template <typename T>
-        unused_type(T const&)
-        {
-        }
-
-        template <typename T>
-        unused_type const&
-        operator=(T const&) const
+        BOOST_CONSTEXPR unused_type const&
+        operator=(T const&) const BOOST_NOEXCEPT
         {
             return *this;
         }
 
         template <typename T>
-        unused_type&
-        operator=(T const&)
-        {
-            return *this;
-        }
-
-        unused_type const&
-        operator=(unused_type const&) const
-        {
-            return *this;
-        }
-
-        unused_type&
-        operator=(unused_type const&)
+        BOOST_CXX14_CONSTEXPR unused_type&
+        operator=(T const&) BOOST_NOEXCEPT
         {
             return *this;
         }
     };
 
-    unused_type const unused = unused_type();
+    BOOST_CONSTEXPR unused_type const unused = unused_type();
 
     namespace detail
     {
         struct unused_only
         {
-            unused_only(unused_type const&) {}
+            BOOST_CONSTEXPR unused_only(unused_type const&) BOOST_NOEXCEPT {}
         };
     }
 
     template <typename Out>
-    inline Out& operator<<(Out& out, detail::unused_only const&)
+    BOOST_CONSTEXPR inline Out& operator<<(Out& out, detail::unused_only const&)
     {
         return out;
     }
 
     template <typename In>
-    inline In& operator>>(In& in, unused_type&)
+    BOOST_CONSTEXPR inline In& operator>>(In& in, unused_type&)
     {
         return in;
     }
@@ -97,9 +78,5 @@ namespace boost { namespace spirit
         template <> struct not_is_unused<unused_type> : mpl::false_ {};
     }
 }}
-
-#if defined(BOOST_MSVC)
-# pragma warning(pop)
-#endif
 
 #endif

@@ -14,6 +14,8 @@ int main()
     using boost::spirit::x3::unused;
     using boost::spirit::x3::unused_type;
 
+    static_assert(std::is_trivial<unused_type>::value, "");
+
     unused_type unused_mut;
     static_assert(std::is_same<decltype((unused)), unused_type const&>::value, "");
     static_assert(std::is_same<decltype((unused_mut)), unused_type&>::value, "");
