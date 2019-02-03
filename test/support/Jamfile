@@ -47,6 +47,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 ###############################################################################
 
 run istream_iterator_basic.cpp ;
+run unused_type.cpp ;
 run utree.cpp ;
 run utree_debug.cpp ;
 
