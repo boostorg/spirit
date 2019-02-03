@@ -36,6 +36,8 @@ int main()
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::lit;
+    using boost::spirit::x3::eps;
+    using boost::spirit::x3::unused_type;
 
 
     { // synth attribute value-init
@@ -66,6 +68,15 @@ int main()
 
         BOOST_TEST(test_attr("abcdef", +rdef, s));
         BOOST_TEST(s == "abcdef");
+    }
+
+    {
+        auto r = rule<class r, int>{} = eps[([] (auto& ctx) {
+            using boost::spirit::x3::_val;
+            static_assert(std::is_same<std::decay_t<decltype(_val(ctx))>, unused_type>::value,
+                "Attribute must not be synthesized");
+        })];
+        BOOST_TEST(test("", r));
     }
 
     return boost::report_errors();
