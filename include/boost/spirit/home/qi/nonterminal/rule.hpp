@@ -312,12 +312,12 @@ namespace boost { namespace spirit { namespace qi
                 {
                     // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
-                    traits::post_transform(attr_param, attr_);
+                    transform::post(attr_param, attr_);
                     return true;
                 }
 
                 // inform attribute transformation of failed rhs
-                traits::fail_transform(attr_param, attr_);
+                transform::fail(attr_param);
             }
             return false;
         }
@@ -363,12 +363,12 @@ namespace boost { namespace spirit { namespace qi
                 {
                     // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
-                    traits::post_transform(attr_param, attr_);
+                    transform::post(attr_param, attr_);
                     return true;
                 }
 
                 // inform attribute transformation of failed rhs
-                traits::fail_transform(attr_param, attr_);
+                transform::fail(attr_param);
             }
             return false;
         }

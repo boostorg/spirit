@@ -969,21 +969,6 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Domain, typename Transformed, typename Exposed>
-    typename spirit::result_of::pre_transform<Exposed, Transformed, Domain>::type
-    pre_transform(Exposed& attr BOOST_PROTO_DISABLE_IF_IS_CONST(Exposed))
-    {
-        return transform_attribute<Exposed, Transformed, Domain>::pre(attr);
-    }
-
-    template <typename Domain, typename Transformed, typename Exposed>
-    typename spirit::result_of::pre_transform<Exposed const, Transformed, Domain>::type
-    pre_transform(Exposed const& attr)
-    {
-        return transform_attribute<Exposed const, Transformed, Domain>::pre(attr);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // swap_impl
     //
     // Swap (with proper handling of unused_types)
@@ -1348,15 +1333,5 @@ namespace boost { namespace spirit { namespace traits
         token_printer_debug<T>::print(out, val);
     }
 }}}
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace result_of
-{
-    template <typename Exposed, typename Transformed, typename Domain>
-    struct pre_transform
-      : traits::transform_attribute<Exposed, Transformed, Domain>
-    {};
-}}}
-
 
 #endif

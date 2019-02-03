@@ -290,8 +290,7 @@ namespace boost { namespace spirit { namespace karma
                     Attribute const, attr_type, domain>
                 transform;
 
-                typename transform::type attr_ =
-                    traits::pre_transform<domain, attr_type>(attr);
+                typename transform::type attr_ = transform::pre(attr);
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -327,8 +326,7 @@ namespace boost { namespace spirit { namespace karma
                     Attribute const, attr_type, domain>
                 transform;
 
-                typename transform::type attr_ =
-                    traits::pre_transform<domain, attr_type>(attr);
+                typename transform::type attr_ = transform::pre(attr);
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
