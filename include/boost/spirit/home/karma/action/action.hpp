@@ -22,7 +22,6 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 
-#include <boost/core/ignore_unused.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/remove_const.hpp>
@@ -61,10 +60,7 @@ namespace boost { namespace spirit { namespace karma
             typedef traits::transform_attribute<
                 Attribute const, attr_type, domain> transform;
 
-            boost::ignore_unused<transform>();
-
-            attr_type attr = 
-                traits::pre_transform<domain, attr_type>(attr_);
+            attr_type attr = transform::pre(attr_);
 
             // call the function, passing the attribute, the context and a bool 
             // flag that the client can set to false to fail generating.

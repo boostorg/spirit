@@ -188,12 +188,12 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             {
                 // do up-stream transformation, this integrates the results 
                 // back into the original attribute value, if appropriate
-                traits::post_transform(attr, attr_);
+                transform::post(attr, attr_);
                 return true;
             }
 
             // inform attribute transformation of failed rhs
-            traits::fail_transform(attr, attr_);
+            transform::fail(attr);
             return false;
         }
 
@@ -237,12 +237,12 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             {
                 // do up-stream transformation, this integrates the results 
                 // back into the original attribute value, if appropriate
-                traits::post_transform(attr, attr_);
+                transform::post(attr, attr_);
                 return true;
             }
 
             // inform attribute transformation of failed rhs
-            traits::fail_transform(attr, attr_);
+            transform::fail(attr);
             return false;
         }
 
