@@ -118,6 +118,7 @@ run confix.cpp ;
 run repeat.cpp ;
 run seek.cpp ;
 
+run unused_type.cpp ;
 run attribute_type_check.cpp ;
 run fusion_map.cpp ;
 run x3_variant.cpp ;
