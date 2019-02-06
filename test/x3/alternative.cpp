@@ -37,6 +37,19 @@ BOOST_FUSION_ADAPT_STRUCT(di_include,
 
 struct undefined {};
 
+
+struct stationary : boost::noncopyable
+{
+    explicit stationary(int i) : val{i} {}
+    // TODO: fix unneeded self move in alternative
+    stationary& operator=(stationary&&)
+    { std::abort(); return *this; }
+    stationary& operator=(int i) { val = i; return *this; }
+
+    int val;
+};
+
+
 int
 main()
 {
@@ -50,6 +63,7 @@ main()
     using boost::spirit::x3::unused_type;
     using boost::spirit::x3::unused;
     using boost::spirit::x3::omit;
+    using boost::spirit::x3::eps;
 
 
     {
@@ -226,6 +240,14 @@ main()
         BOOST_TEST(test_attr("long=ABC", pair, attr_));
         BOOST_TEST(boost::get<long>(&boost::fusion::front(attr_)) != nullptr);
         BOOST_TEST(boost::get<char>(&boost::fusion::front(attr_)) == nullptr);
+    }
+
+    { // ensure no unneded synthesization, copying and moving occured
+        auto p = '{' >> int_ >> '}';
+
+        stationary st { 0 };
+        BOOST_TEST(test_attr("{42}", p | eps | p, st));
+        BOOST_TEST_EQ(st.val, 42);
     }
 
     return boost::report_errors();

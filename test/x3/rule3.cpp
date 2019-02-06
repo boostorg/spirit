@@ -28,6 +28,16 @@ struct f
     }
 };
 
+
+struct stationary : boost::noncopyable
+{
+    explicit stationary(int i) : val{i} {}
+    stationary& operator=(int i) { val = i; return *this; }
+
+    int val;
+};
+
+
 int main()
 {
     using spirit_test::test_attr;
@@ -36,6 +46,7 @@ int main()
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::lit;
+    using boost::spirit::x3::int_;
     using boost::spirit::x3::eps;
     using boost::spirit::x3::unused_type;
 
@@ -77,6 +88,15 @@ int main()
                 "Attribute must not be synthesized");
         })];
         BOOST_TEST(test("", r));
+    }
+
+    { // ensure no unneded synthesization, copying and moving occured
+        auto a = rule<class a_r, stationary>{} = '{' >> int_ >> '}';
+        auto b = rule<class b_r, stationary>{} = a;
+
+        stationary st { 0 };
+        BOOST_TEST(test_attr("{42}", b, st));
+        BOOST_TEST_EQ(st.val, 42);
     }
 
     return boost::report_errors();
