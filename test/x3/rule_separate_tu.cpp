@@ -26,7 +26,9 @@ int main()
     }
 
     {
-        int i;
+        long i;
+        static_assert(!std::is_same<decltype(i), used_attr::grammar_type::attribute_type>::value,
+            "ensure we have instantiated the rule with a different attribute type");
         BOOST_TEST(test_attr("123", used_attr::grammar, i));
         BOOST_TEST_EQ(i, 123);
         BOOST_TEST(test_attr(" 42", used_attr::grammar, i, used_attr::skipper));

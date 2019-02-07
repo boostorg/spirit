@@ -114,7 +114,17 @@ namespace boost { namespace spirit { namespace x3
             static_assert(has_attribute,
                 "The rule does not have an attribute. Check your parser.");
 
-            return parse_rule(*this, first, last, context, attr);
+            using transform = traits::transform_attribute<
+                Attribute_, attribute_type, parser_id>;
+
+            using transform_attr = typename transform::type;
+            transform_attr attr_ = transform::pre(attr);
+
+            if (parse_rule(*this, first, last, context, attr_)) {
+                transform::post(attr, std::forward<transform_attr>(attr_));
+                return true;
+            }
+            return false;
         }
 
         template <typename Iterator, typename Context>
