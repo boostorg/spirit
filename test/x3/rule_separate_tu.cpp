@@ -10,13 +10,28 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include "test.hpp"
+
 int main()
 {
-    char const* const s = "*", * const end = s + std::strlen(s);
+    using spirit_test::test;
+    using spirit_test::test_attr;
 
-    BOOST_TEST(parse(s, end, unused_attr::skipper));
-    BOOST_TEST(parse(s, end, unused_attr::grammar));
-    BOOST_TEST(phrase_parse(s, end, unused_attr::grammar, unused_attr::skipper));
+    {
+        BOOST_TEST(test("*", unused_attr::skipper));
+        BOOST_TEST(test("#", unused_attr::skipper2));
+        BOOST_TEST(test("==", unused_attr::grammar));
+        BOOST_TEST(test("*=*=", unused_attr::grammar, unused_attr::skipper));
+        BOOST_TEST(test("#=#=", unused_attr::grammar, unused_attr::skipper2));
+    }
+
+    {
+        int i;
+        BOOST_TEST(test_attr("123", used_attr::grammar, i));
+        BOOST_TEST_EQ(i, 123);
+        BOOST_TEST(test_attr(" 42", used_attr::grammar, i, used_attr::skipper));
+        BOOST_TEST_EQ(i, 42);
+    }
 
     return boost::report_errors();
 }
