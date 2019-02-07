@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace x3
         typedef ID id;
         typedef Attribute attribute_type;
         static bool const has_attribute =
-            !is_same<Attribute, unused_type>::value;
+            !std::is_same<std::remove_const_t<Attribute>, unused_type>::value;
         static bool const handles_container =
             traits::is_container<Attribute>::value;
         static bool const force_attribute = force_attribute_;
@@ -111,7 +111,22 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
+            static_assert(has_attribute,
+                "The rule does not have an attribute. Check your parser.");
+
             return parse_rule(*this, first, last, context, attr);
+        }
+
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator const& last
+            , Context const& context, unused_type, unused_type) const
+        {
+            static_assert(!has_attribute,
+                "The rule requires an input attribute. Check your parser.");
+
+            // make sure we pass exactly the rule attribute type
+            attribute_type no_attr;
+            return parse_rule(*this, first, last, context, no_attr);
         }
 
         char const* name;
@@ -140,42 +155,12 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-    namespace detail
-    {
-        template <typename Attribute>
-        struct rule_attr_deducer
-        {
-            template <typename PassedAttribute>
-            using deduce = PassedAttribute&;
-        };
-
-        template <typename PassedAttribute>
-        struct rule_requires_unused_attribute
-        {
-            static_assert(std::is_same<std::remove_cv_t<PassedAttribute>, unused_type>::value,
-                "The rule does not syntesize an attribute");
-
-            static int constexpr dummy = 1; // just a dummy member, used to force instantiation
-        };
-
-        template <>
-        struct rule_attr_deducer<unused_type>
-        {
-            template <typename PassedAttribute, int = rule_requires_unused_attribute<PassedAttribute>::dummy>
-            using deduce = PassedAttribute;
-        };
-
-        template <typename Rule, typename Attribute = typename Rule::attribute_type>
-        using deduce_rule_attr = typename rule_attr_deducer<typename Rule::attribute_type>::template deduce<Attribute>;
-    }
-
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
     template <typename Iterator, typename Context, typename Attribute>          \
     bool parse_rule(                                                            \
         rule_type rule_                                                         \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context                                                  \
-      , ::boost::spirit::x3::detail::deduce_rule_attr<rule_type, Attribute> attr); \
+      , Context const& context, Attribute& attr);                               \
     /***/
 
 #define BOOST_SPIRIT_DECLARE(...) BOOST_PP_SEQ_FOR_EACH(                        \
@@ -189,8 +174,7 @@ namespace boost { namespace spirit { namespace x3
     inline bool parse_rule(                                                     \
         BOOST_PP_CAT(rule_name, _synonym) /* rule_ */                           \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context                                                  \
-      , ::boost::spirit::x3::detail::deduce_rule_attr<BOOST_PP_CAT(rule_name, _synonym), Attribute> attr) \
+      , Context const& context, Attribute& attr)                                \
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
@@ -203,8 +187,7 @@ namespace boost { namespace spirit { namespace x3
     inline bool parse_rule(                                                     \
         decltype(rule_name) /* rule_ */                                         \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context                                                  \
-      , ::boost::spirit::x3::detail::deduce_rule_attr<decltype(rule_name), Attribute> attr) \
+      , Context const& context, Attribute& attr)                                \
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
@@ -221,8 +204,7 @@ namespace boost { namespace spirit { namespace x3
     template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \
         rule_type rule_                                                         \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context                                                  \
-      , ::boost::spirit::x3::detail::deduce_rule_attr<rule_type> attr);         \
+      , Context const& context, rule_type::attribute_type&);                    \
     /***/
 
 
