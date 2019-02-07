@@ -38,6 +38,19 @@ struct stationary : boost::noncopyable
 };
 
 
+namespace check_stationary {
+
+boost::spirit::x3::rule<class a_r, stationary> const a;
+boost::spirit::x3::rule<class b_r, stationary> const b;
+
+auto const a_def = '{' >> boost::spirit::x3::int_ >> '}';
+auto const b_def = a;
+
+BOOST_SPIRIT_DEFINE(a, b)
+
+}
+
+
 int main()
 {
     using spirit_test::test_attr;
@@ -46,7 +59,6 @@ int main()
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::lit;
-    using boost::spirit::x3::int_;
     using boost::spirit::x3::eps;
     using boost::spirit::x3::unused_type;
 
@@ -91,11 +103,8 @@ int main()
     }
 
     { // ensure no unneded synthesization, copying and moving occured
-        auto a = rule<class a_r, stationary>{} = '{' >> int_ >> '}';
-        auto b = rule<class b_r, stationary>{} = a;
-
         stationary st { 0 };
-        BOOST_TEST(test_attr("{42}", b, st));
+        BOOST_TEST(test_attr("{42}", check_stationary::b, st));
         BOOST_TEST_EQ(st.val, 42);
     }
 
