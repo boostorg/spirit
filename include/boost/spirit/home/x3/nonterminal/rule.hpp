@@ -166,11 +166,11 @@ namespace boost { namespace spirit { namespace x3
     };
 
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
-    template <typename Iterator, typename Context, typename Attribute>          \
+    template <typename Iterator, typename Context>                              \
     bool parse_rule(                                                            \
         rule_type rule_                                                         \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context, Attribute& attr);                               \
+      , Context const& context, rule_type::attribute_type& attr);               \
     /***/
 
 #define BOOST_SPIRIT_DECLARE(...) BOOST_PP_SEQ_FOR_EACH(                        \
@@ -180,11 +180,11 @@ namespace boost { namespace spirit { namespace x3
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1910)
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     using BOOST_PP_CAT(rule_name, _synonym) = decltype(rule_name);              \
-    template <typename Iterator, typename Context, typename Attribute>          \
+    template <typename Iterator, typename Context>                              \
     inline bool parse_rule(                                                     \
         BOOST_PP_CAT(rule_name, _synonym) /* rule_ */                           \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context, Attribute& attr)                                \
+      , Context const& context, BOOST_PP_CAT(rule_name, _synonym)::attribute_type& attr) \
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
@@ -193,11 +193,11 @@ namespace boost { namespace spirit { namespace x3
     /***/
 #else
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
-    template <typename Iterator, typename Context, typename Attribute>          \
+    template <typename Iterator, typename Context>                              \
     inline bool parse_rule(                                                     \
         decltype(rule_name) /* rule_ */                                         \
       , Iterator& first, Iterator const& last                                   \
-      , Context const& context, Attribute& attr)                                \
+      , Context const& context, decltype(rule_name)::attribute_type& attr)      \
     {                                                                           \
         using boost::spirit::x3::unused;                                        \
         static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
@@ -211,7 +211,7 @@ namespace boost { namespace spirit { namespace x3
     /***/
 
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
-    template bool parse_rule<Iterator, Context, rule_type::attribute_type>(     \
+    template bool parse_rule<Iterator, Context>(                                \
         rule_type rule_                                                         \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, rule_type::attribute_type&);                    \
