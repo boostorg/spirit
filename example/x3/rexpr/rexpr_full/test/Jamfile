@@ -15,7 +15,9 @@ project
       <c++-template-depth>300
    ;
 
+path-constant TEST_FILES : test_files ;
+
 unit-test parse_rexpr_test
    : parse_rexpr_test.cpp
-   : <testing.arg>"test_files"
+   : <testing.arg>"$(TEST_FILES)"
    ;
