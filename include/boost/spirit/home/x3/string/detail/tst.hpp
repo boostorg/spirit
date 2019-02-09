@@ -9,7 +9,6 @@
 
 #include <boost/call_traits.hpp>
 #include <boost/assert.hpp>
-#include <iterator> // for std::iterator_traits
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -111,9 +110,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             tst_node** pp = &start;
             for (;;)
             {
-                typename
-                    std::iterator_traits<Iterator>::value_type
-                c = *first;
+                auto c = *first;
 
                 if (*pp == 0)
                     *pp = alloc->new_node(c);
@@ -147,9 +144,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             if (p == 0 || first == last)
                 return;
 
-            typename
-                std::iterator_traits<Iterator>::value_type
-            c = *first;
+            auto c = *first;
 
             if (c == p->id)
             {
