@@ -16,7 +16,6 @@ environment:
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 64, TOOLSET: 'msvc-12.0' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 32, TOOLSET: 'msvc-11.0' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 32, TOOLSET: 'msvc-10.0' }
-    - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 32, TOOLSET: 'msvc-9.0' }
 
 cache:
   - '%USERPROFILE%\clcache'
