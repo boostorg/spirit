@@ -50,7 +50,7 @@
 [def __caution__                [$./images/caution.png]]
 [def __danger__                 [$./images/alert.png]]
 
-[def __x3__                     /spirit_x3/]
+[def __x3__                     /Spirit.X3/]
 
 [def __sd_start_stop__          [$./images/start_stop.png]]
 [def __sd_terminals__           [$./images/terminal.png]]
@@ -143,17 +143,17 @@
 [def __x3_hold__                    [/ link spirit_x3.reference.directive.hold] `hold`]
 
 [/ operator]
-[def __x3_alternative__             [/ link spirit_x3.reference.operator.alternative] `a | b`]
-[def __x3_and_predicate__           [/ link spirit_x3.reference.operator.and_predicate] `&a`]
-[def __x3_difference__              [/ link spirit_x3.reference.operator.difference] `a - b`]
-[def __x3_expect__                  [/ link spirit_x3.reference.operator.expect] `a > b`]
+[def __x3_alternative__             [/ link spirit_x3.reference.operator.alternative] Alternative]
+[def __x3_and_predicate__           [/ link spirit_x3.reference.operator.and_predicate] And Predicate]
+[def __x3_difference__              [/ link spirit_x3.reference.operator.difference] Difference]
+[def __x3_expect__                  [/ link spirit_x3.reference.operator.expect] Expectation operator]
 [def __x3_expectation_failure__     [/ link spirit_x3.reference.operator.expect.expectation_failure] `expectation_failure`]
-[def __x3_kleene__                  [/ link spirit_x3.reference.operator.kleene] `*a`]
-[def __x3_list__                    [/ link spirit_x3.reference.operator.list] `a % b`]
-[def __x3_not_predicate__           [/ link spirit_x3.reference.operator.not_predicate] `!a`]
-[def __x3_optional__                [/ link spirit_x3.reference.operator.optional] `-a`]
-[def __x3_plus__                    [/ link spirit_x3.reference.operator.plus] `+a`]
-[def __x3_sequence__                [/ link spirit_x3.reference.operator.sequence] `a >> b`]
+[def __x3_kleene__                  [/ link spirit_x3.reference.operator.kleene] Kleene]
+[def __x3_list__                    [/ link spirit_x3.reference.operator.list] List]
+[def __x3_not_predicate__           [/ link spirit_x3.reference.operator.not_predicate] Not Predicate]
+[def __x3_optional__                [/ link spirit_x3.reference.operator.optional] Optional]
+[def __x3_plus__                    [/ link spirit_x3.reference.operator.plus] Plus]
+[def __x3_sequence__                [/ link spirit_x3.reference.operator.sequence] Sequence]
 
 [def __x3_stream__                  [/ link spirit_x3.reference.stream.stream] `stream`]
 
