@@ -28,7 +28,6 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/is_view.hpp>
 #include <boost/fusion/include/mpl.hpp>
-#include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -931,6 +930,15 @@ namespace boost { namespace spirit { namespace traits
         // specializations are dispatched via intermediate type.
         template <typename Exposed, typename Transformed, typename Domain>
         struct transform_attribute_base;
+
+        template <typename Attribute>
+        struct synthesize_attribute
+        {
+            typedef Attribute type;
+            static Attribute pre(unused_type) { return Attribute(); }
+            static void post(unused_type, Attribute const&) {}
+            static void fail(unused_type) {}
+        };
     }
     ///////////////////////////////////////////////////////////////////////////
     //  transform_attribute
@@ -939,11 +947,25 @@ namespace boost { namespace spirit { namespace traits
     //  attributes. This template can be used as a customization point, where
     //  the user is able specify specific transformation rules for any attribute
     //  type.
+    //
+    //  Note: the transformations involving unused_type are internal details
+    //  and may be subject to change at any time.
+    //
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed, typename Domain
       , typename Enable/* = void*/>
     struct transform_attribute
       : detail::transform_attribute_base<Exposed, Transformed, Domain>
+    {};
+
+    template <typename Transformed, typename Domain>
+    struct transform_attribute<unused_type, Transformed, Domain>
+      : detail::synthesize_attribute<Transformed>
+    {};
+
+    template <typename Transformed, typename Domain>
+    struct transform_attribute<unused_type const, Transformed, Domain>
+      : detail::synthesize_attribute<Transformed>
     {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -960,71 +982,6 @@ namespace boost { namespace spirit { namespace traits
     {
         return transform_attribute<Exposed const, Transformed, Domain>::pre(attr);
     }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // make_attribute
-    //
-    // All parsers and generators have specific attribute types.
-    // Spirit parsers and generators are passed an attribute; these are either
-    // references to the expected type, or an unused_type -- to flag that we do
-    // not care about the attribute. For semantic actions, however, we need to
-    // have a real value to pass to the semantic action. If the client did not
-    // provide one, we will have to synthesize the value. This class takes care
-    // of that. *Note that this behavior has changed. From Boost 1.47, semantic
-    // actions always take in the passed attribute as-is if the PP constant:
-    // BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT is defined.
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute, typename ActualAttribute>
-    struct make_attribute
-    {
-        typedef typename remove_const<Attribute>::type attribute_type;
-        typedef typename
-            mpl::if_<
-                is_same<typename remove_const<ActualAttribute>::type, unused_type>
-              , attribute_type
-              , ActualAttribute&>::type
-        type;
-
-        typedef typename
-            mpl::if_<
-                is_same<typename remove_const<ActualAttribute>::type, unused_type>
-              , attribute_type
-              , ActualAttribute>::type
-        value_type;
-
-        static Attribute call(unused_type)
-        {
-             // synthesize the attribute/parameter
-            return boost::get(value_initialized<attribute_type>());
-        }
-
-        template <typename T>
-        static T& call(T& value)
-        {
-            return value; // just pass the one provided
-        }
-    };
-
-    template <typename Attribute, typename ActualAttribute>
-    struct make_attribute<Attribute&, ActualAttribute>
-      : make_attribute<Attribute, ActualAttribute>
-    {};
-
-    template <typename Attribute, typename ActualAttribute>
-    struct make_attribute<Attribute const&, ActualAttribute>
-      : make_attribute<Attribute const, ActualAttribute>
-    {};
-
-    template <typename ActualAttribute>
-    struct make_attribute<unused_type, ActualAttribute>
-    {
-        typedef unused_type type;
-        typedef unused_type value_type;
-        static unused_type call(unused_type)
-        {
-            return unused;
-        }
-    };
 
     ///////////////////////////////////////////////////////////////////////////
     // swap_impl

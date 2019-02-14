@@ -171,18 +171,13 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 >
             context_type;
 
-            // prepare attribute
-            typedef traits::make_attribute<
-                subrule_attr_type, Attribute> make_attribute;
-
             // do down-stream transformation, provides attribute for 
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, subrule_attr_type, spirit::qi::domain> 
+                Attribute, subrule_attr_type, spirit::qi::domain> 
             transform;
 
-            typename make_attribute::type made_attr = make_attribute::call(attr);
-            typename transform::type attr_ = transform::pre(made_attr);
+            typename transform::type attr_ = transform::pre(attr);
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
@@ -225,18 +220,13 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 >
             context_type;
 
-            // prepare attribute
-            typedef traits::make_attribute<
-                subrule_attr_type, Attribute> make_attribute;
-
             // do down-stream transformation, provides attribute for 
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, subrule_attr_type, spirit::qi::domain> 
+                Attribute, subrule_attr_type, spirit::qi::domain> 
             transform;
 
-            typename make_attribute::type made_attr = make_attribute::call(attr);
-            typename transform::type attr_ = transform::pre(made_attr);
+            typename transform::type attr_ = transform::pre(attr);
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
