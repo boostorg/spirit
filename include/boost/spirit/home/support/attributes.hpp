@@ -45,6 +45,7 @@
 #include <boost/variant.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/config.hpp>
+#include <iterator> // for std::iterator_traits, std::distance
 #include <vector>
 #include <utility>
 #include <ios>
@@ -559,12 +560,12 @@ namespace boost { namespace spirit { namespace traits
     template <typename Iterator>
     struct attribute_size<iterator_range<Iterator> >
     {
-        typedef typename boost::detail::iterator_traits<Iterator>::
+        typedef typename std::iterator_traits<Iterator>::
             difference_type type;
 
         static type call(iterator_range<Iterator> const& r)
         {
-            return boost::detail::distance(r.begin(), r.end());
+            return std::distance(r.begin(), r.end());
         }
     };
 
@@ -923,6 +924,14 @@ namespace boost { namespace spirit { namespace traits
         type;
     };
 
+    namespace detail {
+        // Domain-agnostic class template partial specializations and
+        // type agnostic domain partial specializations are ambious.
+        // To resolve the ambiguity type agnostic domain partial
+        // specializations are dispatched via intermediate type.
+        template <typename Exposed, typename Transformed, typename Domain>
+        struct transform_attribute_base;
+    }
     ///////////////////////////////////////////////////////////////////////////
     //  transform_attribute
     //
@@ -933,7 +942,9 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed, typename Domain
       , typename Enable/* = void*/>
-    struct transform_attribute;
+    struct transform_attribute
+      : detail::transform_attribute_base<Exposed, Transformed, Domain>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Domain, typename Transformed, typename Exposed>

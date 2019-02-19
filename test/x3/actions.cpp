@@ -9,6 +9,9 @@
 #include <cstring>
 #include <functional>
 
+#include "test.hpp"
+
+
 namespace x3 = boost::spirit::x3;
 
 int x = 0;
@@ -49,8 +52,21 @@ struct setnext
     char& next;
 };
 
+
+struct stationary : boost::noncopyable
+{
+    explicit stationary(int i) : val{i} {}
+    stationary& operator=(int i) { val = i; return *this; }
+
+    int val;
+};
+
+
 int main()
 {
+    using spirit_test::test;
+    using spirit_test::test_attr;
+
     using x3::int_;
 
     {
@@ -78,6 +94,14 @@ int main()
        BOOST_TEST(x3::phrase_parse(input.begin(), input.end(),
           x3::int_[fail] | x3::digit[setnext(next)], x3::space));
        BOOST_TEST(next == '1');
+    }
+
+    { // ensure no unneded synthesization, copying and moving occured
+        auto p = '{' >> int_ >> '}';
+
+        stationary st { 0 };
+        BOOST_TEST(test_attr("{42}", p[([]{})], st));
+        BOOST_TEST_EQ(st.val, 42);
     }
 
     return boost::report_errors();

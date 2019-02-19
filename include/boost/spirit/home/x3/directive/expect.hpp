@@ -11,13 +11,14 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
+#include <boost/config.hpp> // for BOOST_SYMBOL_VISIBLE
 #include <boost/throw_exception.hpp>
 #include <stdexcept>
 
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Iterator>
-    struct expectation_failure : std::runtime_error
+    struct BOOST_SYMBOL_VISIBLE expectation_failure : std::runtime_error
     {
     public:
 
@@ -25,7 +26,7 @@ namespace boost { namespace spirit { namespace x3
           : std::runtime_error("boost::spirit::x3::expectation_failure")
           , where_(where), which_(which)
         {}
-        ~expectation_failure() throw() {}
+        ~expectation_failure() {}
 
         std::string which() const { return which_; }
         Iterator const& where() const { return where_; }

@@ -49,7 +49,7 @@ namespace boost { namespace spirit
           : from(src.name()), to(dest.name())
         {}
 
-        virtual const char* what() const throw() { return "bad any cast"; }
+        virtual const char* what() const BOOST_NOEXCEPT_OR_NOTHROW { return "bad any cast"; }
 
         const char* from;
         const char* to;
@@ -327,6 +327,11 @@ namespace boost { namespace spirit
             return assign(x);
         }
 #endif
+        // copy assignment operator
+        basic_hold_any& operator=(basic_hold_any const& x)
+        {
+            return assign(x);
+        }
 
         // utility functions
         basic_hold_any& swap(basic_hold_any& x)

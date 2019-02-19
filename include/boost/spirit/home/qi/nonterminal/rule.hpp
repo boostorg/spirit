@@ -12,10 +12,12 @@
 #endif
 
 #include <boost/assert.hpp>
+#include <boost/static_assert.hpp>
 #include <boost/config.hpp>
 #include <boost/function.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 #include <boost/type_traits/is_same.hpp>
 
 #include <boost/fusion/include/vector.hpp>
@@ -275,6 +277,14 @@ namespace boost { namespace spirit { namespace qi
           , Context& /*context*/, Skipper const& skipper
           , Attribute& attr_param) const
         {
+            BOOST_STATIC_ASSERT_MSG((is_same<skipper_type, unused_type>::value ||
+                !is_same<Skipper, unused_type>::value),
+                "The rule was instantiated with a skipper type but you have not pass any. "
+                "Did you use `parse` instead of `phrase_parse`?");
+            BOOST_STATIC_ASSERT_MSG(
+                (is_convertible<Skipper const&, skipper_type>::value),
+                "The passed skipper is not compatible/convertible to one "
+                "that the rule was instantiated with");
             if (f)
             {
                 // do a preskip if this is an implied lexeme
@@ -321,6 +331,14 @@ namespace boost { namespace spirit { namespace qi
           , Context& caller_context, Skipper const& skipper
           , Attribute& attr_param, Params const& params) const
         {
+            BOOST_STATIC_ASSERT_MSG((is_same<skipper_type, unused_type>::value ||
+                !is_same<Skipper, unused_type>::value),
+                "The rule was instantiated with a skipper type but you have not pass any. "
+                "Did you use `parse` instead of `phrase_parse`?");
+            BOOST_STATIC_ASSERT_MSG(
+                (is_convertible<Skipper const&, skipper_type>::value),
+                "The passed skipper is not compatible/convertible to one "
+                "that the rule was instantiated with");
             if (f)
             {
                 // do a preskip if this is an implied lexeme

@@ -15,7 +15,6 @@
 #pragma once
 #endif
 
-#include <boost/detail/iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
@@ -31,7 +30,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
-#include <boost/integer_traits.hpp>
+#include <iterator> // for std::iterator_traits
 
 #if defined(BOOST_MSVC)
 # pragma warning(push)
@@ -114,12 +113,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
     };
-    
-    template <typename T, T Val>
-    struct constexpr_int
-    {
-        BOOST_STATIC_CONSTEXPR T value = Val; 
-    };
 
     ///////////////////////////////////////////////////////////////////////////
     //  positive_accumulator/negative_accumulator: Accumulator policies for
@@ -140,17 +133,17 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
-            typedef constexpr_int<T, boost::integer_traits<T>::const_max> max;
-            typedef constexpr_int<T, max::value / Radix> val;
+            T const max = (std::numeric_limits<T>::max)();
+            T const val = max / Radix;
 
-            if (n > val::value)
+            if (n > val)
                 return false;
 
             n *= Radix;
 
             // Ensure n += digit will not overflow
             const int digit = radix_traits<Radix>::digit(ch);
-            if (n > max::value - digit)
+            if (n > max - digit)
                 return false;
 
             n += static_cast<T>(digit);
@@ -172,17 +165,17 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
-            typedef constexpr_int<T, boost::integer_traits<T>::const_min> min;
-            typedef constexpr_int<T, (min::value + 1) / T(Radix)> val;
+            T const min = (std::numeric_limits<T>::min)();
+            T const val = (min + 1) / T(Radix);
 
-            if (n < val::value)
+            if (n < val)
                 return false;
 
             n *= Radix;
 
             // Ensure n -= digit will not underflow
             int const digit = radix_traits<Radix>::digit(ch);
-            if (n < min::value + digit)
+            if (n < min + digit)
                 return false;
 
             n -= static_cast<T>(digit);
@@ -200,9 +193,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         inline static bool
         call(Char ch, std::size_t count, T& n, mpl::true_)
         {
-            typedef constexpr_int<std::size_t, digits_traits<T, Radix>::value - 1> overflow_free;
+            std::size_t const overflow_free = digits_traits<T, Radix>::value - 1;
 
-            if (!AlwaysCheckOverflow && (count < overflow_free::value))
+            if (!AlwaysCheckOverflow && (count < overflow_free))
             {
                 Accumulator::add(n, ch, mpl::false_());
             }
@@ -318,9 +311,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, MaxDigits, Accumulate> extractor;
-            typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
-            char_type;
+            typedef typename std::iterator_traits<Iterator>::value_type char_type;
 
             Iterator it = first;
             std::size_t leading_zeros = 0;
@@ -423,9 +414,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, -1, Accumulate> extractor;
-            typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
-            char_type;
+            typedef typename std::iterator_traits<Iterator>::value_type char_type;
 
             Iterator it = first;
             std::size_t count = 0;

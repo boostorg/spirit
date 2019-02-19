@@ -3,10 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//#define KARMA_FAIL_COMPILATION
-
-#define SPIRIT_ARGUMENTS_LIMIT 10
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -19,6 +15,10 @@
 #include <boost/spirit/include/karma_format_attr.hpp>
 
 #include "test_manip_attr.hpp"
+
+#if SPIRIT_ARGUMENTS_LIMIT < 10
+# error SPIRIT_ARGUMENTS_LIMIT must be at least 10 to run the test
+#endif
 
 using spirit_test::test;
 using spirit_test::test_delimited;

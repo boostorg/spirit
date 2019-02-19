@@ -375,7 +375,7 @@ std::vector<std::string>::const_iterator end = trace_vector.get_output().end();
 std::vector<std::string>::const_iterator begin = trace_vector.get_output().begin();
 char const *expected = first[0];
 
-    for (size_t i = 0; i < cnt; expected = first[++i])
+    for (size_t i = 0; i < cnt - 1; expected = first[++i])
     {
         if (std::find(begin, end, std::string(expected)) == end)
             std::cerr << "node in question: " << expected << std::endl;

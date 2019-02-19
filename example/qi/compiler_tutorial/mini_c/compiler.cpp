@@ -135,12 +135,12 @@ namespace client { namespace code_gen
 
                 case op_load:
                     line += "      op_load     ";
-                    line += boost::lexical_cast<std::string>(locals[*pc++]);
+                    line += locals[*pc++];
                     break;
 
                 case op_store:
                     line += "      op_store    ";
-                    line += boost::lexical_cast<std::string>(locals[*pc++]);
+                    line += locals[*pc++];
                     break;
 
                 case op_int:
@@ -400,7 +400,7 @@ namespace client { namespace code_gen
             return false;
         (*current)[skip] = current->size()-skip;    // now we know where to jump to (after the if branch)
 
-        if (x.else_)                                // We got an alse
+        if (x.else_)                                // We got an else
         {
             (*current)[skip] += 2;                  // adjust for the "else" jump
             current->op(op_jump, 0);                // we shall fill this (0) in later

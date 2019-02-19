@@ -19,8 +19,6 @@
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
 
 #include "test.hpp"
 

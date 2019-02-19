@@ -3,7 +3,7 @@ clone_depth: 50
 environment:
   global:
     PROJECT: libs\spirit
-    TEST_LINK_DEPS: date_time,filesystem,regex,system
+    TEST_LINK_DEPS: date_time,filesystem,regex,thread
     APPVEYOR_SAVE_CACHE_ON_ERROR: true
     CLCACHE_HARDLINK: 1
     APPVEYOR_CACHE_ENTRY_ZIP_ARGS: "-t7z -m0=lzma2 -mx=3 -md=32m -ms=on"
@@ -16,7 +16,6 @@ environment:
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 64, TOOLSET: 'msvc-12.0' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 32, TOOLSET: 'msvc-11.0' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 32, TOOLSET: 'msvc-10.0' }
-    - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 32, TOOLSET: 'msvc-9.0' }
 
 cache:
   - '%USERPROFILE%\clcache'
@@ -35,7 +34,7 @@ before_build:
       # Creating %USERPROFILE%/user-config.jam file
       @'
       
-      import feature os regex toolset ;
+      import feature os regex toolset pch ;
       
       # clcache
       local toolset = [ regex.split [ os.environ TOOLSET ] "-" ] ;
@@ -53,6 +52,9 @@ before_build:
           -wd4459  # declaration of 'varname' hides global declaration
         : unchecked ;
       
+      # A subfeature that tells Spirit tests to use PCH
+      feature.subfeature pch on : version : spirit : optional propagated incidental ;
+      
       '@ | sc "$env:USERPROFILE/user-config.jam"
 
   - set BRANCH=%APPVEYOR_REPO_BRANCH%
@@ -67,8 +69,8 @@ before_build:
   - ps: |
       $git = Get-Command git | Select-Object -ExpandProperty Definition
       $git = Split-Path -Parent $git | Split-Path -Parent
-      $git = [io.path]::combine($git, 'mingw64', 'bin', 'git.exe')
-      (Get-Content -Raw $git).Replace("--depth=1","--depth=9") | Set-Content $git
+      Get-ChildItem -Path "$git\mingw64\*" -Include *.exe -Recurse |
+          ForEach-Object -Process {(Get-Content -Raw $_).Replace("--depth=1","--depth=9") | Set-Content $_}
 
   # Checkout Boost
   - git clone -j10 --branch=%BRANCH% --depth=1 --quiet
@@ -82,7 +84,7 @@ before_build:
   - mklink /J %APPVEYOR_BUILD_FOLDER% %PROJECT%
 
   # Install clcache
-  - pip install git+https://github.com/frerich/clcache.git
+  - pip install clcache
   - clcache -M %CLCACHE_CACHESIZE%
   # Run clcache-server
   - set CLCACHE_SERVER=1
@@ -107,6 +109,6 @@ build_script:
 test_script:
   - set B2_ARGS=%B2_ARGS% warnings=on known-warnings=suppress warnings-as-errors=on
   - echo B2 argumets %B2_ARGS%
-  - b2 %B2_ARGS% %PROJECT%\classic\test
-  - b2 %B2_ARGS% %PROJECT%\repository\test
-  - b2 %B2_ARGS% %PROJECT%\test
+  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\classic\test
+  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\repository\test
+  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\test

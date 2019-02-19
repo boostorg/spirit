@@ -8,6 +8,9 @@
 =============================================================================*/
 // vim:ts=4:sw=4:et
 
+#if defined(BOOST_BUILD_PCH_ENABLED) && defined(BOOST_SPIRIT_THREADSAFE)
+# error BOOST_SPIRIT_THREADSAFE has to be undefined for this test
+#endif
 #undef BOOST_SPIRIT_THREADSAFE
 #include <boost/spirit/home/classic/core/non_terminal/impl/object_with_id.ipp>
 #include <boost/detail/lightweight_test.hpp>

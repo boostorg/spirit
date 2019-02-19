@@ -151,20 +151,6 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <typename T>
-    inline bool
-    is_equal_to_one(T const& value)
-    {
-        return value == 1.0;
-    }
-
-    inline bool
-    is_equal_to_one(unused_type)
-    {
-        // no-op for unused_type
-        return false;
-    }
-
-    template <typename T>
     struct real_accumulator : mpl::identity<T> {};
 
     template <>
@@ -234,6 +220,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 // to zero (0) only if we already got a number.
                 if (p.parse_frac_n(first, last, acc_n, frac_digits))
                 {
+                    BOOST_ASSERT(frac_digits >= 0);
                 }
                 else if (!got_a_number || !p.allow_trailing_dot)
                 {
@@ -286,29 +273,15 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     // by resetting 'first' prior to the exponent prefix (e|E)
                     first = e_pos;
                     // Scale the number by -frac_digits.
-                    traits::scale(-frac_digits, n, acc_n);
+                    bool r = traits::scale(-frac_digits, n, acc_n);
+                    BOOST_VERIFY(r);
                 }
             }
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
-                traits::scale(-frac_digits, n, acc_n);
-            }
-            else if (traits::is_equal_to_one(acc_n))
-            {
-                // There is a chance of having to parse one of the 1.0#...
-                // styles some implementations use for representing NaN or Inf.
-
-                // Check whether the number to parse is a NaN or Inf
-                if (p.parse_nan(first, last, n) ||
-                    p.parse_inf(first, last, n))
-                {
-                    // If we got a negative sign, negate the number
-                    traits::assign_to(traits::negate(neg, n), attr);
-                    return true;    // got a NaN or Inf, return immediately
-                }
-
-                n = static_cast<T>(acc_n);
+                bool r = traits::scale(-frac_digits, n, acc_n);
+                BOOST_VERIFY(r);
             }
             else
             {

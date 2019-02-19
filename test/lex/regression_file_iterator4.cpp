@@ -8,8 +8,6 @@
 // if a token matched at the beginning of a line is discarded using 
 // lex::pass_fail.
 
-// #define BOOST_SPIRIT_LEXERTL_DEBUG 1
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -17,11 +15,8 @@
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/include/phoenix.hpp>
-
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;
-namespace phoenix = boost::phoenix;
 
 typedef spirit::classic::position_iterator2<
     spirit::multi_pass<std::istreambuf_iterator<char> >

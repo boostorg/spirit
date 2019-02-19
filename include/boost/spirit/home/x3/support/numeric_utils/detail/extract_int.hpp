@@ -23,7 +23,6 @@
 #include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/seq/elem.hpp>
 
-#include <boost/detail/iterator.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/type_traits/is_integral.hpp>
@@ -33,6 +32,8 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
+
+#include <iterator> // for std::iterator_traits
 
 #if !defined(SPIRIT_NUMERICS_LOOP_UNROLL)
 # define SPIRIT_NUMERICS_LOOP_UNROLL 3
@@ -132,8 +133,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
-            static T const max = (std::numeric_limits<T>::max)();
-            static T const val = max / Radix;
+            T const max = (std::numeric_limits<T>::max)();
+            T const val = max / Radix;
             if (n > val)
                 return false;
 
@@ -163,8 +164,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
-            static T const min = (std::numeric_limits<T>::min)();
-            static T const val = (min + 1) / T(Radix);
+            T const min = (std::numeric_limits<T>::min)();
+            T const val = (min + 1) / T(Radix);
             if (n < val)
                 return false;
 
@@ -190,7 +191,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool
         call(Char ch, std::size_t count, T& n, mpl::true_)
         {
-            static std::size_t const
+            std::size_t constexpr
                 overflow_free = digits_traits<T, Radix>::value - 1;
 
             if (count < overflow_free)
@@ -296,7 +297,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, MaxDigits> extractor;
             typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
+                std::iterator_traits<Iterator>::value_type
             char_type;
 
             Iterator it = first;
@@ -394,7 +395,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, -1> extractor;
             typedef typename
-                boost::detail::iterator_traits<Iterator>::value_type
+                std::iterator_traits<Iterator>::value_type
             char_type;
 
             Iterator it = first;

@@ -165,7 +165,7 @@ namespace client
 
               , end_tag %=
                         "</"
-                    >>  string(_r1)
+                    >>  lit(_r1)
                     >>  '>'
             );
         }
@@ -233,11 +233,11 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::string::const_iterator some = iter+30;
+        std::string::const_iterator some = iter + std::min(30, int(end - iter));
         std::string context(iter, (some>end)?end:some);
         std::cout << "-------------------------\n";
         std::cout << "Parsing failed\n";
-        std::cout << "stopped at: \": " << context << "...\"\n";
+        std::cout << "stopped at: \"" << context << "...\"\n";
         std::cout << "-------------------------\n";
         return 1;
     }

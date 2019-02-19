@@ -9,7 +9,6 @@
 #if !defined(BOOST_SPIRIT_LEXER_NEXT_TOKEN_CONJURE_STATIC_SWITCH_JUL_25_2011_07_03_08)
 #define BOOST_SPIRIT_LEXER_NEXT_TOKEN_CONJURE_STATIC_SWITCH_JUL_25_2011_07_03_08
 
-#include <boost/detail/iterator.hpp>
 #include <boost/spirit/home/support/detail/lexer/char_traits.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////

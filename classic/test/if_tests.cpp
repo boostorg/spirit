@@ -11,12 +11,8 @@
 // Tests for BOOST_SPIRIT_CLASSIC_NS::if_p
 // [28-Dec-2002]
 ////////////////////////////////////////////////////////////////////////////////
-#define qDebug 0
 #include <iostream>
 #include <cstring>
-#if qDebug
-#define BOOST_SPIRIT_DEBUG
-#endif
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_if.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
