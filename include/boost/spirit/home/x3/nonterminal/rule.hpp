@@ -60,9 +60,9 @@ namespace boost { namespace spirit { namespace x3
          *  rule<...>::parse function; hence, no need to repeat
          *  it here.
          */
-        template <typename Iterator, typename Context, typename ActualAttribute>
+        template <typename Iterator, typename Context, typename Attribute_>
         bool parse_no_xform(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, ActualAttribute& attr) const
+          , Context const& context, unused_type, Attribute_& attr) const
         {
             return detail::rule_parser<attribute_type, ID>
                 ::call_rule_definition(
@@ -79,9 +79,9 @@ namespace boost { namespace spirit { namespace x3
          *  by the BOOST_SPIRIT_DEFINE_ macro); 
          *  hence, rule_attr_transform_f must be called to do attribute transformation.
          */
-        template <typename Iterator, typename Context, typename ActualAttribute>
+        template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, ActualAttribute& attr) const
+          , Context const& context, unused_type, Attribute_& attr) const
         {
             auto parser_f=[&]( Iterator& f_first, Iterator const& f_last, auto& f_attr)
               {  return  this->parse_no_xform( f_first, f_last, context, unused, f_attr);
@@ -136,9 +136,9 @@ namespace boost { namespace spirit { namespace x3
         }
 
 
-        template <typename Iterator, typename Context, typename ActualAttribute>
+        template <typename Iterator, typename Context, typename Attribute_>
         bool parse(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, ActualAttribute& attr) const
+          , Context const& context, unused_type, Attribute_& attr) const
         {
             static_assert(has_attribute,
                 "The rule does not have an attribute. Check your parser.");
@@ -152,6 +152,18 @@ namespace boost { namespace spirit { namespace x3
               , attr
               , parser_f);
             return ok_parse;
+        }
+        
+        template <typename Iterator, typename Context>
+        bool parse(Iterator& first, Iterator const& last
+            , Context const& context, unused_type, unused_type) const
+        {
+            static_assert(!has_attribute,
+                "The rule requires an input attribute. Check your parser.");
+
+            // make sure we pass exactly the rule attribute type
+            attribute_type no_attr;
+            return parse_rule(*this, first, last, context, no_attr);
         }
 
         char const* name;
