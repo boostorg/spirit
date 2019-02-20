@@ -290,6 +290,26 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             return parse_rhs_main(rhs, first, last, context, rcontext, unused);
         }
+  
+        template <typename RHS, typename Iterator, typename Context
+          , typename ActualAttribute, typename ExplicitAttrPropagation>
+        static bool call_rule_definition(
+            RHS const& rhs
+          , char const* rule_name
+          , Iterator& first, Iterator const& last
+          , Context const& context, ActualAttribute& attr
+          , ExplicitAttrPropagation)
+        {
+            boost::ignore_unused(rule_name);
+
+            auto const parse_flag=
+              mpl::bool_
+              < (  RHS::has_action
+                && !ExplicitAttrPropagation::value
+                )
+              >();
+            return parse_rhs(rhs, first, last, context, attr, attr, parse_flag);
+        }
 
         template < typename Iterator
           , typename ActualAttribute, typename Parser>
@@ -338,26 +358,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             }
             return ok_parse;
         };//rule_attr_transform_f
-  
-        template <typename RHS, typename Iterator, typename Context
-          , typename ActualAttribute, typename ExplicitAttrPropagation>
-        static bool call_rule_definition(
-            RHS const& rhs
-          , char const* rule_name
-          , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr
-          , ExplicitAttrPropagation)
-        {
-            boost::ignore_unused(rule_name);
-
-            auto const parse_flag=
-              mpl::bool_
-              < (  RHS::has_action
-                && !ExplicitAttrPropagation::value
-                )
-              >();
-            return parse_rhs(rhs, first, last, context, attr, attr, parse_flag);
-        }
     };
 }}}}
 
