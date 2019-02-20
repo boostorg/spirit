@@ -192,29 +192,6 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-/** @defgroup BOOST_SPIRIT_NS_RECUR BOOST_SPIRIT_* macros
- *
- *  Macros for connecting a rule in namespace scope
- *  with its rule_definition.
- *  @{
- */    
-
-/*!
-  \def BOOST_SPIRIT_DECLARE_(r, data, rule_type)
-    \a r is ignored.
-    \a data is ignored.
-    \a rule_type is a type, rule<ID,RuleAttribute,...>.
-    
-    This generates a *declaration* of a parse_rule function
-    specialized on rule_type as 1st arg. 
-    The companion macro, BOOST_SPIRIT_INSTANTIATE, actually
-    instantiates this declaration.  The INSTANTIATE macro should be
-    called within a separate .cpp file which then allows separate
-    compilation of the instantiation from the declaration; thereby,
-    saving some overall compilation time (in theory ;).
-    **IN ADDITION* the BOOST_SPIRIT_DEFINE_ macro should be called
-    in the same .cpp file to provide the actual definition.
-*/
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
     template <typename Iterator, typename Context>                              \
     bool parse_rule(                                                            \
@@ -227,31 +204,6 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DECLARE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))            \
     /***/
 
-/*!
-  \def BOOST_SPIRIT_DEFINE_(r, data, rule_name)
-    \a r is ignored.
-    \a data is ignored.
-    \a rule_name is the variable name of a variable
-       with type, rule<ID,RuleAttribute,...>,
-       for some typename's ID and RuleAttriute.
-       
-    This generates a *definition* of a parse_rule function
-    specialized on decltype(rule_name) as 1st arg.
-    This specialized parse_rule will then be the one
-    called in the rule<...>::parse function above. 
-    The body creates a static instance of rule_name##_def.  
-    Of course this  means rule_name##_def must be defined 
-    before this macro is executed.  For example, given:
-      rule_name = x
-    then, something like:
-      auto const& x_def = x = rhs;
-    must occur in the scope in which this macro is invoked.
-    Then, this macro is called as:
-      BOOST_SPIRIT_DEFINE_(_,_,x)
-      
-    Using this obviates the need for calling the combination of
-    BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_INSTANTIATE.
-*/
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1910)
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     using BOOST_PP_CAT(rule_name, _synonym) = decltype(rule_name);              \
@@ -285,16 +237,6 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_DEFINE_, _, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))             \
     /***/
 
-/*!
-  \def BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)
-    Instantiates the parse_rule function specialization
-    declared by the BOOST_SPIRIT_DECLARE_ macro.
-    
-   \design DESIGN_QUESTION:2017-11-04:
-      Why shouldn't the BOOST_SPIRIT_DECLARE_ and BOOST_SPIRIT_DEFINE_ macros
-      hardcode rule_type::attribute_type also as the type of the attr argument
-      instead of making it a template parameter?
- */    
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
     template bool parse_rule<Iterator, Context>(                                \
         rule_type rule_                                                         \
@@ -302,7 +244,6 @@ namespace boost { namespace spirit { namespace x3
       , Context const& context, rule_type::attribute_type&);                    \
     /***/
 
-/** @}*/    
 
 }}}
 
