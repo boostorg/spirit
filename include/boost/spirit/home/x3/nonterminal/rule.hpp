@@ -55,24 +55,6 @@ namespace boost { namespace spirit { namespace x3
           : rhs(rhs), name(name) {}
 
         /**@brief
-         *  *only* called from BOOST_SPIRIT_DEFINE_; hence,
-         *  the rule_attr_transform_f has already been done in the
-         *  rule<...>::parse function; hence, no need to repeat
-         *  it here.
-         */
-        template <typename Iterator, typename Context, typename Attribute_>
-        bool parse_no_xform(Iterator& first, Iterator const& last
-          , Context const& context, unused_type, Attribute_& attr) const
-        {
-            return detail::rule_parser<attribute_type, ID>
-                ::call_rule_definition(
-                    rhs, name, first, last
-                  , context
-                  , attr
-                  , mpl::bool_<force_attribute>());
-        }
-        
-        /**@brief
          *  *this appears in rhs of some grammar expression; hence,
          *  this parse function is *not* called from the rule::parse function
          *  (i.e. indirectly through the parse_rule function generated
@@ -93,6 +75,24 @@ namespace boost { namespace spirit { namespace x3
               , attr
               , parser_f);
             return ok_parse;
+        }
+
+        /**@brief
+         *  *only* called from BOOST_SPIRIT_DEFINE_; hence,
+         *  the rule_attr_transform_f has already been done in the
+         *  rule<...>::parse function; hence, no need to repeat
+         *  it here.
+         */
+        template <typename Iterator, typename Context, typename Attribute_>
+        bool parse_no_xform(Iterator& first, Iterator const& last
+          , Context const& context, unused_type, Attribute_& attr) const
+        {
+            return detail::rule_parser<attribute_type, ID>
+                ::call_rule_definition(
+                    rhs, name, first, last
+                  , context
+                  , attr
+                  , mpl::bool_<force_attribute>());
         }
 
         RHS rhs;
@@ -153,7 +153,7 @@ namespace boost { namespace spirit { namespace x3
               , parser_f);
             return ok_parse;
         }
-        
+
         template <typename Iterator, typename Context>
         bool parse(Iterator& first, Iterator const& last
             , Context const& context, unused_type, unused_type) const
