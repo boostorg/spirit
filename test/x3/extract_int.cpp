@@ -11,6 +11,7 @@
 #include <iosfwd>
 #include <limits>
 
+template <int Min, int Max>
 struct custom_int
 {
     custom_int() = default;
@@ -46,24 +47,34 @@ struct custom_int
         return os << x.value_;
     }
 
-    static constexpr int max = 10;
-    static constexpr int min = -11;
+    static constexpr int max = Max;
+    static constexpr int min = Min;
 
 private:
     int value_;
 };
 
+namespace utils {
+
+template <int Min, int Max> struct digits;
+template <> struct digits<-9,  9>  { static constexpr int r2 = 3, r10 = 1; };
+template <> struct digits<-10, 10> { static constexpr int r2 = 3, r10 = 1; };
+template <> struct digits<-15, 15> { static constexpr int r2 = 3, r10 = 1; };
+
+}
+
 namespace std {
 
-template <>
-class numeric_limits<custom_int> : public numeric_limits<int>
+template <int Min, int Max>
+class numeric_limits<custom_int<Min, Max>> : public numeric_limits<int>
 {
 public:
-    static constexpr custom_int max() noexcept { return custom_int::max; }
-    static constexpr custom_int min() noexcept { return custom_int::min; }
-    static constexpr custom_int lowest() noexcept { return min(); }
-    static constexpr int digits = 3;
-    static constexpr int digits10 = 1;
+    static constexpr custom_int<Min, Max> max() noexcept { return Max; }
+    static constexpr custom_int<Min, Max> min() noexcept { return Min; }
+    static constexpr custom_int<Min, Max> lowest() noexcept { return min(); }
+    static_assert(numeric_limits<int>::radix == 2, "hardcoded for digits of radix 2");
+    static constexpr int digits = utils::digits<Min, Max>::r2;
+    static constexpr int digits10 = utils::digits<Min, Max>::r10;
 };
 
 }
@@ -75,7 +86,7 @@ void test_overflow_handling(char const* begin, char const* end, int i)
 {
     // Check that parser fails on overflow
     static_assert(std::numeric_limits<T>::is_bounded, "tests prerequest");
-    BOOST_ASSERT_MSG(MaxDigits == -1 || std::pow(Base, MaxDigits) >= T::max,
+    BOOST_ASSERT_MSG(MaxDigits == -1 || static_cast<int>(std::pow(Base, MaxDigits)) > T::max,
                      "test prerequest");
     int initial = Base - i % Base; // just a 'random' non-equal to i number
     T x { initial };
@@ -98,8 +109,8 @@ template <typename T, int Base>
 void test_unparsed_digits_are_not_consumed(char const* it, char const* end, int i)
 {
     // Check that unparsed digits are not consumed
-    static_assert(T::min <= -Base, "test prerequest");
-    static_assert(T::max >=  Base, "test prerequest");
+    static_assert(T::min <= -Base+1, "test prerequest");
+    static_assert(T::max >=  Base-1, "test prerequest");
     bool has_sign = *it == '+' || *it == '-';
     auto len = end - it;
     int initial = Base - i % Base; // just a 'random' non-equal to i number
@@ -129,12 +140,17 @@ void run_tests(char const* begin, char const* end, int i)
 
 int main()
 {
-    for (int i = -20; i <= 20; ++i) {
+    for (int i = -30; i <= 30; ++i) {
         char s[4];
         std::snprintf(s, 4, "%d", i);
         auto begin = &s[0], end = begin + std::strlen(begin);
 
-        run_tests<custom_int, 10>(begin, end, i);
+        // log(Base, abs(MinOrMax) + 1) == digits
+        run_tests<custom_int<-9, 9>, 10>(begin, end, i);
+        // (MinOrMax % Base) == 0
+        run_tests<custom_int<-10, 10>, 10>(begin, end, i);
+        // (MinOrMax % Base) != 0
+        run_tests<custom_int<-15, 15>, 10>(begin, end, i);
     }
 
     return boost::report_errors();
