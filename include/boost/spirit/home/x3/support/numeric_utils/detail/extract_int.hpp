@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             // Ensure n *= Radix will not underflow
             T const min = (std::numeric_limits<T>::min)();
-            T const val = (min + 1) / T(Radix);
+            T const val = min / T(Radix);
             if (n < val)
                 return false;
 
