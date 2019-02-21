@@ -63,7 +63,7 @@ public:
     static BOOST_CONSTEXPR custom_int max() BOOST_NOEXCEPT_OR_NOTHROW { return custom_int::max; }
     static BOOST_CONSTEXPR custom_int min() BOOST_NOEXCEPT_OR_NOTHROW { return custom_int::min; }
     static BOOST_CONSTEXPR custom_int lowest() BOOST_NOEXCEPT_OR_NOTHROW { return min(); }
-    BOOST_STATIC_CONSTEXPR int digits = 4;
+    BOOST_STATIC_CONSTEXPR int digits = 3;
     BOOST_STATIC_CONSTEXPR int digits10 = 1;
 };
 
