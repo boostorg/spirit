@@ -30,6 +30,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
+#include <boost/static_assert.hpp>
 #include <iterator> // for std::iterator_traits
 
 #if defined(BOOST_MSVC)
@@ -55,6 +56,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <typename T, unsigned Radix>
     struct digits_traits;
 
+    template <int Digits, unsigned Radix>
+    struct digits2_to_n;
+
 // lookup table for log2(x) : 2 <= x <= 36
 #define BOOST_SPIRIT_LOG2 (#error)(#error)                                    \
         (1000000)(1584960)(2000000)(2321920)(2584960)(2807350)                \
@@ -66,11 +70,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     /***/
 
 #define BOOST_PP_LOCAL_MACRO(Radix)                                           \
-    template <typename T> struct digits_traits<T, Radix>                      \
+    template <int Digits> struct digits2_to_n<Digits, Radix>                  \
     {                                                                         \
-        typedef std::numeric_limits<T> numeric_limits_type;                   \
         BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                  \
-            (numeric_limits_type::digits * 1000000) /                         \
+            (Digits * 1000000) /                                              \
                 BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_LOG2)));                \
     };                                                                        \
     /***/
@@ -79,6 +82,18 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 #include BOOST_PP_LOCAL_ITERATE()
 
 #undef BOOST_SPIRIT_LOG2
+
+    template <typename T, unsigned Radix>
+    struct digits_traits : digits2_to_n<std::numeric_limits<T>::digits, Radix>
+    {
+        BOOST_STATIC_ASSERT(std::numeric_limits<T>::radix == 2);
+    };
+
+    template <typename T>
+    struct digits_traits<T, 10>
+    {
+        static int const value = std::numeric_limits<T>::digits10;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     //

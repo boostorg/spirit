@@ -62,7 +62,7 @@ public:
     static constexpr custom_int max() noexcept { return custom_int::max; }
     static constexpr custom_int min() noexcept { return custom_int::min; }
     static constexpr custom_int lowest() noexcept { return min(); }
-    static constexpr int digits = 4;
+    static constexpr int digits = 3;
     static constexpr int digits10 = 1;
 };
 
