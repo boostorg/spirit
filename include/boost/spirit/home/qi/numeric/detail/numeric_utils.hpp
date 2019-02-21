@@ -154,14 +154,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (n > val)
                 return false;
 
-            n *= Radix;
+            T tmp = n * Radix;
 
             // Ensure n += digit will not overflow
             const int digit = radix_traits<Radix>::digit(ch);
-            if (n > max - digit)
+            if (tmp > max - digit)
                 return false;
 
-            n += static_cast<T>(digit);
+            n = tmp + static_cast<T>(digit);
             return true;
         }
     };
@@ -186,14 +186,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (n < val)
                 return false;
 
-            n *= Radix;
+            T tmp = n * Radix;
 
             // Ensure n -= digit will not underflow
             int const digit = radix_traits<Radix>::digit(ch);
-            if (n < min + digit)
+            if (tmp < min + digit)
                 return false;
 
-            n -= static_cast<T>(digit);
+            n = tmp - static_cast<T>(digit);
             return true;
         }
     };

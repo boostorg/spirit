@@ -127,6 +127,33 @@ void test_unparsed_digits_are_not_consumed(char const* it, char const* end, int 
 }
 
 template <typename T, int Base>
+void test_ignore_overflow_digits(char const* it, char const* end, int i)
+{
+    // TODO: Check accumulating too?
+    if (i < 0) return; // extract_int does not support IgnoreOverflowDigits
+
+    bool has_sign = *it == '+' || *it == '-';
+    char const* begin = it;
+    int initial = Base - i % Base; // just a 'random' non-equal to i number
+    T x(initial);
+    BOOST_TEST((qi::extract_uint<T, Base, 1, -1, false, true>::call(it, end, x)));
+    if (T::min <= i && i <= T::max) {
+        BOOST_TEST(it == end);
+        BOOST_TEST_EQ(x, i);
+    }
+    else {
+        BOOST_TEST_EQ(it - begin, (qi::detail::digits_traits<T, Base>::value) + has_sign);
+        if (Base == std::numeric_limits<T>::radix)
+            BOOST_TEST_EQ(it - begin, std::numeric_limits<T>::digits + has_sign);
+        if (Base == 10)
+            BOOST_TEST_EQ(it - begin, std::numeric_limits<T>::digits10 + has_sign);
+        int expected = i;
+        for (char const* p = it; p < end; ++p) expected /= Base;
+        BOOST_TEST_EQ(x, expected);
+    }
+}
+
+template <typename T, int Base>
 void run_tests(char const* begin, char const* end, int i)
 {
     // Check that parser fails on overflow
@@ -135,6 +162,8 @@ void run_tests(char const* begin, char const* end, int i)
     test_overflow_handling<T, Base, 2>(begin, end, i);
     // Check that unparsed digits are not consumed
     test_unparsed_digits_are_not_consumed<T, Base>(begin, end, i);
+    // Check that IgnoreOverflowDigits does what we expect
+    test_ignore_overflow_digits<T, Base>(begin, end, i);
 }
 
 int main()
