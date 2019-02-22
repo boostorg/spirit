@@ -8,6 +8,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/qi/numeric/numeric_utils.hpp>
 #include <boost/static_assert.hpp>
+#include <cmath> // for std::pow
 #include <iosfwd>
 #include <limits>
 #include <sstream>
@@ -87,7 +88,7 @@ void test_overflow_handling(char const* begin, char const* end, int i)
 {
     // Check that parser fails on overflow
     BOOST_STATIC_ASSERT_MSG(std::numeric_limits<T>::is_bounded, "tests prerequest");
-    BOOST_ASSERT_MSG(MaxDigits == -1 || static_cast<int>(std::pow(Base, MaxDigits)) > T::max,
+    BOOST_ASSERT_MSG(MaxDigits == -1 || static_cast<int>(std::pow(float(Base), MaxDigits)) > T::max,
                      "test prerequest");
     int initial = Base - i % Base; // just a 'random' non-equal to i number
     T x(initial);
