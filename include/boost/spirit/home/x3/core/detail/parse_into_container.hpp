@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return false;
 
             // push the parsed value into our attribute
-            traits::push_back(attr, val);
+            traits::push_back(attr, static_cast<value_type&&>(val));
             return true;
         }
 
