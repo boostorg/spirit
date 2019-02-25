@@ -97,14 +97,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Attribute>
     struct transform_attribute<Attribute&, Attribute, x3::parser_id>
       : x3::transform_attribute<Attribute&, Attribute> {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    void post_transform(Exposed& dest, Transformed&& attr)
-    {
-        return transform_attribute<Exposed, Transformed, x3::parser_id>
-            ::post(dest, std::forward<Transformed>(attr));
-    }
 }}}}
 
 #endif

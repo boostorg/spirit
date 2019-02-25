@@ -172,11 +172,11 @@ function in the client namespace that tells X3 how to invoke the rule. For examp
 given a rule named `my_rule` and a corresponding definition named `my_rule_def`,
 `BOOST_SPIRIT_DEFINE(my_rule)` expands to this code:
 
-    template <typename Iterator, typename Context, typename Attribute>
+    template <typename Iterator, typename Context>
     inline bool parse_rule(
         decltype(my_rule)
       , Iterator& first, Iterator const& last
-      , Context const& context, Attribute& attr)
+      , Context const& context, decltype(my_rule)::attribute_type& attr)
     {
         using boost::spirit::x3::unused;
         static auto const def_ = my_rule_def;

@@ -26,7 +26,7 @@ namespace boost { namespace spirit { namespace x3
           : std::runtime_error("boost::spirit::x3::expectation_failure")
           , where_(where), which_(which)
         {}
-        ~expectation_failure() throw() {}
+        ~expectation_failure() {}
 
         std::string which() const { return which_; }
         Iterator const& where() const { return where_; }

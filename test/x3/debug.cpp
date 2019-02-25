@@ -66,8 +66,6 @@ main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::alpha;
 
-    //~ namespace phx = boost::phoenix;
-
     { // basic tests
 
         auto a = rule<class a>("a") = 'a';

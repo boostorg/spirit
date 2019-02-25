@@ -15,7 +15,6 @@
 
 #include <boost/endian/conversion.hpp>
 #include <boost/endian/arithmetic.hpp>
-#include <boost/fusion/include/at.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_enum.hpp>

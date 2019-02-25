@@ -31,7 +31,7 @@ project spirit-x3
             #cxx14_aggregate_nsdmi
             cxx14_return_type_deduction         # grep -Er "auto[^\\(=\\)]+\(" *
             #cxx14_std_exchange                  # grep -r "exchange" *
-            #cxx14_variable_templates
+            cxx14_variable_templates
         ]
     ;
 
@@ -79,6 +79,7 @@ run eoi.cpp ;
 run eol.cpp ;
 run eps.cpp ;
 run expect.cpp ;
+run extract_int.cpp ;
 run int1.cpp ;
 run kleene.cpp ;
 run lexeme.cpp ;
@@ -108,7 +109,7 @@ run skip.cpp ;
 run symbols1.cpp ;
 run symbols2.cpp ;
 run symbols3.cpp ;
-run tst.cpp /boost//system ;
+run tst.cpp ;
 
 run uint1.cpp ;
 run uint_radix.cpp ;
@@ -120,7 +121,10 @@ run seek.cpp ;
 run attribute_type_check.cpp ;
 run fusion_map.cpp ;
 run x3_variant.cpp ;
-run error_handler.cpp /boost//system /boost//filesystem ;
+run error_handler.cpp /boost//filesystem ;
 run iterator_check.cpp ;
 
 run to_utf8.cpp ;
+
+obj rule_separate_tu_grammar : rule_separate_tu_grammar.cpp ;
+run rule_separate_tu.cpp rule_separate_tu_grammar ;

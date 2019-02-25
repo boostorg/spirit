@@ -11,7 +11,6 @@
 
 using namespace std;
 
-//#define BOOST_SPIRIT_DEBUG
 #include <boost/spirit/include/classic_core.hpp>
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 

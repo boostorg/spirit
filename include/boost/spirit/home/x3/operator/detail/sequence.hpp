@@ -9,7 +9,6 @@
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
-#include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
@@ -106,19 +105,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-    template <typename Parser, typename Attribute>
-    struct pass_sequence_attribute_used :
+    template <typename Parser, typename Attribute, typename Enable = void>
+    struct pass_sequence_attribute :
         mpl::if_<
             traits::is_size_one_view<Attribute>
           , pass_sequence_attribute_size_one_view<Attribute>
           , pass_through_sequence_attribute<Attribute>>::type {};
-
-    template <typename Parser, typename Attribute, typename Enable = void>
-    struct pass_sequence_attribute :
-        mpl::if_<
-            fusion::result_of::empty<Attribute>
-          , pass_sequence_attribute_unused
-          , pass_sequence_attribute_used<Parser, Attribute>>::type {};
 
     template <typename L, typename R, typename Attribute>
     struct pass_sequence_attribute<sequence<L, R>, Attribute>
@@ -137,6 +129,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , typename Enable = void>
     struct partition_attribute
     {
+        using attr_category = typename traits::attribute_category<Attribute>::type;
+        static_assert(is_same<traits::tuple_attribute, attr_category>::value,
+            "The parser expects tuple-like attribute type");
+
         static int const l_size = sequence_size<L, Context>::value;
         static int const r_size = sequence_size<R, Context>::value;
 
@@ -300,11 +296,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 
     template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
+      , typename RContext, typename Attribute, typename AttributeCategory>
     bool parse_sequence(
         Parser const& parser, Iterator& first, Iterator const& last
       , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::tuple_attribute)
+      , AttributeCategory)
     {
         typedef typename Parser::left_type Left;
         typedef typename Parser::right_type Right;
@@ -324,78 +320,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         first = save;
         return false;
     }
-
-    template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
-    bool parse_sequence_plain(
-        Parser const& parser, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr)
-    {
-        typedef typename Parser::left_type Left;
-        typedef typename Parser::right_type Right;
-        typedef typename traits::attribute_of<Left, Context>::type l_attr_type;
-        typedef typename traits::attribute_of<Right, Context>::type r_attr_type;
-        typedef traits::make_attribute<l_attr_type, Attribute> l_make_attribute;
-        typedef traits::make_attribute<r_attr_type, Attribute> r_make_attribute;
-
-        typename l_make_attribute::type l_attr = l_make_attribute::call(attr);
-        typename r_make_attribute::type r_attr = r_make_attribute::call(attr);
-
-        Iterator save = first;
-        if (parser.left.parse(first, last, context, rcontext, l_attr)
-            && parser.right.parse(first, last, context, rcontext, r_attr))
-            return true;
-        first = save;
-        return false;
-    }
-
-    template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
-    bool parse_sequence(
-        Parser const& parser, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::plain_attribute)
-    {
-        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
-    }
-
-    template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
-    bool parse_sequence(
-        Parser const& parser, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::variant_attribute)
-    {
-        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
-    }
-
-    template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
-    bool parse_sequence(
-        Parser const& parser, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::optional_attribute)
-    {
-        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
-    }
-
-    template <typename Parser, typename Iterator, typename Context
-      , typename RContext, typename Attribute>
-    bool parse_sequence(
-        Parser const& parser, Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::range_attribute)
-    {
-        return parse_sequence_plain(parser, first, last, context, rcontext, attr);
-    }
-
-    template <typename Left, typename Right, typename Iterator
-      , typename Context, typename RContext, typename Attribute>
-    bool parse_sequence(
-        Left const& left, Right const& right
-      , Iterator& first, Iterator const& last
-      , Context const& context, RContext& rcontext, Attribute& attr
-      , traits::container_attribute);
 
     template <typename Parser, typename Context>
     constexpr bool pass_sequence_container_attribute

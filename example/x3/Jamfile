@@ -45,7 +45,6 @@ exe x3_calc7 :
 ;
 
 exe x3_calc8 :
-    /boost//system
     /boost//filesystem
     calc/calc8/vm.cpp
     calc/calc8/compiler.cpp
@@ -55,7 +54,6 @@ exe x3_calc8 :
 ;
 
 exe x3_calc9 :
-    /boost//system
     /boost//filesystem
     calc/calc9/vm.cpp
     calc/calc9/compiler.cpp

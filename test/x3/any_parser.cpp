@@ -25,7 +25,6 @@ main()
 
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::any_parser;
-    using boost::spirit::x3::int_;
     using boost::spirit::x3::make_context;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;

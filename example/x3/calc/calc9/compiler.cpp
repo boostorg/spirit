@@ -8,7 +8,6 @@
 #include "vm.hpp"
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/assert.hpp>
-#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <set>
 #include <iostream>
@@ -136,17 +135,17 @@ namespace client { namespace code_gen
 
                 case op_load:
                     line += "      op_load     ";
-                    line += boost::lexical_cast<std::string>(locals[*pc++]);
+                    line += locals[*pc++];
                     break;
 
                 case op_store:
                     line += "      op_store    ";
-                    line += boost::lexical_cast<std::string>(locals[*pc++]);
+                    line += locals[*pc++];
                     break;
 
                 case op_int:
                     line += "      op_int      ";
-                    line += boost::lexical_cast<std::string>(*pc++);
+                    line += std::to_string(*pc++);
                     break;
 
                 case op_true:
@@ -164,7 +163,7 @@ namespace client { namespace code_gen
                         if (pos == code.size())
                             line += "end";
                         else
-                            line += boost::lexical_cast<std::string>(pos);
+                            line += std::to_string(pos);
                         jumps.insert(pos);
                     }
                     break;
@@ -176,14 +175,14 @@ namespace client { namespace code_gen
                         if (pos == code.size())
                             line += "end";
                         else
-                            line += boost::lexical_cast<std::string>(pos);
+                            line += std::to_string(pos);
                         jumps.insert(pos);
                     }
                     break;
 
                 case op_stk_adj:
                     line += "      op_stk_adj  ";
-                    line += boost::lexical_cast<std::string>(*pc++);
+                    line += std::to_string(*pc++);
                     break;
             }
             lines[address] = line;

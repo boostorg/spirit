@@ -6,8 +6,6 @@
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-#include <boost/phoenix/core.hpp>
-#include <boost/phoenix/operator.hpp>
 
 #include <iostream>
 #include "test.hpp"

@@ -14,7 +14,7 @@ executable.
 
 The newest Spirit shines faster compile times. Currently only a parser framework.
 
-Requires C++14 compiler (GCC 5, Clang 3.5, VS 2015 Update 3).
+Requires C++14 compiler (GCC 5, Clang 3.6, VS 2015 Update 3).
 
 ### Spirit V2 (2nd generation)
 

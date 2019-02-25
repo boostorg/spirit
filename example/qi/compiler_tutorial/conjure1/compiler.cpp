@@ -135,12 +135,12 @@ namespace client { namespace code_gen
 
                 case op_load:
                     line += "      op_load     ";
-                    line += boost::lexical_cast<std::string>(locals[*pc++]);
+                    line += locals[*pc++];
                     break;
 
                 case op_store:
                     line += "      op_store    ";
-                    line += boost::lexical_cast<std::string>(locals[*pc++]);
+                    line += locals[*pc++];
                     break;
 
                 case op_int:

@@ -20,7 +20,6 @@
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
 #include <boost/spirit/home/classic/iterator/fixed_size_queue.hpp>
-#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 #include <boost/spirit/home/classic/iterator/multi_pass_fwd.hpp>
 
@@ -150,11 +149,11 @@ class BOOST_SYMBOL_VISIBLE illegal_backtracking : public std::exception
 {
 public:
 
-    illegal_backtracking() throw() {}
-    ~illegal_backtracking() throw() {}
+    illegal_backtracking() BOOST_NOEXCEPT_OR_NOTHROW {}
+    ~illegal_backtracking() BOOST_NOEXCEPT_OR_NOTHROW {}
 
     virtual const char*
-    what() const throw()
+    what() const BOOST_NOEXCEPT_OR_NOTHROW
     { return "BOOST_SPIRIT_CLASSIC_NS::illegal_backtracking"; }
 };
 
@@ -491,7 +490,7 @@ class inner
 {
     private:
         typedef
-            typename boost::detail::iterator_traits<InputT>::value_type
+            typename std::iterator_traits<InputT>::value_type
             result_type;
 
     public:
@@ -516,13 +515,13 @@ class inner
 
     public:
         typedef
-            typename boost::detail::iterator_traits<InputT>::difference_type
+            typename std::iterator_traits<InputT>::difference_type
             difference_type;
         typedef
-            typename boost::detail::iterator_traits<InputT>::pointer
+            typename std::iterator_traits<InputT>::pointer
             pointer;
         typedef
-            typename boost::detail::iterator_traits<InputT>::reference
+            typename std::iterator_traits<InputT>::reference
             reference;
 
     protected:
@@ -550,7 +549,7 @@ class inner
         }
 
         typedef
-            typename boost::detail::iterator_traits<InputT>::value_type
+            typename std::iterator_traits<InputT>::value_type
             value_t;
         void swap(inner& x)
         {

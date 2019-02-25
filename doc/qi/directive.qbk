@@ -583,7 +583,7 @@ Some using declarations:
 
 [heading Description]
 
-The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip `no_skip[]`]. 
+The `skip` directive is the inverse of __qi_lexeme__ or [qi_no_skip `no_skip`]. 
 While the __qi_lexeme__ directive turns off white space
 skipping, the `skip` directive turns it on again. This is simply done by
 wrapping the parts inside the `skip` directive:
