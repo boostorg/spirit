@@ -113,9 +113,11 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     static_cast<std::streamsize>(std::distance(first, last)),
                     n);
 
+            typedef typename std::iterator_traits<Iterator>::difference_type diff_type;
+
             // copy_n is only part of c++11, so emulate it
-            std::copy(first, first + n, s);
-            first += n;
+            std::copy(first, first + static_cast<diff_type>(n), s);
+            first += static_cast<diff_type>(n);
             pos += n;
 
             return n;
