@@ -109,9 +109,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (first == last)
                 return -1;
 
-            n = std::min BOOST_PREVENT_MACRO_SUBSTITUTION(
-                    static_cast<std::streamsize>(std::distance(first, last)),
-                    n);
+            n = (std::min)(static_cast<std::streamsize>(last - first), n);
 
             typedef typename std::iterator_traits<Iterator>::difference_type diff_type;
 
