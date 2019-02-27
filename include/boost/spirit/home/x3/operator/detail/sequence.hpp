@@ -36,6 +36,8 @@
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+#include <iterator> // for std::make_move_iterator
+
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Left, typename Right>
@@ -445,7 +447,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 return false;
             }
-            traits::append(attr, traits::begin(attr_), traits::end(attr_));
+            traits::append(attr, std::make_move_iterator(traits::begin(attr_)),
+                                 std::make_move_iterator(traits::end(attr_)));
             return true;
         }
 

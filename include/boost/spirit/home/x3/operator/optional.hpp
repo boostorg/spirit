@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace x3
             value_type;
 
             // create a local value
-            value_type val = value_type();
+            value_type val{};
 
             if (this->subject.parse(first, last, context, rcontext, val))
             {

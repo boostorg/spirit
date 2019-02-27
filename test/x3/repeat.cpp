@@ -14,6 +14,7 @@
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 int
 main()
@@ -140,5 +141,12 @@ main()
 
         BOOST_TEST(!test("1 2", int_ >> repeat(2)[int_], space));
     }
+
+    { // test move only types
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("sss", repeat(3)[synth_move_only], v));
+        BOOST_TEST_EQ(v.size(), 3);
+    }
+
     return boost::report_errors();
 }

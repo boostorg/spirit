@@ -13,6 +13,7 @@
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 struct x_attr
 {
@@ -113,6 +114,12 @@ main()
 
         x_attr x;
         test_attr("abcde", *char_, x);
+    }
+
+    { // test move only types
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("sss", *synth_move_only, v));
+        BOOST_TEST_EQ(v.size(), 3);
     }
 
     return boost::report_errors();
