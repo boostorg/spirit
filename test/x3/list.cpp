@@ -101,7 +101,7 @@ main()
 
     { // test move only types
         std::vector<move_only> v;
-        BOOST_TEST(test_attr("s.s.s.s", synth<move_only> % '.', v));
+        BOOST_TEST(test_attr("s.s.s.s", synth_move_only % '.', v));
         BOOST_TEST_EQ(v.size(), 4);
     }
 

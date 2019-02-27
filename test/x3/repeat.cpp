@@ -144,7 +144,7 @@ main()
 
     { // test move only types
         std::vector<move_only> v;
-        BOOST_TEST(test_attr("sss", repeat(3)[synth<move_only>], v));
+        BOOST_TEST(test_attr("sss", repeat(3)[synth_move_only], v));
         BOOST_TEST_EQ(v.size(), 3);
     }
 

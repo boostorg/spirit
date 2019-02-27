@@ -105,7 +105,7 @@ main()
 
     { // test move only types
         boost::optional<move_only> o;
-        BOOST_TEST(test_attr("s", -synth<move_only>, o));
+        BOOST_TEST(test_attr("s", -synth_move_only, o));
         BOOST_TEST(o);
     }
 

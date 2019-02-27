@@ -495,7 +495,7 @@ main()
     { // test move only types
         using boost::spirit::x3::eps;
         std::vector<move_only> v;
-        BOOST_TEST(test_attr("ssszs", *synth<move_only> >> 'z' >> synth<move_only>, v));
+        BOOST_TEST(test_attr("ssszs", *synth_move_only >> 'z' >> synth_move_only, v));
         BOOST_TEST_EQ(v.size(), 4);
     }
 

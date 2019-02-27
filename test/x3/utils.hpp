@@ -42,4 +42,6 @@ struct synth_parser : boost::spirit::x3::parser<synth_parser<T>>
 template <typename T>
 synth_parser<T> synth{};
 
+synth_parser<move_only> const synth_move_only{};
+
 #endif
