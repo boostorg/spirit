@@ -17,7 +17,7 @@ struct error_handler_base
 {
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result on_error(
-        Iterator& first, Iterator const& last
+        Iterator&, Iterator const&
       , Exception const& x, Context const& context) const
     {
         std::string message = "Error! Expecting: " + x.which() + " here:";

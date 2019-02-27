@@ -26,7 +26,7 @@ struct my_rule_class
 {
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result
-    on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+    on_error(Iterator&, Iterator const& last, Exception const& x, Context const&)
     {
         std::cout
             << "Error! Expecting: "
@@ -81,7 +81,7 @@ main()
         rule<class b, int> rb;
         int attr;
 
-        auto f = [](auto c){};
+        auto f = [](auto&){};
         auto ra_def = (ra %= int_[f]);
         BOOST_TEST(test_attr("123", ra_def, attr));
         BOOST_TEST(attr == 123);
