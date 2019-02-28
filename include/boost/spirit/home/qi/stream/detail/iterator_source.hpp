@@ -109,13 +109,13 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (first == last)
                 return -1;
 
-            n = std::min BOOST_PREVENT_MACRO_SUBSTITUTION(
-                    static_cast<std::streamsize>(std::distance(first, last)),
-                    n);
+            n = (std::min)(static_cast<std::streamsize>(last - first), n);
+
+            typedef typename std::iterator_traits<Iterator>::difference_type diff_type;
 
             // copy_n is only part of c++11, so emulate it
-            std::copy(first, first + n, s);
-            first += n;
+            std::copy(first, first + static_cast<diff_type>(n), s);
+            first += static_cast<diff_type>(n);
             pos += n;
 
             return n;
