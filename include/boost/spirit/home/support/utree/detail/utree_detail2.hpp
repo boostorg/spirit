@@ -933,11 +933,11 @@ namespace boost { namespace spirit
         return *this;
     }
 
-    inline utree& utree::operator=(any_ptr const& p)
+    inline utree& utree::operator=(any_ptr const& p_)
     {
         free();
-        v.p = p.p;
-        v.i = p.i;
+        v.p = p_.p;
+        v.i = p_.i;
         set_type(type::any_type);
         return *this;
     }
