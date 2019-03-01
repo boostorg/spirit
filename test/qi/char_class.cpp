@@ -6,9 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #define BOOST_SPIRIT_UNICODE
 
 #include <boost/detail/lightweight_test.hpp>
@@ -112,16 +109,10 @@ main()
         BOOST_TEST(test("f", xdigit));
         BOOST_TEST(!test("g", xdigit));
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
+        // test extended ASCII characters
         BOOST_TEST(test("\xE9", alpha));
         BOOST_TEST(test("\xE9", lower));
         BOOST_TEST(!test("\xE9", upper));
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
     }
 
     {
@@ -201,17 +192,10 @@ main()
         BOOST_TEST(test(L"f", xdigit));
         BOOST_TEST(!test(L"g", xdigit));
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
+        // TODO: these tests are suspicious, they do not test unicode
         BOOST_TEST(test("\xE9", alpha));
         BOOST_TEST(test("\xE9", lower));
         BOOST_TEST(!test("\xE9", upper));
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
     }
 
     {   // test attribute extraction

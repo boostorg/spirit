@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -108,9 +105,6 @@ int main()
         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
     { // specifying the encoding
         using karma::lower;
         using karma::upper;
@@ -141,10 +135,6 @@ int main()
         r = upper[string("\xE1\xC1")];
         BOOST_TEST(test("\xC1\xC1", r));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     return boost::report_errors();
 }

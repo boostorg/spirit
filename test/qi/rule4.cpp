@@ -5,9 +5,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
@@ -107,9 +104,6 @@ main()
         BOOST_TEST(!test("[123,456]", r));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
     { // specifying the encoding
 
         typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
@@ -129,10 +123,6 @@ main()
         r = no_case[lit("\xE1\xC1")];
         BOOST_TEST(test("\xC1\xE1", r));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     {
         typedef boost::variant<double, int> v_type;

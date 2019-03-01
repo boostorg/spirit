@@ -119,7 +119,7 @@ before_install:
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
         -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
         -Wno-nested-anon-types # Boost.Random
-        -Wno-uninitialized -Wno-invalid-source-encoding : unchecked ;
+        -Wno-uninitialized : unchecked ;
 
   - |
     # Determining the root branch

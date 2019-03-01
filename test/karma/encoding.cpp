@@ -4,9 +4,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -29,12 +26,7 @@ main()
 
     encoding<char_encoding::iso8859_1> iso8859_1;
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
-
-    {
+    { // test extended ASCII characters
         BOOST_TEST(test("\xE1", iso8859_1[lower['\xE1']]));
         BOOST_TEST(test("\xC1", iso8859_1[upper['\xE1']]));
         BOOST_TEST(test("\xE1", iso8859_1[lower[char_('\xE1')]]));
@@ -51,26 +43,13 @@ main()
         BOOST_TEST(test("\xC1", iso8859_1[upper[lit('\xC1')]]));
         BOOST_TEST(test("\xE1", iso8859_1[lower[char_]], '\xC1'));
         BOOST_TEST(test("\xC1", iso8859_1[upper[char_]], '\xC1'));
-    }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
-
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
-    {
         BOOST_TEST(test("\xE4\xE4", iso8859_1[lower["\xC4\xE4"]]));
         BOOST_TEST(test("\xE4\xE4", iso8859_1[lower[lit("\xC4\xE4")]]));
 
         BOOST_TEST(test("\xC4\xC4", iso8859_1[upper["\xC4\xE4"]]));
         BOOST_TEST(test("\xC4\xC4", iso8859_1[upper[lit("\xC4\xE4")]]));
     }
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     return boost::report_errors();
 }
