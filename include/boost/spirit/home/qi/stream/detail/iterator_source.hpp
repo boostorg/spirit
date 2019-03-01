@@ -60,6 +60,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         std::streampos seek(boost::iostreams::stream_offset, std::ios_base::seekdir way)
         {
+            (void)way;
             BOOST_ASSERT(way == std::ios_base::cur);    // only support queries
             return pos;                              // return current position
         }

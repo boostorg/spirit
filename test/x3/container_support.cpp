@@ -30,7 +30,7 @@ x3::rule<class string_rule, std::string> const string_rule("string");
 auto const pair_rule_def = string_rule > x3::lit('=') > string_rule;
 auto const string_rule_def = x3::lexeme[*x3::alnum];
 
-BOOST_SPIRIT_DEFINE(pair_rule, string_rule);
+BOOST_SPIRIT_DEFINE(pair_rule, string_rule)
 
 template <typename Container>
 void test_map_support()

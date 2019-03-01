@@ -16,7 +16,7 @@ struct my_rule_class
 {
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result
-    on_error(Iterator&, Iterator const&, Exception const& x, Context const& context)
+    on_error(Iterator&, Iterator const&, Exception const&, Context const& context)
     {
         x3::get<my_tag>(context)++;
         return x3::error_handler_result::fail;
