@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/detail/workaround.hpp>
@@ -25,22 +22,15 @@ main()
 {
     using namespace boost::spirit;
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
-    {
+    { // test extended ASCII characters
         using namespace boost::spirit::iso8859_1;
 
-        BOOST_TEST(test("ä", lower['Ä']));
-        BOOST_TEST(test("ä", lower['ä']));
+        BOOST_TEST(test("\xE4", lower['\xC4']));
+        BOOST_TEST(test("\xE4", lower['\xE4']));
 
-        BOOST_TEST(test("Ä", upper['Ä']));
-        BOOST_TEST(test("Ä", upper['ä']));
+        BOOST_TEST(test("\xC4", upper['\xC4']));
+        BOOST_TEST(test("\xC4", upper['\xE4']));
     }
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     {
         using namespace boost::spirit::ascii;

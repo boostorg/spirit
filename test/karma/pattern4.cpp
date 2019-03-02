@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -108,9 +105,6 @@ int main()
         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
     { // specifying the encoding
         using karma::lower;
         using karma::upper;
@@ -119,32 +113,28 @@ int main()
         typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
         karma::rule<outiter_type, iso8859_1> r;
 
-        r = lower['·'];
-        BOOST_TEST(test("·", r));
-        r = lower[char_('¡')];
-        BOOST_TEST(test("·", r));
-        r = upper['·'];
-        BOOST_TEST(test("¡", r));
-        r = upper[char_('¡')];
-        BOOST_TEST(test("¡", r));
+        r = lower['\xE1'];
+        BOOST_TEST(test("\xE1", r));
+        r = lower[char_('\xC1')];
+        BOOST_TEST(test("\xE1", r));
+        r = upper['\xE1'];
+        BOOST_TEST(test("\xC1", r));
+        r = upper[char_('\xC1')];
+        BOOST_TEST(test("\xC1", r));
 
-        r = lower["·¡"];
-        BOOST_TEST(test("··", r));
-        r = lower[lit("·¡")];
-        BOOST_TEST(test("··", r));
-        r = lower[string("·¡")];
-        BOOST_TEST(test("··", r));
-        r = upper["·¡"];
-        BOOST_TEST(test("¡¡", r));
-        r = upper[lit("·¡")];
-        BOOST_TEST(test("¡¡", r));
-        r = upper[string("·¡")];
-        BOOST_TEST(test("¡¡", r));
+        r = lower["\xE1\xC1"];
+        BOOST_TEST(test("\xE1\xE1", r));
+        r = lower[lit("\xE1\xC1")];
+        BOOST_TEST(test("\xE1\xE1", r));
+        r = lower[string("\xE1\xC1")];
+        BOOST_TEST(test("\xE1\xE1", r));
+        r = upper["\xE1\xC1"];
+        BOOST_TEST(test("\xC1\xC1", r));
+        r = upper[lit("\xE1\xC1")];
+        BOOST_TEST(test("\xC1\xC1", r));
+        r = upper[string("\xE1\xC1")];
+        BOOST_TEST(test("\xC1\xC1", r));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     return boost::report_errors();
 }
