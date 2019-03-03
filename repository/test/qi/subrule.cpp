@@ -109,7 +109,16 @@ main()
         BOOST_TEST(test("aaaabababaaabba", start, false));
 
         // no-ops
+#if defined(BOOST_CLANG) && defined(__has_warning)
+# pragma clang diagnostic push
+# if __has_warning("-Wself-assign-overloaded")
+#  pragma clang diagnostic ignored "-Wself-assign-overloaded"
+# endif
+#endif
         a = a;
+#if defined(BOOST_CLANG) && defined(__has_warning)
+# pragma clang diagnostic pop
+#endif
         subrule<42> aa(a);
     }
 
@@ -144,7 +153,16 @@ main()
         BOOST_TEST(test(" a a a a b a b a b a a a b b a ", start, space, false));
 
         // no-ops
+#if defined(BOOST_CLANG) && defined(__has_warning)
+# pragma clang diagnostic push
+# if __has_warning("-Wself-assign-overloaded")
+#  pragma clang diagnostic ignored "-Wself-assign-overloaded"
+# endif
+#endif
         a = a;
+#if defined(BOOST_CLANG) && defined(__has_warning)
+# pragma clang diagnostic pop
+#endif
         subrule<1> aa(a);
     }
 

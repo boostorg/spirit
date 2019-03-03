@@ -21,6 +21,7 @@
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/back.hpp>
 #include <boost/variant/apply_visitor.hpp>
+#include <iterator> // for std::make_move_iterator
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
 {
@@ -99,7 +100,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return false;
 
             // push the parsed value into our attribute
-            traits::push_back(attr, val);
+            traits::push_back(attr, static_cast<value_type&&>(val));
             return true;
         }
 
@@ -262,7 +263,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             Attribute rest;
             bool r = parser.parse(first, last, context, rcontext, rest);
             if (r)
-                traits::append(attr, rest.begin(), rest.end());
+                traits::append(attr, std::make_move_iterator(rest.begin()),
+                                     std::make_move_iterator(rest.end()));
             return r;
         }
 

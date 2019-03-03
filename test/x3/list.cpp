@@ -15,6 +15,7 @@
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 using namespace spirit_test;
 
@@ -96,6 +97,12 @@ main()
 
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[f]));
         BOOST_TEST(s == "abcdefgh");
+    }
+
+    { // test move only types
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("s.s.s.s", synth_move_only % '.', v));
+        BOOST_TEST_EQ(v.size(), 4);
     }
 
     return boost::report_errors();

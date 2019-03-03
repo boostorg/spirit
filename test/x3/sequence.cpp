@@ -14,6 +14,7 @@
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 int
 main()
@@ -489,6 +490,13 @@ main()
         int i;
         parse(s, s, int_ >> int_, i);
 #endif
+    }
+
+    { // test move only types
+        using boost::spirit::x3::eps;
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("ssszs", *synth_move_only >> 'z' >> synth_move_only, v));
+        BOOST_TEST_EQ(v.size(), 4);
     }
 
     return boost::report_errors();

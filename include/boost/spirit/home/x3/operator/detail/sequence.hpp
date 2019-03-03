@@ -9,7 +9,6 @@
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
-#include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/has_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
@@ -36,6 +35,8 @@
 
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
+
+#include <iterator> // for std::make_move_iterator
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -446,7 +447,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             {
                 return false;
             }
-            traits::append(attr, traits::begin(attr_), traits::end(attr_));
+            traits::append(attr, std::make_move_iterator(traits::begin(attr_)),
+                                 std::make_move_iterator(traits::end(attr_)));
             return true;
         }
 

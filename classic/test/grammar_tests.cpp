@@ -35,7 +35,7 @@ struct num_list : public grammar<num_list>
 {
     enum {
         default_rule = 0,
-        num_rule = 1,
+        num_rule = 1
     };
 
     template <typename ScannerT>

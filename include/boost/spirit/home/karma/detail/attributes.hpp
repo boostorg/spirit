@@ -74,16 +74,6 @@ namespace boost { namespace spirit { namespace karma
     {};
 
     template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type const, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
     struct transform_attribute<Attribute, unused_type>
       : transform_attribute<unused_type, unused_type>
     {};

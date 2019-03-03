@@ -30,13 +30,14 @@ x3::rule<class string_rule, std::string> const string_rule("string");
 auto const pair_rule_def = string_rule > x3::lit('=') > string_rule;
 auto const string_rule_def = x3::lexeme[*x3::alnum];
 
-BOOST_SPIRIT_DEFINE(pair_rule, string_rule);
+BOOST_SPIRIT_DEFINE(pair_rule, string_rule)
 
 template <typename Container>
-void test_map_support(Container&& container)
+void test_map_support()
 {
     using spirit_test::test_attr;
 
+    Container container;
     Container const compare {{"k1", "v1"}, {"k2", "v2"}};
     auto const rule = pair_rule % x3::lit(',');
 
@@ -56,10 +57,11 @@ void test_map_support(Container&& container)
 }
 
 template <typename Container>
-void test_multimap_support(Container&& container)
+void test_multimap_support()
 {
     using spirit_test::test_attr;
 
+    Container container;
     Container const compare {{"k1", "v1"}, {"k2", "v2"}, {"k2", "v3"}};
     auto const rule = pair_rule % x3::lit(',');
 
@@ -79,10 +81,11 @@ void test_multimap_support(Container&& container)
 }
 
 template <typename Container>
-void test_sequence_support(Container&& container)
+void test_sequence_support()
 {
     using spirit_test::test_attr;
 
+    Container container;
     Container const compare {"e1", "e2", "e2"};
     auto const rule = string_rule % x3::lit(',');
 
@@ -102,10 +105,11 @@ void test_sequence_support(Container&& container)
 }
 
 template <typename Container>
-void test_set_support(Container&& container)
+void test_set_support()
 {
     using spirit_test::test_attr;
 
+    Container container;
     Container const compare {"e1", "e2"};
     auto const rule = string_rule % x3::lit(',');
 
@@ -125,10 +129,11 @@ void test_set_support(Container&& container)
 }
 
 template <typename Container>
-void test_multiset_support(Container&& container)
+void test_multiset_support()
 {
     using spirit_test::test_attr;
 
+    Container container;
     Container const compare {"e1", "e2", "e2"};
     auto const rule = string_rule % x3::lit(',');
 
@@ -148,10 +153,11 @@ void test_multiset_support(Container&& container)
 }
 
 template <typename Container>
-void test_string_support(Container&& container)
+void test_string_support()
 {
     using spirit_test::test_attr;
 
+    Container container;
     Container const compare {"e1e2e2"};
     auto const rule = string_rule % x3::lit(',');
 
@@ -216,27 +222,27 @@ main()
 
     // ------------------------------------------------------------------
 
-    test_string_support(std::string());
+    test_string_support<std::string>();
 
-    test_sequence_support(std::vector<std::string>());
-    test_sequence_support(std::list<std::string>());
-    test_sequence_support(std::deque<std::string>());
+    test_sequence_support<std::vector<std::string>>();
+    test_sequence_support<std::list<std::string>>();
+    test_sequence_support<std::deque<std::string>>();
 
-    test_set_support(std::set<std::string>());
-    test_set_support(std::unordered_set<std::string>());
-    test_set_support(boost::unordered_set<std::string>());
+    test_set_support<std::set<std::string>>();
+    test_set_support<std::unordered_set<std::string>>();
+    test_set_support<boost::unordered_set<std::string>>();
 
-    test_multiset_support(std::multiset<std::string>());
-    test_multiset_support(std::unordered_multiset<std::string>());
-    test_multiset_support(boost::unordered_multiset<std::string>());
+    test_multiset_support<std::multiset<std::string>>();
+    test_multiset_support<std::unordered_multiset<std::string>>();
+    test_multiset_support<boost::unordered_multiset<std::string>>();
 
-    test_map_support(std::map<std::string,std::string>());
-    test_map_support(std::unordered_map<std::string,std::string>());
-    test_map_support(boost::unordered_map<std::string,std::string>());
+    test_map_support<std::map<std::string,std::string>>();
+    test_map_support<std::unordered_map<std::string,std::string>>();
+    test_map_support<boost::unordered_map<std::string,std::string>>();
 
-    test_multimap_support(std::multimap<std::string,std::string>());
-    test_multimap_support(std::unordered_multimap<std::string,std::string>());
-    test_multimap_support(boost::unordered_multimap<std::string,std::string>());
+    test_multimap_support<std::multimap<std::string,std::string>>();
+    test_multimap_support<std::unordered_multimap<std::string,std::string>>();
+    test_multimap_support<boost::unordered_multimap<std::string,std::string>>();
 
     return boost::report_errors();
 }

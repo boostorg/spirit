@@ -120,16 +120,6 @@ namespace boost { namespace spirit { namespace qi
     {};
 
     template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<unused_type const, Attribute>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
     struct transform_attribute<Attribute, unused_type>
       : transform_attribute<unused_type, unused_type>
     {};
@@ -159,20 +149,6 @@ namespace boost { namespace spirit { namespace traits
     struct transform_attribute<Attribute&, Attribute, qi::domain>
       : qi::transform_attribute<Attribute&, Attribute>
     {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    void post_transform(Exposed& dest, Transformed const& attr)
-    {
-        return transform_attribute<Exposed, Transformed, qi::domain>::post(dest, attr);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Exposed, typename Transformed>
-    void fail_transform(Exposed& dest, Transformed const&)
-    {
-        return transform_attribute<Exposed, Transformed, qi::domain>::fail(dest);
-    }
 }}}
 
 #endif

@@ -5,9 +5,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/vector.hpp>
@@ -26,7 +23,7 @@ struct my_rule_class
 {
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result
-    on_error(Iterator&, Iterator const& last, Exception const& x, Context const& context)
+    on_error(Iterator&, Iterator const& last, Exception const& x, Context const&)
     {
         std::cout
             << "Error! Expecting: "
@@ -81,7 +78,7 @@ main()
         rule<class b, int> rb;
         int attr;
 
-        auto f = [](auto c){};
+        auto f = [](auto&){};
         auto ra_def = (ra %= int_[f]);
         BOOST_TEST(test_attr("123", ra_def, attr));
         BOOST_TEST(attr == 123);

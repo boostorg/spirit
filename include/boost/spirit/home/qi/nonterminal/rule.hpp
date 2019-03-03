@@ -291,16 +291,13 @@ namespace boost { namespace spirit { namespace qi
                 if (is_same<skipper_type, unused_type>::value)
                     qi::skip_over(first, last, skipper);
 
-                typedef traits::make_attribute<attr_type, Attribute> make_attribute;
-
                 // do down-stream transformation, provides attribute for
                 // rhs parser
                 typedef traits::transform_attribute<
-                    typename make_attribute::type, attr_type, domain>
+                    Attribute, attr_type, domain>
                 transform;
 
-                typename make_attribute::type made_attr = make_attribute::call(attr_param);
-                typename transform::type attr_ = transform::pre(made_attr);
+                typename transform::type attr_ = transform::pre(attr_param);
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -315,12 +312,12 @@ namespace boost { namespace spirit { namespace qi
                 {
                     // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
-                    traits::post_transform(attr_param, attr_);
+                    transform::post(attr_param, attr_);
                     return true;
                 }
 
                 // inform attribute transformation of failed rhs
-                traits::fail_transform(attr_param, attr_);
+                transform::fail(attr_param);
             }
             return false;
         }
@@ -345,16 +342,13 @@ namespace boost { namespace spirit { namespace qi
                 if (is_same<skipper_type, unused_type>::value)
                     qi::skip_over(first, last, skipper);
 
-                typedef traits::make_attribute<attr_type, Attribute> make_attribute;
-
                 // do down-stream transformation, provides attribute for
                 // rhs parser
                 typedef traits::transform_attribute<
-                    typename make_attribute::type, attr_type, domain>
+                    Attribute, attr_type, domain>
                 transform;
 
-                typename make_attribute::type made_attr = make_attribute::call(attr_param);
-                typename transform::type attr_ = transform::pre(made_attr);
+                typename transform::type attr_ = transform::pre(attr_param);
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -369,12 +363,12 @@ namespace boost { namespace spirit { namespace qi
                 {
                     // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
-                    traits::post_transform(attr_param, attr_);
+                    transform::post(attr_param, attr_);
                     return true;
                 }
 
                 // inform attribute transformation of failed rhs
-                traits::fail_transform(attr_param, attr_);
+                transform::fail(attr_param);
             }
             return false;
         }

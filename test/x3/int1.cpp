@@ -145,7 +145,7 @@ main()
         using boost::spirit::x3::_attr;
         using boost::spirit::x3::ascii::space;
         using boost::spirit::x3::int_;
-        int n, m;
+        int n = 0, m = 0;
 
         auto f = [&](auto& ctx){ n = _attr(ctx); };
 

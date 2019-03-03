@@ -7,8 +7,6 @@
 project spirit-qi-compiler_tutorial
     : requirements
         <c++-template-depth>300
-        <variant>release:<location>"bin/release"
-        <variant>debug:<location>"bin/debug"
     :
     ;
 

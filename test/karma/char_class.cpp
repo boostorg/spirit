@@ -3,9 +3,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -140,16 +137,10 @@ int main()
         BOOST_TEST(!test("", xdigit, 'g'));
 
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("german")
-#endif
-        BOOST_TEST(test("é", alpha, 'é'));
-        BOOST_TEST(test("é", lower, 'é'));
-        BOOST_TEST(!test("", upper, 'é'));
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
+        // test extended ASCII characters
+        BOOST_TEST(test("\xE9", alpha, '\xE9'));
+        BOOST_TEST(test("\xE9", lower, '\xE9'));
+        BOOST_TEST(!test("", upper, '\xE9'));
     }
 
     {
