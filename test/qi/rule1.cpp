@@ -72,7 +72,9 @@ main()
         rule<char const*> a ('a');
         rule<char const*> b ('b');
         rule<char const*> c ('c');
-        rule<char const*> start = (a | b) >> (start | b);
+        rule<char const*> start;
+
+        start = (a | b) >> (start | b);
 
         BOOST_TEST(test("aaaabababaaabbb", start));
         BOOST_TEST(test("aaaabababaaabba", start, false));
