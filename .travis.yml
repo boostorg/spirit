@@ -116,7 +116,8 @@ before_install:
     feature.feature known-warnings : suppress : optional incidental propagated ;
     toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
         -Wno-maybe-uninitialized  # this warning is known to give false positives
-        -Wno-bool-operation -Wno-sign-compare : unchecked ;
+        -Wno-sign-compare
+      : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
         -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
         -Wno-nested-anon-types # Boost.Random
