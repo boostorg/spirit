@@ -120,7 +120,6 @@ before_install:
       : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
         -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
-        -Wno-nested-anon-types # Boost.Random
       : unchecked ;
 
   - |
