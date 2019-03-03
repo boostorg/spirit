@@ -29,5 +29,5 @@ boostbook spirit2_repository
         <include>.
         <format>pdf:<xsl:param>img.src.path=$(images_location)/
         <format>pdf:<xsl:param>draft.mode="no"
-        <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/spirit/repository/doc/html
+        <format>pdf:<xsl:param>"boost.url.prefix=http://www.boost.org/doc/libs/release/libs/spirit/repository/doc/html"
     ;
