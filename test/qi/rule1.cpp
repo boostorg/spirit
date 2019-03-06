@@ -72,9 +72,15 @@ main()
         rule<char const*> a ('a');
         rule<char const*> b ('b');
         rule<char const*> c ('c');
-        rule<char const*> start;
-
-        start = (a | b) >> (start | b);
+#ifdef BOOST_CLANG
+# pragma clang diagnostic push
+// variable 'start' is uninitialized when used within its own initialization
+# pragma clang diagnostic ignored "-Wuninitialized"
+#endif
+        rule<char const*> start = (a | b) >> (start | b);
+#ifdef BOOST_CLANG
+# pragma clang diagnostic pop
+#endif
 
         BOOST_TEST(test("aaaabababaaabbb", start));
         BOOST_TEST(test("aaaabababaaabba", start, false));
