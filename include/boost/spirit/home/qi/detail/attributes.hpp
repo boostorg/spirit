@@ -94,16 +94,6 @@ namespace boost { namespace spirit { namespace qi
         }
     };
 
-    // reference types need special handling
-    template <typename Attribute>
-    struct transform_attribute<Attribute&, Attribute>
-    {
-        typedef Attribute& type;
-        static Attribute& pre(Attribute& val) { return val; }
-        static void post(Attribute&, Attribute const&) {}
-        static void fail(Attribute&) {}
-    };
-
     // unused_type needs some special handling as well
     template <>
     struct transform_attribute<unused_type, unused_type>
@@ -139,16 +129,6 @@ namespace boost { namespace spirit { namespace traits
           : qi::transform_attribute<Exposed, Transformed>
         {};
     }
-
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed&, Transformed, qi::domain>
-      : transform_attribute<Exposed, Transformed, qi::domain>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute&, Attribute, qi::domain>
-      : qi::transform_attribute<Attribute&, Attribute>
-    {};
 }}}
 
 #endif
