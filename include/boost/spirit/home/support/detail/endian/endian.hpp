@@ -523,10 +523,6 @@ namespace boost { namespace spirit
     typedef endian< endianness::native, uint_least64_t, 56 >     unative56_t;
     typedef endian< endianness::native, uint_least64_t, 64 >     unative64_t;
 
-#define BOOST_HAS_INT16_T
-#define BOOST_HAS_INT32_T
-#define BOOST_HAS_INT64_T
-
   //  These types only present if platform has exact size integers:
   //     aligned big endian signed integer types
   //     aligned big endian unsigned integer types
@@ -536,26 +532,26 @@ namespace boost { namespace spirit
   //     aligned native endian typedefs are not provided because
   //     <cstdint> types are superior for this use case
 
-# if defined(BOOST_HAS_INT16_T)
+#ifdef INT16_MAX
     typedef endian< endianness::big, int16_t, 16, alignment::aligned >      aligned_big16_t;
     typedef endian< endianness::big, uint16_t, 16, alignment::aligned >     aligned_ubig16_t;
     typedef endian< endianness::little, int16_t, 16, alignment::aligned >   aligned_little16_t;
     typedef endian< endianness::little, uint16_t, 16, alignment::aligned >  aligned_ulittle16_t;
-# endif
+#endif
 
-# if defined(BOOST_HAS_INT32_T)
+#ifdef INT32_MAX
     typedef endian< endianness::big, int32_t, 32, alignment::aligned >      aligned_big32_t;
     typedef endian< endianness::big, uint32_t, 32, alignment::aligned >     aligned_ubig32_t;
     typedef endian< endianness::little, int32_t, 32, alignment::aligned >   aligned_little32_t;
     typedef endian< endianness::little, uint32_t, 32, alignment::aligned >  aligned_ulittle32_t;
-# endif
+#endif
 
-# if defined(BOOST_HAS_INT64_T)
+#ifdef INT64_MAX
     typedef endian< endianness::big, int64_t, 64, alignment::aligned >      aligned_big64_t;
     typedef endian< endianness::big, uint64_t, 64, alignment::aligned >     aligned_ubig64_t;
     typedef endian< endianness::little, int64_t, 64, alignment::aligned >   aligned_little64_t;
     typedef endian< endianness::little, uint64_t, 64, alignment::aligned >  aligned_ulittle64_t;
-# endif
+#endif
 
   } // namespace endian
 }} // namespace boost::spirit
