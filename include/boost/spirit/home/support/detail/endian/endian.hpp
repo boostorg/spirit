@@ -566,6 +566,9 @@ namespace boost { namespace endian
     using namespace boost::spirit::endian;
 }}
 
+#undef BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+#undef BOOST_SPIRIT_ENDIAN_NO_CTORS
+
 #if defined(__BORLANDC__) || defined( __CODEGEARC__)
 # pragma pack(pop)
 #endif
