@@ -30,6 +30,7 @@
 #include <boost/fusion/include/mpl.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_convertible.hpp>
+#include <boost/type_traits/is_reference.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
@@ -956,7 +957,12 @@ namespace boost { namespace spirit { namespace traits
       , typename Enable/* = void*/>
     struct transform_attribute
       : detail::transform_attribute_base<Exposed, Transformed, Domain>
-    {};
+    {
+        BOOST_STATIC_ASSERT_MSG(!is_reference<Exposed>::value,
+            "Exposed cannot be a reference type");
+        BOOST_STATIC_ASSERT_MSG(!is_reference<Transformed>::value,
+            "Transformed cannot be a reference type");
+    };
 
     template <typename Transformed, typename Domain>
     struct transform_attribute<unused_type, Transformed, Domain>
