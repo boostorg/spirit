@@ -40,45 +40,45 @@ env:
 matrix:
   include:
     ### Spirit 3
-    - { env: 'STD=14  JOB=test/x3          TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=14  JOB=test/x3          TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: gcc-8, addons: *gcc-8 }
     ### Spirit 2
     ## Clang
     # 11
-    - { env: 'STD=11  JOB=test/qi          TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=test/karma       TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=test/lex         TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=test/support     TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=repository/test  TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/support',    compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=repository/test', compiler: clang-7, addons: *clang-7 }
     # 03
-    - { env: 'STD=03  JOB=test/qi          TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=test/karma       TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=test/lex         TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=test/support     TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=repository/test  TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/support',    compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=repository/test', compiler: clang-7, addons: *clang-7 }
     ## GCC
     # 11
-    - { env: 'STD=11  JOB=test/qi          TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=test/karma       TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=test/lex         TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=test/support     TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=repository/test  TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/support',    compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=repository/test', compiler: gcc-8, addons: *gcc-8 }
     # 03
-    - { env: 'STD=03  JOB=test/qi          TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=test/karma       TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=test/lex         TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=test/support     TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=repository/test  TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/support',    compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=repository/test', compiler: gcc-8, addons: *gcc-8 }
     ### Spirit 1
-    - { env: 'STD=03  JOB=classic/test     TOOLSET=clang-7', compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=classic/test     TOOLSET=gcc-8', compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: gcc-8, addons: *gcc-8 }
 
 cache: ccache
 
 before_install:
   - export CACHE_NAME=$TRAVIS_OS_NAME-$TOOLSET-$STD-$JOB
   - export PATH=$BOOST_ROOT:$PATH
-  - if [[ "$TOOLSET" =~ ^clang- ]]; then export STDLIB=stdlib=libc++ ; fi
+  - if [[ "$TRAVIS_COMPILER" =~ ^clang- ]]; then export STDLIB=stdlib=libc++ ; fi
   - |
     # Creating ~/user-config.jam file
     sed 's/^  //' > ~/user-config.jam << 'EOF'
@@ -92,7 +92,7 @@ before_install:
 
     # Ccache
     local CCACHE = [ common.find-tool ccache ] ;
-    local TOOLSET = [ os.environ TOOLSET ] ;
+    local TOOLSET = [ os.environ TRAVIS_COMPILER ] ;
     local toolset-parts = [ regex.split $(TOOLSET) "-" ] ;
     local toolset-name = $(toolset-parts[1]) ;
     local toolset-feature = $(toolset-parts[2-]:J="-") ;
@@ -157,7 +157,7 @@ before_install:
     || ( echo === bootstrap.log === ; cat bootstrap.log ; exit 1 ; )
   - ./b2 headers
   - ./b2 -j`nproc` link=shared threading=multi variant=release
-      toolset=$TOOLSET cxxstd=${STD#*,} $STDLIB
+      toolset=$TRAVIS_COMPILER cxxstd=${STD#*,} $STDLIB
       warnings=off
 
   # Move the repository to boost/libs and make a link to previous place
@@ -169,5 +169,5 @@ before_install:
 
 script:
   - b2 -j`nproc` link=shared threading=multi variant=release
-      toolset=$TOOLSET cxxstd=$STD $STDLIB
+      toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
       warnings=on known-warnings=suppress warnings-as-errors=on
