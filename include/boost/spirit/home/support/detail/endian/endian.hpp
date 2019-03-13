@@ -556,12 +556,6 @@ namespace boost { namespace spirit
   } // namespace endian
 }} // namespace boost::spirit
 
-// import the namespace above into boost::endian
-namespace boost { namespace endian
-{
-    using namespace boost::spirit::endian;
-}}
-
 #undef BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
 #undef BOOST_SPIRIT_ENDIAN_NO_CTORS
 
