@@ -16,57 +16,74 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID, typename T, typename Next = unused_type>
     struct context
     {
-        context(T& val, Next const& next)
-            : val(val), next(next) {}
+        T& val;
+        Next next;
+    };
 
-        T& get(mpl::identity<ID>) const
-        {
-            return val;
-        }
-
-        template <typename ID_>
-        decltype(auto) get(ID_ id) const
-        {
-            return next.get(id);
-        }
-
+    template <typename ID, typename T, typename Next>
+    struct context<ID, T, Next const&>
+    {
         T& val;
         Next const& next;
     };
 
-    template <typename ID, typename T>
-    struct context<ID, T, unused_type>
-    {
-        context(T& val)
-            : val(val) {}
-
-        context(T& val, unused_type)
-            : val(val) {}
-
-        T& get(mpl::identity<ID>) const
+    namespace detail {
+        template <typename ID, typename T, typename Next>
+        T& get(context<ID, T, Next> const& ctx, mpl::identity<ID>)
         {
-            return val;
+            return ctx.val;
         }
 
-        template <typename ID_>
-        unused_type get(ID_) const
+        template <typename ID>
+        unused_type get(unused_type, mpl::identity<ID>)
         {
             return {};
         }
 
-        T& val;
-    };
+        template <typename ID, typename T, typename Next, typename DifferentID>
+        decltype(auto) get(context<ID, T, Next> const& ctx, mpl::identity<DifferentID> id)
+        {
+            return get(ctx.next, id);
+        }
+    }
 
     template <typename Tag, typename Context>
-    inline decltype(auto) get(Context const& context)
+    inline decltype(auto) get(Context const& ctx)
     {
-        return context.get(mpl::identity<Tag>());
+        return detail::get(ctx, mpl::identity<Tag>());
+    }
+
+    namespace detail {
+        template <typename ID, typename T, typename Next>
+        auto const& remove(context<ID, T, Next> const& ctx, mpl::identity<ID>)
+        {
+            return ctx.next;
+        }
+
+        template <typename ID, typename T, typename Next, typename DifferentID>
+        auto remove(context<ID, T, Next> const& ctx, mpl::identity<DifferentID> id)
+        {
+            return context<ID, T, decltype(remove(ctx.next, id))>{ ctx.val, remove(ctx.next, id) };
+        }
+
+        template <typename ID, typename FoundVal, typename T, typename Next, std::enable_if_t<!std::is_same<FoundVal, unused_type>::value>* =nullptr>
+        inline auto make_context(T& val, Next const& next) -> context<ID, T, decltype(remove(next, mpl::identity<ID>()))>
+        {
+            return { val, remove(next, mpl::identity<ID>()) };
+        }
+        
+        // optimization: don't rebuild the context when ID could not be found
+        template <typename ID, typename FoundVal, typename T, typename Next, std::enable_if_t<std::is_same<FoundVal, unused_type>::value>* =nullptr>
+        inline context<ID, T, Next const&> make_context(T& val, Next const& next)
+        {
+            return { val, next };
+        }
     }
 
     template <typename ID, typename T, typename Next>
-    inline context<ID, T, Next> make_context(T& val, Next const& next)
+    inline decltype(auto) make_context(T& val, Next const& next)
     {
-        return { val, next };
+        return detail::make_context<ID, decltype(x3::get<ID>(next))>(val, next);
     }
 
     template <typename ID, typename T>
@@ -85,7 +102,7 @@ namespace boost { namespace spirit { namespace x3
         }
         
         template <typename ID, typename T, typename Next>
-        inline context<ID, T, Next>
+        inline context<ID, T, Next const&>
         make_unique_context(T& val, Next const& next, unused_type)
         {
             return { val, next };

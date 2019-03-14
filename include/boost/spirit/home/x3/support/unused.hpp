@@ -54,14 +54,6 @@ namespace boost { namespace spirit { namespace x3
         {
             return *this;
         }
-
-        // unused_type can also masquerade as an empty context (see context.hpp)
-
-        template <typename ID>
-        unused_type get(ID) const
-        {
-            return {};
-        }
     };
 
     auto const unused = unused_type{};
