@@ -24,7 +24,7 @@ using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 namespace {
 
-static char TMP_FILE[L_tmpnam];
+static const char* TMP_FILE = "file_iter.tmp";
 
 bool CreateTempFile(void)
 {
@@ -149,15 +149,9 @@ BOOST_CLASS_REQUIRE(iter, boost, RandomAccessIteratorConcept);
 
 int main(void)
 {
-    if (!std::tmpnam(TMP_FILE))
-    {
-        std::cerr << "ERROR: Cannot create unique file name\n";
-        return 3;
-    }
-
     if (!CreateTempFile())
     {
-        std::cerr << "ERROR: Cannot create temporary file " << TMP_FILE << '\n';
+        cerr << "ERROR: Cannot create temporary file file_iter.tmp" << endl;
         return 2;
     }
 
