@@ -217,7 +217,9 @@ namespace boost { namespace spirit { namespace qi
             T attr_;
 
             if (extract::parse(first, last, attr_, RealPolicies()) &&
-                (attr_ == n_))
+                (abs(attr_ - n_) <=
+                 (std::numeric_limits<T>::epsilon() * std::max(abs(attr_), abs(n_)) * 2) ||
+                 (abs(attr_ - n_) < std::numeric_limits<T>::min())))
             {
                 traits::assign_to(attr_, attr_param);
                 return true;
