@@ -67,7 +67,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     {
                         return true;
                     }
-                    save = save;
+                    first = save;
                     return false;
                 }
 
@@ -86,7 +86,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     {
                         return true;
                     }
-                    save = save;
+                    first = save;
                     return false;
                 }
 

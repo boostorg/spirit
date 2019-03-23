@@ -6,9 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
@@ -52,26 +49,22 @@ main()
         BOOST_TEST(!test("z", no_case['x']));
     }
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
-    {
-        using namespace boost::spirit::iso8859_1;
-        BOOST_TEST(test("¡", no_case[char_('·')]));
-    }
-
     {
         using namespace boost::spirit::iso8859_1;
         BOOST_TEST(test("X", no_case[char_("a-z")]));
         BOOST_TEST(!test("1", no_case[char_("a-z")]));
-
-        BOOST_TEST(test("…", no_case[char_("Â-Ô")]));
-        BOOST_TEST(!test("ˇ", no_case[char_("Â-Ô")]));
     }
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
+
+    { // test extended ASCII characters
+        using namespace boost::spirit::iso8859_1;
+        BOOST_TEST(test("\xC1", no_case[char_('\xE1')]));
+
+        BOOST_TEST(test("\xC9", no_case[char_("\xE5-\xEF")]));
+        BOOST_TEST(!test("\xFF", no_case[char_("\xE5-\xEF")]));
+
+        BOOST_TEST(test("\xC1\xE1", no_case[lit("\xE1\xC1")]));
+        BOOST_TEST(test("\xE1\xE1", no_case[no_case[lit("\xE1\xC1")]]));
+    }
 
     {
         using namespace boost::spirit::ascii;
@@ -79,18 +72,6 @@ main()
         BOOST_TEST(test("BOCHI BOCHI", no_case[lit("bochi bochi")]));
         BOOST_TEST(!test("Vavoo", no_case[lit("bochi bochi")]));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
-    {
-        using namespace boost::spirit::iso8859_1;
-        BOOST_TEST(test("¡·", no_case[lit("·¡")]));
-        BOOST_TEST(test("··", no_case[no_case[lit("·¡")]]));
-    }
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     {
         // should work!

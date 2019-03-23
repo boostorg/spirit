@@ -225,7 +225,7 @@ declared and defined via `BOOST_SPIRIT_DECLARE` and `BOOST_SPIRIT_DEFINE`
 respectively, using `BOOST_SPIRIT_INSTANTIATE`. For our particular example,
 `BOOST_SPIRIT_INSTANTIATE` expands to this code:
 
-    template bool parse_rule<iterator_type, context_type, employee_type::attribute_type>(
+    template bool parse_rule<iterator_type, context_type>(
         employee_type rule_
       , iterator_type& first, iterator_type const& last
       , context_type const& context, employee_type::attribute_type& attr);

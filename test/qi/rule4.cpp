@@ -5,9 +5,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file deliberately contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
@@ -107,32 +104,25 @@ main()
         BOOST_TEST(!test("[123,456]", r));
     }
 
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
     { // specifying the encoding
 
         typedef boost::spirit::char_encoding::iso8859_1 iso8859_1;
         rule<char const*, iso8859_1> r;
 
-        r = no_case['·'];
-        BOOST_TEST(test("¡", r));
-        r = no_case[char_('·')];
-        BOOST_TEST(test("¡", r));
+        r = no_case['\xE1'];
+        BOOST_TEST(test("\xC1", r));
+        r = no_case[char_('\xE1')];
+        BOOST_TEST(test("\xC1", r));
 
-        r = no_case[char_("Â-Ô")];
-        BOOST_TEST(test("…", r));
-        BOOST_TEST(!test("ˇ", r));
+        r = no_case[char_("\xE5-\xEF")];
+        BOOST_TEST(test("\xC9", r));
+        BOOST_TEST(!test("\xFF", r));
 
-        r = no_case["·¡"];
-        BOOST_TEST(test("¡·", r));
-        r = no_case[lit("·¡")];
-        BOOST_TEST(test("¡·", r));
+        r = no_case["\xE1\xC1"];
+        BOOST_TEST(test("\xC1\xE1", r));
+        r = no_case[lit("\xE1\xC1")];
+        BOOST_TEST(test("\xC1\xE1", r));
     }
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     {
         typedef boost::variant<double, int> v_type;

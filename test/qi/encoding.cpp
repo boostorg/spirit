@@ -6,9 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-// this file intentionally contains non-ascii characters
-// boostinspect:noascii
-
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
@@ -33,30 +30,16 @@ main()
 
     encoding<char_encoding::iso8859_1> iso8859_1;
 
-// needed for VC7.1 only
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("french")
-#endif
+    { // test extended ASCII characters
+        BOOST_TEST(test("\xC1", iso8859_1[no_case['\xE1']]));
+        BOOST_TEST(test("\xC1", iso8859_1[no_case[char_('\xE1')]]));
 
-    {
-        BOOST_TEST(test("¡", iso8859_1[no_case['·']]));
-        BOOST_TEST(test("¡", iso8859_1[no_case[char_('·')]]));
+        BOOST_TEST(test("\xC9", iso8859_1[no_case[char_("\xE5-\xEF")]]));
+        BOOST_TEST(!test("\xFF", iso8859_1[no_case[char_("\xE5-\xEF")]]));
+
+        BOOST_TEST(test("\xC1\xE1", iso8859_1[no_case["\xE1\xC1"]]));
+        BOOST_TEST(test("\xC1\xE1", iso8859_1[no_case[lit("\xE1\xC1")]]));
     }
-
-    {
-        BOOST_TEST(test("…", iso8859_1[no_case[char_("Â-Ô")]]));
-        BOOST_TEST(!test("ˇ", iso8859_1[no_case[char_("Â-Ô")]]));
-    }
-
-    {
-        BOOST_TEST(test("¡·", iso8859_1[no_case["·¡"]]));
-        BOOST_TEST(test("¡·", iso8859_1[no_case[lit("·¡")]]));
-    }
-
-
-#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
-#pragma setlocale("")
-#endif
 
     return boost::report_errors();
 }

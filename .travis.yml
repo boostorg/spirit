@@ -1,5 +1,5 @@
 #==============================================================================
-#   Copyright (c) 2016-2017 Nikita Kniazev
+#   Copyright (c) 2016-2019 Nikita Kniazev
 #
 #   Use, modification and distribution is subject to the Boost Software
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,33 +11,24 @@ language: cpp
 sudo: false
 
 addon_shortcuts:
-  clang50: &clang50
+  clang-7: &clang-7
     apt:
       sources:
-        - llvm-toolchain-trusty-5.0
+        - llvm-toolchain-xenial-7
       packages:
-        - clang-5.0
-        - libc++-dev
+        - clang-7
+        - libc++-7-dev
+        - libc++abi-7-dev
 
-  gcc6: &gcc6
+  gcc-8: &gcc-8
     apt:
       sources:
         - ubuntu-toolchain-r-test
       packages:
-        - gcc-6
-        - g++-6
-
-  # GCC 7 installs three times slower than GCC 6
-  gcc7: &gcc7
-    apt:
-      sources:
-        - ubuntu-toolchain-r-test
-      packages:
-        - gcc-7
-        - g++-7
+        - g++-8
 
 os: linux
-dist: trusty
+dist: xenial
 
 env:
   global:
@@ -49,45 +40,45 @@ env:
 matrix:
   include:
     ### Spirit 3
-    - { env: 'STD=14  JOB=test/x3          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=14  JOB=test/x3          TOOLSET=gcc-7', compiler: gcc-7, addons: *gcc7 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: gcc-8, addons: *gcc-8 }
     ### Spirit 2
     ## Clang
     # 11
-    - { env: 'STD=11  JOB=test/qi          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=test/karma       TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=test/lex         TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=test/support     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=11  JOB=repository/test  TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/support',    compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=repository/test', compiler: clang-7, addons: *clang-7 }
     # 03
-    - { env: 'STD=03  JOB=test/qi          TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=test/karma       TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=test/lex         TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=test/support     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=repository/test  TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/support',    compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=repository/test', compiler: clang-7, addons: *clang-7 }
     ## GCC
     # 11
-    - { env: 'STD=11  JOB=test/qi          TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=test/karma       TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=test/lex         TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=test/support     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=11  JOB=repository/test  TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/support',    compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=repository/test', compiler: gcc-8, addons: *gcc-8 }
     # 03
-    - { env: 'STD=03  JOB=test/qi          TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=test/karma       TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=test/lex         TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=test/support     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
-    - { env: 'STD=03  JOB=repository/test  TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/support',    compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=repository/test', compiler: gcc-8, addons: *gcc-8 }
     ### Spirit 1
-    - { env: 'STD=03  JOB=classic/test     TOOLSET=clang-5.0', compiler: clang-5.0, addons: *clang50 }
-    - { env: 'STD=03  JOB=classic/test     TOOLSET=gcc-6', compiler: gcc-6, addons: *gcc6 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: gcc-8, addons: *gcc-8 }
 
 cache: ccache
 
 before_install:
   - export CACHE_NAME=$TRAVIS_OS_NAME-$TOOLSET-$STD-$JOB
   - export PATH=$BOOST_ROOT:$PATH
-  - if [[ "$TOOLSET" =~ ^clang- ]]; then export STDLIB=stdlib=libc++ ; fi
+  - if [[ "$TRAVIS_COMPILER" =~ ^clang- ]]; then export STDLIB=stdlib=libc++ ; fi
   - |
     # Creating ~/user-config.jam file
     sed 's/^  //' > ~/user-config.jam << 'EOF'
@@ -101,7 +92,7 @@ before_install:
 
     # Ccache
     local CCACHE = [ common.find-tool ccache ] ;
-    local TOOLSET = [ os.environ TOOLSET ] ;
+    local TOOLSET = [ os.environ TRAVIS_COMPILER ] ;
     local toolset-parts = [ regex.split $(TOOLSET) "-" ] ;
     local toolset-name = $(toolset-parts[1]) ;
     local toolset-feature = $(toolset-parts[2-]:J="-") ;
@@ -124,11 +115,12 @@ before_install:
     # Ignore some warnings
     feature.feature known-warnings : suppress : optional incidental propagated ;
     toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
-        -Wno-uninitialized -Wno-bool-operation -Wno-sign-compare : unchecked ;
+        -Wno-maybe-uninitialized  # this warning is known to give false positives
+        -Wno-sign-compare
+      : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
         -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
-        -Wno-nested-anon-types # Boost.Random
-        -Wno-uninitialized -Wno-invalid-source-encoding : unchecked ;
+      : unchecked ;
 
   - |
     # Determining the root branch
@@ -165,7 +157,7 @@ before_install:
     || ( echo === bootstrap.log === ; cat bootstrap.log ; exit 1 ; )
   - ./b2 headers
   - ./b2 -j`nproc` link=shared threading=multi variant=release
-      toolset=$TOOLSET cxxstd=${STD#*,} $STDLIB
+      toolset=$TRAVIS_COMPILER cxxstd=${STD#*,} $STDLIB
       warnings=off
 
   # Move the repository to boost/libs and make a link to previous place
@@ -177,5 +169,5 @@ before_install:
 
 script:
   - b2 -j`nproc` link=shared threading=multi variant=release
-      toolset=$TOOLSET cxxstd=$STD $STDLIB
+      toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
       warnings=on known-warnings=suppress warnings-as-errors=on

@@ -14,6 +14,7 @@
 #include <string>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 struct x_attr
 {
@@ -127,6 +128,12 @@ main()
         boost::fusion::vector<std::string> fs;
         BOOST_TEST((test_attr("12345", +char_, fs))); // ok
         BOOST_TEST(boost::fusion::at_c<0>(fs) == "12345");
+    }
+
+    { // test move only types
+        std::vector<move_only> v;
+        BOOST_TEST(test_attr("sss", +synth_move_only, v));
+        BOOST_TEST_EQ(v.size(), 3);
     }
 
     return boost::report_errors();

@@ -17,7 +17,7 @@ struct error_handler_base
 {
     template <typename Iterator, typename Exception, typename Context>
     x3::error_handler_result on_error(
-        Iterator& first, Iterator const& last
+        Iterator&, Iterator const&
       , Exception const& x, Context const& context) const
     {
         std::string message = "Error! Expecting: " + x.which() + " here:";
@@ -32,7 +32,7 @@ struct test_rule_class : x3::annotate_on_success, error_handler_base {};
 x3::rule<test_rule_class> const test_rule;
 auto const test_rule_def = x3::lit("foo") > x3::lit("bar") > x3::lit("git");
 
-BOOST_SPIRIT_DEFINE(test_rule);
+BOOST_SPIRIT_DEFINE(test_rule)
 
 void test(std::string const& line_break) {
     std::string const input("foo" + line_break + "  foo" + line_break + "git");

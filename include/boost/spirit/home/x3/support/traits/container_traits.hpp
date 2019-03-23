@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename T>
         static bool call(Container& c, T&& val)
         {
-            c.insert(c.end(), std::move(val));
+            c.insert(c.end(), static_cast<T&&>(val));
             return true;
         }
     };
@@ -130,7 +130,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename T>
     inline bool push_back(Container& c, T&& val)
     {
-        return push_back_container<Container>::call(c, std::move(val));
+        return push_back_container<Container>::call(c, static_cast<T&&>(val));
     }
 
     template <typename Container>

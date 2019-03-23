@@ -206,7 +206,9 @@ long eval_expression(iter_t const& i)
             std::abort(); // error
     }
 
+#if defined(_MSC_VER) && (_MSC_VER < 1700)
     return 0;
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////

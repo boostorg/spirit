@@ -44,22 +44,6 @@ namespace boost { namespace spirit { namespace karma
         // Karma only, no post() and no fail() required
     };
 
-    // reference types need special handling
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed&, Transformed>
-      : transform_attribute<Exposed, Transformed>
-    {};
-
-    template <typename Exposed, typename Transformed>
-    struct transform_attribute<Exposed const&, Transformed>
-      : transform_attribute<Exposed const, Transformed>
-    {};
-
-    template <typename Attribute>
-    struct transform_attribute<Attribute const&, Attribute>
-      : transform_attribute<Attribute const, Attribute>
-    {};
-
     // unused_type needs some special handling as well
     template <>
     struct transform_attribute<unused_type, unused_type>

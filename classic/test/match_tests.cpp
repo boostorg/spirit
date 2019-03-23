@@ -40,14 +40,14 @@ match_tests()
     BOOST_TEST(m1.value() == int(m2.value()));
     m2.value(456);
 
-    m0 = m0; // match<nil> = match<nil>
+    *&m0 = m0; // match<nil> = match<nil>
     m0 = m1; // match<nil> = match<int>
     m0 = m2; // match<nil> = match<double>
     m1 = m0; // match<int> = match<nil>
     BOOST_TEST(!m1);
     BOOST_TEST(!m1.has_valid_attribute());
 
-    m1 = m1; // match<int> = match<int>
+    *&m1 = m1; // match<int> = match<int>
     m1.value(int(m2.value()));
     BOOST_TEST(m1.has_valid_attribute());
     BOOST_TEST(m1.value() == int(m2.value()));
@@ -65,7 +65,7 @@ match_tests()
     m2 = m1; // match<double> = match<int>
     BOOST_TEST(m2.has_valid_attribute());
     BOOST_TEST(m1.value() == int(m2.value()));
-    m2 = m2; // match<double> = match<double>
+    *&m2 = m2; // match<double> = match<double>
 
     cout << "sizeof(int) == " << sizeof(int) << '\n';
     cout << "sizeof(match<>) == " << sizeof(m0) << '\n';
