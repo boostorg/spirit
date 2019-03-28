@@ -42,6 +42,10 @@
 [def __iomanip__                [@http://www.cppreference.com/wiki/io/io_flags#manipulators Manipulators]]
 [def __boost_iterator_range__   [@boost:/libs/range/doc/html/range/reference/utilities/iterator_range.html `boost::iterator_range`]]
 
+[template trac[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">TRAC#'''[number]'''</ulink>''']
+[template gh[number]'''<ulink url="https://github.com/boostorg/spirit/issues/'''[number]'''">GH#'''[number]'''</ulink>''']
+[template gh_pr[number]'''<ulink url="https://github.com/boostorg/spirit/pull/'''[number]'''">GH#'''[number]'''</ulink>''']
+
 [/ Some images ]
 
 [def __note__                   [$./images/note.png]]

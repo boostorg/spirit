@@ -289,6 +289,10 @@
 [def __customize_create_parser__    [link spirit.advanced.customize.auto.create_parser `traits::create_parser`]]
 [def __customize_create_generator__ [link spirit.advanced.customize.auto.create_generator `traits::create_generator`]]
 
+[template trac[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">TRAC#'''[number]'''</ulink>''']
+[template gh[number]'''<ulink url="https://github.com/boostorg/spirit/issues/'''[number]'''">GH#'''[number]'''</ulink>''']
+[template gh_pr[number]'''<ulink url="https://github.com/boostorg/spirit/pull/'''[number]'''">GH#'''[number]'''</ulink>''']
+
 [/ Some images ]
 
 [def __note__                   [$./images/note.png]]

@@ -11,23 +11,23 @@
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_3 Spirit V3.0.3 (Boost V1.69.0)]
 
-* Drop own FP routines in favor of `boost::math` PR#392 #13531
-* Missing visibility mark on exception types PR#409
-* to_utf8: Fixed wchar_t handling on Windows PR#413 GH#395
+* Drop own FP routines in favor of `boost::math`. [gh_pr 392] [trac 13531]
+* Missing visibility mark on exception types. [gh_pr 409]
+* to_utf8: Fixed wchar_t handling on Windows. [gh_pr 413] [gh 395]
 
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_2 Spirit V3.0.2 (Boost V1.68.0)]
 
-* Small list parser optimization PR#368.
+* Small list parser optimization. [gh_pr 368]
 * Pass container attributes through sequence parser or unary
-  ending down to a sequence parser PR#370 #12085.
-* More fine grained sequence attribute check message PR#371.
-* Removed redundant check in `skip_over` PR#373.
-* Workaround constexpr in noexcept VS2015 bug in entire x3::variant PR#379.
-* Fixed calc4b example compilation PR#384.
-* Minor code improvements: PR#374.
+  ending down to a sequence parser. [gh_pr 370] [trac 12085]
+* More fine grained sequence attribute check message. [gh_pr 371]
+* Removed redundant check in `skip_over`. [gh_pr 373]
+* Workaround constexpr in noexcept VS2015 bug in entire x3::variant. [gh_pr 379]
+* Fixed calc4b example compilation. [gh_pr 384]
+* Minor code improvements. [gh_pr 374]
 
 [endsect]
 
@@ -36,22 +36,22 @@
 
 There was no version bump and changelog for Boost V1.56.0-1.66.0 releases.
 
-* Removed `with_context` PR#239.
-* Added noexcept to `x3::variant` and `forward_ast` PR#241.
-* CR+LF lines wrongly counted in `error_handler::position()` PR#248.
-* Fixed `unused_type` attribute case in `parse_into_container` PR#266.
-* Fixed parsing into associative containers PR#289.
-* Fixed overflow problem in `uint_parser<signed T>` PR#297.
-* Added VS2015 Update 3 support by using workarounds PR#308.
-* Fixed include guard names collision with Qi PR#313.
-* Added parsing into range PR#316 #12928.
+* Removed `with_context`. [gh_pr 239]
+* Added noexcept to `x3::variant` and `forward_ast`. [gh_pr 241]
+* CR+LF lines wrongly counted in `error_handler::position()`. [gh_pr 248]
+* Fixed `unused_type` attribute case in `parse_into_container`. [gh_pr 266]
+* Fixed parsing into associative containers. [gh_pr 289]
+* Fixed overflow problem in `uint_parser<signed T>`. [gh_pr 297]
+* Added VS2015 Update 3 support by using workarounds. [gh_pr 308]
+* Fixed include guard names collision with Qi. [gh_pr 313]
+* Added parsing into range. [gh_pr 316] [trac 12928]
 * Changed iterator concept static assert from `ForwardIterator` to
-  `ReadableIteratorConcept` && `ForwardTraversalConcept` PR#320.
-* Reenabled `fusion::map` support PR#330.
-* Fixed `string("...")` and `attr("...")` to single item sequence PR#337.
-* Dereference a single item view instead of unwrapping sequence PR#340.
-* Prevent `parse_nan` from dereferencing out of range iterator PR#351.
-* Use traits to test if container is empty PR#355.
+  `ReadableIteratorConcept` && `ForwardTraversalConcept`. [gh_pr 320]
+* Reenabled `fusion::map` support. [gh_pr 330]
+* Fixed `string("...")` and `attr("...")` to single item sequence. [gh_pr 337]
+* Dereference a single item view instead of unwrapping sequence. [gh_pr 340]
+* Prevent `parse_nan` from dereferencing out of range iterator. [gh_pr 351]
+* Use traits to test if container is empty. [gh_pr 355]
 
 [endsect]
 

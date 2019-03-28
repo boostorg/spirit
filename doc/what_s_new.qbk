@@ -13,10 +13,10 @@
 
 [heading What's changed from V2.5.6 (Boost V1.68.0) to V2.5.7 (Boost V1.69.0)]
 
-* Drop own FP routines in favor of `boost::math` PR#392 #13531
-* Missing visibility mark on exception types PR#409
-* Fixed transform_attribute ambiguity PR#407 GH#396
-* to_utf8: Fixed wchar_t handling on Windows PR#413 GH#395
+* Drop own FP routines in favor of `boost::math`. [gh_pr 392] [trac 13531]
+* Missing visibility mark on exception types. [gh_pr 409]
+* Fixed transform_attribute ambiguity. [gh_pr 407] [gh 396]
+* to_utf8: Fixed wchar_t handling on Windows. [gh_pr 413] [gh 395]
 
 [endsect]
 
@@ -26,13 +26,13 @@
 [heading What's changed from V2.5.5 (Boost V1.67.0) to V2.5.6 (Boost V1.68.0)]
 
 [heading Bug Fixes in Qi]
-* Fixed ADT support by permutation and sequence_or operator PR#376.
-* Specialize iterator_source for random access PR#383.
-* Removed redundant check in `skip_over` PR#373.
+* Fixed ADT support by permutation and sequence_or operator. [gh_pr 376]
+* Specialize iterator_source for random access. [gh_pr 383]
+* Removed redundant check in `skip_over`. [gh_pr 373]
 
 [heading Bug Fixes in Karma]
-* Fixed UB in `get_absolute_value` function PR#246.
-* Fixed use after scope bug if ADT getter returns by value PR#375 #6126.
+* Fixed UB in `get_absolute_value` function. [gh_pr 246]
+* Fixed use after scope bug if ADT getter returns by value. [gh_pr 375] [trac 6126]
 
 [endsect]
 
@@ -44,38 +44,38 @@
 There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
 
 [heading Bug Fixes in Qi or Karma]
-* Fixed keyword directives compilation on C++11 PR#256 #11493.
-* Fixed subrules compilation PR#279 PR#259.
-* Fixed subrules use after scope bug PR#284 #5270.
+* Fixed keyword directives compilation on C++11. [gh_pr 256] [trac 11493]
+* Fixed subrules compilation. [gh_pr 279] [gh_pr 259]
+* Fixed subrules use after scope bug. [gh_pr 284] [trac 5270]
 * Fixed undefined behavior in sequential or operator. Underlying parsers
-  order of execution was dependent on compiler PR#310.
+  order of execution was dependent on compiler. [gh_pr 310]
 * Spirit was accidentally relaying on `types` typedef of `boost::optional`.
-  The typedef was removed in the new optional implementation PR#271 #12349.
+  The typedef was removed in the new optional implementation. [gh_pr 271] [trac 12349]
 * Fixed problems with `BOOST_SPIRIT_NO_PREDEFINED_TERMINALS` (`attr_cast`,
-  `confix`, `distinct`, `keywords`, and `flush_multi_pass`) PR#314 #13311.
-* Added missing copy assignment operator to `hold_any` PR#361 #8268.
+  `confix`, `distinct`, `keywords`, and `flush_multi_pass`). [gh_pr 314] [trac 13311]
+* Added missing copy assignment operator to `hold_any`. [gh_pr 361] [trac 8268]
 
 [heading Bug Fixes in Qi]
-* Fixed alternate operator PR#201 PR#271 #12349.
-* Fixed signed integer overflow in real parser PR#245.
-* Fixed overflow problem in `uint_parser<signed T>` PR#297.
-* Fixed `get_current_line`, `get_line_start`, and added `get_line_end` PR#304.
-* Permutations parser were always initializing optionals PR#319 #12473.
+* Fixed alternate operator. [gh_pr 201] [gh_pr 271] [trac 12349]
+* Fixed signed integer overflow in real parser. [gh_pr 245]
+* Fixed overflow problem in `uint_parser<signed T>`. [gh_pr 297]
+* Fixed `get_current_line`, `get_line_start`, and added `get_line_end`. [gh_pr 304]
+* Permutations parser were always initializing optionals. [gh_pr 319] [trac 12473]
 * Changed iterator concept static assert from `ForwardIterator` to
-  `ReadableIteratorConcept` && `ForwardTraversalConcept` PR#320.
+  `ReadableIteratorConcept` && `ForwardTraversalConcept`. [gh_pr 320]
 * Added assertations to real parsers to ensure that the `parse_frac_n` from
   user defined real policy does not return negative values and also to prevent
-  static analyzers false-positives PR#358.
+  static analyzers false-positives. [gh_pr 358]
 
 [heading Bug Fixes in Karma]
-* Fixed alternate operator PR#271.
-* Fixed `no_buffering_policy` missing copy constructor PR#261.
+* Fixed alternate operator. [gh_pr 271]
+* Fixed `no_buffering_policy` missing copy constructor. [gh_pr 261]
 * The `ostream_iterator` was inheriting `std::iterator` which is deprecated
-  in C++17 PR#345.
+  in C++17. [gh_pr 345]
 
 [heading Bug Fixes in Lex]
-* Store id as promoted type to allow out-of-enum values PR#247.
-* Fixed C2001 'newline in constant' warning in generated lexers PR#324 #11540.
+* Store id as promoted type to allow out-of-enum values. [gh_pr 247]
+* Fixed C2001 'newline in constant' warning in generated lexers. [gh_pr 324] [trac 11540]
 
 [endsect]
 
@@ -107,7 +107,7 @@ There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
 
 * Integrated Vitaly Budovski's patch to add binary floating point parsers and
   generators.
-* Fixed #6253: `lex::lexertl::generate_static_dfa` compiler errors if lexer has
+* Fixed [trac 6253]: `lex::lexertl::generate_static_dfa` compiler errors if lexer has
   wchar_t as underlying stream type.
 * Added the possibility to match a token range when parsing with a lexer by
   using `qi::token(min, max)`, or `qi::tokenid(min, max)`. Both parsers match
@@ -118,7 +118,7 @@ There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
 * Fixed `karma::subrule` from the [@../../repository/doc/html/index.html repository]
   (thanks to Lee Clagett for submitting a patch).
 * Fixed __karma__ examples (thanks to Lee Clagett for submitting a patch).
-* Fixed #6368: [multi_pass] clear_queue isn't forwarded to the storage policy.
+* Fixed [trac 6368]: [multi_pass] clear_queue isn't forwarded to the storage policy.
 * Fixed a problem in __karma__ when a variant holding a container was used as
   a generator inside a sequence.
 
@@ -141,7 +141,7 @@ There was no version bump and changelog for Boost V1.61.0-1.66.0 releases.
 
 [heading Bug Fixes in Lex]
 
-* Fixed Boost ticket #5701: lexertl token_value_type returns const unused for
+* Fixed [trac 5701]: lexertl token_value_type returns const unused for
   nonconst ref.
 * Fixed a problem in the lexer (position_token) causing problems with enabled
   parser debugging (MSVC2010).
@@ -202,8 +202,8 @@ any of Spirit's include files):
 
 * __qi__ integer literals (like `int_(10)`) do not consume input on failure
   anymore.
-* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
-* Fixed Boost ticket #5246: mmap_file_iterator Fails to initialize correctly.
+* Fixed [trac 5246]: mmap_file_iterator Fails to initialize correctly.
+* Fixed [trac 5246]: mmap_file_iterator Fails to initialize correctly.
 * Fixed a const correctness problem in `karma::real_policies<>` preventing the
   use of const floating point types with the generator. Thanks to Jeroen
   Habraken (a.k.a. VeXocide) for reporting it and for submitting a patch and
@@ -393,7 +393,7 @@ any of Spirit's include files):
   with `signed char` and `unsigned char` as well.
 * Fixed a problem in the multi_pass fixed_queue policy.
 * Enabled proper modifier handling for the __qi_skip__ directive.
-* Fixed a floating point formating problem in Karma (Trac ticket #4742).
+* Fixed a floating point formating problem in Karma ([trac 4742]).
 * Fixed a problem in [qi_repeat `repeat`]`[]`, which caused the `first`
   iterator not to be reset on certain parsing failures (see
   [@http://stackoverflow.com/questions/4009752/boost-spirit-bug-when-mixing-alternates-with-optionals Stack Overflow]).
