@@ -8,7 +8,7 @@
 
 [article Spirit X3
     [quickbook 1.5]
-    [version 3.0.3]
+    [version 3.0.4]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001-2018 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser Library]
@@ -25,7 +25,7 @@
     Some links and defines
 =============================================================================/]
 
-[def __version__                V3.0.3]
+[def __version__                V3.0.4]
 
 [/ external]
 
@@ -41,6 +41,10 @@
 [def __endianness__             [@http://en.wikipedia.org/wiki/Endianness endianness]]
 [def __iomanip__                [@http://www.cppreference.com/wiki/io/io_flags#manipulators Manipulators]]
 [def __boost_iterator_range__   [@boost:/libs/range/doc/html/range/reference/utilities/iterator_range.html `boost::iterator_range`]]
+
+[template trac[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">TRAC#'''[number]'''</ulink>''']
+[template gh[number]'''<ulink url="https://github.com/boostorg/spirit/issues/'''[number]'''">GH#'''[number]'''</ulink>''']
+[template gh_pr[number]'''<ulink url="https://github.com/boostorg/spirit/pull/'''[number]'''">GH#'''[number]'''</ulink>''']
 
 [/ Some images ]
 
