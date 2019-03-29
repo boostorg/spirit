@@ -9,6 +9,39 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8 Spirit V2.5.8]
+
+[heading What's changed from V2.5.7 (Boost V1.69.0) to V2.5.8 (Boost V1.70.0)]
+
+* Removed use of deprecated `boost/detail/iterator.hpp` header [gh_pr 432]
+* Macro name collisions and namespace conflicts with Boost.Endian were fixed. [gh_pr 349] [gh_pr 482]
+
+[heading Bug Fixes in Qi]
+* Added static asserts for rule skipper type problems. [gh_pr 427]
+* The `check_overflow` trait default implementation now relies on
+  `std::numeric_limits<T>::is_bounded` instead of `boost::integer_traits<T>::is_integral` [gh_pr 429]
+* Integer parsers should now handle user defined types. [gh_pr 429]
+*[/^] [*Note:] The `check_overflow` trait default implementation now relies on
+  `std::numeric_limits<T>::is_bounded` instead of `boost::integer_traits<T>::is_integral`.
+* Removed broken 1.0#INF parser. It was poorly documented and never worked. [gh 415] [gh_pr 458] [trac 8699]
+* The undocumented `make_attribute` trait was merged into `transform_attribute` trait. [gh_pr 471]
+* The `pre_transform`, `post_transform`, and `fail_transform` utility functions
+  were removed in favor of directly using `pre`/`post`/`fail` of the transform trait. [gh_pr 467]
+* The integer value parser now respects `std::numeric_limits<T>::digits10` value. [gh_pr 469]
+* Fixed underflow check for a `(Min % Base) == 0` corner case. [gh_pr 469]
+* Fixed an output value on overflow of IgnoreOverflowDigits=true integer parser. [gh_pr 470]
+* Special handling of references in `transform_attribute` was removed. [gh_pr 480]
+
+[heading Bug Fixes in Lex]
+* Fixed UB in default constructor of lexer with user specified token type. [gh_pr 420]
+
+[heading Bug Fixes in utree]
+* Fixed UB in tag getter due to left shift of negative value. [gh_pr 423]
+* Fixed double-conversion (`spirit::string -> std::string -> spirit::string`). [gh_pr 462]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_7 Spirit V2.5.7]
 
 [heading What's changed from V2.5.6 (Boost V1.68.0) to V2.5.7 (Boost V1.69.0)]
