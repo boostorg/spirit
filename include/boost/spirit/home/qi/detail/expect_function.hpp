@@ -96,9 +96,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Skipper const& skipper;
         mutable bool is_first;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        expect_function& operator= (expect_function const&);
+        BOOST_DELETED_FUNCTION(expect_function& operator= (expect_function const&));
     };
 }}}}
 

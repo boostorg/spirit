@@ -70,9 +70,8 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        omit_directive& operator= (omit_directive const&);
+        BOOST_DELETED_FUNCTION(omit_directive& operator= (omit_directive const&));
     };
 
     ///////////////////////////////////////////////////////////////////////////

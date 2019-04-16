@@ -191,9 +191,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         Delimiter const& delim;
         Attribute const& attr;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        alternative_generate_function& operator= (alternative_generate_function const&);
+        BOOST_DELETED_FUNCTION(alternative_generate_function& operator= (alternative_generate_function const&));
     };
 
     // specialization for strict alternatives
@@ -241,9 +240,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         Attribute const& attr;
         bool failed;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        alternative_generate_function& operator= (alternative_generate_function const&);
+        BOOST_DELETED_FUNCTION(alternative_generate_function& operator= (alternative_generate_function const&));
     };
 }}}}
 

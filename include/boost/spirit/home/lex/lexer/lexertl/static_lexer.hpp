@@ -151,9 +151,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t num_states_;
             bool bol_;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            iterator_data_type& operator= (iterator_data_type const&);
+            BOOST_DELETED_FUNCTION(iterator_data_type& operator= (iterator_data_type const&));
         };
 
         typedef LexerTables tables_type;

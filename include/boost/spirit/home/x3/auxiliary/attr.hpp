@@ -50,9 +50,8 @@ namespace boost { namespace spirit { namespace x3
 
         Value value_;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        attr_parser& operator= (attr_parser const&);
+        attr_parser& operator= (attr_parser const&) = delete;
     };
     
     template <typename Value, std::size_t N>
@@ -86,9 +85,8 @@ namespace boost { namespace spirit { namespace x3
 
         Value value_[N];
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        attr_parser& operator= (attr_parser const&);
+        attr_parser& operator= (attr_parser const&) = delete;
     };
     
     template <typename Value>

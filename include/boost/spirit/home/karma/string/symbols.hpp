@@ -411,9 +411,8 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            adder& operator= (adder const&);
+            BOOST_DELETED_FUNCTION(adder& operator= (adder const&));
         };
 
         struct remover
@@ -444,9 +443,8 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            remover& operator= (remover const&);
+            BOOST_DELETED_FUNCTION(remover& operator= (remover const&));
         };
 
         adder add;
@@ -670,9 +668,8 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            adder& operator= (adder const&);
+            BOOST_DELETED_FUNCTION(adder& operator= (adder const&));
         };
 
         struct remover
@@ -703,9 +700,8 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            remover& operator= (remover const&);
+            BOOST_DELETED_FUNCTION(remover& operator= (remover const&));
         };
 
         adder add;

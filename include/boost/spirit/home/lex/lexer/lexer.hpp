@@ -181,9 +181,8 @@ namespace boost { namespace spirit { namespace lex
 
                 lexer_def_& def;
 
-            private:
                 // silence MSVC warning C4512: assignment operator could not be generated
-                adder& operator= (adder const&);
+                BOOST_DELETED_FUNCTION(adder& operator= (adder const&));
             };
             friend struct adder;
 
@@ -203,9 +202,8 @@ namespace boost { namespace spirit { namespace lex
 
                 lexer_def_& def;
 
-            private:
                 // silence MSVC warning C4512: assignment operator could not be generated
-                pattern_adder& operator= (pattern_adder const&);
+                BOOST_DELETED_FUNCTION(pattern_adder& operator= (pattern_adder const&));
             };
             friend struct pattern_adder;
 
@@ -280,9 +278,8 @@ namespace boost { namespace spirit { namespace lex
             string_type state;
             string_type targetstate;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            lexer_def_& operator= (lexer_def_ const&);
+            BOOST_DELETED_FUNCTION(lexer_def_& operator= (lexer_def_ const&));
         };
 
 #if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)

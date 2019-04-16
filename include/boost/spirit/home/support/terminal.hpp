@@ -485,9 +485,8 @@ namespace boost { namespace spirit
               , phoenix::as_actor<A2>::convert(_2_));
         }
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        terminal& operator= (terminal const&);
+        BOOST_DELETED_FUNCTION(terminal& operator= (terminal const&));
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -543,9 +542,8 @@ namespace boost { namespace spirit
 
             data_type data_;
 
-        private:
             // silence MSVC warning C4512: assignment operator could not be generated
-            stateful_tag& operator= (stateful_tag const&);
+            BOOST_DELETED_FUNCTION(stateful_tag& operator= (stateful_tag const&));
         };
     }
 
@@ -562,9 +560,8 @@ namespace boost { namespace spirit
           : spirit::terminal<tag_type>(data) 
         {}
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        stateful_tag_type& operator= (stateful_tag_type const&);
+        BOOST_DELETED_FUNCTION(stateful_tag_type& operator= (stateful_tag_type const&));
     };
 
     namespace detail
