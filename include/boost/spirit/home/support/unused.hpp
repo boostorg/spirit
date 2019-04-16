@@ -53,18 +53,6 @@ namespace boost { namespace spirit
         {
             return *this;
         }
-
-        unused_type const&
-        operator=(unused_type const&) const
-        {
-            return *this;
-        }
-
-        unused_type&
-        operator=(unused_type const&)
-        {
-            return *this;
-        }
     };
 
     unused_type const unused = unused_type();
