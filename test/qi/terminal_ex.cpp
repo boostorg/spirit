@@ -69,9 +69,8 @@ namespace testns
 
         const T1 t1;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        ops_1_parser& operator= (ops_1_parser const&);
+        BOOST_DELETED_FUNCTION(ops_1_parser& operator= (ops_1_parser const&));
     };
 
     template <typename T1, typename T2>
@@ -122,9 +121,8 @@ namespace testns
         const T1 t1;
         const T2 t2;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        ops_2_parser& operator= (ops_2_parser const&);
+        BOOST_DELETED_FUNCTION(ops_2_parser& operator= (ops_2_parser const&));
     };
 
     template <typename T1, typename T2, typename T3>
@@ -180,9 +178,8 @@ namespace testns
         const T2 t2;
         const T3 t3;
 
-    private:
         // silence MSVC warning C4512: assignment operator could not be generated
-        ops_3_parser& operator= (ops_3_parser const&);
+        BOOST_DELETED_FUNCTION(ops_3_parser& operator= (ops_3_parser const&));
     };
 
 }

@@ -36,9 +36,8 @@ struct store_double
         out.push_back(std::atof(work.c_str()));
     }
 
-private:
     // silence MSVC warning C4512: assignment operator could not be generated
-    store_double& operator= (store_double const&);
+    BOOST_DELETED_FUNCTION(store_double& operator= (store_double const&));
 };
 
 struct add_row
@@ -58,9 +57,8 @@ struct add_row
         ctx.set_state_name("A");
     }
 
-private:
     // silence MSVC warning C4512: assignment operator could not be generated
-    add_row& operator= (add_row const&);
+    BOOST_DELETED_FUNCTION(add_row& operator= (add_row const&));
 };
 
 template <class Lexer>
