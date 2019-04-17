@@ -25,9 +25,9 @@ int main()
     test<unused_type const&>(unused);
     test<unused_type&>(unused_mut);
     test<unused_type const&>(unused = 123);
-    test<unused_type const&>(unused = unused);
+    test<unused_type const&>(unused = *&unused);
     test<unused_type const&>(unused = unused_mut);
     test<unused_type&>(unused_mut = 123);
     test<unused_type&>(unused_mut = unused);
-    test<unused_type&>(unused_mut = unused_mut);
+    test<unused_type&>(unused_mut = *&unused_mut);
 }
