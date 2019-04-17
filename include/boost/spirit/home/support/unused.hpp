@@ -12,13 +12,7 @@
 #pragma once
 #endif
 
-#include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
-
-#if defined(BOOST_MSVC)
-# pragma warning(push)
-# pragma warning(disable: 4522) // multiple assignment operators specified warning
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -50,18 +44,6 @@ namespace boost { namespace spirit
         template <typename T>
         unused_type&
         operator=(T const&)
-        {
-            return *this;
-        }
-
-        unused_type const&
-        operator=(unused_type const&) const
-        {
-            return *this;
-        }
-
-        unused_type&
-        operator=(unused_type const&)
         {
             return *this;
         }
@@ -97,9 +79,5 @@ namespace boost { namespace spirit
         template <> struct not_is_unused<unused_type> : mpl::false_ {};
     }
 }}
-
-#if defined(BOOST_MSVC)
-# pragma warning(pop)
-#endif
 
 #endif
