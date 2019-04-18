@@ -9,6 +9,8 @@
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <type_traits>
 
+void test_use(boost::spirit::x3::unused_type) {}
+
 int main()
 {
     using boost::spirit::x3::unused;
@@ -25,4 +27,8 @@ int main()
     static_assert(std::is_same<decltype(unused_mut = 123), unused_type&>::value, "");
     static_assert(std::is_same<decltype(unused_mut = unused), unused_type&>::value, "");
     static_assert(std::is_same<decltype(unused_mut = unused_mut), unused_type&>::value, "");
+
+    test_use(0);
+    test_use(unused);
+    test_use(unused_mut);
 }

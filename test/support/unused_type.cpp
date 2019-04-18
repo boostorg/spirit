@@ -16,6 +16,8 @@
 static_assert(std::is_trivial<boost::spirit::unused_type>::value, "");
 #endif
 
+void test_use(boost::spirit::unused_type) {}
+
 template <typename Expected, typename T>
 void test(T&)
 {
@@ -36,4 +38,8 @@ int main()
     test<unused_type&>(unused_mut = 123);
     test<unused_type&>(unused_mut = unused);
     test<unused_type&>(unused_mut = *&unused_mut);
+
+    test_use(0);
+    test_use(unused);
+    test_use(unused_mut);
 }
