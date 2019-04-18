@@ -15,9 +15,7 @@ namespace boost { namespace spirit { namespace x3
 {
     struct unused_type
     {
-        unused_type()
-        {
-        }
+        unused_type() = default;
 
         template <typename T>
         unused_type(T const&)
