@@ -15,7 +15,7 @@
 #include "../rexpr/config.hpp"
 #include "../rexpr/printer.hpp"
 
-#include <boost/spirit/home/x3/support/utility/testing.hpp>
+#include "testing.hpp"
 
 namespace fs = boost::filesystem;
 namespace testing = boost::spirit::x3::testing;
