@@ -10,7 +10,7 @@
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 
-#if !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) || \
+#if !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) && \
     !defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
 #include <type_traits>
 static_assert(std::is_trivial<boost::spirit::unused_type>::value, "");
