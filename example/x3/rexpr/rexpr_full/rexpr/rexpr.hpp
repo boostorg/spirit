@@ -13,21 +13,17 @@
 
 namespace rexpr
 {
-    namespace x3 = boost::spirit::x3;
-
     ///////////////////////////////////////////////////////////////////////////
     // rexpr public interface
     ///////////////////////////////////////////////////////////////////////////
     namespace parser
     {
-        struct rexpr_class;
-        typedef
-            x3::rule<rexpr_class, ast::rexpr>
-        rexpr_type;
-        BOOST_SPIRIT_DECLARE(rexpr_type);
+        namespace x3 = boost::spirit::x3;
+        x3::rule<struct rexpr_r, ast::rexpr> const rexpr = "rexpr";
+        BOOST_SPIRIT_DECLARE(decltype(rexpr));
     }
 
-    parser::rexpr_type const& rexpr();
+    using parser::rexpr;
 }
 
 #endif

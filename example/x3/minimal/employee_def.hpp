@@ -7,12 +7,12 @@
 #if !defined(BOOST_SPIRIT_X3_MINIMAL_EMPLOYEE_DEF_HPP)
 #define BOOST_SPIRIT_X3_MINIMAL_EMPLOYEE_DEF_HPP
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/spirit/home/x3.hpp>
+#include "employee.hpp"
 
 #include "ast.hpp"
 #include "ast_adapted.hpp"
-#include "employee.hpp"
+
+#include <boost/spirit/home/x3.hpp>
 
 namespace client
 {
@@ -30,8 +30,6 @@ namespace client
         using x3::lexeme;
         using ascii::char_;
 
-        x3::rule<class employee, ast::employee> const employee = "employee";
-
         auto const quoted_string = lexeme['"' >> +(char_ - '"') >> '"'];
 
         auto const employee_def =
@@ -45,11 +43,6 @@ namespace client
             ;
 
         BOOST_SPIRIT_DEFINE(employee);
-    }
-
-    parser::employee_type employee()
-    {
-        return parser::employee;
     }
 }
 

@@ -105,13 +105,9 @@ namespace client
         using x3::lexeme;
         using ascii::char_;
 
-        struct quoted_string_class;
-        struct person_class;
-        struct employee_class;
-
-        x3::rule<quoted_string_class, std::string> const quoted_string = "quoted_string";
-        x3::rule<person_class, ast::person> const person = "person";
-        x3::rule<employee_class, ast::employee> const employee = "employee";
+        x3::rule<struct quoted_string_r, std::string> const quoted_string = "quoted_string";
+        x3::rule<struct person_r, ast::person> const person = "person";
+        x3::rule<struct employee_r, ast::employee> const employee = "employee";
 
         auto const quoted_string_def = lexeme['"' >> +(char_ - '"') >> '"'];
         auto const person_def = quoted_string >> ',' >> quoted_string;
@@ -128,9 +124,9 @@ namespace client
 
         BOOST_SPIRIT_DEFINE(quoted_string, person, employee);
 
-        struct quoted_string_class {};
-        struct person_class : annotate_position {};
-        struct employee_class : annotate_position {};
+        struct quoted_string_r {};
+        struct person_r : annotate_position {};
+        struct employee_r : annotate_position {};
     }
 }
 

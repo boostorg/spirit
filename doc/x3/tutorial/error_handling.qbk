@@ -175,13 +175,9 @@ Here we go:
         using x3::lexeme;
         using ascii::char_;
 
-        struct quoted_string_class;
-        struct person_class;
-        struct employee_class;
-
-        x3::rule<quoted_string_class, std::string> const quoted_string = "quoted_string";
-        x3::rule<person_class, ast::person> const person = "person";
-        x3::rule<employee_class, ast::employee> const employee = "employee";
+        x3::rule<struct quoted_string_r, std::string> const quoted_string = "quoted_string";
+        x3::rule<struct person_r, ast::person> const person = "person";
+        x3::rule<struct employee_r, ast::employee> const employee = "employee";
 
         auto const quoted_string_def = lexeme['"' >> +(char_ - '"') >> '"'];
         auto const person_def = quoted_string > ',' > quoted_string;
@@ -198,9 +194,9 @@ Here we go:
 
         BOOST_SPIRIT_DEFINE(quoted_string, person, employee);
 
-        struct quoted_string_class {};
-        struct person_class : x3::annotate_on_success {};
-        struct employee_class : error_handler, x3::annotate_on_success {};
+        struct quoted_string_r {};
+        struct person_r : x3::annotate_on_success {};
+        struct employee_r : error_handler, x3::annotate_on_success {};
     }
 
 Go back and review the [link __tutorial_annotated_employee_parser__ annotated
@@ -229,7 +225,7 @@ happens, an expectation_failure exception is thrown. Somewhere outward, the
 error handler will catch the exception. In our case, it is caught in our
 `on_error` handler.
 
-Notice too that we subclass the `employee_class` from our `error_handler`. By
+Notice too that we subclass the `employee_r` from our `error_handler`. By
 doing so, we tell X3 that we want to call our `error_handler` whenever an
 exception is thrown somewhere inside the `employee` rule and whatever else it
 calls (i.e. the `person` and `quoted_string` rules).

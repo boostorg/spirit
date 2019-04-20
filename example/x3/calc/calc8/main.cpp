@@ -75,7 +75,7 @@ main()
         // it later on in our on_error and on_sucess handlers
         with<error_handler_tag>(std::ref(error_handler))
         [
-            client::statement()
+            client::statement
         ];
 
     using boost::spirit::x3::ascii::space;

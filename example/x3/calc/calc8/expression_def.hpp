@@ -7,13 +7,16 @@
 #if !defined(BOOST_SPIRIT_X3_CALC8_EXPRESSION_DEF_HPP)
 #define BOOST_SPIRIT_X3_CALC8_EXPRESSION_DEF_HPP
 
-#include <boost/spirit/home/x3.hpp>
-#include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
+#include "expression.hpp"
+
 #include "ast.hpp"
 #include "ast_adapted.hpp"
-#include "expression.hpp"
 #include "common.hpp"
 #include "error_handler.hpp"
+#include "config.hpp"
+
+#include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/home/x3/support/utility/annotate_on_success.hpp>
 
 namespace client { namespace parser
 {
@@ -23,21 +26,10 @@ namespace client { namespace parser
     using x3::lexeme;
     using namespace x3::ascii;
 
-    struct additive_expr_class;
-    struct multiplicative_expr_class;
-    struct unary_expr_class;
-    struct primary_expr_class;
-
-    typedef x3::rule<additive_expr_class, ast::expression> additive_expr_type;
-    typedef x3::rule<multiplicative_expr_class, ast::expression> multiplicative_expr_type;
-    typedef x3::rule<unary_expr_class, ast::operand> unary_expr_type;
-    typedef x3::rule<primary_expr_class, ast::operand> primary_expr_type;
-
-    expression_type const expression = "expression";
-    additive_expr_type const additive_expr = "additive_expr";
-    multiplicative_expr_type const multiplicative_expr = "multiplicative_expr";
-    unary_expr_type unary_expr = "unary_expr";
-    primary_expr_type primary_expr = "primary_expr";
+    x3::rule<struct additive_expr_r, ast::expression> const additive_expr = "additive_expr";
+    x3::rule<struct multiplicative_expr_r, ast::expression> const multiplicative_expr = "multiplicative_expr";
+    x3::rule<struct unary_expr_r, ast::operand> const unary_expr = "unary_expr";
+    x3::rule<struct primary_expr_r, ast::operand> const primary_expr = "primary_expr";
 
     auto const additive_expr_def =
         multiplicative_expr
@@ -75,17 +67,8 @@ namespace client { namespace parser
       , primary_expr
     );
 
-    struct unary_expr_class : x3::annotate_on_success {};
-    struct primary_expr_class : x3::annotate_on_success {};
-
+    struct unary_expr_r : x3::annotate_on_success {};
+    struct primary_expr_r : x3::annotate_on_success {};
 }}
-
-namespace client
-{
-    parser::expression_type const& expression()
-    {
-        return parser::expression;
-    }
-}
 
 #endif

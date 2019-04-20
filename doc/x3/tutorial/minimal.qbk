@@ -105,24 +105,23 @@ generates function definitions that are meant to be placed in cpp files.
 [note `BOOST_SPIRIT_DECLARE` is variadic and may be used for one or more rules.
 Example: `BOOST_SPIRIT_DECLARE(r1, r2, r3);`]
 
-In this example, the top rule is `employee`. We declare `employee` in this
-header file:
+In this example, the top rule is `employee`. We define `employee` rule
+placeholder in this header file:
 
     namespace client
     {
         namespace parser
         {
             namespace x3 = boost::spirit::x3;
-            using employee_type = x3::rule<class employee, ast::employee>;
-            BOOST_SPIRIT_DECLARE(employee_type);
+            x3::rule<class employee_r, ast::employee> const employee = "employee";
+            BOOST_SPIRIT_DECLARE(decltype(employee));
         }
 
-        parser::employee_type employee();
+        using parser::employee;
     }
 
-We also provide a function that returns an `employee` object. This is the
-parser that we will use anywhere it is needed. X3 parser objects are very
-lightweight. They are basically simple tags with no data other than the name
+X3 rule placeholders are very lightweight. They are basically simple tags
+with no data other than the name
 of the rule (e.g. "employee"). Notice that we are passing this by value.
 
 [heading Parser Definitions]
@@ -140,8 +139,6 @@ Here is where we place the actual rules that make up our grammar:
         using x3::lexeme;
         using ascii::char_;
 
-        x3::rule<class employee, ast::employee> const employee = "employee";
-
         auto const quoted_string = lexeme['"' >> +(char_ - '"') >> '"'];
 
         auto const employee_def =
@@ -155,11 +152,6 @@ Here is where we place the actual rules that make up our grammar:
             ;
 
         BOOST_SPIRIT_DEFINE(employee);
-    }
-
-    parser::employee_type employee()
-    {
-        return parser::employee;
     }
 
 In the parser definition, we use [link __tutorial_spirit_define__
@@ -191,7 +183,7 @@ Now we instantiate our parser here, for our specific configuration:
 
     namespace client { namespace parser
     {
-        BOOST_SPIRIT_INSTANTIATE(employee_type, iterator_type, context_type);
+        BOOST_SPIRIT_INSTANTIATE(decltype(employee), iterator_type, context_type);
     }}
 
 For that, we use `BOOST_SPIRIT_INSTANTIATE`, passing in the parser type,

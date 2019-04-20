@@ -36,8 +36,8 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
 
     std::cout
-        << "Give me an employee of the form :"
-        << "employee{age, \"forename\", \"surname\", salary } \n";
+        << "Give me an employee of the form: "
+        << "employee{ age, \"forename\", \"surname\", salary }\n";
     std::cout << "Type [q or Q] to quit\n\n";
 
     using boost::spirit::x3::ascii::space;
@@ -53,7 +53,7 @@ main()
         client::ast::employee emp;
         iterator_type iter = str.begin();
         iterator_type const end = str.end();
-        bool r = phrase_parse(iter, end, employee(), space, emp);
+        bool r = phrase_parse(iter, end, employee, space, emp);
 
         if (r && iter == end)
         {

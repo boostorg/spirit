@@ -161,13 +161,13 @@ the text inside double quotes.
         using ascii::char_;
         using ascii::string;
 
-        x3::rule<class rexpr_value, ast::rexpr_value>
+        x3::rule<struct rexpr_value_r, ast::rexpr_value>
             rexpr_value = "rexpr_value";
 
-        x3::rule<class rexpr, ast::rexpr>
+        x3::rule<struct rexpr_r, ast::rexpr>
             rexpr = "rexpr";
 
-        x3::rule<class rexpr_key_value, ast::rexpr_key_value>
+        x3::rule<struct rexpr_key_value_r, ast::rexpr_key_value>
             rexpr_key_value = "rexpr_key_value";
 
         auto const quoted_string =

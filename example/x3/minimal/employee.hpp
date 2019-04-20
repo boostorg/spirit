@@ -7,10 +7,9 @@
 #if !defined(BOOST_SPIRIT_X3_MINIMAL_EMPLOYEE_HPP)
 #define BOOST_SPIRIT_X3_MINIMAL_EMPLOYEE_HPP
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/spirit/home/x3.hpp>
-
 #include "ast.hpp"
+
+#include <boost/spirit/home/x3.hpp>
 
 namespace client
 {
@@ -20,11 +19,11 @@ namespace client
     namespace parser
     {
         namespace x3 = boost::spirit::x3;
-        using employee_type = x3::rule<class employee, ast::employee>;
-        BOOST_SPIRIT_DECLARE(employee_type);
+        x3::rule<class employee_r, ast::employee> const employee = "employee";
+        BOOST_SPIRIT_DECLARE(decltype(employee));
     }
 
-    parser::employee_type employee();
+    using parser::employee;
 }
 
 #endif

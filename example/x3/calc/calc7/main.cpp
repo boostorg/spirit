@@ -49,7 +49,7 @@ main()
 
         client::vmachine mach;                          // Our virtual machine
         std::vector<int> code;                          // Our VM code
-        auto calc = client::expression();               // grammar
+        auto calc = client::expression;                 // grammar
 
         ast_expression ast;                             // Our program (AST)
         compiler compile(code);                         // Compiles the program

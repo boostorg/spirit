@@ -9,11 +9,11 @@
 #include <algorithm>
 #include <sstream>
 
-#include "../rexpr/ast.hpp"
-#include "../rexpr/rexpr.hpp"
-#include "../rexpr/error_handler.hpp"
-#include "../rexpr/config.hpp"
-#include "../rexpr/printer.hpp"
+#include "ast.hpp"
+#include "rexpr.hpp"
+#include "error_handler.hpp"
+#include "config.hpp"
+#include "printer.hpp"
 
 #include "testing.hpp"
 
@@ -43,7 +43,7 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
         // it later on in our on_error and on_sucess handlers
         with<error_handler_tag>(std::ref(error_handler))
         [
-            rexpr::rexpr()
+            rexpr::rexpr
         ];
 
     // Go forth and parse!

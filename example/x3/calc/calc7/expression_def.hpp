@@ -7,28 +7,21 @@
 #if !defined(BOOST_SPIRIT_X3_CALC7_EXPRESSION_DEF_HPP)
 #define BOOST_SPIRIT_X3_CALC7_EXPRESSION_DEF_HPP
 
-#include <boost/spirit/home/x3.hpp>
+#include "expression.hpp"
+
 #include "ast.hpp"
 #include "ast_adapted.hpp"
-#include "expression.hpp"
 #include "error_handler.hpp"
+
+#include <boost/spirit/home/x3.hpp>
 
 namespace client { namespace calculator_grammar
 {
     using x3::uint_;
     using x3::char_;
 
-    struct expression_class;
-    struct term_class;
-    struct factor_class;
-
-    typedef x3::rule<expression_class, ast::expression> expression_type;
-    typedef x3::rule<term_class, ast::expression> term_type;
-    typedef x3::rule<factor_class, ast::operand> factor_type;
-
-    expression_type const expression = "expression";
-    term_type const term = "term";
-    factor_type const factor = "factor";
+    x3::rule<struct term_r, ast::expression> const term = "term";
+    x3::rule<struct factor_r, ast::operand> const factor = "factor";
 
     auto const expression_def =
         term
@@ -57,15 +50,7 @@ namespace client { namespace calculator_grammar
       , factor
     );
 
-    struct expression_class : error_handler {};
+    struct expression_r : error_handler {};
 }}
-
-namespace client
-{
-    calculator_grammar::expression_type expression()
-    {
-        return calculator_grammar::expression;
-    }
-}
 
 #endif
