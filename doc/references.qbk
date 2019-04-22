@@ -10,7 +10,7 @@
 
 [table
 [[ ]   [Authors]                    [Title, Publisher/link, Date Published]]
-[[1.]  [Todd Veldhuizen]            [[@http://www.extreme.indiana.edu/%7Etveldhui/papers/Expression-Templates/exprtmpl.html
+[[1.]  [Todd Veldhuizen]            [[@https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.43.248
                                     "Expression Templates"]. C++ Report, June 1995.]]
 [[2.]  [Peter Naur (ed.)]           [[@http://www.masswerk.at/algol60/report.htm
                                     "Report on the Algorithmic Language ALGOL 60"]. CACM, May 1960.]]
@@ -54,7 +54,7 @@
                                     RDP, A Recursive Descent Compiler Compiler].
                                     Technical Report CSD TR 97 25, Dept. of Computer Science,
                                     Egham, Surrey, England, Dec. 20, 1997.]]
-[[13.] [Adrian Johnstone]           [[@http://www.cs.rhul.ac.uk/research/languages/projects/lookahead_backtrack.shtml
+[[13.] [Adrian Johnstone]           [[@https://www.cs.rhul.ac.uk/research/languages/csle/lookahead_backtrack.html
                                     Languages and Architectures,
                                     Parser generators with backtrack or extended lookahead capability]
                                     Department of Computer Science, Royal Holloway, University of London,
@@ -79,12 +79,12 @@
         Edited by Graham Hutton]    [[@http://www.cs.nott.ac.uk/~gmh//faq.html
                                     Frequently Asked Questions for comp.lang.functional].
                                     Edited by Graham Hutton, University of Nottingham.]]
-[[20.] [Hewlett-Packard]            [[@https://web.archive.org/web/20171225062613/http://www.sgi.com/tech/stl/
+[[20.] [Hewlett-Packard]            [[@https://www.boost.org/sgi/stl/
                                     Standard Template Library Programmer's Guide.], Hewlett-Packard Company, 1994]]
 [[21.] [Boost Libraries]            [[@http://boost.org/libs/libraries.htm
                                     Boost Libraries Documentation].]]
 [[22.] [Brian McNamara and
-        Yannis Smaragdakis]         [[@http://www.cc.gatech.edu/~yannis/fc++/ FC++:Functional Programming in C++].]]
+        Yannis Smaragdakis]         [[@https://people.cs.umass.edu/~yannis/fc++/ FC++:Functional Programming in C++].]]
 [[23.] [Todd Veldhuizen]            [[@ftp://ftp.cs.indiana.edu/pub/techreports/TR542.pdf Techniques for Scientific C++.]]]
 ]
 
