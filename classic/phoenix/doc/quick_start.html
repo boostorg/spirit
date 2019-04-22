@@ -73,7 +73,7 @@ Call the lazy is_odd function:</p>
 <p>
 is_odd_ is the actual functor. It has been proxied in function&lt;is_odd_&gt; by is_odd (note no trailing underscore) which makes it a lazy function. is_odd_::operator() is the main function body. is_odd_::result is a type computer that answers the question &quot;What should be our return type given an argument of type ArgT?&quot;.</p>
 <p>
-Like 2, and unlike 1, function pointers or plain C++ functors, is_odd is a true lazy, polymorphic functor (rank-2 polymorphic functoid, in <a href="http://www.cc.gatech.edu/~yannis/fc++/">
+Like 2, and unlike 1, function pointers or plain C++ functors, is_odd is a true lazy, polymorphic functor (rank-2 polymorphic functoid, in <a href="https://people.cs.umass.edu/~yannis/fc++/">
 FC++</a> jargon). The Phoenix functor version is fully polymorphic and works with any container (of ints, of doubles, of complex, etc.) as long as its elements can handle the &quot;arg1 % 2 == 1&quot; expression. However, unlike 2, this is more efficient and has less overhead especially when dealing with much more complex functions.</p>
 <p>
 This is just the tip of the iceberg. There are more nifty things you can do with the framework. There are quite interesting concepts such as rank-2 polymorphic lazy functions, lazy statements, binders etc; enough to whet the appetite of anyone wishing to squeeze more power from C++.</p>
