@@ -99,6 +99,8 @@ main()
 
         BOOST_TEST(!test("1e999", double_));
         BOOST_TEST(!test("1e-999", double_));
+        BOOST_TEST(test_attr("2.1111111e-303", double_, d) &&
+            compare(d, 2.1111111e-303));
         BOOST_TEST(!test_attr("1.1234e", double_, d) && compare(d, 1.1234));
     }
 

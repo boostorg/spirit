@@ -47,12 +47,15 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
         {
             if (exp < min_exp)
             {
-                // since exp < min_exp, we return false for primitive types
+                n /= pow10<T>(-min_exp);
+
+                // return false if exp still exceeds the min_exp
+                // do this check only for primitive types!
+                exp += -min_exp;
                 if (is_floating_point<T>() && exp < min_exp)
                     return false;
 
-                n /= pow10<T>(-min_exp);
-                n /= pow10<T>(-exp + min_exp);
+                n /= pow10<T>(-exp);
             }
             else
             {
