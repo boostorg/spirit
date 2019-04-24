@@ -96,6 +96,10 @@ main()
         BOOST_TEST(test("-NAN(...)", double_));
         BOOST_TEST(test_attr("-NAN(...)", double_, d) &&
             FP_NAN == fpclassify(d) && signbit(d));
+
+        BOOST_TEST(!test("1e999", double_));
+        BOOST_TEST(!test("1e-999", double_));
+        BOOST_TEST(!test_attr("1.1234e", double_, d) && compare(d, 1.1234));
     }
 
     return boost::report_errors();

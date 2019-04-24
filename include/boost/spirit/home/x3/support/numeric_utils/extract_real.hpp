@@ -29,47 +29,58 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
     using x3::traits::pow10;
 
     template <typename T>
-    inline void
+    inline bool
     scale(int exp, T& n)
     {
+        constexpr auto max_exp = std::numeric_limits<T>::max_exponent10;
+        constexpr auto min_exp = std::numeric_limits<T>::min_exponent10;
+
         if (exp >= 0)
         {
-            // $$$ Why is this failing for boost.math.concepts ? $$$
-            //~ int nn = std::numeric_limits<T>::max_exponent10;
-            //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
+            // return false if exp exceeds the max_exp
+            // do this check only for primitive types!
+            if (is_floating_point<T>() && exp > max_exp)
+                return false;
             n *= pow10<T>(exp);
         }
         else
         {
-            if (exp < std::numeric_limits<T>::min_exponent10)
+            if (exp < min_exp)
             {
-                n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
-                n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
+                // since exp < min_exp, we return false for primitive types
+                if (is_floating_point<T>() && exp < min_exp)
+                    return false;
+
+                n /= pow10<T>(-min_exp);
+                n /= pow10<T>(-exp + min_exp);
             }
             else
             {
                 n /= pow10<T>(-exp);
             }
         }
+        return true;
     }
 
-    inline void
+    inline bool
     scale(int /*exp*/, unused_type /*n*/)
     {
         // no-op for unused_type
+        return true;
     }
 
     template <typename T>
-    inline void
+    inline bool
     scale(int exp, int frac, T& n)
     {
-        scale(exp - frac, n);
+        return scale(exp - frac, n);
     }
 
-    inline void
+    inline bool
     scale(int /*exp*/, int /*frac*/, unused_type /*n*/)
     {
         // no-op for unused_type
+        return true;
     }
 
     inline float
@@ -150,6 +161,7 @@ namespace boost { namespace spirit { namespace x3
             }
 
             bool e_hit = false;
+            Iterator e_pos;
             int frac_digits = 0;
 
             // Try to parse the dot ('.' decimal point)
@@ -178,6 +190,7 @@ namespace boost { namespace spirit { namespace x3
                 }
 
                 // Now, let's see if we can parse the exponent prefix
+                e_pos = first;
                 e_hit = p.parse_exp(first, last);
             }
             else
@@ -191,6 +204,7 @@ namespace boost { namespace spirit { namespace x3
 
                 // If we must expect a dot and we didn't see an exponent
                 // prefix, return no-match.
+                e_pos = first;
                 e_hit = p.parse_exp(first, last);
                 if (p.expect_dot && !e_hit)
                 {
@@ -208,19 +222,25 @@ namespace boost { namespace spirit { namespace x3
                 {
                     // Got the exponent value. Scale the number by
                     // exp-frac_digits.
-                    extension::scale(exp, frac_digits, n);
+                    if (!extension::scale(exp, frac_digits, n))
+                        return false;
                 }
                 else
                 {
-                    // Oops, no exponent, return no-match.
-                    first = save;
-                    return false;
+                    // If there is no number, disregard the exponent altogether.
+                    // by resetting 'first' prior to the exponent prefix (e|E)
+                    first = e_pos;
+
+                    // Scale the number by -frac_digits.
+                    if (!extension::scale(-frac_digits, n))
+                        return false;
                 }
             }
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
-                extension::scale(-frac_digits, n);
+                if (!extension::scale(-frac_digits, n))
+                    return false;
             }
 
             // If we got a negative sign, negate the number
