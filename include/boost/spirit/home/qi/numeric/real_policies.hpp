@@ -39,7 +39,7 @@ namespace boost { namespace spirit { namespace qi
         static bool
         parse_n(Iterator& first, Iterator const& last, Attribute& attr_)
         {
-            return extract_uint<Attribute, 10, 1, -1>::call(first, last, attr_);
+            return extract_uint<Attribute, 10, 1, -1, false, true>::call(first, last, attr_);
         }
 
         template <typename Iterator>

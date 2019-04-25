@@ -185,6 +185,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
 
             typename traits::real_accumulator<T>::type acc_n = 0;
             bool got_a_number = p.parse_n(first, last, acc_n);
+            int excess_n = 0;
 
             // If we did not get a number it might be a NaN, Inf or a leading
             // dot.
@@ -207,6 +208,15 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     return false;
                 }
             }
+           else
+           {
+                // We got a number and we still see digits. Collect the excess digits.
+                while (first != last && *first >= '0' && *first <= '9')
+                {
+                    ++excess_n;
+                    ++first;
+                }
+           }
 
             bool e_hit = false;
             Iterator e_pos;
@@ -263,8 +273,8 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 if (p.parse_exp_n(first, last, exp))
                 {
                     // Got the exponent value. Scale the number by
-                    // exp-frac_digits.
-                    if (!traits::scale(exp, frac_digits, n, acc_n))
+                    // exp + excess_n - frac_digits.
+                    if (!traits::scale(exp + excess_n, frac_digits, n, acc_n))
                         return false;
                 }
                 else
@@ -285,7 +295,15 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             }
             else
             {
-                n = static_cast<T>(acc_n);
+                if (excess_n)
+                {
+                    if (!traits::scale(excess_n, n, acc_n))
+                        return false;
+                }
+                else
+                {
+                    n = static_cast<T>(acc_n);
+                }
             }
 
             // If we got a negative sign, negate the number
