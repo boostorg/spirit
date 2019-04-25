@@ -107,13 +107,13 @@ for semantic actions at all. The parser simply works as declared and you get
 your data back as a result.
 
 However, there are certain cases where there's no way to avoid introducing
-imperative code. But semantic actions messes up our clean declarative
-grammars. If we care to keep our code clean, `on_success` handlers are
-alternative callback hooks to client code that are executed by the parser
-after a successful parse without polluting the grammar. Like semantic
-actions, `on_success` handlers have access to the AST, the iterators, and
-context. But, unlike semantic actions, `on_success` handlers are cleanly
-separated from the actual grammar.
+imperative code. But semantic actions mess up our clean declarative grammars.
+If we care to keep our code clean, `on_success` handlers are alternative
+callback hooks to client code that are executed by the parser after a
+successful parse without polluting the grammar. Like semantic actions,
+`on_success` handlers have access to the AST, the iterators, and context.
+But, unlike semantic actions, `on_success` handlers are cleanly separated
+from the actual grammar.
 
 [heading Annotation Handler]
 
