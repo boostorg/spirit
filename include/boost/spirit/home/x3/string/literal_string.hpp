@@ -106,6 +106,35 @@ namespace boost { namespace spirit { namespace x3
     }
 #endif
 
+#if defined(BOOST_SPIRIT_X3_UNICODE)
+    namespace unicode
+    {
+        inline literal_string<char32_t const*, char_encoding::unicode>
+        string(char32_t const* s)
+        {
+            return { s };
+        }
+
+        inline literal_string<std::basic_string<char32_t>, char_encoding::unicode>
+        string(std::basic_string<char32_t> const& s)
+        {
+            return { s };
+        }
+
+        inline literal_string<char32_t const*, char_encoding::unicode, unused_type>
+        lit(char32_t const* s)
+        {
+            return { s };
+        }
+
+        inline literal_string<std::basic_string<char32_t>, char_encoding::unicode, unused_type>
+        lit(std::basic_string<char32_t> const& s)
+        {
+            return { s };
+        }
+    }
+#endif
+
     namespace ascii
     {
         inline literal_string<wchar_t const*, char_encoding::ascii>
