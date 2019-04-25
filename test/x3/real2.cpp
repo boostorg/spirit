@@ -102,6 +102,16 @@ main()
         BOOST_TEST(test_attr("2.1111111e-303", double_, d) &&
             compare(d, 2.1111111e-303));
         BOOST_TEST(!test_attr("1.1234e", double_, d) && compare(d, 1.1234));
+
+        // https://svn.boost.org/trac10/ticket/11608
+        BOOST_TEST(test_attr("1267650600228229401496703205376", double_, d) &&
+            compare(d, 1.2676506002282291E+30));    // Note Qi has better precision
+
+        BOOST_TEST(test_attr("12676506.00228229401496703205376", double_, d) &&
+            compare(d, 1.2676506002282292E7));      // Note Qi has better precision
+
+        BOOST_TEST(test_attr("12676506.00228229401496703205376E6", double_, d) &&
+            compare(d, 1.2676506002282291016E13));  // Note Qi has better precision
     }
 
     return boost::report_errors();

@@ -65,11 +65,11 @@ namespace boost { namespace spirit { namespace traits
     {
         if (exp >= 0)
         {
-            int max_exp = std::numeric_limits<T>::max_exponent10;
+            int const max_exp = std::numeric_limits<T>::max_exponent10;
 
             // return false if exp exceeds the max_exp
             // do this check only for primitive types!
-            if (is_floating_point<T>() && exp > max_exp)
+            if (is_floating_point<T>() && (exp > max_exp))
                 return false;
             n = acc_n * pow10<T>(exp);
         }
@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace traits
         {
             if (exp < std::numeric_limits<T>::min_exponent10)
             {
-                int min_exp = std::numeric_limits<T>::min_exponent10;
+                int const min_exp = std::numeric_limits<T>::min_exponent10;
                 detail::compensate_roundoff(n, acc_n);
                 n /= pow10<T>(-min_exp);
 
@@ -228,7 +228,13 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 // We got the decimal point. Now we will try to parse
                 // the fraction if it is there. If not, it defaults
                 // to zero (0) only if we already got a number.
-                if (p.parse_frac_n(first, last, acc_n, frac_digits))
+                if (excess_n != 0)
+                {
+                    // We skip the fractions if we already exceeded our digits capacity
+                    while (first != last && *first >= '0' && *first <= '9')
+                        ++first;
+                }
+                else if (p.parse_frac_n(first, last, acc_n, frac_digits))
                 {
                     BOOST_ASSERT(frac_digits >= 0);
                 }
