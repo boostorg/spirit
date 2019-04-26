@@ -14,6 +14,29 @@
 
 #include <boost/spirit/home/qi/numeric/numeric_utils.hpp>
 #include <boost/spirit/home/qi/detail/string_parse.hpp>
+#include <boost/type_traits/is_floating_point.hpp>
+
+namespace boost { namespace spirit { namespace traits
+{
+    // So that we won't exceed the capacity of the underlying type T,
+    // we limit the number of digits parsed to its max_digits10.
+    // By default, the value is -1 which tells spirit to parse an
+    // unbounded number of digits.
+
+    template <typename T, typename Enable = void>
+    struct max_digits10
+    {
+        static int const value = -1;  // unbounded
+    };
+
+    template <typename T>
+    struct max_digits10<T
+      , typename enable_if_c<(is_floating_point<T>::value)>::type>
+    {
+        static int const digits = std::numeric_limits<T>::digits;
+        static int const value = 2 + (digits * 30103l) / 100000l;
+    };
+}}}
 
 namespace boost { namespace spirit { namespace qi
 {
@@ -41,20 +64,9 @@ namespace boost { namespace spirit { namespace qi
         {
             typedef
                 extract_uint<Attribute, 10, 1
-              , (std::numeric_limits<T>::max_digits10 == 0)?
-                -1 : std::numeric_limits<T>::max_digits10 // $$$ fixme: note below $$$
+              , traits::max_digits10<T>::value
               , false, true>
             extract_uint;
-
-            // $$$ fixme note $$$
-            // So that we won't exceed the capacity of the underlying type T,
-            // we limit the number of digits parsed to its max_digits10. However,
-            // std::numeric_limits<T>::max_digits10 for boost math real_concept
-            // returns 0, so this is a workaround for such types that do not honor
-            // max_digits10. Also, take note that max_digits10 is introduced in C++11
-            // so this code might not be portable to older libraries. We might have to
-            // roll our own max_digits10 TMP code for Qi.
-
             return extract_uint::call(first, last, attr_);
         }
 
