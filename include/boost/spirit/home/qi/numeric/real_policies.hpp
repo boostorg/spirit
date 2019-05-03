@@ -62,9 +62,8 @@ namespace boost { namespace spirit { namespace qi
         static bool
         parse_n(Iterator& first, Iterator const& last, Attribute& attr_)
         {
-            typedef
-                extract_uint<Attribute, 10, 1
-              , traits::max_digits10<T>::value
+            typedef extract_uint<Attribute, 10, 1
+              , traits::max_digits10<T>::value // See notes on max_digits10 above
               , false, true>
             extract_uint;
             return extract_uint::call(first, last, attr_);
