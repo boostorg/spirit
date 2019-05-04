@@ -98,9 +98,9 @@ struct no_leading_dot_policy : boost::spirit::qi::real_policies<T>
 
 template <typename T>
 bool
-compare(T n, double expected)
+compare(T n, double expected
+  , T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10))
 {
-    T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10);
     T delta = n - expected;
     return (delta >= -eps) && (delta <= eps);
 }
@@ -112,13 +112,13 @@ struct custom_real
     double n;
     custom_real() : n(0) {}
     custom_real(double n_) : n(n_) {}
-    friend bool operator==(custom_real a, custom_real b) 
+    friend bool operator==(custom_real a, custom_real b)
         { return a.n == b.n; }
-    friend custom_real operator*(custom_real a, custom_real b) 
+    friend custom_real operator*(custom_real a, custom_real b)
         { return custom_real(a.n * b.n); }
-    friend custom_real operator+(custom_real a, custom_real b) 
+    friend custom_real operator+(custom_real a, custom_real b)
         { return custom_real(a.n + b.n); }
-    friend custom_real operator-(custom_real a, custom_real b) 
+    friend custom_real operator-(custom_real a, custom_real b)
         { return custom_real(a.n - b.n); }
 };
 
