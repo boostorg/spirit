@@ -57,6 +57,9 @@ namespace boost { namespace spirit { namespace x3
     typedef real_parser<double> double_type;
     double_type const double_ = {};
 
+    typedef real_parser<long double> long_double_type;
+    long_double_type const long_double = {};
+
 }}}
 
 #endif
