@@ -93,9 +93,9 @@ struct no_leading_dot_policy : boost::spirit::x3::real_policies<T>
     static bool const allow_leading_dot = false;
 };
 
-template <typename T>
+template <typename T, typename T2>
 bool
-compare(T n, double expected)
+compare(T n, T2 expected)
 {
     T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10);
     T delta = n - expected;
