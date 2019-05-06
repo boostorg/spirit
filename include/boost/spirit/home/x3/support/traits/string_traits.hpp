@@ -16,69 +16,6 @@
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
-    // Determine if T is a character type
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    struct is_char : mpl::false_ {};
-
-    template <typename T>
-    struct is_char<T const> : is_char<T> {};
-
-    template <>
-    struct is_char<char> : mpl::true_ {};
-
-    template <>
-    struct is_char<wchar_t> : mpl::true_ {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Determine if T is a string
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    struct is_string : mpl::false_ {};
-
-    template <typename T>
-    struct is_string<T const> : is_string<T> {};
-
-    template <>
-    struct is_string<char const*> : mpl::true_ {};
-
-    template <>
-    struct is_string<wchar_t const*> : mpl::true_ {};
-
-    template <>
-    struct is_string<char*> : mpl::true_ {};
-
-    template <>
-    struct is_string<wchar_t*> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<char[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<wchar_t[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<char const[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<wchar_t const[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<char(&)[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<wchar_t(&)[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<char const(&)[N]> : mpl::true_ {};
-
-    template <std::size_t N>
-    struct is_string<wchar_t const(&)[N]> : mpl::true_ {};
-
-    template <typename T, typename Traits, typename Allocator>
-    struct is_string<std::basic_string<T, Traits, Allocator> > : mpl::true_ {};
-
-    ///////////////////////////////////////////////////////////////////////////
     // Get the underlying char type of a string
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
