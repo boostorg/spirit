@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2019 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -164,9 +164,33 @@ namespace boost { namespace spirit { namespace traits
 
 namespace boost { namespace spirit { namespace qi  { namespace detail
 {
+    BOOST_MPL_HAS_XXX_TRAIT_DEF(version)
+
     template <typename T, typename RealPolicies>
     struct real_impl
     {
+        template <typename Iterator>
+        static std::size_t
+        ignore_excess_digits(Iterator& first, Iterator const& last, mpl::false_)
+        {
+            return 0;
+        }
+
+        template <typename Iterator>
+        static std::size_t
+        ignore_excess_digits(Iterator& first, Iterator const& last, mpl::true_)
+        {
+            return RealPolicies::ignore_excess_digits(first, last);
+        }
+
+        template <typename Iterator>
+        static std::size_t
+        ignore_excess_digits(Iterator& first, Iterator const& last)
+        {
+            typedef mpl::bool_<has_version<RealPolicies>::value> has_version;
+            return ignore_excess_digits(first, last, has_version());
+        }
+
         template <typename Iterator, typename Attribute>
         static bool
         parse(Iterator& first, Iterator const& last, Attribute& attr,
@@ -208,15 +232,12 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     return false;
                 }
             }
-           else
-           {
-                // We got a number and we still see digits. Collect the excess digits.
-                while (first != last && *first >= '0' && *first <= '9')
-                {
-                    ++excess_n;
-                    ++first;
-                }
-           }
+            else
+            {
+                // We got a number and we still see digits. This happens if acc_n (an integer)
+                // exceeds the integer's capacity. Collect the excess digits.
+                excess_n = ignore_excess_digits(first, last);
+            }
 
             bool e_hit = false;
             Iterator e_pos;
@@ -231,8 +252,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 if (excess_n != 0)
                 {
                     // We skip the fractions if we already exceeded our digits capacity
-                    while (first != last && *first >= '0' && *first <= '9')
-                        ++first;
+                    ignore_excess_digits(first, last);
                 }
                 else if (p.parse_frac_n(first, last, acc_n, frac_digits))
                 {

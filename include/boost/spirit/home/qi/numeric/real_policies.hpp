@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2019 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -46,6 +46,9 @@ namespace boost { namespace spirit { namespace qi
     template <typename T>
     struct ureal_policies
     {
+        // Versioning
+        typedef mpl::int_<2> version;
+
         // trailing dot policy suggested by Gustavo Guerra
         static bool const allow_leading_dot = true;
         static bool const allow_trailing_dot = true;
@@ -63,10 +66,21 @@ namespace boost { namespace spirit { namespace qi
         parse_n(Iterator& first, Iterator const& last, Attribute& attr_)
         {
             typedef extract_uint<Attribute, 10, 1
-              , traits::max_digits10<T>::value // See notes on max_digits10 above
-              , false, true>
+            , traits::max_digits10<T>::value // See notes on max_digits10 above
+            , false, true>
             extract_uint;
             return extract_uint::call(first, last, attr_);
+        }
+
+        // ignore_excess_digits (required for version > 1 API)
+        template <typename Iterator>
+        static std::size_t
+        ignore_excess_digits(Iterator& first, Iterator const& last)
+        {
+            Iterator save = first;
+            if (extract_uint<unused_type, 10, 1, -1>::call(first, last, unused))
+                return std::distance(save, first);
+            return 0;
         }
 
         template <typename Iterator>
