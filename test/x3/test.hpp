@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_TEST_FEBRUARY_01_2007_0605PM
 
 #include <boost/spirit/home/x3/core/parse.hpp>
+#include <boost/utility/string_view.hpp>
 #include <iostream>
 
 namespace spirit_test
@@ -20,6 +21,16 @@ namespace spirit_test
             last++;
         return boost::spirit::x3::parse(in, last, p)
             && (!full_match || (in == last));
+    }
+
+    template <typename Char, typename Parser>
+    bool test(boost::basic_string_view<Char, std::char_traits<Char>> in,
+              Parser const& p, bool full_match = true)
+    {
+        auto const last = in.end();
+        auto pos        = in.begin();
+
+        return boost::spirit::x3::parse(pos, last, p) && (!full_match || (pos == last));
     }
 
     template <typename Char, typename Parser, typename Skipper>
