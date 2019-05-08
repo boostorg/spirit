@@ -209,7 +209,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
 
             typename traits::real_accumulator<T>::type acc_n = 0;
             bool got_a_number = p.parse_n(first, last, acc_n);
-            int excess_n = 0;
+            std::size_t excess_n = 0;
 
             // If we did not get a number it might be a NaN, Inf or a leading
             // dot.
