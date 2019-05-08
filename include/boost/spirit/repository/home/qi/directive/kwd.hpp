@@ -435,10 +435,12 @@ template <typename T>
                 no_case_keyword,
                 spirit::qi::no_case_literal_string< KeywordType, true>,
                 spirit::qi::literal_string<KeywordType, true> >::type keyword_string_type;
-       keyword_string_type keyword;
+        keyword_string_type keyword;
+
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(kwd_parser& operator= (kwd_parser const&))
 
+    private:
         template <typename Iterator, typename Context, typename Skipper>
         static spirit::qi::detail::fail_function<Iterator, Context, Skipper>
         fail_function(
@@ -580,9 +582,11 @@ template <typename Subject, typename KeywordType, typename LoopIter, typename Di
         LoopIter iter;
 
         KeywordType keyword;
+
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(complex_kwd_parser& operator= (complex_kwd_parser const&))
 
+    private:
         template <typename Iterator, typename Context, typename Skipper>
         static spirit::qi::detail::fail_function<Iterator, Context, Skipper>
         fail_function(
