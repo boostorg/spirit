@@ -209,7 +209,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
 
             typename traits::real_accumulator<T>::type acc_n = 0;
             bool got_a_number = p.parse_n(first, last, acc_n);
-            std::size_t excess_n = 0;
+            int excess_n = 0;
 
             // If we did not get a number it might be a NaN, Inf or a leading
             // dot.
@@ -236,7 +236,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             {
                 // We got a number and we still see digits. This happens if acc_n (an integer)
                 // exceeds the integer's capacity. Collect the excess digits.
-                excess_n = ignore_excess_digits(first, last);
+                excess_n = static_cast<int>(ignore_excess_digits(first, last));
             }
 
             bool e_hit = false;
