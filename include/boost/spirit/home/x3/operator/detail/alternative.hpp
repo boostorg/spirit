@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_X3_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/pseudo_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
@@ -244,9 +245,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_alternative(Parser const& p, Iterator& first, Iterator const& last
       , Context const& context, RContext& rcontext, Attribute& attr)
     {
-        typedef detail::pass_variant_attribute<Parser, Attribute, Context> pass;
+        using pass = detail::pass_variant_attribute<Parser, Attribute, Context>;
+        using pseudo = traits::pseudo_attribute<Context, typename pass::type, Iterator>;
 
-        typename pass::type attr_ = pass::call(attr);
+        typename pseudo::type attr_ = pseudo::call(first, last, pass::call(attr));
+
         if (p.parse(first, last, context, rcontext, attr_))
         {
             move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
@@ -254,7 +257,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
         return false;
     }
-
 
     template <typename Left, typename Right, typename Context, typename RContext>
     struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>

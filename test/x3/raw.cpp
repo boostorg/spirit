@@ -20,6 +20,9 @@ int main()
     using boost::spirit::x3::eps;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::_attr;
+    using boost::spirit::x3::parse;
+    using boost::spirit::x3::int_;
+    using boost::spirit::x3::char_;
 
     {
         boost::iterator_range<char const*> range;
@@ -53,6 +56,17 @@ int main()
         BOOST_TEST((test("x123x", lit('x') >> raw[+digit] >> lit('x'))));
         BOOST_TEST((test_attr("x123x", lit('x') >> raw[+digit] >> lit('x'), range)));
         BOOST_TEST((std::string(range.begin(), range.end()) == "123"));
+    }
+
+    {
+        using range = boost::iterator_range<std::string::const_iterator>;
+        boost::variant<int, range> attr;
+
+        std::string str("test");
+        parse(str.begin(), str.end(),  (int_ | raw[*char_]), attr);
+
+        auto rng = boost::get<range>(attr);
+        BOOST_TEST(std::string(rng.begin(), rng.end()) == "test");
     }
 
     return boost::report_errors();
