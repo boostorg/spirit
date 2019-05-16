@@ -304,11 +304,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Context const& context, RContext& rcontext, Attribute& attr
       , AttributeCategory)
     {
-        typedef typename Parser::left_type Left;
-        typedef typename Parser::right_type Right;
-        typedef partition_attribute<Left, Right, Attribute, Context> partition;
-        typedef typename partition::l_pass l_pass;
-        typedef typename partition::r_pass r_pass;
+        using Left = typename Parser::left_type;
+        using Right = typename Parser::right_type;
+        using partition = partition_attribute<Left, Right, Attribute, Context>;
+        using l_pass = typename partition::l_pass;
+        using r_pass = typename partition::r_pass;
 
         typename partition::l_part l_part = partition::left(attr);
         typename partition::r_part r_part = partition::right(attr);
