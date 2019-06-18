@@ -61,3 +61,5 @@ exe x3_calc9 :
     calc/calc9/statement.cpp
     calc/calc9/main.cpp
 ;
+
+exe x3_tuple : attributes/tuple.cpp ;
