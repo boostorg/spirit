@@ -86,18 +86,10 @@ attribute:
         x3::space,                        // delimiter grammar
         p);                               // attribute to fill while parsing
 
-[tip  *For sequences only:* __x3__ exposes a set of API functions
-      usable mainly with sequences. Very much like the functions of the `scanf`
-      and `printf` families these functions allow to pass the attributes for
-      each of the elements of the sequence separately. Using the corresponding
-      overload of /X3's/ parse function, the expression above
-      could be rewritten as:
-      ``
-          double d1 = 0.0, d2 = 0.0;
-          x3::phrase_parse(begin, end, x3::double_ >> x3::double_, x3::space, d1, d2);
-      ``
-      where the first attribute is used for the first `double_`, and
-      the second attribute is used for the second `double_`.
+[tip  *For sequences only:* To keep it simple, unlike __Spirit.qi__, __x3__ does 
+       not support more than one attribute anymore in the `parse` and `phrase_parse` function. 
+       Just use `std:tuple'. Be sure to include `boost/fusion/adapted/std_tuple.hpp' in this case.
+
 ]
 
 [heading The Attribute of Alternative Parsers]
@@ -156,14 +148,10 @@ handling their variable parts. In this context you can think about __x3__'s
 primitive components (such as the `double_` above) as of being
 type safe placeholders for the attribute values.
 
-[tip  Similarly to the tip provided above, this example could be rewritten
-      using /Spirit's/ multi-attribute API function:
-      ``
-          double d1 = 0.0, d2 = 0.0;
-          x3::parse(begin, end, '(' >> x3::double_ >> ", " >> x3::double_ >> ')', d1, d2);
-      ``
-      which provides a clear and comfortable syntax, more similar to the
-      placeholder based syntax as exposed by `printf` or `boost::format`.
+[tip  *For sequences only:* To keep it simple, unlike __Spirit.qi__, __x3__ does 
+       not support more than one attribute anymore in the `parse` and `phrase_parse` function. 
+       Just use `std:tuple'. Be sure to include `boost/fusion/adapted/std_tuple.hpp' in this case.
+
 ]
 
 Let's take a look at this from a more formal perspective:
