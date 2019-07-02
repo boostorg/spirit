@@ -129,3 +129,6 @@ run to_utf8.cpp ;
 
 obj rule_separate_tu_grammar : rule_separate_tu_grammar.cpp ;
 run rule_separate_tu.cpp rule_separate_tu_grammar ;
+
+obj grammar_linker : grammar.cpp ;
+run grammar_linker.cpp grammar_linker ;

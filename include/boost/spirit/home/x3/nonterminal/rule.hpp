@@ -131,9 +131,6 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
             , Context const& context, unused_type, unused_type) const
         {
-            static_assert(!has_attribute,
-                "The rule requires an input attribute. Check your parser.");
-
             // make sure we pass exactly the rule attribute type
             attribute_type no_attr;
             return parse_rule(*this, first, last, context, no_attr);
