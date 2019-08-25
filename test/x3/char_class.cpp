@@ -19,6 +19,7 @@ int
 main()
 {
     using spirit_test::test;
+    using spirit_test::test_failure;
     using spirit_test::test_attr;
 
     using boost::spirit::x3::unused_type;
@@ -194,6 +195,21 @@ main()
         BOOST_TEST(test("\xE9", alpha));
         BOOST_TEST(test("\xE9", lower));
         BOOST_TEST(!test("\xE9", upper));
+    }
+
+    {   // test invalid unicode literals
+        using namespace boost::spirit::x3::unicode;
+
+        auto const invalid_unicode = char32_t{0x7FFFFFFF};
+        auto const input           = boost::u32string_view(&invalid_unicode, 1);
+
+        BOOST_TEST(test_failure(input, char_));
+
+        // force unicode category lookup
+        // related issue: https://github.com/boostorg/spirit/issues/524
+        BOOST_TEST(test_failure(input, alpha));
+        BOOST_TEST(test_failure(input, upper));
+        BOOST_TEST(test_failure(input, lower));
     }
 
     {   // test attribute extraction
