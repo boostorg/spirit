@@ -55,6 +55,13 @@ namespace spirit_test
         return !boost::spirit::x3::parse(in, last, p) && (in == start);
     }
 
+    template <typename Char, typename Parser>
+    bool test_failure(boost::basic_string_view<Char> const in, Parser const& p)
+    {
+        auto pos = in.begin();
+        return !boost::spirit::x3::parse(pos, in.end(), p) && (pos == in.begin());
+    }
+
     template <typename Char, typename Parser, typename Attr>
     bool test_attr(Char const* in, Parser const& p
         , Attr& attr, bool full_match = true)
