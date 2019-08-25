@@ -208,6 +208,8 @@ main()
         // force unicode category lookup
         // related issue: https://github.com/boostorg/spirit/issues/524
         BOOST_TEST(test_failure(input, alpha));
+        BOOST_TEST(test_failure(input, upper));
+        BOOST_TEST(test_failure(input, lower));
     }
 
     {   // test attribute extraction
