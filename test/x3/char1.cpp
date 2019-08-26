@@ -182,5 +182,17 @@ main()
 #endif
     }
 
+    {
+        namespace ascii = boost::spirit::x3::ascii;
+        char const* input = "\x80";
+
+        // ascii > 7 bits (this should fail, not assert!)
+        BOOST_TEST(!test(input, ascii::char_));
+        BOOST_TEST(!test(input, ascii::char_('a')));
+        BOOST_TEST(!test(input, ascii::alnum));
+        BOOST_TEST(!test(input, ascii::char_("a-z")));
+        BOOST_TEST(!test(input, ascii::char_('0', '9')));
+    }
+
     return boost::report_errors();
 }
