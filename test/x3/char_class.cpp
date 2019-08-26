@@ -190,11 +190,6 @@ main()
         BOOST_TEST(!test(L" ", braille));
         BOOST_TEST(test(L" ", ~braille));
         // $$$ TODO $$$ Add more unicode tests
-
-        // TODO: these tests are suspicious, they do not test unicode
-        BOOST_TEST(test("\xE9", alpha));
-        BOOST_TEST(test("\xE9", lower));
-        BOOST_TEST(!test("\xE9", upper));
     }
 
     {   // test invalid unicode literals
