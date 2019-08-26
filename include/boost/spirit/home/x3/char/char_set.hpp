@@ -41,9 +41,8 @@ namespace boost { namespace spirit { namespace x3
         {
 
             char_type ch = char_type(ch_);  // optimize for token based parsing
-            return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-                        && (get_case_compare<encoding>(context)(ch, from) >= 0 )
-                        && (get_case_compare<encoding>(context)(ch , to) <= 0 );
+            return (get_case_compare<encoding>(context)(ch, from) >= 0)
+               && (get_case_compare<encoding>(context)(ch , to) <= 0);
         }
 
         char_type from, to;
@@ -97,8 +96,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename Char, typename Context>
         bool test(Char ch_, Context const& context) const
         {
-            return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-                && get_case_compare<encoding>(context).in_set(ch_,chset);
+            return get_case_compare<encoding>(context).in_set(ch_, chset);
         }
 
         support::detail::basic_chset<char_type> chset;

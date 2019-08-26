@@ -29,10 +29,9 @@ namespace boost { namespace spirit { namespace x3
         template <typename Char, typename Context>
         bool test(Char ch_, Context const& context) const
         {
-            return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
-                && (get_case_compare<encoding>(context)(ch, char_type(ch_)) == 0);
+            return get_case_compare<encoding>(context)(ch, char_type(ch_)) == 0;
         }
-        
+
         char_type ch;
     };
 
