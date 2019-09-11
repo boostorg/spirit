@@ -189,6 +189,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     }
 
     template <typename Source, typename Dest>
+    inline void move_to(boost::optional<Source>&& src, Dest& dest)
+    {
+        if (src) detail::move_to(std::move(*src), dest
+          , typename attribute_category<Dest>::type());
+    }
+
+    template <typename Source, typename Dest>
     inline void move_to(Source&& src, Dest& dest)
     {
         detail::move_to(std::move(src), dest
