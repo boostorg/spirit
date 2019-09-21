@@ -80,19 +80,22 @@ namespace impl {
                                 while (scan.first != scan.last)
                                 {
                                     char_t c = *scan.first;
-                                    if (hex > lim && impl::isxdigit_(c))
+                                    if BOOST_CONSTEXPR ( impl::isxdigit_(c))
                                     {
-                                        // overflow detected
-                                        scan.first = save;
-                                        return scan.no_match();
+                                        if(hex > lim)
+                                        {
+                                            // overflow detected
+                                            scan.first = save;
+                                            return scan.no_match();
+                                        }
                                     }
-                                    if (impl::isdigit_(c))
+                                    if BOOST_CONSTEXPR (impl::isdigit_(c))
                                     {
                                         hex <<= 4;
                                         hex |= c - '0';
                                         ++scan.first;
                                     }
-                                    else if (impl::isxdigit_(c))
+                                    else if BOOST_CONSTEXPR (impl::isxdigit_(c))
                                     {
                                         hex <<= 4;
                                         c = impl::toupper_(c);
@@ -166,7 +169,7 @@ namespace impl {
             return scan.no_match(); // overflow detected
         }
     };
-#if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
+#if (defined(BOOST_MSVC))
 #pragma warning(pop)
 #endif
 

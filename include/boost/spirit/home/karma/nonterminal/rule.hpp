@@ -304,7 +304,7 @@ namespace boost { namespace spirit { namespace karma
                 if (f(sink, context, delim))
                 {
                     // do a post-delimit if this is an implied verbatim
-                    if (is_same<delimiter_type, unused_type>::value)
+                    if BOOST_CONSTEXPR (is_same<delimiter_type, unused_type>::value)
                         karma::delimit_out(sink, delim);
 
                     return true;
@@ -340,7 +340,7 @@ namespace boost { namespace spirit { namespace karma
                 if (f(sink, context, delim))
                 {
                     // do a post-delimit if this is an implied verbatim
-                    if (is_same<delimiter_type, unused_type>::value)
+                    if BOOST_CONSTEXPR (is_same<delimiter_type, unused_type>::value)
                         karma::delimit_out(sink, delim);
 
                     return true;

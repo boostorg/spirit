@@ -271,7 +271,7 @@ namespace boost { namespace spirit
             if (table == x_table) {
             // if so, we can avoid deallocating and re-use memory
                 table->destruct(&object);    // first destruct the old content
-                if (spirit::detail::get_table<T>::is_small::value) {
+                if BOOST_CONSTEXPR (spirit::detail::get_table<T>::is_small::value) {
                     // create copy on-top of object pointer itself
                     new (&object) T(x);
                 }
@@ -281,7 +281,7 @@ namespace boost { namespace spirit
                 }
             }
             else {
-                if (spirit::detail::get_table<T>::is_small::value) {
+                if BOOST_CONSTEXPR (spirit::detail::get_table<T>::is_small::value) {
                     // create copy on-top of object pointer itself
                     table->destruct(&object); // first destruct the old content
                     new (&object) T(x);
@@ -352,9 +352,10 @@ namespace boost { namespace spirit
             if (type() != BOOST_CORE_TYPEID(T))
               throw bad_any_cast(type(), BOOST_CORE_TYPEID(T));
 
-            return spirit::detail::get_table<T>::is_small::value ?
-                *reinterpret_cast<T const*>(&object) :
-                *reinterpret_cast<T const*>(object);
+            if BOOST_CONSTEXPR (spirit::detail::get_table<T>::is_small::value)
+                return *reinterpret_cast<T const*>(&object)
+            else
+                return *reinterpret_cast<T const*>(object);
         }
 
 // implicit casting is disabled by default for compatibility with boost::any

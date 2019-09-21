@@ -288,7 +288,7 @@ namespace boost { namespace spirit { namespace qi
             if (f)
             {
                 // do a preskip if this is an implied lexeme
-                if (is_same<skipper_type, unused_type>::value)
+                if BOOST_CONSTEXPR (is_same<skipper_type, unused_type>::value)
                     qi::skip_over(first, last, skipper);
 
                 // do down-stream transformation, provides attribute for
@@ -339,7 +339,7 @@ namespace boost { namespace spirit { namespace qi
             if (f)
             {
                 // do a preskip if this is an implied lexeme
-                if (is_same<skipper_type, unused_type>::value)
+                if BOOST_CONSTEXPR (is_same<skipper_type, unused_type>::value)
                     qi::skip_over(first, last, skipper);
 
                 // do down-stream transformation, provides attribute for

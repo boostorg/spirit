@@ -162,7 +162,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             //  Use this accumulator if number is positive
             static bool add(T& n, T digit)
             {
-                if (std::numeric_limits<T>::is_specialized)
+                if BOOST_CONSTEXPR (std::numeric_limits<T>::is_specialized)
                 {
                     static T const max = (std::numeric_limits<T>::max)();
                     static T const max_div_radix = max/Radix;
@@ -192,7 +192,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             //  Use this accumulator if number is negative
             static bool add(T& n, T digit)
             {
-                if (std::numeric_limits<T>::is_specialized)
+                if BOOST_CONSTEXPR (std::numeric_limits<T>::is_specialized)
                 {
                     typedef std::numeric_limits<T> num_limits;
                     static T const min =
@@ -384,8 +384,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                 bool            got_a_number = n_match;
                 exp_match_t     e_hit;
 
-                if (!got_a_number && !RealPoliciesT::allow_leading_dot)
-                     return scan.no_match();
+                if (!got_a_numberà
+                {
+                    if BOOST_CONSTEXPR (!RealPoliciesT::allow_leading_dot)
+                        return scan.no_match();
+                }
                 else
                     count += n_match.length();
 
@@ -410,11 +413,10 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                         else
                             n += hit.value();
                         count += hit.length() + 1;
-
                     }
-
-                    else if (!got_a_number ||
-                        !RealPoliciesT::allow_trailing_dot)
+                    else if BOOST_CONSTEXPR (!RealPoliciesT::allow_trailing_dot)
+                        return scan.no_match();
+                    else if(!got_a_number)
                         return scan.no_match();
 
                     e_hit = RealPoliciesT::parse_exp(scan);
@@ -430,8 +432,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                     //  If we must expect a dot and we didn't see
                     //  an exponent, return early with a no-match.
                     e_hit = RealPoliciesT::parse_exp(scan);
-                    if (RealPoliciesT::expect_dot && !e_hit)
-                        return scan.no_match();
+                    if BOOST_CONSTEXPR (RealPoliciesT::expect_dot)
+                    {
+                        if(!e_hit)
+                            return scan.no_match();
+                    }
                 }
 
                 if (e_hit)

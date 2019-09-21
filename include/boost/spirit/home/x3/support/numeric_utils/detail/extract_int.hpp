@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         template <typename Char>
         inline static bool is_valid(Char ch)
         {
-            if (Radix <= 10)
+            if BOOST_CONSTEXPR (Radix <= 10)
                 return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1));
             return (ch >= '0' && ch <= '9')
                 || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
@@ -122,7 +122,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         template <typename Char>
         inline static unsigned digit(Char ch)
         {
-            if (Radix <= 10 || (ch >= '0' && ch <= '9'))
+            if BOOST_CONSTEXPR (Radix <= 10)
+                return ch - '0';
+            else if((ch >= '0' && ch <= '9'))
                 return ch - '0';
             return char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
@@ -316,7 +318,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             Iterator it = first;
             std::size_t leading_zeros = 0;
-            if (!Accumulate)
+            if BOOST_CONSTEXPR (!Accumulate)
             {
                 // skip leading zeros
                 while (it != last && *it == '0' && leading_zeros < MaxDigits)
@@ -414,7 +416,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             Iterator it = first;
             std::size_t count = 0;
-            if (!Accumulate)
+            if BOOST_CONSTEXPR (!Accumulate)
             {
                 // skip leading zeros
                 while (it != last && *it == '0')

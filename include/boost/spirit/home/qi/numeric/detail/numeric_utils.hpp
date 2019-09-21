@@ -123,7 +123,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Char>
         inline static unsigned digit(Char ch)
         {
-            if (Radix <= 10 || (ch >= '0' && ch <= '9'))
+            if BOOST_CONSTEXPR (Radix <= 10)
+                return ch - '0';
+            else if (ch >= '0' && ch <= '9')
                 return ch - '0';
             return spirit::char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
@@ -210,9 +212,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         {
             std::size_t const overflow_free = digits_traits<T, Radix>::value - 1;
 
-            if (!AlwaysCheckOverflow && (count < overflow_free))
+            if BOOST_CONSTEXPR (!AlwaysCheckOverflow)
             {
-                Accumulator::add(n, ch, mpl::false_());
+                if(count < overflow_free))
+                    Accumulator::add(n, ch, mpl::false_());
             }
             else
             {
@@ -294,7 +297,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }                                                                     \
         if (!extractor::call(ch, count, val))                                 \
         {                                                                     \
-            if (IgnoreOverflowDigits)                                         \
+            if BOOST_CONSTEXPR (IgnoreOverflowDigits)                                         \
             {                                                                 \
                 first = it;                                                   \
             }                                                                 \
@@ -330,7 +333,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
             Iterator it = first;
             std::size_t leading_zeros = 0;
-            if (!Accumulate)
+            if BOOST_CONSTEXPR (!Accumulate)
             {
                 // skip leading zeros
                 while (it != last && *it == '0' && (MaxDigits < 0 || leading_zeros < static_cast< std::size_t >(MaxDigits)))
@@ -433,7 +436,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
             Iterator it = first;
             std::size_t count = 0;
-            if (!Accumulate)
+            if BOOST_CONSTEXPR (!Accumulate)
             {
                 // skip leading zeros
                 while (it != last && *it == '0')

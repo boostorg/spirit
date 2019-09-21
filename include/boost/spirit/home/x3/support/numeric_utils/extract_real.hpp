@@ -39,8 +39,11 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
         {
             // return false if exp exceeds the max_exp
             // do this check only for primitive types!
-            if (is_floating_point<T>() && exp > max_exp)
-                return false;
+            if BOOST_CONSTEXPR (is_floating_point<T>())
+            {
+                if(exp > max_exp)
+                    return false;
+            }
             n *= pow10<T>(exp);
         }
         else
@@ -52,9 +55,11 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
                 // return false if exp still exceeds the min_exp
                 // do this check only for primitive types!
                 exp += -min_exp;
-                if (is_floating_point<T>() && exp < min_exp)
-                    return false;
-
+                if BOOST_CONSTEXPR (is_floating_point<T>())
+                {
+                    if(exp < min_exp)
+                        return false;
+                }
                 n /= pow10<T>(-exp);
             }
             else
