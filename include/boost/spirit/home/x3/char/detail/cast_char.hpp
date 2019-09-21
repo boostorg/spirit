@@ -8,6 +8,8 @@
 #if !defined(BOOST_SPIRIT_X3_CAST_CHAR_NOVEMBER_10_2006_0907AM)
 #define BOOST_SPIRIT_X3_CAST_CHAR_NOVEMBER_10_2006_0907AM
 
+#include <boost/config/workaround.hpp>
+
 #include <boost/type_traits/is_signed.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
 #include <boost/type_traits/make_signed.hpp>
@@ -22,7 +24,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     // The trick is to cast to an unsigned version of the source char first
     // before casting to the target. {P.S. Don't worry about the code, the
     // optimizer will optimize the if-else branches}
-
+#if BOOST_WORKAROUND(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4127)   // conditional expression is constant
+#endif
     template <typename TargetChar, typename SourceChar>
     TargetChar cast_char(SourceChar ch)
     {
@@ -47,6 +52,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return TargetChar(ch); // just cast
         }
     }
+#if BOOST_WORKAROUND(BOOST_MSVC)
+# pragma warning(pop)
+#endif
 }}}}
 
 #endif
