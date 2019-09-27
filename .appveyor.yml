@@ -54,7 +54,10 @@ before_build:
           -wd4457  # declaration of 'varname' hides function parameter
           -wd4458  # declaration of 'varname' hides class member
           -wd4459  # declaration of 'varname' hides global declaration
+          -wd4512  # assignment operator could not be generated
+          -wd4702  # unreachable code
           -wd4709  # msvc bug https://stackoverflow.com/questions/6012068
+          -wd4714  # function 'x' marked as __forceinline not inlined
         : unchecked ;
       
       # A subfeature that tells Spirit tests to use PCH
@@ -112,7 +115,7 @@ build_script:
     || ( echo === deps_build.log === && cat deps_build.log )
 
 test_script:
-  - set B2_ARGS=%B2_ARGS% warnings=on known-warnings=suppress warnings-as-errors=on
+  - set B2_ARGS=%B2_ARGS% warnings=extra known-warnings=suppress warnings-as-errors=on
   - echo B2 argumets %B2_ARGS%
   - b2 %B2_ARGS% pch=on-spirit %PROJECT%\classic\test
   - b2 %B2_ARGS% pch=on-spirit %PROJECT%\repository\test
