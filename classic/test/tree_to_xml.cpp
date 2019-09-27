@@ -8,11 +8,19 @@
 =============================================================================*/
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/iostreams/stream.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/spirit/include/classic_core.hpp> 
 #include <boost/spirit/include/classic_ast.hpp> 
 #include <boost/spirit/include/classic_tree_to_xml.hpp> 
+
+#ifdef _MSC_VER
+# pragma warning(push)
+# pragma warning(disable: 4702) // unreachable code
+#endif
+#include <boost/iostreams/stream.hpp>
+#ifdef _MSC_VER
+# pragma warning(pop)
+#endif
 
 #include <iostream>
 #include <fstream>
