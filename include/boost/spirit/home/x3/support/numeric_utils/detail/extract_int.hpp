@@ -112,19 +112,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         template <typename Char>
         inline static bool is_valid(Char ch)
         {
-            if (Radix <= 10)
-                return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1));
-            return (ch >= '0' && ch <= '9')
-                || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
-                || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
+            return (ch >= '0' && ch <= (Radix > 10 ? '9' : static_cast<Char>('0' + Radix -1)))
+                || (Radix > 10 && ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
+                || (Radix > 10 && ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
         }
 
         template <typename Char>
         inline static unsigned digit(Char ch)
         {
-            if (Radix <= 10 || (ch >= '0' && ch <= '9'))
-                return ch - '0';
-            return char_encoding::ascii::tolower(ch) - 'a' + 10;
+            return (Radix <= 10 || (ch >= '0' && ch <= '9'))
+                ? ch - '0'
+                : char_encoding::ascii::tolower(ch) - 'a' + 10;
         }
     };
 

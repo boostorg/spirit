@@ -101,11 +101,18 @@ namespace boost { namespace spirit { namespace qi
             bool r = extract_uint<Attribute, 10, 1, -1, true, true>::call(first, last, attr_);
             if (r)
             {
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
                 // Optimization note: don't compute frac_digits if T is
                 // an unused_type. This should be optimized away by the compiler.
                 if (!is_same<T, unused_type>::value)
                     frac_digits =
                         static_cast<int>(std::distance(savef, first));
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(pop)
+#endif
                 // ignore extra (non-significant digits)
                 extract_uint<unused_type, 10, 1, -1>::call(first, last, unused);
             }

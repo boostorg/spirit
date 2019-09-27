@@ -25,6 +25,11 @@
 #include <boost/fusion/include/at.hpp>
 #include <vector>
 
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -1198,6 +1203,10 @@ namespace boost { namespace spirit { namespace traits
       : unary_handles_container<Subject, Attribute, Context, Iterator> {};
 
 }}}
+
+#if defined(_MSC_VER)
+# pragma warning(pop)
+#endif
 
 #endif
 
