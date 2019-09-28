@@ -4,7 +4,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_string.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
@@ -15,6 +14,9 @@
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+#include <boost/core/lightweight_test_trait.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -54,11 +56,7 @@ main()
             ("Joeyboy")
         ;
 
-        boost::mpl::true_ f = boost::mpl::bool_<boost::spirit::traits::is_parser<symbols<char, int> >::value>();
-
-        // silence stupid compiler warnings
-        // i.e. MSVC warning C4189: 'f' : local variable is initialized but not referenced
-        BOOST_TEST((f.value));
+        BOOST_TEST_TRAIT_TRUE((boost::spirit::traits::is_parser<symbols<char, int> >));
 
         BOOST_TEST((test("Joel", sym)));
         BOOST_TEST((test("Ruby", sym)));
