@@ -7,6 +7,10 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/spirit/home/support/utf8.hpp>
 
+#if defined(_MSC_VER) && _MSC_VER < 1700
+# pragma warning(disable: 4428) // universal-character-name encountered in source
+#endif
+
 int main()
 {
     using boost::spirit::to_utf8;
