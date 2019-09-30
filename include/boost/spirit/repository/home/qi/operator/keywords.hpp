@@ -263,7 +263,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             // 1) parse a keyword and fetch the parser index associated with that keyword
             // 2) call the associated parser and store the parsed value in the matching attribute.
 
-            while(true)
+            for(;;)
             {
 
                 spirit::qi::skip_over(first, last, skipper);
@@ -344,7 +344,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             // 1) parse a keyword and fetch the parser index associated with that keyword
             // 2) call the associated parser and store the parsed value in the matching attribute.
 
-            while(true)
+            for(;;)
             {
                 spirit::qi::skip_over(first, last, skipper);
                 Iterator save = first;

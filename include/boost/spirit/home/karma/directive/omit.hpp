@@ -73,8 +73,15 @@ namespace boost { namespace spirit { namespace karma
             // have any other means to verify, whether the passed attribute is 
             // compatible with the subject. 
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
             // omit[] will execute the code, while skip[] doesn't execute it
             if (Execute) {
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(pop)
+#endif
                 // wrap the given output iterator to avoid output
                 detail::disable_output<OutputIterator> disable(sink);
                 return subject.generate(sink, ctx, d, attr);

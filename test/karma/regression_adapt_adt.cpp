@@ -138,6 +138,10 @@ int main ()
         BOOST_TEST(test("x=1.1\n", "x=" << double_ << "\n", data3(1.1)));
         BOOST_TEST(test("x=1.0e10\n", "x=" << double_ << "\n", data3(1e10)));
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
         BOOST_TEST(test("x=inf\n", "x=" << double_ << "\n", 
             data3(std::numeric_limits<double>::infinity())));
         if (std::numeric_limits<double>::has_quiet_NaN) {
@@ -148,6 +152,9 @@ int main ()
             BOOST_TEST(test("x=nan\n", "x=" << double_ << "\n", 
                 data3(std::numeric_limits<double>::signaling_NaN())));
         }
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(pop)
+#endif
     }
 
     {

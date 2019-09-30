@@ -48,7 +48,6 @@ before_build:
           -wd4996  # Call to 'std::copy' with parameters that may be unsafe
           -wd4003  # Fusion adapt_adt: not enough actual parameters for macro
           -wd4100  # unreferenced formal parameter
-          -wd4127  # conditional expression is constant
           -wd4310  # cast truncates constant value
           -wd4456  # declaration of 'varname' hides previous local declaration
           -wd4457  # declaration of 'varname' hides function parameter
