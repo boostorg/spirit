@@ -569,6 +569,7 @@ namespace boost { namespace spirit { namespace char_encoding
     struct iso8859_1
     {
         typedef unsigned char char_type;
+        typedef unsigned char classify_type;
 
         static bool
         isascii_(int ch)
@@ -581,12 +582,25 @@ namespace boost { namespace spirit { namespace char_encoding
         {
             // iso8859.1 uses all 8 bits
             // we have to watch out for sign extensions
-            return (0 == (ch & ~0xff) || ~0 == (ch | 0xff)) ? true : false;
+            return (0 == (ch & ~0xff) || ~0 == (ch | 0xff)) != 0;
+        }
+
+        // *** Note on assertions: The precondition is that the calls to
+        // these functions do not violate the required range of ch (type int)
+        // which is that strict_ischar(ch) should be true. It is the
+        // responsibility of the caller to make sure this precondition is not
+        // violated.
+
+        static bool
+        strict_ischar(int ch)
+        {
+            return ch >= 0 && ch <= 255;
         }
 
         static bool
         isalnum(int ch)
         {
+            BOOST_ASSERT(strict_ischar(ch));
             return (iso8859_1_char_types[ch] & BOOST_CC_ALPHA)
                 || (iso8859_1_char_types[ch] & BOOST_CC_DIGIT);
         }
@@ -594,25 +608,29 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         isalpha(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_ALPHA) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_ALPHA) != 0;
         }
 
         static bool
         isdigit(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_DIGIT) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_DIGIT) != 0;
         }
 
         static bool
         isxdigit(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_XDIGIT) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_XDIGIT) != 0;
         }
 
         static bool
         iscntrl(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_CTRL) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_CTRL) != 0;
         }
 
         static bool
@@ -624,7 +642,8 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         islower(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_LOWER) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_LOWER) != 0;
         }
 
         static bool
@@ -636,25 +655,29 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         ispunct(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_PUNCT) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_PUNCT) != 0;
         }
 
         static bool
         isspace(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_SPACE) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_SPACE) != 0;
         }
 
         static bool
         isblank BOOST_PREVENT_MACRO_SUBSTITUTION (int ch)
         {
+            BOOST_ASSERT(strict_ischar(ch));
             return ('\x09' == ch || '\x20' == ch || '\xa0' == ch);
         }
 
         static bool
         isupper(int ch)
         {
-            return (iso8859_1_char_types[ch] & BOOST_CC_UPPER) ? true : false;
+            BOOST_ASSERT(strict_ischar(ch));
+            return (iso8859_1_char_types[ch] & BOOST_CC_UPPER) != 0;
         }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -664,6 +687,7 @@ namespace boost { namespace spirit { namespace char_encoding
         static int
         tolower(int ch)
         {
+            BOOST_ASSERT(strict_ischar(ch));
             return isupper(ch) && '\0' != iso8859_1_char_conversion[ch] ?
                 iso8859_1_char_conversion[ch] : ch;
         }
@@ -671,6 +695,7 @@ namespace boost { namespace spirit { namespace char_encoding
         static int
         toupper(int ch)
         {
+            BOOST_ASSERT(strict_ischar(ch));
             return islower(ch) && '\0' != iso8859_1_char_conversion[ch] ?
                 iso8859_1_char_conversion[ch] : ch;
         }
@@ -680,6 +705,7 @@ namespace boost { namespace spirit { namespace char_encoding
         {
             // The first 256 characters in Unicode and the UCS are
             // identical to those in ISO/IEC-8859-1.
+            BOOST_ASSERT(strict_ischar(ch));
             return ch;
         }
     };
