@@ -137,5 +137,12 @@ main()
         BOOST_TEST(test("Bochi Bochi", no_case[s]));
     }
 
+    {
+        {
+            using namespace boost::spirit::x3::standard;
+            BOOST_TEST(!test("ą", no_case['a']));
+        }
+    }
+
     return boost::report_errors();
 }
