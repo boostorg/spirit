@@ -19,7 +19,7 @@ namespace boost { namespace spirit { namespace x3
     struct case_compare
     {
         template <typename Char, typename CharSet>
-        Char in_set(Char ch, CharSet const& set)
+        bool in_set(Char ch, CharSet const& set)
         {
             return set.test(ch);
         }
@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
     struct no_case_compare
     {
         template <typename Char, typename CharSet>
-        Char in_set(Char ch_, CharSet const& set)
+        bool in_set(Char ch_, CharSet const& set)
         {
             using char_type = typename Encoding::classify_type;
             auto ch = char_type(ch_);
