@@ -13,6 +13,7 @@
 #endif
 
 #include <cctype>
+#include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 
 namespace boost { namespace spirit { namespace char_encoding
@@ -164,4 +165,3 @@ namespace boost { namespace spirit { namespace char_encoding
 }}}
 
 #endif
-
