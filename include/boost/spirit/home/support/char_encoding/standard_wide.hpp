@@ -15,6 +15,7 @@
 #include <cwctype>
 #include <string>
 
+#include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 
@@ -211,4 +212,3 @@ namespace boost { namespace spirit { namespace char_encoding
 }}}
 
 #endif
-
