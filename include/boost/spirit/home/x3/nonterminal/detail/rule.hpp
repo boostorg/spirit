@@ -20,6 +20,8 @@
 #include <boost/spirit/home/x3/nonterminal/simple_trace.hpp>
 #endif
 
+#include <type_traits>
+
 namespace boost { namespace spirit { namespace x3
 {
     template <typename ID>
@@ -191,7 +193,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef
                 decltype(parse_rule(
                     rule<ID, Attribute>(), first, last
-                  , make_unique_context<ID>(rhs, context), attr))
+                  , make_unique_context<ID>(rhs, context), std::declval<Attribute&>()))
             parse_rule_result;
 
             // If there is no BOOST_SPIRIT_DEFINE for this rule,
