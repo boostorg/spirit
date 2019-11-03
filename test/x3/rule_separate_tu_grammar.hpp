@@ -17,17 +17,17 @@ namespace x3 = boost::spirit::x3;
 
 // skipper must has no attribute, checks `parse` and `skip_over`
 using skipper_type = x3::rule<class skipper_r>;
-extern const skipper_type skipper;
+const skipper_type skipper;
 BOOST_SPIRIT_DECLARE(skipper_type)
 
 // the `unused_type const` must have the same effect as no attribute
 using skipper2_type = x3::rule<class skipper2_r, x3::unused_type const>;
-extern const skipper2_type skipper2;
+const skipper2_type skipper2;
 BOOST_SPIRIT_DECLARE(skipper2_type)
 
 // grammar must has no attribute, checks `parse` and `phrase_parse`
 using grammar_type = x3::rule<class grammar_r>;
-extern const grammar_type grammar;
+const grammar_type grammar;
 BOOST_SPIRIT_DECLARE(grammar_type)
 
 }
@@ -39,11 +39,11 @@ namespace used_attr {
 namespace x3 = boost::spirit::x3;
 
 using skipper_type = x3::rule<class skipper_r>;
-extern const skipper_type skipper;
+const skipper_type skipper;
 BOOST_SPIRIT_DECLARE(skipper_type)
 
 using grammar_type = x3::rule<class grammar_r, int>;
-extern const grammar_type grammar;
+const grammar_type grammar;
 BOOST_SPIRIT_DECLARE(grammar_type)
 
 }
