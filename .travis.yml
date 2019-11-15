@@ -11,24 +11,25 @@ language: cpp
 sudo: false
 
 addon_shortcuts:
-  clang-7: &clang-7
+  clang-10: &clang-10
     apt:
       sources:
-        - llvm-toolchain-xenial-7
+        - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main'
+          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
       packages:
-        - clang-7
-        - libc++-7-dev
-        - libc++abi-7-dev
+        - clang-10
+        - libc++-10-dev
+        - libc++abi-10-dev
 
-  gcc-8: &gcc-8
+  gcc-9: &gcc-9
     apt:
       sources:
-        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:ubuntu-toolchain-r/test'
       packages:
-        - g++-8
+        - g++-9
 
 os: linux
-dist: xenial
+dist: bionic
 
 env:
   global:
@@ -40,38 +41,38 @@ env:
 matrix:
   include:
     ### Spirit 3
-    - { env: 'STD=14  JOB=test/x3',         compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=14  JOB=test/x3',         compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: gcc-9, addons: *gcc-9 }
     ### Spirit 2
     ## Clang
     # 11
-    - { env: 'STD=11  JOB=test/qi',         compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=test/karma',      compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=test/lex',        compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=test/support',    compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=11  JOB=repository/test', compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=11  JOB=test/support',    compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=11  JOB=repository/test', compiler: clang-10, addons: *clang-10 }
     # 03
-    - { env: 'STD=03  JOB=test/qi',         compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=test/karma',      compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=test/lex',        compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=test/support',    compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=repository/test', compiler: clang-7, addons: *clang-7 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=03  JOB=test/support',    compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=03  JOB=repository/test', compiler: clang-10, addons: *clang-10 }
     ## GCC
     # 11
-    - { env: 'STD=11  JOB=test/qi',         compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=test/karma',      compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=test/lex',        compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=test/support',    compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=11  JOB=repository/test', compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=11  JOB=test/support',    compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=11  JOB=repository/test', compiler: gcc-9, addons: *gcc-9 }
     # 03
-    - { env: 'STD=03  JOB=test/qi',         compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=test/karma',      compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=test/lex',        compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=test/support',    compiler: gcc-8, addons: *gcc-8 }
-    - { env: 'STD=03  JOB=repository/test', compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=03  JOB=test/support',    compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=03  JOB=repository/test', compiler: gcc-9, addons: *gcc-9 }
     ### Spirit 1
-    - { env: 'STD=03  JOB=classic/test',    compiler: clang-7, addons: *clang-7 }
-    - { env: 'STD=03  JOB=classic/test',    compiler: gcc-8, addons: *gcc-8 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: clang-10, addons: *clang-10 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: gcc-9, addons: *gcc-9 }
 
 cache: ccache
 

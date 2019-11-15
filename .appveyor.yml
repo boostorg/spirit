@@ -19,6 +19,7 @@ environment:
                                    # object files compress ratio is 20:1 in our case
 
   matrix:
+    - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2019', ADDRMDL: 64, TOOLSET: 'msvc-14.2' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2017', ADDRMDL: 64, TOOLSET: 'msvc-14.1' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 64, TOOLSET: 'msvc-14.0' }
     - { APPVEYOR_BUILD_WORKER_IMAGE: 'Visual Studio 2015', ADDRMDL: 64, TOOLSET: 'msvc-12.0' }
