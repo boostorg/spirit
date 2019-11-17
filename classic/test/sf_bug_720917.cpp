@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2003 Giovanni Bajo
-    Copyrigh (c) 2003 Martin Wille
+    Copyright (c) 2003 Martin Wille
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
