@@ -43,19 +43,19 @@ namespace boost { namespace spirit { namespace x3
         {
             return {};
         }
+
+        friend std::ostream& operator<<(std::ostream& out, unused_type const&)
+        {
+            return out;
+        }
+
+        friend std::istream& operator>>(std::istream& in, unused_type&)
+        {
+            return in;
+        }
     };
 
     auto const unused = unused_type{};
-
-    inline std::ostream& operator<<(std::ostream& out, unused_type const&)
-    {
-        return out;
-    }
-
-    inline std::istream& operator>>(std::istream& in, unused_type&)
-    {
-        return in;
-    }
 }}}
 
 #endif
