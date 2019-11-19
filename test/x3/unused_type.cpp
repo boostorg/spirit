@@ -8,6 +8,7 @@
 
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <type_traits>
+#include <iostream>
 
 void test_use(boost::spirit::x3::unused_type) {}
 
@@ -31,4 +32,8 @@ int main()
     test_use(0);
     test_use(unused);
     test_use(unused_mut);
+
+    std::cout << unused;
+    std::cout << unused_mut;
+    std::cin >> unused_mut;
 }
