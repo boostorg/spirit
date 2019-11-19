@@ -9,6 +9,7 @@
 #include <boost/spirit/home/x3.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
+#include <boost/variant.hpp>
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -44,6 +45,21 @@ auto const a_def = '{' >> boost::spirit::x3::int_ >> '}';
 auto const b_def = a;
 
 BOOST_SPIRIT_DEFINE(a, b)
+
+}
+
+namespace check_recursive {
+
+using node_t = boost::make_recursive_variant<
+                   int,
+                   std::vector<boost::recursive_variant_>
+               >::type;
+
+boost::spirit::x3::rule<class grammar_r, node_t> const grammar;
+
+auto const grammar_def = '[' >> grammar % ',' >> ']' | boost::spirit::x3::int_;
+
+BOOST_SPIRIT_DEFINE(grammar)
 
 }
 
@@ -103,6 +119,13 @@ int main()
         stationary st { 0 };
         BOOST_TEST(test_attr("{42}", check_stationary::b, st));
         BOOST_TEST_EQ(st.val, 42);
+    }
+
+    {
+        using namespace check_recursive;
+        node_t v;
+        BOOST_TEST(test_attr("[4,2]", grammar, v));
+        BOOST_TEST((node_t{std::vector<node_t>{{4}, {2}}} == v));
     }
 
     return boost::report_errors();
