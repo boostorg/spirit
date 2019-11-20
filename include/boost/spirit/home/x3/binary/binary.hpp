@@ -40,7 +40,7 @@ namespace boost { namespace spirit { namespace x3
         {
             x3::skip_over(first, last, context);
 
-            auto bytes = reinterpret_cast<const unsigned char*>(&n);
+            unsigned char const* bytes = n.data();
 
             Iterator it = first;
             for (unsigned int i = 0; i < sizeof(n); ++i)

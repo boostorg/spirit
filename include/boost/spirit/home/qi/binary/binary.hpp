@@ -237,7 +237,7 @@ namespace boost { namespace spirit { namespace qi
             qi::skip_over(first, last, skipper);
 
             typename attribute<Context, Iterator>::type attr_;
-            unsigned char* bytes = reinterpret_cast<unsigned char*>(&attr_);
+            unsigned char* bytes = attr_.data();
 
             Iterator it = first;
             for (unsigned int i = 0; i < sizeof(attr_); ++i)
@@ -282,10 +282,6 @@ namespace boost { namespace spirit { namespace qi
         {
             qi::skip_over(first, last, skipper);
 
-            // Even if the endian types are not pod's (at least not in the
-            // definition of C++03) it seems to be safe to assume they are
-            // (but in C++0x the endian types _are_ PODs).
-            // This allows us to treat them as a sequence of consecutive bytes.
             boost::endian::endian_arithmetic<endian, typename T::type, bits> attr_;
 
 #if defined(BOOST_MSVC)
@@ -298,7 +294,7 @@ namespace boost { namespace spirit { namespace qi
 #pragma warning(pop)
 #endif
 
-            unsigned char* bytes = reinterpret_cast<unsigned char*>(&attr_);
+            unsigned char* bytes = attr_.data();
 
             Iterator it = first;
             for (unsigned int i = 0; i < sizeof(attr_); ++i)

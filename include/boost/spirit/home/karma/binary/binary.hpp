@@ -233,9 +233,6 @@ namespace boost { namespace spirit { namespace karma
             if (!traits::has_optional_value(attr))
                 return false;
 
-            // Even if the endian types are not pod's (at least not in the
-            // definition of C++03) it seems to be safe to assume they are.
-            // This allows us to treat them as a sequence of consecutive bytes.
             boost::endian::endian_arithmetic<endian, typename T::type, bits> p;
 
 #if defined(BOOST_MSVC)
@@ -249,8 +246,7 @@ namespace boost { namespace spirit { namespace karma
 #pragma warning(pop)
 #endif
 
-            unsigned char const* bytes =
-                reinterpret_cast<unsigned char const*>(&p);
+            unsigned char const* bytes = p.data();
 
             for (unsigned int i = 0; i < sizeof(p); ++i)
             {
@@ -314,12 +310,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const&) const
         {
-            // Even if the endian types are not pod's (at least not in the
-            // definition of C++03) it seems to be safe to assume they are
-            // (but in C++0x the endian types _are_ PODs).
-            // This allows us to treat them as a sequence of consecutive bytes.
-            unsigned char const* bytes =
-                reinterpret_cast<unsigned char const*>(&data_);
+            unsigned char const* bytes = data_.data();
 
             for (unsigned int i = 0; i < sizeof(data_type); ++i)
             {
