@@ -9,9 +9,6 @@
 #if !defined(BOOST_SPIRIT_ASSERT_HPP)
 #define BOOST_SPIRIT_ASSERT_HPP
 
-#include <boost/config.hpp>
-#include <boost/throw_exception.hpp>
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  BOOST_SPIRIT_ASSERT is used throughout the framework.  It can be
@@ -24,6 +21,7 @@
 #if defined(NDEBUG)
     #define BOOST_SPIRIT_ASSERT(x)
 #elif defined (BOOST_SPIRIT_ASSERT_EXCEPTION)
+    #include <boost/throw_exception.hpp>
     #define BOOST_SPIRIT_ASSERT_AUX(f, l, x) BOOST_SPIRIT_ASSERT_AUX2(f, l, x)
     #define BOOST_SPIRIT_ASSERT_AUX2(f, l, x)                                   \
     ( (x) ? (void)0 : boost::throw_exception(                                   \
