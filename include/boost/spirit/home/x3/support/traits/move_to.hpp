@@ -57,14 +57,14 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         inline void
         move_to_plain(Source&& src, Dest& dest, mpl::false_) // src is not a single-element tuple
         {
-            dest = std::move(src);
+            dest = static_cast<Dest>(std::move(src));
         }
         
         template <typename Source, typename Dest>
         inline void
         move_to_plain(Source&& src, Dest& dest, mpl::true_) // src is a single-element tuple
         {
-            dest = std::move(fusion::front(src));
+            dest = static_cast<Dest>(std::move(fusion::front(src)));
         }
 
         template <typename Source, typename Dest>
@@ -110,7 +110,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         inline void
         move_to(Source&& src, Dest& dest, variant_attribute, mpl::false_)
         {
-            dest = std::move(src);
+            dest = static_cast<Dest>(std::move(src));
         }
         
         template <typename Source, typename Dest>
@@ -124,7 +124,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             static_assert(variant_has_substitute<Dest, typename fusion::result_of::front<Source>::type>::value,
                 "Error! The destination variant (Dest) cannot hold the source type (Source)");
             
-            dest = std::move(fusion::front(src));
+            dest = static_cast<Dest>(std::move(fusion::front(src)));
         }
         
         template <typename Source, typename Dest>
@@ -133,7 +133,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         {
             // dest is a variant, src is a single element fusion sequence that the variant
             // *can* directly hold.
-            dest = std::move(src);
+            dest = static_cast<Dest>(std::move(src));
         }
 
         template <typename Source, typename Dest>
@@ -154,7 +154,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         inline void
         move_to(Source&& src, Dest& dest, optional_attribute)
         {
-            dest = std::move(src);
+            dest = static_cast<Dest>(std::move(src));
         }
 
         template <typename Iterator>
