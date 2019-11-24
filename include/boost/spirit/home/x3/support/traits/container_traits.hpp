@@ -12,8 +12,8 @@
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 #include <boost/fusion/include/deque.hpp>
-#include <boost/tti/has_type.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/type_traits/make_void.hpp>
 
 #include <vector>
 #include <string>
@@ -28,23 +28,27 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     namespace detail
     {
-        BOOST_TTI_HAS_TYPE(value_type)
-        BOOST_TTI_HAS_TYPE(iterator)
-        BOOST_TTI_HAS_TYPE(size_type)
-        BOOST_TTI_HAS_TYPE(reference)
-        BOOST_TTI_HAS_TYPE(key_type)
+        template <typename T, typename Enabler = void>
+        struct is_container_impl : mpl::false_ {};
+
+        template <typename T>
+        struct is_container_impl<T, void_t<
+            typename T::value_type, typename T::iterator,
+            typename T::size_type, typename T::reference> > : mpl::true_ {};
+
+        template <typename T, typename Enabler = void>
+        struct is_associative_impl : mpl::false_ {};
+
+        template <typename T>
+        struct is_associative_impl<T, void_t<typename T::key_type>>
+            : mpl::true_ {};
     }
 
     template <typename T>
-    using is_container = mpl::bool_<
-        detail::has_type_value_type<T>::value &&
-        detail::has_type_iterator<T>::value &&
-        detail::has_type_size_type<T>::value &&
-        detail::has_type_reference<T>::value>;
+    using is_container = typename detail::is_container_impl<T>::type;
 
     template <typename T>
-    using is_associative = mpl::bool_<
-        detail::has_type_key_type<T>::value>;
+    using is_associative = typename detail::is_associative_impl<T>::type;
 
     template<typename T, typename Enable = void>
     struct is_reservable : mpl::false_ {};
