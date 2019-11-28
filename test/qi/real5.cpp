@@ -10,6 +10,8 @@
 
 #include "real.hpp"
 
+#include <boost/phoenix/core/reference.hpp>
+
 int
 main()
 {

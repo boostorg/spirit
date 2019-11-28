@@ -40,6 +40,9 @@
 #include <boost/spirit/home/qi/nonterminal/nonterminal_fwd.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 
+#include <boost/proto/extends.hpp>
+#include <boost/proto/traits.hpp>
+
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4355) // 'this' : used in base member initializer list warning

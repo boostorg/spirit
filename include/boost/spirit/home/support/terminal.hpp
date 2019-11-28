@@ -14,16 +14,19 @@
 #endif
 
 #include <boost/config.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
-#include <boost/proto/proto.hpp>
 #include <boost/spirit/home/support/meta_compiler.hpp>
 #include <boost/spirit/home/support/detail/make_vector.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/detail/is_spirit_tag.hpp>
-#include <boost/preprocessor/tuple/elem.hpp>
-
 #include <boost/spirit/home/support/terminal_expression.hpp>
+#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/is_actor.hpp>
+#include <boost/phoenix/core/terminal_fwd.hpp>
+#include <boost/phoenix/core/value.hpp> // includes as_actor specialization
+#include <boost/phoenix/function/function.hpp>
+#include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/proto/extends.hpp>
+#include <boost/proto/traits.hpp>
 
 namespace boost { namespace spirit
 {
