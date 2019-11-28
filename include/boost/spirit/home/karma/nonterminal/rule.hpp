@@ -40,6 +40,9 @@
 #include <boost/spirit/home/karma/nonterminal/detail/generator_binder.hpp>
 #include <boost/spirit/home/karma/nonterminal/detail/parameterized.hpp>
 
+#include <boost/proto/extends.hpp>
+#include <boost/proto/traits.hpp>
+
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4127) // conditional expression is constant

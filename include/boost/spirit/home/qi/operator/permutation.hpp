@@ -22,6 +22,8 @@
 #include <boost/fusion/include/size.hpp>
 #include <boost/optional.hpp>
 #include <boost/array.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/tags.hpp>
 
 namespace boost { namespace spirit
 {

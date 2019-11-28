@@ -14,6 +14,7 @@
 #include <boost/spirit/include/qi_grammar.hpp>
 #include <boost/spirit/include/qi_eoi.hpp>
 
+#include <boost/phoenix/operator/self.hpp>
 #include <string>
 #include <iostream>
 #include <sstream>

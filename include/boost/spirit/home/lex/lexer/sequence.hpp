@@ -15,6 +15,8 @@
 #include <boost/spirit/home/lex/meta_compiler.hpp>
 #include <boost/spirit/home/lex/detail/sequence_function.hpp>
 #include <boost/fusion/include/any.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/tags.hpp>
 
 namespace boost { namespace spirit
 {

@@ -37,6 +37,8 @@
 #include <boost/mpl/not.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/mpl/accumulate.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/tags.hpp>
 #include <boost/config.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

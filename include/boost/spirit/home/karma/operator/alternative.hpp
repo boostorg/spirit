@@ -26,6 +26,7 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/mpl/accumulate.hpp>
 #include <boost/mpl/bitor.hpp>
+#include <boost/proto/tags.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace spirit

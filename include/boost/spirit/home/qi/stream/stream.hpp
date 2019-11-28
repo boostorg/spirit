@@ -15,7 +15,7 @@
 #include <boost/spirit/home/qi/stream/detail/match_manip.hpp>
 #include <boost/spirit/home/qi/stream/detail/iterator_source.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
-
+#include <boost/proto/traits.hpp>
 #include <iosfwd>
 #include <sstream>
 

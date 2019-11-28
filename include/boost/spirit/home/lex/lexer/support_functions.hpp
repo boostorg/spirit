@@ -10,11 +10,12 @@
 #pragma once
 #endif
 
-#include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/home/support/detail/scoped_enum_emulation.hpp>
 #include <boost/spirit/home/lex/lexer/pass_flags.hpp>
-
 #include <boost/spirit/home/lex/lexer/support_functions_expression.hpp>
+#include <boost/phoenix/core/actor.hpp>
+#include <boost/phoenix/core/as_actor.hpp>
+#include <boost/phoenix/core/value.hpp> // includes as_actor specialization
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace lex
