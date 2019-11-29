@@ -5,7 +5,6 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/if.hpp>
@@ -22,8 +21,17 @@
 
 #include <boost/limits.hpp>
 #include "test.hpp"
+#include <sstream>
 
 using namespace spirit_test;
+
+template <typename T>
+std::string to_string(T v)
+{
+    std::stringstream ss;
+    ss << v;
+    return ss.str();
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 struct test_minmax
@@ -37,8 +45,8 @@ struct test_minmax
         T minval = (std::numeric_limits<T>::min)();
         T maxval = (std::numeric_limits<T>::max)();
 
-        std::string expected_minval = boost::lexical_cast<std::string>(minval); 
-        std::string expected_maxval = boost::lexical_cast<std::string>(maxval);
+        std::string expected_minval = to_string(minval);
+        std::string expected_maxval = to_string(maxval);
 
         // create a correct generator type from the given integer type
         typedef typename

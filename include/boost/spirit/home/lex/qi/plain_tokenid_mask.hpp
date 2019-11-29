@@ -25,8 +25,8 @@
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_enum.hpp>
-#include <boost/lexical_cast.hpp>
 #include <iterator> // for std::iterator_traits
+#include <sstream>
 
 namespace boost { namespace spirit
 {
@@ -103,8 +103,9 @@ namespace boost { namespace spirit { namespace qi
         template <typename Context>
         info what(Context& /*context*/) const
         {
-            return info("tokenid_mask",
-                "tokenid_mask(" + boost::lexical_cast<utf8_string>(mask) + ")");
+            std::stringstream ss;
+            ss << "tokenid_mask(" << mask << ")";
+            return info("tokenid_mask", ss.str());
         }
 
         Mask mask;
