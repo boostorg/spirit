@@ -12,7 +12,8 @@
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/core/enable_if.hpp>
+#include <boost/proto/traits.hpp>
 
 namespace boost { namespace spirit
 {

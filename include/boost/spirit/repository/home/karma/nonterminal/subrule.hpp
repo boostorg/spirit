@@ -41,6 +41,8 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/proto/extends.hpp>
+#include <boost/proto/traits.hpp>
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_reference.hpp>

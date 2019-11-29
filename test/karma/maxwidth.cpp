@@ -12,6 +12,9 @@
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 
+#include <boost/phoenix/core/reference.hpp>
+#include <boost/phoenix/core/value.hpp>
+
 #include "test.hpp"
 
 using namespace spirit_test;

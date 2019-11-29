@@ -22,6 +22,8 @@
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/optional.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/tags.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 
 namespace boost { namespace spirit

@@ -21,6 +21,8 @@
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/detail/string_generate.hpp>
 #include <boost/config.hpp>
+#include <boost/proto/extends.hpp>
+#include <boost/proto/traits.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/mpl/if.hpp>
 #include <map>

@@ -41,6 +41,8 @@
 #include <boost/fusion/include/zip_view.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/variant/static_visitor.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/tags.hpp>
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/repository/home/qi/operator/detail/keywords.hpp>

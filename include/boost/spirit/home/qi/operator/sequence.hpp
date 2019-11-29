@@ -15,6 +15,8 @@
 #include <boost/spirit/home/qi/operator/sequence_base.hpp>
 #include <boost/spirit/home/qi/detail/fail_function.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/tags.hpp>
 
 namespace boost { namespace spirit
 {
