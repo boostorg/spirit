@@ -17,7 +17,6 @@
 #include <boost/spirit/home/lex/lexer/lexertl/semantic_action_data.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/wrap_action.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 #include <iterator> // for std::iterator_traits
 
 namespace boost { namespace spirit { namespace lex { namespace lexertl
@@ -25,13 +24,22 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     namespace detail
     {
         ///////////////////////////////////////////////////////////////////////
+        template <typename Char>
+        inline bool zstr_compare(Char const* s1, Char const* s2)
+        {
+            for (; *s1 || *s2; ++s1, ++s2)
+                if (*s1 != *s2)
+                    return false;
+            return true;
+        }
+
         template <typename Char, typename F>
         inline std::size_t get_state_id(Char const* state, F f
           , std::size_t numstates)
         {
             for (std::size_t i = 0; i < numstates; ++i)
             {
-                if (boost::algorithm::equals(f(i), state))
+                if (zstr_compare(f(i), state))
                     return i;
             }
             return boost::lexer::npos;
