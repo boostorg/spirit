@@ -73,6 +73,9 @@ namespace boost { namespace spirit { namespace x3
     template <typename ID, typename Attribute, bool force_attribute_>
     struct rule : parser<rule<ID, Attribute>>
     {
+        static_assert(!std::is_reference<Attribute>::value,
+                      "Reference qualifier on rule attribute type is meaningless");
+
         typedef ID id;
         typedef Attribute attribute_type;
         static bool const has_attribute =
