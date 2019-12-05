@@ -27,6 +27,7 @@
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/repository/home/support/subrule_context.hpp>
 
+#include <boost/static_assert.hpp>
 #include <boost/fusion/include/as_map.hpp>
 #include <boost/fusion/include/at_key.hpp>
 #include <boost/fusion/include/cons.hpp>
@@ -43,7 +44,8 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/proto/traits.hpp>
-#include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 
@@ -392,8 +394,10 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         typedef typename
             spirit::detail::attr_from_sig<sig_type>::type
         attr_type;
-        typedef typename add_reference<
-            typename add_const<attr_type>::type>::type attr_reference_type;
+        BOOST_STATIC_ASSERT_MSG(
+            !is_reference<attr_type>::value && !is_const<attr_type>::value,
+            "Const/reference qualifiers on Karma subrule attribute are meaningless");
+        typedef attr_type const& attr_reference_type;
 
         // parameter_types is a sequence of types passed as parameters to the subrule
         typedef typename
