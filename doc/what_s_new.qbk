@@ -9,6 +9,24 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_72 Spirit V2.5.8 (Boost V1.72.0)]
+
+* `<cctype>` functions were called with negative values. [gh_pr 543]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_71 Spirit V2.5.8 (Boost V1.71.0)]
+
+* Explicitly delete all non implemented assignment operators. [gh_pr 489] Romain Geissler
+* Port `hold_any` to Boost.Core typeinfo. [gh_pr 510] Andrey Semashev
+* Lex: Removed variadic `tokenize_and_phrase_parse`. [gh_pr 491]
+* Qi: Floating point parser fixes. [trac 11608] [gh 421] [gh 495] [gh 498] [gh 503]
+* utree: Missing `<cstring>` include in `utree_detail2.hpp`. [gh 502]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_8 Spirit V2.5.8]
 
 [heading What's changed from V2.5.7 (Boost V1.69.0) to V2.5.8 (Boost V1.70.0)]

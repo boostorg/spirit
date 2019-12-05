@@ -8,6 +8,33 @@
 [section Changelog]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_5 Spirit V3.0.5 (Boost V1.72.0)]
+
+* `any_char` parser were accepting characters outside of encoding. [gh 520] [gh_pr 521] sehe
+* Added workaround `move_to` overload for `boost::optional` type. [gh 533] [gh_pr 534] Duzy Chan
+* Unicode out-of-bounds category lookup. [gh_pr 528] Christian Mazakas
+* Mismatched pragma warning push/pop in `escape_char.ipp`. [gh 532] [gh_pr 535] stefan301
+* Remove bool->char->bool conversion in `[no_]case_compare`. [gh_pr 536]
+* `<cctype>` functions were called with negative values. [gh_pr 543]
+* Fixed `parse_rule` definition check. [gh_pr 549] (regressed in [gh_pr 457])
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_4_boost_1_71 Spirit V3.0.4 (Boost V1.71.0)]
+
+* Explicitly delete all non implemented assignment operators. [gh_pr 489] Romain Geissler
+* Unpublish `x3/support/utility/testing.hpp`. [gh_pr 492]
+* Removed unused `is_char` and `is_string` traits. [gh_pr 507]
+* Simplified `string_traits`. [gh_pr 507]
+* `raw` parser attribute materialization issue. [gh 509]
+* Removed static assert guarding unwanted attribute materialization that
+  happens when rule parser producing an attribute called without an actual
+  attribute. See [gh 511] for the discussion.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_4 Spirit V3.0.4 (Boost V1.70.0)]
 
 * Integer parsers should now handle user defined types. [gh_pr 429]
