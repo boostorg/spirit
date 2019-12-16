@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_X3_RAW_APRIL_9_2007_0912AM)
-#define SPIRIT_X3_RAW_APRIL_9_2007_0912AM
+#ifndef BOOST_SPIRIT_X3_DIRECTIVE_RAW_HPP
+#define BOOST_SPIRIT_X3_DIRECTIVE_RAW_HPP
 
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>

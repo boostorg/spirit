@@ -8,8 +8,8 @@
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#ifndef PHOENIX_NEW_HPP
-#define PHOENIX_NEW_HPP
+#ifndef BOOST_SPIRIT_CLASSIC_PHOENIX_NEW_HPP
+#define BOOST_SPIRIT_CLASSIC_PHOENIX_NEW_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/classic/phoenix/actor.hpp>
@@ -1312,4 +1312,4 @@ new_(
 ///////////////////////////////////////////////////////////////////////////////
 }   //  namespace phoenix
 
-#endif // PHOENIX_NEW_HPP
+#endif

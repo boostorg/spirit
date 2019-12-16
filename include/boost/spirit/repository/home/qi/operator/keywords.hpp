@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_KEYWORDS_OR_MARCH_13_2007_1145PM)
-#define SPIRIT_KEYWORDS_OR_MARCH_13_2007_1145PM
+#ifndef BOOST_SPIRIT_REPOSITORY_QI_OPERATOR_KEYWORDS_HPP
+#define BOOST_SPIRIT_REPOSITORY_QI_OPERATOR_KEYWORDS_HPP
 
 #if defined(_MSC_VER)
 #pragma once

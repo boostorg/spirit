@@ -8,8 +8,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#if !defined(PARSE_TREE_UTILS_IPP)
-#define PARSE_TREE_UTILS_IPP
+#ifndef BOOST_SPIRIT_CLASSIC_TREE_IMPL_PARSE_TREE_UTILS_IPP
+#define BOOST_SPIRIT_CLASSIC_TREE_IMPL_PARSE_TREE_UTILS_IPP
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost {
@@ -132,4 +132,4 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 }   // namespace spirit
 }   // namespace boost
 
-#endif // !defined(PARSE_TREE_UTILS_IPP)
+#endif
