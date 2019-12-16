@@ -4,8 +4,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_WHAT_FUNCTION_APRIL_22_2007_0236PM)
-#define SPIRIT_WHAT_FUNCTION_APRIL_22_2007_0236PM
+#ifndef BOOST_SPIRIT_SUPPORT_DETAIL_WHAT_FUNCTION_HPP
+#define BOOST_SPIRIT_SUPPORT_DETAIL_WHAT_FUNCTION_HPP
 
 #if defined(_MSC_VER)
 #pragma once

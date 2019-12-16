@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_PASS_CONTAINER_MAR_15_2009_0114PM)
-#define SPIRIT_PASS_CONTAINER_MAR_15_2009_0114PM
+#ifndef BOOST_SPIRIT_KARMA_DETAIL_PASS_CONTAINER_HPP
+#define BOOST_SPIRIT_KARMA_DETAIL_PASS_CONTAINER_HPP
 
 #if defined(_MSC_VER)
 #pragma once

@@ -25,8 +25,8 @@ namespace boost { namespace spirit { namespace detail
 #else
 
 #ifndef BOOST_PP_IS_ITERATING
-#if !defined(SPIRIT_MAKE_VECTOR_07162005_0243)
-#define SPIRIT_MAKE_VECTOR_07162005_0243
+#ifndef BOOST_SPIRIT_SUPPORT_DETAIL_MAKE_VECTOR_HPP
+#define BOOST_SPIRIT_SUPPORT_DETAIL_MAKE_VECTOR_HPP
 
 #include <boost/preprocessor/iterate.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
