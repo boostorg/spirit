@@ -35,8 +35,13 @@
 
 #include <iterator> // for std::iterator_traits
 
-#if !defined(SPIRIT_NUMERICS_LOOP_UNROLL)
-# define SPIRIT_NUMERICS_LOOP_UNROLL 3
+#ifndef BOOST_SPIRIT_NUMERICS_LOOP_UNROLL
+# ifdef SPIRIT_NUMERICS_LOOP_UNROLL
+// backward compatibility
+#  define BOOST_SPIRIT_NUMERICS_LOOP_UNROLL SPIRIT_NUMERICS_LOOP_UNROLL
+# else
+#  define BOOST_SPIRIT_NUMERICS_LOOP_UNROLL 3
+# endif
 #endif
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -277,7 +282,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     //  extract_int: main code for extracting integers
     ///////////////////////////////////////////////////////////////////////////
-#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                   \
+#define BOOST_SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                             \
         if (!check_max_digits<MaxDigits>::call(count + leading_zeros)           \
             || it == last)                                                      \
             break;                                                              \
@@ -335,8 +340,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             while (true)
             {
                 BOOST_PP_REPEAT(
-                    SPIRIT_NUMERICS_LOOP_UNROLL
-                  , SPIRIT_NUMERIC_INNER_LOOP, _)
+                    BOOST_SPIRIT_NUMERICS_LOOP_UNROLL
+                  , BOOST_SPIRIT_NUMERIC_INNER_LOOP, _)
             }
 
             if (count + leading_zeros >= MinDigits)
@@ -372,13 +377,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return parse_main(first, last, attr);
         }
     };
-#undef SPIRIT_NUMERIC_INNER_LOOP
+#undef BOOST_SPIRIT_NUMERIC_INNER_LOOP
 
     ///////////////////////////////////////////////////////////////////////////
     //  extract_int: main code for extracting integers
     //  common case where MinDigits == 1 and MaxDigits = -1
     ///////////////////////////////////////////////////////////////////////////
-#define SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                                   \
+#define BOOST_SPIRIT_NUMERIC_INNER_LOOP(z, x, data)                             \
         if (it == last)                                                         \
             break;                                                              \
         ch = *it;                                                               \
@@ -452,8 +457,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             while (true)
             {
                 BOOST_PP_REPEAT(
-                    SPIRIT_NUMERICS_LOOP_UNROLL
-                  , SPIRIT_NUMERIC_INNER_LOOP, _)
+                    BOOST_SPIRIT_NUMERICS_LOOP_UNROLL
+                  , BOOST_SPIRIT_NUMERIC_INNER_LOOP, _)
             }
 
             traits::move_to(val, attr);
@@ -486,7 +491,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         }
     };
 
-#undef SPIRIT_NUMERIC_INNER_LOOP
+#undef BOOST_SPIRIT_NUMERIC_INNER_LOOP
 }}}}
 
 #endif

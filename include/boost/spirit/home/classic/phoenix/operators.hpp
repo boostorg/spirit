@@ -9,21 +9,21 @@
 #define BOOST_SPIRIT_CLASSIC_PHOENIX_OPERATORS_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#if !defined(BOOST_NO_CWCTYPE)
-    #include <cwctype>
-#endif
-
-#if defined(__BORLANDC__) || (defined(__ICL) && __ICL >= 700)
-#define CREF const&
-#else
-#define CREF
-#endif
-
 #include <climits>
 #include <boost/spirit/home/classic/phoenix/actor.hpp>
 #include <boost/spirit/home/classic/phoenix/composite.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/if.hpp>
+
+#if !defined(BOOST_NO_CWCTYPE)
+    #include <cwctype>
+#endif
+
+#if defined(__BORLANDC__) || (defined(__ICL) && __ICL >= 700)
+#define BOOST_SPIRIT_CREF const&
+#else
+#define BOOST_SPIRIT_CREF
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace phoenix {
@@ -1085,7 +1085,7 @@ struct plus_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<plus_assign_op, BaseT, T1>::type
-operator+=(actor<BaseT> const& _0, T1 CREF _1)
+operator+=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<plus_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1113,7 +1113,7 @@ struct minus_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<minus_assign_op, BaseT, T1>::type
-operator-=(actor<BaseT> const& _0, T1 CREF _1)
+operator-=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<minus_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1141,7 +1141,7 @@ struct times_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<times_assign_op, BaseT, T1>::type
-operator*=(actor<BaseT> const& _0, T1 CREF _1)
+operator*=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<times_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1169,7 +1169,7 @@ struct divide_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<divide_assign_op, BaseT, T1>::type
-operator/=(actor<BaseT> const& _0, T1 CREF _1)
+operator/=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<divide_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1197,7 +1197,7 @@ struct mod_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<mod_assign_op, BaseT, T1>::type
-operator%=(actor<BaseT> const& _0, T1 CREF _1)
+operator%=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<mod_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1225,7 +1225,7 @@ struct and_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<and_assign_op, BaseT, T1>::type
-operator&=(actor<BaseT> const& _0, T1 CREF _1)
+operator&=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<and_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1253,7 +1253,7 @@ struct or_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<or_assign_op, BaseT, T1>::type
-operator|=(actor<BaseT> const& _0, T1 CREF _1)
+operator|=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<or_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1281,7 +1281,7 @@ struct xor_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<xor_assign_op, BaseT, T1>::type
-operator^=(actor<BaseT> const& _0, T1 CREF _1)
+operator^=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<xor_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1309,7 +1309,7 @@ struct shift_l_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<shift_l_assign_op, BaseT, T1>::type
-operator<<=(actor<BaseT> const& _0, T1 CREF _1)
+operator<<=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<shift_l_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1337,7 +1337,7 @@ struct shift_r_assign_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<shift_r_assign_op, BaseT, T1>::type
-operator>>=(actor<BaseT> const& _0, T1 CREF _1)
+operator>>=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<shift_r_assign_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1365,7 +1365,7 @@ struct plus_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<plus_op, BaseT, T1>::type
-operator+(actor<BaseT> const& _0, T1 CREF _1)
+operator+(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<plus_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1373,7 +1373,7 @@ operator+(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<plus_op, T0, BaseT>::type
-operator+(T0 CREF _0, actor<BaseT> const& _1)
+operator+(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<plus_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1409,7 +1409,7 @@ struct minus_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<minus_op, BaseT, T1>::type
-operator-(actor<BaseT> const& _0, T1 CREF _1)
+operator-(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<minus_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1417,7 +1417,7 @@ operator-(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<minus_op, T0, BaseT>::type
-operator-(T0 CREF _0, actor<BaseT> const& _1)
+operator-(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<minus_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1453,7 +1453,7 @@ struct times_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<times_op, BaseT, T1>::type
-operator*(actor<BaseT> const& _0, T1 CREF _1)
+operator*(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<times_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1461,7 +1461,7 @@ operator*(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<times_op, T0, BaseT>::type
-operator*(T0 CREF _0, actor<BaseT> const& _1)
+operator*(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<times_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1497,7 +1497,7 @@ struct divide_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<divide_op, BaseT, T1>::type
-operator/(actor<BaseT> const& _0, T1 CREF _1)
+operator/(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<divide_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1505,7 +1505,7 @@ operator/(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<divide_op, T0, BaseT>::type
-operator/(T0 CREF _0, actor<BaseT> const& _1)
+operator/(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<divide_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1541,7 +1541,7 @@ struct mod_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<mod_op, BaseT, T1>::type
-operator%(actor<BaseT> const& _0, T1 CREF _1)
+operator%(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<mod_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1549,7 +1549,7 @@ operator%(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<mod_op, T0, BaseT>::type
-operator%(T0 CREF _0, actor<BaseT> const& _1)
+operator%(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<mod_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1585,7 +1585,7 @@ struct and_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<and_op, BaseT, T1>::type
-operator&(actor<BaseT> const& _0, T1 CREF _1)
+operator&(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<and_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1593,7 +1593,7 @@ operator&(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<and_op, T0, BaseT>::type
-operator&(T0 CREF _0, actor<BaseT> const& _1)
+operator&(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<and_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1629,7 +1629,7 @@ struct or_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<or_op, BaseT, T1>::type
-operator|(actor<BaseT> const& _0, T1 CREF _1)
+operator|(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<or_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1637,7 +1637,7 @@ operator|(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<or_op, T0, BaseT>::type
-operator|(T0 CREF _0, actor<BaseT> const& _1)
+operator|(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<or_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1673,7 +1673,7 @@ struct xor_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<xor_op, BaseT, T1>::type
-operator^(actor<BaseT> const& _0, T1 CREF _1)
+operator^(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<xor_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1681,7 +1681,7 @@ operator^(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<xor_op, T0, BaseT>::type
-operator^(T0 CREF _0, actor<BaseT> const& _1)
+operator^(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<xor_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1717,7 +1717,7 @@ struct shift_l_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<shift_l_op, BaseT, T1>::type
-operator<<(actor<BaseT> const& _0, T1 CREF _1)
+operator<<(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<shift_l_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1725,7 +1725,7 @@ operator<<(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<shift_l_op, T0, BaseT>::type
-operator<<(T0 CREF _0, actor<BaseT> const& _1)
+operator<<(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<shift_l_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1761,7 +1761,7 @@ struct shift_r_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<shift_r_op, BaseT, T1>::type
-operator>>(actor<BaseT> const& _0, T1 CREF _1)
+operator>>(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<shift_r_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1769,7 +1769,7 @@ operator>>(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<shift_r_op, T0, BaseT>::type
-operator>>(T0 CREF _0, actor<BaseT> const& _1)
+operator>>(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<shift_r_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1805,7 +1805,7 @@ struct eq_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<eq_op, BaseT, T1>::type
-operator==(actor<BaseT> const& _0, T1 CREF _1)
+operator==(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<eq_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1813,7 +1813,7 @@ operator==(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<eq_op, T0, BaseT>::type
-operator==(T0 CREF _0, actor<BaseT> const& _1)
+operator==(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<eq_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1849,7 +1849,7 @@ struct not_eq_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<not_eq_op, BaseT, T1>::type
-operator!=(actor<BaseT> const& _0, T1 CREF _1)
+operator!=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<not_eq_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1857,7 +1857,7 @@ operator!=(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<not_eq_op, T0, BaseT>::type
-operator!=(T0 CREF _0, actor<BaseT> const& _1)
+operator!=(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<not_eq_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1893,7 +1893,7 @@ struct lt_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<lt_op, BaseT, T1>::type
-operator<(actor<BaseT> const& _0, T1 CREF _1)
+operator<(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<lt_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1901,7 +1901,7 @@ operator<(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<lt_op, T0, BaseT>::type
-operator<(T0 CREF _0, actor<BaseT> const& _1)
+operator<(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<lt_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1937,7 +1937,7 @@ struct lt_eq_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<lt_eq_op, BaseT, T1>::type
-operator<=(actor<BaseT> const& _0, T1 CREF _1)
+operator<=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<lt_eq_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1945,7 +1945,7 @@ operator<=(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<lt_eq_op, T0, BaseT>::type
-operator<=(T0 CREF _0, actor<BaseT> const& _1)
+operator<=(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<lt_eq_op, T0, BaseT>::construct(_0, _1);
 }
@@ -1981,7 +1981,7 @@ struct gt_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<gt_op, BaseT, T1>::type
-operator>(actor<BaseT> const& _0, T1 CREF _1)
+operator>(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<gt_op, BaseT, T1>::construct(_0, _1);
 }
@@ -1989,7 +1989,7 @@ operator>(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<gt_op, T0, BaseT>::type
-operator>(T0 CREF _0, actor<BaseT> const& _1)
+operator>(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<gt_op, T0, BaseT>::construct(_0, _1);
 }
@@ -2025,7 +2025,7 @@ struct gt_eq_op {
 //////////////////////////////////
 template <typename BaseT, typename T1>
 inline typename impl::make_binary1<gt_eq_op, BaseT, T1>::type
-operator>=(actor<BaseT> const& _0, T1 CREF _1)
+operator>=(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return impl::make_binary1<gt_eq_op, BaseT, T1>::construct(_0, _1);
 }
@@ -2033,7 +2033,7 @@ operator>=(actor<BaseT> const& _0, T1 CREF _1)
 //////////////////////////////////
 template <typename T0, typename BaseT>
 inline typename impl::make_binary2<gt_eq_op, T0, BaseT>::type
-operator>=(T0 CREF _0, actor<BaseT> const& _1)
+operator>=(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return impl::make_binary2<gt_eq_op, T0, BaseT>::construct(_0, _1);
 }
@@ -2087,7 +2087,7 @@ struct logical_and_composite {
 template <typename BaseT, typename T1>
 inline actor<logical_and_composite
 <actor<BaseT>, typename as_actor<T1>::type> >
-operator&&(actor<BaseT> const& _0, T1 CREF _1)
+operator&&(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return logical_and_composite
         <actor<BaseT>, typename as_actor<T1>::type>
@@ -2098,7 +2098,7 @@ operator&&(actor<BaseT> const& _0, T1 CREF _1)
 template <typename T0, typename BaseT>
 inline actor<logical_and_composite
 <typename as_actor<T0>::type, actor<BaseT> > >
-operator&&(T0 CREF _0, actor<BaseT> const& _1)
+operator&&(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return logical_and_composite
         <typename as_actor<T0>::type, actor<BaseT> >
@@ -2120,7 +2120,7 @@ operator&&(actor<BaseT0> const& _0, actor<BaseT1> const& _1)
 template <typename T0, typename T1>
 inline actor<logical_and_composite
 <typename as_actor<T0>::type, typename as_actor<T1>::type> >
-operator&&(T0 CREF _0, T1 CREF _1)
+operator&&(T0 BOOST_SPIRIT_CREF _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return logical_and_composite
         <typename as_actor<T0>::type, typename as_actor<T1>::type>
@@ -2168,7 +2168,7 @@ struct logical_or_composite {
 template <typename BaseT, typename T1>
 inline actor<logical_or_composite
 <actor<BaseT>, typename as_actor<T1>::type> >
-operator||(actor<BaseT> const& _0, T1 CREF _1)
+operator||(actor<BaseT> const& _0, T1 BOOST_SPIRIT_CREF _1)
 {
     return logical_or_composite
         <actor<BaseT>, typename as_actor<T1>::type>
@@ -2179,7 +2179,7 @@ operator||(actor<BaseT> const& _0, T1 CREF _1)
 template <typename T0, typename BaseT>
 inline actor<logical_or_composite
 <typename as_actor<T0>::type, actor<BaseT> > >
-operator||(T0 CREF _0, actor<BaseT> const& _1)
+operator||(T0 BOOST_SPIRIT_CREF _0, actor<BaseT> const& _1)
 {
     return logical_or_composite
         <typename as_actor<T0>::type, actor<BaseT> >
@@ -2199,5 +2199,5 @@ operator||(actor<BaseT0> const& _0, actor<BaseT1> const& _1)
 
 }   //  namespace phoenix
 
-#undef CREF
+#undef BOOST_SPIRIT_CREF
 #endif

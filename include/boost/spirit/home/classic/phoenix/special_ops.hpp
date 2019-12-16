@@ -8,26 +8,26 @@
 #ifndef BOOST_SPIRIT_CLASSIC_PHOENIX_SPECIAL_OPS_HPP
 #define BOOST_SPIRIT_CLASSIC_PHOENIX_SPECIAL_OPS_HPP
 
-#include <boost/config.hpp>
-#ifdef BOOST_NO_STRINGSTREAM
-#include <strstream>
-#define PHOENIX_SSTREAM strstream
-#else
-#include <sstream>
-#define PHOENIX_SSTREAM stringstream
-#endif
-
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/classic/phoenix/operators.hpp>
 #include <iosfwd>
 #include <complex>
 
+#include <boost/config.hpp>
+#ifdef BOOST_NO_STRINGSTREAM
+#include <strstream>
+#define BOOST_SPIRIT_SSTREAM strstream
+#else
+#include <sstream>
+#define BOOST_SPIRIT_SSTREAM stringstream
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 #if defined(_STLPORT_VERSION) && defined(__STL_USE_OWN_NAMESPACE)
-#define PHOENIX_STD _STLP_STD
+#define BOOST_SPIRIT_STD _STLP_STD
 #define PHOENIX_NO_STD_NAMESPACE
 #else
-#define PHOENIX_STD std
+#define BOOST_SPIRIT_STD std
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ namespace phoenix
 //  specialization for rank<std::complex>
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T> struct rank<PHOENIX_STD::complex<T> >
+template <typename T> struct rank<BOOST_SPIRIT_STD::complex<T> >
 { static int const value = 170 + rank<T>::value; };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,21 +71,21 @@ template <typename T> struct rank<PHOENIX_STD::complex<T> >
 
 //////////////////////////////////
 template <typename T1>
-struct binary_operator<shift_r_op, PHOENIX_STD::istream, T1>
+struct binary_operator<shift_r_op, BOOST_SPIRIT_STD::istream, T1>
 {
-    typedef PHOENIX_STD::istream& result_type;
-    static result_type eval(PHOENIX_STD::istream& out, T1& rhs)
+    typedef BOOST_SPIRIT_STD::istream& result_type;
+    static result_type eval(BOOST_SPIRIT_STD::istream& out, T1& rhs)
     { return out >> rhs; }
 };
 
 //////////////////////////////////
 template <typename BaseT>
 inline typename impl::make_binary3
-    <shift_r_op, variable<PHOENIX_STD::istream>, BaseT>::type
-operator>>(PHOENIX_STD::istream& _0, actor<BaseT> const& _1)
+    <shift_r_op, variable<BOOST_SPIRIT_STD::istream>, BaseT>::type
+operator>>(BOOST_SPIRIT_STD::istream& _0, actor<BaseT> const& _1)
 {
     return impl::make_binary3
-    <shift_r_op, variable<PHOENIX_STD::istream>, BaseT>
+    <shift_r_op, variable<BOOST_SPIRIT_STD::istream>, BaseT>
     ::construct(var(_0), _1);
 }
 
@@ -97,21 +97,21 @@ operator>>(PHOENIX_STD::istream& _0, actor<BaseT> const& _1)
 
 //////////////////////////////////
 template <typename T1>
-struct binary_operator<shift_l_op, PHOENIX_STD::ostream, T1>
+struct binary_operator<shift_l_op, BOOST_SPIRIT_STD::ostream, T1>
 {
-    typedef PHOENIX_STD::ostream& result_type;
-    static result_type eval(PHOENIX_STD::ostream& out, T1 const& rhs)
+    typedef BOOST_SPIRIT_STD::ostream& result_type;
+    static result_type eval(BOOST_SPIRIT_STD::ostream& out, T1 const& rhs)
     { return out << rhs; }
 };
 
 //////////////////////////////////
 template <typename BaseT>
 inline typename impl::make_binary3
-    <shift_l_op, variable<PHOENIX_STD::ostream>, BaseT>::type
-operator<<(PHOENIX_STD::ostream& _0, actor<BaseT> const& _1)
+    <shift_l_op, variable<BOOST_SPIRIT_STD::ostream>, BaseT>::type
+operator<<(BOOST_SPIRIT_STD::ostream& _0, actor<BaseT> const& _1)
 {
     return impl::make_binary3
-    <shift_l_op, variable<PHOENIX_STD::ostream>, BaseT>
+    <shift_l_op, variable<BOOST_SPIRIT_STD::ostream>, BaseT>
     ::construct(var(_0), _1);
 }
 
@@ -121,41 +121,41 @@ operator<<(PHOENIX_STD::ostream& _0, actor<BaseT> const& _1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T1>
-struct binary_operator<shift_r_op, PHOENIX_STD::PHOENIX_SSTREAM, T1>
+struct binary_operator<shift_r_op, BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM, T1>
 {
-    typedef PHOENIX_STD::istream& result_type;
-    static result_type eval(PHOENIX_STD::istream& out, T1& rhs)
+    typedef BOOST_SPIRIT_STD::istream& result_type;
+    static result_type eval(BOOST_SPIRIT_STD::istream& out, T1& rhs)
     { return out >> rhs; }
 };
 
 //////////////////////////////////
 template <typename BaseT>
 inline typename impl::make_binary3
-    <shift_r_op, variable<PHOENIX_STD::PHOENIX_SSTREAM>, BaseT>::type
-operator>>(PHOENIX_STD::PHOENIX_SSTREAM& _0, actor<BaseT> const& _1)
+    <shift_r_op, variable<BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM>, BaseT>::type
+operator>>(BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM& _0, actor<BaseT> const& _1)
 {
     return impl::make_binary3
-    <shift_r_op, variable<PHOENIX_STD::PHOENIX_SSTREAM>, BaseT>
+    <shift_r_op, variable<BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM>, BaseT>
     ::construct(var(_0), _1);
 }
 
 //////////////////////////////////
 template <typename T1>
-struct binary_operator<shift_l_op, PHOENIX_STD::PHOENIX_SSTREAM, T1>
+struct binary_operator<shift_l_op, BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM, T1>
 {
-    typedef PHOENIX_STD::ostream& result_type;
-    static result_type eval(PHOENIX_STD::ostream& out, T1 const& rhs)
+    typedef BOOST_SPIRIT_STD::ostream& result_type;
+    static result_type eval(BOOST_SPIRIT_STD::ostream& out, T1 const& rhs)
     { return out << rhs; }
 };
 
 //////////////////////////////////
 template <typename BaseT>
 inline typename impl::make_binary3
-    <shift_l_op, variable<PHOENIX_STD::PHOENIX_SSTREAM>, BaseT>::type
-operator<<(PHOENIX_STD::PHOENIX_SSTREAM& _0, actor<BaseT> const& _1)
+    <shift_l_op, variable<BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM>, BaseT>::type
+operator<<(BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM& _0, actor<BaseT> const& _1)
 {
     return impl::make_binary3
-    <shift_l_op, variable<PHOENIX_STD::PHOENIX_SSTREAM>, BaseT>
+    <shift_l_op, variable<BOOST_SPIRIT_STD::BOOST_SPIRIT_SSTREAM>, BaseT>
     ::construct(var(_0), _1);
 }
 
@@ -165,9 +165,9 @@ operator<<(PHOENIX_STD::PHOENIX_SSTREAM& _0, actor<BaseT> const& _1)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef PHOENIX_STD::ios_base&  (*iomanip_t)(PHOENIX_STD::ios_base&);
-typedef PHOENIX_STD::istream&   (*imanip_t)(PHOENIX_STD::istream&);
-typedef PHOENIX_STD::ostream&   (*omanip_t)(PHOENIX_STD::ostream&);
+typedef BOOST_SPIRIT_STD::ios_base&  (*iomanip_t)(BOOST_SPIRIT_STD::ios_base&);
+typedef BOOST_SPIRIT_STD::istream&   (*imanip_t)(BOOST_SPIRIT_STD::istream&);
+typedef BOOST_SPIRIT_STD::ostream&   (*omanip_t)(BOOST_SPIRIT_STD::ostream&);
 
 #if defined(__BORLANDC__)
 
@@ -187,13 +187,13 @@ typedef PHOENIX_STD::ostream&   (*omanip_t)(PHOENIX_STD::ostream&);
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-imanip_t    ws_     = &PHOENIX_STD::ws;
-iomanip_t   dec_    = &PHOENIX_STD::dec;
-iomanip_t   hex_    = &PHOENIX_STD::hex;
-iomanip_t   oct_    = &PHOENIX_STD::oct;
-omanip_t    endl_   = &PHOENIX_STD::endl;
-omanip_t    ends_   = &PHOENIX_STD::ends;
-omanip_t    flush_  = &PHOENIX_STD::flush;
+imanip_t    ws_     = &BOOST_SPIRIT_STD::ws;
+iomanip_t   dec_    = &BOOST_SPIRIT_STD::dec;
+iomanip_t   hex_    = &BOOST_SPIRIT_STD::hex;
+iomanip_t   oct_    = &BOOST_SPIRIT_STD::oct;
+omanip_t    endl_   = &BOOST_SPIRIT_STD::endl;
+omanip_t    ends_   = &BOOST_SPIRIT_STD::ends;
+omanip_t    flush_  = &BOOST_SPIRIT_STD::flush;
 
 #else // __BORLANDC__
 
@@ -269,6 +269,6 @@ struct binary_operator<index_op, T0 const, T1>
 ///////////////////////////////////////////////////////////////////////////////
 }   //  namespace phoenix
 
-#undef PHOENIX_SSTREAM
-#undef PHOENIX_STD
+#undef BOOST_SPIRIT_SSTREAM
+#undef BOOST_SPIRIT_STD
 #endif
