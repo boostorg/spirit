@@ -3,8 +3,8 @@
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-#ifndef BOOST_LEXER_FILE_INPUT
-#define BOOST_LEXER_FILE_INPUT
+#ifndef BOOST_SPIRIT_SUPPORT_DETAIL_LEXER_FILE_INPUT_HPP
+#define BOOST_SPIRIT_SUPPORT_DETAIL_LEXER_FILE_INPUT_HPP
 
 #include "char_traits.hpp"
 // memcpy
