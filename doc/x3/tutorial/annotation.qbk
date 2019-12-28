@@ -210,7 +210,7 @@ rules required by X3 to perform its tasks. In addition to that, the rule
 class can also be extended to have some user-defined customization hooks that
 are called:
 
-* On success: After a rule sucessfully parses an input.
+* On success: After a rule successfully parses an input.
 * On Error: After a rule fails to parse.
 
 By subclassing the rule class from a client supplied handler such as our
@@ -313,7 +313,7 @@ template that accepts the type of container it will hold. In this case, a
 `std::vector<iterator_type>`.
 
 The main parse function accepts an input, a std::string and a reference to a
-position_cache, and retuns an AST: `std::vector<client::ast::employee>`.
+position_cache, and returns an AST: `std::vector<client::ast::employee>`.
 
 Inside the parse function, we first create an AST where parsed data will be
 stored:
@@ -390,7 +390,7 @@ source positions of the 2nd employee:
 
     auto pos = positions.position_of(ast[1]); // zero based of course!
 
-`pos` is an iterator range that contians iterators to the start and end of
+`pos` is an iterator range that contains iterators to the start and end of
 `ast[1]` in the input stream.
 
 [heading Config]

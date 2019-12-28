@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
     // object instances needed to invoke the parsing process
     strip_comments_tokens<lexer_type> strip_comments;             // Our lexer
 
-    // No parsing is done alltogether, everything happens in the lexer semantic
+    // No parsing is done altogether, everything happens in the lexer semantic
     // actions.
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();

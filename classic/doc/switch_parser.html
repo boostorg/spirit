@@ -53,7 +53,7 @@
         The <strong><em><a href="techniques.html#nabialek_trick">&quot;Nabialek trick&quot; </a></em></strong>(from the name of its inventor, Sam Nabialek), can also improve the rule dispatch from linear non-deterministic to deterministic. This is similar to the <tt>switch_p</tt> parser, yet, can handle  grammars where a keyword (operator, etc), instead of a single character or token, precedes a production.</div></td>
   </tr>
 </table>
-<p>Sometimes it is desireable to add handling of the default case (none of the <tt>case_p</tt> branches  matched). This may be achieved with the help of a <tt>default_p</tt> branch:</p>
+<p>Sometimes it is desirable to add handling of the default case (none of the <tt>case_p</tt> branches  matched). This may be achieved with the help of a <tt>default_p</tt> branch:</p>
 <pre>    rule<span class="special">&lt;&gt;</span> rule_overall <span class="special">=</span>
             switch_p
             <span class="special">[</span>

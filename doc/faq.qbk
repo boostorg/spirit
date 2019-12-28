@@ -164,7 +164,7 @@ compatible type. The error above arises when this is not the case, i.e.:
   defined with another, incompatible skip parser type.
 
 [note The same applies to __karma__, replacing 'skip parser' and `lexeme`
-      by 'delimit generator' and `verbatim`. Similarily, corresponding error 
+      by 'delimit generator' and `verbatim`. Similarly, corresponding error 
       messages in __karma__ reference `boost::function3` and the 3rd 
       parameter (instead of the 4th).]
 

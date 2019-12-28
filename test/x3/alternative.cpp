@@ -241,7 +241,7 @@ main()
         BOOST_TEST(boost::get<char>(&boost::fusion::front(attr_)) == nullptr);
     }
 
-    { // ensure no unneded synthesization, copying and moving occured
+    { // ensure no unneeded synthesization, copying and moving occurred
         auto p = '{' >> int_ >> '}';
 
         stationary st { 0 };

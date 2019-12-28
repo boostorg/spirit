@@ -1515,7 +1515,7 @@ const action_directive_parser_gen<access_node_action> access_node_d
 //      length: The number of characters consumed by the parser.
 //              This is valid only if we have a successful match
 //              (either partial or full). A negative value means
-//              that the match is unsucessful.
+//              that the match is unsuccessful.
 //
 //     trees:   Contains the root node(s) of the tree.
 //

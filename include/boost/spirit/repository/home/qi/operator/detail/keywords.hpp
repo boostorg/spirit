@@ -188,7 +188,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
             ///////////////////////////////////////////////////////////////////////////
             // get_keyword_char_type
             //
-            // Collapses the character type comming from the subject kwd parsers and
+            // Collapses the character type coming from the subject kwd parsers and
             // and checks that they are all identical (necessary in order to be able
             // to build a tst parser to parse the keywords.
             ///////////////////////////////////////////////////////////////////////////

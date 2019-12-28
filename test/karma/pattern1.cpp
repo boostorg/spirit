@@ -89,7 +89,7 @@ int main()
         BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
     }
 
-    // test direct initalization
+    // test direct initialization
     {
         using boost::phoenix::at_c;
 
