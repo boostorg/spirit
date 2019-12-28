@@ -261,7 +261,7 @@ Also, see __include_structure__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`is_string<T>::type`] [Result of the metafunction that evalutes to mpl::true_
+    [[`is_string<T>::type`] [Result of the metafunction that evaluates to mpl::true_
                              if a given type, `T`, is to be treated as a string and
                              mpl::false_ otherwise. Generally,
                              any implementation of `is_string` needs to behave as 

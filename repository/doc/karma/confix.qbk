@@ -11,7 +11,7 @@
 [heading Description]
 
 The __karma__ `confix` generator is a generator directive component 
-allowing to embed any generated ouput inside an opening (a prefix) and a 
+allowing to embed any generated output inside an opening (a prefix) and a 
 closing (a suffix). A simple example is a C comment: `/* This is a C comment */`
 which can be generated using the `confix` generator as: 
 `confix("/*", "*/")["This is a C comment"]`. The general syntax for using the
@@ -132,7 +132,7 @@ a C++ comment:
 
 [karma_confix_cpp_comment]
 
-This code snippet will obviouly generate `// This is a comment \n `. Similarily
+This code snippet will obviouly generate `// This is a comment \n `. Similarly
 generating a 'C'-style comment proves to be straightforward:
 
 [karma_confix_c_comment]

@@ -149,7 +149,7 @@
 <p><span class=special></span>in Spirit. What could be simpler? Look Ma, no recursion,
   just iteration.</p>
 <p><b> <a name="right_associativity" id="right_associativity"></a> Implementing Right Associativity </b></p>
-<p> <font color="#FF0000">Question:</font> I tried adding <tt>'^'</tt> as an operator to compute the power to a calculator grammer. The following code
+<p> <font color="#FF0000">Question:</font> I tried adding <tt>'^'</tt> as an operator to compute the power to a calculator grammar. The following code
 </p>
 <pre>    <span class=identifier>pow_expression 
     </span><span class=special>= </span><span class=identifier>pow_operand </span><span class=special>&gt;&gt; </span><span class=special>*( </span><span class=literal>'^' </span><span class=special>&gt;&gt; </span><span class=identifier>pow_operand </span><span class=special>[ </span><span class=special>&amp; </span><span class=identifier>do_pow </span><span class=special>]
@@ -288,8 +288,8 @@
 </p>
 <p>The cross referencing problems may be solved by some kind of forward declaration,
   or, if this does not work, by introducing some dummy template argument to the
-  non-templated grammars. Thus allows the instantiation time to be defered until the
-  compiler has seen all the defintions:</p>
+  non-templated grammars. Thus allows the instantiation time to be deferred until the
+  compiler has seen all the definitions:</p>
 <pre>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>&gt;<br>    grammar2;</p>
 
     <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>&gt;<br>    <span class="keyword">struct</span> grammar1 : <span class="keyword">public</span> grammar&lt;grammar1&gt;<br>    {

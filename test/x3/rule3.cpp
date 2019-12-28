@@ -115,7 +115,7 @@ int main()
         BOOST_TEST(test("", r));
     }
 
-    { // ensure no unneded synthesization, copying and moving occured
+    { // ensure no unneeded synthesization, copying and moving occurred
         stationary st { 0 };
         BOOST_TEST(test_attr("{42}", check_stationary::b, st));
         BOOST_TEST_EQ(st.val, 42);

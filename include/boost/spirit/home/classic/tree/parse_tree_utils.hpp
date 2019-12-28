@@ -44,7 +44,7 @@ find_node (tree_node<T> const &node, parser_id node_to_search,
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  The function 'get_node_range' return a pair of iterators pointing at the
-//  range, which containes the elements of a specified node. It's very useful
+//  range, which contains the elements of a specified node. It's very useful
 //  for locating all information related with a specified node.
 //
 ///////////////////////////////////////////////////////////////////////////////

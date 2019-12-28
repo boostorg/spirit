@@ -479,7 +479,7 @@ public:
 
     friend class iterator;
 
-    // Make it explict that we are NOT taking a copy of state_machine_!
+    // Make it explicit that we are NOT taking a copy of state_machine_!
     basic_input (const basic_state_machine<typename Traits::char_type>
         *state_machine_, const FwdIter &begin_, const FwdIter &end_) :
         _state_machine (state_machine_),

@@ -148,7 +148,7 @@ main()
         test_phrase_parser_attr(
                         "name = \"John\" \n age = 10 \n size = 1.69m "
                         ,no_constraint_person_rule 
-                        ,John);  // full in orginal order
+                        ,John);  // full in original order
         std::cout<<John;
 
         test_phrase_parser_attr(

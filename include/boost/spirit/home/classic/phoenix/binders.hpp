@@ -20,7 +20,7 @@ namespace phoenix {
 //
 //  Binders
 //
-//      There are times when it is desireable to bind a simple functor,
+//      There are times when it is desirable to bind a simple functor,
 //      function, member function or member variable for deferred
 //      evaluation. This can be done through the binding facilities
 //      provided below. There are template classes:

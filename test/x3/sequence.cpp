@@ -249,7 +249,7 @@ main()
         v.clear();
         BOOST_TEST(!test_attr("abcd", char_ >> *(char_ >> char_), v));
 
-        // $$$ hold not yet implementd $$$
+        // $$$ hold not yet implemented $$$
         //~ v.clear();
         //~ BOOST_TEST(test_attr("abcdef", char_ >> *hold[char_ >> char_] >> char_, v));
         //~ BOOST_TEST(v.size() == 6);

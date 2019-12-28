@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     //
     // This is the only place where the code is different from an equivalent
     // dynamic lexical analyzer. We use the `lexertl::static_lexer<>` instead of
-    // the `lexertl::lexer<>` as the base class for our token defintion type.
+    // the `lexertl::lexer<>` as the base class for our token definition type.
     //
     // As we specified the suffix "wcl" while generating the static tables we 
     // need to pass the type lexertl::static_::lexer_wcl as the second template
