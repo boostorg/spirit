@@ -183,7 +183,7 @@ const_cast_(actor<BaseAT> const& a)
 //          A a = construct_<A>(...arbitrary list of actors...);
 //
 //      where the given parameters are submitted as parameters to the
-//      contructor of the object of type A. (This certainly implies, that
+//      constructor of the object of type A. (This certainly implies, that
 //      type A has a constructor with a fitting set of parameter types
 //      defined.)
 //

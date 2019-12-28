@@ -96,7 +96,7 @@ int main()
        BOOST_TEST(next == '1');
     }
 
-    { // ensure no unneded synthesization, copying and moving occured
+    { // ensure no unneeded synthesization, copying and moving occurred
         auto p = '{' >> int_ >> '}';
 
         stationary st { 0 };

@@ -48,7 +48,7 @@
   * An actual attribute is not of type a rule was declared with. [gh_pr 456] [gh 457]
 *[/^] A [*huge] thanks goes out to [@https://github.com/Xeverous Xeverous]
   for reporting a regression in [gh 453].
-* Fixed unneded attribute synthesization and no-transformation attribute
+* Fixed unneeded attribute synthesization and no-transformation attribute
   reference pass-through in rules. [gh 444] [gh_pr 449] [gh_pr 452]
 * Removed broken 1.0#INF parser. It was poorly documented and never worked. [gh 415] [gh_pr 458] [trac 8699]
 * The undocumented `make_attribute` trait was removed due to bugs [gh_pr 449]

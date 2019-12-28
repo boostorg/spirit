@@ -115,7 +115,7 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_qword, little, uint_least64_t, 64)
 #endif
 
-    // Use a pseudo configuration macro to make clear that endian libray support
+    // Use a pseudo configuration macro to make clear that endian library support
     // for floating point types is required. Must be removed as soon as the endian library
     // properly supports floating point types.
 #ifdef BOOST_ENDIAN_HAS_FLOATING_POINT

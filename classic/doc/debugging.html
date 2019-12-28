@@ -127,10 +127,10 @@
   defined to <tt>foo</tt>, it must be compatible with this usage:</p>
 <pre><code><span class=identifier>    foo</span><span class=special>(</span><span class=identifier>StreamT</span><span class=special>, </span><span class=identifier>CharT</span><span class=special>)</span></code></pre>
 <p>The default printer requires <tt>operator&lt;&lt;(StreamT, CharT)</tt>  to
-  be defined. Additionaly, if <tt>CharT</tt> is convertible to a normal character
+  be defined. Additionally, if <tt>CharT</tt> is convertible to a normal character
   type (<tt>char</tt>, <tt>wchar_t</tt> or <tt>int</tt>), it prints control
   characters in a friendly manner (e.g., when it receives <span class=special>'\n'</span> it
-  actually prints the <span class=special>\</span> and <span class=special>n</span> charactes,
+  actually prints the <span class=special>\</span> and <span class=special>n</span> characters,
 instead of a newline).</p>
 <a name="spirit_debug_print_some"></a>
 <h3>BOOST_SPIRIT_DEBUG_PRINT_SOME</h3>
@@ -157,8 +157,8 @@ instead of a newline).</p>
   into the data at the current iterator position is printed.</p>
 <p> <b>Post-parse</b>: After parsing the rule, the rule name followed by a peek
   into the data at the current iterator position is printed. Here, <tt>'/'</tt>
-  before the rule name flags a succesful match while <tt>'#'</tt> before the rule
-  name flags an unsuccesful match.</p>
+  before the rule name flags a successful match while <tt>'#'</tt> before the rule
+  name flags an unsuccessful match.</p>
 <p> The following are synonyms for <tt>BOOST_SPIRIT_DEBUG_NODE</tt></p>
 <ol>
   <li>BOOST_SPIRIT_DEBUG_RULE</li>

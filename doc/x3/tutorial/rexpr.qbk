@@ -138,7 +138,7 @@ We add a utility to print out the AST:
         int indent;
     };
 
-Traversing the AST is a recursive excercise. `rexpr_printer` is a function
+Traversing the AST is a recursive exercise. `rexpr_printer` is a function
 object and the main entry point is `void operator()(rexpr const& ast)`. Notice
 how it recursively calls an instance of itself for each of the key value pairs,
 using `boost::apply_visitor`. Before and after iterating through all the

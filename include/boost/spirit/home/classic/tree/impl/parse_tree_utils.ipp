@@ -61,7 +61,7 @@ find_node (tree_node<T> const &node, parser_id node_to_search,
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  The functions 'get_node_range' return a pair of iterators pointing at the
-//  range, which containes the elements of a specified node.
+//  range, which contains the elements of a specified node.
 //
 ///////////////////////////////////////////////////////////////////////////////
 namespace impl {

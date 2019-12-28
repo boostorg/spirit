@@ -28,7 +28,7 @@ int
 main()
 {
     banner();
-    std::cout << "Test skipped (Boost libaries not available)\n";
+    std::cout << "Test skipped (Boost libraries not available)\n";
     return 0;
 }
 #else

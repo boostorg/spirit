@@ -24,7 +24,7 @@
 //  the numbers in the "bin" block are wrote in the binary system. We want
 //  parser to return the overall sum.
 //
-//  To achive this when base ("bin" or "dec") is parsed, in semantic action
+//  To achieve this when base ("bin" or "dec") is parsed, in semantic action
 //  we store a pointer to the appropriate numeric parser in the closure
 //  variable block.int_rule. Than, when we need to parse a number we use lazy_p
 //  parser to invoke the parser stored in the block.int_rule pointer.

@@ -338,7 +338,7 @@ any of Spirit's include files):
   separate version allowing to distinguish 'lit(foo)' from 'foo'. This should
   not change any semantics nor should it break exiting code.
 * Added the __qi__ directive __qi_as__ (and its string specializations
-  __qi_as_string__ and __qi_as_wstring__) enabling asignment of container
+  __qi_as_string__ and __qi_as_wstring__) enabling assignment of container
   attribute types as a whole.
 * Added the __karma__ directive __karma_as__ (and its string specializations
   __karma_as_string__ and __karma_as_wstring__) enabling handling of container
@@ -537,7 +537,7 @@ any of Spirit's include files):
   the description of the __customize_transform_attribute__ for more details.
 * Added support for attribute sequences created with `BOOST_FUSION_ADAPT_CLASS`
   and `BOOST_FUSION_ADAPT_CLASS_NAMED`. This support requires to include the
-  new header file: `#include <boost/spirit/inlcude/support_adapt_class_attributes.hpp>`.
+  new header file: `#include <boost/spirit/include/support_adapt_class_attributes.hpp>`.
 * Added `karma::ostream_iterator` as a counterpart to `qi::istream_iterator`
   (see new header file: `#include <boost/spirit/home/support/iterators/ostream_iterator.hpp>`).
 * Added `qi::hold` allowing to make sure the embedded parser does not touch

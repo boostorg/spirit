@@ -54,7 +54,7 @@ BOOST_STATIC_ASSERT(PHOENIX_CONSTRUCT_LIMIT <= 15);
 //          A *a = new_<A>(...arbitrary list of actors...);
 //
 //      where the given parameters are submitted as parameters to the
-//      contructor of the object of type A. (This certainly implies, that
+//      constructor of the object of type A. (This certainly implies, that
 //      type A has a constructor with a fitting set of parameter types
 //      defined.)
 //

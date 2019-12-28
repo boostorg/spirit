@@ -280,7 +280,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                   if(!complex_keywords_inst.parse(complex_function))
                   {
                     first = save;
-                    // Check that we are leaving the keywords parser in a successfull state
+                    // Check that we are leaving the keywords parser in a successful state
                     BOOST_FOREACH(bool &valid,flags)
                     {
                       if(!valid)
@@ -361,7 +361,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                   if(!complex_keywords_inst.parse(complex_function))
                   {
                     first = save;
-                    // Check that we are leaving the keywords parser in a successfull state
+                    // Check that we are leaving the keywords parser in a successful state
                     BOOST_FOREACH(bool &valid,flags)
                     {
                       if(!valid)

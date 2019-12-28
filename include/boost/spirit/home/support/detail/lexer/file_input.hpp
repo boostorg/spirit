@@ -130,7 +130,7 @@ public:
 
     friend class iterator;
 
-    // Make it explict that we are NOT taking a copy of state_machine_!
+    // Make it explicit that we are NOT taking a copy of state_machine_!
     basic_file_input (const basic_state_machine<CharT> *state_machine_,
         std::basic_ifstream<CharT> *is_,
         const std::streamsize buffer_size_ = 4096,
