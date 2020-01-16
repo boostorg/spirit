@@ -489,7 +489,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 def_type(compile<spirit::qi::domain>(expr), name_)));
         }
 
-#define SUBRULE_MODULUS_ASSIGN_OPERATOR(lhs_ref, rhs_ref)                     \
+#define BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(lhs_ref, rhs_ref)        \
         template <typename Expr>                                              \
         friend typename group_type_helper<Expr, true>::type                   \
         operator%=(subrule lhs_ref sr, Expr rhs_ref expr)                     \
@@ -503,20 +503,20 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         /**/
 
         // non-const versions needed to suppress proto's %= kicking in
-        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, const&)
+        BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, const&)
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &&)
+        BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &&)
 #else
-        SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &)
+        BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(const&, &)
 #endif
-        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, const&)
+        BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(&, const&)
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &&)
+        BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &&)
 #else
-        SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &)
+        BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR(&, &)
 #endif
 
-#undef SUBRULE_MODULUS_ASSIGN_OPERATOR
+#undef BOOST_SPIRIT_SUBRULE_MODULUS_ASSIGN_OPERATOR
 
         std::string const& name() const
         {
