@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace x3
             !is_same<unused_type, attribute_type>::value;
 
 
-        char_range(char_type from_, char_type to_)
+        constexpr char_range(char_type from_, char_type to_)
           : from(from_), to(to_) {}
 
         template <typename Char, typename Context>

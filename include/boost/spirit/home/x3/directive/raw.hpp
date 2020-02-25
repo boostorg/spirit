@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const handles_container = Subject::handles_container;
         typedef Subject subject_type;
 
-        raw_directive(Subject const& subject)
+        constexpr raw_directive(Subject const& subject)
           : base_type(subject) {}
 
         template <typename Iterator, typename Context
@@ -58,14 +58,14 @@ namespace boost { namespace spirit { namespace x3
     struct raw_gen
     {
         template <typename Subject>
-        raw_directive<typename extension::as_parser<Subject>::value_type>
+        constexpr raw_directive<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
             return { as_parser(subject) };
         }
     };
 
-    auto const raw = raw_gen{};
+    constexpr auto raw = raw_gen{};
 
     namespace traits
     {
