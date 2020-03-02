@@ -93,6 +93,15 @@ namespace boost { namespace spirit { namespace x3
         rule(char const* name)
           : name(name) {}
 
+        rule(rule const& r)
+          : name(r.name)
+        {
+            // Assert that we are not copying an unitialized static rule. If
+            // the static is in another TU, it may be initialized after we copy
+            // it. If so, its name member will be nullptr.
+            BOOST_ASSERT_MSG(r.name, "uninitialized rule"); // static initialization order fiasco
+        }
+
         template <typename RHS>
         rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute_>
