@@ -60,7 +60,7 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_X3_UINT_PARSER(uint_type, radix, name)                     \
     typedef uint_parser<uint_type, radix> name##type;                           \
-    constexpr name##type name = name##type();                                       \
+    constexpr name##type name = name##type();                                   \
     /***/
 
     BOOST_SPIRIT_X3_UINT_PARSER(unsigned, 2, bin)

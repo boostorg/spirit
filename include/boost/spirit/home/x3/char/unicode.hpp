@@ -420,7 +420,7 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_X3_CHAR_CLASS(name)                                         \
     typedef unicode_char_class<name##_tag> name##_type;                          \
-    constexpr name##_type name = name##_type();                                      \
+    constexpr name##_type name = name##_type();                                  \
     /***/
 
     namespace unicode
