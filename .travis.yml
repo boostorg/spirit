@@ -156,7 +156,7 @@ before_install:
   - ./bootstrap.sh --with-toolset=clang --with-libraries=$TEST_LINK_DEPS
     || ( echo === bootstrap.log === ; cat bootstrap.log ; exit 1 ; )
   - ./b2 headers
-  - ./b2 -j`nproc` link=shared threading=multi variant=release
+  - ./b2 -j`nproc` threading=multi variant=release
       toolset=$TRAVIS_COMPILER cxxstd=${STD#*,} $STDLIB
       warnings=off
 
@@ -168,6 +168,6 @@ before_install:
   - cd $JOB
 
 script:
-  - b2 -j`nproc` link=shared threading=multi variant=release
+  - b2 -j`nproc` threading=multi variant=release
       toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
       warnings=on known-warnings=suppress warnings-as-errors=on
