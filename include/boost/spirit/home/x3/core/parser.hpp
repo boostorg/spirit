@@ -172,14 +172,14 @@ namespace boost { namespace spirit { namespace x3
     }
 
     template <typename T>
-    inline constexpr typename extension::as_parser<T>::type
+    constexpr typename extension::as_parser<T>::type
     as_parser(T const& x)
     {
         return extension::as_parser<T>::call(x);
     }
 
     template <typename Derived>
-    inline constexpr Derived const&
+    constexpr Derived const&
     as_parser(parser<Derived> const& p)
     {
         return p.derived();

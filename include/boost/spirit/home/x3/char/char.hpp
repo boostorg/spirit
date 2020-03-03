@@ -20,13 +20,13 @@ namespace boost { namespace spirit { namespace x3
         typedef any_char<char_encoding::standard> char_type;
         constexpr auto char_ = char_type{};
 
-        inline constexpr literal_char<char_encoding::standard, unused_type>
+        constexpr literal_char<char_encoding::standard, unused_type>
         lit(char ch)
         {
             return { ch };
         }
 
-        inline constexpr literal_char<char_encoding::standard, unused_type>
+        constexpr literal_char<char_encoding::standard, unused_type>
         lit(wchar_t ch)
         {
             return { ch };
@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace x3
         typedef any_char<char_encoding::standard_wide> char_type;
         constexpr auto char_ = char_type{};
 
-        inline constexpr literal_char<char_encoding::standard_wide, unused_type>
+        constexpr literal_char<char_encoding::standard_wide, unused_type>
         lit(wchar_t ch)
         {
             return { ch };
@@ -57,13 +57,13 @@ namespace boost { namespace spirit { namespace x3
         typedef any_char<char_encoding::ascii> char_type;
         constexpr auto char_ = char_type{};
 
-        inline constexpr literal_char<char_encoding::ascii, unused_type>
+        constexpr literal_char<char_encoding::ascii, unused_type>
         lit(char ch)
         {
             return { ch };
         }
 
-        inline constexpr literal_char<char_encoding::ascii, unused_type>
+        constexpr literal_char<char_encoding::ascii, unused_type>
         lit(wchar_t ch)
         {
             return { ch };
@@ -75,13 +75,13 @@ namespace boost { namespace spirit { namespace x3
         typedef any_char<char_encoding::iso8859_1> char_type;
         constexpr auto char_ = char_type{};
 
-        inline constexpr literal_char<char_encoding::iso8859_1, unused_type>
+        constexpr literal_char<char_encoding::iso8859_1, unused_type>
         lit(char ch)
         {
             return { ch };
         }
 
-        inline constexpr literal_char<char_encoding::iso8859_1, unused_type>
+        constexpr literal_char<char_encoding::iso8859_1, unused_type>
         lit(wchar_t ch)
         {
             return { ch };

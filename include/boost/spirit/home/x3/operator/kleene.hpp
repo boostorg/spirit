@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename Subject>
-    inline constexpr kleene<typename extension::as_parser<Subject>::value_type>
+    constexpr kleene<typename extension::as_parser<Subject>::value_type>
     operator*(Subject const& subject)
     {
         return { as_parser(subject) };

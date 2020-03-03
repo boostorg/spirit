@@ -42,7 +42,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename Left, typename Right>
-    inline constexpr alternative<
+    constexpr alternative<
         typename extension::as_parser<Left>::value_type
       , typename extension::as_parser<Right>::value_type>
     operator|(Left const& left, Right const& right)

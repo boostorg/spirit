@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename ID, typename T>
-    inline constexpr with_gen<ID, T> with(T&& val)
+    constexpr with_gen<ID, T> with(T&& val)
     {
         return { std::forward<T>(val) };
     }

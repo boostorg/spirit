@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename Subject>
-    inline constexpr plus<typename extension::as_parser<Subject>::value_type>
+    constexpr plus<typename extension::as_parser<Subject>::value_type>
     operator+(Subject const& subject)
     {
         return { as_parser(subject) };

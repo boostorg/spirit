@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace x3
             return true;
         }
 
-        inline constexpr semantic_predicate operator()(bool predicate) const
+        constexpr semantic_predicate operator()(bool predicate) const
         {
             return { predicate };
         }
