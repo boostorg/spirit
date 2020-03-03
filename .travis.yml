@@ -154,7 +154,6 @@ before_install:
   # Remove the empty folder
   - rm -rf $PROJECT
   - ./bootstrap.sh --with-toolset=clang --with-libraries=$TEST_LINK_DEPS
-    || ( echo === bootstrap.log === ; cat bootstrap.log ; exit 1 ; )
   - ./b2 headers
   - ./b2 -j`nproc` threading=multi variant=release
       toolset=$TRAVIS_COMPILER cxxstd=${STD#*,} $STDLIB

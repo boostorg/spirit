@@ -100,7 +100,6 @@ before_build:
 
 build_script:
   - bootstrap.bat --with-toolset=msvc
-    || ( echo === bootstrap.log === && cat bootstrap.log )
 
   # bootstrap.bat does not support --with-libraries
   - echo libraries = >> project-config.jam
