@@ -155,7 +155,7 @@ before_install:
   - rm -rf $PROJECT
   - ./bootstrap.sh --with-toolset=clang --with-libraries=$TEST_LINK_DEPS
   - ./b2 headers
-  - ./b2 -j`nproc` threading=multi variant=release
+  - ./b2 threading=multi variant=release
       toolset=$TRAVIS_COMPILER cxxstd=${STD#*,} $STDLIB
       warnings=off
 
@@ -167,6 +167,6 @@ before_install:
   - cd $JOB
 
 script:
-  - b2 -j`nproc` threading=multi variant=release
+  - b2 threading=multi variant=release
       toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
       warnings=on known-warnings=suppress warnings-as-errors=on

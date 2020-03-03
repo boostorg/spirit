@@ -24,7 +24,7 @@ cache:
 init:
   - set BOOST_ROOT=%APPVEYOR_BUILD_FOLDER%\..\boost
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\..\boost-build
-  - set B2_ARGS=-j%NUMBER_OF_PROCESSORS% threading=multi variant=release
+  - set B2_ARGS=threading=multi variant=release
                 address-model=%ADDRMDL% toolset=%TOOLSET%
                 define=BOOST_ALL_NO_LIB
 
