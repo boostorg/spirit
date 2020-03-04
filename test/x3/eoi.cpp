@@ -16,6 +16,8 @@ main()
     using spirit_test::test;
     using boost::spirit::x3::eoi;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eoi);
+
     {
         BOOST_TEST((test("", eoi)));
         BOOST_TEST(!(test("x", eoi)));

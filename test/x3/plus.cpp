@@ -56,6 +56,8 @@ main()
     //~ using boost::spirit::x3::_1;
     using boost::spirit::x3::lexeme;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(+char_);
+
     {
         BOOST_TEST(test("aaaaaaaa", +char_));
         BOOST_TEST(test("a", +char_));

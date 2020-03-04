@@ -69,6 +69,8 @@ int main()
 
     using x3::int_;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(int_[std::true_type{}]);
+
     {
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
         x3::parse(s1, e1, '{' >> int_[fun1] >> '}');

@@ -21,7 +21,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, Derived> base_type;
         mutable T val;
-        with_value_holder(Subject const& subject, T&& val)
+        constexpr with_value_holder(Subject const& subject, T&& val)
           : base_type(subject)
           , val(std::forward<T>(val)) {}
     };
@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, Derived> base_type;
         T& val;
-        with_value_holder(Subject const& subject, T& val)
+        constexpr with_value_holder(Subject const& subject, T& val)
           : base_type(subject)
           , val(val) {}
     };

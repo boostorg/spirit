@@ -20,6 +20,8 @@ main()
     using boost::spirit::x3::lexeme;
     using boost::spirit::x3::rule;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(lexeme['x']);
+
     {
         BOOST_TEST((test(" 1 2 3 4 5", +digit, space)));
         BOOST_TEST((!test(" 1 2 3 4 5", lexeme[+digit], space)));

@@ -40,6 +40,8 @@ main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::with;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(with<my_tag>(0)['x']);
+
     { // injecting data into the context in the grammar
 
         int val = 0;

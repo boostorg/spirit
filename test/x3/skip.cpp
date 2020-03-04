@@ -24,6 +24,8 @@ main()
     using boost::spirit::x3::skip;
     using boost::spirit::x3::lit;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(skip('x')['y']);
+
     {
         BOOST_TEST((test("a b c d", skip(space)[*char_])));
     }

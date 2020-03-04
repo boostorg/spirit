@@ -18,6 +18,11 @@ int main()
     using boost::spirit::x3::attr;
     using boost::spirit::x3::int_;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr(1));
+    // TODO: Currently is not constexpr
+    //BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr("asd"));
+
     {
         int d = 0;
         BOOST_TEST(test_attr("", attr(1), d) && d == 1);

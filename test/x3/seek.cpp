@@ -27,6 +27,8 @@ int main()
     using namespace spirit_test;
     namespace x3 = boost::spirit::x3;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::seek['x']);
+
     // test eoi
     {
         BOOST_TEST(test("", x3::seek[x3::eoi]));

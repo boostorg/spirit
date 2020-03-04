@@ -22,6 +22,8 @@ main()
     using boost::spirit::x3::lexeme;
     using boost::spirit::x3::no_skip;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(no_skip['x']);
+
     // without skipping no_skip is equivalent to lexeme
     {
         std::string str;

@@ -132,5 +132,3 @@ run rule_separate_tu.cpp rule_separate_tu_grammar ;
 
 obj grammar_linker : grammar.cpp ;
 run grammar_linker.cpp grammar_linker ;
-
-run constexpr.cpp ;

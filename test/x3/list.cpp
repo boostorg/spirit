@@ -24,6 +24,8 @@ main()
 {
     using namespace boost::spirit::x3::ascii;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ % ',');
+
     {
         BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ','));
         BOOST_TEST(test("a,b,c,d,e,f,g,h,", char_ % ',', false));

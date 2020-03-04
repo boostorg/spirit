@@ -25,6 +25,8 @@ int main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::char_;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(raw['x']);
+
     {
         boost::iterator_range<char const*> range;
         std::string str;

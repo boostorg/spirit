@@ -18,6 +18,8 @@ main()
     using boost::spirit::x3::matches;
     using boost::spirit::x3::char_;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(matches['x']);
+
     {
         BOOST_TEST(test("x", matches[char_]));
         bool result = false;

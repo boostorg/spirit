@@ -29,6 +29,12 @@ main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::lexeme;
     using boost::spirit::x3::char_;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3)['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, 5)['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(repeat(3, inf)['x']);
+
     {
         BOOST_TEST(test("aaaaaaaa", repeat[char_])); // kleene synonym
         BOOST_TEST(test("aaaaaaaa", repeat(8)[char_]));

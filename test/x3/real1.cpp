@@ -44,8 +44,10 @@ main()
         using boost::spirit::x3::parse;
         using boost::spirit::x3::ureal_policies;
 
-        real_parser<double, ureal_policies<double> > udouble;
+        constexpr real_parser<double, ureal_policies<double> > udouble;
         double d;
+
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(udouble);
 
         BOOST_TEST(test("1234", udouble));
         BOOST_TEST(test_attr("1234", udouble, d) && compare(d, 1234));

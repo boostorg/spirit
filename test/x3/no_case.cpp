@@ -19,6 +19,8 @@ main()
     using spirit_test::test_attr;
     using boost::spirit::x3::no_case;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(no_case['x']);
+
     {
         using namespace boost::spirit::x3::ascii;
         BOOST_TEST(test("x", no_case[char_]));

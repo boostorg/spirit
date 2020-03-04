@@ -64,6 +64,7 @@ main()
     using boost::spirit::x3::omit;
     using boost::spirit::x3::eps;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ | char_);
 
     {
         BOOST_TEST((test("a", char_ | char_)));

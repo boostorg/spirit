@@ -19,6 +19,8 @@ main()
     using spirit_test::test_attr;
     using boost::spirit::x3::string;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(string("x"));
+
     {
         BOOST_TEST((test("kimpo", "kimpo")));
         BOOST_TEST((test("kimpo", string("kimpo"))));
