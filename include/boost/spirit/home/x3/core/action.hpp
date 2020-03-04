@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const is_pass_through_unary = true;
         static bool const has_action = true;
 
-        action(Subject const& subject, Action f)
+        constexpr action(Subject const& subject, Action f)
           : base_type(subject), f(f) {}
 
         template <typename Iterator, typename Context, typename RuleContext, typename Attribute>
@@ -100,7 +100,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename P, typename Action>
-    inline action<typename extension::as_parser<P>::value_type, Action>
+    constexpr action<typename extension::as_parser<P>::value_type, Action>
     operator/(P const& p, Action f)
     {
         return { as_parser(p), f };

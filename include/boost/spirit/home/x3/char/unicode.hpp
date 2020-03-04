@@ -420,13 +420,13 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_X3_CHAR_CLASS(name)                                         \
     typedef unicode_char_class<name##_tag> name##_type;                          \
-    name##_type const name = name##_type();                                      \
+    constexpr name##_type name = name##_type();                                  \
     /***/
 
     namespace unicode
     {
         typedef any_char<char_encoding::unicode> char_type;
-        auto const char_ = char_type{};
+        constexpr auto char_ = char_type{};
 
     ///////////////////////////////////////////////////////////////////////////
     //  Unicode Major Categories

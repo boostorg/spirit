@@ -71,7 +71,7 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_X3_CHAR_CLASS(encoding, name)                                 \
     typedef char_class<char_encoding::encoding, name##_tag> name##_type;           \
-    name##_type const name = name##_type();                                        \
+    constexpr name##_type name = name##_type();                                    \
     /***/
 
 #define BOOST_SPIRIT_X3_CHAR_CLASSES(encoding)                                     \

@@ -18,7 +18,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef binary_parser<Left, Right, alternative<Left, Right>> base_type;
 
-        alternative(Left const& left, Right const& right)
+        constexpr alternative(Left const& left, Right const& right)
             : base_type(left, right) {}
 
         template <typename Iterator, typename Context, typename RContext>
@@ -42,7 +42,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename Left, typename Right>
-    inline alternative<
+    constexpr alternative<
         typename extension::as_parser<Left>::value_type
       , typename extension::as_parser<Right>::value_type>
     operator|(Left const& left, Right const& right)

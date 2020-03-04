@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace x3
 
         typedef Subject subject_type;
 
-        with_directive(Subject const& subject, T&& val)
+        constexpr with_directive(Subject const& subject, T&& val)
           : base_type(subject, std::forward<T>(val)) {}
 
         template <typename Iterator, typename Context
@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace x3
         T&& val;
 
         template <typename Subject>
-        with_directive<typename extension::as_parser<Subject>::value_type, ID, T>
+        constexpr with_directive<typename extension::as_parser<Subject>::value_type, ID, T>
         operator[](Subject const& subject) const
         {
             return { as_parser(subject), std::forward<T>(val) };
@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename ID, typename T>
-    inline with_gen<ID, T> with(T&& val)
+    constexpr with_gen<ID, T> with(T&& val)
     {
         return { std::forward<T>(val) };
     }

@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const has_attribute = false;
         typedef unused_type attribute_type;
 
-        binary_lit_parser(V n_)
+        constexpr binary_lit_parser(V n_)
           : n(n_) {}
 
         template <typename Iterator, typename Context, typename Attribute>
@@ -91,7 +91,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename V>
-        binary_lit_parser< V, T, endian, bits> operator()(V n) const
+        constexpr binary_lit_parser< V, T, endian, bits> operator()(V n) const
         {
             return {n};
         }
@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(name, endiantype, attrtype, bits)                  \
     typedef any_binary_parser< attrtype, boost::endian::order::endiantype, bits > name##type; \
-    name##type const name = name##type();
+    constexpr name##type name = name##type();
 
 
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(byte_, native, uint_least8_t, 8)

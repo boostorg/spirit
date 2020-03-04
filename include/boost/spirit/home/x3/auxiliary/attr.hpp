@@ -33,9 +33,9 @@ namespace boost { namespace spirit { namespace x3
         static bool const handles_container =
             traits::is_container<attribute_type>::value;
         
-        attr_parser(Value const& value)
+        constexpr attr_parser(Value const& value)
           : value_(value) {}
-        attr_parser(Value&& value)
+        constexpr attr_parser(Value&& value)
           : value_(std::move(value)) {}
 
         template <typename Iterator, typename Context
@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace x3
     struct attr_gen
     {
         template <typename Value>
-        attr_parser<typename remove_cv<
+        constexpr attr_parser<typename remove_cv<
             typename remove_reference<Value>::type>::type>
         operator()(Value&& value) const
         {
@@ -123,7 +123,7 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-    auto const attr = attr_gen{};
+    constexpr auto attr = attr_gen{};
 }}}
 
 #endif

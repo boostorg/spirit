@@ -51,7 +51,7 @@ namespace boost { namespace spirit { namespace x3
         static bool const force_attribute =
             force_attribute_;
 
-        rule_definition(RHS const& rhs, char const* name)
+        constexpr rule_definition(RHS const& rhs, char const* name)
           : rhs(rhs), name(name) {}
 
         template <typename Iterator, typename Context, typename Attribute_>
@@ -87,13 +87,13 @@ namespace boost { namespace spirit { namespace x3
 #if !defined(BOOST_SPIRIT_X3_NO_RTTI)
         rule() : name(typeid(rule).name()) {}
 #else
-        rule() : name("unnamed") {}
+        constexpr rule() : name("unnamed") {}
 #endif
 
-        rule(char const* name)
+        constexpr rule(char const* name)
           : name(name) {}
 
-        rule(rule const& r)
+        constexpr rule(rule const& r)
           : name(r.name)
         {
             // Assert that we are not copying an unitialized static rule. If
@@ -103,7 +103,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename RHS>
-        rule_definition<
+        constexpr rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute_>
         operator=(RHS const& rhs) const
         {
@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         template <typename RHS>
-        rule_definition<
+        constexpr rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, true>
         operator%=(RHS const& rhs) const
         {
