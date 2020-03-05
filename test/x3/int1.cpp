@@ -121,7 +121,7 @@ main()
     // Check overflow is parse error
     ///////////////////////////////////////////////////////////////////////////
     {
-        constexpr boost::spirit::x3::int_parser<boost::int8_t> int8_;
+        static constexpr boost::spirit::x3::int_parser<boost::int8_t> int8_;
         char c;
 
         BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(int8_);
@@ -140,7 +140,7 @@ main()
     {
         using boost::spirit::x3::int_parser;
         using boost::spirit::x3::unused_type;
-        constexpr int_parser<unused_type> any_int;
+        static constexpr int_parser<unused_type> any_int;
 
         BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(any_int);
 

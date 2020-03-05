@@ -40,7 +40,9 @@ main()
     using boost::spirit::x3::int_;
     using boost::spirit::x3::with;
 
+#if !defined(_MSC_VER) || _MSC_VER >= 1910
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(with<my_tag>(0)['x']);
+#endif
 
     { // injecting data into the context in the grammar
 
