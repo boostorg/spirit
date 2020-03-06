@@ -18,6 +18,7 @@ main()
     using boost::spirit::x3::unused_type;
 
     {
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eps);
         BOOST_TEST((test("", eps)));
         BOOST_TEST((test("xxx", eps, false)));
         //~ BOOST_TEST((!test("", !eps))); // not predicate $$$ Implement me! $$$
@@ -25,6 +26,7 @@ main()
 
     {   // test non-lazy semantic predicate
 
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eps(true));
         BOOST_TEST((test("", eps(true))));
         BOOST_TEST((!test("", eps(false))));
         BOOST_TEST((test("", !eps(false))));
@@ -35,6 +37,8 @@ main()
         auto true_ = [](unused_type) { return true; };
         auto false_ = [](unused_type) { return false; };
 
+        // cannot use lambda in constant expression before C++17
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eps(std::true_type{}));
         BOOST_TEST((test("", eps(true_))));
         BOOST_TEST((!test("", eps(false_))));
         BOOST_TEST((test("", !eps(false_))));

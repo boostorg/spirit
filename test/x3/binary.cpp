@@ -47,6 +47,35 @@ int main()
 //    float f;
 //    double d;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(byte_);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(word);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(dword);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(big_word);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(big_dword);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(little_word);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(little_dword);
+#ifdef BOOST_HAS_LONG_LONG
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(qword);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(big_qword);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(little_qword);
+#endif
+
+// TODO: boost::endian::endian_arithmetic value constructor is not constexpr
+#if 0
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(byte_(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(word(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(dword(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(big_word(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(big_dword(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(little_word(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(little_dword(1));
+#ifdef BOOST_HAS_LONG_LONG
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(qword(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(big_qword(1));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(little_qword(1));
+#endif
+#endif
+
     {   // test native endian binaries
 #if BOOST_ENDIAN_LITTLE_BYTE
         BOOST_TEST(test_attr("\x01", byte_, uc) && uc == 0x01);

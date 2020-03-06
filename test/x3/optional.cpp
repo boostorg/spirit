@@ -46,6 +46,8 @@ main()
     using boost::spirit::x3::omit;
     using boost::spirit::x3::ascii::char_;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(-int_);
+
     {
         BOOST_TEST((test("1234", -int_)));
         BOOST_TEST((test("abcd", -int_, false)));

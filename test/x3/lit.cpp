@@ -18,6 +18,8 @@ main()
     using boost::spirit::x3::lit;
     using boost::spirit::x3::char_;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(lit("x"));
+
     {
         std::string attr;
         auto p = char_ >> lit("\n");

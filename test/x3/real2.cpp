@@ -54,6 +54,11 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
+
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(boost::spirit::x3::float_);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(boost::spirit::x3::double_);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(boost::spirit::x3::long_double);
+
     ///////////////////////////////////////////////////////////////////////////
     //  signed real number tests
     ///////////////////////////////////////////////////////////////////////////

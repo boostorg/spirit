@@ -20,6 +20,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ - 'a');
+
     // Basic tests
     {
         BOOST_TEST(test("b", char_ - 'a'));

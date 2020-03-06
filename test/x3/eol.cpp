@@ -16,6 +16,8 @@ main()
     using spirit_test::test;
     using boost::spirit::x3::eol;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(eol);
+
     {
         BOOST_TEST((test("\r\n", eol)));
         BOOST_TEST((test("\r", eol)));

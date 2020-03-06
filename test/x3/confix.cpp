@@ -21,6 +21,10 @@ int main()
     namespace x3 = boost::spirit::x3;
     using namespace spirit_test;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::confix('(', ')'));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::confix("[", "]"));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(x3::confix("/*", "*/"));
+
     {
         const auto comment = x3::confix("/*", "*/");
 

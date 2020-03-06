@@ -24,6 +24,9 @@ main()
     using spirit_test::test_attr;
     using boost::spirit::x3::expectation_failure;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(expect['x']);
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ > char_);
+
     {
         try
         {

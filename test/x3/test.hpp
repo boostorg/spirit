@@ -120,6 +120,15 @@ namespace spirit_test
         return boost::spirit::x3::phrase_parse(in, last, p, s, attr)
             && (!full_match || (in == last));
     }
+
+    template <typename Parser>
+    constexpr Parser test_ctors(Parser p)
+    {
+        return { static_cast<Parser&&>(Parser{ p }) };
+    }
 }
+
+# define BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(...) \
+    static_assert((::spirit_test::test_ctors(__VA_ARGS__), void(), true), "")
 
 #endif

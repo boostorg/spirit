@@ -43,6 +43,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ >> char_);
+
     {
         BOOST_TEST((test("aa", char_ >> char_)));
         BOOST_TEST((test("aa", char_ >> 'a')));

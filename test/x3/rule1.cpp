@@ -28,6 +28,12 @@ main()
     using boost::spirit::x3::skip_flag;
     using boost::spirit::x3::traits::has_attribute;
 
+#ifdef BOOST_SPIRIT_X3_NO_RTTI
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(rule<class r>{});
+#endif
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(rule<class r>{"r"});
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(rule<class r>{"r"} = 'x');
+
     // check attribute advertising
     static_assert( has_attribute<rule<class r, int>, /*Context=*/unused_type>::value, "");
     static_assert(!has_attribute<rule<class r     >, /*Context=*/unused_type>::value, "");

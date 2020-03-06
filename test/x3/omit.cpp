@@ -28,6 +28,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(omit['x']);
+
     {
         BOOST_TEST(test("a", omit['a']));
     }
