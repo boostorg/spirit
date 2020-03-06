@@ -20,8 +20,11 @@ int main()
 
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr);
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr(1));
-    // TODO: Currently is not constexpr
-    //BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr("asd"));
+    BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr("asd"));
+    {
+        constexpr char s[] = "asd";
+        BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(attr(s));
+    }
 
     {
         int d = 0;
