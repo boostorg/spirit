@@ -8,7 +8,6 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_container.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/foreach.hpp>
 
 using namespace boost::spirit;
 
@@ -115,13 +114,13 @@ template <typename Token>
 inline 
 bool test_tokens(token_data const* d, std::vector<Token> const& tokens)
 {
-    BOOST_FOREACH(Token const& t, tokens)
+    for (std::size_t i = 0, len = tokens.size(); i < len; ++i)
     {
         if (d->id == -1)
             return false;           // reached end of expected data
 
-        typename Token::token_value_type const& value (t.value());
-        if (t.id() != static_cast<std::size_t>(d->id))        // token id must match
+        typename Token::token_value_type const& value (tokens[i].value());
+        if (tokens[i].id() != static_cast<std::size_t>(d->id))        // token id must match
             return false;
         if (value.which() != 1)     // must have an integer value 
             return false;

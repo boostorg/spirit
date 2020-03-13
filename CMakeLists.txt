@@ -19,7 +19,6 @@ target_link_libraries(boost_spirit
     Boost::config
     Boost::core
     Boost::endian
-    Boost::foreach
     Boost::function
     Boost::function_types
     Boost::fusion
