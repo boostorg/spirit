@@ -12,7 +12,6 @@
 
 #include <string>
 #include <boost/config.hpp>
-#include <boost/concept_check.hpp>
 
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/iterator/position_iterator_fwd.hpp>
