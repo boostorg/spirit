@@ -171,7 +171,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
     {
         template <typename Iterator>
         static std::size_t
-        ignore_excess_digits(Iterator& first, Iterator const& last, mpl::false_)
+        ignore_excess_digits(Iterator& /* first */, Iterator const& /* last */, mpl::false_)
         {
             return 0;
         }
