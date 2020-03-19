@@ -383,7 +383,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           , output_iterator<OutputIterator, Properties, Derived>
         >::type most_derived_type;
 
-        enum { properties = Properties::value };
+        static const generator_properties::enum_type properties = static_cast<generator_properties::enum_type>(Properties::value);
 
         typedef typename mpl::if_c<
             (properties & generator_properties::tracking) ? true : false
