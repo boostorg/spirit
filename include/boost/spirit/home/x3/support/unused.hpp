@@ -55,7 +55,7 @@ namespace boost { namespace spirit { namespace x3
         }
     };
 
-    auto const unused = unused_type{};
+    constexpr auto unused = unused_type{};
 }}}
 
 #endif
