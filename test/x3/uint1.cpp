@@ -109,13 +109,13 @@ main()
         unsigned u;
         using boost::spirit::x3::uint_parser;
 
-        static constexpr uint_parser<unsigned, 10, 1, 3> uint3;
+        constexpr uint_parser<unsigned, 10, 1, 3> uint3{};
         BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint3);
         BOOST_TEST(test("123456", uint3, false));
         BOOST_TEST(test_attr("123456", uint3, u, false));
         BOOST_TEST(u == 123);
 
-        static constexpr uint_parser<unsigned, 10, 2, 4> uint4;
+        constexpr uint_parser<unsigned, 10, 2, 4> uint4{};
         BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint4);
         BOOST_TEST(test("123456", uint4, false));
         BOOST_TEST(test_attr("123456", uint4, u, false));
@@ -123,7 +123,7 @@ main()
 
         char const * first = "0000000";
         char const * last  = first + std::strlen(first);
-        static constexpr uint_parser<unsigned, 10, 4, 4> uint_exact4;
+        constexpr uint_parser<unsigned, 10, 4, 4> uint_exact4{};
         BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(uint_exact4);
         BOOST_TEST(boost::spirit::x3::parse(first, last, uint_exact4, u)
             && first != last && (last-first == 3) && u == 0);

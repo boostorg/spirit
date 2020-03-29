@@ -441,7 +441,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                   "where type of first element is existing key in fusion::map and second element "
                   "is value to be stored under that key");
 
-            Attribute attr_;
+            Attribute attr_{};
             if (!parse_sequence(parser
 			       , first, last, context, rcontext, attr_, traits::container_attribute()))
             {
