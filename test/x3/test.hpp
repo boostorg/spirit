@@ -121,14 +121,20 @@ namespace spirit_test
             && (!full_match || (in == last));
     }
 
+
+    template <typename... T>
+    constexpr bool always_true(T&&...) { return true; }
+
     template <typename Parser>
-    constexpr Parser test_ctors(Parser p)
+    constexpr bool test_ctors(Parser const& p)
     {
-        return { static_cast<Parser&&>(Parser{ p }) };
+        return always_true(
+                   static_cast<Parser>(static_cast<Parser&&>(  // test move ctor
+                       static_cast<Parser>(p))));              // test copy ctor
     }
 }
 
 # define BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(...) \
-    static_assert((::spirit_test::test_ctors(__VA_ARGS__), void(), true), "")
+    static_assert(::spirit_test::test_ctors(__VA_ARGS__), "")
 
 #endif
