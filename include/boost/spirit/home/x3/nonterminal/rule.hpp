@@ -144,7 +144,7 @@ namespace boost { namespace spirit { namespace x3
             , Context const& context, unused_type, unused_type) const
         {
             // make sure we pass exactly the rule attribute type
-            attribute_type no_attr;
+            attribute_type no_attr{};
             return parse_rule(*this, first, last, context, no_attr);
         }
 
