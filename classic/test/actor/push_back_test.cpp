@@ -19,7 +19,6 @@
 #include <iostream>
 #include <boost/spirit/include/classic_core.hpp>
 #include <algorithm>
-#include <boost/bind.hpp>
 #include <boost/spirit/include/classic_push_back_actor.hpp>
 #include <boost/spirit/include/classic_lists.hpp>
 

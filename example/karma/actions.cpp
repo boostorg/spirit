@@ -9,7 +9,7 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -89,6 +89,7 @@ int main()
     }
 
     { // example using plain function with boost.bind
+        using namespace boost::placeholders;
         std::string generated;
         std::back_insert_iterator<std::string> outiter(generated);
 
@@ -100,6 +101,7 @@ int main()
     }
 
     { // example using member function with boost.bind
+        using namespace boost::placeholders;
         std::string generated;
         std::back_insert_iterator<std::string> outiter(generated);
 

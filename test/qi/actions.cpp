@@ -18,7 +18,7 @@
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <cstring>
 
 int x = 0;
@@ -89,6 +89,7 @@ int main()
     }
 
     {
+        using boost::placeholders::_1;
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[boost::bind(&fun1, _1)] >> '}');
     }
