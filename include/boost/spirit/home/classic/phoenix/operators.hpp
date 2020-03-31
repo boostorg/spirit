@@ -13,7 +13,7 @@
     #include <cwctype>
 #endif
 
-#if defined(__BORLANDC__) || (defined(__ICL) && __ICL >= 700)
+#if (defined(__BORLANDC__) && !defined(__clang__)) || (defined(__ICL) && __ICL >= 700)
 #define CREF const&
 #else
 #define CREF
@@ -290,7 +290,7 @@ struct unary_operator<dereference_op, nil_t> {
 };
 
 //////////////////////////////////
-#ifndef __BORLANDC__
+#ifndef BOOST_BORLANDC
 template <>
 struct unary_operator<dereference_op, nil_t const> {
 

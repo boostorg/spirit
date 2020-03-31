@@ -170,7 +170,7 @@ namespace phoenix {
 template <typename FuncT>
 struct functor_action : public FuncT {
 
-#if !defined(__BORLANDC__) && (!defined(__MWERKS__) || (__MWERKS__ > 0x3002))
+#if !defined(BOOST_BORLANDC) && (!defined(__MWERKS__) || (__MWERKS__ > 0x3002))
 
     template <
             typename A = nil_t
@@ -209,7 +209,7 @@ struct functor_action : public FuncT {
     :   FuncT(fptr_) {}
 };
 
-#if defined(__BORLANDC__) || (defined(__MWERKS__) && (__MWERKS__ <= 0x3002))
+#if defined(BOOST_BORLANDC) || (defined(__MWERKS__) && (__MWERKS__ <= 0x3002))
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -2661,7 +2661,7 @@ struct bound_member
     bound_member(CT & c, FPT fp)
     :   function<action_t>(action_t(c,fp)) {}
 
-#if !defined(__BORLANDC__)
+#if !defined(BOOST_BORLANDC)
     template <typename CT, typename FPT>
     bound_member(CT * c, FPT fp)
     :   function<action_t>(action_t(c,fp)) {}

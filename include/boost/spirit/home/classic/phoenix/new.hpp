@@ -694,7 +694,7 @@ struct new_15 {
 #endif
 
 
-#if defined(__BORLANDC__) || (defined(__MWERKS__) && (__MWERKS__ <= 0x3002))
+#if defined(BOOST_BORLANDC) || (defined(__MWERKS__) && (__MWERKS__ <= 0x3002))
 
 ///////////////////////////////////////////////////////////////////////////////
 //

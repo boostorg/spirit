@@ -64,7 +64,7 @@ main()
     for_each(v.begin(), v.end(), cout << arg1 << ',');
     cout << endl;
 
-#ifdef __BORLANDC__ // *** See special_ops.hpp why ***
+#ifdef BOOST_BORLANDC // *** See special_ops.hpp why ***
     (cout << arg1 << "this is it, shukz:" << hex_ << arg2 << endl_ << endl_)(msg, i100);
 #else
     (cout << arg1 << "this is it, shukz:" << hex << arg2 << endl << endl)(msg, i100);
