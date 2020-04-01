@@ -158,6 +158,8 @@ main()
     BOOST_TEST(!parse(L"\\z", wcep[assign_a(wc)]).hit);
 
 #if !defined(BOOST_NO_SWPRINTF)
+    unsigned long ulwcmax(WCHAR_MAX);
+
     // test out of range octal escape
     size_t const octmax_size = 16;
     wchar_t octmax[octmax_size];
@@ -168,8 +170,9 @@ main()
     //BOOST_TEST(lex_escape_ch_p[assign_a(wc)].parse(str, end));
     BOOST_TEST(wc == (std::numeric_limits<wchar_t>::max)());
 
+    // WCHAR_MAX + 1
     swprintf(octmax, octmax_size,
-      L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
+      L"\\%lo%lo", ulwcmax / 8 + (ulwcmax % 8 == 7), (ulwcmax - 7) % 8);
     BOOST_TEST(!parse(octmax, wlep[assign_a(wc)]).hit);
 
     // test out of range hex escape
@@ -181,8 +184,9 @@ main()
     BOOST_TEST(parse(hexmax, wlep[assign_a(wc)]).full);
     BOOST_TEST(wc == (std::numeric_limits<wchar_t>::max)());
 
+    // WCHAR_MAX + 1
     swprintf(hexmax, hexmax_size,
-      L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
+      L"\\x%lx%lx", ulwcmax / 16 + (ulwcmax % 16 == 15), (ulwcmax - 15) % 16);
     BOOST_TEST(!parse(hexmax, wlep[assign_a(wc)]).hit);
 #else
     boost::ignore_unused(wlep);
