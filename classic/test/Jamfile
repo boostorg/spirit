@@ -20,9 +20,9 @@ project spirit-classic
 
 ###############################################################################
 
-cpp-pch pch : pch.hpp : : : <include>. <toolset>msvc:<cxxflags>"/FIpch.hpp" ;
+cpp-pch pch : pch.hpp : : : <include>. <force-include>pch.hpp ;
 cpp-pch pch-dbg : pch.hpp : <define>BOOST_SPIRIT_DEBUG :
-                          : <include>. <toolset>msvc:<cxxflags>"/FIpch.hpp" ;
+                          : <include>. <force-include>pch.hpp ;
 
 explicit pch pch-dbg ;
 

@@ -21,7 +21,7 @@ project spirit-karma
 
 ###############################################################################
 
-cpp-pch pch : pch.hpp : : : <include>. <toolset>msvc:<cxxflags>"/FIpch.hpp" ;
+cpp-pch pch : pch.hpp : : : <include>. <force-include>pch.hpp ;
 
 explicit pch ;
 
