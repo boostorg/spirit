@@ -537,14 +537,13 @@ namespace boost { namespace spirit
     BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(BINARY, bitxor_,     a^b)
     BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(BINARY, shift_left,  a<<b)
     BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(BINARY, shift_right, a>>b)
-#if defined(__GNUC__) && (__GNUC__ >= 7)
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wbool-operation" // '~' on an expression of type bool
-#endif
     BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(UNARY,  invert,      ~a)
-#if defined(__GNUC__) && (__GNUC__ >= 7)
-# pragma GCC diagnostic pop
-#endif
+
+    // avoid `'~' on an expression of type bool` warning
+    template <> utree function_impl_invert::eval<bool>(bool const& a)
+    {
+        return utree(!a);
+    }
 
 #undef BOOST_SPIRIT_UTREE_CREATE_FUNCTION_BINARY
 #undef BOOST_SPIRIT_UTREE_CREATE_FUNCTION_UNARY
