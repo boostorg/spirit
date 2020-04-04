@@ -13,7 +13,9 @@
 #if defined(_MSC_VER) && _MSC_VER < 1700
 # pragma warning(disable: 4127) // conditional expression is constant
 #endif
-#include <boost/random.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/variate_generator.hpp>
 
 #if defined(_MSC_VER)
 # pragma warning(disable: 4127) // conditional expression is constant
