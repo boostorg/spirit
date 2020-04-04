@@ -10,6 +10,10 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/utility/enable_if.hpp>
 
+#if defined(__GNUC__) && (__GNUC__ >= 8)
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92539
+# pragma GCC diagnostic ignored "-Warray-bounds"
+#endif
 #include <boost/spirit/home/x3.hpp>
 #include <string>
 #include <iostream>
