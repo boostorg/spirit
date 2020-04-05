@@ -118,9 +118,15 @@ before_install:
     toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
         -Wno-maybe-uninitialized  # this warning is known to give false positives
         -Wno-sign-compare
+      # -Wextra warnings:
+        -Wno-deprecated-copy      # Proto, Phoenix, GCC bug 92145
+        -Wno-implicit-fallthrough # Locale
+        -Wno-cast-function-type
+        -Wno-type-limits
       : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
         -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
+        -Wno-deprecated-copy      # Proto, Phoenix
       : unchecked ;
 
   - |
@@ -170,4 +176,4 @@ before_install:
 script:
   - b2 threading=multi variant=release runtime-debugging=on,off
       toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
-      warnings=on known-warnings=suppress warnings-as-errors=on
+      warnings=extra known-warnings=suppress warnings-as-errors=on
