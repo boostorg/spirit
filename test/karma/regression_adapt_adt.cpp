@@ -13,6 +13,9 @@
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/support_adapt_adt_attributes.hpp>
 
+#include <boost/assert.hpp>
+#include <boost/core/ignore_unused.hpp>
+
 #include "test.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -101,13 +104,17 @@ public:
     boost::optional<std::string> const& c() const { return c_; }
 };
 
+#define NO_SETTER (BOOST_ASSERT_MSG(false, "unused setter called"), \
+                   boost::ignore_unused(obj, val))
 
 BOOST_FUSION_ADAPT_ADT(
     data4,
-    (boost::optional<int>, boost::optional<int> const&, obj.a(), /**/)
-    (boost::optional<double>, boost::optional<double> const&, obj.b(), /**/)
-    (boost::optional<std::string>, boost::optional<std::string> const&, obj.c(), /**/)
+    (boost::optional<int>, boost::optional<int> const&, obj.a(), NO_SETTER)
+    (boost::optional<double>, boost::optional<double> const&, obj.b(), NO_SETTER)
+    (boost::optional<std::string>, boost::optional<std::string> const&, obj.c(), NO_SETTER)
 )
+
+#undef NO_SETTER
 
 ///////////////////////////////////////////////////////////////////////////////
 int main () 

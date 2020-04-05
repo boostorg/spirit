@@ -229,7 +229,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             actions_.add_action(unique_id, state, wrapper_type::call(act));
         }
 
-        bool init_dfa(bool minimize = false) const { return true; }
+        bool init_dfa(bool /*minimize*/ = false) const { return true; }
 
     private:
         typename Functor::semantic_actions_type actions_;

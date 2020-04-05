@@ -134,7 +134,7 @@ namespace boost { namespace spirit { namespace x3
     struct get_info<any_binary_parser<T, endian::order::little, bits>>
     {
         typedef std::string result_type;
-        std::string operator()(any_binary_parser<T, endian::order::little, bits> const& p) const
+        std::string operator()(any_binary_parser<T, endian::order::little, bits> const&) const
         {
             return "little-endian binary";
         }
@@ -144,7 +144,7 @@ namespace boost { namespace spirit { namespace x3
     struct get_info<any_binary_parser<T, endian::order::big, bits>>
     {
         typedef std::string result_type;
-        std::string operator()(any_binary_parser<T, endian::order::big, bits> const& p) const
+        std::string operator()(any_binary_parser<T, endian::order::big, bits> const&) const
         {
             return "big-endian binary";
         }
@@ -154,7 +154,7 @@ namespace boost { namespace spirit { namespace x3
     struct get_info<binary_lit_parser<V, T, endian::order::little, bits>>
     {
         typedef std::string result_type;
-        std::string operator()(binary_lit_parser<V, T, endian::order::little, bits> const& p) const
+        std::string operator()(binary_lit_parser<V, T, endian::order::little, bits> const&) const
         {
             return "little-endian binary";
         }
@@ -164,7 +164,7 @@ namespace boost { namespace spirit { namespace x3
     struct get_info<binary_lit_parser<V, T, endian::order::big, bits>>
     {
         typedef std::string result_type;
-        std::string operator()(binary_lit_parser<V, T, endian::order::big, bits> const& p) const
+        std::string operator()(binary_lit_parser<V, T, endian::order::big, bits> const&) const
         {
             return "big-endian binary";
         }
