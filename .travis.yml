@@ -121,7 +121,6 @@ before_install:
       # -Wextra warnings:
         -Wno-deprecated-copy      # Proto, Phoenix, GCC bug 92145
         -Wno-implicit-fallthrough # Locale
-        -Wno-cast-function-type
         -Wno-type-limits
       : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
