@@ -120,7 +120,6 @@ before_install:
         -Wno-sign-compare
       # -Wextra warnings:
         -Wno-deprecated-copy      # Proto, Phoenix, GCC bug 92145
-        -Wno-implicit-fallthrough # Locale
         -Wno-type-limits
       : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :

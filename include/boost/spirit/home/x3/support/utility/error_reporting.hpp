@@ -11,8 +11,8 @@
 #include <boost/filesystem/path.hpp>
 #endif
 
-#include <boost/locale/encoding_utf.hpp>
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
+#include <boost/spirit/home/x3/support/utility/utf8.hpp>
 #include <ostream>
 
 // Clang-style error handling utilities
@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace x3
         }
         typedef typename std::iterator_traits<Iterator>::value_type char_type;
         std::basic_string<char_type> line{start, end};
-        err_out << locale::conv::utf_to_utf<char>(line) << std::endl;
+        err_out << x3::to_utf8(line) << std::endl;
     }
 
     template <typename Iterator>
