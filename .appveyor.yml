@@ -123,8 +123,5 @@ build_script:
     || ( echo === deps_build.log === && cat deps_build.log )
 
 test_script:
-  - set B2_ARGS=%B2_ARGS% warnings=extra known-warnings=suppress warnings-as-errors=on
-  - echo B2 argumets %B2_ARGS%
-  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\classic\test
-  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\repository\test
-  - b2 %B2_ARGS% pch=on-spirit %PROJECT%\test
+  - b2 %B2_ARGS% %PROJECT%\classic\test %PROJECT%\repository\test %PROJECT%\test
+      warnings=extra known-warnings=suppress warnings-as-errors=on pch=on-spirit 
