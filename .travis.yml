@@ -36,7 +36,6 @@ env:
     - PROJECT=libs/spirit
     - BOOST_ROOT=$HOME/boost
     - BOOST_BUILD_PATH=$HOME/build-boost
-    - TEST_LINK_DEPS=date_time,chrono,filesystem,regex,thread
 
 matrix:
   include:
@@ -158,11 +157,8 @@ before_install:
   - pushd $BOOST_ROOT
   # Remove the empty folder
   - rm -rf $PROJECT
-  - ./bootstrap.sh --with-toolset=clang --with-libraries=$TEST_LINK_DEPS
+  - ./bootstrap.sh --with-toolset=clang
   - ./b2 headers
-  - ./b2 link=shared threading=multi variant=release runtime-debugging=on,off
-      toolset=$TRAVIS_COMPILER cxxstd=${STD#*,} $STDLIB
-      warnings=off
 
   # Move the repository to boost/libs and make a link to previous place
   - mv $TRAVIS_BUILD_DIR $PROJECT

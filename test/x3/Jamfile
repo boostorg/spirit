@@ -63,6 +63,8 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 ###############################################################################
 
+alias boost_filesystem : /boost/filesystem//boost_filesystem : <warnings>off ;
+
 run actions.cpp ;
 run alternative.cpp ;
 run and_predicate.cpp ;
@@ -122,7 +124,7 @@ run unused_type.cpp ;
 run attribute_type_check.cpp ;
 run fusion_map.cpp ;
 run x3_variant.cpp ;
-run error_handler.cpp /boost//filesystem ;
+run error_handler.cpp boost_filesystem ;
 run iterator_check.cpp ;
 
 run to_utf8.cpp ;

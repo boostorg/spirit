@@ -11,7 +11,6 @@ clone_depth: 50
 environment:
   global:
     PROJECT: libs\spirit
-    TEST_LINK_DEPS: date_time,chrono,filesystem,regex,thread
     APPVEYOR_SAVE_CACHE_ON_ERROR: true
     CLCACHE_HARDLINK: 1
     APPVEYOR_CACHE_ENTRY_ZIP_ARGS: "-t7z -m0=lzma2 -mx=3 -md=32m -ms=on"
@@ -110,16 +109,8 @@ before_build:
 build_script:
   - bootstrap.bat --with-toolset=msvc
 
-  # bootstrap.bat does not support --with-libraries
-  - echo libraries = >> project-config.jam
-  - for %%a in ("%TEST_LINK_DEPS:,=" "%") do (
-      echo --with-%%~a >> project-config.jam
-    )
-  - echo ; >> project-config.jam
-
   # Let's have less noise (Appveyor cannot collapse command output)
-  - b2 headers 2>&1 >> deps_build.log &&
-    b2 %B2_ARGS% warnings=off 2>&1 >> deps_build.log
+  - b2 headers 2>&1 >> deps_build.log
     || ( echo === deps_build.log === && cat deps_build.log )
 
 test_script:
