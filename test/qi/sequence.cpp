@@ -302,7 +302,7 @@ main()
         int n = 0;
 
         BOOST_TEST(test("x123\"a string\"", (char_ >> int_ >> "\"a string\"")
-            [ref(c) = _1, ref(n) = _2]));
+            [(ref(c) = _1, ref(n) = _2)]));
         BOOST_TEST(c == 'x');
         BOOST_TEST(n == 123);
     }
@@ -313,7 +313,7 @@ main()
         int n = 0;
 
         BOOST_TEST(test("x 123 \"a string\"", (char_ >> int_ >> "\"a string\"")
-            [ref(c) = _1, ref(n) = _2], space));
+            [(ref(c) = _1, ref(n) = _2)], space));
         BOOST_TEST(c == 'x');
         BOOST_TEST(n == 123);
     }

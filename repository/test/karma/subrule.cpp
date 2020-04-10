@@ -47,7 +47,7 @@ int main()
         BOOST_TEST(test("a1012.4", start));
 
         BOOST_TEST(test("a1012.4", (
-            sr = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4]
+            sr = (char_ << int_ << double_)[(_1 = 'a', _2 = 10, _3 = 12.4)]
         )));
 
         subrule<1> a;
@@ -74,7 +74,7 @@ int main()
         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
 
         BOOST_TEST(test_delimited("a 10 12.4 ", (
-            sr = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4]
+            sr = (char_ << int_ << double_)[(_1 = 'a', _2 = 10, _3 = 12.4)]
         ), space));
 
         subrule<1> a;
@@ -137,7 +137,7 @@ int main()
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
         BOOST_TEST(test("a1012.4", (
-            sr = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3]
+            sr = (char_ << int_ << double_)[(_1 = _r1, _2 = _r2, _3 = _r3)]
         )('a', 10, 12.4)));
 
         subrule<1, void(char, int, double)> entry;
@@ -164,7 +164,7 @@ int main()
         BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
 
         BOOST_TEST(test_delimited("a 10 12.4 ", (
-            sr = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3]
+            sr = (char_ << int_ << double_)[(_1 = _r1, _2 = _r2, _3 = _r3)]
         )('a', 10, 12.4), space));
 
         subrule<1, void(char, int, double)> entry;

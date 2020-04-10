@@ -67,10 +67,10 @@ struct lexer
                 st [ 
                     lex::_state = "INITIAL" 
                 ]
-            |   lex::token_def<>(".", 4) [ 
+            |   lex::token_def<>(".", 4) [(
                     lex::_state = "INITIAL"
                   , lex::_pass = lex::pass_flags::pass_fail 
-                ]
+                )]
             ;
     }
     

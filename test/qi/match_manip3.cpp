@@ -27,7 +27,7 @@ main()
         char a = '\0';
         int i = 0;
         BOOST_TEST(test( "a2",
-            (char_ >> int_)[phx::ref(a) = _1, phx::ref(i) = _2]
+            (char_ >> int_)[(phx::ref(a) = _1, phx::ref(i) = _2)]
         ) && a == 'a' && i == 2);
 
         fusion::vector<char, int> t;

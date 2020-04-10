@@ -44,20 +44,20 @@ struct lexer
         self =  word [ 
                     lex::_state = "O" 
                 ]
-            |   lex::token_def<>("!.*$") [ 
+            |   lex::token_def<>("!.*$") [(
                     lex::_state = "O"
                   , lex::_pass = lex::pass_flags::pass_ignore 
-                ]
+                )]
             |   lex::token_def<>('\n', 2) [ 
                     lex::_state = "O" 
                 ] 
             ;
         
         self("O") = 
-                lex::token_def<>(".") [ 
+                lex::token_def<>(".") [(
                     lex::_state = "INITIAL"
                   , lex::_pass = lex::pass_flags::pass_fail 
-                ]
+                )]
             ;
     }
     

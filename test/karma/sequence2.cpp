@@ -95,17 +95,17 @@ int main()
         using namespace boost::phoenix;
 
         BOOST_TEST(test("abcdefg", 
-            (char_ << char_ << string)[_1 = 'a', _2 = 'b', _3 = "cdefg"]));
+            (char_ << char_ << string)[(_1 = 'a', _2 = 'b', _3 = "cdefg")]));
         BOOST_TEST(test_delimited("a b cdefg ", 
-            (char_ << char_ << string)[_1 = 'a', _2 = 'b', _3 = "cdefg"], 
+            (char_ << char_ << string)[(_1 = 'a', _2 = 'b', _3 = "cdefg")], 
             char(' ')));
 
         BOOST_TEST(test_delimited("a 12 c ", 
-            (char_ << lit(12) << char_)[_1 = 'a', _2 = 'c'], char(' ')));
+            (char_ << lit(12) << char_)[(_1 = 'a', _2 = 'c')], char(' ')));
 
         char c = 'c';
         BOOST_TEST(test("abc", 
-            (char_[_1 = 'a'] << 'b' << char_)[_1 = 'x', _2 = ref(c)]));
+            (char_[_1 = 'a'] << 'b' << char_)[(_1 = 'x', _2 = ref(c))]));
         BOOST_TEST(test_delimited("a b c ", 
             (char_[_1 = 'a'] << 'b' << char_)[_2 = ref(c)], char(' ')));
 

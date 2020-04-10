@@ -97,7 +97,7 @@ int main()
         BOOST_SPIRIT_DEBUG_NODE(b);
         BOOST_SPIRIT_DEBUG_NODE(c);
 
-        start %= eps[_a = 0, _b = 2.0] << *(a[++_a] | b | c);
+        start %= eps[(_a = 0, _b = 2.0)] << *(a[++_a] | b | c);
         BOOST_SPIRIT_DEBUG_NODE(start);
         BOOST_TEST(test("abacabba", start, v));
     }

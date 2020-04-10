@@ -128,7 +128,7 @@ main()
 
     {
         BOOST_TEST(test( "a2", 
-            (char_ << int_)[_1 = 'a', _2 = 2] 
+            (char_ << int_)[(_1 = 'a', _2 = 2)]
         ));
 
         fusion::vector<char, int> t('a', 2);

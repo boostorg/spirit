@@ -36,11 +36,11 @@ struct multi_tokens : lex::lexer<Lexer>
         this->self = 
                 a [ ++phoenix::ref(level) ]
             |   b
-            |   c [
+            |   c [(
                       _state = "in_dedenting",
                       _end = _start,
                       _pass = pass_flags::pass_ignore
-                  ]
+                  )]
             ;
 
         d = ".";

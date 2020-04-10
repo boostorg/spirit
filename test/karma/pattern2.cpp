@@ -33,14 +33,14 @@ int main()
     {
         karma::rule<outiter_type, locals<std::string> > start;
 
-        start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
+        start = string[(_1 = "abc", _a = _1)] << int_[_1 = 10] << string[_1 = _a];
         BOOST_TEST(test("abc10abc", start));
     }
 
     {
         karma::rule<outiter_type, space_type, locals<std::string> > start;
 
-        start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
+        start = string[(_1 = "abc", _a = _1)] << int_[_1 = 10] << string[_1 = _a];
         BOOST_TEST(test_delimited("abc 10 abc ", start, space));
     }
 

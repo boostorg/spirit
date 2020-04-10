@@ -100,7 +100,7 @@ main()
         optional<int> i;
         optional<char> c;
 
-        BOOST_TEST((test("123a", (int_ || alpha)[phx::ref(i) = _1, phx::ref(c) = _2])));
+        BOOST_TEST((test("123a", (int_ || alpha)[(phx::ref(i) = _1, phx::ref(c) = _2)])));
         BOOST_TEST((i.get() == 123));
         BOOST_TEST((c.get() == 'a'));
     }

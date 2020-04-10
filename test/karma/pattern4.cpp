@@ -37,7 +37,7 @@ int main()
         start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
+        start = (char_ << int_ << double_)[(_1 = _r1, _2 = _r2, _3 = _r3)];
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
         karma::rule<outiter_type, void(char)> a;
@@ -58,7 +58,7 @@ int main()
         start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
         BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
 
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
+        start = (char_ << int_ << double_)[(_1 = _r1, _2 = _r2, _3 = _r3)];
         BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
 
         karma::rule<outiter_type, space_type, void(char)> a;

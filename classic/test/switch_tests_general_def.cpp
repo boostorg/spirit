@@ -42,12 +42,12 @@ namespace test_grammars {
         {
             definition(switch_grammar_direct_default1 const& /*self*/)
             {
-                r = switch_p [
+                r = switch_p [(
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
                         case_p<'c'>(str_p("bcd")),
                         default_p(str_p("default"))
-                    ];
+                    )];
             }
 
             rule<ScannerT> r;
@@ -63,12 +63,12 @@ namespace test_grammars {
         {
             definition(switch_grammar_direct_default2 const& /*self*/)
             {
-                r = switch_p [
+                r = switch_p [(
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
                         default_p(str_p("default")),
                         case_p<'c'>(str_p("bcd"))
-                    ];
+                    )];
             }
 
             rule<ScannerT> r;
@@ -84,12 +84,12 @@ namespace test_grammars {
         {
             definition(switch_grammar_direct_default3 const& /*self*/)
             {
-                r = switch_p [
+                r = switch_p [(
                         default_p(str_p("default")),
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
                         case_p<'c'>(str_p("bcd"))
-                    ];
+                    )];
             }
 
             rule<ScannerT> r;
@@ -107,12 +107,12 @@ namespace test_grammars {
         {
             definition(switch_grammar_parser_default1 const& /*self*/)
             {
-                r = switch_p(anychar_p) [
+                r = switch_p(anychar_p) [(
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
                         case_p<'c'>(str_p("bcd")),
                         default_p(str_p("default"))
-                    ];
+                    )];
             }
 
             rule<ScannerT> r;
@@ -128,12 +128,12 @@ namespace test_grammars {
         {
             definition(switch_grammar_parser_default2 const& /*self*/)
             {
-                r = switch_p(anychar_p) [
+                r = switch_p(anychar_p) [(
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
                         default_p(str_p("default")),
                         case_p<'c'>(str_p("bcd"))
-                    ];
+                    )];
             }
 
             rule<ScannerT> r;
@@ -149,12 +149,12 @@ namespace test_grammars {
         {
             definition(switch_grammar_parser_default3 const& /*self*/)
             {
-                r = switch_p(anychar_p) [
+                r = switch_p(anychar_p) [(
                         default_p(str_p("default")),
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
                         case_p<'c'>(str_p("bcd"))
-                    ];
+                    )];
             }
 
             rule<ScannerT> r;
@@ -180,12 +180,12 @@ namespace test_grammars {
             {
                 using phoenix::arg1;
                 r = select_p('a', 'b', 'c', 'd')[r.val = arg1] >>
-                    switch_p(r.val) [
+                    switch_p(r.val) [(
                         case_p<0>(int_p),
                         case_p<1>(ch_p(',')),
                         case_p<2>(str_p("bcd")),
                         default_p(str_p("default"))
-                    ];
+                    )];
             }
 
             rule<ScannerT, select_result::context_t> r;
@@ -204,12 +204,12 @@ namespace test_grammars {
             {
                 using phoenix::arg1;
                 r = select_p('a', 'b', 'c', 'd')[r.val = arg1] >>
-                    switch_p(r.val) [
+                    switch_p(r.val) [(
                         case_p<0>(int_p),
                         case_p<1>(ch_p(',')),
                         default_p(str_p("default")),
                         case_p<2>(str_p("bcd"))
-                    ];
+                    )];
             }
 
             rule<ScannerT, select_result::context_t> r;
@@ -228,12 +228,12 @@ namespace test_grammars {
             {
                 using phoenix::arg1;
                 r = select_p('a', 'b', 'c', 'd')[r.val = arg1] >>
-                    switch_p(r.val) [
+                    switch_p(r.val) [(
                         default_p(str_p("default")),
                         case_p<0>(int_p),
                         case_p<1>(ch_p(',')),
                         case_p<2>(str_p("bcd"))
-                    ];
+                    )];
             }
 
             rule<ScannerT, select_result::context_t> r;
