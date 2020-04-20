@@ -63,7 +63,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 ###############################################################################
 
-alias boost_filesystem : /boost/filesystem//boost_filesystem : <warnings>off ;
+alias boost_filesystem : /boost/filesystem//boost_filesystem : <warnings>off <warnings-as-errors>off ;
 
 run actions.cpp ;
 run alternative.cpp ;

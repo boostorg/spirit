@@ -52,7 +52,7 @@ local opt-metrowerks = <toolset>cw:<optimization>speed ;
 
 # VP, 2005/04/14: MT is not available with Como, but this is
 # not handled yet.
-alias boost_thread : /boost/thread//boost_thread : <warnings>off ;
+alias boost_thread : /boost/thread//boost_thread : <warnings>off <warnings-as-errors>off ;
 local multi-threading = <library>boost_thread
                         <threading>multi <define>BOOST_ALL_NO_LIB ;
 
