@@ -8,6 +8,18 @@
 [section Changelog]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_6 Spirit V3.0.6 (Boost V1.73.0)]
+
+* ADL used to find and match `unused_type` streaming operators for every type
+  in `boost::spirit::x3` namespace [gh_pr 553] [gh 552]
+* Ceased dependence on Boost.TTI
+* Rule placeholders now a non-trivial type because its copy constructor checks
+  for a static initialization fiasco [gh_pr 571]
+* Most parsers are now constexpr-constructible [gh_pr 570]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_5 Spirit V3.0.5 (Boost V1.72.0)]
 
 * `any_char` parser were accepting characters outside of encoding. [gh 520] [gh_pr 521] sehe
