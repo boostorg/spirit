@@ -12,7 +12,7 @@ int main()
     using boost::spirit::x3::to_utf8;
 
     // Assume wchar_t content is UTF-16 on MSVC, or mingw/wineg++ with -fshort-wchar
-#if defined(_MSC_VER) || (__SIZEOF_WCHAR_T__ == 2 && defined(__STDC_ISO_10646__))
+#if defined(_MSC_VER) || defined(__SIZEOF_WCHAR_T__) && __SIZEOF_WCHAR_T__ == 2
     BOOST_TEST_CSTR_EQ("\xEF\xBF\xA1", to_utf8(L'\uFFE1').c_str());
 #else
     BOOST_TEST_CSTR_EQ("\xF0\x9F\xA7\x90", to_utf8(L'\U0001F9D0').c_str());

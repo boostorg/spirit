@@ -69,7 +69,7 @@ namespace boost { namespace spirit
     }
 
     // Assume wchar_t content is UTF-16 on MSVC, or mingw/wineg++ with -fshort-wchar
-#if defined(_MSC_VER) || (__SIZEOF_WCHAR_T__ == 2 && defined(__STDC_ISO_10646__))
+#if defined(_MSC_VER) || defined(__SIZEOF_WCHAR_T__) && __SIZEOF_WCHAR_T__ == 2
     inline utf8_string to_utf8(wchar_t value)
     {
         utf8_string result;

@@ -191,7 +191,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
        // wchar_t is only 16-bits on Windows. If BOOST_SPIRIT_UNICODE is
        // defined, the character type is 32-bits wide so we need to make
        // sure the buffer is at least that wide.
-#if (defined(_MSC_VER) || (__SIZEOF_WCHAR_T__ == 2 && defined(__STDC_ISO_10646__))) && defined(BOOST_SPIRIT_UNICODE)
+#if (defined(_MSC_VER) || defined(__SIZEOF_WCHAR_T__) && __SIZEOF_WCHAR_T__ == 2) && defined(BOOST_SPIRIT_UNICODE)
        typedef spirit::char_encoding::unicode::char_type buffer_char_type;
 #else
        typedef wchar_t buffer_char_type;

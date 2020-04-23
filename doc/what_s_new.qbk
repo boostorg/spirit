@@ -9,6 +9,18 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_73 Spirit V2.5.8 (Boost V1.73.0)]
+
+* Boost.Endian is now used instead of its bundled prerelease version [gh_pr 550]
+* Narrowed Proto and Phoenix inclusion for a 5-10% inclusion speed-up [gh_pr 558]
+* Ceased dependence on Boost.Algorithm and Boost.LexicalCast [gh_pr 560]
+* Added static assertion for meaningless rule attribute qualifiers [gh_pr 561]
+* String literal was matching everything when `<boost/spirit/include/qi_auto.hpp>`
+  header is included [gh_pr 579]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_8_boost_1_72 Spirit V2.5.8 (Boost V1.72.0)]
 
 * `<cctype>` functions were called with negative values. [gh_pr 543]
