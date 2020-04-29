@@ -90,7 +90,7 @@ namespace client
             //  Begin grammar
             (
                &true_ << '(' << double_ << ", " << double_ << ')'
-            |   omit[bool_]  << double_ 
+            |   omit[bool_]  << double_ << omit[double_]
             ),
             //  End grammar
 
