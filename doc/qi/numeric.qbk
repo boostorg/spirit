@@ -771,9 +771,10 @@ For models of `RealPolicies` the following expressions must be valid:
                                             If successful, place the result into `n`.]]
     [[`RP::parse_dot(f, l)`]                [Parse the decimal point.
                                             Return `true` if successful, otherwise `false`.]]
-    [[`RP::parse_frac_n(f, l, n)`]          [Parse the fraction after the decimal point.
+    [[`RP::parse_frac_n(f, l, n, d)`]       [Parse the fraction after the decimal point.
                                             Return `true` if successful, otherwise `false`.
-                                            If successful, place the result into `n`.]]
+                                            If successful, place the result into `n` and the
+                                            number of digits into `d`]]
     [[`RP::parse_exp(f, l)`]                [Parse the exponent prefix (e.g. 'e').
                                             Return `true` if successful, otherwise `false`.]]
     [[`RP::parse_exp_n(f, l, n)`]           [Parse the actual exponent.
