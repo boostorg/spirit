@@ -45,30 +45,6 @@ struct basic_num_token
         *_macro = 0;
     }
 
-    basic_num_token &operator = (const basic_num_token &rhs_)
-    {
-        _type = rhs_._type;
-        _id = rhs_._id;
-        _min = rhs_._min;
-        _comma = rhs_._comma;
-        _max = rhs_._max;
-
-        if (_type == MACRO)
-        {
-            const CharT *read_ = rhs_._macro;
-            CharT *write_ = _macro;
-
-            while (*read_)
-            {
-                *write_++ = *read_++;
-            }
-
-            *write_ = 0;
-        }
-
-        return *this;
-    }
-
     void set (const type type_)
     {
         _type = type_;

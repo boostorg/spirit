@@ -98,13 +98,6 @@ struct tree_node
         impl::cp_swap(value, x.value);
         impl::cp_swap(children, x.children);
     }
-
-// Intel V5.0.1 has a problem without this explicit operator=
-    tree_node &operator= (tree_node const &rhs)
-    {
-        tree_node(rhs).swap(*this);
-        return *this;
-    }
 };
 
 #if defined(BOOST_SPIRIT_DEBUG) && \

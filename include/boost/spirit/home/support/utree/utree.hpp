@@ -185,12 +185,6 @@ namespace boost { namespace spirit
         basic_string(Iterator first, Iterator last)
           : Base(first, last) {}
 
-        basic_string& operator=(basic_string const& other)
-        {
-            Base::operator=(other);
-            return *this;
-        }
-
         basic_string& operator=(Base const& other)
         {
             Base::operator=(other);
