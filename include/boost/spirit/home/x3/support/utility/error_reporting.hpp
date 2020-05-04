@@ -7,10 +7,6 @@
 #if !defined(BOOST_SPIRIT_X3_ERROR_REPORTING_MAY_19_2014_00405PM)
 #define BOOST_SPIRIT_X3_ERROR_REPORTING_MAY_19_2014_00405PM
 
-#ifndef BOOST_SPIRIT_X3_NO_FILESYSTEM
-#include <boost/filesystem/path.hpp>
-#endif
-
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <boost/spirit/home/x3/support/utility/utf8.hpp>
 #include <ostream>
@@ -84,12 +80,7 @@ namespace boost { namespace spirit { namespace x3
     {
         if (file != "")
         {
-#ifdef BOOST_SPIRIT_X3_NO_FILESYSTEM
             err_out << "In file " << file << ", ";
-#else
-            namespace fs = boost::filesystem;
-            err_out << "In file " << fs::path(file).generic_string() << ", ";
-#endif
         }
         else
         {
