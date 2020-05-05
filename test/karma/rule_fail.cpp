@@ -11,7 +11,6 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
-#include <boost/function_output_iterator.hpp>
 
 #include "test.hpp"
 
