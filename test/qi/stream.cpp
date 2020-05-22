@@ -48,6 +48,11 @@ int main()
                 stream_parser<char, complex>(), c, blank) && 
             c.a == 1.0 && c.b == 2.5);
 
+        boost::variant<complex, double> cd;
+        BOOST_TEST(test_attr("{1.0",
+                stream_parser<char, complex>() | "{" >> double_, cd, blank) && 
+            boost::get<double>(cd) == 1.0);
+
         boost::fusion::vector<complex, double> d;
         BOOST_TEST(test_attr("{1.0,2.5},123.456", 
                 stream >> ',' >> double_, d, blank) && 
