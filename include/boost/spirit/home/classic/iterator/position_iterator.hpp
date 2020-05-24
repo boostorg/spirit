@@ -293,7 +293,7 @@ private:
 
 protected:
 
-    void newline(void)
+    void newline()
     {}
 
     ForwardIteratorT _end;
@@ -396,13 +396,13 @@ public:
         return *this;
     }
 
-    ForwardIteratorT get_currentline_begin(void) const
+    ForwardIteratorT get_currentline_begin() const
     { return _startline; }
 
-    ForwardIteratorT get_currentline_end(void) const
+    ForwardIteratorT get_currentline_end() const
     { return get_endline(); }
 
-    std::basic_string<value_type> get_currentline(void) const
+    std::basic_string<value_type> get_currentline() const
     {
         return std::basic_string<value_type>
             (get_currentline_begin(), get_currentline_end());
@@ -424,7 +424,7 @@ protected:
         return endline;
     }
 
-    void newline(void)
+    void newline()
     { _startline = this->base(); }
 };
 

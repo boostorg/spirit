@@ -9,9 +9,9 @@
 #ifndef BOOST_SPIRIT_CLASSIC_ITERATOR_FIXED_SIZE_QUEUE_HPP
 #define BOOST_SPIRIT_CLASSIC_ITERATOR_FIXED_SIZE_QUEUE_HPP
 
+#include <cstddef>
 #include <cstdlib>
 #include <iterator>
-#include <cstddef>
 
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp> // for BOOST_SPIRIT_ASSERT

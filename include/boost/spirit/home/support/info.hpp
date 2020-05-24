@@ -132,7 +132,7 @@ namespace boost { namespace spirit
 
         void element(string const& tag, string const& value, int /*depth*/) const
         {
-            if (value == "")
+            if (value.empty())
                 out << '<' << tag << '>';
             else
                 out << '"' << value << '"';
