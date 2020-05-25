@@ -20,6 +20,7 @@
 #include <boost/type_traits/is_enum.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/config.hpp>
+#include <climits>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -72,11 +73,12 @@ namespace boost { namespace spirit { namespace x3
         {
             x3::skip_over(first, last, context);
 
-            attribute_type attr_;
-            auto bytes = reinterpret_cast<unsigned char*>(&attr_);
+            // Properly align the buffer for performance reasons
+            alignas(T) unsigned char buf[sizeof(T)];
+            unsigned char * bytes = buf;
 
             Iterator it = first;
-            for (unsigned int i = 0; i < sizeof(attr_); ++i)
+            for (unsigned int i = 0; i < sizeof(T); ++i)
             {
                 if (it == last)
                     return false;
@@ -84,9 +86,12 @@ namespace boost { namespace spirit { namespace x3
             }
 
             first = it;
+
+            static_assert(bits % CHAR_BIT == 0,
+                          "Boost.Endian supports only multiples of CHAR_BIT");
             x3::traits::move_to(
-                    endian::conditional_reverse<endian, endian::order::native>(attr_)
-                    , attr_param );
+                endian::endian_load<T, bits / CHAR_BIT, endian>(buf),
+                attr_param);
             return true;
         }
 
@@ -114,18 +119,12 @@ namespace boost { namespace spirit { namespace x3
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_qword, big, uint_least64_t, 64)
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_qword, little, uint_least64_t, 64)
 #endif
-
-    // Use a pseudo configuration macro to make clear that endian library support
-    // for floating point types is required. Must be removed as soon as the endian library
-    // properly supports floating point types.
-#ifdef BOOST_ENDIAN_HAS_FLOATING_POINT
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(bin_float, native, float, 32)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_bin_float, big, float, 32)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_bin_float, little, float, 32)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(bin_double, native, double, 64)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_bin_double, big, double, 64)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_bin_double, little, double, 64)
-#endif
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(bin_float, native, float, sizeof(float) * CHAR_BIT)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_bin_float, big, float, sizeof(float) * CHAR_BIT)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_bin_float, little, float, sizeof(float) * CHAR_BIT)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(bin_double, native, double, sizeof(double) * CHAR_BIT)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_bin_double, big, double, sizeof(double) * CHAR_BIT)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_bin_double, little, double, sizeof(double) * CHAR_BIT)
 
 #undef BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE
 
