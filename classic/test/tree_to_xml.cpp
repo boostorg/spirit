@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Hartmut Kaiser
+    Copyright (c) 2020 Nikita Kniazev
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -13,17 +14,10 @@
 #include <boost/spirit/include/classic_ast.hpp> 
 #include <boost/spirit/include/classic_tree_to_xml.hpp> 
 
-#ifdef _MSC_VER
-# pragma warning(push)
-# pragma warning(disable: 4702) // unreachable code
-#endif
-#include <boost/iostreams/stream.hpp>
-#ifdef _MSC_VER
-# pragma warning(pop)
-#endif
-
 #include <iostream>
+#include <iterator>
 #include <fstream>
+#include <ostream>
 #include <string>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS; 
@@ -79,44 +73,29 @@ struct calculator : public grammar<calculator>
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// this is a Boost.IoStreams source device usable to create a istream on 
-/// top of a random access container (i.e. vector<>)
-template<typename Container>
-class container_device 
+/// a streambuf implementation that sinks characters to output iterator
+template <typename OutputIterator, typename Char>
+struct psbuf : std::basic_streambuf<Char>
 {
-public:
-    typedef typename Container::value_type char_type;
-    typedef boost::iostreams::sink_tag category;
-    
-    container_device(Container& container) 
-      : container_(container), pos_(0)
-    {}
+    template <typename T>
+    psbuf(T& sink) : sink_(sink) {}
 
-    /// Write up to n characters to the underlying data sink into the 
-    /// buffer s, returning the number of characters written
-    std::streamsize write(const char_type* s, std::streamsize n)
+    // silence MSVC warning C4512: assignment operator could not be generated
+    BOOST_DELETED_FUNCTION(psbuf& operator=(psbuf const&))
+
+protected:
+    typename psbuf::int_type overflow(typename psbuf::int_type ch) BOOST_OVERRIDE
     {
-        std::streamsize result = 0;
-        if (pos_ != container_.size()) {
-            std::streamsize amt = 
-                static_cast<std::streamsize>(container_.size() - pos_);
-            result = (std::min)(n, amt);
-            std::copy(s, s + result, container_.begin() + pos_);
-            pos_ += static_cast<size_type>(result);
-        }
-        if (result < n) {
-            container_.insert(container_.end(), s, s + n);
-            pos_ = container_.size();
-        }
-        return n;
+        if (psbuf::traits_type::eq_int_type(ch, psbuf::traits_type::eof()))
+            return psbuf::traits_type::not_eof(ch);
+
+        *sink_ = psbuf::traits_type::to_char_type(ch);
+        ++sink_;
+        return ch;
     }
 
-    Container& container() { return container_; }
-    
 private:
-    typedef typename Container::size_type size_type;
-    Container& container_;
-    size_type pos_;
+    OutputIterator sink_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -149,8 +128,8 @@ bool test(wchar_t const *text)
 
     std::basic_string<wchar_t> out;
     {
-        typedef container_device<std::basic_string<wchar_t> > device_type;
-        boost::iostreams::stream<device_type> outsink(out);
+        psbuf<std::back_insert_iterator<std::wstring>, wchar_t> buf(out);
+        std::wostream outsink(&buf);
         basic_tree_to_xml<wchar_t>(outsink, ast_info.trees, input); 
     }
     return out == EXPECTED_XML_OUTPUT_WIDE;
@@ -168,8 +147,8 @@ bool test(char const *text)
 
     std::string out;
     {
-        typedef container_device<std::string> device_type;
-        boost::iostreams::stream<device_type> outsink(out);
+        psbuf<std::back_insert_iterator<std::string>, char> buf(out);
+        std::ostream outsink(&buf);
         basic_tree_to_xml<char>(outsink, ast_info.trees, input); 
     }
     return out == EXPECTED_XML_OUTPUT;
