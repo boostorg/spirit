@@ -207,8 +207,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Iterator>
     struct container_iterator<iterator_range<Iterator> >
     {
-        typedef typename range_const_iterator<
-              iterator_range<Iterator> >::type type;
+        typedef Iterator type;
     };
 
     template <>
