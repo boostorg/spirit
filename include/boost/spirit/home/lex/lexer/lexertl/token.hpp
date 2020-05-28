@@ -32,9 +32,9 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
+#include <boost/range/iterator_range_core.hpp>
 #include <boost/type_traits/integral_promotion.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/range/iterator_range.hpp>
 #include <boost/static_assert.hpp>
 
 #if defined(BOOST_SPIRIT_DEBUG)

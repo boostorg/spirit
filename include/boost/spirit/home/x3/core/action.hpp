@@ -11,7 +11,7 @@
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/call.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {

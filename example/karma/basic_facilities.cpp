@@ -25,10 +25,10 @@
 #include <algorithm>
 #include <cstdlib> 
 
-#include <boost/range.hpp>
 #include <boost/array.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#include <boost/range/iterator_range.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // This streaming operator is needed to generate the output from the map below

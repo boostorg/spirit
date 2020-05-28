@@ -23,7 +23,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <boost/range/iterator_range_core.hpp>
 #include <boost/fusion/include/deduce_sequence.hpp>
 
 #include <boost/mpl/print.hpp>

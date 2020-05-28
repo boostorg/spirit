@@ -21,7 +21,7 @@
 #include <boost/variant.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repeat.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <boost/range/range_fwd.hpp>
 #include <iterator> // for std::iterator_traits
 
 namespace boost { namespace spirit { namespace traits

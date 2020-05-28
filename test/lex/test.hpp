@@ -7,7 +7,7 @@
 #define BOOST_SPIRIT_LEX_TEST_MAR_23_2007_0721PM
 
 #include <boost/variant.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
 namespace spirit_test
 {
