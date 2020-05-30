@@ -250,5 +250,25 @@ main()
         BOOST_TEST_EQ(st.val, 42);
     }
 
+    { // attributeless parsers must not insert values
+        std::vector<int> v;
+        BOOST_TEST(test_attr("1 2 3 - 5 - - 7 -", (int_ | '-') % ' ', v));
+        BOOST_TEST_EQ(v.size(), 5)
+            && BOOST_TEST_EQ(v[0], 1)
+            && BOOST_TEST_EQ(v[1], 2)
+            && BOOST_TEST_EQ(v[2], 3)
+            && BOOST_TEST_EQ(v[3], 5)
+            && BOOST_TEST_EQ(v[4], 7)
+            ;
+    }
+
+    { // regressing test for #603
+        using boost::spirit::x3::attr;
+        struct X {};
+        std::vector<boost::variant<std::string, int, X>> v;
+        BOOST_TEST(test_attr("xx42x9y", *(int_ | +char_('x') | 'y' >> attr(X{})), v));
+        BOOST_TEST_EQ(v.size(), 5);
+    }
+
     return boost::report_errors();
 }

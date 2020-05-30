@@ -258,6 +258,22 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return false;
     }
 
+    template <typename Subject>
+    struct alternative_helper : unary_parser<Subject, alternative_helper<Subject>>
+    {
+        static bool const is_pass_through_unary = true;
+
+        using unary_parser<Subject, alternative_helper<Subject>>::unary_parser;
+
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr) const
+        {
+            return detail::parse_alternative(this->subject, first, last, context, rcontext, attr);
+        }
+    };
+
     template <typename Left, typename Right, typename Context, typename RContext>
     struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>
     {
@@ -267,33 +283,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
-        {
-            return parse_alternative(parser, first, last, context, rcontext, attr);
-        }
-
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
-        {
-            return parse_into_container_base_impl<parser_type>::call(
-                parser, first, last, context, rcontext, attr);
-        }
-
-        template <typename Iterator, typename Attribute>
-        static bool call(
-            parser_type const& parser
-          , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr)
         {
-            typedef typename
-                traits::attribute_of<parser_type, Context>::type
-            attribute_type;
-
-            return call(parser, first, last, context, rcontext, attr
-                , traits::variant_has_substitute<attribute_type, Attribute>());
+            return detail::parse_into_container(alternative_helper<Left>{parser.left}, first, last, context, rcontext, attr)
+                || detail::parse_into_container(alternative_helper<Right>{parser.right}, first, last, context, rcontext, attr);
         }
     };
 
