@@ -270,5 +270,12 @@ main()
         BOOST_TEST_EQ(v.size(), 5);
     }
 
+    { // sequence parser in alternative into container
+        std::string s;
+        BOOST_TEST(test_attr("abcbbcd",
+            *(char_('a') >> *(*char_('b') >> char_('c')) | char_('d')), s));
+        BOOST_TEST_EQ(s, "abcbbcd");
+    }
+
     return boost::report_errors();
 }

@@ -283,10 +283,30 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         static bool call(
             parser_type const& parser
           , Iterator& first, Iterator const& last
-          , Context const& context, RContext& rcontext, Attribute& attr)
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
+        {
+            return detail::parse_into_container(parser.left, first, last, context, rcontext, attr)
+                || detail::parse_into_container(parser.right, first, last, context, rcontext, attr);
+        }
+
+        template <typename Iterator, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
         {
             return detail::parse_into_container(alternative_helper<Left>{parser.left}, first, last, context, rcontext, attr)
                 || detail::parse_into_container(alternative_helper<Right>{parser.right}, first, last, context, rcontext, attr);
+        }
+
+        template <typename Iterator, typename Attribute>
+        static bool call(
+            parser_type const& parser
+          , Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr)
+        {
+            return call(parser, first, last, context, rcontext, attr,
+                typename traits::is_variant<typename traits::container_value<Attribute>::type>::type{});
         }
     };
 
