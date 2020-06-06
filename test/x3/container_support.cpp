@@ -24,6 +24,35 @@
 
 namespace x3 = boost::spirit::x3;
 
+
+// check if we did not break user defined specializations
+namespace check_substitute {
+template <typename T> struct foo {};
+template <typename T> struct bar { using type = T; };
+template <typename T> struct is_bar : std::false_type {};
+template <typename T> struct is_bar<bar<T>> : std::true_type {};
+}
+
+namespace boost { namespace spirit { namespace x3 { namespace traits {
+using namespace check_substitute;
+
+template <typename T, typename U>
+struct is_substitute<foo<T>, foo<U>> : is_substitute<T, U> {};
+
+template <typename T, typename U>
+struct is_substitute<T, U, std::enable_if_t<is_bar<T>::value && is_bar<U>::value>>
+  : is_substitute<typename T::type, typename U::type> {};
+}}}}
+
+namespace check_substitute {
+using x3::traits::is_substitute;
+static_assert(is_substitute<foo<int>, foo<int>>::value, "is_substitute problem");
+static_assert(!is_substitute<foo<int>, foo<long>>::value, "is_substitute problem");
+static_assert(is_substitute<bar<int>, bar<int>>::value, "is_substitute problem");
+static_assert(!is_substitute<bar<int>, bar<long>>::value, "is_substitute problem");
+}
+
+
 x3::rule<class pair_rule, std::pair<std::string,std::string>> const pair_rule("pair");
 x3::rule<class string_rule, std::string> const string_rule("string");
 
