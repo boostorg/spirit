@@ -15,14 +15,8 @@
 #include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/variant_find_substitute.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
-#include <boost/variant/variant.hpp>
 
-#include <boost/mpl/copy_if.hpp>
-#include <boost/mpl/not.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/insert_range.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/vector.hpp>
 
 #include <boost/fusion/include/front.hpp>
 
@@ -164,63 +158,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_variant_unused>::type
     {
         typedef typename mpl::true_ is_alternative;
-    };
-
-    template <typename L, typename R, typename C>
-    struct get_alternative_types
-    {
-        typedef
-            mpl::vector<
-                typename traits::attribute_of<L, C>::type
-              , typename traits::attribute_of<R, C>::type
-            >
-        type;
-    };
-
-    template <typename LL, typename LR, typename R, typename C>
-    struct get_alternative_types<alternative<LL, LR>, R, C>
-        : mpl::push_back< typename get_alternative_types<LL, LR, C>::type
-                        , typename traits::attribute_of<R, C>::type> {};
-
-    template <typename L, typename RL, typename RR, typename C>
-    struct get_alternative_types<L, alternative<RL, RR>, C>
-        : mpl::push_front< typename get_alternative_types<RL, RR, C>::type
-                         , typename traits::attribute_of<L, C>::type> {};
-
-    template <typename LL, typename LR, typename RL, typename RR, typename C>
-    struct get_alternative_types<alternative<LL, LR>, alternative<RL, RR>, C>
-    {
-        typedef typename get_alternative_types<LL, LR, C>::type left;
-        typedef typename get_alternative_types<RL, RR, C>::type right;
-        typedef typename
-            mpl::insert_range<left, typename mpl::end<left>::type, right>::type
-        type;
-    };
-
-    template <typename L, typename R, typename C>
-    struct attribute_of_alternative
-    {
-        // Get all alternative attribute types
-        typedef typename get_alternative_types<L, R, C>::type all_types;
-
-        // Filter all unused_types
-        typedef typename
-            mpl::copy_if<
-                all_types
-              , mpl::not_<is_same<mpl::_1, unused_type>>
-              , mpl::back_inserter<mpl::vector<>>
-            >::type
-        filtered_types;
-
-        // Build a variant if filtered_types is not empty,
-        // else just return unused_type
-        typedef typename
-            mpl::eval_if<
-                mpl::empty<filtered_types>
-              , mpl::identity<unused_type>
-              , make_variant_over<filtered_types>
-            >::type
-        type;
     };
 
     template <typename IsAlternative>
