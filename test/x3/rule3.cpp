@@ -7,15 +7,18 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/variant.hpp>
 #include <string>
+#include <vector>
 #include <cstring>
 #include <iostream>
 #include "test.hpp"
 
 using boost::spirit::x3::_val;
+namespace x3 = boost::spirit::x3;
 
 struct f
 {
@@ -60,6 +63,25 @@ boost::spirit::x3::rule<class grammar_r, node_t> const grammar;
 auto const grammar_def = '[' >> grammar % ',' >> ']' | boost::spirit::x3::int_;
 
 BOOST_SPIRIT_DEFINE(grammar)
+
+}
+
+struct recursive_tuple
+{
+    int value;
+    std::vector<recursive_tuple> children;
+};
+BOOST_FUSION_ADAPT_STRUCT(recursive_tuple,
+    value, children)
+
+// regression test for #461
+namespace check_recursive_tuple {
+
+x3::rule<class grammar_r, recursive_tuple> const grammar;
+auto const grammar_def = x3::int_ >> ('{' >> grammar % ',' >> '}' | x3::eps);
+BOOST_SPIRIT_DEFINE(grammar)
+
+BOOST_SPIRIT_INSTANTIATE(decltype(grammar), char const*, x3::unused_type)
 
 }
 
