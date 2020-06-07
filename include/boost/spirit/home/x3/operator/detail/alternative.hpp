@@ -21,6 +21,7 @@
 #include <boost/fusion/include/front.hpp>
 
 #include <boost/type_traits/is_same.hpp>
+#include <type_traits>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -148,7 +149,6 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_parser_attribute<Parser, Attribute, Context>
           , pass_variant_unused>::type
     {
-        typedef typename mpl::false_ is_alternative;
     };
 
     template <typename L, typename R, typename Attribute, typename Context>
@@ -157,18 +157,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , pass_variant_used<Attribute>
           , pass_variant_unused>::type
     {
-        typedef typename mpl::true_ is_alternative;
     };
 
-    template <typename IsAlternative>
-    struct move_if_not_alternative
+    template <bool Condition>
+    struct move_if
     {
         template<typename T1, typename T2>
         static void call(T1& /* attr_ */, T2& /* attr */) {}
     };
 
     template <>
-    struct move_if_not_alternative<mpl::false_ /*is alternative*/>
+    struct move_if<true>
     {
         template<typename T1, typename T2>
         static void call(T1& attr_, T2& attr)
@@ -189,7 +188,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         if (p.parse(first, last, context, rcontext, attr_))
         {
-            move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
+            move_if<!std::is_reference<decltype(attr_)>::value>::call(attr_, attr);
             return true;
         }
         return false;

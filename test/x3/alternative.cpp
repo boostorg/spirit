@@ -41,8 +41,6 @@ struct undefined {};
 struct stationary : boost::noncopyable
 {
     explicit stationary(int i) : val{i} {}
-    // TODO: fix unneeded self move in alternative
-    stationary& operator=(stationary&&) { std::abort(); }
     stationary& operator=(int i) { val = i; return *this; }
 
     int val;
