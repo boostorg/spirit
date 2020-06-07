@@ -12,6 +12,8 @@
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
+
+#include <boost/assert.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/move.hpp>
@@ -205,22 +207,22 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     inline void move_to(T& src, T& dest)
     {
-        if (boost::addressof(src) != boost::addressof(dest))
-            dest = std::move(src);
+        BOOST_ASSERT(boost::addressof(src) != boost::addressof(dest));
+        dest = std::move(src);
     }
 
     template <typename T>
     inline void move_to(T const& src, T& dest)
     {
-        if (boost::addressof(src) != boost::addressof(dest))
-            dest = std::move(src);
+        BOOST_ASSERT(boost::addressof(src) != boost::addressof(dest));
+        dest = src;
     }
 
     template <typename T>
     inline void move_to(T&& src, T& dest)
     {
-        if (boost::addressof(src) != boost::addressof(dest))
-            dest = std::move(src);
+        BOOST_ASSERT(boost::addressof(src) != boost::addressof(dest));
+        dest = std::move(src);
     }
 
     template <typename Iterator, typename Dest>
