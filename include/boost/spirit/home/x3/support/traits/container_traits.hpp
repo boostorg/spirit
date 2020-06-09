@@ -50,13 +50,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     using is_associative = typename detail::is_associative_impl<T>::type;
 
-    template<typename T, typename Enable = void>
-    struct is_reservable : mpl::false_ {};
-
-    template<typename T>
-    struct is_reservable<T, decltype(std::declval<T&>().reserve(0))>
-      : mpl::true_ {};
-
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
@@ -163,18 +156,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
     private:
         template <typename Iterator>
-        static void reserve(Container& /* c */, Iterator /* first */, Iterator /* last */, mpl::false_)
-        {
-            // Not all containers have "reserve"
-        }
-
-        template <typename Iterator>
-        static void reserve(Container& c, Iterator first, Iterator last, mpl::true_)
-        {
-            c.reserve(c.size() + std::distance(first, last));
-        }
-
-        template <typename Iterator>
         static void insert(Container& c, Iterator first, Iterator last, mpl::false_)
         {
             c.insert(c.end(), first, last);
@@ -190,7 +171,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename Iterator>
         static bool call(Container& c, Iterator first, Iterator last)
         {
-            reserve(c, first, last, is_reservable<Container>{});
             insert(c, first, last, is_associative<Container>{});
             return true;
         }
