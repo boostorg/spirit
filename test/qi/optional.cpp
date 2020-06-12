@@ -53,6 +53,18 @@ main()
     {
         BOOST_TEST((test("1234", -int_)));
         BOOST_TEST((test("abcd", -int_, false)));
+
+        boost::optional<int> n;
+        BOOST_TEST(test_attr("", -int_, n))
+            && BOOST_TEST(!n);
+        BOOST_TEST(test_attr("123", -int_, n))
+            && BOOST_TEST(n) && BOOST_TEST_EQ(*n, 123);
+
+        boost::optional<std::string> s;
+        BOOST_TEST(test_attr("", -+char_, s))
+            && BOOST_TEST(!s);
+        BOOST_TEST(test_attr("abc", -+char_, s))
+            && BOOST_TEST(s) && BOOST_TEST_EQ(*s, "abc");
     }
 
     {   // test propagation of unused
