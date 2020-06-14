@@ -103,6 +103,9 @@ before_install:
 
     using $(toolset-name) : $(toolset-feature) : ccache $(cxx) ;
 
+    # Release variant with enabled asserts
+    variant sanitize : <optimization>speed <debug-symbols>off <inlining>full
+                       <runtime-debugging>off ;
 
     # Ignore some warnings
     feature.feature known-warnings : suppress : optional incidental propagated ;
@@ -159,6 +162,6 @@ before_install:
   - cd $JOB
 
 script:
-  - b2 link=shared threading=multi variant=release runtime-debugging=on,off
+  - b2 link=shared threading=multi variant=release,sanitize
       toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
       warnings=extra known-warnings=suppress warnings-as-errors=on
