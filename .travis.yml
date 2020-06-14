@@ -83,15 +83,12 @@ before_install:
     # Creating ~/user-config.jam file
     sed 's/^  //' > ~/user-config.jam << 'EOF'
 
-    import common ;
     import feature ;
     import os ;
     import regex ;
     import toolset ;
 
 
-    # Ccache
-    local CCACHE = [ common.find-tool ccache ] ;
     local TOOLSET = [ os.environ TRAVIS_COMPILER ] ;
     local toolset-parts = [ regex.split $(TOOLSET) "-" ] ;
     local toolset-name = $(toolset-parts[1]) ;
@@ -104,7 +101,7 @@ before_install:
         case *     : EXIT "user-config: Unsupported toolset $(toolset-name)" ;
     }
 
-    using $(toolset-name) : $(toolset-feature) : $(CCACHE) $(cxx) ;
+    using $(toolset-name) : $(toolset-feature) : ccache $(cxx) ;
 
 
     # Ignore some warnings
