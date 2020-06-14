@@ -107,11 +107,6 @@ before_install:
     using $(toolset-name) : $(toolset-feature) : $(CCACHE) $(cxx) ;
 
 
-    # Extend stdlib with libc++
-    feature.extend stdlib : libc++ ;
-    feature.compose <stdlib>libc++ : <cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++ ;
-
-
     # Ignore some warnings
     feature.feature known-warnings : suppress : optional incidental propagated ;
     toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
@@ -122,7 +117,6 @@ before_install:
         -Wno-type-limits
       : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
-        -Wno-unused-command-line-argument # Sometimes it barks on -I and -stdlib
         -Wno-deprecated-copy      # Proto, Phoenix
       : unchecked ;
 
