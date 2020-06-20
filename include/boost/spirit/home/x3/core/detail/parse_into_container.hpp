@@ -93,9 +93,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             // synthesized attribute needs to be value initialized
             using value_type = typename traits::container_value<Attribute>::type;
-            using pseudo = traits::pseudo_attribute<Context, value_type, Iterator>;
-            typename pseudo::type val = pseudo::call(
-                first, last, traits::value_initialize<value_type>::call());
+            value_type val = traits::value_initialize<value_type>::call();
 
             if (!parser.parse(first, last, context, rcontext, val))
                 return false;
