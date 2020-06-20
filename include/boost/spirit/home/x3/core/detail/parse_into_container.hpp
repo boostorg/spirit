@@ -10,7 +10,6 @@
 #include <type_traits>
 
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
-#include <boost/spirit/home/x3/support/traits/value_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/pseudo_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/handles_container.hpp>
@@ -93,7 +92,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         {
             // synthesized attribute needs to be value initialized
             using value_type = typename traits::container_value<Attribute>::type;
-            value_type val = traits::value_initialize<value_type>::call();
+            value_type val{};
 
             if (!parser.parse(first, last, context, rcontext, val))
                 return false;
