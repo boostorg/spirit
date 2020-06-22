@@ -21,12 +21,12 @@ addon_shortcuts:
         - libc++-10-dev
         - libc++abi-10-dev
 
-  gcc-9: &gcc-9
+  gcc-10: &gcc-10
     apt:
       sources:
         - sourceline: 'ppa:ubuntu-toolchain-r/test'
       packages:
-        - g++-9
+        - g++-10
 
 os: linux
 dist: bionic
@@ -41,7 +41,7 @@ matrix:
   include:
     ### Spirit 3
     - { env: 'STD=14  JOB=test/x3',         compiler: clang-10, addons: *clang-10 }
-    - { env: 'STD=14  JOB=test/x3',         compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=14  JOB=test/x3',         compiler: gcc-10, addons: *gcc-10 }
     ### Spirit 2
     ## Clang
     # 11
@@ -58,20 +58,20 @@ matrix:
     - { env: 'STD=03  JOB=repository/test', compiler: clang-10, addons: *clang-10 }
     ## GCC
     # 11
-    - { env: 'STD=11  JOB=test/qi',         compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=11  JOB=test/karma',      compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=11  JOB=test/lex',        compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=11  JOB=test/support',    compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=11  JOB=repository/test', compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=11  JOB=test/qi',         compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=11  JOB=test/karma',      compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=11  JOB=test/lex',        compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=11  JOB=test/support',    compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=11  JOB=repository/test', compiler: gcc-10, addons: *gcc-10 }
     # 03
-    - { env: 'STD=03  JOB=test/qi',         compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=03  JOB=test/karma',      compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=03  JOB=test/lex',        compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=03  JOB=test/support',    compiler: gcc-9, addons: *gcc-9 }
-    - { env: 'STD=03  JOB=repository/test', compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=03  JOB=test/qi',         compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=03  JOB=test/karma',      compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=03  JOB=test/lex',        compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=03  JOB=test/support',    compiler: gcc-10, addons: *gcc-10 }
+    - { env: 'STD=03  JOB=repository/test', compiler: gcc-10, addons: *gcc-10 }
     ### Spirit 1
     - { env: 'STD=03  JOB=classic/test',    compiler: clang-10, addons: *clang-10 }
-    - { env: 'STD=03  JOB=classic/test',    compiler: gcc-9, addons: *gcc-9 }
+    - { env: 'STD=03  JOB=classic/test',    compiler: gcc-10, addons: *gcc-10 }
 
 cache: ccache
 
