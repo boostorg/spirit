@@ -18,9 +18,9 @@ int main()
 {
     {
         using boost::spirit::char_encoding::standard_wide;
-        BOOST_TEST(0xFFFFu == standard_wide::toucs4(L'\uFFFF'));
-        BOOST_TEST(0x7FFFu == standard_wide::toucs4(L'\u7FFF'));
-        BOOST_TEST(0x0000u == standard_wide::toucs4(L'\u0000'));
+        BOOST_TEST_EQ(standard_wide::toucs4(L'\uFFFF'), 0xFFFFu);
+        BOOST_TEST_EQ(standard_wide::toucs4(L'\u7FFF'), 0x7FFFu);
+        BOOST_TEST_EQ(standard_wide::toucs4(L'\u0024'), 0x0024u);
     }
 
     return boost::report_errors();
