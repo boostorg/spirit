@@ -17,6 +17,7 @@
 
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/type_traits/common_type.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 
 namespace boost { namespace spirit { namespace traits
@@ -83,7 +84,9 @@ namespace boost { namespace spirit { namespace char_encoding
         strict_ischar(int ch)
         {
             // ch should be representable as a wchar_t
-            return ch >= WCHAR_MIN && ch <= WCHAR_MAX;
+            typedef boost::common_type<int, wchar_t>::type common_int;
+            return static_cast<common_int>(ch) >= static_cast<common_int>(static_cast<wchar_t>(WCHAR_MIN)) &&
+                static_cast<common_int>(ch) <= static_cast<common_int>(static_cast<wchar_t>(WCHAR_MAX));
         }
 
         static bool
