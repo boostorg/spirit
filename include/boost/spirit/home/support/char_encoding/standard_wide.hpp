@@ -19,6 +19,8 @@
 #include <boost/cstdint.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 
+#include <boost/type_traits/make_unsigned.hpp>
+
 namespace boost { namespace spirit { namespace traits
 {
     template <std::size_t N>
@@ -203,10 +205,9 @@ namespace boost { namespace spirit { namespace char_encoding
         }
 
         static ::boost::uint32_t
-        toucs4(int ch)
+        toucs4(wchar_t ch)
         {
-            BOOST_ASSERT(strict_ischar(ch));
-            return ch;
+            return static_cast<make_unsigned<wchar_t>::type>(ch);
         }
     };
 }}}
