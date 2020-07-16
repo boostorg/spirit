@@ -75,24 +75,10 @@ namespace boost { namespace spirit { namespace char_encoding
             ) != 0;     // any wchar_t, but no other bits set
         }
 
-        // *** Note on assertions: The precondition is that the calls to
-        // these functions do not violate the required range of ch (type int)
-        // which is that strict_ischar(ch) should be true. It is the
-        // responsibility of the caller to make sure this precondition is not
-        // violated.
-
-        static bool
-        strict_ischar(int ch)
-        {
-            // ch should be representable as a wchar_t
-            return ch >= WCHAR_MIN && ch <= WCHAR_MAX;
-        }
-
         static bool
         isalnum(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswalnum(to_int_type(ch)) != 0;
         }
 
@@ -100,7 +86,6 @@ namespace boost { namespace spirit { namespace char_encoding
         isalpha(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswalpha(to_int_type(ch)) != 0;
         }
 
@@ -108,7 +93,6 @@ namespace boost { namespace spirit { namespace char_encoding
         iscntrl(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswcntrl(to_int_type(ch)) != 0;
         }
 
@@ -116,7 +100,6 @@ namespace boost { namespace spirit { namespace char_encoding
         isdigit(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswdigit(to_int_type(ch)) != 0;
         }
 
@@ -124,7 +107,6 @@ namespace boost { namespace spirit { namespace char_encoding
         isgraph(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswgraph(to_int_type(ch)) != 0;
         }
 
@@ -132,7 +114,6 @@ namespace boost { namespace spirit { namespace char_encoding
         islower(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswlower(to_int_type(ch)) != 0;
         }
 
@@ -147,7 +128,6 @@ namespace boost { namespace spirit { namespace char_encoding
         ispunct(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswpunct(to_int_type(ch)) != 0;
         }
 
@@ -155,7 +135,6 @@ namespace boost { namespace spirit { namespace char_encoding
         isspace(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswspace(to_int_type(ch)) != 0;
         }
 
@@ -163,7 +142,6 @@ namespace boost { namespace spirit { namespace char_encoding
         isupper(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswupper(to_int_type(ch)) != 0;
         }
 
@@ -171,14 +149,12 @@ namespace boost { namespace spirit { namespace char_encoding
         isxdigit(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return iswxdigit(to_int_type(ch)) != 0;
         }
 
         static bool
         isblank BOOST_PREVENT_MACRO_SUBSTITUTION (wchar_t ch)
         {
-            BOOST_ASSERT(strict_ischar(ch));
             return (ch == L' ' || ch == L'\t');
         }
 
@@ -190,7 +166,6 @@ namespace boost { namespace spirit { namespace char_encoding
         tolower(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return isupper(ch) ?
                 to_char_type<wchar_t>(towlower(to_int_type(ch))) : ch;
         }
@@ -199,7 +174,6 @@ namespace boost { namespace spirit { namespace char_encoding
         toupper(wchar_t ch)
         {
             using namespace std;
-            BOOST_ASSERT(strict_ischar(ch));
             return islower(ch) ?
                 to_char_type<wchar_t>(towupper(to_int_type(ch))) : ch;
         }

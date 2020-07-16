@@ -111,10 +111,8 @@ before_install:
     feature.feature known-warnings : suppress : optional incidental propagated ;
     toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
         -Wno-maybe-uninitialized  # this warning is known to give false positives
-        -Wno-sign-compare
       # -Wextra warnings:
         -Wno-deprecated-copy      # Proto, Phoenix, GCC bug 92145
-        -Wno-type-limits
       : unchecked ;
     toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
         -Wno-deprecated-copy      # Proto, Phoenix
