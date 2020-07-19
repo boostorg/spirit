@@ -53,9 +53,16 @@ namespace spirit_test
         if (!result)
             std::cerr << "in " << func << ": result is false" << std::endl;
         else if (generated != expected)
-            std::cerr << "in " << func << ": generated \""
-                << std::string(generated.begin(), generated.end())
-                << "\"" << std::endl;
+        {
+            std::cerr << "in " << func << ": generated \"";
+            BOOST_FOREACH(typename boost::make_unsigned<Char>::type c, generated) {
+                if (c >= 32 && c < 127)
+                    std::cerr << static_cast<char>(static_cast<unsigned char>(c));
+                else
+                    std::cerr << "\\x" << std::hex << +c;
+            }
+            std::cerr << "\"\n";
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
