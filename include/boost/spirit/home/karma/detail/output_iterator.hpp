@@ -237,9 +237,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 buffer.begin() + (std::min)(buffer.size(), maxwidth);
 
 #if defined(BOOST_MSVC)
-#pragma warning(pop)
+#pragma warning(disable: 4244) // conversion from 'x' to 'y', possible loss of data
 #endif
             std::copy(buffer.begin(), end, sink);
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
             return true;
         }
         template <typename RestIterator>
@@ -253,9 +256,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 buffer.begin() + (std::min)(buffer.size(), start_at);
 
 #if defined(BOOST_MSVC)
-#pragma warning(pop)
+#pragma warning(disable: 4244) // conversion from 'x' to 'y', possible loss of data
 #endif
             std::copy(begin, buffer.end(), sink);
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
             return true;
         }
 
