@@ -1,11 +1,33 @@
 [/==============================================================================
-    Copyright (C) 2018-2019 Nikita Kniazev
+    Copyright (C) 2018-2020 Nikita Kniazev
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
 [section Changelog]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_7 Spirit V3.0.7 (Boost V1.74.0)]
+
+* Ceased dependence on Boost.Locale (replaced `locale::conv::utf_to_utf`
+  with `x3::to_utf8`), and Boost.Filesystem [gh_pr 596]
+* Fixed infinity recursion in `is_substitute` trait that was blocking recursive
+  sequences via containers [gh 461] [gh_pr 606]
+* Fixed sequence parser in alternative into container [gh 434] [gh_pr 605]
+* Fixed some corner cases in alternative parser with container attribute,
+  notably atribute-less parsers in alternative parser with container attribute
+  were appending an empty value [gh 394] [gh 603] [gh_pr 604]
+* Attribute type of alternative/sequence parsers now calculated without MPL,
+  what removes MPL limits on alternative/sequence parser chain length [gh 515] [gh_pr 607]
+* Reverted [gh_pr 534] that made possible parsing `optional<T>` into `T` [gh_pr 608]
+* Removed unneeded `reserve` before `insert` [gh_pr 611]
+* Removed `value_initialize` trait [gh_pr 613]
+* Removed unwanted move due to wrong `pseudo_attribute` usage, that was also
+  causing bogus GCC `-Wununinitlized` warning [gh_pr 613]
+* Removed unused `boost/spirit/home/x3/support/utility/unrefcv.hpp` header
+
+[endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_6 Spirit V3.0.6 (Boost V1.73.0)]

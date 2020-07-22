@@ -9,6 +9,13 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_74 Spirit V2.5.8 (Boost V1.74.0)]
+
+* Ceased dependence on Boost.Iostreams [gh_pr 599]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_8_boost_1_73 Spirit V2.5.8 (Boost V1.73.0)]
 
 * Boost.Endian is now used instead of its bundled prerelease version [gh_pr 550]
