@@ -12,6 +12,7 @@
 #include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <cctype>
+#include <ios>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
