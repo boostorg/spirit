@@ -100,7 +100,7 @@ int main()
         BOOST_TEST(test("1.234e-05", science, 0.000012345));
         BOOST_TEST(test("1.234e-04", science, 0.00012345));
         BOOST_TEST(test("1.234e-03", science, 0.0012345));
-        BOOST_TEST(test("1.234e-02", science, 0.012345));
+        BOOST_TEST(test("1.235e-02", science, 0.012345));
         BOOST_TEST(test("1.235e-01", science, 0.12345));     // note the rounding error!
         BOOST_TEST(test("1.234e00", science, 1.2345));
         BOOST_TEST(test("1.235e01", science, 12.346));
@@ -112,7 +112,7 @@ int main()
         BOOST_TEST(test("-1.234e-05", science, -0.000012345));
         BOOST_TEST(test("-1.234e-04", science, -0.00012345));
         BOOST_TEST(test("-1.234e-03", science, -0.0012345));
-        BOOST_TEST(test("-1.234e-02", science, -0.012345));
+        BOOST_TEST(test("-1.235e-02", science, -0.012345));
         BOOST_TEST(test("-1.235e-01", science, -0.12345));   // note the rounding error!
         BOOST_TEST(test("-1.234e00", science, -1.2345));
         BOOST_TEST(test("-1.235e01", science, -12.346));
@@ -124,7 +124,7 @@ int main()
         BOOST_TEST(test("1.234E-05", upper[science], 0.000012345));
         BOOST_TEST(test("1.234E-04", upper[science], 0.00012345));
         BOOST_TEST(test("1.234E-03", upper[science], 0.0012345));
-        BOOST_TEST(test("1.234E-02", upper[science], 0.012345));
+        BOOST_TEST(test("1.235E-02", upper[science], 0.012345));
         BOOST_TEST(test("1.235E-01", upper[science], 0.12345));     // note the rounding error!
         BOOST_TEST(test("1.234E00", upper[science], 1.2345));
         BOOST_TEST(test("1.235E01", upper[science], 12.346));
@@ -136,7 +136,7 @@ int main()
         BOOST_TEST(test("-1.234E-05", upper[science], -0.000012345));
         BOOST_TEST(test("-1.234E-04", upper[science], -0.00012345));
         BOOST_TEST(test("-1.234E-03", upper[science], -0.0012345));
-        BOOST_TEST(test("-1.234E-02", upper[science], -0.012345));
+        BOOST_TEST(test("-1.235E-02", upper[science], -0.012345));
         BOOST_TEST(test("-1.235E-01", upper[science], -0.12345));   // note the rounding error!
         BOOST_TEST(test("-1.234E00", upper[science], -1.2345));
         BOOST_TEST(test("-1.235E01", upper[science], -12.346));
