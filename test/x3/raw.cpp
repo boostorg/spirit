@@ -12,6 +12,16 @@
 #include <string>
 #include "test.hpp"
 
+using boost::spirit::x3::rule;
+
+rule<class direct_rule, int> direct_rule = "direct_rule";
+rule<class indirect_rule, int> indirect_rule = "indirect_rule";
+
+auto const direct_rule_def = boost::spirit::x3::int_;
+auto const indirect_rule_def = direct_rule;
+
+BOOST_SPIRIT_DEFINE(direct_rule, indirect_rule)
+
 int main()
 {
     using spirit_test::test;
@@ -93,6 +103,20 @@ int main()
         );
         BOOST_TEST(attr.first == 123);
         BOOST_TEST(std::string(attr.second.begin(), attr.second.end()) == "abcd");
+    }
+
+    {
+        // test with simple rule
+        boost::iterator_range<char const*> range;
+        BOOST_TEST((test_attr("123", raw[direct_rule], range)));
+        BOOST_TEST((std::string(range.begin(), range.end()) == "123"));
+    }
+
+    {
+        // test with complex rule
+        boost::iterator_range<char const*> range;
+        BOOST_TEST((test_attr("123", raw[indirect_rule], range)));
+        BOOST_TEST((std::string(range.begin(), range.end()) == "123"));
     }
 
     return boost::report_errors();
