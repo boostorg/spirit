@@ -80,6 +80,26 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             out << val;
         }
 
+        static void call(Out& out, char32_t val, plain_attribute)
+        {
+            if (val >= 0 && val < 127)
+            {
+              if (iscntrl(val))
+                out << "\\" << std::oct << int(val) << std::dec;
+              else if (isprint(val))
+                out << char(val);
+              else
+                out << "\\x" << std::hex << int(val) << std::dec;
+            }
+            else
+              out << "\\x" << std::hex << int(val) << std::dec;
+        }
+
+        static void call(Out& out, char val, plain_attribute tag)
+        {
+            call(out, static_cast<char32_t>(val), tag);
+        }
+
         // for fusion data types
         template <typename T_>
         static void call(Out& out, T_ const& val, tuple_attribute)
