@@ -6,8 +6,10 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+#define BOOST_SPIRIT_X3_DEBUG
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/home/support/char_encoding/unicode.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
@@ -80,6 +82,15 @@ main()
         foo = {"a1", "a2", "a3"};
 
         BOOST_TEST((test("a3", foo)));
+    }
+
+    { // unicode | construction from initializer-list
+        using namespace boost::spirit;
+        x3::symbols_parser<char_encoding::unicode, int> foo = {{U"a1", 1}, {U"a2", 2}, {U"a3", 3}};
+
+        int r;
+        BOOST_TEST((test_attr(U"a3", foo, r)));
+        BOOST_TEST(r == 3);
     }
 
     return boost::report_errors();
