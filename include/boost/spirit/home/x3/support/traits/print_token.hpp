@@ -37,17 +37,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
                     case '\t': o << "\\t"; break;
                     case '\v': o << "\\v"; break;
                     default:
-                        if (c >= 0 && c < 127)
-                        {
-                          if (iscntrl(c))
+                        if (c >= 0 && c < 127 && iscntrl(c))
                             o << "\\" << std::oct << int(c);
-                          else if (isprint(c))
-                            o << char(c);
-                          else
-                            o << "\\x" << std::hex << int(c);
-                        }
                         else
-                          o << "\\x" << std::hex << int(c);
+                            o << Char(c);
                 }
             }
         };

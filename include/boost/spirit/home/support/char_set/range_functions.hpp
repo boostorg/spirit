@@ -47,14 +47,14 @@ namespace boost { namespace spirit { namespace support { namespace detail
         // another range 'other', so we can merge them
 
         typedef typename Range::value_type value_type;
-        typedef std::numeric_limits<value_type> limits;
+        typedef integer_traits<value_type> integer_traits;
 
         value_type decr_first =
-            range.first == limits::min()
+            range.first == integer_traits::const_min
             ? range.first : range.first-1;
 
         value_type incr_last =
-            range.last == limits::max()
+            range.last == integer_traits::const_max
             ? range.last : range.last+1;
 
         return (decr_first <= other.last) && (incr_last >= other.first);
