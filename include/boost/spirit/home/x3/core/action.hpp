@@ -83,8 +83,8 @@ namespace boost { namespace spirit { namespace x3
             attribute_type;
 
             // synthesize the attribute since one is not supplied
-            attribute_type attr{};
-            return parse_main(first, last, context, rcontext, attr);
+            attribute_type attribute{};
+            return parse_main(first, last, context, rcontext, attribute);
         }
         
         // main parse function
