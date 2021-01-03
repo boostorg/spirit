@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2003 2003 Vaclav Vesely
+    Copyright (c) 2003-2003 Vaclav Vesely
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
