@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2011 Hartmut Kaiser
+//  Copyright (c) 2001-2020 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -94,24 +94,33 @@ namespace boost { namespace spirit { namespace karma
             // allow for ADL to find the correct overloads for log10 et.al.
             using namespace std;
 
+            bool precexp_offset = false;
             U dim = 0;
             if (0 == (Policies::fmtflags::fixed & flags) && !traits::test_zero(n))
             {
                 dim = log10(n);
-                if (dim > 0) 
+                if (dim > 0)
                     n /= spirit::traits::pow10<U>(traits::truncate_to_long::call(dim));
                 else if (n < 1.) {
                     long exp = traits::truncate_to_long::call(-dim);
-                    if (exp != -dim)
-                        ++exp;
+
                     dim = static_cast<U>(-exp);
+
                     // detect and handle denormalized numbers to prevent overflow in pow10
                     if (exp > std::numeric_limits<U>::max_exponent10)
                     {
                         n *= spirit::traits::pow10<U>(std::numeric_limits<U>::max_exponent10);
                         n *= spirit::traits::pow10<U>(exp - std::numeric_limits<U>::max_exponent10);
-                    } else
+                    }
+                    else
                         n *= spirit::traits::pow10<U>(exp);
+
+                    if (n < 1.)
+                    {
+                        n *= 10.;
+                        --dim;
+                        precexp_offset = true;
+                    }
                 }
             }
 
@@ -120,14 +129,28 @@ namespace boost { namespace spirit { namespace karma
             U precexp = spirit::traits::pow10<U>(precision);
             U fractional_part = modf(n, &integer_part);
 
-            fractional_part = floor(fractional_part * precexp + U(0.5));
-            if (fractional_part >= precexp) 
+            if (precexp_offset)
+            {
+                fractional_part =
+                    floor((fractional_part * precexp + U(0.5)) * U(10.)) / U(10.);
+            }
+            else
+            {
+                fractional_part = floor(fractional_part * precexp + U(0.5));
+            }
+
+            if (fractional_part >= precexp)
             {
                 fractional_part = floor(fractional_part - precexp);
                 integer_part += 1;    // handle rounding overflow
+                if (integer_part >= 10.)
+                {
+                    integer_part /= 10.;
+                    ++dim;
+                }
             }
 
-        // if trailing zeros are to be omitted, normalize the precision and
+        // if trailing zeros are to be omitted, normalize the precision and``
         // fractional part
             U long_int_part = floor(integer_part);
             U long_frac_part = fractional_part;

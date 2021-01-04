@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2011 Hartmut Kaiser
+//  Copyright (c) 2001-2020 Hartmut Kaiser
 //  Copyright (c) 2011      Bryce Lelbach
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -180,6 +180,17 @@ int main()
     {
         BOOST_TEST(test("4.941e-324", double_, std::numeric_limits<double>::denorm_min()));
     }
+
+    // test for #628: spirit::karma::generate generates 10.0e-04, but expecting 1.0e-03
+    {
+        BOOST_TEST(test("1.0", double_, 0.99999999999999829));
+        BOOST_TEST(test("0.1", double_, 0.099999999999999829));
+        BOOST_TEST(test("0.01", double_, 0.0099999999999999829));
+        BOOST_TEST(test("1.0e-03", double_, 0.00099999999999999829));
+        BOOST_TEST(test("1.0e-04", double_, 0.00009999999999999982));
+        BOOST_TEST(test("1.0e-05", double_, 0.00000999999999999998));
+    }
+
     return boost::report_errors();
 }
 
