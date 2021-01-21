@@ -1286,7 +1286,9 @@ namespace impl {
     inline void mp_swap(T& t1, T& t2)
     {
         using std::swap;
+#if __cplusplus < 202002L
         using BOOST_SPIRIT_CLASSIC_NS::swap;
+#endif
         swap(t1, t2);
     }
 }

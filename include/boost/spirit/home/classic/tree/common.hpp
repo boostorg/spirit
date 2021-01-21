@@ -518,8 +518,10 @@ namespace impl {
     inline void cp_swap(T& t1, T& t2)
     {
         using std::swap;
+#if __cplusplus < 202002L
         using BOOST_SPIRIT_CLASSIC_NS::swap;
         using boost::swap;
+#endif
         swap(t1, t2);
     }
 }
@@ -1044,8 +1046,10 @@ struct infix_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
+#if __cplusplus < 202002L
         using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
+#endif
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1096,8 +1100,10 @@ struct discard_first_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
+#if __cplusplus < 202002L
         using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
+#endif
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1160,9 +1166,10 @@ struct discard_last_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
+#if __cplusplus < 202002L
         using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
-
+#endif
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
         // a new container of children, instead of saying
@@ -1220,8 +1227,10 @@ struct inner_node_op
         typedef typename MatchT::container_t::value_type value_t;
 
         using std::swap;
+#if __cplusplus < 202002L
         using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
+#endif
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1543,8 +1552,10 @@ struct tree_parse_info
         , trees()
     {
         using std::swap;
+#if __cplusplus < 202002L
         using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
+#endif
 
         // use auto_ptr like ownership for the trees data member
         swap(trees, pi.trees);
@@ -1563,8 +1574,10 @@ struct tree_parse_info
         , trees()
     {
         using std::swap;
+#if __cplusplus < 202002L
         using boost::swap;
         using BOOST_SPIRIT_CLASSIC_NS::swap;
+#endif
 
         // use auto_ptr like ownership for the trees data member
         swap(trees, trees_);
