@@ -540,7 +540,7 @@ namespace boost { namespace spirit
     BOOST_SPIRIT_UTREE_CREATE_INTEGRAL_FUNCTION(UNARY,  invert,      ~a)
 
     // avoid `'~' on an expression of type bool` warning
-    template <> utree function_impl_invert::eval<bool>(bool const& a)
+    template <> inline utree function_impl_invert::eval<bool>(bool const& a)
     {
         return utree(!a);
     }
