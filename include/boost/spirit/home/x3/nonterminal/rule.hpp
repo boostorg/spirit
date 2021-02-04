@@ -195,9 +195,13 @@ namespace boost { namespace spirit { namespace x3
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, BOOST_PP_CAT(rule_name, _synonym)::attribute_type& attr) \
     {                                                                           \
-        using boost::spirit::x3::unused;                                        \
-        static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
-        return def_.parse(first, last, context, unused, attr);                  \
+        using rule_t = BOOST_JOIN(rule_name, _synonym);                         \
+        return ::boost::spirit::x3::detail                                      \
+            ::rule_parser<typename rule_t::attribute_type, rule_t::id>          \
+            ::call_rule_definition(                                             \
+                BOOST_JOIN(rule_name, _def), rule_name.name                     \
+              , first, last, context, attr                                      \
+              , ::boost::mpl::bool_<rule_t::force_attribute>());                \
     }                                                                           \
     /***/
 #else
@@ -208,9 +212,13 @@ namespace boost { namespace spirit { namespace x3
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, decltype(rule_name)::attribute_type& attr)      \
     {                                                                           \
-        using boost::spirit::x3::unused;                                        \
-        static auto const def_ = (rule_name = BOOST_PP_CAT(rule_name, _def));   \
-        return def_.parse(first, last, context, unused, attr);                  \
+        using rule_t = decltype(rule_name);                                     \
+        return ::boost::spirit::x3::detail                                      \
+            ::rule_parser<typename rule_t::attribute_type, rule_t::id>          \
+            ::call_rule_definition(                                             \
+                BOOST_JOIN(rule_name, _def), rule_name.name                     \
+              , first, last, context, attr                                      \
+              , ::boost::mpl::bool_<rule_t::force_attribute>());                \
     }                                                                           \
     /***/
 #endif
