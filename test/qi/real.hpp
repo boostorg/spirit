@@ -10,7 +10,6 @@
 #define BOOST_SPIRIT_TEST_QI_REAL_HPP
 
 #include <climits>
-#include <boost/math/concepts/real_concept.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
@@ -19,6 +18,12 @@
 #include <boost/math/special_functions/sign.hpp>
 
 #include "test.hpp"
+
+#ifndef BOOST_NO_CXX11_SFINAE_EXPR
+# include <boost/math/concepts/real_concept.hpp>
+#else
+# define BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //  These policies can be used to parse thousand separated

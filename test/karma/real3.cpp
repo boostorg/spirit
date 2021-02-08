@@ -11,8 +11,7 @@
 #include "real.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
-// the customization points below have been added only recently
-#if SPIRIT_VERSION >= 0x2050
+#ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
 // does not provide proper std::numeric_limits, we need to roll our own
 namespace boost { namespace spirit { namespace traits
 {
@@ -78,10 +77,7 @@ int main()
         BOOST_TEST(test("-123420000000000000000.0", fixed, -1.23420e20));
     }
 
-// support for using real_concept with a Karma generator has been implemented 
-// in Boost versions > 1.36 only, additionally real_concept is available only
-// if BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS  is not defined
-#if BOOST_VERSION > 103600 && !defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
+#ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
     {
         using boost::math::concepts::real_concept;
         typedef karma::real_generator<real_concept> custom_type;
