@@ -162,8 +162,7 @@ namespace boost { namespace spirit { namespace karma
         //
         //  Note:     If the trailing_zeros flag is not in effect additional
         //            comments apply. See the comment for the fraction_part()
-        //            function below. Moreover, this precision will be limited
-        //            to the value of std::numeric_limits<T>::digits10 + 1
+        //            function below.
         ///////////////////////////////////////////////////////////////////////
         static unsigned precision(T)
         {
