@@ -14,10 +14,10 @@
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/math/special_functions/sign.hpp>
 
 #include "test.hpp"
+
+#include <boost/core/cmath.hpp>
 
 #ifndef BOOST_NO_CXX11_SFINAE_EXPR
 # include <boost/math/concepts/real_concept.hpp>

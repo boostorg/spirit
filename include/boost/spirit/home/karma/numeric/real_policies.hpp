@@ -11,7 +11,6 @@
 #endif
 
 #include <boost/config/no_tr1/cmath.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/type_traits/remove_const.hpp>
 
 #include <boost/spirit/home/support/char_class.hpp>

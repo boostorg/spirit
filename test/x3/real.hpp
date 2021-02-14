@@ -10,13 +10,10 @@
 #define BOOST_SPIRIT_TEST_X3_REAL_HPP
 
 #include <climits>
-#include <boost/math/concepts/real_concept.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/numeric.hpp>
 #include <boost/spirit/home/x3/operator.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/math/special_functions/sign.hpp>
 
 #include "test.hpp"
 

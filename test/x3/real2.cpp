@@ -86,35 +86,32 @@ main()
         BOOST_TEST(d == 2.0332938517515416e307); // exact!
 #endif
 
-        using boost::math::fpclassify;
-        using boost::spirit::x3::signbit;   // Boost version is broken
-
         BOOST_TEST(test("-inf", double_));
         BOOST_TEST(test("-infinity", double_));
         BOOST_TEST(test_attr("-inf", double_, d) &&
-            FP_INFINITE == fpclassify(d) && signbit(d));
+            std::isinf(d) && std::signbit(d));
         BOOST_TEST(test_attr("-infinity", double_, d) &&
-            FP_INFINITE == fpclassify(d) && signbit(d));
+            std::isinf(d) && std::signbit(d));
         BOOST_TEST(test("-INF", double_));
         BOOST_TEST(test("-INFINITY", double_));
         BOOST_TEST(test_attr("-INF", double_, d) &&
-            FP_INFINITE == fpclassify(d) && signbit(d));
+            std::isinf(d) && std::signbit(d));
         BOOST_TEST(test_attr("-INFINITY", double_, d) &&
-            FP_INFINITE == fpclassify(d) && signbit(d));
+            std::isinf(d) && std::signbit(d));
 
         BOOST_TEST(test("-nan", double_));
         BOOST_TEST(test_attr("-nan", double_, d) &&
-            FP_NAN == fpclassify(d) && signbit(d));
+            std::isnan(d) && std::signbit(d));
         BOOST_TEST(test("-NAN", double_));
         BOOST_TEST(test_attr("-NAN", double_, d) &&
-            FP_NAN == fpclassify(d) && signbit(d));
+            std::isnan(d) && std::signbit(d));
 
         BOOST_TEST(test("-nan(...)", double_));
         BOOST_TEST(test_attr("-nan(...)", double_, d) &&
-            FP_NAN == fpclassify(d) && signbit(d));
+            std::isnan(d) && std::signbit(d));
         BOOST_TEST(test("-NAN(...)", double_));
         BOOST_TEST(test_attr("-NAN(...)", double_, d) &&
-            FP_NAN == fpclassify(d) && signbit(d));
+            std::isnan(d) && std::signbit(d));
 
         BOOST_TEST(!test("1e999", double_));
         BOOST_TEST(!test("1e-999", double_));
