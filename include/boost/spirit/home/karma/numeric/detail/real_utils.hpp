@@ -83,12 +83,6 @@ namespace boost { namespace spirit { namespace karma
 
             // get correct precision for generated number
             unsigned precision = p.precision(n);
-            if (std::numeric_limits<U>::digits10) 
-            {
-                // limit generated precision to digits10, if defined
-                precision = (std::min)(precision, 
-                    (unsigned)std::numeric_limits<U>::digits10 + 1);
-            }
 
             // allow for ADL to find the correct overloads for log10 et.al.
             using namespace std;
