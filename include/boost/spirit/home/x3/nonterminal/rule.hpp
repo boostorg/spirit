@@ -35,10 +35,10 @@ namespace boost { namespace spirit { namespace x3
         return x3::get<ID>(context).parse(first, last, context, unused, attr);
     }
 
-    template <typename ID, typename RHS, typename Attribute, bool force_attribute_>
+    template <typename ID, typename RHS, typename Attribute, bool force_attribute_, bool skip_definition_injection = false>
     struct rule_definition : parser<rule_definition<ID, RHS, Attribute, force_attribute_>>
     {
-        typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
+        typedef rule_definition<ID, RHS, Attribute, force_attribute_, skip_definition_injection> this_type;
         typedef ID id;
         typedef RHS rhs_type;
         typedef rule<ID, Attribute, force_attribute_> lhs_type;
@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, unused_type, Attribute_& attr) const
         {
-            return detail::rule_parser<attribute_type, ID>
+            return detail::rule_parser<attribute_type, ID, skip_definition_injection>
                 ::call_rule_definition(
                     rhs, name, first, last
                   , context
@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace x3
         template <typename RHS>
         constexpr rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute_>
-        operator=(RHS const& rhs) const
+        operator=(RHS const& rhs) const&
         {
             return { as_parser(rhs), name };
         }
@@ -113,7 +113,27 @@ namespace boost { namespace spirit { namespace x3
         template <typename RHS>
         constexpr rule_definition<
             ID, typename extension::as_parser<RHS>::value_type, Attribute, true>
-        operator%=(RHS const& rhs) const
+        operator%=(RHS const& rhs) const&
+        {
+            return { as_parser(rhs), name };
+        }
+
+        // When a rule placeholder constructed and immediately consumed it cannot be used recursively,
+        // that's why the rule definition injection into a parser context can be skipped.
+        // This optimization has a huge impact on compile times because immediate rules are commonly
+        // used to cast an attribute like `as`/`attr_cast` does in Qi.
+        template <typename RHS>
+        constexpr rule_definition<
+            ID, typename extension::as_parser<RHS>::value_type, Attribute, force_attribute_, true>
+        operator=(RHS const& rhs) const&&
+        {
+            return { as_parser(rhs), name };
+        }
+
+        template <typename RHS>
+        constexpr rule_definition<
+            ID, typename extension::as_parser<RHS>::value_type, Attribute, true, true>
+        operator%=(RHS const& rhs) const&&
         {
             return { as_parser(rhs), name };
         }
@@ -159,8 +179,8 @@ namespace boost { namespace spirit { namespace x3
         template <typename ID, typename Attribute, bool force_attribute>
         struct is_rule<rule<ID, Attribute, force_attribute>> : mpl::true_ {};
 
-        template <typename ID, typename Attribute, typename RHS, bool force_attribute>
-        struct is_rule<rule_definition<ID, RHS, Attribute, force_attribute>> : mpl::true_ {};
+        template <typename ID, typename Attribute, typename RHS, bool force_attribute, bool skip_definition_injection>
+        struct is_rule<rule_definition<ID, RHS, Attribute, force_attribute, skip_definition_injection>> : mpl::true_ {};
     }
 
     template <typename T>
@@ -197,7 +217,7 @@ namespace boost { namespace spirit { namespace x3
     {                                                                           \
         using rule_t = BOOST_JOIN(rule_name, _synonym);                         \
         return ::boost::spirit::x3::detail                                      \
-            ::rule_parser<typename rule_t::attribute_type, rule_t::id>          \
+            ::rule_parser<typename rule_t::attribute_type, rule_t::id, true>    \
             ::call_rule_definition(                                             \
                 BOOST_JOIN(rule_name, _def), rule_name.name                     \
               , first, last, context, attr                                      \
@@ -214,7 +234,7 @@ namespace boost { namespace spirit { namespace x3
     {                                                                           \
         using rule_t = decltype(rule_name);                                     \
         return ::boost::spirit::x3::detail                                      \
-            ::rule_parser<typename rule_t::attribute_type, rule_t::id>          \
+            ::rule_parser<typename rule_t::attribute_type, rule_t::id, true>    \
             ::call_rule_definition(                                             \
                 BOOST_JOIN(rule_name, _def), rule_name.name                     \
               , first, last, context, attr                                      \
