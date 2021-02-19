@@ -156,7 +156,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return make_unique_context<ID>(rhs, context);
     }
 
-    template <typename Attribute, typename ID>
+    template <typename Attribute, typename ID, bool skip_definition_injection = false>
     struct rule_parser
     {
         template <typename Iterator, typename Context, typename ActualAttribute>
@@ -211,7 +211,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             bool r = rhs.parse(
                 i
               , last
-              , make_rule_context<ID>(rhs, context, is_default_parse_rule())
+              , make_rule_context<ID>(rhs, context, std::conditional_t<skip_definition_injection, mpl::false_, is_default_parse_rule>())
               , rcontext
               , attr
             );
