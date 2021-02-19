@@ -91,6 +91,8 @@ main()
         int r;
         BOOST_TEST((test_attr(U"a3", foo, r)));
         BOOST_TEST(r == 3);
+        BOOST_TEST((test_attr("a3", foo, r)));
+        BOOST_TEST(r == 3);
     }
 
     return boost::report_errors();

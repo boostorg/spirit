@@ -24,8 +24,8 @@ namespace boost { namespace spirit { namespace x3
             return set.test(ch);
         }
 
-        template <typename Char>
-        int32_t operator()(Char lc, Char rc) const
+        template <typename Char, typename Char2>
+        int32_t operator()(Char lc, Char2 rc) const
         {
             return lc - rc;
         }
@@ -50,8 +50,8 @@ namespace boost { namespace spirit { namespace x3
                     ? Encoding::toupper(ch) : Encoding::tolower(ch));
         }
 
-        template <typename Char>
-        int32_t operator()(Char lc_, Char const rc_) const
+        template <typename Char, typename Char2>
+        int32_t operator()(Char lc_, Char2 const rc_) const
         {
             using char_type = typename Encoding::classify_type;
             auto lc = char_type(lc_);
