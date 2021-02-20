@@ -66,6 +66,15 @@ BOOST_SPIRIT_DEFINE(grammar)
 
 }
 
+namespace check_recursive_scoped {
+
+using check_recursive::node_t;
+
+x3::rule<class intvec_r, node_t> const intvec;
+auto const grammar = intvec = '[' >> intvec % ',' >> ']' | x3::int_;
+
+}
+
 struct recursive_tuple
 {
     int value;
@@ -145,6 +154,12 @@ int main()
 
     {
         using namespace check_recursive;
+        node_t v;
+        BOOST_TEST(test_attr("[4,2]", grammar, v));
+        BOOST_TEST((node_t{std::vector<node_t>{{4}, {2}}} == v));
+    }
+    {
+        using namespace check_recursive_scoped;
         node_t v;
         BOOST_TEST(test_attr("[4,2]", grammar, v));
         BOOST_TEST((node_t{std::vector<node_t>{{4}, {2}}} == v));
