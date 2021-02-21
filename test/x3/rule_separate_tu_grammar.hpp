@@ -42,7 +42,7 @@ using skipper_type = x3::rule<class skipper_r>;
 const skipper_type skipper;
 BOOST_SPIRIT_DECLARE(skipper_type)
 
-using grammar_type = x3::rule<class grammar_r, int>;
+using grammar_type = x3::rule<class grammar_r, int, true>;
 const grammar_type grammar;
 BOOST_SPIRIT_DECLARE(grammar_type)
 

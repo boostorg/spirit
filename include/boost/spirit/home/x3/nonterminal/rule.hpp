@@ -22,11 +22,11 @@
 namespace boost { namespace spirit { namespace x3
 {
     // default parse_rule implementation
-    template <typename ID, typename Attribute, typename Iterator
+    template <typename ID, typename Iterator
       , typename Context, typename ActualAttribute>
     inline detail::default_parse_rule_result
     parse_rule(
-        rule<ID, Attribute> /* rule_ */
+        detail::rule_id<ID>
       , Iterator& first, Iterator const& last
       , Context const& context, ActualAttribute& attr)
     {
@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace x3
         typedef rule_definition<ID, RHS, Attribute, force_attribute_> this_type;
         typedef ID id;
         typedef RHS rhs_type;
-        typedef rule<ID, Attribute> lhs_type;
+        typedef rule<ID, Attribute, force_attribute_> lhs_type;
         typedef Attribute attribute_type;
 
         static bool const has_attribute =
@@ -71,7 +71,7 @@ namespace boost { namespace spirit { namespace x3
     };
 
     template <typename ID, typename Attribute, bool force_attribute_>
-    struct rule : parser<rule<ID, Attribute>>
+    struct rule : parser<rule<ID, Attribute, force_attribute_>>
     {
         static_assert(!std::is_reference<Attribute>::value,
                       "Reference qualifier on rule attribute type is meaningless");
@@ -132,7 +132,7 @@ namespace boost { namespace spirit { namespace x3
             using transform_attr = typename transform::type;
             transform_attr attr_ = transform::pre(attr);
 
-            if (parse_rule(*this, first, last, context, attr_)) {
+            if (parse_rule(detail::rule_id<ID>{}, first, last, context, attr_)) {
                 transform::post(attr, std::forward<transform_attr>(attr_));
                 return true;
             }
@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace x3
         {
             // make sure we pass exactly the rule attribute type
             attribute_type no_attr{};
-            return parse_rule(*this, first, last, context, no_attr);
+            return parse_rule(detail::rule_id<ID>{}, first, last, context, no_attr);
         }
 
         char const* name;
@@ -156,8 +156,8 @@ namespace boost { namespace spirit { namespace x3
         template <typename T, typename Enable = void>
         struct is_rule : mpl::false_ {};
 
-        template <typename ID, typename Attribute>
-        struct is_rule<rule<ID, Attribute>> : mpl::true_ {};
+        template <typename ID, typename Attribute, bool force_attribute>
+        struct is_rule<rule<ID, Attribute, force_attribute>> : mpl::true_ {};
 
         template <typename ID, typename Attribute, typename RHS, bool force_attribute>
         struct is_rule<rule_definition<ID, RHS, Attribute, force_attribute>> : mpl::true_ {};
@@ -177,7 +177,7 @@ namespace boost { namespace spirit { namespace x3
 #define BOOST_SPIRIT_DECLARE_(r, data, rule_type)                               \
     template <typename Iterator, typename Context>                              \
     bool parse_rule(                                                            \
-        rule_type rule_                                                         \
+        ::boost::spirit::x3::detail::rule_id<rule_type::id>                     \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, rule_type::attribute_type& attr);               \
     /***/
@@ -191,7 +191,7 @@ namespace boost { namespace spirit { namespace x3
     using BOOST_PP_CAT(rule_name, _synonym) = decltype(rule_name);              \
     template <typename Iterator, typename Context>                              \
     inline bool parse_rule(                                                     \
-        BOOST_PP_CAT(rule_name, _synonym) /* rule_ */                           \
+        ::boost::spirit::x3::detail::rule_id<BOOST_PP_CAT(rule_name, _synonym)::id> \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, BOOST_PP_CAT(rule_name, _synonym)::attribute_type& attr) \
     {                                                                           \
@@ -208,7 +208,7 @@ namespace boost { namespace spirit { namespace x3
 #define BOOST_SPIRIT_DEFINE_(r, data, rule_name)                                \
     template <typename Iterator, typename Context>                              \
     inline bool parse_rule(                                                     \
-        decltype(rule_name) /* rule_ */                                         \
+        ::boost::spirit::x3::detail::rule_id<decltype(rule_name)::id>           \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, decltype(rule_name)::attribute_type& attr)      \
     {                                                                           \
@@ -229,7 +229,7 @@ namespace boost { namespace spirit { namespace x3
 
 #define BOOST_SPIRIT_INSTANTIATE(rule_type, Iterator, Context)                  \
     template bool parse_rule<Iterator, Context>(                                \
-        rule_type rule_                                                         \
+        ::boost::spirit::x3::detail::rule_id<rule_type::id>                     \
       , Iterator& first, Iterator const& last                                   \
       , Context const& context, rule_type::attribute_type&);                    \
     /***/
