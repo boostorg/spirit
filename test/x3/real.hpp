@@ -94,8 +94,10 @@ template <typename T, typename T2>
 bool
 compare(T n, T2 expected)
 {
+    using std::abs;
+    using std::log10;
     using std::pow;
-    T const eps = pow(T(10), -std::numeric_limits<T>::digits10);
+    T const eps = pow(T(10), -std::numeric_limits<T>::digits10 + log10(abs(expected)));
     T delta = n - expected;
     return (delta >= -eps) && (delta <= eps);
 }
