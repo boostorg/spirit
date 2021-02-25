@@ -62,7 +62,6 @@ before_build:
           -wd4458  # declaration of 'varname' hides class member
           -wd4459  # declaration of 'varname' hides global declaration
           -wd4512  # assignment operator could not be generated
-          -wd4702  # unreachable code
           -wd4701  # potentially uninitialized local variable 'varname' used
           -wd4709  # msvc bug https://stackoverflow.com/questions/6012068
           -wd4714  # function 'x' marked as __forceinline not inlined

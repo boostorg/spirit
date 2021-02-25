@@ -166,7 +166,7 @@ namespace boost { namespace spirit
             BOOST_THROW_EXCEPTION(bad_type_exception
               ("no less-than comparison for this utree type",
                utree_type::invalid_type));
-            return false; // no less than comparison for nil
+            BOOST_UNREACHABLE_RETURN(false) // no less than comparison for nil
         }
 
         bool operator()(utree::nil_type, utree::nil_type) const
@@ -174,7 +174,7 @@ namespace boost { namespace spirit
             BOOST_THROW_EXCEPTION(bad_type_exception
               ("no less-than comparison for this utree type",
                utree_type::nil_type));
-            return false; // no less than comparison for nil
+            BOOST_UNREACHABLE_RETURN(false) // no less than comparison for nil
         }
 
         bool operator()(any_ptr const&, any_ptr const&) const
@@ -182,7 +182,7 @@ namespace boost { namespace spirit
             BOOST_THROW_EXCEPTION(bad_type_exception
               ("no less-than comparison for this utree type",
                utree_type::any_type));
-            return false; // no less than comparison for any_ptr
+            BOOST_UNREACHABLE_RETURN(false) // no less than comparison for any_ptr
         }
 
         bool operator()(function_base const&, function_base const&) const
@@ -190,7 +190,7 @@ namespace boost { namespace spirit
             BOOST_THROW_EXCEPTION(bad_type_exception
               ("no less-than comparison for this utree type",
                utree_type::function_type));
-            return false; // no less than comparison of functions
+            BOOST_UNREACHABLE_RETURN(false) // no less than comparison of functions
         }
     };
 
