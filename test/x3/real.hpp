@@ -17,6 +17,8 @@
 
 #include "test.hpp"
 
+#include <boost/type_traits/type_identity.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 //  These policies can be used to parse thousand separated
 //  numbers with at most 2 decimal digits after the decimal
@@ -90,9 +92,8 @@ struct no_leading_dot_policy : boost::spirit::x3::real_policies<T>
     static bool const allow_leading_dot = false;
 };
 
-template <typename T, typename T2>
-bool
-compare(T n, T2 expected)
+template <typename T>
+bool compare(T n, boost::type_identity_t<T> expected)
 {
     using std::abs;
     using std::log10;

@@ -149,14 +149,14 @@ main()
 
         auto const expr = int_;
 
-        short i;
+        long long i;
         BOOST_TEST(test_attr("1", expr, i) && i == 1); // ok
 
         const rule< class int_rule, int > int_rule( "int_rule" );
         auto const int_rule_def = int_;
         auto const start  = int_rule = int_rule_def;
 
-        short j;
+        long long j;
         BOOST_TEST(test_attr("1", start, j) && j == 1); // error
     }
 
