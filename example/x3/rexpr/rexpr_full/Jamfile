@@ -13,7 +13,7 @@ project spirit-x3-example-rexpr
       <include>.
    ;
 
-lib rexpr
+obj rexpr
    : [ glob src/*.cpp ]
    ;
 
