@@ -56,6 +56,7 @@ int main()
         boost::iterator_range<char const*> range;
         BOOST_TEST((test("x", raw[alpha])));
         BOOST_TEST((test_attr("x", raw[alpha], range)));
+        BOOST_TEST((test_attr("x", raw[alpha] >> eps, range)));
     }
 
     {
