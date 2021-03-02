@@ -54,7 +54,6 @@ before_build:
       toolset.flags msvc.compile OPTIONS <known-warnings>suppress :
           -wd4244  # lit1.cpp(31): wchar_t to char truncation
           -wd4996  # Call to 'std::copy' with parameters that may be unsafe
-          -wd4003  # Fusion adapt_adt: not enough actual parameters for macro
           -wd4100  # unreferenced formal parameter
           -wd4310  # cast truncates constant value
           -wd4456  # declaration of 'varname' hides previous local declaration
