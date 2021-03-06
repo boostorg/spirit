@@ -87,14 +87,7 @@ understanding of what's happening.
 Here in the header file, instead of `BOOST_SPIRIT_DEFINE`, we use
 `BOOST_SPIRIT_DECLARE` for the *top* rule. Behind the scenes, what's actually
 happening is that we are declaring a `parse_rule` function in the client
-namespace. For example, given a rule named `my_rule`,
-`BOOST_SPIRIT_DECLARE(my_rule)` expands to this code:
-
-    template <typename Iterator, typename Context>
-    bool parse_rule(
-        decltype(my_rule)
-      , Iterator& first, Iterator const& last
-      , Context const& context, decltype(my_rule)::attribute_type& attr);
+namespace.
 
 If you went back and reviewed [link __tutorial_spirit_define__
 BOOST_SPIRIT_DEFINE], you'll see why it is exactly what we need to use for
