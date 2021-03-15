@@ -14,7 +14,9 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
-#include <boost/spirit/home/support/char_encoding/unicode.hpp>
+#ifdef BOOST_SPIRIT_X3_UNICODE
+# include <boost/spirit/home/support/char_encoding/unicode.hpp>
+#endif
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
