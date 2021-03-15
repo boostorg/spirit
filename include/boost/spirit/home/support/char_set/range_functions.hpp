@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/integer_traits.hpp>
+#include <limits>
 
 namespace boost { namespace spirit { namespace support { namespace detail
 {
