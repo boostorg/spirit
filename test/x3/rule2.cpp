@@ -30,7 +30,7 @@ struct check_no_rule_injection_parser
             "no rule definition injection should occur");
         return true;
     }
-} const check_no_rule_injection;
+} const check_no_rule_injection{};
 
 int
 main()
