@@ -1,11 +1,31 @@
 [/==============================================================================
-    Copyright (C) 2018-2020 Nikita Kniazev
+    Copyright (C) 2018-2021 Nikita Kniazev
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
 [section Changelog]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_0_8 Spirit V3.0.8 (Boost V1.76.0)]
+
+* Fixed assertion in standard parser with an input containing characters from
+  extended charset (on values above 0x7F) [gh_pr 620]
+* Enhanced debug output to print unicode code points as hex [gh_pr 634]
+* Skip rule definition binder creation in `parse_rule` [gh_pr 646]
+* Replaced Boost.Math with std alternatives [gh_pr 648]
+* Fixed unqualified `get<typename>` call in `parse_rule`
+* Removed unused header `no_case_string_parse.hpp`
+* Make literal binary parser constructor non-templated 
+* Fixed unqualified `get<typename>` call in `annotate_on_success::on_success` [gh 526]
+* Fixed multiple times missed `force_attribute` parameter. Adresses compilation
+  errors and slow compilation due to rule definition injection into context
+  when `force_attribute` is set to `true` [gh_pr 651]
+* Skip rule definition injection into context when a rule placeholder  constructed
+  and immediately consumed (like `auto const grammar = rule<tag>{} = parser`) [gh_pr 650]
+
+[endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_7 Spirit V3.0.7 (Boost V1.74.0)]

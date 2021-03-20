@@ -9,6 +9,20 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_76 Spirit V2.5.8 (Boost V1.76.0)]
+
+* Fixed assertion in standard parser with an input containing characters from
+  extended charset (on values above 0x7F) [gh_pr 620]
+* Karma real numbers generator produces 10.0e-04 instead of 1.0e-03 [gh 628] [gh_pr 629]
+* Improved `what()` info for `distinct` directive [gh_pr 631]
+* Enhanced debug output to print unicode code points as hex [gh_pr 634]
+* Missing inline keyword in `function_impl_invert::eval<bool>` specialization [gh 638]
+* Replaced Boost.Math with Boost.Core alternatives [gh_pr 648]
+* Removed hardcap on Karma's `RealPolicy::precision()` value [trac 7785] [trac 11056] [gh 585] [gh_pr 586]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_8_boost_1_74 Spirit V2.5.8 (Boost V1.74.0)]
 
 * Ceased dependence on Boost.Iostreams [gh_pr 599]

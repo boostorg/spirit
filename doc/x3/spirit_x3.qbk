@@ -8,7 +8,7 @@
 
 [article Spirit X3
     [quickbook 1.5]
-    [version 3.0.4]
+    [version 3.0.8]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001-2018 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser Library]
@@ -25,7 +25,7 @@
     Some links and defines
 =============================================================================/]
 
-[def __version__                V3.0.4]
+[def __version__                V3.0.8]
 
 [/ external]
 
