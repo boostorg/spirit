@@ -43,9 +43,8 @@ namespace client
             double_ >> *(',' >> double_),   // The Parser
             space                           // The Skip-Parser
         );
-        if (first != last) // fail if we did not get a full match
-            return false;
-        return r;
+        // fail if we did not get a full match
+        return (first == last) && r;
     }
 }
 
