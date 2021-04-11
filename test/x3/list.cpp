@@ -57,6 +57,15 @@ main()
         BOOST_TEST(s == "abcdefg");
     }
 
+    { // regression test for has_attribute
+        using boost::spirit::x3::int_;
+        using boost::spirit::x3::omit;
+
+        int i;
+        BOOST_TEST(test_attr("1:2,3", int_ >> ':' >> omit[int_] % ',', i))
+          && BOOST_TEST_EQ(i, 1);
+    }
+
     {
         using boost::spirit::x3::int_;
 
