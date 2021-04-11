@@ -123,8 +123,6 @@ main()
         BOOST_TEST(!test("x", char_[_1 = val('y')]));
     }
 
-// we support Phoenix attributes only starting with V2.2
-#if SPIRIT_VERSION >= 0x2020
     // yes, we can use phoenix expressions as attributes as well
     // but only if we include karma_phoenix_attributes.hpp
     {
@@ -137,7 +135,6 @@ main()
         BOOST_TEST(test("x", ascii::char_, phoenix::ref(c)));
         BOOST_TEST(test("y", ascii::char_, ++phoenix::ref(c)));
     }
-#endif
 
     {
         namespace ascii = boost::spirit::ascii;

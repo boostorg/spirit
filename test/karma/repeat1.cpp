@@ -125,8 +125,6 @@ int main()
             '[' << repeat[hex[action(v)]] << ']'));
     }
 
-// we support Phoenix attributes only starting with V2.2
-#if SPIRIT_VERSION >= 0x2020
     {
         namespace ascii = boost::spirit::ascii;
         namespace phoenix = boost::phoenix;
@@ -137,7 +135,6 @@ int main()
         c = 'a';
         BOOST_TEST(test("bcd", repeat(3)[ascii::char_], ++phoenix::ref(c)));
     }
-#endif
 
     return boost::report_errors();
 }

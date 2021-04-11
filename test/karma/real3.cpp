@@ -158,8 +158,6 @@ int main()
         BOOST_TEST(test("1.0", double_(1.0), v));
     }
 
-// we support Phoenix attributes only starting with V2.2
-#if SPIRIT_VERSION >= 0x2020
     {   // Phoenix expression tests (requires to include 
         // karma_phoenix_attributes.hpp)
         namespace phoenix = boost::phoenix;
@@ -170,7 +168,6 @@ int main()
         BOOST_TEST(test("1.2", double_, phoenix::ref(d)));
         BOOST_TEST(test("2.2", double_, ++phoenix::ref(d)));
     }
-#endif
 
     // test for denormalized numbers
     {
