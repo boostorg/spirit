@@ -82,7 +82,9 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     Iterator save = first;
                     skipper_keyword_marker<Skipper,NoCasePass> 
                         marked_skipper(skipper,flags[Index::value],counters[Index::value]);
-                    if(subject.parse(first,last,context,marked_skipper,fusion::at_c<Index::value>(attr)))
+                    typename fusion::result_of::at_c<typename remove_reference<Attribute>::type, Index::value>::type
+                        attr_ = fusion::at_c<Index::value>(attr);
+                    if(subject.parse(first,last,context,marked_skipper,attr_))
                     {
                         return true;
                     }
