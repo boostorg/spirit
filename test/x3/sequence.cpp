@@ -383,30 +383,6 @@ main()
     }
 
     // test from spirit mailing list
-    // "Optional operator causes string attribute concatenation"
-    {
-        typedef vector<char, char, int> attr_type;
-        attr_type attr;
-
-        auto node = alnum >> -('[' >> alnum >> '=' >> int_ >> ']');
-
-        BOOST_TEST(test_attr("x[y=123]", node, attr));
-        BOOST_TEST(attr == attr_type('x', 'y', 123));
-    }
-
-    // test from spirit mailing list (variation of above)
-    // "Optional operator causes string attribute concatenation"
-    {
-        typedef vector<std::string, std::string, int> attr_type;
-        attr_type attr;
-
-        auto node = +alnum >> -('[' >> +alnum >> '=' >> int_ >> ']');
-
-        BOOST_TEST(test_attr("xxx[yyy=123]", node, attr));
-        BOOST_TEST(attr == attr_type("xxx", "yyy", 123));
-    }
-
-    // test from spirit mailing list
     // "Error with container within sequence"
     {
         typedef vector<std::string> attr_type;
@@ -430,6 +406,23 @@ main()
         BOOST_TEST(at_c<0>(attr).size() == 2);
         BOOST_TEST(at_c<0>(attr)[0] == 123);
         BOOST_TEST(at_c<0>(attr)[1] == 456);
+    }
+
+    { // non-flat optional
+        vector<int, boost::optional<vector<int, int>>> v;
+        auto const p = int_ >> -(':' >> int_ >> '-' >> int_);
+        BOOST_TEST(test_attr("1:2-3", p, v))
+            && BOOST_TEST(at_c<1>(v)) && BOOST_TEST_EQ(at_c<0>(*at_c<1>(v)), 2);
+    }
+
+    { // optional with container attribute
+        vector<char, boost::optional<std::string>> v;
+        auto const p = char_ >> -(':' >> +char_);
+        BOOST_TEST(test_attr("x", p, v))
+            && BOOST_TEST(!at_c<1>(v));
+        v = {};
+        BOOST_TEST(test_attr("x:abc", p, v))
+            && BOOST_TEST(at_c<1>(v)) && BOOST_TEST(*at_c<1>(v) == "abc");
     }
 
     {
