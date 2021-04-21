@@ -404,7 +404,7 @@ supplement the context like this:
     using phrase_context_type = x3::phrase_parse_context<x3::ascii::space_type>::type;
 
     typedef x3::context<
-        error_handler_tag
+        position_cache_tag
       , std::reference_wrapper<position_cache>
       , phrase_context_type>
     context_type;
