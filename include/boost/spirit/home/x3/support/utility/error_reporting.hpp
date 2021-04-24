@@ -154,8 +154,9 @@ namespace boost { namespace spirit { namespace x3
     template <class Iterator>
     inline Iterator error_handler<Iterator>::get_line_start(Iterator first, Iterator pos) const
     {
-        Iterator latest = first;
-        for (Iterator i = first; i != pos; ++i)
+        // if first line is empty, skip it
+        Iterator latest = (*first == '\r' || *first == '\n') ? first + 1 : first;
+        for (Iterator i = latest; i != pos; ++i)
             if (*i == '\r' || *i == '\n')
                 latest = i;
         return latest;
