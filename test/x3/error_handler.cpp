@@ -48,10 +48,29 @@ void test(std::string const& line_break) {
     BOOST_TEST_EQ(stream.str(), "In line 2:\nError! Expecting: \"bar\" here:\n  foo\n__^_\n");
 }
 
+void test_line_break_first(std::string const& line_break) {
+    std::string const input(line_break + "foo  foo" + line_break + "git");
+    auto const begin = std::begin(input);
+    auto const end = std::end(input);
+
+    std::stringstream stream;
+    x3::error_handler<std::string::const_iterator> error_handler{begin, end, stream};
+
+    auto const parser = x3::with<x3::error_handler_tag>(std::ref(error_handler))[test_rule];
+    x3::phrase_parse(begin, end, parser, x3::space);
+
+    BOOST_TEST_EQ(stream.str(), "In line 2:\nError! Expecting: \"bar\" here:\nfoo  foo\n_____^_\n");
+}
+
 int main() {
     test("\n");
     test("\r");
     test("\r\n");
+
+    test_line_break_first("\n");
+    test_line_break_first("\r");
+    test_line_break_first("\r\n");
+
 
     return boost::report_errors();
 }

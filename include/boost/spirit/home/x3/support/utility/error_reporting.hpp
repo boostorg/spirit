@@ -155,9 +155,11 @@ namespace boost { namespace spirit { namespace x3
     inline Iterator error_handler<Iterator>::get_line_start(Iterator first, Iterator pos) const
     {
         Iterator latest = first;
-        for (Iterator i = first; i != pos; ++i)
+        for (Iterator i = first; i != pos;)
             if (*i == '\r' || *i == '\n')
-                latest = i;
+                latest = ++i;
+            else
+                ++i;
         return latest;
     }
 
@@ -199,8 +201,6 @@ namespace boost { namespace spirit { namespace x3
         err_out << error_message << std::endl;
 
         Iterator start = get_line_start(first, err_pos);
-        if (start != first)
-            ++start;
         print_line(start, last);
         print_indicator(start, err_pos, '_');
         err_out << "^_" << std::endl;
@@ -220,8 +220,6 @@ namespace boost { namespace spirit { namespace x3
         err_out << error_message << std::endl;
 
         Iterator start = get_line_start(first, err_first);
-        if (start != first)
-            ++start;
         print_line(start, last);
         print_indicator(start, err_first, ' ');
         print_indicator(start, err_last, '~');
