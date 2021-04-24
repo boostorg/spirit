@@ -154,12 +154,19 @@ namespace boost { namespace spirit { namespace x3
     template <class Iterator>
     inline Iterator error_handler<Iterator>::get_line_start(Iterator first, Iterator pos) const
     {
-        // if first line is empty, skip it
-        Iterator latest = (*first == '\r' || *first == '\n') ? first + 1 : first;
-        for (Iterator i = latest; i != pos; ++i)
+        Iterator latest = first;
+        for (Iterator i = first; i != pos; ++i)
             if (*i == '\r' || *i == '\n')
                 latest = i;
-        return latest;
+
+        if (latest == first) {
+            if (*first == '\n' || *first == '\r')
+                return latest + 1;
+            else
+                return latest;
+        } else {
+            return latest + 1;
+        }
     }
 
     template <typename Iterator>
@@ -200,8 +207,6 @@ namespace boost { namespace spirit { namespace x3
         err_out << error_message << std::endl;
 
         Iterator start = get_line_start(first, err_pos);
-        if (start != first)
-            ++start;
         print_line(start, last);
         print_indicator(start, err_pos, '_');
         err_out << "^_" << std::endl;
@@ -221,8 +226,6 @@ namespace boost { namespace spirit { namespace x3
         err_out << error_message << std::endl;
 
         Iterator start = get_line_start(first, err_first);
-        if (start != first)
-            ++start;
         print_line(start, last);
         print_indicator(start, err_first, ' ');
         print_indicator(start, err_last, '~');
