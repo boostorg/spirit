@@ -64,8 +64,6 @@ namespace boost { namespace spirit { namespace x3
         void print_file_line(std::size_t line) const;
         void print_line(Iterator line_start, Iterator last) const;
         void print_indicator(Iterator& line_start, Iterator last, char ind) const;
-        void skip_whitespace(Iterator& err_pos, Iterator last) const;
-        void skip_non_whitespace(Iterator& err_pos, Iterator last) const;
         Iterator get_line_start(Iterator first, Iterator pos) const;
         std::size_t position(Iterator i) const;
 
@@ -123,34 +121,6 @@ namespace boost { namespace spirit { namespace x3
         }
     }
 
-    template <typename Iterator>
-    void error_handler<Iterator>::skip_whitespace(Iterator& err_pos, Iterator last) const
-    {
-        // make sure err_pos does not point to white space
-        while (err_pos != last)
-        {
-            char c = *err_pos;
-            if (std::isspace(c))
-                ++err_pos;
-            else
-                break;
-        }
-    }
-
-    template <typename Iterator>
-    void error_handler<Iterator>::skip_non_whitespace(Iterator& err_pos, Iterator last) const
-    {
-        // make sure err_pos does not point to white space
-        while (err_pos != last)
-        {
-            char c = *err_pos;
-            if (std::isspace(c))
-                break;
-            else
-                ++err_pos;
-        }
-    }
-
     template <class Iterator>
     inline Iterator error_handler<Iterator>::get_line_start(Iterator first, Iterator pos) const
     {
@@ -194,9 +164,6 @@ namespace boost { namespace spirit { namespace x3
         Iterator first = pos_cache.first();
         Iterator last = pos_cache.last();
 
-        // make sure err_pos does not point to white space
-        skip_whitespace(err_pos, last);
-
         print_file_line(position(err_pos));
         err_out << error_message << std::endl;
 
@@ -212,9 +179,6 @@ namespace boost { namespace spirit { namespace x3
     {
         Iterator first = pos_cache.first();
         Iterator last = pos_cache.last();
-
-        // make sure err_pos does not point to white space
-        skip_whitespace(err_first, last);
 
         print_file_line(position(err_first));
         err_out << error_message << std::endl;
