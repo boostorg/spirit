@@ -97,7 +97,7 @@ int main()
             qword(0x0102030405060708LL)));
 #endif
         BOOST_TEST(binary_test("\x3f\x80\x00\x00", 4, bin_float(1.0f)));
-        BOOST_TEST(binary_test("\x3f\x80\x00\x00\x00\x00\x00\x00", 8,
+        BOOST_TEST(binary_test("\x3f\xf0\x00\x00\x00\x00\x00\x00", 8,
             bin_double(1.0)));
 #endif
     }
