@@ -39,6 +39,7 @@ void test(std::string const& line_break) {
     auto const begin = std::begin(input);
     auto const end = std::end(input);
 
+{
     std::stringstream stream;
     x3::error_handler<std::string::const_iterator> error_handler{begin, end, stream};
 
@@ -46,6 +47,7 @@ void test(std::string const& line_break) {
     x3::phrase_parse(begin, end, parser, x3::space);
 
     BOOST_TEST_EQ(stream.str(), "In line 2:\nError! Expecting: \"bar\" here:\n  foo\n__^_\n");
+}
 
 { // TODO: cleanup when error_handler is reenterable
     std::stringstream stream;

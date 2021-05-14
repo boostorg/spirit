@@ -755,7 +755,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 for (/**/; t_ < transitions_; ++t_)
                 {
                     Char const *ptr_ = iter_->token._charset.c_str();
-                    Char const *end_ = ptr_ + iter_->token._charset.size();
+                    Char const *end2_ = ptr_ + iter_->token._charset.size();
                     Char start_char_ = 0;
                     Char curr_char_ = 0;
                     bool range_ = false;
@@ -763,7 +763,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
                     os_ << "\n    if (";
 
-                    while (ptr_ != end_)
+                    while (ptr_ != end2_)
                     {
                         curr_char_ = *ptr_++;
 

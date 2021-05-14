@@ -56,7 +56,6 @@ before_build:
           -wd4996  # Call to 'std::copy' with parameters that may be unsafe
           -wd4100  # unreferenced formal parameter
           -wd4310  # cast truncates constant value
-          -wd4456  # declaration of 'varname' hides previous local declaration
           -wd4457  # declaration of 'varname' hides function parameter
           -wd4458  # declaration of 'varname' hides class member
           -wd4459  # declaration of 'varname' hides global declaration

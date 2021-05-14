@@ -484,7 +484,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
             return true;
                     }
                     // Second pass case insensitive
-                    else if(parser_index_type* val_ptr
+                    if(parser_index_type* val_ptr
                             = lookup->find(saved_first,last,nc_filter()))
                     {
                         first = saved_first;
