@@ -413,6 +413,11 @@ jobs:
           variant sanitize : <optimization>speed <debug-symbols>off <inlining>full
                              <runtime-debugging>off ;
 
+          # Enable additional warnings
+          toolset.flags gcc.compile OPTIONS <warnings>extra :
+              -Wshadow-local
+            : unchecked ;
+
           # Ignore some warnings
           feature.feature known-warnings : suppress : optional incidental propagated ;
           toolset.flags gcc.compile OPTIONS <known-warnings>suppress :

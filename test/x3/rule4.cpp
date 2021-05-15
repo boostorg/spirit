@@ -95,7 +95,7 @@ main()
 
         // test deduced auto rule behavior
 
-        auto text = rule<class text, std::string>()
+        auto text = rule<class text_id, std::string>()
             = +(!char_(')') >> !char_('>') >> char_);
 
         attr.clear();
@@ -119,14 +119,14 @@ main()
 
     {
         typedef boost::variant<double, int> v_type;
-        auto r1 = rule<class r1, v_type>()
+        auto r1 = rule<class r1_id, v_type>()
             = int_;
         v_type v;
         BOOST_TEST(test_attr("1", r1, v) && v.which() == 1 &&
             boost::get<int>(v) == 1);
 
         typedef boost::optional<int> ov_type;
-        auto r2 = rule<class r2, ov_type>()
+        auto r2 = rule<class r2_id, ov_type>()
             = int_;
         ov_type ov;
         BOOST_TEST(test_attr("1", r2, ov) && ov && boost::get<int>(ov) == 1);
@@ -136,7 +136,7 @@ main()
     {
         using boost::fusion::vector;
         using boost::fusion::at_c;
-        auto r = rule<class r, vector<int>>()
+        auto r = rule<class r_id, vector<int>>()
             = int_;
 
         vector<int> v(0);

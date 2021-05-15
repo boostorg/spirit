@@ -149,7 +149,7 @@ main()
         typedef deque<char, int> attr_type;
         attr_type fv;
 
-        auto r = rule<class r, attr_type>()
+        auto r = rule<class r_id, attr_type>()
             = char_ >> ',' >> int_;
 
         BOOST_TEST((test_attr("test:x,1", "test:" >> r, fv) &&
@@ -164,7 +164,7 @@ main()
         typedef deque<int> attr_type;
         attr_type fv;
 
-        auto r = rule<class r, attr_type>()
+        auto r = rule<class r_id, attr_type>()
             = int_;
 
         BOOST_TEST((test_attr("test:1", "test:" >> r, fv) &&
@@ -319,10 +319,10 @@ main()
     {
         std::vector<std::string> v;
 
-        auto e = rule<class e, std::string>()
+        auto e = rule<class e_id, std::string>()
             = *~char_(',');
 
-        auto l = rule<class l, std::vector<std::string>>()
+        auto l = rule<class l_id, std::vector<std::string>>()
             = e >> *(',' >> e);
 
         BOOST_TEST(test_attr("abc1,abc2,abc3", l, v));
@@ -342,10 +342,10 @@ main()
 
     {
         std::string s;
-        auto e = rule<class e, std::string>()
+        auto e = rule<class e_id, std::string>()
             = *~char_(',');
 
-        auto l = rule<class l, std::string>()
+        auto l = rule<class l_id, std::string>()
             = e >> *(',' >> e);
 
         BOOST_TEST(test_attr("abc1,abc2,abc3", l, s));
@@ -428,8 +428,8 @@ main()
     {
         using Attr = boost::variant<int, float>;
         Attr attr;
-        auto const term = rule<class term, Attr>("term") = int_ | float_;
-        auto const expr = rule<class expr, Attr>("expr") = term | ('(' > term > ')');
+        auto const term = rule<class term_id, Attr>("term") = int_ | float_;
+        auto const expr = rule<class expr_id, Attr>("expr") = term | ('(' > term > ')');
         BOOST_TEST((test_attr("(1)", expr, attr, space)));
     }
 

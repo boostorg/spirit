@@ -138,7 +138,7 @@ int main()
     }
 
     {
-        auto r = rule<class r, int>{} = eps[([] (auto& ctx) {
+        auto r = rule<class r_id, int>{} = eps[([] (auto& ctx) {
             using boost::spirit::x3::_val;
             static_assert(std::is_same<std::decay_t<decltype(_val(ctx))>, unused_type>::value,
                 "Attribute must not be synthesized");

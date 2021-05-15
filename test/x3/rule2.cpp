@@ -47,7 +47,7 @@ main()
     { // context tests
 
         char ch;
-        auto a = rule<class a, char>() = alpha;
+        auto a = rule<class a_id, char>() = alpha;
 
         // this semantic action requires the context
         auto f = [&](auto& ctx){ ch = _attr(ctx); };
@@ -71,7 +71,7 @@ main()
     { // auto rules tests
 
         char ch = '\0';
-        auto a = rule<class a, char>() = alpha;
+        auto a = rule<class a_id, char>() = alpha;
         auto f = [&](auto& ctx){ ch = _attr(ctx); };
 
         BOOST_TEST(test("x", a[f]));
@@ -98,7 +98,7 @@ main()
         auto f = [&](auto& ctx){ s = _attr(ctx); };
 
         {
-            auto r = rule<class r, std::string>()
+            auto r = rule<class r_id, std::string>()
                 = char_ >> *(',' >> char_)
                 ;
 
@@ -107,7 +107,7 @@ main()
         }
 
         {
-            auto r = rule<class r, std::string>()
+            auto r = rule<class r_id, std::string>()
                 = char_ >> *(',' >> char_);
             s.clear();
             BOOST_TEST(test("a,b,c,d,e,f", r[f]));
@@ -115,7 +115,7 @@ main()
         }
 
         {
-            auto r = rule<class r, std::string>()
+            auto r = rule<class r_id, std::string>()
                 = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
             s.clear();
             BOOST_TEST(test("abcdef", r[f]));
