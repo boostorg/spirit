@@ -39,7 +39,7 @@ namespace client { namespace parser
     variable_type const variable = "variable";
 
     // Import the expression rule
-    namespace { auto const& expression = client::expression(); }
+    namespace { auto expression = client::expression(); }
 
     auto const statement_list_def =
         +(variable_declaration | assignment)
@@ -75,7 +75,7 @@ namespace client { namespace parser
 
 namespace client
 {
-    parser::statement_type const& statement()
+    parser::statement_type statement()
     {
         return parser::statement;
     }

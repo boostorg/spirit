@@ -64,7 +64,7 @@ namespace client
 {
     calculator_grammar::expression_type expression()
     {
-        return calculator_grammar::expression;
+        return {"expression"};
     }
 }
 
