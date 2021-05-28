@@ -27,7 +27,8 @@
 struct base_type {
     base_type(const std::string &name) : name(name)  {}
     std::string name;
- 
+
+    virtual ~base_type() {}
     virtual std::ostream &output(std::ostream &os) const
     {
         os<<"Base : "<<name;
