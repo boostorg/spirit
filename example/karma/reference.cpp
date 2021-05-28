@@ -12,6 +12,7 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#include <boost/proto/deep_copy.hpp>
 #include <iostream>
 #include <string>
 //]

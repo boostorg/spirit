@@ -18,6 +18,7 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/assert.hpp>
 #include <boost/predef/other/endian.h>
+#include <boost/proto/deep_copy.hpp>
 #include <iostream>
 #include <string>
 #include <cstdlib>

@@ -28,6 +28,7 @@
 #include <boost/array.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/fusion/include/array.hpp>
+#include <boost/proto/deep_copy.hpp>
 #include <boost/range/iterator_range.hpp>
 
 #include <boost/spirit/include/karma.hpp>
