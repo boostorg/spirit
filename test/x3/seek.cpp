@@ -93,5 +93,8 @@ int main()
         BOOST_TEST(test_failure("abcdefg", x3::seek[x3::int_]));
     }
 
+    // past the end regression GH#658
+    BOOST_TEST(!test(" ", x3::seek['x'], x3::space));
+
     return boost::report_errors();
 }
