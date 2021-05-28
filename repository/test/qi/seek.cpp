@@ -97,5 +97,8 @@ int main()
         );
     }
 
+    // past the end regression GH#658
+    BOOST_TEST(!test(" ", seek['x'], space));
+
     return boost::report_errors();
 }
