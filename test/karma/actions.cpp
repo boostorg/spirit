@@ -20,6 +20,11 @@
 #include <sstream>
 #include "test.hpp"
 
+#ifdef _MSC_VER
+// bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
+# pragma warning(disable: 4709) // comma operator within array index expression
+#endif
+
 using namespace spirit_test;
 using boost::spirit::unused_type;
 

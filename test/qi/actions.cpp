@@ -21,6 +21,11 @@
 #include <boost/bind/bind.hpp>
 #include <cstring>
 
+#ifdef _MSC_VER
+// bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
+# pragma warning(disable: 4709) // comma operator within array index expression
+#endif
+
 int x = 0;
 
 void fun1(int const& i)

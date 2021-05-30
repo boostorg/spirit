@@ -17,6 +17,11 @@
 #include <iostream>
 #include "test.hpp"
 
+#ifdef _MSC_VER
+// bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956
+# pragma warning(disable: 4709) // comma operator within array index expression
+#endif
+
 using boost::spirit::x3::_val;
 namespace x3 = boost::spirit::x3;
 
