@@ -54,7 +54,6 @@ before_build:
       toolset.flags msvc.compile OPTIONS <known-warnings>suppress :
           -wd4244  # lit1.cpp(31): wchar_t to char truncation
           -wd4100  # unreferenced formal parameter
-          -wd4310  # cast truncates constant value
           -wd4458  # declaration of 'varname' hides class member
           -wd4459  # declaration of 'varname' hides global declaration
           -wd4512  # assignment operator could not be generated
