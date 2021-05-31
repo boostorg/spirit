@@ -53,7 +53,6 @@ before_build:
       feature.feature known-warnings : suppress : optional incidental propagated ;
       toolset.flags msvc.compile OPTIONS <known-warnings>suppress :
           -wd4244  # lit1.cpp(31): wchar_t to char truncation
-          -wd4996  # Call to 'std::copy' with parameters that may be unsafe
           -wd4100  # unreferenced formal parameter
           -wd4310  # cast truncates constant value
           -wd4458  # declaration of 'varname' hides class member
