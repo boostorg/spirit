@@ -207,9 +207,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 is_same<parse_rule_result, default_parse_rule_result>
             is_default_parse_rule;
 
-            Iterator i = first;
+            Iterator start = first;
             bool r = rhs.parse(
-                i
+                first
               , last
               , make_rule_context<ID>(rhs, context, std::conditional_t<skip_definition_injection, mpl::false_, is_default_parse_rule>())
               , rcontext
@@ -218,14 +218,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             if (r)
             {
-                auto first_ = first;
-                x3::skip_over(first_, last, context);
-                r = call_on_success(first_, i, context, attr
+                r = call_on_success(start, first, context, attr
                   , has_on_success<ID, Iterator, Context, ActualAttribute>());
             }
 
-            if (r)
-                first = i;
             return r;
         }
 

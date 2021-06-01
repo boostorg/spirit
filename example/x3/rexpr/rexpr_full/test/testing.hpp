@@ -233,8 +233,8 @@ namespace boost { namespace spirit { namespace x3 { namespace testing
         auto result = compare(output, expected, re_prefix, re_suffix);
         if (!result.full_match)
         {
-            std::cout << "=============================================" << std::endl;
-            std::cout << "==== Mismatch Found:" << std::endl;
+            std::cerr << "=============================================" << std::endl;
+            std::cerr << "==== Mismatch Found:" << std::endl;
             int line = 1;
             int col = 1;
             for (auto i = output.begin(); i != result.pos; ++i)

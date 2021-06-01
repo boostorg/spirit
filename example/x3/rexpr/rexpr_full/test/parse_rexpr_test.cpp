@@ -62,9 +62,11 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
 };
 
 int num_files_tested = 0;
+int num_tests_failed = 0;
 auto compare = [](fs::path input_path, fs::path expect_path)
 {
-   testing::compare(input_path, expect_path, parse);
+   if (!testing::compare(input_path, expect_path, parse))
+       ++num_tests_failed;
    ++num_files_tested;
 };
 
@@ -82,5 +84,5 @@ int main(int argc, char* argv[])
     if (r == 0)
         std::cout << num_files_tested << " files tested." << std::endl;
     std::cout << "===================================================================================================" << std::endl;
-    return r;
+    return num_tests_failed;
 }
