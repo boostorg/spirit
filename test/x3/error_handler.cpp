@@ -27,12 +27,15 @@ struct error_handler_base
     }
 };
 
+struct test_inner_rule_class;
 struct test_rule_class : x3::annotate_on_success, error_handler_base {};
 
+x3::rule<test_inner_rule_class> const test_inner_rule = "\"bar\"";
 x3::rule<test_rule_class> const test_rule;
-auto const test_rule_def = x3::lit("foo") > x3::lit("bar") > x3::lit("git");
+auto const test_inner_rule_def = x3::lit("bar");
+auto const test_rule_def = x3::lit("foo") > test_inner_rule > x3::lit("git");
 
-BOOST_SPIRIT_DEFINE(test_rule)
+BOOST_SPIRIT_DEFINE(test_inner_rule, test_rule)
 
 void test(std::string const& line_break) {
     std::string const input("foo" + line_break + "  foo" + line_break + "git");
