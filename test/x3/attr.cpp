@@ -42,8 +42,12 @@ int main()
 
         // $$$ Needs some special is_convertible support, or
         // str ends up with an explicit null-terminator... $$$
-        //~ std::string str;
+        std::string str;
         //~ BOOST_TEST(test_attr("", attr("test"), str) && str == "test");
+
+        str.clear();
+        BOOST_TEST(test_attr("", attr(std::string("test")), str))
+          && BOOST_TEST_EQ(str, "test");
 
         int array[] = {0, 1, 2};
         std::vector<int> vec;
@@ -57,9 +61,8 @@ int main()
             s == "123");
 
         s.clear();
-        using boost::spirit::x3::string;
-        BOOST_TEST(test_attr("123", string("123") >> attr(std::string("456")), s) &&
-            s == "123456");
+        BOOST_TEST(test_attr("", attr(std::string("123")) >> attr(std::string("456")), s))
+          && BOOST_TEST_EQ(s, "123456");
     }
 
     return boost::report_errors();

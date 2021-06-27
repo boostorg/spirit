@@ -50,6 +50,10 @@ int main()
         std::string str;
         BOOST_TEST((test_attr("spirit_test_123", raw[alpha >> *(alnum | '_')], str)));
         BOOST_TEST((str == "spirit_test_123"));
+
+        str.clear();
+        BOOST_TEST((test_attr("x123", alpha >> raw[+alnum], str)))
+          && BOOST_TEST_EQ(str, "x123");
     }
 
     {
