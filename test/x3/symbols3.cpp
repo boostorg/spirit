@@ -93,5 +93,15 @@ main()
         BOOST_TEST(r == 3);
     }
 
+    { // unicode input | ascii symbols
+        using namespace boost::spirit;
+        symbols<int> foo = {{"a1", 1}, {"a2", 2}, {"a3", 3}};
+
+        int r;
+        BOOST_TEST((test_attr(U"a3", foo, r)));
+        std::cout << "r = " <<r << std::endl;
+        BOOST_TEST(r == 3);
+    }
+
     return boost::report_errors();
 }
