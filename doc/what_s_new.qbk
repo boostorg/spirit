@@ -9,6 +9,16 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_8_boost_1_77 Spirit V2.5.8 (Boost V1.77.0)]
+
+* Fixed keyword list parser with Fusion adapt ADT attribute. [gh 666]
+* Lex: Changed token id storage type to `std::size_t` (lexer engine is hardcoded
+  to `std::size_t`) to always be able to hold `boost::lexer::npos` value.
+* Ceased dependence on Foreach. [gh_pr 691]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_8_boost_1_76 Spirit V2.5.8 (Boost V1.76.0)]
 
 * Fixed assertion in standard parser with an input containing characters from
