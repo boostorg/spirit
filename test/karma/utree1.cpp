@@ -7,8 +7,6 @@
 
 #include <boost/config/warning_disable.hpp>
 
-#include <boost/mpl/print.hpp>
-
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/support_utree.hpp>
 
