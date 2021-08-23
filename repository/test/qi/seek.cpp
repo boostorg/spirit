@@ -9,7 +9,6 @@
 #include <vector>
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_char.hpp>

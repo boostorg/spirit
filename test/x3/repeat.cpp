@@ -7,7 +7,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #if defined(__GNUC__) && (__GNUC__ >= 8)

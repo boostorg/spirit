@@ -7,7 +7,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>

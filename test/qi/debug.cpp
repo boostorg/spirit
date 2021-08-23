@@ -6,7 +6,6 @@
 =============================================================================*/
 #define BOOST_SPIRIT_DEBUG
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>

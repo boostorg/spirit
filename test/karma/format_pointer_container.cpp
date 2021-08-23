@@ -4,7 +4,7 @@
 //   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/iterator/indirect_iterator.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>

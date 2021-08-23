@@ -9,6 +9,8 @@
 #include <boost/variant.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
+#include <boost/core/lightweight_test.hpp>
+
 namespace spirit_test
 {
     ///////////////////////////////////////////////////////////////////////////

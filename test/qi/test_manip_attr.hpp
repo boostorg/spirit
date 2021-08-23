@@ -18,6 +18,7 @@
 #include <boost/spirit/include/qi_stream.hpp>
 #include <boost/spirit/include/qi_match_attr.hpp>
 
+#include <boost/core/lightweight_test.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/iterate.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>

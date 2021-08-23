@@ -7,7 +7,6 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 
 
 #define BOOST_SPIRIT_SWITCH_CASE_LIMIT 6
@@ -27,6 +26,8 @@
 #include <boost/spirit/include/classic_switch.hpp>
 #include <boost/spirit/include/classic_select.hpp>
 #include <boost/spirit/include/classic_closure.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 

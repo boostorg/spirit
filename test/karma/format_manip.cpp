@@ -17,7 +17,7 @@
 #include <vector>
 #include <list>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/assign/std/vector.hpp>
 #include <boost/assign/std/list.hpp>
 

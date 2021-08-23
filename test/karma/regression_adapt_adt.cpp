@@ -6,7 +6,6 @@
 
 #include <boost/mpl/print.hpp>
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/fusion/include/adapt_adt.hpp>
 

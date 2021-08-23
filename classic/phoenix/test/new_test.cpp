@@ -8,11 +8,12 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <boost/spirit/include/phoenix1_new.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace phoenix;
 using namespace std;

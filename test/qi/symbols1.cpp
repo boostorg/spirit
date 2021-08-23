@@ -15,7 +15,6 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
-#include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 
 #include <iostream>

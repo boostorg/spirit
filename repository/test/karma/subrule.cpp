@@ -5,7 +5,6 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>

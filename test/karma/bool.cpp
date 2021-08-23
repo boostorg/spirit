@@ -7,7 +7,6 @@
 =============================================================================*/
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>

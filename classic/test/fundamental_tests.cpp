@@ -12,12 +12,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <boost/static_assert.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_meta.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 

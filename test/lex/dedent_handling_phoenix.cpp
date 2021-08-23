@@ -6,12 +6,13 @@
 #include <iostream>
 #include <sstream>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/lex.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 namespace lex = boost::spirit::lex;
 namespace phoenix = boost::phoenix;

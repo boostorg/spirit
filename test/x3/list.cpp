@@ -9,7 +9,6 @@
 #include <set>
 #include <map>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 
 #include <string>

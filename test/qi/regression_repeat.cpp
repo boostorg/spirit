@@ -5,8 +5,9 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <iostream> 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi.hpp> 
+
+#include <boost/core/lightweight_test.hpp>
  
 namespace qi = boost::spirit::qi; 
 using qi::omit; 

@@ -9,7 +9,6 @@
 
 #define BOOST_SPIRIT_X3_UNICODE
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 
 #include <boost/utility/string_view.hpp>

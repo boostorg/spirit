@@ -10,7 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_STRINGSTREAM

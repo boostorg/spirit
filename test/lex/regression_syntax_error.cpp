@@ -4,7 +4,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/config/warning_disable.hpp>
 
 #include <boost/spirit/include/lex_lexertl.hpp>
@@ -14,6 +13,7 @@
 #include <boost/spirit/include/qi_grammar.hpp>
 #include <boost/spirit/include/qi_eoi.hpp>
 
+#include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/operator/self.hpp>
 #include <string>
 #include <iostream>

@@ -11,7 +11,6 @@
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 
-#include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 
 #include "test.hpp"

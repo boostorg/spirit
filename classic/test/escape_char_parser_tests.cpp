@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <boost/core/ignore_unused.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <cstdio>       // for sprintf
 
 #if !defined(BOOST_NO_CWCHAR) && !defined(BOOST_NO_SWPRINTF)

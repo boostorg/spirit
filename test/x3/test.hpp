@@ -8,6 +8,8 @@
 #define BOOST_SPIRIT_TEST_FEBRUARY_01_2007_0605PM
 
 #include <boost/spirit/home/x3/core/parse.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/utility/string_view.hpp>
 #include <iostream>
 

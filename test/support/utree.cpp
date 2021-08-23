@@ -8,10 +8,11 @@
 =============================================================================*/
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/functional/hash.hpp>
 #include <boost/spirit/include/support_utree.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 #include <iostream>
 #include <sstream>

@@ -8,7 +8,6 @@
 #include <iostream>
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/cstdint.hpp>
 
 #include <boost/spirit/include/karma_char.hpp>

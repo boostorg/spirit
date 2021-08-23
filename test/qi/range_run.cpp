@@ -6,8 +6,9 @@
 ==============================================================================*/
 #include <iostream>
 #include <cctype>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/support/char_set/range_run.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/integer_traits.hpp>
 #if defined(_MSC_VER) && _MSC_VER < 1700

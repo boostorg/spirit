@@ -10,7 +10,6 @@
 // This test verifies, that reapeat_p et.al. work correctly while using AST's
 
 # include <map>
-# include <boost/detail/lightweight_test.hpp>
 # include <iostream>
 # include <string>
 
@@ -18,6 +17,8 @@
 # include <boost/spirit/include/classic_loops.hpp>
 # include <boost/spirit/include/classic_ast.hpp>
 # include <boost/spirit/include/classic_tree_to_xml.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 

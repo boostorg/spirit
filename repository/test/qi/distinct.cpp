@@ -7,7 +7,6 @@
 
 #include <boost/mpl/print.hpp>
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
 #include <boost/spirit/include/qi_nonterminal.hpp>

@@ -28,7 +28,7 @@
 #include <vector>
 #include <list>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Char, typename Expr>

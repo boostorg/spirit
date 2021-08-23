@@ -7,7 +7,6 @@
 #define BOOST_SPIRIT_TEST_AUTO_HPP
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/spirit/include/karma_bool.hpp>

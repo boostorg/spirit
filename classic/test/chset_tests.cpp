@@ -9,11 +9,11 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include "impl/sstream.hpp"
 
 #include <boost/spirit/include/classic_chset.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;

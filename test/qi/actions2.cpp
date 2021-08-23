@@ -15,7 +15,6 @@
 
 #define BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/detail/workaround.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_bind.hpp>

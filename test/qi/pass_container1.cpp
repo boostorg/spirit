@@ -8,7 +8,6 @@
 #include <set>
 #include <map>
 
-#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>

@@ -6,7 +6,6 @@
 
 #define BOOST_SPIRIT_KARMA_DEBUG
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>

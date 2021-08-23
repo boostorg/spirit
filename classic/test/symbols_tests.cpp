@@ -9,10 +9,10 @@
 =============================================================================*/
 #include <iostream>
 #include <string>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_symbols.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;

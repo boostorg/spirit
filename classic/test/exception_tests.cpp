@@ -8,8 +8,9 @@
 =============================================================================*/
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_exceptions.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 
 #ifdef _MSC_VER
 // bogus https://developercommunity.visualstudio.com/t/buggy-warning-c4709/471956

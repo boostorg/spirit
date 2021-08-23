@@ -10,7 +10,6 @@
 #define BOOST_SPIRIT_TEST_QI_INT_HPP
 
 #include <climits>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
