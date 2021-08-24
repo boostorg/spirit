@@ -19,7 +19,6 @@
 // Uncomment this if you want to enable debugging
 //#define BOOST_SPIRIT_X3_DEBUG
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>

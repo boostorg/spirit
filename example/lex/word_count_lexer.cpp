@@ -32,7 +32,6 @@
 
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 
-#include <boost/config/warning_disable.hpp>
 //[wcl_includes
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

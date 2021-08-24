@@ -49,7 +49,6 @@
 
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 
-#include <boost/config/warning_disable.hpp>
 //[wcf_includes
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/bind/bind.hpp>

@@ -18,7 +18,6 @@
 
 // #define BOOST_SPIRIT_DEBUG
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/support_utree.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

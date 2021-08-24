@@ -13,7 +13,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 
 #include <iostream>

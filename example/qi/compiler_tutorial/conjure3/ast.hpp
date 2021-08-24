@@ -8,7 +8,6 @@
 #if !defined(BOOST_SPIRIT_CONJURE_AST_HPP)
 #define BOOST_SPIRIT_CONJURE_AST_HPP
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>

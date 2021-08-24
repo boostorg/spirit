@@ -5,8 +5,6 @@
 
 // #define BOOST_SPIRIT_LEXERTL_DEBUG 1
 
-#include <boost/config/warning_disable.hpp>
-
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>

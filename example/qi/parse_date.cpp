@@ -15,7 +15,6 @@
 // compatible for the rule we define a specialization of the customization 
 // point called 'transform_attribute'.
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/date_time.hpp>

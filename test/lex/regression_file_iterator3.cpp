@@ -7,8 +7,6 @@
 #define BOOST_SPIRIT_DEBUG 1    // required for token streaming
 // #define BOOST_SPIRIT_LEXERTL_DEBUG 1
 
-#include <boost/config/warning_disable.hpp>
-
 #include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/spirit/include/classic_position_iterator.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>

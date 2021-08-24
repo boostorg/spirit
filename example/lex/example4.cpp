@@ -21,7 +21,6 @@
 //  assignment statements and if and while control structures. Look at the file
 //  example4.input for an example.
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

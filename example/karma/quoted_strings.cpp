@@ -7,8 +7,6 @@
 //  and the built in matching capabilities of Karma generators to emit output 
 //  in different formats based on the content of an attribute (not its type).
 
-#include <boost/config/warning_disable.hpp>
-
 #include <string>
 #include <vector>
 

@@ -7,7 +7,6 @@
 #include <streambuf>
 #include <iostream>
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/cstdint.hpp>
 
 #include <boost/spirit/include/karma_char.hpp>

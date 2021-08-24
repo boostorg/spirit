@@ -15,8 +15,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
-
 #include <boost/spirit/include/qi.hpp>
 //[mini_xml_karma_sr_includes
 #include <boost/spirit/include/karma.hpp>

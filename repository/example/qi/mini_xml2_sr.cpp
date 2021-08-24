@@ -13,7 +13,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
 //[mini_xml2_sr_includes
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/repository/include/qi_subrule.hpp>

@@ -22,7 +22,6 @@
 // you need (e.g. see qi::uint_type uint_ below).
 #define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <iostream>
 #include <string>

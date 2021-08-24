@@ -13,7 +13,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/warning_disable.hpp>
 //[tutorial_adder_includes
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>

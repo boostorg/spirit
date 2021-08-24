@@ -5,8 +5,6 @@
 
 // compilation test only
 
-#include <boost/config/warning_disable.hpp>
-
 #include <string>
 #include <vector>
 

@@ -8,8 +8,6 @@
 #if !defined(BOOST_SPIRIT_TEST_MATCH_MANIP_HPP)
 #define BOOST_SPIRIT_TEST_MATCH_MANIP_HPP
 
-#include <boost/config/warning_disable.hpp>
-
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
