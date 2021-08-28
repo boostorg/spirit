@@ -4,13 +4,14 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/fusion/include/adapt_adt.hpp>
-
-#include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/support_adapt_adt_attributes.hpp>
 
+#include <boost/spirit/include/karma.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/assert.hpp>
 #include <boost/core/ignore_unused.hpp>
+#include <boost/fusion/include/adapt_adt.hpp>
 
 #include "test.hpp"
 

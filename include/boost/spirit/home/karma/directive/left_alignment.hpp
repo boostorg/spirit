@@ -17,6 +17,7 @@
 #include <boost/spirit/home/karma/detail/default_width.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
+#include <boost/spirit/home/karma/char/char.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/karma/detail/attributes.hpp>

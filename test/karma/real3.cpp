@@ -4,11 +4,12 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include "real.hpp"
+
 #include <boost/spirit/include/version.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include "real.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 #ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT

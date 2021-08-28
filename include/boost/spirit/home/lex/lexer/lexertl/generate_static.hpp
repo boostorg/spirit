@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/static_version.hpp>
 #include <boost/scoped_array.hpp>
+#include <cstring>
 #include <locale>
 
 ///////////////////////////////////////////////////////////////////////////////

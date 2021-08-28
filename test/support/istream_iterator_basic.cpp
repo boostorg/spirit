@@ -5,11 +5,10 @@
 
 // A series of simple tests for the istream_iterator
 
-#include <sstream>
-
 #include <boost/spirit/include/support_istream_iterator.hpp>
 
 #include <boost/core/lightweight_test.hpp>
+#include <sstream>
 
 int main()
 {

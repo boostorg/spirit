@@ -3,6 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/spirit/include/qi_auto.hpp>
+
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
@@ -13,7 +15,6 @@
 #include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_directive.hpp>
-#include <boost/spirit/include/qi_auto.hpp>
 
 #include "test.hpp"
 

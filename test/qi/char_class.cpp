@@ -8,7 +8,8 @@
 
 #define BOOST_SPIRIT_UNICODE
 
-#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_char_class.hpp>
+
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/support_attributes.hpp>

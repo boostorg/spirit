@@ -10,9 +10,10 @@
 // Additionally this test makes sure the syntax 'self("state", "targetstate")'
 // works properly.
 
+#include <boost/spirit/include/lex_lexertl.hpp>
+
 #include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/spirit/include/classic_position_iterator.hpp>
-#include <boost/spirit/include/lex_lexertl.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/operator/self.hpp>

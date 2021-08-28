@@ -5,6 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include <boost/spirit/repository/include/qi_subrule.hpp>
+
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
@@ -17,8 +19,6 @@
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_bind.hpp>
 #include <boost/fusion/include/std_pair.hpp>
-
-#include <boost/spirit/repository/include/qi_subrule.hpp>
 
 #include <string>
 #include <cstring>

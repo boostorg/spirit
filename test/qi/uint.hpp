@@ -9,8 +9,8 @@
 #if !defined(BOOST_SPIRIT_TEST_QI_UINT_HPP)
 #define BOOST_SPIRIT_TEST_QI_UINT_HPP
 
-#include <climits>
-#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_uint.hpp>
+
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/support_argument.hpp>
@@ -18,6 +18,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 
 #include "test.hpp"
+#include <climits>
 #include <cstring>
 
 ///////////////////////////////////////////////////////////////////////////////
