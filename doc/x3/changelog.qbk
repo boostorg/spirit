@@ -8,7 +8,7 @@
 [section Changelog]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:spirit_3_0_9 Spirit V3.0.9 (Boost V1.76.0)]
+[section:spirit_3_0_9 Spirit V3.0.9 (Boost V1.77.0)]
 
 *Breaking change*: Optional parser no longer unflattens sequence, parsers like
   `int_ >> -(int_ >> int_)` into `tuple<int, optional<int>, optional<int>>`
@@ -18,6 +18,8 @@
 * Fixed list parser with attribute-less subject in sequence parser. [gh_pr 663]
 * Fixed optional parser with container attribute in sequence parser. [gh_pr 665]
 * Fixed `error_handler` newline/whitespace handling issues. [gh_pr 669] [gh_pr 670]
+* Fixed `seek[...]` directive going past the end of input introduced in [gh_pr 30],
+  triggered when pre-skip leaves no data. [gh_pr 658] [gh_pr 683]
 * Removed rollback in rules to fix a regression introduced in [gh_pr 670]. [gh_pr 686]
 
 [endsect]
