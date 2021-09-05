@@ -17,8 +17,8 @@
 #include <boost/spirit/include/qi_auxiliary.hpp>
 #include <boost/spirit/include/qi_rule.hpp>
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant.hpp>
 #include <boost/assert.hpp>

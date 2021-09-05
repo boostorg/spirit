@@ -9,8 +9,8 @@
 #include <boost/spirit/include/karma_format.hpp>
 #include <boost/spirit/include/karma_format_auto.hpp>
 #include <boost/spirit/include/karma_stream.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <string>
 #include <sstream>

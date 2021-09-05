@@ -6,9 +6,9 @@
 #if !defined(SPIRIT_LEXER_EXAMPLE_WORD_COUNT_LEXER_TOKENS_FEB_10_2008_0739PM)
 #define SPIRIT_LEXER_EXAMPLE_WORD_COUNT_LEXER_TOKENS_FEB_10_2008_0739PM
 
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/core.hpp>
 #include <boost/iterator/iterator_traits.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

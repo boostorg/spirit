@@ -13,10 +13,10 @@
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_container.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/stl/container.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <vector>

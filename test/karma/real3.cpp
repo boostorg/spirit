@@ -8,8 +8,8 @@
 
 #include <boost/spirit/include/version.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 #ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT

@@ -7,7 +7,7 @@
 
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/phoenix.hpp>
 
 namespace lex = boost::spirit::lex;
 namespace qi = boost::spirit::qi;

@@ -10,7 +10,7 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/spirit/home/qi.hpp>
 #include <boost/spirit/home/qi/nonterminal/grammar.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/phoenix.hpp>
 #include <boost/foreach.hpp>
 
 namespace qi = boost::spirit::qi;

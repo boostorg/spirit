@@ -19,7 +19,7 @@
 
 #include <boost/detail/workaround.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_bind.hpp>
+#include <boost/phoenix/bind.hpp>
 #include <string>
 #include "test.hpp"
 

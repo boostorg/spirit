@@ -11,7 +11,7 @@
 #include <vector>
 
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/phoenix/stl.hpp>
 
 namespace client
 {

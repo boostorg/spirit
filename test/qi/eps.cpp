@@ -8,7 +8,7 @@
 
 #include <boost/spirit/include/qi_lazy.hpp>
 #include <boost/spirit/include/qi_not_predicate.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
 #include <iostream>
 #include "test.hpp"
 

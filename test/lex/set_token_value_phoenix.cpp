@@ -7,8 +7,8 @@
 #include <boost/spirit/include/lex_lexertl.hpp>
 
 #include <boost/core/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/function.hpp>
 #include <boost/phoenix/operator/self.hpp>
 #include <string>
 #include <iostream>
