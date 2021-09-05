@@ -18,9 +18,9 @@
 //[wc_static_include
 #include <boost/spirit/include/lex_static_lexertl.hpp>
 //]
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_container.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
+#include <boost/phoenix/stl/container.hpp>
 
 #include <iostream>
 #include <string>

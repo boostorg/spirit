@@ -11,7 +11,7 @@
 #include <boost/spirit/include/qi_grammar.hpp>
 
 #include <boost/core/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <iostream>
 #include <string>

@@ -9,9 +9,9 @@
 #include <boost/spirit/include/karma_action.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/statement.hpp>
 
 #include "test.hpp"
 

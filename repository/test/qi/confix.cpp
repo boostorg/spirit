@@ -14,10 +14,10 @@
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_string.hpp>
-#include <boost/spirit/include/phoenix_bind.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/bind.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <string>
 #include "test.hpp"

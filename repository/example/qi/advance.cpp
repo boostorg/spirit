@@ -7,7 +7,7 @@
 
 //[qi_advance_includes
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/spirit/repository/include/qi_advance.hpp>
 //]
 

@@ -10,8 +10,8 @@
 #include <string>
 
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/function.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 

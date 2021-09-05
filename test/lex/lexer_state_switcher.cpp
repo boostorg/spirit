@@ -5,8 +5,8 @@
 
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 

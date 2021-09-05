@@ -7,8 +7,8 @@
 =============================================================================*/
 //[reference_lex_includes
 #include <boost/spirit/include/lex.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <iostream>
 #include <string>
 //]

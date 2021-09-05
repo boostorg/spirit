@@ -16,7 +16,7 @@
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_string.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <boost/assign/std/list.hpp>
 #include "test.hpp"

@@ -9,8 +9,8 @@
 //[reference_karma_includes
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/support_utree.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/proto/deep_copy.hpp>
 #include <iostream>

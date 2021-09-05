@@ -10,7 +10,7 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/phoenix/core.hpp>
 
 #include <iostream>
 #include "test.hpp"
