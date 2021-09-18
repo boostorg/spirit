@@ -410,6 +410,9 @@ jobs:
           toolset.flags gcc.compile OPTIONS <warnings>extra :
               -Wshadow-local
             : unchecked ;
+          toolset.flags clang-linux.compile OPTIONS <warnings>extra :
+              -Wundefined-reinterpret-cast
+            : unchecked ;
 
           # Ignore some warnings
           feature.feature known-warnings : suppress : optional incidental propagated ;
