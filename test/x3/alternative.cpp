@@ -274,5 +274,27 @@ main()
         BOOST_TEST_EQ(s, "abcbbcd");
     }
 
+    { // conversion between alternatives
+        struct X {};
+        struct Y {};
+        struct Z {};
+        boost::variant<X, Y, Z> v;
+        boost::variant<Y, X> x{X{}};
+        v = x; // boost::variant supports that convertion
+        auto const p = 'x' >> attr(x) | 'z' >> attr(Z{});
+        BOOST_TEST(test_attr("z", p, v));
+        BOOST_TEST(boost::get<Z>(&v) != nullptr);
+        BOOST_TEST(test_attr("x", p, v));
+        BOOST_TEST(boost::get<X>(&v) != nullptr);
+    }
+
+    { // regression test for #679
+        using Qaz = std::vector<boost::variant<int>>;
+        using Foo = std::vector<boost::variant<Qaz, int>>;
+        using Bar = std::vector<boost::variant<Foo, int>>;
+        Bar x;
+        BOOST_TEST(test_attr("abaabb", +('a' >> attr(Foo{}) | 'b' >> attr(int{})), x));
+    }
+
     return boost::report_errors();
 }
