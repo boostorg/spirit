@@ -8,6 +8,16 @@
 [section Changelog]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_3_10 Spirit V3.10 (Boost V1.78.0)]
+
+* Fortified against `min` and `max` macros. [gh_pr 697]
+* Producing a variant attribute in an alternative parser branch was leading to a
+  compilation error when parsed into a superset variant attribute due to
+  swapped parameters to `is_substitute` trait. [gh_pr 702] [gh 701] [gh 679]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_3_0_9 Spirit V3.0.9 (Boost V1.77.0)]
 
 *Breaking change*: Optional parser no longer unflattens sequence, parsers like

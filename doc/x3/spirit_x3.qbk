@@ -8,7 +8,7 @@
 
 [article Spirit X3
     [quickbook 1.5]
-    [version 3.0.9]
+    [version 3.10]
     [authors [de Guzman, Joel], [Kaiser, Hartmut]]
     [copyright 2001-2018 Joel de Guzman, Hartmut Kaiser]
     [/ purpose Parser Library]
@@ -19,13 +19,13 @@
     ]
 ]
 
-[/ May 12, 2015 ]
+[/ Nov 29, 2021 ]
 
 [/=============================================================================
     Some links and defines
 =============================================================================/]
 
-[def __version__                V3.0.9]
+[def __version__                V3.10]
 
 [/ external]
 

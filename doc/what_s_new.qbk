@@ -9,6 +9,18 @@
 [section What's New]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:spirit_2_5_9_boost_1_78 Spirit V2.5.9 (Boost V1.78.0)]
+
+* Improved headers self-sufficiency. [gh 695]
+* Removed unneeded `boost/foreach.hpp` include.
+* Fortified against `min` and `max` macros. [gh_pr 697]
+* Deprecated Phoenix V2 transition headers (`boost/spirit/include/phoenix*.hpp`). [gh_pr 699]
+* Fixed potential UB in `hold_any` (`-Wundefined-reinterpret-cast` warnings).
+* Fixed swapped parameters to `is_substitute`. [gh_pr 702] [gh 701] [gh 679]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:spirit_2_5_8_boost_1_77 Spirit V2.5.8 (Boost V1.77.0)]
 
 * Fixed keyword list parser with Fusion adapt ADT attribute. [gh 666]
