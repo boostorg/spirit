@@ -26,6 +26,7 @@ project spirit
         <warnings>extra,<toolset>clang-linux:<cxxflags>-Wshadow-field-in-constructor
         <warnings>extra,<toolset>clang-linux:<cxxflags>-Wshadow-uncaptured-local
         <warnings>extra,<toolset>clang-linux:<cxxflags>-Wundefined-reinterpret-cast
+        <warnings>extra,<toolset>msvc:<cxxflags>-w44555  # result of expression not used
 
         # Broken or very high false-positive rate
         <known-warnings>hide,<toolset>gcc:<cxxflags>-Wno-maybe-uninitialized  # Too many pesky false-positives
