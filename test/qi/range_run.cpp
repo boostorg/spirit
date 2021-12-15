@@ -9,6 +9,14 @@
 #include <iostream>
 #include <cctype>
 #include <boost/core/lightweight_test.hpp>
+// suppress -Wdeprecated-copy from dynamic_bitset and random
+#if defined(__GNUC__) && __GNUC__ >= 9
+# pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#elif defined(__clang__) && defined(__has_warning)
+# if __has_warning("-Wdeprecated-copy")
+#  pragma clang diagnostic ignored "-Wdeprecated-copy"
+# endif
+#endif
 #include <boost/dynamic_bitset.hpp>
 #include <boost/integer_traits.hpp>
 #if defined(_MSC_VER) && _MSC_VER < 1700

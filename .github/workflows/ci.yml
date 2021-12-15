@@ -421,9 +421,6 @@ jobs:
             # -Wextra warnings:
               -Wno-deprecated-copy      # Proto, Phoenix, GCC bug 92145
             : unchecked ;
-          toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
-              -Wno-deprecated-copy      # Proto, Phoenix
-            : unchecked ;
 
           EOF
           # Determining the root branch
