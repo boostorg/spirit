@@ -53,17 +53,6 @@ using $(toolset-name) : $(toolset-feature) : ccache $(cxx) ;
 variant sanitize : <optimization>speed <debug-symbols>off <inlining>full
                    <runtime-debugging>off ;
 
-# Ignore some warnings
-feature.feature known-warnings : suppress : optional incidental propagated ;
-toolset.flags gcc.compile OPTIONS <known-warnings>suppress :
-    -Wno-maybe-uninitialized  # this warning is known to give false positives
-  # -Wextra warnings:
-    -Wno-deprecated-copy      # Proto, Phoenix, GCC bug 92145
-  : unchecked ;
-toolset.flags clang-linux.compile OPTIONS <known-warnings>suppress :
-    -Wno-deprecated-copy      # Proto, Phoenix
-  : unchecked ;
-
 # Determining the root branch
 if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
   export BRANCH=$TRAVIS_BRANCH
@@ -94,6 +83,6 @@ cd $JOB
 
 echo '==================================> SCRIPT'
 
-b2 link=shared threading=multi variant=release,sanitize toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB warnings=extra known-warnings=suppress warnings-as-errors=on
+b2 link=shared threading=multi variant=release,sanitize toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB warnings=extra warnings-as-errors=on
 
 fi

@@ -49,18 +49,6 @@ before_build:
       
       using $(toolset[1]) : $(toolset[2-]:J="-") : : <compiler>clcache ;
       
-      # Ignore some warnings
-      feature.feature known-warnings : suppress : optional incidental propagated ;
-      toolset.flags msvc.compile OPTIONS <known-warnings>suppress :
-          -wd4244  # lit1.cpp(31): wchar_t to char truncation
-          -wd4100  # unreferenced formal parameter
-          -wd4458  # declaration of 'varname' hides class member
-          -wd4459  # declaration of 'varname' hides global declaration
-          -wd4512  # assignment operator could not be generated
-          -wd4701  # potentially uninitialized local variable 'varname' used
-          -wd4714  # function 'x' marked as __forceinline not inlined
-        : unchecked ;
-      
       # A subfeature that tells Spirit tests to use PCH
       feature.subfeature pch on : version : spirit : optional propagated incidental ;
       
@@ -108,4 +96,4 @@ build_script:
 
 test_script:
   - b2 %B2_ARGS% %PROJECT%\classic\test %PROJECT%\repository\test %PROJECT%\test
-      warnings=extra known-warnings=suppress warnings-as-errors=on pch=on-spirit 
+      warnings=extra warnings-as-errors=on pch=on-spirit 

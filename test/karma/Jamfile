@@ -17,6 +17,8 @@ project spirit-karma
     : requirements
         <include>.
         <c++-template-depth>512
+        <known-warnings>hide,<toolset>gcc:<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92145
+        <known-warnings>hide,<toolset>msvc-10.0:<cxxflags>-wd4701  # Compiler bug in Proto
     ;
 
 ###############################################################################

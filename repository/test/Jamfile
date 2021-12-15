@@ -11,6 +11,7 @@ project spirit_v2_repository/test
     : requirements
         <include>.
         <c++-template-depth>300
+        <known-warnings>hide,<toolset>gcc:<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92145
     :
     :
     ;
