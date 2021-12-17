@@ -11,12 +11,13 @@
 import testing ;
 
 ###############################################################################
+local 9-11 = 9 10 11 ;
 
 project spirit-support
     : requirements
         <include>.
         <c++-template-depth>512
-        <known-warnings>hide,<toolset>gcc:<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92145
+        <known-warnings>hide,<toolset>gcc-$(9-11):<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94492
     ;
 
 ###############################################################################
