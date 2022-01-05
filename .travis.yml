@@ -152,3 +152,4 @@ script:
   - b2 link=shared threading=multi variant=release,sanitize
       toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB
       warnings=extra warnings-as-errors=on
+      define=BOOST_SPIRIT_X3_HIDE_CXX17_WARNING
