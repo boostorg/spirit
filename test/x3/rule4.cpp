@@ -43,6 +43,31 @@ struct my_rule_class
     }
 };
 
+struct on_success_advance_iterator
+{
+    template <typename Iterator, typename Attribute, typename Context>
+    void on_success(Iterator const&, Iterator& after, Attribute&, Context const&)
+    {
+        ++after;
+    }
+};
+struct on_success_advance_iterator_mutref
+{
+    template <typename Iterator, typename Attribute, typename Context>
+    void on_success(Iterator&, Iterator& after, Attribute&, Context const&)
+    {
+        ++after;
+    }
+};
+struct on_success_advance_iterator_byval
+{
+    template <typename Iterator, typename Attribute, typename Context>
+    void on_success(Iterator, Iterator& after, Attribute&, Context const&)
+    {
+        ++after;
+    }
+};
+
 int
 main()
 {
@@ -114,6 +139,18 @@ main()
         BOOST_TEST(!test("[123,456]", r));
 
         BOOST_TEST(got_it == 1);
+    }
+
+    { // on_success handler mutable 'after' iterator
+        auto r1 = rule<on_success_advance_iterator, char const*>()
+            = lit("ab");
+        BOOST_TEST(test("abc", r1));
+        auto r2 = rule<on_success_advance_iterator_mutref, char const*>()
+            = lit("ab");
+        BOOST_TEST(test("abc", r2));
+        auto r3 = rule<on_success_advance_iterator_byval, char const*>()
+            = lit("ab");
+        BOOST_TEST(test("abc", r3));
     }
 
     {
