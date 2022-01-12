@@ -117,7 +117,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             decltype(void(
                 std::declval<ID>().on_success(
                     std::declval<Iterator&>()
-                  , std::declval<Iterator>()
+                  , std::declval<Iterator&>()
                   , std::declval<Attribute&>()
                   , std::declval<Context>()
                 )
@@ -158,7 +158,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     {
         template <typename Iterator, typename Context, typename ActualAttribute>
         static bool call_on_success(
-            Iterator& /* first */, Iterator const& /* last */
+            Iterator& /* before */, Iterator& /* after */
           , Context const& /* context */, ActualAttribute& /* attr */
           , mpl::false_ /* No on_success handler */ )
         {
@@ -167,14 +167,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
         template <typename Iterator, typename Context, typename ActualAttribute>
         static bool call_on_success(
-            Iterator& first, Iterator const& last
+            Iterator& before, Iterator& after
           , Context const& context, ActualAttribute& attr
           , mpl::true_ /* Has on_success handler */)
         {
             bool pass = true;
             ID().on_success(
-                first
-              , last
+                before
+              , after
               , attr
               , make_context<parse_pass_context_tag>(pass, context)
             );
