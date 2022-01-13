@@ -12,7 +12,6 @@
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/skip_over.hpp>
 #include <boost/spirit/home/x3/directive/expect.hpp>
-#include <boost/spirit/home/x3/support/utility/sfinae.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/utility/addressof.hpp>
 
@@ -98,15 +97,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename Iterator, typename Context>
     struct has_on_error<ID, Iterator, Context,
-        typename disable_if_substitution_failure<
-            decltype(
+            decltype(void(
                 std::declval<ID>().on_error(
                     std::declval<Iterator&>()
                   , std::declval<Iterator>()
                   , std::declval<expectation_failure<Iterator>>()
                   , std::declval<Context>()
                 )
-            )>::type
+            ))
         >
       : mpl::true_
     {};
@@ -116,15 +114,14 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename ID, typename Iterator, typename Attribute, typename Context>
     struct has_on_success<ID, Iterator, Context, Attribute,
-        typename disable_if_substitution_failure<
-            decltype(
+            decltype(void(
                 std::declval<ID>().on_success(
                     std::declval<Iterator&>()
                   , std::declval<Iterator>()
                   , std::declval<Attribute&>()
                   , std::declval<Context>()
                 )
-            )>::type
+            ))
         >
       : mpl::true_
     {};
