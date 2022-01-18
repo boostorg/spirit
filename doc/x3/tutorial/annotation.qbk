@@ -115,6 +115,9 @@ successful parse without polluting the grammar. Like semantic actions,
 But, unlike semantic actions, `on_success` handlers are cleanly separated
 from the actual grammar.
 
+[*Note:] an `on_success` handler recieves a pre-skipped iterator even when
+the rule definition disables pre-skipping via `no_skip` directive.
+
 [heading Annotation Handler]
 
 As discussed, we annotate the AST with its position in the input stream with
