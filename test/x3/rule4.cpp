@@ -43,6 +43,18 @@ struct my_rule_class
     }
 };
 
+struct on_success_gets_preskipped_iterator
+{
+    static bool ok;
+
+    template <typename Iterator, typename Attribute, typename Context>
+    void on_success(Iterator before, Iterator& after, Attribute&, Context const&)
+    {
+        ok = ('b' == *before) && (++before == after);
+    }
+};
+bool on_success_gets_preskipped_iterator::ok = false;
+
 struct on_success_advance_iterator
 {
     template <typename Iterator, typename Attribute, typename Context>
@@ -139,6 +151,13 @@ main()
         BOOST_TEST(!test("[123,456]", r));
 
         BOOST_TEST(got_it == 1);
+    }
+
+    { // on_success gets pre-skipped iterator
+        auto r = rule<on_success_gets_preskipped_iterator, char const*>()
+            = lit("b");
+        BOOST_TEST(test("a b", 'a' >> r, lit(' ')));
+        BOOST_TEST(on_success_gets_preskipped_iterator::ok);
     }
 
     { // on_success handler mutable 'after' iterator
