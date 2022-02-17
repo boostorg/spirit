@@ -248,11 +248,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         typename l_pass::type l_attr = l_pass::call(l_part);
         typename r_pass::type r_attr = r_pass::call(r_part);
 
-        Iterator save = first;
         if (parser.left.parse(first, last, context, rcontext, l_attr)
             && parser.right.parse(first, last, context, rcontext, r_attr))
             return true;
-        first = save;
         return false;
     }
 
@@ -289,11 +287,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Context const& context, RContext& rcontext, Attribute& attr
       , traits::container_attribute)
     {
-        Iterator save = first;
         if (parse_sequence_container(parser.left, first, last, context, rcontext, attr)
             && parse_sequence_container(parser.right, first, last, context, rcontext, attr))
             return true;
-        first = save;
         return false;
     }
 
@@ -312,11 +308,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         Parser const& parser , Iterator& first, Iterator const& last
 	  , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_ /*should_split*/)
     {
-        Iterator save = first;
         if (parser.left.parse( first, last, context, rcontext, attr)
             && parser.right.parse(first, last, context, rcontext, attr))
             return true;
-        first = save;
         return false;
     }
 
