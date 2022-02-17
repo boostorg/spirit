@@ -42,6 +42,8 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
+    using spirit_test::test_failure;
+    using spirit_test::test_partial;
     using boost::spirit::x3::char_;
     using boost::spirit::x3::alpha;
     using boost::spirit::x3::upper;
@@ -58,6 +60,10 @@ main()
         BOOST_TEST(test("", *char_));
         BOOST_TEST(test("aaaaaaaa", *alpha));
         BOOST_TEST(!test("aaaaaaaa", *upper));
+
+        BOOST_TEST(test_partial("F", *sf, 0));
+        BOOST_TEST(test_partial("sF", +sf, 1));
+        BOOST_TEST(test_partial("ssF", +sf, 2));
     }
 
     {

@@ -76,12 +76,15 @@ namespace boost { namespace spirit { namespace x3
             }
 
             first = local_iterator;
+
+            Iterator iter = first;
             // parse some more up to the maximum specified
             for (/**/; !repeat_limit.got_max(i); ++i)
             {
                 if (!detail::parse_into_container(
-                      this->subject, first, last, context, rcontext, attr))
+                      this->subject, iter, last, context, rcontext, attr))
                     break;
+                first = iter;
             }
             return true;
         }

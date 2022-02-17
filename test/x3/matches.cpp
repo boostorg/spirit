@@ -8,12 +8,15 @@
 #include <boost/spirit/home/x3.hpp>
 #include <iostream>
 #include "test.hpp"
+#include "utils.hpp"
 
 int
 main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
+    using spirit_test::test_failure;
+    using spirit_test::test_partial;
     using boost::spirit::x3::matches;
     using boost::spirit::x3::char_;
 
@@ -23,6 +26,8 @@ main()
         BOOST_TEST(test("x", matches[char_]));
         bool result = false;
         BOOST_TEST(test_attr("x", matches[char_], result) && result);
+
+        BOOST_TEST(test_partial("F", matches[sf], 0));
     }
 
     {
