@@ -1,7 +1,7 @@
 //  Copyright (c) 2001-2009 Hartmut Kaiser
 //  Copyright (c) 2009 Carl Barron
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef MATLIB_H_05102009
@@ -37,7 +37,7 @@ struct store_double
     }
 
     // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(store_double& operator= (store_double const&));
+    BOOST_DELETED_FUNCTION(store_double& operator= (store_double const&))
 };
 
 struct add_row
@@ -58,7 +58,7 @@ struct add_row
     }
 
     // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(add_row& operator= (add_row const&));
+    BOOST_DELETED_FUNCTION(add_row& operator= (add_row const&))
 };
 
 template <class Lexer>
@@ -74,17 +74,17 @@ struct matlib_tokens : boost::spirit::lex::lexer<Lexer>
 
         number = "[-+]?({REAL1}|{REAL2})([eE][-+]?[0-9]+)?";
 
-        this->self 
+        this->self
             =   token_def_('[') [set_lexer_state("A")]
             ;
 
-        this->self("A") 
+        this->self("A")
             =   token_def_('[') [set_lexer_state("B")]
             |   ','
             |   token_def_(']') [set_lexer_state("INITIAL")]
             ;
 
-        this->self("B") 
+        this->self("B")
             =   number [store_double(row)]
             |   ','
             |   token_def_(']') [add_row(matrix,row)]
