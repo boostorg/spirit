@@ -71,7 +71,7 @@ local multi-threading = <library>boost_thread
           [ spirit-run char_strings_test.cpp ]
           [ compile-fail char_strings_test_fail.cpp ]
           [ spirit-run numerics_tests.cpp : : : $(opt) ]
-          [ spirit-run custom_real_parser.cpp : : : [ requires cxx11_sfinae_expr ] ]
+          [ spirit-run custom_real_parser.cpp : : : [ requires cxx14_constexpr ] ]
         ;
 
     test-suite "spirit.classic.core.composite"
