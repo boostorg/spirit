@@ -68,4 +68,3 @@ run utree.cpp ;
 run utree_debug.cpp ;
 
 compile multi_pass_functor.cpp ;
-compile multi_pass_position_iterator.cpp ;
