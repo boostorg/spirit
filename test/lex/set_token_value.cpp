@@ -21,6 +21,10 @@ enum tokenids
     ID_DEDENT
 };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
 struct handle_whitespace
 {
     handle_whitespace(std::stack<unsigned int>& indents)
@@ -78,10 +82,10 @@ struct handle_whitespace
     }
 
     std::stack<unsigned int>& indents_;
-
-    // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(handle_whitespace& operator= (handle_whitespace const&))
 };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition

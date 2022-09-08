@@ -23,6 +23,10 @@ struct set_lexer_state
     }
 };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
 struct store_double
 {
     std::vector<double> &out;
@@ -35,9 +39,6 @@ struct store_double
         std::string work(start, end);
         out.push_back(std::atof(work.c_str()));
     }
-
-    // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(store_double& operator= (store_double const&))
 };
 
 struct add_row
@@ -56,9 +57,6 @@ struct add_row
         matrix.back().swap(row);
         ctx.set_state_name("A");
     }
-
-    // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(add_row& operator= (add_row const&))
 };
 
 template <class Lexer>
@@ -95,6 +93,9 @@ struct matlib_tokens : boost::spirit::lex::lexer<Lexer>
     std::vector<std::vector<double> > &matrix;
     std::vector<double> row;
 };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #endif
 
