@@ -21,6 +21,10 @@ namespace testns
     BOOST_SPIRIT_TERMINAL_NAME_EX( ops, ops_type )
 
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
     ///////////////////////////////////////////////////////////////////////////
     // Parsers
     ///////////////////////////////////////////////////////////////////////////
@@ -67,9 +71,6 @@ namespace testns
         }
 
         const T1 t1;
-
-        // silence MSVC warning C4512: assignment operator could not be generated
-        BOOST_DELETED_FUNCTION(ops_1_parser& operator= (ops_1_parser const&))
     };
 
     template <typename T1, typename T2>
@@ -119,9 +120,6 @@ namespace testns
 
         const T1 t1;
         const T2 t2;
-
-        // silence MSVC warning C4512: assignment operator could not be generated
-        BOOST_DELETED_FUNCTION(ops_2_parser& operator= (ops_2_parser const&))
     };
 
     template <typename T1, typename T2, typename T3>
@@ -176,10 +174,10 @@ namespace testns
         const T1 t1;
         const T2 t2;
         const T3 t3;
-
-        // silence MSVC warning C4512: assignment operator could not be generated
-        BOOST_DELETED_FUNCTION(ops_3_parser& operator= (ops_3_parser const&))
     };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 }
 
