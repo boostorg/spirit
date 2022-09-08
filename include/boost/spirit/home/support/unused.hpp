@@ -27,6 +27,8 @@ namespace boost { namespace spirit
     struct unused_type
     {
         BOOST_DEFAULTED_FUNCTION(unused_type(), {})
+        BOOST_DEFAULTED_FUNCTION(unused_type(const unused_type& ), {})
+        BOOST_DEFAULTED_FUNCTION(unused_type& operator=(const unused_type& ), { return *this; })
 
         template <typename T>
         unused_type(T const&)

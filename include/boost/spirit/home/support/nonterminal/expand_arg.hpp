@@ -80,6 +80,9 @@ namespace boost { namespace spirit { namespace detail
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(expand_arg& operator= (expand_arg const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        expand_arg(const expand_arg&) = default;
+#endif
     };
 
 }}}

@@ -490,6 +490,9 @@ namespace boost { namespace spirit
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(terminal& operator= (terminal const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        terminal(const terminal&) = default;
+#endif
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -547,6 +550,9 @@ namespace boost { namespace spirit
 
             // silence MSVC warning C4512: assignment operator could not be generated
             BOOST_DELETED_FUNCTION(stateful_tag& operator= (stateful_tag const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+            stateful_tag(const stateful_tag&) = default;
+#endif
         };
     }
 

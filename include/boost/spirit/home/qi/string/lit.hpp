@@ -120,6 +120,9 @@ namespace boost { namespace spirit { namespace qi
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(literal_string& operator= (literal_string const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        literal_string(const literal_string&) = default;
+#endif
     };
 
     template <typename String, bool no_attribute>

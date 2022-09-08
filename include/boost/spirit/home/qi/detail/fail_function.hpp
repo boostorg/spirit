@@ -52,6 +52,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(fail_function& operator= (fail_function const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        fail_function(const fail_function&) = default;
+#endif
     };
 }}}}
 

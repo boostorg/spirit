@@ -93,6 +93,9 @@ namespace boost { namespace spirit { namespace qi
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(exact_iterator& operator= (exact_iterator const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        exact_iterator(const exact_iterator&) = default;
+#endif
     };
 
     template <typename T>
@@ -112,6 +115,9 @@ namespace boost { namespace spirit { namespace qi
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(finite_iterator& operator= (finite_iterator const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        finite_iterator(const finite_iterator&) = default;
+#endif
     };
 
     template <typename T>
@@ -208,6 +214,9 @@ namespace boost { namespace spirit { namespace qi
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(repeat_parser& operator= (repeat_parser const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        repeat_parser(const repeat_parser&) = default;
+#endif
     };
 
     ///////////////////////////////////////////////////////////////////////////

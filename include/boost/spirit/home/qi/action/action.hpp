@@ -139,6 +139,9 @@ namespace boost { namespace spirit { namespace qi
 
         // silence MSVC warning C4512: assignment operator could not be generated
         BOOST_DELETED_FUNCTION(action& operator= (action const&))
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+        action(const action&) = default;
+#endif
     };
 }}}
 
