@@ -36,6 +36,11 @@ namespace boost { namespace spirit { namespace traits
 }}}
 #endif
 
+struct double_prec16_policy : boost::spirit::karma::real_policies<double>
+{
+    static unsigned int precision(double) { return 16; }
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
@@ -183,6 +188,14 @@ int main()
         BOOST_TEST(test("1.0e-03", double_, 0.00099999999999999829));
         BOOST_TEST(test("1.0e-04", double_, 0.00009999999999999982));
         BOOST_TEST(test("1.0e-05", double_, 0.00000999999999999998));
+    }
+
+    // test for #735: off by a magnitude due to log10 rounding up
+    {
+        BOOST_TEST(test("0.0999999999999998",
+            karma::real_generator<double, double_prec16_policy>(),
+            0.099999999999999770
+            ));
     }
 
     return boost::report_errors();
