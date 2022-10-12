@@ -123,6 +123,7 @@ run attribute_type_check.cpp ;
 run fusion_map.cpp ;
 run x3_variant.cpp ;
 run error_handler.cpp ;
+run error_handler_positions.cpp ;
 run iterator_check.cpp ;
 
 run to_utf8.cpp ;
@@ -132,5 +133,3 @@ run rule_separate_tu.cpp rule_separate_tu_grammar ;
 
 obj grammar_linker : grammar.cpp ;
 run grammar_linker.cpp grammar_linker ;
-
-run position_cache.cpp ;
