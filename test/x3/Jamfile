@@ -105,6 +105,7 @@ run rule2.cpp ;
 run rule3.cpp ;
 run rule4.cpp ;
 run sequence.cpp ;
+run sequence_position_tagged.cpp ;
 run skip.cpp ;
 run symbols1.cpp ;
 run symbols2.cpp ;

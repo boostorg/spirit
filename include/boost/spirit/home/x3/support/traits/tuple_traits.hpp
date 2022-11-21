@@ -10,8 +10,11 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/is_view.hpp>
 #include <boost/fusion/include/size.hpp>
+#include <boost/fusion/include/find.hpp>
+#include <boost/fusion/include/end.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -52,6 +55,20 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
           , has_size<View, 1>
         >
     {};
+
+    template <typename Seq, typename T>
+    struct is_typecontaining_sequence
+    {
+        constexpr operator bool () noexcept {
+            if constexpr (fusion::traits::is_sequence<Seq>::value) {
+                using It = typename boost::fusion::result_of::find<Seq, T>::type;
+                using End = typename boost::fusion::result_of::end<Seq>::type;
+                return !is_same<It, End>::value;
+            }
+            return false;
+        }
+        static constexpr bool value = is_typecontaining_sequence<Seq, T>();
+    };
 }}}}
 
 #endif

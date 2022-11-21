@@ -8,11 +8,18 @@
 #define BOOST_SPIRIT_X3_SEQUENCE_JAN_06_2013_1015AM
 
 #include <boost/spirit/home/x3/support/traits/attribute_of_binary.hpp>
+#include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/sequence.hpp>
 #include <boost/spirit/home/x3/directive/expect.hpp>
+#include <boost/spirit/home/x3/support/ast/position_tagged_fwd.hpp>
 
 #include <boost/fusion/include/deque_fwd.hpp>
+#include <boost/fusion/include/filter_view.hpp>
+#include <boost/fusion/include/size.hpp>
+
+#include <boost/mpl/not.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -43,8 +50,18 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            return detail::parse_sequence(*this, first, last, context, rcontext, attr
-              , typename traits::attribute_category<Attribute>::type());
+            using attribute_category_t = typename traits::attribute_category<Attribute>::type;
+            if constexpr (traits::is_typecontaining_sequence<Attribute, position_tagged>::value) {
+                using condition_t = boost::mpl::not_<is_same<boost::mpl::_, position_tagged>>;
+                const auto filtered_attr = boost::fusion::filter_view<Attribute, condition_t>(attr);
+                static_assert(boost::fusion::result_of::size<decltype(filtered_attr)>::value > 1,
+                              "Size one sequences are not supported to be used with position_tagged in fields");
+                return detail::parse_sequence(*this, first, last, context, rcontext, filtered_attr
+                                            , attribute_category_t());
+            } else {
+                return detail::parse_sequence(*this, first, last, context, rcontext, attr
+                                            , attribute_category_t());
+            }
         }
     };
 
