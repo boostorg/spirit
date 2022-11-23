@@ -38,13 +38,14 @@ The full cpp file for this example can be found here:
 
 First, we'll update our previous employee struct, this time separating the
 person into its own struct. So now, we have two structs, the `person` and the
-`employee`. Take note too that we now inherit `person` and `employee` from
-`x3::position_tagged` which provides positional information that we can use
-to tell the AST's position in the input stream anytime.
+`employee`. Take note too that we now embed `x3::position_tagged` in
+`person` and `employee`. `x3::position_tagged` provides positional information
+that we can use to tell the AST's position in the input stream anytime.
 
     namespace client { namespace ast
     {
-        struct person : x3::position_tagged
+        // First way to embed `x3::position_tagged` in structure...
+        struct person
         {
             person(
                 std::string const& first_name = ""
@@ -54,9 +55,11 @@ to tell the AST's position in the input stream anytime.
             , last_name(last_name)
             {}
 
+            x3::position_tagged pt;
             std::string first_name, last_name;
         };
 
+        // ...and the second.
         struct employee : x3::position_tagged
         {
             int age;

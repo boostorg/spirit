@@ -7,9 +7,12 @@
 #if !defined(BOOST_SPIRIT_X3_POSITION_TAGGED_MAY_01_2014_0321PM)
 #define BOOST_SPIRIT_X3_POSITION_TAGGED_MAY_01_2014_0321PM
 
+#include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/core/enable_if.hpp>
+#include <boost/fusion/include/find.hpp>
+#include <boost/fusion/include/deref.hpp>
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -51,17 +54,16 @@ namespace boost { namespace spirit { namespace x3
             (!is_base_of<position_tagged, AST>::value)
           , boost::iterator_range<iterator_type>
         >::type
-        position_of(AST const& /* ast */) const
+        position_of(AST const& ast) const
         {
-            // returns an empty position
-            return boost::iterator_range<iterator_type>();
+            return position_of_noninherited(ast, typename traits::is_typecontaining_sequence<AST, position_tagged>());
         }
 
         // This will catch all nodes except those inheriting from position_tagged
         template <typename AST>
-        void annotate(AST& /* ast */, iterator_type /* first */, iterator_type /* last */, mpl::false_)
+        void annotate(AST& ast, iterator_type first, iterator_type last, mpl::false_)
         {
-            // (no-op) no need for tags
+            annotate_noninherited(ast, first, last, typename traits::is_typecontaining_sequence<AST, position_tagged>());
         }
 
         // This will catch all nodes inheriting from position_tagged
@@ -87,6 +89,48 @@ namespace boost { namespace spirit { namespace x3
 
         iterator_type first() const { return first_; }
         iterator_type last() const { return last_; }
+
+
+    private:
+        // This will catch all nodes except those containing position_tagged as a field
+        template <typename AST>
+        typename boost::enable_if_c<
+            (!is_base_of<position_tagged, AST>::value)
+          , boost::iterator_range<iterator_type>
+        >::type
+        position_of_noninherited(AST const& /* ast */, mpl::false_) const
+        {
+            // returns an empty position
+            return boost::iterator_range<iterator_type>();
+        }
+        
+        // This will catch all nodes containing position_tagged as a field
+        template <typename AST>
+        typename boost::enable_if_c<
+            (!is_base_of<position_tagged, AST>::value)
+          , boost::iterator_range<iterator_type>
+        >::type
+        position_of_noninherited(AST const& ast, mpl::true_) const
+        {
+            return position_of(*fusion::find<position_tagged>(ast));
+        }
+        
+        // This will catch all nodes except those containing position_tagged as a field
+        template <typename AST>
+        void annotate_noninherited(AST& /* ast */, iterator_type /* first */, iterator_type /* last */, mpl::false_)
+        {
+            // (no-op) no need for tags
+        }
+        
+        // This will catch all nodes containing position_tagged as a field
+        template <typename AST>
+        void annotate_noninherited(AST& ast, iterator_type first, iterator_type last, mpl::true_)
+        {
+            annotate(*fusion::find<position_tagged>(ast), first, last, mpl::true_());
+            //                                                         ^~~~~~~~~~~~
+            //                                                         to force the overloading that i need
+        }
+
 
     private:
 
