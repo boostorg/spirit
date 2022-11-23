@@ -71,7 +71,7 @@ that we can use to tell the AST's position in the input stream anytime.
 Like before, we need to tell __fusion__ about our structs to make them
 first-class fusion citizens that the grammar can utilize:
 
-    BOOST_FUSION_ADAPT_STRUCT(client::ast::person,
+    BOOST_FUSION_ADAPT_STRUCT(client::ast::person, pt,
         first_name, last_name
     )
 
