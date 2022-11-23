@@ -67,6 +67,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
             }
             return false;
         }
+        typedef is_typecontaining_sequence type;
+        typedef bool value_type;
         static constexpr bool value = is_typecontaining_sequence<Seq, T>();
     };
 }}}}

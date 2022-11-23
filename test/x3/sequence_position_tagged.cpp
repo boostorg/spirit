@@ -49,6 +49,7 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
+    // TODO: more combinations of position_tagged's positions
     {
         vector<char, char, position_tagged> attr;
         BOOST_TEST((test_attr("ab", char_ >> char_, attr)));
@@ -107,8 +108,6 @@ main()
     }
 #endif
 
-    // TODO: enable it
-#if 0
     {
         // make sure single element tuples get passed through if the rhs
         // has a single element tuple as its attribute. Edit JDG 2014:
@@ -128,7 +127,6 @@ main()
         BOOST_TEST(*begin(fv) == 'x');
         BOOST_TEST(*next(begin(fv)) == 1);
     }
-#endif
 
 #ifdef BOOST_SPIRIT_COMPILE_ERROR_CHECK
     {

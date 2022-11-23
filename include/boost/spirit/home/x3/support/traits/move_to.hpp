@@ -12,12 +12,18 @@
 #include <boost/spirit/home/x3/support/traits/attribute_category.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/variant_has_substitute.hpp>
+#include <boost/spirit/home/x3/support/ast/position_tagged_fwd.hpp>
 
 #include <boost/assert.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/move.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
+#include <boost/fusion/include/filter_view.hpp>
+
+#include <boost/mpl/not.hpp>
+#include <boost/type_traits/is_same.hpp>
+
 #include <utility>
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
@@ -97,6 +103,23 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         move_to(Source& src, Dest& dest, tuple_attribute)
         {
             fusion::move(std::move(src), dest);
+        }
+
+        template <typename Source, typename Dest>
+        inline typename enable_if<
+            mpl::and_<
+                is_typecontaining_sequence<Source, position_tagged>,
+                mpl::not_<is_size_one_sequence<Dest> > >
+        >::type
+        move_to(Source& src, Dest& dest, tuple_attribute)
+        {
+            // FIXME disable this overload when `is_same_size_sequence<Dest, decltype(filtered_src)>` false
+
+            // FIXME move `src` when the moving will be available on the Fusion's side
+            //       unfortunately, only `filtered_src` will be moved, but not `src`
+            using condition_t = boost::mpl::not_<is_same<boost::mpl::_, position_tagged>>;
+            auto filtered_src = boost::fusion::filter_view<Source, condition_t>(src);
+            fusion::move(std::move(filtered_src), dest);
         }
 
         template <typename Source, typename Dest>
