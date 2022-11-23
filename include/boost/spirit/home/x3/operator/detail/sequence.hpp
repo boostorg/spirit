@@ -13,6 +13,7 @@
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
+#include <boost/spirit/home/x3/support/ast/position_tagged_fwd.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
 #include <boost/fusion/include/begin.hpp>
@@ -22,8 +23,11 @@
 #include <boost/fusion/include/empty.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/iterator_range.hpp>
+#include <boost/fusion/include/filter_view.hpp>
+#include <boost/fusion/include/size.hpp>
 
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/not.hpp>
 
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -232,7 +236,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute, typename AttributeCategory>
-    bool parse_sequence(
+    bool parse_sequence_filtered(
         Parser const& parser, Iterator& first, Iterator const& last
       , Context const& context, RContext& rcontext, Attribute& attr
       , AttributeCategory)
@@ -284,7 +288,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>
-    bool parse_sequence(
+    bool parse_sequence_filtered(
         Parser const& parser , Iterator& first, Iterator const& last
       , Context const& context, RContext& rcontext, Attribute& attr
       , traits::container_attribute)
@@ -322,7 +326,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
     template <typename Parser, typename Iterator, typename Context
       , typename RContext, typename Attribute>
-    bool parse_sequence(
+    bool parse_sequence_filtered(
         Parser const& parser, Iterator& first, Iterator const& last
       , Context const& context, RContext& rcontext, Attribute& attr
       , traits::associative_attribute)
@@ -355,6 +359,32 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , should_split());
     }
 
+    // overload for attribute that need to be filtered
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_sequence(
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr, mpl::true_)
+    {
+        using condition_t = mpl::not_<is_same<mpl::_, position_tagged>>;
+        const auto filtered_attr = fusion::filter_view<Attribute, condition_t>(attr);
+        static_assert(fusion::result_of::size<decltype(filtered_attr)>::value > 1,
+                      "Size one sequences are not supported to be used with position_tagged in fields");
+        return parse_sequence_filtered(parser, first, last, context, rcontext, filtered_attr
+                                             , typename traits::attribute_category<Attribute>::type());
+    }
+
+    // overload for attribute that don't need to be filtered
+    template <typename Parser, typename Iterator, typename Context
+      , typename RContext, typename Attribute>
+    bool parse_sequence(
+        Parser const& parser, Iterator& first, Iterator const& last
+      , Context const& context, RContext& rcontext, Attribute& attr, mpl::false_)
+    {
+        return parse_sequence_filtered(parser, first, last, context, rcontext, attr
+                                             , typename traits::attribute_category<Attribute>::type());
+    }
+
     template <typename Left, typename Right, typename Context, typename RContext>
     struct parse_into_container_impl<sequence<Left, Right>, Context, RContext>
     {
@@ -375,7 +405,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                   "is value to be stored under that key");
 
             Attribute attr_{};
-            if (!parse_sequence(parser
+            if (!parse_sequence_filtered(parser
 			       , first, last, context, rcontext, attr_, traits::container_attribute()))
             {
                 return false;

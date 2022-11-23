@@ -14,7 +14,9 @@
 #include <boost/fusion/include/end.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <type_traits> // for std::enable_if_t
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -56,21 +58,19 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         >
     {};
 
-    template <typename Seq, typename T>
+    template <typename Seq, typename T, typename Sfinae = void>
     struct is_typecontaining_sequence
-    {
-        constexpr operator bool () noexcept {
-            if constexpr (fusion::traits::is_sequence<Seq>::value) {
-                using It = typename boost::fusion::result_of::find<Seq, T>::type;
-                using End = typename boost::fusion::result_of::end<Seq>::type;
-                return !is_same<It, End>::value;
-            }
-            return false;
-        }
-        typedef is_typecontaining_sequence type;
-        typedef bool value_type;
-        static constexpr bool value = is_typecontaining_sequence<Seq, T>();
-    };
+      : mpl::false_
+    {};
+
+    template <typename Seq, typename T>
+    struct is_typecontaining_sequence<Seq, T, std::enable_if_t<fusion::traits::is_sequence<Seq>::value>>
+      : mpl::not_<
+            is_same<typename fusion::result_of::find<Seq, T>::type
+                  , typename fusion::result_of::end<Seq>::type
+            >
+        >
+    {};
 }}}}
 
 #endif

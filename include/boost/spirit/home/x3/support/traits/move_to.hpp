@@ -114,9 +114,6 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         move_to(Source& src, Dest& dest, tuple_attribute)
         {
             // FIXME disable this overload when `is_same_size_sequence<Dest, decltype(filtered_src)>` false
-
-            // FIXME move `src` when the moving will be available on the Fusion's side
-            //       unfortunately, only `filtered_src` will be moved, but not `src`
             using condition_t = boost::mpl::not_<is_same<boost::mpl::_, position_tagged>>;
             auto filtered_src = boost::fusion::filter_view<Source, condition_t>(src);
             fusion::move(std::move(filtered_src), dest);

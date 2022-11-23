@@ -49,12 +49,31 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
-    // TODO: more combinations of position_tagged's positions
     {
-        vector<char, char, position_tagged> attr;
-        BOOST_TEST((test_attr("ab", char_ >> char_, attr)));
-        BOOST_TEST((at_c<0>(attr) == 'a'));
-        BOOST_TEST((at_c<1>(attr) == 'b'));
+        auto perform = [](auto& attr) {
+            return test_attr("ab", char_ >> char_, attr);
+        };
+        
+        {
+            vector<char, char, position_tagged> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<1>(attr) == 'b'));
+        }
+        
+        {
+            vector<char, position_tagged, char> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<2>(attr) == 'b'));
+        }
+        
+        {
+            vector<position_tagged, char, char> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<1>(attr) == 'a'));
+            BOOST_TEST((at_c<2>(attr) == 'b'));
+        }
     }
 
 #ifdef BOOST_SPIRIT_COMPILE_ERROR_CHECK
@@ -68,11 +87,41 @@ main()
 #endif
 
     {
-        vector<char, char, char, position_tagged> attr;
-        BOOST_TEST((test_attr(" a\n  b\n  c", char_ >> char_ >> char_, attr, space)));
-        BOOST_TEST((at_c<0>(attr) == 'a'));
-        BOOST_TEST((at_c<1>(attr) == 'b'));
-        BOOST_TEST((at_c<2>(attr) == 'c'));
+        auto perform = [](auto& attr) {
+            return test_attr(" a\n  b\n  c", char_ >> char_ >> char_, attr, space);
+        };
+        
+        {
+            vector<char, char, char, position_tagged> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<1>(attr) == 'b'));
+            BOOST_TEST((at_c<2>(attr) == 'c'));
+        }
+        
+        {
+            vector<char, char, position_tagged, char> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<1>(attr) == 'b'));
+            BOOST_TEST((at_c<3>(attr) == 'c'));
+        }
+        
+        {
+            vector<char, position_tagged, char, char> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<0>(attr) == 'a'));
+            BOOST_TEST((at_c<2>(attr) == 'b'));
+            BOOST_TEST((at_c<3>(attr) == 'c'));
+        }
+        
+        {
+            vector<position_tagged, char, char, char> attr;
+            BOOST_TEST((perform(attr)));
+            BOOST_TEST((at_c<1>(attr) == 'a'));
+            BOOST_TEST((at_c<2>(attr) == 'b'));
+            BOOST_TEST((at_c<3>(attr) == 'c'));
+        }
     }
 
     {
