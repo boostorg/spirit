@@ -426,7 +426,7 @@ void print_table(Out& out, C const& c, bool trailing_comma, int width = 4, int g
     BOOST_ASSERT(size > 1);
     print_tab(out, tab);
     out << std::setw(width) << int(c[0]);
-    for (C::size_type i = 1; i < size; ++i)
+    for (typename C::size_type i = 1; i < size; ++i)
     {
         out << ", ";
         if ((i % group) == 0)
