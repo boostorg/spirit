@@ -44,6 +44,13 @@ using boost::uint8_t;
 using boost::uint16_t;
 using boost::uint32_t;
 
+enum code_action
+{
+    assign_code_value,
+    assign_property,
+    append_property
+};
+
 // a char range
 struct ucd_range
 {
@@ -95,7 +102,7 @@ public:
     }
 
     template <typename Array>
-    void collect(Array& data, int field, bool collect_properties = true) const
+    void collect(Array& data, int field, code_action action) const
     {
         BOOST_ASSERT(!info.empty());
         ucd_vector::const_iterator current = info.begin();
@@ -133,13 +140,22 @@ public:
             if (field < int(current->size()))
                 code = (*current)[field];
             boost::trim(code);
-            // Only collect properties we are interested in
-            if (collect_properties) // code for properties
+
+            if (assign_code_value != action) // code for properties
             {
+                // Only collect properties we are interested in
                 if (!ignore_property(code))
                 {
-                    for (uint32_t i = start; i <= finish; ++i)
-                        data[i] |= map_property(code);
+                    if (assign_property == action)
+                    {
+                        for (uint32_t i = start; i <= finish; ++i)
+                            data[i] = map_property(code);
+                    }
+                    else
+                    {
+                        for (uint32_t i = start; i <= finish; ++i)
+                            data[i] |= map_property(code);
+                    }
                 }
             }
             else // code for actual numeric values
@@ -162,8 +178,6 @@ public:
         }
     }
 
-private:
-
     static bool ignore_property(std::string const& p)
     {
         // We don't handle all properties
@@ -180,6 +194,8 @@ private:
         BOOST_ASSERT(i != pm.end());
         return i->second;
     }
+
+private:
 
     static std::map<std::string, int>&
     get_property_map()
@@ -236,100 +252,172 @@ private:
             map["Default_Ignorable_Code_Point"] = 4096;
 
             // Script
-            map["Arabic"] = 0;
-            map["Imperial_Aramaic"] = 1;
-            map["Armenian"] = 2;
-            map["Avestan"] = 3;
-            map["Balinese"] = 4;
-            map["Bamum"] = 5;
-            map["Bengali"] = 6;
-            map["Bopomofo"] = 7;
-            map["Braille"] = 8;
-            map["Buginese"] = 9;
-            map["Buhid"] = 10;
-            map["Canadian_Aboriginal"] = 11;
-            map["Carian"] = 12;
-            map["Cham"] = 13;
-            map["Cherokee"] = 14;
-            map["Coptic"] = 15;
-            map["Cypriot"] = 16;
-            map["Cyrillic"] = 17;
-            map["Devanagari"] = 18;
-            map["Deseret"] = 19;
-            map["Egyptian_Hieroglyphs"] = 20;
-            map["Ethiopic"] = 21;
-            map["Georgian"] = 22;
-            map["Glagolitic"] = 23;
-            map["Gothic"] = 24;
-            map["Greek"] = 25;
-            map["Gujarati"] = 26;
-            map["Gurmukhi"] = 27;
-            map["Hangul"] = 28;
-            map["Han"] = 29;
-            map["Hanunoo"] = 30;
-            map["Hebrew"] = 31;
-            map["Hiragana"] = 32;
-            map["Katakana_Or_Hiragana"] = 33;
-            map["Old_Italic"] = 34;
-            map["Javanese"] = 35;
-            map["Kayah_Li"] = 36;
-            map["Katakana"] = 37;
-            map["Kharoshthi"] = 38;
-            map["Khmer"] = 39;
-            map["Kannada"] = 40;
-            map["Kaithi"] = 41;
-            map["Tai_Tham"] = 42;
-            map["Lao"] = 43;
-            map["Latin"] = 44;
-            map["Lepcha"] = 45;
-            map["Limbu"] = 46;
-            map["Linear_B"] = 47;
-            map["Lisu"] = 48;
-            map["Lycian"] = 49;
-            map["Lydian"] = 50;
-            map["Malayalam"] = 51;
-            map["Mongolian"] = 52;
-            map["Meetei_Mayek"] = 53;
-            map["Myanmar"] = 54;
-            map["Nko"] = 55;
-            map["Ogham"] = 56;
-            map["Ol_Chiki"] = 57;
-            map["Old_Turkic"] = 58;
-            map["Oriya"] = 59;
-            map["Osmanya"] = 60;
-            map["Phags_Pa"] = 61;
-            map["Inscriptional_Pahlavi"] = 62;
-            map["Phoenician"] = 63;
-            map["Inscriptional_Parthian"] = 64;
-            map["Rejang"] = 65;
-            map["Runic"] = 66;
-            map["Samaritan"] = 67;
-            map["Old_South_Arabian"] = 68;
-            map["Saurashtra"] = 69;
-            map["Shavian"] = 70;
-            map["Sinhala"] = 71;
-            map["Sundanese"] = 72;
-            map["Syloti_Nagri"] = 73;
-            map["Syriac"] = 74;
-            map["Tagbanwa"] = 75;
-            map["Tai_Le"] = 76;
-            map["New_Tai_Lue"] = 77;
-            map["Tamil"] = 78;
-            map["Tai_Viet"] = 79;
-            map["Telugu"] = 80;
-            map["Tifinagh"] = 81;
-            map["Tagalog"] = 82;
-            map["Thaana"] = 83;
-            map["Thai"] = 84;
-            map["Tibetan"] = 85;
-            map["Ugaritic"] = 86;
-            map["Vai"] = 87;
-            map["Old_Persian"] = 88;
-            map["Cuneiform"] = 89;
-            map["Yi"] = 90;
-            map["Inherited"] = 91;
-            map["Common"] = 92;
-            map["Unknown"] = 93;
+            int i = 0;
+            map["Adlam"] = i++;
+            map["Caucasian_Albanian"] = i++;
+            map["Ahom"] = i++;
+            map["Arabic"] = i++;
+            map["Imperial_Aramaic"] = i++;
+            map["Armenian"] = i++;
+            map["Avestan"] = i++;
+            map["Balinese"] = i++;
+            map["Bamum"] = i++;
+            map["Bassa_Vah"] = i++;
+            map["Batak"] = i++;
+            map["Bengali"] = i++;
+            map["Bhaiksuki"] = i++;
+            map["Bopomofo"] = i++;
+            map["Brahmi"] = i++;
+            map["Braille"] = i++;
+            map["Buginese"] = i++;
+            map["Buhid"] = i++;
+            map["Chakma"] = i++;
+            map["Canadian_Aboriginal"] = i++;
+            map["Carian"] = i++;
+            map["Cham"] = i++;
+            map["Cherokee"] = i++;
+            map["Chorasmian"] = i++;
+            map["Coptic"] = i++;
+            map["Cypro_Minoan"] = i++;
+            map["Cypriot"] = i++;
+            map["Cyrillic"] = i++;
+            map["Devanagari"] = i++;
+            map["Dives_Akuru"] = i++;
+            map["Dogra"] = i++;
+            map["Deseret"] = i++;
+            map["Duployan"] = i++;
+            map["Egyptian_Hieroglyphs"] = i++;
+            map["Elbasan"] = i++;
+            map["Elymaic"] = i++;
+            map["Ethiopic"] = i++;
+            map["Georgian"] = i++;
+            map["Glagolitic"] = i++;
+            map["Gunjala_Gondi"] = i++;
+            map["Masaram_Gondi"] = i++;
+            map["Gothic"] = i++;
+            map["Grantha"] = i++;
+            map["Greek"] = i++;
+            map["Gujarati"] = i++;
+            map["Gurmukhi"] = i++;
+            map["Hangul"] = i++;
+            map["Han"] = i++;
+            map["Hanunoo"] = i++;
+            map["Hatran"] = i++;
+            map["Hebrew"] = i++;
+            map["Hiragana"] = i++;
+            map["Anatolian_Hieroglyphs"] = i++;
+            map["Pahawh_Hmong"] = i++;
+            map["Nyiakeng_Puachue_Hmong"] = i++;
+            map["Katakana_Or_Hiragana"] = i++;
+            map["Old_Hungarian"] = i++;
+            map["Old_Italic"] = i++;
+            map["Javanese"] = i++;
+            map["Kayah_Li"] = i++;
+            map["Katakana"] = i++;
+            map["Kawi"] = i++;
+            map["Kharoshthi"] = i++;
+            map["Khmer"] = i++;
+            map["Khojki"] = i++;
+            map["Khitan_Small_Script"] = i++;
+            map["Kannada"] = i++;
+            map["Kaithi"] = i++;
+            map["Tai_Tham"] = i++;
+            map["Lao"] = i++;
+            map["Latin"] = i++;
+            map["Lepcha"] = i++;
+            map["Limbu"] = i++;
+            map["Linear_A"] = i++;
+            map["Linear_B"] = i++;
+            map["Lisu"] = i++;
+            map["Lycian"] = i++;
+            map["Lydian"] = i++;
+            map["Mahajani"] = i++;
+            map["Makasar"] = i++;
+            map["Mandaic"] = i++;
+            map["Manichaean"] = i++;
+            map["Marchen"] = i++;
+            map["Medefaidrin"] = i++;
+            map["Mende_Kikakui"] = i++;
+            map["Meroitic_Cursive"] = i++;
+            map["Meroitic_Hieroglyphs"] = i++;
+            map["Malayalam"] = i++;
+            map["Modi"] = i++;
+            map["Mongolian"] = i++;
+            map["Mro"] = i++;
+            map["Meetei_Mayek"] = i++;
+            map["Multani"] = i++;
+            map["Myanmar"] = i++;
+            map["Nag_Mundari"] = i++;
+            map["Nandinagari"] = i++;
+            map["Old_North_Arabian"] = i++;
+            map["Nabataean"] = i++;
+            map["Newa"] = i++;
+            map["Nko"] = i++;
+            map["Nushu"] = i++;
+            map["Ogham"] = i++;
+            map["Ol_Chiki"] = i++;
+            map["Old_Turkic"] = i++;
+            map["Oriya"] = i++;
+            map["Osage"] = i++;
+            map["Osmanya"] = i++;
+            map["Old_Uyghur"] = i++;
+            map["Palmyrene"] = i++;
+            map["Pau_Cin_Hau"] = i++;
+            map["Old_Permic"] = i++;
+            map["Phags_Pa"] = i++;
+            map["Inscriptional_Pahlavi"] = i++;
+            map["Psalter_Pahlavi"] = i++;
+            map["Phoenician"] = i++;
+            map["Miao"] = i++;
+            map["Inscriptional_Parthian"] = i++;
+            map["Rejang"] = i++;
+            map["Hanifi_Rohingya"] = i++;
+            map["Runic"] = i++;
+            map["Samaritan"] = i++;
+            map["Old_South_Arabian"] = i++;
+            map["Saurashtra"] = i++;
+            map["SignWriting"] = i++;
+            map["Shavian"] = i++;
+            map["Sharada"] = i++;
+            map["Siddham"] = i++;
+            map["Khudawadi"] = i++;
+            map["Sinhala"] = i++;
+            map["Sogdian"] = i++;
+            map["Old_Sogdian"] = i++;
+            map["Sora_Sompeng"] = i++;
+            map["Soyombo"] = i++;
+            map["Sundanese"] = i++;
+            map["Syloti_Nagri"] = i++;
+            map["Syriac"] = i++;
+            map["Tagbanwa"] = i++;
+            map["Takri"] = i++;
+            map["Tai_Le"] = i++;
+            map["New_Tai_Lue"] = i++;
+            map["Tamil"] = i++;
+            map["Tangut"] = i++;
+            map["Tai_Viet"] = i++;
+            map["Telugu"] = i++;
+            map["Tifinagh"] = i++;
+            map["Tagalog"] = i++;
+            map["Thaana"] = i++;
+            map["Thai"] = i++;
+            map["Tibetan"] = i++;
+            map["Tirhuta"] = i++;
+            map["Tangsa"] = i++;
+            map["Toto"] = i++;
+            map["Ugaritic"] = i++;
+            map["Vai"] = i++;
+            map["Vithkuqi"] = i++;
+            map["Warang_Citi"] = i++;
+            map["Wancho"] = i++;
+            map["Old_Persian"] = i++;
+            map["Cuneiform"] = i++;
+            map["Yezidi"] = i++;
+            map["Yi"] = i++;
+            map["Zanabazar_Square"] = i++;
+            map["Inherited"] = i++;
+            map["Common"] = i++;
+            map["Unknown"] = i++;
         }
         return map;
     }
@@ -346,17 +434,17 @@ public:
     static uint32_t const full_span = 0x110000;
     typedef T value_type;
 
-    ucd_table_builder() : p(new T[full_span])
+    ucd_table_builder(T default_value = 0) : p(new T[full_span])
     {
         for (uint32_t i = 0; i < full_span; ++i)
-            p[i] = 0;
+            p[i] = default_value;
     }
 
-    void collect(char const* filename, int field, bool collect_properties = true)
+    void collect(char const* filename, int field, code_action action)
     {
         std::cout << "collecting " << filename << std::endl;
         ucd_info info(filename);
-        info.collect(p, field, collect_properties);
+        info.collect(p, field, action);
     }
 
     void build(std::vector<uint8_t>& stage1, std::vector<T const*>& stage2)
@@ -426,7 +514,7 @@ void print_table(Out& out, C const& c, bool trailing_comma, int width = 4, int g
     BOOST_ASSERT(size > 1);
     print_tab(out, tab);
     out << std::setw(width) << int(c[0]);
-    for (C::size_type i = 1; i < size; ++i)
+    for (typename C::size_type i = 1; i < size; ++i)
     {
         out << ", ";
         if ((i % group) == 0)
@@ -548,18 +636,18 @@ int main()
     // The category tables
     {
         std::ofstream out("category_table.hpp");
-        ucd_table_builder<uint16_t, 256> builder;
-        builder.collect("UnicodeData.txt", 2);
-        builder.collect("DerivedCoreProperties.txt", 1);
-        builder.collect("PropList.txt", 1);
+        ucd_table_builder<uint16_t, 256> builder(ucd_info::map_property("Cn"));
+        builder.collect("UnicodeData.txt", 2, assign_property);
+        builder.collect("DerivedCoreProperties.txt", 1, append_property);
+        builder.collect("PropList.txt", 1, append_property);
         print_file(out, builder, 4, "category");
     }
 
     // The script tables
     {
         std::ofstream out("script_table.hpp");
-        ucd_table_builder<uint8_t, 256> builder;
-        builder.collect("Scripts.txt", 1);
+        ucd_table_builder<uint8_t, 256> builder(ucd_info::map_property("Unknown"));
+        builder.collect("Scripts.txt", 1, assign_property);
         print_file(out, builder, 3, "script");
     }
 
@@ -567,7 +655,7 @@ int main()
     {
         std::ofstream out("lowercase_table.hpp");
         ucd_table_builder<uint32_t, 256> builder;
-        builder.collect("UnicodeData.txt", 13, false);
+        builder.collect("UnicodeData.txt", 13, assign_code_value);
         print_file(out, builder, 6, "lowercase");
     }
 
@@ -575,7 +663,7 @@ int main()
     {
         std::ofstream out("uppercase_table.hpp");
         ucd_table_builder<uint32_t, 256> builder;
-        builder.collect("UnicodeData.txt", 12, false);
+        builder.collect("UnicodeData.txt", 12, assign_code_value);
         print_file(out, builder, 6, "uppercase");
     }
 
