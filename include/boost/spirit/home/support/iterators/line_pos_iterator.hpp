@@ -50,17 +50,17 @@ namespace boost { namespace spirit
 
         std::size_t line; // The line position.
         typename std::iterator_traits<Iterator>::value_type prev;
-        newline_type nltype = unknown;
+        newline_type nltype;
     };
     //]
 
     template <class Iterator>
     line_pos_iterator<Iterator>::line_pos_iterator() :
-        line_pos_iterator::iterator_adaptor_(), line(1), prev(0) { }
+        line_pos_iterator::iterator_adaptor_(), line(1), prev(0), nltype(unknown) { }
 
     template <class Iterator>
     line_pos_iterator<Iterator>::line_pos_iterator(Iterator base) :
-        line_pos_iterator::iterator_adaptor_(base), line(1), prev(0) { }
+        line_pos_iterator::iterator_adaptor_(base), line(1), prev(0), nltype(unknown) { }
 
     template <class Iterator>
     std::size_t line_pos_iterator<Iterator>::position() const
