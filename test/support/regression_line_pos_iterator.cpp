@@ -124,23 +124,64 @@ void testLRorCR_foo_bar(std::string const& line_break) {
     test(input, validations);
 }
 
+// Multiple Empty Lines
+
+void  testMultipleEmptyLines(std::string const& line_break) {
+    std::string const input = "foo" + line_break + "bar"
+                            + line_break + line_break + "foo"
+                            + line_break + line_break + line_break + "bar";
+    validations const validations = boost::assign::list_of<validation>
+        (1,1,"foo")(1,2,"foo")(1,3,"foo")(1,4,"foo")
+        (2,1,"bar")(2,2,"bar")(2,3,"bar")(2,4,"bar")
+        (3,1,"")
+        (4,1,"foo")(4,2,"foo")(4,3,"foo")(4,4,"foo")
+        (5,1,"")
+        (6,1,"")
+        (7,1,"bar")(7,2,"bar")(7,3,"bar");
+    test(input, validations);
+}
+
+void  testMultipleEmptyLinesRN(std::string const& line_break) {
+    std::string const input = "foo" + line_break + "bar"
+                            + line_break + line_break + "foo"
+                            + line_break + line_break + line_break + "bar";
+    validations const validations = boost::assign::list_of<validation>
+        (1,1,"foo")(1,2,"foo")(1,3,"foo")(1,4,"foo")
+        (2,1,"")(2,1,"bar")(2,2,"bar")(2,3,"bar")(2,4,"bar")
+        (3,1,"")(3,1,"")
+        (4,1,"")(4,1,"foo")(4,2,"foo")(4,3,"foo")(4,4,"foo")
+        (5,1,"")(5,1,"")
+        (6,1,"")(6,1,"")
+        (7,1,"")(7,1,"bar")(7,2,"bar")(7,3,"bar");
+    test(input, validations);
+}
+
 int main()
 {
+    // Windows, DOS, TOS and most other early non-Unix and non-IBM operating systems
     testLRandCR("\r\n");
     testLRandCR_foo_bar_git("\r\n");
     testLRandCR_bar_git("\r\n");
     testLRandCR_foo_bar("\r\n");
 
+    // Acorn BBC and RISC OS spooled text output
     testLRandCR("\n\r");
     testLRandCR_foo_bar_git("\n\r");
     testLRandCR_bar_git("\n\r");
     testLRandCR_foo_bar("\n\r");
 
+    testMultipleEmptyLines("\r");
+    testMultipleEmptyLines("\n");
+    testMultipleEmptyLinesRN("\r\n");
+    testMultipleEmptyLinesRN("\n\r");
+
+    // classic Mac OS, C64 ...
     testLRorCR("\r");
     testLRorCR_foo_bar_git("\r");
     testLRorCR_bar_git("\r");
     testLRorCR_foo_bar("\r");
 
+    // Unix and Unix-like systems (Linux, macOS, Amiga...)
     testLRorCR("\n");
     testLRorCR_foo_bar_git("\n");
     testLRorCR_bar_git("\n");

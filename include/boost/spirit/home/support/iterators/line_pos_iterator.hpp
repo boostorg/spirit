@@ -37,12 +37,20 @@ namespace boost { namespace spirit
         std::size_t position() const;
 
     private:
+
+        enum class newline_type : unsigned char {
+            unknown = 0,
+            unix,
+            windows
+        };
+
         friend class boost::iterator_core_access;
 
         void increment();
 
         std::size_t line; // The line position.
         typename std::iterator_traits<Iterator>::value_type prev;
+        newline_type nltype = newline_type::unknown;
     };
     //]
 
@@ -68,14 +76,31 @@ namespace boost { namespace spirit
       
         switch (ref) {
           case '\r':
+            switch (nltype) {
+              case newline_type::unix:
             if (prev != '\n')
               ++line;
             break;
+              case newline_type::unknown:
+                  nltype = newline_type::windows;
+              default:
+                  ++line;
+            }
+            break;
           case '\n':
+            switch (nltype) {
+                case newline_type::windows:
             if (prev != '\r')
               ++line;
             break;
+                case newline_type::unknown:
+                    nltype = newline_type::unix;
+                default:
+                ++line;
+            }
+            break;
           default:
+            nltype = newline_type::unknown;
             break;
         }
       
