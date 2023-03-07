@@ -56,10 +56,11 @@ void test(std::string const& input, validations const& validations, bool singlec
 }
 
 void test_only(std::string const& line_break) {
-    std::string const input = line_break + line_break;
+    std::string const input = line_break + line_break + line_break;
     validations const validations = boost::assign::list_of<validation>
         (1,1,"")(2,1)
-        (2,1,"")(2,1);
+        (2,1,"")(3,1)
+        (3,1,"")(4,1);
     test(input, validations, line_break.size() == 1);
 }
 
@@ -89,6 +90,16 @@ void test_at_end(std::string const& line_break) {
     test(input, validations, line_break.size() == 1);
 }
 
+void test_mixed() {
+    std::string const input = "\n\n\r\r\n\r";
+    validations const validations = boost::assign::list_of<validation>
+        (1,1,"")      // \n
+        (2,1,"")(3,1) // \n\r
+        (3,1,"")(4,1) // \r\n
+        (4,1,"");     // \r
+    test(input, validations, false);
+}
+
 void test(std::string const& line_break)
 {
     test_only(line_break);
@@ -103,6 +114,7 @@ int main()
     test("\r\n");
     test("\r");
     test("\n\r");
+    test_mixed();
 
     return boost::report_errors();
 }
