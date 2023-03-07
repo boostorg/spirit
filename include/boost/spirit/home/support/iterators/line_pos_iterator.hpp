@@ -2,6 +2,7 @@
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2010      Bryce Lelbach
     Copyright (c) 2014      Tomoki Imai
+    Copyright (c) 2023      Kniazev Nikita
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -42,17 +43,18 @@ namespace boost { namespace spirit
         void increment();
 
         std::size_t line; // The line position.
-        typename std::iterator_traits<Iterator>::value_type prev;
+        bool prev_n;
+        bool prev_r;
     };
     //]
 
     template <class Iterator>
     line_pos_iterator<Iterator>::line_pos_iterator() :
-        line_pos_iterator::iterator_adaptor_(), line(1), prev(0) { }
+        line_pos_iterator::iterator_adaptor_(), line(1), prev_n(), prev_r() { }
 
     template <class Iterator>
     line_pos_iterator<Iterator>::line_pos_iterator(Iterator base) :
-        line_pos_iterator::iterator_adaptor_(base), line(1), prev(0) { }
+        line_pos_iterator::iterator_adaptor_(base), line(1), prev_n(), prev_r() { }
 
     template <class Iterator>
     std::size_t line_pos_iterator<Iterator>::position() const
@@ -64,22 +66,13 @@ namespace boost { namespace spirit
     void line_pos_iterator<Iterator>::increment()
     {
         typename std::iterator_traits<Iterator>::reference
-          ref = *(this->base());
+          ch = *(this->base());
       
-        switch (ref) {
-          case '\r':
-            if (prev != '\n')
-              ++line;
-            break;
-          case '\n':
-            if (prev != '\r')
-              ++line;
-            break;
-          default:
-            break;
-        }
-      
-        prev = ref;
+        int newline = ((ch == '\n') & !prev_r) | ((ch == '\r') & !prev_n);
+        line += newline;
+        prev_r = (ch == '\r') & newline;
+        prev_n = (ch == '\n') & newline;
+
         ++this->base_reference();
     }
 
