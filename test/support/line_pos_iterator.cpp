@@ -41,7 +41,7 @@ void test(std::string const& input, validations const& validations, bool singlec
         if (expected->inside_newline && singlechar_newline)
             if (++expected == validations.end())
                 break;
-        boost::iterator_range<pos_iterator_t> const range = get_current_line(input_begin, position, input_end);
+        boost::iterator_range<std::string::const_iterator> const range = get_current_line(input_begin, position, input_end);
         std::string const current(range.begin(), range.end());
 
         BOOST_TEST_EQ(expected->line, get_line(position));
