@@ -15,6 +15,7 @@
 #include <boost/iterator/iterator_traits.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/range/iterator_range_core.hpp>
+#include <boost/next_prior.hpp>
 
 namespace boost { namespace spirit
 {
@@ -197,13 +198,13 @@ namespace boost { namespace spirit
                 return current;
             }
             else {
-                for (typename line_pos_base_iterator_type<Iterator>::type i = std::prev(current); i != lower_bound; --i) {
+                for (typename line_pos_base_iterator_type<Iterator>::type i = boost::prior(current); i != lower_bound; --i) {
                     if ((*i == '\r') || (*i == '\n')) {
-                        return std::next(i);
+                        return boost::next(i);
                     }
                 }
                 if ((*lower_bound == '\r') || (*lower_bound == '\n')) {
-                    return std::next(lower_bound);
+                    return boost::next(lower_bound);
                 }
                 else {
                     return lower_bound;
