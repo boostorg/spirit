@@ -38,8 +38,7 @@ namespace boost { namespace spirit
     public:
         line_pos_iterator();
 
-        explicit line_pos_iterator(Iterator);
-        explicit line_pos_iterator(line_pos_iterator, Iterator);
+        explicit line_pos_iterator(Iterator, std::size_t line_start = 1);
 
         std::size_t position() const;
 
@@ -59,16 +58,8 @@ namespace boost { namespace spirit
         line_pos_iterator::iterator_adaptor_(), line(1), prev_n(), prev_r() { }
 
     template <class Iterator>
-    line_pos_iterator<Iterator>::line_pos_iterator(Iterator base) :
-        line_pos_iterator::iterator_adaptor_(base), line(1), prev_n(), prev_r() { }
-
-
-    template <class Iterator>
-    line_pos_iterator<Iterator>::line_pos_iterator(line_pos_iterator line_data, Iterator base) :
-        line_pos_iterator::iterator_adaptor_(base)
-        , line(line_data.line)
-        , prev_n(), prev_r()
-    { }
+    line_pos_iterator<Iterator>::line_pos_iterator(Iterator base, std::size_t line_start /* = 1 */ ) :
+        line_pos_iterator::iterator_adaptor_(base), line(line_start), prev_n(), prev_r() { }
 
     template <class Iterator>
     std::size_t line_pos_iterator<Iterator>::position() const
@@ -210,7 +201,7 @@ namespace boost { namespace spirit
         template <class Iterator, class IteratorBound>
         inline line_pos_iterator<Iterator> make_first_iterator_type(line_pos_iterator<Iterator> type_and_line, IteratorBound base_iterator)
         {
-            return line_pos_iterator<Iterator>(type_and_line, base_iterator);
+            return line_pos_iterator<Iterator>(base_iterator, type_and_line.position());
         }
 
 
