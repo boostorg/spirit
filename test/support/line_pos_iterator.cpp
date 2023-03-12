@@ -1,6 +1,5 @@
 //  Copyright (c) 2014 Tomoki Imai
 //  Copyright (c) 2023 Nikita Knizev
-//  Copyright (c) 2023 Tobias Loew
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -42,22 +41,12 @@ void test(std::string const& input, validations const& validations, bool singlec
         if (expected->inside_newline && singlechar_newline)
             if (++expected == validations.end())
                 break;
-        {
-            boost::iterator_range<pos_iterator_t> const range = get_current_line(input_begin, position, input_end);
-            std::string const current(range.begin(), range.end());
+        boost::iterator_range<pos_iterator_t> const range = get_current_line(input_begin, position, input_end);
+        std::string const current(range.begin(), range.end());
 
-            BOOST_TEST_EQ(expected->line, get_line(position));
-            BOOST_TEST_EQ(expected->column, get_column(input_begin, position));
-            BOOST_TEST_EQ(expected->current, current);
-        }
-        {
-            boost::iterator_range<std::string::const_iterator> const range = get_current_line_base(input_begin, position, input_end);
-            std::string const current(range.begin(), range.end());
-
-            BOOST_TEST_EQ(expected->line, get_line(position));
-            BOOST_TEST_EQ(expected->column, get_column(input_begin, position));
-            BOOST_TEST_EQ(expected->current, current);
-        }
+        BOOST_TEST_EQ(expected->line, get_line(position));
+        BOOST_TEST_EQ(expected->column, get_column(input_begin, position));
+        BOOST_TEST_EQ(expected->current, current);
     }
     if (expected != validations.end() && expected->inside_newline && singlechar_newline)
         ++expected;

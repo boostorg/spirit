@@ -81,75 +81,38 @@ namespace boost { namespace spirit
         ++this->base_reference();
     }
 
-
-    template<typename Iterator>
-    struct line_pos_base_iterator_type {
-        typedef Iterator type;
-    };
-
-    template<typename Iterator>
-    struct line_pos_base_iterator_type< line_pos_iterator<Iterator> > {
-        typedef Iterator type;
-    };
-
-
-
     //[line_pos_iterator_utilities
     //`[heading get_line]
     template <class Iterator>
     inline std::size_t get_line(Iterator);
-
-    template <class Iterator>
-    inline std::size_t get_line(line_pos_iterator<Iterator>);
     /*`Get the line position. Returns -1 if Iterator is not a
        `line_pos_iterator`. */
 
     //`[heading get_line_start]
-    template <class Iterator, class IteratorBound>
-    inline Iterator get_line_start(IteratorBound lower_bound, Iterator current);
-    /*`Get an iterator to the beginning of the line. Applicable to any
-       iterator. */
-
-    //`[heading get_line_start_base]
-    template <class Iterator, class IteratorBound>
-    inline typename line_pos_base_iterator_type<Iterator>::type get_line_start_base(IteratorBound lower_bound, Iterator current);
+    template <class Iterator>
+    inline Iterator get_line_start(Iterator lower_bound, Iterator current); 
     /*`Get an iterator to the beginning of the line. Applicable to any
        iterator. */
 
 
     //`[heading get_line_end]
-    template <class Iterator, class IteratorBound>
-    inline Iterator get_line_end(Iterator current, IteratorBound upper_bound);
-    /*`Get an iterator to the end of the line. Applicable to any
-       iterator. */
-
-    //`[heading get_line_end_base]
-    template <class Iterator, class IteratorBound>
-    inline typename line_pos_base_iterator_type<Iterator>::type get_line_end_base(Iterator current, IteratorBound upper_bound);
+    template <class Iterator>
+    inline Iterator get_line_end(Iterator current, Iterator upper_bound);
     /*`Get an iterator to the end of the line. Applicable to any
        iterator. */
 
 
     //`[heading get_current_line]
-    template <class Iterator, class IteratorBound>
+    template <class Iterator>
     inline iterator_range<Iterator>
-    get_current_line(IteratorBound lower_bound, Iterator current,
-        IteratorBound upper_bound);
+    get_current_line(Iterator lower_bound, Iterator current,
+                     Iterator upper_bound); 
     /*`Get an `iterator_range` containing the current line. Applicable to any
        iterator. */ 
-
-    //`[heading get_current_line]
-    template <class Iterator, class IteratorBound>
-    inline iterator_range<typename line_pos_base_iterator_type<Iterator>::type>
-    get_current_line_base(IteratorBound lower_bound, Iterator current,
-        IteratorBound upper_bound);
-    /*`Get an `iterator_range` containing the current line. Applicable to any
-       iterator. */ 
-
 
     //`[heading get_column]
-    template <class Iterator, class IteratorBound>
-    inline std::size_t get_column(IteratorBound lower_bound, Iterator current,
+    template <class Iterator>
+    inline std::size_t get_column(Iterator lower_bound, Iterator current,
                                   std::size_t tabs = 4); 
     /*`Get the current column. Applicable to any iterator. */ 
     //]
@@ -168,42 +131,6 @@ namespace boost { namespace spirit
 
 
     namespace impl {
-
-        template<typename Iterator>
-        struct line_pos_base_iterator_category {
-            typedef typename boost::iterators::iterator_category<
-                typename line_pos_base_iterator_type<Iterator>::type
-            >::type type;
-        };
-
-
-        template<typename Iterator>
-        inline typename line_pos_base_iterator_type<Iterator>::type
-            get_line_pos_base_iterator(Iterator it)
-        {
-            return it;
-        }
-
-        template<typename Iterator>
-        inline typename line_pos_base_iterator_type<Iterator>::type
-            get_line_pos_base_iterator(line_pos_iterator<Iterator> it)
-        {
-            return it.base();
-        }
-
-
-        template <class Iterator>
-        inline Iterator make_first_iterator_type(Iterator, Iterator position) {
-            // identiacal types -> just return position
-            return position;
-        }
-
-        template <class Iterator, class IteratorBound>
-        inline line_pos_iterator<Iterator> make_first_iterator_type(line_pos_iterator<Iterator> type_and_line, IteratorBound base_iterator)
-        {
-            return line_pos_iterator<Iterator>(base_iterator, type_and_line.position());
-        }
-
 
         // get_line_start for forward iterators: forward linear search starting from lower-bound
         // complexity: linear in length of [lower_bound, current)
@@ -242,7 +169,7 @@ namespace boost { namespace spirit
                 return current;
             }
             else {
-                for (typename line_pos_base_iterator_type<Iterator>::type i = boost::prior(current); i != lower_bound; --i) {
+                for (Iterator i = boost::prior(current); i != lower_bound; --i) {
                     if ((*i == '\r') || (*i == '\n')) {
                         return boost::next(i);
                     }
@@ -257,84 +184,82 @@ namespace boost { namespace spirit
         }
     }
 
-
-
-
-    template <class Iterator, class IteratorBound>
-    inline typename line_pos_base_iterator_type<Iterator>::type get_line_start_base(IteratorBound lower_bound, Iterator current)
+    template <class Iterator>
+    inline Iterator get_line_start(Iterator lower_bound, Iterator current)
     {
-        return impl::get_line_start(
-            impl::get_line_pos_base_iterator(lower_bound),
-            impl::get_line_pos_base_iterator(current),
-            typename impl::line_pos_base_iterator_category<Iterator>::type()
-        );
+		return impl::get_line_start(
+			lower_bound,
+			current,
+            typename boost::iterators::iterator_category<Iterator>::type()
+		);
     }
 
-    template <class Iterator, class IteratorBound>
-    inline Iterator get_line_start(IteratorBound lower_bound, Iterator current)
+    template <class Iterator>
+    line_pos_iterator<Iterator> get_line_start(line_pos_iterator<Iterator> lower_bound,
+        line_pos_iterator<Iterator> current)
     {
-        return impl::make_first_iterator_type(current, get_line_start_base(lower_bound, current));
+        // No need in line number counting because it will be the same
+        Iterator it = get_line_start(lower_bound.base(), current.base());
+        return line_pos_iterator<Iterator>(it, current.position());
     }
 
 
-
-    template <class Iterator, class IteratorBound>
-    inline typename line_pos_base_iterator_type<Iterator>::type get_line_end_base(Iterator current, IteratorBound upper_bound)
+    template <class Iterator>
+    inline Iterator get_line_end(Iterator current, Iterator upper_bound)
     {
-        typename line_pos_base_iterator_type<Iterator>::type upper_bound_base = impl::get_line_pos_base_iterator(upper_bound);
-        for (typename line_pos_base_iterator_type<Iterator>::type i = impl::get_line_pos_base_iterator(current);
-            i != upper_bound_base; ++i) {
+        for (Iterator i = current; i != upper_bound; ++i) {
             if ((*i == '\n') || (*i == '\r')) {
                 return i;
             }
         }
-        return upper_bound_base;
+        return upper_bound;
     }
 
-    template <class Iterator, class IteratorBound>
-    inline Iterator get_line_end(Iterator current, IteratorBound upper_bound)
+    template <class Iterator>
+    line_pos_iterator<Iterator> get_line_end(line_pos_iterator<Iterator> current,
+        line_pos_iterator<Iterator> upper_bound)
     {
-        return impl::make_first_iterator_type(current, get_line_end_base(current, upper_bound));
+        // No need in line number counting because it will be the same
+        Iterator it = get_line_end(current.base(), upper_bound.base());
+        return line_pos_iterator<Iterator>(it, current.position());
     }
 
     
-    template <class Iterator, class IteratorBound>
-    inline iterator_range<typename line_pos_base_iterator_type<Iterator>::type>
-        get_current_line_base(IteratorBound lower_bound, Iterator current,
-            IteratorBound upper_bound)
-    {
-        typename line_pos_base_iterator_type<Iterator>::type current_base = impl::get_line_pos_base_iterator(current);
-
-        typename line_pos_base_iterator_type<Iterator>::type first = get_line_start_base(impl::get_line_pos_base_iterator(lower_bound), current_base);
-        typename line_pos_base_iterator_type<Iterator>::type last = get_line_end_base(current_base, impl::get_line_pos_base_iterator(upper_bound));
-        return iterator_range<typename line_pos_base_iterator_type<Iterator>::type>(first, last);
-    }
-
-    template <class Iterator, class IteratorBound>
+    template <class Iterator>
     inline iterator_range<Iterator>
-        get_current_line(IteratorBound lower_bound, Iterator current,
-            IteratorBound upper_bound)
+    get_current_line(Iterator lower_bound,
+                     Iterator current,
+                     Iterator upper_bound)
     {
-        iterator_range<typename line_pos_base_iterator_type<Iterator>::type> range =
-            get_current_line_base(lower_bound, current, upper_bound);
-        return iterator_range<Iterator>(
-            impl::make_first_iterator_type(current, range.begin()),
-            impl::make_first_iterator_type(current, range.end())
-            );
+		return iterator_range<Iterator>(
+            get_line_start(lower_bound, current),
+            get_line_end(current, upper_bound)
+        );
     }
-    
 
-    template <class Iterator, class IteratorBound>
-    inline std::size_t get_column(IteratorBound lower_bound,
+
+    template <class Iterator>
+    inline iterator_range<line_pos_iterator<Iterator>>
+        get_current_line(line_pos_iterator<Iterator> lower_bound, line_pos_iterator<Iterator> current,
+            line_pos_iterator<Iterator> upper_bound)
+    {
+        // No need in line number counting because it will be the same
+        iterator_range<Iterator> range = get_current_line(lower_bound.base(), current.base(), upper_bound.base());
+        return iterator_range<line_pos_iterator<Iterator>>(
+            line_pos_iterator<Iterator>(range.begin(), current.position()),
+            line_pos_iterator<Iterator>(range.end(), current.position())
+        );
+    }
+
+    template <class Iterator>
+    inline std::size_t get_column(Iterator lower_bound,
                                   Iterator current,
                                   std::size_t tabs)
     {
-        typename line_pos_base_iterator_type<Iterator>::type current_base = impl::get_line_pos_base_iterator(current);
-
         std::size_t column = 1;
-        typename line_pos_base_iterator_type<Iterator>::type first = get_line_start_base(lower_bound, current_base);
+        Iterator first = get_line_start(lower_bound, current);
       
-        for (typename line_pos_base_iterator_type<Iterator>::type i = first; i != current_base; ++i) {
+        for (Iterator i = first; i != current; ++i) {
           switch (*i) {
             case '\t':
               column += tabs - (column - 1) % tabs;
@@ -345,6 +270,16 @@ namespace boost { namespace spirit
         }
       
         return column;
+    }
+
+    template <class Iterator>
+    std::size_t get_column(line_pos_iterator<Iterator> lower_bound,
+        line_pos_iterator<Iterator> current,
+        std::size_t tabs)
+    {
+        // No need in line number counting because it will be the same
+        Iterator it = get_column(lower_bound.base(), current.base(), tabs);
+        return line_pos_iterator<Iterator>(it, current.position());
     }
 
 }}
