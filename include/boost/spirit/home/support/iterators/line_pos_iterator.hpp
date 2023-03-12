@@ -239,13 +239,11 @@ namespace boost { namespace spirit
     }
 
     template <class Iterator>
-    std::size_t get_column(line_pos_iterator<Iterator> lower_bound,
-                           line_pos_iterator<Iterator> current,
-                           std::size_t tabs)
+    inline std::size_t get_column(line_pos_iterator<Iterator> lower_bound,
+                                  line_pos_iterator<Iterator> current,
+                                  std::size_t tabs = 4)
     {
-        // No need in line number counting because it will be the same
-        Iterator it = get_column(lower_bound.base(), current.base(), tabs);
-        return line_pos_iterator<Iterator>(it, current.position());
+        return get_column(lower_bound.base(), current.base(), tabs);
     }
 
 }}
