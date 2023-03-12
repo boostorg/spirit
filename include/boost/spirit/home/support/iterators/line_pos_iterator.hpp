@@ -239,13 +239,13 @@ namespace boost { namespace spirit
 
 
     template <class Iterator>
-    inline iterator_range<line_pos_iterator<Iterator>>
+    inline iterator_range<line_pos_iterator<Iterator> >
         get_current_line(line_pos_iterator<Iterator> lower_bound, line_pos_iterator<Iterator> current,
             line_pos_iterator<Iterator> upper_bound)
     {
         // No need in line number counting because it will be the same
         iterator_range<Iterator> range = get_current_line(lower_bound.base(), current.base(), upper_bound.base());
-        return iterator_range<line_pos_iterator<Iterator>>(
+        return iterator_range<line_pos_iterator<Iterator> >(
             line_pos_iterator<Iterator>(range.begin(), current.position()),
             line_pos_iterator<Iterator>(range.end(), current.position())
         );
