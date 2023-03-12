@@ -135,15 +135,13 @@ namespace boost { namespace spirit
                                        std::forward_iterator_tag)
         {
             Iterator latest = lower_bound;
-            bool prev_was_newline = false;
-            for (Iterator i = lower_bound; i != current; ++i) {
-                if (prev_was_newline) {
-                    latest = i;
+            for (Iterator it = lower_bound; it != current; ) {
+                if ((*it == '\r') || (*it == '\n')) {
+                    latest = ++it;
                 }
-                prev_was_newline = (*i == '\r') || (*i == '\n');
-            }
-            if (prev_was_newline) {
-                latest = current;
+                else {
+                    ++it;
+                }
             }
             return latest;
         }
