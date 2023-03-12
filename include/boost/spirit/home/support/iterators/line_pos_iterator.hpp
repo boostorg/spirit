@@ -3,6 +3,7 @@
     Copyright (c) 2010      Bryce Lelbach
     Copyright (c) 2014      Tomoki Imai
     Copyright (c) 2023      Kniazev Nikita
+    Copyright (c) 2023      Tobias Loew
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,6 +14,7 @@
 
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/range/iterator_range_core.hpp>
+#include <iterator>
 
 namespace boost { namespace spirit
 {
@@ -21,7 +23,9 @@ namespace boost { namespace spirit
        This iterator adapter only stores the current line number, nothing else.
        Unlike __classic__'s `position_iterator`, it does not store the
        column number and does not need an end iterator. The current column can
-       be computed, if needed. */
+       be computed, if needed.
+       NOTE: line counting considers position inside multicharacter line-breaks
+       (such as CRLF and LFCR) as being on the next line already. */
     //`[heading Class Reference]
     template <class Iterator>
     class line_pos_iterator : public boost::iterator_adaptor<
@@ -33,7 +37,7 @@ namespace boost { namespace spirit
     public:
         line_pos_iterator();
 
-        explicit line_pos_iterator(Iterator);
+        explicit line_pos_iterator(Iterator, std::size_t line_start = 1);
 
         std::size_t position() const;
 
@@ -53,8 +57,8 @@ namespace boost { namespace spirit
         line_pos_iterator::iterator_adaptor_(), line(1), prev_n(), prev_r() { }
 
     template <class Iterator>
-    line_pos_iterator<Iterator>::line_pos_iterator(Iterator base) :
-        line_pos_iterator::iterator_adaptor_(base), line(1), prev_n(), prev_r() { }
+    line_pos_iterator<Iterator>::line_pos_iterator(Iterator base, std::size_t line_start /* = 1 */ ) :
+        line_pos_iterator::iterator_adaptor_(base), line(line_start), prev_n(), prev_r() { }
 
     template <class Iterator>
     std::size_t line_pos_iterator<Iterator>::position() const
@@ -89,6 +93,12 @@ namespace boost { namespace spirit
     /*`Get an iterator to the beginning of the line. Applicable to any
        iterator. */
 
+    //`[heading get_line_end]
+    template <class Iterator>
+    inline Iterator get_line_end(Iterator current, Iterator upper_bound);
+    /*`Get an iterator to the end of the line. Applicable to any
+       iterator. */
+
     //`[heading get_current_line]
     template <class Iterator>
     inline iterator_range<Iterator>
@@ -115,22 +125,64 @@ namespace boost { namespace spirit
     {
         return i.position();
     }
-    
+
+    namespace detail {
+        // get_line_start for forward iterators: forward linear search starting from lower-bound
+        // complexity: linear in length of [lower_bound, current)
+        template <class Iterator>
+        inline Iterator get_line_start(Iterator lower_bound,
+                                       Iterator current, 
+                                       std::forward_iterator_tag)
+        {
+            Iterator latest = lower_bound;
+            bool prev_was_newline = false;
+            for (Iterator i = lower_bound; i != current; ++i) {
+                if (prev_was_newline) {
+                    latest = i;
+                }
+                prev_was_newline = (*i == '\r') || (*i == '\n');
+            }
+            if (prev_was_newline) {
+                latest = current;
+            }
+            return latest;
+        }
+
+        // get_line_start for forward iterators: backward linear search starting from current
+        // complexity: linear in avarage line-length
+        template <class Iterator>
+        inline Iterator get_line_start(Iterator lower_bound,
+                                       Iterator current,
+                                       std::bidirectional_iterator_tag)
+        {
+            while (current != lower_bound) {
+                --current;
+                if ((*current == '\r') || (*current == '\n')) {
+                    return ++current;
+                }
+            }
+            return current;
+        }
+    }
+
     template <class Iterator>
     inline Iterator get_line_start(Iterator lower_bound, Iterator current)
     {
-        Iterator latest = lower_bound;
-        bool prev_was_newline = false;
-        for (Iterator i = lower_bound; i != current; ++i) {
-            if (prev_was_newline) {
-                latest = i;
-            }
-            prev_was_newline = (*i == '\r') || (*i == '\n');
-        }
-        if (prev_was_newline) {
-            latest = current;
-        }
-        return latest;
+        return detail::get_line_start(
+            lower_bound,
+            current,
+            typename std::iterator_traits<Iterator>::iterator_category()
+        );
+    }
+
+    template <class Iterator>
+    inline line_pos_iterator<Iterator>
+    get_line_start(line_pos_iterator<Iterator> lower_bound,
+                   line_pos_iterator<Iterator> current)
+    {
+        // No need in line number counting because it will be the same
+        Iterator it = get_line_start(lower_bound.base(), current.base());
+        return line_pos_iterator<Iterator>(it, current.position());
     }
 
     template <class Iterator>
@@ -144,6 +196,15 @@ namespace boost { namespace spirit
         return upper_bound;
     }
 
+    template <class Iterator>
+    inline line_pos_iterator<Iterator>
+    get_line_end(line_pos_iterator<Iterator> current,
+                 line_pos_iterator<Iterator> upper_bound)
+    {
+        // No need in line number counting because it will be the same
+        Iterator it = get_line_end(current.base(), upper_bound.base());
+        return line_pos_iterator<Iterator>(it, current.position());
+    }
     
     template <class Iterator>
     inline iterator_range<Iterator>
@@ -155,7 +216,7 @@ namespace boost { namespace spirit
         Iterator last = get_line_end(current, upper_bound);
         return iterator_range<Iterator>(first, last);
     }
-    
+
     template <class Iterator>
     inline std::size_t get_column(Iterator lower_bound,
                                   Iterator current,
@@ -175,6 +236,14 @@ namespace boost { namespace spirit
         }
       
         return column;
+    }
+
+    template <class Iterator>
+    inline std::size_t get_column(line_pos_iterator<Iterator> lower_bound,
+                                  line_pos_iterator<Iterator> current,
+                                  std::size_t tabs = 4)
+    {
+        return get_column(lower_bound.base(), current.base(), tabs);
     }
 
 }}
