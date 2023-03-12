@@ -7,8 +7,10 @@
 #include <boost/spirit/include/support_line_pos_iterator.hpp>
 
 #include <boost/core/lightweight_test.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/assign.hpp>
-#include <iostream>
+#include <boost/static_assert.hpp>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -29,11 +31,24 @@ struct validation {
 
 typedef std::vector<validation> validations;
 
-void test(std::string const& input, validations const& validations, bool singlechar_newline) {
-    typedef boost::spirit::line_pos_iterator<std::string::const_iterator> pos_iterator_t;
+struct string_forward_iterator : public boost::iterator_adaptor<
+    string_forward_iterator      // Derived
+  , std::string::const_iterator  // Base
+  , boost::use_default           // Value
+  , boost::forward_traversal_tag // CategoryOrTraversal
+  >
+{
+    explicit string_forward_iterator(std::string::const_iterator it)
+      : string_forward_iterator::iterator_adaptor_(it) {}
+};
+BOOST_STATIC_ASSERT(boost::is_same<std::iterator_traits<string_forward_iterator>::iterator_category, std::forward_iterator_tag>::value);
 
-    pos_iterator_t const input_begin(input.begin());
-    pos_iterator_t const input_end(input.end());
+template <typename Iterator>
+void test(Iterator first, Iterator last, validations const& validations, bool singlechar_newline) {
+    typedef boost::spirit::line_pos_iterator<Iterator> pos_iterator_t;
+
+    pos_iterator_t const input_begin(first);
+    pos_iterator_t const input_end(last);
     pos_iterator_t position(input_begin);
     validations::const_iterator expected = validations.begin();
 
@@ -53,6 +68,12 @@ void test(std::string const& input, validations const& validations, bool singlec
 
     BOOST_TEST(position == input_end);
     BOOST_TEST(expected == validations.end());
+}
+
+void test(std::string const& input, validations const& validations, bool singlechar_newline) {
+    test(input.begin(), input.end(), validations, singlechar_newline);
+    test(string_forward_iterator(input.begin()), string_forward_iterator(input.end()),
+         validations, singlechar_newline);
 }
 
 void test_only(std::string const& line_break) {
