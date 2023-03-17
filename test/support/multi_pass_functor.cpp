@@ -13,6 +13,7 @@
 #include <boost/spirit/home/support/iterators/detail/functor_input_policy.hpp>
 
 #include <fstream>
+#include <iostream>
 
 //[iterate_a2m:
 // copied from:
