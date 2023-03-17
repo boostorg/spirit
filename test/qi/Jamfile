@@ -19,6 +19,16 @@ project spirit-qi
         <include>.
         <c++-template-depth>512
         <known-warnings>hide,<toolset>gcc-$(9-11):<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94492
+
+        # Suppress C++03 deprecation warnings from other libraries
+        <define>BOOST_BIND_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_HASH_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_ENDIAN_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_FUNCTION_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SMART_PTR_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SYSTEM_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_TYPEOF_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_UNORDERED_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
     ;
 
 ###############################################################################

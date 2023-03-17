@@ -16,6 +16,16 @@ import config : requires ;
 project spirit-classic
     : requirements
         <include>.
+
+        # Suppress C++03 deprecation warnings from other libraries
+        <define>BOOST_BIND_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_HASH_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_ENDIAN_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_FUNCTION_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SMART_PTR_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SYSTEM_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_TYPEOF_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_UNORDERED_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
     ;
 
 ###############################################################################
