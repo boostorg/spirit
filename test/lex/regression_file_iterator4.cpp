@@ -16,6 +16,8 @@
 #include <boost/phoenix/operator/self.hpp>
 #include <boost/phoenix/statement/sequence.hpp>
 
+#include <sstream>
+
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;
 

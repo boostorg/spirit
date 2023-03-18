@@ -18,6 +18,8 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/operator/self.hpp>
 
+#include <sstream>
+
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;
 
