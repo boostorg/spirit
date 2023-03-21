@@ -38,8 +38,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.which();
-            std::cout << " got: \"" << x.where() << '"' << std::endl;
+            BOOST_TEST_CSTR_EQ(x.which().c_str(), "'o'");
+            BOOST_TEST_CSTR_EQ(x.where(), "i");
         }
     }
 
@@ -55,8 +55,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.which();
-            std::cout << " got: \"" << x.where() << '"' << std::endl;
+            BOOST_TEST_CSTR_EQ(x.which().c_str(), "'o'");
+            BOOST_TEST_CSTR_EQ(x.where(), "i");
         }
     }
 
@@ -67,8 +67,12 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.which();
-            std::cout << " got: \"" << x.where() << '"' << std::endl;
+#ifndef BOOST_SPIRIT_X3_NO_RTTI
+            BOOST_TEST(x.which().find("sequence") != std::string::npos);
+#else
+            BOOST_TEST_CSTR_EQ(x.which().c_str(), "undefined");
+#endif
+            BOOST_TEST_CSTR_EQ(x.where(), "y:a");
         }
     }
 
@@ -128,8 +132,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.which();
-            std::cout << " got: \"" << x.where() << '"' << std::endl;
+            BOOST_TEST_CSTR_EQ(x.which().c_str(), "'o'");
+            BOOST_TEST_CSTR_EQ(x.where(), "i");
         }
     }
 
@@ -140,8 +144,8 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.which();
-            std::cout << " got: \"" << x.where() << '"' << std::endl;
+            BOOST_TEST_CSTR_EQ(x.which().c_str(), "\"foo\"");
+            BOOST_TEST_CSTR_EQ(x.where(), "bar");
         }
     }
 
