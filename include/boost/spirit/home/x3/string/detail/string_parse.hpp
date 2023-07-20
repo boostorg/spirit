@@ -37,8 +37,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
       , Iterator& first, Iterator const& last, Attribute& attr, CaseCompareFunc const& compare)
     {
         Iterator i = first;
-        typename String::const_iterator stri = str.begin();
-        typename String::const_iterator str_last = str.end();
+        auto stri = str.begin();
+        auto const str_last = str.end();
 
         for (; stri != str_last; ++stri, ++i)
             if (i == last || (compare(*stri, *i) != 0))
@@ -68,9 +68,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         String const& ucstr, String const& lcstr
       , Iterator& first, Iterator const& last, Attribute& attr)
     {
-        typename String::const_iterator uc_i = ucstr.begin();
-        typename String::const_iterator uc_last = ucstr.end();
-        typename String::const_iterator lc_i = lcstr.begin();
+        auto uc_i = ucstr.begin();
+        auto const uc_last = ucstr.end();
+        auto lc_i = lcstr.begin();
         Iterator i = first;
 
         for (; uc_i != uc_last; ++uc_i, ++lc_i, ++i)

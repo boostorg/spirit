@@ -14,6 +14,7 @@
 #include <boost/fusion/include/deque.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/type_traits/make_void.hpp>
+#include <boost/range/iterator.hpp>
 
 #include <vector>
 #include <string>
@@ -33,7 +34,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
         template <typename T>
         struct is_container_impl<T, void_t<
-            typename T::value_type, typename T::iterator,
+            typename T::value_type, typename boost::range_iterator<T>::type,
             typename T::size_type, typename T::reference> > : mpl::true_ {};
 
         template <typename T, typename Enabler = void>
