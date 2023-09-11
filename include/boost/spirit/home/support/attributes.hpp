@@ -44,6 +44,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/variant.hpp>
 #include <boost/range/range_fwd.hpp>
+#include <boost/core/invoke_swap.hpp>
 #include <boost/config.hpp>
 #include <iterator> // for std::iterator_traits, std::distance
 #include <vector>
@@ -990,7 +991,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     void swap_impl(T& a, T& b)
     {
-        boost::swap(a, b);
+        boost::core::invoke_swap(a, b);
     }
 
     template <typename A>

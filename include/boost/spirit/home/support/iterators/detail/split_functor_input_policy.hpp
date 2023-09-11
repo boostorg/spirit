@@ -9,6 +9,7 @@
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 #include <boost/assert.hpp>
+#include <boost/core/invoke_swap.hpp>
 #include <boost/type_traits/is_empty.hpp>
 
 namespace boost { namespace spirit { namespace iterator_policies
@@ -126,7 +127,7 @@ namespace boost { namespace spirit { namespace iterator_policies
 
             void swap(unique& x)
             {
-                boost::swap(ftor, x.ftor);
+                boost::core::invoke_swap(ftor, x.ftor);
             }
 
         public:
