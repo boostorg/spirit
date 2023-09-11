@@ -10,6 +10,7 @@
 #pragma once
 #endif
 
+#include <ios>
 #include <iterator>
 #include <string>
 #include <boost/spirit/home/karma/generate.hpp>
