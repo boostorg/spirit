@@ -16,7 +16,6 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/stream/detail/match_manip.hpp>
-#include <boost/mpl/bool.hpp>
 #include <iosfwd>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -114,7 +113,7 @@ namespace boost { namespace spirit { namespace qi
         input_iterator l;
         if (!p.derived().parse(f, l, unused, unused, unused))
         {
-            is.setstate(std::basic_istream<Char, Traits>::failbit);
+            is.setstate(std::ios_base::failbit);
         }
         return is;
     }

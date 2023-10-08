@@ -14,7 +14,6 @@
 #include <boost/spirit/home/qi/parse.hpp>
 #include <boost/spirit/home/support/iterators/istream_iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/core/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 
 #include <iosfwd>
@@ -156,7 +155,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         input_iterator l;
         if (!qi::parse(f, l, fm.expr))
         {
-            is.setstate(std::basic_istream<Char, Traits>::failbit);
+            is.setstate(std::ios_base::failbit);
         }
         return is;
     }
@@ -175,7 +174,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         input_iterator l;
         if (!qi::parse(f, l, fm.expr, fm.attr))
         {
-            is.setstate(std::basic_istream<Char, Traits>::failbit);
+            is.setstate(std::ios_base::failbit);
         }
         return is;
     }
@@ -195,7 +194,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         if (!qi::phrase_parse(
                 f, l, fm.expr, fm.skipper, fm.post_skip))
         {
-            is.setstate(std::basic_istream<Char, Traits>::failbit);
+            is.setstate(std::ios_base::failbit);
         }
         return is;
     }
@@ -217,7 +216,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         if (!qi::phrase_parse(
                 f, l, fm.expr, fm.skipper, fm.post_skip, fm.attr))
         {
-            is.setstate(std::basic_istream<Char, Traits>::failbit);
+            is.setstate(std::ios_base::failbit);
         }
         return is;
     }
