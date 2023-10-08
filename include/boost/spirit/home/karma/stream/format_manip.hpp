@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace karma
 
         if (!g.derived().generate(sink, unused, unused, unused))
         {
-            os.setstate(std::basic_ostream<Char, Traits>::failbit);
+            os.setstate(std::ios_base::failbit);
         }
         return os;
     }
