@@ -21,7 +21,7 @@ namespace client
         BOOST_SPIRIT_DECLARE(statement_type);
     }
     
-    parser::statement_type const& statement();
+    parser::statement_type statement();
 }
 
 #endif

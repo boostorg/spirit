@@ -82,9 +82,9 @@ namespace client { namespace parser
 
 namespace client
 {
-    parser::expression_type const& expression()
+    parser::expression_type expression()
     {
-        return parser::expression;
+        return {"expression"};
     }
 }
 
