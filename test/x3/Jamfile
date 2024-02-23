@@ -94,6 +94,7 @@ run omit.cpp ;
 run optional.cpp ;
 run plus.cpp ;
 run with.cpp ;
+run operators_adl.cpp ;
 
 run raw.cpp ;
 run real1.cpp ;

@@ -59,6 +59,7 @@ namespace boost { namespace spirit { namespace x3
 
     template <typename Left, typename Right>
     constexpr auto operator>(Left const& left, Right const& right)
+      -> decltype(left >> expect[right])
     {
         return left >> expect[right];
     }
