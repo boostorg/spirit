@@ -214,21 +214,21 @@ pages and pages of reference documentation.
 [section:operator Parser Operators]
 
 [table
-    [[Expression]           [Attribute]                 [Description]]
-    [[__x3_not_predicate__] [`Unused`]                  [Not predicate. If the predicate `a` matches,
+    [[Expression]                 [Attribute]                 [Description]]
+    [[__x3_not_predicate__ `!a`]  [`Unused`]                  [Not predicate. If the predicate `a` matches,
                                                         fail. Otherwise, return a zero length match.]]
-    [[__x3_and_predicate__] [`Unused`]                  [And predicate. If the predicate `a` matches,
+    [[__x3_and_predicate__ `&a`]  [`Unused`]                  [And predicate. If the predicate `a` matches,
                                                         return a zero length match. Otherwise, fail.]]
-    [[__x3_optional__]      [`optional<A>`]             [Optional. Parse `a` zero or one time]]
-    [[__x3_kleene__]        [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
-    [[__x3_plus__]          [`vector<A>`]               [Plus. Parse `a` one or more times]]
-    [[__x3_alternative__]   [`variant<A, B>`]           [Alternative. Parse `a` or `b`]]
-    [[__x3_sequence__]      [`tuple<A, B>`]             [Sequence. Parse `a` followed by `b`]]
-    [[__x3_expect__]        [`tuple<A, B>`]             [Expect. Parse `a` followed by `b`. `b` is
+    [[__x3_optional__ `-a`]       [`optional<A>`]             [Optional. Parse `a` zero or one time]]
+    [[__x3_kleene__ `*a`]         [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
+    [[__x3_plus__ `+a`]           [`vector<A>`]               [Plus. Parse `a` one or more times]]
+    [[__x3_alternative__ `a | b`] [`variant<A, B>`]           [Alternative. Parse `a` or `b`]]
+    [[__x3_sequence__ `a >> b`]   [`tuple<A, B>`]             [Sequence. Parse `a` followed by `b`]]
+    [[__x3_expect__ `a > b`]      [`tuple<A, B>`]             [Expect. Parse `a` followed by `b`. `b` is
                                                         expected to match when `a` matches, otherwise,
                                                         an `expectation_failure` is thrown.]]
-    [[__x3_difference__]    [`A`]                       [Difference. Parse `a` but not `b`]]
-    [[__x3_list__]          [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
+    [[__x3_difference__ `a - b`]  [`A`]                       [Difference. Parse `a` but not `b`]]
+    [[__x3_list__ `a % b`]        [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
 ]
 
 [endsect]
