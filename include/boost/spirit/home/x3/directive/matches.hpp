@@ -28,8 +28,10 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
+            Iterator save = first;
             bool const result = this->subject.parse(
                     first, last, context, rcontext, unused);
+            if (!result) first = save;
             traits::move_to(result, attr);
             return true;
         }

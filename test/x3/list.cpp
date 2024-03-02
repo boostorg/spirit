@@ -26,6 +26,11 @@ main()
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ % ',');
 
     {
+        BOOST_TEST(test_partial("s,F", sf % ',', 1));
+        BOOST_TEST(test_partial("s,s,F", sf % ',', 3));
+    }
+
+    {
         BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ','));
         BOOST_TEST(test("a,b,c,d,e,f,g,h,", char_ % ',', false));
     }

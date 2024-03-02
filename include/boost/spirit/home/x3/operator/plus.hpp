@@ -33,9 +33,10 @@ namespace boost { namespace spirit { namespace x3
                 this->subject, first, last, context, rcontext, attr))
                 return false;
 
+            Iterator iter = first;
             while (detail::parse_into_container(
-                this->subject, first, last, context, rcontext, attr))
-                ;
+                this->subject, iter, last, context, rcontext, attr))
+                first = iter;
             return true;
         }
     };

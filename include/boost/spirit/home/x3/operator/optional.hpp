@@ -36,8 +36,10 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RContext& rcontext, Attribute& attr
           , traits::container_attribute) const
         {
-            detail::parse_into_container(
-                this->subject, first, last, context, rcontext, attr);
+            Iterator iter = first;
+            if (detail::parse_into_container(
+                this->subject, iter, last, context, rcontext, attr))
+                first = iter;
             return true;
         }
 
@@ -55,11 +57,26 @@ namespace boost { namespace spirit { namespace x3
             // create a local value
             value_type val{};
 
-            if (this->subject.parse(first, last, context, rcontext, val))
+            Iterator iter = first;
+            if (this->subject.parse(iter, last, context, rcontext, val))
             {
+                first = iter;
                 // assign the parsed value into our attribute
                 x3::traits::move_to(val, attr);
             }
+            return true;
+        }
+
+        // Attribute is of other type
+        template <typename Iterator, typename Context
+          , typename RContext, typename Attribute, typename Category>
+        bool parse_subject(Iterator& first, Iterator const& last
+          , Context const& context, RContext& rcontext, Attribute& attr
+          , Category) const
+        {
+            Iterator iter = first;
+            if (this->subject.parse(iter, last, context, rcontext, attr))
+                first = iter;
             return true;
         }
     };

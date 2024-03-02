@@ -9,6 +9,7 @@
 #define BOOST_SPIRIT_TEST_X3_UTILS_HPP
 
 #include <boost/spirit/home/x3/core/parser.hpp>
+#include <cstdlib>
 
 struct move_only
 {
@@ -44,5 +45,37 @@ template <typename T>
 synth_parser<T> synth{};
 
 synth_parser<move_only> const synth_move_only{};
+
+
+struct sf_parser : boost::spirit::x3::parser<sf_parser>
+{
+    typedef boost::spirit::x3::unused_type attribute_type;
+
+    static bool const has_attribute = false;
+    static bool const handles_container = false;
+
+    template <typename Context, typename RuleContext, typename Attribute>
+    bool parse(char const*& iter, char const* last, Context const&,
+        RuleContext&, Attribute&) const
+    {
+        if (iter == last)
+            std::abort();
+
+        switch (*iter) {
+        case 's':
+            ++iter;
+            return true;
+        case 'F':
+            ++iter;  // fail without rollback
+            return false;
+        case 'f':
+            return false;
+        }
+
+        std::abort();
+    }
+};
+
+constexpr sf_parser const sf{};
 
 #endif

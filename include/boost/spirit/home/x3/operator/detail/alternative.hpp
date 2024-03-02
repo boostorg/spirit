@@ -221,8 +221,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attribute, mpl::false_)
         {
+            Iterator save = first;
             return detail::parse_into_container(parser.left, first, last, context, rcontext, attribute)
-                || detail::parse_into_container(parser.right, first, last, context, rcontext, attribute);
+                || detail::parse_into_container(parser.right, first = save, last, context, rcontext, attribute);
         }
 
         template <typename Iterator, typename Attribute>
@@ -231,8 +232,9 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
           , Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attribute, mpl::true_)
         {
+            Iterator save = first;
             return detail::parse_into_container(alternative_helper<Left>{parser.left}, first, last, context, rcontext, attribute)
-                || detail::parse_into_container(alternative_helper<Right>{parser.right}, first, last, context, rcontext, attribute);
+                || detail::parse_into_container(alternative_helper<Right>{parser.right}, first = save, last, context, rcontext, attribute);
         }
 
         template <typename Iterator, typename Attribute>

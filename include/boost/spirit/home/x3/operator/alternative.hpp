@@ -28,8 +28,9 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, unused_type) const
         {
+            Iterator save = first;
             return this->left.parse(first, last, context, rcontext, unused)
-               || this->right.parse(first, last, context, rcontext, unused);
+               || this->right.parse(first = save, last, context, rcontext, unused);
         }
 
         template <typename Iterator, typename Context
@@ -38,8 +39,9 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
+            Iterator save = first;
             return detail::parse_alternative(this->left, first, last, context, rcontext, attr)
-               || detail::parse_alternative(this->right, first, last, context, rcontext, attr);
+               || detail::parse_alternative(this->right, first = save, last, context, rcontext, attr);
         }
     };
 

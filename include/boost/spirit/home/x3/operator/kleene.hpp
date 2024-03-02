@@ -29,9 +29,10 @@ namespace boost { namespace spirit { namespace x3
         bool parse(Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
+            Iterator iter = first;
             while (detail::parse_into_container(
-                this->subject, first, last, context, rcontext, attr))
-                ;
+                this->subject, iter, last, context, rcontext, attr))
+                first = iter;
             return true;
         }
     };

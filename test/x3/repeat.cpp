@@ -24,6 +24,8 @@ main()
 {
     using spirit_test::test_attr;
     using spirit_test::test;
+    using spirit_test::test_failure;
+    using spirit_test::test_partial;
 
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::repeat;
@@ -51,6 +53,15 @@ main()
         BOOST_TEST(test("aaaaa", repeat(3, inf)[char_]));
         BOOST_TEST(test("aaaaaa", repeat(3, inf)[char_]));
         BOOST_TEST(!test("aa", repeat(3, inf)[char_]));
+
+        BOOST_TEST(test_partial("sF", repeat(1)[sf], 1));
+        BOOST_TEST(test_partial("sF", repeat(1, inf)[sf], 1));
+        BOOST_TEST(test_partial("ssF", repeat(2)[sf], 2));
+        BOOST_TEST(test_partial("ssF", repeat(1, inf)[sf], 2));
+        BOOST_TEST(test_partial("ssF", repeat(2, inf)[sf], 2));
+        BOOST_TEST(test_partial("sssF", repeat(3)[sf], 3));
+        BOOST_TEST(test_partial("sssF", repeat(1, inf)[sf], 3));
+        BOOST_TEST(test_partial("sssF", repeat(2, inf)[sf], 3));
     }
     {
         std::string s;

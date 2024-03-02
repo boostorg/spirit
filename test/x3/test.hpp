@@ -58,6 +58,17 @@ namespace spirit_test
     }
 
     template <typename Char, typename Parser>
+    bool test_partial(Char const* in, Parser const& p, int parsed_chars)
+    {
+        Char const * const start = in;
+        Char const* last = in;
+        while (*last)
+            last++;
+
+        return boost::spirit::x3::parse(in, last, p) && (in == start + parsed_chars);
+    }
+
+    template <typename Char, typename Parser>
     bool test_failure(boost::basic_string_view<Char, std::char_traits<Char>> const in,
                       Parser const& p)
     {

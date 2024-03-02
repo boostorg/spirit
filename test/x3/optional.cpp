@@ -45,6 +45,8 @@ main()
 
     using spirit_test::test;
     using spirit_test::test_attr;
+    using spirit_test::test_failure;
+    using spirit_test::test_partial;
 
     using boost::spirit::x3::int_;
     using boost::spirit::x3::omit;
@@ -55,6 +57,8 @@ main()
     {
         BOOST_TEST((test("1234", -int_)));
         BOOST_TEST((test("abcd", -int_, false)));
+
+        BOOST_TEST(test_partial("F", -sf, 0));
 
         boost::optional<int> n;
         BOOST_TEST(test_attr("", -int_, n))

@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include "test.hpp"
+#include "utils.hpp"
 
 struct di_ignore
 {
@@ -72,6 +73,8 @@ main()
         BOOST_TEST((test("roll", lit("rock") | lit("roll"))));
         BOOST_TEST((test("rock", lit("rock") | int_)));
         BOOST_TEST((test("12345", lit("rock") | int_)));
+
+        BOOST_TEST(test("F", sf | lit('F')));
     }
 
     {
