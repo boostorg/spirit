@@ -45,6 +45,14 @@ struct stationary : boost::noncopyable
     int val;
 };
 
+template <typename Expected, typename Expr>
+constexpr void test_attribute_of_alternative(Expr)
+{
+    using namespace boost::spirit::x3;
+    using namespace boost::spirit::x3::traits;
+
+    static_assert(std::is_same_v<Expected, typename attribute_of<Expr, unused_type>::type>);
+}
 
 int
 main()
@@ -294,6 +302,26 @@ main()
         using Bar = std::vector<boost::variant<Foo, int>>;
         Bar x;
         BOOST_TEST(test_attr("abaabb", +('a' >> attr(Foo{}) | 'b' >> attr(int{})), x));
+    }
+
+    {   // compile checks
+        using namespace boost::spirit::x3;
+
+        test_attribute_of_alternative<boost::variant<char, int>>(char_ | int_);
+        test_attribute_of_alternative<boost::variant<char, int, double>>(char_ | int_ | double_);
+        test_attribute_of_alternative<boost::variant<unused_type, char, int, double>>(char_ | int_ | double_ | eps);
+        test_attribute_of_alternative<boost::variant<unused_type, char, int, double>>(char_ | int_ | double_ | eps | int_);
+        test_attribute_of_alternative<boost::variant<unused_type, char, int, double>>(char_ | int_ | double_ | eps | int_ | eps);
+        test_attribute_of_alternative<unused_type>(eps);
+        test_attribute_of_alternative<boost::optional<int>>(eps | int_);
+        test_attribute_of_alternative<boost::optional<int>>(eps | int_);
+        test_attribute_of_alternative<unused_type>(eps | eps);
+        test_attribute_of_alternative<int>(int_ | int_);
+        test_attribute_of_alternative<int>(int_);
+
+        test_attribute_of_alternative<boost::variant<boost::fusion::deque<int, int>, char>>((int_ >> int_) | char_);
+        test_attribute_of_alternative<boost::variant<unused_type, char, boost::fusion::deque<int, int>>>(char_ | (int_ >> int_) | eps);
+        test_attribute_of_alternative<boost::optional<boost::fusion::deque<int, int>>>(eps | (int_ >> int_));
     }
 
     return boost::report_errors();
