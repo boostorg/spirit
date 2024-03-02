@@ -24,9 +24,11 @@
 #include <boost/spirit/home/x3/support/ast/position_tagged.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
+#include <boost/fusion/include/make_vector.hpp>
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 namespace client { namespace ast
 {
@@ -35,7 +37,7 @@ namespace client { namespace ast
     ///////////////////////////////////////////////////////////////////////////
     namespace x3 = boost::spirit::x3;
 
-    struct person : x3::position_tagged
+    struct person
     {
         person(
             std::string const& first_name = ""
@@ -45,6 +47,7 @@ namespace client { namespace ast
           , last_name(last_name)
         {}
 
+        x3::position_tagged pt;
         std::string first_name, last_name;
     };
 
@@ -54,15 +57,13 @@ namespace client { namespace ast
         person who;
         double salary;
     };
-
-    using boost::fusion::operator<<;
 }}
 
 // We need to tell fusion about our employee struct
 // to make it a first-class fusion citizen. This has to
 // be in global scope.
 
-BOOST_FUSION_ADAPT_STRUCT(client::ast::person,
+BOOST_FUSION_ADAPT_STRUCT(client::ast::person, pt,
     first_name, last_name
 )
 
@@ -137,6 +138,19 @@ namespace client
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
 
+
+
+
+std::string print_employee(const client::ast::employee& e)
+{
+    // `x3::position_tagged` among the fields spoils the ability to print whole 'client::ast::employee'
+    std::stringstream ss;
+    auto pv = boost::fusion::make_vector(e.who.first_name, e.who.last_name);
+    auto ev = boost::fusion::make_vector(e.age, pv, e.salary);
+    boost::fusion::out(ss, ev);
+    return ss.str();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Our main parse entry point
 ///////////////////////////////////////////////////////////////////////////////
@@ -180,7 +194,7 @@ parse(std::string const& input, position_cache& positions)
 
         for (auto const& emp : ast)
         {
-            std::cout << "got: " << emp << std::endl;
+            std::cout << "got: " << print_employee(emp) << std::endl;
         }
         std::cout << "\n-------------------------\n";
 
@@ -236,10 +250,15 @@ main()
     position_cache positions{input.begin(), input.end()};
     auto ast = parse(input, positions);
 
-    // Get the source of the 2nd employee and print it
+    // Get the source of the 2nd employee and print it..
     auto pos = positions.position_of(ast[1]); // zero based of course!
     std::cout << "Here's the 2nd employee:" << std::endl;
     std::cout << std::string(pos.begin(), pos.end()) << std::endl;
+    std::cout << "-------------------------\n";
+    // ..and get the source of it's component(person) and print it.
+    pos = positions.position_of(ast[1].who); // zero based of course!
+    std::cout << "Here's the component of the 2nd employee:" << std::endl;
+    std::cout << "    " << std::string(pos.begin(), pos.end()) << std::endl;
     std::cout << "-------------------------\n";
     return 0;
 }

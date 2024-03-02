@@ -8,9 +8,11 @@
 #define BOOST_SPIRIT_X3_SEQUENCE_JAN_06_2013_1015AM
 
 #include <boost/spirit/home/x3/support/traits/attribute_of_binary.hpp>
+#include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/detail/sequence.hpp>
 #include <boost/spirit/home/x3/directive/expect.hpp>
+#include <boost/spirit/home/x3/support/ast/position_tagged_fwd.hpp>
 
 #include <boost/fusion/include/deque_fwd.hpp>
 
@@ -44,7 +46,7 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
             return detail::parse_sequence(*this, first, last, context, rcontext, attr
-              , typename traits::attribute_category<Attribute>::type());
+                                        , typename traits::is_typecontaining_sequence<Attribute, position_tagged>());
         }
     };
 

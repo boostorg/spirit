@@ -10,8 +10,13 @@
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/is_view.hpp>
 #include <boost/fusion/include/size.hpp>
+#include <boost/fusion/include/find.hpp>
+#include <boost/fusion/include/end.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <type_traits> // for std::enable_if_t
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -50,6 +55,20 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
       : mpl::and_<
             fusion::traits::is_view<View>
           , has_size<View, 1>
+        >
+    {};
+
+    template <typename Seq, typename T, typename Sfinae = void>
+    struct is_typecontaining_sequence
+      : mpl::false_
+    {};
+
+    template <typename Seq, typename T>
+    struct is_typecontaining_sequence<Seq, T, std::enable_if_t<fusion::traits::is_sequence<Seq>::value>>
+      : mpl::not_<
+            is_same<typename fusion::result_of::find<Seq, T>::type
+                  , typename fusion::result_of::end<Seq>::type
+            >
         >
     {};
 }}}}
