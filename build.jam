@@ -1,0 +1,74 @@
+# Copyright René Ferdinand Rivera Morell 2023
+# Copyright (c) 2021 Nikita Kniazev
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import project ;
+import feature ;
+
+if ! [ feature.valid known-warnings ] {
+    feature.feature known-warnings : hide show : incidental propagated ;
+}
+
+local 9.0-14.0 = 9.0 10.0 11.0 12.0 14.0 ;
+
+project /boost/spirit
+    : common-requirements
+        <source>/boost/array//boost_array
+        <source>/boost/assert//boost_assert
+        <source>/boost/config//boost_config
+        <source>/boost/core//boost_core
+        <source>/boost/endian//boost_endian
+        <source>/boost/function//boost_function
+        <source>/boost/function_types//boost_function_types
+        <source>/boost/fusion//boost_fusion
+        <source>/boost/integer//boost_integer
+        <source>/boost/io//boost_io
+        <source>/boost/iterator//boost_iterator
+        <source>/boost/move//boost_move
+        <source>/boost/mpl//boost_mpl
+        <source>/boost/optional//boost_optional
+        <source>/boost/phoenix//boost_phoenix
+        <source>/boost/pool//boost_pool
+        <source>/boost/preprocessor//boost_preprocessor
+        <source>/boost/proto//boost_proto
+        <source>/boost/range//boost_range
+        <source>/boost/regex//boost_regex
+        <source>/boost/smart_ptr//boost_smart_ptr
+        <source>/boost/static_assert//boost_static_assert
+        <source>/boost/thread//boost_thread
+        <source>/boost/throw_exception//boost_throw_exception
+        <source>/boost/type_traits//boost_type_traits
+        <source>/boost/typeof//boost_typeof
+        <source>/boost/unordered//boost_unordered
+        <source>/boost/utility//boost_utility
+        <source>/boost/variant//boost_variant
+        <include>include
+    : requirements
+        # Warnings that we have not managed to fix yet
+        <known-warnings>hide,<toolset>msvc:<cxxflags>-wd4244  # conversion from 'T' to 'U', possible loss of data
+        <known-warnings>hide,<toolset>msvc:<cxxflags>-wd4365  # conversion from 'T' to 'U', signed/unsigned mismatch
+        <known-warnings>hide,<toolset>msvc:<cxxflags>-wd4459  # declaration of 'varname' hides global declaration
+
+        # Enable additional useful warnings
+        <warnings>extra,<toolset>gcc:<cxxflags>-Wshadow-local
+        <warnings>extra,<toolset>clang-linux:<cxxflags>-Wshadow-field-in-constructor
+        <warnings>extra,<toolset>clang-linux:<cxxflags>-Wshadow-uncaptured-local
+        <warnings>extra,<toolset>clang-linux:<cxxflags>-Wundefined-reinterpret-cast
+        <warnings>extra,<toolset>msvc:<cxxflags>-w44555  # result of expression not used
+
+        # Broken or very high false-positive rate
+        <known-warnings>hide,<toolset>gcc:<cxxflags>-Wno-maybe-uninitialized  # Too many pesky false-positives
+        <known-warnings>hide,<toolset>msvc-$(9.0-14.0):<cxxflags>-wd4100  # unreferenced formal parameter
+        <known-warnings>hide,<toolset>msvc-$(9.0-14.0):<cxxflags>-wd4512  # assignment operator could not be generated
+        <known-warnings>hide,<toolset>msvc-$(9.0-14.0):<cxxflags>-wd4714  # function 'x' marked as __forceinline not inlined
+    ;
+
+explicit
+    [ alias boost_spirit ]
+    [ alias all : boost_spirit example test ]
+    ;
+
+call-if : boost-library spirit
+    ;

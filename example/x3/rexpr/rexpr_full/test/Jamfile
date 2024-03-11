@@ -10,8 +10,8 @@ import testing ;
 project
    : requirements
       <source>..//rexpr
-      <source>/boost//regex
-      <source>/boost//filesystem
+      <source>/boost/regex//boost_regex
+      <source>/boost/filesystem//boost_filesystem
       <c++-template-depth>300
    ;
 
