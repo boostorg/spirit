@@ -101,7 +101,7 @@ run raw.cpp ;
 run real1.cpp ;
 run real2.cpp ;
 run real3.cpp ;
-run real4.cpp /boost/math//boost_math ;
+run real4.cpp /boost/math//boost_math_tr1 ;
 run rule1.cpp ;
 run rule2.cpp ;
 run rule3.cpp ;
