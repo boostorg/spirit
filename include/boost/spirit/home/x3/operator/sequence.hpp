@@ -29,11 +29,9 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, unused_type) const
         {
-            Iterator save = first;
             if (this->left.parse(first, last, context, rcontext, unused)
                 && this->right.parse(first, last, context, rcontext, unused))
                 return true;
-            first = save;
             return false;
         }
 

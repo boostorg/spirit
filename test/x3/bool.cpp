@@ -6,6 +6,26 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include "bool.hpp"
+#include "utils.hpp"
+
+struct sf_bool_policies : boost::spirit::x3::bool_policies<>
+{
+    template <typename Iterator, typename Attribute, typename CaseCompare>
+    static bool parse_true(Iterator& first, Iterator const& last, Attribute& attr_, CaseCompare const&)
+    {
+        bool r = parse(first, last, sf);
+        if (r) boost::spirit::x3::traits::move_to(true, attr_);
+        return r;
+    }
+
+    template <typename Iterator, typename Attribute, typename CaseCompare>
+    static bool parse_false(Iterator& first, Iterator const& last, Attribute& attr_, CaseCompare const&)
+    {
+        bool r = parse(first, last, boost::spirit::x3::lit('F'));
+        if (r) boost::spirit::x3::traits::move_to(false, attr_);
+        return r;
+    }
+};
 
 int main()
 {
@@ -19,6 +39,9 @@ int main()
         BOOST_TEST(test("true", bool_));
         BOOST_TEST(test("false", bool_));
         BOOST_TEST(!test("fasle", bool_));
+
+        constexpr boost::spirit::x3::bool_parser<bool, boost::spirit::char_encoding::standard, sf_bool_policies> sf_bool{};
+        BOOST_TEST(test("F", sf_bool));
     }
 
     {

@@ -32,8 +32,9 @@ namespace boost { namespace spirit { namespace x3
           , Context const& context, unused_type, T& attr) const
         {
             x3::skip_over(first, last, context);
+            Iterator save = first;
             return policies.parse_true(first, last, attr, get_case_compare<encoding>(context))
-                || policies.parse_false(first, last, attr, get_case_compare<encoding>(context));
+                || policies.parse_false(first = save, last, attr, get_case_compare<encoding>(context));
         }
 
         template <typename Iterator, typename Context, typename Attribute>

@@ -66,22 +66,22 @@ namespace boost { namespace spirit { namespace x3
             Iterator& first, Iterator const& last
           , Context const& context, RContext& rcontext, Attribute& attr) const
         {
-            Iterator local_iterator = first;
             typename RepeatCountLimit::type i{};
             for (/**/; !repeat_limit.got_min(i); ++i)
             {
                 if (!detail::parse_into_container(
-                      this->subject, local_iterator, last, context, rcontext, attr))
+                      this->subject, first, last, context, rcontext, attr))
                     return false;
             }
 
-            first = local_iterator;
+            Iterator iter = first;
             // parse some more up to the maximum specified
             for (/**/; !repeat_limit.got_max(i); ++i)
             {
                 if (!detail::parse_into_container(
-                      this->subject, first, last, context, rcontext, attr))
+                      this->subject, iter, last, context, rcontext, attr))
                     break;
+                first = iter;
             }
             return true;
         }
