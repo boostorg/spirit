@@ -229,8 +229,14 @@ namespace detail
     } while (false)
 
 
-int
-main()
+#if defined(TEST_MAIN_FUNC)
+# define TEST_MAIN_FUNC_IS_MAIN 0
+#else
+# define TEST_MAIN_FUNC_IS_MAIN 1
+# define TEST_MAIN_FUNC main
+#endif
+
+int TEST_MAIN_FUNC()
 {
     using namespace std::string_view_literals;
 
@@ -270,7 +276,6 @@ main()
 
     using spirit_test::test;
     using spirit_test::test_attr;
-
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(expect['x']);
     BOOST_SPIRIT_ASSERT_CONSTEXPR_CTORS(char_ > char_);
 
@@ -794,5 +799,9 @@ main()
         });
     }
 
+#if TEST_MAIN_FUNC_IS_MAIN
     return boost::report_errors();
+#else
+    return 0;
+#endif
 }
