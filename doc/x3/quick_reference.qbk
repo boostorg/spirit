@@ -298,7 +298,7 @@ a: vector<A>, b: vector<A> --> (a > b): vector<A>``]]
     [[__x3_alternative__ (`a | b`)]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): optional<A>
-a: A, b: B, c: Unused --> (a | b | c): optional<variant<A, B> >
+a: A, b: B, c: Unused --> (a | b | c): variant<Unused, A, B>
 a: Unused, b: B --> (a | b): optional<B>
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]

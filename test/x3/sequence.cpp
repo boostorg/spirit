@@ -15,6 +15,15 @@
 #include "test.hpp"
 #include "utils.hpp"
 
+template <typename Expected, typename Expr>
+void test_attribute_of_sequence(Expr)
+{
+    using namespace boost::spirit::x3;
+    using namespace boost::spirit::x3::traits;
+
+    static_assert(std::is_same_v<Expected, typename attribute_of<Expr, unused_type>::type>);
+}
+
 int
 main()
 {
@@ -491,6 +500,17 @@ main()
         std::vector<move_only> v;
         BOOST_TEST(test_attr("ssszs", *synth_move_only >> 'z' >> synth_move_only, v));
         BOOST_TEST_EQ(v.size(), 4);
+    }
+
+    {   // compile checks only
+        using namespace boost::spirit::x3;
+
+        test_attribute_of_sequence<boost::fusion::deque<int, int>>(int_ >> int_);
+        test_attribute_of_sequence<int>(int_ >> eps);
+        test_attribute_of_sequence<int>(eps >> int_);
+        test_attribute_of_sequence<unused_type>(eps >> eps);
+        test_attribute_of_sequence<int>(eps >> int_ >> eps);
+        test_attribute_of_sequence<boost::fusion::deque<int, int>>(int_ >> eps >> eps >> int_ >> eps);
     }
 
     return boost::report_errors();
