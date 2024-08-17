@@ -78,7 +78,14 @@ run difference.cpp ;
 run eoi.cpp ;
 run eol.cpp ;
 run eps.cpp ;
-run expect.cpp ;
+
+run expect_throw.cpp ;
+run expect_nothrow.cpp ;
+
+obj expect_odr_throw : expect_odr_throw.cpp ;
+obj expect_odr_nothrow : expect_odr_nothrow.cpp ;
+run expect_odr.cpp expect_odr_throw expect_odr_nothrow ;
+
 run extract_int.cpp ;
 run int1.cpp ;
 run kleene.cpp ;
