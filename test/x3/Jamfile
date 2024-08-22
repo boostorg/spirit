@@ -8,6 +8,7 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
+import-search /boost/config/checks ;
 import config : requires ;
 import modules ;
 import feature ;
@@ -107,7 +108,7 @@ run raw.cpp ;
 run real1.cpp ;
 run real2.cpp ;
 run real3.cpp ;
-run real4.cpp ;
+run real4.cpp /boost/math//boost_math_tr1 ;
 run rule1.cpp ;
 run rule2.cpp ;
 run rule3.cpp ;

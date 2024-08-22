@@ -12,48 +12,52 @@ project spirit-qi-compiler_tutorial
 
 import modules ;
 
-exe calc1 : calc1.cpp ;
-exe calc2 : calc2.cpp ;
-exe calc3 : calc3.cpp ;
-exe calc4 : calc4.cpp ;
-exe calc5 : calc5.cpp ;
-exe calc6 : calc6.cpp ;
+exe calc1_exe : calc1.cpp ;
+exe calc2_exe : calc2.cpp ;
+exe calc3_exe : calc3.cpp ;
+exe calc4_exe : calc4.cpp /boost/foreach//boost_foreach ;
+exe calc5_exe : calc5.cpp /boost/foreach//boost_foreach ;
+exe calc6_exe : calc6.cpp /boost/foreach//boost_foreach ;
 
-exe calc7 :
+exe calc7_exe :
     calc7/vm.cpp
     calc7/compiler.cpp
     calc7/expression.cpp
     calc7/statement.cpp
     calc7/main.cpp
+    /boost/foreach//boost_foreach
 ;
 
-exe calc8 :
+exe calc8_exe :
     calc8/vm.cpp
     calc8/compiler.cpp
     calc8/expression.cpp
     calc8/statement.cpp
     calc8/main.cpp
+    /boost/foreach//boost_foreach
 ;
 
-exe mini_c :
+exe mini_c_exe :
     mini_c/vm.cpp
     mini_c/compiler.cpp
     mini_c/expression.cpp
     mini_c/statement.cpp
     mini_c/function.cpp
     mini_c/main.cpp
+    /boost/foreach//boost_foreach
 ;
 
-exe conjure1 :
+exe conjure1_exe :
     conjure1/vm.cpp
     conjure1/compiler.cpp
     conjure1/expression.cpp
     conjure1/statement.cpp
     conjure1/function.cpp
     conjure1/main.cpp
+    /boost/foreach//boost_foreach
 ;
 
-exe conjure2 :
+exe conjure2_exe :
     conjure2/compiler.cpp
     conjure2/expression.cpp
     conjure2/function.cpp
@@ -61,6 +65,7 @@ exe conjure2 :
     conjure2/main.cpp
     conjure2/statement.cpp
     conjure2/vm.cpp
+    /boost/foreach//boost_foreach
 ;
 
 #==============================================================================
@@ -117,7 +122,7 @@ if $(LLVM_PATH)
         build_exe_1 $(target-name) : $(sources) : <variant>release ;
     }
 
-    build_exe conjure3 :
+    build_exe conjure3_exe :
         conjure3/compiler.cpp
         conjure3/expression.cpp
         conjure3/function.cpp
