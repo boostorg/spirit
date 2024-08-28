@@ -167,7 +167,7 @@ freedom to instantiate the parser with different iterator types.
 [#tutorial_configuration]
 [heading Configuration]
 
-Here, we declare some types for instatntaiting our X3 parser with. Rememeber
+Here, we declare some types for instantiating our X3 parser with. Remember
 that Spirit parsers can work with any __fwditer__. We'll also need to provide
 the initial context type. This is the context that X3 will use to initiate a
 parse. For calling `phrase_parse`, you will need the `phrase_parse_context`
