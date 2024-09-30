@@ -198,6 +198,16 @@ int main()
             ));
     }
 
+    // test for #792: off by a magnitude due to fraction_part
+    // notice that it applies to all forms of fractions
+    // that end with a sequence of 0.009999
+    {
+        BOOST_TEST(test("1.09e-06",
+			double_,
+            1.09e-06
+            ));
+    }
+
     return boost::report_errors();
 }
 
