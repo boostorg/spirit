@@ -133,21 +133,19 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     // Implementation for containers (includes basic_string).
     template <typename T, typename Str>
-    inline typename Str::const_iterator get_string_begin(Str const& str)
+    inline auto get_string_begin(Str const& str) -> decltype(str.begin())
     { return str.begin(); }
 
     template <typename T, typename Str>
-    inline typename Str::iterator
-    get_string_begin(Str& str)
+    inline auto get_string_begin(Str& str) -> decltype(str.begin())
     { return str.begin(); }
 
     template <typename T, typename Str>
-    inline typename Str::const_iterator get_string_end(Str const& str)
+    inline auto get_string_end(Str const& str) -> decltype(str.end())
     { return str.end(); }
 
     template <typename T, typename Str>
-    inline typename Str::iterator
-    get_string_end(Str& str)
+    inline auto get_string_end(Str& str) -> decltype(str.end())
     { return str.end(); }
 }}}}
 
