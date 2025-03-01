@@ -1,5 +1,6 @@
 [/==============================================================================
     Copyright (C) 2001-2018 Joel de Guzman
+    Copyright (C) 2024 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -94,6 +95,10 @@ matches the input or an exception is emitted. Using on_error(), that
 exception can be handled by calling a handler with the context at which the
 parsing failed can be reported.
 
+[tip    Check the [link spirit_x3.tutorials.non_throwing_expectations Non-throwing Expectations Tutorial]
+        for information on switching to more efficient error handling without using C++ exceptions.
+]
+
 [heading on_error]
 
 `on_error` is the counterpart of `on_success`, as discussed in the
@@ -104,6 +109,7 @@ that are executed by the parser when an __x3_expectation_failure__ is thrown
 via the expect operator or directive. `on_error` handlers have access to the
 iterators, the context and the exception that was thrown.
 
+[#__tutorial_error_handling__]
 [heading Error Handling]
 
 Before we proceed, let me introduce a helper class, the
@@ -129,8 +135,8 @@ Here's our `on_error` handler:
           , Exception const& x, Context const& context)
         {
             auto& error_handler = x3::get<x3::error_handler_tag>(context).get();
-            std::string message = "Error! Expecting: " + x.which() + " here:";
-            error_handler(x.where(), message);
+            std::string message = "Error! Expecting: " + x3::which(x) + " here:";
+            error_handler(x3::where(x), message);
             return x3::error_handler_result::fail;
         }
     };
@@ -146,7 +152,7 @@ determining the line number and actual column position, and formatting the
 error message printed. All we have to do is provide the actual error string
 which we extract from the __x3_expectation_failure__ exception:
 
-   std::string message = "Error! Expecting: " + x.which() + " here:";
+   std::string message = "Error! Expecting: " + x3::which(x) + " here:";
 
 Then, we return `x3::error_handler_result::fail` to tell X3 that we want to
 fail the parse when such an event is caught. You can return one of:
