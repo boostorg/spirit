@@ -1,6 +1,7 @@
 [/==============================================================================
     Copyright (C) 2001-2015 Joel de Guzman
     Copyright (C) 2001-2011 Hartmut Kaiser
+    Copyright (C) 2024 Nana Sakisaka
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -237,6 +238,7 @@ Supported compilers will be:
 [include        tutorial/annotation.qbk]
 [include        tutorial/rexpr.qbk]
 [include        tutorial/error_handling.qbk]
+[include        tutorial/non_throwing_expectations.qbk]
 [endsect]
 
 [section    Quick Reference]

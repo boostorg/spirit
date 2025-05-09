@@ -22,6 +22,7 @@
 #include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/core/scoped_enum.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/mpl/or.hpp>

@@ -13,6 +13,7 @@
 #include <iterator>
 #include <iostream>
 #include <typeinfo>
+#include <sstream>
 
 #include <boost/spirit/include/qi_parse.hpp>
 #include <boost/spirit/include/qi_stream.hpp>
