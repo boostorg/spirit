@@ -508,6 +508,9 @@ a user defined numeric type such as fixed_point (fixed point reals) and
 bignum (unlimited precision numbers) as long as the type follows certain
 expression requirements (documented below).
 
+[warning The `double_` parser and serializer currently produce incorrect values on certain
+        edge cases. See [@https://github.com/boostorg/spirit/issues/804 boostorg/spirit#804] for details.]
+
 [heading Header]
 
     // forwards to <boost/spirit/home/qi/numeric/real.hpp>
