@@ -60,7 +60,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 run char_encoding.cpp ;
 run istream_iterator_basic.cpp ;
-run line_pos_iterator.cpp ;
+run line_pos_iterator.cpp /boost/assign//boost_assign ;
 run multi_pass_error_handler.cpp ;
 run multi_pass_parse.cpp ;
 run unused_type.cpp ;

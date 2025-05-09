@@ -1,0 +1,97 @@
+[/==============================================================================
+    Copyright (C) 2024 Nana Sakisaka
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section:non_throwing_expectations Non-throwing Expectations]
+
+By default, X3 throws __x3_expectation_failure__ when an expectation failure occurs.
+While C++ exceptions are straightforward, they come with significant overhead
+that can drastically impact your application's processing speed, especially if
+your parser is called within a performance-critical loop.
+
+In short, even the simplest grammar, like the one below, would throw exceptions
+100,000 times if invoked 100,000 times with mismatched input.
+
+    x3::lit('a') > 'b'
+
+You can change this behavior to store the error in a user-provided variable
+instead of throwing an exception.
+
+Non-throwing mode can be up to *1-90 times faster* than the traditional mode,
+depending on the complexity of your grammar.
+
+[tip    The performance improvement is capped by the overhead of C++ exceptions,
+        meaning the reduction in parse time is limited by the overhead that
+        exceptions would have introduced.
+]
+
+[heading Migration Guide]
+
+To switch to non-throwing mode, define the macro `BOOST_SPIRIT_X3_THROW_EXPECTATION_FAILURE`
+as `0` before including X3 headers, and then make a few modifications to your
+parser's entry point.
+
+Here's an example of a parser in its default (throwing) mode:
+
+    #include <boost/spirit/home/x3.hpp>
+
+    void do_parse()
+    {
+        // ... setup your variables here...
+
+        try
+        {
+            bool const ok = x3::parse(first, last, parser);
+            if (!ok)
+            {
+                // error handling
+            }
+        }
+        catch (x3::expectation_failure<Iterator> const& failure)
+        {
+            // error handling
+        }
+    }
+
+Next, adjust your code as follows to switch to non-throwing mode:
+
+    #define BOOST_SPIRIT_X3_THROW_EXPECTATION_FAILURE 0
+    #include <boost/spirit/home/x3.hpp>
+
+    void do_parse()
+    {
+        // ... setup your variables here...
+
+        // convenient helper, defaults to `boost::optional<x3::expectation_failure<Iterator>>`
+        x3::expectation_failure_optional<Iterator> failure;
+
+        bool const ok = x3::parse(
+            first, last, x3::with<x3::expectation_failure_tag>(failure)[parser]);
+
+        if (!ok)
+        {
+            if (failure.has_value())
+            {
+                // error handling
+            }
+        }
+    }
+
+[tip    You can also inspect the variable within [link __tutorial_error_handling__ `on_error` handler].
+]
+
+That's it! All X3 parsers will behave semantically the same as before,
+except that expectation failures will be stored in the variable instead of
+being thrown as C++ exceptions.
+
+The following types are supported for the context value:
+
+* `bool`
+* `std::optional<x3::expectation_failure<Iterator>>`
+* `boost::optional<x3::expectation_failure<Iterator>>`
+* `std::reference_wrapper` of optional types
+
+[endsect]

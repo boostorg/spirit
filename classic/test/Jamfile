@@ -9,6 +9,7 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
+import-search /boost/config/checks ;
 import config : requires ;
 
 ###############################################################################
@@ -41,7 +42,7 @@ explicit pch pch-dbg ;
 rule spirit-run ( sources + : args * : input-files * : requirements * : name ? : default-build * )
 {
     name ?= $(sources[1]:D=:S=) ;
-    return  
+    return
        [ run $(sources) : $(args) : $(input-files) : $(requirements)
           <pch>on-spirit:<source>pch : $(name)
         : $(default-build) ]
@@ -210,6 +211,6 @@ local multi-threading = <library>boost_thread
           [ compile typeof_support/typeof_symbols.cpp ]
           [ compile typeof_support/typeof_tree.cpp ]
           [ compile typeof_support/typeof_utility.cpp ]
-        ; 
+        ;
 
 

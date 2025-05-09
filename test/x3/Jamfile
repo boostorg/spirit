@@ -8,6 +8,7 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
+import-search /boost/config/checks ;
 import config : requires ;
 import modules ;
 import feature ;
@@ -78,7 +79,14 @@ run difference.cpp ;
 run eoi.cpp ;
 run eol.cpp ;
 run eps.cpp ;
-run expect.cpp ;
+
+run expect_throw.cpp ;
+run expect_nothrow.cpp ;
+
+obj expect_odr_throw : expect_odr_throw.cpp ;
+obj expect_odr_nothrow : expect_odr_nothrow.cpp ;
+run expect_odr.cpp expect_odr_throw expect_odr_nothrow ;
+
 run extract_int.cpp ;
 run int1.cpp ;
 run kleene.cpp ;
@@ -100,7 +108,7 @@ run raw.cpp ;
 run real1.cpp ;
 run real2.cpp ;
 run real3.cpp ;
-run real4.cpp ;
+run real4.cpp /boost/math//boost_math_tr1 ;
 run rule1.cpp ;
 run rule2.cpp ;
 run rule3.cpp ;
