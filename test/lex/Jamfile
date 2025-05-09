@@ -21,6 +21,16 @@ project spirit-lex
         <include>.
         <c++-template-depth>512
         <known-warnings>hide,<toolset>gcc-$(9-11):<cxxflags>-Wno-deprecated-copy  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94492
+
+        # Suppress C++03 deprecation warnings from other libraries
+        <define>BOOST_BIND_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_HASH_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_ENDIAN_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_FUNCTION_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SMART_PTR_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_SYSTEM_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_TYPEOF_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
+        <define>BOOST_UNORDERED_DETAIL_REQUIRES_CXX11_HPP_INCLUDED
     ;
 
 ###############################################################################
@@ -95,9 +105,9 @@ run regression_matlib_switch.cpp           : : : <dependency>lex_regression_matl
 run regression_word_count.cpp ;
 run regression_syntax_error.cpp ;
 run regression_wide.cpp ;
-run regression_file_iterator1.cpp ;
-run regression_file_iterator2.cpp ;
-run regression_file_iterator3.cpp : : : <pch>off ;
-run regression_file_iterator4.cpp ;
+run state_any_token_semact.cpp ;
+run multi_pass.cpp ;
+run lookahead.cpp : : : <pch>off ;
+run bol_reset.cpp ;
 run regression_static_wide_6253.cpp ;
 run regression_less_8563.cpp ;

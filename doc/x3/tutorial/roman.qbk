@@ -192,9 +192,9 @@ The roman numeral grammar is a very nice and simple example of a grammar:
         using x3::_attr;
         using ascii::char_;
 
-        auto set_zero = [&](auto& ctx){ _val(ctx) = 0; };
-        auto add1000 = [&](auto& ctx){ _val(ctx) += 1000; };
-        auto add = [&](auto& ctx){ _val(ctx) += _attr(ctx); };
+        auto set_zero = [](auto& ctx){ _val(ctx) = 0; };
+        auto add1000 = [](auto& ctx){ _val(ctx) += 1000; };
+        auto add = [](auto& ctx){ _val(ctx) += _attr(ctx); };
 
         x3::rule<class roman, unsigned> const roman = "roman";
 

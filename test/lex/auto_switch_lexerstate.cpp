@@ -12,30 +12,16 @@
 
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include <boost/spirit/include/support_multi_pass.hpp>
-#include <boost/spirit/include/classic_position_iterator.hpp>
-
 #include <boost/core/lightweight_test.hpp>
 #include <boost/phoenix/operator/self.hpp>
+
+#include <sstream>
 
 namespace spirit = boost::spirit;
 namespace lex = spirit::lex;
 
-typedef spirit::classic::position_iterator2<
-    spirit::multi_pass<std::istreambuf_iterator<char> >
-> file_iterator;
-
-inline file_iterator 
-make_file_iterator(std::istream& input, const std::string& filename)
-{
-    return file_iterator(
-        spirit::make_default_multi_pass(
-            std::istreambuf_iterator<char>(input)),
-        spirit::multi_pass<std::istreambuf_iterator<char> >(),
-        filename);
-}
-
-typedef lex::lexertl::token<file_iterator> token_type;
+typedef char const* content_iterator;
+typedef lex::lexertl::token<content_iterator> token_type;
 
 struct lexer
   : lex::lexer<lex::lexertl::actor_lexer<token_type> >
@@ -64,11 +50,10 @@ typedef lexer::iterator_type token_iterator;
 
 int main()
 {
-    std::stringstream ss;
-    ss << "!foo\nbar\n!baz";
+    std::string const s = "!foo\nbar\n!baz";
     
-    file_iterator begin = make_file_iterator(ss, "SS");
-    file_iterator end;
+    content_iterator begin = s.data();
+    content_iterator end = s.data() + s.size();
     
     lexer l;
     token_iterator begin2 = l.begin(begin, end);

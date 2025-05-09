@@ -12,9 +12,9 @@ project spirit-karma-example
     :
     ;
 
-exe actions_example : actions.cpp ;
+exe actions_example : actions.cpp /boost/lambda//boost_lambda ;
 exe auto_facilities : auto_facilities.cpp ;
-exe basic_facilities : basic_facilities.cpp /boost//date_time ;
+exe basic_facilities : basic_facilities.cpp /boost/date_time//boost_date_time /boost/tokenizer//boost_tokenizer ;
 exe karma_calc2_ast_dump : calc2_ast_dump.cpp ;
 exe karma_calc2_ast_rpn : calc2_ast_rpn.cpp ;
 exe karma_calc2_ast_vm : calc2_ast_vm.cpp ;
@@ -31,7 +31,7 @@ exe mini_xml_karma : mini_xml_karma.cpp ;
 exe printf_style_double_format : printf_style_double_format.cpp ;
 exe quick_start1 : quick_start1.cpp ;
 exe karma_reference : reference.cpp ;
-exe karma_reorder_struct : reorder_struct.cpp ;
+exe karma_reorder_struct : reorder_struct.cpp /boost/assign//boost_assign ;
 exe karma_escaped_string : escaped_string.cpp ;
 exe simple_columns_directive : simple_columns_directive.cpp ;
 exe quoted_strings : quoted_strings.cpp ;

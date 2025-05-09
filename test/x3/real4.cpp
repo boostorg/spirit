@@ -8,6 +8,10 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+#if defined(_MSC_VER) && _MSC_VER < 1910
+int main() {}
+#else
+
 #include "real.hpp"
 
 #include <boost/math/concepts/real_concept.hpp>
@@ -75,3 +79,4 @@ main()
 
     return boost::report_errors();
 }
+#endif

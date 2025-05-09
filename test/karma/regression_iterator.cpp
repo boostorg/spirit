@@ -9,6 +9,7 @@
 #include <boost/spirit/include/karma.hpp>
 
 #include <iostream>
+#include <sstream>
 
 // Note how the return is made by value instead of by reference.
 template <typename T> T identity(T const& t) { return t; }
