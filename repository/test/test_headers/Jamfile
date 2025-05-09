@@ -16,21 +16,19 @@ import print ;
 import sequence ;
 import feature ;
 
-project boost/spirit/repository/test/test_headers 
-    : requirements 
-        <include>$(BOOST_ROOT) 
-        <include>../../../../..
+project boost/spirit/repository/test/test_headers
+    : requirements
         <c++-template-depth>300
     ;
 
-headers = 
-[ 
-    path.glob-tree ../../../../../boost/spirit/repository/include : *.hpp 
+headers =
+[
+    path.glob-tree ../../../include/boost/spirit/repository/include : *.hpp
 ] ;
 
-main_headers = 
-[ 
-    path.glob-tree ../../../../../boost/spirit/include : *.hpp : classic* phoenix1*
+main_headers =
+[
+    path.glob-tree ../../../include/boost/spirit/include : *.hpp : classic* phoenix1*
 ] ;
 
 for local file in $(headers)
@@ -40,7 +38,7 @@ for local file in $(headers)
             <define>BOOST_SPIRIT_HEADER_NAME=$(file)
             <dependency>$(file)
         : # test name
-            [ regex.replace [ path.relative-to ../../../../../boost/spirit/repository $(file) ] "/" "_" ] 
+            [ regex.replace [ path.relative-to ../../../include/boost/spirit/repository $(file) ] "/" "_" ]
         ;
 }
 
@@ -63,19 +61,19 @@ rule generate-include-all ( target : sources * : properties * )
 
 }
 
-make auto_all1.cpp 
+make auto_all1.cpp
     : $(headers) $(main_headers)
-    : @generate-include-all 
+    : @generate-include-all
     ;
 
-make auto_all2.cpp 
+make auto_all2.cpp
     : $(headers) $(main_headers)
-    : @generate-include-all 
-    : <generate-include-all-order>reverse 
+    : @generate-include-all
+    : <generate-include-all-order>reverse
     ;
 
 # this ought to catch non-inlined functions and other duplicate definitions
-link auto_all1.cpp auto_all2.cpp main.cpp 
-    : <include>. 
-    : auto_all_headers 
+link auto_all1.cpp auto_all2.cpp main.cpp
+    : <include>.
+    : auto_all_headers
     ;

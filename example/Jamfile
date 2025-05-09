@@ -9,7 +9,9 @@
 
 # build all examples
 
-local examples = [ glob-tree [jJ]amfile [jJ]amfile.v2 ] ;
+project : requirements <library>/boost/spirit//boost_spirit ;
+
+local examples = [ glob-tree "[jJ]amfile" "[jJ]amfile.v2" ] ;
 
 for local ex in $(examples) {
    local dir = $(ex:P) ;
