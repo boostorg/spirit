@@ -508,7 +508,8 @@ a user defined numeric type such as fixed_point (fixed point reals) and
 bignum (unlimited precision numbers) as long as the type follows certain
 expression requirements (documented below).
 
-[warning The `double_` parser is not IEEE 754 compliant, the mantissa of the result can be off by one.]
+[warning The `double_` parser and serializer currently produce incorrect values on certain
+        edge cases. See [@https://github.com/boostorg/spirit/issues/804 boostorg/spirit#804] for details.]
 
 [heading Header]
 
