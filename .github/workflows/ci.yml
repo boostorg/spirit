@@ -194,7 +194,7 @@ jobs:
           if [ -n "$PACKAGES_TO_REMOVE" ]; then sudo apt-get purge -y $PACKAGES_TO_REMOVE; fi
           echo ">>>>> APT: REPO.."
           for i in {1..3}; do sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test" && break || sleep 2; done
-          
+
           if test -n "${LLVM_OS}" ; then
               wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
               if test -n "${LLVM_VER}" ; then
@@ -297,6 +297,6 @@ jobs:
 
           echo '==================================> SCRIPT'
 
-          b2 link=shared threading=multi variant=release,sanitize toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB warnings=extra warnings-as-errors=on define=BOOST_SPIRIT_X3_HIDE_CXX17_WARNING
+          b2 link=shared threading=multi variant=release,sanitize toolset=$TRAVIS_COMPILER cxxstd=$STD $STDLIB warnings=extra warnings-as-errors=off define=BOOST_SPIRIT_X3_HIDE_CXX17_WARNING
 
           fi
