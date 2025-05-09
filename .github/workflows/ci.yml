@@ -172,7 +172,13 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: linux
+      - name: Initialize Ubuntu
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo echo "set man-db/auto-update false" | sudo debconf-communicate
+          sudo dpkg-reconfigure man-db
+
+      - name: Linux
         shell: bash
         env:
           CXX: ${{ matrix.cxx }}
