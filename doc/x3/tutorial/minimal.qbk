@@ -17,7 +17,7 @@ example.
 So far, to keep things simple, all of the tutorial programs are self
 contained in one cpp file. In reality, you will want to separate various
 logical modules of the parser into separate cpp and header files, decoupling
-the interface from the implememtation.
+the interface from the implementation.
 
 There are many ways to structure an X3 parser, but the "minimal" example in
 this tutorial shows the preferred way. This example basically reuses the same
