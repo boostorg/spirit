@@ -8,6 +8,8 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
+project : requirements <library>/boost/spirit//boost_spirit ;
+
 build-project karma ;
 build-project lex ;
 build-project qi ;

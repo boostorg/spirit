@@ -67,7 +67,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
 
 compile-fail grammar_fail.cpp ;
 compile-fail rule_fail.cpp ;
-run actions.cpp : : : <pch>off ; # Enable PCH when boostorg/proto#13 is merged.
+run actions.cpp /boost/lambda//boost_lambda : : : <pch>off ; # Enable PCH when boostorg/proto#13 is merged.
 run actions2.cpp : : : <pch>off ;
 run alternative.cpp ;
 run attr.cpp ;
@@ -115,13 +115,13 @@ run pass_container1.cpp ;
 run pass_container2.cpp ;
 run permutation.cpp ;
 run plus.cpp ;
-run range_run.cpp ;
+run range_run.cpp /boost/dynamic_bitset//boost_dynamic_bitset /boost/random//boost_random ;
 run raw.cpp ;
-run real1.cpp ;
-run real2.cpp ;
-run real3.cpp ;
-run real4.cpp ;
-run real5.cpp ;
+run real1.cpp /boost/math//boost_math_tr1 ;
+run real2.cpp /boost/math//boost_math_tr1 ;
+run real3.cpp /boost/math//boost_math_tr1 ;
+run real4.cpp /boost/math//boost_math_tr1 ;
+run real5.cpp /boost/math//boost_math_tr1 ;
 run repeat.cpp ;
 run rule1.cpp ;
 run rule2.cpp ;
