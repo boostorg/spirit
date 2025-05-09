@@ -1,7 +1,7 @@
 //  Copyright (c) 2001-2009 Hartmut Kaiser
 //  Copyright (c) 2009 Carl Barron
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef MATLIB_H_05102009
@@ -23,6 +23,10 @@ struct set_lexer_state
     }
 };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
 struct store_double
 {
     std::vector<double> &out;
@@ -35,9 +39,6 @@ struct store_double
         std::string work(start, end);
         out.push_back(std::atof(work.c_str()));
     }
-
-    // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(store_double& operator= (store_double const&));
 };
 
 struct add_row
@@ -56,9 +57,6 @@ struct add_row
         matrix.back().swap(row);
         ctx.set_state_name("A");
     }
-
-    // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(add_row& operator= (add_row const&));
 };
 
 template <class Lexer>
@@ -74,17 +72,17 @@ struct matlib_tokens : boost::spirit::lex::lexer<Lexer>
 
         number = "[-+]?({REAL1}|{REAL2})([eE][-+]?[0-9]+)?";
 
-        this->self 
+        this->self
             =   token_def_('[') [set_lexer_state("A")]
             ;
 
-        this->self("A") 
+        this->self("A")
             =   token_def_('[') [set_lexer_state("B")]
             |   ','
             |   token_def_(']') [set_lexer_state("INITIAL")]
             ;
 
-        this->self("B") 
+        this->self("B")
             =   number [store_double(row)]
             |   ','
             |   token_def_(']') [add_row(matrix,row)]
@@ -95,6 +93,9 @@ struct matlib_tokens : boost::spirit::lex::lexer<Lexer>
     std::vector<std::vector<double> > &matrix;
     std::vector<double> row;
 };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 #endif
 

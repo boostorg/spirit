@@ -9,14 +9,13 @@
 #if !defined(BOOST_SPIRIT_TEST_QI_INT_HPP)
 #define BOOST_SPIRIT_TEST_QI_INT_HPP
 
-#include <climits>
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_int.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <climits>
 
 #include "test.hpp"
 

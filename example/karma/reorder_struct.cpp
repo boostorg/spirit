@@ -6,7 +6,6 @@
 //  The main purpose of this example is to show how a single fusion sequence
 //  can be used to generate output of the elements in different sequences
 
-#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/fusion/include/struct.hpp>
 #include <boost/fusion/include/nview.hpp>

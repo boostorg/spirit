@@ -11,7 +11,8 @@
 #include <boost/spirit/include/classic_lazy.hpp>
 #include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <boost/spirit/include/phoenix1_operators.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost;
 using namespace BOOST_SPIRIT_CLASSIC_NS;

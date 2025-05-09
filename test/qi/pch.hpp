@@ -8,8 +8,8 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/optional.hpp>
 #include <boost/variant.hpp>

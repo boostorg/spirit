@@ -6,7 +6,6 @@
 
 #define BOOST_SPIRIT_KARMA_DEBUG
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -14,8 +13,8 @@
 #include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <string>

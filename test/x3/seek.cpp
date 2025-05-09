@@ -7,7 +7,6 @@
 //////////////////////////////////////////////////////////////////////////////*/
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/auxiliary/eoi.hpp>
 #include <boost/spirit/home/x3/core.hpp>
 #include <boost/spirit/home/x3/char.hpp>

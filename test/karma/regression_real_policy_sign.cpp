@@ -5,8 +5,6 @@
 
 // This test checks whether #8970 was fixed
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <boost/spirit/include/karma.hpp>
 

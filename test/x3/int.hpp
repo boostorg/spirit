@@ -10,7 +10,6 @@
 #define BOOST_SPIRIT_TEST_X3_INT_HPP
 
 #include <climits>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/numeric/int.hpp>
 #include "test.hpp"
 

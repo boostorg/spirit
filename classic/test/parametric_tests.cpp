@@ -8,7 +8,6 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 #include <string>
 
 
@@ -16,10 +15,12 @@
 #include <boost/spirit/include/classic_parametric.hpp>
 #include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <boost/spirit/include/phoenix1_operators.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
-#include <boost/detail/lightweight_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //

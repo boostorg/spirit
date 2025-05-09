@@ -8,13 +8,14 @@
 ==============================================================================*/
 #include <iostream>
 #include <cmath>
-#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <boost/spirit/include/phoenix1_composite.hpp>
 #include <boost/spirit/include/phoenix1_functions.hpp>
 #include <boost/spirit/include/phoenix1_operators.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace phoenix;
 using namespace std;

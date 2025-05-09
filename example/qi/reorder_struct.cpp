@@ -6,8 +6,6 @@
 //  The main purpose of this example is to show how a single fusion sequence
 //  can be filled from a parsed input of the elements in different sequences
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/mpl/print.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/fusion/include/struct.hpp>
 #include <boost/fusion/include/nview.hpp>

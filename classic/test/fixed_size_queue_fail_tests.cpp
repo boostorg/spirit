@@ -11,7 +11,7 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <iostream>
 
 typedef BOOST_SPIRIT_CLASSIC_NS::fixed_size_queue<int, 5> queue_t;

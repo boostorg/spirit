@@ -4,10 +4,9 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_binary.hpp>
 
 #include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/qi_binary.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/predef/other/endian.h>
 #include "test.hpp"

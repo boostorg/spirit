@@ -5,7 +5,7 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/repository/include/qi_advance.hpp>
 
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/qi_auxiliary.hpp>
@@ -16,9 +16,7 @@
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_string.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-
-#include <boost/spirit/repository/include/qi_advance.hpp>
+#include <boost/phoenix/operator.hpp>
 
 #include <boost/assign/std/list.hpp>
 #include "test.hpp"

@@ -4,12 +4,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/string/tst.hpp>
 #include <boost/spirit/home/x3/string/tst_map.hpp>
 #include <boost/spirit/home/x3/support/no_case.hpp>
 #include <boost/spirit/home/support/char_encoding/standard.hpp>
 #include <boost/spirit/home/support/char_encoding/standard_wide.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <string>
 #include <cctype>
 #include <iostream>

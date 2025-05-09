@@ -9,7 +9,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/include/phoenix1_primitives.hpp>
@@ -17,6 +16,8 @@
 #include <boost/spirit/include/phoenix1_operators.hpp>
 #include <boost/spirit/include/phoenix1_special_ops.hpp>
 #include <boost/spirit/include/phoenix1_statements.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace phoenix;
 using namespace std;

@@ -9,8 +9,9 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_dynamic.hpp>
 #include <boost/spirit/include/classic_ast.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 int the_var_to_be_tested = 0;

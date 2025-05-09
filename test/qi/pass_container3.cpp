@@ -5,17 +5,13 @@
 
 // compilation test only
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi.hpp>
+
+#include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/variant.hpp>
 
 #include <string>
 #include <vector>
-
-#include <boost/spirit/include/qi.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-
-#include <boost/variant.hpp>
-
 #include "test.hpp"
 
 using namespace spirit_test;

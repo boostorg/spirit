@@ -8,8 +8,9 @@
 ==============================================================================*/
 #include <iostream>
 #include <string>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/phoenix1_tuples.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace phoenix;
 using namespace phoenix::tuple_index_names;

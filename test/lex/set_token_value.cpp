@@ -1,24 +1,30 @@
 //  Copyright (c) 2001-2011 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_container.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
+
+#include <boost/phoenix/object.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/stl/container.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
-// semantic action analyzing leading whitespace 
+// semantic action analyzing leading whitespace
 enum tokenids
 {
     ID_INDENT = 1000,
     ID_DEDENT
 };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
 struct handle_whitespace
 {
     handle_whitespace(std::stack<unsigned int>& indents)
@@ -52,7 +58,7 @@ struct handle_whitespace
     }
 
     template <typename Iterator>
-    bool is_dedent(Iterator& start, Iterator& end, unsigned int& level) 
+    bool is_dedent(Iterator& start, Iterator& end, unsigned int& level)
     {
         unsigned int newindent = get_indent(start, end);
         while (!indents_.empty() && newindent < indents_.top()) {
@@ -64,11 +70,11 @@ struct handle_whitespace
 
     // Handle additional indentation
     template <typename Iterator>
-    bool is_indent(Iterator& start, Iterator& end, unsigned int& level) 
+    bool is_indent(Iterator& start, Iterator& end, unsigned int& level)
     {
         unsigned int newindent = get_indent(start, end);
         if (indents_.empty() || newindent > indents_.top()) {
-            level = 1;      // indent one more level 
+            level = 1;      // indent one more level
             indents_.push(newindent);
             return true;
         }
@@ -76,10 +82,10 @@ struct handle_whitespace
     }
 
     std::stack<unsigned int>& indents_;
-
-    // silence MSVC warning C4512: assignment operator could not be generated
-    BOOST_DELETED_FUNCTION(handle_whitespace& operator= (handle_whitespace const&));
 };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition
@@ -111,7 +117,7 @@ struct token_data
 };
 
 template <typename Token>
-inline 
+inline
 bool test_tokens(token_data const* d, std::vector<Token> const& tokens)
 {
     for (std::size_t i = 0, len = tokens.size(); i < len; ++i)
@@ -122,7 +128,7 @@ bool test_tokens(token_data const* d, std::vector<Token> const& tokens)
         typename Token::token_value_type const& value (tokens[i].value());
         if (tokens[i].id() != static_cast<std::size_t>(d->id))        // token id must match
             return false;
-        if (value.which() != 1)     // must have an integer value 
+        if (value.which() != 1)     // must have an integer value
             return false;
         if (boost::get<unsigned int>(value) != d->value)  // value must match
             return false;
@@ -132,7 +138,7 @@ bool test_tokens(token_data const* d, std::vector<Token> const& tokens)
     return (d->id == -1) ? true : false;
 }
 
-inline 
+inline
 bool test_indents(int *i, std::stack<unsigned int>& indents)
 {
     while (!indents.empty())
@@ -194,7 +200,7 @@ int main()
         int i[] = { 8, 4, -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
-        token_data d[] = { 
+        token_data d[] = {
             { ID_INDENT, 1 }, { ID_INDENT, 1 }
           , { -1, 0 } };
         BOOST_TEST(test_tokens(d, tokens));
@@ -217,7 +223,7 @@ int main()
         int i[] = { 4, -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
-        token_data d[] = { 
+        token_data d[] = {
             { ID_INDENT, 1 }, { ID_INDENT, 1 }
           , { ID_DEDENT, 1 }
           , { -1, 0 } };
@@ -242,7 +248,7 @@ int main()
         int i[] = { 4, -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
-        token_data d[] = { 
+        token_data d[] = {
             { ID_INDENT, 1 }, { ID_INDENT, 1 }, { ID_INDENT, 1 }
           , { ID_DEDENT, 2 }
           , { -1, 0 } };

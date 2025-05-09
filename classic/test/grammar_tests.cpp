@@ -8,13 +8,15 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <boost/detail/lightweight_test.hpp>
 
 
 //#define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_grammar_def.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+
 using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 //////////////////////////////////////////////////////////////////////////////

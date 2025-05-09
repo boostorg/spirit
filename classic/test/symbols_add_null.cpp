@@ -35,7 +35,7 @@ struct spirit_exception : std::exception
 #include <boost/spirit/home/classic/symbols/impl/tst.ipp>
 #include <boost/utility/addressof.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 typedef char char_type;
 typedef char const * iterator;

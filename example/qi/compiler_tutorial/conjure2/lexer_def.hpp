@@ -7,6 +7,8 @@
 
 #include "lexer.hpp"
 
+#include <boost/phoenix/operator/self.hpp>
+
 namespace client { namespace lexer
 {
     template <typename BaseIterator>

@@ -6,8 +6,7 @@
 #if !defined(BOOST_SPIRIT_TEST_AUTO_HPP)
 #define BOOST_SPIRIT_TEST_AUTO_HPP
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/karma_auto.hpp>
 
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/spirit/include/karma_bool.hpp>
@@ -17,7 +16,6 @@
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
-#include <boost/spirit/include/karma_auto.hpp>
 
 #include "test.hpp"
 

@@ -3,10 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/karma_binary.hpp>
+
 #include <boost/spirit/include/karma_generate.hpp>
 
 #include <boost/predef/other/endian.h>

@@ -7,7 +7,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 
 #include <string>

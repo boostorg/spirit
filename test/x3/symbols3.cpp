@@ -7,7 +7,6 @@
 =============================================================================*/
 
 #define BOOST_SPIRIT_X3_DEBUG
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/support/char_encoding/unicode.hpp>
 #include <boost/fusion/include/at.hpp>

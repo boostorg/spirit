@@ -6,11 +6,12 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
 #include <cstdio>
 #include <iostream>
 #include <boost/concept_check.hpp>
 #include <boost/spirit/include/classic_file_iterator.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 // This checks for a namespace related problem in VC8
 // The problem can be avoided by not using "using namespace std;" in the

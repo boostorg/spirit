@@ -4,12 +4,10 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/spirit/include/support_multi_pass.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <sstream>
 #include <iostream>
 #include <iterator>

@@ -10,7 +10,6 @@
 #define BOOST_SPIRIT_TEST_X3_REAL_HPP
 
 #include <climits>
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3/char.hpp>
 #include <boost/spirit/home/x3/numeric.hpp>
 #include <boost/spirit/home/x3/operator.hpp>

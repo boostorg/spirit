@@ -3,15 +3,15 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <string>
-#include <iostream>
-
-#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/lex.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/function.hpp>
 #include <boost/phoenix/operator/self.hpp>
+#include <string>
+#include <iostream>
 
 namespace lex = boost::spirit::lex;
 namespace phoenix = boost::phoenix;

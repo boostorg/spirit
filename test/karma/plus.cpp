@@ -3,10 +3,7 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
-#include <boost/assign/std/vector.hpp>
+#include <boost/spirit/include/karma_plus.hpp>
 
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -17,9 +14,11 @@
 #include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+
+#include <boost/assign/std/vector.hpp>
 #include <boost/fusion/include/vector.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
 #include "test.hpp"

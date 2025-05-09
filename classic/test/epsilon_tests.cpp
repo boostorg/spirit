@@ -8,13 +8,13 @@
 =============================================================================*/
 #include <iostream>
 #include <cstring>
-#include <boost/detail/lightweight_test.hpp>
 
 // This test program only includes the epsilon.hpp header from Spirit
 #include <boost/spirit/include/classic_epsilon.hpp>
-#include <boost/detail/lightweight_test.hpp>
 #include "impl/var.hpp"
 #include "impl/string_length.hpp"
+
+#include <boost/core/lightweight_test.hpp>
 
 using namespace test;
 static BOOST_SPIRIT_CLASSIC_NS::parse_info<char const *> pi;

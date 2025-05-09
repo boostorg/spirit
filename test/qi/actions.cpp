@@ -10,13 +10,15 @@
                                     // has no meaning; ignored
 #endif
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_action.hpp>
+
 #include <boost/detail/workaround.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
-#include <boost/spirit/include/qi_action.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind/bind.hpp>
 #include <cstring>

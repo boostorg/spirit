@@ -10,7 +10,8 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_dynamic.hpp>
 #include <boost/spirit/include/phoenix1.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 #include <iostream>
 #include <string>
 

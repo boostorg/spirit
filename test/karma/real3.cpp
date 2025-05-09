@@ -4,11 +4,12 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include "real.hpp"
+
 #include <boost/spirit/include/version.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include "real.hpp"
+#include <boost/phoenix/core.hpp>
+#include <boost/phoenix/operator.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 #ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
@@ -34,6 +35,11 @@ namespace boost { namespace spirit { namespace traits
     };
 }}}
 #endif
+
+struct double_prec16_policy : boost::spirit::karma::real_policies<double>
+{
+    static unsigned int precision(double) { return 16; }
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
@@ -182,6 +188,24 @@ int main()
         BOOST_TEST(test("1.0e-03", double_, 0.00099999999999999829));
         BOOST_TEST(test("1.0e-04", double_, 0.00009999999999999982));
         BOOST_TEST(test("1.0e-05", double_, 0.00000999999999999998));
+    }
+
+    // test for #735: off by a magnitude due to log10 rounding up
+    {
+        BOOST_TEST(test("0.0999999999999998",
+            karma::real_generator<double, double_prec16_policy>(),
+            0.099999999999999770
+            ));
+    }
+
+    // test for #792: off by a magnitude due to fraction_part
+    // notice that it applies to all forms of fractions
+    // that end with a sequence of 0.009999
+    {
+        BOOST_TEST(test("1.09e-06",
+			double_,
+            1.09e-06
+            ));
     }
 
     return boost::report_errors();

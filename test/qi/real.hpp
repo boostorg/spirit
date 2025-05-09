@@ -9,8 +9,8 @@
 #if !defined(BOOST_SPIRIT_TEST_QI_REAL_HPP)
 #define BOOST_SPIRIT_TEST_QI_REAL_HPP
 
-#include <climits>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/include/qi_real.hpp>
+
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
@@ -18,11 +18,17 @@
 #include "test.hpp"
 
 #include <boost/core/cmath.hpp>
+#include <climits>
 
-#ifndef BOOST_NO_CXX11_SFINAE_EXPR
-# include <boost/math/concepts/real_concept.hpp>
-#else
+#ifdef _MSVC_LANG
+# if _MSC_VER < 1910 || _MSVC_LANG < 201402L
+#  define BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+# endif
+#elif __cplusplus < 201402L
 # define BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+#endif
+#ifndef BOOST_SPIRIT_NO_MATH_REAL_CONCEPT
+# include <boost/math/concepts/real_concept.hpp>
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
