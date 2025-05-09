@@ -4,6 +4,7 @@
 #   Distributed under the Boost Software License, Version 1.0. (See accompanying
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
+import-search /boost/config/checks ;
 import config : requires ;
 
 project spirit-x3-example
@@ -47,7 +48,7 @@ exe x3_calc7 :
 ;
 
 exe x3_calc8 :
-    /boost//filesystem
+    /boost/filesystem//boost_filesystem
     calc/calc8/vm.cpp
     calc/calc8/compiler.cpp
     calc/calc8/expression.cpp
@@ -56,7 +57,7 @@ exe x3_calc8 :
 ;
 
 exe x3_calc9 :
-    /boost//filesystem
+    /boost/filesystem//boost_filesystem
     calc/calc9/vm.cpp
     calc/calc9/compiler.cpp
     calc/calc9/expression.cpp

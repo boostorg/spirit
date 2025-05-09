@@ -13,6 +13,7 @@
 #include <iterator>
 #include <iostream>
 #include <typeinfo>
+#include <sstream>
 
 #include <boost/spirit/include/karma_stream.hpp>
 
